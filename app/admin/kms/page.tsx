@@ -1,0 +1,3 @@
+import { checkSecretStoreHealth } from "@/lib/secrets/secretStoreHealth";
+export const dynamic = "force-dynamic";
+export default async function KmsAdminPage() { const health = await checkSecretStoreHealth(); return <div><p className="eyebrow">Key management</p><h1 className="mt-2 text-3xl font-bold">KMS health</h1><section className="card mt-6 p-6"><p className={health.healthy ? "text-emerald-300" : "text-red-300"}>{health.healthy ? "Healthy" : "Unavailable"}</p><dl className="mt-4 grid gap-3 text-sm"><div>Provider: {health.provider}</div><div>Configured: {String(health.configured)}</div><div>Latency: {health.latencyMs} ms</div><div>{health.message}</div></dl></section></div>; }

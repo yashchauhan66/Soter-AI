@@ -1,0 +1,10 @@
+import { z } from "zod";
+import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
+import { requirePermission } from "@/lib/auth/guards";
+import { db } from "@/lib/db";
+import { encryptSecret } from "@/lib/secrets/secretStore";
+import { parsePublicHttpsUrl } from "@/lib/network/outboundUrl";
+
+const schema = z.object({ organizationId: z.string().min(1), provider: z.enum(["generic", "splunk", "elastic", "datadog"]), name: z.string().min(1).max(100), endpointUrl: z.string().url().superRefine((value, context) => { try { parsePublicHttpsUrl(value); } catch (error) { context.addIssue({ code: "custom", message: error instanceof Error ? error.message : "Invalid SIEM endpoint." }); } }), token: z.string().max(4000).optional(), enabled: z.boolean().default(true) });
+export async function GET(request: Request) { try { const organizationId = new URL(request.url).searchParams.get("organizationId"); if (!organizationId) return jsonResponse({ error: true, message: "organizationId required." }, { status: 400 }); await requirePermission(organizationId, "logs:read"); return jsonResponse(await db.siemIntegration.findMany({ where: { organizationId }, select: { id: true, provider: true, name: true, endpointUrl: true, enabled: true, createdAt: true } })); } catch (error) { return apiError(error, "SIEM integrations could not be loaded."); } }
+export async function POST(request: Request) { try { const body = schema.parse(await readJson(request)); await requirePermission(body.organizationId, "member:manage"); const encrypted = body.token ? await encryptSecret(body.token) : null; const integration = await db.siemIntegration.create({ data: { organizationId: body.organizationId, provider: body.provider, name: body.name, endpointUrl: body.endpointUrl, encryptedToken: encrypted?.ciphertext, tokenKeyVersion: encrypted ? `${encrypted.provider}:${encrypted.version ?? encrypted.keyVersion}` : null, enabled: body.enabled } }); return jsonResponse({ id: integration.id, provider: integration.provider, enabled: integration.enabled }, { status: 201 }); } catch (error) { return apiError(error, "SIEM integration could not be saved."); } }

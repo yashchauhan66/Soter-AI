@@ -1,0 +1,60 @@
+{
+  "name": "cyberrakshak-guard",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "prebuild": "node scripts/cleanNextBuild.mjs",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/guard.test.ts tests/security.test.ts tests/webhooks.test.ts tests/phase2.test.ts tests/phase3.test.ts tests/phase4.test.ts tests/phase5.test.ts tests/phase6.test.ts",
+    "verify": "npm run typecheck && npm --prefix packages/sdk run typecheck && npm test && npx prisma validate && npm run build",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:seed": "tsx prisma/seed.ts",
+    "worker:webhooks": "tsx workers/webhookWorker.ts",
+    "worker:siem": "tsx workers/siemWorker.ts",
+    "worker:background": "tsx workers/backgroundWorker.ts",
+    "eval:classifiers": "tsx scripts/evalClassifiers.ts",
+    "postinstall": "prisma generate"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@auth/prisma-adapter": "^2.7.4",
+    "@prisma/client": "5.22.0",
+    "@upstash/redis": "^1.34.3",
+    "bcryptjs": "^2.4.3",
+    "clsx": "2.1.1",
+    "iconv-lite": "^0.6.3",
+    "lucide-react": "0.468.0",
+    "next": "15.5.19",
+    "next-auth": "^5.0.0-beta.25",
+    "pdfkit": "^0.15.1",
+    "razorpay": "^2.9.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwind-merge": "2.6.0",
+    "tesseract.js": "^6.0.1",
+    "zod": "3.24.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "22.10.2",
+    "@types/pdfkit": "^0.13.5",
+    "@types/react": "18.2.79",
+    "@types/react-dom": "18.2.25",
+    "autoprefixer": "10.4.20",
+    "postcss": "8.5.10",
+    "prisma": "5.22.0",
+    "tailwindcss": "3.4.17",
+    "tsx": "4.22.4",
+    "typescript": "5.7.2"
+  },
+  "overrides": {
+    "postcss": "8.5.10"
+  }
+}

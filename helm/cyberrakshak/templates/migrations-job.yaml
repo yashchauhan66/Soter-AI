@@ -1,0 +1,19 @@
+{{- if .Values.migrations.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "cyberrakshak.fullname" . }}-migrations
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: migrations
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          command: ["npm", "run", "db:deploy"]
+          envFrom:
+            - configMapRef:
+                name: {{ include "cyberrakshak.fullname" . }}-config
+            - secretRef:
+                name: {{ include "cyberrakshak.fullname" . }}-secrets
+{{- end }}

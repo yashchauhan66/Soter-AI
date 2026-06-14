@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cyberrakshak.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "cyberrakshak.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "cyberrakshak.fullname" . }}
+    spec:
+      containers:
+        - name: app
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: {{ include "cyberrakshak.fullname" . }}-config
+            - secretRef:
+                name: {{ include "cyberrakshak.fullname" . }}-secrets
+          readinessProbe:
+            httpGet:
+              path: /api/ready
+              port: 3000
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000

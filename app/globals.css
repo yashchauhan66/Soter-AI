@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+* { border-color: rgb(51 65 85 / 0.75); }
+html { scroll-behavior: smooth; }
+body { @apply bg-ink text-slate-100 antialiased; }
+::selection { background: rgba(49, 215, 200, 0.25); }
+
+@layer components {
+  .container-page { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
+  .card { @apply rounded-2xl border border-slate-800 bg-panel/75 shadow-glow backdrop-blur; }
+  .button-primary { @apply inline-flex items-center justify-center rounded-xl bg-cyan px-5 py-3 font-semibold text-ink transition hover:bg-cyan/90 disabled:cursor-not-allowed disabled:opacity-50; }
+  .button-secondary { @apply inline-flex items-center justify-center rounded-xl border border-slate-700 bg-slate-900/60 px-5 py-3 font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-800; }
+  .input { @apply w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan focus:ring-2 focus:ring-cyan/10; }
+  .eyebrow { @apply text-xs font-bold uppercase tracking-[0.22em] text-cyan; }
+  .grid-fade { background-image: linear-gradient(rgba(49,215,200,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(49,215,200,.05) 1px, transparent 1px); background-size: 44px 44px; }
+}

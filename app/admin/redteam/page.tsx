@@ -1,0 +1,3 @@
+import { db } from "@/lib/db";
+export const dynamic = "force-dynamic";
+export default async function AdminRedTeamPage() { const runs = await db.redTeamRun.findMany({ orderBy: { startedAt: "desc" }, take: 20, include: { project: { select: { name: true } } } }); return <div><p className="eyebrow">Authorized testing</p><h1 className="mt-2 text-3xl font-bold">Red-team runs</h1><div className="mt-6 space-y-3">{runs.map((run) => <div className="card p-5" key={run.id}><p>{run.project.name} · {run.status}</p><p className="text-sm text-slate-400">Passed {run.passed} · failed {run.failed}</p></div>)}</div></div>; }
