@@ -1,0 +1,38 @@
+{
+  "name": "@cyberrakshak/guard",
+  "version": "0.1.0",
+  "description": "Typed client and Next.js helper for the CyberRakshak Guard AI security gateway.",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./next": {
+      "types": "./dist/next.d.ts",
+      "default": "./dist/next.js"
+    }
+  },
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": { "node": ">=18.18" },
+  "keywords": [
+    "ai",
+    "security",
+    "owasp",
+    "llm",
+    "prompt-injection",
+    "pii",
+    "guard",
+    "chatbot"
+  ],
+  "devDependencies": {
+    "typescript": "5.7.2"
+  },
+  "publishConfig": { "access": "public" }
+}

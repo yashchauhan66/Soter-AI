@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cyberrakshak.fullname" . }}-worker
+spec:
+  replicas: {{ .Values.worker.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "cyberrakshak.fullname" . }}-worker
+  template:
+    metadata:
+      labels:
+        app: {{ include "cyberrakshak.fullname" . }}-worker
+    spec:
+      containers:
+        - name: worker
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          command: {{ toJson .Values.worker.command }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "cyberrakshak.fullname" . }}-config
+            - secretRef:
+                name: {{ include "cyberrakshak.fullname" . }}-secrets

@@ -1,0 +1,4 @@
+"use client";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+export function VerifyEmailClient({ token }: { token: string }) { const [message, setMessage] = useState("Verifying your email..."); useEffect(() => { void fetch("/api/auth/verify-email", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token }) }).then(async (response) => { const data = await response.json(); setMessage(response.ok ? "Email verified. You can sign in." : data.message); }).catch(() => setMessage("Verification failed.")); }, [token]); return <div className="card mx-auto max-w-lg p-8 text-center"><h1 className="text-2xl font-bold">Email verification</h1><p className="mt-4 text-slate-400">{message}</p><Link href="/signin" className="button-primary mt-6">Go to sign in</Link></div>; }

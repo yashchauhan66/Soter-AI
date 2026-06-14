@@ -1,0 +1,37 @@
+replicaCount: 2
+
+image:
+  repository: cyberrakshak-guard
+  tag: latest
+  pullPolicy: IfNotPresent
+
+worker:
+  replicaCount: 1
+  command: ["npm", "run", "worker:webhooks"]
+
+service:
+  type: ClusterIP
+  port: 3000
+
+ingress:
+  enabled: false
+  className: ""
+  host: cyberrakshak.example.com
+  tlsSecretName: ""
+
+env:
+  NODE_ENV: production
+  VECTOR_PROVIDER: qdrant
+
+secrets:
+  DATABASE_URL: ""
+  NEXTAUTH_SECRET: ""
+  NEXTAUTH_URL: ""
+  API_KEY_PEPPER: ""
+  SCIM_TOKEN_PEPPER: ""
+  WEBHOOK_SECRET_PEPPER: ""
+  REPORT_SIGNING_SECRET: ""
+
+migrations:
+  enabled: true
+
