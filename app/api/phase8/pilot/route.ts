@@ -3,7 +3,7 @@ import { auth } from "@/auth";
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { db } from "@/lib/db";
 import { sanitizeLogText } from "@/lib/guard/logSafety";
-import { checkMemoryRateLimit } from "@/lib/rateLimit";
+import { enforcePublicRateLimit } from "@/lib/publicRateLimit";
 
 const schema = z.object({
   companyName: z.string().trim().min(2).max(160), contactName: z.string().trim().min(2).max(120), contactEmail: z.string().email().max(254),
@@ -14,9 +14,16 @@ const schema = z.object({
 
 export async function POST(request: Request) {
   try {
-    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-    if (!checkMemoryRateLimit(`pilot:${ip}`, 5, 60 * 60_000).allowed) return jsonResponse({ error: true, message: "Too many pilot requests." }, { status: 429 });
     const body = schema.parse(await readJson(request));
+    const limited = await enforcePublicRateLimit({
+      request,
+      scope: "form:enterprise-pilot",
+      limit: 5,
+      windowMs: 60 * 60_000,
+      subject: body.contactEmail,
+      message: "Too many pilot requests. Please try again later.",
+    });
+    if (limited) return limited;
     const session = await auth();
     const organization = body.organizationId && session?.user?.id ? await db.organizationMember.findFirst({ where: { organizationId: body.organizationId, userId: session.user.id } }) : null;
     const pilot = await db.enterprisePilot.create({ data: {

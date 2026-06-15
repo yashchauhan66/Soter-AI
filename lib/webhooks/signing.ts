@@ -31,7 +31,10 @@ export function generateWebhookSecret() {
 }
 
 export function hashWebhookSecret(secret: string) {
-  const pepper = process.env.API_KEY_PEPPER ?? "";
+  const pepper = process.env.API_KEY_PEPPER;
+  if (!pepper || pepper.length < 32 || pepper === "replace-with-a-long-random-secret") {
+    throw new Error("API_KEY_PEPPER must be configured with at least 32 characters before hashing webhook secrets.");
+  }
   return createHash("sha256").update(`${pepper}:wh:${secret}`).digest("hex");
 }
 

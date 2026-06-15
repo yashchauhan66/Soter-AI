@@ -121,9 +121,13 @@ class SesEmailClient implements EmailClient {
 
 export function getEmailClient(): EmailClient {
   const provider = (process.env.EMAIL_PROVIDER ?? "mock").toLowerCase() as EmailProvider;
+  if (provider === "mock" && process.env.NODE_ENV === "production") {
+    throw new Error("EMAIL_PROVIDER=mock is disabled in production. Configure resend, aws-ses, or smtp.");
+  }
   if (provider === "resend") return new ResendEmailClient();
   if (provider === "aws-ses") return new SesEmailClient();
   if (provider === "smtp") return new SmtpEmailClient();
+  if (provider !== "mock") throw new Error(`Unsupported EMAIL_PROVIDER: ${provider}`);
   return new MockEmailClient();
 }
 import { createHash, createHmac } from "crypto";

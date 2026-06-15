@@ -23,6 +23,9 @@ export async function POST(request: Request) {
     // SECURITY: in production we MUST verify the signature server-side.
     // In sandbox/mock mode (Razorpay not configured) we accept the mock
     // session because no real payment was made.
+    if (body.mock && process.env.NODE_ENV === "production") {
+      return jsonResponse({ error: true, message: "Mock billing activation is disabled in production." }, { status: 403 });
+    }
     if (!body.mock) {
       if (!razorpayConfigured()) {
         return jsonResponse({ error: true, message: "Razorpay is not configured." }, { status: 503 });

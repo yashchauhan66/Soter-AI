@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
+import { db } from "@/lib/db";
 import { SignInForm } from "@/components/auth/SignInForm";
 
 export const dynamic = "force-dynamic";
@@ -12,7 +13,10 @@ export default async function SignInPage({
   searchParams: Promise<{ callbackUrl?: string; error?: string }>;
 }) {
   const session = await auth();
-  if (session?.user) redirect("/dashboard");
+  if (session?.user?.id) {
+    const existing = await db.user.findUnique({ where: { id: session.user.id }, select: { id: true } });
+    if (existing) redirect("/dashboard");
+  }
   const params = await searchParams;
   return (
     <main className="container-page flex min-h-[calc(100vh-4rem)] items-center py-16">

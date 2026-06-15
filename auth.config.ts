@@ -6,6 +6,16 @@
 //   private /api/* routes require an authenticated session.
 import type { NextAuthConfig } from "next-auth";
 
+function assertAuthSecretConfigured() {
+  if (process.env.NODE_ENV !== "production") return;
+  const secret = process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET;
+  if (!secret || secret.length < 32 || secret === "replace-with-a-long-random-secret") {
+    throw new Error("AUTH_SECRET or NEXTAUTH_SECRET must be configured with at least 32 characters in production.");
+  }
+}
+
+assertAuthSecretConfigured();
+
 export const PUBLIC_ROUTES = [
   "/",
   "/docs",

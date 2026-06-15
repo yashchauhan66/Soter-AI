@@ -5,6 +5,7 @@ import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { db } from "@/lib/db";
 import { createEmailVerificationToken } from "@/lib/auth/tokens";
 import { sendTemplateEmail } from "@/lib/email/send";
+import { enforcePublicRateLimit } from "@/lib/publicRateLimit";
 
 export const dynamic = "force-dynamic";
 
@@ -19,6 +20,15 @@ const schema = z.object({
 export async function POST(request: Request) {
   try {
     const body = schema.parse(await readJson(request));
+    const limited = await enforcePublicRateLimit({
+      request,
+      scope: "auth:signup",
+      limit: 5,
+      windowMs: 60 * 60_000,
+      subject: body.email,
+      message: "Too many sign-up attempts. Please try again later.",
+    });
+    if (limited) return limited;
     const existing = await db.user.findUnique({ where: { email: body.email } });
     if (existing) {
       return jsonResponse({ error: true, message: "Email is already registered." }, { status: 409 });

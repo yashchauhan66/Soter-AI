@@ -59,6 +59,20 @@ export async function checkRedisRateLimit(identifier: string, limit: number, win
   return { allowed: count <= limit, remaining: Math.max(0, limit - count), resetAt };
 }
 
+export async function checkRedisFixedWindowRateLimit(identifier: string, limit: number, windowMs: number): Promise<RateLimitResult> {
+  const redis = getRedis();
+  const now = Date.now();
+  const safeWindowMs = Math.max(1_000, windowMs);
+  const bucket = Math.floor(now / safeWindowMs);
+  const key = `crg:rl:${identifier}:w${safeWindowMs}:${bucket}`;
+  const count = await redis.incrBy(key, 1);
+  if (count === 1) {
+    await redis.expire(key, Math.ceil(safeWindowMs / 1000));
+  }
+  const resetAt = (bucket + 1) * safeWindowMs;
+  return { allowed: count <= limit, remaining: Math.max(0, limit - count), resetAt };
+}
+
 export interface MonthlyUsage {
   used: number;
   limit: number;

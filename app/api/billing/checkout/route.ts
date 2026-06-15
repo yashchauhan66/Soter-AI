@@ -19,6 +19,9 @@ export async function POST(request: Request) {
     if (!config) return jsonResponse({ error: true, message: "Plan is not purchasable." }, { status: 400 });
 
     if (!razorpayConfigured()) {
+      if (process.env.NODE_ENV === "production") {
+        return jsonResponse({ error: true, message: "Razorpay is not configured for production checkout." }, { status: 503 });
+      }
       // Sandbox mode: create a mock order id so the UI flow is testable end-to-end.
       const mockOrderId = `order_mock_${Math.random().toString(36).slice(2, 12)}`;
       return jsonResponse({

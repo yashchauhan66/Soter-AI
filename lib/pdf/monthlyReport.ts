@@ -14,6 +14,14 @@ export interface PdfReportInput {
   year: number;
 }
 
+function reportSigningSecret() {
+  const secret = process.env.REPORT_SIGNING_SECRET ?? process.env.AUDIT_EXPORT_SECRET ?? process.env.API_KEY_PEPPER;
+  if (!secret || secret.length < 24 || (process.env.NODE_ENV === "production" && secret === "development-only")) {
+    throw new Error("REPORT_SIGNING_SECRET, AUDIT_EXPORT_SECRET, or API_KEY_PEPPER must be configured before signing PDF reports.");
+  }
+  return secret;
+}
+
 export async function buildMonthlyReportPdf(input: PdfReportInput): Promise<Buffer> {
   const { projectId, month, year } = input;
   const project = await db.project.findUnique({
@@ -48,7 +56,7 @@ export async function buildMonthlyReportPdf(input: PdfReportInput): Promise<Buff
     db.report.findUnique({ where: { projectId_month_year: { projectId, month, year } } }),
   ]);
   if (!reportRecord) throw new Error("Report record was not created.");
-  const reportSignature = createHmac("sha256", process.env.REPORT_SIGNING_SECRET ?? process.env.AUDIT_EXPORT_SECRET ?? process.env.API_KEY_PEPPER ?? "development-only")
+  const reportSignature = createHmac("sha256", reportSigningSecret())
     .update(`${reportRecord.id}:${projectId}:${year}-${month}`).digest("hex");
   const weeklyTrend = Array.from({ length: 5 }, (_, week) => ({ week: week + 1, total: 0, blocked: 0 }));
   for (const log of trendLogs) {
