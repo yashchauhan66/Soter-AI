@@ -2,11 +2,9 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { Loader2, LogIn } from "lucide-react";
 
 export function SignInForm({ callbackUrl, initialError }: { callbackUrl: string; initialError?: string }) {
-  const router = useRouter();
   const [error, setError] = useState(initialError ?? "");
   const [loading, setLoading] = useState(false);
 
@@ -25,8 +23,7 @@ export function SignInForm({ callbackUrl, initialError }: { callbackUrl: string;
         setError("Email or password is incorrect.");
         return;
       }
-      router.push(callbackUrl);
-      router.refresh();
+      window.location.assign(callbackUrl);
     } finally {
       setLoading(false);
     }

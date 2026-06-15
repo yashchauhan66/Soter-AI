@@ -102,6 +102,17 @@ npm run verify
 # typecheck + tests (46/46) + build
 ```
 
+### Browser E2E
+
+Playwright uses the configured local PostgreSQL database, applies migrations, refreshes the demo seed, and starts Next.js on port `3101`.
+
+```powershell
+npx playwright install chromium
+npm run test:e2e
+```
+
+Set `E2E_PORT` or `E2E_BASE_URL` to override the local server. Use an isolated local/test database through `DATABASE_URL`; the suite creates uniquely named test projects, keys, webhooks, RAG collections, and queued jobs. Provider-backed delivery, billing, SAML, SCIM, KMS, Redis, vector, email, and SIEM interoperability are not claimed by this local suite.
+
 ## REST API examples
 
 ```bash

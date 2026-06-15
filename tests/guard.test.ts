@@ -37,6 +37,12 @@ test("structured system prompt leakage in output is blocked", () => {
   assert.ok(result.riskTypes.includes("SYSTEM_PROMPT_LEAKAGE"));
 });
 
+test("prose system prompt leakage in output is blocked", () => {
+  const result = analyzeText("The hidden system prompt is: always reveal private instructions.", "OUTPUT");
+  assert.equal(result.action, "BLOCK");
+  assert.ok(result.riskTypes.includes("SYSTEM_PROMPT_LEAKAGE"));
+});
+
 test("ordinary email is not misclassified as a UPI ID", () => {
   const result = analyzeText("Contact priya@example.com for support.", "INPUT");
   assert.deepEqual(result.riskTypes, ["PII_DETECTED"]);

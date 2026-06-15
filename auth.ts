@@ -4,10 +4,15 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { db } from "./lib/db";
 import { authConfig } from "./auth.config";
+import { consumeSamlSessionExchange } from "./lib/enterprise/samlSessionExchange";
 
 const credentialsSchema = z.object({
   email: z.string().trim().toLowerCase().email(),
   password: z.string().min(8).max(200),
+});
+
+const samlExchangeSchema = z.object({
+  token: z.string().min(32).max(200),
 });
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -33,6 +38,28 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           email: user.email,
           name: user.name ?? undefined,
           isAdmin: user.isAdmin,
+        };
+      },
+    }),
+    Credentials({
+      id: "saml-exchange",
+      name: "SAML SSO",
+      credentials: {
+        token: { label: "One-time SAML exchange", type: "password" },
+      },
+      async authorize(rawCredentials, request) {
+        const parsed = samlExchangeSchema.safeParse(rawCredentials);
+        if (!parsed.success) return null;
+        const exchange = await consumeSamlSessionExchange(parsed.data.token, {
+          ip: request.headers.get("x-forwarded-for"),
+          userAgent: request.headers.get("user-agent"),
+        });
+        if (!exchange) return null;
+        return {
+          id: exchange.user.id,
+          email: exchange.user.email,
+          name: exchange.user.name ?? undefined,
+          isAdmin: exchange.user.isAdmin,
         };
       },
     }),

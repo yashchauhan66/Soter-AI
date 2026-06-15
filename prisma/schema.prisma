@@ -248,6 +248,7 @@ model User {
   scimTokensCreated       ScimToken[]              @relation("ScimTokenCreator")
   scimUserMappings        ScimUserMapping[]
   sessions                UserSession[]
+  samlSessionExchanges    SamlSessionExchange[]
   mlReviewItemsResolved   MLReviewQueue[]          @relation("MLReviewResolver")
   dataDeletionsRequested  DataDeletionRequest[]    @relation("DataDeletionRequestedBy")
   customerOnboarding      CustomerOnboarding[]     @relation("CustomerOnboardingOwner")
@@ -295,6 +296,7 @@ model Organization {
   scimTokens            ScimToken[]
   samlProviders         SamlProvider[]
   samlLoginAttempts     SamlLoginAttempt[]
+  samlSessionExchanges  SamlSessionExchange[]
   scimUserMappings      ScimUserMapping[]
   scimGroupMappings     ScimGroupMapping[]
   ipAllowlistEntries    IpAllowlistEntry[]
@@ -1322,21 +1324,22 @@ model MLReviewQueue {
 }
 
 model SamlProvider {
-  id              String             @id @default(cuid())
-  organizationId  String
-  organization    Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  entityId        String
-  ssoUrl          String
-  acsUrl          String
-  issuer          String
-  metadataUrl     String?
-  x509Certificate String             @db.Text
-  enabled         Boolean            @default(false)
-  defaultRole     OrgRole            @default(VIEWER)
-  emailDomain     String?
-  loginAttempts   SamlLoginAttempt[]
-  createdAt       DateTime           @default(now())
-  updatedAt       DateTime           @updatedAt
+  id               String                @id @default(cuid())
+  organizationId   String
+  organization     Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  entityId         String
+  ssoUrl           String
+  acsUrl           String
+  issuer           String
+  metadataUrl      String?
+  x509Certificate  String                @db.Text
+  enabled          Boolean               @default(false)
+  defaultRole      OrgRole               @default(VIEWER)
+  emailDomain      String?
+  loginAttempts    SamlLoginAttempt[]
+  sessionExchanges SamlSessionExchange[]
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
 
   @@unique([organizationId])
 }
@@ -1354,6 +1357,26 @@ model SamlLoginAttempt {
   createdAt      DateTime      @default(now())
 
   @@index([organizationId, createdAt])
+}
+
+model SamlSessionExchange {
+  id             String       @id @default(cuid())
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  providerId     String
+  provider       SamlProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  tokenHash      String       @unique
+  ip             String?
+  userAgent      String?
+  expiresAt      DateTime
+  usedAt         DateTime?
+  createdAt      DateTime     @default(now())
+
+  @@index([userId, expiresAt])
+  @@index([organizationId, expiresAt])
+  @@index([expiresAt, usedAt])
 }
 
 model ScimUserMapping {

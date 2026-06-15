@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
+import { safeCallbackUrl } from "../lib/auth/callback";
 import { generateApiKey, hashApiKey } from "../lib/apiKeyCrypto";
 import { analyzeText } from "../lib/guard/analyze";
 import { prepareSafeLogContent, sanitizeMetadata } from "../lib/guard/logSafety";
@@ -8,6 +10,22 @@ import { checkMemoryRateLimit, resetRateLimitBucketsForTests } from "../lib/rate
 import { inputGuardSchema } from "../lib/validations";
 
 process.env.API_KEY_PEPPER = "test-only-pepper-that-is-longer-than-thirty-two-characters";
+
+test("sign-in callback URL is limited to safe relative paths", () => {
+  assert.equal(safeCallbackUrl("/dashboard/reports"), "/dashboard/reports");
+  assert.equal(safeCallbackUrl("https://evil.example/phish"), "/dashboard");
+  assert.equal(safeCallbackUrl("//evil.example/phish"), "/dashboard");
+  assert.equal(safeCallbackUrl("/\\evil.example/phish"), "/dashboard");
+  assert.equal(safeCallbackUrl("/%5Cevil.example/phish"), "/dashboard");
+  assert.equal(safeCallbackUrl("javascript:alert(1)"), "/dashboard");
+});
+
+test("public badge script avoids HTML injection sinks", () => {
+  const badgeRoute = readFileSync("app/badge.js/route.ts", "utf8");
+  assert.equal(badgeRoute.includes("innerHTML"), false);
+  assert.match(badgeRoute, /safeColor/);
+  assert.match(badgeRoute, /textContent|createTextNode/);
+});
 
 test("API keys are random, prefixed, and hashed with the configured pepper", () => {
   const first = generateApiKey("test");

@@ -9,6 +9,8 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/guard.test.ts tests/security.test.ts tests/webhooks.test.ts tests/phase2.test.ts tests/phase3.test.ts tests/phase4.test.ts tests/phase5.test.ts tests/phase6.test.ts tests/phase9.test.ts tests/phase10.test.ts tests/phase11.test.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "verify": "npm run typecheck && npm --prefix packages/sdk run typecheck && npm test && npx prisma validate && npm run build",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
@@ -45,6 +47,7 @@
     "zod": "3.24.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "22.10.2",
     "@types/pdfkit": "^0.13.5",
