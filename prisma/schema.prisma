@@ -1777,3 +1777,494 @@ model ContactLead {
   @@index([status, createdAt])
   @@index([email, createdAt])
 }
+
+model AiProvider {
+  id             String   @id @default(cuid())
+  organizationId String
+  name           String
+  providerType   String
+  status         String   @default("REVIEW")
+  riskLevel      String   @default("MEDIUM")
+  dataRegion     String?
+  metadata       Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([organizationId, name])
+  @@index([organizationId, status])
+}
+
+model AiModel {
+  id             String   @id @default(cuid())
+  organizationId String
+  providerId     String
+  name           String
+  version        String?
+  modality       String   @default("TEXT")
+  riskLevel      String   @default("MEDIUM")
+  approved       Boolean  @default(false)
+  metadata       Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([organizationId, providerId, name, version])
+  @@index([organizationId, approved])
+}
+
+model PromptVersion {
+  id             String    @id @default(cuid())
+  organizationId String
+  projectId      String?
+  name           String
+  version        Int       @default(1)
+  promptHash     String
+  promptRedacted String    @db.Text
+  status         String    @default("DRAFT")
+  approvedById   String?
+  approvedAt     DateTime?
+  metadata       Json?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@unique([organizationId, projectId, name, version])
+  @@index([organizationId, status])
+  @@index([projectId])
+}
+
+model ToolIntegration {
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String?
+  name           String
+  category       String
+  enabled        Boolean  @default(false)
+  approved       Boolean  @default(false)
+  riskLevel      String   @default("MEDIUM")
+  metadata       Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([organizationId, projectId, name])
+  @@index([organizationId, enabled])
+  @@index([projectId])
+}
+
+model PluginInventory {
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String?
+  name           String
+  version        String?
+  source         String?
+  status         String   @default("REVIEW")
+  riskLevel      String   @default("MEDIUM")
+  metadata       Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([organizationId, status])
+  @@index([projectId])
+}
+
+model AiBillOfMaterials {
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String
+  version        Int      @default(1)
+  snapshot       Json
+  riskSummary    Json?
+  createdById    String?
+  createdAt      DateTime @default(now())
+
+  @@index([organizationId, createdAt])
+  @@index([projectId, createdAt])
+}
+
+model SupplyChainRiskFinding {
+  id             String    @id @default(cuid())
+  organizationId String
+  projectId      String?
+  subjectType    String
+  subjectId      String?
+  severity       String
+  title          String
+  description    String    @db.Text
+  status         String    @default("OPEN")
+  metadata       Json?
+  createdAt      DateTime  @default(now())
+  resolvedAt     DateTime?
+
+  @@index([organizationId, status, severity])
+  @@index([projectId])
+}
+
+model AgentTool {
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String?
+  name           String
+  category       String
+  description    String?
+  enabled        Boolean  @default(false)
+  metadata       Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([organizationId, projectId, name])
+  @@index([organizationId, enabled])
+  @@index([projectId])
+}
+
+model ToolPermission {
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String
+  toolId         String
+  role           String?
+  allow          Boolean  @default(false)
+  requiresApproval Boolean @default(true)
+  maxCallsPerMinute Int?
+  costBudgetPaise  Int?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([organizationId, projectId, toolId, role])
+  @@index([organizationId, projectId])
+}
+
+model ToolCallLog {
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String
+  toolId         String?
+  toolName       String
+  action         String
+  category       String
+  riskScore      Int
+  decision       String
+  redactedInput  Json?
+  redactedOutput Json?
+  reason         String
+  actorUserId    String?
+  createdAt      DateTime @default(now())
+
+  @@index([organizationId, projectId, createdAt])
+  @@index([decision, createdAt])
+}
+
+model ToolApprovalRequest {
+  id             String    @id @default(cuid())
+  organizationId String
+  projectId      String
+  toolCallLogId  String
+  status         String    @default("PENDING")
+  requestedById  String?
+  reviewedById   String?
+  reason         String
+  preview        Json
+  createdAt      DateTime  @default(now())
+  reviewedAt     DateTime?
+
+  @@index([organizationId, status, createdAt])
+  @@index([projectId, status])
+}
+
+model ToolRiskPolicy {
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String
+  defaultAction  String   @default("DENY")
+  approvalThreshold Int   @default(70)
+  blockThreshold    Int   @default(90)
+  highRiskContextReview Boolean @default(true)
+  settings       Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([organizationId, projectId])
+}
+
+model ToolRollbackLog {
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String
+  toolCallLogId  String?
+  action         String
+  status         String   @default("RECORDED")
+  redactedDetails Json?
+  createdById    String?
+  createdAt      DateTime @default(now())
+
+  @@index([organizationId, projectId, createdAt])
+}
+
+model ThreatIntelSource {
+  id             String   @id @default(cuid())
+  name           String
+  sourceType     String   @default("INTERNAL")
+  trustLevel     String   @default("MEDIUM")
+  enabled        Boolean  @default(false)
+  metadata       Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([name])
+  @@index([enabled])
+}
+
+model ThreatPattern {
+  id             String   @id @default(cuid())
+  sourceId       String?
+  name           String
+  category       String
+  severity       String
+  pattern        String   @db.Text
+  language       String   @default("en")
+  status         String   @default("DRAFT")
+  safeTestText   String?  @db.Text
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([category, status])
+  @@index([sourceId])
+}
+
+model DetectorRuleVersion {
+  id             String    @id @default(cuid())
+  detector       String
+  version        Int
+  mode           String    @default("SHADOW")
+  patterns       Json
+  approvedById   String?
+  activatedAt    DateTime?
+  rolledBackAt   DateTime?
+  createdAt      DateTime  @default(now())
+
+  @@unique([detector, version])
+  @@index([detector, mode])
+}
+
+model ThreatUpdateJob {
+  id             String   @id @default(cuid())
+  sourceId       String?
+  status         String   @default("PENDING")
+  importedCount  Int      @default(0)
+  rejectedCount  Int      @default(0)
+  report         Json?
+  createdAt      DateTime @default(now())
+  completedAt    DateTime?
+
+  @@index([status, createdAt])
+}
+
+model ThreatIntelAuditLog {
+  id             String   @id @default(cuid())
+  actorUserId    String?
+  action         String
+  targetType     String
+  targetId       String?
+  metadata       Json?
+  createdAt      DateTime @default(now())
+
+  @@index([action, createdAt])
+}
+
+model BenchmarkDataset {
+  id             String   @id @default(cuid())
+  organizationId String?
+  name           String
+  version        String
+  category       String
+  publicSafe     Boolean  @default(false)
+  limitations    String?  @db.Text
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([organizationId, name, version])
+  @@index([category, publicSafe])
+}
+
+model BenchmarkExample {
+  id             String   @id @default(cuid())
+  datasetId      String
+  category       String
+  language       String   @default("en")
+  redactedText   String   @db.Text
+  expectedLabel  String
+  metadata       Json?
+  createdAt      DateTime @default(now())
+
+  @@index([datasetId, category])
+  @@index([language])
+}
+
+model BenchmarkRun {
+  id             String    @id @default(cuid())
+  datasetId      String
+  detectorVersion String
+  status         String    @default("PENDING")
+  metrics        Json?
+  startedAt      DateTime  @default(now())
+  completedAt    DateTime?
+
+  @@index([datasetId, startedAt])
+  @@index([status])
+}
+
+model BenchmarkResult {
+  id             String   @id @default(cuid())
+  runId          String
+  exampleId      String
+  expectedLabel  String
+  predictedLabel String
+  confidence     Float
+  latencyMs      Int
+  correct        Boolean
+  metadata       Json?
+  createdAt      DateTime @default(now())
+
+  @@index([runId, correct])
+  @@index([exampleId])
+}
+
+model DetectorAccuracySnapshot {
+  id             String   @id @default(cuid())
+  detectorVersion String
+  datasetVersion  String
+  metrics        Json
+  limitations    String?  @db.Text
+  publicSafe     Boolean  @default(false)
+  createdAt      DateTime @default(now())
+
+  @@index([detectorVersion, createdAt])
+  @@index([publicSafe])
+}
+
+model DataSubjectRequest {
+  id             String   @id @default(cuid())
+  organizationId String
+  requesterEmail String
+  requestType    String
+  status         String   @default("PENDING")
+  confirmation   String
+  metadata       Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([organizationId, status, createdAt])
+  @@index([requesterEmail])
+}
+
+model ConsentRecord {
+  id             String   @id @default(cuid())
+  organizationId String
+  subjectEmail   String
+  purpose        String
+  status         String
+  evidenceHash   String?
+  metadata       Json?
+  recordedAt     DateTime @default(now())
+
+  @@index([organizationId, subjectEmail])
+  @@index([purpose, status])
+}
+
+model PrivacyIncident {
+  id             String    @id @default(cuid())
+  organizationId String
+  title          String
+  severity       String
+  status         String    @default("INVESTIGATING")
+  redactedSummary String   @db.Text
+  createdById    String?
+  createdAt      DateTime  @default(now())
+  resolvedAt     DateTime?
+
+  @@index([organizationId, status, createdAt])
+}
+
+model BreachNotificationDraft {
+  id             String   @id @default(cuid())
+  organizationId String
+  incidentId     String
+  jurisdiction   String   @default("IN-DPDP")
+  status         String   @default("DRAFT")
+  redactedContent String  @db.Text
+  createdById    String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([organizationId, status, createdAt])
+}
+
+model DataProcessingRecord {
+  id             String   @id @default(cuid())
+  organizationId String
+  systemName     String
+  purpose        String
+  dataCategories String[]
+  retention      String?
+  subprocessors  String[]
+  safeguards     String[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([organizationId, systemName])
+}
+
+model AbuseSignal {
+  id             String   @id @default(cuid())
+  organizationId String?
+  projectId      String?
+  signalType     String
+  severity       String
+  status         String   @default("OPEN")
+  metadata       Json?
+  createdAt      DateTime @default(now())
+
+  @@index([organizationId, status, createdAt])
+  @@index([projectId, createdAt])
+}
+
+model UsageAnomaly {
+  id             String   @id @default(cuid())
+  organizationId String?
+  projectId      String?
+  metric         String
+  baseline       Float
+  observed       Float
+  severity       String
+  metadata       Json?
+  createdAt      DateTime @default(now())
+
+  @@index([organizationId, createdAt])
+  @@index([projectId, metric])
+}
+
+model CostBudget {
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String?
+  monthlyLimitPaise Int
+  usedPaise      Int      @default(0)
+  hardStop       Boolean  @default(true)
+  alertThreshold Float    @default(0.8)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([organizationId, projectId])
+}
+
+model ThrottleEvent {
+  id             String   @id @default(cuid())
+  organizationId String?
+  projectId      String?
+  reason         String
+  mode           String   @default("AUTO_THROTTLE")
+  expiresAt      DateTime?
+  metadata       Json?
+  createdAt      DateTime @default(now())
+
+  @@index([organizationId, createdAt])
+  @@index([projectId, expiresAt])
+}
