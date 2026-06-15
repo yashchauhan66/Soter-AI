@@ -14,18 +14,22 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CyberRakshakGuard = exports.createClient = exports.GuardClient = void 0;
+exports.CyberRakshakGuard = exports.normalizeDecision = exports.createClient = exports.GuardClient = exports.CyberRakshakClient = void 0;
 __exportStar(require("./types"), exports);
 __exportStar(require("./errors"), exports);
 var client_1 = require("./client");
+Object.defineProperty(exports, "CyberRakshakClient", { enumerable: true, get: function () { return client_1.CyberRakshakClient; } });
 Object.defineProperty(exports, "GuardClient", { enumerable: true, get: function () { return client_1.GuardClient; } });
 Object.defineProperty(exports, "createClient", { enumerable: true, get: function () { return client_1.createClient; } });
+Object.defineProperty(exports, "normalizeDecision", { enumerable: true, get: function () { return client_1.normalizeDecision; } });
 const client_2 = require("./client");
 /**
- * Class form: `new CyberRakshakGuard({ apiKey })`.
- * Functionally identical to `createClient`. Implements the same surface as the GuardClient.
+ * Class form kept for backwards compatibility: `new CyberRakshakGuard({ apiKey })`.
+ * Identical surface to {@link CyberRakshakClient}; prefer `CyberRakshakClient` in new code.
  */
-class CyberRakshakGuard extends client_2.GuardClient {
-    constructor(options) { super(options); }
+class CyberRakshakGuard extends client_2.CyberRakshakClient {
+    constructor(options) {
+        super(options);
+    }
 }
 exports.CyberRakshakGuard = CyberRakshakGuard;

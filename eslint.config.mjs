@@ -9,12 +9,15 @@ const eslintConfig = [
   {
     ignores: [
       ".next/**",
+      ".next-e2e/**",
       "node_modules/**",
       "next-env.d.ts",
       "**/dist/**",
       "playwright-report/**",
       "test-results/**",
       "coverage/**",
+      "**/.pytest_cache/**",
+      "**/__pycache__/**",
     ],
   },
   ...compat.extends("next/core-web-vitals", "next/typescript"),

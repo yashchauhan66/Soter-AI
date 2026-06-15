@@ -20,12 +20,13 @@ export default defineConfig({
     video: "retain-on-failure",
   },
   webServer: {
-    command: `npm run dev -- --port ${port}`,
+    command: `npx next dev --port ${port}`,
     url: baseURL,
     reuseExistingServer: false,
     timeout: 120_000,
     env: {
       ...process.env,
+      NEXT_DIST_DIR: ".next-e2e",
       NEXTAUTH_URL: baseURL,
       NEXT_PUBLIC_APP_URL: baseURL,
     },

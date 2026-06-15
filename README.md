@@ -164,6 +164,22 @@ export const POST = secureChatHandler({
 });
 ```
 
+## Integrations
+
+Official SDKs and plugins for connecting chatbots, RAG apps, and AI agents:
+
+- **JavaScript / TypeScript** — `@cyberrakshak/guard` (`packages/sdk`).
+  See [docs/integrations/javascript-typescript.md](docs/integrations/javascript-typescript.md).
+- **Python** — `cyberrakshak-guard` (`packages/cyberrakshak-python`).
+  See [docs/integrations/python.md](docs/integrations/python.md).
+- **WordPress / PHP** — plugin in `integrations/wordpress-plugin/cyberrakshak-guard`.
+  See [docs/integrations/wordpress.md](docs/integrations/wordpress.md).
+- **API contract** — [docs/integrations/api-contract.md](docs/integrations/api-contract.md).
+- **Security best practices** — [docs/integrations/security-best-practices.md](docs/integrations/security-best-practices.md).
+
+Runnable examples live in `examples/` (Next.js, Express, FastAPI, LangChain,
+WordPress demo).
+
 ## Webhooks
 
 Add an HTTPS endpoint under **Dashboard → Webhooks** and store the signing secret. Phase 3 makes delivery durable:
