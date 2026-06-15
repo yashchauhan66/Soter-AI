@@ -27,11 +27,12 @@ export function ApiKeyManager({ projects, keys }: { projects: Project[]; keys: K
 
   async function createKey(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const formElement = event.currentTarget;
     setLoading(true);
     setError("");
     setCopied(false);
     try {
-      const form = new FormData(event.currentTarget);
+      const form = new FormData(formElement);
       const response = await fetch("/api/api-keys", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -45,7 +46,7 @@ export function ApiKeyManager({ projects, keys }: { projects: Project[]; keys: K
       const data = await response.json();
       if (!response.ok) throw new Error(data.message ?? "API key generation failed.");
       setRawKey(data.apiKey);
-      event.currentTarget.reset();
+      formElement.reset();
       router.refresh();
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "API key generation failed.");
