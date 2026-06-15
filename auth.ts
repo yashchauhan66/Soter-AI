@@ -5,6 +5,7 @@ import { z } from "zod";
 import { db } from "./lib/db";
 import { authConfig } from "./auth.config";
 import { consumeSamlSessionExchange } from "./lib/enterprise/samlSessionExchange";
+import { canStartCredentialsSession } from "./lib/auth/signupPolicy";
 
 const credentialsSchema = z.object({
   email: z.string().trim().toLowerCase().email(),
@@ -33,6 +34,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const stored = user?.passwordHash ?? "$2a$12$0000000000000000000000.invalidhash000000000000000000000";
         const ok = await bcrypt.compare(password, stored);
         if (!user || !ok) return null;
+        // Verified email is an authorization prerequisite when mail can be
+        // delivered (real provider / production). Mock/dev mode is exempt so
+        // local and e2e flows keep working. SSO accounts are pre-verified.
+        if (!canStartCredentialsSession(user)) return null;
         return {
           id: user.id,
           email: user.email,

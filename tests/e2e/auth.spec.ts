@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 
 test("new user can sign up and reach onboarding in mock-email mode", async ({ page }) => {
+  test.skip(process.env.E2E_TEST_MOCK_EMAIL !== "true", "Production E2E requires an authorized real email provider; mock email is tested separately in development mode.");
   const suffix = Date.now().toString(36);
   await page.goto("/signup");
   await page.getByLabel("Your name").fill("E2E New User");

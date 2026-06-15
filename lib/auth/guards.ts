@@ -117,9 +117,11 @@ export async function requirePermission(organizationId: string, permission: Perm
 
 export async function requireProjectPermission(projectId: string, permission: Permission) {
   const access = await requireProjectAccess(projectId);
-  if (!access.org.id) {
-    return access;
-  }
+  // CRG-RT-014: requireProjectAccess always resolves a concrete organization
+  // (legacy projects fall back to the user's active org), so org.id is always
+  // truthy here. The permission check below is therefore unconditional — the
+  // previous `if (!access.org.id) return access` branch was dead code that
+  // obscured the fact that the role-based check always applies.
   if (!hasPermission(access.role, permission) && !access.user.isAdmin) {
     throw new ForbiddenError(`Missing permission: ${permission}`);
   }

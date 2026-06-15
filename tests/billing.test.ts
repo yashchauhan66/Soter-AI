@@ -173,3 +173,18 @@ test("billing diagnostics route is admin-only and never leaks the raw key", asyn
   assert.match(source, /keyId\.slice\(0,\s*12\)/);
   assert.doesNotMatch(source, /razorpayKeySecret\(\)/);
 });
+
+test("CRG-RT-010: webhook verifies signature BEFORE persisting/deduping the event", async () => {
+  const fs = await import("node:fs");
+  const source = fs.readFileSync("app/api/billing/webhook/route.ts", "utf8");
+  // The invalid-signature 400 must be returned before the paymentEvent.create
+  // call so an attacker cannot pre-seed the dedup key with a forged event id.
+  const invalidGuard = source.indexOf("if (!valid)");
+  const persist = source.indexOf("db.paymentEvent.create");
+  assert.ok(invalidGuard >= 0, "expected an invalid-signature guard");
+  assert.ok(persist >= 0, "expected paymentEvent.create");
+  assert.ok(
+    invalidGuard < persist,
+    "signature rejection must precede event persistence (CRG-RT-010)",
+  );
+});

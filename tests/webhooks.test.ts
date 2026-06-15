@@ -63,3 +63,12 @@ test("safe inputs produce no webhook events", () => {
   const safe = analyzeText("How do I reset my account password?", "INPUT");
   assert.deepEqual(eventsForGuardResult(safe), []);
 });
+
+test("CRG-RT-012: replay route resets attempts so dead-lettered deliveries can re-send", async () => {
+  const { readFileSync } = await import("node:fs");
+  const src = readFileSync("app/api/webhooks/replay/route.ts", "utf8");
+  // The replay update must set attempts: 0; otherwise a DEAD_LETTER delivery
+  // (attempts == MAX_ATTEMPTS) re-dead-letters on the first replay attempt.
+  assert.match(src, /status:\s*"PENDING"[\s\S]*attempts:\s*0/);
+  assert.match(src, /deadLetteredAt:\s*null/);
+});

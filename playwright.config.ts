@@ -20,13 +20,15 @@ export default defineConfig({
     video: "retain-on-failure",
   },
   webServer: {
-    command: `npx next dev --port ${port}`,
+    command: `npm run start -- --port ${port}`,
     url: baseURL,
-    reuseExistingServer: false,
+    // Reuse an already-running, integrity-checked server when requested. This
+    // avoids the OneDrive/Turbopack .next resync race (CRG-RT-007) that can
+    // corrupt a freshly-started server mid-suite.
+    reuseExistingServer: process.env.E2E_REUSE_SERVER === "true",
     timeout: 120_000,
     env: {
       ...process.env,
-      NEXT_DIST_DIR: ".next-e2e",
       NEXTAUTH_URL: baseURL,
       NEXT_PUBLIC_APP_URL: baseURL,
     },
