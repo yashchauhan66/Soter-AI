@@ -9,6 +9,7 @@
 import { createHash, randomBytes, timingSafeEqual } from "crypto";
 import type { OrgRole } from "@prisma/client";
 import { db } from "../db";
+import { sanitizeMetadata } from "../guard/logSafety";
 
 function pepper(): string {
   const value = process.env.SCIM_TOKEN_PEPPER ?? process.env.API_KEY_PEPPER;
@@ -190,7 +191,7 @@ export function applyUserPatch(
   current: { active: boolean; name: string | null; email: string },
   ops: ScimPatchOperation[],
 ): { active: boolean; name: string | null; email: string } {
-  let next = { ...current };
+  const next = { ...current };
   for (const op of ops) {
     if (op.op === "replace" && (op.path === "active" || (!op.path && typeof op.value === "object"))) {
       const value = op.path === "active" ? op.value : (op.value as Record<string, unknown>)?.active;
@@ -227,6 +228,20 @@ export function applyUserPatch(
   return next;
 }
 
+export function minimizedScimUserMetadata(input: {
+  externalId?: string | null;
+  userName?: string | null;
+  active?: boolean | null;
+  operation: "create" | "replace" | "patch" | "delete";
+}) {
+  return sanitizeMetadata({
+    externalId: input.externalId ?? null,
+    userNameDomain: input.userName?.includes("@") ? input.userName.split("@").at(-1)?.toLowerCase() : null,
+    active: input.active ?? null,
+    operation: input.operation,
+  });
+}
+
 export function scimGroupMembersFromValue(value: unknown): Array<{ value: string; display?: string }> {
   if (!Array.isArray(value)) return [];
   return value
@@ -242,7 +257,7 @@ export function applyGroupPatch(
   current: { displayName: string; members: Array<{ value: string; display?: string }> },
   ops: ScimPatchOperation[],
 ): { displayName: string; members: Array<{ value: string; display?: string }> } {
-  let next = { displayName: current.displayName, members: [...current.members] };
+  const next = { displayName: current.displayName, members: [...current.members] };
   for (const op of ops) {
     const path = op.path?.toLowerCase();
     if (op.op === "replace" && (path === "displayname" || (!path && op.value && typeof op.value === "object"))) {

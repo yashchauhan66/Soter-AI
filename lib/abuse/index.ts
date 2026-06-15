@@ -1,3 +1,10 @@
+export const ABUSE_PREVIEW_GAPS = [
+  "Route-wide enforcement on all cost-bearing API paths is not complete in this preview; current coverage focuses on guard input/output paths.",
+  "Tenant-aware quota and budget controls exist as helpers; admin overrides and incident review UI are not complete.",
+  "Public form/contact rate limiting is bounded but does not yet include CAPTCHA fallback or device-fingerprint heuristics.",
+  "Spike detection thresholds require organization-specific tuning before production alerting is enabled.",
+] as const;
+
 export interface UsagePoint {
   timestamp: Date;
   count: number;

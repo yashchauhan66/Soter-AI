@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 import { safeCallbackUrl } from "../lib/auth/callback";
 import { generateApiKey, hashApiKey } from "../lib/apiKeyCrypto";
+import { PUBLIC_BADGE_STATUS_FIELDS } from "../lib/badge";
 import { analyzeText } from "../lib/guard/analyze";
 import { prepareSafeLogContent, sanitizeMetadata } from "../lib/guard/logSafety";
 import { toPublicGuardResult } from "../lib/guard/publicResult";
@@ -20,11 +21,54 @@ test("sign-in callback URL is limited to safe relative paths", () => {
   assert.equal(safeCallbackUrl("javascript:alert(1)"), "/dashboard");
 });
 
+test("auth middleware stays on edge-safe configuration only", () => {
+  const middlewareSource = readFileSync("middleware.ts", "utf8");
+  const authConfigSource = readFileSync("auth.config.ts", "utf8");
+  const authSource = readFileSync("auth.ts", "utf8");
+
+  assert.match(middlewareSource, /\.\/auth\.config/);
+  assert.doesNotMatch(middlewareSource, /from "\.\/auth"/);
+  assert.doesNotMatch(middlewareSource, /Credentials|bcrypt|@prisma\/client|\.\/lib\/db/);
+  assert.match(authConfigSource, /providers:\s*\[\]/);
+  assert.doesNotMatch(authConfigSource, /^import .*Credentials|^import .*bcrypt|^import .*\.\/lib\/db/m);
+  assert.match(authSource, /Credentials\(/);
+  assert.match(authSource, /bcrypt/);
+});
+
 test("public badge script avoids HTML injection sinks", () => {
   const badgeRoute = readFileSync("app/badge.js/route.ts", "utf8");
   assert.equal(badgeRoute.includes("innerHTML"), false);
   assert.match(badgeRoute, /safeColor/);
   assert.match(badgeRoute, /textContent|createTextNode/);
+});
+
+test("public badge status payload is allowlisted and omits private project data", () => {
+  const allowed = new Set(PUBLIC_BADGE_STATUS_FIELDS);
+  for (const privateField of [
+    "id",
+    "projectId",
+    "organizationId",
+    "userId",
+    "name",
+    "projectName",
+    "agencyName",
+    "email",
+    "apiKey",
+    "secret",
+    "originalText",
+    "redactedText",
+    "safeText",
+  ]) {
+    assert.equal(allowed.has(privateField as (typeof PUBLIC_BADGE_STATUS_FIELDS)[number]), false, privateField);
+  }
+
+  const badgeSource = readFileSync("lib/badge.ts", "utf8");
+  const scriptSource = readFileSync("app/badge.js/route.ts", "utf8");
+  assert.match(badgeSource, /PUBLIC_BADGE_STATUS_FIELDS/);
+  assert.match(badgeSource, /select:\s*{[\s\S]*id: true,[\s\S]*badgeEnabled: true/);
+  assert.doesNotMatch(badgeSource, /include:\s*{/);
+  assert.doesNotMatch(badgeSource, /projectName\s*:|agencyName\s*:|user:\s*true|organizationId|userId|apiKey\s*:|secret\s*:/i);
+  assert.doesNotMatch(scriptSource, /projectName|agencyName|organizationId|userId|apiKey|secret|originalText|redactedText|safeText/i);
 });
 
 test("API keys are random, prefixed, and hashed with the configured pepper", () => {

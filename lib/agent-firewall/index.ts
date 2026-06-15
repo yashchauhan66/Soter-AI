@@ -1,6 +1,14 @@
 import { randomUUID } from "crypto";
 import { db } from "@/lib/db";
 import { sanitizeLogText, sanitizeMetadata } from "@/lib/guard/logSafety";
+import { requireTenantProjectOwnership } from "@/lib/phase11/tenantIsolation";
+
+export const AGENT_FIREWALL_PREVIEW_GAPS = [
+  "Inspection and approval queue exist; runtime agent execution enforcement integration is not complete.",
+  "Approver assignment, SLA, and notification routing are not wired to email/SIEM in this preview.",
+  "Approval audit trail covers persistence only; reviewer attestation export is not complete.",
+  "Provider-specific agent runtime hooks require authorized integration setup before production use.",
+] as const;
 
 export const TOOL_CATEGORIES = [
   "READ_ONLY",
@@ -89,6 +97,7 @@ export function previewToolAction(input: ToolCallInspectionInput) {
 }
 
 export async function persistToolCallInspection(input: ToolCallInspectionInput & { organizationId: string; projectId: string; actorUserId?: string | null }) {
+  await requireTenantProjectOwnership({ organizationId: input.organizationId, projectId: input.projectId });
   const inspected = inspectToolCall(input);
   const logId = `tool_log_${randomUUID()}`;
   await db.$queryRaw`

@@ -27,7 +27,7 @@
 - `CYBERRAKSHAK_API_KEY` for SDK examples
 - `WEBHOOK_WORKER_INTERVAL_MS`, `WEBHOOK_WORKER_HEALTH_PORT`
 - `BACKGROUND_WORKER_INTERVAL_MS`, `BACKGROUND_WORKER_HEALTH_PORT`
-- `SIEM_WORKER_INTERVAL_MS`
+- `SIEM_WORKER_INTERVAL_MS`, `SIEM_WORKER_HEALTH_PORT`
 - `THREAT_INTEL_WORKER_INTERVAL_MS`, `THREAT_INTEL_WORKER_HEALTH_PORT`
 - `ENABLE_SEMANTIC_DETECTORS`, `ENABLE_MULTILINGUAL_DETECTORS`, `ENABLE_PHASE11_MULTILINGUAL_DETECTORS`
 - `ML_BACKEND`, `ML_API_URL`, `ML_API_KEY`, `ML_API_TIMEOUT_MS`
@@ -41,4 +41,3 @@
 
 - `.env.example` was updated during the audit to avoid real-looking local DB credentials and short auth-secret placeholders.
 - Local `.env` was fixed with generated 64-character `AUTH_SECRET`/`NEXTAUTH_SECRET` values to allow production build verification.
-

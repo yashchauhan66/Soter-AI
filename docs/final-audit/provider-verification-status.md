@@ -1,6 +1,6 @@
 # Provider Verification Status
 
-Updated: 2026-06-15 13:14:02 +05:30
+Updated: 2026-06-15 14:31:29 +05:30
 
 Local mocks, fallbacks, signature tests, and SSRF tests are useful development evidence. They are not recorded as real-provider verification.
 
@@ -12,5 +12,5 @@ Local mocks, fallbacks, signature tests, and SSRF tests are useful development e
 | Razorpay | Signature verification and route logic have local tests. | `BLOCKED_NEEDS_USER_PERMISSION` | `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `RAZORPAY_WEBHOOK_SECRET` | Exercise sandbox order/payment/webhook/failure lifecycle. | Not run against Razorpay. | Razorpay sandbox or live account and webhook setup required. |
 | Qdrant / pgvector and embeddings | In-memory/vector ACL behavior has local tests. | `BLOCKED_NEEDS_USER_PERMISSION` | `VECTOR_PROVIDER`, provider URL/database credentials, and production embedding endpoint credentials | Health, namespace isolation, write/search/delete, and outage checks. | Not run against a real production provider. | Authorized provider and embedding service required. |
 | SIEM | Exporter redaction, signing/headers, retry, and outbound URL safety have local coverage. | `BLOCKED_NEEDS_USER_PERMISSION` | Authorized HTTPS collector endpoint and its authentication configuration | Deliver a redacted test event; verify receipt, retry, rejection, and timeout behavior. | Not run against a real collector. | SIEM endpoint and credentials required. |
-| SAML IdP | Assertion helper code exists; local remediation is pending. | `BLOCKED_NEEDS_USER_PERMISSION` | IdP tenant, metadata/certificate, callback registration, and test account/groups | Perform IdP-initiated and SP-initiated login after CRG-001/002. | No real IdP test completed. | Authorized SAML IdP setup required. |
+| SAML IdP | Local session minting, callback sanitization, exchange-token tests, and production build are verified under CRG-001/002. | `BLOCKED_NEEDS_USER_PERMISSION` | IdP tenant, metadata/certificate, callback registration, and test account/groups | Perform IdP-initiated and SP-initiated login against the remediated ACS. | No real IdP test completed. | Authorized SAML IdP setup required. |
 | SCIM IdP | Tenant-scoped bearer-token routes and local tests exist. | `BLOCKED_NEEDS_USER_PERMISSION` | IdP SCIM app, base URL, generated SCIM token, test users/groups | Provision/update/deactivate users and groups; verify tenant isolation and minimized storage. | No real IdP test completed. | Authorized SCIM IdP setup required. |

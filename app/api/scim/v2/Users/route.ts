@@ -9,6 +9,7 @@ import {
   scimResponse,
   toScimUser,
   SCIM_LIST_RESPONSE,
+  minimizedScimUserMetadata,
 } from "@/lib/enterprise/scim";
 
 export const dynamic = "force-dynamic";
@@ -141,7 +142,7 @@ export async function POST(request: Request) {
       organizationId: auth.organizationId,
       action: "scim_user_created",
       category: "scim",
-      metadata: { mappingId: mapping.id, email, externalId: mapping.externalId },
+      metadata: { mappingId: mapping.id, ...minimizedScimUserMetadata({ externalId: mapping.externalId, userName: email, active, operation: "create" }) },
     },
   });
 

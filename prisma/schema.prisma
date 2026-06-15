@@ -1387,6 +1387,7 @@ model ScimUserMapping {
   user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   externalId     String
   active         Boolean      @default(true)
+  /// Deprecated: do not store full SCIM provider payloads. Application code stores only minimized audit metadata.
   raw            Json?
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt

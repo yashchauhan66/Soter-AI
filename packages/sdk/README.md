@@ -19,35 +19,59 @@ npm install @cyberrakshak/guard
 ## Quick start
 
 ```ts
-import { CyberRakshakGuard } from "@cyberrakshak/guard";
+import { CyberRakshakClient } from "@cyberrakshak/guard";
 
-const guard = new CyberRakshakGuard({
+const guard = new CyberRakshakClient({
   apiKey: process.env.CYBERRAKSHAK_API_KEY!,
-  baseUrl: "https://yourdomain.com",
+  baseUrl: process.env.CYBERRAKSHAK_BASE_URL ?? "https://api.cyberrakshak.dev",
+  projectId: process.env.CYBERRAKSHAK_PROJECT_ID,
+  timeoutMs: 5000,
 });
 
-const input = await guard.guardInput({ message: userMessage });
-if (!input.allowed) {
-  return input.safeText ?? "This request was blocked for security reasons.";
+const input = await guard.guardInput({ text: userMessage });
+if (guard.shouldBlock(input)) {
+  return "This request was blocked for safety.";
 }
 
-const aiResponse = await callLLM(input.safeText ?? userMessage);
-const output = await guard.guardOutput({ aiResponse });
-return output.safeText ?? aiResponse;
+const aiResponse = await callLLM(guard.getSafeText(input, userMessage) ?? userMessage);
+const output = await guard.guardOutput({ text: aiResponse });
+return guard.getSafeText(output, aiResponse);
 ```
+
+> `CyberRakshakGuard` remains exported as a backwards-compatible alias of
+> `CyberRakshakClient`.
 
 ## API
 
 | Method | Description |
 | --- | --- |
-| `guardInput({ message, userId?, sessionId?, metadata? })` | Run the input guard. |
-| `guardOutput({ aiResponse, sessionId?, metadata? })` | Run the output guard. |
+| `guardInput({ text \| message, userId?, sessionId?, metadata? })` | Run the input guard. |
+| `guardOutput({ text \| aiResponse, sessionId?, metadata? })` | Run the output guard. |
 | `analyze({ text, direction })` | Public analyzer (no API key required). |
-| `secureChat({ message, callLLM, ... })` | Combined input → LLM → output flow. |
+| `guardConversation({ input, callLLM, ... })` | Combined input → LLM → output flow. |
+| `secureChat({ message, callLLM, ... })` | Lower-level combined flow. |
+| `isAllowed(result)` | `true` when the result is safe to forward. |
+| `shouldBlock(result)` | `true` when the caller should stop. |
+| `getSafeText(result, fallback?)` | Redacted/safe text, or the fallback. |
 
-All methods return a typed `GuardResult` with `allowed`, `action`, `riskScore`,
+All methods return a typed `GuardResult` with `allowed`, `action`, a normalized
+`decision` (`ALLOW` \| `REDACT` \| `BLOCK` \| `HUMAN_REVIEW`), `riskScore`,
 `riskTypes`, `findings`, `reason`, and optional `safeText` / `redactedText`.
 `originalText` is never returned by the server.
+
+### Field compatibility
+
+The live API uses `message` (input) and `aiResponse` (output). The SDK also
+accepts a generic `text` field for both and maps it to the correct API field,
+so the same call shape works on either side.
+
+## Security notes
+
+- The constructor warns if it detects a browser environment. **Never** ship an
+  API key to client-side code; call the Guard from a server route or proxy.
+- The API key and raw text are never logged, even when `debug: true`.
+- Errors never include the API key.
+
 
 ## Errors
 
@@ -93,6 +117,29 @@ The helper:
 - Calls your `callLLM` with the redacted/safe input.
 - Calls `guardOutput`. If withheld, returns the safe withhold response.
 - Never echoes the original request text.
+
+## Express helper
+
+`@cyberrakshak/guard/express` exposes `cyberRakshakInputMiddleware` and
+`cyberRakshakOutputMiddleware`:
+
+```ts
+import express from "express";
+import { cyberRakshakInputMiddleware } from "@cyberrakshak/guard/express";
+
+const app = express();
+app.use(express.json());
+
+app.post(
+  "/chat",
+  cyberRakshakInputMiddleware({ apiKey: process.env.CYBERRAKSHAK_API_KEY! }),
+  async (req, res) => {
+    // req.body.message has been replaced with safe/redacted text.
+    const reply = await callLLM(req.body.message);
+    res.json({ reply });
+  },
+);
+```
 
 ## Webhook signature verification
 

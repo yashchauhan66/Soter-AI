@@ -7,8 +7,10 @@
     "clean": "node scripts/cleanNextBuild.mjs",
     "build": "next build",
     "start": "next start",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test tests/guard.test.ts tests/security.test.ts tests/webhooks.test.ts tests/phase2.test.ts tests/phase3.test.ts tests/phase4.test.ts tests/phase5.test.ts tests/phase6.test.ts tests/phase9.test.ts tests/phase10.test.ts tests/phase11.test.ts",
+    "test": "tsx --test tests/guard.test.ts tests/security.test.ts tests/webhooks.test.ts tests/performance.test.ts tests/api-route-audit.test.ts tests/phase2.test.ts tests/phase3.test.ts tests/phase4.test.ts tests/phase5.test.ts tests/phase6.test.ts tests/phase9.test.ts tests/phase10.test.ts tests/phase11.test.ts tests/integrations.test.ts tests/retention.test.ts tests/billing.test.ts",
+    "test:load": "tsx scripts/loadTest.ts",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "verify": "npm run typecheck && npm --prefix packages/sdk run typecheck && npm test && npx prisma validate && npm run build",
@@ -21,6 +23,7 @@
     "worker:background": "tsx workers/backgroundWorker.ts",
     "worker:threat-intel": "tsx workers/threatIntelWorker.ts",
     "eval:classifiers": "tsx scripts/evalClassifiers.ts",
+    "verify:dashboard-metrics": "tsx scripts/verifyDashboardMetrics.ts",
     "demo:reset": "tsx scripts/resetDemoWorkspace.ts",
     "postinstall": "prisma generate"
   },
@@ -47,6 +50,7 @@
     "zod": "3.24.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.5",
     "@playwright/test": "^1.60.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "22.10.2",
@@ -54,6 +58,8 @@
     "@types/react": "18.2.79",
     "@types/react-dom": "18.2.25",
     "autoprefixer": "10.4.20",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^15.5.19",
     "postcss": "8.5.10",
     "prisma": "5.22.0",
     "tailwindcss": "3.4.17",
