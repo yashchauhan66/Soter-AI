@@ -13,6 +13,7 @@ import {
   deriveRoleFromGroupName,
   generateScimToken,
   hashScimToken,
+  minimizedScimUserMetadata,
   parsePatchPayload,
   scimGroupMembersFromValue,
 } from "../lib/enterprise/scim";
@@ -40,6 +41,30 @@ test("SCIM user PATCH handles active, names, and email changes", () => {
     name: "Priya Shah",
     email: "priya@example.com",
   });
+});
+
+test("SCIM user metadata is minimized and raw mapping payload writes stay disabled", async () => {
+  const metadata = minimizedScimUserMetadata({
+    externalId: "idp-user-123",
+    userName: "alice@example.com",
+    active: true,
+    operation: "create",
+  });
+  const serialized = JSON.stringify(metadata);
+
+  assert.equal(serialized.includes("alice@example.com"), false);
+  assert.equal(serialized.includes("password"), false);
+  assert.equal(serialized.includes("token"), false);
+  assert.equal(metadata.userNameDomain, "example.com");
+
+  const scimSources = await Promise.all([
+    readFile("app/api/scim/v2/Users/route.ts", "utf8"),
+    readFile("app/api/scim/v2/Users/[id]/route.ts", "utf8"),
+    readFile("lib/enterprise/scim.ts", "utf8"),
+  ]);
+  for (const source of scimSources) {
+    assert.doesNotMatch(source, /raw\s*:/);
+  }
 });
 
 test("SCIM group PATCH maps members and roles deterministically", () => {

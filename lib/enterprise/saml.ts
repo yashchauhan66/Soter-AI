@@ -204,7 +204,7 @@ function verifySignature(xml: string, certificatePem: string): boolean {
   let publicKey;
   try {
     publicKey = createPublicKey({ key: certificatePem, format: "pem" });
-  } catch (error) {
+  } catch {
     return false;
   }
 

@@ -24,9 +24,9 @@ Phase 9 intentionally avoids unrelated product development. Roadmap changes shou
 
 The [Phase 10 growth workspace](docs/growth/README.md) contains the 100-account research list, 50-message draft queue, authorization-first audit and demo playbooks, beta and pricing execution, objection learning, launch gates, weekly scorecard, and KPI definitions. Draft activity is never counted as sent outreach or traction.
 
-## Phase 11: Competitive Gap Scaffolding
+## Phase 11: Internal Preview Competitive Gap Scaffolding
 
-Phase 11 adds defensive scaffolds for AI supply chain security, AI Bill of Materials, model/provider and prompt registries, tool-call firewall, advanced RAG security simulation, threat-intelligence rule lifecycle, internal benchmark metrics, multilingual detector expansion, DPDP readiness workflow, WordPress and AI framework middleware scaffolds, production abuse controls, and audit readiness documentation.
+Phase 11 adds Internal Preview defensive scaffolds for AI supply chain security, AI Bill of Materials, model/provider and prompt registries, tool-call firewall, advanced RAG security simulation, threat-intelligence rule lifecycle, internal benchmark metrics, multilingual detector expansion, DPDP readiness workflow, WordPress and AI framework middleware scaffolds, abuse/cost-control evidence, and audit readiness documentation.
 
 These capabilities are OWASP LLM Top 10 aligned defense-in-depth controls for risk reduction. They are not a guarantee of complete protection and do not represent independent certification. Remote threat rules and red-team tests require authorization and review before use.
 

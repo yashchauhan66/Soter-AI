@@ -1,14 +1,17 @@
 export * from "./types";
 export * from "./errors";
-export { GuardClient, createClient } from "./client";
+export { CyberRakshakClient, GuardClient, createClient, normalizeDecision } from "./client";
+export type { CyberRakshakGuard as CyberRakshakGuardInterface } from "./client";
 
-import { GuardClient } from "./client";
+import { CyberRakshakClient } from "./client";
 import type { ClientOptions } from "./types";
 
 /**
- * Class form: `new CyberRakshakGuard({ apiKey })`.
- * Functionally identical to `createClient`. Implements the same surface as the GuardClient.
+ * Class form kept for backwards compatibility: `new CyberRakshakGuard({ apiKey })`.
+ * Identical surface to {@link CyberRakshakClient}; prefer `CyberRakshakClient` in new code.
  */
-export class CyberRakshakGuard extends GuardClient {
-  constructor(options: ClientOptions) { super(options); }
+export class CyberRakshakGuard extends CyberRakshakClient {
+  constructor(options: ClientOptions) {
+    super(options);
+  }
 }

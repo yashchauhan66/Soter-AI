@@ -112,7 +112,7 @@ export async function buildMonthlyReportPdf(input: PdfReportInput): Promise<Buff
     ];
 
     doc.moveDown(1.2);
-    let cellY = doc.y;
+    const cellY = doc.y;
     const cellWidth = 162;
     const cellHeight = 70;
     const cellGap = 6;

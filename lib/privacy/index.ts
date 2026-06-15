@@ -1,6 +1,13 @@
 import { createHash } from "crypto";
 import { sanitizeLogText } from "@/lib/guard/logSafety";
 
+export const PRIVACY_PREVIEW_GAPS = [
+  "Full DSR SLA workflow with reviewer assignment, evidence export, and reminder cadence is not complete in this preview.",
+  "Breach notification drafting is readiness support; legal counsel review and regulator submission are out of scope.",
+  "Consent capture, retention scheduling, and processing-record approvals require organization-specific configuration before production use.",
+  "DPDP/GDPR/CCPA compliance certification is never claimed by this preview; this is defensive readiness only.",
+] as const;
+
 export function buildDataSubjectConfirmation(email: string, requestType: string) {
   return createHash("sha256").update(`dsr:${email.toLowerCase()}:${requestType}:${Date.now()}`).digest("hex").slice(0, 16).toUpperCase();
 }

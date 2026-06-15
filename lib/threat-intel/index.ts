@@ -1,3 +1,10 @@
+export const THREAT_INTEL_PREVIEW_GAPS = [
+  "Remote feed ingestion, scheduled refresh, and signature verification are not enabled in this preview.",
+  "Approve/shadow/promote/rollback workflow exists at the helper level; admin UI promotion controls are not complete.",
+  "Detection-rule rollout requires staged shadow runs against authorized datasets before production promotion.",
+  "Partner pack exchange and publisher attestation require authorized provider setup.",
+] as const;
+
 export interface ThreatRule {
   name: string;
   category: string;

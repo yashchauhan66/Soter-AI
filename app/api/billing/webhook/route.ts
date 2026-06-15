@@ -10,8 +10,7 @@
 import crypto from "crypto";
 import { jsonResponse } from "@/lib/apiResponse";
 import { db } from "@/lib/db";
-import { verifyRazorpayWebhook, planForPriceId } from "@/lib/billing/razorpay";
-import type { ProjectPlan } from "@prisma/client";
+import { verifyRazorpayWebhook, planForPriceId, razorpayWebhookSecret } from "@/lib/billing/razorpay";
 import { sendTemplateEmail } from "@/lib/email/send";
 import { failedPaymentWindow } from "@/lib/phase8/billing";
 
@@ -52,7 +51,8 @@ export async function POST(request: Request) {
   }
 
   if (!valid) {
-    return jsonResponse({ error: true, message: "Signature invalid." }, { status: 400 });
+    const reason = razorpayWebhookSecret() ? "Signature invalid." : "RAZORPAY_WEBHOOK_SECRET is not configured.";
+    return jsonResponse({ error: true, message: reason }, { status: 400 });
   }
 
   try {

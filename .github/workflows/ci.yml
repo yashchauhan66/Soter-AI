@@ -1,0 +1,86 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: cyberrakshak_guard
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d cyberrakshak_guard"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      CI: "true"
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/cyberrakshak_guard?schema=public
+      AUTH_SECRET: ci-auth-secret-at-least-thirty-two-characters
+      NEXTAUTH_SECRET: ci-auth-secret-at-least-thirty-two-characters
+      NEXTAUTH_URL: http://127.0.0.1:3101
+      NEXT_PUBLIC_APP_URL: http://127.0.0.1:3101
+      API_KEY_PEPPER: ci-api-key-pepper-at-least-thirty-two-characters
+      WEBHOOK_SECRET_PEPPER: ci-webhook-pepper-at-least-thirty-two-characters
+      LOCAL_SECRET_STORE_KEY: ci-local-secret-key-at-least-thirty-two-characters
+      SCIM_TOKEN_PEPPER: ci-scim-token-pepper-at-least-thirty-two-characters
+      AUDIT_EXPORT_SECRET: ci-audit-export-secret-at-least-thirty-two-characters
+      REPORT_SIGNING_SECRET: ci-report-signing-secret-at-least-thirty-two-characters
+      EMAIL_PROVIDER: mock
+      VECTOR_PROVIDER: memory
+      VECTOR_ALLOW_LOCAL_EMBEDDINGS: "true"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate Prisma schema
+        run: npx prisma validate
+
+      - name: Apply database migrations
+        run: npm run db:deploy
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Run unit and integration tests
+        run: npm test
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build production application
+        run: npm run build
+
+      - name: Audit production dependencies
+        run: npm audit --audit-level=high
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run browser E2E tests
+        run: npm run test:e2e

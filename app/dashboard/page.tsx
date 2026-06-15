@@ -6,6 +6,7 @@ import { RiskChart } from "@/components/dashboard/RiskChart";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { UsageCard } from "@/components/dashboard/UsageCard";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
+import { getTopRiskTypes } from "@/lib/dashboard/metrics";
 import { db } from "@/lib/db";
 import { guardLogListSelect } from "@/lib/guard/logSelect";
 import { checkMonthlyLimit } from "@/lib/rateLimit";
@@ -27,14 +28,9 @@ export default async function DashboardPage({
   const now = new Date();
   const monthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
   const usage = await checkMonthlyLimit(project.id, project.plan);
-  const [logs, riskRows, aggregate, total, blocked, piiRedactions, secrets] = await Promise.all([
+  const [logs, riskData, aggregate, total, blocked, piiRedactions, secrets] = await Promise.all([
     db.guardLog.findMany({ where: { projectId: project.id }, orderBy: { createdAt: "desc" }, take: 8, select: guardLogListSelect }),
-    db.guardLog.findMany({
-      where: { projectId: project.id, createdAt: { gte: monthStart } },
-      select: { riskTypes: true },
-      orderBy: { createdAt: "desc" },
-      take: 2_000,
-    }),
+    getTopRiskTypes(project.id, monthStart),
     db.guardLog.aggregate({ where: { projectId: project.id }, _avg: { riskScore: true } }),
     db.guardLog.count({ where: { projectId: project.id } }),
     db.guardLog.count({ where: { projectId: project.id, action: "BLOCK" } }),
@@ -51,15 +47,6 @@ export default async function DashboardPage({
     db.guardLog.count({ where: { projectId: project.id, riskTypes: { has: "SECRET_DETECTED" } } }),
   ]);
 
-  const risks = new Map<string, number>();
-  riskRows
-    .flatMap((row) => row.riskTypes)
-    .filter((type) => type !== "LOW_RISK")
-    .forEach((type) => risks.set(type, (risks.get(type) ?? 0) + 1));
-  const riskData = [...risks]
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 5)
-    .map(([label, value]) => ({ label, value }));
   void recordRequestMetric("dashboard_latency_ms", Date.now() - startedAt);
 
   return (

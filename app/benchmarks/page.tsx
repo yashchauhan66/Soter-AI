@@ -1,9 +1,9 @@
 export default function BenchmarksPage() {
   return (
     <main className="container-page py-16">
-      <p className="eyebrow">Benchmarks</p>
-      <h1 className="mt-2 text-4xl font-bold">Internal detection evaluation</h1>
-      <p className="mt-4 max-w-3xl text-slate-400">Published results should include dataset version, language mix, detector version, thresholds, sample size, and known limitations. Internal customer examples are never published.</p>
+      <p className="eyebrow">Benchmarks - Internal Preview</p>
+      <h1 className="mt-2 text-4xl font-bold">Internal detection evaluation preview</h1>
+      <p className="mt-4 max-w-3xl text-slate-400">Internal Preview only. Published results must include dataset version, language mix, detector version, thresholds, sample size, and known limitations. Internal customer examples are never published.</p>
       <div className="mt-10 grid gap-4 md:grid-cols-3">
         {[["Precision", "Measures how often flagged examples were expected to be risky."], ["Recall", "Measures how many expected risky examples were detected."], ["Latency", "Tracks p50, p95, and p99 detector response time."]].map(([title, copy]) => (
           <section className="card p-5" key={title}>

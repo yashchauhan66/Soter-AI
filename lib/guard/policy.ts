@@ -7,7 +7,7 @@
 // the policy excludes are filtered out, and the action is recomputed against
 // the policy mode + thresholds.
 
-import type { Project, ProjectPolicy, PolicyMode, UnsafeOutputMode } from "@prisma/client";
+import type { ProjectPolicy, PolicyMode, UnsafeOutputMode } from "@prisma/client";
 import { db } from "../db";
 import { getLocalCache, setLocalCache } from "../localCache";
 import { decideGuardAction } from "./decisionEngine";

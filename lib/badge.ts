@@ -5,8 +5,6 @@ export type BadgeStatus = "PROTECTED" | "MONITORING_ACTIVE" | "ISSUES_FOUND" | "
 
 export interface PublicBadgeStatus {
   slug: string;
-  projectName: string;
-  agencyName: string | null;
   brandColor: string | null;
   status: BadgeStatus;
   monitoringActive: boolean;
@@ -17,6 +15,18 @@ export interface PublicBadgeStatus {
   alignment: string;
 }
 
+export const PUBLIC_BADGE_STATUS_FIELDS = [
+  "slug",
+  "brandColor",
+  "status",
+  "monitoringActive",
+  "monthRequestsScanned",
+  "monthRisksBlocked",
+  "lastActivity",
+  "message",
+  "alignment",
+] as const;
+
 export function publicProjectName(publicName: string | null | undefined) {
   return publicName?.trim() || "Protected AI application";
 }
@@ -24,18 +34,18 @@ export function publicProjectName(publicName: string | null | undefined) {
 export async function loadBadgeStatus(slug: string): Promise<PublicBadgeStatus | null> {
   const project = await db.project.findUnique({
     where: { badgeSlug: slug },
-    include: { client: { include: { agency: { include: { branding: true } } } }, user: true },
+    select: {
+      id: true,
+      badgeEnabled: true,
+      client: { select: { agency: { select: { branding: { select: { brandColor: true } } } } } },
+    },
   });
   if (!project) return null;
   const branding = project.client?.agency?.branding ?? null;
-  const agencyName = branding?.agencyName ?? project.client?.agency?.name ?? null;
-  const publicName = publicProjectName(project.publicName);
 
   if (!project.badgeEnabled) {
     return {
       slug,
-      projectName: publicName,
-      agencyName,
       brandColor: branding?.brandColor ?? null,
       status: "INACTIVE",
       monitoringActive: false,
@@ -81,8 +91,6 @@ export async function loadBadgeStatus(slug: string): Promise<PublicBadgeStatus |
 
   return {
     slug,
-    projectName: publicName,
-    agencyName,
     brandColor: branding?.brandColor ?? null,
     status,
     monitoringActive,

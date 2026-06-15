@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { db } from "../../../db";
 import { auditRetrieval, createEmbedding, createVectorNamespace, retrievalPostFilter, type VectorProvider } from "../vectorProvider";
-import type { VectorChunk, VectorHealth, VectorNamespaceContext, VectorQueryContext, VectorQueryFilters, VectorQueryResult } from "../vectorTypes";
+import type { VectorChunk, VectorHealth, VectorNamespaceContext, VectorQueryContext, VectorQueryFilters } from "../vectorTypes";
 
 function vectorLiteral(vector: number[]) { return `[${vector.map((value) => Number(value).toFixed(8)).join(",")}]`; }
 
