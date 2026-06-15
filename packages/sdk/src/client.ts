@@ -70,7 +70,6 @@ export class CyberRakshakClient implements CyberRakshakGuard {
     }
     // Defensive: never let a secret reach untrusted browser code.
     if (isBrowserLike()) {
-      // eslint-disable-next-line no-console
       console.warn(
         "[cyberrakshak] CyberRakshakClient appears to be running in a browser. " +
           "Never embed an API key in client-side code. Call the Guard from a " +
@@ -293,7 +292,6 @@ export class CyberRakshakClient implements CyberRakshakGuard {
   private log(message: string): void {
     if (!this.debug) return;
     // Never log the API key or raw text; only safe diagnostics reach here.
-    // eslint-disable-next-line no-console
     console.debug(`[cyberrakshak] ${message}`);
   }
 }

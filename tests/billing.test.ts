@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import crypto from "node:crypto";
 import {
+  createRazorpayReceipt,
   PLAN_PRICING,
   planForPriceId,
   razorpayConfigDiagnostics,
@@ -136,6 +137,13 @@ test("plan pricing table covers the three purchasable plans", () => {
   assert.equal(PLAN_PRICING.AGENCY.amount, 9_999_00);
 });
 
+test("Razorpay receipt stays within the provider's 40-character limit", () => {
+  const receipt = createRazorpayReceipt("org_abcdefghijklmnopqrstuvwxyz0123456789", 1_765_000_000_000);
+  assert.ok(receipt.length <= 40);
+  assert.match(receipt, /^org_[A-Za-z0-9_-]+_[a-z0-9]+$/);
+  assert.notEqual(receipt, createRazorpayReceipt("org_abcdefghijklmnopqrstuvwxyz0123456789", 1_765_000_000_001));
+});
+
 test("activate route stores the real plan amount instead of zero", async () => {
   const fs = await import("node:fs");
   const source = fs.readFileSync("app/api/billing/activate/route.ts", "utf8");
@@ -148,6 +156,14 @@ test("checkout route returns a 502 when Razorpay rejects the order", async () =>
   const source = fs.readFileSync("app/api/billing/checkout/route.ts", "utf8");
   assert.match(source, /Razorpay rejected the order request/);
   assert.match(source, /status:\s*502/);
+});
+
+test("security headers allow the Razorpay checkout script and embedded checkout", async () => {
+  const fs = await import("node:fs");
+  const source = fs.readFileSync("next.config.mjs", "utf8");
+  assert.match(source, /scriptSources.*https:\/\/checkout\.razorpay\.com/);
+  assert.match(source, /connect-src 'self' https:\/\/\*\.razorpay\.com/);
+  assert.match(source, /frame-src https:\/\/\*\.razorpay\.com/);
 });
 
 test("billing diagnostics route is admin-only and never leaks the raw key", async () => {

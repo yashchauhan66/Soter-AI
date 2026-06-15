@@ -1,6 +1,7 @@
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { requirePermission } from "@/lib/auth/guards";
 import {
+  createRazorpayReceipt,
   getRazorpayClient,
   PLAN_PRICING,
   razorpayConfigDiagnostics,
@@ -15,6 +16,20 @@ const schema = z.object({
   organizationId: z.string().min(1),
   plan: z.enum(["STARTER", "PRO", "AGENCY"]),
 });
+
+function razorpayErrorDetail(caught: unknown): string {
+  if (caught && typeof caught === "object") {
+    const error = (caught as { error?: unknown }).error;
+    if (error && typeof error === "object") {
+      const code = (error as { code?: unknown }).code;
+      const description = (error as { description?: unknown }).description;
+      if (typeof description === "string") {
+        return typeof code === "string" ? `${code}: ${description}` : description;
+      }
+    }
+  }
+  return caught instanceof Error ? caught.message : String(caught);
+}
 
 export async function POST(request: Request) {
   try {
@@ -53,11 +68,11 @@ export async function POST(request: Request) {
       order = await client.orders.create({
         amount: config.amount,
         currency: "INR",
-        receipt: `org_${access.org.id.slice(0, 24)}_${Date.now()}`,
+        receipt: createRazorpayReceipt(access.org.id),
         notes: { organizationId: access.org.id, plan: body.plan },
       });
     } catch (caught) {
-      const detail = caught instanceof Error ? caught.message : String(caught);
+      const detail = razorpayErrorDetail(caught);
       return jsonResponse({
         error: true,
         message: "Razorpay rejected the order request. Verify the key id/secret pair and the test/live mode of the keys.",

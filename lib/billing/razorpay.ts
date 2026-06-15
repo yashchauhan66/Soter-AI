@@ -61,6 +61,11 @@ export function razorpayConfigured(): boolean {
   return Boolean(razorpayKeyId() && razorpayKeySecret());
 }
 
+export function createRazorpayReceipt(organizationId: string, now = Date.now()): string {
+  const organizationPart = organizationId.replace(/[^A-Za-z0-9_-]/g, "").slice(0, 24);
+  return `org_${organizationPart}_${now.toString(36)}`.slice(0, 40);
+}
+
 export function razorpayConfigDiagnostics(): { ok: boolean; missing: string[]; warnings: string[] } {
   const missing: string[] = [];
   const warnings: string[] = [];
