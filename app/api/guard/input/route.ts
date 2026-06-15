@@ -8,8 +8,11 @@ import { toPublicGuardResult } from "@/lib/guard/publicResult";
 import { createRateLimitResult } from "@/lib/guard/rateLimitResult";
 import { checkRedisRateLimit, peekMonthlyUsage, planLimit } from "@/lib/rateLimit";
 import { inputGuardSchema } from "@/lib/validations";
+import { recordRequestMetric } from "@/lib/phase8/monitoring";
 
 export async function POST(request: Request) {
+  const startedAt = Date.now();
+  let failed = false;
   try {
     const authenticated = await authenticateApiKeyRequest(request);
     if (!authenticated.ok) return authenticated.response;
@@ -65,6 +68,9 @@ export async function POST(request: Request) {
       headers: { "X-RateLimit-Limit": String(DEFAULT_RPM), "X-RateLimit-Remaining": String(rpm.remaining) },
     });
   } catch (error) {
+    failed = true;
     return apiError(error, "The input guard could not process this request.");
+  } finally {
+    void recordRequestMetric("guard_api_latency_ms", Date.now() - startedAt, failed);
   }
 }

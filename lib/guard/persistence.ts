@@ -12,6 +12,7 @@ import { USAGE_WARNING_THRESHOLD } from "../guard/constants";
 import { prepareSafeLogContent } from "./logSafety";
 import type { GuardDirection, GuardResult } from "./types";
 import { emitSecurityEvent } from "../events/emit";
+import { markGuardActivation } from "../phase8/onboarding";
 
 export async function persistGuardResult(input: {
   projectId: string;
@@ -85,6 +86,15 @@ export async function persistGuardResult(input: {
     const eventType = result.action === "BLOCK" ? "guard.blocked" : result.action === "ALLOW_WITH_REDACTION" ? "guard.redacted" : "guard.human_review";
     const severity = result.riskScore >= 86 ? "CRITICAL" : result.riskScore >= 61 ? "HIGH" : result.riskScore >= 31 ? "MEDIUM" : "LOW";
     void emitSecurityEvent({ organizationId: project.organizationId, projectId: input.projectId, eventType, severity, riskTypes: result.riskTypes, action: result.action, source: `guard.${input.direction.toLowerCase()}`, metadata: { riskScore: result.riskScore, direction: input.direction } }).catch((error) => console.error("Security event emission failed", error));
+  }
+
+  if (project?.organizationId) {
+    void markGuardActivation({
+      organizationId: project.organizationId,
+      projectId: input.projectId,
+      userId: owner?.id,
+      action: result.action,
+    }).catch((error) => console.error("Phase 8 activation tracking failed", error));
   }
 
   // Webhook fan-out: queued to the durable WebhookDelivery table.

@@ -58,6 +58,35 @@ class MemoryRedis implements RedisLike {
   }
 }
 
+class NodeRedis implements RedisLike {
+  private clientPromise: Promise<import("redis").RedisClientType> | null = null;
+
+  constructor(private readonly url: string) {}
+
+  private async client() {
+    if (!this.clientPromise) {
+      this.clientPromise = import("redis").then(async ({ createClient }) => {
+        const client = createClient({ url: this.url });
+        client.on("error", (error) => console.error("[CyberRakshak] Redis client error", error));
+        await client.connect();
+        return client as import("redis").RedisClientType;
+      });
+    }
+    return this.clientPromise;
+  }
+
+  async incrBy(key: string, value: number) { return (await this.client()).incrBy(key, value); }
+  async expire(key: string, seconds: number) { return (await this.client()).expire(key, seconds); }
+  async get<T = unknown>(key: string) {
+    const value = await (await this.client()).get(key);
+    if (value === null) return null;
+    const numeric = Number(value);
+    return (Number.isNaN(numeric) ? value : numeric) as T;
+  }
+  async ttl(key: string) { return (await this.client()).ttl(key); }
+  async del(...keys: string[]) { return keys.length ? (await this.client()).del(keys) : 0; }
+}
+
 export function getRedis(): RedisLike {
   if (cached) return cached;
   const url = process.env.UPSTASH_REDIS_REST_URL;
@@ -72,6 +101,13 @@ export function getRedis(): RedisLike {
       async del(...keys: string[]) { return keys.length ? client.del(...keys) : 0; },
     };
     return cached;
+  }
+  if (process.env.REDIS_URL) {
+    cached = new NodeRedis(process.env.REDIS_URL);
+    return cached;
+  }
+  if (process.env.NODE_ENV === "production") {
+    throw new Error("Distributed Redis is required in production. Configure UPSTASH_REDIS_REST_URL or REDIS_URL.");
   }
   if (!warned) {
     console.warn("[CyberRakshak] UPSTASH_REDIS_REST_URL is not set. Using in-memory rate limit store. Do NOT run multi-instance in this state.");

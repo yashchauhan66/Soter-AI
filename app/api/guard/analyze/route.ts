@@ -5,8 +5,11 @@ import { toPublicGuardResult } from "@/lib/guard/publicResult";
 import { createRateLimitResult } from "@/lib/guard/rateLimitResult";
 import { checkRedisRateLimit } from "@/lib/rateLimit";
 import { analyzeSchema } from "@/lib/validations";
+import { recordRequestMetric } from "@/lib/phase8/monitoring";
 
 export async function POST(request: Request) {
+  const startedAt = Date.now();
+  let failed = false;
   try {
     const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
     const identifier = forwarded || request.headers.get("x-real-ip") || "local-public";
@@ -29,6 +32,9 @@ export async function POST(request: Request) {
       headers: { "X-RateLimit-Limit": String(PUBLIC_ANALYZE_RPM), "X-RateLimit-Remaining": String(rateLimit.remaining) },
     });
   } catch (error) {
+    failed = true;
     return apiError(error, "The analysis could not be completed.");
+  } finally {
+    void recordRequestMetric("guard_api_latency_ms", Date.now() - startedAt, failed);
   }
 }

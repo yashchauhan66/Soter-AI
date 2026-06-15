@@ -74,6 +74,24 @@ services:
       postgres: { condition: service_healthy }
       redis: { condition: service_healthy }
 
+  background-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    restart: unless-stopped
+    command: ["npm", "run", "worker:background"]
+    env_file: ${APP_ENV_FILE:-.env.production}
+    environment:
+      DATABASE_URL: postgresql://cyberrakshak:${POSTGRES_PASSWORD}@postgres:5432/cyberrakshak?schema=public
+      VECTOR_PROVIDER: ${VECTOR_PROVIDER:-qdrant}
+      QDRANT_URL: http://qdrant:6333
+      REDIS_URL: redis://redis:6379
+      NODE_ENV: production
+    depends_on:
+      postgres: { condition: service_healthy }
+      qdrant: { condition: service_healthy }
+      redis: { condition: service_healthy }
+
   siem-worker:
     build:
       context: .

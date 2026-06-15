@@ -17,6 +17,9 @@ import {
   SlidersHorizontal,
   Webhook,
   DatabaseZap,
+  Handshake,
+  LifeBuoy,
+  TrendingUp,
 } from "lucide-react";
 
 const groups = [
@@ -26,6 +29,8 @@ const groups = [
       { Icon: BarChart3, label: "Overview", href: "/dashboard" },
       { Icon: ScrollText, label: "Guard logs", href: "/dashboard/logs" },
       { Icon: FileBarChart, label: "Reports", href: "/dashboard/reports" },
+      { Icon: TrendingUp, label: "Customer success", href: "/dashboard/customer-success" },
+      { Icon: ShieldCheck, label: "Detection feedback", href: "/dashboard/detection-feedback" },
     ],
   },
   {
@@ -42,6 +47,7 @@ const groups = [
   {
     label: "Agency",
     items: [
+      { Icon: Handshake, label: "Partner program", href: "/dashboard/partner" },
       { Icon: Building2, label: "Agency overview", href: "/dashboard/agency" },
       { Icon: Building2, label: "Clients", href: "/dashboard/agency/clients" },
       { Icon: FileBarChart, label: "White-label report", href: "/dashboard/reports/white-label" },
@@ -52,6 +58,7 @@ const groups = [
     label: "Account",
     items: [
       { Icon: ListChecks, label: "Onboarding", href: "/dashboard/onboarding" },
+      { Icon: LifeBuoy, label: "Support", href: "/dashboard/support" },
       { Icon: CreditCard, label: "Billing & usage", href: "/dashboard/billing" },
       { Icon: Download, label: "Audit exports", href: "/dashboard/exports" },
       { Icon: Settings, label: "Settings", href: "/dashboard/settings" },

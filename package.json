@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "prebuild": "node scripts/cleanNextBuild.mjs",
+    "dev": "next dev --turbopack",
+    "clean": "node scripts/cleanNextBuild.mjs",
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test tests/guard.test.ts tests/security.test.ts tests/webhooks.test.ts tests/phase2.test.ts tests/phase3.test.ts tests/phase4.test.ts tests/phase5.test.ts tests/phase6.test.ts",
+    "test": "tsx --test tests/guard.test.ts tests/security.test.ts tests/webhooks.test.ts tests/phase2.test.ts tests/phase3.test.ts tests/phase4.test.ts tests/phase5.test.ts tests/phase6.test.ts tests/phase9.test.ts tests/phase10.test.ts",
     "verify": "npm run typecheck && npm --prefix packages/sdk run typecheck && npm test && npx prisma validate && npm run build",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
@@ -18,6 +18,7 @@
     "worker:siem": "tsx workers/siemWorker.ts",
     "worker:background": "tsx workers/backgroundWorker.ts",
     "eval:classifiers": "tsx scripts/evalClassifiers.ts",
+    "demo:reset": "tsx scripts/resetDemoWorkspace.ts",
     "postinstall": "prisma generate"
   },
   "prisma": {
@@ -37,6 +38,7 @@
     "razorpay": "^2.9.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "redis": "^4.7.0",
     "tailwind-merge": "2.6.0",
     "tesseract.js": "^6.0.1",
     "zod": "3.24.1"

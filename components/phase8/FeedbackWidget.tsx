@@ -1,0 +1,7 @@
+"use client";
+import { useState } from "react";
+import { MessageSquare, X } from "lucide-react";
+
+export function FeedbackWidget() { const [open, setOpen] = useState(false); const [message, setMessage] = useState(""); async function submit(formData: FormData) { const response = await fetch("/api/phase8/support", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ category: "INTEGRATION_HELP", priority: "NORMAL", subject: "In-app product feedback", message: formData.get("message") }) }); setMessage(response.ok ? "Feedback sent to support." : "Feedback could not be sent."); }
+  return <div className="fixed bottom-5 right-5 z-50"><button type="button" title="Send feedback" aria-label="Send feedback" onClick={() => setOpen(!open)} className="flex h-11 w-11 items-center justify-center rounded-full bg-cyan text-ink shadow-glow">{open ? <X size={19} /> : <MessageSquare size={19} />}</button>{open && <form action={submit} className="absolute bottom-14 right-0 w-80 max-w-[calc(100vw-2.5rem)] border border-slate-700 bg-panel p-4 shadow-xl"><p className="font-semibold">Product feedback</p><textarea name="message" required minLength={10} className="input mt-3 min-h-24" placeholder="Share feedback without credentials or raw sensitive data." /><button className="button-primary mt-3 w-full !py-2">Send</button>{message && <p className="mt-2 text-xs text-cyan">{message}</p>}</form>}</div>;
+}
