@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import { z } from "zod";
+import { trialWindow } from "@/lib/phase8/billing";
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { db } from "@/lib/db";
 import { createEmailVerificationToken } from "@/lib/auth/tokens";
@@ -46,11 +47,15 @@ export async function POST(request: Request) {
       await tx.organizationMember.create({
         data: { organizationId: org.id, userId: user.id, role: "OWNER" },
       });
+      const trial = trialWindow(new Date());
       await tx.subscription.create({
         data: {
           organizationId: org.id,
           plan: "FREE",
           status: "TRIAL",
+          currentPeriodStart: trial.startedAt,
+          currentPeriodEnd: trial.trialEndsAt,
+          trialEndsAt: trial.trialEndsAt,
         },
       });
       await tx.onboardingProgress.create({

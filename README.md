@@ -1,5 +1,29 @@
 # CyberRakshak Guard
 
+## Phase 8: Launch Operations
+
+Phase 8 adds the business and operational layer required for beta launch:
+
+- Beta, agency-partner, and enterprise-pilot onboarding with activation timestamps.
+- Trial, failed-payment, grace-period, invoice, cancellation, and reactivation workflows.
+- Tenant-scoped support tickets, incident operations, and a public-safe status page.
+- Detection feedback review, redacted dataset intake, quality trends, and tuning suggestions.
+- Customer-success funnel, churn indicators, and sampled production latency/error metrics.
+- Public demo, pricing, partner, enterprise, case-study, contact, changelog, trust, and launch assets.
+- Production readiness audit, live billing checklist, SLA draft, error budget, runbook, and QA checklist.
+
+CyberRakshak Guard is OWASP LLM Top 10 aligned and supports defense-in-depth risk reduction. It does not guarantee complete protection or replace secure application engineering, access controls, human review, and incident response.
+
+## Phase 9: Business Validation
+
+The [Phase 9 go-to-market package](docs/phase9/README.md) defines the ICPs, founder-led CRM templates, beta onboarding, authorized free audit, agency partner motion, enterprise pilot package, pricing validation, outreach, case-study permissions, public launch plan, investor materials, and admin growth metrics.
+
+Phase 9 intentionally avoids unrelated product development. Roadmap changes should require repeated evidence from qualified beta users, partners, or paying-intent enterprise buyers.
+
+## Phase 10: Founder-Led Growth Execution
+
+The [Phase 10 growth workspace](docs/growth/README.md) contains the 100-account research list, 50-message draft queue, authorization-first audit and demo playbooks, beta and pricing execution, objection learning, launch gates, weekly scorecard, and KPI definitions. Draft activity is never counted as sent outreach or traction.
+
 CyberRakshak Guard is an OWASP LLM Top 10 aligned, defense-in-depth gateway for AI chatbot input and output flows. It detects, blocks, rewrites, redacts, monitors, and reports prompt injection, jailbreaks, system prompt exposure, PII, India-specific PII, secrets, unsafe output, and basic usage abuse.
 
 The product reduces risk. It does not provide complete protection, replace secure model configuration, or represent OWASP certification.

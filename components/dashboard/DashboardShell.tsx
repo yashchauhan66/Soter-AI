@@ -1,4 +1,5 @@
 import { DashboardSidebar } from "./DashboardSidebar";
+import { FeedbackWidget } from "@/components/phase8/FeedbackWidget";
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   return (
@@ -7,6 +8,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
         <DashboardSidebar />
         <section className="min-w-0">{children}</section>
       </div>
+      <FeedbackWidget />
     </div>
   );
 }

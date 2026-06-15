@@ -13,6 +13,7 @@ import { db } from "@/lib/db";
 import { verifyRazorpayWebhook, planForPriceId } from "@/lib/billing/razorpay";
 import type { ProjectPlan } from "@prisma/client";
 import { sendTemplateEmail } from "@/lib/email/send";
+import { failedPaymentWindow } from "@/lib/phase8/billing";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -90,6 +91,8 @@ async function processRazorpayEvent(eventType: string, payload: Record<string, u
         razorpayPlanId: planRzpId,
         currentPeriodStart: sub.current_start ? new Date(Number(sub.current_start) * 1000) : null,
         currentPeriodEnd: sub.current_end ? new Date(Number(sub.current_end) * 1000) : null,
+        paymentFailedAt: status === "GRACE_PERIOD" || status === "PAST_DUE" ? new Date() : null,
+        gracePeriodEndsAt: status === "GRACE_PERIOD" || status === "PAST_DUE" ? failedPaymentWindow(new Date()).gracePeriodEndsAt : null,
         cancelledAt: status === "CANCELLED" ? new Date() : null,
       },
       update: {
@@ -99,6 +102,8 @@ async function processRazorpayEvent(eventType: string, payload: Record<string, u
         plan: targetPlan ?? previous?.plan ?? "STARTER",
         currentPeriodStart: sub.current_start ? new Date(Number(sub.current_start) * 1000) : undefined,
         currentPeriodEnd: sub.current_end ? new Date(Number(sub.current_end) * 1000) : undefined,
+        paymentFailedAt: status === "GRACE_PERIOD" || status === "PAST_DUE" ? new Date() : null,
+        gracePeriodEndsAt: status === "GRACE_PERIOD" || status === "PAST_DUE" ? failedPaymentWindow(new Date()).gracePeriodEndsAt : null,
         cancelledAt: status === "CANCELLED" ? new Date() : null,
       },
     });
@@ -110,10 +115,21 @@ async function processRazorpayEvent(eventType: string, payload: Record<string, u
         });
       }
     }
-    if (status === "PAST_DUE") {
+    if (status === "PAST_DUE" || status === "GRACE_PERIOD") {
       const org = await db.organization.findUnique({ where: { id: orgIdFromNotes }, select: { name: true, contactEmail: true } });
       if (org?.contactEmail) await sendTemplateEmail({ to: org.contactEmail, template: "payment-failed", data: { organizationName: org.name } });
     }
+  }
+
+  if (eventType === "payment.failed") {
+    const payment = (entityWrap.payment as Record<string, unknown> | undefined)?.entity as Record<string, unknown> | undefined;
+    const organizationId = (payment?.notes as Record<string, unknown> | undefined)?.organizationId as string | undefined;
+    if (!organizationId) return;
+    const failedAt = new Date();
+    const window = failedPaymentWindow(failedAt);
+    await db.subscription.updateMany({ where: { organizationId }, data: { status: "GRACE_PERIOD", paymentFailedAt: failedAt, gracePeriodEndsAt: window.gracePeriodEndsAt } });
+    const org = await db.organization.findUnique({ where: { id: organizationId }, select: { name: true, contactEmail: true } });
+    if (org?.contactEmail) await sendTemplateEmail({ to: org.contactEmail, template: "payment-failed", data: { organizationName: org.name } });
   }
 
   // payment.captured / invoice.paid
@@ -139,9 +155,10 @@ async function processRazorpayEvent(eventType: string, payload: Record<string, u
   }
 }
 
-function mapSubStatus(eventType: string): "ACTIVE" | "CANCELLED" | "PAST_DUE" | "EXPIRED" | "TRIAL" {
+function mapSubStatus(eventType: string): "ACTIVE" | "CANCELLED" | "PAST_DUE" | "GRACE_PERIOD" | "EXPIRED" | "TRIAL" {
   if (eventType === "subscription.cancelled") return "CANCELLED";
   if (eventType === "subscription.completed") return "EXPIRED";
-  if (eventType === "subscription.halted" || eventType === "subscription.pending") return "PAST_DUE";
+  if (eventType === "subscription.halted") return "GRACE_PERIOD";
+  if (eventType === "subscription.pending") return "PAST_DUE";
   return "ACTIVE";
 }

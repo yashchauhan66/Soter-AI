@@ -97,6 +97,7 @@ enum SubscriptionStatus {
   TRIAL
   ACTIVE
   PAST_DUE
+  GRACE_PERIOD
   CANCELLED
   EXPIRED
 }
@@ -150,6 +151,79 @@ enum BackgroundJobStatus {
   FAILED
 }
 
+enum CustomerOnboardingType {
+  BETA
+  AGENCY
+  ENTERPRISE
+}
+
+enum OnboardingStepState {
+  COMPLETED
+  SKIPPED
+}
+
+enum PartnerTier {
+  STARTER_PARTNER
+  VERIFIED_PARTNER
+  PREMIUM_PARTNER
+}
+
+enum EnterprisePilotStatus {
+  REQUESTED
+  QUALIFYING
+  INTEGRATING
+  VALIDATING
+  COMPLETED
+  DECLINED
+}
+
+enum SupportTicketStatus {
+  OPEN
+  IN_PROGRESS
+  WAITING_ON_CUSTOMER
+  RESOLVED
+  CLOSED
+}
+
+enum SupportTicketCategory {
+  INTEGRATION_HELP
+  BILLING
+  FALSE_POSITIVE
+  MISSED_DETECTION
+  RAG_ISSUE
+  WEBHOOK_ISSUE
+  ENTERPRISE_SETUP
+  SECURITY_CONCERN
+}
+
+enum SupportPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum IncidentStatus {
+  INVESTIGATING
+  IDENTIFIED
+  MONITORING
+  RESOLVED
+}
+
+enum IncidentImpact {
+  NONE
+  MINOR
+  MAJOR
+  CRITICAL
+}
+
+enum FeedbackReviewStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  NEEDS_MORE_INFO
+}
+
 model User {
   id                      String                   @id @default(cuid())
   email                   String                   @unique
@@ -175,63 +249,79 @@ model User {
   sessions                UserSession[]
   mlReviewItemsResolved   MLReviewQueue[]          @relation("MLReviewResolver")
   dataDeletionsRequested  DataDeletionRequest[]    @relation("DataDeletionRequestedBy")
+  customerOnboarding      CustomerOnboarding[]     @relation("CustomerOnboardingOwner")
+  enterprisePilots        EnterprisePilot[]        @relation("EnterprisePilotRequester")
+  supportTicketsCreated   SupportTicket[]          @relation("SupportTicketCreator")
+  supportTicketsAssigned  SupportTicket[]          @relation("SupportTicketAssignee")
+  supportMessages         SupportMessage[]
+  incidentsCreated        Incident[]               @relation("IncidentCreator")
+  incidentUpdates         IncidentUpdate[]
+  feedbackReviews         FeedbackReview[]         @relation("FeedbackReviewer")
+  productEvents           ProductEvent[]
   createdAt               DateTime                 @default(now())
   updatedAt               DateTime                 @updatedAt
 }
 
 model Organization {
-  id                   String                @id @default(cuid())
-  name                 String
-  slug                 String                @unique
-  type                 OrganizationType      @default(DIRECT_BUSINESS)
-  plan                 ProjectPlan           @default(FREE)
-  contactEmail         String?
-  members              OrganizationMember[]
-  invites              Invite[]
-  projects             Project[]
-  agency               Agency?
-  subscription         Subscription?
-  invoices             Invoice[]
-  paymentEvents        PaymentEvent[]
-  planChanges          PlanChangeLog[]
-  audits               AuditExport[]
-  ragCollections       RagCollection[]
-  detectionFeedback    DetectionFeedback[]
-  scheduledReports     ScheduledReport[]
-  adminAuditLogs       AdminAuditLog[]
-  classifierDatasets   ClassifierDataset[]
-  classifierRuns       ClassifierRun[]
-  redTeamSuites        RedTeamSuite[]
-  redTeamRuns          RedTeamRun[]
-  securityEvents       SecurityEvent[]
-  siemIntegrations     SiemIntegration[]
-  retrievalAudits      RetrievalAuditLog[]
-  ragAnswerAudits      RagAnswerAuditLog[]
-  ssoProviders         SsoProvider[]
-  scimTokens           ScimToken[]
-  samlProviders        SamlProvider[]
-  samlLoginAttempts    SamlLoginAttempt[]
-  scimUserMappings     ScimUserMapping[]
-  scimGroupMappings    ScimGroupMapping[]
-  ipAllowlistEntries   IpAllowlistEntry[]
-  sessions             UserSession[]
-  retentionPolicy      RetentionPolicy?
-  dataDeletionRequests DataDeletionRequest[]
-  integrations         Integration[]
-  integrationEvents    IntegrationEvent[]
-  mlDatasets           MLDataset[]
-  mlModelVersions      MLModelVersion[]
-  mlEvaluations        MLModelEvaluation[]
-  mlDeployments        MLModelDeployment[]
-  mlReviewQueue        MLReviewQueue[]
+  id                    String                 @id @default(cuid())
+  name                  String
+  slug                  String                 @unique
+  type                  OrganizationType       @default(DIRECT_BUSINESS)
+  plan                  ProjectPlan            @default(FREE)
+  contactEmail          String?
+  members               OrganizationMember[]
+  invites               Invite[]
+  projects              Project[]
+  agency                Agency?
+  subscription          Subscription?
+  invoices              Invoice[]
+  paymentEvents         PaymentEvent[]
+  planChanges           PlanChangeLog[]
+  audits                AuditExport[]
+  ragCollections        RagCollection[]
+  detectionFeedback     DetectionFeedback[]
+  scheduledReports      ScheduledReport[]
+  adminAuditLogs        AdminAuditLog[]
+  classifierDatasets    ClassifierDataset[]
+  classifierRuns        ClassifierRun[]
+  redTeamSuites         RedTeamSuite[]
+  redTeamRuns           RedTeamRun[]
+  securityEvents        SecurityEvent[]
+  siemIntegrations      SiemIntegration[]
+  retrievalAudits       RetrievalAuditLog[]
+  ragAnswerAudits       RagAnswerAuditLog[]
+  ssoProviders          SsoProvider[]
+  scimTokens            ScimToken[]
+  samlProviders         SamlProvider[]
+  samlLoginAttempts     SamlLoginAttempt[]
+  scimUserMappings      ScimUserMapping[]
+  scimGroupMappings     ScimGroupMapping[]
+  ipAllowlistEntries    IpAllowlistEntry[]
+  sessions              UserSession[]
+  retentionPolicy       RetentionPolicy?
+  dataDeletionRequests  DataDeletionRequest[]
+  integrations          Integration[]
+  integrationEvents     IntegrationEvent[]
+  mlDatasets            MLDataset[]
+  mlModelVersions       MLModelVersion[]
+  mlEvaluations         MLModelEvaluation[]
+  mlDeployments         MLModelDeployment[]
+  mlReviewQueue         MLReviewQueue[]
   organizationAuditLogs OrganizationAuditLog[]
-  quotaOverride        Int?
-  disabled             Boolean               @default(false)
-  disabledReason       String?
-  ipAllowlistEnabled   Boolean               @default(false)
-  apiKeyRotationDays   Int?
-  createdAt            DateTime              @default(now())
-  updatedAt            DateTime              @updatedAt
+  customerOnboarding    CustomerOnboarding[]
+  partnerProfile        PartnerProfile?
+  enterprisePilots      EnterprisePilot[]
+  supportTickets        SupportTicket[]
+  incidents             Incident[]
+  productEvents         ProductEvent[]
+  productionMetrics     ProductionMetric[]
+  quotaOverride         Int?
+  disabled              Boolean                @default(false)
+  disabledReason        String?
+  ipAllowlistEnabled    Boolean                @default(false)
+  apiKeyRotationDays    Int?
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
 
   @@index([type])
 }
@@ -309,37 +399,40 @@ model BrandingSettings {
 }
 
 model Project {
-  id                String              @id @default(cuid())
-  name              String
-  publicName        String?
-  description       String?
-  plan              ProjectPlan         @default(FREE)
-  userId            String
-  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
-  organizationId    String?
-  organization      Organization?       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  clientId          String?
-  client            Client?             @relation(fields: [clientId], references: [id], onDelete: SetNull)
-  badgeSlug         String              @unique @default(cuid())
-  badgeEnabled      Boolean             @default(true)
-  apiKeys           ApiKey[]
-  guardLogs         GuardLog[]
-  usageCounters     UsageCounter[]
-  reports           Report[]
-  webhooks          WebhookEndpoint[]
-  policy            ProjectPolicy?
-  ragCollections    RagCollection[]
-  detectionFeedback DetectionFeedback[]
-  scheduledReports  ScheduledReport[]
-  redTeamSuites     RedTeamSuite[]
-  redTeamRuns       RedTeamRun[]
-  securityEvents    SecurityEvent[]
-  retrievalAudits   RetrievalAuditLog[]
-  ragAnswerAudits   RagAnswerAuditLog[]
-  disabledAt        DateTime?
-  disabledReason    String?
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
+  id                 String               @id @default(cuid())
+  name               String
+  publicName         String?
+  description        String?
+  plan               ProjectPlan          @default(FREE)
+  userId             String
+  user               User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organizationId     String?
+  organization       Organization?        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  clientId           String?
+  client             Client?              @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  badgeSlug          String               @unique @default(cuid())
+  badgeEnabled       Boolean              @default(true)
+  apiKeys            ApiKey[]
+  guardLogs          GuardLog[]
+  usageCounters      UsageCounter[]
+  reports            Report[]
+  webhooks           WebhookEndpoint[]
+  policy             ProjectPolicy?
+  ragCollections     RagCollection[]
+  detectionFeedback  DetectionFeedback[]
+  scheduledReports   ScheduledReport[]
+  redTeamSuites      RedTeamSuite[]
+  redTeamRuns        RedTeamRun[]
+  securityEvents     SecurityEvent[]
+  retrievalAudits    RetrievalAuditLog[]
+  ragAnswerAudits    RagAnswerAuditLog[]
+  customerOnboarding CustomerOnboarding[]
+  supportTickets     SupportTicket[]
+  productEvents      ProductEvent[]
+  disabledAt         DateTime?
+  disabledReason     String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
 
   @@index([userId])
   @@index([organizationId])
@@ -523,8 +616,12 @@ model Subscription {
   razorpayPlanId         String?
   currentPeriodStart     DateTime?
   currentPeriodEnd       DateTime?
+  trialEndsAt            DateTime?
+  paymentFailedAt        DateTime?
+  gracePeriodEndsAt      DateTime?
   cancelAt               DateTime?
   cancelledAt            DateTime?
+  reactivatedAt          DateTime?
   createdAt              DateTime           @default(now())
   updatedAt              DateTime           @updatedAt
 
@@ -715,6 +812,7 @@ model DetectionFeedback {
   note           String?
   createdById    String?
   createdBy      User?                  @relation("DetectionFeedbackCreator", fields: [createdById], references: [id], onDelete: SetNull)
+  review         FeedbackReview?
   createdAt      DateTime               @default(now())
 
   @@unique([guardLogId, createdById])
@@ -1112,61 +1210,61 @@ enum IntegrationDeliveryStatus {
 }
 
 model MLDataset {
-  id              String             @id @default(cuid())
-  organizationId  String
-  organization    Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  name            String
-  description     String?
-  version         Int                @default(1)
-  isActive        Boolean            @default(true)
-  examples        MLDatasetExample[]
-  evaluations     MLModelEvaluation[]
-  createdAt       DateTime           @default(now())
-  updatedAt       DateTime           @updatedAt
+  id             String              @id @default(cuid())
+  organizationId String
+  organization   Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  name           String
+  description    String?
+  version        Int                 @default(1)
+  isActive       Boolean             @default(true)
+  examples       MLDatasetExample[]
+  evaluations    MLModelEvaluation[]
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
 
   @@unique([organizationId, name, version])
   @@index([organizationId, isActive])
 }
 
 model MLDatasetExample {
-  id           String   @id @default(cuid())
+  id           String    @id @default(cuid())
   datasetId    String
   dataset      MLDataset @relation(fields: [datasetId], references: [id], onDelete: Cascade)
-  redactedText String   @db.Text
+  redactedText String    @db.Text
   label        MLLabel
-  language     String   @default("en")
+  language     String    @default("en")
   source       String?
   metadata     Json?
-  createdAt    DateTime @default(now())
+  createdAt    DateTime  @default(now())
 
   @@index([datasetId, label])
 }
 
 model MLModelVersion {
-  id              String              @id @default(cuid())
-  organizationId  String
-  organization    Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  name            String
-  version         String
-  backend         String              @default("heuristic")
-  thresholds      Json?
-  notes           String?
-  createdAt       DateTime            @default(now())
-  evaluations     MLModelEvaluation[]
-  deployments     MLModelDeployment[]
-  reviewItems     MLReviewQueue[]
+  id             String              @id @default(cuid())
+  organizationId String
+  organization   Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  name           String
+  version        String
+  backend        String              @default("heuristic")
+  thresholds     Json?
+  notes          String?
+  createdAt      DateTime            @default(now())
+  evaluations    MLModelEvaluation[]
+  deployments    MLModelDeployment[]
+  reviewItems    MLReviewQueue[]
 
   @@unique([organizationId, name, version])
 }
 
 model MLModelEvaluation {
-  id                String           @id @default(cuid())
+  id                String         @id @default(cuid())
   organizationId    String
-  organization      Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organization      Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   modelVersionId    String
-  modelVersion      MLModelVersion   @relation(fields: [modelVersionId], references: [id], onDelete: Cascade)
+  modelVersion      MLModelVersion @relation(fields: [modelVersionId], references: [id], onDelete: Cascade)
   datasetId         String
-  dataset           MLDataset        @relation(fields: [datasetId], references: [id], onDelete: Cascade)
+  dataset           MLDataset      @relation(fields: [datasetId], references: [id], onDelete: Cascade)
   precision         Float
   recall            Float
   f1                Float
@@ -1175,69 +1273,69 @@ model MLModelEvaluation {
   calibrationError  Float
   perRisk           Json
   totalExamples     Int
-  durationMs        Int              @default(0)
-  createdAt         DateTime         @default(now())
+  durationMs        Int            @default(0)
+  createdAt         DateTime       @default(now())
 
   @@index([organizationId, createdAt])
   @@index([modelVersionId, createdAt])
 }
 
 model MLModelDeployment {
-  id              String        @id @default(cuid())
-  organizationId  String
-  organization    Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  modelVersionId  String
-  modelVersion    MLModelVersion @relation(fields: [modelVersionId], references: [id], onDelete: Cascade)
-  rolloutMode     MLRolloutMode @default(OFF)
-  rolloutPercent  Int           @default(0)
-  projectId       String?
-  notes           String?
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  id             String         @id @default(cuid())
+  organizationId String
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  modelVersionId String
+  modelVersion   MLModelVersion @relation(fields: [modelVersionId], references: [id], onDelete: Cascade)
+  rolloutMode    MLRolloutMode  @default(OFF)
+  rolloutPercent Int            @default(0)
+  projectId      String?
+  notes          String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 
   @@unique([organizationId, modelVersionId, projectId])
   @@index([organizationId, rolloutMode])
 }
 
 model MLReviewQueue {
-  id             String         @id @default(cuid())
+  id             String          @id @default(cuid())
   organizationId String
-  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organization   Organization    @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   modelVersionId String?
   modelVersion   MLModelVersion? @relation(fields: [modelVersionId], references: [id], onDelete: SetNull)
   kind           MLReviewKind
   expectedLabel  MLLabel
   predictedLabel MLLabel
-  redactedText   String         @db.Text
+  redactedText   String          @db.Text
   confidence     Float
-  status         MLReviewStatus @default(PENDING)
+  status         MLReviewStatus  @default(PENDING)
   resolvedById   String?
-  resolvedBy     User?          @relation("MLReviewResolver", fields: [resolvedById], references: [id], onDelete: SetNull)
+  resolvedBy     User?           @relation("MLReviewResolver", fields: [resolvedById], references: [id], onDelete: SetNull)
   resolvedAt     DateTime?
   notes          String?
   metadata       Json?
-  createdAt      DateTime       @default(now())
+  createdAt      DateTime        @default(now())
 
   @@index([organizationId, status, createdAt])
   @@index([modelVersionId, kind, status])
 }
 
 model SamlProvider {
-  id               String             @id @default(cuid())
-  organizationId   String
-  organization     Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  entityId         String
-  ssoUrl           String
-  acsUrl           String
-  issuer           String
-  metadataUrl      String?
-  x509Certificate  String             @db.Text
-  enabled          Boolean            @default(false)
-  defaultRole      OrgRole            @default(VIEWER)
-  emailDomain      String?
-  loginAttempts    SamlLoginAttempt[]
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
+  id              String             @id @default(cuid())
+  organizationId  String
+  organization    Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  entityId        String
+  ssoUrl          String
+  acsUrl          String
+  issuer          String
+  metadataUrl     String?
+  x509Certificate String             @db.Text
+  enabled         Boolean            @default(false)
+  defaultRole     OrgRole            @default(VIEWER)
+  emailDomain     String?
+  loginAttempts   SamlLoginAttempt[]
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
 
   @@unique([organizationId])
 }
@@ -1290,17 +1388,17 @@ model ScimGroupMapping {
 }
 
 model RetentionPolicy {
-  id             String              @id @default(cuid())
-  organizationId String              @unique
-  organization   Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  window         DataRetentionWindow @default(DAYS_30)
-  customDays     Int?
-  applyToLogs    Boolean             @default(true)
-  applyToWebhookDeliveries Boolean   @default(false)
-  applyToSecurityEvents Boolean      @default(false)
-  lastRunAt      DateTime?
-  createdAt      DateTime            @default(now())
-  updatedAt      DateTime            @updatedAt
+  id                       String              @id @default(cuid())
+  organizationId           String              @unique
+  organization             Organization        @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  window                   DataRetentionWindow @default(DAYS_30)
+  customDays               Int?
+  applyToLogs              Boolean             @default(true)
+  applyToWebhookDeliveries Boolean             @default(false)
+  applyToSecurityEvents    Boolean             @default(false)
+  lastRunAt                DateTime?
+  createdAt                DateTime            @default(now())
+  updatedAt                DateTime            @updatedAt
 }
 
 model DataDeletionRequest {
@@ -1324,32 +1422,32 @@ model DataDeletionRequest {
 }
 
 model DataDeletionJob {
-  id          String              @id @default(cuid())
-  requestId   String
-  request     DataDeletionRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
-  resource    String
-  status      DataDeletionStatus  @default(PENDING)
-  itemsDeleted Int                @default(0)
+  id           String              @id @default(cuid())
+  requestId    String
+  request      DataDeletionRequest @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  resource     String
+  status       DataDeletionStatus  @default(PENDING)
+  itemsDeleted Int                 @default(0)
   errorMessage String?
-  startedAt   DateTime?
-  completedAt DateTime?
-  createdAt   DateTime            @default(now())
+  startedAt    DateTime?
+  completedAt  DateTime?
+  createdAt    DateTime            @default(now())
 
   @@index([requestId, status])
 }
 
 model Integration {
-  id              String                 @id @default(cuid())
+  id              String                @id @default(cuid())
   organizationId  String
-  organization    Organization           @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organization    Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   provider        IntegrationProvider
   name            String
-  enabled         Boolean                @default(true)
+  enabled         Boolean               @default(true)
   encryptedConfig Json
-  events          String[]               @default([])
+  events          String[]              @default([])
   lastUsedAt      DateTime?
-  createdAt       DateTime               @default(now())
-  updatedAt       DateTime               @updatedAt
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
   deliveries      IntegrationDelivery[]
 
   @@unique([organizationId, provider, name])
@@ -1357,14 +1455,14 @@ model Integration {
 }
 
 model IntegrationEvent {
-  id             String                @id @default(cuid())
-  organizationId String
-  organization   Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  kind           String
-  severity       String
+  id              String                @id @default(cuid())
+  organizationId  String
+  organization    Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  kind            String
+  severity        String
   redactedPayload Json
-  createdAt      DateTime              @default(now())
-  deliveries     IntegrationDelivery[]
+  createdAt       DateTime              @default(now())
+  deliveries      IntegrationDelivery[]
 
   @@index([organizationId, createdAt])
 }
@@ -1377,8 +1475,8 @@ model IntegrationDelivery {
   event         IntegrationEvent          @relation(fields: [eventId], references: [id], onDelete: Cascade)
   status        IntegrationDeliveryStatus @default(PENDING)
   attempts      Int                       @default(0)
-  responseCode Int?
-  errorMessage String?
+  responseCode  Int?
+  errorMessage  String?
   deliveredAt   DateTime?
   createdAt     DateTime                  @default(now())
 
@@ -1398,15 +1496,15 @@ model IpAllowlistEntry {
 }
 
 model UserSession {
-  id             String       @id @default(cuid())
+  id             String        @id @default(cuid())
   userId         String
-  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   organizationId String?
   organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
-  tokenHash      String       @unique
+  tokenHash      String        @unique
   ip             String?
   userAgent      String?
-  createdAt      DateTime     @default(now())
+  createdAt      DateTime      @default(now())
   expiresAt      DateTime
   revokedAt      DateTime?
   lastUsedAt     DateTime?
@@ -1450,4 +1548,231 @@ model BackgroundJob {
   @@index([status, runAfter])
   @@index([type, status, createdAt])
   @@index([dedupeKey, status])
+}
+
+model CustomerOnboarding {
+  id                  String                 @id @default(cuid())
+  organizationId      String
+  organization        Organization           @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId              String
+  user                User                   @relation("CustomerOnboardingOwner", fields: [userId], references: [id], onDelete: Cascade)
+  projectId           String?
+  project             Project?               @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  type                CustomerOnboardingType @default(BETA)
+  chatbotType         String?
+  integrationMethod   String?
+  outputGuardEnabled  Boolean                @default(false)
+  startedAt           DateTime               @default(now())
+  completedAt         DateTime?
+  firstGuardRequestAt DateTime?
+  firstBlockedEventAt DateTime?
+  firstReportAt       DateTime?
+  stepEvents          OnboardingStepEvent[]
+  createdAt           DateTime               @default(now())
+  updatedAt           DateTime               @updatedAt
+
+  @@unique([organizationId, type])
+  @@index([userId, createdAt])
+  @@index([completedAt, updatedAt])
+}
+
+model OnboardingStepEvent {
+  id           String              @id @default(cuid())
+  onboardingId String
+  onboarding   CustomerOnboarding  @relation(fields: [onboardingId], references: [id], onDelete: Cascade)
+  stepKey      String
+  state        OnboardingStepState
+  metadata     Json?
+  occurredAt   DateTime            @default(now())
+
+  @@unique([onboardingId, stepKey])
+  @@index([stepKey, state, occurredAt])
+}
+
+model PartnerProfile {
+  id                        String       @id @default(cuid())
+  organizationId            String       @unique
+  organization              Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  tier                      PartnerTier  @default(STARTER_PARTNER)
+  referralCode              String       @unique
+  website                   String?
+  focusMarkets              String[]
+  commissionTrackingEnabled Boolean      @default(false)
+  commissionPendingPaise    Int          @default(0)
+  createdAt                 DateTime     @default(now())
+  updatedAt                 DateTime     @updatedAt
+
+  @@index([tier])
+}
+
+model EnterprisePilot {
+  id                      String                @id @default(cuid())
+  organizationId          String?
+  organization            Organization?         @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+  requestedById           String?
+  requestedBy             User?                 @relation("EnterprisePilotRequester", fields: [requestedById], references: [id], onDelete: SetNull)
+  companyName             String
+  contactName             String
+  contactEmail            String
+  useCase                 String                @db.Text
+  chatbotType             String
+  usesRag                 Boolean               @default(false)
+  expectedMonthlyMessages Int
+  securityRequirements    String                @db.Text
+  needsSso                Boolean               @default(false)
+  needsScim               Boolean               @default(false)
+  deploymentPreference    String
+  status                  EnterprisePilotStatus @default(REQUESTED)
+  successCriteria         Json?
+  checklist               Json?
+  deliverables            Json?
+  targetStartAt           DateTime?
+  completedAt             DateTime?
+  createdAt               DateTime              @default(now())
+  updatedAt               DateTime              @updatedAt
+
+  @@index([organizationId, status])
+  @@index([contactEmail, createdAt])
+}
+
+model SupportTicket {
+  id              String                @id @default(cuid())
+  ticketNumber    String                @unique
+  organizationId  String
+  organization    Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  projectId       String?
+  project         Project?              @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  createdById     String
+  createdBy       User                  @relation("SupportTicketCreator", fields: [createdById], references: [id], onDelete: Restrict)
+  assignedToId    String?
+  assignedTo      User?                 @relation("SupportTicketAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
+  category        SupportTicketCategory
+  priority        SupportPriority       @default(NORMAL)
+  status          SupportTicketStatus   @default(OPEN)
+  subject         String
+  redactedContext String?               @db.Text
+  messages        SupportMessage[]
+  resolvedAt      DateTime?
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+
+  @@index([organizationId, status, updatedAt])
+  @@index([assignedToId, status])
+}
+
+model SupportMessage {
+  id        String        @id @default(cuid())
+  ticketId  String
+  ticket    SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User          @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  body      String        @db.Text
+  internal  Boolean       @default(false)
+  createdAt DateTime      @default(now())
+
+  @@index([ticketId, createdAt])
+}
+
+model Incident {
+  id                 String           @id @default(cuid())
+  organizationId     String?
+  organization       Organization?    @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+  createdById        String?
+  createdBy          User?            @relation("IncidentCreator", fields: [createdById], references: [id], onDelete: SetNull)
+  slug               String           @unique
+  title              String
+  summary            String           @db.Text
+  status             IncidentStatus   @default(INVESTIGATING)
+  impact             IncidentImpact   @default(MINOR)
+  affectedComponents String[]
+  public             Boolean          @default(false)
+  startedAt          DateTime         @default(now())
+  resolvedAt         DateTime?
+  updates            IncidentUpdate[]
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+
+  @@index([public, status, startedAt])
+  @@index([organizationId, createdAt])
+}
+
+model IncidentUpdate {
+  id         String         @id @default(cuid())
+  incidentId String
+  incident   Incident       @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  authorId   String?
+  author     User?          @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  status     IncidentStatus
+  message    String         @db.Text
+  public     Boolean        @default(false)
+  createdAt  DateTime       @default(now())
+
+  @@index([incidentId, createdAt])
+}
+
+model FeedbackReview {
+  id                  String               @id @default(cuid())
+  detectionFeedbackId String               @unique
+  detectionFeedback   DetectionFeedback    @relation(fields: [detectionFeedbackId], references: [id], onDelete: Cascade)
+  reviewerId          String?
+  reviewer            User?                @relation("FeedbackReviewer", fields: [reviewerId], references: [id], onDelete: SetNull)
+  status              FeedbackReviewStatus @default(PENDING)
+  redactedExample     String?              @db.Text
+  datasetVersion      String?
+  detector            String?
+  thresholdSuggestion Float?
+  tuningSuggestion    String?
+  reviewedAt          DateTime?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+
+  @@index([status, createdAt])
+  @@index([detector, status])
+}
+
+model ProductEvent {
+  id             String        @id @default(cuid())
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+  projectId      String?
+  project        Project?      @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  userId         String?
+  user           User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  eventType      String
+  properties     Json?
+  occurredAt     DateTime      @default(now())
+
+  @@index([organizationId, eventType, occurredAt])
+  @@index([userId, occurredAt])
+}
+
+model ProductionMetric {
+  id             String        @id @default(cuid())
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: SetNull)
+  metric         String
+  value          Float
+  unit           String
+  dimensions     Json?
+  recordedAt     DateTime      @default(now())
+
+  @@index([metric, recordedAt])
+  @@index([organizationId, metric, recordedAt])
+}
+
+model ContactLead {
+  id                   String   @id @default(cuid())
+  name                 String
+  email                String
+  company              String
+  role                 String?
+  monthlyMessages      Int?
+  interest             String
+  message              String   @db.Text
+  deploymentPreference String?
+  status               String   @default("NEW")
+  createdAt            DateTime @default(now())
+
+  @@index([status, createdAt])
+  @@index([email, createdAt])
 }

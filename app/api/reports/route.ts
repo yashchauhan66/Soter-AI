@@ -28,6 +28,20 @@ export async function GET(request: Request) {
       create: { userId: access.user.id, reportGenerated: true },
       update: { reportGenerated: true },
     });
+    const customerOnboarding = await db.customerOnboarding.findFirst({
+      where: { organizationId: access.org.id, OR: [{ projectId: project.id }, { projectId: null }] },
+      orderBy: { createdAt: "asc" },
+    });
+    if (customerOnboarding) {
+      await db.$transaction([
+        db.customerOnboarding.update({ where: { id: customerOnboarding.id }, data: { projectId: project.id, firstReportAt: customerOnboarding.firstReportAt ?? new Date() } }),
+        db.onboardingStepEvent.upsert({
+          where: { onboardingId_stepKey: { onboardingId: customerOnboarding.id, stepKey: "first_report_generated" } },
+          create: { onboardingId: customerOnboarding.id, stepKey: "first_report_generated", state: "COMPLETED" },
+          update: { state: "COMPLETED" },
+        }),
+      ]);
+    }
     return jsonResponse(jobAcceptedResponse(job, { projectId: project.id, month, year }), { status: 202 });
   } catch (error) { return apiError(error, "Monthly report could not be generated."); }
 }

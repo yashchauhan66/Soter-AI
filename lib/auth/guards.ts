@@ -5,6 +5,7 @@
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import type { OrgRole, Organization, OrganizationMember } from "@prisma/client";
+import { cache } from "react";
 import { hasPermission, type Permission } from "./permissions";
 
 export class AuthError extends Error {
@@ -37,7 +38,7 @@ export interface SessionUser {
   isAdmin: boolean;
 }
 
-export async function requireUser(): Promise<SessionUser> {
+export const requireUser = cache(async (): Promise<SessionUser> => {
   const session = await auth();
   if (!session?.user?.id) {
     throw new AuthError("Sign in required.", 401);
@@ -49,7 +50,7 @@ export async function requireUser(): Promise<SessionUser> {
   });
   if (!user) throw new AuthError("Session user no longer exists.", 401);
   return { id: user.id, email: user.email, name: user.name, isAdmin: user.isAdmin };
-}
+});
 
 /**
  * Resolve the user's "active" organization. The session does not encode
@@ -57,7 +58,7 @@ export async function requireUser(): Promise<SessionUser> {
  * cookie or query param. This helper falls back to the user's first
  * membership.
  */
-export async function getActiveOrganization(input?: { organizationId?: string | null }): Promise<{ org: Organization; membership: OrganizationMember & { role: OrgRole } } | null> {
+export const getActiveOrganization = cache(async (input?: { organizationId?: string | null }): Promise<{ org: Organization; membership: OrganizationMember & { role: OrgRole } } | null> => {
   const user = await requireUser();
   const targetId = input?.organizationId ?? null;
 
@@ -72,7 +73,7 @@ export async function getActiveOrganization(input?: { organizationId?: string | 
   });
   if (!membership) return null;
   return { org: membership.organization, membership };
-}
+});
 
 export async function requireOrganizationAccess(organizationId: string): Promise<{ user: SessionUser; org: Organization; role: OrgRole }> {
   const user = await requireUser();
