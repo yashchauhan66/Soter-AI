@@ -9,6 +9,7 @@ import {
   ScimError,
   scimResponse,
   toScimUser,
+  minimizedScimUserMetadata,
 } from "@/lib/enterprise/scim";
 
 export const dynamic = "force-dynamic";
@@ -104,7 +105,15 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
           organizationId: auth.organizationId,
           action: next.active ? "scim_user_updated" : "scim_user_deprovisioned",
           category: "scim",
-          metadata: { mappingId: mapping.id, email: next.email },
+          metadata: {
+            mappingId: mapping.id,
+            ...minimizedScimUserMetadata({
+              externalId: mapping.externalId,
+              userName: next.email,
+              active: next.active,
+              operation: "patch",
+            }),
+          },
         },
       }),
     ]);
@@ -147,7 +156,15 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
     const updated = await db.scimUserMapping.update({ where: { id: mapping.id }, data: { active } });
     await setMembershipActive(auth.organizationId, mapping.userId, active);
     await db.organizationAuditLog.create({
-      data: { organizationId: auth.organizationId, action: "scim_user_replaced", category: "scim", metadata: { mappingId: mapping.id, email } },
+      data: {
+        organizationId: auth.organizationId,
+        action: "scim_user_replaced",
+        category: "scim",
+        metadata: {
+          mappingId: mapping.id,
+          ...minimizedScimUserMetadata({ externalId: mapping.externalId, userName: email, active, operation: "replace" }),
+        },
+      },
     });
     return scimResponse(
       toScimUser({
@@ -184,7 +201,15 @@ export async function DELETE(request: Request, { params }: { params: Promise<{ i
       organizationId: auth.organizationId,
       action: "scim_user_deprovisioned",
       category: "scim",
-      metadata: { mappingId: mapping.id, userId: mapping.userId },
+      metadata: {
+        mappingId: mapping.id,
+        ...minimizedScimUserMetadata({
+          externalId: mapping.externalId,
+          userName: mapping.user.email,
+          active: false,
+          operation: "delete",
+        }),
+      },
     },
   });
   return new Response(null, { status: 204 });

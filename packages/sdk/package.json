@@ -13,12 +13,17 @@
     "./next": {
       "types": "./dist/next.d.ts",
       "default": "./dist/next.js"
+    },
+    "./express": {
+      "types": "./dist/express.d.ts",
+      "default": "./dist/express.js"
     }
   },
   "files": ["dist", "README.md"],
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/client.test.ts"
   },
   "engines": { "node": ">=18.18" },
   "keywords": [

@@ -27,11 +27,29 @@ declare global {
 async function ensureRazorpayScript(): Promise<boolean> {
   if (typeof window === "undefined") return false;
   if (window.Razorpay) return true;
+
+  const scriptUrl = "https://checkout.razorpay.com/v1/checkout.js";
+  const existing = document.querySelector<HTMLScriptElement>(`script[src="${scriptUrl}"]`);
+  if (existing) existing.remove();
+
   return new Promise<boolean>((resolve) => {
     const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.onload = () => resolve(true);
-    script.onerror = () => resolve(false);
+    const timeout = window.setTimeout(() => {
+      script.remove();
+      resolve(false);
+    }, 10_000);
+
+    script.src = scriptUrl;
+    script.async = true;
+    script.onload = () => {
+      window.clearTimeout(timeout);
+      resolve(Boolean(window.Razorpay));
+    };
+    script.onerror = () => {
+      window.clearTimeout(timeout);
+      script.remove();
+      resolve(false);
+    };
     document.body.appendChild(script);
   });
 }
@@ -51,7 +69,10 @@ export function PlanGrid({ organizationId, currentPlan, plans, enterpriseEmail }
         body: JSON.stringify({ organizationId, plan: planId }),
       });
       const data = await response.json();
-      if (!response.ok) throw new Error(data.message ?? "Checkout failed.");
+      if (!response.ok) {
+        const detail = typeof data.detail === "string" ? ` ${data.detail}` : "";
+        throw new Error(`${data.message ?? "Checkout failed."}${detail}`);
+      }
 
       if (data.mock) {
         // Sandbox path: activate immediately so the dashboard reflects the new plan.

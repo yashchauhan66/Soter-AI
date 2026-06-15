@@ -24,8 +24,7 @@ export default async function PublicSecurityStatusPage({ params }: { params: Pro
     <main className="container-page py-16">
       <div className="mx-auto max-w-3xl">
         <p className="eyebrow">Public security status</p>
-        <h1 className="mt-3 text-4xl font-bold">{status.projectName}</h1>
-        {status.agencyName && <p className="mt-2 text-slate-400">Protected by {status.agencyName}</p>}
+        <h1 className="mt-3 text-4xl font-bold">Protected AI application</h1>
 
         <div className="card mt-7 p-7">
           <div className="flex flex-wrap items-center justify-between gap-4">

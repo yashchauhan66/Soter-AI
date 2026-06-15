@@ -2,8 +2,42 @@ import { createHash, randomUUID } from "crypto";
 import { Prisma } from "@prisma/client";
 import { db } from "@/lib/db";
 import { sanitizeLogText } from "@/lib/guard/logSafety";
+import { requireTenantProjectOwnership } from "@/lib/phase11/tenantIsolation";
 
 export type SupplyChainRiskLevel = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+
+export const AI_BOM_PREVIEW_GAPS = [
+  "Create/update workflow for providers, models, prompt versions, tools, and BOM snapshots is not complete.",
+  "Review and approval workflow for AI BOM risk findings is not complete.",
+  "Signed export package and evidence bundle generation are not complete.",
+  "Provider interoperability and data-residency evidence require authorized production or staging verification.",
+] as const;
+
+export interface AiBomExportInput {
+  organizationId: string;
+  projectId: string;
+  snapshot: ReturnType<typeof generateAiBillOfMaterialsSnapshot>;
+  generatedAt?: string;
+}
+
+export function buildAiBomExportPackage(input: AiBomExportInput) {
+  const payload = {
+    organizationId: input.organizationId,
+    projectId: input.projectId,
+    generatedAt: input.generatedAt ?? input.snapshot.generatedAt,
+    snapshot: input.snapshot,
+    notice: "Preview export package. Raw system prompts are excluded; only hashes and redacted previews are included.",
+  };
+  const serialized = JSON.stringify(payload);
+  const digest = createHash("sha256").update(serialized).digest("hex");
+  return {
+    payload,
+    serialized,
+    digest,
+    digestAlgorithm: "sha256",
+    format: "application/json",
+  };
+}
 
 export interface AiBomInput {
   organizationId: string;
@@ -84,6 +118,7 @@ export function generateAiBillOfMaterialsSnapshot(input: AiBomInput) {
 }
 
 export async function storeAiBillOfMaterials(input: AiBomInput & { createdById?: string | null }) {
+  await requireTenantProjectOwnership({ organizationId: input.organizationId, projectId: input.projectId });
   const snapshot = generateAiBillOfMaterialsSnapshot(input);
   const rows = await db.$queryRaw<Array<{ id: string }>>`
     INSERT INTO "AiBillOfMaterials" ("id", "organizationId", "projectId", "version", "snapshot", "riskSummary", "createdById", "createdAt")
@@ -94,6 +129,7 @@ export async function storeAiBillOfMaterials(input: AiBomInput & { createdById?:
 }
 
 export async function createPromptVersion(input: { organizationId: string; projectId?: string | null; name: string; prompt: string; status?: string; approvedById?: string | null }) {
+  await requireTenantProjectOwnership({ organizationId: input.organizationId, projectId: input.projectId });
   const redacted = redactPromptVersion(input.prompt);
   const rows = await db.$queryRaw<Array<{ id: string }>>`
     INSERT INTO "PromptVersion" ("id", "organizationId", "projectId", "name", "version", "promptHash", "promptRedacted", "status", "approvedById", "approvedAt", "metadata", "createdAt", "updatedAt")
@@ -107,4 +143,3 @@ function highestSeverity(values: SupplyChainRiskLevel[]) {
   const order: SupplyChainRiskLevel[] = ["LOW", "MEDIUM", "HIGH", "CRITICAL"];
   return values.sort((a, b) => order.indexOf(b) - order.indexOf(a))[0] ?? "LOW";
 }
-

@@ -8,20 +8,24 @@ import { Loader2, UserPlus } from "lucide-react";
 export function SignUpForm() {
   const router = useRouter();
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setLoading(true);
     setError("");
+    setNotice("");
     try {
       const form = new FormData(event.currentTarget);
+      const email = form.get("email");
+      const password = form.get("password");
       const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: form.get("email"),
-          password: form.get("password"),
+          email,
+          password,
           name: form.get("name") || undefined,
           organizationName: form.get("organizationName") || undefined,
           organizationType: form.get("organizationType") || "DIRECT_BUSINESS",
@@ -33,9 +37,21 @@ export function SignUpForm() {
         setLoading(false);
         return;
       }
+      // When verification is enforced (real email / production), the account
+      // cannot sign in until the emailed link is used. Show a recovery-friendly
+      // notice instead of attempting an auto sign-in that would fail.
+      if (data.verificationRequired) {
+        setNotice(
+          data.emailSent
+            ? "Account created. Check your email for a verification link to finish signing in."
+            : "Account created, but the verification email could not be sent. Re-submit this form to resend it.",
+        );
+        setLoading(false);
+        return;
+      }
       const signInResult = await signIn("credentials", {
-        email: form.get("email"),
-        password: form.get("password"),
+        email,
+        password,
         redirect: false,
       });
       if (!signInResult || signInResult.error) {
@@ -82,6 +98,7 @@ export function SignUpForm() {
         {loading ? <Loader2 className="animate-spin" size={16} /> : <UserPlus size={16} />}
         {loading ? "Creating..." : "Create account"}
       </button>
+      {notice && <p className="rounded-xl bg-cyan/10 p-3 text-sm text-cyan">{notice}</p>}
       {error && <p className="rounded-xl bg-red-500/10 p-3 text-sm text-red-300">{error}</p>}
     </form>
   );

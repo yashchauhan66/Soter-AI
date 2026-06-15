@@ -30,6 +30,7 @@ import { sanitizeLogText } from "../lib/guard/logSafety";
 import { publicProjectName } from "../lib/badge";
 import { ssoProviderSchema } from "../lib/enterprise/sso";
 import { compareClassifierRuns } from "../lib/classifiers/evaluation";
+import { hashSamlSessionExchangeToken, isSamlSessionExchangeUsable } from "../lib/enterprise/samlSessionExchange";
 
 test("external KMS providers fail closed when configuration is missing", async () => {
   const saved = { awsRegion: process.env.AWS_REGION, awsKey: process.env.AWS_KMS_KEY_ID, gcpProject: process.env.GCP_PROJECT_ID, vault: process.env.VAULT_ADDR };
@@ -226,6 +227,34 @@ test("enabled SAML configurations require complete HTTPS metadata or manual sett
   assert.throws(() => ssoProviderSchema.parse({ organizationId: "org", name: "broken", enabled: true }));
   assert.equal(ssoProviderSchema.parse({ organizationId: "org", name: "metadata", metadataUrl: "https://idp.example/metadata", enabled: true }).enabled, true);
   assert.throws(() => ssoProviderSchema.parse({ organizationId: "org", name: "insecure", metadataUrl: "http://idp.example/metadata", enabled: true }));
+});
+
+test("SAML session exchanges are hashed, short-lived, request-bound, and one-time", () => {
+  const token = "saml-test-token-that-is-long-enough-to-be-unpredictable";
+  const hash = hashSamlSessionExchangeToken(token);
+  assert.notEqual(hash, token);
+  assert.equal(hash.includes(token), false);
+
+  const now = new Date("2026-06-15T07:30:00.000Z");
+  const context = { ip: "203.0.113.10", userAgent: "test-browser" };
+  const exchange = { ...context, expiresAt: new Date(now.getTime() + 120_000), usedAt: null };
+  assert.equal(isSamlSessionExchangeUsable(exchange, context, now), true);
+  assert.equal(isSamlSessionExchangeUsable(exchange, { ...context, userAgent: "other-browser" }, now), false);
+  assert.equal(isSamlSessionExchangeUsable({ ...exchange, usedAt: now }, context, now), false);
+  assert.equal(isSamlSessionExchangeUsable({ ...exchange, expiresAt: now }, context, now), false);
+});
+
+test("SAML ACS mints sessions through the one-time NextAuth exchange provider", async () => {
+  const [acs, authSource] = await Promise.all([
+    readFile("app/api/sso/saml/acs/route.ts", "utf8"),
+    readFile("auth.ts", "utf8"),
+  ]);
+  assert.match(acs, /createSamlSessionExchange/);
+  assert.match(acs, /signIn\("saml-exchange"/);
+  assert.match(acs, /safeCallbackUrl\(relayState\)/);
+  assert.doesNotMatch(acs, /ssoEmail=/);
+  assert.match(authSource, /id: "saml-exchange"/);
+  assert.match(authSource, /consumeSamlSessionExchange/);
 });
 
 test("public badges never fall back to an internal project name", () => {

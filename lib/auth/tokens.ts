@@ -4,6 +4,15 @@ import { db } from "../db";
 const VERIFY_TTL_MS = 24 * 60 * 60 * 1000;
 const RESET_TTL_MS = 60 * 60 * 1000;
 
+// Minimal client surface so callers can pass either the root Prisma client or
+// an interactive-transaction client (tx) for atomic user+token creation.
+type EmailVerificationTokenClient = {
+  emailVerificationToken: {
+    deleteMany: (args: { where: { userId: string; usedAt: null } }) => Promise<unknown>;
+    create: (args: { data: { userId: string; tokenHash: string; expiresAt: Date } }) => Promise<unknown>;
+  };
+};
+
 export function hashOneTimeToken(token: string) {
   return createHash("sha256").update(`auth-token:${token}`).digest("hex");
 }
@@ -15,10 +24,20 @@ export function isOneTimeTokenUsable<T extends TokenState>(record: T | null, now
   return Boolean(record && !record.usedAt && record.expiresAt > now);
 }
 
-export async function createEmailVerificationToken(userId: string, now = new Date()) {
+/**
+ * Creates a fresh email-verification token, invalidating any prior unused
+ * tokens for the user (so resend regenerates safely and old links stop
+ * working). Accepts an optional transaction client so token creation can be
+ * committed atomically with user creation — no token is ever stored raw.
+ */
+export async function createEmailVerificationToken(
+  userId: string,
+  now = new Date(),
+  client: EmailVerificationTokenClient = db,
+) {
   const token = newToken();
-  await db.emailVerificationToken.deleteMany({ where: { userId, usedAt: null } });
-  await db.emailVerificationToken.create({ data: { userId, tokenHash: hashOneTimeToken(token), expiresAt: new Date(now.getTime() + VERIFY_TTL_MS) } });
+  await client.emailVerificationToken.deleteMany({ where: { userId, usedAt: null } });
+  await client.emailVerificationToken.create({ data: { userId, tokenHash: hashOneTimeToken(token), expiresAt: new Date(now.getTime() + VERIFY_TTL_MS) } });
   return token;
 }
 

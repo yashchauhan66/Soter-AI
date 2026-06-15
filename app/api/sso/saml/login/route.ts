@@ -3,6 +3,7 @@
 
 import { NextResponse } from "next/server";
 import { apiError, jsonResponse } from "@/lib/apiResponse";
+import { safeCallbackUrl } from "@/lib/auth/callback";
 import { db } from "@/lib/db";
 import { buildAuthnRequest } from "@/lib/enterprise/saml";
 
@@ -29,8 +30,8 @@ export async function GET(request: Request) {
       acsUrl: process.env.SAML_SP_ACS_URL ?? `${baseUrl}/api/sso/saml/acs`,
     };
     const idp = { entityId: provider.entityId, ssoUrl: provider.ssoUrl, x509Certificate: provider.x509Certificate };
-    const relayState = url.searchParams.get("relayState") ?? "/dashboard";
-    const { redirectUrl, requestId } = buildAuthnRequest(sp, idp, relayState);
+    const relayState = safeCallbackUrl(url.searchParams.get("relayState") ?? "/dashboard");
+    const { redirectUrl } = buildAuthnRequest(sp, idp, relayState);
     await db.samlLoginAttempt.create({
       data: {
         organizationId: provider.organizationId,

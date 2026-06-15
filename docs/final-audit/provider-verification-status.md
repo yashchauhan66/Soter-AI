@@ -1,0 +1,16 @@
+# Provider Verification Status
+
+Updated: 2026-06-15 14:31:29 +05:30
+
+Local mocks, fallbacks, signature tests, and SSRF tests are useful development evidence. They are not recorded as real-provider verification.
+
+| Provider | Local/mock status | Real provider status | Environment or setup needed | Test command/procedure | Result | Remaining blocker |
+| --- | --- | --- | --- | --- | --- | --- |
+| Redis / Upstash | Local/in-memory behavior covered by existing tests; production fallback hard-fail is documented. | `BLOCKED_NEEDS_USER_PERMISSION` | `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`, or `REDIS_URL` | Run rate-limit, health, expiry, and provider-failure integration checks. | Not run against a real service. | Credentials and authorized provider instance required. |
+| AWS KMS / GCP KMS / Vault | Local secret-store behavior and provider code exist. | `BLOCKED_NEEDS_USER_PERMISSION` | Provider choice and corresponding `AWS_KMS_*`, `GCP_KMS_*`, or `VAULT_*` variables | Encrypt, decrypt, health, wrong-key, and access-denied checks. | Not run against a real service. | Cloud/Vault account, key, and credentials required. |
+| Email: Resend / SES / SMTP | Template and mock/local behavior exists. | `BLOCKED_NEEDS_USER_PERMISSION` | `EMAIL_PROVIDER` plus selected provider credentials and an authorized recipient | Send a controlled verification email and inspect provider acceptance/delivery. | Not run against a real service. | Provider account and sending identity required. |
+| Razorpay | Signature verification and route logic have local tests. | `BLOCKED_NEEDS_USER_PERMISSION` | `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET`, `RAZORPAY_WEBHOOK_SECRET` | Exercise sandbox order/payment/webhook/failure lifecycle. | Not run against Razorpay. | Razorpay sandbox or live account and webhook setup required. |
+| Qdrant / pgvector and embeddings | In-memory/vector ACL behavior has local tests. | `BLOCKED_NEEDS_USER_PERMISSION` | `VECTOR_PROVIDER`, provider URL/database credentials, and production embedding endpoint credentials | Health, namespace isolation, write/search/delete, and outage checks. | Not run against a real production provider. | Authorized provider and embedding service required. |
+| SIEM | Exporter redaction, signing/headers, retry, and outbound URL safety have local coverage. | `BLOCKED_NEEDS_USER_PERMISSION` | Authorized HTTPS collector endpoint and its authentication configuration | Deliver a redacted test event; verify receipt, retry, rejection, and timeout behavior. | Not run against a real collector. | SIEM endpoint and credentials required. |
+| SAML IdP | Local session minting, callback sanitization, exchange-token tests, and production build are verified under CRG-001/002. | `BLOCKED_NEEDS_USER_PERMISSION` | IdP tenant, metadata/certificate, callback registration, and test account/groups | Perform IdP-initiated and SP-initiated login against the remediated ACS. | No real IdP test completed. | Authorized SAML IdP setup required. |
+| SCIM IdP | Tenant-scoped bearer-token routes and local tests exist. | `BLOCKED_NEEDS_USER_PERMISSION` | IdP SCIM app, base URL, generated SCIM token, test users/groups | Provision/update/deactivate users and groups; verify tenant isolation and minimized storage. | No real IdP test completed. | Authorized SCIM IdP setup required. |

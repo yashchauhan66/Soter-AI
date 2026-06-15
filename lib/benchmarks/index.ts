@@ -1,5 +1,12 @@
 import { performance } from "perf_hooks";
 
+export const BENCHMARK_PREVIEW_GAPS = [
+  "Scheduled benchmark pipeline, dataset versioning, and trend history are not complete in this preview.",
+  "Public-safe accuracy snapshots require dataset size, language mix, threshold, and limitation disclosure before publication.",
+  "Accuracy claims are internal-only; no external audit, no production traffic replay, and no third-party certification are claimed.",
+  "Multilingual coverage matrix and per-language thresholds require representative authorized datasets before production use.",
+] as const;
+
 export interface BenchmarkCase {
   id: string;
   category: string;

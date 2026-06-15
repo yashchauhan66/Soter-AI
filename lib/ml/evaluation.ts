@@ -81,7 +81,7 @@ export async function evaluateModel(
       const inference = await backend.infer(example.redactedText, example.label === "UNSAFE_OUTPUT" ? "OUTPUT" : "INPUT");
       predicted = inference.predictedLabel;
       confidence = inference.confidence;
-    } catch (error) {
+    } catch {
       // Backend failed — treat as SAFE; this is the safety fallback signal.
       predicted = "SAFE";
       confidence = 0.4;
