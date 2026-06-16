@@ -84,10 +84,31 @@ export async function POST(request: Request) {
       return { userId: user.id, organizationId: org.id };
     });
 
+    // CRG-003: Email token is created and send attempted AFTER the DB transaction.
+    // If the email send fails, the account exists but is unverified. We still
+    // return 201 so the client can prompt the user to check their inbox or use
+    // the resend-verification endpoint. The error is logged server-side.
     const token = await createEmailVerificationToken(result.userId);
     const verifyUrl = `${process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"}/verify-email?token=${encodeURIComponent(token)}`;
-    const email = await sendTemplateEmail({ to: body.email, template: "verify-email", data: { url: verifyUrl } });
-    return jsonResponse({ ok: true, ...result, verificationEmailMocked: email.mocked, ...(email.mocked ? { developmentVerificationUrl: verifyUrl } : {}) }, { status: 201 });
+    let emailMocked = false;
+    let emailFailed = false;
+    try {
+      const emailResult = await sendTemplateEmail({ to: body.email, template: "verify-email", data: { url: verifyUrl } });
+      emailMocked = emailResult.mocked;
+    } catch (emailError) {
+      // Log the failure but do not expose details to the client. User can
+      // request a new verification email via the resend endpoint.
+      console.error("[CyberRakshak] Verification email failed to send for new signup:", body.email, emailError);
+      emailFailed = true;
+    }
+
+    return jsonResponse({
+      ok: true,
+      ...result,
+      verificationEmailMocked: emailMocked,
+      verificationEmailFailed: emailFailed,
+      ...(emailMocked ? { developmentVerificationUrl: verifyUrl } : {}),
+    }, { status: 201 });
   } catch (error) {
     return apiError(error, "Sign up failed.");
   }

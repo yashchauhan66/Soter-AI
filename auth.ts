@@ -24,10 +24,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (!parsed.success) return null;
         const { email, password } = parsed.data;
         // Constant-work-shaped: always run bcrypt.compare even on missing user
+        // to prevent timing-based user-enumeration attacks.
         const user = await db.user.findUnique({ where: { email } });
         const stored = user?.passwordHash ?? "$2a$12$0000000000000000000000.invalidhash000000000000000000000";
         const ok = await bcrypt.compare(password, stored);
         if (!user || !ok) return null;
+        // SECURITY (CRG-005): Reject login for accounts that have not verified
+        // their email address. bcrypt.compare already ran above so timing is
+        // uniform regardless of verification state.
+        if (!user.emailVerifiedAt) return null;
         return {
           id: user.id,
           email: user.email,
