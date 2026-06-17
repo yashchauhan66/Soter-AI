@@ -1,119 +1,99 @@
 # @cyberrakshak/guard
 
-Typed JavaScript / TypeScript client and Next.js helper for the
-[CyberRakshak Guard](https://github.com/) AI security gateway.
-
-CyberRakshak Guard is OWASP LLM Top 10 aligned, defensive in design, and
-inspects both input and output of chatbot flows. The SDK is a thin, typed
-wrapper around the REST API; it never claims to provide complete protection.
+Typed JavaScript / TypeScript SDK for CyberRakshak Guard.
 
 ```bash
 npm install @cyberrakshak/guard
 ```
 
-> Phase 2 beta ships a CommonJS build with TypeScript declarations. Modern
-> bundlers (Next.js, Vite, Webpack 5, Rollup with `@rollup/plugin-commonjs`)
-> consume it directly. Pure-ESM Node 22 setups should use a `require` shim
-> via `createRequire` until the dual-format build lands in Phase 3.
-
-## Quick start
+## Protect a Chatbot
 
 ```ts
 import { CyberRakshakGuard } from "@cyberrakshak/guard";
 
 const guard = new CyberRakshakGuard({
   apiKey: process.env.CYBERRAKSHAK_API_KEY!,
-  baseUrl: "https://yourdomain.com",
+  baseUrl: process.env.CYBERRAKSHAK_BASE_URL || "https://api.cyberrakshak.com",
 });
 
-const input = await guard.guardInput({ message: userMessage });
-if (!input.allowed) {
-  return input.safeText ?? "This request was blocked for security reasons.";
-}
+const result = await guard.protectChat({
+  message: userMessage,
+  userId,
+  sessionId,
+  metadata: { source: "website-chatbot" },
+  callLLM: async (safeMessage) => {
+    return await myLLM.chat(safeMessage);
+  },
+});
 
-const aiResponse = await callLLM(input.safeText ?? userMessage);
-const output = await guard.guardOutput({ aiResponse });
-return output.safeText ?? aiResponse;
+return result.safeResponse;
 ```
+
+`protectChat` runs:
+
+1. Input guard.
+2. No LLM call for `BLOCK` or `HUMAN_REVIEW`.
+3. LLM call with `safeText` / `redactedText` for safe actions.
+4. Output guard.
+5. Safe final response.
 
 ## API
 
 | Method | Description |
-| --- | --- |
-| `guardInput({ message, userId?, sessionId?, metadata? })` | Run the input guard. |
-| `guardOutput({ aiResponse, sessionId?, metadata? })` | Run the output guard. |
-| `analyze({ text, direction })` | Public analyzer (no API key required). |
-| `secureChat({ message, callLLM, ... })` | Combined input → LLM → output flow. |
+| :--- | :--- |
+| `input(message, options?)` | Alias for input guard. |
+| `output(aiResponse, options?)` | Alias for output guard. |
+| `analyze(text, direction)` | Public analyzer. |
+| `guardInput(payload)` | Raw input guard request. |
+| `guardOutput(payload)` | Raw output guard request. |
+| `protectChat(options)` | Input guard -> LLM -> output guard. |
+| `protectRag(options)` | Guard query, retrieval chunks, and final answer. |
+| `shouldCallLLM(result)` | Returns false for `BLOCK` and `HUMAN_REVIEW`. |
+| `getSafeInput(result, original)` | Returns `safeText`, `redactedText`, or original. |
+| `getSafeOutput(result, original)` | Returns `safeText`, `redactedText`, or original. |
+| `createExpressMiddleware(options)` | Express-compatible `/chat` middleware. |
+| `createNextHandler(options)` | Next.js route-handler helper. |
 
-All methods return a typed `GuardResult` with `allowed`, `action`, `riskScore`,
-`riskTypes`, `findings`, `reason`, and optional `safeText` / `redactedText`.
-`originalText` is never returned by the server.
+Existing methods `guardInput`, `guardOutput`, and `secureChat` remain supported.
 
-## Errors
+## Express
 
 ```ts
-import {
-  CyberRakshakAuthError,
-  CyberRakshakRateLimitError,
-  CyberRakshakValidationError,
-  CyberRakshakNetworkError,
-  CyberRakshakError,
-} from "@cyberrakshak/guard";
-
-try {
-  await guard.guardInput({ message });
-} catch (caught) {
-  if (caught instanceof CyberRakshakRateLimitError) {
-    // retryAfter (seconds) when provided by server
-  }
-}
+app.post("/chat", guard.createExpressMiddleware({
+  callLLM: async (safeMessage) => myLLM(safeMessage),
+}));
 ```
 
-## Next.js helper
-
-`@cyberrakshak/guard/next` exposes `secureChatHandler`, a ready-to-mount
-Next.js Route Handler that runs input guard → your LLM → output guard:
+## Next.js
 
 ```ts
-// app/api/chat/route.ts
-import { secureChatHandler } from "@cyberrakshak/guard/next";
+export const POST = guard.createNextHandler({
+  callLLM: async (safeMessage) => callMyLLM(safeMessage),
+});
+```
 
-export const POST = secureChatHandler({
-  apiKey: process.env.CYBERRAKSHAK_API_KEY!,
-  callLLM: async ({ safeInput }) => {
-    return await myLLMCall(safeInput);
+## RAG
+
+```ts
+const result = await guard.protectRag({
+  query,
+  retrieve: async (safeQuery) => vectorStore.similaritySearch(safeQuery),
+  callLLM: async ({ safeQuery, safeContext }) => {
+    return chain.invoke({ question: safeQuery, context: safeContext });
   },
 });
 ```
 
-The helper:
+## Authentication
 
-- Validates `message`.
-- Calls `guardInput`. If blocked, returns the safe blocked response.
-- Calls your `callLLM` with the redacted/safe input.
-- Calls `guardOutput`. If withheld, returns the safe withhold response.
-- Never echoes the original request text.
+The SDK sends:
 
-## Webhook signature verification
+```http
+x-api-key: <CYBERRAKSHAK_API_KEY>
+```
 
-`signWebhookPayload` and `verifyWebhookSignature` are not bundled into the SDK,
-because the consuming app already has Node `crypto`. Verify like this:
-
-```ts
-import { createHmac, timingSafeEqual } from "crypto";
-
-function verify(rawBody: string, header: string, secret: string) {
-  const match = /t=(\d+),v1=([0-9a-f]+)/.exec(header);
-  if (!match) return false;
-  const [, t, sig] = match;
-  const expected = createHmac("sha256", secret).update(`${t}.${rawBody}`).digest("hex");
-  return timingSafeEqual(Buffer.from(expected, "hex"), Buffer.from(sig, "hex"));
-}
-
-
+The key is never added to request JSON bodies.
 
 ## Disclaimer
 
-CyberRakshak Guard reduces risk through pattern detection and policy enforcement.
-It does not guarantee complete protection, replace secure development practices,
-or represent OWASP certification. False positives and false negatives are possible.
+CyberRakshak Guard reduces risk through defense-in-depth controls. It does not guarantee complete protection or replace secure application design, access control, model governance, or human review.

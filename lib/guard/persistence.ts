@@ -12,7 +12,7 @@ import { USAGE_WARNING_THRESHOLD } from "../guard/constants";
 import { prepareSafeLogContent } from "./logSafety";
 import type { GuardDirection, GuardResult } from "./types";
 import { emitSecurityEvent } from "../events/emit";
-import { markGuardActivation } from "../phase8/onboarding";
+import { markGuardActivation } from "../ops/onboarding";
 
 export async function persistGuardResult(input: {
   projectId: string;
@@ -78,14 +78,14 @@ export async function persistGuardResult(input: {
     });
     if (result.action === "BLOCK" && result.riskScore >= 80 && owner.email) {
       const { sendTemplateEmail } = await import("../email/send");
-      void sendTemplateEmail({ to: owner.email, template: "high-risk-alert", data: { projectName: project?.name ?? input.projectId } }).catch((error) => console.error("High-risk alert email failed", error));
+      void sendTemplateEmail({ to: owner.email, template: "high-risk-alert", data: { projectName: project?.name ?? input.projectId } }).catch((error) => console.error("[CyberRakshak] High-risk alert email failed for project", input.projectId, error));
     }
   }
 
   if (project?.organizationId && result.action !== "ALLOW") {
     const eventType = result.action === "BLOCK" ? "guard.blocked" : result.action === "ALLOW_WITH_REDACTION" ? "guard.redacted" : "guard.human_review";
     const severity = result.riskScore >= 86 ? "CRITICAL" : result.riskScore >= 61 ? "HIGH" : result.riskScore >= 31 ? "MEDIUM" : "LOW";
-    void emitSecurityEvent({ organizationId: project.organizationId, projectId: input.projectId, eventType, severity, riskTypes: result.riskTypes, action: result.action, source: `guard.${input.direction.toLowerCase()}`, metadata: { riskScore: result.riskScore, direction: input.direction } }).catch((error) => console.error("Security event emission failed", error));
+    void emitSecurityEvent({ organizationId: project.organizationId, projectId: input.projectId, eventType, severity, riskTypes: result.riskTypes, action: result.action, source: `guard.${input.direction.toLowerCase()}`, metadata: { riskScore: result.riskScore, direction: input.direction } }).catch((error) => console.error("[CyberRakshak] Security event emission failed for project", input.projectId, error));
   }
 
   if (project?.organizationId) {
@@ -94,7 +94,7 @@ export async function persistGuardResult(input: {
       projectId: input.projectId,
       userId: owner?.id,
       action: result.action,
-    }).catch((error) => console.error("Phase 8 activation tracking failed", error));
+    }).catch((error) => console.error("[CyberRakshak] Activation tracking failed for project", input.projectId, error));
   }
 
   // Webhook fan-out: queued to the durable WebhookDelivery table.
@@ -104,16 +104,16 @@ export async function persistGuardResult(input: {
     direction: input.direction,
     result,
     requestMetadata: input.requestMetadata,
-  }).catch((error) => console.error("Webhook dispatch failed", error));
+  }).catch((error) => console.error("[CyberRakshak] Webhook dispatch failed for project", input.projectId, error));
 
   // Usage telemetry: record in Redis for plan enforcement, surface warning/exceeded events.
   if (project?.organizationId && project.plan) {
     void maybeFireUsageWebhook(input.projectId, project.organizationId, project.plan, project.organization?.quotaOverride, owner?.email ?? undefined, project.name).catch((error) =>
-      console.error("Usage webhook failed", error),
+      console.error("[CyberRakshak] Usage webhook failed for project", input.projectId, error),
     );
   } else {
     void maybeFireUsageWebhookLegacy(input.projectId).catch((error) =>
-      console.error("Usage webhook legacy failed", error),
+      console.error("[CyberRakshak] Usage webhook legacy failed for project", input.projectId, error),
     );
   }
 }

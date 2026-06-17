@@ -1,7 +1,7 @@
 import { createHash, randomUUID } from "crypto";
 import { Prisma } from "@prisma/client";
-import { db } from "@/lib/db";
-import { sanitizeLogText } from "@/lib/guard/logSafety";
+import { db } from "../db";
+import { sanitizeLogText } from "../guard/logSafety";
 
 export type SupplyChainRiskLevel = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
 

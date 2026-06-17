@@ -1,5 +1,6 @@
 import { createHash } from "crypto";
 import { db } from "../../db";
+import { isProduction, isTest } from "../../utils";
 import type { VectorChunk, VectorHealth, VectorNamespaceContext, VectorQueryContext, VectorQueryFilters, VectorQueryResult } from "./vectorTypes";
 
 export interface VectorProvider {
@@ -47,7 +48,7 @@ export async function createEmbedding(text: string): Promise<number[]> {
     if (!embedding?.length) throw new Error("Embedding endpoint returned no vector.");
     return embedding;
   }
-  if (process.env.NODE_ENV === "production" && process.env.VECTOR_ALLOW_LOCAL_EMBEDDINGS !== "true") {
+  if (isProduction() && process.env.VECTOR_ALLOW_LOCAL_EMBEDDINGS !== "true") {
     throw new Error("EMBEDDING_API_URL is required in production. Deterministic local embeddings are test-only.");
   }
   const dimensions = Number(process.env.VECTOR_DIMENSIONS ?? 64);
@@ -76,7 +77,7 @@ export function buildRetrievalAuditData(input: { context: VectorQueryContext; qu
 
 export async function auditRetrieval(input: { context: VectorQueryContext; queryText: string; requestedFilters?: VectorQueryFilters; candidates: VectorQueryResult[]; accepted: VectorQueryResult[] }) {
   const data = buildRetrievalAuditData(input);
-  if (process.env.NODE_ENV === "test" && process.env.PERSIST_RETRIEVAL_AUDIT !== "true") return data;
+  if (isTest() && process.env.PERSIST_RETRIEVAL_AUDIT !== "true") return data;
   await db.retrievalAuditLog.create({ data });
   return data;
 }
@@ -94,7 +95,7 @@ export class MemoryVectorProvider implements VectorProvider {
 export async function getVectorProvider(): Promise<VectorProvider> {
   const provider = process.env.VECTOR_PROVIDER ?? "memory";
   if (provider === "memory") {
-    if (process.env.NODE_ENV === "production") throw new Error("The in-memory vector provider is disabled in production. Configure Qdrant or pgvector.");
+    if (isProduction()) throw new Error("The in-memory vector provider is disabled in production. Configure Qdrant or pgvector.");
     return new MemoryVectorProvider();
   }
   if (provider === "qdrant") return new (await import("./providers/qdrantProvider")).QdrantProvider();

@@ -1,5 +1,5 @@
 import type { DataRetentionWindow } from "@prisma/client";
-import { db } from "@/lib/db";
+import { db } from "../db";
 
 export const RETENTION_WINDOWS: DataRetentionWindow[] = ["DAYS_7", "DAYS_30", "DAYS_90", "DAYS_180", "DAYS_365", "CUSTOM"];
 

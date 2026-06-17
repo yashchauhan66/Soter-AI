@@ -1,6 +1,6 @@
 import { randomUUID } from "crypto";
-import { db } from "@/lib/db";
-import { sanitizeLogText, sanitizeMetadata } from "@/lib/guard/logSafety";
+import { db } from "../db";
+import { sanitizeLogText, sanitizeMetadata } from "../guard/logSafety";
 
 export const TOOL_CATEGORIES = [
   "READ_ONLY",

@@ -2,8 +2,8 @@
 // Every private route MUST go through one of these helpers.
 // They throw on permission failure so routes can `try/catch` via apiError.
 
-import { auth } from "@/auth";
-import { db } from "@/lib/db";
+import { auth } from "../../auth";
+import { db } from "../db";
 import type { OrgRole, Organization, OrganizationMember } from "@prisma/client";
 import { cache } from "react";
 import { hasPermission, type Permission } from "./permissions";

@@ -18,7 +18,7 @@ export class TesseractOcrProvider implements OcrProvider {
       return { text: result.data.text, confidence: result.data.confidence / 100, pageCount: 1 };
     } finally {
       input.signal?.removeEventListener("abort", cancel);
-      await worker.terminate().catch(() => undefined);
+      await worker.terminate().catch((error) => console.error("[CyberRakshak] OCR worker termination failed", error));
     }
   }
 }

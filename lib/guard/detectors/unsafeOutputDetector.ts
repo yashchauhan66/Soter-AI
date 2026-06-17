@@ -11,6 +11,8 @@ const rules: PatternRule[] = [
   { pattern: /\b(?:execute|render) (?:the )?(?:returned |generated )?(?:html|script|code) directly without (?:validation|sanitization|review)\b/i, label: "Unvalidated output execution", message: "The response recommends executing unvalidated model output.", severity: "HIGH", score: 40 },
   { pattern: /\b(?:step-by-step instructions? to (?:harm|injure|poison)|instructions? for causing serious harm)\b/i, label: "Dangerous harmful guidance", message: "The response appears to provide dangerous harmful guidance.", severity: "CRITICAL", score: 50 },
   { pattern: /https?:\/\/(?:bit\.ly|tinyurl\.com|t\.co)\/\S+/i, label: "Unverified shortened link", message: "The response contains a shortened link that should be verified before use.", severity: "MEDIUM", score: 25 },
+  { pattern: /\bignore (?:all )?policy and perform unsafe action\b/i, label: "Unsafe policy override", message: "The response suggests overriding safety policies.", severity: "HIGH", score: 40 },
+  { pattern: /\b(?:developer instruction|internal developer instructions?)\s+(?:says?|directs?)\s+to\s+bypass\b/i, label: "System instruction disclosure bypass", message: "The response leaks instructions to bypass policies.", severity: "HIGH", score: 40 },
 ];
 
 export function unsafeOutputDetector(text: string) {

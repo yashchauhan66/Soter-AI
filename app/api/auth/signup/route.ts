@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { z } from "zod";
-import { trialWindow } from "@/lib/phase8/billing";
+import { trialWindow } from "@/lib/ops/billing";
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { db } from "@/lib/db";
 import { createEmailVerificationToken } from "@/lib/auth/tokens";

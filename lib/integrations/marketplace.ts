@@ -1,4 +1,4 @@
-import { sanitizeMetadata } from "@/lib/guard/logSafety";
+import { sanitizeMetadata } from "../guard/logSafety";
 
 export const MARKETPLACE_PROVIDERS = ["SLACK", "MS_TEAMS", "JIRA", "GITHUB"] as const;
 

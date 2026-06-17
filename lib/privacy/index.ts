@@ -1,5 +1,5 @@
 import { createHash } from "crypto";
-import { sanitizeLogText } from "@/lib/guard/logSafety";
+import { sanitizeLogText } from "../guard/logSafety";
 
 export function buildDataSubjectConfirmation(email: string, requestType: string) {
   return createHash("sha256").update(`dsr:${email.toLowerCase()}:${requestType}:${Date.now()}`).digest("hex").slice(0, 16).toUpperCase();

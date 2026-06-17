@@ -5,7 +5,7 @@ import { toPublicGuardResult } from "@/lib/guard/publicResult";
 import { createRateLimitResult } from "@/lib/guard/rateLimitResult";
 import { checkRedisRateLimit } from "@/lib/rateLimit";
 import { analyzeSchema } from "@/lib/validations";
-import { recordRequestMetric } from "@/lib/phase8/monitoring";
+import { recordRequestMetric } from "@/lib/ops/monitoring";
 
 export async function POST(request: Request) {
   const startedAt = Date.now();
