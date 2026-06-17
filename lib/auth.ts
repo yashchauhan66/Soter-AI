@@ -60,8 +60,8 @@ export async function getCurrentProjectById(projectId?: string) {
     try {
       const access = await requireProjectAccess(projectId);
       return access.project;
-    } catch {
-      // fall through to default
+    } catch (error) {
+      console.warn("[CyberRakshak] Project access fallback for", projectId, error instanceof Error ? error.message : error);
     }
   }
   return getCurrentProject();

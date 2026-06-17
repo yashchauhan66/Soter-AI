@@ -1,7 +1,7 @@
 import { apiError, jsonResponse } from "@/lib/apiResponse";
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
-import { evaluateSubscriptionLifecycle } from "@/lib/phase8/billing";
+import { evaluateSubscriptionLifecycle } from "@/lib/ops/billing";
 
 export async function POST() {
   try {

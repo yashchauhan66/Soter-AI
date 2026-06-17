@@ -9,7 +9,7 @@ import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { guardLogListSelect } from "@/lib/guard/logSelect";
 import { checkMonthlyLimit } from "@/lib/rateLimit";
-import { recordRequestMetric } from "@/lib/phase8/monitoring";
+import { recordRequestMetric } from "@/lib/ops/monitoring";
 
 export const dynamic = "force-dynamic";
 

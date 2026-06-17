@@ -1,4 +1,4 @@
-import { analyzeRagSecurity } from "@/lib/rag/security";
+import { analyzeRagSecurity } from "../security";
 
 export const RAG_POISONING_BENCHMARK = [
   {

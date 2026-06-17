@@ -1,0 +1,77 @@
+name: Docker Production Build Verification
+
+on:
+  push:
+    branches: [bug-stabilization-final, main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  POSTGRES_PASSWORD: ci-test-password-dockerbuild
+  NEXTAUTH_SECRET: ci-test-nextauth-secret-for-docker-build-only-32chars
+  API_KEY_PEPPER: ci-test-api-key-pepper-for-docker-build-only-32chars
+  WEBHOOK_WORKER_TOKEN: ci-test-webhook-token-for-docker-build-only-32chars
+  REPORT_SIGNING_SECRET: ci-test-report-signing-secret-for-docker-build-32chars
+  SCIM_TOKEN_PEPPER: ci-test-scim-token-pepper-for-docker-build-only-32
+  NEXTAUTH_URL: http://localhost:3000
+  NODE_ENV: production
+  SECRET_STORE_PROVIDER: local
+  LOCAL_SECRET_STORE_KEY: ci-test-local-secret-store-key-for-docker-build-32chars
+  VECTOR_PROVIDER: qdrant
+  EMAIL_PROVIDER: mock
+  EMAIL_FROM: noreply@cyberrakshak.dev
+
+jobs:
+  docker-build:
+    name: Docker Production Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set DATABASE_URL for Compose interpolation
+        run: echo "DATABASE_URL=postgresql://postgres:${{ env.POSTGRES_PASSWORD }}@postgres:5432/cyberrakshak" >> $GITHUB_ENV
+
+      - name: Validate Docker Compose config
+        run: docker compose -f docker-compose.prod.yml config
+
+      - name: Validate services list
+        run: docker compose -f docker-compose.prod.yml config --services
+
+      - name: Build Docker images
+        run: docker compose -f docker-compose.prod.yml build
+
+      - name: Start services
+        run: |
+          docker compose -f docker-compose.prod.yml up -d
+          sleep 15
+
+      - name: Health check
+        run: |
+          for i in $(seq 1 10); do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/api/health || true)
+            if [ "$STATUS" = "200" ]; then
+              echo "Health check passed (attempt $i)"
+              exit 0
+            fi
+            echo "Attempt $i: got HTTP $STATUS, retrying..."
+            sleep 5
+          done
+          echo "Health check failed after 10 attempts"
+          docker compose -f docker-compose.prod.yml logs
+          exit 1
+
+      - name: Show service status
+        if: always()
+        run: docker compose -f docker-compose.prod.yml ps
+
+      - name: Show service logs
+        if: always()
+        run: docker compose -f docker-compose.prod.yml logs --tail=50
+
+      - name: Cleanup
+        if: always()
+        run: docker compose -f docker-compose.prod.yml down -v

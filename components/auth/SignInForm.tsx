@@ -5,9 +5,20 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Loader2, LogIn } from "lucide-react";
 
+function authErrorMessage(error?: string) {
+  if (!error) return "";
+  if (error === "CredentialsSignin") return "Email or password is incorrect, or the account email is not verified.";
+  return "Could not sign in. Please try again.";
+}
+
+function safeCallbackUrl(value: string) {
+  if (!value.startsWith("/") || value.startsWith("//")) return "/dashboard";
+  return value;
+}
+
 export function SignInForm({ callbackUrl, initialError }: { callbackUrl: string; initialError?: string }) {
   const router = useRouter();
-  const [error, setError] = useState(initialError ?? "");
+  const [error, setError] = useState(authErrorMessage(initialError));
   const [loading, setLoading] = useState(false);
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
@@ -22,11 +33,13 @@ export function SignInForm({ callbackUrl, initialError }: { callbackUrl: string;
         redirect: false,
       });
       if (!result || result.error) {
-        setError("Email or password is incorrect.");
+        setError(authErrorMessage(result?.error) || "Email or password is incorrect.");
         return;
       }
-      router.push(callbackUrl);
+      router.push(safeCallbackUrl(callbackUrl));
       router.refresh();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Could not sign in.");
     } finally {
       setLoading(false);
     }

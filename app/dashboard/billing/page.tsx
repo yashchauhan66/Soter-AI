@@ -4,7 +4,7 @@ import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { checkMonthlyLimit, planLimit } from "@/lib/rateLimit";
-import { BillingActions } from "@/components/phase8/BillingActions";
+import { BillingActions } from "@/components/ops/BillingActions";
 
 export const dynamic = "force-dynamic";
 

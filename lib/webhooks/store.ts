@@ -16,7 +16,7 @@ async function auditSecretAction(input: { endpointId: string; projectId?: string
       reason: input.message,
       metadata: { projectId: input.projectId, success: input.success },
     },
-  }).catch(() => undefined);
+  }).catch((error) => console.error("[CyberRakshak] Failed to create audit log for webhook secret", input.action, input.endpointId, error));
 }
 
 interface CreateInput {

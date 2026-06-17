@@ -1,0 +1,59 @@
+[project]
+name = "cyberrakshak-guard"
+version = "0.2.0"
+description = "Official Python SDK for CyberRakshak Guard — protect any Python chatbot, RAG app, or AI agent in 3 lines of code."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "CyberRakshak" }]
+keywords = [
+    "ai-security",
+    "prompt-injection",
+    "llm-guardrails",
+    "chatbot-security",
+    "rag",
+    "langchain",
+    "llamaindex",
+    "fastapi",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security",
+]
+dependencies = ["requests>=2.31.0"]
+
+[project.urls]
+Homepage = "https://cyberrakshak.com"
+Documentation = "https://cyberrakshak.com/docs/integrations/python"
+Source = "https://github.com/cyberrakshak/guard"
+
+[project.optional-dependencies]
+async = ["httpx>=0.24.0"]
+fastapi = ["fastapi>=0.100.0"]
+flask = ["flask>=2.2.0"]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "httpx>=0.24.0",
+    "fastapi>=0.100.0",
+    "flask>=2.2.0",
+    "starlette>=0.27.0",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["cyberrakshak_guard*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

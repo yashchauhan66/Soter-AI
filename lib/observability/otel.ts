@@ -10,7 +10,7 @@ export async function endSecuritySpan(span: TraceSpan, status: "OK" | "ERROR", e
   const record = { traceId: span.traceId, spanId: span.spanId, name: span.name, startTimeUnixMs: span.startedAt, endTimeUnixMs: Date.now(), status, attributes: { ...span.attributes, ...extra } };
   const endpoint = process.env.OTEL_EXPORTER_OTLP_ENDPOINT;
   if (endpoint) {
-    await fetch(`${endpoint.replace(/\/$/, "")}/v1/traces`, { method: "POST", headers: { "content-type": "application/json", ...(process.env.OTEL_EXPORTER_OTLP_HEADERS ? Object.fromEntries(process.env.OTEL_EXPORTER_OTLP_HEADERS.split(",").map((pair) => pair.split("=", 2) as [string, string])) : {}) }, body: JSON.stringify({ resourceSpans: [{ resource: { attributes: [{ key: "service.name", value: { stringValue: "cyberrakshak-guard" } }] }, scopeSpans: [{ spans: [record] }] }] }), signal: AbortSignal.timeout(5_000) }).catch(() => undefined);
+    await fetch(`${endpoint.replace(/\/$/, "")}/v1/traces`, { method: "POST", headers: { "content-type": "application/json", ...(process.env.OTEL_EXPORTER_OTLP_HEADERS ? Object.fromEntries(process.env.OTEL_EXPORTER_OTLP_HEADERS.split(",").map((pair) => pair.split("=", 2) as [string, string])) : {}) }, body: JSON.stringify({ resourceSpans: [{ resource: { attributes: [{ key: "service.name", value: { stringValue: "cyberrakshak-guard" } }] }, scopeSpans: [{ spans: [record] }] }] }), signal: AbortSignal.timeout(5_000) }).catch((error) => console.warn("[CyberRakshak] OpenTelemetry export failed", error));
   }
   return record;
 }

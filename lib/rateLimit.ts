@@ -132,12 +132,15 @@ export async function checkMonthlyLimit(projectId: string, plan: string): Promis
   // Try Redis first (project-scoped bucket).
   const redis = getRedis();
   const projectKey = monthBucketKey(`project:${projectId}`);
-  let used = (await redis.get<number>(projectKey)) ?? 0;
-  if (!used) {
+  const redisValue = await redis.get<number>(projectKey);
+  let used: number;
+  if (redisValue === null) {
     // Cold cache: derive from DB UsageCounter aggregate to avoid
     // under-reporting until the next request rehydrates Redis.
     const aggregate = await getMonthlyUsage(projectId);
     used = aggregate.requestCount;
+  } else {
+    used = redisValue;
   }
   const limit = planLimit(plan);
   const ratio = limit > 0 ? used / limit : 0;

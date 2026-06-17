@@ -60,6 +60,8 @@ export interface ClientOptions {
   apiKey: string;
   baseUrl?: string;
   timeoutMs?: number;
+  maxRetries?: number;
+  retryBackoffMs?: number;
   fetch?: typeof fetch;
   headers?: Record<string, string>;
 }
@@ -79,3 +81,79 @@ export interface SecureChatResult {
   inputResult: GuardResult;
   outputResult?: GuardResult;
 }
+
+export interface ProtectChatOptions {
+  message: string;
+  userId?: string;
+  sessionId?: string;
+  metadata?: Record<string, MetadataValue>;
+  callLLM: (safeMessage: string, context: { originalMessage: string; inputGuard: GuardResult }) => Promise<string>;
+  blockedResponse?: string;
+  outputBlockedResponse?: string;
+}
+
+export interface ProtectChatResult {
+  allowed: boolean;
+  blocked: boolean;
+  inputAction: GuardAction;
+  outputAction?: GuardAction;
+  llmCalled: boolean;
+  safeResponse: string;
+  inputGuard: GuardResult;
+  outputGuard?: GuardResult;
+  latencyMs: number;
+}
+
+export interface RagSource {
+  id?: string;
+  text: string;
+  metadata?: Record<string, MetadataValue>;
+  citation?: string;
+}
+
+export interface SafeRagSource extends RagSource {
+  safeText: string;
+  guard: GuardResult;
+}
+
+export interface ProtectRagOptions<TSource extends RagSource = RagSource> {
+  query: string;
+  userId?: string;
+  sessionId?: string;
+  metadata?: Record<string, MetadataValue>;
+  retrieve: (safeQuery: string) => Promise<TSource[]>;
+  callLLM: (input: { safeQuery: string; safeContext: string; sources: SafeRagSource[] }) => Promise<string>;
+  blockedResponse?: string;
+  outputBlockedResponse?: string;
+}
+
+export interface ProtectRagResult {
+  allowed: boolean;
+  blocked: boolean;
+  inputAction: GuardAction;
+  outputAction?: GuardAction;
+  llmCalled: boolean;
+  retrieved: number;
+  usedSources: SafeRagSource[];
+  excludedSources: Array<{ source: RagSource; guard: GuardResult }>;
+  safeResponse: string;
+  inputGuard: GuardResult;
+  outputGuard?: GuardResult;
+  latencyMs: number;
+}
+
+export interface ExpressLikeRequest {
+  body?: {
+    message?: unknown;
+    userId?: unknown;
+    sessionId?: unknown;
+    metadata?: unknown;
+  };
+}
+
+export interface ExpressLikeResponse {
+  status(code: number): ExpressLikeResponse;
+  json(body: unknown): unknown;
+}
+
+export type ExpressLikeNext = (error?: unknown) => unknown;

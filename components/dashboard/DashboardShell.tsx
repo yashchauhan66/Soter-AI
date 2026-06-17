@@ -1,5 +1,5 @@
 import { DashboardSidebar } from "./DashboardSidebar";
-import { FeedbackWidget } from "@/components/phase8/FeedbackWidget";
+import { FeedbackWidget } from "@/components/ops/FeedbackWidget";
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   return (

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PartnerProfileForm } from "@/components/phase8/PartnerProfileForm";
+import { PartnerProfileForm } from "@/components/ops/PartnerProfileForm";
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 

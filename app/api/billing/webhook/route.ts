@@ -13,7 +13,7 @@ import { db } from "@/lib/db";
 import { verifyRazorpayWebhook, planForPriceId } from "@/lib/billing/razorpay";
 import type { ProjectPlan } from "@prisma/client";
 import { sendTemplateEmail } from "@/lib/email/send";
-import { failedPaymentWindow } from "@/lib/phase8/billing";
+import { failedPaymentWindow } from "@/lib/ops/billing";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";

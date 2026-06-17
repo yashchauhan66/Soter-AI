@@ -1,4 +1,4 @@
-import { sanitizeLogText } from "@/lib/guard/logSafety";
+import { sanitizeLogText } from "../../guard/logSafety";
 
 export interface RagSecuritySource {
   id: string;
