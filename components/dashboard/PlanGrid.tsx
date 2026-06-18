@@ -62,7 +62,7 @@ export function PlanGrid({ organizationId, currentPlan, plans, enterpriseEmail }
             organizationId,
             plan: planId,
             razorpayOrderId: data.orderId,
-            razorpayPaymentId: `mock_pay_${Math.random().toString(36).slice(2, 12)}`,
+            razorpayPaymentId: `mock_pay_${crypto.randomUUID().replace(/-/g, "").slice(0, 10)}`,
             mock: true,
           }),
         });

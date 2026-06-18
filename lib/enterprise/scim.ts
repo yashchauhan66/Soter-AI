@@ -190,7 +190,7 @@ export function applyUserPatch(
   current: { active: boolean; name: string | null; email: string },
   ops: ScimPatchOperation[],
 ): { active: boolean; name: string | null; email: string } {
-  let next = { ...current };
+  const next = { ...current };
   for (const op of ops) {
     if (op.op === "replace" && (op.path === "active" || (!op.path && typeof op.value === "object"))) {
       const value = op.path === "active" ? op.value : (op.value as Record<string, unknown>)?.active;
@@ -242,7 +242,7 @@ export function applyGroupPatch(
   current: { displayName: string; members: Array<{ value: string; display?: string }> },
   ops: ScimPatchOperation[],
 ): { displayName: string; members: Array<{ value: string; display?: string }> } {
-  let next = { displayName: current.displayName, members: [...current.members] };
+  const next = { displayName: current.displayName, members: [...current.members] };
   for (const op of ops) {
     const path = op.path?.toLowerCase();
     if (op.op === "replace" && (path === "displayname" || (!path && op.value && typeof op.value === "object"))) {

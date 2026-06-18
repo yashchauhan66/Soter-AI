@@ -2,11 +2,19 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GuardClient = void 0;
 exports.createClient = createClient;
+exports.createAgentFirewallClient = createAgentFirewallClient;
+exports.createCybersecurityGuardClient = createCybersecurityGuardClient;
 const errors_1 = require("./errors");
-const DEFAULT_BASE_URL = "https://api.cyberrakshak.com";
+const DEFAULT_BASE_URL = "https://api.cybersecurityguard.com";
 const DEFAULT_TIMEOUT_MS = 8000;
 const DEFAULT_RETRY_BACKOFF_MS = 250;
 function createClient(options) {
+    return new GuardClient(options);
+}
+function createAgentFirewallClient(options) {
+    return new GuardClient(options);
+}
+function createCybersecurityGuardClient(options) {
     return new GuardClient(options);
 }
 class GuardClient {
@@ -190,7 +198,7 @@ class GuardClient {
                 if (next)
                     return next(caught);
                 const status = caught.status ?? 500;
-                return res.status(status).json({ error: true, message: caught instanceof Error ? caught.message : "CyberRakshak request failed." });
+                return res.status(status).json({ error: true, message: caught instanceof Error ? caught.message : "cybersecurityguard request failed." });
             }
         };
     }
@@ -219,7 +227,211 @@ class GuardClient {
             }
             catch (caught) {
                 const status = caught.status ?? 500;
-                return jsonResponse({ error: true, message: caught instanceof Error ? caught.message : "CyberRakshak request failed." }, status);
+                return jsonResponse({ error: true, message: caught instanceof Error ? caught.message : "cybersecurityguard request failed." }, status);
+            }
+        };
+    }
+    startAgentSession(input) {
+        return this.post("/api/agent/session/start", input, true);
+    }
+    checkAgentAction(input) {
+        return this.post("/api/agent/action/check", input, true);
+    }
+    checkToolUse(input) {
+        return this.post("/api/agent/tool/check", input, true);
+    }
+    checkDataLeak(input) {
+        return this.post("/api/agent/data/check", input, true);
+    }
+    checkDataEgress(input) {
+        return this.checkDataLeak(input);
+    }
+    checkAgentOutput(input) {
+        return this.post("/api/agent/output/check", input, true);
+    }
+    resolveAgentApproval(input) {
+        return this.post("/api/agent/approval/resolve", input, true);
+    }
+    scanMcpTools(input) {
+        return this.post("/api/agent/mcp/scan", input, true);
+    }
+    checkBrowserForm(input) {
+        return this.post("/api/agent/browser/form/check", input, true);
+    }
+    checkMemory(input) {
+        return this.post("/api/agent/memory/check", input, true);
+    }
+    scoreRagDocument(input) {
+        return this.post("/api/rag/document/trust-score", input, true);
+    }
+    createCanary(input) {
+        return this.post("/api/canary/create", input, true);
+    }
+    checkCanaryLeak(input) {
+        return this.post("/api/canary/check", input, true);
+    }
+    getAgentReplay(sessionId) {
+        return this.get(`/api/agent/replay/${encodeURIComponent(sessionId)}`, true);
+    }
+    registerContextSource(input) {
+        return this.post("/api/lineage/source/register", input, true);
+    }
+    checkContextFlow(input) {
+        return this.post("/api/lineage/flow/check", input, true);
+    }
+    getLineageSession(sessionId) {
+        return this.get(`/api/lineage/session/${encodeURIComponent(sessionId)}`, true);
+    }
+    listLineageIncidents(status) {
+        const query = status ? `?status=${encodeURIComponent(status)}` : "";
+        return this.get(`/api/lineage/incidents${query}`, true);
+    }
+    simulateBlastRadius(input) {
+        return this.post("/api/blast-radius/simulate", input, true);
+    }
+    runBlastRadiusScenario(input) {
+        return this.post("/api/blast-radius/scenario", input, true);
+    }
+    checkMemoryPoisoning(input) {
+        return this.post("/api/memory/check", input, true);
+    }
+    storeSafeMemory(input) {
+        return this.post("/api/memory/store", input, true);
+    }
+    quarantineMemory(memoryRecordId) {
+        return this.post(`/api/memory/${encodeURIComponent(memoryRecordId)}/quarantine`, {}, true);
+    }
+    registerMcpServer(input) {
+        return this.post("/api/mcp/servers/register", input, true);
+    }
+    snapshotMcpTools(input) {
+        return this.post("/api/mcp/tools/snapshot", input, true);
+    }
+    listMcpDrifts(status) {
+        const query = status ? `?status=${encodeURIComponent(status)}` : "";
+        return this.get(`/api/mcp/drifts${query}`, true);
+    }
+    checkLegalBoundary(input) {
+        return this.post("/api/legal-boundary/check", input, true);
+    }
+    wrapTool(context, executor) {
+        return async (args) => {
+            const content = context.content ?? JSON.stringify(args);
+            const decision = await this.checkAgentAction({
+                sessionId: context.sessionId,
+                agentName: context.agentName,
+                tool: context.tool,
+                action: context.action,
+                target: context.target,
+                content,
+                destination: context.destination,
+                riskContext: context.riskContext,
+                metadata: context.metadata,
+            }).catch((caught) => {
+                if (caught instanceof errors_1.CyberRakshakRateLimitError) {
+                    return failClosedDecision("Agent Firewall rate limit hit. Do not execute the tool.", "HIGH");
+                }
+                if (caught instanceof errors_1.CyberRakshakNetworkError) {
+                    return failClosedDecision("Agent Firewall unavailable. Fail-closed policy prevented tool execution.", "CRITICAL");
+                }
+                throw caught;
+            });
+            if (!shouldExecuteAgentDecision(decision)) {
+                return { executed: false, decision };
+            }
+            const result = await executor(args, decision);
+            return { executed: true, decision, result };
+        };
+    }
+    wrapMcpTool(toolName, executor, defaults = {}) {
+        return this.wrapTool({
+            tool: `mcp.${toolName}`,
+            action: defaults.action ?? "mcp_tool_call",
+            ...defaults,
+        }, executor);
+    }
+    createOpenClawAdapter(options) {
+        return {
+            beforeToolCall: (input) => this.checkAgentAction({
+                ...input,
+                sessionId: input.sessionId ?? options.sessionId,
+                agentName: input.agentName ?? options.agentName ?? "openclaw",
+            }),
+        };
+    }
+    createLangChainToolWrapper(toolName, executor, defaults = {}) {
+        return this.wrapTool({
+            tool: `langchain.${toolName}`,
+            action: defaults.action ?? "tool_call",
+            ...defaults,
+        }, executor);
+    }
+    createGenericChatbotWrapper(options) {
+        return {
+            guardInput: (message) => this.guardInput({ message, userId: undefined }),
+            checkAction: (input) => this.checkAgentAction({
+                ...input,
+                sessionId: input.sessionId ?? options.sessionId,
+                agentName: input.agentName ?? options.agentName ?? "chatbot",
+            }),
+            checkData: (input) => this.checkDataEgress({
+                ...input,
+                sessionId: input.sessionId ?? options.sessionId,
+            }),
+            guardOutput: (aiResponse) => this.guardOutput({ aiResponse }),
+        };
+    }
+    createExpressAgentMiddleware() {
+        return async (req, res, next) => {
+            try {
+                const body = req.body;
+                const destination = body?.destination;
+                const decision = await this.checkAgentAction({
+                    sessionId: typeof body?.sessionId === "string" ? body.sessionId : undefined,
+                    agentName: typeof body?.agentName === "string" ? body.agentName : undefined,
+                    tool: typeof body?.tool === "string" ? body.tool : "unknown",
+                    action: typeof body?.action === "string" ? body.action : "tool_call",
+                    target: typeof body?.target === "string" ? body.target : undefined,
+                    content: typeof body?.content === "string" ? body.content : undefined,
+                    destination: isAgentDestination(destination) ? destination : "unknown",
+                    metadata: asMetadata(body?.metadata),
+                });
+                return res.status(200).json(decision);
+            }
+            catch (caught) {
+                if (next)
+                    return next(caught);
+                const status = caught.status ?? 500;
+                return res.status(status).json({ error: true, message: caught instanceof Error ? caught.message : "Agent Firewall request failed." });
+            }
+        };
+    }
+    createNextAgentHandler() {
+        return async (request) => {
+            let body;
+            try {
+                body = await request.json();
+            }
+            catch {
+                return jsonResponse({ error: true, message: "Request body must be valid JSON." }, 400);
+            }
+            const parsed = body && typeof body === "object" ? body : {};
+            try {
+                const decision = await this.checkAgentAction({
+                    sessionId: typeof parsed.sessionId === "string" ? parsed.sessionId : undefined,
+                    agentName: typeof parsed.agentName === "string" ? parsed.agentName : undefined,
+                    tool: typeof parsed.tool === "string" ? parsed.tool : "unknown",
+                    action: typeof parsed.action === "string" ? parsed.action : "tool_call",
+                    target: typeof parsed.target === "string" ? parsed.target : undefined,
+                    content: typeof parsed.content === "string" ? parsed.content : undefined,
+                    destination: isAgentDestination(parsed.destination) ? parsed.destination : "unknown",
+                    metadata: asMetadata(parsed.metadata),
+                });
+                return jsonResponse(decision, 200);
+            }
+            catch (caught) {
+                const status = caught.status ?? 500;
+                return jsonResponse({ error: true, message: caught instanceof Error ? caught.message : "Agent Firewall request failed." }, status);
             }
         };
     }
@@ -229,7 +441,7 @@ class GuardClient {
         const timer = setTimeout(() => controller.abort(), this.timeoutMs);
         const headers = {
             "Content-Type": "application/json",
-            "User-Agent": "cyberrakshak-guard-sdk/0.1",
+            "User-Agent": "cybersecurityguard-sdk/0.1",
             ...this.extraHeaders,
         };
         if (requireApiKey)
@@ -240,6 +452,26 @@ class GuardClient {
             body: JSON.stringify(body ?? {}),
             signal: controller.signal,
         }).finally(() => clearTimeout(timer));
+        return this.handleResponse(response);
+    }
+    async get(path, requireApiKey) {
+        const url = `${this.baseUrl}${path}`;
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), this.timeoutMs);
+        const headers = {
+            "User-Agent": "cybersecurityguard-sdk/0.1",
+            ...this.extraHeaders,
+        };
+        if (requireApiKey)
+            headers["x-api-key"] = this.apiKey;
+        const response = await this.fetchWithNetworkRetry(url, {
+            method: "GET",
+            headers,
+            signal: controller.signal,
+        }).finally(() => clearTimeout(timer));
+        return this.handleResponse(response);
+    }
+    async handleResponse(response) {
         const text = await response.text();
         let data = undefined;
         if (text) {
@@ -301,4 +533,19 @@ function jsonResponse(data, status) {
 }
 function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
+}
+function shouldExecuteAgentDecision(decision) {
+    return decision.decision === "ALLOW" || decision.decision === "READ_ONLY" || decision.decision === "REDACT";
+}
+function failClosedDecision(reason, riskLevel) {
+    return {
+        decision: "BLOCK",
+        riskLevel,
+        reason,
+        redactions: [],
+        policyMatches: [{ id: "sdk.fail_closed", label: reason, severity: riskLevel }],
+    };
+}
+function isAgentDestination(value) {
+    return value === "external" || value === "internal" || value === "local" || value === "unknown";
 }

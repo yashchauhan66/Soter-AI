@@ -25,7 +25,7 @@ export default async function AdminOverviewPage() {
     db.project.count(),
     db.guardLog.count(),
     db.guardLog.count({
-      where: { action: "BLOCK", createdAt: { gte: new Date(Date.now() - 24 * 60 * 60 * 1000) } },
+      where: { action: "BLOCK", createdAt: { gte: new Date(new Date().getTime() - 24 * 60 * 60 * 1000) } },
     }),
     db.webhookDelivery.count({ where: { status: { in: ["FAILED", "DEAD_LETTER"] } } }),
     db.subscription.count({ where: { status: "ACTIVE" } }),

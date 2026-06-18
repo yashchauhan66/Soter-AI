@@ -35,12 +35,30 @@ export const PUBLIC_API_PREFIXES = [
   "/api/guard/analyze",
   "/api/badge",
   "/api/billing/webhook",
+  "/api/health",
+  // API-key-authenticated SDK routes — middleware lets them through;
+  // route handlers enforce their own auth via authenticateApiKeyRequest.
+  "/api/agent",
+  "/api/agent-firewall",
+  // Bearer-token-authenticated SCIM v2 routes.
+  "/api/scim/v2",
+  // SAML SSO — IdP redirect (acs), SP metadata, SP-initiated login
+  // all arrive without a session cookie.
+  "/api/sso/saml",
+  // Public readiness/health check.
+  "/api/ready",
+  // Public lead-generation forms (rate-limited in handler).
+  "/api/ops/contact",
+  "/api/ops/pilot",
 ];
 
 export const authConfig = {
   pages: { signIn: "/signin" },
   session: { strategy: "jwt", maxAge: 60 * 60 * 24 },
-  trustHost: true,
+  // Auth.js v5 rejects requests when the host is not trusted. Default to true
+  // for local, Docker, and reverse-proxy deployments; set AUTH_TRUST_HOST=false
+  // only if your platform provides a fully managed trusted-host configuration.
+  trustHost: process.env.AUTH_TRUST_HOST !== "false",
   callbacks: {
     authorized({ auth, request }) {
       const { pathname } = request.nextUrl;

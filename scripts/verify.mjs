@@ -13,6 +13,7 @@
 import { execSync } from "node:child_process";
 
 const steps = [
+  { label: "Lint", cmd: "npx eslint . --max-warnings=50" },
   { label: "Typecheck", cmd: "npm run typecheck" },
   { label: "SDK Typecheck", cmd: "npm --prefix packages/sdk run typecheck" },
   { label: "Tests", cmd: "npm test" },

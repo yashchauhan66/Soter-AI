@@ -117,7 +117,9 @@ export async function requirePermission(organizationId: string, permission: Perm
 
 export async function requireProjectPermission(projectId: string, permission: Permission) {
   const access = await requireProjectAccess(projectId);
-  if (!access.org.id) {
+  // Legacy projects without an organizationId skip the org-level permission
+  // check since they are user-scoped, not org-scoped.
+  if (!access.project.organizationId) {
     return access;
   }
   if (!hasPermission(access.role, permission) && !access.user.isAdmin) {

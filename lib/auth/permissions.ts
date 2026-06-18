@@ -29,6 +29,16 @@ export const ALL_PERMISSIONS = [
   "rag:manage",
   "feedback:create",
   "scheduled_report:manage",
+  "shadow_ai:read",
+  "shadow_ai:scan",
+  "credentials:read",
+  "credentials:manage",
+  "cost:read",
+  "cost:manage",
+  "forensics:read",
+  "forensics:manage",
+  "redteam:read",
+  "redteam:run",
 ] as const;
 
 export type Permission = (typeof ALL_PERMISSIONS)[number];
@@ -43,6 +53,7 @@ const ROLE_PERMISSIONS: Record<OrgRole, Permission[]> = {
     "billing:read",
     "agency:manage", "policy:manage", "badge:manage", "member:manage",
     "rag:read", "rag:manage", "feedback:create", "scheduled_report:manage",
+    "shadow_ai:read", "credentials:read", "cost:read", "forensics:read", "redteam:read",
   ],
   DEVELOPER: [
     "project:read", "project:update",
@@ -51,18 +62,22 @@ const ROLE_PERMISSIONS: Record<OrgRole, Permission[]> = {
     "webhook:create", "webhook:update", "webhook:delete",
     "policy:manage", "badge:manage",
     "rag:read", "rag:manage", "feedback:create",
+    "shadow_ai:read", "shadow_ai:scan", "credentials:read", "cost:read",
+    "redteam:read", "redteam:run",
   ],
   SECURITY_ANALYST: [
     "project:read",
     "logs:read", "reports:read", "reports:export",
     "policy:manage",
     "rag:read", "rag:manage", "feedback:create", "scheduled_report:manage",
+    "shadow_ai:read", "forensics:read", "forensics:manage", "redteam:read",
   ],
   BILLING: [
     "project:read",
     "billing:read", "billing:update",
     "reports:read",
     "rag:read",
+    "cost:read", "cost:manage",
   ],
   VIEWER: [
     "project:read",

@@ -129,6 +129,39 @@ test("unsafe output claims and execution guidance are detected", () => {
   assert.equal(result.allowed, false);
 });
 
+test("spam URL detector flags lottery scams in output", () => {
+  const result = analyzeText("Congratulations! You have won a lottery! Click here to claim your prize: http://spamlink.com", "OUTPUT");
+  assert.ok(result.riskTypes.includes("UNSAFE_OUTPUT"), `expected UNSAFE_OUTPUT, got ${result.riskTypes.join(",")}`);
+  assert.equal(result.action, "HUMAN_REVIEW");
+  assert.equal(result.allowed, false);
+  assert.ok(result.findings.some((f) => f.label.includes("Lottery") || f.label.includes("promotional URL")), "expected lottery or promotional URL finding");
+});
+
+test("spam URL detector flags suspicious TLD links", () => {
+  const result = analyzeText("Check out this great offer at https://claim-prize.top/win", "OUTPUT");
+  assert.ok(result.riskTypes.includes("UNSAFE_OUTPUT"), `expected UNSAFE_OUTPUT, got ${result.riskTypes.join(",")}`);
+  assert.equal((result.redactedText ?? "").includes("claim-prize.top"), false, "suspicious URL must be redacted");
+  assert.ok((result.redactedText ?? "").includes("[REDACTED_SPAM_URL]"), "URL must be replaced with redaction token");
+});
+
+test("spam URL detector flags advance-fee scams in output", () => {
+  const result = analyzeText("To claim your inheritance, please send a small processing fee to confirm your identity.", "OUTPUT");
+  assert.ok(result.riskTypes.includes("UNSAFE_OUTPUT"), `expected UNSAFE_OUTPUT, got ${result.riskTypes.join(",")}`);
+  assert.ok(result.findings.some((f) => f.label.includes("Advance-fee")), "expected advance-fee scam finding");
+});
+
+test("spam URL detector does not flag normal business URLs", () => {
+  const result = analyzeText("You can view our privacy policy at https://example.com/privacy", "OUTPUT");
+  assert.equal(result.allowed, true, "normal business URLs must be allowed");
+  assert.deepEqual(result.riskTypes, ["LOW_RISK"], "no risk types should be triggered");
+});
+
+test("spam URL detector flags work-from-home scams", () => {
+  const result = analyzeText("Start today and earn $5000 per week from home! Visit https://easy-money.work/start", "OUTPUT");
+  assert.ok(result.riskTypes.includes("UNSAFE_OUTPUT"), `expected UNSAFE_OUTPUT, got ${result.riskTypes.join(",")}`);
+  assert.ok(result.findings.some((f) => f.label.includes("Work-from-home") || f.label.includes("promotional URL")), "expected work-from-home scam finding");
+});
+
 test("score severity boundaries match the Phase 1 specification", () => {
   assert.equal(severityForScore(30), "LOW");
   assert.equal(severityForScore(31), "MEDIUM");

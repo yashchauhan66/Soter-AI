@@ -8,6 +8,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+
 enum GuardDirection {
   INPUT
   OUTPUT
@@ -1690,6 +1692,7 @@ model Incident {
   startedAt          DateTime         @default(now())
   resolvedAt         DateTime?
   updates            IncidentUpdate[]
+  forensicReports    ForensicReport[]
   createdAt          DateTime         @default(now())
   updatedAt          DateTime         @updatedAt
 
@@ -1984,6 +1987,170 @@ model ToolRiskPolicy {
   @@unique([organizationId, projectId])
 }
 
+model AgentSession {
+  id           String    @id
+  projectId    String
+  userId       String?
+  apiKeyId     String?
+  agentName    String
+  agentType    String
+  status       String    @default("ACTIVE")
+  metadataJson Json?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  endedAt      DateTime?
+
+  @@index([projectId, status, createdAt])
+  @@index([apiKeyId])
+  @@index([agentName])
+}
+
+model AgentActionLog {
+  id                      String   @id
+  sessionId               String?
+  projectId               String
+  userId                  String?
+  tool                    String
+  action                  String
+  target                  String?
+  destination             String   @default("unknown")
+  decision                String
+  riskLevel               String
+  reason                  String
+  originalContentRedacted String?  @db.Text
+  safeContent             String?  @db.Text
+  policyMatchesJson       Json?
+  redactionsJson          Json?
+  approvalId              String?
+  metadataJson            Json?
+  createdAt               DateTime @default(now())
+
+  @@index([sessionId, createdAt])
+  @@index([projectId, createdAt])
+  @@index([projectId, decision, createdAt])
+  @@index([riskLevel, createdAt])
+}
+
+model AgentApproval {
+  id                       String    @id
+  sessionId                String?
+  projectId                String
+  actionLogId              String?
+  status                   String    @default("PENDING")
+  approvalTokenHash        String    @unique
+  requestedAction          Json
+  requestedContentRedacted String?   @db.Text
+  safeContent              String?   @db.Text
+  reason                   String
+  expiresAt                DateTime
+  resolvedAt               DateTime?
+  createdAt                DateTime  @default(now())
+
+  @@index([projectId, status, createdAt])
+  @@index([sessionId, status])
+  @@index([actionLogId])
+}
+
+model AgentManifest {
+  id           String   @id @default(cuid())
+  projectId    String
+  agentName    String
+  manifestJson Json
+  enabled      Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([projectId, enabled])
+  @@index([projectId, agentName])
+  @@unique([projectId, agentName])
+}
+
+model McpToolScan {
+  id                       String   @id @default(cuid())
+  projectId                String
+  serverName               String
+  toolName                 String
+  toolSchemaJson           Json?
+  detectedCapabilitiesJson Json
+  riskLevel                String
+  riskReasonsJson          Json
+  recommendedPolicyJson    Json
+  createdAt                DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([projectId, serverName])
+}
+
+model AgentMemoryEvent {
+  id              String   @id @default(cuid())
+  sessionId       String?
+  projectId       String
+  memoryType      String
+  action          String
+  decision        String
+  riskLevel       String
+  contentRedacted String?  @db.Text
+  reason          String
+  createdAt       DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([sessionId, createdAt])
+}
+
+model RagDocumentTrust {
+  id          String   @id @default(cuid())
+  projectId   String
+  documentId  String
+  trustScore  Int
+  trustLevel  String
+  findingsJson Json
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([projectId, documentId])
+  @@index([projectId, trustLevel])
+}
+
+model CanaryToken {
+  id          String    @id @default(cuid())
+  projectId   String
+  tokenHash   String    @unique
+  tokenLabel  String
+  scope       String
+  active      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  triggeredAt DateTime?
+
+  @@index([projectId, active])
+  @@index([projectId, scope])
+}
+
+model AgentReplay {
+  id         String   @id @default(cuid())
+  sessionId  String
+  projectId  String
+  replayJson Json
+  summary    String   @db.Text
+  riskLevel  String
+  createdAt  DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([sessionId, createdAt])
+}
+
+model AgentPolicy {
+  id        String   @id @default(cuid())
+  projectId String
+  name      String   @default("Default Agent Firewall Policy")
+  enabled   Boolean  @default(true)
+  rulesJson Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId, enabled])
+  @@unique([projectId, name])
+}
+
 model ToolRollbackLog {
   id             String   @id @default(cuid())
   organizationId String
@@ -2267,4 +2434,383 @@ model ThrottleEvent {
 
   @@index([organizationId, createdAt])
   @@index([projectId, expiresAt])
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Phase 12: Market-gap modules — Shadow AI Scanner, MCP Credential Vault,
+//           AI Cost Firewall (enhanced), AI Red Team Lab (enhanced),
+//           AI Incident Forensics
+// ═══════════════════════════════════════════════════════════════════════════════
+
+// ── Shadow AI Scanner ─────────────────────────────────────────────────────────
+
+model ShadowAiScan {
+  id             String        @id @default(cuid())
+  organizationId String
+  projectId      String?
+  scanType       String        @default("FULL")
+  status         String        @default("PENDING")
+  providerCount  Int           @default(0)
+  modelCount     Int           @default(0)
+  riskFindings   Int           @default(0)
+  findings       ShadowAiFinding[]
+  startedAt      DateTime?
+  completedAt    DateTime?
+  error          String?
+  createdAt      DateTime      @default(now())
+
+  @@index([organizationId, createdAt])
+  @@index([projectId, createdAt])
+  @@index([status])
+}
+
+model ShadowAiFinding {
+  id             String       @id @default(cuid())
+  scanId         String
+  scan           ShadowAiScan @relation(fields: [scanId], references: [id], onDelete: Cascade)
+  findingType    String
+  providerName   String?
+  modelName      String?
+  riskLevel      String       @default("MEDIUM")
+  evidence       String?      @db.Text
+  recommendation String?
+  createdAt      DateTime     @default(now())
+
+  @@index([scanId])
+  @@index([findingType, riskLevel])
+}
+
+// ── MCP Credential Vault ──────────────────────────────────────────────────────
+
+model McpCredentialVault {
+  id              String   @id @default(cuid())
+  organizationId  String
+  projectId       String?
+  name            String
+  serverUrl       String
+  description     String?
+  encryptedSecret String   @db.Text
+  secretPreview   String
+  keyVersion      String?
+  expiresAt       DateTime?
+  lastUsedAt      DateTime?
+  status          String   @default("ACTIVE")
+  createdById     String?
+  accessLogs      McpCredentialAccessLog[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([organizationId, name])
+  @@index([organizationId, status])
+  @@index([projectId])
+}
+
+model McpCredentialAccessLog {
+  id             String            @id @default(cuid())
+  vaultId        String
+  vault          McpCredentialVault @relation(fields: [vaultId], references: [id], onDelete: Cascade)
+  action         String
+  actorUserId    String?
+  success        Boolean
+  ipAddress      String?
+  createdAt      DateTime          @default(now())
+
+  @@index([vaultId, createdAt])
+}
+
+// ── AI Cost Firewall — Enhanced ───────────────────────────────────────────────
+
+model CostTransaction {
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String?
+  budgetId       String?
+  amountPaise    Int
+  currency       String   @default("INR")
+  category       String   @default("API_CALL")
+  description    String?
+  providerName   String?
+  modelName      String?
+  metadata       Json?
+  recordedAt     DateTime @default(now())
+
+  @@index([organizationId, recordedAt])
+  @@index([projectId, recordedAt])
+  @@index([budgetId])
+}
+
+// ── AI Incident Forensics ─────────────────────────────────────────────────────
+
+model ForensicReport {
+  id              String   @id @default(cuid())
+  incidentId      String
+  incident        Incident   @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  reportType      String     @default("INCIDENT_REPORT")
+  status          String     @default("DRAFT")
+  title           String
+  summary         String     @db.Text
+  timelineJson    Json?
+  evidenceJson    Json?
+  findingsJson    Json?
+  recommendations String?    @db.Text
+  createdById     String?
+  evidence        ForensicEvidence[]
+  publishedAt     DateTime?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  @@unique([incidentId, reportType])
+  @@index([incidentId, status])
+}
+
+model ForensicEvidence {
+  id              String         @id @default(cuid())
+  reportId        String
+  report          ForensicReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  evidenceType    String
+  sourceId        String?
+  redactedContent String?        @db.Text
+  metadata        Json?
+  capturedAt      DateTime       @default(now())
+
+  @@index([reportId])
+}
+
+// --- Advanced AI Security MVP 1: Context Lineage Firewall ---
+
+model ContextSource {
+  id               String   @id @default(cuid())
+  projectId        String
+  sessionId        String?
+  sourceType       String
+  sourceName       String?
+  sourceTrustLevel String
+  sensitivityLevel String
+  metadataJson     Json?
+  contentHash      String
+  contentRedacted  String?  @db.Text
+  createdAt        DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([projectId, sessionId])
+}
+
+model ContextFlow {
+  id                    String   @id @default(cuid())
+  projectId             String
+  sessionId             String?
+  sourceId              String?
+  destinationType       String
+  destinationName       String?
+  destinationTrustLevel String
+  action                String?
+  decision              String
+  riskLevel             String
+  reason                String   @db.Text
+  redactionsJson        Json?
+  policyMatchesJson     Json?
+  createdAt             DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([projectId, sessionId])
+  @@index([projectId, decision])
+}
+
+model LineageIncident {
+  id                     String   @id @default(cuid())
+  projectId              String
+  sessionId              String?
+  incidentType           String
+  riskLevel              String
+  summary                String   @db.Text
+  involvedSourcesJson    Json?
+  involvedDestinationsJson Json?
+  recommendedFix         String?  @db.Text
+  status                 String   @default("OPEN")
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  @@index([projectId, status, createdAt])
+  @@index([projectId, riskLevel])
+}
+
+// --- Advanced AI Security MVP 1: Agent Blast Radius Simulator ---
+
+model AgentRiskProfile {
+  id                       String   @id @default(cuid())
+  projectId                String
+  agentName                String
+  agentType                String?
+  toolsJson                Json?
+  permissionsJson          Json?
+  dataSourcesJson          Json?
+  externalDestinationsJson Json?
+  memoryAccessJson         Json?
+  policyJson               Json?
+  blastRadiusScore         Int
+  riskLevel                String
+  findingsJson             Json?
+  recommendationsJson      Json?
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+
+  @@unique([projectId, agentName])
+  @@index([projectId, riskLevel])
+}
+
+model BlastRadiusSimulation {
+  id                 String   @id @default(cuid())
+  projectId          String
+  agentRiskProfileId String?
+  scenarioName       String
+  scenarioJson       Json?
+  resultJson         Json
+  blastRadiusScore   Int
+  riskLevel          String
+  createdAt          DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([agentRiskProfileId])
+}
+
+// --- Advanced AI Security MVP 2: Cross-Session Memory Poisoning Detector ---
+
+model AgentMemoryRecord {
+  id              String   @id @default(cuid())
+  projectId       String
+  userId          String?
+  agentName       String
+  memoryScope     String
+  memoryType      String
+  contentHash     String
+  contentRedacted String?  @db.Text
+  status          String   @default("ACTIVE")
+  riskLevel       String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([projectId, status, createdAt])
+  @@index([projectId, agentName])
+}
+
+model MemoryPoisoningFinding {
+  id               String   @id @default(cuid())
+  projectId        String
+  memoryRecordId   String
+  findingType      String
+  riskLevel        String
+  reason           String   @db.Text
+  recommendedAction String  @db.Text
+  createdAt        DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([memoryRecordId])
+}
+
+model MemoryChangeAudit {
+  id             String   @id @default(cuid())
+  projectId      String
+  memoryRecordId String
+  action         String
+  beforeHash     String?
+  afterHash      String?
+  decision       String
+  reason         String   @db.Text
+  createdAt      DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([memoryRecordId])
+}
+
+// --- Advanced AI Security MVP 2: MCP Tool Drift Monitor ---
+
+model McpServerRegistry {
+  id           String   @id @default(cuid())
+  projectId    String
+  serverName   String
+  serverUrl    String?
+  status       String   @default("ACTIVE")
+  trustLevel   String
+  metadataJson Json?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([projectId, serverName])
+  @@index([projectId, status])
+}
+
+model McpToolSnapshot {
+  id                       String   @id @default(cuid())
+  projectId                String
+  serverId                 String
+  toolName                 String
+  toolDescriptionHash      String
+  inputSchemaHash          String
+  outputSchemaHash         String?
+  endpointHash             String?
+  toolDescriptionRedacted  String?  @db.Text
+  inputSchemaJson          Json?
+  outputSchemaJson         Json?
+  detectedCapabilitiesJson Json
+  riskLevel                String
+  riskReasonsJson          Json
+  createdAt                DateTime @default(now())
+
+  @@index([projectId, serverId, createdAt])
+  @@index([projectId, toolName])
+}
+
+model McpToolDrift {
+  id                 String   @id @default(cuid())
+  projectId          String
+  serverId           String
+  toolName           String
+  previousSnapshotId String?
+  currentSnapshotId  String?
+  driftType          String
+  riskBefore         String
+  riskAfter          String
+  summary            String   @db.Text
+  recommendation     String   @db.Text
+  status             String   @default("OPEN")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([projectId, status, createdAt])
+  @@index([projectId, serverId])
+}
+
+// --- Advanced AI Security MVP 3: Agent Legal Boundary Guard ---
+
+model LegalBoundaryPolicy {
+  id        String   @id @default(cuid())
+  projectId String
+  name      String
+  enabled   Boolean  @default(true)
+  rulesJson Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([projectId, enabled])
+}
+
+model LegalBoundaryCheck {
+  id                  String   @id @default(cuid())
+  projectId           String
+  sessionId           String?
+  agentName           String
+  websiteUrl          String?
+  domain              String?
+  action              String?
+  actionCategory      String
+  userConsentProvided Boolean  @default(false)
+  riskLevel           String
+  decision            String
+  reason              String   @db.Text
+  evidenceJson        Json?
+  createdAt           DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([projectId, decision])
+  @@index([projectId, domain])
 }

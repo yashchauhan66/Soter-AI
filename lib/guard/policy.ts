@@ -107,6 +107,43 @@ function customRegexMatches(text: string, pattern: string) {
 }
 
 /**
+ * Check if a URL in text contains an allowlisted domain.
+ * Used to suppress findings for URLs that match the project's allowlist.
+ */
+function urlMatchesAllowlistedDomain(text: string, allowlistedDomains: string[]): boolean {
+  if (allowlistedDomains.length === 0) return false;
+  const urlRe = /https?:\/\/[^\s'"<>)]+/gi;
+  for (const match of text.matchAll(urlRe)) {
+    try {
+      const hostname = new URL(match[0]).hostname.toLowerCase();
+      for (const domain of allowlistedDomains) {
+        const d = domain.toLowerCase().replace(/^https?:\/\//, "").replace(/\/+$/, "");
+        if (hostname === d || hostname.endsWith("." + d)) return true;
+      }
+    } catch {
+      // Malformed URL; skip
+    }
+  }
+  return false;
+}
+
+/**
+ * Detect whether a pattern looks like a plain domain name (no regex special chars).
+ * If so, auto-wrap it as a URL-matching pattern so users can enter plain domain
+ * names like "evil.com" without regex escaping.
+ */
+function isPlainDomainPattern(pattern: string): boolean {
+  // Allow dots, hyphens, alphanumeric, and colons (for ports)
+  return /^[a-zA-Z0-9._:-]+$/.test(pattern) && pattern.includes(".");
+}
+
+function wrapDomainAsUrlPattern(domain: string): string {
+  // Escape dots for regex
+  const escaped = domain.replace(/\./g, "\\.");
+  return `https?:\\/\\/(?:[^\\s\\/]+\\.)?${escaped}\\b`;
+}
+
+/**
  * Wrap baseline analysis with project policy. Mutates findings/decisions
  * so the resulting GuardResult honours the project's settings.
  */
@@ -144,14 +181,45 @@ export function applyPolicy(
   }
   for (const pattern of policy.deniedPatterns) {
     if (!pattern.trim()) continue;
-    if (customRegexMatches(text, pattern)) {
+    // Auto-convert plain domain names to URL-matching patterns
+    const resolvedPattern = isPlainDomainPattern(pattern) ? wrapDomainAsUrlPattern(pattern) : pattern;
+    if (customRegexMatches(text, resolvedPattern)) {
       filtered.push({
         type: direction === "OUTPUT" ? "UNSAFE_OUTPUT" : "PROMPT_INJECTION",
         label: `Custom denylist pattern`,
         severity: "HIGH",
         score: 65,
-        message: "Project policy denylist pattern matched.",
+        message: `Project policy denylist pattern matched: ${pattern.slice(0, 60)}.`,
       });
+    }
+  }
+
+  // Allowlisted domains: suppress findings if the text contains URLs with allowlisted domains.
+  // This lets users whitelist specific URLs/domains that they know are safe, even if the
+  // automated detectors flagged them.
+  if (policy.allowlistedDomains.length > 0 && urlMatchesAllowlistedDomain(text, policy.allowlistedDomains)) {
+    // Remove any spam URL / promotional URL findings (they came from detectors, not custom rules)
+    const filteredAllowlist: GuardFinding[] = [];
+    for (const finding of filtered) {
+      // Keep synthetic custom findings (user explicitly denied them)
+      if (finding.label.startsWith("Custom blocked topic") || finding.label.startsWith("Custom denylist")) {
+        filteredAllowlist.push(finding);
+      } else if (finding.type === "UNSAFE_OUTPUT" && (
+        finding.label.includes("URL") ||
+        finding.label.includes("link") ||
+        finding.label.includes("Spam") ||
+        finding.label.includes("scam")
+      )) {
+        continue; // skip URL-related findings for allowlisted domains
+      } else {
+        filteredAllowlist.push(finding);
+      }
+    }
+    // Only replace if we actually removed something
+    if (filteredAllowlist.length < filtered.length) {
+      // Replace filtered with the reduced list
+      filtered.length = 0;
+      filtered.push(...filteredAllowlist);
     }
   }
 

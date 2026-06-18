@@ -4,6 +4,7 @@ import { piiDetector } from "./detectors/piiDetector";
 import { promptInjectionDetector } from "./detectors/promptInjectionDetector";
 import { secretsDetector } from "./detectors/secretsDetector";
 import { systemPromptLeakageDetector, systemPromptLeakAttemptDetector } from "./detectors/systemPromptLeakDetector";
+import { spamUrlDetector } from "./detectors/spamUrlDetector";
 import { unsafeOutputDetector } from "./detectors/unsafeOutputDetector";
 import { decideGuardAction } from "./decisionEngine";
 import { redactText } from "./redactor";
@@ -15,7 +16,7 @@ import type { GuardDirection, GuardFinding, GuardResult, RiskType } from "./type
 export function analyzeText(text: string, direction: GuardDirection): GuardResult {
   const common = [piiDetector, indiaPiiDetector, secretsDetector];
   const detectors = direction === "OUTPUT"
-    ? [systemPromptLeakageDetector, unsafeOutputDetector, ...common]
+    ? [systemPromptLeakageDetector, unsafeOutputDetector, spamUrlDetector, ...common]
     : [promptInjectionDetector, jailbreakDetector, systemPromptLeakAttemptDetector, ...common];
   const findings: GuardFinding[] = detectors.flatMap((detector) => detector(text));
 

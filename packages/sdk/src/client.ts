@@ -7,6 +7,25 @@ import {
 } from "./errors";
 import type {
   AnalyzeRequest,
+  AgentActionCheckRequest,
+  AgentActionCheckResponse,
+  AgentApprovalResolveRequest,
+  AgentApprovalResolveResponse,
+  AgentDataCheckRequest,
+  AgentOutputCheckRequest,
+  AgentReplayResponse,
+  BrowserFormCheckRequest,
+  BrowserFormCheckResponse,
+  CanaryCheckRequest,
+  CanaryCheckResponse,
+  CheckContextFlowRequest,
+  CheckContextFlowResponse,
+  CheckLegalBoundaryRequest,
+  CheckLegalBoundaryResponse,
+  CheckMemoryPoisoningRequest,
+  CheckMemoryPoisoningResponse,
+  CreateCanaryRequest,
+  CreateCanaryResponse,
   ClientOptions,
   ExpressLikeNext,
   ExpressLikeRequest,
@@ -14,16 +33,42 @@ import type {
   GuardInputRequest,
   GuardOutputRequest,
   GuardResult,
+  LineageIncidentsResponse,
+  LineageSessionResponse,
+  McpDriftsResponse,
+  MemoryCheckRequest,
+  MemoryCheckResponse,
   ProtectChatOptions,
   ProtectChatResult,
   ProtectRagOptions,
   ProtectRagResult,
   RagSource,
+  RagTrustScoreRequest,
+  RagTrustScoreResponse,
+  RegisterContextSourceRequest,
+  RegisterContextSourceResponse,
+  RegisterMcpServerRequest,
+  RegisterMcpServerResponse,
+  RunBlastRadiusScenarioRequest,
+  RunBlastRadiusScenarioResponse,
+  ScanMcpToolsRequest,
+  ScanMcpToolsResponse,
   SecureChatOptions,
   SecureChatResult,
+  SimulateBlastRadiusRequest,
+  SimulateBlastRadiusResponse,
+  SnapshotMcpToolsRequest,
+  SnapshotMcpToolsResponse,
+  StoreSafeMemoryRequest,
+  StoreSafeMemoryResponse,
+  StartAgentSessionRequest,
+  StartAgentSessionResponse,
+  ToolExecutionContext,
+  ToolExecutor,
+  WrappedToolResult,
 } from "./types";
 
-const DEFAULT_BASE_URL = "https://api.cyberrakshak.com";
+const DEFAULT_BASE_URL = "https://api.cybersecurityguard.com";
 const DEFAULT_TIMEOUT_MS = 8000;
 const DEFAULT_RETRY_BACKOFF_MS = 250;
 
@@ -42,10 +87,57 @@ export interface CyberRakshakGuard {
   getSafeOutput(result: GuardResult, originalOutput: string): string;
   createExpressMiddleware(options: Omit<ProtectChatOptions, "message" | "userId" | "sessionId" | "metadata">): (req: ExpressLikeRequest, res: ExpressLikeResponse, next?: ExpressLikeNext) => Promise<unknown>;
   createNextHandler(options: Omit<ProtectChatOptions, "message" | "userId" | "sessionId" | "metadata">): (request: Request) => Promise<Response>;
+  startAgentSession(input: StartAgentSessionRequest): Promise<StartAgentSessionResponse>;
+  checkAgentAction(input: AgentActionCheckRequest): Promise<AgentActionCheckResponse>;
+  checkToolUse(input: AgentActionCheckRequest): Promise<AgentActionCheckResponse>;
+  checkDataEgress(input: AgentDataCheckRequest): Promise<AgentActionCheckResponse>;
+  checkDataLeak(input: AgentDataCheckRequest): Promise<AgentActionCheckResponse>;
+  checkAgentOutput(input: AgentOutputCheckRequest): Promise<AgentActionCheckResponse>;
+  resolveAgentApproval(input: AgentApprovalResolveRequest): Promise<AgentApprovalResolveResponse>;
+  scanMcpTools(input: ScanMcpToolsRequest): Promise<ScanMcpToolsResponse>;
+  checkBrowserForm(input: BrowserFormCheckRequest): Promise<BrowserFormCheckResponse>;
+  checkMemory(input: MemoryCheckRequest): Promise<MemoryCheckResponse>;
+  scoreRagDocument(input: RagTrustScoreRequest): Promise<RagTrustScoreResponse>;
+  createCanary(input: CreateCanaryRequest): Promise<CreateCanaryResponse>;
+  checkCanaryLeak(input: CanaryCheckRequest): Promise<CanaryCheckResponse>;
+  getAgentReplay(sessionId: string): Promise<AgentReplayResponse>;
+  registerContextSource(input: RegisterContextSourceRequest): Promise<RegisterContextSourceResponse>;
+  checkContextFlow(input: CheckContextFlowRequest): Promise<CheckContextFlowResponse>;
+  getLineageSession(sessionId: string): Promise<LineageSessionResponse>;
+  listLineageIncidents(status?: string): Promise<LineageIncidentsResponse>;
+  simulateBlastRadius(input: SimulateBlastRadiusRequest): Promise<SimulateBlastRadiusResponse>;
+  runBlastRadiusScenario(input: RunBlastRadiusScenarioRequest): Promise<RunBlastRadiusScenarioResponse>;
+  checkMemoryPoisoning(input: CheckMemoryPoisoningRequest): Promise<CheckMemoryPoisoningResponse>;
+  storeSafeMemory(input: StoreSafeMemoryRequest): Promise<StoreSafeMemoryResponse>;
+  quarantineMemory(memoryRecordId: string): Promise<{ id: string; status: string }>;
+  registerMcpServer(input: RegisterMcpServerRequest): Promise<RegisterMcpServerResponse>;
+  snapshotMcpTools(input: SnapshotMcpToolsRequest): Promise<SnapshotMcpToolsResponse>;
+  listMcpDrifts(status?: string): Promise<McpDriftsResponse>;
+  checkLegalBoundary(input: CheckLegalBoundaryRequest): Promise<CheckLegalBoundaryResponse>;
+  wrapTool<TArgs, TResult>(context: Omit<ToolExecutionContext<TArgs>, "args">, executor: ToolExecutor<TArgs, TResult>): (args: TArgs) => Promise<WrappedToolResult<TResult>>;
+  wrapMcpTool<TArgs, TResult>(toolName: string, executor: ToolExecutor<TArgs, TResult>, defaults?: Partial<Omit<ToolExecutionContext<TArgs>, "args" | "tool">>): (args: TArgs) => Promise<WrappedToolResult<TResult>>;
+  createOpenClawAdapter(options: { sessionId: string; agentName?: string }): { beforeToolCall: (input: AgentActionCheckRequest) => Promise<AgentActionCheckResponse> };
+  createLangChainToolWrapper<TArgs, TResult>(toolName: string, executor: ToolExecutor<TArgs, TResult>, defaults?: Partial<Omit<ToolExecutionContext<TArgs>, "args" | "tool">>): (args: TArgs) => Promise<WrappedToolResult<TResult>>;
+  createGenericChatbotWrapper(options: { sessionId?: string; agentName?: string }): {
+    guardInput: (message: string) => Promise<GuardResult>;
+    checkAction: (input: AgentActionCheckRequest) => Promise<AgentActionCheckResponse>;
+    checkData: (input: AgentDataCheckRequest) => Promise<AgentActionCheckResponse>;
+    guardOutput: (aiResponse: string) => Promise<GuardResult>;
+  };
+  createExpressAgentMiddleware(): (req: ExpressLikeRequest, res: ExpressLikeResponse, next?: ExpressLikeNext) => Promise<unknown>;
+  createNextAgentHandler(): (request: Request) => Promise<Response>;
 }
 
 
 export function createClient(options: ClientOptions): CyberRakshakGuard {
+  return new GuardClient(options);
+}
+
+export function createAgentFirewallClient(options: ClientOptions): CyberRakshakGuard {
+  return new GuardClient(options);
+}
+
+export function createCybersecurityGuardClient(options: ClientOptions): CyberRakshakGuard {
   return new GuardClient(options);
 }
 
@@ -249,7 +341,7 @@ export class GuardClient implements CyberRakshakGuard {
       } catch (caught) {
         if (next) return next(caught);
         const status = (caught as { status?: number }).status ?? 500;
-        return res.status(status).json({ error: true, message: caught instanceof Error ? caught.message : "CyberRakshak request failed." });
+        return res.status(status).json({ error: true, message: caught instanceof Error ? caught.message : "cybersecurityguard request failed." });
       }
     };
   }
@@ -276,7 +368,253 @@ export class GuardClient implements CyberRakshakGuard {
         return jsonResponse(result, 200);
       } catch (caught) {
         const status = (caught as { status?: number }).status ?? 500;
-        return jsonResponse({ error: true, message: caught instanceof Error ? caught.message : "CyberRakshak request failed." }, status);
+        return jsonResponse({ error: true, message: caught instanceof Error ? caught.message : "cybersecurityguard request failed." }, status);
+      }
+    };
+  }
+
+  startAgentSession(input: StartAgentSessionRequest): Promise<StartAgentSessionResponse> {
+    return this.post<StartAgentSessionResponse>("/api/agent/session/start", input, true);
+  }
+
+  checkAgentAction(input: AgentActionCheckRequest): Promise<AgentActionCheckResponse> {
+    return this.post<AgentActionCheckResponse>("/api/agent/action/check", input, true);
+  }
+
+  checkToolUse(input: AgentActionCheckRequest): Promise<AgentActionCheckResponse> {
+    return this.post<AgentActionCheckResponse>("/api/agent/tool/check", input, true);
+  }
+
+  checkDataLeak(input: AgentDataCheckRequest): Promise<AgentActionCheckResponse> {
+    return this.post<AgentActionCheckResponse>("/api/agent/data/check", input, true);
+  }
+
+  checkDataEgress(input: AgentDataCheckRequest): Promise<AgentActionCheckResponse> {
+    return this.checkDataLeak(input);
+  }
+
+  checkAgentOutput(input: AgentOutputCheckRequest): Promise<AgentActionCheckResponse> {
+    return this.post<AgentActionCheckResponse>("/api/agent/output/check", input, true);
+  }
+
+  resolveAgentApproval(input: AgentApprovalResolveRequest): Promise<AgentApprovalResolveResponse> {
+    return this.post<AgentApprovalResolveResponse>("/api/agent/approval/resolve", input, true);
+  }
+
+  scanMcpTools(input: ScanMcpToolsRequest): Promise<ScanMcpToolsResponse> {
+    return this.post<ScanMcpToolsResponse>("/api/agent/mcp/scan", input, true);
+  }
+
+  checkBrowserForm(input: BrowserFormCheckRequest): Promise<BrowserFormCheckResponse> {
+    return this.post<BrowserFormCheckResponse>("/api/agent/browser/form/check", input, true);
+  }
+
+  checkMemory(input: MemoryCheckRequest): Promise<MemoryCheckResponse> {
+    return this.post<MemoryCheckResponse>("/api/agent/memory/check", input, true);
+  }
+
+  scoreRagDocument(input: RagTrustScoreRequest): Promise<RagTrustScoreResponse> {
+    return this.post<RagTrustScoreResponse>("/api/rag/document/trust-score", input, true);
+  }
+
+  createCanary(input: CreateCanaryRequest): Promise<CreateCanaryResponse> {
+    return this.post<CreateCanaryResponse>("/api/canary/create", input, true);
+  }
+
+  checkCanaryLeak(input: CanaryCheckRequest): Promise<CanaryCheckResponse> {
+    return this.post<CanaryCheckResponse>("/api/canary/check", input, true);
+  }
+
+  getAgentReplay(sessionId: string): Promise<AgentReplayResponse> {
+    return this.get<AgentReplayResponse>(`/api/agent/replay/${encodeURIComponent(sessionId)}`, true);
+  }
+
+  registerContextSource(input: RegisterContextSourceRequest): Promise<RegisterContextSourceResponse> {
+    return this.post<RegisterContextSourceResponse>("/api/lineage/source/register", input, true);
+  }
+
+  checkContextFlow(input: CheckContextFlowRequest): Promise<CheckContextFlowResponse> {
+    return this.post<CheckContextFlowResponse>("/api/lineage/flow/check", input, true);
+  }
+
+  getLineageSession(sessionId: string): Promise<LineageSessionResponse> {
+    return this.get<LineageSessionResponse>(`/api/lineage/session/${encodeURIComponent(sessionId)}`, true);
+  }
+
+  listLineageIncidents(status?: string): Promise<LineageIncidentsResponse> {
+    const query = status ? `?status=${encodeURIComponent(status)}` : "";
+    return this.get<LineageIncidentsResponse>(`/api/lineage/incidents${query}`, true);
+  }
+
+  simulateBlastRadius(input: SimulateBlastRadiusRequest): Promise<SimulateBlastRadiusResponse> {
+    return this.post<SimulateBlastRadiusResponse>("/api/blast-radius/simulate", input, true);
+  }
+
+  runBlastRadiusScenario(input: RunBlastRadiusScenarioRequest): Promise<RunBlastRadiusScenarioResponse> {
+    return this.post<RunBlastRadiusScenarioResponse>("/api/blast-radius/scenario", input, true);
+  }
+
+  checkMemoryPoisoning(input: CheckMemoryPoisoningRequest): Promise<CheckMemoryPoisoningResponse> {
+    return this.post<CheckMemoryPoisoningResponse>("/api/memory/check", input, true);
+  }
+
+  storeSafeMemory(input: StoreSafeMemoryRequest): Promise<StoreSafeMemoryResponse> {
+    return this.post<StoreSafeMemoryResponse>("/api/memory/store", input, true);
+  }
+
+  quarantineMemory(memoryRecordId: string): Promise<{ id: string; status: string }> {
+    return this.post<{ id: string; status: string }>(`/api/memory/${encodeURIComponent(memoryRecordId)}/quarantine`, {}, true);
+  }
+
+  registerMcpServer(input: RegisterMcpServerRequest): Promise<RegisterMcpServerResponse> {
+    return this.post<RegisterMcpServerResponse>("/api/mcp/servers/register", input, true);
+  }
+
+  snapshotMcpTools(input: SnapshotMcpToolsRequest): Promise<SnapshotMcpToolsResponse> {
+    return this.post<SnapshotMcpToolsResponse>("/api/mcp/tools/snapshot", input, true);
+  }
+
+  listMcpDrifts(status?: string): Promise<McpDriftsResponse> {
+    const query = status ? `?status=${encodeURIComponent(status)}` : "";
+    return this.get<McpDriftsResponse>(`/api/mcp/drifts${query}`, true);
+  }
+
+  checkLegalBoundary(input: CheckLegalBoundaryRequest): Promise<CheckLegalBoundaryResponse> {
+    return this.post<CheckLegalBoundaryResponse>("/api/legal-boundary/check", input, true);
+  }
+
+  wrapTool<TArgs, TResult>(
+    context: Omit<ToolExecutionContext<TArgs>, "args">,
+    executor: ToolExecutor<TArgs, TResult>,
+  ) {
+    return async (args: TArgs): Promise<WrappedToolResult<TResult>> => {
+      const content = context.content ?? JSON.stringify(args);
+      const decision = await this.checkAgentAction({
+        sessionId: context.sessionId,
+        agentName: context.agentName,
+        tool: context.tool,
+        action: context.action,
+        target: context.target,
+        content,
+        destination: context.destination,
+        riskContext: context.riskContext,
+        metadata: context.metadata,
+      }).catch((caught) => {
+        if (caught instanceof CyberRakshakRateLimitError) {
+          return failClosedDecision("Agent Firewall rate limit hit. Do not execute the tool.", "HIGH");
+        }
+        if (caught instanceof CyberRakshakNetworkError) {
+          return failClosedDecision("Agent Firewall unavailable. Fail-closed policy prevented tool execution.", "CRITICAL");
+        }
+        throw caught;
+      });
+
+      if (!shouldExecuteAgentDecision(decision)) {
+        return { executed: false, decision };
+      }
+      const result = await executor(args, decision);
+      return { executed: true, decision, result };
+    };
+  }
+
+  wrapMcpTool<TArgs, TResult>(
+    toolName: string,
+    executor: ToolExecutor<TArgs, TResult>,
+    defaults: Partial<Omit<ToolExecutionContext<TArgs>, "args" | "tool">> = {},
+  ) {
+    return this.wrapTool<TArgs, TResult>({
+      tool: `mcp.${toolName}`,
+      action: defaults.action ?? "mcp_tool_call",
+      ...defaults,
+    }, executor);
+  }
+
+  createOpenClawAdapter(options: { sessionId: string; agentName?: string }) {
+    return {
+      beforeToolCall: (input: AgentActionCheckRequest) => this.checkAgentAction({
+        ...input,
+        sessionId: input.sessionId ?? options.sessionId,
+        agentName: input.agentName ?? options.agentName ?? "openclaw",
+      }),
+    };
+  }
+
+  createLangChainToolWrapper<TArgs, TResult>(
+    toolName: string,
+    executor: ToolExecutor<TArgs, TResult>,
+    defaults: Partial<Omit<ToolExecutionContext<TArgs>, "args" | "tool">> = {},
+  ) {
+    return this.wrapTool<TArgs, TResult>({
+      tool: `langchain.${toolName}`,
+      action: defaults.action ?? "tool_call",
+      ...defaults,
+    }, executor);
+  }
+
+  createGenericChatbotWrapper(options: { sessionId?: string; agentName?: string }) {
+    return {
+      guardInput: (message: string) => this.guardInput({ message, userId: undefined }),
+      checkAction: (input: AgentActionCheckRequest) => this.checkAgentAction({
+        ...input,
+        sessionId: input.sessionId ?? options.sessionId,
+        agentName: input.agentName ?? options.agentName ?? "chatbot",
+      }),
+      checkData: (input: AgentDataCheckRequest) => this.checkDataEgress({
+        ...input,
+        sessionId: input.sessionId ?? options.sessionId,
+      }),
+      guardOutput: (aiResponse: string) => this.guardOutput({ aiResponse }),
+    };
+  }
+
+  createExpressAgentMiddleware() {
+    return async (req: ExpressLikeRequest, res: ExpressLikeResponse, next?: ExpressLikeNext) => {
+      try {
+        const body = req.body as Record<string, unknown> | undefined;
+        const destination = body?.destination;
+        const decision = await this.checkAgentAction({
+          sessionId: typeof body?.sessionId === "string" ? body.sessionId : undefined,
+          agentName: typeof body?.agentName === "string" ? body.agentName : undefined,
+          tool: typeof body?.tool === "string" ? body.tool : "unknown",
+          action: typeof body?.action === "string" ? body.action : "tool_call",
+          target: typeof body?.target === "string" ? body.target : undefined,
+          content: typeof body?.content === "string" ? body.content : undefined,
+          destination: isAgentDestination(destination) ? destination : "unknown",
+          metadata: asMetadata(body?.metadata),
+        });
+        return res.status(200).json(decision);
+      } catch (caught) {
+        if (next) return next(caught);
+        const status = (caught as { status?: number }).status ?? 500;
+        return res.status(status).json({ error: true, message: caught instanceof Error ? caught.message : "Agent Firewall request failed." });
+      }
+    };
+  }
+
+  createNextAgentHandler() {
+    return async (request: Request) => {
+      let body: unknown;
+      try {
+        body = await request.json();
+      } catch {
+        return jsonResponse({ error: true, message: "Request body must be valid JSON." }, 400);
+      }
+      const parsed = body && typeof body === "object" ? body as Record<string, unknown> : {};
+      try {
+        const decision = await this.checkAgentAction({
+          sessionId: typeof parsed.sessionId === "string" ? parsed.sessionId : undefined,
+          agentName: typeof parsed.agentName === "string" ? parsed.agentName : undefined,
+          tool: typeof parsed.tool === "string" ? parsed.tool : "unknown",
+          action: typeof parsed.action === "string" ? parsed.action : "tool_call",
+          target: typeof parsed.target === "string" ? parsed.target : undefined,
+          content: typeof parsed.content === "string" ? parsed.content : undefined,
+          destination: isAgentDestination(parsed.destination) ? parsed.destination : "unknown",
+          metadata: asMetadata(parsed.metadata),
+        });
+        return jsonResponse(decision, 200);
+      } catch (caught) {
+        const status = (caught as { status?: number }).status ?? 500;
+        return jsonResponse({ error: true, message: caught instanceof Error ? caught.message : "Agent Firewall request failed." }, status);
       }
     };
   }
@@ -287,7 +625,7 @@ export class GuardClient implements CyberRakshakGuard {
     const timer = setTimeout(() => controller.abort(), this.timeoutMs);
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
-      "User-Agent": "cyberrakshak-guard-sdk/0.1",
+      "User-Agent": "cybersecurityguard-sdk/0.1",
       ...this.extraHeaders,
     };
     if (requireApiKey) headers["x-api-key"] = this.apiKey;
@@ -298,6 +636,28 @@ export class GuardClient implements CyberRakshakGuard {
       signal: controller.signal,
     }).finally(() => clearTimeout(timer));
 
+    return this.handleResponse<T>(response);
+  }
+
+  private async get<T>(path: string, requireApiKey: boolean): Promise<T> {
+    const url = `${this.baseUrl}${path}`;
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), this.timeoutMs);
+    const headers: Record<string, string> = {
+      "User-Agent": "cybersecurityguard-sdk/0.1",
+      ...this.extraHeaders,
+    };
+    if (requireApiKey) headers["x-api-key"] = this.apiKey;
+    const response = await this.fetchWithNetworkRetry(url, {
+      method: "GET",
+      headers,
+      signal: controller.signal,
+    }).finally(() => clearTimeout(timer));
+
+    return this.handleResponse<T>(response);
+  }
+
+  private async handleResponse<T>(response: Response): Promise<T> {
     const text = await response.text();
     let data: unknown = undefined;
     if (text) {
@@ -357,4 +717,22 @@ function jsonResponse(data: unknown, status: number) {
 
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function shouldExecuteAgentDecision(decision: AgentActionCheckResponse) {
+  return decision.decision === "ALLOW" || decision.decision === "READ_ONLY" || decision.decision === "REDACT";
+}
+
+function failClosedDecision(reason: string, riskLevel: AgentActionCheckResponse["riskLevel"]): AgentActionCheckResponse {
+  return {
+    decision: "BLOCK",
+    riskLevel,
+    reason,
+    redactions: [],
+    policyMatches: [{ id: "sdk.fail_closed", label: reason, severity: riskLevel }],
+  };
+}
+
+function isAgentDestination(value: unknown): value is AgentActionCheckRequest["destination"] {
+  return value === "external" || value === "internal" || value === "local" || value === "unknown";
 }

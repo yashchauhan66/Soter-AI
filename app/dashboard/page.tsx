@@ -18,7 +18,7 @@ export default async function DashboardPage({
 }: {
   searchParams: Promise<{ project?: string }>;
 }) {
-  const startedAt = Date.now();
+  const startedAt = new Date();
   const params = await searchParams;
   const [project, projects] = await Promise.all([
     getCurrentProjectById(params.project),
@@ -60,7 +60,7 @@ export default async function DashboardPage({
     .sort((a, b) => b[1] - a[1])
     .slice(0, 5)
     .map(([label, value]) => ({ label, value }));
-  void recordRequestMetric("dashboard_latency_ms", Date.now() - startedAt);
+  void recordRequestMetric("dashboard_latency_ms", new Date().getTime() - startedAt.getTime());
 
   return (
     <div>

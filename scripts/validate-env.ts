@@ -196,16 +196,9 @@ const validations: ValidationEntry[] = [
     description: "Webhook secret store provider",
     validate: (v) => {
       const allowed = ["local", "aws-kms", "gcp-kms", "vault"];
-      return { ok: allowed.includes(v), message: !allowed.includes(v) ? `must be one of: ${allowed.join(", ")}` : undefined };
-    },
-  },
-  {
-    name: "LOCAL_SECRET_STORE_KEY",
-    required: false,
-    description: "Key for local secret store (only if provider=local)",
-    validate: (v) => {
-      if (v.length < 32) return { ok: false, message: "must be at least 32 characters" };
-      return isNotPlaceholder()(v);
+      if (!allowed.includes(v)) return { ok: false, message: `must be one of: ${allowed.join(", ")}` };
+      if (v === "local") return { ok: false, message: `"local" provider is rejected in production. Use aws-kms, gcp-kms, or vault.` };
+      return { ok: true };
     },
   },
   {
@@ -214,6 +207,31 @@ const validations: ValidationEntry[] = [
     description: "Pepper for SCIM token hashing",
     validate: minLength(32),
   },
+  {
+    name: "WEBHOOK_SECRET_PEPPER",
+    required: true,
+    description: "Pepper for webhook secret store key derivation",
+    validate: minLength(32),
+  },
+  {
+    name: "AUDIT_EXPORT_SECRET",
+    required: false,
+    description: "HMAC secret for audit export signing (falls back to API_KEY_PEPPER if empty)",
+    validate: (v) => {
+      if (v.length > 0 && v.length < 32) return { ok: false, message: "if set, must be at least 32 characters" };
+      return { ok: true };
+    },
+  },
+  {
+    name: "REPORT_WORKER_TOKEN",
+    required: true,
+    description: "Auth token for report worker",
+    validate: (v) => {
+      const len = minLength(32)(v);
+      if (!len.ok) return len;
+      return isNotPlaceholder()(v);
+    },
+  },
 
   // ─── Vector / RAG ───
   {
@@ -221,11 +239,13 @@ const validations: ValidationEntry[] = [
     required: true,
     description: "Vector store provider",
     validate: (v) => {
+      const allowed = ["qdrant", "pgvector"];
       const disallowed = ["memory"];
-      return { ok: !disallowed.includes(v), message: disallowed.includes(v) ? `"memory" provider is not allowed in production` : undefined };
+      if (disallowed.includes(v)) return { ok: false, message: `"memory" provider is not allowed in production` };
+      if (!allowed.includes(v)) return { ok: false, message: `must be one of: ${allowed.join(", ")}` };
+      return { ok: true };
     },
   },
-
   // ─── Feature flags ───
   {
     name: "ENABLE_SEMANTIC_DETECTORS",
@@ -246,8 +266,10 @@ const validations: ValidationEntry[] = [
     required: true,
     description: "Email delivery provider",
     validate: (v) => {
-      const allowed = ["mock", "resend", "aws-ses", "smtp"];
-      return { ok: allowed.includes(v), message: !allowed.includes(v) ? `must be one of: ${allowed.join(", ")}` : undefined };
+      const allowed = ["resend", "aws-ses", "smtp"];
+      if (v === "mock") return { ok: false, message: "\"mock\" provider is not allowed in production. Use resend, aws-ses, or smtp." };
+      if (!allowed.includes(v)) return { ok: false, message: `must be one of: ${allowed.join(", ")}` };
+      return { ok: true };
     },
   },
   {
@@ -256,6 +278,61 @@ const validations: ValidationEntry[] = [
     description: "Sender email address",
     validate: (v) => {
       if (v.includes("example.com") || v.includes("test")) return { ok: false, message: "must not use example/test domain in production" };
+      return { ok: true };
+    },
+  },
+  {
+    name: "SMTP_PORT",
+    required: false,
+    description: "SMTP port (required when EMAIL_PROVIDER=smtp)",
+    validate: isInteger(1, 65535),
+  },
+
+  // ─── Billing (Razorpay) ───
+  {
+    name: "RAZORPAY_KEY_ID",
+    required: true,
+    description: "Razorpay live-mode key ID",
+    validate: (v) => {
+      if (v.includes("test")) return { ok: false, message: "appears to be a test key; use live-mode key in production" };
+      return { ok: true };
+    },
+  },
+  {
+    name: "RAZORPAY_KEY_SECRET",
+    required: true,
+    description: "Razorpay live-mode key secret",
+    validate: minLength(16),
+  },
+  {
+    name: "RAZORPAY_WEBHOOK_SECRET",
+    required: true,
+    description: "Razorpay webhook HMAC secret for signature verification",
+    validate: minLength(16),
+  },
+
+  // ─── Distributed Redis ───
+  {
+    name: "UPSTASH_REDIS_REST_URL",
+    required: false,
+    description: "Upstash Redis REST API URL (preferred for multi-instance deployments)",
+    validate: (v) => {
+      if (!v) return { ok: true };
+      return isUrl()(v);
+    },
+  },
+  {
+    name: "UPSTASH_REDIS_REST_TOKEN",
+    required: false,
+    description: "Upstash Redis REST API token",
+  },
+  {
+    name: "REDIS_URL",
+    required: false,
+    description: "Standard Redis connection URL (alternative to Upstash)",
+    validate: (v) => {
+      if (!v) return { ok: true };
+      if (v.includes("127.0.0.1") || v.includes("localhost")) return { ok: false, message: "must not point to localhost in production" };
       return { ok: true };
     },
   },
@@ -274,7 +351,7 @@ const validations: ValidationEntry[] = [
     validate: isInteger(1, 10000),
   },
 
-  // ─── Webhook / Redis ───
+  // ─── Worker ports ───
   {
     name: "WEBHOOK_WORKER_HEALTH_PORT",
     required: false,
@@ -282,10 +359,137 @@ const validations: ValidationEntry[] = [
     validate: isInteger(1024, 65535),
   },
   {
+    name: "SIEM_WORKER_HEALTH_PORT",
+    required: false,
+    description: "SIEM worker health check port",
+    validate: isInteger(1024, 65535),
+  },
+  {
+    name: "THREAT_INTEL_WORKER_HEALTH_PORT",
+    required: false,
+    description: "Threat intel worker health check port",
+    validate: isInteger(1024, 65535),
+  },
+  {
     name: "SIEM_WORKER_INTERVAL_MS",
     required: false,
     description: "SIEM worker poll interval in ms",
     validate: isInteger(1000, 300000),
+  },
+  {
+    name: "WEBHOOK_WORKER_INTERVAL_MS",
+    required: false,
+    description: "Webhook worker poll interval in ms",
+    validate: isInteger(1000, 300000),
+  },
+];
+
+// ─── Provider-specific conditional checks ───
+
+interface ConditionalCheck {
+  name: string;
+  condition: (env: Record<string, string>) => boolean;
+  description: string;
+  severity: "ERROR" | "WARN";
+}
+
+const conditionalChecks: ConditionalCheck[] = [
+  // KMS provider checks
+  {
+    name: "AWS_KMS_KEY_ID",
+    condition: (env) => env.SECRET_STORE_PROVIDER === "aws-kms" && !env.AWS_KMS_KEY_ID,
+    description: "Required when SECRET_STORE_PROVIDER=aws-kms",
+    severity: "ERROR",
+  },
+  {
+    name: "AWS_ACCESS_KEY_ID",
+    condition: (env) => env.SECRET_STORE_PROVIDER === "aws-kms" && !env.AWS_ACCESS_KEY_ID,
+    description: "Required when SECRET_STORE_PROVIDER=aws-kms",
+    severity: "ERROR",
+  },
+  {
+    name: "AWS_SECRET_ACCESS_KEY",
+    condition: (env) => env.SECRET_STORE_PROVIDER === "aws-kms" && !env.AWS_SECRET_ACCESS_KEY,
+    description: "Required when SECRET_STORE_PROVIDER=aws-kms",
+    severity: "ERROR",
+  },
+  {
+    name: "GCP_PROJECT_ID",
+    condition: (env) => env.SECRET_STORE_PROVIDER === "gcp-kms" && !env.GCP_PROJECT_ID,
+    description: "Required when SECRET_STORE_PROVIDER=gcp-kms",
+    severity: "ERROR",
+  },
+  {
+    name: "GCP_KEY_RING",
+    condition: (env) => env.SECRET_STORE_PROVIDER === "gcp-kms" && !env.GCP_KEY_RING,
+    description: "Required when SECRET_STORE_PROVIDER=gcp-kms",
+    severity: "ERROR",
+  },
+  {
+    name: "GCP_CRYPTO_KEY",
+    condition: (env) => env.SECRET_STORE_PROVIDER === "gcp-kms" && !env.GCP_CRYPTO_KEY,
+    description: "Required when SECRET_STORE_PROVIDER=gcp-kms",
+    severity: "ERROR",
+  },
+  {
+    name: "VAULT_ADDR",
+    condition: (env) => env.SECRET_STORE_PROVIDER === "vault" && !env.VAULT_ADDR,
+    description: "Required when SECRET_STORE_PROVIDER=vault",
+    severity: "ERROR",
+  },
+  {
+    name: "VAULT_TOKEN",
+    condition: (env) => env.SECRET_STORE_PROVIDER === "vault" && !env.VAULT_TOKEN,
+    description: "Required when SECRET_STORE_PROVIDER=vault",
+    severity: "ERROR",
+  },
+
+  // Email provider checks
+  {
+    name: "RESEND_API_KEY",
+    condition: (env) => env.EMAIL_PROVIDER === "resend" && !env.RESEND_API_KEY,
+    description: "Required when EMAIL_PROVIDER=resend",
+    severity: "ERROR",
+  },
+  {
+    name: "SMTP_HOST",
+    condition: (env) => env.EMAIL_PROVIDER === "smtp" && !env.SMTP_HOST,
+    description: "Required when EMAIL_PROVIDER=smtp",
+    severity: "ERROR",
+  },
+  {
+    name: "SMTP_USER",
+    condition: (env) => env.EMAIL_PROVIDER === "smtp" && !env.SMTP_USER,
+    description: "Required when EMAIL_PROVIDER=smtp",
+    severity: "ERROR",
+  },
+  {
+    name: "SMTP_PASS",
+    condition: (env) => env.EMAIL_PROVIDER === "smtp" && !env.SMTP_PASS,
+    description: "Required when EMAIL_PROVIDER=smtp",
+    severity: "ERROR",
+  },
+
+  // Vector provider checks
+  {
+    name: "QDRANT_URL",
+    condition: (env) => env.VECTOR_PROVIDER === "qdrant" && !env.QDRANT_URL,
+    description: "Required when VECTOR_PROVIDER=qdrant",
+    severity: "ERROR",
+  },
+  {
+    name: "PGVECTOR_DATABASE_URL",
+    condition: (env) => env.VECTOR_PROVIDER === "pgvector" && !env.PGVECTOR_DATABASE_URL,
+    description: "Required when VECTOR_PROVIDER=pgvector",
+    severity: "ERROR",
+  },
+
+  // Redis: warn if no distributed Redis is configured
+  {
+    name: "REDIS_URL / UPSTASH_REDIS_REST_URL",
+    condition: (env) => !env.UPSTASH_REDIS_REST_URL && !env.REDIS_URL,
+    description: "No distributed Redis configured. Multi-instance deployments require Redis for rate limiting.",
+    severity: "WARN",
   },
 ];
 
@@ -336,6 +540,15 @@ function main() {
       }
     } else {
       results.push({ name: entry.name, severity: "INFO", message: `OK — ${entry.description}` });
+    }
+  }
+
+  // ─── Provider-specific conditional checks ───
+  for (const check of conditionalChecks) {
+    if (check.condition(merged)) {
+      results.push({ name: check.name, severity: check.severity, message: `MISSING — ${check.description}` });
+    } else {
+      results.push({ name: check.name, severity: "INFO", message: `OK — ${check.description}` });
     }
   }
 

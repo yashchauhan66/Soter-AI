@@ -1,4 +1,4 @@
-import type { AnalyzeRequest, ClientOptions, ExpressLikeNext, ExpressLikeRequest, ExpressLikeResponse, GuardInputRequest, GuardOutputRequest, GuardResult, ProtectChatOptions, ProtectChatResult, ProtectRagOptions, ProtectRagResult, RagSource, SecureChatOptions, SecureChatResult } from "./types";
+import type { AnalyzeRequest, AgentActionCheckRequest, AgentActionCheckResponse, AgentApprovalResolveRequest, AgentApprovalResolveResponse, AgentDataCheckRequest, AgentOutputCheckRequest, AgentReplayResponse, BrowserFormCheckRequest, BrowserFormCheckResponse, CanaryCheckRequest, CanaryCheckResponse, CheckContextFlowRequest, CheckContextFlowResponse, CheckLegalBoundaryRequest, CheckLegalBoundaryResponse, CheckMemoryPoisoningRequest, CheckMemoryPoisoningResponse, CreateCanaryRequest, CreateCanaryResponse, ClientOptions, ExpressLikeNext, ExpressLikeRequest, ExpressLikeResponse, GuardInputRequest, GuardOutputRequest, GuardResult, LineageIncidentsResponse, LineageSessionResponse, McpDriftsResponse, MemoryCheckRequest, MemoryCheckResponse, ProtectChatOptions, ProtectChatResult, ProtectRagOptions, ProtectRagResult, RagSource, RagTrustScoreRequest, RagTrustScoreResponse, RegisterContextSourceRequest, RegisterContextSourceResponse, RegisterMcpServerRequest, RegisterMcpServerResponse, RunBlastRadiusScenarioRequest, RunBlastRadiusScenarioResponse, ScanMcpToolsRequest, ScanMcpToolsResponse, SecureChatOptions, SecureChatResult, SimulateBlastRadiusRequest, SimulateBlastRadiusResponse, SnapshotMcpToolsRequest, SnapshotMcpToolsResponse, StoreSafeMemoryRequest, StoreSafeMemoryResponse, StartAgentSessionRequest, StartAgentSessionResponse, ToolExecutionContext, ToolExecutor, WrappedToolResult } from "./types";
 export interface CyberRakshakGuard {
     input(message: string, options?: Omit<GuardInputRequest, "message">): Promise<GuardResult>;
     output(aiResponse: string, options?: Omit<GuardOutputRequest, "aiResponse">): Promise<GuardResult>;
@@ -14,8 +14,60 @@ export interface CyberRakshakGuard {
     getSafeOutput(result: GuardResult, originalOutput: string): string;
     createExpressMiddleware(options: Omit<ProtectChatOptions, "message" | "userId" | "sessionId" | "metadata">): (req: ExpressLikeRequest, res: ExpressLikeResponse, next?: ExpressLikeNext) => Promise<unknown>;
     createNextHandler(options: Omit<ProtectChatOptions, "message" | "userId" | "sessionId" | "metadata">): (request: Request) => Promise<Response>;
+    startAgentSession(input: StartAgentSessionRequest): Promise<StartAgentSessionResponse>;
+    checkAgentAction(input: AgentActionCheckRequest): Promise<AgentActionCheckResponse>;
+    checkToolUse(input: AgentActionCheckRequest): Promise<AgentActionCheckResponse>;
+    checkDataEgress(input: AgentDataCheckRequest): Promise<AgentActionCheckResponse>;
+    checkDataLeak(input: AgentDataCheckRequest): Promise<AgentActionCheckResponse>;
+    checkAgentOutput(input: AgentOutputCheckRequest): Promise<AgentActionCheckResponse>;
+    resolveAgentApproval(input: AgentApprovalResolveRequest): Promise<AgentApprovalResolveResponse>;
+    scanMcpTools(input: ScanMcpToolsRequest): Promise<ScanMcpToolsResponse>;
+    checkBrowserForm(input: BrowserFormCheckRequest): Promise<BrowserFormCheckResponse>;
+    checkMemory(input: MemoryCheckRequest): Promise<MemoryCheckResponse>;
+    scoreRagDocument(input: RagTrustScoreRequest): Promise<RagTrustScoreResponse>;
+    createCanary(input: CreateCanaryRequest): Promise<CreateCanaryResponse>;
+    checkCanaryLeak(input: CanaryCheckRequest): Promise<CanaryCheckResponse>;
+    getAgentReplay(sessionId: string): Promise<AgentReplayResponse>;
+    registerContextSource(input: RegisterContextSourceRequest): Promise<RegisterContextSourceResponse>;
+    checkContextFlow(input: CheckContextFlowRequest): Promise<CheckContextFlowResponse>;
+    getLineageSession(sessionId: string): Promise<LineageSessionResponse>;
+    listLineageIncidents(status?: string): Promise<LineageIncidentsResponse>;
+    simulateBlastRadius(input: SimulateBlastRadiusRequest): Promise<SimulateBlastRadiusResponse>;
+    runBlastRadiusScenario(input: RunBlastRadiusScenarioRequest): Promise<RunBlastRadiusScenarioResponse>;
+    checkMemoryPoisoning(input: CheckMemoryPoisoningRequest): Promise<CheckMemoryPoisoningResponse>;
+    storeSafeMemory(input: StoreSafeMemoryRequest): Promise<StoreSafeMemoryResponse>;
+    quarantineMemory(memoryRecordId: string): Promise<{
+        id: string;
+        status: string;
+    }>;
+    registerMcpServer(input: RegisterMcpServerRequest): Promise<RegisterMcpServerResponse>;
+    snapshotMcpTools(input: SnapshotMcpToolsRequest): Promise<SnapshotMcpToolsResponse>;
+    listMcpDrifts(status?: string): Promise<McpDriftsResponse>;
+    checkLegalBoundary(input: CheckLegalBoundaryRequest): Promise<CheckLegalBoundaryResponse>;
+    wrapTool<TArgs, TResult>(context: Omit<ToolExecutionContext<TArgs>, "args">, executor: ToolExecutor<TArgs, TResult>): (args: TArgs) => Promise<WrappedToolResult<TResult>>;
+    wrapMcpTool<TArgs, TResult>(toolName: string, executor: ToolExecutor<TArgs, TResult>, defaults?: Partial<Omit<ToolExecutionContext<TArgs>, "args" | "tool">>): (args: TArgs) => Promise<WrappedToolResult<TResult>>;
+    createOpenClawAdapter(options: {
+        sessionId: string;
+        agentName?: string;
+    }): {
+        beforeToolCall: (input: AgentActionCheckRequest) => Promise<AgentActionCheckResponse>;
+    };
+    createLangChainToolWrapper<TArgs, TResult>(toolName: string, executor: ToolExecutor<TArgs, TResult>, defaults?: Partial<Omit<ToolExecutionContext<TArgs>, "args" | "tool">>): (args: TArgs) => Promise<WrappedToolResult<TResult>>;
+    createGenericChatbotWrapper(options: {
+        sessionId?: string;
+        agentName?: string;
+    }): {
+        guardInput: (message: string) => Promise<GuardResult>;
+        checkAction: (input: AgentActionCheckRequest) => Promise<AgentActionCheckResponse>;
+        checkData: (input: AgentDataCheckRequest) => Promise<AgentActionCheckResponse>;
+        guardOutput: (aiResponse: string) => Promise<GuardResult>;
+    };
+    createExpressAgentMiddleware(): (req: ExpressLikeRequest, res: ExpressLikeResponse, next?: ExpressLikeNext) => Promise<unknown>;
+    createNextAgentHandler(): (request: Request) => Promise<Response>;
 }
 export declare function createClient(options: ClientOptions): CyberRakshakGuard;
+export declare function createAgentFirewallClient(options: ClientOptions): CyberRakshakGuard;
+export declare function createCybersecurityGuardClient(options: ClientOptions): CyberRakshakGuard;
 export declare class GuardClient implements CyberRakshakGuard {
     private readonly apiKey;
     private readonly baseUrl;
@@ -38,7 +90,59 @@ export declare class GuardClient implements CyberRakshakGuard {
     secureChat(input: SecureChatOptions): Promise<SecureChatResult>;
     createExpressMiddleware(options: Omit<ProtectChatOptions, "message" | "userId" | "sessionId" | "metadata">): (req: ExpressLikeRequest, res: ExpressLikeResponse, next?: ExpressLikeNext) => Promise<unknown>;
     createNextHandler(options: Omit<ProtectChatOptions, "message" | "userId" | "sessionId" | "metadata">): (request: Request) => Promise<Response>;
+    startAgentSession(input: StartAgentSessionRequest): Promise<StartAgentSessionResponse>;
+    checkAgentAction(input: AgentActionCheckRequest): Promise<AgentActionCheckResponse>;
+    checkToolUse(input: AgentActionCheckRequest): Promise<AgentActionCheckResponse>;
+    checkDataLeak(input: AgentDataCheckRequest): Promise<AgentActionCheckResponse>;
+    checkDataEgress(input: AgentDataCheckRequest): Promise<AgentActionCheckResponse>;
+    checkAgentOutput(input: AgentOutputCheckRequest): Promise<AgentActionCheckResponse>;
+    resolveAgentApproval(input: AgentApprovalResolveRequest): Promise<AgentApprovalResolveResponse>;
+    scanMcpTools(input: ScanMcpToolsRequest): Promise<ScanMcpToolsResponse>;
+    checkBrowserForm(input: BrowserFormCheckRequest): Promise<BrowserFormCheckResponse>;
+    checkMemory(input: MemoryCheckRequest): Promise<MemoryCheckResponse>;
+    scoreRagDocument(input: RagTrustScoreRequest): Promise<RagTrustScoreResponse>;
+    createCanary(input: CreateCanaryRequest): Promise<CreateCanaryResponse>;
+    checkCanaryLeak(input: CanaryCheckRequest): Promise<CanaryCheckResponse>;
+    getAgentReplay(sessionId: string): Promise<AgentReplayResponse>;
+    registerContextSource(input: RegisterContextSourceRequest): Promise<RegisterContextSourceResponse>;
+    checkContextFlow(input: CheckContextFlowRequest): Promise<CheckContextFlowResponse>;
+    getLineageSession(sessionId: string): Promise<LineageSessionResponse>;
+    listLineageIncidents(status?: string): Promise<LineageIncidentsResponse>;
+    simulateBlastRadius(input: SimulateBlastRadiusRequest): Promise<SimulateBlastRadiusResponse>;
+    runBlastRadiusScenario(input: RunBlastRadiusScenarioRequest): Promise<RunBlastRadiusScenarioResponse>;
+    checkMemoryPoisoning(input: CheckMemoryPoisoningRequest): Promise<CheckMemoryPoisoningResponse>;
+    storeSafeMemory(input: StoreSafeMemoryRequest): Promise<StoreSafeMemoryResponse>;
+    quarantineMemory(memoryRecordId: string): Promise<{
+        id: string;
+        status: string;
+    }>;
+    registerMcpServer(input: RegisterMcpServerRequest): Promise<RegisterMcpServerResponse>;
+    snapshotMcpTools(input: SnapshotMcpToolsRequest): Promise<SnapshotMcpToolsResponse>;
+    listMcpDrifts(status?: string): Promise<McpDriftsResponse>;
+    checkLegalBoundary(input: CheckLegalBoundaryRequest): Promise<CheckLegalBoundaryResponse>;
+    wrapTool<TArgs, TResult>(context: Omit<ToolExecutionContext<TArgs>, "args">, executor: ToolExecutor<TArgs, TResult>): (args: TArgs) => Promise<WrappedToolResult<TResult>>;
+    wrapMcpTool<TArgs, TResult>(toolName: string, executor: ToolExecutor<TArgs, TResult>, defaults?: Partial<Omit<ToolExecutionContext<TArgs>, "args" | "tool">>): (args: TArgs) => Promise<WrappedToolResult<TResult>>;
+    createOpenClawAdapter(options: {
+        sessionId: string;
+        agentName?: string;
+    }): {
+        beforeToolCall: (input: AgentActionCheckRequest) => Promise<AgentActionCheckResponse>;
+    };
+    createLangChainToolWrapper<TArgs, TResult>(toolName: string, executor: ToolExecutor<TArgs, TResult>, defaults?: Partial<Omit<ToolExecutionContext<TArgs>, "args" | "tool">>): (args: TArgs) => Promise<WrappedToolResult<TResult>>;
+    createGenericChatbotWrapper(options: {
+        sessionId?: string;
+        agentName?: string;
+    }): {
+        guardInput: (message: string) => Promise<GuardResult>;
+        checkAction: (input: AgentActionCheckRequest) => Promise<AgentActionCheckResponse>;
+        checkData: (input: AgentDataCheckRequest) => Promise<AgentActionCheckResponse>;
+        guardOutput: (aiResponse: string) => Promise<GuardResult>;
+    };
+    createExpressAgentMiddleware(): (req: ExpressLikeRequest, res: ExpressLikeResponse, next?: ExpressLikeNext) => Promise<unknown>;
+    createNextAgentHandler(): (request: Request) => Promise<Response>;
     private post;
+    private get;
+    private handleResponse;
     private fetchWithNetworkRetry;
 }
 //# sourceMappingURL=client.d.ts.map
