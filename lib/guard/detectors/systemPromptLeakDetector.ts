@@ -12,6 +12,7 @@ const inputRules: PatternRule[] = [
 
 const outputRules: PatternRule[] = [
   { pattern: /\b(?:system prompt|developer message|hidden instructions?|internal policy|confidential instructions?|assistant instructions?)\s*(?:is\b)?\s*:/i, label: "System instruction disclosure", message: "The output appears to disclose internal instructions.", severity: "CRITICAL", score: 60 },
+  { pattern: /\b(?:the )?(?:hidden |confidential )?(?:system prompt|developer message|hidden instructions?|internal policy|confidential instructions?|assistant instructions?)\s+(?:is|are|says|contains)\b/i, label: "System instruction disclosure", message: "The output appears to disclose internal instructions.", severity: "CRITICAL", score: 60 },
   { pattern: /you are ChatGPT with instructions/i, label: "Prompt disclosure phrase", message: "The output resembles leaked model setup text.", severity: "CRITICAL", score: 60 },
   { pattern: /["']?(?:system_prompt|developer_message|hidden_instructions)["']?\s*[:=]/i, label: "Structured prompt disclosure", message: "The output appears to expose internal instructions in a structured format.", severity: "CRITICAL", score: 60 },
   { pattern: /<(?:system|developer|instructions)>[\s\S]{1,2000}<\/(?:system|developer|instructions)>/i, label: "Tagged prompt disclosure", message: "The output appears to expose tagged internal instructions.", severity: "CRITICAL", score: 60 },

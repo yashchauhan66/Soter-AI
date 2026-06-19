@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GuardClient = void 0;
+exports.CyberRakshakClient = exports.GuardClient = void 0;
+exports.normalizeDecision = normalizeDecision;
 exports.createClient = createClient;
 exports.createAgentFirewallClient = createAgentFirewallClient;
 exports.createCybersecurityGuardClient = createCybersecurityGuardClient;
@@ -8,6 +9,21 @@ const errors_1 = require("./errors");
 const DEFAULT_BASE_URL = "https://api.cybersecurityguard.com";
 const DEFAULT_TIMEOUT_MS = 8000;
 const DEFAULT_RETRY_BACKOFF_MS = 250;
+const DEFAULT_BLOCKED_RESPONSE = "This request was blocked for security reasons.";
+function normalizeDecision(action) {
+    switch (action) {
+        case "ALLOW":
+            return "ALLOW";
+        case "ALLOW_WITH_REDACTION":
+        case "REWRITE":
+            return "REDACT";
+        case "HUMAN_REVIEW":
+            return "HUMAN_REVIEW";
+        case "BLOCK":
+        default:
+            return "BLOCK";
+    }
+}
 function createClient(options) {
     return new GuardClient(options);
 }
@@ -19,13 +35,18 @@ function createCybersecurityGuardClient(options) {
 }
 class GuardClient {
     constructor(options) {
-        if (!options.apiKey)
+        if (!options?.apiKey)
             throw new errors_1.CyberRakshakError("apiKey is required.", { code: "config_error" });
+        if (isBrowserLike()) {
+            console.warn("[cybersecurityguard] GuardClient appears to be running in a browser. Never embed an API key in client-side code.");
+        }
         this.apiKey = options.apiKey;
         this.baseUrl = (options.baseUrl ?? DEFAULT_BASE_URL).replace(/\/$/, "");
+        this.projectId = options.projectId;
         this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
-        this.maxRetries = options.maxRetries ?? 0;
+        this.maxRetries = options.maxRetries ?? options.retries ?? 0;
         this.retryBackoffMs = options.retryBackoffMs ?? DEFAULT_RETRY_BACKOFF_MS;
+        this.debug = options.debug ?? false;
         this.fetchImpl = options.fetch ?? globalThis.fetch;
         this.extraHeaders = options.headers ?? {};
         if (!this.fetchImpl) {
@@ -39,10 +60,26 @@ class GuardClient {
         return this.guardOutput({ ...options, aiResponse });
     }
     guardInput(input) {
-        return this.post("/api/guard/input", input, true);
+        const message = input.message ?? input.text;
+        if (!message?.trim())
+            throw new errors_1.CyberRakshakValidationError("guardInput requires `text` or `message`.", 400);
+        return this.post("/api/guard/input", {
+            message,
+            userId: input.userId,
+            sessionId: input.sessionId,
+            metadata: this.withProjectMetadata(input.metadata),
+        }, true);
     }
     guardOutput(input) {
-        return this.post("/api/guard/output", input, true);
+        const aiResponse = input.aiResponse ?? input.text;
+        if (!aiResponse?.trim())
+            throw new errors_1.CyberRakshakValidationError("guardOutput requires `text` or `aiResponse`.", 400);
+        return this.post("/api/guard/output", {
+            aiResponse,
+            userId: input.userId,
+            sessionId: input.sessionId,
+            metadata: this.withProjectMetadata(input.metadata),
+        }, true);
     }
     analyze(textOrInput, direction) {
         const input = typeof textOrInput === "string" ? { text: textOrInput, direction: direction ?? "INPUT" } : textOrInput;
@@ -51,15 +88,25 @@ class GuardClient {
     shouldCallLLM(result) {
         return result.allowed && (result.action === "ALLOW" || result.action === "ALLOW_WITH_REDACTION" || result.action === "REWRITE");
     }
+    isAllowed(result) {
+        return result.allowed === true && this.decisionOf(result) !== "BLOCK";
+    }
+    shouldBlock(result) {
+        const decision = this.decisionOf(result);
+        return result.allowed === false || decision === "BLOCK" || decision === "HUMAN_REVIEW";
+    }
     getSafeInput(result, originalMessage) {
         return result.safeText ?? result.redactedText ?? originalMessage;
     }
     getSafeOutput(result, originalOutput) {
         return result.safeText ?? result.redactedText ?? originalOutput;
     }
+    getSafeText(result, fallback) {
+        return result.safeText ?? result.redactedText ?? fallback;
+    }
     async protectChat(input) {
         const startedAt = Date.now();
-        const blockedResponse = input.blockedResponse ?? "This request was blocked for security reasons.";
+        const blockedResponse = input.blockedResponse ?? DEFAULT_BLOCKED_RESPONSE;
         const outputBlockedResponse = input.outputBlockedResponse ?? "The assistant response was blocked for security reasons.";
         const inputGuard = await this.guardInput({
             message: input.message,
@@ -100,7 +147,7 @@ class GuardClient {
     }
     async protectRag(input) {
         const startedAt = Date.now();
-        const blockedResponse = input.blockedResponse ?? "This request was blocked for security reasons.";
+        const blockedResponse = input.blockedResponse ?? DEFAULT_BLOCKED_RESPONSE;
         const outputBlockedResponse = input.outputBlockedResponse ?? "The assistant response was blocked for security reasons.";
         const inputGuard = await this.guardInput({
             message: input.query,
@@ -159,7 +206,7 @@ class GuardClient {
         };
     }
     async secureChat(input) {
-        const blocked = input.blockedResponse ?? "This request was blocked for security reasons.";
+        const blocked = input.blockedResponse ?? DEFAULT_BLOCKED_RESPONSE;
         const result = await this.protectChat({
             message: input.message,
             userId: input.userId,
@@ -178,6 +225,16 @@ class GuardClient {
             inputResult: result.inputGuard,
             outputResult: result.outputGuard,
         };
+    }
+    guardConversation(input) {
+        return this.secureChat({
+            message: input.input,
+            userId: input.userId,
+            sessionId: input.sessionId,
+            metadata: input.metadata,
+            blockedResponse: input.blockedResponse,
+            callLLM: ({ safeInput }) => input.callLLM(safeInput),
+        });
     }
     createExpressMiddleware(options) {
         return async (req, res, next) => {
@@ -446,6 +503,7 @@ class GuardClient {
         };
         if (requireApiKey)
             headers["x-api-key"] = this.apiKey;
+        this.log(`POST ${path}`);
         const response = await this.fetchWithNetworkRetry(url, {
             method: "POST",
             headers,
@@ -464,6 +522,7 @@ class GuardClient {
         };
         if (requireApiKey)
             headers["x-api-key"] = this.apiKey;
+        this.log(`GET ${path}`);
         const response = await this.fetchWithNetworkRetry(url, {
             method: "GET",
             headers,
@@ -483,9 +542,7 @@ class GuardClient {
             }
         }
         if (!response.ok) {
-            const message = (data && typeof data === "object" && "message" in data && typeof data.message === "string")
-                ? data.message
-                : `Request failed with status ${response.status}.`;
+            const message = extractMessage(data) ?? `Request failed with status ${response.status}.`;
             if (response.status === 401 || response.status === 403)
                 throw new errors_1.CyberRakshakAuthError(message, response.status);
             if (response.status === 429) {
@@ -496,6 +553,11 @@ class GuardClient {
                 throw new errors_1.CyberRakshakValidationError(message, response.status, data);
             throw new errors_1.CyberRakshakError(message, { status: response.status, details: data });
         }
+        if (data && typeof data === "object" && "action" in data && !("decision" in data)) {
+            const result = data;
+            if (typeof result.action === "string")
+                result.decision = normalizeDecision(result.action);
+        }
         return data;
     }
     async fetchWithNetworkRetry(url, init) {
@@ -505,16 +567,31 @@ class GuardClient {
                 return await this.fetchImpl(url, init);
             }
             catch (caught) {
+                const aborted = caught instanceof Error && caught.name === "AbortError";
                 if (attempt >= this.maxRetries) {
-                    throw new errors_1.CyberRakshakNetworkError(caught instanceof Error ? caught.message : "Network request failed.", caught);
+                    throw new errors_1.CyberRakshakNetworkError(aborted ? `Request timed out after ${this.timeoutMs}ms.` : caught instanceof Error ? caught.message : "Network request failed.", caught);
                 }
                 attempt += 1;
                 await delay(this.retryBackoffMs * attempt);
             }
         }
     }
+    decisionOf(result) {
+        return result.decision ?? normalizeDecision(result.action);
+    }
+    withProjectMetadata(metadata) {
+        if (!this.projectId)
+            return metadata;
+        return { ...(metadata ?? {}), projectId: this.projectId };
+    }
+    log(message) {
+        if (!this.debug)
+            return;
+        console.debug(`[cybersecurityguard] ${message}`);
+    }
 }
 exports.GuardClient = GuardClient;
+exports.CyberRakshakClient = GuardClient;
 function asMetadata(value) {
     if (!value || typeof value !== "object" || Array.isArray(value))
         return undefined;
@@ -530,6 +607,14 @@ function jsonResponse(data, status) {
         status,
         headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
     });
+}
+function extractMessage(data) {
+    if (data && typeof data === "object" && "message" in data) {
+        const message = data.message;
+        if (typeof message === "string")
+            return message;
+    }
+    return undefined;
 }
 function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -548,4 +633,8 @@ function failClosedDecision(reason, riskLevel) {
 }
 function isAgentDestination(value) {
     return value === "external" || value === "internal" || value === "local" || value === "unknown";
+}
+function isBrowserLike() {
+    return (typeof window !== "undefined" &&
+        typeof window.document !== "undefined");
 }

@@ -9,6 +9,7 @@
 import { createHash, randomBytes, timingSafeEqual } from "crypto";
 import type { OrgRole } from "@prisma/client";
 import { db } from "../db";
+import { sanitizeMetadata } from "../guard/logSafety";
 
 function pepper(): string {
   const value = process.env.SCIM_TOKEN_PEPPER ?? process.env.API_KEY_PEPPER;
@@ -225,6 +226,20 @@ export function applyUserPatch(
     }
   }
   return next;
+}
+
+export function minimizedScimUserMetadata(input: {
+  externalId?: string | null;
+  userName?: string | null;
+  active?: boolean | null;
+  operation: "create" | "replace" | "patch" | "delete";
+}) {
+  return sanitizeMetadata({
+    externalId: input.externalId ?? null,
+    userNameDomain: input.userName?.includes("@") ? input.userName.split("@").at(-1)?.toLowerCase() : null,
+    active: input.active ?? null,
+    operation: input.operation,
+  });
 }
 
 export function scimGroupMembersFromValue(value: unknown): Array<{ value: string; display?: string }> {

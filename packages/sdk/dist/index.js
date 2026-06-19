@@ -14,7 +14,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CybersecurityGuard = exports.CyberRakshakGuard = exports.createClient = exports.createCybersecurityGuardClient = exports.createAgentFirewallClient = exports.GuardClient = void 0;
+exports.CybersecurityGuard = exports.CyberRakshakGuard = exports.normalizeDecision = exports.createClient = exports.createCybersecurityGuardClient = exports.createAgentFirewallClient = exports.GuardClient = exports.CyberRakshakClient = void 0;
 exports.startAgentSession = startAgentSession;
 exports.checkAgentAction = checkAgentAction;
 exports.checkToolUse = checkToolUse;
@@ -51,11 +51,14 @@ exports.checkLegalBoundary = checkLegalBoundary;
 exports.createNextAgentHandler = createNextAgentHandler;
 __exportStar(require("./types"), exports);
 __exportStar(require("./errors"), exports);
+__exportStar(require("./agent-passport"), exports);
 var client_1 = require("./client");
+Object.defineProperty(exports, "CyberRakshakClient", { enumerable: true, get: function () { return client_1.CyberRakshakClient; } });
 Object.defineProperty(exports, "GuardClient", { enumerable: true, get: function () { return client_1.GuardClient; } });
 Object.defineProperty(exports, "createAgentFirewallClient", { enumerable: true, get: function () { return client_1.createAgentFirewallClient; } });
 Object.defineProperty(exports, "createCybersecurityGuardClient", { enumerable: true, get: function () { return client_1.createCybersecurityGuardClient; } });
 Object.defineProperty(exports, "createClient", { enumerable: true, get: function () { return client_1.createClient; } });
+Object.defineProperty(exports, "normalizeDecision", { enumerable: true, get: function () { return client_1.normalizeDecision; } });
 const client_2 = require("./client");
 function startAgentSession(options, input) {
     return (0, client_2.createAgentFirewallClient)(options).startAgentSession(input);
@@ -117,7 +120,6 @@ function createExpressAgentMiddleware(options) {
 function createGenericChatbotWrapper(options, wrapperOptions = {}) {
     return (0, client_2.createAgentFirewallClient)(options).createGenericChatbotWrapper(wrapperOptions);
 }
-// --- Advanced AI Security MVP 1 ---
 function registerContextSource(options, input) {
     return (0, client_2.createAgentFirewallClient)(options).registerContextSource(input);
 }
@@ -136,7 +138,6 @@ function simulateBlastRadius(options, input) {
 function runBlastRadiusScenario(options, input) {
     return (0, client_2.createAgentFirewallClient)(options).runBlastRadiusScenario(input);
 }
-// --- Advanced AI Security MVP 2 ---
 function checkMemoryPoisoning(options, input) {
     return (0, client_2.createAgentFirewallClient)(options).checkMemoryPoisoning(input);
 }
@@ -155,22 +156,21 @@ function snapshotMcpTools(options, input) {
 function listMcpDrifts(options, status) {
     return (0, client_2.createAgentFirewallClient)(options).listMcpDrifts(status);
 }
-// --- Advanced AI Security MVP 3 ---
 function checkLegalBoundary(options, input) {
     return (0, client_2.createAgentFirewallClient)(options).checkLegalBoundary(input);
 }
 function createNextAgentHandler(options) {
     return (0, client_2.createAgentFirewallClient)(options).createNextAgentHandler();
 }
-/**
- * Class form: `new CyberRakshakGuard({ apiKey })`.
- * Functionally identical to `createClient`. Implements the same surface as the GuardClient.
- */
 class CyberRakshakGuard extends client_2.GuardClient {
-    constructor(options) { super(options); }
+    constructor(options) {
+        super(options);
+    }
 }
 exports.CyberRakshakGuard = CyberRakshakGuard;
 class CybersecurityGuard extends client_2.GuardClient {
-    constructor(options) { super(options); }
+    constructor(options) {
+        super(options);
+    }
 }
 exports.CybersecurityGuard = CybersecurityGuard;

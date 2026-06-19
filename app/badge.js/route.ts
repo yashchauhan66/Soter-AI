@@ -10,7 +10,15 @@ const SCRIPT = String.raw`(function(){
   var statusUrl = origin + '/security-status/' + encodeURIComponent(slug);
   fetch(endpoint, { credentials: 'omit' }).then(function(r){ return r.ok ? r.json() : null; }).then(function(data){
     if(!data){return;}
-    var color = data.brandColor || '#31d7c8';
+    function safeColor(value){
+      if(typeof value !== 'string'){ return '#31d7c8'; }
+      var trimmed = value.trim();
+      if(/^#[0-9a-fA-F]{3,8}$/.test(trimmed)){ return trimmed; }
+      if(/^rgba?\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}(?:\s*,\s*(?:0|1|0?\.\d+))?\s*\)$/.test(trimmed)){ return trimmed; }
+      if(/^hsla?\(\s*\d{1,3}\s*,\s*\d{1,3}%\s*,\s*\d{1,3}%(?:\s*,\s*(?:0|1|0?\.\d+))?\s*\)$/.test(trimmed)){ return trimmed; }
+      return '#31d7c8';
+    }
+    var color = safeColor(data.brandColor);
     var label = ({
       PROTECTED: 'Protected',
       MONITORING_ACTIVE: 'Monitoring active',
@@ -29,8 +37,11 @@ const SCRIPT = String.raw`(function(){
       'border:1px solid '+color,
       'text-decoration:none','box-shadow:0 0 16px rgba(49,215,200,0.18)'
     ].join(';');
-    node.innerHTML = '<span style="width:8px;height:8px;border-radius:9999px;background:'+color+';display:inline-block;"></span>'
-      + 'CyberRakshak Guard · ' + label;
+    var dot = document.createElement('span');
+    dot.style.cssText = 'width:8px;height:8px;border-radius:9999px;display:inline-block;';
+    dot.style.background = color;
+    node.appendChild(dot);
+    node.appendChild(document.createTextNode('CyberRakshak Guard - ' + label));
     if(current.parentNode){ current.parentNode.insertBefore(node, current); }
   }).catch(function(){});
 })();`;

@@ -2,10 +2,10 @@
 // Every private route MUST go through one of these helpers.
 // They throw on permission failure so routes can `try/catch` via apiError.
 
+import { cache } from "react";
+import type { OrgRole, Organization, OrganizationMember } from "@prisma/client";
 import { auth } from "../../auth";
 import { db } from "../db";
-import type { OrgRole, Organization, OrganizationMember } from "@prisma/client";
-import { cache } from "react";
 import { hasPermission, type Permission } from "./permissions";
 
 export class AuthError extends Error {
@@ -43,7 +43,6 @@ export const requireUser = cache(async (): Promise<SessionUser> => {
   if (!session?.user?.id) {
     throw new AuthError("Sign in required.", 401);
   }
-  // Hydrate from DB so isAdmin is always fresh.
   const user = await db.user.findUnique({
     where: { id: session.user.id },
     select: { id: true, email: true, name: true, isAdmin: true },
@@ -52,12 +51,6 @@ export const requireUser = cache(async (): Promise<SessionUser> => {
   return { id: user.id, email: user.email, name: user.name, isAdmin: user.isAdmin };
 });
 
-/**
- * Resolve the user's "active" organization. The session does not encode
- * the active org because users may belong to many; clients pass it in via
- * cookie or query param. This helper falls back to the user's first
- * membership.
- */
 export const getActiveOrganization = cache(async (input?: { organizationId?: string | null }): Promise<{ org: Organization; membership: OrganizationMember & { role: OrgRole } } | null> => {
   const user = await requireUser();
   const targetId = input?.organizationId ?? null;
@@ -98,7 +91,6 @@ export async function requireProjectAccess(projectId: string): Promise<{ user: S
   if (!project) throw new NotFoundError("Project not found.");
   if (!project.organizationId) {
     if (project.userId !== user.id && !user.isAdmin) throw new ForbiddenError("You do not have access to this project.");
-    // Legacy project: synthesise org info via the user's default org.
     const fallback = await getActiveOrganization();
     if (!fallback) throw new ForbiddenError("No organization available.");
     return { user, org: fallback.org, role: fallback.membership.role, project };
@@ -117,11 +109,6 @@ export async function requirePermission(organizationId: string, permission: Perm
 
 export async function requireProjectPermission(projectId: string, permission: Permission) {
   const access = await requireProjectAccess(projectId);
-  // Legacy projects without an organizationId skip the org-level permission
-  // check since they are user-scoped, not org-scoped.
-  if (!access.project.organizationId) {
-    return access;
-  }
   if (!hasPermission(access.role, permission) && !access.user.isAdmin) {
     throw new ForbiddenError(`Missing permission: ${permission}`);
   }

@@ -2,6 +2,7 @@ import { apiError, jsonResponse } from "@/lib/apiResponse";
 import { requirePermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { enqueueBackgroundJob, jobAcceptedResponse } from "@/lib/backgroundJobs";
+import { checkRedisRateLimit } from "@/lib/rateLimit";
 import { z } from "zod";
 
 export const dynamic = "force-dynamic";
@@ -21,6 +22,8 @@ export async function GET(request: Request) {
     const params = Object.fromEntries(new URL(request.url).searchParams.entries());
     const parsed = schema.parse(params);
     const access = await requirePermission(parsed.organizationId, "reports:export");
+    const rate = await checkRedisRateLimit(`exports:${access.org.id}:${access.user.id}`, 10, 60_000);
+    if (!rate.allowed) return jsonResponse({ error: "Rate limit exceeded.", resetAt: rate.resetAt }, { status: 429 });
 
     const fetchOptions = {
       organizationId: access.org.id,

@@ -227,6 +227,100 @@ enum FeedbackReviewStatus {
   NEEDS_MORE_INFO
 }
 
+enum AgentIdentityType {
+  CHATBOT
+  RAG_AGENT
+  COMPUTER_USE
+  BROWSER_AGENT
+  MCP_AGENT
+  CODING_AGENT
+  CUSTOM
+}
+
+enum AgentIdentityStatus {
+  ACTIVE
+  DISABLED
+  QUARANTINED
+}
+
+enum AgentSessionPassportStatus {
+  ACTIVE
+  REVOKED
+  EXPIRED
+}
+
+enum AgentIntentDecision {
+  ALLOW
+  BLOCK
+  ASK_APPROVAL
+  REVIEW
+}
+
+enum ToolChainSessionStatus {
+  ACTIVE
+  CLOSED
+}
+
+enum ToolChainDecision {
+  ALLOW
+  BLOCK
+  ASK_APPROVAL
+  REVIEW
+}
+
+enum ToolChainFindingType {
+  DATA_EXFILTRATION_CHAIN
+  PRIVILEGE_ESCALATION_CHAIN
+  TOOL_POISONING_CHAIN
+  MEMORY_TO_EGRESS
+  RAG_TO_EXTERNAL
+  SECRET_TO_OUTPUT
+  UNKNOWN
+}
+
+enum AgentEscrowTransactionStatus {
+  PENDING
+  APPROVED
+  DENIED
+  EXPIRED
+  EXECUTED
+  CANCELLED
+}
+
+enum AgentEscrowActorType {
+  USER
+  ADMIN
+  SYSTEM
+}
+
+enum AgentDryRunType {
+  EMAIL
+  FORM_SUBMIT
+  TERMINAL
+  FILE_WRITE
+  FILE_DELETE
+  API_CALL
+  PAYMENT
+  PACKAGE_INSTALL
+  DATABASE_WRITE
+  CUSTOM
+}
+
+enum AgentDryRunDecision {
+  SAFE_TO_EXECUTE
+  REQUIRE_APPROVAL
+  BLOCK
+  REVIEW
+}
+
+enum SemanticEgressDecision {
+  ALLOW
+  BLOCK
+  REDACT
+  ASK_APPROVAL
+  REVIEW
+}
+
 model User {
   id                      String                   @id @default(cuid())
   email                   String                   @unique
@@ -250,6 +344,7 @@ model User {
   scimTokensCreated       ScimToken[]              @relation("ScimTokenCreator")
   scimUserMappings        ScimUserMapping[]
   sessions                UserSession[]
+  samlSessionExchanges    SamlSessionExchange[]
   mlReviewItemsResolved   MLReviewQueue[]          @relation("MLReviewResolver")
   dataDeletionsRequested  DataDeletionRequest[]    @relation("DataDeletionRequestedBy")
   customerOnboarding      CustomerOnboarding[]     @relation("CustomerOnboardingOwner")
@@ -297,6 +392,7 @@ model Organization {
   scimTokens            ScimToken[]
   samlProviders         SamlProvider[]
   samlLoginAttempts     SamlLoginAttempt[]
+  samlSessionExchanges  SamlSessionExchange[]
   scimUserMappings      ScimUserMapping[]
   scimGroupMappings     ScimGroupMapping[]
   ipAllowlistEntries    IpAllowlistEntry[]
@@ -1324,21 +1420,22 @@ model MLReviewQueue {
 }
 
 model SamlProvider {
-  id              String             @id @default(cuid())
-  organizationId  String
-  organization    Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  entityId        String
-  ssoUrl          String
-  acsUrl          String
-  issuer          String
-  metadataUrl     String?
-  x509Certificate String             @db.Text
-  enabled         Boolean            @default(false)
-  defaultRole     OrgRole            @default(VIEWER)
-  emailDomain     String?
-  loginAttempts   SamlLoginAttempt[]
-  createdAt       DateTime           @default(now())
-  updatedAt       DateTime           @updatedAt
+  id               String                @id @default(cuid())
+  organizationId   String
+  organization     Organization          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  entityId         String
+  ssoUrl           String
+  acsUrl           String
+  issuer           String
+  metadataUrl      String?
+  x509Certificate  String                @db.Text
+  enabled          Boolean               @default(false)
+  defaultRole      OrgRole               @default(VIEWER)
+  emailDomain      String?
+  loginAttempts    SamlLoginAttempt[]
+  sessionExchanges SamlSessionExchange[]
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
 
   @@unique([organizationId])
 }
@@ -1358,6 +1455,26 @@ model SamlLoginAttempt {
   @@index([organizationId, createdAt])
 }
 
+model SamlSessionExchange {
+  id             String       @id @default(cuid())
+  userId         String
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  providerId     String
+  provider       SamlProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+  tokenHash      String       @unique
+  ip             String?
+  userAgent      String?
+  expiresAt      DateTime
+  usedAt         DateTime?
+  createdAt      DateTime     @default(now())
+
+  @@index([userId, expiresAt])
+  @@index([organizationId, expiresAt])
+  @@index([expiresAt, usedAt])
+}
+
 model ScimUserMapping {
   id             String       @id @default(cuid())
   organizationId String
@@ -1366,6 +1483,7 @@ model ScimUserMapping {
   user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   externalId     String
   active         Boolean      @default(true)
+  /// Deprecated: do not store full SCIM provider payloads. Application code stores only minimized audit metadata.
   raw            Json?
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
@@ -2063,6 +2181,262 @@ model AgentManifest {
   @@index([projectId, enabled])
   @@index([projectId, agentName])
   @@unique([projectId, agentName])
+}
+
+model AgentIdentity {
+  id                String                @id @default(cuid())
+  projectId         String
+  name              String
+  agentType         AgentIdentityType
+  description       String?               @db.Text
+  status            AgentIdentityStatus   @default(ACTIVE)
+  defaultPolicyJson Json?
+  passports         AgentSessionPassport[]
+  audits            AgentPassportAudit[]
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+
+  @@unique([projectId, name])
+  @@index([projectId, status])
+  @@index([projectId, agentType])
+}
+
+model AgentSessionPassport {
+  id                        String                      @id @default(cuid())
+  projectId                 String
+  agentIdentityId           String
+  agentIdentity             AgentIdentity               @relation(fields: [agentIdentityId], references: [id], onDelete: Cascade)
+  sessionId                 String
+  passportHash              String                      @unique
+  status                    AgentSessionPassportStatus  @default(ACTIVE)
+  allowedToolsJson          Json
+  blockedToolsJson          Json
+  approvalRequiredToolsJson Json
+  allowedDomainsJson        Json
+  blockedDomainsJson        Json
+  dataScopesJson            Json
+  memoryScopesJson          Json
+  riskScore                 Int
+  riskLevel                 String
+  expiresAt                 DateTime
+  audits                    AgentPassportAudit[]
+  createdAt                 DateTime                    @default(now())
+  updatedAt                 DateTime                    @updatedAt
+
+  @@unique([projectId, sessionId])
+  @@index([projectId, status, expiresAt])
+  @@index([projectId, agentIdentityId])
+  @@index([sessionId])
+}
+
+model AgentPassportAudit {
+  id                String                @id @default(cuid())
+  projectId         String
+  agentIdentityId   String
+  agentIdentity     AgentIdentity         @relation(fields: [agentIdentityId], references: [id], onDelete: Cascade)
+  sessionPassportId String
+  sessionPassport   AgentSessionPassport  @relation(fields: [sessionPassportId], references: [id], onDelete: Cascade)
+  action            String
+  decision          String
+  reason            String                @db.Text
+  metadataJson      Json?
+  createdAt         DateTime              @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([projectId, agentIdentityId])
+  @@index([sessionPassportId, createdAt])
+  @@index([decision, createdAt])
+}
+
+model AgentIntentRecord {
+  id                            String                   @id @default(cuid())
+  projectId                     String
+  sessionId                     String
+  userPromptHash                String
+  userPromptRedacted            String                   @db.Text
+  extractedIntentJson           Json
+  allowedIntentCategoriesJson   Json
+  forbiddenIntentCategoriesJson Json
+  actionChecks                  AgentIntentActionCheck[]
+  createdAt                     DateTime                 @default(now())
+
+  @@index([projectId, sessionId, createdAt])
+  @@index([projectId, userPromptHash])
+}
+
+model AgentIntentActionCheck {
+  id                String              @id @default(cuid())
+  projectId         String
+  sessionId         String
+  intentRecordId    String
+  intentRecord      AgentIntentRecord   @relation(fields: [intentRecordId], references: [id], onDelete: Cascade)
+  tool              String
+  action            String
+  target            String?
+  actionDescription String?             @db.Text
+  intentMatchScore  Float
+  decision          AgentIntentDecision
+  riskLevel         String
+  reason            String              @db.Text
+  createdAt         DateTime            @default(now())
+
+  @@index([projectId, sessionId, createdAt])
+  @@index([projectId, decision, createdAt])
+  @@index([intentRecordId, createdAt])
+}
+
+model ToolChainSession {
+  id              String                  @id @default(cuid())
+  projectId       String
+  sessionId       String
+  agentIdentityId String?
+  status          ToolChainSessionStatus  @default(ACTIVE)
+  steps           ToolChainStep[]
+  findings        ToolChainFinding[]
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
+
+  @@unique([projectId, sessionId])
+  @@index([projectId, status, updatedAt])
+  @@index([projectId, agentIdentityId])
+}
+
+model ToolChainStep {
+  id                 String            @id @default(cuid())
+  projectId          String
+  toolChainSessionId String
+  toolChainSession   ToolChainSession  @relation(fields: [toolChainSessionId], references: [id], onDelete: Cascade)
+  stepIndex          Int
+  tool               String
+  action             String
+  sourceType         String
+  destinationType    String
+  dataSensitivity    String
+  decision           ToolChainDecision
+  riskLevel          String
+  metadataJson       Json?
+  createdAt          DateTime          @default(now())
+
+  @@unique([toolChainSessionId, stepIndex])
+  @@index([projectId, createdAt])
+  @@index([projectId, decision, createdAt])
+  @@index([toolChainSessionId, stepIndex])
+}
+
+model ToolChainFinding {
+  id                 String                 @id @default(cuid())
+  projectId          String
+  toolChainSessionId String
+  toolChainSession   ToolChainSession       @relation(fields: [toolChainSessionId], references: [id], onDelete: Cascade)
+  findingType        ToolChainFindingType
+  riskLevel          String
+  summary            String                 @db.Text
+  involvedStepsJson  Json
+  recommendation     String                 @db.Text
+  createdAt          DateTime               @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([projectId, findingType, createdAt])
+  @@index([toolChainSessionId, createdAt])
+}
+
+model AgentEscrowTransaction {
+  id                      String                         @id @default(cuid())
+  projectId               String
+  sessionId               String
+  agentIdentityId         String?
+  transactionType         String
+  tool                    String
+  action                  String
+  target                  String?
+  originalPayloadRedacted String?                        @db.Text
+  safePayload             String?                        @db.Text
+  riskLevel               String
+  status                  AgentEscrowTransactionStatus   @default(PENDING)
+  approvalTokenHash       String                         @unique
+  expiresAt               DateTime
+  resolvedAt              DateTime?
+  executedAt              DateTime?
+  audits                  AgentEscrowAudit[]
+  createdAt               DateTime                       @default(now())
+  updatedAt               DateTime                       @updatedAt
+
+  @@index([projectId, sessionId, createdAt])
+  @@index([projectId, status, expiresAt])
+  @@index([projectId, agentIdentityId])
+}
+
+model AgentEscrowAudit {
+  id                  String                    @id @default(cuid())
+  projectId           String
+  escrowTransactionId String
+  escrowTransaction   AgentEscrowTransaction    @relation(fields: [escrowTransactionId], references: [id], onDelete: Cascade)
+  action              String
+  actorType           AgentEscrowActorType
+  reason              String?                   @db.Text
+  metadataJson        Json?
+  createdAt           DateTime                  @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([projectId, actorType, createdAt])
+  @@index([escrowTransactionId, createdAt])
+}
+
+model AgentDryRun {
+  id                        String               @id @default(cuid())
+  projectId                 String
+  sessionId                 String
+  agentIdentityId           String?
+  dryRunType                AgentDryRunType
+  tool                      String
+  action                    String
+  target                    String?
+  simulatedPayloadRedacted  String?              @db.Text
+  simulatedEffectsJson      Json
+  riskLevel                 String
+  decision                  AgentDryRunDecision
+  reason                    String               @db.Text
+  createdAt                 DateTime             @default(now())
+
+  @@index([projectId, sessionId, createdAt])
+  @@index([projectId, decision, createdAt])
+  @@index([projectId, dryRunType, createdAt])
+}
+
+model SemanticSourceFingerprint {
+  id                String    @id @default(cuid())
+  projectId         String
+  sourceId          String
+  sourceType        String
+  sensitivityLevel  String
+  fingerprintJson   Json
+  contentHash       String
+  createdAt         DateTime  @default(now())
+
+  @@unique([projectId, sourceId])
+  @@index([projectId, sensitivityLevel, createdAt])
+  @@index([projectId, sourceType, createdAt])
+}
+
+model SemanticEgressCheck {
+  id                    String                  @id @default(cuid())
+  projectId             String
+  sessionId             String
+  sourceIdsJson         Json
+  destinationType       String
+  destinationName       String?
+  contentHash           String
+  contentRedacted       String                  @db.Text
+  semanticRiskScore     Float
+  decision              SemanticEgressDecision
+  riskLevel             String
+  reason                String                  @db.Text
+  findingsJson          Json
+  createdAt             DateTime                @default(now())
+
+  @@index([projectId, sessionId, createdAt])
+  @@index([projectId, decision, createdAt])
+  @@index([projectId, riskLevel, createdAt])
 }
 
 model McpToolScan {

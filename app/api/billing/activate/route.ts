@@ -1,8 +1,14 @@
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { requirePermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
-import { verifyPaymentSignature, razorpayConfigured } from "@/lib/billing/razorpay";
+import { verifyPaymentSignature, razorpayConfigured, PLAN_PRICING } from "@/lib/billing/razorpay";
 import { z } from "zod";
+
+const PLAN_AMOUNT: Record<"STARTER" | "PRO" | "AGENCY", number> = {
+  STARTER: PLAN_PRICING.STARTER.amount,
+  PRO: PLAN_PRICING.PRO.amount,
+  AGENCY: PLAN_PRICING.AGENCY.amount,
+};
 
 export const dynamic = "force-dynamic";
 
@@ -76,7 +82,7 @@ export async function POST(request: Request) {
         data: {
           organizationId: access.org.id,
           razorpayPaymentId: body.razorpayPaymentId,
-          amount: 0, // will be replaced when the captured webhook arrives
+          amount: body.mock ? 0 : (PLAN_AMOUNT[body.plan] ?? 0),
           status: body.mock ? "MOCK_PAID" : "PAID",
           paidAt: new Date(),
           invoiceNumber: `INV-${Date.now()}`,

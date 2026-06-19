@@ -1,7 +1,8 @@
-import type { AnalyzeRequest, AgentActionCheckRequest, AgentActionCheckResponse, AgentApprovalResolveRequest, AgentApprovalResolveResponse, AgentDataCheckRequest, AgentOutputCheckRequest, AgentReplayResponse, BrowserFormCheckRequest, BrowserFormCheckResponse, CanaryCheckRequest, CanaryCheckResponse, CheckContextFlowRequest, CheckContextFlowResponse, CheckLegalBoundaryRequest, CheckLegalBoundaryResponse, CheckMemoryPoisoningRequest, CheckMemoryPoisoningResponse, CreateCanaryRequest, CreateCanaryResponse, ClientOptions, ExpressLikeNext, ExpressLikeRequest, ExpressLikeResponse, GuardInputRequest, GuardOutputRequest, GuardResult, LineageIncidentsResponse, LineageSessionResponse, McpDriftsResponse, MemoryCheckRequest, MemoryCheckResponse, ProtectChatOptions, ProtectChatResult, ProtectRagOptions, ProtectRagResult, RagSource, RagTrustScoreRequest, RagTrustScoreResponse, RegisterContextSourceRequest, RegisterContextSourceResponse, RegisterMcpServerRequest, RegisterMcpServerResponse, RunBlastRadiusScenarioRequest, RunBlastRadiusScenarioResponse, ScanMcpToolsRequest, ScanMcpToolsResponse, SecureChatOptions, SecureChatResult, SimulateBlastRadiusRequest, SimulateBlastRadiusResponse, SnapshotMcpToolsRequest, SnapshotMcpToolsResponse, StoreSafeMemoryRequest, StoreSafeMemoryResponse, StartAgentSessionRequest, StartAgentSessionResponse, ToolExecutionContext, ToolExecutor, WrappedToolResult } from "./types";
+import type { AnalyzeRequest, AgentActionCheckRequest, AgentActionCheckResponse, AgentApprovalResolveRequest, AgentApprovalResolveResponse, AgentDataCheckRequest, AgentOutputCheckRequest, AgentReplayResponse, BrowserFormCheckRequest, BrowserFormCheckResponse, CanaryCheckRequest, CanaryCheckResponse, CheckContextFlowRequest, CheckContextFlowResponse, CheckLegalBoundaryRequest, CheckLegalBoundaryResponse, CheckMemoryPoisoningRequest, CheckMemoryPoisoningResponse, ClientOptions, CreateCanaryRequest, CreateCanaryResponse, ExpressLikeNext, ExpressLikeRequest, ExpressLikeResponse, GuardAction, GuardConversationOptions, GuardDecision, GuardInputRequest, GuardOutputRequest, GuardResult, LineageIncidentsResponse, LineageSessionResponse, McpDriftsResponse, MemoryCheckRequest, MemoryCheckResponse, ProtectChatOptions, ProtectChatResult, ProtectRagOptions, ProtectRagResult, RagSource, RagTrustScoreRequest, RagTrustScoreResponse, RegisterContextSourceRequest, RegisterContextSourceResponse, RegisterMcpServerRequest, RegisterMcpServerResponse, RunBlastRadiusScenarioRequest, RunBlastRadiusScenarioResponse, ScanMcpToolsRequest, ScanMcpToolsResponse, SecureChatOptions, SecureChatResult, SimulateBlastRadiusRequest, SimulateBlastRadiusResponse, SnapshotMcpToolsRequest, SnapshotMcpToolsResponse, StartAgentSessionRequest, StartAgentSessionResponse, StoreSafeMemoryRequest, StoreSafeMemoryResponse, ToolExecutionContext, ToolExecutor, WrappedToolResult } from "./types";
+export declare function normalizeDecision(action: GuardAction): GuardDecision;
 export interface CyberRakshakGuard {
-    input(message: string, options?: Omit<GuardInputRequest, "message">): Promise<GuardResult>;
-    output(aiResponse: string, options?: Omit<GuardOutputRequest, "aiResponse">): Promise<GuardResult>;
+    input(message: string, options?: Omit<GuardInputRequest, "message" | "text">): Promise<GuardResult>;
+    output(aiResponse: string, options?: Omit<GuardOutputRequest, "aiResponse" | "text">): Promise<GuardResult>;
     analyze(text: string, direction: AnalyzeRequest["direction"]): Promise<GuardResult>;
     analyze(input: AnalyzeRequest): Promise<GuardResult>;
     guardInput(input: GuardInputRequest): Promise<GuardResult>;
@@ -9,9 +10,13 @@ export interface CyberRakshakGuard {
     protectChat(input: ProtectChatOptions): Promise<ProtectChatResult>;
     protectRag(input: ProtectRagOptions): Promise<ProtectRagResult>;
     secureChat(input: SecureChatOptions): Promise<SecureChatResult>;
+    guardConversation(input: GuardConversationOptions): Promise<SecureChatResult>;
     shouldCallLLM(result: GuardResult): boolean;
+    isAllowed(result: GuardResult): boolean;
+    shouldBlock(result: GuardResult): boolean;
     getSafeInput(result: GuardResult, originalMessage: string): string;
     getSafeOutput(result: GuardResult, originalOutput: string): string;
+    getSafeText(result: GuardResult, fallback?: string): string | undefined;
     createExpressMiddleware(options: Omit<ProtectChatOptions, "message" | "userId" | "sessionId" | "metadata">): (req: ExpressLikeRequest, res: ExpressLikeResponse, next?: ExpressLikeNext) => Promise<unknown>;
     createNextHandler(options: Omit<ProtectChatOptions, "message" | "userId" | "sessionId" | "metadata">): (request: Request) => Promise<Response>;
     startAgentSession(input: StartAgentSessionRequest): Promise<StartAgentSessionResponse>;
@@ -71,23 +76,29 @@ export declare function createCybersecurityGuardClient(options: ClientOptions): 
 export declare class GuardClient implements CyberRakshakGuard {
     private readonly apiKey;
     private readonly baseUrl;
+    private readonly projectId?;
     private readonly timeoutMs;
     private readonly maxRetries;
     private readonly retryBackoffMs;
+    private readonly debug;
     private readonly fetchImpl;
     private readonly extraHeaders;
     constructor(options: ClientOptions);
-    input(message: string, options?: Omit<GuardInputRequest, "message">): Promise<GuardResult>;
-    output(aiResponse: string, options?: Omit<GuardOutputRequest, "aiResponse">): Promise<GuardResult>;
+    input(message: string, options?: Omit<GuardInputRequest, "message" | "text">): Promise<GuardResult>;
+    output(aiResponse: string, options?: Omit<GuardOutputRequest, "aiResponse" | "text">): Promise<GuardResult>;
     guardInput(input: GuardInputRequest): Promise<GuardResult>;
     guardOutput(input: GuardOutputRequest): Promise<GuardResult>;
     analyze(textOrInput: string | AnalyzeRequest, direction?: AnalyzeRequest["direction"]): Promise<GuardResult>;
     shouldCallLLM(result: GuardResult): boolean;
+    isAllowed(result: GuardResult): boolean;
+    shouldBlock(result: GuardResult): boolean;
     getSafeInput(result: GuardResult, originalMessage: string): string;
     getSafeOutput(result: GuardResult, originalOutput: string): string;
+    getSafeText(result: GuardResult, fallback?: string): string | undefined;
     protectChat(input: ProtectChatOptions): Promise<ProtectChatResult>;
     protectRag<TSource extends RagSource = RagSource>(input: ProtectRagOptions<TSource>): Promise<ProtectRagResult>;
     secureChat(input: SecureChatOptions): Promise<SecureChatResult>;
+    guardConversation(input: GuardConversationOptions): Promise<SecureChatResult>;
     createExpressMiddleware(options: Omit<ProtectChatOptions, "message" | "userId" | "sessionId" | "metadata">): (req: ExpressLikeRequest, res: ExpressLikeResponse, next?: ExpressLikeNext) => Promise<unknown>;
     createNextHandler(options: Omit<ProtectChatOptions, "message" | "userId" | "sessionId" | "metadata">): (request: Request) => Promise<Response>;
     startAgentSession(input: StartAgentSessionRequest): Promise<StartAgentSessionResponse>;
@@ -144,5 +155,9 @@ export declare class GuardClient implements CyberRakshakGuard {
     private get;
     private handleResponse;
     private fetchWithNetworkRetry;
+    private decisionOf;
+    private withProjectMetadata;
+    private log;
 }
+export { GuardClient as CyberRakshakClient };
 //# sourceMappingURL=client.d.ts.map

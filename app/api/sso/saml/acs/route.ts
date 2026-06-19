@@ -2,11 +2,14 @@
 // validates it, performs JIT provisioning, and redirects to the dashboard.
 
 import { NextResponse } from "next/server";
+import { signIn } from "@/auth";
 import { apiError, jsonResponse } from "@/lib/apiResponse";
+import { safeCallbackUrl } from "@/lib/auth/callback";
 import { db } from "@/lib/db";
 import { SamlError, validateSamlResponse } from "@/lib/enterprise/saml";
 import { jitProvisionFromSaml } from "@/lib/enterprise/samlProvisioning";
 import { markAndCheckReplay } from "@/lib/enterprise/samlReplayStore";
+import { createSamlSessionExchange } from "@/lib/enterprise/samlSessionExchange";
 
 export const dynamic = "force-dynamic";
 
@@ -54,22 +57,39 @@ export async function POST(request: Request) {
     });
 
     const jit = await jitProvisionFromSaml(provider, result.attributes);
+    const context = {
+      ip: request.headers.get("x-forwarded-for"),
+      userAgent: request.headers.get("user-agent"),
+    };
+    const exchange = await createSamlSessionExchange({
+      userId: jit.userId,
+      organizationId: jit.organizationId,
+      providerId: provider.id,
+      context,
+    });
+
+    const destination = safeCallbackUrl(relayState);
+    const authRedirect = await signIn("saml-exchange", {
+      token: exchange.token,
+      redirect: false,
+      redirectTo: destination,
+    });
+    const authRedirectUrl = new URL(String(authRedirect), baseUrl);
+    if (authRedirectUrl.pathname.startsWith("/api/auth/error")) {
+      throw new SamlError("SAML session exchange failed.");
+    }
+
     await db.samlLoginAttempt.create({
       data: {
         organizationId: provider.organizationId,
         providerId: provider.id,
         email: result.attributes.email,
         status: "SUCCESS",
-        ip: request.headers.get("x-forwarded-for") ?? null,
+        ip: context.ip,
       },
     });
 
-    // We do NOT mint a NextAuth session here (NextAuth v5 credentials provider
-    // is the source of truth). Instead, we redirect to a one-time SSO landing
-    // page that completes credential exchange. In a deployment with custom
-    // session minting (e.g. SCIM-managed accounts), wire this up in auth.ts.
-    const redirect = `/signin?ssoEmail=${encodeURIComponent(result.attributes.email)}&orgId=${encodeURIComponent(jit.organizationId)}&relay=${encodeURIComponent(relayState ?? "/dashboard")}`;
-    return NextResponse.redirect(new URL(redirect, baseUrl));
+    return NextResponse.redirect(new URL(destination, baseUrl));
   } catch (error) {
     if (providerId) {
       await db.samlLoginAttempt.create({

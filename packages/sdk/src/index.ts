@@ -1,6 +1,20 @@
 export * from "./types";
 export * from "./errors";
-export { GuardClient, createAgentFirewallClient, createCybersecurityGuardClient, createClient } from "./client";
+export * from "./agent-passport";
+export * from "./agent-intent";
+export * from "./tool-chain";
+export * from "./escrow";
+export * from "./dry-run";
+export * from "./semantic-egress";
+export {
+  CyberRakshakClient,
+  GuardClient,
+  createAgentFirewallClient,
+  createCybersecurityGuardClient,
+  createClient,
+  normalizeDecision,
+} from "./client";
+export type { CyberRakshakGuard as CyberRakshakGuardInterface } from "./client";
 
 import { GuardClient, createAgentFirewallClient } from "./client";
 import type {
@@ -123,8 +137,6 @@ export function createGenericChatbotWrapper(options: ClientOptions, wrapperOptio
   return createAgentFirewallClient(options).createGenericChatbotWrapper(wrapperOptions);
 }
 
-// --- Advanced AI Security MVP 1 ---
-
 export function registerContextSource(options: ClientOptions, input: RegisterContextSourceRequest) {
   return createAgentFirewallClient(options).registerContextSource(input);
 }
@@ -148,8 +160,6 @@ export function simulateBlastRadius(options: ClientOptions, input: SimulateBlast
 export function runBlastRadiusScenario(options: ClientOptions, input: RunBlastRadiusScenarioRequest) {
   return createAgentFirewallClient(options).runBlastRadiusScenario(input);
 }
-
-// --- Advanced AI Security MVP 2 ---
 
 export function checkMemoryPoisoning(options: ClientOptions, input: CheckMemoryPoisoningRequest) {
   return createAgentFirewallClient(options).checkMemoryPoisoning(input);
@@ -175,8 +185,6 @@ export function listMcpDrifts(options: ClientOptions, status?: string) {
   return createAgentFirewallClient(options).listMcpDrifts(status);
 }
 
-// --- Advanced AI Security MVP 3 ---
-
 export function checkLegalBoundary(options: ClientOptions, input: CheckLegalBoundaryRequest) {
   return createAgentFirewallClient(options).checkLegalBoundary(input);
 }
@@ -185,14 +193,14 @@ export function createNextAgentHandler(options: ClientOptions) {
   return createAgentFirewallClient(options).createNextAgentHandler();
 }
 
-/**
- * Class form: `new CyberRakshakGuard({ apiKey })`.
- * Functionally identical to `createClient`. Implements the same surface as the GuardClient.
- */
 export class CyberRakshakGuard extends GuardClient {
-  constructor(options: ClientOptions) { super(options); }
+  constructor(options: ClientOptions) {
+    super(options);
+  }
 }
 
 export class CybersecurityGuard extends GuardClient {
-  constructor(options: ClientOptions) { super(options); }
+  constructor(options: ClientOptions) {
+    super(options);
+  }
 }

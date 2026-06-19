@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { SignInForm } from "@/components/auth/SignInForm";
+import { safeCallbackUrl } from "@/lib/auth/callback";
 
 export const dynamic = "force-dynamic";
 
@@ -29,7 +30,7 @@ export default async function SignInPage({
           <p className="eyebrow">Sign in</p>
           <h1 className="mt-3 text-2xl font-bold">Welcome back</h1>
           <p className="mt-2 text-sm text-slate-400">Use your CyberRakshak Guard credentials to access the dashboard.</p>
-          <SignInForm callbackUrl={params.callbackUrl ?? "/dashboard"} initialError={params.error} />
+          <SignInForm callbackUrl={safeCallbackUrl(params.callbackUrl)} initialError={params.error} />
           <p className="mt-6 text-sm text-slate-500">
             New to CyberRakshak? <Link href="/signup" className="text-cyan">Create an account</Link>
           </p>

@@ -24,12 +24,15 @@ import type {
   CheckLegalBoundaryResponse,
   CheckMemoryPoisoningRequest,
   CheckMemoryPoisoningResponse,
+  ClientOptions,
   CreateCanaryRequest,
   CreateCanaryResponse,
-  ClientOptions,
   ExpressLikeNext,
   ExpressLikeRequest,
   ExpressLikeResponse,
+  GuardAction,
+  GuardConversationOptions,
+  GuardDecision,
   GuardInputRequest,
   GuardOutputRequest,
   GuardResult,
@@ -38,6 +41,7 @@ import type {
   McpDriftsResponse,
   MemoryCheckRequest,
   MemoryCheckResponse,
+  MetadataValue,
   ProtectChatOptions,
   ProtectChatResult,
   ProtectRagOptions,
@@ -59,10 +63,10 @@ import type {
   SimulateBlastRadiusResponse,
   SnapshotMcpToolsRequest,
   SnapshotMcpToolsResponse,
-  StoreSafeMemoryRequest,
-  StoreSafeMemoryResponse,
   StartAgentSessionRequest,
   StartAgentSessionResponse,
+  StoreSafeMemoryRequest,
+  StoreSafeMemoryResponse,
   ToolExecutionContext,
   ToolExecutor,
   WrappedToolResult,
@@ -71,10 +75,26 @@ import type {
 const DEFAULT_BASE_URL = "https://api.cybersecurityguard.com";
 const DEFAULT_TIMEOUT_MS = 8000;
 const DEFAULT_RETRY_BACKOFF_MS = 250;
+const DEFAULT_BLOCKED_RESPONSE = "This request was blocked for security reasons.";
+
+export function normalizeDecision(action: GuardAction): GuardDecision {
+  switch (action) {
+    case "ALLOW":
+      return "ALLOW";
+    case "ALLOW_WITH_REDACTION":
+    case "REWRITE":
+      return "REDACT";
+    case "HUMAN_REVIEW":
+      return "HUMAN_REVIEW";
+    case "BLOCK":
+    default:
+      return "BLOCK";
+  }
+}
 
 export interface CyberRakshakGuard {
-  input(message: string, options?: Omit<GuardInputRequest, "message">): Promise<GuardResult>;
-  output(aiResponse: string, options?: Omit<GuardOutputRequest, "aiResponse">): Promise<GuardResult>;
+  input(message: string, options?: Omit<GuardInputRequest, "message" | "text">): Promise<GuardResult>;
+  output(aiResponse: string, options?: Omit<GuardOutputRequest, "aiResponse" | "text">): Promise<GuardResult>;
   analyze(text: string, direction: AnalyzeRequest["direction"]): Promise<GuardResult>;
   analyze(input: AnalyzeRequest): Promise<GuardResult>;
   guardInput(input: GuardInputRequest): Promise<GuardResult>;
@@ -82,9 +102,13 @@ export interface CyberRakshakGuard {
   protectChat(input: ProtectChatOptions): Promise<ProtectChatResult>;
   protectRag(input: ProtectRagOptions): Promise<ProtectRagResult>;
   secureChat(input: SecureChatOptions): Promise<SecureChatResult>;
+  guardConversation(input: GuardConversationOptions): Promise<SecureChatResult>;
   shouldCallLLM(result: GuardResult): boolean;
+  isAllowed(result: GuardResult): boolean;
+  shouldBlock(result: GuardResult): boolean;
   getSafeInput(result: GuardResult, originalMessage: string): string;
   getSafeOutput(result: GuardResult, originalOutput: string): string;
+  getSafeText(result: GuardResult, fallback?: string): string | undefined;
   createExpressMiddleware(options: Omit<ProtectChatOptions, "message" | "userId" | "sessionId" | "metadata">): (req: ExpressLikeRequest, res: ExpressLikeResponse, next?: ExpressLikeNext) => Promise<unknown>;
   createNextHandler(options: Omit<ProtectChatOptions, "message" | "userId" | "sessionId" | "metadata">): (request: Request) => Promise<Response>;
   startAgentSession(input: StartAgentSessionRequest): Promise<StartAgentSessionResponse>;
@@ -128,7 +152,6 @@ export interface CyberRakshakGuard {
   createNextAgentHandler(): (request: Request) => Promise<Response>;
 }
 
-
 export function createClient(options: ClientOptions): CyberRakshakGuard {
   return new GuardClient(options);
 }
@@ -144,19 +167,28 @@ export function createCybersecurityGuardClient(options: ClientOptions): CyberRak
 export class GuardClient implements CyberRakshakGuard {
   private readonly apiKey: string;
   private readonly baseUrl: string;
+  private readonly projectId?: string;
   private readonly timeoutMs: number;
   private readonly maxRetries: number;
   private readonly retryBackoffMs: number;
+  private readonly debug: boolean;
   private readonly fetchImpl: typeof fetch;
   private readonly extraHeaders: Record<string, string>;
 
   constructor(options: ClientOptions) {
-    if (!options.apiKey) throw new CyberRakshakError("apiKey is required.", { code: "config_error" });
+    if (!options?.apiKey) throw new CyberRakshakError("apiKey is required.", { code: "config_error" });
+    if (isBrowserLike()) {
+      console.warn(
+        "[cybersecurityguard] GuardClient appears to be running in a browser. Never embed an API key in client-side code.",
+      );
+    }
     this.apiKey = options.apiKey;
     this.baseUrl = (options.baseUrl ?? DEFAULT_BASE_URL).replace(/\/$/, "");
+    this.projectId = options.projectId;
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
-    this.maxRetries = options.maxRetries ?? 0;
+    this.maxRetries = options.maxRetries ?? options.retries ?? 0;
     this.retryBackoffMs = options.retryBackoffMs ?? DEFAULT_RETRY_BACKOFF_MS;
+    this.debug = options.debug ?? false;
     this.fetchImpl = options.fetch ?? globalThis.fetch;
     this.extraHeaders = options.headers ?? {};
     if (!this.fetchImpl) {
@@ -164,20 +196,34 @@ export class GuardClient implements CyberRakshakGuard {
     }
   }
 
-  input(message: string, options: Omit<GuardInputRequest, "message"> = {}): Promise<GuardResult> {
+  input(message: string, options: Omit<GuardInputRequest, "message" | "text"> = {}): Promise<GuardResult> {
     return this.guardInput({ ...options, message });
   }
 
-  output(aiResponse: string, options: Omit<GuardOutputRequest, "aiResponse"> = {}): Promise<GuardResult> {
+  output(aiResponse: string, options: Omit<GuardOutputRequest, "aiResponse" | "text"> = {}): Promise<GuardResult> {
     return this.guardOutput({ ...options, aiResponse });
   }
 
   guardInput(input: GuardInputRequest): Promise<GuardResult> {
-    return this.post<GuardResult>("/api/guard/input", input, true);
+    const message = input.message ?? input.text;
+    if (!message?.trim()) throw new CyberRakshakValidationError("guardInput requires `text` or `message`.", 400);
+    return this.post<GuardResult>("/api/guard/input", {
+      message,
+      userId: input.userId,
+      sessionId: input.sessionId,
+      metadata: this.withProjectMetadata(input.metadata),
+    }, true);
   }
 
   guardOutput(input: GuardOutputRequest): Promise<GuardResult> {
-    return this.post<GuardResult>("/api/guard/output", input, true);
+    const aiResponse = input.aiResponse ?? input.text;
+    if (!aiResponse?.trim()) throw new CyberRakshakValidationError("guardOutput requires `text` or `aiResponse`.", 400);
+    return this.post<GuardResult>("/api/guard/output", {
+      aiResponse,
+      userId: input.userId,
+      sessionId: input.sessionId,
+      metadata: this.withProjectMetadata(input.metadata),
+    }, true);
   }
 
   analyze(textOrInput: string | AnalyzeRequest, direction?: AnalyzeRequest["direction"]): Promise<GuardResult> {
@@ -189,6 +235,15 @@ export class GuardClient implements CyberRakshakGuard {
     return result.allowed && (result.action === "ALLOW" || result.action === "ALLOW_WITH_REDACTION" || result.action === "REWRITE");
   }
 
+  isAllowed(result: GuardResult): boolean {
+    return result.allowed === true && this.decisionOf(result) !== "BLOCK";
+  }
+
+  shouldBlock(result: GuardResult): boolean {
+    const decision = this.decisionOf(result);
+    return result.allowed === false || decision === "BLOCK" || decision === "HUMAN_REVIEW";
+  }
+
   getSafeInput(result: GuardResult, originalMessage: string): string {
     return result.safeText ?? result.redactedText ?? originalMessage;
   }
@@ -197,9 +252,13 @@ export class GuardClient implements CyberRakshakGuard {
     return result.safeText ?? result.redactedText ?? originalOutput;
   }
 
+  getSafeText(result: GuardResult, fallback?: string): string | undefined {
+    return result.safeText ?? result.redactedText ?? fallback;
+  }
+
   async protectChat(input: ProtectChatOptions): Promise<ProtectChatResult> {
     const startedAt = Date.now();
-    const blockedResponse = input.blockedResponse ?? "This request was blocked for security reasons.";
+    const blockedResponse = input.blockedResponse ?? DEFAULT_BLOCKED_RESPONSE;
     const outputBlockedResponse = input.outputBlockedResponse ?? "The assistant response was blocked for security reasons.";
     const inputGuard = await this.guardInput({
       message: input.message,
@@ -243,7 +302,7 @@ export class GuardClient implements CyberRakshakGuard {
 
   async protectRag<TSource extends RagSource = RagSource>(input: ProtectRagOptions<TSource>): Promise<ProtectRagResult> {
     const startedAt = Date.now();
-    const blockedResponse = input.blockedResponse ?? "This request was blocked for security reasons.";
+    const blockedResponse = input.blockedResponse ?? DEFAULT_BLOCKED_RESPONSE;
     const outputBlockedResponse = input.outputBlockedResponse ?? "The assistant response was blocked for security reasons.";
     const inputGuard = await this.guardInput({
       message: input.query,
@@ -268,8 +327,8 @@ export class GuardClient implements CyberRakshakGuard {
 
     const safeQuery = this.getSafeInput(inputGuard, input.query);
     const sources = await input.retrieve(safeQuery);
-    const usedSources = [];
-    const excludedSources = [];
+    const usedSources: Array<TSource & { safeText: string; guard: GuardResult }> = [];
+    const excludedSources: Array<{ source: TSource; guard: GuardResult }> = [];
     for (const source of sources) {
       const guard = await this.analyze(source.text, "INPUT");
       if (this.shouldCallLLM(guard)) {
@@ -304,7 +363,7 @@ export class GuardClient implements CyberRakshakGuard {
   }
 
   async secureChat(input: SecureChatOptions): Promise<SecureChatResult> {
-    const blocked = input.blockedResponse ?? "This request was blocked for security reasons.";
+    const blocked = input.blockedResponse ?? DEFAULT_BLOCKED_RESPONSE;
     const result = await this.protectChat({
       message: input.message,
       userId: input.userId,
@@ -323,6 +382,17 @@ export class GuardClient implements CyberRakshakGuard {
       inputResult: result.inputGuard,
       outputResult: result.outputGuard,
     };
+  }
+
+  guardConversation(input: GuardConversationOptions): Promise<SecureChatResult> {
+    return this.secureChat({
+      message: input.input,
+      userId: input.userId,
+      sessionId: input.sessionId,
+      metadata: input.metadata,
+      blockedResponse: input.blockedResponse,
+      callLLM: ({ safeInput }) => input.callLLM(safeInput),
+    });
   }
 
   createExpressMiddleware(options: Omit<ProtectChatOptions, "message" | "userId" | "sessionId" | "metadata">) {
@@ -629,6 +699,7 @@ export class GuardClient implements CyberRakshakGuard {
       ...this.extraHeaders,
     };
     if (requireApiKey) headers["x-api-key"] = this.apiKey;
+    this.log(`POST ${path}`);
     const response = await this.fetchWithNetworkRetry(url, {
       method: "POST",
       headers,
@@ -648,6 +719,7 @@ export class GuardClient implements CyberRakshakGuard {
       ...this.extraHeaders,
     };
     if (requireApiKey) headers["x-api-key"] = this.apiKey;
+    this.log(`GET ${path}`);
     const response = await this.fetchWithNetworkRetry(url, {
       method: "GET",
       headers,
@@ -666,9 +738,7 @@ export class GuardClient implements CyberRakshakGuard {
       }
     }
     if (!response.ok) {
-      const message = (data && typeof data === "object" && "message" in data && typeof (data as { message?: unknown }).message === "string")
-        ? (data as { message: string }).message
-        : `Request failed with status ${response.status}.`;
+      const message = extractMessage(data) ?? `Request failed with status ${response.status}.`;
       if (response.status === 401 || response.status === 403) throw new CyberRakshakAuthError(message, response.status);
       if (response.status === 429) {
         const retryAfter = Number(response.headers.get("Retry-After") ?? 0) || undefined;
@@ -676,6 +746,10 @@ export class GuardClient implements CyberRakshakGuard {
       }
       if (response.status === 400) throw new CyberRakshakValidationError(message, response.status, data);
       throw new CyberRakshakError(message, { status: response.status, details: data });
+    }
+    if (data && typeof data === "object" && "action" in data && !("decision" in data)) {
+      const result = data as { action?: unknown; decision?: GuardDecision };
+      if (typeof result.action === "string") result.decision = normalizeDecision(result.action as GuardAction);
     }
     return data as T;
   }
@@ -686,9 +760,10 @@ export class GuardClient implements CyberRakshakGuard {
       try {
         return await this.fetchImpl(url, init);
       } catch (caught) {
+        const aborted = caught instanceof Error && caught.name === "AbortError";
         if (attempt >= this.maxRetries) {
           throw new CyberRakshakNetworkError(
-            caught instanceof Error ? caught.message : "Network request failed.",
+            aborted ? `Request timed out after ${this.timeoutMs}ms.` : caught instanceof Error ? caught.message : "Network request failed.",
             caught,
           );
         }
@@ -697,7 +772,23 @@ export class GuardClient implements CyberRakshakGuard {
       }
     }
   }
+
+  private decisionOf(result: GuardResult): GuardDecision {
+    return result.decision ?? normalizeDecision(result.action);
+  }
+
+  private withProjectMetadata(metadata?: Record<string, MetadataValue>): Record<string, MetadataValue> | undefined {
+    if (!this.projectId) return metadata;
+    return { ...(metadata ?? {}), projectId: this.projectId };
+  }
+
+  private log(message: string): void {
+    if (!this.debug) return;
+    console.debug(`[cybersecurityguard] ${message}`);
+  }
 }
+
+export { GuardClient as CyberRakshakClient };
 
 function asMetadata(value: unknown) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
@@ -713,6 +804,14 @@ function jsonResponse(data: unknown, status: number) {
     status,
     headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
   });
+}
+
+function extractMessage(data: unknown): string | undefined {
+  if (data && typeof data === "object" && "message" in data) {
+    const message = (data as { message?: unknown }).message;
+    if (typeof message === "string") return message;
+  }
+  return undefined;
 }
 
 function delay(ms: number) {
@@ -735,4 +834,11 @@ function failClosedDecision(reason: string, riskLevel: AgentActionCheckResponse[
 
 function isAgentDestination(value: unknown): value is AgentActionCheckRequest["destination"] {
   return value === "external" || value === "internal" || value === "local" || value === "unknown";
+}
+
+function isBrowserLike(): boolean {
+  return (
+    typeof window !== "undefined" &&
+    typeof (window as { document?: unknown }).document !== "undefined"
+  );
 }

@@ -57,6 +57,12 @@ const groups = [
   {
     label: "Agent security",
     items: [
+      { Icon: ShieldCheck, label: "Agent passports", href: "/dashboard/agent-passports" },
+      { Icon: ShieldCheck, label: "Intent guard", href: "/dashboard/intent-guard" },
+      { Icon: ShieldCheck, label: "Tool chain", href: "/dashboard/tool-chain" },
+      { Icon: ShieldCheck, label: "Escrow", href: "/dashboard/escrow" },
+      { Icon: ShieldCheck, label: "Dry-run", href: "/dashboard/dry-run" },
+      { Icon: ShieldCheck, label: "Semantic egress", href: "/dashboard/semantic-egress" },
       { Icon: Shield, label: "Context lineage", href: "/dashboard/lineage" },
       { Icon: Shield, label: "Blast radius", href: "/dashboard/blast-radius" },
       { Icon: Shield, label: "Memory firewall", href: "/dashboard/memory-firewall" },

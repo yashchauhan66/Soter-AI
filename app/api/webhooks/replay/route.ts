@@ -18,9 +18,13 @@ export async function POST(request: Request) {
     if (!delivery) return jsonResponse({ error: true, message: "Delivery not found." }, { status: 404 });
     await requireProjectPermission(delivery.endpoint.projectId, "webhook:update");
     // Reset attempt count for manual replay so backoff doesn't immediately kill it.
+    // CRG-RT-012: without resetting attempts, a DEAD_LETTER delivery (attempts ==
+    // MAX_ATTEMPTS) would re-dead-letter on the first replay attempt because
+    // attemptNumber = attempts + 1 already exceeds the limit — the replay would
+    // never actually re-send.
     await db.webhookDelivery.update({
       where: { id: delivery.id },
-      data: { status: "PENDING", nextAttemptAt: new Date(), deadLetteredAt: null, errorMessage: null },
+      data: { status: "PENDING", attempts: 0, nextAttemptAt: new Date(), deadLetteredAt: null, errorMessage: null },
     });
     return jsonResponse({ accepted: true, deliveryId: delivery.id, status: "PENDING" }, { status: 202 });
   } catch (error) {

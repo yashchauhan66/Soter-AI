@@ -1,14 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 interface Props {
   clients?: { id: string; name: string }[];
 }
 
 export function NewProjectForm({ clients = [] }: Props) {
-  const router = useRouter();
   const search = useSearchParams();
   const preselectedClient = search.get("clientId") ?? "";
   const [loading, setLoading] = useState(false);
@@ -32,8 +31,7 @@ export function NewProjectForm({ clients = [] }: Props) {
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.message ?? "Could not create project.");
-      router.push("/dashboard/projects");
-      router.refresh();
+      window.location.assign("/dashboard/projects");
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Could not create project.");
       setLoading(false);

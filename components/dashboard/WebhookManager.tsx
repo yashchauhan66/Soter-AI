@@ -60,10 +60,11 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
 
   async function createEndpoint(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const formElement = event.currentTarget;
     setError("");
     setCreating(true);
     try {
-      const form = new FormData(event.currentTarget);
+      const form = new FormData(formElement);
       const events = ALL_EVENTS.filter((name) => form.get(`event:${name}`));
       if (!events.length) throw new Error("Select at least one event.");
       const response = await fetch("/api/webhooks", {
@@ -79,7 +80,7 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
       const data = await response.json();
       if (!response.ok) throw new Error(data.message ?? "Could not create webhook.");
       setRevealed({ id: data.id, secret: data.signingSecret });
-      event.currentTarget.reset();
+      formElement.reset();
       router.refresh();
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Could not create webhook.");

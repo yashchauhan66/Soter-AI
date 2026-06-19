@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 import { Loader2, UserPlus } from "lucide-react";
 
 type SignupSuccess = {
@@ -12,6 +13,7 @@ type SignupSuccess = {
 
 export function SignUpForm() {
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<SignupSuccess | null>(null);
 
@@ -20,15 +22,17 @@ export function SignUpForm() {
     setLoading(true);
     setError("");
     setSuccess(null);
+    setNotice("");
     try {
       const form = new FormData(event.currentTarget);
       const email = String(form.get("email") ?? "");
+      const password = String(form.get("password") ?? "");
       const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email,
-          password: form.get("password"),
+          password,
           name: form.get("name") || undefined,
           organizationName: form.get("organizationName") || undefined,
           organizationType: form.get("organizationType") || "DIRECT_BUSINESS",
@@ -39,11 +43,24 @@ export function SignUpForm() {
         setError(data.message ?? "Could not sign up.");
         return;
       }
-      setSuccess({
+      if (data.verificationRequired) {
+        setSuccess({
+          email,
+          verificationEmailFailed: data.emailSent === false,
+          developmentVerificationUrl: data.developmentVerificationUrl,
+        });
+        return;
+      }
+      const signInResult = await signIn("credentials", {
         email,
-        verificationEmailFailed: Boolean(data.verificationEmailFailed),
-        developmentVerificationUrl: data.developmentVerificationUrl,
+        password,
+        redirect: false,
       });
+      if (!signInResult || signInResult.error) {
+        setNotice("Account created. Please sign in with your new credentials.");
+      } else {
+        window.location.assign("/dashboard");
+      }
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Could not sign up.");
     } finally {
@@ -103,6 +120,7 @@ export function SignUpForm() {
         {loading ? <Loader2 className="animate-spin" size={16} /> : <UserPlus size={16} />}
         {loading ? "Creating..." : "Create account"}
       </button>
+      {notice && <p className="rounded-xl bg-cyan/10 p-3 text-sm text-cyan">{notice}</p>}
       {error && <p className="rounded-xl bg-red-500/10 p-3 text-sm text-red-300">{error}</p>}
     </form>
   );

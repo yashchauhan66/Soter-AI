@@ -51,11 +51,16 @@ export async function checkRedisRateLimit(identifier: string, limit: number, win
   const redis = getRedis();
   const key = minuteBucketKey(identifier);
   const count = await redis.incrBy(key, 1);
-  if (count === 1) {
+  const ttl = await redis.ttl(key);
+  // CRG-RT-013: incrBy + expire are two commands. If the expire after the first
+  // increment was ever lost (process crash / partial failure), the key persists
+  // with no TTL (-1) and would never reset — a permanent lockout. Self-heal by
+  // re-applying the expiry whenever the key has no TTL.
+  if (count === 1 || ttl === -1) {
     await redis.expire(key, Math.ceil(windowMs / 1000));
   }
-  const ttl = await redis.ttl(key);
-  const resetAt = ttl > 0 ? Date.now() + ttl * 1000 : Date.now() + windowMs;
+  const effectiveTtl = ttl > 0 ? ttl : Math.ceil(windowMs / 1000);
+  const resetAt = Date.now() + effectiveTtl * 1000;
   return { allowed: count <= limit, remaining: Math.max(0, limit - count), resetAt };
 }
 
@@ -66,7 +71,8 @@ export async function checkRedisFixedWindowRateLimit(identifier: string, limit: 
   const bucket = Math.floor(now / safeWindowMs);
   const key = `crg:rl:${identifier}:w${safeWindowMs}:${bucket}`;
   const count = await redis.incrBy(key, 1);
-  if (count === 1) {
+  // CRG-RT-013: self-heal a missing TTL (see checkRedisRateLimit).
+  if (count === 1 || (await redis.ttl(key)) === -1) {
     await redis.expire(key, Math.ceil(safeWindowMs / 1000));
   }
   const resetAt = (bucket + 1) * safeWindowMs;

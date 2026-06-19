@@ -12,7 +12,6 @@ import {
 } from "./audit/export";
 import { sandboxDocument } from "./rag/documentSandbox";
 import { emitSecurityEvent } from "./events/emit";
-import { safeRedTeamScenarios } from "./redteam/scenarios";
 import { runRedTeamSuite } from "./redteam/runner";
 import { evaluateModel, getDefaultBackend, HeuristicMLBackend } from "./ml";
 import { deliverScheduledReport } from "./reports/scheduled";

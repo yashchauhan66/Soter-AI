@@ -7,7 +7,7 @@
 // the policy excludes are filtered out, and the action is recomputed against
 // the policy mode + thresholds.
 
-import type { Project, ProjectPolicy, PolicyMode, UnsafeOutputMode } from "@prisma/client";
+import type { ProjectPolicy, PolicyMode, UnsafeOutputMode } from "@prisma/client";
 import { db } from "../db";
 import { getLocalCache, setLocalCache } from "../localCache";
 import { decideGuardAction } from "./decisionEngine";
@@ -246,7 +246,11 @@ export function applyPolicy(
   }
 
   // Unsafe output mode override.
-  if (direction === "OUTPUT" && riskTypes.includes("UNSAFE_OUTPUT")) {
+  // SECURITY: a custom denylist/topic match is an explicit hard BLOCK opted into
+  // by the project; it must NOT be downgraded by a softer unsafeOutputMode.
+  // Without the `!customMatched` guard, a WARN/REDACT mode would silently turn a
+  // denylist BLOCK into ALLOW/ALLOW_WITH_REDACTION and leak the matched content.
+  if (direction === "OUTPUT" && riskTypes.includes("UNSAFE_OUTPUT") && !customMatched) {
     if (policy.unsafeOutputMode === "WARN") action = "ALLOW";
     else if (policy.unsafeOutputMode === "REDACT") action = "ALLOW_WITH_REDACTION";
     else action = "BLOCK";

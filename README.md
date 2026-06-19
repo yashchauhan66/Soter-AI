@@ -24,11 +24,11 @@ Phase 9 intentionally avoids unrelated product development. Roadmap changes shou
 
 The [Phase 10 growth workspace](docs/growth/README.md) contains the 100-account research list, 50-message draft queue, authorization-first audit and demo playbooks, beta and pricing execution, objection learning, launch gates, weekly scorecard, and KPI definitions. Draft activity is never counted as sent outreach or traction.
 
-## Phase 11: Competitive Gap Scaffolding
+## Phase 11: Internal Preview Competitive Gap Scaffolding
 
-Phase 11 adds defensive scaffolds for AI supply chain security, AI Bill of Materials, model/provider and prompt registries, tool-call firewall, advanced RAG security simulation, threat-intelligence rule lifecycle, internal benchmark metrics, multilingual detector expansion, DPDP readiness workflow, WordPress and AI framework middleware scaffolds, production abuse controls, and audit readiness documentation.
+Phase 11 adds Internal Preview defensive scaffolds for AI supply chain security, AI Bill of Materials, model/provider and prompt registries, tool-call firewall, advanced RAG security simulation, threat-intelligence rule lifecycle, internal benchmark metrics, multilingual detector expansion, DPDP readiness workflow, WordPress and AI framework middleware scaffolds, abuse/cost-control evidence, and audit readiness documentation.
 
-These capabilities are OWASP LLM Top 10 aligned defense-in-depth controls for risk reduction. They are not a guarantee of complete protection and do not represent independent certification. Remote threat rules and red-team tests require authorization and review before use.
+These capabilities are OWASP LLM Top 10 aligned defense-in-depth controls for risk reduction. The tool-call firewall preview is not runtime agent enforcement yet unless it is wired into the agent execution path. These previews are not a guarantee of complete protection and do not represent independent certification. Remote threat rules and red-team tests require authorization and review before use.
 
 CyberRakshak Guard is an OWASP LLM Top 10 aligned, defense-in-depth gateway for AI chatbot input and output flows. It detects, blocks, rewrites, redacts, monitors, and reports prompt injection, jailbreaks, system prompt exposure, PII, India-specific PII, secrets, unsafe output, and basic usage abuse.
 
@@ -102,6 +102,17 @@ npm run verify
 # typecheck + tests (46/46) + build
 ```
 
+### Browser E2E
+
+Playwright uses the configured local PostgreSQL database, applies migrations, refreshes the demo seed, and starts Next.js on port `3101`.
+
+```powershell
+npx playwright install chromium
+npm run test:e2e
+```
+
+Set `E2E_PORT` or `E2E_BASE_URL` to override the local server. Use an isolated local/test database through `DATABASE_URL`; the suite creates uniquely named test projects, keys, webhooks, RAG collections, and queued jobs. Provider-backed delivery, billing, SAML, SCIM, KMS, Redis, vector, email, and SIEM interoperability are not claimed by this local suite.
+
 ## REST API examples
 
 ```bash
@@ -152,6 +163,22 @@ export const POST = secureChatHandler({
   callLLM: async ({ safeInput }) => callLLM(safeInput),
 });
 ```
+
+## Integrations
+
+Official SDKs and plugins for connecting chatbots, RAG apps, and AI agents:
+
+- **JavaScript / TypeScript** — `@cyberrakshak/guard` (`packages/sdk`).
+  See [docs/integrations/javascript-typescript.md](docs/integrations/javascript-typescript.md).
+- **Python** — `cyberrakshak-guard` (`packages/cyberrakshak-python`).
+  See [docs/integrations/python.md](docs/integrations/python.md).
+- **WordPress / PHP** — plugin in `integrations/wordpress-plugin/cyberrakshak-guard`.
+  See [docs/integrations/wordpress.md](docs/integrations/wordpress.md).
+- **API contract** — [docs/integrations/api-contract.md](docs/integrations/api-contract.md).
+- **Security best practices** — [docs/integrations/security-best-practices.md](docs/integrations/security-best-practices.md).
+
+Runnable examples live in `examples/` (Next.js, Express, FastAPI, LangChain,
+WordPress demo).
 
 ## Webhooks
 

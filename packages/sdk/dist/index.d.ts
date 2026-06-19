@@ -1,6 +1,8 @@
 export * from "./types";
 export * from "./errors";
-export { GuardClient, createAgentFirewallClient, createCybersecurityGuardClient, createClient } from "./client";
+export * from "./agent-passport";
+export { CyberRakshakClient, GuardClient, createAgentFirewallClient, createCybersecurityGuardClient, createClient, normalizeDecision, } from "./client";
+export type { CyberRakshakGuard as CyberRakshakGuardInterface } from "./client";
 import { GuardClient } from "./client";
 import type { AgentActionCheckRequest, AgentApprovalResolveRequest, AgentDataCheckRequest, AgentOutputCheckRequest, BrowserFormCheckRequest, CanaryCheckRequest, CheckContextFlowRequest, CheckLegalBoundaryRequest, CheckMemoryPoisoningRequest, ClientOptions, CreateCanaryRequest, MemoryCheckRequest, RagTrustScoreRequest, RegisterContextSourceRequest, RegisterMcpServerRequest, RunBlastRadiusScenarioRequest, ScanMcpToolsRequest, SimulateBlastRadiusRequest, SnapshotMcpToolsRequest, StartAgentSessionRequest, StoreSafeMemoryRequest, ToolExecutionContext, ToolExecutor } from "./types";
 export declare function startAgentSession(options: ClientOptions, input: StartAgentSessionRequest): Promise<import("./types").StartAgentSessionResponse>;
@@ -53,10 +55,6 @@ export declare function snapshotMcpTools(options: ClientOptions, input: Snapshot
 export declare function listMcpDrifts(options: ClientOptions, status?: string): Promise<import("./types").McpDriftsResponse>;
 export declare function checkLegalBoundary(options: ClientOptions, input: CheckLegalBoundaryRequest): Promise<import("./types").CheckLegalBoundaryResponse>;
 export declare function createNextAgentHandler(options: ClientOptions): (request: Request) => Promise<Response>;
-/**
- * Class form: `new CyberRakshakGuard({ apiKey })`.
- * Functionally identical to `createClient`. Implements the same surface as the GuardClient.
- */
 export declare class CyberRakshakGuard extends GuardClient {
     constructor(options: ClientOptions);
 }

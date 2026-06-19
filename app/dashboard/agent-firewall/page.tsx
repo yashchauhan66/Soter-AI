@@ -4,6 +4,7 @@ import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { defaultAgentFirewallPolicy } from "@/lib/agent-firewall";
 import { db } from "@/lib/db";
+import { AGENT_FIREWALL_PREVIEW_GAPS } from "@/lib/agent-firewall";
 import { resolveDashboardAgentApproval } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -232,6 +233,15 @@ if (checked.decision === "BLOCK") throw new Error(checked.reason);
 if (checked.decision === "ASK_APPROVAL") return checked.requiredApproval;
 
 await sendEmail(checked.safeContent ?? emailBody);`}</pre>
+      </section>
+
+      <section className="card p-5">
+        <h2 className="text-lg font-semibold">Agent firewall preview gap list</h2>
+        <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-slate-400">
+          {AGENT_FIREWALL_PREVIEW_GAPS.map((gap) => (
+            <li key={gap}>{gap}</li>
+          ))}
+        </ul>
       </section>
     </div>
   );

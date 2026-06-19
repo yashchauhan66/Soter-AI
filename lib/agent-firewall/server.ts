@@ -5,6 +5,7 @@ import { DEFAULT_RPM } from "@/lib/guard/constants";
 import { sanitizeLogText, sanitizeMetadata } from "@/lib/guard/logSafety";
 import { checkRedisRateLimit } from "@/lib/rateLimit";
 import { db } from "@/lib/db";
+import { checkAgentPassportForAction } from "@/lib/agent-passport/server";
 import {
   AGENT_TYPES,
   DEFAULT_ALLOWED_AGENT_TOOLS,
@@ -35,6 +36,7 @@ export const startSessionSchema = z.object({
 
 export const agentActionSchema = z.object({
   sessionId: z.string().trim().min(1).max(200).optional(),
+  passportToken: z.string().trim().min(10).max(300).optional(),
   agentName: z.string().trim().max(120).optional(),
   tool: z.string().trim().min(1).max(160),
   action: z.string().trim().min(1).max(200),
@@ -177,6 +179,12 @@ export async function startAndPersistAgentSession(auth: AgentAuth, input: z.infe
 }
 
 export async function decideAndPersistAgentAction(auth: AgentAuth, input: AgentActionCheckInput) {
+  const passportDecision = await checkAgentPassportForAction(auth, input);
+  if (passportDecision.decision !== "ALLOW") {
+    const result = passportDecisionToAgentDecision(passportDecision);
+    const auditId = await persistAgentActionLog(auth, input, result);
+    return jsonResponse({ ...result, auditId, passportId: passportDecision.passportId, sessionId: passportDecision.sessionId });
+  }
   const policy = await loadAgentPolicyForProject(auth.project.id, input.agentName);
   const result = checkAgentAction(input, { policy });
   const auditId = await persistAgentActionLog(auth, input, result);
@@ -190,6 +198,12 @@ export async function decideAndPersistAgentAction(auth: AgentAuth, input: AgentA
 }
 
 export async function persistToolCheck(auth: AgentAuth, input: AgentActionCheckInput) {
+  const passportDecision = await checkAgentPassportForAction(auth, input);
+  if (passportDecision.decision !== "ALLOW") {
+    const result = passportDecisionToAgentDecision(passportDecision);
+    const auditId = await persistAgentActionLog(auth, input, result);
+    return jsonResponse({ ...result, auditId, passportId: passportDecision.passportId, sessionId: passportDecision.sessionId });
+  }
   const policy = await loadAgentPolicyForProject(auth.project.id, input.agentName);
   const result = checkToolUse(input, { policy });
   const auditId = await persistAgentActionLog(auth, input, result);
@@ -490,6 +504,16 @@ function normalizeManifestInput(input: AgentManifestInput) {
       externalPII: input.manifest.dataPolicy?.externalPII ?? "ASK_APPROVAL",
       failClosed: input.manifest.dataPolicy?.failClosed ?? true,
     },
+  };
+}
+
+function passportDecisionToAgentDecision(result: Awaited<ReturnType<typeof checkAgentPassportForAction>>): AgentActionDecisionResult {
+  return {
+    decision: result.decision,
+    riskLevel: result.riskLevel,
+    reason: result.reason,
+    redactions: [],
+    policyMatches: result.policyMatches,
   };
 }
 

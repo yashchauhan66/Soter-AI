@@ -10,8 +10,7 @@
 import crypto from "crypto";
 import { jsonResponse } from "@/lib/apiResponse";
 import { db } from "@/lib/db";
-import { verifyRazorpayWebhook, planForPriceId } from "@/lib/billing/razorpay";
-import type { ProjectPlan } from "@prisma/client";
+import { verifyRazorpayWebhook, planForPriceId, razorpayWebhookSecret } from "@/lib/billing/razorpay";
 import { sendTemplateEmail } from "@/lib/email/send";
 import { failedPaymentWindow } from "@/lib/ops/billing";
 
@@ -34,7 +33,17 @@ export async function POST(request: Request) {
   const eventId = String((payload as { id?: string }).id ?? `${eventType}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`);
   const payloadHash = crypto.createHash("sha256").update(rawBody).digest("hex");
 
-  // Persist + dedupe via unique eventId.
+  // SECURITY (CRG-RT-010): verify the signature BEFORE persisting/deduping.
+  // Recording invalid-signature events first let an attacker pre-seed a row
+  // under a guessable eventId; the genuine event then hit the unique-constraint
+  // dedup and was silently acked (200) without ever being processed. Reject
+  // invalid signatures up front and never let them occupy the dedup key.
+  if (!valid) {
+    const reason = razorpayWebhookSecret() ? "Signature invalid." : "RAZORPAY_WEBHOOK_SECRET is not configured.";
+    return jsonResponse({ error: true, message: reason }, { status: 400 });
+  }
+
+  // Persist + dedupe via unique eventId (only validated events reach here).
   try {
     await db.paymentEvent.create({
       data: {
@@ -46,13 +55,9 @@ export async function POST(request: Request) {
       },
     });
   } catch (caught) {
-    // Likely duplicate; treat as already-processed and ack.
+    // Likely duplicate of an already-validated event; treat as processed and ack.
     console.warn("Razorpay event dedup or error", caught);
     return jsonResponse({ ok: true, deduplicated: true });
-  }
-
-  if (!valid) {
-    return jsonResponse({ error: true, message: "Signature invalid." }, { status: 400 });
   }
 
   try {
