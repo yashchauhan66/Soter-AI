@@ -78,6 +78,7 @@ const groups = [
       { Icon: Box, label: "Dry-run", href: "/dashboard/dry-run" },
       { Icon: Wifi, label: "Semantic egress", href: "/dashboard/semantic-egress" },
       { Icon: BookOpen, label: "Evidence vault", href: "/dashboard/evidence-vault" },
+      { Icon: TrendingUp, label: "SLM evaluations", href: "/dashboard/evaluations" },
       { Icon: Network, label: "Context lineage", href: "/dashboard/lineage" },
       { Icon: Radio, label: "Blast radius", href: "/dashboard/blast-radius" },
       { Icon: ShieldClose, label: "Memory firewall", href: "/dashboard/memory-firewall" },

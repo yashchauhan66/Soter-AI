@@ -39,6 +39,8 @@ export const ALL_PERMISSIONS = [
   "forensics:manage",
   "redteam:read",
   "redteam:run",
+  "evaluate:read",
+  "evaluate:create",
 ] as const;
 
 export type Permission = (typeof ALL_PERMISSIONS)[number];
@@ -54,6 +56,7 @@ const ROLE_PERMISSIONS: Record<OrgRole, Permission[]> = {
     "agency:manage", "policy:manage", "badge:manage", "member:manage",
     "rag:read", "rag:manage", "feedback:create", "scheduled_report:manage",
     "shadow_ai:read", "credentials:read", "cost:read", "forensics:read", "redteam:read",
+    "evaluate:read", "evaluate:create",
   ],
   DEVELOPER: [
     "project:read", "project:update",
@@ -63,7 +66,7 @@ const ROLE_PERMISSIONS: Record<OrgRole, Permission[]> = {
     "policy:manage", "badge:manage",
     "rag:read", "rag:manage", "feedback:create",
     "shadow_ai:read", "shadow_ai:scan", "credentials:read", "cost:read",
-    "redteam:read", "redteam:run",
+    "redteam:read", "redteam:run", "evaluate:read", "evaluate:create",
   ],
   SECURITY_ANALYST: [
     "project:read",
@@ -82,7 +85,7 @@ const ROLE_PERMISSIONS: Record<OrgRole, Permission[]> = {
   VIEWER: [
     "project:read",
     "logs:read", "reports:read",
-    "rag:read", "feedback:create",
+    "rag:read", "feedback:create", "evaluate:read",
   ],
 };
 
