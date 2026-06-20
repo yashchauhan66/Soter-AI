@@ -2,19 +2,13 @@ import { ProjectSwitcher } from "@/components/dashboard/ProjectSwitcher";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
+import { MetricCard, StatusBadge, RiskLevel } from "@/components/dashboard/MetricCard";
 
 export const dynamic = "force-dynamic";
 
 type RecordRow = { id: string; agentName: string; memoryScope: string; memoryType: string; contentRedacted: string | null; status: string; riskLevel: string; updatedAt: Date };
 type FindingRow = { memoryRecordId: string; findingType: string; riskLevel: string; reason: string };
-
-const RISK_TONE: Record<string, string> = { LOW: "text-emerald-300", MEDIUM: "text-amber-300", HIGH: "text-orange-300", CRITICAL: "text-red-300" };
-const STATUS_TONE: Record<string, string> = {
-  ACTIVE: "bg-emerald-400/10 text-emerald-300",
-  QUARANTINED: "bg-red-400/10 text-red-300",
-  NEEDS_REVIEW: "bg-yellow-400/10 text-yellow-300",
-  DELETED: "bg-slate-700 text-slate-400",
-};
 
 export default async function MemoryFirewallPage({ searchParams }: { searchParams: Promise<{ project?: string }> }) {
   const params = await searchParams;
@@ -33,19 +27,42 @@ export default async function MemoryFirewallPage({ searchParams }: { searchParam
   const quarantined = records.filter((row) => row.status === "QUARANTINED").length;
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Agent security</p>
-          <h1 className="mt-2 text-3xl font-bold">Memory firewall</h1>
-          <p className="mt-3 max-w-3xl text-slate-400">Detect and quarantine poisoned instructions in long-term agent memory before they affect future sessions. Quarantined memory is never returned to the agent.</p>
-        </div>
-        <ProjectSwitcher projects={projects} selectedId={project.id} />
-      </div>
+      <FeatureGuide
+        eyebrow="Agent security"
+        title="Memory firewall"
+        description="Detect and quarantine poisoned instructions in long-term agent memory before they affect future sessions. Quarantined memory is never returned to the agent."
+        useCase="Memory poisoning is a critical attack vector where an attacker injects malicious instructions into an agent's long-term memory during one session, which then affects all future sessions. Traditional input guards only catch attacks at the moment of input — memory firewall protects against persistent, cross-session attacks."
+        howItWorks={[
+          { heading: "Content is analyzed", body: "When memory is written, each piece of content is analyzed for prompt injection, jailbreak attempts, and instruction poisoning using deep content inspection." },
+          { heading: "Risk scoring", body: "Each memory record receives a risk score. Suspicious content is flagged and categorized by the type of poisoning detected." },
+          { heading: "Automated quarantine", body: "High-risk memory is automatically quarantined — it is stored but never returned to the agent. Medium-risk records are marked for review." },
+          { heading: "Audit and recovery", body: "All quarantine events are logged with findings. You can review, release, or permanently delete quarantined memory from the dashboard." },
+        ]}
+        integrationCode={`import { Soter } from "@soter/core";
+
+const soter = new Soter({
+  apiKey: process.env.SOTER_API_KEY,
+  baseUrl: process.env.SOTER_BASE_URL,
+});
+
+const check = await soter.checkMemory({
+  agentName: "support-agent",
+  memoryScope: "USER",
+  memoryType: "INSTRUCTION",
+  content: candidateMemory
+});
+
+if (check.decision === "QUARANTINE" || check.decision === "BLOCK") {
+  // do not persist; raise an incident
+}`}
+        callout="Memory firewall detects known poisoning patterns but cannot guarantee complete protection against novel attacks. Combine with periodic memory audits and least-privilege memory access for defense in depth."
+      />
+      <ProjectSwitcher projects={projects} selectedId={project.id} />
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <Metric label="Memory records" value={records.length} tone="gray" />
-        <Metric label="Quarantined" value={quarantined} tone="red" />
-        <Metric label="Needs review" value={records.filter((r) => r.status === "NEEDS_REVIEW").length} tone="yellow" />
+        <MetricCard label="Memory records" value={records.length} tone="gray" />
+        <MetricCard label="Quarantined" value={quarantined} tone="red" />
+        <MetricCard label="Needs review" value={records.filter((r) => r.status === "NEEDS_REVIEW").length} tone="yellow" />
       </div>
 
       <section className="grid gap-3">
@@ -57,8 +74,8 @@ export default async function MemoryFirewallPage({ searchParams }: { searchParam
                 <p className="mt-1 max-w-2xl truncate text-slate-400">{row.contentRedacted ?? "(no content)"}</p>
               </div>
               <div className="flex items-center gap-2">
-                <span className={`text-xs font-semibold ${RISK_TONE[row.riskLevel] ?? "text-slate-400"}`}>{row.riskLevel}</span>
-                <span className={`rounded px-2 py-1 text-xs font-medium ${STATUS_TONE[row.status] ?? "bg-slate-700 text-slate-300"}`}>{row.status}</span>
+                <RiskLevel level={row.riskLevel} />
+                <StatusBadge value={row.status} />
               </div>
             </div>
             {(findingsByRecord.get(row.id) ?? []).length > 0 && (
@@ -70,35 +87,7 @@ export default async function MemoryFirewallPage({ searchParams }: { searchParam
         ))}
         {records.length === 0 && <section className="card p-5 text-sm text-slate-500">No memory records yet. Check or store memory via the API/SDK.</section>}
       </section>
-
-      <section className="card p-5">
-        <h2 className="text-lg font-semibold">Copy-paste integration</h2>
-        <pre className="mt-4 overflow-x-auto rounded-lg bg-slate-950 p-4 text-xs text-slate-300">{`import { createCybersecurityGuardClient } from "@cybersecurityguard/guard";
-
-const guard = createCybersecurityGuardClient({ apiKey: process.env.CYBERSECURITYGUARD_API_KEY! });
-
-const check = await guard.checkMemoryPoisoning({
-  agentName: "support-agent",
-  memoryScope: "USER",
-  memoryType: "INSTRUCTION",
-  content: candidateMemory
-});
-
-if (check.decision === "QUARANTINE" || check.decision === "BLOCK") {
-  // do not persist; raise an incident
-}`}</pre>
-      </section>
     </div>
-  );
-}
-
-function Metric({ label, value, tone }: { label: string; value: number; tone: "green" | "yellow" | "red" | "gray" }) {
-  const tones = { green: "text-emerald-300", yellow: "text-yellow-300", red: "text-red-300", gray: "text-slate-300" };
-  return (
-    <section className="card p-5">
-      <p className="text-sm text-slate-400">{label}</p>
-      <p className={`mt-2 text-2xl font-bold ${tones[tone]}`}>{value}</p>
-    </section>
   );
 }
 

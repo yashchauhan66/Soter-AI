@@ -1,4 +1,4 @@
-import { Ban, Globe, ScanLine, ShieldAlert } from "lucide-react";
+import { Globe, ScanLine, ShieldAlert } from "lucide-react";
 import Link from "next/link";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
@@ -13,7 +13,7 @@ export default async function ShadowAIPage({
   searchParams: Promise<{ project?: string }>;
 }) {
   const params = await searchParams;
-  const [project, projects] = await Promise.all([
+  const [project, _projects] = await Promise.all([
     getCurrentProjectById(params.project),
     getCurrentUserProjects(),
   ]);

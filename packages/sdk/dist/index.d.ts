@@ -1,7 +1,15 @@
 export * from "./types";
 export * from "./errors";
+export type { SoterConfig, SoterProtectRequest, SoterProtectResult, SoterRiskLevel, SoterDetection, SoterContext, SoterPolicy, SoterRedactionResult, } from "./types";
 export * from "./agent-passport";
-export { CyberRakshakClient, GuardClient, createAgentFirewallClient, createCybersecurityGuardClient, createClient, normalizeDecision, } from "./client";
+export * from "./agent-intent";
+export * from "./tool-chain";
+export * from "./escrow";
+export * from "./dry-run";
+export * from "./semantic-egress";
+export * from "./evidence-vault";
+export * from "./soter";
+export { CyberRakshakClient, GuardClient, SoterClient, createAgentFirewallClient, createCybersecurityGuardClient, createClient, normalizeDecision, } from "./client";
 export type { CyberRakshakGuard as CyberRakshakGuardInterface } from "./client";
 import { GuardClient } from "./client";
 import type { AgentActionCheckRequest, AgentApprovalResolveRequest, AgentDataCheckRequest, AgentOutputCheckRequest, BrowserFormCheckRequest, CanaryCheckRequest, CheckContextFlowRequest, CheckLegalBoundaryRequest, CheckMemoryPoisoningRequest, ClientOptions, CreateCanaryRequest, MemoryCheckRequest, RagTrustScoreRequest, RegisterContextSourceRequest, RegisterMcpServerRequest, RunBlastRadiusScenarioRequest, ScanMcpToolsRequest, SimulateBlastRadiusRequest, SnapshotMcpToolsRequest, StartAgentSessionRequest, StoreSafeMemoryRequest, ToolExecutionContext, ToolExecutor } from "./types";
@@ -55,9 +63,11 @@ export declare function snapshotMcpTools(options: ClientOptions, input: Snapshot
 export declare function listMcpDrifts(options: ClientOptions, status?: string): Promise<import("./types").McpDriftsResponse>;
 export declare function checkLegalBoundary(options: ClientOptions, input: CheckLegalBoundaryRequest): Promise<import("./types").CheckLegalBoundaryResponse>;
 export declare function createNextAgentHandler(options: ClientOptions): (request: Request) => Promise<Response>;
+/** @deprecated Use Soter for new integrations. */
 export declare class CyberRakshakGuard extends GuardClient {
     constructor(options: ClientOptions);
 }
+/** @deprecated Use Soter for new integrations. */
 export declare class CybersecurityGuard extends GuardClient {
     constructor(options: ClientOptions);
 }

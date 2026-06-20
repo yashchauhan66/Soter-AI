@@ -1,24 +1,24 @@
 // server.js
 //
-// Express chatbot example using @cyberrakshak/guard. Two routes are shown:
+// Express chatbot example using @soter/core. Two routes are shown:
 //   POST /chat              — explicit guard flow with the client
 //   POST /chat-middleware   — uses the Express input-guard middleware
 //
-// The CyberRakshak API key is read from the environment and never sent to the
+// The Soter API key is read from the environment and never sent to the
 // browser.
 
 import "dotenv/config";
 import express from "express";
-import { CyberRakshakClient } from "@cyberrakshak/guard";
-import { cyberRakshakInputMiddleware } from "@cyberrakshak/guard/express";
+import { Soter } from "@soter/core";
+import { soterInputMiddleware } from "@soter/core/express";
 
 const app = express();
 app.use(express.json({ limit: "32kb" }));
 
-const guard = new CyberRakshakClient({
-  apiKey: process.env.CYBERRAKSHAK_API_KEY,
-  baseUrl: process.env.CYBERRAKSHAK_BASE_URL || "https://api.cyberrakshak.dev",
-  projectId: process.env.CYBERRAKSHAK_PROJECT_ID,
+const soter = new Soter({
+  apiKey: process.env.SOTER_API_KEY,
+  baseUrl: process.env.SOTER_BASE_URL,
+  projectId: process.env.SOTER_PROJECT_ID,
   timeoutMs: 5000,
 });
 
@@ -34,16 +34,16 @@ app.post("/chat", async (req, res) => {
     return res.status(400).json({ error: true, message: "message is required." });
   }
   try {
-    const inputResult = await guard.guardInput({ text: message });
-    if (guard.shouldBlock(inputResult)) {
+    const inputResult = await soter.guardInput({ text: message });
+    if (soter.shouldBlock(inputResult)) {
       return res.json({ reply: inputResult.safeText ?? "Blocked for safety.", blocked: true });
     }
-    const reply = await callLLM(guard.getSafeText(inputResult, message) ?? message);
-    const outputResult = await guard.guardOutput({ text: reply });
-    if (guard.shouldBlock(outputResult)) {
+    const reply = await callLLM(soter.getSafeText(inputResult, message) ?? message);
+    const outputResult = await soter.guardOutput({ text: reply });
+    if (soter.shouldBlock(outputResult)) {
       return res.json({ reply: outputResult.safeText ?? "Response withheld.", blocked: true });
     }
-    return res.json({ reply: guard.getSafeText(outputResult, reply) ?? reply, blocked: false });
+    return res.json({ reply: soter.getSafeText(outputResult, reply) ?? reply, blocked: false });
   } catch (caught) {
     const status = caught?.status ?? 500;
     // Never leak the API key or internal details.
@@ -54,18 +54,18 @@ app.post("/chat", async (req, res) => {
 // --- Middleware flow -------------------------------------------------------
 app.post(
   "/chat-middleware",
-  cyberRakshakInputMiddleware({
-    apiKey: process.env.CYBERRAKSHAK_API_KEY,
-    baseUrl: process.env.CYBERRAKSHAK_BASE_URL || "https://api.cyberrakshak.dev",
+  soterInputMiddleware({
+    apiKey: process.env.SOTER_API_KEY,
+    baseUrl: process.env.SOTER_BASE_URL,
   }),
   async (req, res) => {
     // req.body.message is now the safe/redacted text; if it was blocked, the
     // middleware already responded.
     const reply = await callLLM(req.body.message);
-    const outputResult = await guard.guardOutput({ text: reply });
+    const outputResult = await soter.guardOutput({ text: reply });
     res.json({
-      reply: guard.getSafeText(outputResult, reply) ?? reply,
-      blocked: guard.shouldBlock(outputResult),
+      reply: soter.getSafeText(outputResult, reply) ?? reply,
+      blocked: soter.shouldBlock(outputResult),
     });
   },
 );

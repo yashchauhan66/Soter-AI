@@ -15,10 +15,6 @@ process.env.API_KEY_PEPPER = "auth-test-pepper-that-is-longer-than-thirty-two-ch
 import {
   hashOneTimeToken,
   isOneTimeTokenUsable,
-  createEmailVerificationToken,
-  consumeEmailVerificationToken,
-  createPasswordResetToken,
-  consumePasswordResetToken,
 } from "../lib/auth/tokens";
 
 // ---------------------------------------------------------------------------

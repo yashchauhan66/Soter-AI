@@ -1,15 +1,16 @@
 import express from "express";
-import { CyberRakshakGuard } from "@cyberrakshak/guard";
+import { Soter } from "@soter/core";
 
 const app = express();
 app.use(express.json());
 
-const guard = new CyberRakshakGuard({
-  apiKey: process.env.CYBERRAKSHAK_API_KEY!,
-  baseUrl: process.env.CYBERRAKSHAK_BASE_URL || "https://api.cyberrakshak.com",
+const soter = new Soter({
+  apiKey: process.env.SOTER_API_KEY,
+  projectId: process.env.SOTER_PROJECT_ID,
+  baseUrl: process.env.SOTER_BASE_URL,
 });
 
-app.post("/chat", guard.createExpressMiddleware({
+app.post("/chat", soter.createExpressMiddleware({
   callLLM: async (safeMessage) => `Safe demo response for: ${safeMessage}`,
 }));
 

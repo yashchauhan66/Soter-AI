@@ -1,14 +1,11 @@
-# JavaScript / TypeScript Integration
+# Soter for JavaScript and TypeScript
 
-The `@cyberrakshak/guard` package is a typed, server-side client for the
-CyberRakshak Guard API. It is OWASP LLM Top 10 aligned and built for
-defense-in-depth: **detect, block, redact, monitor, and report**. It does not
-guarantee complete protection.
+Soter is a developer-first safety layer for AI chatbots, agents, RAG systems, and LLM applications. It helps detect and block prompt injection, jailbreaks, data leakage, unsafe outputs, PII exposure, tool abuse, and risky AI behavior before it reaches your model or user.
 
 ## Install
 
 ```bash
-npm install @cyberrakshak/guard
+npm install @soter/core
 ```
 
 Requires Node.js ≥ 18.18 (built-in `fetch`).
@@ -16,43 +13,44 @@ Requires Node.js ≥ 18.18 (built-in `fetch`).
 ## Environment
 
 ```bash
-CYBERRAKSHAK_API_KEY=ck_live_your_key_here   # server-side only
-CYBERRAKSHAK_BASE_URL=https://api.cyberrakshak.dev
-CYBERRAKSHAK_PROJECT_ID=                      # optional
+SOTER_API_KEY=ck_live_your_key_here   # server-side only
+SOTER_BASE_URL=https://api.your-soter-host.example
+SOTER_PROJECT_ID=                      # optional
 ```
 
 > **Never** expose the API key in browser/client code. Do not prefix it with
-> `NEXT_PUBLIC_`. Call the Guard from a server route or proxy.
+> `NEXT_PUBLIC_`. Call Soter from a server route or proxy.
 
 ## Basic usage
 
 ```ts
-import { CyberRakshakClient } from "@cyberrakshak/guard";
+import { Soter } from "@soter/core";
 
-const guard = new CyberRakshakClient({
-  apiKey: process.env.CYBERRAKSHAK_API_KEY!,
-  baseUrl: process.env.CYBERRAKSHAK_BASE_URL || "https://api.cyberrakshak.dev",
-  projectId: process.env.CYBERRAKSHAK_PROJECT_ID,
+const soter = new Soter({
+  apiKey: process.env.SOTER_API_KEY,
+  baseUrl: process.env.SOTER_BASE_URL,
+  projectId: process.env.SOTER_PROJECT_ID,
   timeoutMs: 5000,
 });
 
-const inputResult = await guard.guardInput({ text: userMessage });
-if (guard.shouldBlock(inputResult)) {
-  return "This request was blocked for safety.";
+const result = await soter.protect({
+  input: userMessage,
+  context: { userId: "user_123", sessionId: "session_123" },
+});
+
+if (!result.allowed) {
+  console.log("Blocked by Soter:", result.reason);
 }
 
-const llmResponse = await callLLM(guard.getSafeText(inputResult, userMessage)!);
-
-const outputResult = await guard.guardOutput({ text: llmResponse });
-return guard.getSafeText(outputResult, llmResponse);
+// Continue to the model only after Soter allows the input.
 ```
 
 ### Decision helpers
 
 ```ts
-guard.isAllowed(result);    // safe to forward
-guard.shouldBlock(result);  // stop (BLOCK or HUMAN_REVIEW or !allowed)
-guard.getSafeText(result, fallback);  // safeText ?? redactedText ?? fallback
+soter.isAllowed(result);    // safe to forward
+soter.shouldBlock(result);  // stop (BLOCK or HUMAN_REVIEW or !allowed)
+soter.getSafeText(result, fallback);  // safeText ?? redactedText ?? fallback
 ```
 
 `result.decision` is a normalized 4-value field (`ALLOW` | `REDACT` | `BLOCK` |
@@ -62,7 +60,7 @@ available.
 ### One-call conversation
 
 ```ts
-const { reply, blocked } = await guard.guardConversation({
+const { reply, blocked } = await soter.guardConversation({
   input: userMessage,
   callLLM: async (safeInput) => myLLMCall(safeInput),
 });
@@ -74,19 +72,19 @@ Route handler with the one-line helper:
 
 ```ts
 // app/api/chat/route.ts
-import { createGuardedRoute } from "@cyberrakshak/guard/next";
+import { createGuardedRoute } from "@soter/core/next";
 
 export const runtime = "nodejs";
 
 export const POST = createGuardedRoute({
-  apiKey: process.env.CYBERRAKSHAK_API_KEY!,
-  baseUrl: process.env.CYBERRAKSHAK_BASE_URL!,
+  apiKey: process.env.SOTER_API_KEY!,
+  baseUrl: process.env.SOTER_BASE_URL!,
   callLLM: async (safeInput) => myLLMCall(safeInput),
 });
 ```
 
 Lower-level helpers `guardNextInput(client, ...)`, `guardNextOutput(client, ...)`,
-and `secureChatHandler({...})` are also exported from `@cyberrakshak/guard/next`.
+and `secureChatHandler({...})` are also exported from `@soter/core/next`.
 
 The browser only ever sends `{ message }` and receives `{ reply, blocked }`.
 
@@ -94,14 +92,14 @@ The browser only ever sends `{ message }` and receives `{ reply, blocked }`.
 
 ```ts
 import express from "express";
-import { cyberRakshakInputMiddleware, cyberRakshakOutputMiddleware } from "@cyberrakshak/guard/express";
+import { soterInputMiddleware, soterOutputMiddleware } from "@soter/core/express";
 
 const app = express();
 app.use(express.json());
 
 app.post(
   "/chat",
-  cyberRakshakInputMiddleware({ apiKey: process.env.CYBERRAKSHAK_API_KEY! }),
+  soterInputMiddleware({ apiKey: process.env.SOTER_API_KEY! }),
   async (req, res) => {
     // req.body.message is now safe/redacted; blocked requests already responded.
     const reply = await callLLM(req.body.message);
@@ -110,7 +108,7 @@ app.post(
 );
 ```
 
-`req.cyberrakshak.inputResult` holds the full `GuardResult`.
+`req.soter.inputResult` holds the full `GuardResult`. The legacy `req.cyberrakshak.inputResult` property is still populated for existing integrations.
 
 ## Error handling
 
@@ -121,10 +119,10 @@ import {
   CyberRakshakValidationError,
   CyberRakshakNetworkError,
   CyberRakshakError,
-} from "@cyberrakshak/guard";
+} from "@soter/core";
 
 try {
-  await guard.guardInput({ text });
+  await soter.guardInput({ text });
 } catch (caught) {
   if (caught instanceof CyberRakshakRateLimitError) {
     // caught.retryAfter (seconds) when provided

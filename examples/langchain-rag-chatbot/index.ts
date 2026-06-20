@@ -1,8 +1,9 @@
-import { CyberRakshakGuard } from "@cyberrakshak/guard";
+import { Soter } from "@soter/core";
 
-const guard = new CyberRakshakGuard({
-  apiKey: process.env.CYBERRAKSHAK_API_KEY!,
-  baseUrl: process.env.CYBERRAKSHAK_BASE_URL || "https://api.cyberrakshak.com",
+const soter = new Soter({
+  apiKey: process.env.SOTER_API_KEY,
+  projectId: process.env.SOTER_PROJECT_ID,
+  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 const vectorStore = {
@@ -15,7 +16,7 @@ const vectorStore = {
 };
 
 async function run(query: string) {
-  const result = await guard.protectRag({
+  const result = await soter.protectRag({
     query,
     retrieve: async (safeQuery) => vectorStore.similaritySearch(safeQuery),
     callLLM: async ({ safeQuery, safeContext }) => `Answer for ${safeQuery}\n\n${safeContext}`,

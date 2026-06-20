@@ -1,14 +1,27 @@
 export * from "./types";
 export * from "./errors";
+export type {
+  SoterConfig,
+  SoterProtectRequest,
+  SoterProtectResult,
+  SoterRiskLevel,
+  SoterDetection,
+  SoterContext,
+  SoterPolicy,
+  SoterRedactionResult,
+} from "./types";
 export * from "./agent-passport";
 export * from "./agent-intent";
 export * from "./tool-chain";
 export * from "./escrow";
 export * from "./dry-run";
 export * from "./semantic-egress";
+export * from "./evidence-vault";
+export * from "./soter";
 export {
   CyberRakshakClient,
   GuardClient,
+  SoterClient,
   createAgentFirewallClient,
   createCybersecurityGuardClient,
   createClient,
@@ -193,12 +206,14 @@ export function createNextAgentHandler(options: ClientOptions) {
   return createAgentFirewallClient(options).createNextAgentHandler();
 }
 
+/** @deprecated Use Soter for new integrations. */
 export class CyberRakshakGuard extends GuardClient {
   constructor(options: ClientOptions) {
     super(options);
   }
 }
 
+/** @deprecated Use Soter for new integrations. */
 export class CybersecurityGuard extends GuardClient {
   constructor(options: ClientOptions) {
     super(options);

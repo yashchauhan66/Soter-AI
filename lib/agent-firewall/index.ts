@@ -296,7 +296,7 @@ export function applyAgentManifestToPolicy(
   };
 }
 
-export function startAgentSession(input: AgentSessionStartInput): AgentSessionStartResult {
+export function startAgentSession(_input: AgentSessionStartInput): AgentSessionStartResult {
   return {
     sessionId: `agent_sess_${randomUUID()}`,
     policy: defaultAgentFirewallPolicy(),

@@ -1,13 +1,13 @@
 # Security Best Practices
 
-CyberRakshak Guard is OWASP LLM Top 10 aligned and built for defense-in-depth:
+Soter is OWASP LLM Top 10 aligned and built for defense-in-depth:
 **detect, block, redact, monitor, and report**. It reduces risk. It does **not**
 guarantee complete protection, and false positives and false negatives are
 possible. Treat it as one layer alongside secure development practices.
 
 ## Keep the API key server-side only
 
-- Never embed `CYBERRAKSHAK_API_KEY` in browser/client code, mobile apps, or any
+- Never embed `SOTER_API_KEY` (or a legacy API key variable) in browser/client code, mobile apps, or any
   artifact shipped to users.
 - In Next.js, do **not** prefix it with `NEXT_PUBLIC_`. Read it only in route
   handlers, server actions, or server components.

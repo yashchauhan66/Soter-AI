@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CyberRakshakClient = exports.GuardClient = void 0;
+exports.SoterClient = exports.CyberRakshakClient = exports.GuardClient = void 0;
 exports.normalizeDecision = normalizeDecision;
 exports.createClient = createClient;
 exports.createAgentFirewallClient = createAgentFirewallClient;
@@ -30,15 +30,17 @@ function createClient(options) {
 function createAgentFirewallClient(options) {
     return new GuardClient(options);
 }
+/** @deprecated Use new Soter(options) for new integrations. */
 function createCybersecurityGuardClient(options) {
     return new GuardClient(options);
 }
+/** @deprecated Use Soter for new integrations. GuardClient remains supported. */
 class GuardClient {
     constructor(options) {
         if (!options?.apiKey)
             throw new errors_1.CyberRakshakError("apiKey is required.", { code: "config_error" });
         if (isBrowserLike()) {
-            console.warn("[cybersecurityguard] GuardClient appears to be running in a browser. Never embed an API key in client-side code.");
+            console.warn("[soter] GuardClient appears to be running in a browser. Never embed an API key in client-side code.");
         }
         this.apiKey = options.apiKey;
         this.baseUrl = (options.baseUrl ?? DEFAULT_BASE_URL).replace(/\/$/, "");
@@ -255,7 +257,7 @@ class GuardClient {
                 if (next)
                     return next(caught);
                 const status = caught.status ?? 500;
-                return res.status(status).json({ error: true, message: caught instanceof Error ? caught.message : "cybersecurityguard request failed." });
+                return res.status(status).json({ error: true, message: caught instanceof Error ? caught.message : "Soter request failed." });
             }
         };
     }
@@ -498,7 +500,7 @@ class GuardClient {
         const timer = setTimeout(() => controller.abort(), this.timeoutMs);
         const headers = {
             "Content-Type": "application/json",
-            "User-Agent": "cybersecurityguard-sdk/0.1",
+            "User-Agent": "soter-sdk/0.1",
             ...this.extraHeaders,
         };
         if (requireApiKey)
@@ -517,7 +519,7 @@ class GuardClient {
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), this.timeoutMs);
         const headers = {
-            "User-Agent": "cybersecurityguard-sdk/0.1",
+            "User-Agent": "soter-sdk/0.1",
             ...this.extraHeaders,
         };
         if (requireApiKey)
@@ -587,11 +589,12 @@ class GuardClient {
     log(message) {
         if (!this.debug)
             return;
-        console.debug(`[cybersecurityguard] ${message}`);
+        console.debug(`[soter] ${message}`);
     }
 }
 exports.GuardClient = GuardClient;
 exports.CyberRakshakClient = GuardClient;
+exports.SoterClient = GuardClient;
 function asMetadata(value) {
     if (!value || typeof value !== "object" || Array.isArray(value))
         return undefined;

@@ -2,16 +2,14 @@ import { ProjectSwitcher } from "@/components/dashboard/ProjectSwitcher";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
+import { MetricCard, RiskLevel } from "@/components/dashboard/MetricCard";
 
 export const dynamic = "force-dynamic";
 
 type ProfileRow = {
   id: string; agentName: string; agentType: string | null; blastRadiusScore: number; riskLevel: string;
   findingsJson: unknown; recommendationsJson: unknown; updatedAt: Date;
-};
-
-const RISK_TONE: Record<string, string> = {
-  LOW: "text-emerald-300", MEDIUM: "text-amber-300", HIGH: "text-orange-300", CRITICAL: "text-red-300",
 };
 
 export default async function BlastRadiusPage({ searchParams }: { searchParams: Promise<{ project?: string }> }) {
@@ -21,13 +19,43 @@ export default async function BlastRadiusPage({ searchParams }: { searchParams: 
   const profiles = await safeRows<ProfileRow>`SELECT "id", "agentName", "agentType", "blastRadiusScore", "riskLevel", "findingsJson", "recommendationsJson", "updatedAt" FROM "AgentRiskProfile" WHERE "projectId" = ${project.id} ORDER BY "blastRadiusScore" DESC LIMIT 100`;
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Agent security</p>
-          <h1 className="mt-2 text-3xl font-bold">Blast radius simulator</h1>
-          <p className="mt-3 max-w-3xl text-slate-400">Estimate how much damage each agent could do if compromised, based on its tools, data access, destinations, and policies. Higher scores mean a wider blast radius.</p>
-        </div>
-        <ProjectSwitcher projects={projects} selectedId={project.id} />
+      <FeatureGuide
+        eyebrow="Agent security"
+        title="Blast radius simulator"
+        description="Estimate how much damage each agent could do if compromised, based on its tools, data access, destinations, and policies. Higher scores mean a wider blast radius."
+        useCase="Without blast radius analysis, a single compromised agent with broad tool access — like email read + email send + CRM update + filesystem delete — could exfiltrate sensitive data or cause widespread damage. Blast radius simulation helps you identify and reduce the potential impact of agent compromise."
+        howItWorks={[
+          { heading: "Define agent capabilities", body: "Register each agent's tools, permissions, data sources, external destinations, and memory access patterns with the SDK." },
+          { heading: "Run simulation", body: "The simulator analyzes the agent's full capability graph — what tools it can call, what data it can access, where data can flow, and what destructive actions are possible." },
+          { heading: "Review score and findings", body: "Each agent receives a blast radius score and risk level. Detailed findings explain the specific risk vectors, and recommendations suggest how to reduce the blast radius." },
+          { heading: "Iterate and improve", body: "Use the recommendations to tighten permissions, add approval gates, restrict data access, and reduce the agent's overall blast radius over time." },
+        ]}
+        integrationCode={`import { Soter } from "@soter/core";
+
+const soter = new Soter({
+  apiKey: process.env.SOTER_API_KEY,
+  baseUrl: process.env.SOTER_BASE_URL,
+});
+
+const result = await soter.simulateBlastRadius({
+  agentName: "support-agent",
+  agentType: "computer_use",
+  tools: ["gmail.read", "gmail.send", "crm.update", "filesystem.read"],
+  permissions: { "gmail.send": "approval_required", "filesystem.delete": "blocked" },
+  dataSources: [{ type: "EMAIL", sensitivity: "CONFIDENTIAL" }],
+  externalDestinations: ["email_external"],
+  memoryAccess: { longTermMemory: true }
+});
+
+console.log(result.blastRadiusScore, result.riskLevel);`}
+        callout="Blast radius simulation is a planning tool that estimates potential impact based on declared capabilities. It does not prevent attacks on its own — combine with least-privilege tool access, approval workflows, and monitoring for defense in depth."
+      />
+      <ProjectSwitcher projects={projects} selectedId={project.id} />
+
+      <div className="grid gap-4 sm:grid-cols-3">
+        <MetricCard label="Agent profiles" value={profiles.length} tone="gray" />
+        <MetricCard label="High risk" value={profiles.filter((p) => ["HIGH", "CRITICAL"].includes(p.riskLevel)).length} tone="red" />
+        <MetricCard label="Medium risk" value={profiles.filter((p) => p.riskLevel === "MEDIUM").length} tone="yellow" />
       </div>
 
       <section className="grid gap-3">
@@ -39,8 +67,8 @@ export default async function BlastRadiusPage({ searchParams }: { searchParams: 
                 <p className="text-xs text-slate-500">{profile.agentType ?? "agent"} · updated {profile.updatedAt.toLocaleString()}</p>
               </div>
               <div className="text-right">
-                <p className={`text-3xl font-bold ${RISK_TONE[profile.riskLevel] ?? "text-slate-300"}`}>{profile.blastRadiusScore}</p>
-                <p className={`text-xs font-semibold ${RISK_TONE[profile.riskLevel] ?? "text-slate-400"}`}>{profile.riskLevel}</p>
+                <p className={`text-3xl font-bold ${profile.riskLevel === "CRITICAL" ? "text-red-300" : profile.riskLevel === "HIGH" ? "text-orange-300" : profile.riskLevel === "MEDIUM" ? "text-amber-300" : "text-emerald-300"}`}>{profile.blastRadiusScore}</p>
+                <p className="text-xs"><RiskLevel level={profile.riskLevel} /></p>
               </div>
             </div>
             <div className="mt-3 grid gap-3 md:grid-cols-2">
@@ -56,27 +84,6 @@ export default async function BlastRadiusPage({ searchParams }: { searchParams: 
           </div>
         ))}
         {profiles.length === 0 && <section className="card p-5 text-sm text-slate-500">No agent risk profiles yet. Run a simulation via the SDK or API.</section>}
-      </section>
-
-      <section className="card p-5">
-        <h2 className="text-lg font-semibold">Copy-paste integration</h2>
-        <pre className="mt-4 overflow-x-auto rounded-lg bg-slate-950 p-4 text-xs text-slate-300">{`import { createCybersecurityGuardClient } from "@cybersecurityguard/guard";
-
-const guard = createCybersecurityGuardClient({
-  apiKey: process.env.CYBERSECURITYGUARD_API_KEY!
-});
-
-const result = await guard.simulateBlastRadius({
-  agentName: "support-agent",
-  agentType: "computer_use",
-  tools: ["gmail.read", "gmail.send", "crm.update", "filesystem.read"],
-  permissions: { "gmail.send": "approval_required", "filesystem.delete": "blocked" },
-  dataSources: [{ type: "EMAIL", sensitivity: "CONFIDENTIAL" }],
-  externalDestinations: ["email_external"],
-  memoryAccess: { longTermMemory: true }
-});
-
-console.log(result.blastRadiusScore, result.riskLevel);`}</pre>
       </section>
     </div>
   );

@@ -9,6 +9,10 @@ export interface ExpressRequestLike {
         inputResult?: GuardResult;
         outputResult?: GuardResult;
     };
+    soter?: {
+        inputResult?: GuardResult;
+        outputResult?: GuardResult;
+    };
     [key: string]: unknown;
 }
 export interface ExpressResponseLike {
@@ -41,10 +45,14 @@ export interface OutputMiddlewareOptions extends ClientOptions {
  * key stays server-side.
  */
 export declare function cyberRakshakInputMiddleware(options: InputMiddlewareOptions): (req: ExpressRequestLike, res: ExpressResponseLike, next: ExpressNext) => Promise<void>;
+/** Soter-branded alias for new integrations. */
+export declare const soterInputMiddleware: typeof cyberRakshakInputMiddleware;
 /**
  * Express middleware for the output side. Intended to wrap an AI response that
  * was placed on `res.locals[sourceField]` (or the request body) before this
  * middleware runs. Blocks unsafe output and exposes the result.
  */
 export declare function cyberRakshakOutputMiddleware(options: OutputMiddlewareOptions): (req: ExpressRequestLike, res: ExpressResponseLike, next: ExpressNext) => Promise<void>;
+/** Soter-branded alias for new integrations. */
+export declare const soterOutputMiddleware: typeof cyberRakshakOutputMiddleware;
 //# sourceMappingURL=express.d.ts.map

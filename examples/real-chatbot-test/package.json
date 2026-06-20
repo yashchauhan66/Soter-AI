@@ -1,7 +1,7 @@
 {
   "name": "real-chatbot-test",
   "version": "1.0.0",
-  "description": "Realistic Chatbot Test Application for CyberRakshak Guard Integration",
+  "description": "Realistic chatbot test application for Soter integration",
   "main": "dist/server.js",
   "scripts": {
     "start": "tsx src/server.ts",
@@ -9,7 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@cyberrakshak/guard": "file:../../packages/sdk",
+    "@soter/core": "file:../../packages/sdk",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "@prisma/client": "5.22.0"

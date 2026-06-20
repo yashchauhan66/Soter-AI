@@ -1,253 +1,202 @@
 import Link from "next/link";
+import { CodeBlock } from "@/components/ui/CodeBlock";
+import { DocViewTracker } from "@/components/docs/DocViewTracker";
 
-const fetchExample = `// Fetch API (browser or server)
-const response = await fetch("https://yourdomain.com/api/guard/input", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "x-api-key": process.env.CYBERRAKSHAK_API_KEY!,
-  },
-  body: JSON.stringify({ message: userMessage }),
-});
-const result = await response.json();
-if (!result.allowed) return result.safeText ?? "Blocked.";`;
+const quickstartCode = `import { Soter } from "@soter/core";
 
-const nodeExample = `// Node.js (>=18) with the SDK
-import { CyberRakshakGuard } from "@cyberrakshak/guard";
-
-const guard = new CyberRakshakGuard({
-  apiKey: process.env.CYBERRAKSHAK_API_KEY!,
-  baseUrl: "https://yourdomain.com",
+const soter = new Soter({
+  apiKey: process.env.SOTER_API_KEY,
+  baseUrl: process.env.SOTER_BASE_URL,
 });
 
-const result = await guard.guardInput({ message: userMessage });`;
+const result = await soter.protect({ input: message });
 
-const nextRouteExample = `// app/api/chat/route.ts
-import { secureChatHandler } from "@cyberrakshak/guard/next";
-
-export const POST = secureChatHandler({
-  apiKey: process.env.CYBERRAKSHAK_API_KEY!,
-  callLLM: async ({ safeInput }) => {
-    return await myLLMCall(safeInput);
-  },
-});`;
-
-const sdkSecureChat = `const result = await guard.secureChat({
-  message: userMessage,
-  sessionId: session.id,
-  callLLM: async ({ safeInput }) => callLLM(safeInput),
-});
-return result.reply;`;
-
-const webhookVerify = `import { createHmac, timingSafeEqual } from "crypto";
-
-export function verifyWebhook(rawBody: string, header: string, secret: string) {
-  const match = /t=(\\d+),v1=([0-9a-f]+)/.exec(header);
-  if (!match) return false;
-  const [, t, sig] = match;
-  const expected = createHmac("sha256", secret).update(\`\${t}.\${rawBody}\`).digest("hex");
-  return timingSafeEqual(Buffer.from(expected, "hex"), Buffer.from(sig, "hex"));
+if (!result.allowed) {
+  return { blocked: true, reason: result.reason };
 }`;
 
-const responseExample = `{
-  "allowed": false,
-  "action": "BLOCK",
-  "riskScore": 85,
-  "riskTypes": ["PROMPT_INJECTION", "SYSTEM_PROMPT_LEAK_ATTEMPT"],
-  "reason": "Blocked because high-risk patterns were detected...",
-  "findings": []
-}`;
+const languages = [
+  {
+    title: "JavaScript / TypeScript",
+    description: "@soter/core SDK — the primary client for Node.js, Deno, Bun, and browser-based server routes",
+    href: "/docs/js",
+    icon: "🟨",
+    tags: ["Node.js", "Deno", "Bun", "TypeScript"],
+  },
+  {
+    title: "Python",
+    description: "Python client with sync/async support, FastAPI middleware, LangChain & LlamaIndex wrappers",
+    href: "/docs/python",
+    icon: "🐍",
+    tags: ["FastAPI", "Flask", "LangChain", "LlamaIndex"],
+  },
+  {
+    title: "Next.js",
+    description: "Route handler helpers, secureChatHandler, and server action patterns for Next.js apps",
+    href: "/docs/nextjs",
+    icon: "▲",
+    tags: ["App Router", "Route Handlers", "Server Actions"],
+  },
+  {
+    title: "Express.js",
+    description: "Express middleware for input/output guarding with session context support",
+    href: "/docs/express",
+    icon: "⚡",
+    tags: ["Middleware", "REST API"],
+  },
+  {
+    title: "FastAPI",
+    description: "FastAPI integration with create_chat_route, async support, and Pydantic models",
+    href: "/docs/fastapi",
+    icon: "🚀",
+    tags: ["Pydantic", "Async", "Python"],
+  },
+  {
+    title: "REST API",
+    description: "Raw HTTP endpoints — use from any language: curl, Java, Go, PHP, C#, and more",
+    href: "/docs/rest-api",
+    icon: "🌐",
+    tags: ["curl", "Java", "Go", "PHP", "C#"],
+  },
+  {
+    title: "RAG / LangChain",
+    description: "RAG pipeline protection, LangChain chains, LlamaIndex query engines, source filtering",
+    href: "/docs/rag",
+    icon: "📚",
+    tags: ["RAG", "LangChain", "LlamaIndex", "Retrieval"],
+  },
+  {
+    title: "Botpress",
+    description: "Pre/post processing HTTP steps in Botpress workflows with input + output guarding",
+    href: "/docs/botpress",
+    icon: "🤖",
+    tags: ["Workflows", "HTTP"],
+  },
+  {
+    title: "Intercom",
+    description: "Guard AI support-chat messages in Intercom workflows with PII redaction",
+    href: "/docs/intercom",
+    icon: "💬",
+    tags: ["Support", "CRM"],
+  },
+  {
+    title: "WhatsApp Chatbots",
+    description: "Protect WhatsApp chatbot deployments with India PII redaction support",
+    href: "/docs/whatsapp",
+    icon: "📱",
+    tags: ["WhatsApp", "Meta", "India PII"],
+  },
+  {
+    title: "Zendesk",
+    description: "Guard ticket messages and AI drafts in Zendesk environments",
+    href: "/docs/zendesk",
+    icon: "🎫",
+    tags: ["Support", "Tickets"],
+  },
+  {
+    title: "WordPress",
+    description: "WordPress plugin with settings UI, shortcodes, and local REST proxy for API key safety",
+    href: "/docs/wordpress",
+    icon: "🔌",
+    tags: ["PHP", "Plugin", "Shortcodes"],
+  },
+  {
+    title: "Generic Chatbot & Agent",
+    description: "Universal pattern for any chatbot, agent, or tool-using AI system with tool firewall",
+    href: "/docs/generic-chatbot",
+    icon: "🧠",
+    tags: ["Agent", "Tool Firewall", "Session"],
+  },
+  {
+    title: "CLI",
+    description: "npx soter init — planned CLI tool for framework detection and project scaffolding",
+    href: "/docs/cli",
+    icon: "⌨️",
+    tags: ["CLI", "Scaffolding"],
+  },
+  {
+    title: "Security Best Practices",
+    description: "OWASP LLM Top 10 alignment, key rotation, webhook verification, fail-open vs fail-closed",
+    href: "/docs/best-practices",
+    icon: "🛡️",
+    tags: ["OWASP", "Security", "Compliance"],
+  },
+  {
+    title: "Quickstart",
+    description: "Get a chatbot protected in 5 minutes — install, configure, and test with an attack prompt",
+    href: "/docs/quickstart",
+    icon: "⏱️",
+    tags: ["5 min", "Setup", "Tutorial"],
+  },
+  {
+    title: "API Contract",
+    description: "Complete API reference: endpoints, request/response shapes, error codes, webhook events",
+    href: "/docs/api-contract",
+    icon: "📋",
+    tags: ["Reference", "Endpoints", "Errors"],
+  },
+];
 
-function Code({ children }: { children: string }) {
-  return (
-    <pre className="mt-3 overflow-x-auto rounded-xl border border-slate-800 bg-slate-950 p-5 text-xs leading-6 text-slate-300">
-      <code>{children}</code>
-    </pre>
-  );
-}
-
-export default function DocsPage() {
-  const sections = [
-    ["quickstart", "Quickstart"],
-    ["rest-api", "REST API"],
-    ["sdk", "SDK"],
-    ["nextjs", "Next.js integration"],
-    ["webhooks", "Webhooks"],
-    ["badge", "Security badge"],
-    ["risk-types", "Risk types"],
-    ["actions", "Actions"],
-    ["error-codes", "Error codes"],
-    ["best-practices", "Best practices"],
-    ["limitations", "Limitations"],
-  ];
-
+export default function DocsHubPage() {
   return (
     <main className="container-page py-16">
-      <div className="grid gap-10 lg:grid-cols-[230px_1fr]">
-        <aside className="card hidden h-fit p-5 text-sm lg:block">
-          <p className="font-semibold">On this page</p>
-          <nav className="mt-3 space-y-2">
-            {sections.map(([id, label]) => (
-              <a className="block text-slate-500 hover:text-cyan" href={`#${id}`} key={id}>{label}</a>
-            ))}
-          </nav>
-        </aside>
-        <article className="min-w-0 max-w-4xl">
-          <section id="quickstart">
-            <p className="eyebrow">Developer documentation v2</p>
-            <h1 className="mt-3 text-4xl font-bold">Integrate CyberRakshak Guard</h1>
-            <p className="mt-5 text-lg leading-8 text-slate-400">
-              CyberRakshak Guard is an OWASP LLM Top 10 aligned defensive gateway for chatbot input and output flows.
-              The typical loop: user input → Input Guard → LLM → Output Guard → user.
-            </p>
-            <ol className="mt-6 list-decimal space-y-2 pl-5 text-slate-300">
-              <li>Create a project and generate an API key in the dashboard.</li>
-              <li>Install the SDK: <code className="text-cyan">npm install @cyberrakshak/guard</code></li>
-              <li>Call <code>guardInput</code>, your LLM, then <code>guardOutput</code>.</li>
-              <li>Optionally configure webhooks for blocked-risk and usage events.</li>
-            </ol>
-          </section>
+      <DocViewTracker />
+      <div className="mx-auto max-w-5xl">
+        {/* Header */}
+        <div className="mb-12 text-center">
+          <p className="eyebrow">Developer documentation v2</p>
+          <h1 className="mt-3 text-4xl font-bold">Soter Documentation</h1>
+          <p className="mt-4 text-lg text-slate-400 max-w-2xl mx-auto">
+            Safety layer for intelligent conversations. Choose your language or platform below to get started.
+          </p>
+        </div>
 
-          <section id="rest-api" className="mt-12">
-            <h2 className="text-2xl font-bold">REST API</h2>
-            <p className="mt-3 leading-7 text-slate-400">
-              Authenticate with <code className="text-cyan">x-api-key</code>. Responses are <code>no-store</code> and
-              never echo <code>originalText</code>. HTTP 429 uses the same body shape with <code>RATE_LIMIT</code>.
-            </p>
-            <h3 className="mt-6 font-semibold">Endpoints</h3>
-            <ul className="mt-3 space-y-2 text-sm text-slate-400">
-              <li><code className="text-cyan">POST /api/guard/input</code> — message + optional userId / sessionId / metadata</li>
-              <li><code className="text-cyan">POST /api/guard/output</code> — aiResponse + optional sessionId / metadata</li>
-              <li><code className="text-cyan">POST /api/guard/analyze</code> — text + direction. Public, rate-limited per IP.</li>
-              <li><code className="text-cyan">GET /api/badge/&lt;slug&gt;</code> — public badge status (no private data).</li>
-            </ul>
-            <h3 className="mt-6 font-semibold">Fetch example</h3>
-            <Code>{fetchExample}</Code>
-            <h3 className="mt-6 font-semibold">Response</h3>
-            <Code>{responseExample}</Code>
-          </section>
+        {/* Quickstart */}
+        <div className="card mb-12 border-cyan-500/20 p-6">
+          <h2 className="text-xl font-bold">Quickstart — 5 Minutes</h2>
+          <p className="mt-2 text-sm text-slate-400">
+            Create a project, install the SDK, and protect your first chatbot message.
+          </p>
+          <CodeBlock language="typescript">{quickstartCode}</CodeBlock>
+          <Link
+            href="/docs/quickstart"
+            className="mt-4 inline-flex items-center gap-2 rounded-lg bg-cyan px-4 py-2 text-sm font-semibold text-black transition hover:bg-cyan/90"
+          >
+            Full Quickstart Guide →
+          </Link>
+        </div>
 
-          <section id="sdk" className="mt-12">
-            <h2 className="text-2xl font-bold">SDK</h2>
-            <p className="mt-3 leading-7 text-slate-400">
-              <code>@cyberrakshak/guard</code> ships ESM + CommonJS, typed errors, and a <code>secureChat</code> helper.
-            </p>
-            <Code>{nodeExample}</Code>
-            <p className="mt-3 text-sm text-slate-500">
-              <code>secureChat</code> runs the full input → LLM → output sequence and returns the safe reply:
-            </p>
-            <Code>{sdkSecureChat}</Code>
-            <p className="mt-3 text-sm text-slate-500">
-              Errors derive from <code>CyberRakshakError</code>: <code>CyberRakshakAuthError</code>,
-              <code> CyberRakshakRateLimitError</code> (with <code>retryAfter</code>),
-              <code> CyberRakshakValidationError</code>, <code>CyberRakshakNetworkError</code>.
-            </p>
-          </section>
-
-          <section id="nextjs" className="mt-12">
-            <h2 className="text-2xl font-bold">Next.js integration</h2>
-            <p className="mt-3 leading-7 text-slate-400">
-              Mount <code>secureChatHandler</code> as a Route Handler. It validates JSON, runs both guards, and never
-              echoes the original request text.
-            </p>
-            <Code>{nextRouteExample}</Code>
-          </section>
-
-          <section id="webhooks" className="mt-12">
-            <h2 className="text-2xl font-bold">Webhooks</h2>
-            <p className="mt-3 leading-7 text-slate-400">
-              Add an HTTPS endpoint under <Link className="text-cyan" href="/dashboard/webhooks">Dashboard → Webhooks</Link>,
-              select events, and store the signing secret returned once at creation. The dashboard test button delivers
-              a synthetic event and stores the result for audit.
-            </p>
-            <h3 className="mt-6 font-semibold">Events</h3>
-            <div className="mt-3 grid gap-2 text-sm text-slate-400 md:grid-cols-2">
-              {[
-                "guard.prompt_injection.blocked",
-                "guard.jailbreak.detected",
-                "guard.secret.detected",
-                "guard.pii.redacted",
-                "guard.system_prompt_leak.blocked",
-                "guard.unsafe_output.blocked",
-                "usage.limit.warning",
-                "usage.limit.exceeded",
-              ].map((name) => <code key={name} className="rounded-md border border-slate-800 bg-slate-950/70 px-2 py-1">{name}</code>)}
-            </div>
-            <h3 className="mt-6 font-semibold">Headers on every delivery</h3>
-            <ul className="mt-2 space-y-1 text-sm text-slate-400">
-              <li><code>x-cyberrakshak-event</code> — event name</li>
-              <li><code>x-cyberrakshak-timestamp</code> — unix seconds at signing time</li>
-              <li><code>x-cyberrakshak-signature</code> — <code>t=...,v1=&lt;hmac-sha256&gt;</code></li>
-            </ul>
-            <h3 className="mt-6 font-semibold">Verifying a delivery</h3>
-            <Code>{webhookVerify}</Code>
-            <p className="mt-3 text-sm text-amber-200">
-              Webhook payloads never contain raw secrets or PII. Sensitive metadata is sanitised; raw findings are
-              omitted; only redacted text is shared when the gateway captured any.
-            </p>
-          </section>
-
-          <section id="badge" className="mt-12">
-            <h2 className="text-2xl font-bold">Security badge</h2>
-            <p className="mt-3 leading-7 text-slate-400">
-              Each project exposes a public status at <code>/security-status/&lt;slug&gt;</code> and JSON at
-              <code> /api/badge/&lt;slug&gt;</code>. Embed the badge:
-            </p>
-            <Code>{`<script src="https://yourdomain.com/badge.js" data-project-id="PROJECT_BADGE_SLUG"></script>`}</Code>
-            <p className="mt-3 text-sm text-slate-500">
-              Badge statuses: <code>PROTECTED</code>, <code>MONITORING_ACTIVE</code>, <code>ISSUES_FOUND</code>,
-              <code> INACTIVE</code>. The public page exposes monthly counts and last activity timestamp only.
-            </p>
-          </section>
-
-          <section id="risk-types" className="mt-12">
-            <h2 className="text-2xl font-bold">Risk types</h2>
-            <p className="mt-2 text-sm text-slate-400">
-              PROMPT_INJECTION, JAILBREAK, SYSTEM_PROMPT_LEAK_ATTEMPT, SYSTEM_PROMPT_LEAKAGE, PII_DETECTED,
-              INDIA_PII_DETECTED, SECRET_DETECTED, UNSAFE_OUTPUT, RATE_LIMIT, TOKEN_ABUSE, LOW_RISK.
-            </p>
-          </section>
-
-          <section id="actions" className="mt-12">
-            <h2 className="text-2xl font-bold">Actions</h2>
-            <p className="mt-2 text-sm text-slate-400">ALLOW, ALLOW_WITH_REDACTION, REWRITE, BLOCK, HUMAN_REVIEW.</p>
-          </section>
-
-          <section id="error-codes" className="mt-12">
-            <h2 className="text-2xl font-bold">Error codes</h2>
-            <ul className="mt-3 space-y-2 text-sm text-slate-400">
-              <li><code>400</code> validation_error — payload failed Zod validation.</li>
-              <li><code>401</code> auth_error — missing or invalid <code>x-api-key</code>.</li>
-              <li><code>403</code> auth_error — API key inactive.</li>
-              <li><code>404</code> not_found — project, webhook, or badge does not exist.</li>
-              <li><code>409</code> conflict — signing secret no longer available; rotate to issue a new one.</li>
-              <li><code>429</code> rate_limited — per-minute or monthly limit hit. See <code>Retry-After</code>.</li>
-              <li><code>500</code> server_error — unexpected failure. Original details are not leaked.</li>
-            </ul>
-          </section>
-
-          <section id="best-practices" className="mt-12">
-            <h2 className="text-2xl font-bold">Best practices</h2>
-            <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-400">
-              <li>Run both input and output guards every model turn.</li>
-              <li>Use <code>safeText</code>, not the original text, after redaction or rewriting.</li>
-              <li>Stop processing when <code>allowed</code> is false.</li>
-              <li>Keep API keys in server environment variables and rotate them regularly.</li>
-              <li>Use application authorization and tenant isolation in addition to guard checks.</li>
-              <li>Verify webhook signatures and reject deliveries older than 5 minutes.</li>
-            </ul>
-          </section>
-
-          <section id="limitations" className="card mt-12 border-amber-500/20 p-6">
-            <h2 className="font-semibold text-amber-200">Security limitations</h2>
-            <ul className="mt-3 list-disc space-y-2 pl-5 leading-7 text-slate-400">
-              <li>Pattern detection produces false positives and negatives.</li>
-              <li>Rate limits are per-process; use a shared Redis bucket in multi-instance deployments.</li>
-              <li>Phase 2 ships a demo identity boundary; production needs full auth, RBAC, and tenant isolation.</li>
-              <li>The badge reflects defensive activity, not certification or complete protection.</li>
-            </ul>
-          </section>
-        </article>
+        {/* Language Grid */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {languages.map((lang) => (
+            <Link
+              key={lang.href}
+              href={lang.href}
+              className="card group relative overflow-hidden border-slate-800 p-5 transition hover:border-cyan/50 hover:shadow-lg hover:shadow-cyan/5"
+            >
+              <div className="mb-3 text-2xl">{lang.icon}</div>
+              <h3 className="font-semibold text-white group-hover:text-cyan transition-colors">
+                {lang.title}
+              </h3>
+              <p className="mt-2 text-xs leading-5 text-slate-400">
+                {lang.description}
+              </p>
+              <div className="mt-3 flex flex-wrap gap-1.5">
+                {lang.tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-md bg-slate-800/50 px-2 py-0.5 text-[10px] font-medium text-slate-500"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <div className="absolute right-4 top-4 text-slate-700 transition group-hover:text-cyan group-hover:translate-x-0.5">
+                →
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </main>
   );

@@ -13,7 +13,6 @@ import { KNOWN_AI_PROVIDERS, SDK_TOOL_PATTERNS, assessProviderRisk } from "../li
 import { validateServerUrl } from "../lib/credentials/vault";
 import { detectUsageSpike, estimateCost, KNOWN_MODEL_RATES, CRITICAL_SPIKE_MULTIPLIER, WARNING_SPIKE_MULTIPLIER } from "../lib/cost-firewall";
 import { safeRedTeamScenarios } from "../lib/redteam/scenarios";
-import { db } from "../lib/db";
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // Shadow AI Scanner — Pure Logic Tests

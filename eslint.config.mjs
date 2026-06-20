@@ -16,6 +16,7 @@ const eslintConfig = [
       "coverage/**",
       ".venv-*/**",
       "**/.pytest_cache/**",
+      "**/pytest-cache-files-*/**",
       "**/__pycache__/**",
     ],
   },

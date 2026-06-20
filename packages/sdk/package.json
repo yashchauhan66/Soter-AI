@@ -1,8 +1,10 @@
 {
-  "name": "@cybersecurityguard/guard",
+  "name": "@soter/core",
   "version": "0.1.0",
-  "description": "Typed client, Agent Firewall SDK, and Next.js helper for the cybersecurityguard AI security gateway.",
+  "description": "Soter is a safety layer for AI chatbots, agents, RAG systems, and LLM applications.",
   "license": "MIT",
+  "type": "commonjs",
+  "sideEffects": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -23,18 +25,21 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit",
-    "test": "npm run build && node --test test/*.test.js"
+    "test": "npm run build && node --test test/*.test.js",
+    "prepublishOnly": "npm test"
   },
   "engines": { "node": ">=18.18" },
   "keywords": [
-    "ai",
-    "security",
-    "owasp",
-    "llm",
+    "soter",
+    "ai-chatbot",
+    "llm-security",
     "prompt-injection",
-    "pii",
-    "guard",
-    "chatbot"
+    "jailbreak-detection",
+    "pii-redaction",
+    "chatbot-protection",
+    "rag-security",
+    "ai-safety",
+    "ai-agents"
   ],
   "devDependencies": {
     "typescript": "5.7.2"

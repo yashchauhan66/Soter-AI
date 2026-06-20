@@ -20,9 +20,9 @@ from .types import (
     SafeRagSource,
 )
 
-DEFAULT_BASE_URL = "https://api.cyberrakshak.com"
+DEFAULT_BASE_URL = "https://api.cybersecurityguard.com"
 DEFAULT_TIMEOUT = 8.0
-USER_AGENT = "cyberrakshak-guard-python/0.2.0"
+USER_AGENT = "soter-python/0.2.0"
 
 DEFAULT_BLOCKED_RESPONSE = "This request was blocked for security reasons."
 DEFAULT_OUTPUT_BLOCKED_RESPONSE = "The assistant response was blocked for security reasons."
@@ -37,13 +37,27 @@ def resolve_config(
 
     Raises :class:`CyberRakshakConfigError` when no API key can be found.
     """
-    key = api_key or os.environ.get("CYBERRAKSHAK_API_KEY") or ""
+    key = (
+        api_key
+        or os.environ.get("SOTER_API_KEY")
+        or os.environ.get("CYBERGUARD_API_KEY")
+        or os.environ.get("CYBERRAKSHAK_API_KEY")
+        or os.environ.get("CYBERSECURITYGUARD_API_KEY")
+        or ""
+    )
     if not key:
         raise CyberRakshakConfigError(
-            "Missing API key. Pass api_key=... or set the CYBERRAKSHAK_API_KEY "
+            "Missing API key. Pass api_key=... or set the SOTER_API_KEY "
             "environment variable. Never embed the key in frontend/client code."
         )
-    url = (base_url or os.environ.get("CYBERRAKSHAK_BASE_URL") or DEFAULT_BASE_URL).rstrip("/")
+    url = (
+        base_url
+        or os.environ.get("SOTER_BASE_URL")
+        or os.environ.get("CYBERGUARD_BASE_URL")
+        or os.environ.get("CYBERRAKSHAK_BASE_URL")
+        or os.environ.get("CYBERSECURITYGUARD_BASE_URL")
+        or DEFAULT_BASE_URL
+    ).rstrip("/")
     resolved_timeout = timeout if timeout is not None else DEFAULT_TIMEOUT
     return key, url, resolved_timeout
 

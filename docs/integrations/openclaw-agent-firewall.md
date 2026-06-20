@@ -24,15 +24,13 @@ Backward-compatible aliases are supported for `CYBERGUARD_*`.
 ## Install
 
 ```bash
-npm install @cybersecurityguard/guard
+npm install @soter/core
 ```
-
-If your registry exposes the short alias, `@cyberguard/guard` uses the same API.
 
 ## Start A Session
 
 ```ts
-import { createAgentFirewallClient } from "@cybersecurityguard/guard";
+import { createAgentFirewallClient } from "@soter/core";
 
 const firewall = createAgentFirewallClient({
   apiKey: process.env.CYBERSECURITYGUARD_API_KEY!,

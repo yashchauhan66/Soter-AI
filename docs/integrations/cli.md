@@ -1,4 +1,4 @@
-# CyberRakshak CLI (`npx cyberrakshak init`)
+# Soter CLI (`npx soter init`)
 
 ## Status: PLANNED (not implemented in this pass)
 
@@ -8,7 +8,7 @@ The CLI init command is a convenience tool that was planned but not implemented 
 
 ## Planned Behavior
 
-When implemented, `npx cyberrakshak init` would:
+When implemented, `npx soter init` would:
 
 1. **Detect framework** in the current directory:
    - Next.js (detects `next.config.js` or `next.config.mjs`)
@@ -18,11 +18,11 @@ When implemented, `npx cyberrakshak init` would:
    - Unknown
 
 2. **Prompt for configuration:**
-   - Base URL (default: `https://api.cyberrakshak.com`)
+   - Base URL (default: `https://api.cybersecurityguard.com`)
    - API key (stored in `.env`, never committed)
 
 3. **Generate files:**
-   - `.env.example` with `CYBERRAKSHAK_BASE_URL` and `CYBERRAKSHAK_API_KEY`
+   - `.env.example` with `SOTER_BASE_URL` and `SOTER_API_KEY`
    - Sample integration file based on detected framework
 
 4. **Print next steps:**

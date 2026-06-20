@@ -1,5 +1,5 @@
 import express from "express";
-import { guardClient } from "./guard";
+import { soter } from "./guard";
 import { callMockLLM } from "./llm";
 
 const app = express();
@@ -16,7 +16,7 @@ app.post("/chat", async (req, res) => {
 
   try {
     const start = Date.now();
-    const result = await guardClient.secureChat({
+    const result = await soter.secureChat({
       message,
       userId,
       sessionId,

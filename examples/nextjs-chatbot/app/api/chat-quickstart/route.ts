@@ -1,9 +1,9 @@
 // app/api/chat-quickstart/route.ts
 //
 // Same flow as ../chat/route.ts but using the one-line createGuardedRoute
-// helper from @cyberrakshak/guard/next. Mount and you're done.
+// helper from @soter/core/next. Mount and you're done.
 
-import { createGuardedRoute } from "@cyberrakshak/guard/next";
+import { createGuardedRoute } from "@soter/core/next";
 
 export const runtime = "nodejs";
 
@@ -12,9 +12,9 @@ async function callLLM(prompt: string): Promise<string> {
 }
 
 export const POST = createGuardedRoute({
-  apiKey: process.env.CYBERRAKSHAK_API_KEY!,
-  baseUrl: process.env.CYBERRAKSHAK_BASE_URL || "https://api.cyberrakshak.dev",
-  projectId: process.env.CYBERRAKSHAK_PROJECT_ID,
+  apiKey: process.env.SOTER_API_KEY!,
+  baseUrl: process.env.SOTER_BASE_URL,
+  projectId: process.env.SOTER_PROJECT_ID,
   timeoutMs: 5000,
   callLLM,
 });

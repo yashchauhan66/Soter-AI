@@ -97,6 +97,50 @@ export interface ClientOptions {
   headers?: Record<string, string>;
 }
 
+/** Configuration for the primary Soter client. Explicit values override environment variables. */
+export interface SoterConfig extends Omit<ClientOptions, "apiKey"> {
+  apiKey?: string;
+}
+
+export type SoterRiskLevel = Severity;
+
+export interface SoterDetection {
+  type: RiskType;
+  label: string;
+  riskLevel: SoterRiskLevel;
+  score: number;
+  message: string;
+}
+
+export interface SoterContext {
+  userId?: string;
+  sessionId?: string;
+  metadata?: Record<string, MetadataValue>;
+}
+
+export interface SoterPolicy {
+  id?: string;
+  mode?: "MONITOR" | "ENFORCE";
+}
+
+export interface SoterProtectRequest {
+  input: string;
+  context?: SoterContext;
+  policy?: SoterPolicy;
+}
+
+export interface SoterRedactionResult {
+  redacted: boolean;
+  text: string;
+  categories: RiskType[];
+}
+
+export interface SoterProtectResult extends GuardResult {
+  riskLevel: SoterRiskLevel;
+  detections: SoterDetection[];
+  redaction?: SoterRedactionResult;
+}
+
 /** Friendlier alias used throughout the docs and examples. */
 export type CyberRakshakConfig = ClientOptions;
 

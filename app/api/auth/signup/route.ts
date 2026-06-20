@@ -15,6 +15,12 @@ import {
 
 export const dynamic = "force-dynamic";
 
+// The signup transaction creates the user, workspace, membership, trial,
+// onboarding state, and verification token. On a cold serverless Postgres
+// connection those sequential writes can legitimately exceed Prisma's
+// 5-second interactive-transaction default.
+const SIGNUP_TRANSACTION_OPTIONS = { maxWait: 10_000, timeout: 30_000 } as const;
+
 const schema = z.object({
   email: z.string().trim().toLowerCase().email().max(200),
   password: z.string().min(8).max(200),
@@ -145,7 +151,7 @@ export async function POST(request: Request) {
         // (or a token without a user) can never be committed.
         const token = await createEmailVerificationToken(user.id, new Date(), tx);
         return { userId: user.id, organizationId: org.id, token };
-      });
+      }, SIGNUP_TRANSACTION_OPTIONS);
     } catch (txError) {
       // Unique-constraint race: a concurrent request created the same email.
       if (txError && typeof txError === "object" && "code" in txError && (txError as { code?: string }).code === "P2002") {

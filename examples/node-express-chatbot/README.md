@@ -1,12 +1,12 @@
-# Node + Express chatbot example (CyberRakshak Guard)
+# Node + Express chatbot example (Soter)
 
-Express server that guards a chatbot turn with the `@cyberrakshak/guard` JS SDK.
+Express server that protects a chatbot turn with the `@soter/core` SDK.
 
 ## Run
 
 ```bash
 cp .env.example .env
-# fill in CYBERRAKSHAK_API_KEY and CYBERRAKSHAK_BASE_URL
+# fill in SOTER_API_KEY and SOTER_BASE_URL
 npm install
 npm start
 ```
@@ -16,7 +16,7 @@ npm start
 | Route | Description |
 | --- | --- |
 | `POST /chat` | Explicit input guard → LLM → output guard. |
-| `POST /chat-middleware` | Uses `cyberRakshakInputMiddleware`, then output guard. |
+| `POST /chat-middleware` | Uses `soterInputMiddleware`, then output guard. |
 
 ```bash
 curl -s localhost:3001/chat -H 'Content-Type: application/json' \

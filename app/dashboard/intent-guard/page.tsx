@@ -2,6 +2,8 @@ import { ProjectSwitcher } from "@/components/dashboard/ProjectSwitcher";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
+import { MetricCard, StatusBadge, RiskLevel } from "@/components/dashboard/MetricCard";
 
 export const dynamic = "force-dynamic";
 
@@ -27,20 +29,6 @@ type ActionCheckRow = {
   riskLevel: string;
   reason: string;
   createdAt: Date;
-};
-
-const DECISION_TONE: Record<string, string> = {
-  ALLOW: "bg-emerald-400/10 text-emerald-300",
-  ASK_APPROVAL: "bg-yellow-400/10 text-yellow-300",
-  REVIEW: "bg-blue-400/10 text-blue-300",
-  BLOCK: "bg-red-400/10 text-red-300",
-};
-
-const RISK_TONE: Record<string, string> = {
-  LOW: "text-emerald-300",
-  MEDIUM: "text-amber-300",
-  HIGH: "text-orange-300",
-  CRITICAL: "text-red-300",
 };
 
 export default async function IntentGuardPage({ searchParams }: { searchParams: Promise<{ project?: string }> }) {
@@ -72,19 +60,49 @@ export default async function IntentGuardPage({ searchParams }: { searchParams: 
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Agent security</p>
-          <h1 className="mt-2 text-3xl font-bold">Intent guard</h1>
-          <p className="mt-3 max-w-3xl text-slate-400">Verify planned agent actions against the original user request before execution.</p>
-        </div>
-        <ProjectSwitcher projects={projects} selectedId={project.id} />
-      </div>
+      <FeatureGuide
+        eyebrow="Agent security"
+        title="Intent guard"
+        description="Verify planned agent actions against the original user request before execution. Prevents agents from going off-course or performing actions the user didn't authorize."
+        useCase="AI agents can misinterpret user requests or be tricked into performing actions that don't match the user's original intent. For example, a user asks 'find my emails from last week' but the agent decides to 'delete all emails from last month'. Intent guard checks every planned action against the extracted user intent before allowing execution."
+        howItWorks={[
+          { heading: "Extract user intent", body: "When a user submits a request, the system extracts the user's intent — the primary goal, categories of actions, and specific constraints." },
+          { heading: "Record allowed scope", body: "The extracted intent defines the allowed action categories and any explicitly forbidden categories for the session." },
+          { heading: "Check every action", body: "Before each tool call or action, the system checks whether the planned action matches the original user intent. Actions that don't match are scored by intent mismatch severity." },
+          { heading: "Block or flag mismatches", body: "Actions that significantly deviate from the user's intent are blocked. Minor mismatches are flagged for review. All checks are logged with match scores and decisions." },
+        ]}
+        integrationCode={`import { Soter } from "@soter/core";
+
+const soter = new Soter({
+  apiKey: process.env.SOTER_API_KEY,
+  baseUrl: process.env.SOTER_BASE_URL,
+});
+
+// Step 1: Extract intent from user's request
+const intent = await soter.extractIntent({
+  sessionId: "session-123",
+  userPrompt: "Find my emails from last week",
+});
+
+// Step 2: Check each action before executing
+const check = await soter.checkIntentAction({
+  sessionId: "session-123",
+  tool: "email.delete",
+  action: "delete_all",
+  target: "inbox",
+});
+
+if (check.decision !== "ALLOW") {
+  throw new Error(\`Action not allowed: \${check.reason}\`);
+}`}
+        callout="Intent guard requires SDK integration to extract intent from user prompts and check actions before execution. It is most effective when combined with tool chain detection and blast radius analysis for comprehensive agent protection."
+      />
+      <ProjectSwitcher projects={projects} selectedId={project.id} />
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <Metric label="Intent records" value={records.length} tone="gray" />
-        <Metric label="Blocked mismatches" value={blocked} tone="red" />
-        <Metric label="Approval holds" value={approvals} tone="yellow" />
+        <MetricCard label="Intent records" value={records.length} tone="gray" />
+        <MetricCard label="Blocked mismatches" value={blocked} tone="red" />
+        <MetricCard label="Approval holds" value={approvals} tone="yellow" />
       </div>
 
       <section className="card overflow-x-auto p-5">
@@ -108,8 +126,8 @@ export default async function IntentGuardPage({ searchParams }: { searchParams: 
           <tbody className="divide-y divide-slate-800">
             {checks.map((check) => (
               <tr key={check.id}>
-                <td className="py-3"><Badge value={check.decision} /></td>
-                <td className={`font-semibold ${RISK_TONE[check.riskLevel] ?? "text-slate-400"}`}>{check.riskLevel}</td>
+                <td className="py-3"><StatusBadge value={check.decision} /></td>
+                <td><RiskLevel level={check.riskLevel} /></td>
                 <td>{Math.round(check.intentMatchScore * 100)}%</td>
                 <td className="font-mono text-xs">{check.tool}</td>
                 <td>{check.action}</td>
@@ -144,7 +162,7 @@ export default async function IntentGuardPage({ searchParams }: { searchParams: 
                 </div>
                 {sessionChecks.length > 0 && (
                   <div className="mt-3 flex flex-wrap gap-2">
-                    {sessionChecks.slice(0, 4).map((check) => <Badge key={check.id} value={check.decision} />)}
+                    {sessionChecks.slice(0, 4).map((check) => <StatusBadge key={check.id} value={check.decision} />)}
                   </div>
                 )}
               </div>
@@ -155,20 +173,6 @@ export default async function IntentGuardPage({ searchParams }: { searchParams: 
       </section>
     </div>
   );
-}
-
-function Metric({ label, value, tone }: { label: string; value: number; tone: "yellow" | "red" | "gray" }) {
-  const tones = { yellow: "text-yellow-300", red: "text-red-300", gray: "text-slate-300" };
-  return (
-    <section className="card p-5">
-      <p className="text-sm text-slate-400">{label}</p>
-      <p className={`mt-2 text-2xl font-bold ${tones[tone]}`}>{value}</p>
-    </section>
-  );
-}
-
-function Badge({ value }: { value: string }) {
-  return <span className={`rounded px-2 py-1 text-xs font-medium ${DECISION_TONE[value] ?? "bg-slate-700 text-slate-300"}`}>{value}</span>;
 }
 
 function asIntent(value: unknown) {

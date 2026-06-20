@@ -1,4 +1,8 @@
-# CyberRakshak Guard
+# Soter
+
+Safety layer for intelligent conversations.
+
+Soter is a developer-first safety layer for AI chatbots, agents, RAG systems, and LLM applications. It helps detect and block prompt injection, jailbreaks, data leakage, unsafe outputs, PII exposure, tool abuse, and risky AI behavior before it reaches your model or user.
 
 ## Phase 8: Launch Operations
 
@@ -47,7 +51,7 @@ The product reduces risk. It does not provide complete protection, replace secur
 
 ## Phase 2 capabilities (still working)
 
-- `@cyberrakshak/guard` typed SDK + `@cyberrakshak/guard/next` `secureChatHandler`.
+- `@soter/core` typed SDK + `@soter/core/next` `secureChatHandler`.
 - Webhook endpoints with HMAC-SHA256 signatures and delivery logs.
 - Agency dashboard, clients, branding, white-label printable report.
 - Public security badge endpoint, embed script, public status page.
@@ -136,30 +140,34 @@ curl http://localhost:3000/api/badge/<slug>
 ## SDK quick start
 
 ```bash
-npm install @cyberrakshak/guard
+npm install @soter/core
 ```
 
 ```ts
-import { CyberRakshakGuard } from "@cyberrakshak/guard";
+import { Soter } from "@soter/core";
 
-const guard = new CyberRakshakGuard({
-  apiKey: process.env.CYBERRAKSHAK_API_KEY!,
-  baseUrl: "https://yourdomain.com",
+const soter = new Soter({
+  apiKey: process.env.SOTER_API_KEY,
+  projectId: process.env.SOTER_PROJECT_ID,
+  baseUrl: process.env.SOTER_BASE_URL,
 });
 
-const result = await guard.secureChat({
-  message: userMessage,
-  callLLM: async ({ safeInput }) => callLLM(safeInput),
+const result = await soter.protect({
+  input: userMessage,
+  context: { userId, sessionId },
 });
-return result.reply;
+
+if (!result.allowed) {
+  console.log("Blocked by Soter:", result.reason);
+}
 ```
 
 The Next.js helper:
 
 ```ts
-import { secureChatHandler } from "@cyberrakshak/guard/next";
+import { secureChatHandler } from "@soter/core/next";
 export const POST = secureChatHandler({
-  apiKey: process.env.CYBERRAKSHAK_API_KEY!,
+  apiKey: process.env.SOTER_API_KEY!,
   callLLM: async ({ safeInput }) => callLLM(safeInput),
 });
 ```
@@ -168,9 +176,9 @@ export const POST = secureChatHandler({
 
 Official SDKs and plugins for connecting chatbots, RAG apps, and AI agents:
 
-- **JavaScript / TypeScript** — `@cyberrakshak/guard` (`packages/sdk`).
+- **JavaScript / TypeScript** — `@soter/core` (`packages/sdk`).
   See [docs/integrations/javascript-typescript.md](docs/integrations/javascript-typescript.md).
-- **Python** — `cyberrakshak-guard` (`packages/cyberrakshak-python`).
+- **Python** — `cyberrakshak-guard` (`packages/python-sdk`).
   See [docs/integrations/python.md](docs/integrations/python.md).
 - **WordPress / PHP** — plugin in `integrations/wordpress-plugin/cyberrakshak-guard`.
   See [docs/integrations/wordpress.md](docs/integrations/wordpress.md).

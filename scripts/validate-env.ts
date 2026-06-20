@@ -65,13 +65,6 @@ function minLength(min: number) {
   });
 }
 
-function matches(pattern: RegExp, label: string) {
-  return (value: string) => ({
-    ok: pattern.test(value),
-    message: !pattern.test(value) ? `does not match expected ${label} format` : undefined,
-  });
-}
-
 function isNotPlaceholder() {
   return (value: string) => {
     const placeholders = ["replace", "replace-with", "your-", "CHANGE_ME", "TODO", "xxx", "placeholder"];
@@ -97,6 +90,16 @@ function isUrl() {
       return { ok: false, message: "is not a valid URL" };
     }
   };
+}
+
+function isSupabaseDirectConnection(value: string | undefined) {
+  if (!value) return false;
+  try {
+    const url = new URL(value);
+    return /^db\.[a-z0-9]+\.supabase\.co$/i.test(url.hostname) && (url.port === "" || url.port === "5432");
+  } catch {
+    return false;
+  }
 }
 
 function isInteger(min?: number, max?: number) {
@@ -394,6 +397,15 @@ interface ConditionalCheck {
 }
 
 const conditionalChecks: ConditionalCheck[] = [
+  {
+    name: "DATABASE_URL IPv4 compatibility",
+    condition: (env) =>
+      isSupabaseDirectConnection(env.DATABASE_URL) &&
+      env.DATABASE_NETWORK_IPV6 !== "true" &&
+      env.SUPABASE_IPV4_ADDON !== "true",
+    description: "Supabase direct connections require IPv6 (or the IPv4 add-on). On IPv4-only hosts use the Shared Pooler session URL.",
+    severity: "ERROR",
+  },
   // KMS provider checks
   {
     name: "AWS_KMS_KEY_ID",
@@ -510,6 +522,11 @@ function main() {
   const fileEnv = parseEnvFile(filePath);
   const processEnv = process.env as Record<string, string>;
   const merged: Record<string, string> = { ...fileEnv, ...processEnv };
+  // Docker Compose maps SUPABASE_DATABASE_URL to DATABASE_URL at runtime.
+  // Mirror that mapping when validating the env file directly.
+  if (!merged.DATABASE_URL && merged.SUPABASE_DATABASE_URL) {
+    merged.DATABASE_URL = merged.SUPABASE_DATABASE_URL;
+  }
 
   const results: ValidationResult[] = [];
 

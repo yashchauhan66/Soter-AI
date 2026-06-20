@@ -6,7 +6,7 @@
 // returned in API responses, and are only exposed via explicit "reveal" actions
 // with audit logging.
 
-import { createCipheriv, createDecipheriv, createHash, randomBytes, randomUUID } from "crypto";
+import { createCipheriv, createDecipheriv, createHash, randomBytes } from "crypto";
 import { db } from "../db";
 
 // ── Encryption ────────────────────────────────────────────────────────────────

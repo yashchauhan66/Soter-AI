@@ -89,7 +89,7 @@ export async function PATCH(request: Request) {
     const body = await readJson(request) as { reportId: string; projectId: string };
     if (!body.reportId) return jsonResponse({ error: true, message: "reportId is required." }, { status: 400 });
     if (!body.projectId) return jsonResponse({ error: true, message: "projectId is required." }, { status: 400 });
-    const access = await requireProjectPermission(body.projectId, "forensics:manage");
+    await requireProjectPermission(body.projectId, "forensics:manage");
     const report = await publishForensicReport(body.reportId);
     return jsonResponse(report);
   } catch (error) {

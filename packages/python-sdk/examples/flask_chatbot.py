@@ -1,8 +1,8 @@
-"""Flask chatbot protected by CyberRakshak Guard.
+"""Flask chatbot protected by Soter.
 
 Run:
-    export CYBERRAKSHAK_API_KEY=ck_...
-    export CYBERRAKSHAK_BASE_URL=http://localhost:3000
+    export SOTER_API_KEY=ck_...
+    export SOTER_BASE_URL=http://localhost:3000
     flask --app flask_chatbot run
 
 Then:
@@ -14,10 +14,10 @@ from __future__ import annotations
 
 from flask import Flask, jsonify, request
 
-from cyberrakshak_guard import CyberRakshakGuard
+from soter import Soter
 
 app = Flask(__name__)
-guard = CyberRakshakGuard()  # reads CYBERRAKSHAK_API_KEY / _BASE_URL
+guard = Soter()  # reads SOTER_API_KEY / SOTER_BASE_URL
 
 
 def my_llm_call(safe_message: str) -> str:

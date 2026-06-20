@@ -1,4 +1,4 @@
-"""LangChain-style guarded chain example using cyberrakshak-guard.
+"""LangChain-style guarded chain example using Soter.
 
 This example does not require LangChain to be installed: GuardedLLMWrapper wraps
 any callable `(prompt) -> str`, which is the same shape as a LangChain LLM's
@@ -11,13 +11,13 @@ Run:
 """
 import os
 
-from cyberrakshak_guard import CyberRakshakClient
+from cyberrakshak_guard import Soter
 from cyberrakshak_guard.langchain import GuardedLLMWrapper, guard_langchain_input, guard_langchain_output
 
-guard = CyberRakshakClient(
-    api_key=os.environ["CYBERRAKSHAK_API_KEY"],
-    base_url=os.environ.get("CYBERRAKSHAK_BASE_URL", "https://api.cyberrakshak.dev"),
-    project_id=os.environ.get("CYBERRAKSHAK_PROJECT_ID"),
+guard = Soter(
+    api_key=os.environ.get("SOTER_API_KEY") or os.environ.get("CYBERRAKSHAK_API_KEY"),
+    base_url=os.environ.get("SOTER_BASE_URL") or os.environ.get("CYBERRAKSHAK_BASE_URL"),
+    project_id=os.environ.get("SOTER_PROJECT_ID") or os.environ.get("CYBERRAKSHAK_PROJECT_ID"),
     timeout=5,
 )
 

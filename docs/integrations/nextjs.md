@@ -3,29 +3,34 @@
 Install:
 
 ```bash
-npm install @cyberrakshak/guard
+npm install @soter/core
 ```
 
 Create `app/api/chat/route.ts`:
 
 ```ts
-import { CyberRakshakGuard } from "@cyberrakshak/guard";
+import { Soter } from "@soter/core";
 
-const guard = new CyberRakshakGuard({
-  apiKey: process.env.CYBERRAKSHAK_API_KEY!,
-  baseUrl: process.env.CYBERRAKSHAK_BASE_URL!,
+const soter = new Soter({
+  apiKey: process.env.SOTER_API_KEY,
+  projectId: process.env.SOTER_PROJECT_ID,
+  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 export async function POST(req: Request) {
-  const { message, userId, sessionId } = await req.json();
-  const result = await guard.protectChat({
-    message,
-    userId,
-    sessionId,
-    metadata: { source: "nextjs" },
-    callLLM: async (safeMessage) => callMyLLM(safeMessage),
+  const body = await req.json();
+  const result = await soter.protect({
+    input: body.message,
   });
-  return Response.json(result);
+
+  if (!result.allowed) {
+    return Response.json(
+      { blocked: true, reason: result.reason },
+      { status: 403 },
+    );
+  }
+
+  // Continue with the model call here.
 }
 ```
 

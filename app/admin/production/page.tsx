@@ -11,23 +11,10 @@ function formatPercent(numerator: number, denominator: number) {
   return denominator ? `${((numerator / denominator) * 100).toFixed(2)}%` : "0%";
 }
 
-export default async function ProductionPage() {
+async function loadProductionMetrics() {
   const since = new Date(Date.now() - 24 * 60 * 60 * 1000);
   const redisStart = Date.now();
-  const [
-    metrics,
-    failedJobs,
-    pendingJobs,
-    failedWebhooks,
-    totalWebhooks,
-    billingFailures,
-    detectionVolume,
-    blockedVolume,
-    kms,
-    vector,
-    dbHealth,
-    redisHealth,
-  ] = await Promise.all([
+  return await Promise.all([
     getProductionMetricSummary(since),
     db.backgroundJob.count({ where: { status: "FAILED", createdAt: { gte: since } } }),
     db.backgroundJob.count({ where: { status: { in: ["PENDING", "RUNNING"] } } }),
@@ -50,6 +37,23 @@ export default async function ProductionPage() {
       .then(() => `healthy (${Date.now() - redisStart}ms)`)
       .catch(() => "unavailable"),
   ]);
+}
+
+export default async function ProductionPage() {
+  const [
+    metrics,
+    failedJobs,
+    pendingJobs,
+    failedWebhooks,
+    totalWebhooks,
+    billingFailures,
+    detectionVolume,
+    blockedVolume,
+    kms,
+    vector,
+    dbHealth,
+    redisHealth,
+  ] = await loadProductionMetrics();
 
   const cards = [
     ["Guard API p50", metrics.guardApiP50 ?? "No samples", "ms"],

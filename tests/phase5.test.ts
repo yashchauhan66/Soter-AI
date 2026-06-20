@@ -270,9 +270,11 @@ test("chunk ACL and SCIM revocation routes are present and tenant scoped", async
   assert.match(scim, /organizationId: body\.organizationId/);
 });
 
-test("production Docker stack declares app, workers, database, and vector service", async () => {
+test("production Docker stack declares app, workers, vector, and cache services", async () => {
   const compose = await readFile("docker-compose.prod.yml", "utf8");
-  for (const service of ["app:", "webhook-worker:", "siem-worker:", "postgres:", "qdrant:"]) assert.match(compose, new RegExp(service));
+  for (const service of ["app:", "webhook-worker:", "background-worker:", "siem-worker:", "qdrant:", "redis:"]) assert.match(compose, new RegExp(service));
   const dockerfile = await readFile("Dockerfile", "utf8");
   assert.doesNotMatch(dockerfile, /prisma generate --no-engine/);
 });
+
+// Supabase migration: local postgres service removed in favour of managed Supabase PostgreSQL
