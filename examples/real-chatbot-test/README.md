@@ -1,6 +1,6 @@
 # Real Chatbot Test App
 
-This is a minimal Express + TypeScript chatbot application to verify the `@cyberrakshak/guard` SDK integration, LLM response handling, and plan billing limits (Free and Pro plans).
+This is a minimal Express + TypeScript chatbot application to verify the `@soter/core` SDK integration, LLM response handling, and plan billing limits (Free and Pro plans).
 
 ## Setup
 

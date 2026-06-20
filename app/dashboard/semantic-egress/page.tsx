@@ -2,6 +2,8 @@ import { ProjectSwitcher } from "@/components/dashboard/ProjectSwitcher";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
+import { MetricCard, StatusBadge, PayloadViewer, EmptyRow, RiskLevel, safeJson } from "@/components/dashboard/MetricCard";
 
 export const dynamic = "force-dynamic";
 
@@ -30,20 +32,7 @@ type SemanticSourceRow = {
   createdAt: Date;
 };
 
-const DECISION_TONE: Record<string, string> = {
-  ALLOW: "bg-emerald-400/10 text-emerald-300",
-  REDACT: "bg-yellow-400/10 text-yellow-300",
-  ASK_APPROVAL: "bg-yellow-400/10 text-yellow-300",
-  REVIEW: "bg-blue-400/10 text-blue-300",
-  BLOCK: "bg-red-400/10 text-red-300",
-};
 
-const RISK_TONE: Record<string, string> = {
-  LOW: "text-emerald-300",
-  MEDIUM: "text-amber-300",
-  HIGH: "text-orange-300",
-  CRITICAL: "text-red-300",
-};
 
 export default async function SemanticEgressPage({ searchParams }: { searchParams: Promise<{ project?: string }> }) {
   const params = await searchParams;
@@ -74,20 +63,26 @@ export default async function SemanticEgressPage({ searchParams }: { searchParam
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Agent security</p>
-          <h1 className="mt-2 text-3xl font-bold">Semantic egress firewall</h1>
-          <p className="mt-3 max-w-3xl text-slate-400">Detect confidential meaning leaving the system, including paraphrased customer, roadmap, pricing, source-code, and private-context leakage.</p>
-        </div>
-        <ProjectSwitcher projects={projects} selectedId={project.id} />
-      </div>
+      <FeatureGuide
+        eyebrow="Agent security"
+        title="Semantic egress firewall"
+        description="Detect confidential meaning leaving the system, including paraphrased customer, roadmap, pricing, source-code, and private-context leakage."
+        useCase="Keyword-based egress detection misses paraphrased or rewritten confidential content. Semantic egress uses deep content inspection to catch reworded secrets, abstracted roadmap data, and restructured source code — even when the exact phrasing has changed."
+        howItWorks={[
+          { heading: "Content is fingerprinted", body: "Confidential sources (documents, emails, code) are semantically fingerprinted when registered. Creating a semantic fingerprint that captures meaning, not just exact text." },
+          { heading: "Outbound content is checked", body: "Every piece of content leaving the system — via tool calls, API responses, or memory writes — is compared against registered fingerprints for semantic similarity." },
+          { heading: "Risk scoring and decision", body: "If outbound content matches a confidential source beyond a configurable threshold, the guard blocks, redacts, or flags for review based on your policy." },
+          { heading: "Incident logging", body: "All egress checks are logged with redacted content, risk scores, findings, and the matched source fingerprints for audit and compliance." },
+        ]}
+        callout="Semantic egress reduces risk of data leakage but is not foolproof. Combine with blast radius analysis, context lineage, and least-privilege tool access for defense in depth."
+      />
+      <ProjectSwitcher projects={projects} selectedId={project.id} />
 
       <div className="grid gap-4 sm:grid-cols-4">
-        <Metric label="Checks" value={checks.length} tone="gray" />
-        <Metric label="Blocked" value={blocked} tone="red" />
-        <Metric label="Review holds" value={review} tone="yellow" />
-        <Metric label="Redactions" value={redacted} tone="blue" />
+        <MetricCard label="Checks" value={checks.length} tone="gray" />
+        <MetricCard label="Blocked" value={blocked} tone="red" />
+        <MetricCard label="Review holds" value={review} tone="yellow" />
+        <MetricCard label="Redactions" value={redacted} tone="blue" />
       </div>
 
       <section className="card overflow-x-auto p-5">
@@ -111,8 +106,8 @@ export default async function SemanticEgressPage({ searchParams }: { searchParam
           <tbody className="divide-y divide-slate-800">
             {checks.map((check) => (
               <tr key={check.id}>
-                <td className="py-3"><Badge value={check.decision} /></td>
-                <td className={`font-semibold ${RISK_TONE[check.riskLevel] ?? "text-slate-400"}`}>{check.riskLevel}</td>
+                <td className="py-3"><StatusBadge value={check.decision} /></td>
+                <td className="font-semibold"><RiskLevel level={check.riskLevel} /></td>
                 <td>{Math.round(check.semanticRiskScore)}</td>
                 <td>{check.destinationType}</td>
                 <td className="max-w-[220px] truncate text-slate-400">{check.destinationName ?? "-"}</td>
@@ -121,7 +116,7 @@ export default async function SemanticEgressPage({ searchParams }: { searchParam
                 <td>{check.createdAt.toLocaleString()}</td>
               </tr>
             ))}
-            {checks.length === 0 && <tr><td className="py-5 text-slate-500" colSpan={8}>No semantic egress checks recorded yet.</td></tr>}
+            {checks.length === 0 && <EmptyRow colSpan={8} message="No semantic egress checks recorded yet." />}
           </tbody>
         </table>
       </section>
@@ -141,17 +136,17 @@ export default async function SemanticEgressPage({ searchParams }: { searchParam
                   <p className="mt-2 text-xs text-slate-500">Session {check.sessionId}</p>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  <Badge value={check.decision} />
-                  <span className={`text-xs font-bold ${RISK_TONE[check.riskLevel] ?? "text-slate-400"}`}>{check.riskLevel}</span>
+                  <StatusBadge value={check.decision} />
+                  <RiskLevel level={check.riskLevel} />
                 </div>
               </div>
               <div className="mt-3 grid gap-3 lg:grid-cols-2">
-                <Payload title="Content redacted" value={check.contentRedacted} />
-                <Payload title="Findings" value={formatJson(check.findingsJson)} />
+                <PayloadViewer title="Content redacted" value={check.contentRedacted} />
+                <PayloadViewer title="Findings" value={safeJson(check.findingsJson)} />
               </div>
             </div>
           ))}
-          {checks.length === 0 && <p className="text-sm text-slate-500">No semantic findings available yet.</p>}
+          
         </div>
       </section>
 
@@ -168,53 +163,21 @@ export default async function SemanticEgressPage({ searchParams }: { searchParam
                   <p className="font-semibold">{source.sourceId}</p>
                   <p className="mt-1 text-slate-400">{source.sourceType}</p>
                 </div>
-                <span className={`text-xs font-bold ${RISK_TONE[source.sensitivityLevel] ?? "text-slate-400"}`}>{source.sensitivityLevel}</span>
+                <RiskLevel level={source.sensitivityLevel} />
               </div>
               <p className="mt-2 font-mono text-xs text-slate-500">{source.contentHash.slice(0, 24)}...</p>
-              <Payload title="Fingerprint" value={formatJson(source.fingerprintJson)} />
+              <PayloadViewer title="Fingerprint" value={safeJson(source.fingerprintJson)} />
             </div>
           ))}
-          {sources.length === 0 && <p className="text-sm text-slate-500">No protected source fingerprints recorded yet.</p>}
+          
         </div>
       </section>
     </div>
   );
 }
 
-function Metric({ label, value, tone }: { label: string; value: number; tone: "yellow" | "red" | "gray" | "blue" }) {
-  const tones = { yellow: "text-yellow-300", red: "text-red-300", gray: "text-slate-300", blue: "text-blue-300" };
-  return (
-    <section className="card p-5">
-      <p className="text-sm text-slate-400">{label}</p>
-      <p className={`mt-2 text-2xl font-bold ${tones[tone]}`}>{value}</p>
-    </section>
-  );
-}
-
-function Badge({ value }: { value: string }) {
-  return <span className={`rounded px-2 py-1 text-xs font-medium ${DECISION_TONE[value] ?? "bg-slate-700 text-slate-300"}`}>{value}</span>;
-}
-
-function Payload({ title, value }: { title: string; value: string | null | undefined }) {
-  return (
-    <div>
-      <p className="text-xs font-semibold uppercase text-slate-500">{title}</p>
-      <pre className="mt-1 max-h-36 overflow-auto rounded bg-slate-950/70 p-2 text-xs text-slate-300">{value ?? "No data supplied."}</pre>
-    </div>
-  );
-}
-
 function formatSourceIds(value: unknown) {
   return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string").join(", ") || "-" : "-";
-}
-
-function formatJson(value: unknown) {
-  if (!value) return "No data.";
-  try {
-    return JSON.stringify(value, null, 2);
-  } catch {
-    return "Data could not be formatted.";
-  }
 }
 
 async function safeRows<T>(strings: TemplateStringsArray, ...values: unknown[]) {

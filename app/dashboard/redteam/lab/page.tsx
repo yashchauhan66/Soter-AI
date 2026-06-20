@@ -1,9 +1,8 @@
 import { Shield, AlertTriangle, CheckCircle2, TrendingUp, TrendingDown, Minus } from "lucide-react";
-import Link from "next/link";
 import { RunRedTeamButton } from "@/components/dashboard/RunRedTeamButton";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
-import { getOrCreateSuite, getRedTeamTrends, getRedTeamSummary } from "@/lib/redteam/lab";
+import { getOrCreateSuite, getRedTeamSummary } from "@/lib/redteam/lab";
 
 export const dynamic = "force-dynamic";
 
@@ -13,14 +12,14 @@ export default async function RedTeamLabPage({
   searchParams: Promise<{ project?: string }>;
 }) {
   const params = await searchParams;
-  const [project, projects] = await Promise.all([
+  const [project, _projects] = await Promise.all([
     getCurrentProjectById(params.project),
     getCurrentUserProjects(),
   ]);
   await requireProjectPermission(project.id, "redteam:read");
 
   const orgId = project.organizationId ?? "";
-  const suiteId = await getOrCreateSuite(orgId, project.id);
+  await getOrCreateSuite(orgId, project.id);
   const { latestRun, suite, trends } = await getRedTeamSummary(orgId, project.id);
 
   const TrendIcon = trends.trend === "improving" ? TrendingUp

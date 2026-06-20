@@ -1,8 +1,8 @@
-"""Basic chatbot protected by CyberRakshak Guard.
+"""Basic chatbot protected by Soter.
 
 Run:
-    export CYBERRAKSHAK_API_KEY=ck_...           # never hardcode this
-    export CYBERRAKSHAK_BASE_URL=http://localhost:3000
+    export SOTER_API_KEY=ck_...           # never hardcode this
+    export SOTER_BASE_URL=http://localhost:3000
     python basic_chatbot.py
 
 It exercises four cases: a safe prompt, a prompt-injection attack, a secret in
@@ -11,7 +11,7 @@ the input, and an unsafe model output.
 
 from __future__ import annotations
 
-from cyberrakshak_guard import CyberRakshakGuard
+from soter import Soter
 
 
 def fake_llm(safe_message: str) -> str:
@@ -25,7 +25,7 @@ def fake_llm(safe_message: str) -> str:
 
 
 def main() -> None:
-    guard = CyberRakshakGuard()  # reads CYBERRAKSHAK_API_KEY / _BASE_URL
+    guard = Soter()  # reads SOTER_API_KEY / SOTER_BASE_URL
 
     cases = {
         "safe": "What is the weather today?",

@@ -2,22 +2,13 @@ import { ProjectSwitcher } from "@/components/dashboard/ProjectSwitcher";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
+import { MetricCard, StatusBadge, RiskLevel } from "@/components/dashboard/MetricCard";
 
 export const dynamic = "force-dynamic";
 
 type ServerRow = { id: string; serverName: string; status: string; trustLevel: string; updatedAt: Date };
 type DriftRow = { id: string; serverId: string; toolName: string; driftType: string; riskBefore: string; riskAfter: string; summary: string; recommendation: string; status: string; createdAt: Date };
-
-const RISK_TONE: Record<string, string> = { LOW: "text-emerald-300", MEDIUM: "text-amber-300", HIGH: "text-orange-300", CRITICAL: "text-red-300" };
-const DRIFT_TONE: Record<string, string> = {
-  PROMPT_INJECTION_DETECTED: "bg-red-400/10 text-red-300",
-  CAPABILITY_ADDED: "bg-orange-400/10 text-orange-300",
-  RISK_INCREASED: "bg-red-400/10 text-red-300",
-  ENDPOINT_CHANGED: "bg-yellow-400/10 text-yellow-300",
-  SCHEMA_CHANGED: "bg-blue-400/10 text-blue-300",
-  DESCRIPTION_CHANGED: "bg-blue-400/10 text-blue-300",
-  CAPABILITY_REMOVED: "bg-slate-700 text-slate-300",
-};
 
 export default async function McpDriftPage({ searchParams }: { searchParams: Promise<{ project?: string }> }) {
   const params = await searchParams;
@@ -28,15 +19,45 @@ export default async function McpDriftPage({ searchParams }: { searchParams: Pro
     safeRows<DriftRow>`SELECT "id", "serverId", "toolName", "driftType", "riskBefore", "riskAfter", "summary", "recommendation", "status", "createdAt" FROM "McpToolDrift" WHERE "projectId" = ${project.id} ORDER BY "createdAt" DESC LIMIT 100`,
   ]);
   const serverName = new Map(servers.map((s) => [s.id, s.serverName]));
+  const criticalDrifts = drifts.filter((d) => d.riskAfter === "CRITICAL" || d.riskAfter === "HIGH").length;
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Agent security</p>
-          <h1 className="mt-2 text-3xl font-bold">MCP tool drift</h1>
-          <p className="mt-3 max-w-3xl text-slate-400">Detect when MCP server tools change in a risky way over time: new dangerous capabilities, prompt injection in descriptions, schema changes, or endpoint changes.</p>
-        </div>
-        <ProjectSwitcher projects={projects} selectedId={project.id} />
+      <FeatureGuide
+        eyebrow="Agent security"
+        title="MCP tool drift"
+        description="Detect when MCP server tools change in a risky way over time: new dangerous capabilities, prompt injection in descriptions, schema changes, or endpoint changes."
+        useCase="MCP (Model Context Protocol) servers expose tools to AI agents. Over time, these tools can silently change — a file-read tool could gain delete capability, or a harmless description could be replaced with a prompt injection payload. Without drift detection, these changes go unnoticed until an incident occurs."
+        howItWorks={[
+          { heading: "Register MCP servers", body: "Register each MCP server with a trust level. The system tracks the server's identity and baseline tool signatures." },
+          { heading: "Snapshot tools regularly", body: "Periodically snapshot the tools exposed by each MCP server. Each snapshot captures tool names, schemas, descriptions, and risk assessments." },
+          { heading: "Detect drift", body: "When a new snapshot differs from the previous baseline, drift is detected. The system categorizes the change — new capabilities, description changes, schema changes, or endpoint changes — and re-assesses risk." },
+          { heading: "Alert and quarantine", body: "Risky drifts trigger alerts. Servers with critical drifts can be automatically quarantined to prevent further tool access until reviewed." },
+        ]}
+        integrationCode={`import { Soter } from "@soter/core";
+
+const soter = new Soter({
+  apiKey: process.env.SOTER_API_KEY,
+  baseUrl: process.env.SOTER_BASE_URL,
+});
+
+await soter.registerMcpServer({ serverName: "filesystem-mcp", trustLevel: "INTERNAL" });
+
+const snapshot = await soter.snapshotMcpTools({
+  serverName: "filesystem-mcp",
+  tools: mcpClient.listTools()
+});
+
+if (snapshot.drifts.some((d) => d.riskAfter === "CRITICAL")) {
+  // quarantine the server / require approval
+}`}
+        callout="MCP drift detection is based on periodic snapshots — it detects changes between snapshots, not real-time attacks. For real-time protection, combine with agent intent guard and tool-chain detection."
+      />
+      <ProjectSwitcher projects={projects} selectedId={project.id} />
+
+      <div className="grid gap-4 sm:grid-cols-3">
+        <MetricCard label="MCP servers" value={servers.length} tone="gray" />
+        <MetricCard label="Critical drifts" value={criticalDrifts} tone="red" />
+        <MetricCard label="Total drifts" value={drifts.length} tone="yellow" />
       </div>
 
       <section className="card p-5">
@@ -48,7 +69,7 @@ export default async function McpDriftPage({ searchParams }: { searchParams: Pro
                 <p className="font-semibold">{server.serverName}</p>
                 <p className="text-xs text-slate-500">trust {server.trustLevel} · updated {server.updatedAt.toLocaleString()}</p>
               </div>
-              <span className={`rounded px-2 py-1 text-xs font-medium ${server.status === "QUARANTINED" ? "bg-red-400/10 text-red-300" : server.status === "DISABLED" ? "bg-slate-700 text-slate-400" : "bg-emerald-400/10 text-emerald-300"}`}>{server.status}</span>
+              <StatusBadge value={server.status} />
             </div>
           ))}
           {servers.length === 0 && <p className="text-sm text-slate-500">No MCP servers registered yet.</p>}
@@ -62,10 +83,10 @@ export default async function McpDriftPage({ searchParams }: { searchParams: Pro
           <tbody className="divide-y divide-slate-800">
             {drifts.map((drift) => (
               <tr key={drift.id}>
-                <td className="py-3"><span className={`rounded px-2 py-1 text-xs font-medium ${DRIFT_TONE[drift.driftType] ?? "bg-slate-700 text-slate-300"}`}>{drift.driftType}</span></td>
+                <td className="py-3"><StatusBadge value={drift.driftType} /></td>
                 <td className="font-mono text-xs">{drift.toolName}</td>
                 <td>{serverName.get(drift.serverId) ?? drift.serverId.slice(0, 8)}</td>
-                <td><span className={RISK_TONE[drift.riskBefore]}>{drift.riskBefore}</span> → <span className={`font-semibold ${RISK_TONE[drift.riskAfter]}`}>{drift.riskAfter}</span></td>
+                <td><RiskLevel level={drift.riskBefore} /> → <RiskLevel level={drift.riskAfter} /></td>
                 <td className="max-w-[280px] truncate text-slate-400">{drift.recommendation}</td>
                 <td>{drift.createdAt.toLocaleString()}</td>
               </tr>
@@ -73,24 +94,6 @@ export default async function McpDriftPage({ searchParams }: { searchParams: Pro
             {drifts.length === 0 && <tr><td className="py-5 text-slate-500" colSpan={6}>No drift detected yet. Snapshot tools repeatedly to track drift.</td></tr>}
           </tbody>
         </table>
-      </section>
-
-      <section className="card p-5">
-        <h2 className="text-lg font-semibold">Copy-paste integration</h2>
-        <pre className="mt-4 overflow-x-auto rounded-lg bg-slate-950 p-4 text-xs text-slate-300">{`import { createCybersecurityGuardClient } from "@cybersecurityguard/guard";
-
-const guard = createCybersecurityGuardClient({ apiKey: process.env.CYBERSECURITYGUARD_API_KEY! });
-
-await guard.registerMcpServer({ serverName: "filesystem-mcp", trustLevel: "INTERNAL" });
-
-const snapshot = await guard.snapshotMcpTools({
-  serverName: "filesystem-mcp",
-  tools: mcpClient.listTools()
-});
-
-if (snapshot.drifts.some((d) => d.riskAfter === "CRITICAL")) {
-  // quarantine the server / require approval
-}`}</pre>
       </section>
     </div>
   );

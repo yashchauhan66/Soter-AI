@@ -1,5 +1,6 @@
 import type { AnalyzeRequest, AgentActionCheckRequest, AgentActionCheckResponse, AgentApprovalResolveRequest, AgentApprovalResolveResponse, AgentDataCheckRequest, AgentOutputCheckRequest, AgentReplayResponse, BrowserFormCheckRequest, BrowserFormCheckResponse, CanaryCheckRequest, CanaryCheckResponse, CheckContextFlowRequest, CheckContextFlowResponse, CheckLegalBoundaryRequest, CheckLegalBoundaryResponse, CheckMemoryPoisoningRequest, CheckMemoryPoisoningResponse, ClientOptions, CreateCanaryRequest, CreateCanaryResponse, ExpressLikeNext, ExpressLikeRequest, ExpressLikeResponse, GuardAction, GuardConversationOptions, GuardDecision, GuardInputRequest, GuardOutputRequest, GuardResult, LineageIncidentsResponse, LineageSessionResponse, McpDriftsResponse, MemoryCheckRequest, MemoryCheckResponse, ProtectChatOptions, ProtectChatResult, ProtectRagOptions, ProtectRagResult, RagSource, RagTrustScoreRequest, RagTrustScoreResponse, RegisterContextSourceRequest, RegisterContextSourceResponse, RegisterMcpServerRequest, RegisterMcpServerResponse, RunBlastRadiusScenarioRequest, RunBlastRadiusScenarioResponse, ScanMcpToolsRequest, ScanMcpToolsResponse, SecureChatOptions, SecureChatResult, SimulateBlastRadiusRequest, SimulateBlastRadiusResponse, SnapshotMcpToolsRequest, SnapshotMcpToolsResponse, StartAgentSessionRequest, StartAgentSessionResponse, StoreSafeMemoryRequest, StoreSafeMemoryResponse, ToolExecutionContext, ToolExecutor, WrappedToolResult } from "./types";
 export declare function normalizeDecision(action: GuardAction): GuardDecision;
+/** @deprecated Use the Soter class for new integrations. */
 export interface CyberRakshakGuard {
     input(message: string, options?: Omit<GuardInputRequest, "message" | "text">): Promise<GuardResult>;
     output(aiResponse: string, options?: Omit<GuardOutputRequest, "aiResponse" | "text">): Promise<GuardResult>;
@@ -72,7 +73,9 @@ export interface CyberRakshakGuard {
 }
 export declare function createClient(options: ClientOptions): CyberRakshakGuard;
 export declare function createAgentFirewallClient(options: ClientOptions): CyberRakshakGuard;
+/** @deprecated Use new Soter(options) for new integrations. */
 export declare function createCybersecurityGuardClient(options: ClientOptions): CyberRakshakGuard;
+/** @deprecated Use Soter for new integrations. GuardClient remains supported. */
 export declare class GuardClient implements CyberRakshakGuard {
     private readonly apiKey;
     private readonly baseUrl;
@@ -159,5 +162,8 @@ export declare class GuardClient implements CyberRakshakGuard {
     private withProjectMetadata;
     private log;
 }
+/** @deprecated Use Soter for new integrations. */
 export { GuardClient as CyberRakshakClient };
+/** Soter-branded client alias. */
+export { GuardClient as SoterClient };
 //# sourceMappingURL=client.d.ts.map

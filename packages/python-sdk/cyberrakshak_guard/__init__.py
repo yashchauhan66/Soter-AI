@@ -1,9 +1,9 @@
-"""CyberRakshak Guard — Python SDK.
+"""Soter — Python SDK.
 
 Protect any Python chatbot in 3 lines of code::
 
-    from cyberrakshak_guard import CyberRakshakGuard
-    guard = CyberRakshakGuard()  # reads CYBERRAKSHAK_API_KEY
+    from cyberrakshak_guard import Soter
+    guard = Soter()  # reads SOTER_API_KEY / CYBERRAKSHAK_API_KEY
     result = guard.protect_chat(message=user_message, call_llm=my_llm)
 """
 
@@ -17,6 +17,12 @@ from .exceptions import (
     CyberRakshakNetworkError,
     CyberRakshakRateLimitError,
     CyberRakshakValidationError,
+    SoterAuthError,
+    SoterConfigError,
+    SoterError,
+    SoterNetworkError,
+    SoterRateLimitError,
+    SoterValidationError,
 )
 from .types import (
     ExcludedRagSource,
@@ -30,11 +36,14 @@ from .types import (
 
 __version__ = "0.2.0"
 
+Soter = CyberRakshakGuard
+
+
 
 def __getattr__(name: str):
     # Lazy import so the async client (and its httpx dependency) is only loaded
     # when actually used.
-    if name in ("AsyncCyberRakshakGuard",):
+    if name in ("AsyncCyberRakshakGuard", "AsyncSoter"):
         from .async_client import AsyncCyberRakshakGuard
 
         return AsyncCyberRakshakGuard
@@ -43,7 +52,9 @@ def __getattr__(name: str):
 
 __all__ = [
     "CyberRakshakGuard",
+    "Soter",
     "AsyncCyberRakshakGuard",
+    "AsyncSoter",
     "GuardResult",
     "GuardFinding",
     "RagSource",
@@ -57,5 +68,11 @@ __all__ = [
     "CyberRakshakRateLimitError",
     "CyberRakshakValidationError",
     "CyberRakshakNetworkError",
+    "SoterError",
+    "SoterConfigError",
+    "SoterAuthError",
+    "SoterRateLimitError",
+    "SoterValidationError",
+    "SoterNetworkError",
     "__version__",
 ]

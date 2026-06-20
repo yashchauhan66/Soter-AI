@@ -1,24 +1,41 @@
 # Express Integration
 
 ```bash
-npm install @cyberrakshak/guard express
+npm install @soter/core express
 ```
 
 ```ts
 import express from "express";
-import { CyberRakshakGuard } from "@cyberrakshak/guard";
+import { Soter } from "@soter/core";
 
 const app = express();
 app.use(express.json());
 
-const guard = new CyberRakshakGuard({
-  apiKey: process.env.CYBERRAKSHAK_API_KEY!,
-  baseUrl: process.env.CYBERRAKSHAK_BASE_URL!,
+const soter = new Soter({
+  apiKey: process.env.SOTER_API_KEY,
+  projectId: process.env.SOTER_PROJECT_ID,
+  baseUrl: process.env.SOTER_BASE_URL,
 });
 
-app.post("/chat", guard.createExpressMiddleware({
-  callLLM: async (safeMessage) => myLLM(safeMessage),
-}));
+app.post("/chat", async (req, res) => {
+  const protection = await soter.protect({
+    input: req.body.message,
+    context: {
+      userId: req.user?.id,
+      sessionId: req.session?.id,
+    },
+  });
+
+  if (!protection.allowed) {
+    return res.status(403).json({
+      blocked: true,
+      reason: protection.reason,
+      riskLevel: protection.riskLevel,
+    });
+  }
+
+  // Continue to the LLM only after Soter allows the input.
+});
 ```
 
 Example: `examples/express-chatbot`.

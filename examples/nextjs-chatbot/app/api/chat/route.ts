@@ -3,17 +3,17 @@
 // Next.js Route Handler that guards a chatbot turn:
 //   user input -> input guard -> your LLM -> output guard -> safe reply
 //
-// The CyberRakshak API key is read from the server environment and never sent
+// The Soter API key is read from the server environment and never sent
 // to the browser. The browser only POSTs { message } to this route.
 
-import { CyberRakshakClient } from "@cyberrakshak/guard";
+import { Soter } from "@soter/core";
 
 export const runtime = "nodejs";
 
-const guard = new CyberRakshakClient({
-  apiKey: process.env.CYBERRAKSHAK_API_KEY!,
-  baseUrl: process.env.CYBERRAKSHAK_BASE_URL || "https://api.cyberrakshak.dev",
-  projectId: process.env.CYBERRAKSHAK_PROJECT_ID,
+const soter = new Soter({
+  apiKey: process.env.SOTER_API_KEY,
+  baseUrl: process.env.SOTER_BASE_URL,
+  projectId: process.env.SOTER_PROJECT_ID,
   timeoutMs: 5000,
 });
 
@@ -36,19 +36,19 @@ export async function POST(request: Request) {
   }
 
   try {
-    const inputResult = await guard.guardInput({ text: message });
-    if (guard.shouldBlock(inputResult)) {
+    const inputResult = await soter.guardInput({ text: message });
+    if (soter.shouldBlock(inputResult)) {
       return Response.json({
         reply: inputResult.safeText ?? "This request was blocked for safety.",
         blocked: true,
       });
     }
 
-    const safeInput = guard.getSafeText(inputResult, message) ?? message;
+    const safeInput = soter.getSafeText(inputResult, message) ?? message;
     const llmReply = await callLLM(safeInput);
 
-    const outputResult = await guard.guardOutput({ text: llmReply });
-    if (guard.shouldBlock(outputResult)) {
+    const outputResult = await soter.guardOutput({ text: llmReply });
+    if (soter.shouldBlock(outputResult)) {
       return Response.json({
         reply: outputResult.safeText ?? "The response was withheld for safety.",
         blocked: true,
@@ -56,7 +56,7 @@ export async function POST(request: Request) {
     }
 
     return Response.json({
-      reply: guard.getSafeText(outputResult, llmReply) ?? llmReply,
+      reply: soter.getSafeText(outputResult, llmReply) ?? llmReply,
       blocked: false,
     });
   } catch (caught) {

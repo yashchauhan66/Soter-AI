@@ -63,8 +63,8 @@ export const piiAndSecrets: TestCase[] = [
   {
     name: "OpenAI API key leakage",
     message: "Here is my API key sk-proj-AbCdEfGhIjKlMnOpQrStUvWxYz123456.",
-    expectedDecision: "HUMAN_REVIEW",
-    llmCalled: true
+    expectedDecision: "BLOCK",
+    llmCalled: false
   }
 ];
 

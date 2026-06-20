@@ -69,7 +69,7 @@ async function postJson(url, body) {
 async function validateNext() {
   const cwd = join(root, "examples", "nextjs-chatbot");
   await run(npm, ["install", "--no-audit", "--no-fund", "--no-package-lock"], { cwd });
-  const app = start(npm, ["run", "dev", "--", "-p", "3201"], { cwd, env: { CYBERRAKSHAK_BASE_URL: baseUrl, CYBERRAKSHAK_API_KEY: apiKey } });
+  const app = start(npm, ["run", "dev", "--", "-p", "3201"], { cwd, env: { SOTER_BASE_URL: baseUrl, SOTER_API_KEY: apiKey } });
   try {
     await waitFor("http://127.0.0.1:3201/api/chat");
     const safe = await postJson("http://127.0.0.1:3201/api/chat", { message: "Hello support bot" });
@@ -85,7 +85,7 @@ async function validateNext() {
 async function validateExpress() {
   const cwd = join(root, "examples", "express-chatbot");
   await run(npm, ["install", "--no-audit", "--no-fund", "--no-package-lock"], { cwd });
-  const app = start(npm, ["start"], { cwd, env: { PORT: "3202", CYBERRAKSHAK_BASE_URL: baseUrl, CYBERRAKSHAK_API_KEY: apiKey } });
+  const app = start(npm, ["start"], { cwd, env: { PORT: "3202", SOTER_BASE_URL: baseUrl, SOTER_API_KEY: apiKey } });
   try {
     await delay(2000);
     const safe = await postJson("http://127.0.0.1:3202/chat", { message: "Hello support bot" });
@@ -101,7 +101,7 @@ async function validateExpress() {
 async function validateLangChain() {
   const cwd = join(root, "examples", "langchain-rag-chatbot");
   await run(npm, ["install", "--no-audit", "--no-fund", "--no-package-lock"], { cwd });
-  const result = await run(npm, ["start"], { cwd, capture: true, env: { CYBERRAKSHAK_BASE_URL: baseUrl, CYBERRAKSHAK_API_KEY: apiKey } });
+  const result = await run(npm, ["start"], { cwd, capture: true, env: { SOTER_BASE_URL: baseUrl, SOTER_API_KEY: apiKey } });
   const parsed = JSON.parse(result.stdout.slice(result.stdout.indexOf("{")));
   if (parsed.safe.blocked || !parsed.safe.llmCalled) throw new Error("LangChain safe query did not call LLM");
   if (!parsed.attack.blocked || parsed.attack.llmCalled) throw new Error("LangChain attack query was not blocked before LLM");

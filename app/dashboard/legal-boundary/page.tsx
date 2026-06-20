@@ -2,19 +2,12 @@ import { ProjectSwitcher } from "@/components/dashboard/ProjectSwitcher";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
+import { MetricCard, StatusBadge, RiskLevel } from "@/components/dashboard/MetricCard";
 
 export const dynamic = "force-dynamic";
 
 type CheckRow = { id: string; agentName: string; domain: string | null; action: string | null; actionCategory: string; decision: string; riskLevel: string; reason: string; userConsentProvided: boolean; createdAt: Date };
-
-const DECISION_TONE: Record<string, string> = {
-  ALLOW: "bg-emerald-400/10 text-emerald-300",
-  ASK_APPROVAL: "bg-yellow-400/10 text-yellow-300",
-  REVIEW: "bg-blue-400/10 text-blue-300",
-  TAKEOVER_REQUIRED: "bg-orange-400/10 text-orange-300",
-  BLOCK: "bg-red-400/10 text-red-300",
-};
-const RISK_TONE: Record<string, string> = { LOW: "text-emerald-300", MEDIUM: "text-amber-300", HIGH: "text-orange-300", CRITICAL: "text-red-300" };
 
 export default async function LegalBoundaryPage({ searchParams }: { searchParams: Promise<{ project?: string }> }) {
   const params = await searchParams;
@@ -25,19 +18,44 @@ export default async function LegalBoundaryPage({ searchParams }: { searchParams
   const takeover = checks.filter((c) => c.decision === "TAKEOVER_REQUIRED").length;
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Agent security</p>
-          <h1 className="mt-2 text-3xl font-bold">Legal boundary guard</h1>
-          <p className="mt-3 max-w-3xl text-slate-400">Stop computer-use and browser agents from crossing legal, compliance, or consent boundaries: payments, logins, terms acceptance, scraping, and personal-data uploads. This is risk control and consent enforcement, not legal advice.</p>
-        </div>
-        <ProjectSwitcher projects={projects} selectedId={project.id} />
-      </div>
+      <FeatureGuide
+        eyebrow="Agent security"
+        title="Legal boundary guard"
+        description="Stop computer-use and browser agents from crossing legal, compliance, or consent boundaries: payments, logins, terms acceptance, scraping, and personal-data uploads. This is risk control and consent enforcement, not legal advice."
+        useCase="Autonomous computer-use agents can inadvertently perform actions with legal consequences — making purchases, accepting terms of service, submitting forms, or uploading personal data. Without explicit guards, these actions happen silently with no user consent or oversight."
+        howItWorks={[
+          { heading: "Define action categories", body: "Configure which action categories (PURCHASE, LOGIN, TERMS_ACCEPTANCE, FORM_SUBMISSION, DATA_UPLOAD, SCRAPING) require consent or are completely blocked." },
+          { heading: "Agent actions are checked", body: "When an agent attempts an action in a browser or API call, the legal boundary guard evaluates the action against the configured policy and user consent status." },
+          { heading: "Decision and enforcement", body: "Actions are ALLOWed, BLOCKed, or flagged for human TAKEOVER. TAKEOVER_REQUIRED means the agent must pause and hand control to a human." },
+          { heading: "Audit trail", body: "All boundary checks are logged with the action details, decision, risk level, and whether user consent was provided. The log serves as a compliance audit trail." },
+        ]}
+        integrationCode={`import { Soter } from "@soter/core";
+
+const soter = new Soter({
+  apiKey: process.env.SOTER_API_KEY,
+  baseUrl: process.env.SOTER_BASE_URL,
+});
+
+const verdict = await soter.checkLegalBoundary({
+  agentName: "openclaw",
+  websiteUrl: "https://example.com/checkout",
+  domain: "example.com",
+  action: "submit_order",
+  actionCategory: "PURCHASE",
+  userConsentProvided: false,
+  metadata: { loggedIn: true, paymentInvolved: true }
+});
+
+if (verdict.decision === "TAKEOVER_REQUIRED") return handOffToHuman(verdict.requiredUserMessage);
+if (verdict.decision === "BLOCK") throw new Error(verdict.reason);`}
+        callout="Legal boundary guard is a risk control mechanism, not a substitute for legal advice or compliance review. Consult your legal team to define appropriate policies for your use case and jurisdiction."
+      />
+      <ProjectSwitcher projects={projects} selectedId={project.id} />
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <Metric label="Checks" value={checks.length} tone="gray" />
-        <Metric label="Blocked" value={blocked} tone="red" />
-        <Metric label="Takeover required" value={takeover} tone="yellow" />
+        <MetricCard label="Checks" value={checks.length} tone="gray" />
+        <MetricCard label="Blocked" value={blocked} tone="red" />
+        <MetricCard label="Takeover required" value={takeover} tone="yellow" />
       </div>
 
       <section className="card overflow-x-auto p-5">
@@ -47,8 +65,8 @@ export default async function LegalBoundaryPage({ searchParams }: { searchParams
           <tbody className="divide-y divide-slate-800">
             {checks.map((check) => (
               <tr key={check.id}>
-                <td className="py-3"><span className={`rounded px-2 py-1 text-xs font-medium ${DECISION_TONE[check.decision] ?? "bg-slate-700 text-slate-300"}`}>{check.decision}</span></td>
-                <td className={`font-semibold ${RISK_TONE[check.riskLevel] ?? "text-slate-400"}`}>{check.riskLevel}</td>
+                <td className="py-3"><StatusBadge value={check.decision} /></td>
+                <td><RiskLevel level={check.riskLevel} /></td>
                 <td className="font-mono text-xs">{check.actionCategory}</td>
                 <td>{check.domain ?? "-"}</td>
                 <td>{check.userConsentProvided ? "yes" : "no"}</td>
@@ -60,37 +78,7 @@ export default async function LegalBoundaryPage({ searchParams }: { searchParams
           </tbody>
         </table>
       </section>
-
-      <section className="card p-5">
-        <h2 className="text-lg font-semibold">Copy-paste integration</h2>
-        <pre className="mt-4 overflow-x-auto rounded-lg bg-slate-950 p-4 text-xs text-slate-300">{`import { createCybersecurityGuardClient } from "@cybersecurityguard/guard";
-
-const guard = createCybersecurityGuardClient({ apiKey: process.env.CYBERSECURITYGUARD_API_KEY! });
-
-const verdict = await guard.checkLegalBoundary({
-  agentName: "openclaw",
-  websiteUrl: "https://example.com/checkout",
-  domain: "example.com",
-  action: "submit_order",
-  actionCategory: "PURCHASE",
-  userConsentProvided: false,
-  metadata: { loggedIn: true, paymentInvolved: true }
-});
-
-if (verdict.decision === "TAKEOVER_REQUIRED") return handOffToHuman(verdict.requiredUserMessage);
-if (verdict.decision === "BLOCK") throw new Error(verdict.reason);`}</pre>
-      </section>
     </div>
-  );
-}
-
-function Metric({ label, value, tone }: { label: string; value: number; tone: "green" | "yellow" | "red" | "gray" }) {
-  const tones = { green: "text-emerald-300", yellow: "text-yellow-300", red: "text-red-300", gray: "text-slate-300" };
-  return (
-    <section className="card p-5">
-      <p className="text-sm text-slate-400">{label}</p>
-      <p className={`mt-2 text-2xl font-bold ${tones[tone]}`}>{value}</p>
-    </section>
   );
 }
 

@@ -321,6 +321,44 @@ enum SemanticEgressDecision {
   REVIEW
 }
 
+enum ComplianceEvidenceType {
+  POLICY
+  GUARD_DECISION
+  REDACTION
+  APPROVAL
+  INCIDENT
+  RAG_SCAN
+  AGENT_PASSPORT
+  TOOL_CHAIN
+  CANARY
+  RED_TEAM
+  DATA_FLOW
+  COST_CONTROL
+  CUSTOM
+}
+
+enum ComplianceEvidenceStatus {
+  ACTIVE
+  PASS
+  FAIL
+  WARNING
+  RESOLVED
+}
+
+enum ComplianceEvidenceReportType {
+  SECURITY_POSTURE
+  INCIDENT_SUMMARY
+  CUSTOMER_TRUST
+  AUDIT_EXPORT
+  AI_RISK_REVIEW
+}
+
+enum ComplianceEvidenceReportStatus {
+  DRAFT
+  GENERATED
+  EXPORTED
+}
+
 model User {
   id                      String                   @id @default(cuid())
   email                   String                   @unique
@@ -2439,6 +2477,42 @@ model SemanticEgressCheck {
   @@index([projectId, riskLevel, createdAt])
 }
 
+model ComplianceEvidenceItem {
+  id            String                    @id @default(cuid())
+  projectId     String
+  evidenceType  ComplianceEvidenceType
+  title         String
+  summary       String                    @db.Text
+  riskLevel     String?
+  controlName   String
+  status        ComplianceEvidenceStatus  @default(ACTIVE)
+  evidenceJson  Json
+  contentHash   String?
+  createdAt     DateTime                  @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([projectId, evidenceType, createdAt])
+  @@index([projectId, status, createdAt])
+  @@index([projectId, controlName])
+}
+
+model ComplianceEvidenceReport {
+  id              String                          @id @default(cuid())
+  projectId       String
+  reportName      String
+  reportType      ComplianceEvidenceReportType
+  status          ComplianceEvidenceReportStatus  @default(DRAFT)
+  summary         String                          @db.Text
+  evidenceIdsJson Json
+  reportJson      Json
+  createdAt       DateTime                        @default(now())
+  updatedAt       DateTime                        @updatedAt
+
+  @@index([projectId, createdAt])
+  @@index([projectId, reportType, createdAt])
+  @@index([projectId, status, createdAt])
+}
+
 model McpToolScan {
   id                       String   @id @default(cuid())
   projectId                String
@@ -2497,6 +2571,24 @@ model CanaryToken {
 
   @@index([projectId, active])
   @@index([projectId, scope])
+}
+
+model CanaryLeakEvent {
+  id              String   @id @default(cuid())
+  projectId       String
+  canaryTokenId   String?
+  sessionId       String?
+  location        String
+  decision        String
+  riskLevel       String
+  reason          String
+  contentRedacted String   @db.Text
+  createdAt       DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([projectId, riskLevel, createdAt])
+  @@index([canaryTokenId, createdAt])
+  @@index([sessionId, createdAt])
 }
 
 model AgentReplay {

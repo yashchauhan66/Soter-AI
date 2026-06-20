@@ -5,8 +5,8 @@ Demonstrates both:
   * guard.protect_rag        — full retrieve + ground + guard flow
 
 Run:
-    export CYBERRAKSHAK_API_KEY=ck_...
-    export CYBERRAKSHAK_BASE_URL=http://localhost:3000
+    export SOTER_API_KEY=ck_...
+    export SOTER_BASE_URL=http://localhost:3000
     python langchain_rag.py
 
 This example uses tiny fake stand-ins for the retriever/chain so it runs with
@@ -15,8 +15,8 @@ no extra dependencies. Swap them for your real LangChain objects.
 
 from __future__ import annotations
 
-from cyberrakshak_guard import CyberRakshakGuard, RagSource
-from cyberrakshak_guard.langchain import protect_langchain_chain
+from soter import Soter, RagSource
+from soter.langchain import protect_langchain_chain
 
 
 class FakeRunnable:
@@ -34,7 +34,7 @@ def retrieve(safe_query):
     ]
 
 
-def chain_demo(guard: CyberRakshakGuard) -> None:
+def chain_demo(guard: Soter) -> None:
     print("\n--- protect_langchain_chain ---")
     safe_chain = protect_langchain_chain(FakeRunnable(), guard)
     for label, msg in {
@@ -45,7 +45,7 @@ def chain_demo(guard: CyberRakshakGuard) -> None:
         print(f"[{label}] blocked={result['blocked']} llm_called={result['llm_called']} -> {result['safe_response']}")
 
 
-def rag_demo(guard: CyberRakshakGuard) -> None:
+def rag_demo(guard: Soter) -> None:
     print("\n--- guard.protect_rag ---")
     for label, query in {
         "safe": "How do I reset my password?",
@@ -63,7 +63,7 @@ def rag_demo(guard: CyberRakshakGuard) -> None:
 
 
 def main() -> None:
-    guard = CyberRakshakGuard()
+    guard = Soter()
     chain_demo(guard)
     rag_demo(guard)
 

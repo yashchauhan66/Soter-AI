@@ -13,7 +13,7 @@ export default async function CostFirewallPage({
   searchParams: Promise<{ project?: string }>;
 }) {
   const params = await searchParams;
-  const [project, projects] = await Promise.all([
+  const [project, _projects] = await Promise.all([
     getCurrentProjectById(params.project),
     getCurrentUserProjects(),
   ]);

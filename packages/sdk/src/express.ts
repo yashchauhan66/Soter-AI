@@ -8,6 +8,7 @@ import type { ClientOptions, GuardResult, MetadataValue } from "./types";
 export interface ExpressRequestLike {
   body?: unknown;
   cyberrakshak?: { inputResult?: GuardResult; outputResult?: GuardResult };
+  soter?: { inputResult?: GuardResult; outputResult?: GuardResult };
   [key: string]: unknown;
 }
 
@@ -81,6 +82,7 @@ export function cyberRakshakInputMiddleware(options: InputMiddlewareOptions) {
         metadata: asMetadata((req.body as Record<string, unknown> | undefined)?.metadata),
       });
       req.cyberrakshak = { ...(req.cyberrakshak ?? {}), inputResult: result };
+      req.soter = { ...(req.soter ?? {}), inputResult: result };
       if (client.shouldBlock(result)) {
         res.status(200).json({ blocked: true, reply: result.safeText ?? blockedResponse });
         return;
@@ -95,6 +97,9 @@ export function cyberRakshakInputMiddleware(options: InputMiddlewareOptions) {
     }
   };
 }
+
+/** Soter-branded alias for new integrations. */
+export const soterInputMiddleware = cyberRakshakInputMiddleware;
 
 /**
  * Express middleware for the output side. Intended to wrap an AI response that
@@ -117,6 +122,7 @@ export function cyberRakshakOutputMiddleware(options: OutputMiddlewareOptions) {
     try {
       const result = await client.guardOutput({ aiResponse });
       req.cyberrakshak = { ...(req.cyberrakshak ?? {}), outputResult: result };
+      req.soter = { ...(req.soter ?? {}), outputResult: result };
       if (client.shouldBlock(result)) {
         res.status(200).json({ blocked: true, reply: result.safeText ?? blockedResponse });
         return;
@@ -130,3 +136,6 @@ export function cyberRakshakOutputMiddleware(options: OutputMiddlewareOptions) {
     }
   };
 }
+
+/** Soter-branded alias for new integrations. */
+export const soterOutputMiddleware = cyberRakshakOutputMiddleware;

@@ -1,46 +1,11 @@
 # WordPress Integration
 
-<<<<<<< HEAD
-Plugin path: `integrations/wordpress-plugin`.
+Soter protects your WordPress chatbot by guarding input and output server-side through the Soter API.
 
-Admin settings:
+## Install the Plugin
 
-- CyberRakshak Base URL
-- API key
-- Project ID
-- Enable input guard
-- Enable output guard
-- Enable document/RAG scan where supported
-- Test connection
-
-The API key is stored in WordPress options and used only by server-side PHP via `wp_remote_post`. It is never printed into frontend JavaScript.
-
-Shortcode:
-
-```text
-[cyberrakshak_chatbot_guard]
-```
-
-PHP helpers:
-
-```php
-$input = cyberrakshak_guard_input($message);
-$output = cyberrakshak_guard_output($ai_response);
-```
-
-For popular chatbot plugins, call `cyberrakshak_guard_input()` before sending the user message to the chatbot provider and `cyberrakshak_guard_output()` before rendering the provider response.
-=======
-The CyberRakshak Guard WordPress plugin guards chatbot **input** and **output**
-server-side through the CyberRakshak Guard API. It is OWASP LLM Top 10 aligned:
-**detect, block, redact, monitor, and report**. It does not guarantee complete
-protection.
-
-## Install the plugin
-
-1. Copy `integrations/wordpress-plugin/cyberrakshak-guard` into
-   `wp-content/plugins/`, or upload the packaged zip via
-   **Plugins → Add New → Upload Plugin**.
-2. Activate **CyberRakshak Guard**.
+1. Copy `integrations/wordpress-plugin/cyberrakshak-guard` into `wp-content/plugins/`, or upload the packaged zip via **Plugins → Add New → Upload Plugin**.
+2. Activate **CyberRakshak Guard** (the plugin slug remains `cyberrakshak-guard` for compatibility).
 
 Package a zip from the repo root:
 
@@ -48,39 +13,31 @@ Package a zip from the repo root:
 npm run package:wordpress   # produces dist/cyberrakshak-guard.zip
 ```
 
-## Configure settings
+## Configure Settings
 
-**Settings → CyberRakshak Guard**:
+**Settings → CyberRakshak Guard** (plugin name, backward compatible):
 
 | Setting | Notes |
-| --- | --- |
-| API Base URL | `https://api.cyberrakshak.dev` or your self-hosted URL (https only). |
-| API Key | `ck_live_…`. Stored server-side, shown only masked, never sent to the browser. |
+|---------|-------|
+| API Base URL | `https://your-soter-host.example` or your self-hosted URL. |
+| API Key | `ck_live_…`. Stored server-side, shown only masked. |
 | Project ID | Optional; forwarded as metadata. |
 | Enable Input Guard | Guard incoming visitor messages. |
 | Enable Output Guard | Guard chatbot responses. |
-| Enable Security Badge | Show "Protected by CyberRakshak Guard". |
+| Enable Security Badge | Show "Protected by Soter" badge. |
 | Block message | Shown when a request is blocked. |
 | Public rate limit | Per-IP per-minute cap on the REST proxy routes. |
 
-To keep an existing key, leave the masked `************` value untouched on save.
+> **Environment variables:** The plugin also supports `SOTER_API_KEY`, `SOTER_BASE_URL`, and `SOTER_PROJECT_ID` for configuration.
 
-## Test connection
-
-Click **Test connection**. It performs an authenticated call and reports
-success, an auth failure, or a connectivity error. Nonce-protected and
-restricted to `manage_options`.
-
-## Shortcode usage
+## Shortcode Usage
 
 ```
-[cyberrakshak_chatbot_guard]    // emits local proxy config (REST URLs + nonce) + optional badge
+[cyberrakshak_chatbot_guard]    // local proxy config (REST URLs + nonce) + optional badge
 [cyberrakshak_security_badge]   // badge only
 ```
 
-## Chatbot plugin integration
-
-### Server-side (recommended)
+## Server-side PHP Integration
 
 ```php
 $in = cyberrakshak_guard_input( $user_message );
@@ -89,14 +46,13 @@ if ( $in['blocked'] ) {
 } else {
     $ai   = my_chatbot_generate( $in['safe_text'] );
     $out  = cyberrakshak_guard_output( $ai );
-    $reply = $out['safe_text'];
+    $reply = $out['safe_text'] ?? $ai;
 }
 ```
 
-### Front-end via the local proxy
+## Front-end via the Local Proxy
 
-Frontend JavaScript calls the **local** WordPress REST route, never the Guard
-API directly (so the key stays server-side):
+The frontend JavaScript calls the **local** WordPress REST route, never the Soter API directly (so the key stays server-side):
 
 ```js
 const res = await fetch("/wp-json/cyberrakshak/v1/guard-input", {
@@ -110,33 +66,28 @@ const { blocked, safe_text, decision } = await res.json();
 Routes:
 
 | Route | Body | Response |
-| --- | --- | --- |
+|-------|------|----------|
 | `POST /wp-json/cyberrakshak/v1/guard-input` | `{ "text": "…" }` | `{ blocked, decision, safe_text, risk_types }` |
 | `POST /wp-json/cyberrakshak/v1/guard-output` | `{ "text": "…" }` | same shape |
 
 Both require the `X-WP-Nonce` header (`wp_rest`) and are per-IP rate limited.
 
-## Security notes
+## Test Connection
 
-- API key stored server-side only; never printed in page source or sent to JS.
-- `manage_options` + nonce on all admin actions.
-- All inputs sanitized; all outputs escaped.
-- Outbound calls use `wp_remote_post`.
-- Per-IP transient rate limiting on public routes.
-- Raw sensitive prompts are not logged.
+Click **Test Connection** in settings. It performs an authenticated call and reports success, auth failure, or connectivity error.
+
+## Security Notes
+
+- API key stored server-side only; never printed in page source or sent to JS
+- `manage_options` + nonce on all admin actions
+- All inputs sanitized; all outputs escaped
+- Per-IP transient rate limiting on public routes
+- Raw sensitive prompts are not logged
+- This reduces risk; it does not guarantee complete protection
 
 ## Troubleshooting
 
-- **Test connection fails with auth error**: re-enter the API key (the masked
-  value is a placeholder, not the real key).
-- **Base URL rejected on save**: it must start with `https://`.
-- **429 from the proxy**: lower traffic or raise the per-IP rate limit setting.
-- **Guard unreachable**: input guarding fails open (passes through) so the site
-  keeps working; consider withholding output on error for stricter posture.
-
-## Disclaimer
-
-This plugin reduces risk through pattern detection and policy enforcement. It
-does not guarantee complete protection or represent OWASP certification. False
-positives and false negatives are possible.
->>>>>>> main
+- **Test connection fails with auth error** — re-enter the API key (the masked value is a placeholder)
+- **Base URL rejected on save** — it must start with `https://`
+- **429 from the proxy** — lower traffic or raise the per-IP rate limit setting
+- **Guard unreachable** — input guarding fails open (passes through) so the site keeps working

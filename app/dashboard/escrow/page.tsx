@@ -3,6 +3,8 @@ import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { resolveDashboardEscrow } from "./actions";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
+import { MetricCard, StatusBadge, PayloadViewer, RiskLevel } from "@/components/dashboard/MetricCard";
 
 export const dynamic = "force-dynamic";
 
@@ -33,21 +35,7 @@ type AuditRow = {
   createdAt: Date;
 };
 
-const STATUS_TONE: Record<string, string> = {
-  PENDING: "bg-yellow-400/10 text-yellow-300",
-  APPROVED: "bg-emerald-400/10 text-emerald-300",
-  DENIED: "bg-red-400/10 text-red-300",
-  EXPIRED: "bg-slate-500/10 text-slate-300",
-  EXECUTED: "bg-cyan/10 text-cyan",
-  CANCELLED: "bg-slate-500/10 text-slate-300",
-};
 
-const RISK_TONE: Record<string, string> = {
-  LOW: "text-emerald-300",
-  MEDIUM: "text-amber-300",
-  HIGH: "text-orange-300",
-  CRITICAL: "text-red-300",
-};
 
 export default async function EscrowPage({ searchParams }: { searchParams: Promise<{ project?: string }> }) {
   const params = await searchParams;
@@ -79,20 +67,26 @@ export default async function EscrowPage({ searchParams }: { searchParams: Promi
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Agent security</p>
-          <h1 className="mt-2 text-3xl font-bold">Transaction escrow</h1>
-          <p className="mt-3 max-w-3xl text-slate-400">Hold risky or irreversible agent actions for review before execution.</p>
-        </div>
-        <ProjectSwitcher projects={projects} selectedId={project.id} />
-      </div>
+      <FeatureGuide
+        eyebrow="Agent security"
+        title="Transaction escrow"
+        description="Hold risky or irreversible agent actions for review before execution."
+        useCase="Escrow protects your users and your infrastructure by pausing every high-risk agent action until a human approves, edits, or denies it. Without escrow, a single compromised agent could execute destructive operations like deleting databases, transferring funds, or modifying production configuration — all before anyone can intervene."
+        howItWorks={[
+          { heading: "Agent requests action", body: "When an agent attempts a risky action (e.g., DELETE API call, fund transfer), the action is intercepted and held in escrow rather than executed immediately." },
+          { heading: "Human reviews payload", body: "The dashboard approval inbox shows the pending action with its original redacted payload, safe payload, risk level, and target. You can inspect exactly what would have happened." },
+          { heading: "Decide, approve, or deny", body: "Choose to approve the original action, edit and approve a modified version, or deny it entirely. Every decision is logged in the audit trail." },
+          { heading: "Audit trail preserved", body: "All escrow decisions — approvals, denials, edits, and cancellations — are permanently recorded with actor type, reason, and timestamp for compliance and post-incident review." },
+        ]}
+        callout="Escrow does not guarantee protection against every malicious action. Combine with least-privilege design, intent guard, and tool-chain detection for defense in depth."
+      />
+      <ProjectSwitcher projects={projects} selectedId={project.id} />
 
       <div className="grid gap-4 sm:grid-cols-4">
-        <Metric label="Transactions" value={transactions.length} tone="gray" />
-        <Metric label="Pending" value={pending.length} tone="yellow" />
-        <Metric label="Executed" value={executed} tone="cyan" />
-        <Metric label="Denied/expired" value={blocked} tone="red" />
+        <MetricCard label="Transactions" value={transactions.length} tone="gray" />
+        <MetricCard label="Pending" value={pending.length} tone="yellow" />
+        <MetricCard label="Executed" value={executed} tone="cyan" />
+        <MetricCard label="Denied/expired" value={blocked} tone="red" />
       </div>
 
       <section className="card p-5">
@@ -109,11 +103,11 @@ export default async function EscrowPage({ searchParams }: { searchParams: Promi
                   <p className="mt-1 text-slate-400">{transaction.transactionType} to {transaction.target ?? "unknown target"}</p>
                   <p className="mt-1 text-xs text-slate-500">Session {transaction.sessionId} · expires {transaction.expiresAt.toLocaleString()}</p>
                 </div>
-                <span className={`text-xs font-bold ${RISK_TONE[transaction.riskLevel] ?? "text-slate-400"}`}>{transaction.riskLevel}</span>
+                <RiskLevel level={transaction.riskLevel} />
               </div>
               <div className="mt-3 grid gap-3 lg:grid-cols-2">
-                <Payload title="Original redacted payload" value={transaction.originalPayloadRedacted} />
-                <Payload title="Safe payload" value={transaction.safePayload ?? transaction.originalPayloadRedacted} />
+                <PayloadViewer title="Original redacted payload" value={transaction.originalPayloadRedacted} />
+                <PayloadViewer title="Safe payload" value={transaction.safePayload ?? transaction.originalPayloadRedacted} />
               </div>
               <form action={resolveDashboardEscrow} className="mt-3 grid gap-2">
                 <input type="hidden" name="projectId" value={project.id} />
@@ -156,8 +150,8 @@ export default async function EscrowPage({ searchParams }: { searchParams: Promi
           <tbody className="divide-y divide-slate-800">
             {transactions.map((transaction) => (
               <tr key={transaction.id}>
-                <td className="py-3"><Badge value={transaction.status} /></td>
-                <td className={`font-semibold ${RISK_TONE[transaction.riskLevel] ?? "text-slate-400"}`}>{transaction.riskLevel}</td>
+                <td className="py-3"><StatusBadge value={transaction.status} /></td>
+                <td className="font-semibold"><RiskLevel level={transaction.riskLevel} /></td>
                 <td>{transaction.transactionType}</td>
                 <td className="font-mono text-xs text-slate-400">{transaction.tool}</td>
                 <td>{transaction.action}</td>
@@ -193,28 +187,7 @@ export default async function EscrowPage({ searchParams }: { searchParams: Promi
   );
 }
 
-function Metric({ label, value, tone }: { label: string; value: number; tone: "yellow" | "red" | "gray" | "cyan" }) {
-  const tones = { yellow: "text-yellow-300", red: "text-red-300", gray: "text-slate-300", cyan: "text-cyan" };
-  return (
-    <section className="card p-5">
-      <p className="text-sm text-slate-400">{label}</p>
-      <p className={`mt-2 text-2xl font-bold ${tones[tone]}`}>{value}</p>
-    </section>
-  );
-}
 
-function Badge({ value }: { value: string }) {
-  return <span className={`rounded px-2 py-1 text-xs font-medium ${STATUS_TONE[value] ?? "bg-slate-700 text-slate-300"}`}>{value}</span>;
-}
-
-function Payload({ title, value }: { title: string; value: string | null | undefined }) {
-  return (
-    <div>
-      <p className="text-xs font-semibold uppercase text-slate-500">{title}</p>
-      <pre className="mt-1 max-h-36 overflow-auto rounded bg-slate-950/70 p-2 text-xs text-slate-300">{value ?? "No payload supplied."}</pre>
-    </div>
-  );
-}
 
 async function safeRows<T>(strings: TemplateStringsArray, ...values: unknown[]) {
   try {

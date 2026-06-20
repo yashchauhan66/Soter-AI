@@ -1,4 +1,4 @@
-"""FastAPI chatbot example guarded by cyberrakshak-guard.
+"""FastAPI chatbot example guarded by Soter.
 
 Run:
     pip install fastapi uvicorn cyberrakshak-guard
@@ -12,14 +12,14 @@ import os
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-from cyberrakshak_guard import CyberRakshakClient
+from soter import Soter
 
-app = FastAPI(title="CyberRakshak guarded chatbot")
+app = FastAPI(title="Soter guarded chatbot")
 
-guard = CyberRakshakClient(
-    api_key=os.environ["CYBERRAKSHAK_API_KEY"],
-    base_url=os.environ.get("CYBERRAKSHAK_BASE_URL", "https://api.cyberrakshak.dev"),
-    project_id=os.environ.get("CYBERRAKSHAK_PROJECT_ID"),
+guard = Soter(
+    api_key=os.environ.get("SOTER_API_KEY") or os.environ.get("CYBERRAKSHAK_API_KEY"),
+    base_url=os.environ.get("SOTER_BASE_URL") or os.environ.get("CYBERRAKSHAK_BASE_URL"),
+    project_id=os.environ.get("SOTER_PROJECT_ID") or os.environ.get("CYBERRAKSHAK_PROJECT_ID"),
     timeout=5,
 )
 
@@ -35,6 +35,9 @@ def call_llm(prompt: str) -> str:
 
 @app.post("/chat")
 def chat(req: ChatRequest):
-    # guard_conversation runs input guard -> LLM -> output guard.
-    result = guard.guard_conversation(req.message, call_llm)
-    return {"reply": result["reply"], "blocked": result["blocked"]}
+    # protect_chat runs input guard -> LLM -> output guard.
+    result = guard.protect_chat(
+        message=req.message,
+        call_llm=call_llm,
+    )
+    return {"reply": result.safe_response, "blocked": result.blocked}

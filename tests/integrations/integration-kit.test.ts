@@ -214,7 +214,7 @@ test("REST docs and examples use x-api-key and server-side SDK construction", ()
   const next = readFileSync("examples/nextjs-chatbot/app/api/chat/route.ts", "utf8");
   const express = readFileSync("examples/express-chatbot/server.ts", "utf8");
   assert.match(rest, /x-api-key/);
-  assert.match(next, /process\.env\.CYBERRAKSHAK_API_KEY/);
+  assert.match(next, /process\.env\.SOTER_API_KEY/);
   assert.match(express, /createExpressMiddleware/);
 });
 

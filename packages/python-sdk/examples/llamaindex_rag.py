@@ -1,8 +1,8 @@
 """LlamaIndex RAG protected by CyberRakshak Guard.
 
 Run:
-    export CYBERRAKSHAK_API_KEY=ck_...
-    export CYBERRAKSHAK_BASE_URL=http://localhost:3000
+    export SOTER_API_KEY=ck_...
+    export SOTER_BASE_URL=http://localhost:3000
     python llamaindex_rag.py
 
 Uses a tiny fake query engine so it runs with no extra dependencies. Swap it
@@ -11,8 +11,8 @@ for your real LlamaIndex query engine.
 
 from __future__ import annotations
 
-from cyberrakshak_guard import CyberRakshakGuard
-from cyberrakshak_guard.llamaindex import protect_query_engine
+from soter import Soter
+from soter.llamaindex import protect_query_engine
 
 
 class FakeNode:
@@ -41,7 +41,7 @@ class FakeQueryEngine:
 
 
 def main() -> None:
-    guard = CyberRakshakGuard()
+    guard = Soter()
     safe_engine = protect_query_engine(FakeQueryEngine(), guard, check_sources=True)
 
     for label, query in {

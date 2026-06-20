@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.soterOutputMiddleware = exports.soterInputMiddleware = void 0;
 exports.cyberRakshakInputMiddleware = cyberRakshakInputMiddleware;
 exports.cyberRakshakOutputMiddleware = cyberRakshakOutputMiddleware;
 const client_1 = require("./client");
@@ -45,6 +46,7 @@ function cyberRakshakInputMiddleware(options) {
                 metadata: asMetadata(req.body?.metadata),
             });
             req.cyberrakshak = { ...(req.cyberrakshak ?? {}), inputResult: result };
+            req.soter = { ...(req.soter ?? {}), inputResult: result };
             if (client.shouldBlock(result)) {
                 res.status(200).json({ blocked: true, reply: result.safeText ?? blockedResponse });
                 return;
@@ -60,6 +62,8 @@ function cyberRakshakInputMiddleware(options) {
         }
     };
 }
+/** Soter-branded alias for new integrations. */
+exports.soterInputMiddleware = cyberRakshakInputMiddleware;
 /**
  * Express middleware for the output side. Intended to wrap an AI response that
  * was placed on `res.locals[sourceField]` (or the request body) before this
@@ -80,6 +84,7 @@ function cyberRakshakOutputMiddleware(options) {
         try {
             const result = await client.guardOutput({ aiResponse });
             req.cyberrakshak = { ...(req.cyberrakshak ?? {}), outputResult: result };
+            req.soter = { ...(req.soter ?? {}), outputResult: result };
             if (client.shouldBlock(result)) {
                 res.status(200).json({ blocked: true, reply: result.safeText ?? blockedResponse });
                 return;
@@ -94,3 +99,5 @@ function cyberRakshakOutputMiddleware(options) {
         }
     };
 }
+/** Soter-branded alias for new integrations. */
+exports.soterOutputMiddleware = cyberRakshakOutputMiddleware;

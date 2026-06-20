@@ -1,8 +1,8 @@
-"""FastAPI chatbot protected by CyberRakshak Guard.
+"""FastAPI chatbot protected by Soter.
 
 Run:
-    export CYBERRAKSHAK_API_KEY=ck_...
-    export CYBERRAKSHAK_BASE_URL=http://localhost:3000
+    export SOTER_API_KEY=ck_...
+    export SOTER_BASE_URL=http://localhost:3000
     uvicorn fastapi_chatbot:app --reload
 
 Then:
@@ -17,10 +17,10 @@ from typing import Optional
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-from cyberrakshak_guard import CyberRakshakGuard
+from soter import Soter
 
 app = FastAPI(title="Protected Chatbot")
-guard = CyberRakshakGuard()  # reads CYBERRAKSHAK_API_KEY / _BASE_URL
+guard = Soter()  # reads SOTER_API_KEY / SOTER_BASE_URL
 
 
 class ChatRequest(BaseModel):

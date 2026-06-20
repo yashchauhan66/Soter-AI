@@ -1,10 +1,10 @@
 import os
 
-from cyberrakshak_guard import CyberRakshakGuard, RagSource
+from cyberrakshak_guard import Soter, RagSource
 
-guard = CyberRakshakGuard(
-    api_key=os.environ["CYBERRAKSHAK_API_KEY"],
-    base_url=os.environ.get("CYBERRAKSHAK_BASE_URL", "https://api.cyberrakshak.com"),
+guard = Soter(
+    api_key=os.environ.get("SOTER_API_KEY") or os.environ.get("CYBERRAKSHAK_API_KEY"),
+    base_url=os.environ.get("SOTER_BASE_URL") or os.environ.get("CYBERRAKSHAK_BASE_URL"),
 )
 
 

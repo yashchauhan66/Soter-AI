@@ -92,6 +92,7 @@ export function normalizeDecision(action: GuardAction): GuardDecision {
   }
 }
 
+/** @deprecated Use the Soter class for new integrations. */
 export interface CyberRakshakGuard {
   input(message: string, options?: Omit<GuardInputRequest, "message" | "text">): Promise<GuardResult>;
   output(aiResponse: string, options?: Omit<GuardOutputRequest, "aiResponse" | "text">): Promise<GuardResult>;
@@ -160,10 +161,12 @@ export function createAgentFirewallClient(options: ClientOptions): CyberRakshakG
   return new GuardClient(options);
 }
 
+/** @deprecated Use new Soter(options) for new integrations. */
 export function createCybersecurityGuardClient(options: ClientOptions): CyberRakshakGuard {
   return new GuardClient(options);
 }
 
+/** @deprecated Use Soter for new integrations. GuardClient remains supported. */
 export class GuardClient implements CyberRakshakGuard {
   private readonly apiKey: string;
   private readonly baseUrl: string;
@@ -179,7 +182,7 @@ export class GuardClient implements CyberRakshakGuard {
     if (!options?.apiKey) throw new CyberRakshakError("apiKey is required.", { code: "config_error" });
     if (isBrowserLike()) {
       console.warn(
-        "[cybersecurityguard] GuardClient appears to be running in a browser. Never embed an API key in client-side code.",
+        "[soter] GuardClient appears to be running in a browser. Never embed an API key in client-side code.",
       );
     }
     this.apiKey = options.apiKey;
@@ -411,7 +414,7 @@ export class GuardClient implements CyberRakshakGuard {
       } catch (caught) {
         if (next) return next(caught);
         const status = (caught as { status?: number }).status ?? 500;
-        return res.status(status).json({ error: true, message: caught instanceof Error ? caught.message : "cybersecurityguard request failed." });
+        return res.status(status).json({ error: true, message: caught instanceof Error ? caught.message : "Soter request failed." });
       }
     };
   }
@@ -695,7 +698,7 @@ export class GuardClient implements CyberRakshakGuard {
     const timer = setTimeout(() => controller.abort(), this.timeoutMs);
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
-      "User-Agent": "cybersecurityguard-sdk/0.1",
+      "User-Agent": "soter-sdk/0.1",
       ...this.extraHeaders,
     };
     if (requireApiKey) headers["x-api-key"] = this.apiKey;
@@ -715,7 +718,7 @@ export class GuardClient implements CyberRakshakGuard {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), this.timeoutMs);
     const headers: Record<string, string> = {
-      "User-Agent": "cybersecurityguard-sdk/0.1",
+      "User-Agent": "soter-sdk/0.1",
       ...this.extraHeaders,
     };
     if (requireApiKey) headers["x-api-key"] = this.apiKey;
@@ -784,11 +787,15 @@ export class GuardClient implements CyberRakshakGuard {
 
   private log(message: string): void {
     if (!this.debug) return;
-    console.debug(`[cybersecurityguard] ${message}`);
+    console.debug(`[soter] ${message}`);
   }
 }
 
+/** @deprecated Use Soter for new integrations. */
 export { GuardClient as CyberRakshakClient };
+
+/** Soter-branded client alias. */
+export { GuardClient as SoterClient };
 
 function asMetadata(value: unknown) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;

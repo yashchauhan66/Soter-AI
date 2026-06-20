@@ -292,7 +292,7 @@ export async function runShadowScan(input: ShadowScanInput): Promise<ShadowScanR
       ...(input.packageJson.dependencies as Record<string, string> || {}),
       ...(input.packageJson.devDependencies as Record<string, string> || {}),
     };
-    for (const [depName, version] of Object.entries(allDeps)) {
+    for (const [depName, _version] of Object.entries(allDeps)) {
       for (const provider of KNOWN_AI_PROVIDERS) {
         for (const sdkPattern of provider.sdkPatterns) {
           if (depName.includes(sdkPattern.pattern) || depName.startsWith(sdkPattern.pattern)) {

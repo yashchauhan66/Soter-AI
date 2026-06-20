@@ -1,7 +1,7 @@
-# CyberRakshak Guard — API Contract
+# Soter — API Contract
 
 This is the authoritative request/response contract the SDKs target. It reflects
-the **current** Guard API in this repository (`app/api/guard/*`). The SDKs adapt
+the **current** Soter API in this repository (`app/api/guard/*`). The SDKs adapt
 to these shapes; they do not invent new payloads.
 
 ## Authentication
@@ -124,11 +124,13 @@ Non-2xx responses return:
 
 | Status | Meaning | SDK error class |
 | --- | --- | --- |
-| 400 | Validation failed. | `CyberRakshakValidationError` |
-| 401 / 403 | Auth failed / project disabled. | `CyberRakshakAuthError` |
-| 429 | Rate or usage limit. `Retry-After` header set. | `CyberRakshakRateLimitError` |
-| 5xx | Server error (retriable). | `CyberRakshakError` |
-| network/timeout | No response. | `CyberRakshakNetworkError` |
+| 400 | Validation failed. | `SoterValidationError` |
+| 401 / 403 | Auth failed / project disabled. | `SoterAuthError` |
+| 429 | Rate or usage limit. `Retry-After` header set. | `SoterRateLimitError` |
+| 5xx | Server error (retriable). | `SoterError` |
+| network/timeout | No response. | `SoterNetworkError` |
+
+> Legacy `CyberRakshak*Error` class names remain exported for backward compatibility.
 
 Rate-limited responses also include `X-RateLimit-Limit` and
 `X-RateLimit-Remaining` headers.

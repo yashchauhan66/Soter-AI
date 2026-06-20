@@ -14,7 +14,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CybersecurityGuard = exports.CyberRakshakGuard = exports.normalizeDecision = exports.createClient = exports.createCybersecurityGuardClient = exports.createAgentFirewallClient = exports.GuardClient = exports.CyberRakshakClient = void 0;
+exports.CybersecurityGuard = exports.CyberRakshakGuard = exports.normalizeDecision = exports.createClient = exports.createCybersecurityGuardClient = exports.createAgentFirewallClient = exports.SoterClient = exports.GuardClient = exports.CyberRakshakClient = void 0;
 exports.startAgentSession = startAgentSession;
 exports.checkAgentAction = checkAgentAction;
 exports.checkToolUse = checkToolUse;
@@ -52,9 +52,17 @@ exports.createNextAgentHandler = createNextAgentHandler;
 __exportStar(require("./types"), exports);
 __exportStar(require("./errors"), exports);
 __exportStar(require("./agent-passport"), exports);
+__exportStar(require("./agent-intent"), exports);
+__exportStar(require("./tool-chain"), exports);
+__exportStar(require("./escrow"), exports);
+__exportStar(require("./dry-run"), exports);
+__exportStar(require("./semantic-egress"), exports);
+__exportStar(require("./evidence-vault"), exports);
+__exportStar(require("./soter"), exports);
 var client_1 = require("./client");
 Object.defineProperty(exports, "CyberRakshakClient", { enumerable: true, get: function () { return client_1.CyberRakshakClient; } });
 Object.defineProperty(exports, "GuardClient", { enumerable: true, get: function () { return client_1.GuardClient; } });
+Object.defineProperty(exports, "SoterClient", { enumerable: true, get: function () { return client_1.SoterClient; } });
 Object.defineProperty(exports, "createAgentFirewallClient", { enumerable: true, get: function () { return client_1.createAgentFirewallClient; } });
 Object.defineProperty(exports, "createCybersecurityGuardClient", { enumerable: true, get: function () { return client_1.createCybersecurityGuardClient; } });
 Object.defineProperty(exports, "createClient", { enumerable: true, get: function () { return client_1.createClient; } });
@@ -162,12 +170,14 @@ function checkLegalBoundary(options, input) {
 function createNextAgentHandler(options) {
     return (0, client_2.createAgentFirewallClient)(options).createNextAgentHandler();
 }
+/** @deprecated Use Soter for new integrations. */
 class CyberRakshakGuard extends client_2.GuardClient {
     constructor(options) {
         super(options);
     }
 }
 exports.CyberRakshakGuard = CyberRakshakGuard;
+/** @deprecated Use Soter for new integrations. */
 class CybersecurityGuard extends client_2.GuardClient {
     constructor(options) {
         super(options);

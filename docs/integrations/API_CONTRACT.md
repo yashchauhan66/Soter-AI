@@ -1,10 +1,12 @@
-# CyberRakshak Guard API Contract
+# Soter API Contract
 
 Base URL:
 
 ```text
-https://api.cyberrakshak.com
+https://api.cybersecurityguard.com
 ```
+
+> The default base URL is `https://api.cybersecurityguard.com`. This can be overridden via `SOTER_BASE_URL` environment variable or the `baseUrl` config option.
 
 Local development often uses:
 

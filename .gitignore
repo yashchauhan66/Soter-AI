@@ -3,6 +3,7 @@ node_modules
 .next-e2e
 .env
 .env.local
+.env.production
 *.log
 *.err
 coverage
@@ -10,8 +11,14 @@ playwright-report
 test-results
 .DS_Store
 *.tsbuildinfo
-playwright-report
-test-results
+*.py[cod]
+__pycache__/
+**/__pycache__/
+.pytest_cache/
+**/.pytest_cache/
+pytest-cache-files-*/
+**/pytest-cache-files-*/
+*.egg-info/
+**/*.egg-info/
 .venv-*
 NUL
-packages/cyberrakshak-python

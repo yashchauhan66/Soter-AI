@@ -1,19 +1,4 @@
 services:
-  postgres:
-    image: pgvector/pgvector:pg16
-    restart: unless-stopped
-    environment:
-      POSTGRES_DB: cyberrakshak
-      POSTGRES_USER: cyberrakshak
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U cyberrakshak"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-
   qdrant:
     image: qdrant/qdrant:v1.14.1
     restart: unless-stopped
@@ -38,11 +23,15 @@ services:
       retries: 10
 
   app:
-    build: .
+    build:
+      context: .
+      args:
+        NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:?set NEXTAUTH_SECRET}
+        AUTH_SECRET: ${AUTH_SECRET:?set AUTH_SECRET}
     restart: unless-stopped
     env_file: ${APP_ENV_FILE:-.env.production}
     environment:
-      DATABASE_URL: postgresql://cyberrakshak:${POSTGRES_PASSWORD}@postgres:5432/cyberrakshak?schema=public
+      DATABASE_URL: ${SUPABASE_DATABASE_URL:?set SUPABASE_DATABASE_URL}
       VECTOR_PROVIDER: ${VECTOR_PROVIDER:-qdrant}
       QDRANT_URL: http://qdrant:6333
       REDIS_URL: redis://redis:6379
@@ -50,7 +39,6 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      postgres: { condition: service_healthy }
       qdrant: { condition: service_healthy }
       redis: { condition: service_healthy }
     healthcheck:
@@ -67,11 +55,10 @@ services:
     command: ["npm", "run", "worker:webhooks"]
     env_file: ${APP_ENV_FILE:-.env.production}
     environment:
-      DATABASE_URL: postgresql://cyberrakshak:${POSTGRES_PASSWORD}@postgres:5432/cyberrakshak?schema=public
+      DATABASE_URL: ${SUPABASE_DATABASE_URL:?set SUPABASE_DATABASE_URL}
       REDIS_URL: redis://redis:6379
       NODE_ENV: production
     depends_on:
-      postgres: { condition: service_healthy }
       redis: { condition: service_healthy }
 
   background-worker:
@@ -82,13 +69,12 @@ services:
     command: ["npm", "run", "worker:background"]
     env_file: ${APP_ENV_FILE:-.env.production}
     environment:
-      DATABASE_URL: postgresql://cyberrakshak:${POSTGRES_PASSWORD}@postgres:5432/cyberrakshak?schema=public
+      DATABASE_URL: ${SUPABASE_DATABASE_URL:?set SUPABASE_DATABASE_URL}
       VECTOR_PROVIDER: ${VECTOR_PROVIDER:-qdrant}
       QDRANT_URL: http://qdrant:6333
       REDIS_URL: redis://redis:6379
       NODE_ENV: production
     depends_on:
-      postgres: { condition: service_healthy }
       qdrant: { condition: service_healthy }
       redis: { condition: service_healthy }
 
@@ -100,14 +86,12 @@ services:
     command: ["npm", "run", "worker:siem"]
     env_file: ${APP_ENV_FILE:-.env.production}
     environment:
-      DATABASE_URL: postgresql://cyberrakshak:${POSTGRES_PASSWORD}@postgres:5432/cyberrakshak?schema=public
+      DATABASE_URL: ${SUPABASE_DATABASE_URL:?set SUPABASE_DATABASE_URL}
       REDIS_URL: redis://redis:6379
       NODE_ENV: production
     depends_on:
-      postgres: { condition: service_healthy }
       redis: { condition: service_healthy }
 
 volumes:
-  postgres-data:
   qdrant-data:
   redis-data:

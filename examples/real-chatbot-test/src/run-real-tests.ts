@@ -1,5 +1,5 @@
 import { PrismaClient } from "../../../node_modules/@prisma/client";
-import { guardClient } from "./guard";
+import { soter } from "./guard";
 import { callMockLLM } from "./llm";
 import { safePrompts, promptInjections, piiAndSecrets, unsafeOutputs, TestCase } from "./test-prompts";
 import { saveResults, generateMarkdownReports } from "./report";
@@ -13,7 +13,7 @@ async function runTestCase(c: TestCase, plan: string): Promise<any> {
   let reply = "";
   
   try {
-    const result = await guardClient.secureChat({
+    const result = await soter.secureChat({
       message: c.message,
       userId: "test-user-1",
       sessionId: `session-${plan}-${c.name}`,

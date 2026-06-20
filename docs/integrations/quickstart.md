@@ -1,4 +1,4 @@
-# Protect Any Chatbot in 5 Minutes
+# Add Soter to a Chatbot in 5 Minutes
 
 ## 1. Create a Project
 
@@ -7,32 +7,39 @@ Open the dashboard, create a project, and generate a server-side API key.
 ## 2. Install the SDK
 
 ```bash
-npm install @cyberrakshak/guard
+npm install @soter/core
 ```
 
 ## 3. Add Environment Variables
 
 ```bash
-CYBERRAKSHAK_BASE_URL=https://api.cyberrakshak.com
-CYBERRAKSHAK_API_KEY=ck_test_...
+SOTER_BASE_URL=https://api.your-soter-host.example
+SOTER_API_KEY=ck_test_...
+SOTER_PROJECT_ID=
 ```
 
 ## 4. Wrap Your LLM Call
 
 ```ts
-import { CyberRakshakGuard } from "@cyberrakshak/guard";
+import { Soter } from "@soter/core";
 
-const guard = new CyberRakshakGuard({
-  apiKey: process.env.CYBERRAKSHAK_API_KEY!,
-  baseUrl: process.env.CYBERRAKSHAK_BASE_URL,
+const soter = new Soter({
+  apiKey: process.env.SOTER_API_KEY,
+  projectId: process.env.SOTER_PROJECT_ID,
+  baseUrl: process.env.SOTER_BASE_URL,
 });
 
-const result = await guard.protectChat({
-  message,
-  callLLM: async (safeMessage) => await myLLM(safeMessage),
+const result = await soter.protect({
+  input: message,
+  context: { userId, sessionId },
 });
 
-return result.safeResponse;
+if (!result.allowed) {
+  return { blocked: true, reason: result.reason, riskLevel: result.riskLevel };
+}
+
+// Continue to the model only after Soter allows the input.
+return myLLM(message);
 ```
 
 ## 5. Test With an Attack Prompt

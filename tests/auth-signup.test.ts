@@ -13,6 +13,7 @@ import {
   isOneTimeTokenUsable,
   createEmailVerificationToken,
 } from "../lib/auth/tokens";
+import { isDatabaseUnavailableError } from "../lib/databaseErrors";
 
 // --- In-memory fakes for the EmailVerificationToken store -------------------
 // Mirrors the Prisma surface the token helpers and verify flow rely on, so the
@@ -198,6 +199,12 @@ test("Test 7: signup route delivers email only after the atomic transaction", ()
   assert.match(src, /createEmailVerificationToken\(user\.id, new Date\(\), tx\)/);
 });
 
+test("signup allows enough time for the complete serverless database transaction", () => {
+  const src = readFileSync("app/api/auth/signup/route.ts", "utf8");
+  assert.match(src, /SIGNUP_TRANSACTION_OPTIONS\s*=\s*\{\s*maxWait:\s*10_000,\s*timeout:\s*30_000\s*\}/);
+  assert.match(src, /}, SIGNUP_TRANSACTION_OPTIONS\);/);
+});
+
 test("Test 7: a post-commit email failure is caught, not rethrown into a 500", () => {
   const src = readFileSync("app/api/auth/signup/route.ts", "utf8");
   // The create path wraps delivery in try/catch and reports emailSent=false
@@ -224,5 +231,13 @@ test("no raw verification token is logged in the signup route", () => {
   // Error logs reference reason/name only, never the token or password.
   assert.doesNotMatch(src, /console\.(log|info|warn|error)\([^)]*\btoken\b/);
   assert.doesNotMatch(src, /console\.(log|info|warn|error)\([^)]*password/);
+});
+
+test("database connectivity failures are classified as temporary outages", () => {
+  assert.equal(isDatabaseUnavailableError({ name: "PrismaClientInitializationError" }), true);
+  assert.equal(isDatabaseUnavailableError({ code: "P1001" }), true);
+  assert.equal(isDatabaseUnavailableError({ code: "P2024" }), true);
+  assert.equal(isDatabaseUnavailableError({ code: "P2002" }), false);
+  assert.equal(isDatabaseUnavailableError(new Error("ordinary application error")), false);
 });
 

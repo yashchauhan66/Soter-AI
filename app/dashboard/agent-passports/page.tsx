@@ -85,9 +85,7 @@ export default async function AgentPassportsPage({ searchParams }: { searchParam
     `,
   ]);
 
-  const now = Date.now();
-  const activePassports = passports.filter((passport) => passport.status === "ACTIVE" && passport.expiresAt.getTime() > now);
-  const highRisk = passports.filter((passport) => ["HIGH", "CRITICAL"].includes(passport.riskLevel)).length;
+  const { now, activePassports, highRisk } = computePassportStats(passports);
 
   return (
     <div className="space-y-6">
@@ -238,6 +236,13 @@ function formatList(value: unknown) {
   if (items.length === 0) return "-";
   if (items.length <= 3) return items.join(", ");
   return `${items.slice(0, 3).join(", ")} +${items.length - 3}`;
+}
+
+function computePassportStats(passports: PassportRow[]) {
+  const now = Date.now();
+  const activePassports = passports.filter((passport) => passport.status === "ACTIVE" && passport.expiresAt.getTime() > now);
+  const highRisk = passports.filter((passport) => ["HIGH", "CRITICAL"].includes(passport.riskLevel)).length;
+  return { now, activePassports, highRisk };
 }
 
 async function safeRows<T>(strings: TemplateStringsArray, ...values: unknown[]) {
