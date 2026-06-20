@@ -42,6 +42,7 @@ const publicRoutes = new Map<string, RegExp[]>([
   ["/api/scim/v2/ResourceTypes", [/schemas|ResourceType/]],
   ["/api/ops/contact", [/enforcePublicRateLimit|recordProductEvent|contact/i, /schema\.parse|z\.object/]],
   ["/api/ops/pilot", [/enforcePublicRateLimit/, /schema\.parse/]],
+  ["/api/docs/track", [/request\.json\(\)/, /recordProductEvent/]],
 ]);
 
 const authPatterns = [

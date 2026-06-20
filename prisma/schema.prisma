@@ -3280,3 +3280,23 @@ model LegalBoundaryCheck {
   @@index([projectId, decision])
   @@index([projectId, domain])
 }
+
+// ── SLM-as-Judge Evaluations ────────────────────────────────────────────────
+
+model SlmEvaluation {
+  id            String   @id
+  projectId     String
+  promptText    String   @db.Text
+  responseText  String   @db.Text
+  contextText   String?  @db.Text
+  scoresJson    Json     @default("[]")
+  overallScore  Int      @default(0)
+  overallPassed Boolean  @default(false)
+  modelUsed     String   @default("gpt-4o-mini")
+  latencyMs     Int      @default(0)
+  createdAt     DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([projectId, overallPassed, createdAt])
+  @@index([projectId, modelUsed, createdAt])
+}
