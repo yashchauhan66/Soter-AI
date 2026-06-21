@@ -155,7 +155,10 @@ jobs:
 
             REPO_DIR="/home/${{ secrets.EC2_USER }}/soter-guard"
             COMMIT_SHA="${{ github.sha }}"
-            DOCKER_USERNAME="${{ secrets.DOCKER_USERNAME }}"
+            # Strip stray whitespace/newlines from the secret before it
+            # reaches the tag — a trailing newline yields an invalid tag
+            # reference (username\n\n/soter-guard:<sha>) that breaks build.
+            DOCKER_USERNAME="$(printf '%s' "${{ secrets.DOCKER_USERNAME }}" | tr -d '[:space:]')"
             DOCKER_TAG="${DOCKER_USERNAME}/soter-guard"
 
             if [ -d "$REPO_DIR/.git" ]; then
@@ -175,7 +178,7 @@ jobs:
 
             test -f "$REPO_DIR/.env.production"
 
-            echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+            echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
 
             docker build \
               -t "${DOCKER_TAG}:${COMMIT_SHA}" \
