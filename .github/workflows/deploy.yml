@@ -77,6 +77,18 @@ jobs:
           printf '%s\n' "$ENV_PRODUCTION" > /tmp/soter-env-production
           scp /tmp/soter-env-production ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/tmp/soter-env-production
 
+      - name: Upload deploy secrets to EC2
+        env:
+          DOCKER_USERNAME_RAW: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD_RAW: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          # Write secrets via env vars (which are safe from shell word-splitting)
+          # and strip any stray newlines before uploading.
+          clean_user="$(printf '%s' "$DOCKER_USERNAME_RAW" | tr -d '[:space:]')"
+          clean_pass="$(printf '%s' "$DOCKER_PASSWORD_RAW" | tr -d '[:space:]')"
+          printf 'DOCKER_USERNAME=%s\nDOCKER_PASSWORD=%s\n' "$clean_user" "$clean_pass" > /tmp/soter-deploy-creds
+          scp /tmp/soter-deploy-creds ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/tmp/soter-deploy-creds
+
       - name: Build & Deploy via SSH
         run: |
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} bash -s << 'DEPLOY_SCRIPT'
@@ -84,9 +96,12 @@ jobs:
 
             REPO_DIR="/home/${{ secrets.EC2_USER }}/soter-guard"
             COMMIT_SHA="${{ github.sha }}"
-            # Strip any stray whitespace/newlines from the secret (a trailing
-            # newline in DOCKER_USERNAME produces an invalid Docker tag reference)
-            DOCKER_USERNAME="$(printf '%s' "${{ secrets.DOCKER_USERNAME }}" | tr -d '[:space:]')"
+
+            # Read deploy secrets from file (already whitespace-stripped on the runner)
+            if [ -f /tmp/soter-deploy-creds ]; then
+              . /tmp/soter-deploy-creds
+              rm -f /tmp/soter-deploy-creds
+            fi
             DOCKER_TAG="${DOCKER_USERNAME}/soter-guard"
 
             echo "═══════════════════════════════════════════════════"
@@ -137,7 +152,7 @@ jobs:
             # ── Step 3: Log in to Docker Hub ─────────────────────────────
             echo ""
             echo "[3/5] Logging in to Docker Hub..."
-            echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+            echo "$DOCKER_PASSWORD" | docker login -u "${DOCKER_USERNAME}" --password-stdin
             echo "  ✅ Docker Hub logged in"
 
             # ── Step 4: Build Docker image ───────────────────────────────
