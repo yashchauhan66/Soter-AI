@@ -101,6 +101,56 @@ function formatDate(iso: string): string {
   }
 }
 
+function jsonLd(data: BenchmarkData) {
+  const overall = data.overall;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "Soter Guard",
+        "applicationCategory": "SecurityApplication",
+        "operatingSystem": "Linux, macOS, Windows",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soter.dev/benchmarks" },
+        "description": "AI security guardrail platform protecting against prompt injection, jailbreaks, PII leakage, and unsafe outputs.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+        },
+        "url": "https://soter.dev/benchmarks",
+      },
+      {
+        "@type": "Dataset",
+        "name": "Soter Guard Adversarial Benchmark",
+        "description": `Adversarial benchmark results: ${overall.total_adversarial_detected}/${overall.total_adversarial} attack variants detected (F1=${overall.f1_score.toFixed(4)}). Zero false positives across 25 safe inputs.`,
+        "url": "https://soter.dev/benchmarks",
+        "datePublished": data.timestamp,
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soter.dev/benchmarks" },
+        "creator": {
+          "@type": "Organization",
+          "name": "Soter",
+        },
+        "variableMeasured": [
+          { "name": "F1 Score", "value": overall.f1_score.toFixed(4) },
+          { "name": "Precision", "value": overall.precision.toFixed(4) },
+          { "name": "Recall", "value": overall.recall.toFixed(4) },
+          { "name": "Specificity", "value": (overall.specificity * 100).toFixed(1) + "%" },
+          { "name": "False Positive Rate", "value": (overall.false_positive_rate * 100).toFixed(1) + "%" },
+          { "name": "p50 Latency", "value": data.latency.adversarial_p50_ms.toFixed(0) + "ms" },
+          { "name": "p95 Latency", "value": data.latency.adversarial_p95_ms.toFixed(0) + "ms" },
+          { "name": "p99 Latency", "value": data.latency.adversarial_p99_ms.toFixed(0) + "ms" },
+          ...data.categories.map((c) => ({
+            "name": c.name,
+            "value": `${c.detected}/${c.total} (${(c.accuracy * 100).toFixed(1)}%)`,
+          })),
+        ],
+        "measurementTechnique": "Garak-style adversarial probing against analyze endpoint",
+      },
+    ],
+  };
+}
+
 export default function BenchmarksPage() {
   const data = loadData();
 
@@ -123,6 +173,10 @@ export default function BenchmarksPage() {
 
   return (
     <main className="py-16 sm:py-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd(data)) }}
+      />
       <div className="container-page">
         {/* Header */}
         <div className="text-center">
