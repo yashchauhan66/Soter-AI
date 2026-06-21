@@ -246,10 +246,13 @@ export default function ComparisonPage() {
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link href="/benchmarks" className="button-primary gap-2">
-              <BarChart3 size={16} /> View benchmarks <ArrowRight size={16} />
+            <Link href="/signup" className="button-primary gap-2">
+              Get started free <ArrowRight size={16} />
             </Link>
-            <Link href="/playground" className="button-secondary gap-2">
+            <Link href="/benchmarks" className="button-secondary gap-2">
+              <BarChart3 size={16} /> View benchmarks
+            </Link>
+            <Link href="/playground" className="text-sm text-slate-400 hover:text-white">
               Try the playground
             </Link>
           </div>
@@ -343,6 +346,10 @@ export default function ComparisonPage() {
 
           <p className="mt-4 text-xs text-slate-500">
             ✅ = Supported &nbsp; ❌ = Not supported &nbsp; — = Not available
+            &nbsp;·&nbsp;
+            <Link href="/signup" className="text-cyan underline underline-offset-2 hover:text-cyan/80">
+              Start with the free tier →
+            </Link>
           </p>
         </section>
 
@@ -602,14 +609,20 @@ export default function ComparisonPage() {
             </p>
             <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
-                href="/playground"
+                href="/signup"
                 className="inline-flex items-center gap-2 rounded-xl bg-ink px-6 py-3 font-semibold text-white"
               >
-                Try the playground <ArrowRight size={18} />
+                Sign up free <ArrowRight size={18} />
+              </Link>
+              <Link
+                href="/playground"
+                className="inline-flex items-center gap-2 rounded-xl border border-ink/20 bg-ink/10 px-6 py-3 font-semibold text-ink"
+              >
+                Try the playground
               </Link>
               <Link
                 href="/docs"
-                className="inline-flex items-center gap-2 rounded-xl border border-ink/20 bg-ink/10 px-6 py-3 font-semibold text-ink"
+                className="inline-flex items-center gap-2 text-sm text-ink/60 hover:text-ink"
               >
                 Read docs
               </Link>
