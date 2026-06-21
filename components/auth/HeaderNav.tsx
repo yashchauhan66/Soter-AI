@@ -27,7 +27,7 @@ export function HeaderNav() {
           </>
         ) : (
           <>
-            <Link href="/signin" className="inline-flex items-center gap-1.5 hover:text-white"><LogIn size={14} /> Sign in</Link>
+            <Link href="/signin" className="inline-flex items-center gap-1.5 hover:text-white"><LogIn size={14} aria-hidden="true" /> Sign in</Link>
             <Link href="/signup" className="button-primary !px-4 !py-2">Get started</Link>
           </>
         )}

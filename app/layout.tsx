@@ -101,7 +101,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-ink/85 backdrop-blur-xl">
             <div className="container-page flex h-16 items-center justify-between">
               <Link href="/" className="flex items-center gap-2 font-bold">
-                <span className="rounded-lg bg-cyan/15 p-2 text-cyan"><ShieldCheck size={20} /></span>
+                <span className="rounded-lg bg-cyan/15 p-2 text-cyan"><ShieldCheck size={20} aria-hidden="true" /></span>
                 CyberRakshak <span className="text-cyan">Guard</span>
               </Link>
               <HeaderNav />

@@ -107,25 +107,25 @@ export default function Home() {
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div className="card p-6">
-              <ShieldCheck className="mx-auto text-cyan" size={28} />
+              <ShieldCheck className="mx-auto text-cyan" size={28} aria-hidden="true" />
               <p className="mt-3 text-3xl font-black text-cyan">100%</p>
               <p className="mt-1 text-sm text-slate-400">Detection Rate</p>
               <p className="text-xs text-slate-500">97/97 adversarial prompts</p>
             </div>
             <div className="card p-6">
-              <Zap className="mx-auto text-lime" size={28} />
+              <Zap className="mx-auto text-lime" size={28} aria-hidden="true" />
               <p className="mt-3 text-3xl font-black text-lime">0%</p>
               <p className="mt-1 text-sm text-slate-400">False Positives</p>
               <p className="text-xs text-slate-500">25/25 safe inputs allowed</p>
             </div>
             <div className="card p-6">
-              <Gauge className="mx-auto text-cyan" size={28} />
+              <Gauge className="mx-auto text-cyan" size={28} aria-hidden="true" />
               <p className="mt-3 text-3xl font-black text-cyan">&lt;50ms</p>
               <p className="mt-1 text-sm text-slate-400">Inline Latency</p>
               <p className="text-xs text-slate-500">SDK-level detection</p>
             </div>
             <div className="card p-6">
-              <BarChart3 className="mx-auto text-cyan" size={28} />
+              <BarChart3 className="mx-auto text-cyan" size={28} aria-hidden="true" />
               <p className="mt-3 text-3xl font-black text-cyan">8</p>
               <p className="mt-1 text-sm text-slate-400">Attack Categories</p>
               <p className="text-xs text-slate-500">All detected at 100%</p>
@@ -156,7 +156,7 @@ export default function Home() {
             href="/benchmarks"
             className="button-secondary mt-8 inline-flex items-center gap-2"
           >
-            View full benchmark details <ArrowRight size={16} />
+            View full benchmark details <ArrowRight size={16} aria-hidden="true" />
           </Link>
         </div>
       </section>
@@ -196,7 +196,7 @@ export default function Home() {
               <div className="grid grid-cols-2 gap-3 text-sm">
                 {["Aadhaar-like", "PAN", "GSTIN", "UPI ID", "IFSC", "Indian mobile"].map((label) => (
                   <div className="flex items-center gap-2 rounded-xl border border-slate-800 bg-slate-950/60 p-4 text-slate-300" key={label}>
-                    <CheckCircle2 className="text-lime" size={16} />{label}
+                    <CheckCircle2 className="text-lime" size={16} aria-hidden="true" />{label}
                   </div>
                 ))}
               </div>
@@ -212,7 +212,7 @@ export default function Home() {
               <h2 className="mt-2 text-2xl font-bold">Test input and output decisions before integration.</h2>
               <p className="mt-2 text-slate-400">Use safe defensive examples to inspect findings, redaction, action, and risk score.</p>
             </div>
-            <Link href="/playground" className="button-primary gap-2">Try the guard <ArrowRight size={18} /></Link>
+            <Link href="/playground" className="button-primary gap-2">Try the guard <ArrowRight size={18} aria-hidden="true" /></Link>
           </div>
         </div>
       </section>
@@ -226,7 +226,7 @@ export default function Home() {
               Start with the playground, then protect both sides of your model call with project-scoped API keys.
             </p>
             <Link href="/docs" className="mt-7 inline-flex items-center gap-2 rounded-xl bg-ink px-6 py-3 font-semibold text-white">
-              Read integration docs <ArrowRight size={18} />
+              Read integration docs <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </div>
         </div>

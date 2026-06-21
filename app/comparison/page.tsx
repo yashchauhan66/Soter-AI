@@ -297,10 +297,10 @@ export default function ComparisonPage() {
 
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link href="/signup" className="button-primary gap-2">
-              Get started free <ArrowRight size={16} />
+              Get started free <ArrowRight size={16} aria-hidden="true" />
             </Link>
             <Link href="/benchmarks" className="button-secondary gap-2">
-              <BarChart3 size={16} /> View benchmarks
+              <BarChart3 size={16} aria-hidden="true" /> View benchmarks
             </Link>
             <Link href="/playground" className="text-sm text-slate-400 hover:text-white">
               Try the playground
@@ -311,7 +311,7 @@ export default function ComparisonPage() {
         {/* ── Feature Comparison Table ── */}
         <section className="mt-16">
           <h2 className="flex items-center gap-3 text-2xl font-bold">
-            <Award className="text-cyan" size={24} />
+            <Award className="text-cyan" size={24} aria-hidden="true" />
             Feature Comparison
           </h2>
           <p className="mt-2 text-sm text-slate-400">22 features compared across 7 platforms</p>
@@ -406,7 +406,7 @@ export default function ComparisonPage() {
         {/* ── Benchmark Comparison ── */}
         <section className="mt-16">
           <h2 className="flex items-center gap-3 text-2xl font-bold">
-            <BarChart3 className="text-cyan" size={24} />
+            <BarChart3 className="text-cyan" size={24} aria-hidden="true" />
             Benchmark Comparison
           </h2>
           <p className="mt-2 text-sm text-slate-400">
@@ -477,7 +477,7 @@ export default function ComparisonPage() {
         {/* ── Who Wins Where ── */}
         <section className="mt-16">
           <h2 className="flex items-center gap-3 text-2xl font-bold">
-            <Star className="text-cyan" size={24} />
+            <Star className="text-cyan" size={24} aria-hidden="true" />
             Who Wins Where
           </h2>
           <p className="mt-2 text-sm text-slate-400">Each platform has a distinct strength quadrant</p>
@@ -500,7 +500,7 @@ export default function ComparisonPage() {
         {/* ── Competitor Profiles ── */}
         <section className="mt-16">
           <h2 className="flex items-center gap-3 text-2xl font-bold">
-            <Users className="text-cyan" size={24} />
+            <Users className="text-cyan" size={24} aria-hidden="true" />
             Competitor Profiles
           </h2>
           <p className="mt-2 text-sm text-slate-400">Detailed breakdown of each competitor</p>
@@ -520,11 +520,11 @@ export default function ComparisonPage() {
                 </p>
                 <div className="mt-3 grid gap-2 text-xs">
                   <div className="flex gap-2">
-                    <TrendingUp className="mt-0.5 shrink-0 text-lime" size={14} />
+                    <TrendingUp className="mt-0.5 shrink-0 text-lime" size={14} aria-hidden="true" />
                     <span className="text-slate-400">{p.strength}</span>
                   </div>
                   <div className="flex gap-2">
-                    <XCircle className="mt-0.5 shrink-0 text-red-400" size={14} />
+                    <XCircle className="mt-0.5 shrink-0 text-red-400" size={14} aria-hidden="true" />
                     <span className="text-slate-400">{p.weakness}</span>
                   </div>
                 </div>
@@ -547,7 +547,7 @@ export default function ComparisonPage() {
         {/* ── Market Map ── */}
         <section className="mt-16">
           <h2 className="flex items-center gap-3 text-2xl font-bold">
-            <BookOpen className="text-cyan" size={24} />
+            <BookOpen className="text-cyan" size={24} aria-hidden="true" />
             Competitive Positioning Map
           </h2>
 
@@ -581,7 +581,7 @@ export default function ComparisonPage() {
         {/* ── Market Trends ── */}
         <section className="mt-16">
           <h2 className="flex items-center gap-3 text-2xl font-bold">
-            <TrendingUp className="text-cyan" size={24} />
+            <TrendingUp className="text-cyan" size={24} aria-hidden="true" />
             Market Context (2026)
           </h2>
 
@@ -619,7 +619,7 @@ export default function ComparisonPage() {
         <section className="mt-16">
           <div className="rounded-2xl border border-cyan/20 bg-gradient-to-br from-cyan/5 to-transparent p-8 sm:p-10">
             <h2 className="flex items-center gap-3 text-2xl font-bold">
-              <ShieldCheck className="text-cyan" size={28} />
+              <ShieldCheck className="text-cyan" size={28} aria-hidden="true" />
               Why Soter?
             </h2>
             <p className="mt-2 text-sm text-slate-400">
@@ -642,7 +642,7 @@ export default function ComparisonPage() {
                 "Free Tier Available",
               ].map((item) => (
                 <div key={item} className="flex items-center gap-2 text-sm">
-                  <CheckCircle2 className="shrink-0 text-lime" size={16} />
+                  <CheckCircle2 className="shrink-0 text-lime" size={16} aria-hidden="true" />
                   <span className="text-slate-300">{item}</span>
                 </div>
               ))}

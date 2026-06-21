@@ -221,21 +221,21 @@ export default function BenchmarksPage() {
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           <div className="card p-5">
             <div className="flex items-center gap-2 text-sm text-slate-400">
-              <Gauge size={16} /> Precision
+              <Gauge size={16} aria-hidden="true" /> Precision
             </div>
             <p className="mt-2 text-2xl font-bold">{overall.precision.toFixed(4)}</p>
             <p className="text-xs text-slate-500">Every detection was correct</p>
           </div>
           <div className="card p-5">
             <div className="flex items-center gap-2 text-sm text-slate-400">
-              <Zap size={16} /> Recall
+              <Zap size={16} aria-hidden="true" /> Recall
             </div>
             <p className="mt-2 text-2xl font-bold">{overall.recall.toFixed(4)}</p>
             <p className="text-xs text-slate-500">Every attack was detected</p>
           </div>
           <div className="card p-5">
             <div className="flex items-center gap-2 text-sm text-slate-400">
-              <BarChart3 size={16} /> Accuracy
+              <BarChart3 size={16} aria-hidden="true" /> Accuracy
             </div>
             <p className="mt-2 text-2xl font-bold">{(overall.adversarial_accuracy * 100).toFixed(1)}%</p>
             <p className="text-xs text-slate-500">{overall.total_adversarial}/{overall.total_adversarial} adversarial tests</p>
@@ -245,7 +245,7 @@ export default function BenchmarksPage() {
         {/* Category Breakdown */}
         <section className="mt-16">
           <div className="flex items-center gap-3">
-            <ShieldCheck className="text-cyan" size={24} />
+            <ShieldCheck className="text-cyan" size={24} aria-hidden="true" />
             <h2 className="text-2xl font-bold">Attack Category Breakdown</h2>
           </div>
           <p className="mt-2 text-sm text-slate-400">
@@ -303,7 +303,7 @@ export default function BenchmarksPage() {
         <section className="mt-12">
           <div className="card border-lime/20 p-6">
             <div className="flex items-center gap-3">
-              <CheckCircle2 className="text-lime" size={24} />
+              <CheckCircle2 className="text-lime" size={24} aria-hidden="true" />
               <div>
                 <h3 className="font-semibold">False Positive Rate: 0%</h3>
                 <p className="text-sm text-slate-400">
@@ -317,7 +317,7 @@ export default function BenchmarksPage() {
         {/* Latency */}
         <section className="mt-12">
           <div className="flex items-center gap-3">
-            <Gauge className="text-cyan" size={24} />
+            <Gauge className="text-cyan" size={24} aria-hidden="true" />
             <h2 className="text-2xl font-bold">Latency</h2>
           </div>
           <p className="mt-2 text-sm text-slate-400">
@@ -346,7 +346,7 @@ export default function BenchmarksPage() {
         {/* Methodology */}
         <section className="mt-16">
           <div className="flex items-center gap-3">
-            <AlertTriangle className="text-cyan" size={24} />
+            <AlertTriangle className="text-cyan" size={24} aria-hidden="true" />
             <h2 className="text-2xl font-bold">Methodology & Caveats</h2>
           </div>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -395,7 +395,7 @@ export default function BenchmarksPage() {
                 href="/playground"
                 className="inline-flex items-center gap-2 rounded-xl bg-ink px-6 py-3 font-semibold text-white"
               >
-                Try the playground <ArrowRight size={18} />
+                Try the playground <ArrowRight size={18} aria-hidden="true" />
               </Link>
               <Link
                 href="/docs"
