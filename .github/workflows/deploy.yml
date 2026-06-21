@@ -2,11 +2,15 @@
 # Soter Guard — CI/CD Pipeline
 # ═══════════════════════════════════════════════════════════════════════════════
 # On push to main:
-#   1. Build Next.js app
-#   2. Run typecheck & lint
-#   3. Build Docker image
-#   4. Push to Docker Hub
-#   5. SSH into EC2 → pull new image → deploy → remove old containers
+#   1. Typecheck & lint on GitHub (fast feedback)
+#   2. SSH into EC2 → git pull → build Docker image → push to Docker Hub → deploy
+# ═══════════════════════════════════════════════════════════════════════════════
+#
+# Prerequisites (one-time setup on EC2):
+#   - docker login  (Docker Hub credentials)
+#   - .env.production created in the repo directory
+#   - Repo cloned: git clone https://github.com/yashchauhan66/Ai-Security-Guard.git
+#
 # ═══════════════════════════════════════════════════════════════════════════════
 
 name: Deploy to EC2
@@ -14,19 +18,17 @@ name: Deploy to EC2
 on:
   push:
     branches: [main]
-  workflow_dispatch: # Manual trigger
+  workflow_dispatch:
 
 env:
   DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/soter-guard
-  DOCKER_TAG: ${{ github.sha }}
-  DOCKER_TAG_LATEST: latest
 
 jobs:
-  # ─── Job 1: Build & Push Docker Image ────────────────────────────────────
-  build:
-    name: Build & Push Docker Image
+  # ─── Job 1: Typecheck & Lint (fast feedback, no build) ───────────────────
+  check:
+    name: Typecheck & Lint
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
 
     steps:
       - name: Checkout repository
@@ -49,43 +51,14 @@ jobs:
       - name: Lint check
         run: npx next lint --max-warnings 0 2>/dev/null || echo "Lint warnings found (non-blocking)"
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Build & Push Docker image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: true
-          tags: |
-            ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG }}
-            ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG_LATEST }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          # Pass build-time args (secrets are NOT baked into image)
-          build-args: |
-            NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}
-            AUTH_SECRET=${{ secrets.AUTH_SECRET }}
-
-  # ─── Job 2: Deploy on EC2 ─────────────────────────────────────────────────
+  # ─── Job 2: Build on EC2 → Push to Docker Hub → Deploy ──────────────────
   deploy:
-    name: Deploy on EC2
-    needs: build
+    name: Build & Deploy on EC2
+    needs: check
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
 
     steps:
-      - name: Checkout repository (for deploy script)
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh
@@ -93,67 +66,113 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
 
-      - name: Deploy via SSH
+      - name: Build & Deploy via SSH
         run: |
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} bash -s << 'DEPLOY_SCRIPT'
             set -e
 
-            echo "=== Soter Guard Deployment ==="
-            echo "Pulling new image..."
-            docker pull ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG_LATEST }}
+            REPO_DIR="/home/${{ secrets.EC2_USER }}/soter-guard"
+            COMMIT_SHA="${{ github.sha }}"
+            DOCKER_USERNAME="${{ secrets.DOCKER_USERNAME }}"
+            DOCKER_TAG="${DOCKER_USERNAME}/soter-guard"
 
-            echo "Tagging current as 'previous' for rollback..."
-            docker tag ${{ env.DOCKER_IMAGE }}:${{ env.DOCKER_TAG_LATEST }} ${{ env.DOCKER_IMAGE }}:deployed 2>/dev/null || true
+            echo "═══════════════════════════════════════════════════"
+            echo "  Soter Guard — Deploy to EC2"
+            echo "  Commit: ${COMMIT_SHA}"
+            echo "═══════════════════════════════════════════════════"
 
-            echo "Starting new container..."
-            cd /home/${{ secrets.EC2_USER }}/soter-guard || mkdir -p /home/${{ secrets.EC2_USER }}/soter-guard && cd /home/${{ secrets.EC2_USER }}/soter-guard
-
-            # Copy .env.production if exists
-            if [ ! -f .env.production ]; then
-              echo "WARNING: .env.production not found! Creating from template..."
-              # Use DOMAIN secret if set, fall back to EC2_HOST
-              DOMAIN_FOR_URL="${{ secrets.DOMAIN }}"
-              if [ -z "$DOMAIN_FOR_URL" ]; then
-                DOMAIN_FOR_URL="${{ secrets.EC2_HOST }}"
-                echo "NOTE: DOMAIN secret not set, using EC2_HOST. Set DOMAIN secret for proper HTTPS URL."
-              fi
-              # Build NEXTAUTH_URL outside heredoc to avoid shell expansion issues
-              NEXTAUTH_URL_VALUE="https://${DOMAIN_FOR_URL}"
-              cat > .env.production << 'ENVEOF'
-            DATABASE_URL=${{ secrets.DATABASE_URL }}
-            NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}
-            AUTH_SECRET=${{ secrets.AUTH_SECRET }}
-            AUTH_TRUST_HOST=true
-            NODE_ENV=production
-            REDIS_URL=redis://redis:6379
-            QDRANT_URL=http://qdrant:6333
-            VECTOR_PROVIDER=qdrant
-ENVEOF
-              # Append NEXTAUTH_URL separately (quoted heredoc disables variable expansion)
-              echo "NEXTAUTH_URL=${NEXTAUTH_URL_VALUE}" >> .env.production
+            # ── Step 1: Pull latest code ─────────────────────────────────
+            echo ""
+            echo "[1/5] Pulling latest code..."
+            if [ -d "$REPO_DIR" ]; then
+              cd "$REPO_DIR"
+              git stash 2>/dev/null || true
+              # Refresh auth token (GITHUB_TOKEN expires between runs)
+              git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/yashchauhan66/Ai-Security-Guard.git
+              git pull --rebase
+              echo "  ✅ Repo updated at ${REPO_DIR}"
+            else
+              echo "  Cloning fresh..."
+              git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/yashchauhan66/Ai-Security-Guard.git "$REPO_DIR"
+              cd "$REPO_DIR"
+              echo "  ✅ Repo cloned at ${REPO_DIR}"
             fi
 
-            # Export DOCKER_IMAGE so docker compose can use it
-            export DOCKER_IMAGE=${{ env.DOCKER_IMAGE }}
+            # ── Step 2: Verify .env.production exists ────────────────────
+            echo ""
+            echo "[2/5] Checking environment file..."
+            if [ ! -f "$REPO_DIR/.env.production" ]; then
+              echo "  ❌ ERROR: .env.production not found!"
+              echo ""
+              echo "  Create it manually:"
+              echo "    ssh -i ai-security-guard.pem ubuntu@${{ secrets.EC2_HOST }}"
+              echo "    cd $REPO_DIR"
+              echo "    nano .env.production"
+              echo ""
+              echo "  Required vars: DATABASE_URL, NEXTAUTH_SECRET, AUTH_SECRET,"
+              echo "  NEXTAUTH_URL, REDIS_URL, QDRANT_URL, VECTOR_PROVIDER"
+              exit 1
+            fi
+            echo "  ✅ .env.production found"
 
-            echo "Pulling latest compose file..."
-            # docker compose is already in the directory
+            # ── Step 3: Log in to Docker Hub ─────────────────────────────
+            echo ""
+            echo "[3/5] Logging in to Docker Hub..."
+            echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+            echo "  ✅ Docker Hub logged in"
 
-            echo "Deploying with docker compose..."
-            docker compose pull app
+            # ── Step 4: Build Docker image ───────────────────────────────
+            echo ""
+            echo "[4/5] Building Docker image..."
+            docker build \
+              -t "${DOCKER_TAG}:${COMMIT_SHA}" \
+              -t "${DOCKER_TAG}:latest" \
+              -t "${DOCKER_TAG}:deployed" \
+              .
+
+            echo "  ✅ Image built: ${DOCKER_TAG}:${COMMIT_SHA}"
+
+            # Push to Docker Hub
+            echo ""
+            echo "  Pushing to Docker Hub..."
+            docker push "${DOCKER_TAG}:${COMMIT_SHA}"
+            docker push "${DOCKER_TAG}:latest"
+            docker push "${DOCKER_TAG}:deployed" 2>/dev/null || true
+            echo "  ✅ Pushed to Docker Hub"
+
+            # ── Step 5: Deploy with docker compose ───────────────────────
+            echo ""
+            echo "[5/5] Deploying with docker compose..."
+            export DOCKER_IMAGE="${DOCKER_TAG}"
+            # No pull needed — we just built the image locally
             docker compose up -d --no-deps --force-recreate app
 
-            echo "Cleaning up old images (keeping last 3)..."
+            echo ""
+            echo "  Cleaning up old images..."
             docker image prune -a --filter "until=24h" --force 2>/dev/null || true
 
-            echo "=== Deployment Complete ==="
-            echo "Checking health (direct Docker port)..."
+            # Health check
+            echo ""
+            echo "  Checking health..."
             sleep 10
-            curl -f http://127.0.0.1:3000/api/health && echo " - Health check PASSED" || echo " - Health check WARNING (app may still be starting)"
+            HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3000/api/health 2>/dev/null || echo "000")
+            if [ "$HTTP_CODE" = "200" ]; then
+              echo "  ✅ Health check PASSED (HTTP ${HTTP_CODE})"
+            else
+              echo "  ⚠️  Health check responded HTTP ${HTTP_CODE} (app may still be starting)"
+            fi
 
-            # Reload nginx so it picks up any proxy config changes
-            echo "Reloading nginx..."
-            sudo nginx -t && sudo systemctl reload nginx && echo " - nginx reloaded" || echo " - nginx reload skipped (not installed or config issue)"
+            # Nginx reload
+            echo ""
+            echo "  Reloading nginx..."
+            sudo nginx -t && sudo systemctl reload nginx && echo "  ✅ nginx reloaded" || echo "  ⚠️  nginx reload skipped"
+
+            echo ""
+            echo "═══════════════════════════════════════════════════"
+            echo "  ✅ Deployment Complete!"
+            echo "═══════════════════════════════════════════════════"
 
       - name: Deployment Status
-        run: echo "✅ Deployment to EC2 completed successfully!"
+        run: |
+          echo "✅ Deployment completed!"
+          echo "   Check health: http://${{ secrets.EC2_HOST }}/api/health"
