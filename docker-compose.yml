@@ -9,7 +9,7 @@
 services:
   # ─── Next.js App ──────────────────────────────────────────────────────────
   app:
-    image: ${DOCKER_IMAGE:-soter-guard:latest}
+    image: ${DOCKER_IMAGE:-soter:latest}
     restart: unless-stopped
     env_file: ${APP_ENV_FILE:-.env.production}
     environment:
