@@ -90,6 +90,18 @@ The product reduces risk. It does not provide complete protection, replace secur
 - npm
 - PostgreSQL 14+ with the `pgcrypto`/`uuid` functions (the migration calls `gen_random_uuid()`).
 
+## Deployment
+
+The app is configured for automated deployment to AWS EC2 (ap-south-1) via GitHub Actions.
+
+| Step | What happens |
+|------|-------------|
+| `git push origin main` | TypeScript typecheck + lint on GitHub Actions runner |
+| SSH into EC2 | Pulls latest code, builds Docker image, pushes to Docker Hub, deploys with docker compose |
+| Health check | Verifies app responds on port 3000, reloads nginx |
+
+**Prerequisites (one-time):** Docker, repo clone, and `.env.production` on the EC2 instance.
+
 ## Local setup
 
 ```powershell
