@@ -84,7 +84,9 @@ jobs:
 
             REPO_DIR="/home/${{ secrets.EC2_USER }}/soter-guard"
             COMMIT_SHA="${{ github.sha }}"
-            DOCKER_USERNAME="${{ secrets.DOCKER_USERNAME }}"
+            # Strip any stray whitespace/newlines from the secret (a trailing
+            # newline in DOCKER_USERNAME produces an invalid Docker tag reference)
+            DOCKER_USERNAME="$(printf '%s' "${{ secrets.DOCKER_USERNAME }}" | tr -d '[:space:]')"
             DOCKER_TAG="${DOCKER_USERNAME}/soter-guard"
 
             echo "═══════════════════════════════════════════════════"
@@ -135,7 +137,7 @@ jobs:
             # ── Step 3: Log in to Docker Hub ─────────────────────────────
             echo ""
             echo "[3/5] Logging in to Docker Hub..."
-            echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+            echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
             echo "  ✅ Docker Hub logged in"
 
             # ── Step 4: Build Docker image ───────────────────────────────
