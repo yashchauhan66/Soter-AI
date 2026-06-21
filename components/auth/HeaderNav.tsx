@@ -16,6 +16,7 @@ export function HeaderNav() {
         <Link href="/docs" className="hover:text-white">Docs</Link>
         <Link href="/demo" className="hover:text-white">Demo</Link>
         <Link href="/pricing" className="hover:text-white">Pricing</Link>
+        <Link href="/benchmarks" className="hover:text-white">Benchmarks</Link>
         <Link href="/playground" className="hover:text-white">Playground</Link>
         {signedIn ? (
           <>
