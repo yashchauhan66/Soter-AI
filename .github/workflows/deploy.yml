@@ -66,6 +66,17 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts 2>/dev/null
 
+      - name: Upload production env to EC2
+        env:
+          ENV_PRODUCTION: ${{ secrets.ENV_PRODUCTION }}
+        run: |
+          if [ -z "$ENV_PRODUCTION" ]; then
+            echo "ENV_PRODUCTION secret is not set. Add your full .env.production content as a GitHub Actions secret."
+            exit 1
+          fi
+          printf '%s\n' "$ENV_PRODUCTION" > /tmp/soter-env-production
+          scp /tmp/soter-env-production ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:/tmp/soter-env-production
+
       - name: Build & Deploy via SSH
         run: |
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} bash -s << 'DEPLOY_SCRIPT'
@@ -96,6 +107,12 @@ jobs:
               git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/yashchauhan66/Ai-Security-Guard.git "$REPO_DIR"
               cd "$REPO_DIR"
               echo "  ✅ Repo cloned at ${REPO_DIR}"
+            fi
+
+            if [ -f /tmp/soter-env-production ]; then
+              mv /tmp/soter-env-production "$REPO_DIR/.env.production"
+              chmod 600 "$REPO_DIR/.env.production"
+              echo "  .env.production uploaded from GitHub secret"
             fi
 
             # ── Step 2: Verify .env.production exists ────────────────────
@@ -171,6 +188,8 @@ jobs:
             echo "═══════════════════════════════════════════════════"
             echo "  ✅ Deployment Complete!"
             echo "═══════════════════════════════════════════════════"
+
+          DEPLOY_SCRIPT
 
       - name: Deployment Status
         run: |
