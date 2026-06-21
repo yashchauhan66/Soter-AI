@@ -8,6 +8,9 @@ import type { NextAuthConfig } from "next-auth";
 
 function assertAuthSecretConfigured() {
   if (process.env.NODE_ENV !== "production") return;
+  // Skip during `next build` page-data collection; no secrets are available in
+  // the Docker build environment. The real check still runs when the server boots.
+  if (process.env.NEXT_PHASE === "phase-production-build") return;
   const secret = process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET;
   if (!secret || secret.length < 32 || secret === "replace-with-a-long-random-secret") {
     throw new Error("AUTH_SECRET or NEXTAUTH_SECRET must be configured with at least 32 characters in production.");
