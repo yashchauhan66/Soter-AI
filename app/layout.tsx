@@ -97,6 +97,13 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   return (
     <html lang="en" data-scroll-behavior="smooth">
       <body>
+        {/* Skip-to-content link for keyboard users */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-xl focus:bg-cyan focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink"
+        >
+          Skip to main content
+        </a>
         <AuthProvider>
           <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-ink/85 backdrop-blur-xl">
             <div className="container-page flex h-16 items-center justify-between">
@@ -107,7 +114,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
               <HeaderNav />
             </div>
           </header>
-          {children}
+          <div id="main-content" tabIndex={-1}>{children}</div>
           <footer className="border-t border-slate-800 py-10 text-sm text-slate-500">
             <div className="container-page flex flex-col justify-between gap-4 sm:flex-row">
               <p>CyberRakshak Guard. Defensive AI security for chatbot flows.</p>

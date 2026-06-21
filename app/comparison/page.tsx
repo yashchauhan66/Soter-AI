@@ -344,9 +344,9 @@ export default function ComparisonPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-slate-800">
-                  <th className="sticky left-0 bg-ink px-4 py-3 text-left font-semibold text-slate-300">Feature</th>
+                  <th scope="col" className="sticky left-0 bg-ink px-4 py-3 text-left font-semibold text-slate-300">Feature</th>
                   {competitors.map((c) => (
-                    <th key={c.id} className={`px-3 py-3 text-center font-semibold ${c.color}`}>
+                    <th key={c.id} scope="col" className={`px-3 py-3 text-center font-semibold ${c.color}`}>
                       {c.icon} {c.name}
                       {c.note && <span className="block text-xs font-normal text-slate-500">{c.note}</span>}
                     </th>
@@ -445,12 +445,12 @@ export default function ComparisonPage() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-slate-800">
-                  <th className="px-4 py-3 text-left font-semibold text-slate-300">Category</th>
-                  <th className="px-3 py-3 text-center font-semibold text-slate-300">Tests</th>
-                  <th className="px-3 py-3 text-center font-semibold text-cyan">Soter</th>
-                  <th className="px-3 py-3 text-center font-semibold text-emerald-400">GA Guard</th>
-                  <th className="px-3 py-3 text-center font-semibold text-green-400">NVIDIA NeMo</th>
-                  <th className="px-3 py-3 text-left font-semibold text-slate-300">Notes</th>
+                  <th scope="col" className="px-4 py-3 text-left font-semibold text-slate-300">Category</th>
+                  <th scope="col" className="px-3 py-3 text-center font-semibold text-slate-300">Tests</th>
+                  <th scope="col" className="px-3 py-3 text-center font-semibold text-cyan">Soter</th>
+                  <th scope="col" className="px-3 py-3 text-center font-semibold text-emerald-400">GA Guard</th>
+                  <th scope="col" className="px-3 py-3 text-center font-semibold text-green-400">NVIDIA NeMo</th>
+                  <th scope="col" className="px-3 py-3 text-left font-semibold text-slate-300">Notes</th>
                 </tr>
               </thead>
               <tbody>
