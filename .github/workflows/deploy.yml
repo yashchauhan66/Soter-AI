@@ -111,17 +111,26 @@ jobs:
             # Copy .env.production if exists
             if [ ! -f .env.production ]; then
               echo "WARNING: .env.production not found! Creating from template..."
+              # Use DOMAIN secret if set, fall back to EC2_HOST
+              DOMAIN_FOR_URL="${{ secrets.DOMAIN }}"
+              if [ -z "$DOMAIN_FOR_URL" ]; then
+                DOMAIN_FOR_URL="${{ secrets.EC2_HOST }}"
+                echo "NOTE: DOMAIN secret not set, using EC2_HOST. Set DOMAIN secret for proper HTTPS URL."
+              fi
+              # Build NEXTAUTH_URL outside heredoc to avoid shell expansion issues
+              NEXTAUTH_URL_VALUE="https://${DOMAIN_FOR_URL}"
               cat > .env.production << 'ENVEOF'
             DATABASE_URL=${{ secrets.DATABASE_URL }}
             NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}
             AUTH_SECRET=${{ secrets.AUTH_SECRET }}
-            NEXTAUTH_URL=https://${{ secrets.EC2_HOST }}
             AUTH_TRUST_HOST=true
             NODE_ENV=production
             REDIS_URL=redis://redis:6379
             QDRANT_URL=http://qdrant:6333
             VECTOR_PROVIDER=qdrant
-            ENVEOF
+ENVEOF
+              # Append NEXTAUTH_URL separately (quoted heredoc disables variable expansion)
+              echo "NEXTAUTH_URL=${NEXTAUTH_URL_VALUE}" >> .env.production
             fi
 
             # Export DOCKER_IMAGE so docker compose can use it
@@ -138,9 +147,13 @@ jobs:
             docker image prune -a --filter "until=24h" --force 2>/dev/null || true
 
             echo "=== Deployment Complete ==="
-            echo "Checking health..."
+            echo "Checking health (direct Docker port)..."
             sleep 10
             curl -f http://127.0.0.1:3000/api/health && echo " - Health check PASSED" || echo " - Health check WARNING (app may still be starting)"
+
+            # Reload nginx so it picks up any proxy config changes
+            echo "Reloading nginx..."
+            sudo nginx -t && sudo systemctl reload nginx && echo " - nginx reloaded" || echo " - nginx reload skipped (not installed or config issue)"
 
       - name: Deployment Status
         run: echo "✅ Deployment to EC2 completed successfully!"
