@@ -1,13 +1,96 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { ShieldCheck } from "lucide-react";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 import { HeaderNav } from "@/components/auth/HeaderNav";
 import "./globals.css";
 
+const siteUrl = "https://soter.dev";
+const siteName = "Soter Guard";
+const siteDescription =
+  "AI security guardrail platform protecting chatbots, RAG apps, and AI agents from prompt injection, jailbreaks, PII leakage, and unsafe outputs. F1=1.0000 benchmark.";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0f1117" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+  ],
+};
+
 export const metadata: Metadata = {
-  title: "CyberRakshak Guard | AI Chatbot Security Gateway",
-  description: "OWASP LLM Top 10 aligned defense-in-depth for chatbot input and output flows.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: `${siteName} | AI Security Guardrail Platform`,
+    template: `%s | ${siteName}`,
+  },
+  description: siteDescription,
+  keywords: [
+    "AI security",
+    "prompt injection protection",
+    "LLM guardrails",
+    "chatbot security",
+    "jailbreak detection",
+    "PII redaction",
+    "RAG security",
+    "AI agent firewall",
+    "OWASP LLM Top 10",
+    "India PII detection",
+    "Aadhaar redaction",
+    "AI safety",
+    "guardrail platform",
+    "Soter",
+    "CyberRakshak",
+  ],
+  authors: [{ name: "Soter" }],
+  creator: "Soter",
+  publisher: "Soter",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: siteName,
+    title: `${siteName} — AI Security Guardrail Platform`,
+    description: siteDescription,
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Soter Guard — AI Security Platform",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@soterdev",
+    creator: "@soterdev",
+    title: `${siteName} — AI Security Guardrail Platform`,
+    description: siteDescription,
+    images: ["/twitter-image.png"],
+  },
+  alternates: {
+    canonical: siteUrl,
+  },
+  icons: {
+    icon: [{ url: "/icon.png", sizes: "32x32" }],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180" }],
+  },
+  manifest: "/manifest.webmanifest",
+  category: "technology",
+  classification: "AI Security",
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
