@@ -1,9 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
   poweredByHeader: false,
   reactStrictMode: true,
-  distDir: process.env.NEXT_DIST_DIR ?? ".next",
-  outputFileTracingRoot: process.cwd(),
   async headers() {
     const scriptSources = ["'self'", "'unsafe-inline'", "https://checkout.razorpay.com"];
     if (process.env.NODE_ENV !== "production") scriptSources.push("'unsafe-eval'");

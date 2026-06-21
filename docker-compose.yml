@@ -1,0 +1,70 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# Soter Guard — Docker Compose (EC2 Production)
+# ═══════════════════════════════════════════════════════════════════════════════
+# Deploy: docker compose up -d --pull always
+# View:   docker compose logs -f
+# Stop:   docker compose down
+# ═══════════════════════════════════════════════════════════════════════════════
+
+services:
+  # ─── Next.js App ──────────────────────────────────────────────────────────
+  app:
+    image: ${DOCKER_IMAGE:-soter-guard:latest}
+    restart: unless-stopped
+    env_file: ${APP_ENV_FILE:-.env.production}
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://127.0.0.1:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 15s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ─── Redis (for rate limiting + distributed state) ────────────────────────
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--maxmemory", "256mb", "--maxmemory-policy", "allkeys-lru"]
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "2"
+
+  # ─── Qdrant (Vector store for RAG) ────────────────────────────────────────
+  qdrant:
+    image: qdrant/qdrant:v1.14.1
+    restart: unless-stopped
+    volumes:
+      - qdrant-data:/qdrant/storage
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/127.0.0.1/6333'"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "2"
+
+volumes:
+  redis-data:
+  qdrant-data:
