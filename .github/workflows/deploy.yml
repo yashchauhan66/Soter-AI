@@ -178,8 +178,15 @@ jobs:
             echo ""
             echo "[5/5] Deploying with docker compose..."
             export DOCKER_IMAGE="${DOCKER_TAG}"
+            # Pick whichever compose is installed: V2 plugin (docker compose)
+            # or legacy V1 binary (docker-compose).
+            if docker compose version >/dev/null 2>&1; then
+              COMPOSE="docker compose"
+            else
+              COMPOSE="docker-compose"
+            fi
             # No pull needed — we just built the image locally
-            docker compose --env-file .env.production up -d --force-recreate redis qdrant app
+            $COMPOSE --env-file .env.production up -d --force-recreate redis qdrant app
 
             echo ""
             echo "  Cleaning up old images..."
