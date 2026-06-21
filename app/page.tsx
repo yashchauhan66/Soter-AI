@@ -14,9 +14,63 @@ const owaspCoverage = [
   ["LLM10", "Unbounded consumption", "Apply text-size, per-minute, and monthly usage controls."],
 ];
 
+const homepageJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "Soter Guard",
+      "applicationCategory": "SecurityApplication",
+      "operatingSystem": "Linux, macOS, Windows",
+      "description": "AI security guardrail platform. Protects chatbots, RAG apps, and AI agents from prompt injection, jailbreaks, PII leakage, and unsafe outputs with 2-way input+output coverage.",
+      "url": "https://soter.dev",
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soter.dev" },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+      },
+      "additionalProperty": [
+        { "@type": "PropertyValue", "name": "Input Guard", "value": "Yes" },
+        { "@type": "PropertyValue", "name": "Output Guard", "value": "Yes" },
+        { "@type": "PropertyValue", "name": "RAG Security", "value": "Yes" },
+        { "@type": "PropertyValue", "name": "Agent Firewall", "value": "Yes" },
+        { "@type": "PropertyValue", "name": "Policy Engine", "value": "Yes" },
+        { "@type": "PropertyValue", "name": "India PII Detection", "value": "Yes" },
+        { "@type": "PropertyValue", "name": "Self-Hosted", "value": "Yes" },
+        { "@type": "PropertyValue", "name": "Enterprise SSO", "value": "Yes" },
+        { "@type": "PropertyValue", "name": "Adversarial Benchmark F1", "value": "1.0000" },
+      ],
+    },
+    {
+      "@type": "Dataset",
+      "name": "Soter Guard Adversarial Benchmark",
+      "description": "97/97 adversarial attack variants detected across 8 categories with zero false positives (F1=1.0000). Internal Garak-style red-team evaluation.",
+      "url": "https://soter.dev/benchmarks",
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soter.dev/benchmarks" },
+      "creator": { "@type": "Organization", "name": "Soter" },
+      "measurementTechnique": "Garak-style adversarial probing",
+      "variableMeasured": [
+        { "name": "F1 Score", "value": "1.0000" },
+        { "name": "Precision", "value": "1.0000" },
+        { "name": "Recall", "value": "1.0000" },
+        { "name": "Specificity", "value": "100.0%" },
+        { "name": "False Positive Rate", "value": "0.0%" },
+        { "name": "Attacks Detected", "value": "97/97" },
+        { "name": "Safe Inputs Allowed", "value": "25/25" },
+        { "name": "Attack Categories", "value": "8" },
+      ],
+    },
+  ],
+};
+
 export default function Home() {
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageJsonLd) }}
+      />
       <Hero />
       <section className="py-20">
         <div className="container-page grid gap-5 md:grid-cols-3">
