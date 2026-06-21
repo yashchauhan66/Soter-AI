@@ -16,7 +16,7 @@ concurrency:
 
 env:
   NODE_VERSION: "22"
-  DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/soter-guard
+  DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/soter
   CI: "true"
   DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/cyberrakshak_guard?schema=public
   AUTH_SECRET: ci-auth-secret-at-least-thirty-two-characters
@@ -157,9 +157,9 @@ jobs:
             COMMIT_SHA="${{ github.sha }}"
             # Strip stray whitespace/newlines from the secret before it
             # reaches the tag — a trailing newline yields an invalid tag
-            # reference (username\n\n/soter-guard:<sha>) that breaks build.
+            # reference (username\n\n/soter:<sha>) that breaks build.
             DOCKER_USERNAME="$(printf '%s' "${{ secrets.DOCKER_USERNAME }}" | tr -d '[:space:]')"
-            DOCKER_TAG="${DOCKER_USERNAME}/soter-guard"
+            DOCKER_TAG="${DOCKER_USERNAME}/soter"
 
             if [ -d "$REPO_DIR/.git" ]; then
               cd "$REPO_DIR"

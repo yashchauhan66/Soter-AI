@@ -1,8 +1,8 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 # Soter Guard — Dockerfile (Standalone Output)
 # ═══════════════════════════════════════════════════════════════════════════════
-# Build: docker build -t soter-guard:latest --secret id=npmrc,src=$HOME/.npmrc .
-# Run:   docker run -p 3000:3000 --env-file .env.production soter-guard:latest
+# Build: docker build -t soter:latest --secret id=npmrc,src=$HOME/.npmrc .
+# Run:   docker run -p 3000:3000 --env-file .env.production soter:latest
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # ─── Stage 1: Dependencies ──────────────────────────────────────────────────
