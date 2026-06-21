@@ -5,11 +5,11 @@ const {
   CyberRakshakGuard,
   GuardClient,
   Soter,
-} = require("@soter/core");
+} = require("@soterai/core");
 const {
   cyberRakshakInputMiddleware,
   soterInputMiddleware,
-} = require("@soter/core/express");
+} = require("@soterai/core/express");
 
 const apiKey = "sdk_test_key_redacted";
 

@@ -1,10 +1,19 @@
 {
-  "name": "@soter/langchain-middleware",
-  "version": "0.1.0",
+  "name": "@soterai/langchain-middleware",
+  "version": "0.2.0",
   "description": "Soter is a safety layer for AI chatbots, agents, RAG systems, and LLM applications.",
-  "private": true,
+  "license": "MIT",
   "type": "module",
-  "main": "src/index.ts",
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": { "node": ">=18.18" },
   "keywords": [
     "soter",
     "ai-chatbot",
@@ -16,5 +25,9 @@
     "rag-security",
     "ai-safety",
     "ai-agents"
-  ]
+  ],
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "publishConfig": { "access": "public" }
 }

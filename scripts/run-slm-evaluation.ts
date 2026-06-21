@@ -209,6 +209,7 @@ async function main() {
   console.log(`   Delays:   ${DELAY_BETWEEN_CRITERIA}ms between criteria, ${DELAY_BETWEEN_TESTS}ms between tests`);
   console.log(`   Retries:  ${MAX_RETRIES} with ${RATE_LIMIT_RETRY_DELAY / 1000}s backoff on 429\n`);
 
+  const critKeys = Object.keys(CRITERIA);
   const allResults: Array<{
     name: string;
     criteriaScores: Array<{ criterion: string; score: number; passed: boolean }>;
@@ -238,7 +239,6 @@ async function main() {
     console.log(`   Response: "${testCase.response.slice(0, 150)}${testCase.response.length > 150 ? "..." : ""}"\n`);
 
     const criterionResults: Array<{ criterion: string; score: number; reason: string; passed: boolean }> = [];
-    const critKeys = Object.keys(CRITERIA);
 
     for (let c = 0; c < critKeys.length; c++) {
       const key = critKeys[c];

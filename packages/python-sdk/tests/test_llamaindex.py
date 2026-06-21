@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from cyberrakshak_guard import CyberRakshakGuard
-from cyberrakshak_guard.llamaindex import protect_query_engine
+from soter import Soter
+from soter.llamaindex import protect_query_engine
 from conftest import FakeSession
 
 
@@ -33,7 +33,7 @@ class FakeQueryEngine:
 
 def _make_guard():
     session = FakeSession()
-    return CyberRakshakGuard(api_key="ck_test_key_123456", base_url="http://localhost:3000", session=session)
+    return Soter(api_key="ck_test_key_123456", base_url="http://localhost:3000", session=session)
 
 
 def test_llamaindex_allows_safe_query():

@@ -2,19 +2,16 @@
 
 from __future__ import annotations
 
+import subprocess
+import sys
+import textwrap
+from pathlib import Path
+
 
 def test_soter_main_imports():
     """All key names are accessible from the soter top-level module."""
     from soter import (  # noqa: F811
-        AsyncCyberRakshakGuard,
         AsyncSoter,
-        CyberRakshakAuthError,
-        CyberRakshakConfigError,
-        CyberRakshakError,
-        CyberRakshakGuard,
-        CyberRakshakNetworkError,
-        CyberRakshakRateLimitError,
-        CyberRakshakValidationError,
         ExcludedRagSource,
         GuardFinding,
         GuardResult,
@@ -31,25 +28,20 @@ def test_soter_main_imports():
         SoterValidationError,
         __version__,
     )
-    assert Soter is CyberRakshakGuard
-    assert SoterError is CyberRakshakError
-    assert SoterConfigError is CyberRakshakConfigError
-    assert SoterAuthError is CyberRakshakAuthError
-    assert SoterRateLimitError is CyberRakshakRateLimitError
-    assert SoterValidationError is CyberRakshakValidationError
-    assert SoterNetworkError is CyberRakshakNetworkError
+
+    assert Soter.__name__ == "Soter"
+    assert AsyncSoter.__name__ == "AsyncSoter"
+    assert issubclass(SoterConfigError, SoterError)
+    assert issubclass(SoterAuthError, SoterError)
+    assert issubclass(SoterRateLimitError, SoterError)
+    assert issubclass(SoterValidationError, SoterError)
+    assert issubclass(SoterNetworkError, SoterError)
     assert isinstance(__version__, str)
 
 
 def test_soter_submodule_exceptions():
-    """Sub-module soter.exceptions re-exports all error classes."""
+    """Sub-module soter.exceptions exports all error classes."""
     from soter.exceptions import (  # noqa: F811
-        CyberRakshakAuthError,
-        CyberRakshakConfigError,
-        CyberRakshakError,
-        CyberRakshakNetworkError,
-        CyberRakshakRateLimitError,
-        CyberRakshakValidationError,
         SoterAuthError,
         SoterConfigError,
         SoterError,
@@ -58,11 +50,15 @@ def test_soter_submodule_exceptions():
         SoterValidationError,
     )
 
-    assert SoterError is CyberRakshakError
+    assert issubclass(SoterConfigError, SoterError)
+    assert issubclass(SoterAuthError, SoterError)
+    assert issubclass(SoterRateLimitError, SoterError)
+    assert issubclass(SoterValidationError, SoterError)
+    assert issubclass(SoterNetworkError, SoterError)
 
 
 def test_soter_submodule_types():
-    """Sub-module soter.types re-exports all type/result classes."""
+    """Sub-module soter.types exports all type/result classes."""
     from soter.types import (  # noqa: F811
         ExcludedRagSource,
         GuardAction,
@@ -81,61 +77,86 @@ def test_soter_submodule_types():
 
 
 def test_soter_submodule_client():
-    """Sub-module soter.client re-exports the sync client."""
-    from soter.client import CyberRakshakGuard
-    from cyberrakshak_guard import CyberRakshakGuard as _Original
+    """Sub-module soter.client exports the sync client."""
+    from soter import Soter as TopLevelSoter
+    from soter.client import Soter
 
-    assert CyberRakshakGuard is _Original
+    assert Soter is TopLevelSoter
 
 
 def test_soter_submodule_async_client():
-    """Sub-module soter.async_client re-exports the async client."""
-    from soter.async_client import AsyncCyberRakshakGuard
-    from cyberrakshak_guard.async_client import AsyncCyberRakshakGuard as _Original
+    """Sub-module soter.async_client exports the async client."""
+    from soter import AsyncSoter as TopLevelAsyncSoter
+    from soter.async_client import AsyncSoter
 
-    assert AsyncCyberRakshakGuard is _Original
+    assert AsyncSoter is TopLevelAsyncSoter
 
 
 def test_soter_submodule_fastapi():
-    """Sub-module soter.fastapi re-exports create_chat_route."""
+    """Sub-module soter.fastapi exports create_chat_route."""
     from soter.fastapi import create_chat_route
-    from cyberrakshak_guard.fastapi import create_chat_route as _Original
 
-    assert create_chat_route is _Original
+    assert callable(create_chat_route)
 
 
 def test_soter_submodule_flask():
-    """Sub-module soter.flask re-exports create_chat_view."""
+    """Sub-module soter.flask exports create_chat_view."""
     from soter.flask import create_chat_view
-    from cyberrakshak_guard.flask import create_chat_view as _Original
 
-    assert create_chat_view is _Original
+    assert callable(create_chat_view)
 
 
 def test_soter_submodule_langchain():
-    """Sub-module soter.langchain re-exports protect_langchain_chain."""
+    """Sub-module soter.langchain exports protect_langchain_chain."""
     from soter.langchain import protect_langchain_chain
-    from cyberrakshak_guard.langchain import protect_langchain_chain as _Original
 
-    assert protect_langchain_chain is _Original
+    assert callable(protect_langchain_chain)
 
 
 def test_soter_submodule_llamaindex():
-    """Sub-module soter.llamaindex re-exports protect_query_engine."""
+    """Sub-module soter.llamaindex exports protect_query_engine."""
     from soter.llamaindex import protect_query_engine
-    from cyberrakshak_guard.llamaindex import protect_query_engine as _Original
 
-    assert protect_query_engine is _Original
+    assert callable(protect_query_engine)
 
 
 def test_soter_submodule_rag():
-    """Sub-module soter.rag re-exports RAG type classes."""
-    from soter.rag import (  # noqa: F811
-        ExcludedRagSource,
-        ProtectRagResult,
-        RagSource,
-        SafeRagSource,
-    )
+    """Sub-module soter.rag exports RAG type classes."""
+    from soter import RagSource as TopLevelRagSource
+    from soter.rag import ExcludedRagSource, ProtectRagResult, RagSource, SafeRagSource
 
-    from soter import RagSource as _TopLevel
-    assert RagSource is _TopLevel
+    assert RagSource is TopLevelRagSource
+
+
+def test_sync_imports_do_not_require_httpx():
+    """Plain sync imports must not require the optional async dependency."""
+    script = textwrap.dedent(
+        """
+        import builtins
+
+        original_import = builtins.__import__
+
+        def blocked_import(name, globals=None, locals=None, fromlist=(), level=0):
+            if name == "httpx" or name.startswith("httpx."):
+                raise ImportError("blocked httpx for regression test")
+            return original_import(name, globals, locals, fromlist, level)
+
+        builtins.__import__ = blocked_import
+
+        import soter
+
+        assert soter.Soter.__name__ == "Soter"
+
+        namespace = {}
+        exec("from soter import *", namespace)
+        assert namespace["Soter"].__name__ == "Soter"
+        assert "AsyncSoter" not in namespace
+        """
+    )
+    result = subprocess.run(
+        [sys.executable, "-c", script],
+        cwd=Path(__file__).resolve().parents[1],
+        text=True,
+        capture_output=True,
+    )
+    assert result.returncode == 0, result.stderr

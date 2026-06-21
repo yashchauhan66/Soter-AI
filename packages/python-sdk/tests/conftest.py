@@ -1,4 +1,4 @@
-"""Shared pytest fixtures and a mock transport for the CyberRakshak Guard SDK.
+"""Shared pytest fixtures and a mock transport for the Soter SDK.
 
 Tests never hit the network. We install a fake ``requests`` session (sync) and
 patch ``httpx.AsyncClient`` (async) that record every request and return
@@ -147,6 +147,6 @@ def fake_session() -> FakeSession:
 
 @pytest.fixture
 def guard(fake_session: FakeSession):
-    from cyberrakshak_guard import CyberRakshakGuard
+    from soter import Soter
 
-    return CyberRakshakGuard(api_key="ck_test_key_123456", base_url="http://localhost:3000", session=fake_session)
+    return Soter(api_key="ck_test_key_123456", base_url="http://localhost:3000", session=fake_session)

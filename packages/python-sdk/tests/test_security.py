@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import logging
 
-from cyberrakshak_guard import CyberRakshakGuard
-from cyberrakshak_guard.utils import redact_key
+from soter import Soter
+from soter.utils import redact_key
 from conftest import FakeSession
 
 API_KEY = "ck_test_key_supersecret_value_123456"
@@ -13,7 +13,7 @@ API_KEY = "ck_test_key_supersecret_value_123456"
 
 def _make_guard():
     session = FakeSession()
-    return CyberRakshakGuard(api_key=API_KEY, base_url="http://localhost:3000", session=session), session
+    return Soter(api_key=API_KEY, base_url="http://localhost:3000", session=session), session
 
 
 def test_api_key_only_in_header_never_in_body():

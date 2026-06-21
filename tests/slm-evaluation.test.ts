@@ -160,7 +160,7 @@ interface WeightInfo {
   passThreshold: number;
 }
 
-const CRITERIA_WEIGHTS: Record<string, WeightInfo> = {
+const CRITERIA_WEIGHTS: Record<Criterion, WeightInfo> = {
   factuality: { weight: 0.25, passThreshold: 70 },
   hallucination: { weight: 0.25, passThreshold: 65 },
   context_adherence: { weight: 0.15, passThreshold: 70 },
@@ -172,13 +172,17 @@ const CRITERIA_WEIGHTS: Record<string, WeightInfo> = {
   coherence: { weight: 0.01, passThreshold: 60 },
 };
 
+function isCriterion(value: string): value is Criterion {
+  return value in CRITERIA_WEIGHTS;
+}
+
 function calculateOverallScore(scores: Array<{ criterion: string; score: number }>) {
   let totalWeight = 0;
   let weightedSum = 0;
 
   for (const { criterion, score } of scores) {
-    const def = CRITERIA_WEIGHTS[criterion];
-    if (def) {
+    if (isCriterion(criterion)) {
+      const def = CRITERIA_WEIGHTS[criterion];
       weightedSum += score * def.weight;
       totalWeight += def.weight;
     }
@@ -187,8 +191,7 @@ function calculateOverallScore(scores: Array<{ criterion: string; score: number 
   const overallScore = totalWeight > 0 ? Math.round(weightedSum / totalWeight) : 0;
   const overallPassed = scores.every(
     (s) => {
-      const def = CRITERIA_WEIGHTS[s.criterion];
-      return !def || s.score >= def.passThreshold;
+      return !isCriterion(s.criterion) || s.score >= CRITERIA_WEIGHTS[s.criterion].passThreshold;
     }
   );
 

@@ -29,8 +29,8 @@ from soter import (
 BASE_URL = os.environ.get("SOTER_BASE_URL", "http://localhost:3000")
 
 pytestmark = pytest.mark.skipif(
-    not (os.environ.get("SOTER_API_KEY") or os.environ.get("CYBERRAKSHAK_API_KEY")),
-    reason="SOTER_API_KEY or CYBERRAKSHAK_API_KEY not set — cannot run E2E tests",
+    not os.environ.get("SOTER_API_KEY"),
+    reason="SOTER_API_KEY not set — cannot run E2E tests",
 )
 
 
@@ -374,7 +374,7 @@ async def test_async_protect_chat() -> None:
     from soter import AsyncSoter
 
     async_guard = AsyncSoter(
-        api_key=os.environ.get("SOTER_API_KEY") or os.environ.get("CYBERRAKSHAK_API_KEY"),
+        api_key=os.environ.get("SOTER_API_KEY") or os.environ.get("SOTER_API_KEY"),
         base_url=BASE_URL,
     )
 

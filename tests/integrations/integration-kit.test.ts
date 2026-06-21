@@ -219,11 +219,11 @@ test("REST docs and examples use x-api-key and server-side SDK construction", ()
 });
 
 test("Python helper and WordPress plugin keep API keys server-side", () => {
-  const python = readFileSync("packages/python-sdk/cyberrakshak_guard/client.py", "utf8");
+  const python = readFileSync("packages/python-sdk/soter/client.py", "utf8");
   const wordpress = readFileSync("integrations/wordpress-plugin/cyberrakshak-guard.php", "utf8");
   const adminJs = readFileSync("integrations/wordpress-plugin/assets/admin.js", "utf8");
   assert.match(python, /base_headers\(self\.api_key/);
-  const pythonUtils = readFileSync("packages/python-sdk/cyberrakshak_guard/utils.py", "utf8");
+  const pythonUtils = readFileSync("packages/python-sdk/soter/utils.py", "utf8");
   assert.match(pythonUtils, /headers\["x-api-key"\] = api_key/);
   assert.match(wordpress, /'x-api-key' => \$api_key/);
   assert.equal(adminJs.includes("api_key"), false);

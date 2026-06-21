@@ -8,10 +8,10 @@ from conftest import FakeAsyncClient
 
 
 def _make_async_guard():
-    from cyberrakshak_guard import AsyncCyberRakshakGuard
+    from soter import AsyncSoter
 
     fake = FakeAsyncClient()
-    guard = AsyncCyberRakshakGuard(
+    guard = AsyncSoter(
         api_key="ck_test_key_123456",
         base_url="http://localhost:3000",
         client=fake,
@@ -74,7 +74,7 @@ async def test_async_protect_chat_accepts_sync_llm():
 @pytest.mark.asyncio
 async def test_async_protect_rag_excludes_risky():
     guard, fake = _make_async_guard()
-    from cyberrakshak_guard import RagSource
+    from soter import RagSource
 
     async def retrieve(safe_query):
         return [

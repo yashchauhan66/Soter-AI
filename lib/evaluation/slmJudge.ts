@@ -118,7 +118,7 @@ export class SlmJudge {
         userPrompt
       );
 
-      const parsed = this.parseResponse(response, criterion);
+      const parsed = this.parseResponse(response);
       return {
         criterion,
         score: parsed.score,
@@ -189,10 +189,7 @@ export class SlmJudge {
    * Parse the JSON response from the SLM provider into a score object.
    * Tries to extract score and reason, falling back to defaults on parse failure.
    */
-  private parseResponse(
-    raw: string,
-    criterion: EvaluationCriterion
-  ): { score: number; reason: string } {
+  private parseResponse(raw: string): { score: number; reason: string } {
     try {
       // Try to extract JSON from the response (handle markdown code blocks)
       const cleaned = raw

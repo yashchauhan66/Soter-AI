@@ -1,4 +1,4 @@
-"""LlamaIndex RAG protected by CyberRakshak Guard.
+"""LlamaIndex RAG protected by Soter.
 
 Run:
     export SOTER_API_KEY=ck_...

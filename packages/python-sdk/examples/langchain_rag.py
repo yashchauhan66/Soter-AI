@@ -1,4 +1,4 @@
-"""LangChain RAG protected by CyberRakshak Guard.
+"""LangChain RAG protected by Soter.
 
 Demonstrates both:
   * protect_langchain_chain — wrap an existing chain/runnable

@@ -4,39 +4,39 @@ from __future__ import annotations
 
 import pytest
 
-from cyberrakshak_guard import CyberRakshakGuard, GuardResult
-from cyberrakshak_guard.exceptions import CyberRakshakConfigError
+from soter import Soter, GuardResult
+from soter.exceptions import SoterConfigError
 
 
 def test_client_reads_env(monkeypatch, fake_session):
-    monkeypatch.setenv("CYBERRAKSHAK_API_KEY", "ck_env_key_abcdef")
-    monkeypatch.setenv("CYBERRAKSHAK_BASE_URL", "http://localhost:3000")
-    guard = CyberRakshakGuard(session=fake_session)
+    monkeypatch.setenv("SOTER_API_KEY", "ck_env_key_abcdef")
+    monkeypatch.setenv("SOTER_BASE_URL", "http://localhost:3000")
+    guard = Soter(session=fake_session)
     assert guard.api_key == "ck_env_key_abcdef"
     assert guard.base_url == "http://localhost:3000"
 
 
 def test_client_reads_soter_env(monkeypatch, fake_session):
-    monkeypatch.delenv("CYBERRAKSHAK_API_KEY", raising=False)
-    monkeypatch.delenv("CYBERRAKSHAK_BASE_URL", raising=False)
+    monkeypatch.delenv("SOTER_API_KEY", raising=False)
+    monkeypatch.delenv("SOTER_BASE_URL", raising=False)
     monkeypatch.setenv("SOTER_API_KEY", "ck_soter_env_key")
     monkeypatch.setenv("SOTER_BASE_URL", "http://localhost:4000")
-    guard = CyberRakshakGuard(session=fake_session)
+    guard = Soter(session=fake_session)
     assert guard.api_key == "ck_soter_env_key"
     assert guard.base_url == "http://localhost:4000"
 
 
 def test_missing_api_key_raises_clear_error(monkeypatch):
-    monkeypatch.delenv("CYBERRAKSHAK_API_KEY", raising=False)
-    with pytest.raises(CyberRakshakConfigError) as exc:
-        CyberRakshakGuard()
+    monkeypatch.delenv("SOTER_API_KEY", raising=False)
+    with pytest.raises(SoterConfigError) as exc:
+        Soter()
     assert "api key" in str(exc.value).lower()
 
 
 def test_base_url_defaults(monkeypatch, fake_session):
-    monkeypatch.delenv("CYBERRAKSHAK_BASE_URL", raising=False)
-    guard = CyberRakshakGuard(api_key="ck_test_key_123456", session=fake_session)
-    assert guard.base_url == "https://api.cybersecurityguard.com"
+    monkeypatch.delenv("SOTER_BASE_URL", raising=False)
+    guard = Soter(api_key="ck_test_key_123456", session=fake_session)
+    assert guard.base_url == "https://api.soter.dev"
 
 
 def test_input_sends_api_key_header(guard, fake_session):

@@ -4,6 +4,18 @@ Safety layer for intelligent conversations.
 
 Soter is a developer-first safety layer for AI chatbots, agents, RAG systems, and LLM applications. It helps detect and block prompt injection, jailbreaks, data leakage, unsafe outputs, PII exposure, tool abuse, and risky AI behavior before it reaches your model or user.
 
+## Package Health
+
+| Package | Registry | Version | Typecheck | Build | Tests | Status |
+|---------|----------|---------|-----------|-------|-------|--------|
+| `@soterai/core` | [npm](https://www.npmjs.com/package/@soterai/core) | `0.2.0` | ✅ | ✅ | ✅ 14/14 | ✅ **Healthy** |
+| `@soterai/langchain-middleware` | [npm](https://www.npmjs.com/package/@soterai/langchain-middleware) | `0.2.0` | ✅ | ✅ | — | ✅ **Healthy** |
+| `@soterai/llamaindex-middleware` | [npm](https://www.npmjs.com/package/@soterai/llamaindex-middleware) | `0.2.0` | ✅ | ✅ | — | ✅ **Healthy** |
+| `@soterai/vercel-ai-sdk-middleware` | [npm](https://www.npmjs.com/package/@soterai/vercel-ai-sdk-middleware) | `0.2.0` | ✅ | ✅ | — | ✅ **Healthy** |
+| `soter` (Python SDK) | [PyPI](https://pypi.org/project/soter/) | `0.2.0` | — | ✅ sdist+wheel | ✅ 56/56 | ✅ **Healthy** |
+
+**Overall: 🟢 HEALTHY** — All 5 packages build, typecheck, and test successfully. 70/70 tests pass (0 failures).
+
 ## Phase 8: Launch Operations
 
 Phase 8 adds the business and operational layer required for beta launch:
@@ -51,7 +63,7 @@ The product reduces risk. It does not provide complete protection, replace secur
 
 ## Phase 2 capabilities (still working)
 
-- `@soter/core` typed SDK + `@soter/core/next` `secureChatHandler`.
+- `@soterai/core` typed SDK + `@soterai/core/next` `secureChatHandler`.
 - Webhook endpoints with HMAC-SHA256 signatures and delivery logs.
 - Agency dashboard, clients, branding, white-label printable report.
 - Public security badge endpoint, embed script, public status page.
@@ -101,9 +113,22 @@ The seed prints the demo email, password, and a one-time API key. The demo user 
 
 ## Verification
 
-```powershell
-npm run verify
-# typecheck + tests (46/46) + build
+```bash
+# TypeScript SDK
+cd packages/sdk && npm run typecheck && npm test
+# → 14/14 tests pass
+
+# Python SDK
+cd packages/python-sdk && python -m pytest tests/ -q
+# → 56/56 tests pass (21 skipped — e2e needs SOTER_API_KEY)
+
+# Middleware packages
+cd packages/langchain-middleware && npm run typecheck
+cd packages/llamaindex-middleware && npm run typecheck
+cd packages/vercel-ai-sdk-middleware && npm run typecheck
+
+# Full project
+cd app && npx tsc --noEmit --skipLibCheck
 ```
 
 ### Browser E2E
@@ -137,14 +162,16 @@ curl -X POST http://localhost:3000/api/guard/output \
 curl http://localhost:3000/api/badge/<slug>
 ```
 
-## SDK quick start
+## SDK Quick Start
+
+### TypeScript / JavaScript
 
 ```bash
-npm install @soter/core
+npm install @soterai/core
 ```
 
 ```ts
-import { Soter } from "@soter/core";
+import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
@@ -162,31 +189,68 @@ if (!result.allowed) {
 }
 ```
 
-The Next.js helper:
+#### Next.js Helper
 
 ```ts
-import { secureChatHandler } from "@soter/core/next";
+import { secureChatHandler } from "@soterai/core/next";
 export const POST = secureChatHandler({
   apiKey: process.env.SOTER_API_KEY!,
   callLLM: async ({ safeInput }) => callLLM(safeInput),
 });
 ```
 
+#### AI Framework Middleware
+
+| Package | Framework | Usage |
+|---------|-----------|-------|
+| `@soterai/langchain-middleware` | LangChain | Wrap chains with `withSoterLangChain(chain, guard)` |
+| `@soterai/llamaindex-middleware` | LlamaIndex | Wrap engines with `createSoterQueryWrapper(engine, guard)` |
+| `@soterai/vercel-ai-sdk-middleware` | Vercel AI SDK | Guard prompts/outputs with `soterVercelAiMiddleware(guard)` |
+
+### Python
+
+```bash
+pip install soter
+```
+
+```python
+from soter import Soter
+
+guard = Soter()  # reads SOTER_API_KEY
+
+result = guard.protect_chat(
+    message="Ignore previous instructions",
+    call_llm=lambda msg: my_llm(msg),
+)
+print(result.input_action)  # BLOCK
+
+# Framework helpers:
+# from soter.fastapi import create_chat_route
+# from soter.flask import create_chat_view
+# from soter.langchain import protect_langchain_chain
+# from soter.llamaindex import protect_query_engine
+```
+
 ## Integrations
 
 Official SDKs and plugins for connecting chatbots, RAG apps, and AI agents:
 
-- **JavaScript / TypeScript** — `@soter/core` (`packages/sdk`).
+- **JavaScript / TypeScript** — `@soterai/core` (`packages/sdk`).
   See [docs/integrations/javascript-typescript.md](docs/integrations/javascript-typescript.md).
-- **Python** — `cyberrakshak-guard` (`packages/python-sdk`).
+- **Python** — `soter` (`packages/python-sdk`).
   See [docs/integrations/python.md](docs/integrations/python.md).
 - **WordPress / PHP** — plugin in `integrations/wordpress-plugin/cyberrakshak-guard`.
   See [docs/integrations/wordpress.md](docs/integrations/wordpress.md).
+- **LangChain** — `@soterai/langchain-middleware` (`packages/langchain-middleware`).
+- **LlamaIndex** — `@soterai/llamaindex-middleware` (`packages/llamaindex-middleware`).
+- **Vercel AI SDK** — `@soterai/vercel-ai-sdk-middleware` (`packages/vercel-ai-sdk-middleware`).
 - **API contract** — [docs/integrations/api-contract.md](docs/integrations/api-contract.md).
 - **Security best practices** — [docs/integrations/security-best-practices.md](docs/integrations/security-best-practices.md).
 
-Runnable examples live in `examples/` (Next.js, Express, FastAPI, LangChain,
-WordPress demo).
+Runnable examples live in `examples/`:
+- [Next.js Chat](examples/nextjs-soter/) — TypeScript + `@soterai/core`
+- [FastAPI Chat](examples/fastapi-soter/) — Python + `soter`
+- [Flask Chat](examples/flask-soter/) — Python + `soter`
 
 ## Webhooks
 

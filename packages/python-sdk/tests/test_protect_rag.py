@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from cyberrakshak_guard import RagSource
+from soter import RagSource
 
 
 def test_protect_rag_excludes_risky_chunks(guard):

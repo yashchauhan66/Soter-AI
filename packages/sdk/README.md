@@ -7,7 +7,7 @@ Soter is a developer-first safety layer for AI chatbots, agents, RAG systems, an
 ## Install
 
 ```bash
-npm install @soter/core
+npm install @soterai/core
 ```
 
 Node.js 18.18 or newer is required. Keep the API key on the server; never bundle it into browser code.
@@ -15,7 +15,7 @@ Node.js 18.18 or newer is required. Keep the API key on the server; never bundle
 ## Usage
 
 ```ts
-import { Soter } from "@soter/core";
+import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
@@ -59,14 +59,14 @@ import type {
   SoterConfig,
   SoterProtectRequest,
   SoterProtectResult,
-} from "@soter/core";
+} from "@soterai/core";
 ```
 
 ## Next.js route handler
 
 ```ts
 // app/api/chat/route.ts
-import { secureChatHandler } from "@soter/core/next";
+import { secureChatHandler } from "@soterai/core/next";
 
 export const POST = secureChatHandler({
   apiKey: process.env.SOTER_API_KEY!,
@@ -78,7 +78,7 @@ export const POST = secureChatHandler({
 ## Express middleware
 
 ```ts
-import { soterInputMiddleware } from "@soter/core/express";
+import { soterInputMiddleware } from "@soterai/core/express";
 
 app.post(
   "/chat",
@@ -120,9 +120,9 @@ Authenticated requests send the API key in the `x-api-key` header. The SDK does 
 
 ## Package exports
 
-- `@soter/core` - Soter client and Agent Firewall helpers
-- `@soter/core/next` - Next.js route helpers
-- `@soter/core/express` - Express-compatible middleware
+- `@soterai/core` - Soter client and Agent Firewall helpers
+- `@soterai/core/next` - Next.js route helpers
+- `@soterai/core/express` - Express-compatible middleware
 
 ## Backward compatibility
 
