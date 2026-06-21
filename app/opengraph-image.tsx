@@ -92,7 +92,7 @@ export default function Image() {
                 fontWeight: 700,
               }}
             >
-              {"\uD83D\uDEE1\uFE0F"}
+              S
             </span>
             <span
               style={{
@@ -179,6 +179,9 @@ export default function Image() {
               <div
                 key={feat.label}
                 style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
                   padding: "6px 14px",
                   borderRadius: 20,
                   border: "1px solid rgba(148, 163, 184, 0.2)",
@@ -188,7 +191,7 @@ export default function Image() {
                   fontWeight: 500,
                 }}
               >
-                {"\u2713"} {feat.label}
+                OK {feat.label}
               </div>
             ))}
           </div>
@@ -208,7 +211,7 @@ export default function Image() {
             soter.dev
           </span>
           <span style={{ fontSize: 12, color: "#334155" }}>
-            OWASP LLM Top 10 Aligned{" \u2022 "}Free Tier Available
+            OWASP LLM Top 10 Aligned - Free Tier Available
           </span>
         </div>
       </div>

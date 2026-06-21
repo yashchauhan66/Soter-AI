@@ -158,9 +158,7 @@ export default function Image() {
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-                <span style={{ fontSize: 22 }}              >
-              {"\uD83D\uDEE1\uFE0F"}
-              </span>
+                <span style={{ fontSize: 22, fontWeight: 800, color: "#00c8c8" }}>S</span>
                 <span style={{ fontSize: 18, fontWeight: 700, color: "#00c8c8" }}>Soter</span>
               </div>
               {[
@@ -172,7 +170,7 @@ export default function Image() {
                 "Enterprise Ready",
               ].map((item) => (
                 <div key={item} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
-                  <span style={{ color: "#00dc82", fontSize: 14 }}>{"\u2713"}</span>
+                  <span style={{ color: "#00dc82", fontSize: 14 }}>OK</span>
                   <span style={{ fontSize: 13, color: "#e2e8f0" }}>{item}</span>
                 </div>
               ))}
@@ -180,10 +178,10 @@ export default function Image() {
 
             {/* Competitors */}
             {[
-              { name: "Lakera", icon: "\uD83D\uDD34", color: "#ef4444", features: ["Input Only", "Cloud-Only", "No RAG"] },
-              { name: "NeMo", icon: "\uD83D\uDD35", color: "#22c55e", features: ["Flow Control", "Complex Setup", "No PII"] },
-              { name: "GA Guard", icon: "\uD83D\uDFE2", color: "#34d399", features: ["Classifier Only", "No RAG/Agent", "256K Context"] },
-              { name: "Guardrails AI", icon: "\uD83D\uDFE1", color: "#eab308", features: ["Output Only", "17K Stars", "No Input Guard"] },
+              { name: "Lakera", icon: "L", color: "#ef4444", features: ["Input Only", "Cloud-Only", "No RAG"] },
+              { name: "NeMo", icon: "N", color: "#22c55e", features: ["Flow Control", "Complex Setup", "No PII"] },
+              { name: "GA Guard", icon: "G", color: "#34d399", features: ["Classifier Only", "No RAG/Agent", "256K Context"] },
+              { name: "Guardrails AI", icon: "A", color: "#eab308", features: ["Output Only", "17K Stars", "No Input Guard"] },
             ].map((comp) => (
               <div
                 key={comp.name}
@@ -203,7 +201,7 @@ export default function Image() {
                 </div>
                 {comp.features.map((f) => (
                   <div key={f} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3 }}>
-                    <span style={{ color: "#ef4444", fontSize: 12 }}>{"\u2717"}</span>
+                    <span style={{ color: "#ef4444", fontSize: 12 }}>NO</span>
                     <span style={{ fontSize: 12, color: "#64748b" }}>{f}</span>
                   </div>
                 ))}
@@ -246,7 +244,7 @@ export default function Image() {
                 fontWeight: 700,
               }}
             >
-                              {"\uD83D\uDEE1\uFE0F"}
+              S
             </span>
             soter.dev/comparison
           </div>
@@ -261,9 +259,9 @@ export default function Image() {
             }}
           >
             <span>22 Features Compared</span>
-            <span style={{ margin: "0 4px" }}>{"\u2022"}</span>
+            <span style={{ margin: "0 4px" }}>-</span>
             <span>6 Competitors</span>
-            <span style={{ margin: "0 4px" }}>{"\u2022"}</span>
+            <span style={{ margin: "0 4px" }}>-</span>
             <span>Free Tier Available</span>
           </div>
         </div>
