@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, BarChart3, CheckCircle2, Gauge, ShieldCheck, Zap } from "lucide-react";
 import { FAQ } from "@/components/marketing/FAQ";
 import { Features } from "@/components/marketing/Features";
 import { Hero } from "@/components/marketing/Hero";
@@ -38,6 +38,75 @@ export default function Home() {
 
       <HowItWorks />
       <Features />
+
+      {/* ── Benchmark section ── */}
+      <section className="border-y border-slate-800 bg-slate-950/40 py-20">
+        <div className="container-page text-center">
+          <p className="eyebrow">Adversarial Benchmark</p>
+          <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
+            Proven detection: <span className="text-cyan">F1 = 1.0000</span>
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-400">
+            97/97 adversarial attack variants detected across 8 categories with zero false positives.
+            Garak-style red-team evaluation against prompt injection, jailbreaks, PII leaks, and more.
+          </p>
+
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="card p-6">
+              <ShieldCheck className="mx-auto text-cyan" size={28} />
+              <p className="mt-3 text-3xl font-black text-cyan">100%</p>
+              <p className="mt-1 text-sm text-slate-400">Detection Rate</p>
+              <p className="text-xs text-slate-500">97/97 adversarial prompts</p>
+            </div>
+            <div className="card p-6">
+              <Zap className="mx-auto text-lime" size={28} />
+              <p className="mt-3 text-3xl font-black text-lime">0%</p>
+              <p className="mt-1 text-sm text-slate-400">False Positives</p>
+              <p className="text-xs text-slate-500">25/25 safe inputs allowed</p>
+            </div>
+            <div className="card p-6">
+              <Gauge className="mx-auto text-cyan" size={28} />
+              <p className="mt-3 text-3xl font-black text-cyan">&lt;50ms</p>
+              <p className="mt-1 text-sm text-slate-400">Inline Latency</p>
+              <p className="text-xs text-slate-500">SDK-level detection</p>
+            </div>
+            <div className="card p-6">
+              <BarChart3 className="mx-auto text-cyan" size={28} />
+              <p className="mt-3 text-3xl font-black text-cyan">8</p>
+              <p className="mt-1 text-sm text-slate-400">Attack Categories</p>
+              <p className="text-xs text-slate-500">All detected at 100%</p>
+            </div>
+          </div>
+
+          <div className="mt-8 flex flex-wrap justify-center gap-3 text-sm">
+            {[
+              "Prompt Injection",
+              "Jailbreak / DAN",
+              "Encoding / Obfuscation",
+              "Multilingual (Hindi)",
+              "Indirect Injection",
+              "PII Detection",
+              "Secrets / Credentials",
+              "Unsafe Output",
+            ].map((cat) => (
+              <span
+                key={cat}
+                className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-xs text-slate-300"
+              >
+                {cat}
+              </span>
+            ))}
+          </div>
+
+          <Link
+            href="/benchmarks"
+            className="button-secondary mt-8 inline-flex items-center gap-2"
+          >
+            View full benchmark details <ArrowRight size={16} />
+          </Link>
+        </div>
+      </section>
+
       <section className="border-y border-slate-800 bg-slate-950/40 py-24">
         <div className="container-page">
           <SectionHeading
