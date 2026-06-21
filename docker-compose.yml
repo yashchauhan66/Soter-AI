@@ -16,6 +16,9 @@ services:
       - NODE_ENV=production
       - PORT=3000
       - HOSTNAME=0.0.0.0
+      - VECTOR_PROVIDER=${VECTOR_PROVIDER:-qdrant}
+      - QDRANT_URL=http://qdrant:6333
+      - REDIS_URL=redis://redis:6379
     # Expose only on 127.0.0.1 — nginx reverse proxy handles external access
     ports:
       - "127.0.0.1:3000:3000"
@@ -25,6 +28,11 @@ services:
       timeout: 10s
       retries: 5
       start_period: 15s
+    depends_on:
+      redis:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
     logging:
       driver: "json-file"
       options:

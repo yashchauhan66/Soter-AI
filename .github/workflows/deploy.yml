@@ -9,7 +9,7 @@
 # Prerequisites (one-time setup on EC2):
 #   - docker login  (Docker Hub credentials)
 #   - .env.production created in the repo directory
-#   - Repo cloned: git clone https://github.com/<your-org>/Ai-Security-Guard.git
+#   - Repo cloned: git clone https://github.com/yashchauhan66/Ai-Security-Guard.git
 #
 # ═══════════════════════════════════════════════════════════════════════════════
 
@@ -88,12 +88,12 @@ jobs:
               cd "$REPO_DIR"
               git stash 2>/dev/null || true
               # Refresh auth token (GITHUB_TOKEN expires between runs)
-              git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/<your-org>/Ai-Security-Guard.git
+              git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/yashchauhan66/Ai-Security-Guard.git
               git pull --rebase
               echo "  ✅ Repo updated at ${REPO_DIR}"
             else
               echo "  Cloning fresh..."
-              git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/<your-org>/Ai-Security-Guard.git "$REPO_DIR"
+              git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/yashchauhan66/Ai-Security-Guard.git "$REPO_DIR"
               cd "$REPO_DIR"
               echo "  ✅ Repo cloned at ${REPO_DIR}"
             fi
@@ -145,7 +145,7 @@ jobs:
             echo "[5/5] Deploying with docker compose..."
             export DOCKER_IMAGE="${DOCKER_TAG}"
             # No pull needed — we just built the image locally
-            docker compose up -d --no-deps --force-recreate app
+            docker compose --env-file .env.production up -d --force-recreate redis qdrant app
 
             echo ""
             echo "  Cleaning up old images..."
