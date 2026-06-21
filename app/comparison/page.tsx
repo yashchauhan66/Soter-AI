@@ -226,13 +226,63 @@ const whoWins: Array<{ emoji: string; winner: string; reason: string }> = [
   { emoji: "🔵", winner: "NVIDIA NeMo", reason: "Best flow control — only programmable dialog flow with Colang DSL" },
 ];
 
-// ─── Helpers ───────────────────────────────────────────────────────────────
+// ─── JSON-LD ───────────────────────────────────────────────────────────────
+
+function jsonLd() {
+  const softwareItems = competitors.map((c) => {
+    const featureProps = features.map((f) => ({
+      "@type": "PropertyValue",
+      name: f.name,
+      value: f.values[c.id as keyof typeof f.values],
+      description: f.desc,
+    }));
+    return {
+      "@type": "ListItem",
+      position: competitors.indexOf(c) + 1,
+      item: {
+        "@type": "SoftwareApplication",
+        name: c.name,
+        url: `https://soter.dev/comparison#${c.id}`,
+        applicationCategory: "SecurityApplication",
+        description: `AI security guardrail platform. Features: ${features
+          .filter((f) => f.values[c.id as keyof typeof f.values] === "✅")
+          .map((f) => f.name)
+          .join(", ")}.`,
+        additionalProperty: featureProps,
+      },
+    };
+  });
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "AboutPage",
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soter.dev/comparison" },
+        "name": "Soter vs Competitors — AI Security Guardrail Comparison",
+        "description": "Compare 7 AI security platforms across 22 features. See how Soter compares against Lakera, NVIDIA NeMo, Guardrails AI, LLM Guard, GA Guard, and AWS Bedrock.",
+        "mainEntity": {
+          "@type": "ItemList",
+          "name": "AI Security Guardrail Platforms",
+          "description": "Comparison of 7 AI security guardrail platforms",
+          "numberOfItems": competitors.length,
+          "itemListOrder": "Descending",
+          "itemListElement": softwareItems,
+        },
+      },
+    ],
+  };
+}
 
 // ─── Component ─────────────────────────────────────────────────────────────
 
 export default function ComparisonPage() {
   return (
     <main className="py-16 sm:py-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
+      />
       <div className="container-page">
         {/* ── Hero ── */}
         <div className="text-center">
