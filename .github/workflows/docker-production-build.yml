@@ -1,4 +1,4 @@
-name: Docker Production Build Verification
+name: Docker Build Verification
 
 on:
   push:
@@ -20,7 +20,7 @@ env:
   LOCAL_SECRET_STORE_KEY: ci-test-local-secret-store-key-for-docker-build-32chars
   VECTOR_PROVIDER: qdrant
   EMAIL_PROVIDER: mock
-  EMAIL_FROM: noreply@cyberrakshak.dev
+  EMAIL_FROM: noreply@soter.dev
 
 jobs:
   docker-build:
@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set DATABASE_URL for Compose interpolation
-        run: echo "DATABASE_URL=postgresql://postgres:${{ env.POSTGRES_PASSWORD }}@postgres:5432/cyberrakshak" >> $GITHUB_ENV
+        run: echo "DATABASE_URL=postgresql://postgres:${{ env.POSTGRES_PASSWORD }}@postgres:5432/soter" >> $GITHUB_ENV
 
       - name: Validate Docker Compose config
         run: docker compose -f docker-compose.prod.yml config
