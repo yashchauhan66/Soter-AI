@@ -6,7 +6,7 @@
 #
 # Usage:
 #   1. SSH into EC2:
-#      ssh -i ai-security-guard.pem ubuntu@ec2-65-0-107-93.ap-south-1.compute.amazonaws.com
+#      ssh -i <your-key>.pem ubuntu@<your-ec2-host>
 #
 #   2. Run this script:
 #      bash <(curl -fsSL https://raw.githubusercontent.com/.../setup-ec2.sh)
@@ -49,7 +49,7 @@ REPO_DIR="/home/ubuntu/soter-guard"
 if [ -d "$REPO_DIR" ]; then
     log "Repository already cloned at ${REPO_DIR}"
 else
-    git clone https://github.com/yashchauhan66/Ai-Security-Guard.git "$REPO_DIR"
+    git clone https://github.com/<your-org>/Ai-Security-Guard.git "$REPO_DIR"
     log "Repository cloned to ${REPO_DIR}"
 fi
 
@@ -145,8 +145,8 @@ echo -e "  3. (Optional) Set up nginx + SSL with a domain:"
 echo -e "     cd ${REPO_DIR} && sudo bash infra/setup-ssl.sh yourdomain.com"
 echo ""
 echo -e "  ${YELLOW}GitHub secrets you still need to set:${NC}"
-echo -e "  • EC2_SSH_PRIVATE_KEY  — content of your ai-security-guard.pem"
-echo -e "  • EC2_HOST             — ec2-65-0-107-93.ap-south-1.compute.amazonaws.com"
+echo -e "  • EC2_SSH_PRIVATE_KEY  — content of your EC2 PEM key file"
+echo -e "  • EC2_HOST             — your EC2 public hostname"
 echo -e "  • EC2_USER             — ubuntu"
 echo -e "  • DOCKER_USERNAME      — your Docker Hub username"
 echo -e "  • DOCKER_PASSWORD      — your Docker Hub password/token"

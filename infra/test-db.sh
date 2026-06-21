@@ -5,7 +5,7 @@
 # Run this on EC2 to verify the database is reachable.
 #
 # Usage:
-#   ssh -i ai-security-guard.pem ubuntu@ec2-65-0-107-93.ap-south-1.compute.amazonaws.com
+#   ssh -i <your-key>.pem ubuntu@<your-ec2-host>
 #   bash ~/soter-guard/infra/test-db.sh
 # ═══════════════════════════════════════════════════════════════════════════════
 

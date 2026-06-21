@@ -9,7 +9,7 @@
 # Prerequisites (one-time setup on EC2):
 #   - docker login  (Docker Hub credentials)
 #   - .env.production created in the repo directory
-#   - Repo cloned: git clone https://github.com/yashchauhan66/Ai-Security-Guard.git
+#   - Repo cloned: git clone https://github.com/<your-org>/Ai-Security-Guard.git
 #
 # ═══════════════════════════════════════════════════════════════════════════════
 
@@ -88,12 +88,12 @@ jobs:
               cd "$REPO_DIR"
               git stash 2>/dev/null || true
               # Refresh auth token (GITHUB_TOKEN expires between runs)
-              git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/yashchauhan66/Ai-Security-Guard.git
+              git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/<your-org>/Ai-Security-Guard.git
               git pull --rebase
               echo "  ✅ Repo updated at ${REPO_DIR}"
             else
               echo "  Cloning fresh..."
-              git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/yashchauhan66/Ai-Security-Guard.git "$REPO_DIR"
+              git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/<your-org>/Ai-Security-Guard.git "$REPO_DIR"
               cd "$REPO_DIR"
               echo "  ✅ Repo cloned at ${REPO_DIR}"
             fi
@@ -105,7 +105,7 @@ jobs:
               echo "  ❌ ERROR: .env.production not found!"
               echo ""
               echo "  Create it manually:"
-              echo "    ssh -i ai-security-guard.pem ubuntu@${{ secrets.EC2_HOST }}"
+              echo "    ssh -i <your-key>.pem ubuntu@${{ secrets.EC2_HOST }}"
               echo "    cd $REPO_DIR"
               echo "    nano .env.production"
               echo ""
