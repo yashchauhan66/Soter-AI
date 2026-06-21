@@ -1,9 +1,11 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { NextResponse } from "next/server";
+import { requireUser } from "@/lib/auth/guards";
 
 export async function GET() {
   try {
+    await requireUser();
     const filePath = join(process.cwd(), "scripts/guard-benchmark/results.json");
     const raw = readFileSync(filePath, "utf-8");
     const data = JSON.parse(raw);
