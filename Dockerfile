@@ -26,6 +26,10 @@ RUN apk add --no-cache libc6-compat openssl
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# Ensure public/ exists so the runner-stage COPY always has a source
+# (this repo ships no static assets, so the dir may be absent)
+RUN mkdir -p public
+
 # Generate Prisma client (needed at build time for type generation)
 RUN npx prisma generate
 
