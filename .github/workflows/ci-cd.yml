@@ -220,6 +220,11 @@ jobs:
           ssh ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} bash -s << 'DEPLOY_SCRIPT'
             set -e
 
+            # ── Fix PATH for non-interactive SSH ───────────────────
+            export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH"
+            [ -f ~/.bashrc ] && source ~/.bashrc 2>/dev/null || true
+            [ -f ~/.profile ] && source ~/.profile 2>/dev/null || true
+
             REPO_DIR="/home/${{ secrets.EC2_USER }}/soter-guard"
             DOCKER_USERNAME="$(printf '%s' "${{ secrets.DOCKER_USERNAME }}" | tr -d '[:space:]')"
             DOCKER_TAG="${DOCKER_USERNAME}/soter"
@@ -267,27 +272,77 @@ jobs:
             echo ""
             echo "[4/5] Pulling latest Docker image..."
             docker pull "${DOCKER_TAG}:${COMMIT_SHA}"
-            # Tag it for docker-compose to pick up
             docker tag "${DOCKER_TAG}:${COMMIT_SHA}" "${DOCKER_TAG}:latest"
             echo "  ✅ Image pulled: ${DOCKER_TAG}:${COMMIT_SHA}"
 
-            # ── Step 5: Deploy with docker compose ─────────────────
+            # ── Step 5: Deploy containers ──────────────────────────
             echo ""
-            echo "[5/5] Deploying with docker compose..."
+            echo "[5/5] Deploying containers..."
             export DOCKER_IMAGE="${DOCKER_TAG}"
 
-            # Detect compose command
+            # Detect docker compose (V2 plugin or V1 binary)
+            COMPOSE=""
             if docker compose version >/dev/null 2>&1; then
               COMPOSE="docker compose"
             elif command -v docker-compose >/dev/null 2>&1; then
               COMPOSE="docker-compose"
-            else
-              echo "  ❌ ERROR: docker compose not found!"
-              exit 127
+            elif [ -x /usr/local/bin/docker-compose ]; then
+              COMPOSE="/usr/local/bin/docker-compose"
+            elif [ -x /usr/bin/docker-compose ]; then
+              COMPOSE="/usr/bin/docker-compose"
             fi
 
-            echo "  Using: $COMPOSE"
-            $COMPOSE --env-file .env.production up -d --force-recreate app redis qdrant
+            if [ -n "$COMPOSE" ]; then
+              # ── Deploy via docker compose ──
+              echo "  Using compose: $COMPOSE"
+              $COMPOSE --env-file .env.production up -d --force-recreate app redis qdrant
+            else
+              # ── Fallback: deploy via plain docker run ──
+              echo "  docker compose not found — using docker run directly"
+
+              # Create shared network
+              docker network create soter-net 2>/dev/null || true
+
+              # Stop old containers
+              docker rm -f soter-redis soter-qdrant soter-app 2>/dev/null || true
+
+              # Start Redis
+              echo "  Starting Redis..."
+              docker run -d \
+                --name soter-redis \
+                --network soter-net \
+                --restart unless-stopped \
+                -v soter-redis-data:/data \
+                redis:7-alpine \
+                redis-server --appendonly yes
+
+              # Start Qdrant
+              echo "  Starting Qdrant..."
+              docker run -d \
+                --name soter-qdrant \
+                --network soter-net \
+                --restart unless-stopped \
+                -v soter-qdrant-data:/qdrant/storage \
+                qdrant/qdrant:v1.14.1
+
+              # Wait for dependencies to be ready
+              echo "  Waiting for Redis & Qdrant..."
+              sleep 5
+
+              # Start App
+              echo "  Starting App..."
+              docker run -d \
+                --name soter-app \
+                --network soter-net \
+                --restart unless-stopped \
+                --env-file "$REPO_DIR/.env.production" \
+                -e NODE_ENV=production \
+                -e VECTOR_PROVIDER=qdrant \
+                -e QDRANT_URL=http://soter-qdrant:6333 \
+                -e REDIS_URL=redis://soter-redis:6379 \
+                -p 127.0.0.1:3000:3000 \
+                "${DOCKER_TAG}:latest"
+            fi
 
             # Clean up old images
             docker image prune -a --filter "until=24h" --force 2>/dev/null || true
@@ -295,6 +350,7 @@ jobs:
             # Health check (wait up to 60 seconds)
             echo ""
             echo "  Waiting for health check..."
+            HTTP_CODE="000"
             for i in $(seq 1 12); do
               sleep 5
               HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3000/api/health 2>/dev/null || echo "000")
@@ -307,7 +363,11 @@ jobs:
 
             if [ "$HTTP_CODE" != "200" ]; then
               echo "  ⚠️  Health check got HTTP $HTTP_CODE (app may still be starting)"
-              $COMPOSE --env-file .env.production logs --tail=30 app
+              if [ -n "$COMPOSE" ]; then
+                $COMPOSE --env-file .env.production logs --tail=30 app
+              else
+                docker logs --tail=30 soter-app
+              fi
             fi
 
             # Reload nginx if present
