@@ -198,9 +198,9 @@ export default function ApiContractDocsPage() {
           <div className="mt-4 rounded-lg border border-slate-800 p-4">
             <p className="text-sm font-semibold text-slate-300">Webhook Headers</p>
             <ul className="mt-2 space-y-1 text-sm text-slate-400">
-              <li><InlineCode>x-cyberrakshak-event</InlineCode> — event name</li>
-              <li><InlineCode>x-cyberrakshak-timestamp</InlineCode> — unix seconds at signing time</li>
-              <li><InlineCode>x-cyberrakshak-signature</InlineCode> — <InlineCode>t=...,v1=&lt;hmac-sha256&gt;</InlineCode></li>
+              <li><InlineCode>x-soter-event</InlineCode> — event name</li>
+              <li><InlineCode>x-soter-timestamp</InlineCode> — unix seconds at signing time</li>
+              <li><InlineCode>x-soter-signature</InlineCode> — <InlineCode>t=...,v1=&lt;hmac-sha256&gt;</InlineCode></li>
             </ul>
           </div>
         </section>

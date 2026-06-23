@@ -26,16 +26,15 @@ const breadcrumbSchema = {
 };
 
 const installCode = `# Install the Python client
-pip install cyberrakshak-guard
+pip install soter
 
 # Optional extras
-pip install "cyberrakshak-guard[fastapi]"    # FastAPI support
-pip install "cyberrakshak-guard[langchain]"  # LangChain support
-pip install "cyberrakshak-guard[async]"     # Async support (requires httpx)`;
+pip install "soter[fastapi]"    # FastAPI support
+pip install "soter[langchain]"  # LangChain support
+pip install "soter[async]"     # Async support (requires httpx)`;
 const basicCode = `from soter import Soter
 
 # Reads SOTER_API_KEY / SOTER_BASE_URL from environment
-# Falls back to CYBERRAKSHAK_API_KEY / CYBERRAKSHAK_BASE_URL
 guard = Soter()
 
 # Guard user input before LLM
@@ -125,10 +124,8 @@ export default function PythonDocsPage() {
           </p>
           <CodeBlock language="bash" title="pip install">{installCode}</CodeBlock>
           <TipBox>
-            <strong>Package name vs import name:</strong> The PyPI package is currently 
-            <InlineCode>cyberrakshak-guard</InlineCode>, but you import it via 
-            <InlineCode>import soter</InlineCode>. Legacy imports like 
-            <InlineCode>from cyberrakshak_guard import CyberRakshakGuard</InlineCode> also work.
+            The Python package is published on PyPI as <InlineCode>soter</InlineCode>.
+            Import it with <InlineCode>from soter import Soter</InlineCode>.
           </TipBox>
         </section>
 
@@ -141,7 +138,7 @@ export default function PythonDocsPage() {
 SOTER_BASE_URL=https://api.your-soter-host.example
 SOTER_PROJECT_ID=                        # optional`}</CodeBlock>
           <p className="mt-3 text-sm text-slate-400">
-            Legacy <InlineCode>CYBERRAKSHAK_*</InlineCode> environment variables are also supported as fallbacks.
+
           </p>
         </section>
 
