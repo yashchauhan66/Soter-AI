@@ -2,7 +2,7 @@ import type { AwaitedReturn } from "./types";
 
 export function createRedTeamReport(run: AwaitedReturn) {
   return {
-    title: "CyberRakshak Guard authorized red-team report",
+    title: "SoterAI authorized red-team report",
     scope: `Owned project ${run.projectId}`,
     defensiveOnly: true,
     summary: { passed: run.passed, failed: run.failed, total: run.results.length },

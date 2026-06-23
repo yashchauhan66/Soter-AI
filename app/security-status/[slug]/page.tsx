@@ -55,7 +55,7 @@ export default async function PublicSecurityStatusPage({ params }: { params: Pro
           negatives; the badge represents defensive activity, not a promise of complete protection.
         </p>
 
-        <Link href="/" className="mt-7 inline-block text-sm text-slate-400 hover:text-white">Powered by CyberRakshak Guard →</Link>
+        <Link href="/" className="mt-7 inline-block text-sm text-slate-400 hover:text-white">Powered by SoterAI →</Link>
       </div>
     </main>
   );

@@ -242,7 +242,7 @@ function jsonLd() {
       item: {
         "@type": "SoftwareApplication",
         name: c.name,
-        url: `https://soter.dev/comparison#${c.id}`,
+        url: `https://soterai.publicvm.com/comparison#${c.id}`,
         applicationCategory: "SecurityApplication",
         description: `AI security guardrail platform. Features: ${features
           .filter((f) => f.values[c.id as keyof typeof f.values] === "✅")
@@ -258,7 +258,7 @@ function jsonLd() {
     "@graph": [
       {
         "@type": "AboutPage",
-        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soter.dev/comparison" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soterai.publicvm.com/comparison" },
         "name": "Soter vs Competitors — AI Security Guardrail Comparison",
         "description": "Compare 7 AI security platforms across 22 features. See how Soter compares against Lakera, NVIDIA NeMo, Guardrails AI, LLM Guard, GA Guard, and AWS Bedrock.",
         "mainEntity": {

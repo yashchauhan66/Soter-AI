@@ -54,7 +54,7 @@ const result = await soter.protectRag({
   },
 });`;
   if (platform === "wordpress") return `// WordPress admin settings
-CyberRakshak Base URL: ${baseUrl}
+SoterAI Base URL: ${baseUrl}
 API Key: ck_test_... // stored server-side only
 Shortcode: [cyberrakshak_chatbot_guard]`;
   if (platform === "rest") return `curl -X POST "${baseUrl}/api/guard/input" \\

@@ -55,5 +55,5 @@ function touchApiKeyLastUsed(apiKeyId: string) {
   const cacheKey = `api-key:last-used:${apiKeyId}`;
   if (getLocalCache<boolean>(cacheKey)) return;
   setLocalCache(cacheKey, true, LAST_USED_WRITE_TTL_MS);
-  void db.apiKey.update({ where: { id: apiKeyId }, data: { lastUsedAt: new Date() } }).catch((error) => console.error("[CyberRakshak] Failed to update apiKey lastUsedAt", apiKeyId, error));
+  void db.apiKey.update({ where: { id: apiKeyId }, data: { lastUsedAt: new Date() } }).catch((error) => console.error("[SoterAI] Failed to update apiKey lastUsedAt", apiKeyId, error));
 }

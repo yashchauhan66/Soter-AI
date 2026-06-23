@@ -41,7 +41,7 @@ const SCRIPT = String.raw`(function(){
     dot.style.cssText = 'width:8px;height:8px;border-radius:9999px;display:inline-block;';
     dot.style.background = color;
     node.appendChild(dot);
-    node.appendChild(document.createTextNode('CyberRakshak Guard - ' + label));
+    node.appendChild(document.createTextNode('SoterAI - ' + label));
     if(current.parentNode){ current.parentNode.insertBefore(node, current); }
   }).catch(function(){});
 })();`;

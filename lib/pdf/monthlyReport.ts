@@ -73,7 +73,7 @@ export async function buildMonthlyReportPdf(input: PdfReportInput): Promise<Buff
     doc.on("end", () => resolve(Buffer.concat(chunks)));
 
     const accent = parseColor(branding?.brandColor ?? "#31d7c8");
-    const agencyName = branding?.agencyName ?? project.client?.agency?.name ?? "CyberRakshak Guard";
+    const agencyName = branding?.agencyName ?? project.client?.agency?.name ?? "SoterAI";
     const projectName = project.publicName ?? project.name;
     const clientName = project.client?.name ?? null;
 
@@ -159,7 +159,7 @@ export async function buildMonthlyReportPdf(input: PdfReportInput): Promise<Buff
     doc.moveDown(1);
     doc.fontSize(13).fillColor("#0f172a").text("OWASP LLM Top 10 alignment");
     doc.fontSize(10).fillColor("#475569").text(
-      "CyberRakshak Guard reduces risk for prompt injection, sensitive information disclosure, improper output handling, and unbounded consumption. Alignment supports defence in depth and is not a certification or claim of complete coverage.",
+      "SoterAI reduces risk for prompt injection, sensitive information disclosure, improper output handling, and unbounded consumption. Alignment supports defence in depth and is not a certification or claim of complete coverage.",
       { width: 499 },
     );
 
@@ -171,7 +171,7 @@ export async function buildMonthlyReportPdf(input: PdfReportInput): Promise<Buff
       { width: 499 },
     );
     doc.moveDown(0.5);
-    doc.fontSize(8).fillColor("#94a3b8").text(`Generated ${new Date().toUTCString()} | Powered by CyberRakshak Guard`);
+    doc.fontSize(8).fillColor("#94a3b8").text(`Generated ${new Date().toUTCString()} | Powered by SoterAI`);
     doc.fontSize(7).fillColor("#94a3b8").text(`Signature: ${reportSignature}`);
 
     doc.end();

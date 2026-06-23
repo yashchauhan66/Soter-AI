@@ -23,7 +23,7 @@ export async function POST(request: Request) {
       event: "guard.prompt_injection.blocked",
       payload: {
         test: true,
-        message: "This is a CyberRakshak Guard webhook test event. No real guard log triggered it.",
+        message: "This is a SoterAI webhook test event. No real guard log triggered it.",
         sentAt: new Date().toISOString(),
       },
     });

@@ -61,7 +61,7 @@ export async function getCurrentProjectById(projectId?: string) {
       const access = await requireProjectAccess(projectId);
       return access.project;
     } catch (error) {
-      console.warn("[CyberRakshak] Project access fallback for", projectId, error instanceof Error ? error.message : error);
+      console.warn("[SoterAI] Project access fallback for", projectId, error instanceof Error ? error.message : error);
     }
   }
   return getCurrentProject();

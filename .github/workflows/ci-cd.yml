@@ -282,20 +282,20 @@ jobs:
 
             # Detect docker compose (V2 plugin or V1 binary)
             COMPOSE=""
-            if docker compose version >/dev/null 2>&1; then
+            if docker compose version >/dev/null 2>&1 && docker compose --help 2>/dev/null | grep -q -- "--env-file"; then
               COMPOSE="docker compose"
-            elif command -v docker-compose >/dev/null 2>&1; then
+            elif command -v docker-compose >/dev/null 2>&1 && docker-compose --help 2>/dev/null | grep -q -- "--env-file"; then
               COMPOSE="docker-compose"
-            elif [ -x /usr/local/bin/docker-compose ]; then
+            elif [ -x /usr/local/bin/docker-compose ] && /usr/local/bin/docker-compose --help 2>/dev/null | grep -q -- "--env-file"; then
               COMPOSE="/usr/local/bin/docker-compose"
-            elif [ -x /usr/bin/docker-compose ]; then
+            elif [ -x /usr/bin/docker-compose ] && /usr/bin/docker-compose --help 2>/dev/null | grep -q -- "--env-file"; then
               COMPOSE="/usr/bin/docker-compose"
             fi
 
             if [ -n "$COMPOSE" ]; then
               # ── Deploy via docker compose ──
               echo "  Using compose: $COMPOSE"
-              $COMPOSE --env-file .env.production up -d --force-recreate app redis qdrant
+              $COMPOSE --env-file .env.production -f docker-compose.prod.yml up -d --force-recreate app redis qdrant
             else
               # ── Fallback: deploy via plain docker run ──
               echo "  docker compose not found — using docker run directly"
@@ -340,7 +340,7 @@ jobs:
                 -e VECTOR_PROVIDER=qdrant \
                 -e QDRANT_URL=http://soter-qdrant:6333 \
                 -e REDIS_URL=redis://soter-redis:6379 \
-                -p 127.0.0.1:3000:3000 \
+                -p 0.0.0.0:3000:3000 \
                 "${DOCKER_TAG}:latest"
             fi
 
@@ -389,4 +389,4 @@ jobs:
           echo "✅ Deployment completed successfully!"
           echo "   Image: ${{ env.DOCKER_IMAGE }}:${{ github.sha }}"
           echo "   Server: ${{ secrets.EC2_HOST }}"
-          echo "   Health: http://${{ secrets.EC2_HOST }}/api/health"
+          echo "   Health: http://${{ secrets.EC2_HOST }}:3000/api/health"

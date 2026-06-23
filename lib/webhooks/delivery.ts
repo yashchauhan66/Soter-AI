@@ -95,7 +95,7 @@ export async function attemptDelivery(deliveryId: string) {
   const signature = signWebhookPayload(secret, timestamp, body);
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
-    "User-Agent": "CyberRakshakGuard-Webhooks/1.0",
+    "User-Agent": "SoterAI-Webhooks/1.0",
     "x-cyberrakshak-event": delivery.event,
     "x-cyberrakshak-timestamp": String(timestamp),
     "x-cyberrakshak-signature": `t=${timestamp},v1=${signature}`,

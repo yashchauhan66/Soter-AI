@@ -246,7 +246,7 @@ export default function Image() {
             >
               S
             </span>
-            soter.dev/comparison
+            soterai.publicvm.com/comparison
           </div>
           <div
             style={{

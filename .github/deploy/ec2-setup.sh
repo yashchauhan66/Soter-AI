@@ -23,6 +23,12 @@ echo \
 sudo apt-get update -y
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
+if ! docker compose version >/dev/null 2>&1; then
+  echo "ERROR: docker compose plugin is not available after install."
+  echo "Try: sudo apt-get update && sudo apt-get install -y docker-compose-plugin"
+  exit 1
+fi
+
 echo "=== Adding ubuntu user to docker group ==="
 sudo usermod -aG docker ubuntu
 

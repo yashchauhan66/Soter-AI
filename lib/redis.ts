@@ -16,6 +16,20 @@ interface RedisLike {
 let warned = false;
 let cached: RedisLike | null = null;
 
+function cleanEnvValue(value: string | undefined) {
+  if (!value) return value;
+  let cleaned = value.trim();
+  while (cleaned.length >= 2) {
+    const first = cleaned[0];
+    const last = cleaned[cleaned.length - 1];
+    if ((first === '"' && last === '"') || (first === "'" && last === "'")) {
+      cleaned = cleaned.slice(1, -1).trim();
+      continue;
+    }
+    break;
+  }
+  return cleaned;
+}
 class MemoryRedis implements RedisLike {
   private store = new Map<string, { value: number; expireAt: number }>();
   private now() { return Date.now(); }
@@ -67,7 +81,7 @@ class NodeRedis implements RedisLike {
     if (!this.clientPromise) {
       this.clientPromise = import("redis").then(async ({ createClient }) => {
         const client = createClient({ url: this.url });
-        client.on("error", (error) => console.error("[CyberRakshak] Redis client error", error));
+        client.on("error", (error) => console.error("[SoterAI] Redis client error", error));
         await client.connect();
         return client as import("redis").RedisClientType;
       });
@@ -89,8 +103,13 @@ class NodeRedis implements RedisLike {
 
 export function getRedis(): RedisLike {
   if (cached) return cached;
-  const url = process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  const redisUrl = cleanEnvValue(process.env.REDIS_URL);
+  if (redisUrl) {
+    cached = new NodeRedis(redisUrl);
+    return cached;
+  }
+  const url = cleanEnvValue(process.env.UPSTASH_REDIS_REST_URL);
+  const token = cleanEnvValue(process.env.UPSTASH_REDIS_REST_TOKEN);
   if (url && token) {
     const client = new Redis({ url, token });
     cached = {
@@ -102,15 +121,11 @@ export function getRedis(): RedisLike {
     };
     return cached;
   }
-  if (process.env.REDIS_URL) {
-    cached = new NodeRedis(process.env.REDIS_URL);
-    return cached;
-  }
   if (process.env.NODE_ENV === "production") {
     throw new Error("Distributed Redis is required in production. Configure UPSTASH_REDIS_REST_URL or REDIS_URL.");
   }
   if (!warned) {
-    console.warn("[CyberRakshak] UPSTASH_REDIS_REST_URL is not set. Using in-memory rate limit store. Do NOT run multi-instance in this state.");
+    console.warn("[SoterAI] UPSTASH_REDIS_REST_URL is not set. Using in-memory rate limit store. Do NOT run multi-instance in this state.");
     warned = true;
   }
   cached = new MemoryRedis();

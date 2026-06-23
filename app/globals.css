@@ -5,7 +5,7 @@
 :root { color-scheme: dark; }
 * { border-color: rgb(51 65 85 / 0.75); }
 html { scroll-behavior: smooth; }
-body { @apply bg-ink text-slate-100 antialiased; }
+body { @apply bg-ink text-slate-100 antialiased; font-feature-settings: "cv02", "cv03", "cv04", "cv11"; }
 
 /* ── Focus-visible ring for keyboard navigation ────────────────── */
 :focus-visible {
@@ -100,6 +100,33 @@ a, button, input, select, textarea, [tabindex] {
   animation: shimmer 1.8s ease-in-out infinite;
 }
 
+/* Code-specific styles */
+code, pre, .font-mono {
+  font-family: var(--font-jetbrains-mono), Consolas, Monaco, monospace;
+  font-feature-settings: "calt" 1, "liga" 1;
+}
+
+pre code {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(51, 65, 85, 0.5);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(51, 65, 85, 0.8);
+}
+
 .animate-pulse-glow {
   animation: pulseGlow 3s ease-in-out infinite;
 }
@@ -121,10 +148,14 @@ a, button, input, select, textarea, [tabindex] {
 /* ── Component Styles ───────────────────────────────────────────── */
 @layer components {
   .container-page { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
-  .card { @apply rounded-2xl border border-slate-800 bg-panel/75 shadow-glow backdrop-blur; }
-  .button-primary { @apply inline-flex items-center justify-center rounded-xl bg-cyan px-5 py-3 font-semibold text-ink transition hover:bg-cyan/90 disabled:cursor-not-allowed disabled:opacity-50; }
-  .button-secondary { @apply inline-flex items-center justify-center rounded-xl border border-slate-700 bg-slate-900/60 px-5 py-3 font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-800; }
-  .input { @apply w-full rounded-xl border border-slate-700 bg-slate-950/70 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan focus:ring-2 focus:ring-cyan/10; }
-  .eyebrow { @apply text-xs font-bold uppercase tracking-[0.22em] text-cyan; }
+  .container-docs { @apply mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8; }
+  .card { @apply rounded-lg border border-slate-800 bg-panel/80 shadow-glow backdrop-blur; }
+  .button-primary { @apply inline-flex items-center justify-center rounded-md bg-cyan px-5 py-3 font-semibold text-ink transition hover:bg-cyan/90 disabled:cursor-not-allowed disabled:opacity-50; }
+  .button-secondary { @apply inline-flex items-center justify-center rounded-md border border-slate-700 bg-slate-900/60 px-5 py-3 font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-800; }
+  .input { @apply w-full rounded-md border border-slate-700 bg-slate-950/80 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan focus:ring-2 focus:ring-cyan/10; }
+  .eyebrow { @apply text-xs font-bold uppercase tracking-[0.18em] text-cyan; }
   .grid-fade { background-image: linear-gradient(rgba(49,215,200,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(49,215,200,.05) 1px, transparent 1px); background-size: 44px 44px; }
+  .tip-card { @apply rounded-lg border border-cyan/20 bg-cyan/5 p-4 text-sm leading-6 text-slate-300; }
+  .warn-card { @apply rounded-lg border border-amber-500/25 bg-amber-500/5 p-4 text-sm leading-6 text-amber-100; }
+  .docs-section { @apply mt-12 scroll-mt-24; }
 }
