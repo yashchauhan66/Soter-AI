@@ -118,7 +118,7 @@ test("public badge routes expose only public documentation/script data", () => {
     assert.match(badgeSource, new RegExp('"' + field + '"'));
   }
   const registrySource = readFileSync("app/api/badge/route.ts", "utf8");
-  assert.match(registrySource, /name: "CyberRakshak Guard Badge"/);
+  assert.match(registrySource, /name: "SoterAI Badge"/);
   assert.match(registrySource, /statuses:/);
   assert.doesNotMatch(registrySource, /organizationId|userId|apiKey|secret|originalText|redactedText|safeText/i);
 
