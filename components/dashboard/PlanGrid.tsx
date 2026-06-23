@@ -103,7 +103,7 @@ export function PlanGrid({ organizationId, currentPlan, plans, enterpriseEmail }
         key: data.keyId,
         amount: data.amount,
         currency: data.currency,
-        name: "CyberRakshak Guard",
+        name: "SoterAI",
         description: `${planId} plan`,
         order_id: data.orderId,
         notes: { organizationId, plan: planId },

@@ -1,1 +1,15 @@
-export default function TermsPage(){return <main className="container-page py-16"><p className="eyebrow">Legal</p><h1 className="mt-2 text-4xl font-bold">Terms of service draft</h1><div className="mt-8 max-w-3xl space-y-6 text-slate-400"><p>This draft requires qualified legal review before public commercial launch.</p><p>CyberRakshak Guard provides defense-in-depth software for AI risk reduction. It does not guarantee prevention of every attack, disclosure, outage, or model failure.</p><p>Customers remain responsible for lawful data processing, application security, access control, human oversight, incident response, and authorized use of testing features.</p><p>Red-team features may only be used against systems and projects the customer owns or is explicitly authorized to assess.</p><p>Plan limits, support targets, data retention, billing, cancellation, and service levels are governed by the applicable order form and published policy.</p></div></main>}
+export default function TermsPage() {
+  return (
+    <main className="container-page py-16">
+      <p className="eyebrow">Legal</p>
+      <h1 className="mt-2 text-4xl font-bold">Terms of service draft</h1>
+      <div className="mt-8 max-w-3xl space-y-6 text-slate-400">
+        <p>This draft requires qualified legal review before public commercial launch.</p>
+        <p>SoterAI provides defense-in-depth software for AI risk reduction. It does not guarantee prevention of every attack, disclosure, outage, or model failure.</p>
+        <p>Customers remain responsible for lawful data processing, application security, access control, human oversight, incident response, and authorized use of testing features.</p>
+        <p>Red-team features may only be used against systems and projects the customer owns or is explicitly authorized to assess.</p>
+        <p>Plan limits, support targets, data retention, billing, cancellation, and service levels are governed by the applicable order form and published policy.</p>
+      </div>
+    </main>
+  );
+}

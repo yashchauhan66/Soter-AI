@@ -113,7 +113,7 @@ export function WhiteLabelReportPrint(props: Props) {
 
       <section className="mt-8 rounded-xl border border-slate-300 bg-white p-5">
         <h3 className="text-lg font-bold">OWASP LLM Top 10 alignment</h3>
-        <p className="mt-2 text-sm text-slate-600">CyberRakshak Guard Phase 2 reduces risk for the categories below. Alignment supports defence in depth and is not a certification or claim of complete coverage.</p>
+        <p className="mt-2 text-sm text-slate-600">SoterAI Phase 2 reduces risk for the categories below. Alignment supports defence in depth and is not a certification or claim of complete coverage.</p>
         <ul className="mt-4 grid gap-2 sm:grid-cols-2">
           {OWASP.map(([id, label]) => (
             <li key={id} className="flex items-center gap-3 rounded-lg bg-slate-50 p-3 text-sm">

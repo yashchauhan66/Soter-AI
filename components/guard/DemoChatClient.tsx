@@ -54,7 +54,7 @@ export function DemoChatClient() {
           <article className="card border-cyan/30 p-6">
             <div className="flex justify-between gap-3">
               <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-cyan">With CyberRakshak Guard</p>
+                <p className="text-xs font-bold uppercase tracking-wider text-cyan">With SoterAI</p>
                 <h2 className="mt-3 text-xl font-semibold">Policy-aware path</h2>
               </div>
               <RiskBadge action={result.action} />

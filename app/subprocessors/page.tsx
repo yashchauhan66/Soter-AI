@@ -15,7 +15,7 @@ export default function SubprocessorsPage() {
   return (
     <ReadinessPage title="Subprocessors">
       <p className="mb-6 max-w-2xl text-slate-400">
-        Self-hosted deployments can run without CyberRakshak-operated subprocessors.
+        Self-hosted deployments can run without SoterAI-operated subprocessors.
         Managed deployments use the following subprocessors to deliver the service.
       </p>
       <div className="overflow-x-auto">

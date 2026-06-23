@@ -1,6 +1,25 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { CodeBlock, InlineCode } from "@/components/ui/CodeBlock";
 import { DocViewTracker } from "@/components/docs/DocViewTracker";
+
+export const metadata: Metadata = {
+  title: "SoterAI API Contract - Complete API Reference for AI Security Endpoints",
+  description:
+    "Complete API reference for all SoterAI endpoints including input guard, output guard, analyze, badge, risk types, error codes, and webhook events. Request/response shapes and status codes.",
+  alternates: { canonical: "/docs/api-contract" },
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.publicvm.com" },
+    { "@type": "ListItem", position: 2, name: "Docs", item: "https://soterai.publicvm.com/docs" },
+    { "@type": "ListItem", position: 3, name: "API Contract", item: "https://soterai.publicvm.com/docs/api-contract" },
+  ],
+};
 
 export default function ApiContractDocsPage() {
   const riskTypes = [
@@ -28,14 +47,15 @@ export default function ApiContractDocsPage() {
   ];
 
   return (
-    <main className="container-page py-16">
+    <main className="py-16">
       <DocViewTracker />
-      <div className="mx-auto max-w-3xl">
+      <div className="container-docs">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
         <Link href="/docs" className="text-sm text-slate-500 hover:text-cyan transition-colors">← Back to docs</Link>
         <p className="eyebrow mt-6">Reference</p>
         <h1 className="mt-3 text-4xl font-bold">API Contract</h1>
         <p className="mt-5 text-lg leading-8 text-slate-400">
-          Complete API reference for all Soter endpoints, request/response shapes, error codes, and webhook events.
+          Complete API reference for all SoterAI endpoints, request/response shapes, error codes, and webhook events.
         </p>
 
         <section className="mt-10">
@@ -182,6 +202,20 @@ export default function ApiContractDocsPage() {
               <li><InlineCode>x-cyberrakshak-timestamp</InlineCode> — unix seconds at signing time</li>
               <li><InlineCode>x-cyberrakshak-signature</InlineCode> — <InlineCode>t=...,v1=&lt;hmac-sha256&gt;</InlineCode></li>
             </ul>
+          </div>
+        </section>
+
+        <section className="docs-section">
+          <div className="rounded-lg border border-cyan/30 bg-gradient-to-r from-cyan/5 to-transparent p-6">
+            <h2 className="text-xl font-bold">What's next?</h2>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link href="/docs/rest-api" className="button-primary gap-2">
+                REST API Guide <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+              <Link href="/docs/best-practices" className="button-secondary gap-2">
+                Security Best Practices <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+            </div>
           </div>
         </section>
 

@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Adversarial Benchmark | Soter Guard",
+  title: "Adversarial Benchmark | SoterAI",
   description:
     "Independent adversarial benchmark results: 97/97 attack variants detected with F1=1.0000. Prompt injection, jailbreak, PII, secrets, encoding, multilingual, and indirect injection.",
 };
@@ -108,25 +108,25 @@ function jsonLd(data: BenchmarkData) {
     "@graph": [
       {
         "@type": "SoftwareApplication",
-        "name": "Soter Guard",
+        "name": "SoterAI",
         "applicationCategory": "SecurityApplication",
         "operatingSystem": "Linux, macOS, Windows",
-        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soter.dev/benchmarks" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soterai.publicvm.com/benchmarks" },
         "description": "AI security guardrail platform protecting against prompt injection, jailbreaks, PII leakage, and unsafe outputs.",
         "offers": {
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "USD",
         },
-        "url": "https://soter.dev/benchmarks",
+        "url": "https://soterai.publicvm.com/benchmarks",
       },
       {
         "@type": "Dataset",
-        "name": "Soter Guard Adversarial Benchmark",
+        "name": "SoterAI Adversarial Benchmark",
         "description": `Adversarial benchmark results: ${overall.total_adversarial_detected}/${overall.total_adversarial} attack variants detected (F1=${overall.f1_score.toFixed(4)}). Zero false positives across 25 safe inputs.`,
-        "url": "https://soter.dev/benchmarks",
+        "url": "https://soterai.publicvm.com/benchmarks",
         "datePublished": data.timestamp,
-        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soter.dev/benchmarks" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soterai.publicvm.com/benchmarks" },
         "creator": {
           "@type": "Organization",
           "name": "Soter",
@@ -182,7 +182,7 @@ export default function BenchmarksPage() {
         <div className="text-center">
           <p className="eyebrow">Adversarial Benchmark</p>
           <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
-            Soter Guard <span className="text-cyan">F1 = 1.0000</span>
+            SoterAI <span className="text-cyan">F1 = 1.0000</span>
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg leading-7 text-slate-400">
             97/97 adversarial attack variants detected across 8 categories with zero false positives.

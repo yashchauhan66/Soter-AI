@@ -23,6 +23,7 @@ services:
       retries: 10
 
   app:
+    image: ${DOCKER_IMAGE:-soter}:latest
     build:
       context: .
       args:
@@ -31,7 +32,7 @@ services:
     restart: unless-stopped
     env_file: ${APP_ENV_FILE:-.env.production}
     environment:
-      DATABASE_URL: ${SUPABASE_DATABASE_URL:?set SUPABASE_DATABASE_URL}
+      DATABASE_URL: ${DATABASE_URL:?set DATABASE_URL}
       VECTOR_PROVIDER: ${VECTOR_PROVIDER:-qdrant}
       QDRANT_URL: http://qdrant:6333
       REDIS_URL: redis://redis:6379
@@ -55,7 +56,7 @@ services:
     command: ["npm", "run", "worker:webhooks"]
     env_file: ${APP_ENV_FILE:-.env.production}
     environment:
-      DATABASE_URL: ${SUPABASE_DATABASE_URL:?set SUPABASE_DATABASE_URL}
+      DATABASE_URL: ${DATABASE_URL:?set DATABASE_URL}
       REDIS_URL: redis://redis:6379
       NODE_ENV: production
     depends_on:
@@ -69,7 +70,7 @@ services:
     command: ["npm", "run", "worker:background"]
     env_file: ${APP_ENV_FILE:-.env.production}
     environment:
-      DATABASE_URL: ${SUPABASE_DATABASE_URL:?set SUPABASE_DATABASE_URL}
+      DATABASE_URL: ${DATABASE_URL:?set DATABASE_URL}
       VECTOR_PROVIDER: ${VECTOR_PROVIDER:-qdrant}
       QDRANT_URL: http://qdrant:6333
       REDIS_URL: redis://redis:6379
@@ -86,7 +87,7 @@ services:
     command: ["npm", "run", "worker:siem"]
     env_file: ${APP_ENV_FILE:-.env.production}
     environment:
-      DATABASE_URL: ${SUPABASE_DATABASE_URL:?set SUPABASE_DATABASE_URL}
+      DATABASE_URL: ${DATABASE_URL:?set DATABASE_URL}
       REDIS_URL: redis://redis:6379
       NODE_ENV: production
     depends_on:

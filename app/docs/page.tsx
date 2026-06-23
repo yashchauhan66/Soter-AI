@@ -1,202 +1,271 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import { CodeBlock } from "@/components/ui/CodeBlock";
+import { ArrowRight, BookOpen, CheckCircle2, Code2, Globe2, Search, ShieldCheck, Terminal, Zap } from "lucide-react";
+import { CodeBlock, TipBox } from "@/components/ui/CodeBlock";
 import { DocViewTracker } from "@/components/docs/DocViewTracker";
 
-const quickstartCode = `import { Soter } from "@soter/core";
+export const metadata: Metadata = {
+  title: "SoterAI Developer Docs - Integrate AI Security in 5 Minutes | JavaScript, Python, REST",
+  description:
+    "Step-by-step SoterAI documentation for developers of all skill levels. Protect your AI chatbot, RAG app, or agent from prompt injection, PII leaks, and unsafe outputs. Guides for JavaScript, Python, Next.js, Express, FastAPI, WordPress, WhatsApp, Intercom, Zendesk, Botpress, and REST API.",
+  alternates: { canonical: "/docs" },
+  openGraph: {
+    title: "SoterAI Developer Documentation - AI Security Integration Guides",
+    description: "Protect your AI from prompt injection, PII leaks, and unsafe outputs. Beginner-friendly guides for all major languages and platforms.",
+  },
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.publicvm.com" },
+    { "@type": "ListItem", position: 2, name: "Developer Documentation", item: "https://soterai.publicvm.com/docs" },
+  ],
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "How do I integrate SoterAI with my chatbot?",
+      acceptedAnswer: { "@type": "Answer", text: "Create a project in the SoterAI dashboard, keep your API key on the server only, call the input guard before your LLM processes the message, and call the output guard before returning the response to the user. See the quickstart guide for a complete example." },
+    },
+    {
+      "@type": "Question",
+      name: "Can I use SoterAI without an SDK?",
+      acceptedAnswer: { "@type": "Answer", text: "Yes. Use the REST API from any programming language that can make HTTPS requests, including Java, Go, PHP, C#, Ruby, Rust, Swift, Kotlin, and shell scripts. See the REST API guide for examples." },
+    },
+    {
+      "@type": "Question",
+      name: "Where should I put the API key?",
+      acceptedAnswer: { "@type": "Answer", text: "Never put the SoterAI API key in frontend or browser code. Always keep it server-side in environment variables. Browser apps should call your own backend route, and that backend route calls SoterAI." },
+    },
+    {
+      "@type": "Question",
+      name: "What languages and frameworks does SoterAI support?",
+      acceptedAnswer: { "@type": "Answer", text: "SoterAI provides SDKs for JavaScript/TypeScript (Node.js, Deno, Bun) and Python. Framework-specific integrations include Next.js, Express.js, FastAPI, LangChain, LlamaIndex, WordPress, Botpress, Intercom, Zendesk, and WhatsApp. You can also use the REST API from any language." },
+    },
+    {
+      "@type": "Question",
+      name: "How long does it take to integrate SoterAI?",
+      acceptedAnswer: { "@type": "Answer", text: "Most developers complete the basic integration in under 5 minutes: install the SDK, add environment variables, wrap your chat route with input and output guards, and test with an attack prompt." },
+    },
+    {
+      "@type": "Question",
+      name: "Is SoterAI free to use?",
+      acceptedAnswer: { "@type": "Answer", text: "Yes. SoterAI offers a free tier that includes input and output guard, playground access, and basic logs. Paid plans add webhooks, monthly reports, higher limits, and enterprise features like SSO and self-hosting." },
+    },
+  ],
+};
+
+const quickstartCode = `// 1. Install the SoterAI SDK
+npm install @soter/core
+
+// 2. Add these to your .env file (server-side only!)
+SOTER_BASE_URL=https://soterai.publicvm.com
+SOTER_API_KEY=ck_live_your_key_here
+
+// 3. Protect one message before your LLM sees it
+import { Soter } from "@soter/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
   baseUrl: process.env.SOTER_BASE_URL,
 });
 
-const result = await soter.protect({ input: message });
+const result = await soter.protect({ input: userMessage });
 
 if (!result.allowed) {
+  // 🛑 Blocked! Don't call the LLM
   return { blocked: true, reason: result.reason };
-}`;
+}
 
-const languages = [
-  {
-    title: "JavaScript / TypeScript",
-    description: "@soter/core SDK — the primary client for Node.js, Deno, Bun, and browser-based server routes",
-    href: "/docs/js",
-    icon: "🟨",
-    tags: ["Node.js", "Deno", "Bun", "TypeScript"],
-  },
-  {
-    title: "Python",
-    description: "Python client with sync/async support, FastAPI middleware, LangChain & LlamaIndex wrappers",
-    href: "/docs/python",
-    icon: "🐍",
-    tags: ["FastAPI", "Flask", "LangChain", "LlamaIndex"],
-  },
-  {
-    title: "Next.js",
-    description: "Route handler helpers, secureChatHandler, and server action patterns for Next.js apps",
-    href: "/docs/nextjs",
-    icon: "▲",
-    tags: ["App Router", "Route Handlers", "Server Actions"],
-  },
-  {
-    title: "Express.js",
-    description: "Express middleware for input/output guarding with session context support",
-    href: "/docs/express",
-    icon: "⚡",
-    tags: ["Middleware", "REST API"],
-  },
-  {
-    title: "FastAPI",
-    description: "FastAPI integration with create_chat_route, async support, and Pydantic models",
-    href: "/docs/fastapi",
-    icon: "🚀",
-    tags: ["Pydantic", "Async", "Python"],
-  },
-  {
-    title: "REST API",
-    description: "Raw HTTP endpoints — use from any language: curl, Java, Go, PHP, C#, and more",
-    href: "/docs/rest-api",
-    icon: "🌐",
-    tags: ["curl", "Java", "Go", "PHP", "C#"],
-  },
-  {
-    title: "RAG / LangChain",
-    description: "RAG pipeline protection, LangChain chains, LlamaIndex query engines, source filtering",
-    href: "/docs/rag",
-    icon: "📚",
-    tags: ["RAG", "LangChain", "LlamaIndex", "Retrieval"],
-  },
-  {
-    title: "Botpress",
-    description: "Pre/post processing HTTP steps in Botpress workflows with input + output guarding",
-    href: "/docs/botpress",
-    icon: "🤖",
-    tags: ["Workflows", "HTTP"],
-  },
-  {
-    title: "Intercom",
-    description: "Guard AI support-chat messages in Intercom workflows with PII redaction",
-    href: "/docs/intercom",
-    icon: "💬",
-    tags: ["Support", "CRM"],
-  },
-  {
-    title: "WhatsApp Chatbots",
-    description: "Protect WhatsApp chatbot deployments with India PII redaction support",
-    href: "/docs/whatsapp",
-    icon: "📱",
-    tags: ["WhatsApp", "Meta", "India PII"],
-  },
-  {
-    title: "Zendesk",
-    description: "Guard ticket messages and AI drafts in Zendesk environments",
-    href: "/docs/zendesk",
-    icon: "🎫",
-    tags: ["Support", "Tickets"],
-  },
-  {
-    title: "WordPress",
-    description: "WordPress plugin with settings UI, shortcodes, and local REST proxy for API key safety",
-    href: "/docs/wordpress",
-    icon: "🔌",
-    tags: ["PHP", "Plugin", "Shortcodes"],
-  },
-  {
-    title: "Generic Chatbot & Agent",
-    description: "Universal pattern for any chatbot, agent, or tool-using AI system with tool firewall",
-    href: "/docs/generic-chatbot",
-    icon: "🧠",
-    tags: ["Agent", "Tool Firewall", "Session"],
-  },
-  {
-    title: "CLI",
-    description: "npx soter init — planned CLI tool for framework detection and project scaffolding",
-    href: "/docs/cli",
-    icon: "⌨️",
-    tags: ["CLI", "Scaffolding"],
-  },
-  {
-    title: "Security Best Practices",
-    description: "OWASP LLM Top 10 alignment, key rotation, webhook verification, fail-open vs fail-closed",
-    href: "/docs/best-practices",
-    icon: "🛡️",
-    tags: ["OWASP", "Security", "Compliance"],
-  },
-  {
-    title: "Quickstart",
-    description: "Get a chatbot protected in 5 minutes — install, configure, and test with an attack prompt",
-    href: "/docs/quickstart",
-    icon: "⏱️",
-    tags: ["5 min", "Setup", "Tutorial"],
-  },
-  {
-    title: "API Contract",
-    description: "Complete API reference: endpoints, request/response shapes, error codes, webhook events",
-    href: "/docs/api-contract",
-    icon: "📋",
-    tags: ["Reference", "Endpoints", "Errors"],
-  },
+// ✅ Safe! Call your LLM with the sanitized input
+return callYourLLM(result.safeText ?? userMessage);`;
+
+const beginnerSteps = [
+  ["1. Create", "Create a project in the SoterAI dashboard and copy your API key.", "/signup"],
+  ["2. Install", "Install an SDK or use the REST API from any backend language.", "/docs/quickstart"],
+  ["3. Guard input", "Check every user message before sending it to your model.", "/docs/js"],
+  ["4. Guard output", "Check every model response before showing it to users.", "/docs/rest-api"],
+];
+
+const languageGuides = [
+  { icon: "🟨", title: "JavaScript / TypeScript", href: "/docs/js", description: "Node.js, Deno, Bun, server routes, and backend services. Full SDK support with type safety.", tags: ["Node", "TypeScript", "SDK"] },
+  { icon: "🐍", title: "Python", href: "/docs/python", description: "Python chatbot backends, FastAPI, LangChain, RAG apps, and LlamaIndex integrations.", tags: ["Python", "FastAPI", "LangChain"] },
+  { icon: "🌐", title: "REST API", href: "/docs/rest-api", description: "Use SoterAI from Java, Go, PHP, C#, Ruby, Rust, Laravel, Spring, .NET, or any HTTP client.", tags: ["curl", "Java", "Go", "PHP", "C#"] },
+  { icon: "▲", title: "Next.js", href: "/docs/nextjs", description: "Protect App Router route handlers, server actions, and AI chat endpoints with one-liner helpers.", tags: ["Next.js", "App Router"] },
+  { icon: "⚡", title: "Express.js", href: "/docs/express", description: "Add input and output guard middleware to Express chatbot routes in minutes.", tags: ["Express", "Middleware"] },
+  { icon: "🚀", title: "FastAPI", href: "/docs/fastapi", description: "Async Python routes with Pydantic models for AI chatbots and agents.", tags: ["FastAPI", "Pydantic"] },
+];
+
+const platformGuides = [
+  { label: "RAG / LangChain", href: "/docs/rag", desc: "Protect RAG retrieval flows, LangChain chains, and LlamaIndex query engines." },
+  { label: "Generic Chatbot & Agent", href: "/docs/generic-chatbot", desc: "Universal pattern for any chatbot, agent, or tool-using AI system." },
+  { label: "WhatsApp Chatbots", href: "/docs/whatsapp", desc: "India-specific PII redaction for WhatsApp deployments." },
+  { label: "WordPress", href: "/docs/wordpress", desc: "WordPress plugin with settings UI, shortcodes, and local REST proxy." },
+  { label: "Botpress", href: "/docs/botpress", desc: "Pre/post processing HTTP steps in Botpress workflows." },
+  { label: "Intercom", href: "/docs/intercom", desc: "Guard AI support-chat messages in Intercom with PII redaction." },
+  { label: "Zendesk", href: "/docs/zendesk", desc: "Protect ticket messages and AI drafts in Zendesk." },
+  { label: "API Contract", href: "/docs/api-contract", desc: "Complete API reference with endpoints, errors, and webhook events." },
+  { label: "Security Best Practices", href: "/docs/best-practices", desc: "OWASP LLM Top 10 alignment, key rotation, webhook verification, and more." },
+  { label: "CLI", href: "/docs/cli", desc: "Scaffolding tool for framework detection and project setup." },
 ];
 
 export default function DocsHubPage() {
   return (
-    <main className="container-page py-16">
+    <main className="py-16">
       <DocViewTracker />
-      <div className="mx-auto max-w-5xl">
-        {/* Header */}
-        <div className="mb-12 text-center">
-          <p className="eyebrow">Developer documentation v2</p>
-          <h1 className="mt-3 text-4xl font-bold">Soter Documentation</h1>
-          <p className="mt-4 text-lg text-slate-400 max-w-2xl mx-auto">
-            Safety layer for intelligent conversations. Choose your language or platform below to get started.
-          </p>
-        </div>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      
+      <div className="container-page">
+        {/* Hero Section */}
+        <section className="grid gap-10 lg:grid-cols-[1fr_360px]">
+          <div>
+            <p className="eyebrow">Developer documentation</p>
+            <h1 className="mt-3 max-w-4xl text-4xl font-bold leading-tight sm:text-5xl">
+              Protect your AI in minutes, not days.
+            </h1>
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-300">
+              New to AI security? <strong>Start here.</strong> SoterAI helps developers of all skill levels 
+              protect chatbots, RAG apps, and AI agents from prompt injection, PII leaks, unsafe responses, 
+              and tool abuse. Pick your language below and copy-paste the code.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link href="/docs/quickstart" className="button-primary gap-2">
+                <Zap size={18} aria-hidden="true" /> Start 5-minute quickstart <ArrowRight size={18} aria-hidden="true" />
+              </Link>
+              <Link href="/docs/rest-api" className="button-secondary gap-2">
+                <Globe2 size={18} aria-hidden="true" /> Use any language
+              </Link>
+            </div>
+          </div>
+          <aside className="card p-5">
+            <div className="flex items-center gap-3">
+              <ShieldCheck className="text-cyan" aria-hidden="true" />
+              <h2 className="font-semibold">Your 4-step plan</h2>
+            </div>
+            <div className="mt-5 space-y-4">
+              {beginnerSteps.map(([step, copy, href]) => (
+                <Link key={step} href={href} className="flex gap-3 border-b border-slate-800 pb-4 last:border-0 last:pb-0 transition hover:opacity-80">
+                  <CheckCircle2 className="mt-0.5 shrink-0 text-lime" size={16} aria-hidden="true" />
+                  <div>
+                    <p className="font-medium">{step}</p>
+                    <p className="mt-1 text-sm leading-6 text-slate-400">{copy}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </aside>
+        </section>
 
-        {/* Quickstart */}
-        <div className="card mb-12 border-cyan-500/20 p-6">
-          <h2 className="text-xl font-bold">Quickstart — 5 Minutes</h2>
-          <p className="mt-2 text-sm text-slate-400">
-            Create a project, install the SDK, and protect your first chatbot message.
+        {/* Copy-paste starter */}
+        <section className="mt-14">
+          <div className="flex items-center gap-3">
+            <Code2 className="text-cyan" aria-hidden="true" />
+            <h2 className="text-2xl font-bold">Quick start - copy and paste</h2>
+          </div>
+          <p className="mt-3 max-w-3xl text-slate-400">
+            This is the smallest useful integration. Put this code in a <strong>server route only</strong> — 
+            never expose the API key to the browser.
           </p>
-          <CodeBlock language="typescript">{quickstartCode}</CodeBlock>
-          <Link
-            href="/docs/quickstart"
-            className="mt-4 inline-flex items-center gap-2 rounded-lg bg-cyan px-4 py-2 text-sm font-semibold text-black transition hover:bg-cyan/90"
-          >
-            Full Quickstart Guide →
-          </Link>
-        </div>
+          <CodeBlock language="typescript" title="server-side integration">{quickstartCode}</CodeBlock>
+          <TipBox>
+            <strong>New to backend development?</strong> The code above goes in a server file (like 
+            <code className="text-cyan"> app/api/chat/route.ts </code> for Next.js or 
+            <code className="text-cyan"> server.js </code> for Node.js). The browser sends the message, 
+            your server sends it to SoterAI, and only safe text reaches your AI model.
+          </TipBox>
+        </section>
 
-        {/* Language Grid */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {languages.map((lang) => (
-            <Link
-              key={lang.href}
-              href={lang.href}
-              className="card group relative overflow-hidden border-slate-800 p-5 transition hover:border-cyan/50 hover:shadow-lg hover:shadow-cyan/5"
-            >
-              <div className="mb-3 text-2xl">{lang.icon}</div>
-              <h3 className="font-semibold text-white group-hover:text-cyan transition-colors">
-                {lang.title}
-              </h3>
-              <p className="mt-2 text-xs leading-5 text-slate-400">
-                {lang.description}
-              </p>
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {lang.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-md bg-slate-800/50 px-2 py-0.5 text-[10px] font-medium text-slate-500"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-              <div className="absolute right-4 top-4 text-slate-700 transition group-hover:text-cyan group-hover:translate-x-0.5">
-                →
-              </div>
-            </Link>
-          ))}
-        </div>
+        {/* Language guides */}
+        <section className="mt-16">
+          <div className="flex items-center gap-3">
+            <Search className="text-cyan" aria-hidden="true" />
+            <h2 className="text-2xl font-bold">Choose your language</h2>
+          </div>
+          <p className="mt-3 text-slate-400">Each guide includes installation, environment setup, code examples, expected output, and common mistakes.</p>
+          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {languageGuides.map((guide) => (
+              <Link key={guide.href} href={guide.href} className="card group p-5 transition-all hover:border-cyan/50 hover:shadow-lg hover:shadow-cyan/5">
+                <span className="text-2xl">{guide.icon}</span>
+                <h3 className="mt-3 font-semibold group-hover:text-cyan">{guide.title}</h3>
+                <p className="mt-2 min-h-12 text-sm leading-6 text-slate-400">{guide.description}</p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {guide.tags.map((tag) => (
+                    <span key={tag} className="rounded-md border border-slate-800 bg-slate-950/70 px-2 py-1 text-xs text-slate-400">{tag}</span>
+                  ))}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* Platform guides */}
+        <section className="mt-16">
+          <div className="flex items-center gap-3">
+            <Terminal className="text-cyan" aria-hidden="true" />
+            <h2 className="text-2xl font-bold">Platform and framework guides</h2>
+          </div>
+          <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {platformGuides.map(({ label, href, desc }) => (
+              <Link key={href} href={href} className="card group p-4 transition hover:border-cyan/50">
+                <h3 className="font-semibold group-hover:text-cyan">{label}</h3>
+                <p className="mt-1.5 text-sm leading-6 text-slate-400">{desc}</p>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* Features cards */}
+        <section className="mt-16 grid gap-5 md:grid-cols-3">
+          <div className="card p-6">
+            <BookOpen className="text-cyan" size={24} aria-hidden="true" />
+            <h3 className="mt-4 font-semibold">For beginners</h3>
+            <p className="mt-2 text-sm leading-6 text-slate-400">
+              Every guide starts with install, env vars, a working request, expected result, and common mistakes. 
+              No prior AI security knowledge needed.
+            </p>
+          </div>
+          <div className="card p-6">
+            <ShieldCheck className="text-cyan" size={24} aria-hidden="true" />
+            <h3 className="mt-4 font-semibold">Security first</h3>
+            <p className="mt-2 text-sm leading-6 text-slate-400">
+              Every example shows proper API key handling, fail-closed behavior, input + output guarding, 
+              and security best practices.
+            </p>
+          </div>
+          <div className="card p-6">
+            <Globe2 className="text-cyan" size={24} aria-hidden="true" />
+            <h3 className="mt-4 font-semibold">Any language, any stack</h3>
+            <p className="mt-2 text-sm leading-6 text-slate-400">
+              Whether you use JavaScript, Python, Java, Go, PHP, C#, or any other language, 
+              the REST API works everywhere.
+            </p>
+          </div>
+        </section>
+
+        {/* Search suggestion */}
+        <section className="mt-16 rounded-lg border border-slate-800 bg-slate-950/40 p-6">
+          <h2 className="text-lg font-semibold">Looking for something specific?</h2>
+          <div className="mt-4 flex flex-wrap gap-2 text-sm">
+            <Link href="/docs/quickstart" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">Quickstart</Link>
+            <Link href="/docs/js" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">JavaScript SDK</Link>
+            <Link href="/docs/python" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">Python SDK</Link>
+            <Link href="/docs/rest-api" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">REST API</Link>
+            <Link href="/docs/nextjs" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">Next.js</Link>
+            <Link href="/docs/fastapi" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">FastAPI</Link>
+            <Link href="/docs/rag" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">RAG</Link>
+            <Link href="/docs/wordpress" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">WordPress</Link>
+            <Link href="/docs/api-contract" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">API Contract</Link>
+            <Link href="/docs/best-practices" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">Best Practices</Link>
+            <Link href="/docs/generic-chatbot" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">Generic Chatbot</Link>
+          </div>
+        </section>
       </div>
     </main>
   );

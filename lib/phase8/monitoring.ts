@@ -6,5 +6,5 @@ export async function recordRequestMetric(metric: "guard_api_latency_ms" | "dash
     { metric: "request_total", value: 1, unit: "request", dimensions: { source: metric } },
     { metric, value: durationMs, unit: "ms" },
     ...(failed ? [{ metric: "request_error", value: 1, unit: "error", dimensions: { source: metric } }] : []),
-  ] }).catch((error) => console.error("[CyberRakshak] Failed to record request metric", metric, error));
+  ] }).catch((error) => console.error("[SoterAI] Failed to record request metric", metric, error));
 }

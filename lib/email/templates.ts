@@ -10,7 +10,7 @@ function escapeHtml(value: string) {
 }
 
 export function renderEmailTemplate(name: EmailTemplateName, data: Record<string, string | number>): RenderedEmail {
-  const app = "CyberRakshak Guard";
+  const app = "SoterAI";
   const url = data.url ? String(data.url) : "";
   const project = escapeHtml(String(data.projectName ?? "your project"));
   const templates: Record<EmailTemplateName, { subject: string; body: string }> = {

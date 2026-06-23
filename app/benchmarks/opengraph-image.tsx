@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Soter Guard — Adversarial Benchmark: F1 = 1.0000";
+export const alt = "SoterAI — Adversarial Benchmark: F1 = 1.0000";
 export const size = {
   width: 1200,
   height: 630,
@@ -119,7 +119,7 @@ export default function Image() {
               marginBottom: 8,
             }}
           >
-            Soter Guard{" "}
+            SoterAI{" "}
             <span
               style={{
                 color: "#00c8c8",
@@ -289,7 +289,7 @@ export default function Image() {
             >
               &#x1F6E1;
             </span>
-            soter.dev/benchmarks
+            soterai.publicvm.com/benchmarks
           </div>
           <div
             style={{

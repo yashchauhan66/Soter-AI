@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-  const siteUrl = "https://soter.dev";
+  const siteUrl = "https://soterai.publicvm.com";
 
   return {
     rules: [

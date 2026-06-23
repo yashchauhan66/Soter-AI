@@ -21,7 +21,7 @@ export const TOUR_STEPS: TourStep[] = [
   // ── Welcome ──────────────────────────────────────────────────────
   {
     id: "welcome",
-    title: "Welcome to Soter Guard 👋",
+    title: "Welcome to SoterAI 👋",
     description:
       "This 2-minute tour will show you around the dashboard so you can protect your AI chatbots, agents, and RAG systems from prompt injection, data leakage, and unsafe outputs. Use Next → to explore, or Skip to start on your own.",
     group: "Getting started",

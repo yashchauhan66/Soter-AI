@@ -1,7 +1,7 @@
 export const trustPrinciples = [
   "OWASP LLM Top 10 aligned controls for prompt injection, sensitive data exposure, insecure output handling, and RAG risks.",
   "Defense-in-depth through detection, blocking, redaction, monitoring, reporting, and human review workflows.",
-  "Risk reduction language only: CyberRakshak Guard does not claim complete protection or certification.",
+  "Risk reduction language only: SoterAI does not claim complete protection or certification.",
 ];
 
 export const owaspMappings = [

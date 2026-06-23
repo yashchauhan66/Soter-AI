@@ -19,12 +19,12 @@ const homepageJsonLd = {
   "@graph": [
     {
       "@type": "SoftwareApplication",
-      "name": "Soter Guard",
+      "name": "SoterAI",
       "applicationCategory": "SecurityApplication",
       "operatingSystem": "Linux, macOS, Windows",
-      "description": "AI security guardrail platform. Protects chatbots, RAG apps, and AI agents from prompt injection, jailbreaks, PII leakage, and unsafe outputs with 2-way input+output coverage.",
-      "url": "https://soter.dev",
-      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soter.dev" },
+      "description": "AI security command layer for chatbots, RAG apps, and autonomous agents. Protects against prompt injection, jailbreaks, PII leakage, unsafe outputs, and agent abuse.",
+      "url": "https://soterai.publicvm.com",
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soterai.publicvm.com" },
       "offers": {
         "@type": "Offer",
         "price": "0",
@@ -44,11 +44,11 @@ const homepageJsonLd = {
     },
     {
       "@type": "Dataset",
-      "name": "Soter Guard Adversarial Benchmark",
+      "name": "SoterAI Adversarial Benchmark",
       "description": "97/97 adversarial attack variants detected across 8 categories with zero false positives (F1=1.0000). Internal Garak-style red-team evaluation.",
-      "url": "https://soter.dev/benchmarks",
-      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soter.dev/benchmarks" },
-      "creator": { "@type": "Organization", "name": "Soter" },
+      "url": "https://soterai.publicvm.com/benchmarks",
+      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soterai.publicvm.com/benchmarks" },
+      "creator": { "@type": "Organization", "name": "SoterAI" },
       "measurementTechnique": "Garak-style adversarial probing",
       "variableMeasured": [
         { "name": "F1 Score", "value": "1.0000" },
@@ -76,16 +76,16 @@ export default function Home() {
         <div className="container-page grid gap-5 md:grid-cols-3">
           <div className="card p-7 md:col-span-2">
             <p className="eyebrow">The problem</p>
-            <h2 className="mt-3 text-3xl font-bold">Your chatbot can become a path to data exposure.</h2>
+            <h2 className="mt-3 text-3xl font-bold">Your AI workflow can become a path to data exposure.</h2>
             <p className="mt-4 max-w-2xl leading-7 text-slate-400">
               Untrusted prompts, copied secrets, personal data, and unsafe model responses need controls outside the model itself.
-              CyberRakshak adds an observable policy gateway to the flow.
+              SoterAI adds an observable security gateway to the flow.
             </p>
           </div>
           <div className="card p-7">
             <p className="text-5xl font-black text-cyan">2-way</p>
-            <p className="mt-4 font-semibold">Input plus output coverage</p>
-            <p className="mt-2 text-sm leading-6 text-slate-400">Risk reduction before and after every model call.</p>
+            <p className="mt-4 font-semibold">Input, output, and agent coverage</p>
+            <p className="mt-2 text-sm leading-6 text-slate-400">Risk reduction around users, models, retrieval, and tools.</p>
           </div>
         </div>
       </section>
@@ -93,7 +93,7 @@ export default function Home() {
       <HowItWorks />
       <Features />
 
-      {/* ── Benchmark section ── */}
+
       <section className="border-y border-slate-800 bg-slate-950/40 py-20">
         <div className="container-page text-center">
           <p className="eyebrow">Adversarial Benchmark</p>
@@ -165,14 +165,14 @@ export default function Home() {
         <div className="container-page">
           <SectionHeading
             eyebrow="OWASP alignment"
-            title="Focused coverage for Phase 1 chatbot flows"
-            copy="The controls map to relevant OWASP LLM Top 10 risk areas. Alignment supports risk reduction and is not a certification or claim of complete coverage."
+            title="Focused coverage for production AI workflows"
+            copy="Controls map to relevant OWASP LLM Top 10 risk areas. Alignment supports risk reduction and is not a certification or claim of complete coverage."
           />
           <div className="mt-10 grid gap-4 md:grid-cols-2">
             {owaspCoverage.map(([id, title, copy]) => (
               <article className="card p-6" key={id}>
                 <div className="flex items-center gap-3">
-                  <span className="rounded-lg bg-cyan/10 px-2.5 py-1 text-xs font-bold text-cyan">{id}</span>
+                  <span className="rounded-md bg-cyan/10 px-2.5 py-1 text-xs font-bold text-cyan">{id}</span>
                   <h3 className="font-semibold">{title}</h3>
                 </div>
                 <p className="mt-3 text-sm leading-6 text-slate-400">{copy}</p>
@@ -189,13 +189,13 @@ export default function Home() {
                 <p className="eyebrow">Built for India</p>
                 <h2 className="mt-3 text-3xl font-bold">Recognize local personal-data patterns.</h2>
                 <p className="mt-4 leading-7 text-slate-400">
-                  Add detection and redaction for Aadhaar-like patterns, PAN, GSTIN, UPI, IFSC, Indian mobile numbers,
+                  Detect and redact Aadhaar-like patterns, PAN, GSTIN, UPI, IFSC, Indian mobile numbers,
                   and contextual student, patient, and bank identifiers.
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-3 text-sm">
                 {["Aadhaar-like", "PAN", "GSTIN", "UPI ID", "IFSC", "Indian mobile"].map((label) => (
-                  <div className="flex items-center gap-2 rounded-xl border border-slate-800 bg-slate-950/60 p-4 text-slate-300" key={label}>
+                  <div className="flex items-center gap-2 rounded-md border border-slate-800 bg-slate-950/60 p-4 text-slate-300" key={label}>
                     <CheckCircle2 className="text-lime" size={16} aria-hidden="true" />{label}
                   </div>
                 ))}
@@ -209,7 +209,7 @@ export default function Home() {
           <div className="card grid items-center gap-6 border-cyan/30 p-8 md:grid-cols-[1fr_auto]">
             <div>
               <p className="eyebrow">Interactive playground</p>
-              <h2 className="mt-2 text-2xl font-bold">Test input and output decisions before integration.</h2>
+              <h2 className="mt-2 text-2xl font-bold">Test AI security decisions before integration.</h2>
               <p className="mt-2 text-slate-400">Use safe defensive examples to inspect findings, redaction, action, and risk score.</p>
             </div>
             <Link href="/playground" className="button-primary gap-2">Try the guard <ArrowRight size={18} aria-hidden="true" /></Link>
@@ -220,12 +220,12 @@ export default function Home() {
       <FAQ />
       <section className="pb-24">
         <div className="container-page">
-          <div className="rounded-3xl bg-cyan p-10 text-center text-ink">
-            <h2 className="text-3xl font-black">Add observable controls to every chatbot turn.</h2>
+          <div className="rounded-lg bg-cyan p-10 text-center text-ink">
+            <h2 className="text-3xl font-black">Add observable controls to every AI turn.</h2>
             <p className="mx-auto mt-3 max-w-2xl text-ink/70">
-              Start with the playground, then protect both sides of your model call with project-scoped API keys.
+              Start with the playground, then protect users, models, retrieval, and tools with project-scoped API keys.
             </p>
-            <Link href="/docs" className="mt-7 inline-flex items-center gap-2 rounded-xl bg-ink px-6 py-3 font-semibold text-white">
+            <Link href="/docs" className="mt-7 inline-flex items-center gap-2 rounded-md bg-ink px-6 py-3 font-semibold text-white">
               Read integration docs <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </div>

@@ -1,6 +1,25 @@
+import type { Metadata } from "next";
 import Link from "next/link";
-import { CodeBlock, InlineCode } from "@/components/ui/CodeBlock";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { CodeBlock, InlineCode, WarnBox } from "@/components/ui/CodeBlock";
 import { DocViewTracker } from "@/components/docs/DocViewTracker";
+
+export const metadata: Metadata = {
+  title: "SoterAI WordPress Plugin Guide - AI Security for CMS Chatbots",
+  description:
+    "Complete WordPress integration guide for SoterAI. Install the plugin, configure settings, use shortcodes, and protect your WordPress chatbot with PHP and REST API input/output guarding.",
+  alternates: { canonical: "/docs/wordpress" },
+};
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.publicvm.com" },
+    { "@type": "ListItem", position: 2, name: "Docs", item: "https://soterai.publicvm.com/docs" },
+    { "@type": "ListItem", position: 3, name: "WordPress", item: "https://soterai.publicvm.com/docs/wordpress" },
+  ],
+};
 
 const phpCode = `$in = cyberrakshak_guard_input( $user_message );
 if ( $in['blocked'] ) {
@@ -24,30 +43,31 @@ const { blocked, safe_text, decision } = await res.json();`;
 
 export default function WordpressDocsPage() {
   return (
-    <main className="container-page py-16">
+    <main className="py-16">
       <DocViewTracker />
-      <div className="mx-auto max-w-3xl">
-        <Link href="/docs" className="text-sm text-slate-500 hover:text-cyan transition-colors">← Back to docs</Link>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <div className="container-docs">
+        <Link href="/docs" className="text-sm text-slate-500 transition-colors hover:text-cyan">← Back to docs</Link>
         <p className="eyebrow mt-6">Platform guide</p>
-        <h1 className="mt-3 text-4xl font-bold">WordPress Integration</h1>
+        <h1 className="mt-3 text-4xl font-bold">WordPress Plugin Guide</h1>
         <p className="mt-5 text-lg leading-8 text-slate-400">
-          Protect your WordPress chatbot by guarding input and output server-side through the Soter API.
+          Protect your WordPress chatbot by guarding input and output server-side through the SoterAI REST API.
         </p>
 
-        <section className="mt-10">
-          <h2 className="text-2xl font-bold">Install the Plugin</h2>
-          <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm leading-7 text-slate-400">
-            <li>Copy <InlineCode>integrations/wordpress-plugin/cyberrakshak-guard</InlineCode> into <InlineCode>wp-content/plugins/</InlineCode>, or upload the packaged zip via <strong>Plugins → Add New → Upload Plugin</strong>.</li>
-            <li>Activate <strong>CyberRakshak Guard</strong> (the plugin slug remains <InlineCode>cyberrakshak-guard</InlineCode> for compatibility).</li>
+        <section className="docs-section">
+          <h2 className="text-2xl font-bold">Step 1: Install the plugin</h2>
+          <ol className="mt-4 list-decimal space-y-2 pl-5 leading-7 text-slate-400">
+            <li>Copy the plugin folder into <InlineCode>wp-content/plugins/</InlineCode>, or upload via <strong>Plugins → Add New → Upload Plugin</strong>.</li>
+            <li>Activate <strong>CyberRakshak Guard</strong> from the Plugins page.</li>
           </ol>
           <p className="mt-4 text-sm text-slate-400">Package a zip from the repo root:</p>
-          <CodeBlock language="bash">{`npm run package:wordpress   # produces dist/cyberrakshak-guard.zip`}</CodeBlock>
+          <CodeBlock language="bash" title="terminal">{`npm run package:wordpress   # produces dist/cyberrakshak-guard.zip`}</CodeBlock>
         </section>
 
-        <section className="mt-10">
-          <h2 className="text-2xl font-bold">Configure Settings</h2>
-          <p className="mt-3 text-slate-400">
-            Navigate to <strong>Settings → CyberRakshak Guard</strong>:
+        <section className="docs-section">
+          <h2 className="text-2xl font-bold">Step 2: Configure settings</h2>
+          <p className="mt-3 leading-7 text-slate-400">
+            Navigate to <strong>Settings → CyberRakshak Guard</strong> to configure:
           </p>
           <div className="mt-4 overflow-x-auto rounded-lg border border-slate-800">
             <table className="w-full text-sm">
@@ -59,12 +79,12 @@ export default function WordpressDocsPage() {
               </thead>
               <tbody className="text-slate-400">
                 {[
-                  ["API Base URL", "Your Soter host URL or self-hosted URL"],
+                  ["API Base URL", "Your SoterAI host URL or self-hosted URL"],
                   ["API Key", "ck_live_… Stored server-side, shown only masked"],
                   ["Project ID", "Optional; forwarded as metadata"],
                   ["Enable Input Guard", "Guard incoming visitor messages"],
                   ["Enable Output Guard", "Guard chatbot responses"],
-                  ["Enable Security Badge", 'Show "Protected by Soter" badge'],
+                  ["Enable Security Badge", 'Show "Protected by SoterAI" badge'],
                   ["Block message", "Shown when a request is blocked"],
                   ["Public rate limit", "Per-IP per-minute cap on REST proxy routes"],
                 ].map(([setting, notes]) => (
@@ -78,37 +98,53 @@ export default function WordpressDocsPage() {
           </div>
         </section>
 
-        <section className="mt-10">
-          <h2 className="text-2xl font-bold">Shortcode Usage</h2>
-          <CodeBlock language="html">{shortcodeCode}</CodeBlock>
+        <section className="docs-section">
+          <h2 className="text-2xl font-bold">Step 3: Use shortcodes</h2>
+          <CodeBlock language="html" title="wordpress editor">{shortcodeCode}</CodeBlock>
         </section>
 
-        <section className="mt-10">
-          <h2 className="text-2xl font-bold">Server-side PHP Integration</h2>
-          <CodeBlock language="php">{phpCode}</CodeBlock>
+        <section className="docs-section">
+          <h2 className="text-2xl font-bold">Step 4: PHP integration (server-side)</h2>
+          <CodeBlock language="php" title="functions.php" showLineNumbers>{phpCode}</CodeBlock>
         </section>
 
-        <section className="mt-10">
-          <h2 className="text-2xl font-bold">Front-end via Local Proxy</h2>
-          <p className="mt-3 text-slate-400">The frontend JavaScript calls the <strong>local</strong> WordPress REST route, never the Soter API directly:</p>
-          <CodeBlock language="javascript">{jsCode}</CodeBlock>
-          <div className="mt-4 rounded-lg border border-slate-800 p-4">
-            <p className="text-sm font-semibold text-slate-300">REST Routes</p>
-            <ul className="mt-2 space-y-2 text-sm text-slate-400">
-              <li><InlineCode>POST /wp-json/cyberrakshak/v1/guard-input</InlineCode> — <InlineCode>{`{ "text": "…" }`}</InlineCode> → <InlineCode>{`{ blocked, decision, safe_text, risk_types }`}</InlineCode></li>
-              <li><InlineCode>POST /wp-json/cyberrakshak/v1/guard-output</InlineCode> — same shape</li>
-            </ul>
+        <section className="docs-section">
+          <h2 className="text-2xl font-bold">Step 5: Frontend via local proxy</h2>
+          <p className="mt-3 leading-7 text-slate-400">
+            The frontend JavaScript calls the <strong>local</strong> WordPress REST route, never the SoterAI API directly:
+          </p>
+          <CodeBlock language="javascript" title="frontend.js" showLineNumbers>{jsCode}</CodeBlock>
+        </section>
+
+        <section className="docs-section">
+          <h2 className="text-2xl font-bold">Troubleshooting</h2>
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {[
+              ["Auth error on test", "Re-enter the API key (the masked value is a placeholder)"],
+              ["Base URL rejected", "Must start with https://"],
+              ["429 from proxy", "Lower traffic or raise the per-IP rate limit"],
+              ["Guard unreachable", "Input guarding fails open (passes through) so the site keeps working"],
+            ].map(([title, copy]) => (
+              <div key={title} className="rounded-lg border border-slate-800 bg-slate-950/45 p-4">
+                <p className="font-semibold text-sm">{title}</p>
+                <p className="mt-1 text-sm text-slate-400">{copy}</p>
+              </div>
+            ))}
           </div>
         </section>
 
-        <section className="mt-10">
-          <h2 className="text-2xl font-bold">Troubleshooting</h2>
-          <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-400">
-            <li><strong>Test connection fails with auth error</strong> — re-enter the API key (the masked value is a placeholder)</li>
-            <li><strong>Base URL rejected on save</strong> — it must start with <InlineCode>https://</InlineCode></li>
-            <li><strong>429 from the proxy</strong> — lower traffic or raise the per-IP rate limit setting</li>
-            <li><strong>Guard unreachable</strong> — input guarding fails open (passes through) so the site keeps working</li>
-          </ul>
+        <section className="docs-section">
+          <div className="rounded-lg border border-cyan/30 bg-gradient-to-r from-cyan/5 to-transparent p-6">
+            <h2 className="text-xl font-bold">What's next?</h2>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link href="/docs/generic-chatbot" className="button-primary gap-2">
+                Generic Chatbot Guide <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+              <Link href="/docs/rest-api" className="button-secondary gap-2">
+                REST API Reference <ArrowRight size={16} aria-hidden="true" />
+              </Link>
+            </div>
+          </div>
         </section>
 
         <div className="mt-12 flex items-center justify-between border-t border-slate-800 pt-8">

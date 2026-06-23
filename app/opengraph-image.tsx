@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Soter Guard — AI Security Guardrail Platform";
+export const alt = "SoterAI — AI Security Guardrail Platform";
 export const size = {
   width: 1200,
   height: 630,
@@ -103,7 +103,7 @@ export default function Image() {
               }}
             >
               Soter{" "}
-              <span style={{ color: "#00c8c8" }}>Guard</span>
+              <span style={{ color: "#00c8c8" }}>AI</span>
             </span>
           </div>
 
@@ -208,7 +208,7 @@ export default function Image() {
           }}
         >
           <span style={{ fontSize: 13, color: "#475569", fontWeight: 500 }}>
-            soter.dev
+            soterai.publicvm.com
           </span>
           <span style={{ fontSize: 12, color: "#334155" }}>
             OWASP LLM Top 10 Aligned - Free Tier Available
