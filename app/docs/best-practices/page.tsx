@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { CodeBlock, InlineCode, TipBox, WarnBox } from "@/components/ui/CodeBlock";
+import { CodeBlock, InlineCode, TipBox } from "@/components/ui/CodeBlock";
 import { DocViewTracker } from "@/components/docs/DocViewTracker";
 
 export const metadata: Metadata = {

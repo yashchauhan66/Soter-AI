@@ -21,21 +21,21 @@ const breadcrumbSchema = {
   ],
 };
 
-const phpCode = `$in = cyberrakshak_guard_input( $user_message );
+const phpCode = `$in = soter_guard_input( $user_message );
 if ( $in['blocked'] ) {
     $reply = $in['safe_text'];
 } else {
     $ai   = my_chatbot_generate( $in['safe_text'] );
-    $out  = cyberrakshak_guard_output( $ai );
+    $out  = soter_guard_output( $ai );
     $reply = $out['safe_text'] ?? $ai;
 }`;
-const shortcodeCode = `[cyberrakshak_chatbot_guard]    // local proxy + optional badge
-[cyberrakshak_security_badge]   // badge only`;
-const jsCode = `const res = await fetch("/wp-json/cyberrakshak/v1/guard-input", {
+const shortcodeCode = `[soter_chatbot_guard]    // local proxy + optional badge
+[soter_security_badge]   // badge only`;
+const jsCode = `const res = await fetch("/wp-json/soter/v1/guard-input", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
-    "X-WP-Nonce": crgNonce,
+    "X-WP-Nonce": soterNonce,
   },
   body: JSON.stringify({ text: userMessage }),
 });
@@ -58,16 +58,16 @@ export default function WordpressDocsPage() {
           <h2 className="text-2xl font-bold">Step 1: Install the plugin</h2>
           <ol className="mt-4 list-decimal space-y-2 pl-5 leading-7 text-slate-400">
             <li>Copy the plugin folder into <InlineCode>wp-content/plugins/</InlineCode>, or upload via <strong>Plugins → Add New → Upload Plugin</strong>.</li>
-            <li>Activate <strong>CyberRakshak Guard</strong> from the Plugins page.</li>
+            <li>Activate <strong>SoterAI Guard</strong> from the Plugins page.</li>
           </ol>
           <p className="mt-4 text-sm text-slate-400">Package a zip from the repo root:</p>
-          <CodeBlock language="bash" title="terminal">{`npm run package:wordpress   # produces dist/cyberrakshak-guard.zip`}</CodeBlock>
+          <CodeBlock language="bash" title="terminal">{`npm run package:wordpress   # produces dist/soter-guard.zip`}</CodeBlock>
         </section>
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 2: Configure settings</h2>
           <p className="mt-3 leading-7 text-slate-400">
-            Navigate to <strong>Settings → CyberRakshak Guard</strong> to configure:
+            Navigate to <strong>Settings → SoterAI Guard</strong> to configure:
           </p>
           <div className="mt-4 overflow-x-auto rounded-lg border border-slate-800">
             <table className="w-full text-sm">

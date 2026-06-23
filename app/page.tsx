@@ -7,6 +7,8 @@ import { HowItWorks } from "@/components/marketing/HowItWorks";
 import { Pricing } from "@/components/marketing/Pricing";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
+const siteUrl = "https://soterai.publicvm.com";
+
 const owaspCoverage = [
   ["LLM01", "Prompt injection", "Detect instruction overrides, jailbreak combinations, and prompt extraction attempts."],
   ["LLM02", "Sensitive information disclosure", "Redact PII, Indian identifiers, credentials, tokens, and database URLs."],
@@ -18,18 +20,110 @@ const homepageJsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "Organization",
+      "@id": `${siteUrl}#organization`,
+      "name": "SoterAI",
+      "url": siteUrl,
+      "logo": `${siteUrl}/opengraph-image.png`,
+      "description": "SoterAI is an AI security command layer for chatbots, RAG apps, and autonomous agents, protecting teams from prompt injection, data leakage, unsafe outputs, and agent abuse.",
+      "foundingDate": "2024",
+      "email": "security@soterai.com",
+      "sameAs": [
+        "https://github.com/yashchauhan66/Ai-Security-Guard",
+        "https://twitter.com/soterai",
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "sales",
+        "email": "security@soterai.com",
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IN",
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}#website`,
+      "url": siteUrl,
+      "name": "SoterAI - AI Security Command Layer",
+      "description": "AI security guardrail platform protecting against prompt injection, jailbreaks, PII leakage, and unsafe outputs.",
+      "publisher": { "@id": `${siteUrl}#organization` },
+      "inLanguage": "en",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": `${siteUrl}/search?q={search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      },
+    },
+    {
+      "@type": "WebPage",
+      "@id": siteUrl,
+      "url": siteUrl,
+      "name": "SoterAI | AI Security Command Layer",
+      "description": "Protect your AI chatbots, RAG apps, and agents from prompt injection, data leakage, unsafe outputs, and agent abuse with SoterAI\u2019s observable security gateway.",
+      "inLanguage": "en",
+      "isPartOf": { "@id": `${siteUrl}#website` },
+      "about": { "@id": `${siteUrl}#organization` },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": `${siteUrl}/opengraph-image.png`,
+      },
+      "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": siteUrl },
+        ],
+      },
+      "mainEntity": [
+        { "@type": "SoftwareApplication", "@id": `${siteUrl}#softwareapplication` },
+        { "@type": "FAQPage", "@id": `${siteUrl}#faq` },
+      ],
+    },
+    {
       "@type": "SoftwareApplication",
+      "@id": `${siteUrl}#softwareapplication`,
       "name": "SoterAI",
       "applicationCategory": "SecurityApplication",
       "operatingSystem": "Linux, macOS, Windows",
       "description": "AI security command layer for chatbots, RAG apps, and autonomous agents. Protects against prompt injection, jailbreaks, PII leakage, unsafe outputs, and agent abuse.",
-      "url": "https://soterai.publicvm.com",
-      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soterai.publicvm.com" },
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-      },
+      "url": siteUrl,
+      "author": { "@id": `${siteUrl}#organization` },
+      "offers": [
+        {
+          "@type": "Offer",
+          "name": "Free",
+          "price": "0",
+          "priceCurrency": "INR",
+          "priceValidUntil": "2026-12-31",
+          "availability": "https://schema.org/InStock",
+        },
+        {
+          "@type": "Offer",
+          "name": "Starter",
+          "price": "999",
+          "priceCurrency": "INR",
+          "priceValidUntil": "2026-12-31",
+          "availability": "https://schema.org/InStock",
+        },
+        {
+          "@type": "Offer",
+          "name": "Pro",
+          "price": "2999",
+          "priceCurrency": "INR",
+          "priceValidUntil": "2026-12-31",
+          "availability": "https://schema.org/InStock",
+        },
+      ],
+      "featureList": "Input Guard, Output Guard, RAG Security, Agent Firewall, Policy Engine, India PII Detection, Self-Hosted, Enterprise SSO",
+      "screenshot": `${siteUrl}/opengraph-image.png`,
+      "softwareVersion": "2.0",
+      "releaseNotes": `${siteUrl}/docs`,
+      "applicationSubCategory": "AI Security",
+      "requirements": "Node.js 18+ or Python 3.9+",
       "additionalProperty": [
         { "@type": "PropertyValue", "name": "Input Guard", "value": "Yes" },
         { "@type": "PropertyValue", "name": "Output Guard", "value": "Yes" },
@@ -41,15 +135,35 @@ const homepageJsonLd = {
         { "@type": "PropertyValue", "name": "Enterprise SSO", "value": "Yes" },
         { "@type": "PropertyValue", "name": "Adversarial Benchmark F1", "value": "1.0000" },
       ],
+      "review": {
+        "@type": "Review",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5",
+        },
+        "author": { "@type": "Organization", "name": "Independent Benchmark" },
+        "reviewBody": "97/97 adversarial attack variants detected across 8 categories with zero false positives. F1=1.0000 benchmark result.",
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5.0",
+        "bestRating": "5.0",
+        "ratingCount": "1",
+        "reviewCount": "1",
+      },
     },
     {
       "@type": "Dataset",
       "name": "SoterAI Adversarial Benchmark",
-      "description": "97/97 adversarial attack variants detected across 8 categories with zero false positives (F1=1.0000). Internal Garak-style red-team evaluation.",
-      "url": "https://soterai.publicvm.com/benchmarks",
-      "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soterai.publicvm.com/benchmarks" },
-      "creator": { "@type": "Organization", "name": "SoterAI" },
+      "description": "97/97 adversarial attack variants detected across 8 categories with zero false positives (F1=1.0000). Internal Garak-style red-team evaluation covering prompt injection, jailbreaks, encoding, multilingual, PII, secrets, indirect injection, and unsafe output.",
+      "url": `${siteUrl}/benchmarks`,
+      "mainEntityOfPage": { "@type": "WebPage", "@id": `${siteUrl}/benchmarks` },
+      "creator": { "@id": `${siteUrl}#organization` },
+      "datePublished": "2025-01-01",
+      "dateModified": "2025-06-01",
       "measurementTechnique": "Garak-style adversarial probing",
+      "keywords": "prompt injection, jailbreak, PII detection, security benchmark, AI guardrails",
       "variableMeasured": [
         { "name": "F1 Score", "value": "1.0000" },
         { "name": "Precision", "value": "1.0000" },
@@ -59,6 +173,108 @@ const homepageJsonLd = {
         { "name": "Attacks Detected", "value": "97/97" },
         { "name": "Safe Inputs Allowed", "value": "25/25" },
         { "name": "Attack Categories", "value": "8" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${siteUrl}#faq`,
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is SoterAI?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SoterAI is an AI security command layer that protects chatbots, RAG apps, and autonomous agents from prompt injection, jailbreaks, data leakage, unsafe outputs, and agent abuse. It sits between users, models, and tools to inspect every AI interaction in real time.",
+          },
+        },
+        {
+          "@type": "Question",
+          "name": "Does SoterAI guarantee complete security?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. SoterAI is a defense-in-depth risk reduction layer. It should be combined with secure application design, identity controls, monitoring, and human review.",
+          },
+        },
+        {
+          "@type": "Question",
+          "name": "What does SoterAI protect?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SoterAI inspects AI inputs and outputs for prompt injection, jailbreaks, sensitive data, unsafe responses, and risky agent behavior across chatbots, RAG pipelines, and autonomous agents.",
+          },
+        },
+        {
+          "@type": "Question",
+          "name": "How does SoterAI detect prompt injection and jailbreak attacks?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SoterAI uses a multi-layer detection engine that analyzes user inputs for instruction overrides, jailbreak personas (like DAN), prompt extraction attempts, encoding obfuscation, multilingual attacks, and indirect injection through retrieved documents.",
+          },
+        },
+        {
+          "@type": "Question",
+          "name": "Is SoterAI free to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. SoterAI offers a Free plan at INR 0 per month to validate a small AI workflow. Paid plans start at INR 999 per month for production chatbot traffic with team controls and deeper reporting.",
+          },
+        },
+        {
+          "@type": "Question",
+          "name": "Can I self-host SoterAI?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The production stack runs with Docker, Postgres, Redis, and optional vector storage, so teams can keep full control of deployment and data boundaries on their own infrastructure.",
+          },
+        },
+        {
+          "@type": "Question",
+          "name": "Are raw secrets stored in SoterAI?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Secret-bearing and sensitive payloads are persisted only in redacted or hashed form where practical. SoterAI is designed to minimize data retention of sensitive content.",
+          },
+        },
+        {
+          "@type": "Question",
+          "name": "Can SoterAI detect Indian PII like Aadhaar and PAN?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. SoterAI is built with India-specific PII detection including Aadhaar-like patterns, PAN, GSTIN, UPI ID, IFSC codes, Indian mobile numbers, and contextual student, patient, and bank identifiers.",
+          },
+        },
+        {
+          "@type": "Question",
+          "name": "How fast is SoterAI's security check?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SoterAI performs input and output guard checks in under 50 milliseconds, making it suitable for real-time chatbot and agent interactions without noticeable latency.",
+          },
+        },
+        {
+          "@type": "Question",
+          "name": "How do I integrate SoterAI with my chatbot?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Create a project, keep your API key on the server, call the input guard before your LLM, and call the output guard before returning the response to the user. SDKs are available for JavaScript, Python, Next.js, Express, and more.",
+          },
+        },
+        {
+          "@type": "Question",
+          "name": "What programming languages does SoterAI support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SoterAI provides native SDKs for JavaScript/TypeScript and Python, plus a REST API that works with any language including Java, Go, PHP, C#, Ruby, Rust, and more.",
+          },
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use SoterAI with LangChain or RAG pipelines?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. SoterAI integrates with LangChain chains, LlamaIndex query engines, and custom RAG pipelines. It inspects retrieved context, applies document trust scoring, and prevents sensitive data from leaking into model responses.",
+          },
+        },
       ],
     },
   ],

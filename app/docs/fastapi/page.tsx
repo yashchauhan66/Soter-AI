@@ -21,7 +21,7 @@ const breadcrumbSchema = {
   ],
 };
 
-const installCode = `pip install "cyberrakshak-guard[fastapi]"`;
+const installCode = `pip install "soter[fastapi]"`;
 const quickstartCode = `from fastapi import FastAPI
 from soter import Soter
 from soter.fastapi import create_chat_route

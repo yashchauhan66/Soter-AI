@@ -29,6 +29,7 @@ const eslintConfig = [
     rules: {
       "prefer-const": "error",
       "no-var": "error",
+      "react/no-unescaped-entities": "warn",
       "react-hooks/purity": "warn",
       "@typescript-eslint/no-unused-vars": [
         "warn",

@@ -110,8 +110,7 @@ export default function ExpressDocsPage() {
           </p>
           <CodeBlock language="typescript" title="middleware">{middlewareCode}</CodeBlock>
           <TipBox>
-            <InlineCode>req.soter.inputResult</InlineCode> holds the full guard result for inspection. 
-            Legacy <InlineCode>req.cyberrakshak.inputResult</InlineCode> is also populated.
+            <InlineCode>req.soter.inputResult</InlineCode> holds the full guard result for inspection.
           </TipBox>
         </section>
 
