@@ -101,6 +101,7 @@ const languageGuides = [
 ];
 
 const platformGuides = [
+  { label: "All Security Services", href: "/docs/services", desc: "Complete documentation for all 32 SoterAI security services — what they do and how to use them." },
   { label: "RAG / LangChain", href: "/docs/rag", desc: "Protect RAG retrieval flows, LangChain chains, and LlamaIndex query engines." },
   { label: "Generic Chatbot & Agent", href: "/docs/generic-chatbot", desc: "Universal pattern for any chatbot, agent, or tool-using AI system." },
   { label: "WhatsApp Chatbots", href: "/docs/whatsapp", desc: "India-specific PII redaction for WhatsApp deployments." },
@@ -251,6 +252,7 @@ export default function DocsHubPage() {
         <section className="mt-16 rounded-lg border border-slate-800 bg-slate-950/40 p-6">
           <h2 className="text-lg font-semibold">Looking for something specific?</h2>
           <div className="mt-4 flex flex-wrap gap-2 text-sm">
+            <Link href="/docs/services" className="rounded-full border border-cyan/30 bg-cyan/10 px-3 py-1.5 text-cyan hover:border-cyan/50">✨ All Services</Link>
             <Link href="/docs/quickstart" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">Quickstart</Link>
             <Link href="/docs/js" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">JavaScript SDK</Link>
             <Link href="/docs/python" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">Python SDK</Link>

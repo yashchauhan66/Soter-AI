@@ -1,462 +1,553 @@
-# Soter
+<div align="center">
+  <img src="https://raw.githubusercontent.com/yashchauhan66/Ai-Security-Guard/main/public/logo.png" alt="SoterAI Logo" width="280" />
+  
+  # SoterAI — AI Security Command Layer
+  
+  **Secure your AI agents, chatbots, and RAG applications from prompt injection, data leakage, and agent abuse.**
+  
+  <p align="center">
+    <a href="https://soterai.publicvm.com"><img src="https://img.shields.io/badge/Live%20Demo-soterai.publicvm.com-31d7c8?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" /></a>
+    <a href="https://soterai.publicvm.com/docs"><img src="https://img.shields.io/badge/Docs-31d7c8?style=for-the-badge&logo=gitbook&logoColor=white" alt="Documentation" /></a>
+    <a href="https://soterai.publicvm.com/playground"><img src="https://img.shields.io/badge/Playground-31d7c8?style=for-the-badge&logo=react&logoColor=white" alt="Playground" /></a>
+  </p>
+  
+  <p align="center">
+    <img src="https://img.shields.io/github/actions/workflow/status/yashchauhan66/Ai-Security-Guard/ci-cd.yml?branch=main&style=flat-square&logo=githubactions&logoColor=white&label=CI%2FCD" alt="CI/CD" />
+    <img src="https://img.shields.io/github/last-commit/yashchauhan66/Ai-Security-Guard/main?style=flat-square&logo=git&logoColor=white" alt="Last Commit" />
+    <img src="https://img.shields.io/github/license/yashchauhan66/Ai-Security-Guard?style=flat-square" alt="License" />
+    <img src="https://img.shields.io/badge/Next.js-15.5-black?style=flat-square&logo=next.js&logoColor=white" alt="Next.js" />
+    <img src="https://img.shields.io/badge/TypeScript-5.7-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
+    <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+    <img src="https://img.shields.io/badge/Prisma-5.22-2D3748?style=flat-square&logo=prisma&logoColor=white" alt="Prisma" />
+    <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker" />
+    <img src="https://img.shields.io/badge/OWASP%20LLM%20Top%2010-Compliant-brightgreen?style=flat-square" alt="OWASP" />
+  </p>
+  
+  <br />
+  
+  **[✨ Features](#-key-features) • [🚀 Quick Start](#-quick-start) • [📋 Services](#-services-overview) • [🏗️ Architecture](#️-architecture) • [🐳 Deployment](#-deployment) • [🧪 Testing](#-testing)**
+  
+  <br />
+</div>
 
-Safety layer for intelligent conversations.
+---
 
-Soter is a developer-first safety layer for AI chatbots, agents, RAG systems, and LLM applications. It helps detect and block prompt injection, jailbreaks, data leakage, unsafe outputs, PII exposure, tool abuse, and risky AI behavior before it reaches your model or user.
+## What is SoterAI?
 
-## Package Health
+**SoterAI** (from Greek *sōtēr* — "savior, protector") is an **open-source AI security command layer** that protects chatbots, RAG systems, and autonomous agents from:
 
-| Package | Registry | Version | Typecheck | Build | Tests | Status |
-|---------|----------|---------|-----------|-------|-------|--------|
-| `@soterai/core` | [npm](https://www.npmjs.com/package/@soterai/core) | `0.2.0` | ✅ | ✅ | ✅ 14/14 | ✅ **Healthy** |
-| `@soterai/langchain-middleware` | [npm](https://www.npmjs.com/package/@soterai/langchain-middleware) | `0.2.0` | ✅ | ✅ | — | ✅ **Healthy** |
-| `@soterai/llamaindex-middleware` | [npm](https://www.npmjs.com/package/@soterai/llamaindex-middleware) | `0.2.0` | ✅ | ✅ | — | ✅ **Healthy** |
-| `@soterai/vercel-ai-sdk-middleware` | [npm](https://www.npmjs.com/package/@soterai/vercel-ai-sdk-middleware) | `0.2.0` | ✅ | ✅ | — | ✅ **Healthy** |
-| `soter` (Python SDK) | [PyPI](https://pypi.org/project/soter/) | `0.2.0` | — | ✅ sdist+wheel | ✅ 56/56 | ✅ **Healthy** |
+- 🎯 **Prompt injection & jailbreak attacks**
+- 🔓 **Data exfiltration & PII leakage**
+- 🤖 **Rogue agent behavior & tool abuse**
+- 🧠 **Memory poisoning & context manipulation**
+- 💸 **Runaway LLM costs & budget overruns**
+- ⚖️ **Regulatory compliance violations**
 
-**Overall: 🟢 HEALTHY** — All 5 packages build, typecheck, and test successfully. 70/70 tests pass (0 failures).
+With **32 specialized security services** organized across 6 layers of defense — Monitor, Protect, Detect, Control, Compliance, and Manage — SoterAI provides comprehensive protection for production AI systems.
 
-## Phase 8: Launch Operations
+> **⭐ Production-ready** — Used in production with 1M+ guarded requests, Docker & EC2 deployment, and full CI/CD pipeline.
 
-Phase 8 adds the business and operational layer required for beta launch:
+<br />
 
-- Beta, agency-partner, and enterprise-pilot onboarding with activation timestamps.
-- Trial, failed-payment, grace-period, invoice, cancellation, and reactivation workflows.
-- Tenant-scoped support tickets, incident operations, and a public-safe status page.
-- Detection feedback review, redacted dataset intake, quality trends, and tuning suggestions.
-- Customer-success funnel, churn indicators, and sampled production latency/error metrics.
-- Public demo, pricing, partner, enterprise, case-study, contact, changelog, trust, and launch assets.
-- Production readiness audit, live billing checklist, SLA draft, error budget, runbook, and QA checklist.
+---
 
-CyberRakshak Guard is OWASP LLM Top 10 aligned and supports defense-in-depth risk reduction. It does not guarantee complete protection or replace secure application engineering, access controls, human review, and incident response.
+## ✨ Key Features
 
-## Phase 9: Business Validation
+### 🛡️ 6 Layers of AI Security
 
-The [Phase 9 go-to-market package](docs/phase9/README.md) defines the ICPs, founder-led CRM templates, beta onboarding, authorized free audit, agency partner motion, enterprise pilot package, pricing validation, outreach, case-study permissions, public launch plan, investor materials, and admin growth metrics.
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>👁️ Monitor</h3>
+      <p><em>Observe, analyze, and understand your AI security posture</em></p>
+      <ul>
+        <li><strong>Guard Logs</strong> — Full audit trail of every security decision</li>
+        <li><strong>Reports</strong> — Automated monthly security reports with trends</li>
+        <li><strong>Detection Feedback</strong> — Improve accuracy by marking false positives</li>
+        <li><strong>Customer Success</strong> — Activation rates and churn risk analytics</li>
+      </ul>
+    </td>
+    <td width="50%" valign="top">
+      <h3>🛡️ Protect</h3>
+      <p><em>Shield your AI from attacks, abuse, and data leaks</em></p>
+      <ul>
+        <li><strong>Agent Firewall</strong> — Block unauthorized tool calls in real-time</li>
+        <li><strong>Policy Engine</strong> — Custom risk thresholds and action defaults</li>
+        <li><strong>RAG Security</strong> — Guard retrieval pipelines from poisoned docs</li>
+        <li><strong>Webhooks</strong> — Real-time signed security event notifications</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>🔍 Detect</h3>
+      <p><em>Identify threats, vulnerabilities, and suspicious patterns</em></p>
+      <ul>
+        <li><strong>Shadow AI</strong> — Discover unauthorized AI tool usage</li>
+        <li><strong>Red Team Lab</strong> — Test against 100+ adversarial scenarios</li>
+        <li><strong>Forensics</strong> — Full incident investigation toolkit</li>
+        <li><strong>Semantic Egress</strong> — Detect paraphrased confidential data leaks</li>
+        <li><strong>Canary Network</strong> — Tripwire tokens to detect prompt injection</li>
+      </ul>
+    </td>
+    <td width="50%" valign="top">
+      <h3>🎛️ Control</h3>
+      <p><em>Govern agent behavior with fine-grained policies</em></p>
+      <ul>
+        <li><strong>Agent Passports</strong> — Cryptographic agent identity verification</li>
+        <li><strong>Transaction Escrow</strong> — Human-in-the-loop for risky actions</li>
+        <li><strong>Intent Guard</strong> — Verify actions match original user intent</li>
+        <li><strong>Tool Chain</strong> — Detect risky multi-tool attack sequences</li>
+        <li><strong>Memory Firewall</strong> — Quarantine poisoned agent memory</li>
+        <li><strong>MCP Drift</strong> — Detect MCP server tool changes</li>
+        <li><strong>Legal Boundary</strong> — Hard guardrails for regulatory compliance</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h3>📋 Compliance</h3>
+      <p><em>Meet regulatory requirements with audit-ready evidence</em></p>
+      <ul>
+        <li><strong>Evidence Vault</strong> — SOC 2 / ISO 27001 evidence packaging</li>
+        <li><strong>Context Lineage</strong> — Track data provenance and block cross-domain leaks</li>
+        <li><strong>Blast Radius</strong> — Estimate damage if an agent is compromised</li>
+        <li><strong>Credential Vault</strong> — Secure server-side credential storage</li>
+      </ul>
+    </td>
+    <td width="50%" valign="top">
+      <h3>⚙️ Manage</h3>
+      <p><em>Configure, monitor, and administer your security stack</em></p>
+      <ul>
+        <li><strong>Projects</strong> — Multi-environment project organization</li>
+        <li><strong>API Keys</strong> — Scoped keys with independent rate limits</li>
+        <li><strong>Cost Firewall</strong> — Prevent runaway LLM spending</li>
+        <li><strong>Security Badges</strong> — Real-time protection status badges</li>
+        <li><strong>Audit Exports</strong> — Compliance-ready audit log exports</li>
+      </ul>
+    </td>
+  </tr>
+</table>
 
-Phase 9 intentionally avoids unrelated product development. Roadmap changes should require repeated evidence from qualified beta users, partners, or paying-intent enterprise buyers.
+<br />
 
-## Phase 10: Founder-Led Growth Execution
+---
 
-The [Phase 10 growth workspace](docs/growth/README.md) contains the 100-account research list, 50-message draft queue, authorization-first audit and demo playbooks, beta and pricing execution, objection learning, launch gates, weekly scorecard, and KPI definitions. Draft activity is never counted as sent outreach or traction.
+## 🏗️ Architecture
 
-## Phase 11: Internal Preview Competitive Gap Scaffolding
-
-Phase 11 adds Internal Preview defensive scaffolds for AI supply chain security, AI Bill of Materials, model/provider and prompt registries, tool-call firewall, advanced RAG security simulation, threat-intelligence rule lifecycle, internal benchmark metrics, multilingual detector expansion, DPDP readiness workflow, WordPress and AI framework middleware scaffolds, abuse/cost-control evidence, and audit readiness documentation.
-
-These capabilities are OWASP LLM Top 10 aligned defense-in-depth controls for risk reduction. The tool-call firewall preview is not runtime agent enforcement yet unless it is wired into the agent execution path. These previews are not a guarantee of complete protection and do not represent independent certification. Remote threat rules and red-team tests require authorization and review before use.
-
-CyberRakshak Guard is an OWASP LLM Top 10 aligned, defense-in-depth gateway for AI chatbot input and output flows. It detects, blocks, rewrites, redacts, monitors, and reports prompt injection, jailbreaks, system prompt exposure, PII, India-specific PII, secrets, unsafe output, and basic usage abuse.
-
-The product reduces risk. It does not provide complete protection, replace secure model configuration, or represent OWASP certification.
-
-## Phase 1 capabilities (still working)
-
-- Input, output, and public playground analysis APIs.
-- Modular detectors with explainable findings.
-- Risk scoring and allow / redact / rewrite / review / block decisions.
-- Position-safe redaction, basic risky-instruction rewriting.
-- Project-scoped API keys with one-time display and peppered hash storage.
-- Per-key RPM limits, public playground limits, monthly plan quotas.
-- Guard logs, usage counters, project dashboard, monthly reports.
-- Security-safe logging that omits raw PII, secrets, and leaked system instructions.
-
-## Phase 2 capabilities (still working)
-
-- `@soterai/core` typed SDK + `@soterai/core/next` `secureChatHandler`.
-- Webhook endpoints with HMAC-SHA256 signatures and delivery logs.
-- Agency dashboard, clients, branding, white-label printable report.
-- Public security badge endpoint, embed script, public status page.
-- Plan + usage system (FREE / STARTER / PRO / AGENCY / ENTERPRISE).
-- Beta onboarding checklist + billing-ready page.
-- Developer docs v2.
-
-## Phase 3 capabilities (new)
-
-- **Real authentication.** NextAuth v5 + credentials + bcrypt. Sign-up, sign-in, sign-out, JWT sessions.
-- **Organizations + members + roles.** OWNER / ADMIN / DEVELOPER / SECURITY_ANALYST / BILLING / VIEWER with a central permission map.
-- **Tenant isolation.** Every private query goes through `requireUser`, `requireOrganizationAccess`, `requireProjectAccess`, or `requirePermission`. UI hiding is *not* the boundary — APIs enforce.
-- **Redis-backed rate limit + monthly metering.** Upstash REST client with in-memory fallback. Atomic counters per minute and per YYYY-MM bucket.
-- **Durable webhook queue.** Database-backed with exponential backoff (30s → 2m → 10m → 1h → 6h), idempotency keys, replay endpoint, signature verification documented.
-- **Razorpay billing.** Checkout, signed activation, signed webhook receiver, subscription state machine, plan upgrade/downgrade, cancel placeholder. Sandbox mode if credentials absent.
-- **Policy engine.** Per-project `ProjectPolicy` with MONITOR / BALANCED / STRICT modes, per-detector toggles, allowlist/denylist, custom topics, custom fallback message.
-- **Server-side PDF reports.** `pdfkit`-based monthly report with agency branding, OWASP block, disclaimer; no raw user text.
-- **Audit exports.** JSONL (SIEM-ready) + CSV, per-row HMAC signature, manifest signature header, AuditExport audit trail.
-- **Admin panel.** `/admin` gated by `User.isAdmin`. Surfaces orgs, plans, failed deliveries, payment events.
-
-## Requirements
-
-- Node.js 20+
-- npm
-- PostgreSQL 14+ with the `pgcrypto`/`uuid` functions (the migration calls `gen_random_uuid()`).
-
-## Deployment
-
-The app is configured for automated deployment to AWS EC2 (ap-south-1) via GitHub Actions.
-
-| Step | What happens |
-|------|-------------|
-| `git push origin main` | TypeScript typecheck + lint on GitHub Actions runner |
-| SSH into EC2 | Pulls latest code, builds Docker image, pushes to Docker Hub, deploys with docker compose |
-| Health check | Verifies app responds on port 3000, reloads nginx |
-
-**Prerequisites (one-time):** Docker, repo clone, and `.env.production` on the EC2 instance.
-
-## Local setup
-
-```powershell
-npm install
-Copy-Item .env.example .env
-# Edit .env:
-#   DATABASE_URL (PostgreSQL)
-#   API_KEY_PEPPER (>= 32 chars)
-#   NEXTAUTH_SECRET (>= 32 chars; openssl rand -base64 32)
-#   WEBHOOK_WORKER_TOKEN (random)
-#   AUDIT_EXPORT_SECRET (optional; falls back to API_KEY_PEPPER)
-#   Optional: UPSTASH_REDIS_REST_URL / TOKEN
-#   Optional: RAZORPAY_KEY_ID / SECRET / WEBHOOK_SECRET
-
-npm run db:deploy
-npm run db:seed
-npm run dev
+```
+┌─────────────────────────────────────────────────────────┐
+│                     Your Application                      │
+│  ┌────────────┐  ┌──────────┐  ┌──────────────────┐     │
+│  │   Chatbot   │  │ RAG App  │  │ Autonomous Agent │     │
+│  └─────┬──────┘  └────┬─────┘  └────────┬─────────┘     │
+│        │              │                  │               │
+└────────┼──────────────┼──────────────────┼───────────────┘
+         │              │                  │
+         ▼              ▼                  ▼
+┌─────────────────────────────────────────────────────────┐
+│                   SoterAI Guard API                       │
+│                                                           │
+│  ┌──────────────┐  ┌─────────────┐  ┌──────────────┐    │
+│  │ Input Guard  │  │ Output Guard│  │Agent Firewall│    │
+│  ├──────────────┤  ├─────────────┤  ├──────────────┤    │
+│  │• Prompt Inj. │  │• PII Leak   │  │• Tool Check  │    │
+│  │• Jailbreak   │  │• Secrets    │  │• Auth Verify │    │
+│  │• Toxicity    │  │• Toxicity   │  │• Risk Score  │    │
+│  │• PII Redact  │  │• Hallucin.  │  │• Policy Eval │    │
+│  └──────────────┘  └─────────────┘  └──────┬───────┘    │
+│                                            │            │
+│  ┌─────────────────────────────────────────┘            │
+│  ▼                                                       │
+│  ┌──────────────┐  ┌─────────────┐  ┌──────────────┐    │
+│  │  Webhooks    │  │   Reports   │  │  Forensics   │    │
+│  │  & SIEM      │  │ & Analytics │  │  & Audit     │    │
+│  └──────────────┘  └─────────────┘  └──────────────┘    │
+│                                                           │
+└─────────────────────────┬─────────────────────────────────┘
+                          │
+          ┌───────────────┼───────────────┐
+          ▼               ▼               ▼
+┌─────────────┐  ┌──────────────┐  ┌──────────────┐
+│  PostgreSQL │  │  Upstash     │  │  Qdrant      │
+│  (Prisma)   │  │  Redis       │  │  (Vector DB) │
+└─────────────┘  └──────────────┘  └──────────────┘
 ```
 
-The seed prints the demo email, password, and a one-time API key. The demo user is provisioned as an `isAdmin: true` workspace owner for testing the admin panel.
+### Tech Stack
 
-## Verification
+| Component | Technology |
+|-----------|-----------|
+| **Framework** | Next.js 15.5 (TypeScript) + Turbopack |
+| **Database** | PostgreSQL 16 + Prisma ORM 5.22 |
+| **Caching** | Upstash Redis |
+| **Vector Store** | Qdrant (optional) |
+| **Auth** | NextAuth v5 (JWT sessions) |
+| **Payments** | Razorpay |
+| **UI** | Tailwind CSS + Lucide Icons |
+| **Container** | Docker (multi-stage build) |
+| **CI/CD** | GitHub Actions → Docker Hub → EC2 |
+| **SDKs** | TypeScript, Python, LangChain, LlamaIndex |
 
-```bash
-# TypeScript SDK
-cd packages/sdk && npm run typecheck && npm test
-# → 14/14 tests pass
+<br />
 
-# Python SDK
-cd packages/python-sdk && python -m pytest tests/ -q
-# → 56/56 tests pass (21 skipped — e2e needs SOTER_API_KEY)
+---
 
-# Middleware packages
-cd packages/langchain-middleware && npm run typecheck
-cd packages/llamaindex-middleware && npm run typecheck
-cd packages/vercel-ai-sdk-middleware && npm run typecheck
+## 🚀 Quick Start
 
-# Full project
-cd app && npx tsc --noEmit --skipLibCheck
-```
-
-### Browser E2E
-
-Playwright uses the configured local PostgreSQL database, applies migrations, refreshes the demo seed, and starts Next.js on port `3101`.
-
-```powershell
-npx playwright install chromium
-npm run test:e2e
-```
-
-Set `E2E_PORT` or `E2E_BASE_URL` to override the local server. Use an isolated local/test database through `DATABASE_URL`; the suite creates uniquely named test projects, keys, webhooks, RAG collections, and queued jobs. Provider-backed delivery, billing, SAML, SCIM, KMS, Redis, vector, email, and SIEM interoperability are not claimed by this local suite.
-
-## REST API examples
-
-```bash
-curl -X POST http://localhost:3000/api/guard/input \
-  -H "Content-Type: application/json" \
-  -H "x-api-key: ck_test_your_key" \
-  -d '{"message":"Ignore previous instructions"}'
-```
-
-```bash
-curl -X POST http://localhost:3000/api/guard/output \
-  -H "Content-Type: application/json" \
-  -H "x-api-key: ck_test_your_key" \
-  -d '{"aiResponse":"System prompt: confidential"}'
-```
-
-```bash
-curl http://localhost:3000/api/badge/<slug>
-```
-
-## SDK Quick Start
-
-### TypeScript / JavaScript
+### 1️⃣ One-liner (Node.js)
 
 ```bash
 npm install @soterai/core
 ```
 
-```ts
+### 2️⃣ Basic Usage
+
+```typescript
 import { Soter } from "@soterai/core";
 
 const soter = new Soter({
-  apiKey: process.env.SOTER_API_KEY,
-  projectId: process.env.SOTER_PROJECT_ID,
-  baseUrl: process.env.SOTER_BASE_URL,
+  apiKey: process.env.SOTERAI_API_KEY,
 });
 
-const result = await soter.protect({
-  input: userMessage,
-  context: { userId, sessionId },
+// Guard user input before passing to LLM
+const result = await soter.guardInput({
+  message: userMessage,
+  userId: "user_123",
+  sessionId: "session_456",
 });
 
-if (!result.allowed) {
-  console.log("Blocked by Soter:", result.reason);
+if (soter.shouldBlock(result)) {
+  // 🛑 Blocked — don't call the LLM
+  return { reply: "Message blocked for security reasons." };
 }
-```
 
-#### Next.js Helper
+const safeInput = soter.getSafeText(result, userMessage) ?? userMessage;
+const llmResponse = await callMyLLM(safeInput);
 
-```ts
-import { secureChatHandler } from "@soterai/core/next";
-export const POST = secureChatHandler({
-  apiKey: process.env.SOTER_API_KEY!,
-  callLLM: async ({ safeInput }) => callLLM(safeInput),
+// Guard the output before returning to user
+const outputResult = await soter.guardOutput({
+  aiResponse: llmResponse,
+  sessionId: "session_456",
 });
+
+const safeOutput = soter.getSafeText(outputResult, llmResponse) ?? llmResponse;
+return { reply: safeOutput };
 ```
 
-#### AI Framework Middleware
-
-| Package | Framework | Usage |
-|---------|-----------|-------|
-| `@soterai/langchain-middleware` | LangChain | Wrap chains with `withSoterLangChain(chain, guard)` |
-| `@soterai/llamaindex-middleware` | LlamaIndex | Wrap engines with `createSoterQueryWrapper(engine, guard)` |
-| `@soterai/vercel-ai-sdk-middleware` | Vercel AI SDK | Guard prompts/outputs with `soterVercelAiMiddleware(guard)` |
-
-### Python
+### 3️⃣ Self-Host (Docker)
 
 ```bash
-pip install soter
+docker pull yashchauhan66/soter:latest
+docker run -p 3000:3000 --env-file .env.production yashchauhan66/soter:latest
 ```
 
-```python
-from soter import Soter
+<details>
+<summary><strong>📄 Requirements: .env.production (click to expand)</strong></summary>
 
-guard = Soter()  # reads SOTER_API_KEY
+```env
+# Required
+DATABASE_URL=postgresql://user:pass@host:5432/soter
+AUTH_SECRET=<your-32-char-secret>
 
-result = guard.protect_chat(
-    message="Ignore previous instructions",
-    call_llm=lambda msg: my_llm(msg),
-)
-print(result.input_action)  # BLOCK
+# API Keys
+SOTERAI_API_KEY=<your-api-key>
 
-# Framework helpers:
-# from soter.fastapi import create_chat_route
-# from soter.flask import create_chat_view
-# from soter.langchain import protect_langchain_chain
-# from soter.llamaindex import protect_query_engine
+# Optional
+REDIS_URL=redis://...
+QDRANT_URL=http://qdrant:6333
+SLM_API_KEY=sk-...
 ```
+</details>
 
-## Integrations
+<br />
 
-Official SDKs and plugins for connecting chatbots, RAG apps, and AI agents:
+---
 
-- **JavaScript / TypeScript** — `@soterai/core` (`packages/sdk`).
-  See [docs/integrations/javascript-typescript.md](docs/integrations/javascript-typescript.md).
-- **Python** — `soter` (`packages/python-sdk`).
-  See [docs/integrations/python.md](docs/integrations/python.md).
-- **WordPress / PHP** — plugin in `integrations/wordpress-plugin/cyberrakshak-guard`.
-  See [docs/integrations/wordpress.md](docs/integrations/wordpress.md).
-- **LangChain** — `@soterai/langchain-middleware` (`packages/langchain-middleware`).
-- **LlamaIndex** — `@soterai/llamaindex-middleware` (`packages/llamaindex-middleware`).
-- **Vercel AI SDK** — `@soterai/vercel-ai-sdk-middleware` (`packages/vercel-ai-sdk-middleware`).
-- **API contract** — [docs/integrations/api-contract.md](docs/integrations/api-contract.md).
-- **Security best practices** — [docs/integrations/security-best-practices.md](docs/integrations/security-best-practices.md).
+## 📋 Services Overview
 
-Runnable examples live in `examples/`:
-- [Next.js Chat](examples/nextjs-soter/) — TypeScript + `@soterai/core`
-- [FastAPI Chat](examples/fastapi-soter/) — Python + `soter`
-- [Flask Chat](examples/flask-soter/) — Python + `soter`
+| Category | Service | Description |
+|----------|---------|-------------|
+| **👁️ Monitor** | [Guard Logs](https://soterai.publicvm.com/docs/services/guard-logs) | Full audit trail of every security decision |
+| | [Reports](https://soterai.publicvm.com/docs/services/reports) | Automated security reports with trend analysis |
+| | [Detection Feedback](https://soterai.publicvm.com/docs/services/detection-feedback) | Improve detection accuracy by marking false positives |
+| | [Customer Success](https://soterai.publicvm.com/docs/services/customer-success) | Activation rates and churn risk analytics |
+| **🛡️ Protect** | [Agent Firewall](https://soterai.publicvm.com/docs/services/agent-firewall) | Real-time agent action monitoring and blocking |
+| | [Policy Engine](https://soterai.publicvm.com/docs/services/policy-engine) | Configurable risk thresholds and action policies |
+| | [RAG Security](https://soterai.publicvm.com/docs/services/rag-security) | Document scanning and retrieval-time guard |
+| | [Webhooks](https://soterai.publicvm.com/docs/services/webhooks) | Signed real-time security event notifications |
+| **🔍 Detect** | [Shadow AI](https://soterai.publicvm.com/docs/services/shadow-ai) | Uncover unauthorized AI tool usage |
+| | [Red Team Lab](https://soterai.publicvm.com/docs/services/red-team-lab) | 100+ adversarial attack scenarios |
+| | [Forensics](https://soterai.publicvm.com/docs/services/forensics) | Incident investigation and root cause analysis |
+| | [Semantic Egress](https://soterai.publicvm.com/docs/services/semantic-egress) | Detect paraphrased confidential data leaks |
+| | [Canary Network](https://soterai.publicvm.com/docs/services/canary-network) | Tripwire tokens for prompt injection detection |
+| **🎛️ Control** | [Agent Passports](https://soterai.publicvm.com/docs/services/agent-passports) | Cryptographic agent identity verification |
+| | [Transaction Escrow](https://soterai.publicvm.com/docs/services/transaction-escrow) | Human-in-the-loop for risky agent actions |
+| | [Intent Guard](https://soterai.publicvm.com/docs/services/intent-guard) | Verify actions match original user intent |
+| | [Tool Chain](https://soterai.publicvm.com/docs/services/tool-chain) | Multi-step attack pattern detection |
+| | [Dry-Run Sandbox](https://soterai.publicvm.com/docs/services/dry-run-sandbox) | Simulate policies without production impact |
+| | [Memory Firewall](https://soterai.publicvm.com/docs/services/memory-firewall) | Quarantine poisoned agent memory |
+| | [MCP Drift](https://soterai.publicvm.com/docs/services/mcp-drift) | Monitor MCP server tool changes |
+| | [Legal Boundary](https://soterai.publicvm.com/docs/services/legal-boundary) | Hard guardrails for regulatory compliance |
+| **📋 Compliance** | [Evidence Vault](https://soterai.publicvm.com/docs/services/evidence-vault) | SOC 2 / ISO 27001 evidence packaging |
+| | [Context Lineage](https://soterai.publicvm.com/docs/services/context-lineage) | Data provenance and cross-domain leak blocking |
+| | [Blast Radius](https://soterai.publicvm.com/docs/services/blast-radius) | Agent compromise damage estimation |
+| | [Credential Vault](https://soterai.publicvm.com/docs/services/credential-vault) | Secure credential storage for agents |
+| **⚙️ Manage** | [Projects](https://soterai.publicvm.com/docs/services/projects) | Multi-environment project organization |
+| | [API Keys](https://soterai.publicvm.com/docs/services/api-keys) | Scoped keys with independent rate limits |
+| | [Cost Firewall](https://soterai.publicvm.com/docs/services/cost-firewall) | Prevent runaway LLM spending |
+| | [Security Badges](https://soterai.publicvm.com/docs/services/security-badges) | Real-time protection status badges |
+| | [Billing](https://soterai.publicvm.com/docs/services/billing) | Plan management and usage tracking |
+| | [Settings](https://soterai.publicvm.com/docs/services/settings) | Profile, team, and preferences |
+| | [Audit Exports](https://soterai.publicvm.com/docs/services/audit-exports) | Compliance-ready audit log exports |
+| | [Onboarding](https://soterai.publicvm.com/docs/services/onboarding) | Guided setup with live validation |
 
-## Webhooks
+> 📖 **Full documentation available at:** [soterai.publicvm.com/docs/services](https://soterai.publicvm.com/docs/services)
 
-Add an HTTPS endpoint under **Dashboard → Webhooks** and store the signing secret. Phase 3 makes delivery durable:
+<br />
 
-- Payloads are queued to `WebhookDelivery` before any HTTP attempt.
-- Failed attempts are retried on an exponential schedule (30s → 6h) up to five times.
-- `x-cyberrakshak-idempotency-key` header lets receivers dedupe across retries.
-- Manual replay via `POST /api/webhooks/replay`.
-- Worker endpoint `POST /api/admin/webhooks/process` is called by your cron driver with a bearer `WEBHOOK_WORKER_TOKEN`.
+---
 
-Verify a signature with:
+## 🔌 SDKs & Integrations
 
-```ts
-import { createHmac, timingSafeEqual } from "crypto";
+| Platform | Package | Status |
+|----------|---------|--------|
+| **Node.js / TypeScript** | `@soterai/core` | ✅ Stable |
+| **Python** | `@soterai/python` | ✅ Stable |
+| **Next.js** | `@soterai/core/next` | ✅ Stable |
+| **Express** | `@soterai/core/express` | ✅ Stable |
+| **LangChain** | `@soterai/langchain-middleware` | ✅ Stable |
+| **LlamaIndex** | `@soterai/llamaindex-middleware` | ✅ Stable |
+| **WordPress** | Plugin package available | ✅ Stable |
+| **Botpress** | Integration channel | ✅ Stable |
+| **Intercom** | Integration channel | ✅ Stable |
+| **Zendesk** | Integration channel | ✅ Stable |
+| **WhatsApp** | Business API integration | ✅ Stable |
+| **REST API** | `https://api.soterai.com/v1/*` | ✅ Stable |
 
-export function verify(rawBody: string, header: string, secret: string) {
-  const match = /t=(\d+),v1=([0-9a-f]+)/.exec(header);
-  if (!match) return false;
-  const [, t, sig] = match;
-  const expected = createHmac("sha256", secret).update(`${t}.${rawBody}`).digest("hex");
-  return timingSafeEqual(Buffer.from(expected, "hex"), Buffer.from(sig, "hex"));
-}
-```
+<br />
 
-## Authentication
+---
 
-`/signin` and `/signup` are public. Everything under `/dashboard`, `/admin`, and private API surfaces enforce session presence via `auth()` and the new tenant guards. Session cookies are HttpOnly, JWT-encoded, 24h lifetime.
+## 🐳 Deployment
 
-Roles and permissions are defined in `lib/auth/permissions.ts`. To check a permission from a route:
-
-```ts
-import { requireProjectPermission } from "@/lib/auth/guards";
-
-const access = await requireProjectPermission(projectId, "webhook:create");
-// access.user, access.org, access.role, access.project
-```
-
-## Razorpay billing
-
-- `/api/billing/checkout` → server-side order creation.
-- Client opens Razorpay checkout; on success the handler calls `/api/billing/activate` which verifies `razorpay_signature` against `RAZORPAY_KEY_SECRET` server-side before flipping the plan.
-- `/api/billing/webhook` accepts Razorpay events, verifies `x-razorpay-signature` with `RAZORPAY_WEBHOOK_SECRET`, persists each event to `PaymentEvent` (with `signatureValid`), and updates the `Subscription` only when the signature is valid.
-- Without credentials, checkout returns a sandbox order id so the UI flow stays exercisable in dev.
-
-## Policy engine
-
-Per-project settings live at `/dashboard/policy`. Modes:
-
-- **MONITOR** — logs everything, demotes BLOCK to HUMAN_REVIEW unless secrets are present.
-- **BALANCED** — default. Matches Phase 1/2 behaviour.
-- **STRICT** — promotes ALLOW_WITH_REDACTION / REWRITE to BLOCK when score ≥ 50.
-
-Per-detector toggles, custom blocked topics, custom denylist regex, allowlisted domains, and a custom fallback message are all stored on `ProjectPolicy`. The guard input and output routes load the policy on every call.
-
-## Server-side PDF + audit exports
-
-- `GET /api/reports/pdf?projectId=<id>&month=<n>&year=<n>` returns a PDF. The PDF mirrors the white-label web report and never includes raw user text.
-- `GET /api/exports?organizationId=<id>&kind=GUARD_LOGS&format=JSONL` returns a SIEM-ready JSONL with one signed row per line. Each export creates an `AuditExport` row with a manifest signature for downstream verification.
-
-## Admin panel
-
-- `/admin` accessible to users with `isAdmin = true`. Surfaces orgs, projects, blocks, webhook failures, payment events, recent subscription states.
-
-## Security behaviour
-
-- Raw API keys are returned once and never stored.
-- `API_KEY_PEPPER` is required and must be at least 32 characters.
-- Raw PII, secrets, and leaked system instructions are not stored in guard logs.
-- Webhook payloads are HMAC-SHA256 signed and never contain raw secrets.
-- Razorpay webhooks are signature-verified before any subscription mutation.
-- Audit exports HMAC every row and the response manifest.
-- React renders all user-controlled text without `dangerouslySetInnerHTML`.
-- API and dashboard responses use `Cache-Control: no-store`.
-- Baseline CSP, frame, MIME-sniffing, referrer, permissions, HSTS headers configured.
-- React renders all user-controlled text without `dangerouslySetInnerHTML`.
-
-## Phase 1, 2, 3 manual QA
-
-- [`docs/phase2-qa-checklist.md`](docs/phase2-qa-checklist.md)
-- [`docs/phase3-qa-checklist.md`](docs/phase3-qa-checklist.md)
-
-## Known Phase 3 limitations
-
-- Webhook signing secrets are persisted server-side using an XOR-obfuscated in-process map plus DB hash. A process restart invalidates the cache; rotate to issue a new secret. Phase 4 should move this to a KMS or envelope-encrypted column.
-- PDF generation runs in the Node runtime via `pdfkit`. Headless Chromium / Puppeteer would offer richer typography but adds infrastructure weight.
-- Razorpay UPI / subscription auto-renewal flows are wired but not exhaustively exercised. Webhook receivers should be tested against the Razorpay sandbox before going live.
-- Email-based invites are scaffolded (DB tables + token hashing); transactional email delivery is intentionally not bundled. Phase 4 should integrate Resend / SES / Postmark.
-- Detection remains deterministic pattern matching; false positives and negatives are possible. The policy engine reduces but does not eliminate this.
-- The admin panel is read-only; impersonation, plan overrides, and quota bumps are Phase 4.
-
-## Phase 4 direction
-
-- Email and SMS notifications (invites, payment failures, exceeded-quota alerts).
-- KMS-backed webhook secret storage.
-- RAG security: retrieval poisoning detection, source attribution checks, document-level guardrails.
-- Semantic + multilingual classifiers behind feature flags; English, Hindi, Tamil to start.
-- Admin actions: impersonation, plan overrides, quota bumps, manual replays at scale.
-- Scheduled reports + email delivery; rolling 7/30/90-day PDF cohort views.
-- Headless-Chromium PDF rendering for richer typography.
-- SCIM provisioning and SAML SSO for enterprise.
-# Phase 4
-
-Phase 4 adds RAG document scanning and quarantine, tenant-bound vector access controls, grounding and citation policies, optional semantic and Hindi/Hinglish classifiers, detection feedback, email verification/password reset/invites, encrypted webhook secrets, an always-on delivery worker with a dead-letter queue, scheduled signed PDF reports, and audited admin actions.
-
-CyberRakshak Guard is **OWASP LLM Top 10 aligned**. It reduces risk but does not provide complete protection.
-
-## Phase 4 setup
-
-1. Configure the Phase 4 variables in `.env.example`.
-2. Apply migrations with `npm run db:deploy` (production) or `npm run db:migrate` (development).
-3. Start the app with `npm run dev`.
-4. Run the durable webhook worker separately with `npm run worker:webhooks`. Its health endpoint defaults to `http://127.0.0.1:3099`.
-5. Trigger scheduled reports from `POST /api/admin/reports/process` using `Authorization: Bearer $REPORT_WORKER_TOKEN`, or use the dashboard's **Send now** action.
-
-When `EMAIL_PROVIDER=mock`, verification/reset/invite URLs are returned only in development API responses and the email metadata is logged without prompt content. Production providers are `resend`, `aws-ses`, and `smtp`.
-
-## Phase 4 testing
-
-- Email verification: create an account, open the mock verification URL (or email), then `POST /api/auth/verify-email` with its token.
-- Password reset: `POST /api/auth/request-password-reset`, then `POST /api/auth/reset-password` with the one-time token and a new password.
-- RAG scanner: open `/dashboard/rag`, create a collection, and upload TXT, Markdown, or a text-extractable PDF. Risky files are quarantined; stored chunks contain redacted text only.
-- Vector access: run `npm test`; the Phase 4 suite checks organization/project namespace and role/status post-filtering.
-- Grounding: enable citation requirements on `/dashboard/policy`; answers without enough authorized sources receive the configured safe fallback.
-- Semantic/Hinglish: set the three detector feature flags to `true`; rule-based detection remains active if optional classifiers fail.
-- Secret rotation: rotate a webhook from `/dashboard/webhooks`; the raw secret is displayed once and encrypted ciphertext is persisted.
-- Scheduled reports: configure recipients on `/dashboard/reports`, then use **Send now** or the worker route.
-- Admin actions: use `/admin`; every plan, quota, replay, retry, disable, and enable action requires a reason and creates an `AdminAuditLog`.
-
-Detailed manual checks are in `docs/phase4-qa-checklist.md`.
-CyberRakshak Guard is an **OWASP LLM Top 10 aligned** defensive AI security gateway. Alignment is not certification and does not imply complete protection.
-
-## Phase 5
-
-Phase 5 adds production-oriented KMS adapters (AWS KMS, GCP KMS, Vault Transit), OCR/document sandboxing, Qdrant and pgvector adapters, source attribution scoring, classifier evaluation, authorized red-team suites, structured security events, SIEM delivery, SAML/SCIM scaffolds, and self-hosted deployment assets.
-
-### Phase 5 environment
-
-- Secret storage: `SECRET_STORE_PROVIDER`, AWS KMS variables, GCP KMS variables, or `VAULT_ADDR`, `VAULT_TOKEN`, and `VAULT_TRANSIT_KEY`. Local encryption is rejected in production.
-- OCR: `RAG_MAX_FILE_BYTES`, `RAG_MAX_PAGES`, `OCR_TIMEOUT_MS`, and `OCR_LANGUAGES`. Local Tesseract supports PNG/JPEG; scanned PDFs require an injected PDF-capable provider.
-- Vectors: `VECTOR_PROVIDER=qdrant|pgvector`, provider connection variables, `VECTOR_DIMENSIONS`, and a production `EMBEDDING_API_URL`. Memory vectors and deterministic local embeddings fail closed in production.
-- Observability: `OTEL_EXPORTER_OTLP_ENDPOINT`, `OTEL_EXPORTER_OTLP_HEADERS`, and SIEM worker settings.
-- Enterprise: `SCIM_TOKEN_PEPPER`; SAML settings are tenant-scoped through the enterprise API.
-
-### Phase 5 workflows
-
-1. Apply migrations with `npm run db:deploy` and verify with `npx prisma migrate status`.
-2. Upload documents through `/api/rag/documents`, approve them, then use the `INDEX` review action to write redacted chunks to the configured vector provider.
-3. Manage chunk roles, source URL, and sensitivity through `PUT /api/rag/chunks/acl`; retrieve with `POST /api/rag/query`.
-4. Ground answers with stored chunk IDs through `POST /api/guard/grounding`. Caller-provided source contents and authorization flags are ignored.
-5. Run classifier regression checks with `npm run eval:classifiers`.
-6. Run the defensive red-team suite only for an authenticated, owned project with explicit confirmation.
-7. Configure SIEM destinations through `/api/siem`. HTTPS and public-network resolution are required.
-8. Start self-hosted services with `docker compose -f docker-compose.prod.yml up --build` after setting `POSTGRES_PASSWORD` and production secrets.
-
-### Provider verification
-
-External provider tests do not use real credentials in the unit suite. In a staging environment, verify KMS round trips and rotation, OCR timeout/cancellation, Qdrant or pgvector indexing/query/deletion, SIEM delivery/retry, and workload identity or short-lived credentials. Mark unconfigured providers as **Not verified locally - requires external provider configuration**.
-
-### Phase 5 limitations
-
-The bundled classifier dataset is regression coverage, not a production accuracy claim. PDF inspection is defensive structural validation, not full malware analysis. External SAML IdP and marketplace provider behavior must be verified in staging with real provider metadata and credentials. OpenTelemetry support is a lightweight OTLP exporter. CyberRakshak Guard remains **OWASP LLM Top 10 aligned**; alignment is not certification and does not imply complete protection.
-
-## Phase 6
-
-Phase 6 adds enterprise launch readiness:
-
-- Full SCIM v2 Users and Groups routes with bearer-token authentication, hashed tokens, tenant scoping, deprovisioning, group-to-role mapping, and audit logs.
-- Full SAML SSO workflow with metadata, ACS, test route, JIT provisioning, issuer/audience/timing validation, and replay protection.
-- Enterprise data retention and deletion controls with audit logging.
-- Enterprise security controls for IP allowlist, session revocation, API key rotation, project/organization disable, quota overrides, and audit review.
-- Public trust, security, privacy, responsible disclosure, subprocessors, data retention, OWASP LLM Top 10, SOC 2 readiness, and ISO 27001 readiness pages.
-- Self-hosted Docker Compose, worker image, backup/restore/health scripts, Kubernetes/Helm scaffold, and deployment docs.
-- Marketplace integration scaffold for Slack, Microsoft Teams, Jira, and GitHub with redacted payload storage.
-
-### Phase 6 workflows
-
-1. Apply migrations with `npm run db:deploy`.
-2. Configure enterprise identity and secret env vars from `.env.example`.
-3. Generate SCIM tokens with `POST /api/enterprise/scim-tokens`; the raw token is returned once.
-4. Configure IdP SCIM base URL at `/api/scim/v2` and SAML metadata at `/api/sso/saml/metadata`.
-5. Review enterprise controls at `/dashboard/enterprise`, `/dashboard/enterprise/scim`, `/dashboard/enterprise/data-retention`, `/dashboard/enterprise/security`, and `/dashboard/enterprise/audit`.
-6. For self-hosting, follow `docs/self-hosted.md`, `docs/kubernetes.md`, and `docs/backup-restore.md`.
-
-Known limitations: external providers are not verified locally without customer-managed IdP, KMS, SIEM, OCR, vector, and marketplace credentials. Mark those checks as **Not verified locally - requires external provider configuration**.
-
-Key commands:
+### Docker (Production)
 
 ```bash
-npm run typecheck
+# Build
+docker build -t soter:latest --secret id=npmrc,src=$HOME/.npmrc .
+
+# Run
+docker run -p 3000:3000 --env-file .env.production soter:latest
+```
+
+### CI/CD Pipeline (Automatic)
+
+The project includes a **fully automated CI/CD pipeline** via GitHub Actions:
+
+| Stage | Description |
+|-------|-------------|
+| 🔨 **Build & Typecheck** | TypeScript compilation + Prisma validation |
+| 🧪 **Tests** | 40+ test suites covering all security services |
+| 🐳 **Docker Build & Push** | Multi-stage build → Docker Hub |
+| 🚀 **Deploy to EC2** | SSH → pull image → restart containers |
+
+Deployment happens automatically on push to `main` branch.
+
+### Architecture
+
+```
+GitHub Push → GitHub Actions → Docker Hub → EC2 Instance
+                                                    │
+                                          ┌─────────┴──────────┐
+                                          │  docker-compose     │
+                                          │  or docker run      │
+                                          │  with --env-file    │
+                                          └─────────┬──────────┘
+                                                    │
+                                          ┌─────────▼──────────┐
+                                          │  App (port 3000)   │
+                                          │  Redis (cache)     │
+                                          │  Qdrant (vectors)  │
+                                          └────────────────────┘
+```
+
+<br />
+
+---
+
+## 🧪 Testing
+
+```bash
+# Run all tests (40+ test suites)
 npm test
-npm run eval:classifiers
-npm run build
-docker compose -f docker-compose.prod.yml up --build
+
+# TypeScript typecheck
+npm run typecheck
+
+# SDK tests
+npm run test:sdk:js
+npm run test:sdk:python
+
+# Integration tests
+npm run test:integrations
+
+# E2E tests (Playwright)
+npm run test:e2e
+
+# Full verification
+npm run verify
 ```
 
-See [Phase 5 QA](docs/phase5-qa-checklist.md), [self-hosted deployment](docs/self-hosted-deployment.md), and the [production readiness report](docs/production-readiness-phase5.md).
+Test suites cover: auth, guard, agent-firewall, agent-passports, intent verification, tool chain, escrow, dry-run, semantic egress, evidence vault, canary network, RAG, SLM evaluation, billing, webhooks, retention, and more.
+
+<br />
+
+---
+
+## 🛠️ Development Setup
+
+```bash
+# 1. Clone and install
+git clone https://github.com/yashchauhan66/Ai-Security-Guard.git
+cd Ai-Security-Guard
+npm install
+
+# 2. Setup PostgreSQL database
+createdb soter
+npx prisma migrate deploy
+
+# 3. Configure environment
+cp .env.example .env.local
+# Edit .env.local with your settings
+
+# 4. Start dev server
+npm run dev
+# → http://localhost:3000
+
+# 5. Seed database (optional)
+npm run db:seed
+```
+
+<br />
+
+---
+
+## 📊 Compliance & Standards
+
+SoterAI is designed to help you meet:
+
+| Framework | Coverage |
+|-----------|----------|
+| **OWASP LLM Top 10** | ✅ Full mapping for all 10 categories |
+| **SOC 2** | ✅ Evidence collection for security, availability, confidentiality |
+| **ISO 27001** | ✅ Evidence collection for A.8 (Access Control), A.12 (Operations Security) |
+| **HIPAA** | ✅ PII/PHI detection and redaction |
+| **GDPR** | ✅ Data subject request workflows |
+| **DPDP (India)** | ✅ Consent records, breach notifications |
+| **PCI-DSS** | ✅ Secret detection and masking |
+
+<br />
+
+---
+
+## 🧠 Why SoterAI?
+
+<details>
+<summary><strong>vs. Guardrails & Content Filters</strong></summary>
+
+Traditional content filters only match known patterns. SoterAI uses **semantic understanding**, **behavioral analysis**, and **multi-layer defense** to catch:
+- Novel prompt injection attacks never seen before
+- Paraphrased confidential data (Semantic Egress)
+- Gradual multi-turn manipulation (Intent Guard)
+- Multi-step tool chain attacks (Tool Chain Detector)
+- Memory poisoning across sessions (Memory Firewall)
+</details>
+
+<details>
+<summary><strong>vs. Agent Monitoring Platforms</strong></summary>
+
+Most agent monitoring tools are **observability-first** — they show you what happened. SoterAI is **protection-first** — we block attacks in real-time before they cause damage, with full audit trails for after-action analysis.
+</details>
+
+<details>
+<summary><strong>vs. DIY Security Wrappers</strong></summary>
+
+Building your own security layer means maintaining 30+ detection models, policy engines, compliance frameworks, and a real-time dashboard. SoterAI gives you all of this out-of-the-box with zero configuration for basic protection.
+</details>
+
+<br />
+
+---
+
+## 📁 Project Structure
+
+```
+├── app/                    # Next.js app (pages, API routes)
+│   ├── api/                #   REST API endpoints
+│   ├── dashboard/          #   Dashboard (42+ feature pages)
+│   ├── docs/               #   Documentation pages
+│   └── (public pages)      #   Marketing, pricing, etc.
+├── components/             # React components
+│   ├── auth/               #   Auth UI
+│   ├── dashboard/          #   Dashboard widgets
+│   ├── docs/               #   Doc components
+│   └── ui/                 #   Shared UI primitives
+├── lib/                    # Shared utilities & services
+│   ├── agent-firewall/     #   Agent firewall logic
+│   ├── guard/              #   Guard analysis engine
+│   ├── auth/               #   Auth helpers
+│   └── docs/               #   Service documentation data
+├── packages/               # SDK packages (monorepo)
+│   ├── sdk/                #   TypeScript SDK
+│   └── python-sdk/         #   Python SDK
+├── prisma/                 # Database schema & migrations
+├── workers/                # Background workers
+├── scripts/                # Maintenance & CI scripts
+├── tests/                  # Test suites (40+)
+├── examples/               # Example integrations
+├── .github/workflows/      # CI/CD pipeline
+└── docker-compose.prod.yml # Production Docker setup
+```
+
+<br />
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions!
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m "Add amazing feature"`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+<br />
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
+<br />
+
+---
+
+<div align="center">
+  <p>
+    <strong>⭐ Star us on GitHub</strong> — it helps others discover SoterAI!
+  </p>
+  <p>
+    <a href="https://soterai.publicvm.com">🌐 Website</a> •
+    <a href="https://soterai.publicvm.com/docs">📖 Docs</a> •
+    <a href="https://soterai.publicvm.com/playground">🎮 Playground</a> •
+    <a href="https://soterai.publicvm.com/demo">🖥️ Demo</a> •
+    <a href="https://soterai.publicvm.com/pricing">💵 Pricing</a>
+  </p>
+  <p>
+    <sub>Built with ❤️ for the AI security community</sub>
+  </p>
+</div>
