@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soter AI — Interactive Demo Walkthrough</title>
+<style>
+  /* ── Reset & Base ── */
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;font-size:16px}
+  body{background:#0a0a12;color:#e2e8f0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;line-height:1.6;overflow-x:hidden}
+  a{color:#22d3ee;text-decoration:none}
+  a:hover{text-decoration:underline}
+  img{max-width:100%}
+  /* ── Layout ── */
+  .app{display:flex;min-height:100vh}
+  /* ── Sidebar Nav ── */
+  .sidebar{width:280px;background:#0f0f1a;border-right:1px solid #1e293b;padding:1.5rem;position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:50}
+  .sidebar-logo{font-size:1.25rem;font-weight:800;color:#22d3ee;margin-bottom:2rem;display:flex;align-items:center;gap:0.5rem}
+  .sidebar-logo small{font-size:0.65rem;color:#64748b;font-weight:400}
+  .sidebar-nav{list-style:none}
+  .sidebar-nav li{margin-bottom:0.25rem}
+  .sidebar-nav a{display:block;padding:0.5rem 0.75rem;border-radius:8px;color:#94a3b8;font-size:0.875rem;transition:all 0.15s}
+  .sidebar-nav a:hover,.sidebar-nav a.active{background:#1e293b;color:#22d3ee;text-decoration:none}
+  .sidebar-nav .nav-label{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#475569;padding:0.75rem 0.75rem 0.25rem;margin-top:0.5rem}
+  .sidebar-nav .nav-label:first-child{margin-top:0}
+  /* ── Main Content ── */
+  .main{flex:1;margin-left:280px;padding:0}
+  /* ── Hero Section ── */
+  .hero{background:linear-gradient(135deg,#0a0a12 0%,#0f172a 50%,#0a0a12 100%);padding:4rem 3rem;border-bottom:1px solid #1e293b;text-align:center}
+  .hero h1{font-size:3rem;font-weight:900;background:linear-gradient(to right,#22d3ee,#818cf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1rem}
+  .hero p{font-size:1.125rem;color:#94a3b8;max-width:700px;margin:0 auto 1.5rem}
+  .hero .badge{display:inline-block;background:rgba(34,211,238,0.1);border:1px solid rgba(34,211,238,0.3);color:#22d3ee;padding:0.25rem 1rem;border-radius:999px;font-size:0.8rem;margin-bottom:1rem}
+  .hero .stats{display:flex;gap:2rem;justify-content:center;margin-top:2rem;flex-wrap:wrap}
+  .hero .stat{text-align:center}
+  .hero .stat-num{font-size:1.5rem;font-weight:700;color:#22d3ee}
+  .hero .stat-label{font-size:0.8rem;color:#64748b}
+  /* ── Section ── */
+  .section{padding:3rem;border-bottom:1px solid #1e293b}
+  .section:last-child{border-bottom:none}
+  .section.alt{background:#0c0c18}
+  .section-title{font-size:1.5rem;font-weight:700;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.75rem}
+  .section-title .icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem}
+  .section-subtitle{color:#64748b;margin-bottom:2rem;font-size:0.95rem}
+  /* ── Cards Grid ── */
+  .grid{display:grid;gap:1rem}
+  .grid-2{grid-template-columns:repeat(auto-fill,minmax(340px,1fr))}
+  .grid-3{grid-template-columns:repeat(auto-fill,minmax(280px,1fr))}
+  .grid-4{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+  .card{background:#11111e;border:1px solid #1e293b;border-radius:12px;padding:1.5rem;transition:all 0.2s}
+  .card:hover{border-color:#22d3ee33;box-shadow:0 4px 20px rgba(34,211,238,0.05);transform:translateY(-2px)}
+  .card .card-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin-bottom:0.75rem}
+  .card h3{font-size:1rem;font-weight:600;margin-bottom:0.5rem}
+  .card p{font-size:0.85rem;color:#94a3b8;line-height:1.6}
+  .card .tag{display:inline-block;padding:0.15rem 0.5rem;border-radius:4px;font-size:0.7rem;font-weight:600;margin-top:0.5rem}
+  /* ── Code Block ── */
+  .code-block{background:#0a0a12;border:1px solid #1e293b;border-radius:8px;padding:1rem;font-family:'SF Mono','Fira Code','Cascadia Code',monospace;font-size:0.8rem;overflow-x:auto;margin:1rem 0;color:#e2e8f0;line-height:1.7}
+  .code-block .kw{color:#22d3ee}
+  .code-block .fn{color:#818cf8}
+  .code-block .str{color:#bef264}
+  .code-block .cm{color:#64748b}
+  .code-block .num{color:#f472b6}
+  /* ── Color tags ── */
+  .tag-cyan{background:rgba(34,211,238,0.12);color:#22d3ee}
+  .tag-green{background:rgba(74,222,128,0.12);color:#4ade80}
+  .tag-orange{background:rgba(251,146,60,0.12);color:#fb923c}
+  .tag-red{background:rgba(239,68,68,0.12);color:#ef4444}
+  .tag-purple{background:rgba(129,140,248,0.12);color:#818cf8}
+  .tag-pink{background:rgba(244,114,182,0.12);color:#f472b6}
+  .tag-yellow{background:rgba(250,204,21,0.12);color:#facc15}
+  .tag-blue{background:rgba(96,165,250,0.12);color:#60a5fa}
+  /* ── Flow diagram ── */
+  .flow{display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;justify-content:center;padding:1.5rem;background:#0a0a12;border:1px solid #1e293b;border-radius:12px;margin:1rem 0}
+  .flow-item{background:#1e293b;padding:0.5rem 1rem;border-radius:8px;font-size:0.8rem;font-weight:500}
+  .flow-item.highlight{background:rgba(34,211,238,0.15);border:1px solid rgba(34,211,238,0.3);color:#22d3ee}
+  .flow-arrow{color:#64748b;font-size:1.2rem}
+  .flow-item.guard{background:rgba(129,140,248,0.15);border:1px solid rgba(129,140,248,0.3);color:#818cf8}
+  .flow-item.block{background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);color:#ef4444}
+  /* ── Timeline ── */
+  .timeline{position:relative;padding-left:2rem}
+  .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:#1e293b}
+  .timeline-item{position:relative;padding-bottom:1.5rem}
+  .timeline-item::before{content:'';position:absolute;left:-2rem;top:0.5rem;width:12px;height:12px;border-radius:50%;background:#22d3ee;border:2px solid #0a0a12}
+  .timeline-item h4{font-size:0.95rem;font-weight:600}
+  .timeline-item p{font-size:0.85rem;color:#94a3b8}
+  /* ── Pricing Table ── */
+  .pricing-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem}
+  .pricing-card{background:#11111e;border:1px solid #1e293b;border-radius:12px;padding:1.5rem;text-align:center}
+  .pricing-card.featured{border-color:#22d3ee;box-shadow:0 0 20px rgba(34,211,238,0.08)}
+  .pricing-card h3{font-size:1rem;font-weight:600;margin-bottom:0.5rem}
+  .pricing-card .price{font-size:2rem;font-weight:800;color:#22d3ee;margin-bottom:0.25rem}
+  .pricing-card .period{font-size:0.8rem;color:#64748b;margin-bottom:1rem}
+  .pricing-card ul{list-style:none;text-align:left;font-size:0.8rem}
+  .pricing-card ul li{padding:0.3rem 0;color:#94a3b8;display:flex;align-items:center;gap:0.5rem}
+  .pricing-card ul li::before{content:'✓';color:#4ade80;font-weight:700}
+  /* ── Architecture ── */
+  .arch{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin:1.5rem 0}
+  .arch-layer{border:1px solid #1e293b;border-radius:8px;padding:1rem;text-align:center;background:#0c0c18}
+  .arch-layer h4{font-size:0.75rem;text-transform:uppercase;letter-spacing:0.1em;color:#64748b;margin-bottom:0.5rem}
+  .arch-layer .items{display:flex;flex-wrap:wrap;gap:0.4rem;justify-content:center}
+  .arch-layer .item{background:#1e293b;padding:0.25rem 0.6rem;border-radius:4px;font-size:0.7rem}
+  /* ── Button ── */
+  .btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.6rem 1.25rem;border-radius:8px;font-weight:600;font-size:0.875rem;border:none;cursor:pointer;transition:all 0.15s}
+  .btn-primary{background:#22d3ee;color:#0a0a12}
+  .btn-primary:hover{background:#06b6d4;transform:translateY(-1px)}
+  .btn-secondary{background:#1e293b;color:#e2e8f0;border:1px solid #334155}
+  .btn-secondary:hover{background:#334155}
+  /* ── Responsive ── */
+  @media(max-width:768px){
+    .sidebar{display:none}
+    .main{margin-left:0}
+    .hero{padding:3rem 1.5rem}
+    .hero h1{font-size:2rem}
+    .section{padding:2rem 1.5rem}
+    .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+    .flow{flex-direction:column}
+    .flow-arrow{transform:rotate(90deg)}
+  }
+  /* ── Highlight animation ── */
+  @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  .section{animation:fadeInUp 0.5s ease-out}
+  /* ── Section numbering ── */
+  .step-number{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(34,211,238,0.12);color:#22d3ee;font-size:0.8rem;font-weight:700;margin-right:0.75rem;flex-shrink:0}
+  .header-row{display:flex;align-items:center;gap:0.5rem;margin-bottom:1.5rem}
+  .header-row h2{margin-bottom:0}
+  .features-list{list-style:none;padding:0}
+  .features-list li{padding:0.4rem 0;display:flex;align-items:center;gap:0.5rem;font-size:0.9rem;color:#cbd5e1}
+  .features-list li::before{content:'›';color:#22d3ee;font-weight:700;font-size:1.2rem}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ─── Sidebar ─── -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    ⚡ Soter AI <small>v0.2.0</small>
+  </div>
+  <ul class="sidebar-nav">
+    <li class="nav-label">Overview</li>
+    <li><a href="#intro">Introduction</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#setup">Setup &amp; Deployment</a></li>
+    <li class="nav-label">Core Security</li>
+    <li><a href="#input-guard">Input Guard</a></li>
+    <li><a href="#output-guard">Output Guard</a></li>
+    <li><a href="#detectors">Detection Engine</a></li>
+    <li><a href="#policy">Policy Engine</a></li>
+    <li><a href="#rag-security">RAG Security</a></li>
+    <li class="nav-label">Agent Security</li>
+    <li><a href="#agent-firewall">Agent Firewall</a></li>
+    <li><a href="#agent-passport">Agent Passport</a></li>
+    <li><a href="#intent-guard">Intent Guard</a></li>
+    <li><a href="#tool-chain">Tool Chain Detector</a></li>
+    <li><a href="#escrow">Transaction Escrow</a></li>
+    <li><a href="#dry-run">Dry-Run Sandbox</a></li>
+    <li><a href="#semantic-egress">Semantic Egress</a></li>
+    <li class="nav-label">Advanced Security</li>
+    <li><a href="#evidence-vault">Evidence Vault</a></li>
+    <li><a href="#context-lineage">Context Lineage</a></li>
+    <li><a href="#blast-radius">Blast Radius</a></li>
+    <li><a href="#memory-poisoning">Memory Poisoning</a></li>
+    <li><a href="#mcp-drift">MCP Drift</a></li>
+    <li><a href="#legal-boundary">Legal Boundary</a></li>
+    <li class="nav-label">SDKs &amp; Integrations</li>
+    <li><a href="#sdk-js">JavaScript / TypeScript SDK</a></li>
+    <li><a href="#sdk-python">Python SDK</a></li>
+    <li><a href="#rest-api">REST API</a></li>
+    <li><a href="#frameworks">Framework Middleware</a></li>
+    <li><a href="#examples">Examples</a></li>
+    <li class="nav-label">Platform</li>
+    <li><a href="#dashboard">Dashboard</a></li>
+    <li><a href="#webhooks">Webhooks</a></li>
+    <li><a href="#billing">Billing &amp; Plans</a></li>
+    <li><a href="#enterprise">Enterprise</a></li>
+    <li><a href="#compliance">Compliance</a></li>
+    <li><a href="#benchmarks">Benchmarks</a></li>
+  </ul>
+</nav>
+
+<!-- ─── Main Content ─── -->
+<div class="main">
+
+<!-- ─── HERO ─── -->
+<section class="hero" id="intro">
+  <div class="badge">🚀 AI Security Command Layer</div>
+  <h1>Soter AI — Agent Security Guard</h1>
+  <p>
+    A developer-first safety layer for AI chatbots, agents, RAG systems, and LLM applications.
+    Detect and block prompt injection, jailbreaks, data leakage, unsafe outputs, PII exposure,
+    tool abuse, and risky AI behavior before it reaches your model or user.
+  </p>
+  <div class="stats">
+    <div class="stat"><div class="stat-num">97/97</div><div class="stat-label">Attacks Detected</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Detection Rate</div></div>
+    <div class="stat"><div class="stat-num">0%</div><div class="stat-label">False Positives</div></div>
+    <div class="stat"><div class="stat-num">&lt;50ms</div><div class="stat-label">Inline Latency</div></div>
+    <div class="stat"><div class="stat-num">8</div><div class="stat-label">Attack Categories</div></div>
+    <div class="stat"><div class="stat-num">5</div><div class="stat-label">SDK Packages</div></div>
+  </div>
+</section>
+
+<!-- ─── HOW TO USE ─── -->
+<section class="section" id="architecture">
+  <div class="header-row">
+    <span class="step-number">1</span>
+    <h2 class="section-title">🏗️ How It Works — Architecture</h2>
+  </div>
+  <p class="section-subtitle">
+    Soter sits between your users, LLM, and tools — inspecting every AI interaction in real time.
+  </p>
+
+  <div class="flow">
+    <span class="flow-item">👤 User</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-item guard">🛡️ Input Guard</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-item">🧠 LLM</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-item guard">🛡️ Output Guard</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-item">👤 User</span>
+  </div>
+
+  <div class="flow" style="margin-top:0.5rem">
+    <span class="flow-item">🔧 Agent / Tool</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-item block">🛡️ Agent Firewall</span>
+    <span class="flow-arrow">→</span>
+    <span class="flow-item">📦 External API</span>
+  </div>
+
+  <div class="arch">
+    <div class="arch-layer">
+      <h4>Frontend</h4>
+      <div class="items">
+        <span class="item">Next.js 15</span>
+        <span class="item">React 18</span>
+        <span class="item">Tailwind CSS</span>
+        <span class="item">Auth.js v5</span>
+      </div>
+    </div>
+    <div class="arch-layer">
+      <h4>Backend</h4>
+      <div class="items">
+        <span class="item">Next.js API</span>
+        <span class="item">Prisma ORM</span>
+        <span class="item">PostgreSQL</span>
+        <span class="item">Redis</span>
+      </div>
+    </div>
+    <div class="arch-layer">
+      <h4>Security Engine</h4>
+      <div class="items">
+        <span class="item">Guard Engine</span>
+        <span class="item">Agent Firewall</span>
+        <span class="item">Policy Engine</span>
+        <span class="item">Detectors</span>
+      </div>
+    </div>
+    <div class="arch-layer">
+      <h4>Workers</h4>
+      <div class="items">
+        <span class="item">Webhooks</span>
+        <span class="item">SIEM</span>
+        <span class="item">Background</span>
+        <span class="item">Threat Intel</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SETUP ─── -->
+<section class="section alt" id="setup">
+  <div class="header-row">
+    <span class="step-number">2</span>
+    <h2 class="section-title">🚀 Setup &amp; Deployment</h2>
+  </div>
+  <p class="section-subtitle">Get Soter running in minutes with Docker or local dev setup.</p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(34,211,238,0.12)">⚡</div>
+      <h3>Local Development</h3>
+      <p>Requirements: Node.js 20+, PostgreSQL 14+, npm</p>
+      <div class="code-block">
+        <span class="cm"># Install dependencies</span><br>
+        npm install<br><br>
+        <span class="cm"># Configure environment</span><br>
+        Copy-Item .env.example .env<br><br>
+        <span class="cm"># Run database migrations</span><br>
+        npm run db:deploy<br><br>
+        <span class="cm"># Seed demo user &amp; API key</span><br>
+        npm run db:seed<br><br>
+        <span class="cm"># Start dev server</span><br>
+        npm run dev
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(74,222,128,0.12)">🐳</div>
+      <h3>Docker / Production</h3>
+      <p>Self-host with Docker Compose, Kubernetes/Helm, or EC2 deployment.</p>
+      <div class="code-block">
+        <span class="cm"># Build &amp; run with Docker</span><br>
+        docker compose -f docker-compose.prod.yml up --build<br><br>
+        <span class="cm"># Or deploy via GitHub Actions CI/CD</span><br>
+        git push origin main<br><br>
+        <span class="cm"># Health check</span><br>
+        curl http://localhost:3000/api/health
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── INPUT GUARD ─── -->
+<section class="section" id="input-guard">
+  <div class="header-row">
+    <span class="step-number">3</span>
+    <h2 class="section-title">🛡️ Input Guard — Before LLM</h2>
+  </div>
+  <p class="section-subtitle">
+    Inspects every user message before it reaches your LLM. Detects prompt injection,
+    jailbreaks, system prompt leak attempts, PII, secrets, and token abuse.
+  </p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>🔍 Detection Capabilities</h3>
+      <ul class="features-list">
+        <li>Prompt injection detection (200+ regex patterns)</li>
+        <li>Jailbreak / DAN / role-play bypass detection</li>
+        <li>System prompt extraction attempts</li>
+        <li>Encoding obfuscation (base64, hex, morse)</li>
+        <li>Multilingual attacks (Hindi, Chinese, Russian, Arabic)</li>
+        <li>Leetspeak / homoglyph bypass patterns</li>
+        <li>Token abuse / large payload detection</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📝 Example: Using REST API</h3>
+      <div class="code-block">
+        curl -X POST http://localhost:3000/api/guard/input \<br>
+        &nbsp;&nbsp;-H "Content-Type: application/json" \<br>
+        &nbsp;&nbsp;-H "x-api-key: ck_test_your_key" \<br>
+        &nbsp;&nbsp;-d '{"message":"Ignore previous instructions"}'
+      </div>
+      <p style="margin-top:0.5rem">Returns: <span class="tag tag-red">BLOCKED</span> with findings and risk score</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── OUTPUT GUARD ─── -->
+<section class="section alt" id="output-guard">
+  <div class="header-row">
+    <span class="step-number">4</span>
+    <h2 class="section-title">🛡️ Output Guard — After LLM</h2>
+  </div>
+  <p class="section-subtitle">
+    Inspects LLM responses before sending to the user. Prevents data leakage, unsafe content,
+    system prompt leakage, and suspicious URLs.
+  </p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>🔍 Detection Capabilities</h3>
+      <ul class="features-list">
+        <li>System prompt leakage in output</li>
+        <li>Unsafe / harmful content detection</li>
+        <li>Suspicious URL / spam link detection</li>
+        <li>PII and secrets in model responses</li>
+        <li>Fallback message on block</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📝 Example: Using TypeScript SDK</h3>
+      <div class="code-block">
+        <span class="kw">import</span> { Soter } <span class="kw">from</span> <span class="str">"@soterai/core"</span>;<br><br>
+        <span class="kw">const</span> soter = <span class="kw">new</span> Soter({<br>
+        &nbsp;&nbsp;apiKey: process.env.SOTER_API_KEY<br>
+        });<br><br>
+        <span class="kw">const</span> result = <span class="kw">await</span> soter.protect({<br>
+        &nbsp;&nbsp;input: userMessage<br>
+        });<br><br>
+        <span class="kw">if</span> (!result.allowed) {<br>
+        &nbsp;&nbsp;console.log(<span class="str">"Blocked:"</span>, result.reason);<br>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DETECTORS ─── -->
+<section class="section" id="detectors">
+  <div class="header-row">
+    <span class="step-number">5</span>
+    <h2 class="section-title">🔬 Detection Engine</h2>
+  </div>
+  <p class="section-subtitle">Multi-layer detection with explainable findings, risk scoring, and configurable actions.</p>
+
+  <div class="grid grid-3">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(239,68,68,0.12)">💉</div>
+      <h3>Prompt Injection</h3>
+      <p>Detects instruction overrides, context resets, role replacements, admin mode claims, and extraction attempts.</p>
+      <span class="tag tag-red">200+ Patterns</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(251,146,60,0.12)">🔓</div>
+      <h3>Jailbreak Detection</h3>
+      <p>Identifies DAN-style personas, unrestricted role-plays, safety override attempts, and multi-step bypass sequences.</p>
+      <span class="tag tag-orange">DAN / Role-play</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(244,114,182,0.12)">👤</div>
+      <h3>PII Detection</h3>
+      <p>Finds emails, phones, IPs, credit cards, DOB — plus <strong>India-specific</strong> Aadhaar, PAN, GSTIN, UPI, IFSC, mobile numbers.</p>
+      <span class="tag tag-pink">India PII</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(250,204,21,0.12)">🔑</div>
+      <h3>Secrets Detection</h3>
+      <p>Catches API keys (OpenAI, AWS, GitHub, Stripe, Razorpay), JWTs, database URLs, private keys, Slack tokens.</p>
+      <span class="tag tag-yellow">15+ Patterns</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(129,140,248,0.12)">📢</div>
+      <h3>System Prompt Leak</h3>
+      <p>Detects both leakage (output) and extraction attempts (input) for hidden system instructions.</p>
+      <span class="tag tag-purple">Bidirectional</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(96,165,250,0.12)">⚠️</div>
+      <h3>Unsafe Output</h3>
+      <p>Flags harmful content, unsafe instructions, and suspicious URLs in model responses.</p>
+      <span class="tag tag-blue">Output Safety</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── POLICY ENGINE ─── -->
+<section class="section alt" id="policy">
+  <div class="header-row">
+    <span class="step-number">6</span>
+    <h2 class="section-title">⚙️ Policy Engine</h2>
+  </div>
+  <p class="section-subtitle">Per-project configurable security policies with three modes and granular controls.</p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>Policy Modes</h3>
+      <table style="width:100%;font-size:0.85rem;border-collapse:collapse">
+        <tr><td style="padding:0.5rem 0;border-bottom:1px solid #1e293b"><span class="tag tag-green">MONITOR</span></td><td style="padding:0.5rem 0;border-bottom:1px solid #1e293b;color:#94a3b8">Logs everything, demotes BLOCK to HUMAN_REVIEW (except secrets)</td></tr>
+        <tr><td style="padding:0.5rem 0;border-bottom:1px solid #1e293b"><span class="tag tag-cyan">BALANCED</span></td><td style="padding:0.5rem 0;border-bottom:1px solid #1e293b;color:#94a3b8">Default. Standard detection and response behavior</td></tr>
+        <tr><td style="padding:0.5rem 0"><span class="tag tag-red">STRICT</span></td><td style="padding:0.5rem 0;color:#94a3b8">Promotes redactions/rewrites to BLOCK when score ≥ 50</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Granular Controls</h3>
+      <ul class="features-list">
+        <li>Per-detector toggles (on/off for each risk type)</li>
+        <li>Custom blocked topics and keywords</li>
+        <li>Allowlisted domains for safe external calls</li>
+        <li>Denied regex patterns for custom blocking</li>
+        <li>Custom fallback message on block</li>
+        <li>RAG citation requirements</li>
+        <li>High-risk topic review mode</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RAG SECURITY ─── -->
+<section class="section" id="rag-security">
+  <div class="header-row">
+    <span class="step-number">7</span>
+    <h2 class="section-title">📚 RAG Security</h2>
+  </div>
+  <p class="section-subtitle">Secure your RAG pipelines with document scanning, tenant isolation, and grounding verification.</p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>🔍 RAG Protection Features</h3>
+      <ul class="features-list">
+        <li>Document upload scanning (PDF, TXT, Markdown)</li>
+        <li>Risky document auto-quarantine</li>
+        <li>OCR text extraction with sandboxing</li>
+        <li>Redacted chunk storage (no raw PII/secrets)</li>
+        <li>Tenant-scoped vector namespaces</li>
+        <li>Role-based retrieval filtering</li>
+        <li>Grounding guard: citation verification</li>
+        <li>Source coverage scoring</li>
+        <li>Unsupported claim detection</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📝 Python SDK Example</h3>
+      <div class="code-block">
+        <span class="kw">from</span> soter <span class="kw">import</span> Soter<br><br>
+        guard = Soter()<br><br>
+        result = guard.protect_rag(<br>
+        &nbsp;&nbsp;query=<span class="str">"What are our Q3 numbers?"</span>,<br>
+        &nbsp;&nbsp;retrieve=my_retrieval_fn,<br>
+        &nbsp;&nbsp;call_llm=<span class="kw">lambda</span> ctx: my_llm(ctx)<br>
+        )<br><br>
+        <span class="kw">print</span>(result.safe_response)
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── AGENT FIREWALL ─── -->
+<section class="section alt" id="agent-firewall">
+  <div class="header-row">
+    <span class="step-number">8</span>
+    <h2 class="section-title">🔥 Agent Firewall</h2>
+  </div>
+  <p class="section-subtitle">
+    Comprehensive agent security — inspects every tool call, data access, and output
+    for autonomous AI agents. Blocks unauthorized actions, prevents data exfiltration,
+    and requires human approval for risky operations.
+  </p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>🛡️ Firewall Capabilities</h3>
+      <ul class="features-list">
+        <li>Agent session management with identity tracking</li>
+        <li>Tool-call inspection (10 risk categories)</li>
+        <li>Data leak prevention (PII, secrets, credentials)</li>
+        <li>Output guard for agent responses</li>
+        <li>Domain allowlist/blocklist</li>
+        <li>Dangerous terminal command blocking</li>
+        <li>Blocked file patterns (.env, keys, cookies)</li>
+        <li>Human approval workflows with tokens</li>
+        <li>Fail-closed mode when guard unavailable</li>
+        <li>Approval audit trail</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📝 Agent Action Check</h3>
+      <div class="code-block">
+        <span class="kw">const</span> decision = <span class="kw">await</span> soter.checkAgentAction({<br>
+        &nbsp;&nbsp;sessionId,<br>
+        &nbsp;&nbsp;tool: <span class="str">"filesystem.write"</span>,<br>
+        &nbsp;&nbsp;action: <span class="str">"write"</span>,<br>
+        &nbsp;&nbsp;content: <span class="str">"user_data.txt"</span>,<br>
+        &nbsp;&nbsp;destination: <span class="str">"external"</span><br>
+        });<br><br>
+        <span class="kw">if</span> (decision.decision === <span class="str">"BLOCK"</span>) {<br>
+        &nbsp;&nbsp;console.log(<span class="str">"Blocked:"</span>, decision.reason);<br>
+        }
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:1.5rem;margin-bottom:0.75rem">Tool Categories &amp; Risk Scoring</h3>
+  <div class="grid grid-4">
+    <div class="card" style="padding:1rem"><span class="tag tag-green">READ_ONLY</span><p style="margin-top:0.3rem;font-size:0.75rem">Risk: 15</p></div>
+    <div class="card" style="padding:1rem"><span class="tag tag-yellow">WRITE</span><p style="margin-top:0.3rem;font-size:0.75rem">Risk: 55</p></div>
+    <div class="card" style="padding:1rem"><span class="tag tag-orange">EXTERNAL_API</span><p style="margin-top:0.3rem;font-size:0.75rem">Risk: 55</p></div>
+    <div class="card" style="padding:1rem"><span class="tag tag-pink">EMAIL</span><p style="margin-top:0.3rem;font-size:0.75rem">Risk: 75</p></div>
+    <div class="card" style="padding:1rem"><span class="tag tag-red">PAYMENT</span><p style="margin-top:0.3rem;font-size:0.75rem">Risk: 85</p></div>
+    <div class="card" style="padding:1rem"><span class="tag tag-orange">DATABASE</span><p style="margin-top:0.3rem;font-size:0.75rem">Risk: 70</p></div>
+    <div class="card" style="padding:1rem"><span class="tag tag-purple">FILE_SYSTEM</span><p style="margin-top:0.3rem;font-size:0.75rem">Risk: 70</p></div>
+    <div class="card" style="padding:1rem"><span class="tag tag-blue">WEB_BROWSER</span><p style="margin-top:0.3rem;font-size:0.75rem">Risk: 45</p></div>
+    <div class="card" style="padding:1rem"><span class="tag tag-red">CODE_EXECUTION</span><p style="margin-top:0.3rem;font-size:0.75rem">Risk: 100</p></div>
+    <div class="card" style="padding:1rem"><span class="tag tag-red">ADMIN_ACTION</span><p style="margin-top:0.3rem;font-size:0.75rem">Risk: 95</p></div>
+  </div>
+</section>
+
+<!-- ─── AGENT PASSPORT ─── -->
+<section class="section" id="agent-passport">
+  <div class="header-row">
+    <span class="step-number">9</span>
+    <h2 class="section-title">🪪 Agent Passport</h2>
+  </div>
+  <p class="section-subtitle">
+    Cryptographically signed agent identities with scoped permissions. Issue, validate,
+    and revoke passports for every agent session.
+  </p>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>Features</h3>
+      <ul class="features-list">
+        <li>Agent identity creation and management</li>
+        <li>Passport issuance with hashed tokens</li>
+        <li>Session-scoped permissions (tools, domains, data)</li>
+        <li>Risk scoring for passport policies</li>
+        <li>Revocation and expiration</li>
+        <li>Full audit trail</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Supported Agent Types</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:0.5rem">
+        <span class="tag tag-cyan">CHATBOT</span>
+        <span class="tag tag-cyan">RAG_AGENT</span>
+        <span class="tag tag-cyan">COMPUTER_USE</span>
+        <span class="tag tag-cyan">BROWSER_AGENT</span>
+        <span class="tag tag-cyan">MCP_AGENT</span>
+        <span class="tag tag-cyan">CODING_AGENT</span>
+        <span class="tag tag-cyan">CUSTOM</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── INTENT GUARD ─── -->
+<section class="section alt" id="intent-guard">
+  <div class="header-row">
+    <span class="step-number">10</span>
+    <h2 class="section-title">🎯 Intent Guard</h2>
+  </div>
+  <p class="section-subtitle">Verifies that every agent action matches the original user intent. Blocks out-of-scope operations.</p>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>How It Works</h3>
+      <ul class="features-list">
+        <li>Extract user intent from the original prompt</li>
+        <li>Define allowed and forbidden intent categories</li>
+        <li>Check each action against the extracted intent</li>
+        <li>Score intent-match on every tool call</li>
+        <li>Decide: ALLOW, BLOCK, ASK_APPROVAL, or REVIEW</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Intent Categories</h3>
+      <p style="font-size:0.8rem;color:#94a3b8">
+        code_execution, data_reading, data_writing, data_deletion, payment,
+        communication, authentication, admin, system_config, external_access,
+        file_operations, web_browsing, search, analysis, content_creation
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TOOL CHAIN ─── -->
+<section class="section" id="tool-chain">
+  <div class="header-row">
+    <span class="step-number">11</span>
+    <h2 class="section-title">⛓️ Tool Chain Attack Detector</h2>
+  </div>
+  <p class="section-subtitle">Detects risky multi-tool sequences where individual steps seem safe but the chain is dangerous.</p>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>Detected Chain Types</h3>
+      <ul class="features-list">
+        <li>Data exfiltration chains (read → send)</li>
+        <li>Privilege escalation chains</li>
+        <li>Tool poisoning chains</li>
+        <li>Memory-to-egress sequences</li>
+        <li>RAG-to-external leakage</li>
+        <li>Secret-to-output chains</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Example Chain</h3>
+      <div class="flow" style="padding:0.75rem;font-size:0.75rem">
+        <span class="flow-item">📖 Read DB</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item">📋 Copy</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item block">📤 Send Email</span>
+      </div>
+      <p style="font-size:0.8rem;color:#ef4444;margin-top:0.5rem">⚠️ Data exfiltration chain detected!</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ESCROW ─── -->
+<section class="section alt" id="escrow">
+  <div class="header-row">
+    <span class="step-number">12</span>
+    <h2 class="section-title">🤝 Transaction Escrow</h2>
+  </div>
+  <p class="section-subtitle">Hold risky agent actions for human review and approval before execution. Edit-and-approve workflow included.</p>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>Features</h3>
+      <ul class="features-list">
+        <li>Hold actions pending human review</li>
+        <li>Approval token with cryptographic hash</li>
+        <li>Edit payload before approving</li>
+        <li>Expiration time for pending escrows</li>
+        <li>Full audit trail of all decisions</li>
+        <li>Execute only after explicit approval</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Escrow Lifecycle</h3>
+      <div class="flow" style="padding:0.75rem;font-size:0.7rem">
+        <span class="flow-item">PENDING</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item tag-green">APPROVED</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item">EXECUTED</span>
+      </div>
+      <div class="flow" style="padding:0.75rem;font-size:0.7rem;margin-top:0.3rem">
+        <span class="flow-item">PENDING</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item tag-red">DENIED</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-item">CANCELLED</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DRY RUN ─── -->
+<section class="section" id="dry-run">
+  <div class="header-row">
+    <span class="step-number">13</span>
+    <h2 class="section-title">📦 Dry-Run Sandbox</h2>
+  </div>
+  <p class="section-subtitle">Simulate agent actions without executing them. Preview effects, risks, and decisions before real execution.</p>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>Supported Dry-Run Types</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:0.4rem">
+        <span class="tag tag-cyan">EMAIL</span>
+        <span class="tag tag-orange">FORM_SUBMIT</span>
+        <span class="tag tag-red">TERMINAL</span>
+        <span class="tag tag-yellow">FILE_WRITE</span>
+        <span class="tag tag-red">FILE_DELETE</span>
+        <span class="tag tag-purple">API_CALL</span>
+        <span class="tag tag-pink">PAYMENT</span>
+        <span class="tag tag-blue">PACKAGE_INSTALL</span>
+        <span class="tag tag-orange">DATABASE_WRITE</span>
+        <span class="tag tag-green">CUSTOM</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Decisions</h3>
+      <p style="font-size:0.85rem"><span class="tag tag-green">SAFE_TO_EXECUTE</span> <span class="tag tag-yellow">REQUIRE_APPROVAL</span> <span class="tag tag-red">BLOCK</span> <span class="tag tag-purple">REVIEW</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SEMANTIC EGRESS ─── -->
+<section class="section alt" id="semantic-egress">
+  <div class="header-row">
+    <span class="step-number">14</span>
+    <h2 class="section-title">📡 Semantic Egress Firewall</h2>
+  </div>
+  <p class="section-subtitle">Detect paraphrased confidential data attempting to leave your environment — even when the words are changed.</p>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>How It Works</h3>
+      <ul class="features-list">
+        <li>Fingerprint sensitive documents with content hashing</li>
+        <li>Build semantic fingerprints from source material</li>
+        <li>Check outbound content against fingerprints</li>
+        <li>Detect paraphrased leaks even with word substitution</li>
+        <li>Decide: ALLOW, BLOCK, REDACT, ASK_APPROVAL, REVIEW</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Example Scenario</h3>
+      <p style="font-size:0.85rem;color:#94a3b8">
+        User uploads a confidential contract → Soter fingerprints it → Agent tries to email
+        a "summary" that contains paraphrased confidential terms → <span class="tag tag-red">BLOCKED</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── EVIDENCE VAULT ─── -->
+<section class="section" id="evidence-vault">
+  <div class="header-row">
+    <span class="step-number">15</span>
+    <h2 class="section-title">📋 Evidence Vault</h2>
+  </div>
+  <p class="section-subtitle">Package compliance evidence for SOC 2, ISO 27001, and internal audits. Auto-collect and export.</p>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>Evidence Types</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:0.4rem">
+        <span class="tag tag-cyan">POLICY</span>
+        <span class="tag tag-green">GUARD_DECISION</span>
+        <span class="tag tag-orange">REDACTION</span>
+        <span class="tag tag-purple">APPROVAL</span>
+        <span class="tag tag-red">INCIDENT</span>
+        <span class="tag tag-yellow">RAG_SCAN</span>
+        <span class="tag tag-blue">AGENT_PASSPORT</span>
+        <span class="tag tag-pink">TOOL_CHAIN</span>
+        <span class="tag tag-cyan">CANARY</span>
+        <span class="tag tag-green">RED_TEAM</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Report Types</h3>
+      <ul class="features-list">
+        <li>Security Posture Report</li>
+        <li>Incident Summary Report</li>
+        <li>Customer Trust Package</li>
+        <li>Audit Export</li>
+        <li>AI Risk Review</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ADVANCED SECURITY ─── -->
+<section class="section alt" id="context-lineage">
+  <div class="header-row">
+    <span class="step-number">16</span>
+    <h2 class="section-title">🔗 Advanced AI Security Features</h2>
+  </div>
+  <p class="section-subtitle">Next-generation AI security controls for sophisticated threat scenarios.</p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(129,140,248,0.12)">🔗</div>
+      <h3>Context Lineage Firewall</h3>
+      <p>Track data sources through every transformation. Block cross-domain leaks and enforce sensitivity-based data flow policies from source to destination.</p>
+      <span class="tag tag-purple">MVP 1</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(251,146,60,0.12)">💥</div>
+      <h3>Blast Radius Simulator</h3>
+      <p>Estimate damage if an agent is compromised. Simulate scenarios (data theft, privilege escalation, financial fraud) and get risk scores.</p>
+      <span class="tag tag-orange">MVP 1</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(244,114,182,0.12)">🧠</div>
+      <h3>Memory Poisoning Detector</h3>
+      <p>Detect and quarantine poisoned agent memory. Analyze content for instructions, tool config overrides, and policy hints being injected.</p>
+      <span class="tag tag-pink">MVP 2</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(96,165,250,0.12)">📡</div>
+      <h3>MCP Tool Drift Monitor</h3>
+      <p>Register MCP servers, snapshot tool definitions, and detect risky changes (capability additions, schema changes, new dangerous endpoints).</p>
+      <span class="tag tag-blue">MVP 2</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(239,68,68,0.12)">⚖️</div>
+      <h3>Legal Boundary Guard</h3>
+      <p>Stop agents from performing actions that could violate legal/compliance requirements. Block purchases, payments, scraping, and unauthorized data uploads.</p>
+      <span class="tag tag-red">MVP 3</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(250,204,21,0.12)">🔫</div>
+      <h3>Red Team Lab</h3>
+      <p>Run automated adversarial testing suites against your guard. Simulate prompt injections, jailbreaks, and evasion techniques. Track trends over time.</p>
+      <span class="tag tag-yellow">Defensive</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── JS/TS SDK ─── -->
+<section class="section" id="sdk-js">
+  <div class="header-row">
+    <span class="step-number">17</span>
+    <h2 class="section-title">📦 JavaScript / TypeScript SDK</h2>
+  </div>
+  <p class="section-subtitle"><code>@soterai/core</code> — The primary NPM package for Node.js and browser-based integrations.</p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>Installation</h3>
+      <div class="code-block">npm install @soterai/core</div>
+      <h3 style="margin-top:1rem">Quick Start</h3>
+      <div class="code-block">
+        <span class="kw">import</span> { Soter } <span class="kw">from</span> <span class="str">"@soterai/core"</span>;<br><br>
+        <span class="kw">const</span> guard = <span class="kw">new</span> Soter({<br>
+        &nbsp;&nbsp;apiKey: process.env.SOTER_API_KEY,<br>
+        &nbsp;&nbsp;baseUrl: process.env.SOTER_BASE_URL<br>
+        });<br><br>
+        <span class="cm">// Protect a chat interaction</span><br>
+        <span class="kw">const</span> result = <span class="kw">await</span> guard.protectChat({<br>
+        &nbsp;&nbsp;message: userMessage,<br>
+        &nbsp;&nbsp;callLLM: <span class="kw">async</span> (safeMsg) => myLLM(safeMsg)<br>
+        });<br><br>
+        <span class="kw">if</span> (result.allowed) {<br>
+        &nbsp;&nbsp;console.log(<span class="str">"Response:"</span>, result.safeResponse);<br>
+        }
+      </div>
+    </div>
+    <div class="card">
+      <h3>Available Methods</h3>
+      <ul class="features-list">
+        <li><code>guard.input()</code> / <code>guard.guardInput()</code> — Check user input</li>
+        <li><code>guard.output()</code> / <code>guard.guardOutput()</code> — Check model output</li>
+        <li><code>guard.protectChat()</code> — Full chat protection (input → LLM → output)</li>
+        <li><code>guard.protectRag()</code> — RAG pipeline protection</li>
+        <li><code>guard.secureChat()</code> — Simplified secure chat</li>
+        <li><code>guard.startAgentSession()</code> — Start agent firewall session</li>
+        <li><code>guard.checkAgentAction()</code> — Check agent tool calls</li>
+        <li><code>guard.checkDataLeak()</code> — Check data for exfiltration</li>
+        <li><code>guard.wrapTool()</code> — Wrap tools with automatic guard</li>
+        <li><code>guard.scanMcpTools()</code> — Scan MCP server tools</li>
+        <li><code>guard.checkBrowserForm()</code> — Browser form safety check</li>
+        <li><code>guard.checkMemory()</code> — Agent memory check</li>
+        <li><code>guard.createCanary()</code> — Deploy canary tokens</li>
+        <li><code>guard.checkCanaryLeak()</code> — Check for canary leaks</li>
+        <li>+ 20+ more methods for advanced security features</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ─── NEXT.JS HELPER ─── -->
+<section class="section alt" id="frameworks">
+  <div class="header-row">
+    <span class="step-number">18</span>
+    <h2 class="section-title">🔌 Framework Integrations</h2>
+  </div>
+  <p class="section-subtitle">Drop-in middleware for popular AI frameworks.</p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(34,211,238,0.12)">▲</div>
+      <h3>Next.js Helper</h3>
+      <div class="code-block">
+        <span class="kw">import</span> { secureChatHandler } <span class="kw">from</span> <span class="str">"@soterai/core/next"</span>;<br><br>
+        <span class="kw">export const</span> POST = secureChatHandler({<br>
+        &nbsp;&nbsp;apiKey: process.env.SOTER_API_KEY!,<br>
+        &nbsp;&nbsp;callLLM: <span class="kw">async</span> ({ safeInput }) => callLLM(safeInput),<br>
+        });
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(129,140,248,0.12)">🦜</div>
+      <h3>LangChain Middleware</h3>
+      <div class="code-block">
+        npm install @soterai/langchain-middleware<br><br>
+        <span class="kw">import</span> { withSoterLangChain } <span class="kw">from</span> <span class="str">"@soterai/langchain-middleware"</span>;<br><br>
+        <span class="kw">const</span> protectedChain = withSoterLangChain(chain, guard);
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(74,222,128,0.12)">📗</div>
+      <h3>LlamaIndex Middleware</h3>
+      <div class="code-block">
+        npm install @soterai/llamaindex-middleware<br><br>
+        <span class="kw">import</span> { createSoterQueryWrapper } <span class="kw">from</span> <span class="str">"@soterai/llamaindex-middleware"</span>;<br><br>
+        <span class="kw">const</span> protectedEngine = createSoterQueryWrapper(engine, guard);
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(250,204,21,0.12)">🤖</div>
+      <h3>Vercel AI SDK Middleware</h3>
+      <div class="code-block">
+        npm install @soterai/vercel-ai-sdk-middleware<br><br>
+        <span class="kw">import</span> { soterVercelAiMiddleware } <span class="kw">from</span> <span class="str">"@soterai/vercel-ai-sdk-middleware"</span>;<br><br>
+        guard prompts/outputs with middleware
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PYTHON SDK ─── -->
+<section class="section" id="sdk-python">
+  <div class="header-row">
+    <span class="step-number">19</span>
+    <h2 class="section-title">🐍 Python SDK</h2>
+  </div>
+  <p class="section-subtitle"><code>soter</code> on PyPI — Protect any Python chatbot in 3 lines of code.</p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>Installation</h3>
+      <div class="code-block">pip install soter</div>
+      <h3 style="margin-top:1rem">Quick Start</h3>
+      <div class="code-block">
+        <span class="kw">from</span> soter <span class="kw">import</span> Soter<br><br>
+        guard = Soter() <span class="cm"># reads SOTER_API_KEY</span><br><br>
+        result = guard.protect_chat(<br>
+        &nbsp;&nbsp;message=<span class="str">"Ignore previous instructions"</span>,<br>
+        &nbsp;&nbsp;call_llm=<span class="kw">lambda</span> msg: my_llm(msg),<br>
+        )<br><br>
+        <span class="kw">print</span>(result.input_action) <span class="cm"># BLOCK</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Framework Helpers</h3>
+      <ul class="features-list">
+        <li><code>from soter.fastapi import create_chat_route</code></li>
+        <li><code>from soter.flask import create_chat_view</code></li>
+        <li><code>from soter.langchain import protect_langchain_chain</code></li>
+        <li><code>from soter.llamaindex import protect_query_engine</code></li>
+        <li><code>Soter()</code> — sync client (requests)</li>
+        <li><code>Soter.AsyncSoter()</code> — async client (httpx)</li>
+      </ul>
+      <p style="margin-top:1rem;font-size:0.85rem;color:#94a3b8">56/56 tests pass. Supports FastAPI, Flask, LangChain, LlamaIndex.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── REST API ─── -->
+<section class="section alt" id="rest-api">
+  <div class="header-row">
+    <span class="step-number">20</span>
+    <h2 class="section-title">🌐 REST API</h2>
+  </div>
+  <p class="section-subtitle">Works with any language — just HTTP + JSON.</p>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>API Endpoints</h3>
+      <table style="width:100%;font-size:0.8rem;border-collapse:collapse">
+        <tr><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><code>POST /api/guard/input</code></td><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b;color:#94a3b8">Check user input</td></tr>
+        <tr><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><code>POST /api/guard/output</code></td><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b;color:#94a3b8">Check AI output</td></tr>
+        <tr><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><code>POST /api/guard/analyze</code></td><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b;color:#94a3b8">Analyze text</td></tr>
+        <tr><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><code>GET /api/badge/&lt;slug&gt;</code></td><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b;color:#94a3b8">Get security badge</td></tr>
+        <tr><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><code>GET /api/health</code></td><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b;color:#94a3b8">Health check</td></tr>
+        <tr><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><code>POST /api/webhooks</code></td><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b;color:#94a3b8">Configure webhooks</td></tr>
+        <tr><td style="padding:0.4rem 0"><code>POST /api/agent/session/start</code></td><td style="padding:0.4rem 0;color:#94a3b8">Start agent session</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Authentication</h3>
+      <div class="code-block">
+        <span class="cm"># Via API Key header</span><br>
+        curl -X POST /api/guard/input \<br>
+        &nbsp;&nbsp;-H <span class="str">"x-api-key: ck_test_your_key"</span> \<br>
+        &nbsp;&nbsp;-d <span class="str">'{"message":"hello"}'</span>
+      </div>
+      <p style="margin-top:0.5rem;font-size:0.8rem;color:#94a3b8">
+        Keys are scoped to projects, with per-minute RPM limits and monthly quotas.
+        One-time display only — never stored in plaintext.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── INTEGRATIONS ─── -->
+<section class="section" id="examples">
+  <div class="header-row">
+    <span class="step-number">21</span>
+    <h2 class="section-title">💻 Integration Examples</h2>
+  </div>
+  <p class="section-subtitle">Ready-to-run examples for popular frameworks.</p>
+  <div class="grid grid-3">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(34,211,238,0.12)">▲</div>
+      <h3>Next.js Chat</h3>
+      <p>TypeScript + @soterai/core. Full chat protection with input/output guard.</p>
+      <span class="tag tag-cyan">examples/nextjs-soter/</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(74,222,128,0.12)">⚡</div>
+      <h3>FastAPI Chat</h3>
+      <p>Python + soter SDK. FastAPI route with built-in guard.</p>
+      <span class="tag tag-green">examples/fastapi-soter/</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(96,165,250,0.12)">🌶️</div>
+      <h3>Flask Chat</h3>
+      <p>Python + soter SDK. Flask view with chat protection.</p>
+      <span class="tag tag-blue">examples/flask-soter/</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(250,204,21,0.12)">🔌</div>
+      <h3>Express Chatbot</h3>
+      <p>Node.js + Express with guard middleware.</p>
+      <span class="tag tag-yellow">examples/express-chatbot/</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(129,140,248,0.12)">📝</div>
+      <h3>WordPress Plugin</h3>
+      <p>PHP plugin for WordPress chatbots with shortcode support.</p>
+      <span class="tag tag-purple">integrations/wordpress-plugin/</span>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(244,114,182,0.12)">📡</div>
+      <h3>More Integrations</h3>
+      <p>Botpress, Intercom, Zendesk, WhatsApp, REST API, Python, CLI, and more.</p>
+      <span class="tag tag-pink">See /docs</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DASHBOARD ─── -->
+<section class="section alt" id="dashboard">
+  <div class="header-row">
+    <span class="step-number">22</span>
+    <h2 class="section-title">📊 Dashboard — Full Feature List</h2>
+  </div>
+  <p class="section-subtitle">The Soter dashboard provides comprehensive visibility and control over your AI security.</p>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>📊 Monitor</h3>
+      <ul class="features-list">
+        <li><strong>Guard Logs</strong> — Every input/output decision with filters and search</li>
+        <li><strong>Reports</strong> — Monthly security reports with trends and recommendations</li>
+        <li><strong>Detection Feedback</strong> — Mark false positives to improve accuracy</li>
+        <li><strong>Customer Success</strong> — Activation rates, usage funnel, churn risk</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🛡️ Protect</h3>
+      <ul class="features-list">
+        <li><strong>Agent Firewall</strong> — Block unauthorized tool calls and exfiltration</li>
+        <li><strong>Policy Engine</strong> — Per-project risk thresholds and action defaults</li>
+        <li><strong>RAG Security</strong> — Guard retrieval pipelines and filter risky sources</li>
+        <li><strong>Webhooks</strong> — Real-time signed events for attacks and alerts</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🔍 Detect</h3>
+      <ul class="features-list">
+        <li><strong>Shadow AI</strong> — Discover unauthorized AI tool usage</li>
+        <li><strong>Red Team Lab</strong> — Test against adversarial prompts and jailbreaks</li>
+        <li><strong>Forensics</strong> — Investigate incidents with full audit trails</li>
+        <li><strong>Semantic Egress</strong> — Catch paraphrased confidential data leaving</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🎛️ Control</h3>
+      <ul class="features-list">
+        <li><strong>Agent Passports</strong> — Cryptographically signed agent identities</li>
+        <li><strong>Transaction Escrow</strong> — Hold risky actions for human review</li>
+        <li><strong>Intent Guard</strong> — Verify actions match original user intent</li>
+        <li><strong>Tool Chain</strong> — Detect risky multi-tool sequences</li>
+        <li><strong>Dry-Run Sandbox</strong> — Simulate actions without executing</li>
+        <li><strong>Memory Firewall</strong> — Quarantine poisoned agent memory</li>
+        <li><strong>MCP Drift</strong> — Detect risky MCP server tool changes</li>
+        <li><strong>Legal Boundary</strong> — Stop agents crossing legal lines</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>✅ Compliance</h3>
+      <ul class="features-list">
+        <li><strong>Evidence Vault</strong> — Package SOC 2 / ISO 27001 proof</li>
+        <li><strong>Context Lineage</strong> — Track data sources, block cross-domain leaks</li>
+        <li><strong>Blast Radius</strong> — Estimate damage if agent compromised</li>
+        <li><strong>Credential Vault</strong> — Server-side credential storage</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>⚙️ Manage</h3>
+      <ul class="features-list">
+        <li><strong>Projects</strong> — Organize keys, logs, config by environment</li>
+        <li><strong>API Keys</strong> — Generate scoped test and live keys</li>
+        <li><strong>Cost Firewall</strong> — Prevent runaway LLM spending</li>
+        <li><strong>Security Badges</strong> — Show protected status on your site</li>
+        <li><strong>Billing &amp; Usage</strong> — Plan management and upgrades</li>
+        <li><strong>Audit Exports</strong> — Download audit logs for compliance</li>
+        <li><strong>Settings</strong> — Profile, team, and preferences</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WEBHOOKS ─── -->
+<section class="section" id="webhooks">
+  <div class="header-row">
+    <span class="step-number">23</span>
+    <h2 class="section-title">🔔 Webhooks</h2>
+  </div>
+  <p class="section-subtitle">Real-time signed security events with durable delivery. HMAC-SHA256 verification.</p>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>Delivery Features</h3>
+      <ul class="features-list">
+        <li>Database-backed durable queue</li>
+        <li>Exponential backoff (30s → 2m → 10m → 1h → 6h)</li>
+        <li>Idempotency keys for deduplication</li>
+        <li>Manual replay endpoint</li>
+        <li>Dead-letter support</li>
+        <li>HMAC-SHA256 signed payloads</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Signature Verification</h3>
+      <div class="code-block">
+        <span class="kw">function</span> verify(rawBody, header, secret) {<br>
+        &nbsp;&nbsp;<span class="kw">const</span> match = /t=(\d+),v1=([0-9a-f]+)/.exec(header);<br>
+        &nbsp;&nbsp;<span class="kw">if</span> (!match) <span class="kw">return</span> <span class="kw">false</span>;<br>
+        &nbsp;&nbsp;<span class="kw">const</span> expected = createHmac(<span class="str">"sha256"</span>, secret)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;.update(`${t}.${rawBody}`).digest(<span class="str">"hex"</span>);<br>
+        &nbsp;&nbsp;<span class="kw">return</span> timingSafeEqual(<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Buffer.from(expected), Buffer.from(sig)<br>
+        &nbsp;&nbsp;);<br>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BILLING ─── -->
+<section class="section alt" id="billing">
+  <div class="header-row">
+    <span class="step-number">24</span>
+    <h2 class="section-title">💳 Billing &amp; Plans</h2>
+  </div>
+  <p class="section-subtitle">Flexible plans from FREE to ENTERPRISE. Powered by Razorpay for Indian market.</p>
+  <div class="pricing-grid">
+    <div class="pricing-card">
+      <h3>FREE</h3>
+      <div class="price">₹0</div>
+      <div class="period">per month</div>
+      <ul>
+        <li>1,000 requests/mo</li>
+        <li>1 project</li>
+        <li>Basic detection</li>
+        <li>Community support</li>
+      </ul>
+    </div>
+    <div class="pricing-card featured">
+      <h3>STARTER</h3>
+      <div class="price">₹999</div>
+      <div class="period">per month</div>
+      <ul>
+        <li>10,000 requests/mo</li>
+        <li>3 projects</li>
+        <li>All detectors</li>
+        <li>Email support</li>
+      </ul>
+    </div>
+    <div class="pricing-card">
+      <h3>PRO</h3>
+      <div class="price">₹2,999</div>
+      <div class="period">per month</div>
+      <ul>
+        <li>100,000 requests/mo</li>
+        <li>10 projects</li>
+        <li>RAG security</li>
+        <li>Agent Firewall</li>
+        <li>Priority support</li>
+      </ul>
+    </div>
+    <div class="pricing-card">
+      <h3>AGENCY</h3>
+      <div class="price">₹7,999</div>
+      <div class="period">per month</div>
+      <ul>
+        <li>500,000 requests/mo</li>
+        <li>Unlimited projects</li>
+        <li>White-label reports</li>
+        <li>Client management</li>
+        <li>Dedicated support</li>
+      </ul>
+    </div>
+    <div class="pricing-card">
+      <h3>ENTERPRISE</h3>
+      <div class="price">Custom</div>
+      <div class="period">per month</div>
+      <ul>
+        <li>SAML/SCIM SSO</li>
+        <li>Self-hosted option</li>
+        <li>SLA guarantee</li>
+        <li>IP allowlisting</li>
+        <li>Data retention controls</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ENTERPRISE ─── -->
+<section class="section" id="enterprise">
+  <div class="header-row">
+    <span class="step-number">25</span>
+    <h2 class="section-title">🏢 Enterprise Features</h2>
+  </div>
+  <p class="section-subtitle">Production-grade security controls for organizations.</p>
+  <div class="grid grid-3">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(129,140,248,0.12)">🔐</div>
+      <h3>SAML SSO</h3>
+      <p>Full SAML 2.0 workflow with metadata, ACS, JIT provisioning, issuer/audience validation, and replay protection.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(96,165,250,0.12)">🔄</div>
+      <h3>SCIM v2</h3>
+      <p>Users and Groups provisioning with bearer tokens, deprovisioning, group-to-role mapping, and audit logs.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(239,68,68,0.12)">🗑️</div>
+      <h3>Data Retention &amp; Deletion</h3>
+      <p>Configurable retention policies, data deletion workflows, and audit logging for compliance.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(251,146,60,0.12)">🛡️</div>
+      <h3>Security Controls</h3>
+      <p>IP allowlisting, session revocation, API key rotation, project disable, quota overrides, audit review.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(34,211,238,0.12)">🐳</div>
+      <h3>Self-Hosted</h3>
+      <p>Docker Compose, Kubernetes/Helm, backup/restore scripts, and health checks for full control.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(74,222,128,0.12)">📋</div>
+      <h3>Compliance Pages</h3>
+      <p>OWASP LLM Top 10, SOC 2, ISO 27001 readiness, security whitepaper, trust center, and more.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── COMPLIANCE ─── -->
+<section class="section alt" id="compliance">
+  <div class="header-row">
+    <span class="step-number">26</span>
+    <h2 class="section-title">✅ Compliance &amp; Audit</h2>
+  </div>
+  <p class="section-subtitle">Comprehensive compliance tooling for AI security.</p>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>OWASP LLM Top 10 Coverage</h3>
+      <table style="width:100%;font-size:0.8rem;border-collapse:collapse">
+        <tr><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><strong>LLM01</strong> Prompt Injection</td><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><span class="tag tag-green">✅</span></td></tr>
+        <tr><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><strong>LLM02</strong> Sensitive Info Disclosure</td><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><span class="tag tag-green">✅</span></td></tr>
+        <tr><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><strong>LLM05</strong> Improper Output Handling</td><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><span class="tag tag-green">✅</span></td></tr>
+        <tr><td style="padding:0.4rem 0"><strong>LLM10</strong> Unbounded Consumption</td><td style="padding:0.4rem 0"><span class="tag tag-green">✅</span></td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Audit &amp; Export Features</h3>
+      <ul class="features-list">
+        <li>Audit exports in JSONL (SIEM-ready) and CSV formats</li>
+        <li>Per-row HMAC signature for tamper-proof verification</li>
+        <li>Manifest signature header on every export</li>
+        <li>Full AuditExport audit trail</li>
+        <li>Admin audit logs for all plan/action changes</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BENCHMARKS ─── -->
+<section class="section" id="benchmarks">
+  <div class="header-row">
+    <span class="step-number">27</span>
+    <h2 class="section-title">📊 Benchmarks &amp; Performance</h2>
+  </div>
+  <p class="section-subtitle">Proven detection with industry-leading metrics.</p>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>Adversarial Benchmark Results</h3>
+      <table style="width:100%;font-size:0.85rem;border-collapse:collapse">
+        <tr><td style="padding:0.5rem 0;border-bottom:1px solid #1e293b">Prompt Injection</td><td style="padding:0.5rem 0;border-bottom:1px solid #1e293b;text-align:right"><span class="tag tag-green">100%</span></td></tr>
+        <tr><td style="padding:0.5rem 0;border-bottom:1px solid #1e293b">Jailbreak / DAN</td><td style="padding:0.5rem 0;border-bottom:1px solid #1e293b;text-align:right"><span class="tag tag-green">100%</span></td></tr>
+        <tr><td style="padding:0.5rem 0;border-bottom:1px solid #1e293b">Encoding / Obfuscation</td><td style="padding:0.5rem 0;border-bottom:1px solid #1e293b;text-align:right"><span class="tag tag-green">100%</span></td></tr>
+        <tr><td style="padding:0.5rem 0;border-bottom:1px solid #1e293b">Multilingual (Hindi)</td><td style="padding:0.5rem 0;border-bottom:1px solid #1e293b;text-align:right"><span class="tag tag-green">100%</span></td></tr>
+        <tr><td style="padding:0.5rem 0;border-bottom:1px solid #1e293b">Indirect Injection</td><td style="padding:0.5rem 0;border-bottom:1px solid #1e293b;text-align:right"><span class="tag tag-green">100%</span></td></tr>
+        <tr><td style="padding:0.5rem 0;border-bottom:1px solid #1e293b">PII Detection</td><td style="padding:0.5rem 0;border-bottom:1px solid #1e293b;text-align:right"><span class="tag tag-green">100%</span></td></tr>
+        <tr><td style="padding:0.5rem 0;border-bottom:1px solid #1e293b">Secrets / Credentials</td><td style="padding:0.5rem 0;border-bottom:1px solid #1e293b;text-align:right"><span class="tag tag-green">100%</span></td></tr>
+        <tr><td style="padding:0.5rem 0">Unsafe Output</td><td style="padding:0.5rem 0;text-align:right"><span class="tag tag-green">100%</span></td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>Package Health</h3>
+      <table style="width:100%;font-size:0.8rem;border-collapse:collapse">
+        <tr><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><code>@soterai/core</code></td><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><span class="tag tag-green">✅ 14/14 tests</span></td></tr>
+        <tr><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><code>@soterai/langchain</code></td><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><span class="tag tag-green">✅ Healthy</span></td></tr>
+        <tr><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><code>@soterai/llamaindex</code></td><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><span class="tag tag-green">✅ Healthy</span></td></tr>
+        <tr><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><code>@soterai/vercel-ai</code></td><td style="padding:0.4rem 0;border-bottom:1px solid #1e293b"><span class="tag tag-green">✅ Healthy</span></td></tr>
+        <tr><td style="padding:0.4rem 0"><code>soter</code> (Python)</td><td style="padding:0.4rem 0"><span class="tag tag-green">✅ 56/56 tests</span></td></tr>
+      </table>
+      <p style="margin-top:0.75rem;font-size:0.85rem;color:#22d3ee">F1 = 1.0000 · Precision = 1.0000 · Recall = 1.0000 · 0% False Positives</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2rem;margin-bottom:1rem">Testing Commands</h3>
+  <div class="code-block">
+    <span class="cm"># Run all tests</span><br>
+    npm test<br><br>
+    <span class="cm"># TypeScript SDK tests</span><br>
+    npm run test:sdk:js<br><br>
+    <span class="cm"># Python SDK tests</span><br>
+    npm run test:sdk:python<br><br>
+    <span class="cm"># Classifier evaluation</span><br>
+    npm run eval:classifiers<br><br>
+    <span class="cm"># End-to-end tests (Playwright)</span><br>
+    npm run test:e2e<br><br>
+    <span class="cm"># Full verification</span><br>
+    npm run verify
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<section class="section" style="text-align:center;background:#0a0a12">
+  <div class="badge" style="margin-bottom:1rem">⚡ Soter AI v0.2.0</div>
+  <h2 style="margin-bottom:1rem">Ready to secure your AI?</h2>
+  <p style="color:#94a3b8;margin-bottom:1.5rem;max-width:500px;margin-left:auto;margin-right:auto">
+    Visit the playground at <code>/playground</code> to test detection,
+    or read the docs at <code>/docs</code> to integrate your chatbot, RAG app, or agent.
+  </p>
+  <p style="color:#64748b;font-size:0.8rem">
+    Defense-in-depth reduces risk. No control is absolute.
+  </p>
+  <p style="color:#64748b;font-size:0.75rem;margin-top:1rem">
+    OWASP LLM Top 10 aligned · Built for India · Made with ❤️
+  </p>
+</section>
+
+</div><!-- /main -->
+</div><!-- /app -->
+<script>
+  // ── Active nav link highlighting on scroll ──
+  (function() {
+    const sections = document.querySelectorAll('.section[id], .hero[id]');
+    const navLinks = document.querySelectorAll('.sidebar-nav a');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => link.classList.remove('active'));
+          const activeLink = document.querySelector(`.sidebar-nav a[href="#${entry.target.id}"]`);
+          if (activeLink) activeLink.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-50% 0px -50% 0px' });
+    sections.forEach(s => observer.observe(s));
+  })();
+</script>
+</body>
+</html>
