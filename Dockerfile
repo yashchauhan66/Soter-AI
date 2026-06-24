@@ -24,6 +24,7 @@ WORKDIR /app
 RUN apk add --no-cache libc6-compat openssl
 
 COPY --from=deps /app/node_modules ./node_modules
+
 COPY . .
 
 # Ensure public/ exists so the runner-stage COPY always has a source
@@ -32,6 +33,10 @@ RUN mkdir -p public
 
 # Generate Prisma client (needed at build time for type generation)
 RUN npx prisma generate
+
+# Build local workspace packages first (e.g. @soterai/core SDK)
+# so that TypeScript can resolve their types during the Next.js build
+RUN npm run build:sdk:js
 
 # Build Next.js (standalone output mode)
 RUN npm run build
