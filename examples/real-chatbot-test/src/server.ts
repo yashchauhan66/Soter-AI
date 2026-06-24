@@ -1,6 +1,6 @@
 import express from "express";
 import { soter } from "./guard";
-import { callMockLLM } from "./llm";
+import { callGroqLLM } from "./llm-groq";
 
 const app = express();
 app.use(express.json());
@@ -21,7 +21,7 @@ app.post("/chat", async (req, res) => {
       userId,
       sessionId,
       callLLM: async (llmInput) => {
-        return callMockLLM(llmInput);
+        return callGroqLLM(llmInput);
       }
     });
     const latencyMs = Date.now() - start;

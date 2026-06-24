@@ -29,11 +29,10 @@ export default async function LegalBoundaryPage({ searchParams }: { searchParams
           { heading: "Decision and enforcement", body: "Actions are ALLOWed, BLOCKed, or flagged for human TAKEOVER. TAKEOVER_REQUIRED means the agent must pause and hand control to a human." },
           { heading: "Audit trail", body: "All boundary checks are logged with the action details, decision, risk level, and whether user consent was provided. The log serves as a compliance audit trail." },
         ]}
-        integrationCode={`import { Soter } from "@soter/core";
+        integrationCode={`import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 const verdict = await soter.checkLegalBoundary({

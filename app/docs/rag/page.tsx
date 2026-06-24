@@ -63,11 +63,10 @@ result = guard.protect_rag(
 print("Used Sources     :", [s.id for s in result.used_sources])
 print("Excluded Sources :", [e.source.id for e in result.excluded_sources])
 print("Answer           :", result.safe_response)`;
-const tsRagCode = `import { Soter } from "@soter/core";
+const tsRagCode = `import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 const result = await soter.protectRag({
@@ -149,7 +148,7 @@ export default function RagDocsPage() {
 
         <section className="docs-section">
           <div className="rounded-lg border border-cyan/30 bg-gradient-to-r from-cyan/5 to-transparent p-6">
-            <h2 className="text-xl font-bold">What's next?</h2>
+            <h2 className="text-xl font-bold">What&apos;s next?</h2>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/docs/python" className="button-primary gap-2">
                 Python SDK Guide <ArrowRight size={16} aria-hidden="true" />

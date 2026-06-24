@@ -49,7 +49,7 @@ Soter returns a verdict (`ALLOW`, `ALLOW_WITH_REDACTION`, `BLOCK`, `HUMAN_REVIEW
 ### JavaScript / TypeScript
 
 ```bash
-npm install @soter/core
+npm install @soterai/core
 ```
 
 Requires Node.js ≥ 18.18 (built-in `fetch`).
@@ -57,12 +57,12 @@ Requires Node.js ≥ 18.18 (built-in `fetch`).
 ### Python
 
 ```bash
-pip install cyberrakshak-guard
+pip install soter
 
 # Optional extras:
-pip install "cyberrakshak-guard[fastapi]"   # FastAPI support
-pip install "cyberrakshak-guard[async]"     # Async/httpx support
-pip install "cyberrakshak-guard[flask]"     # Flask support
+pip install "soter[fastapi]"   # FastAPI support
+pip install "soter[async]"     # Async/httpx support
+pip install "soter[flask]"     # Flask support
 ```
 
 Requires Python ≥ 3.9.
@@ -84,10 +84,10 @@ POST https://your-soter-host.example/api/guard/analyze
 ```bash
 # Required
 SOTER_API_KEY=ck_live_your_key_here     # Get from dashboard
-SOTER_BASE_URL=https://your-soter-host.example
 
 # Optional
 SOTER_PROJECT_ID=                        # For multi-project setups
+# SOTER_BASE_URL=                        # Override only for self-hosted servers
 ```
 
 > **Legacy fallbacks:** `CYBERRAKSHAK_API_KEY`, `CYBERGUARD_API_KEY`, `CYBERSECURITYGUARD_API_KEY` are also supported for backward compatibility.
@@ -108,17 +108,16 @@ SOTER_PROJECT_ID=                        # For multi-project setups
 ### Install
 
 ```bash
-npm install @soter/core
+npm install @soterai/core
 ```
 
 ### Basic Input Guard
 
 ```ts
-import { Soter } from "@soter/core";
+import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
   projectId: process.env.SOTER_PROJECT_ID,
 });
 
@@ -195,7 +194,7 @@ soter.getSafeOutput(result, original); // safe/redacted output for user
 ### Install
 
 ```bash
-pip install cyberrakshak-guard
+pip install soter
 ```
 
 ### Basic Input Guard
@@ -374,11 +373,10 @@ request.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
 ```ts
 // app/api/chat/route.ts
-import { Soter } from "@soter/core";
+import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 export async function POST(req: Request) {
@@ -400,7 +398,7 @@ export async function POST(req: Request) {
 Or use the one-line helper:
 
 ```ts
-import { secureChatHandler } from "@soter/core/next";
+import { secureChatHandler } from "@soterai/core/next";
 
 export const POST = secureChatHandler({
   apiKey: process.env.SOTER_API_KEY!,
@@ -412,14 +410,13 @@ export const POST = secureChatHandler({
 
 ```ts
 import express from "express";
-import { Soter } from "@soter/core";
+import { Soter } from "@soterai/core";
 
 const app = express();
 app.use(express.json());
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 app.post("/chat", async (req, res) => {
@@ -444,7 +441,7 @@ app.post("/chat", async (req, res) => {
 Or use Express middleware:
 
 ```ts
-import { soterInputMiddleware, soterOutputMiddleware } from "@soter/core/express";
+import { soterInputMiddleware, soterOutputMiddleware } from "@soterai/core/express";
 
 app.post(
   "/chat",
@@ -502,7 +499,7 @@ def chat():
 ### RAG Protection (TypeScript)
 
 ```ts
-import { Soter } from "@soter/core";
+import { Soter } from "@soterai/core";
 
 const soter = new Soter({ apiKey: process.env.SOTER_API_KEY });
 
@@ -568,11 +565,10 @@ print("Response:", result["safe_response"])
 ### Agent Firewall (TypeScript)
 
 ```ts
-import { createAgentFirewallClient } from "@soter/core";
+import { createAgentFirewallClient } from "@soterai/core";
 
 const firewall = createAgentFirewallClient({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 const session = await firewall.startAgentSession({
@@ -645,13 +641,12 @@ const result = await executeTool(decision.safeContent ?? payload);
 ### TypeScript
 
 ```ts
-import {
-  SoterError,
+import {    SoterError,
   SoterAuthError,
   SoterRateLimitError,
   SoterValidationError,
   SoterNetworkError,
-} from "@soter/core";
+} from "@soterai/core";
 
 try {
   const result = await soter.protect({ input: message });
@@ -686,7 +681,7 @@ except SoterError as exc:
     print(f"SDK error: {exc}")
 ```
 
-> **Legacy names:** `CyberRakshakError`, `CyberRakshakAuthError`, etc. are also exported for backward compatibility from both `@soter/core` and `cyberrakshak_guard`.
+> **Legacy names:** `CyberRakshakError`, `CyberRakshakAuthError`, etc. are also exported for backward compatibility from both `@soterai/core` and `cyberrakshak_guard`.
 
 ---
 

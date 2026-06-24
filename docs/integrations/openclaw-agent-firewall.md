@@ -24,13 +24,13 @@ Backward-compatible aliases are supported for `CYBERGUARD_*`.
 ## Install
 
 ```bash
-npm install @soter/core
+npm install @soterai/core
 ```
 
 ## Start A Session
 
 ```ts
-import { createAgentFirewallClient } from "@soter/core";
+import { createAgentFirewallClient } from "@soterai/core";
 
 const firewall = createAgentFirewallClient({
   apiKey: process.env.CYBERSECURITYGUARD_API_KEY!,

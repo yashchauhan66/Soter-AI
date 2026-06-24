@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { ArrowRight, BarChart3, CheckCircle2, Gauge, ShieldCheck, Zap } from "lucide-react";
 import { FAQ } from "@/components/marketing/FAQ";
 import { Features } from "@/components/marketing/Features";
@@ -8,6 +9,10 @@ import { Pricing } from "@/components/marketing/Pricing";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
 const siteUrl = "https://soterai.publicvm.com";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 const owaspCoverage = [
   ["LLM01", "Prompt injection", "Detect instruction overrides, jailbreak combinations, and prompt extraction attempts."],

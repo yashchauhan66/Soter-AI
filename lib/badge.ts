@@ -1,4 +1,5 @@
 import { db } from "./db";
+import { getRedis } from "./redis";
 import { getMonthlyUsage } from "./rateLimit";
 
 export type BadgeStatus = "PROTECTED" | "MONITORING_ACTIVE" | "ISSUES_FOUND" | "INACTIVE";
@@ -57,6 +58,18 @@ export async function loadBadgeStatus(slug: string): Promise<PublicBadgeStatus |
     };
   }
 
+  // Redis-backed cache: badge status changes slowly, cache for 60 seconds.
+  const redis = getRedis();
+  const cacheKey = `badge:${slug}`;
+  try {
+    const cached = await redis.get<string>(cacheKey);
+    if (cached) {
+      const parsed = JSON.parse(cached) as PublicBadgeStatus;
+      return parsed;
+    }    } catch (cacheError) {
+      console.error("[SoterAI] Badge cache read error:", cacheError);
+    }
+
   const monthStart = new Date();
   monthStart.setUTCDate(1); monthStart.setUTCHours(0, 0, 0, 0);
 
@@ -89,7 +102,7 @@ export async function loadBadgeStatus(slug: string): Promise<PublicBadgeStatus |
     message = "Badge active; no traffic observed this month yet.";
   }
 
-  return {
+  const result: PublicBadgeStatus = {
     slug,
     brandColor: branding?.brandColor ?? null,
     status,
@@ -99,5 +112,12 @@ export async function loadBadgeStatus(slug: string): Promise<PublicBadgeStatus |
     lastActivity: lastLog?.createdAt?.toISOString() ?? null,
     message,
     alignment: "OWASP LLM Top 10 aligned",
-  };
+  };    // Cache for 60 seconds to reduce DB load on public badge embeds.
+  try {
+    await redis.set(cacheKey, JSON.stringify(result), { ex: 60 });
+  } catch (cacheError) {
+    console.error("[SoterAI] Badge cache write error:", cacheError);
+  }
+
+  return result;
 }

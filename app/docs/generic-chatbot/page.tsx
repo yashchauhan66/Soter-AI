@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { CodeBlock, InlineCode, WarnBox } from "@/components/ui/CodeBlock";
+import { CodeBlock } from "@/components/ui/CodeBlock";
 import { DocViewTracker } from "@/components/docs/DocViewTracker";
 
 export const metadata: Metadata = {
@@ -21,11 +21,10 @@ const breadcrumbSchema = {
   ],
 };
 
-const basicCode = `import { Soter } from "@soter/core";
+const basicCode = `import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 // Guard input → call LLM → guard output
@@ -47,11 +46,14 @@ return {
   blocked: !outputResult.allowed,
 };`;
 
-const agentCode = `import { createAgentFirewallClient } from "@soter/core";
+const agentCode = `import { Soter, createAgentFirewallClient } from "@soterai/core";
+
+const soter = new Soter({
+  apiKey: process.env.SOTER_API_KEY,
+});
 
 const firewall = createAgentFirewallClient({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 // Start an agent session
@@ -78,9 +80,9 @@ if (action.decision === "ASK_APPROVAL") {
 // Only execute after firewall allows it
 const toolResult = await callTool(action.safeContent ?? ticketPayload);
 
-// Guard the final output
-const final = await soter.protect({ input: toolResult });
-return final.safeText ?? final.reason;`;
+// Guard the final output before returning it
+const final = await soter.guardOutput({ text: toolResult });
+return final.safeText ?? final.redactedText ?? toolResult;`;
 
 export default function GenericChatbotDocsPage() {
   return (
@@ -97,7 +99,7 @@ export default function GenericChatbotDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 1: Install the SDK</h2>
-          <CodeBlock language="bash" title="terminal">{`npm install @soter/core`}</CodeBlock>
+          <CodeBlock language="bash" title="terminal">{`npm install @soterai/core`}</CodeBlock>
         </section>
 
         <section className="docs-section">
@@ -138,7 +140,7 @@ export default function GenericChatbotDocsPage() {
 
         <section className="docs-section">
           <div className="rounded-lg border border-cyan/30 bg-gradient-to-r from-cyan/5 to-transparent p-6">
-            <h2 className="text-xl font-bold">What's next?</h2>
+            <h2 className="text-xl font-bold">What&apos;s next?</h2>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/docs/cli" className="button-primary gap-2">
                 CLI Guide <ArrowRight size={16} aria-hidden="true" />

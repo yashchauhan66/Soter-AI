@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import { ShieldCheck } from "lucide-react";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 import { HeaderNav } from "@/components/auth/HeaderNav";
 import "./globals.css";
@@ -97,13 +98,12 @@ export const metadata: Metadata = {
     images: ["/opengraph-image.png"],
     site: "@soterai",
   },
-  alternates: { canonical: siteUrl },
+  category: "technology",
   icons: {
     icon: [{ url: "/icon.png", sizes: "32x32" }, { url: "/icon-192.png", sizes: "192x192" }],
     apple: [{ url: "/apple-icon.png", sizes: "180x180" }],
   },
   manifest: "/manifest.webmanifest",
-  category: "technology",
   classification: "AI Security",
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION || "02ofzVC3PhtpFHCtRZ4s7lsPIoZA0mTJ4-zFS5Og4Aw",
@@ -126,9 +126,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <AuthProvider>
           <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-ink/90 backdrop-blur-xl">
             <div className="container-page flex h-16 items-center justify-between">
-              <Link href="/" className="flex min-w-0 items-center gap-2 font-semibold tracking-wide">
-                <span className="rounded-md border border-cyan/25 bg-cyan/10 p-2 text-cyan"><ShieldCheck size={20} aria-hidden="true" /></span>
-                <span className="text-lg">Soter<span className="text-cyan">AI</span></span>
+              <Link href="/" className="flex min-w-0 items-center font-semibold tracking-wide">
+                <Image src="/logo.png" alt="SoterAI" width={114} height={40} priority className="h-9 w-auto" />
               </Link>
               <HeaderNav />
             </div>
@@ -138,9 +137,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             <div className="container-page">
               <div className="flex flex-col justify-between gap-8 sm:flex-row">
                 <div className="max-w-xs">
-                  <Link href="/" className="flex items-center gap-2 font-semibold tracking-wide">
-                    <span className="rounded-md border border-cyan/25 bg-cyan/10 p-1.5 text-cyan"><ShieldCheck size={16} aria-hidden="true" /></span>
-                    <span>Soter<span className="text-cyan">AI</span></span>
+                  <Link href="/" className="flex items-center font-semibold tracking-wide">
+                    <Image src="/logo.png" alt="SoterAI" width={97} height={34} className="h-8 w-auto" />
                   </Link>
                   <p className="mt-3 leading-6 text-slate-500">
                     AI security command layer for chatbots, RAG apps, and autonomous agents.
@@ -148,7 +146,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                 </div>
                 <div className="flex flex-wrap gap-10">
                   <div>
-                    <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-600">Product</p>
+                    <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-400">Product</p>
                     <div className="flex flex-col gap-2">
                       <Link href="/#features" className="hover:text-slate-300">Features</Link>
                       <Link href="/docs" className="hover:text-slate-300">Documentation</Link>
@@ -158,7 +156,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                     </div>
                   </div>
                   <div>
-                    <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-600">Company</p>
+                    <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-400">Company</p>
                     <div className="flex flex-col gap-2">
                       <Link href="/trust" className="hover:text-slate-300">Trust</Link>
                       <Link href="/status" className="hover:text-slate-300">Status</Link>
@@ -168,7 +166,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                     </div>
                   </div>
                   <div>
-                    <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-600">Compare</p>
+                    <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-400">Compare</p>
                     <div className="flex flex-col gap-2">
                       <Link href="/comparison" className="hover:text-slate-300">vs Competitors</Link>
                       <Link href="/benchmarks" className="hover:text-slate-300">Benchmarks</Link>
@@ -184,6 +182,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             </div>
           </footer>
         </AuthProvider>
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ""} />
       </body>
     </html>
   );

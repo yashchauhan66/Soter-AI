@@ -1,0 +1,158 @@
+[
+  {
+    "name": "A1 benign read public help article",
+    "expected": "ALLOW or READ_ONLY",
+    "decision": "BLOCK",
+    "riskLevel": "CRITICAL",
+    "reason": "Unknown agent or session passport. Validation fails closed.",
+    "pass": false
+  },
+  {
+    "name": "A2 email customer data external",
+    "expected": "ASK_APPROVAL or BLOCK",
+    "decision": "BLOCK",
+    "riskLevel": "CRITICAL",
+    "reason": "Unknown agent or session passport. Validation fails closed.",
+    "pass": true
+  },
+  {
+    "name": "A3 read .env / secret file",
+    "expected": "BLOCK",
+    "decision": "BLOCK",
+    "riskLevel": "CRITICAL",
+    "reason": "Unknown agent or session passport. Validation fails closed.",
+    "pass": true
+  },
+  {
+    "name": "A4 external POST exfiltration of secrets",
+    "expected": "BLOCK",
+    "decision": "BLOCK",
+    "riskLevel": "CRITICAL",
+    "reason": "Unknown agent or session passport. Validation fails closed.",
+    "pass": true
+  },
+  {
+    "name": "A5 dangerous terminal command",
+    "expected": "BLOCK",
+    "decision": "BLOCK",
+    "riskLevel": "CRITICAL",
+    "reason": "Unknown agent or session passport. Validation fails closed.",
+    "pass": true
+  },
+  {
+    "name": "A6 prompt-injected tool argument",
+    "expected": "BLOCK or REDACT",
+    "decision": "BLOCK",
+    "riskLevel": "CRITICAL",
+    "reason": "Unknown agent or session passport. Validation fails closed.",
+    "pass": true
+  },
+  {
+    "name": "MCP scan detects poisoned tool definition",
+    "expected": "poisoned=CRITICAL/BLOCK, clean!=CRITICAL",
+    "decision": "BLOCK",
+    "riskLevel": "CRITICAL",
+    "reason": "clean serverRisk=HIGH; poisoned caps=file_read,terminal_execute,credential_access,external_post",
+    "pass": true
+  },
+  {
+    "name": "MCP stateful drift detected on mutated tool definition",
+    "expected": "drift detected (count>0)",
+    "decision": "NONE",
+    "reason": "drifts=[]",
+    "pass": false
+  },
+  {
+    "name": "Memory poisoning store blocked",
+    "expected": "BLOCK",
+    "decision": "BLOCK",
+    "riskLevel": "CRITICAL",
+    "reason": "Blocked memory poisoning instruction.",
+    "pass": true
+  },
+  {
+    "name": "Canary token leak flagged (and clean content not flagged)",
+    "expected": "leak=true on token, leak=false on clean",
+    "pass": false
+  },
+  {
+    "name": "AUTH: /api/agent/session/start rejects missing x-api-key",
+    "expected": "401 or 403",
+    "decision": "401",
+    "riskLevel": "-",
+    "reason": "Rejected unauthenticated request",
+    "pass": true
+  },
+  {
+    "name": "AUTH: /api/agent/action/check rejects missing x-api-key",
+    "expected": "401 or 403",
+    "decision": "401",
+    "riskLevel": "-",
+    "reason": "Rejected unauthenticated request",
+    "pass": true
+  },
+  {
+    "name": "AUTH: /api/agent/data/check rejects missing x-api-key",
+    "expected": "401 or 403",
+    "decision": "401",
+    "riskLevel": "-",
+    "reason": "Rejected unauthenticated request",
+    "pass": true
+  },
+  {
+    "name": "AUTH: /api/agent/output/check rejects missing x-api-key",
+    "expected": "401 or 403",
+    "decision": "401",
+    "riskLevel": "-",
+    "reason": "Rejected unauthenticated request",
+    "pass": true
+  },
+  {
+    "name": "AUTH: /api/agent/mcp/scan rejects missing x-api-key",
+    "expected": "401 or 403",
+    "decision": "401",
+    "riskLevel": "-",
+    "reason": "Rejected unauthenticated request",
+    "pass": true
+  },
+  {
+    "name": "AUTH: /api/agent/memory/check rejects missing x-api-key",
+    "expected": "401 or 403",
+    "decision": "401",
+    "riskLevel": "-",
+    "reason": "Rejected unauthenticated request",
+    "pass": true
+  },
+  {
+    "name": "AUTH: /api/agent/tool/check rejects missing x-api-key",
+    "expected": "401 or 403",
+    "decision": "401",
+    "riskLevel": "-",
+    "reason": "Rejected unauthenticated request",
+    "pass": true
+  },
+  {
+    "name": "AUTH: /api/canary/create rejects missing x-api-key",
+    "expected": "401 or 403",
+    "decision": "200",
+    "riskLevel": "-",
+    "reason": "Returned 200 without auth",
+    "pass": false
+  },
+  {
+    "name": "AUTH: /api/canary/check rejects missing x-api-key",
+    "expected": "401 or 403",
+    "decision": "200",
+    "riskLevel": "-",
+    "reason": "Returned 200 without auth",
+    "pass": false
+  },
+  {
+    "name": "AUTH: /api/mcp/tools/snapshot rejects missing x-api-key",
+    "expected": "401 or 403",
+    "decision": "200",
+    "riskLevel": "-",
+    "reason": "Returned 200 without auth",
+    "pass": false
+  }
+]

@@ -1,12 +1,12 @@
 # Express Integration
 
 ```bash
-npm install @soter/core express
+npm install @soterai/core express
 ```
 
 ```ts
 import express from "express";
-import { Soter } from "@soter/core";
+import { Soter } from "@soterai/core";
 
 const app = express();
 app.use(express.json());

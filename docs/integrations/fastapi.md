@@ -5,7 +5,7 @@ Soter protects your FastAPI chatbot with input/output guarding in one route wrap
 ## Install
 
 ```bash
-pip install "cyberrakshak-guard[fastapi]"
+pip install "soter[fastapi]"
 ```
 
 ## Quickstart
@@ -96,7 +96,7 @@ def chat(req: ChatRequest):
 For `AsyncSoter` (requires `httpx`):
 
 ```bash
-pip install "cyberrakshak-guard[async]"
+pip install "soter[async]"
 ```
 
 ```python

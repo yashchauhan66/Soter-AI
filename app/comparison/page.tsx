@@ -15,15 +15,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Soter vs Competitors | AI Security Guardrail Comparison",
+  title: "SoterAI vs Competitors | AI Security Guardrail Comparison",
   description:
-    "Compare Soter against Lakera (Check Point), NVIDIA NeMo, Guardrails AI, LLM Guard, GA Guard, and AWS Bedrock. Feature matrix, benchmark scores, and market analysis.",
+    "Compare SoterAI against Lakera (Check Point), NVIDIA NeMo, Guardrails AI, LLM Guard, GA Guard, and AWS Bedrock. Feature matrix, benchmark scores, and market analysis.",
+  alternates: { canonical: "/comparison" },
+  openGraph: {
+    title: "SoterAI vs Competitors — AI Security Guardrail Comparison",
+    description: "Compare 7 AI security platforms across 22 features. Only Soter covers Input + Output + RAG + Agent Firewall + Policy + Enterprise.",
+  },
 };
 
 // ─── Data ──────────────────────────────────────────────────────────────────
 
 const competitors = [
-  { id: "soter", name: "Soter", icon: "🛡️", color: "text-cyan", bg: "bg-cyan/10 border-cyan/30" },
+  { id: "soter", name: "SoterAI", icon: "🛡️", color: "text-cyan", bg: "bg-cyan/10 border-cyan/30" },
   { id: "lakera", name: "Lakera", note: "(Check Point)", color: "text-red-400", bg: "bg-red-500/10 border-red-500/20" },
   { id: "nemo", name: "NVIDIA NeMo", color: "text-green-400", bg: "bg-green-500/10 border-green-500/20" },
   { id: "ga", name: "GA Guard", color: "text-emerald-400", bg: "bg-emerald-500/10 border-emerald-500/20" },

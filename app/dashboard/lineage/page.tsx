@@ -36,11 +36,10 @@ export default async function LineagePage({ searchParams }: { searchParams: Prom
           { heading: "Block or allow", body: "Transfers from sensitive sources to untrusted destinations are blocked. Flow decisions are logged with reasons for audit." },
           { heading: "Incident tracking", body: "Unauthorized flow attempts are recorded as lineage incidents with risk levels for review and escalation." },
         ]}
-        integrationCode={`import { Soter } from "@soter/core";
+        integrationCode={`import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 const source = await soter.registerContextSource({

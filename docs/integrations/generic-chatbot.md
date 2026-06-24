@@ -5,13 +5,13 @@ Use this pattern for any chatbot, RAG bot, browser agent, desktop agent, or cust
 ## Installation
 
 ```bash
-npm install @soter/core
+npm install @soterai/core
 ```
 
 ## Basic Chatbot Pattern
 
 ```ts
-import { Soter } from "@soter/core";
+import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
@@ -42,7 +42,7 @@ return {
 For agents that call tools, APIs, or access data:
 
 ```ts
-import { createAgentFirewallClient } from "@soter/core";
+import { createAgentFirewallClient } from "@soterai/core";
 
 const firewall = createAgentFirewallClient({
   apiKey: process.env.SOTER_API_KEY,

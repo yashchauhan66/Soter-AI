@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { CodeBlock, InlineCode, WarnBox } from "@/components/ui/CodeBlock";
+import { ArrowRight } from "lucide-react";
+import { CodeBlock, InlineCode } from "@/components/ui/CodeBlock";
 import { DocViewTracker } from "@/components/docs/DocViewTracker";
 
 export const metadata: Metadata = {
@@ -135,7 +135,7 @@ export default function WordpressDocsPage() {
 
         <section className="docs-section">
           <div className="rounded-lg border border-cyan/30 bg-gradient-to-r from-cyan/5 to-transparent p-6">
-            <h2 className="text-xl font-bold">What's next?</h2>
+            <h2 className="text-xl font-bold">What&apos;s next?</h2>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/docs/generic-chatbot" className="button-primary gap-2">
                 Generic Chatbot Guide <ArrowRight size={16} aria-hidden="true" />

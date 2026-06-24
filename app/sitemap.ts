@@ -31,10 +31,10 @@ const compliancePages = [
 const legalPages = [
   { url: "/trust", priority: 0.6, changeFrequency: "monthly" as const },
   { url: "/security", priority: 0.6, changeFrequency: "monthly" as const },
+  { url: "/responsible-disclosure", priority: 0.4, changeFrequency: "yearly" as const },
   { url: "/privacy", priority: 0.5, changeFrequency: "yearly" as const },
   { url: "/terms", priority: 0.5, changeFrequency: "yearly" as const },
   { url: "/data-retention", priority: 0.4, changeFrequency: "yearly" as const },
-  { url: "/responsible-disclosure", priority: 0.4, changeFrequency: "yearly" as const },
   { url: "/subprocessors", priority: 0.4, changeFrequency: "yearly" as const },
   { url: "/status", priority: 0.5, changeFrequency: "daily" as const },
 ];
@@ -60,21 +60,12 @@ const docsPages = [
   { url: "/docs/api-contract", priority: 0.6, changeFrequency: "monthly" as const },
 ];
 
-const authPages = [
-  { url: "/signup", priority: 0.6, changeFrequency: "monthly" as const },
-  { url: "/signin", priority: 0.3, changeFrequency: "monthly" as const },
-  { url: "/forgot-password", priority: 0.2, changeFrequency: "monthly" as const },
-  { url: "/reset-password", priority: 0.2, changeFrequency: "monthly" as const },
-  { url: "/verify-email", priority: 0.2, changeFrequency: "monthly" as const },
-];
-
 export default function sitemap(): MetadataRoute.Sitemap {
   const allPages = [
     ...marketingPages,
     ...compliancePages,
     ...legalPages,
     ...docsPages,
-    ...authPages,
   ];
 
   return allPages.map((page) => ({

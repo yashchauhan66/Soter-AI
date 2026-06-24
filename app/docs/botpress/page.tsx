@@ -74,7 +74,7 @@ export default function BotpressDocsPage() {
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Environment</h2>
           <CodeBlock language="bash" title=".env">{`SOTER_API_KEY=ck_live_your_key_here
-SOTER_BASE_URL=https://your-soter-host.example`}</CodeBlock>
+# SOTER_BASE_URL is optional if using the SDK — a default is included`}</CodeBlock>
         </section>
 
         <section className="docs-section">

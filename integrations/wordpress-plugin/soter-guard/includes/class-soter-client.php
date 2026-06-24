@@ -1,8 +1,8 @@
 <?php
 /**
- * Server-side HTTP client for the CyberRakshak Guard API.
+ * Server-side HTTP client for the SoterAI Guard API.
  *
- * @package CyberRakshak_Guard
+ * @package Soter_Guard
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * options and sent only in the x-api-key header. It is never returned to the
  * frontend or logged.
  */
-class CyberRakshak_Client {
+class Soter_Client {
 
 	/**
 	 * Plugin settings.
@@ -27,7 +27,7 @@ class CyberRakshak_Client {
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->settings = CyberRakshak_Settings::get();
+		$this->settings = Soter_Settings::get();
 	}
 
 	/**
@@ -77,10 +77,10 @@ class CyberRakshak_Client {
 		if ( ! $this->is_configured() ) {
 			return array(
 				'ok'      => false,
-				'message' => __( 'API Base URL and API Key are required.', 'cyberrakshak-guard' ),
+				'message' => __( 'API Base URL and API Key are required.', 'soter-guard' ),
 			);
 		}
-		$response = $this->request( '/api/guard/input', array( 'message' => 'CyberRakshak connection test.' ), true );
+		$response = $this->request( '/api/guard/input', array( 'message' => 'SoterAI connection test.' ), true );
 		if ( is_wp_error( $response ) ) {
 			return array(
 				'ok'      => false,
@@ -91,19 +91,19 @@ class CyberRakshak_Client {
 		if ( 200 === $code ) {
 			return array(
 				'ok'      => true,
-				'message' => __( 'Connection successful. The Guard API responded.', 'cyberrakshak-guard' ),
+				'message' => __( 'Connection successful. The Guard API responded.', 'soter-guard' ),
 			);
 		}
 		if ( 401 === $code || 403 === $code ) {
 			return array(
 				'ok'      => false,
-				'message' => __( 'Authentication failed. Check the API key.', 'cyberrakshak-guard' ),
+				'message' => __( 'Authentication failed. Check the API key.', 'soter-guard' ),
 			);
 		}
 		/* translators: %d: HTTP status code. */
 		return array(
 			'ok'      => false,
-			'message' => sprintf( __( 'Unexpected response from the Guard API (HTTP %d).', 'cyberrakshak-guard' ), $code ),
+			'message' => sprintf( __( 'Unexpected response from the Guard API (HTTP %d).', 'soter-guard' ), $code ),
 		);
 	}
 
@@ -119,7 +119,7 @@ class CyberRakshak_Client {
 		$url     = rtrim( $this->settings['base_url'], '/' ) . $path;
 		$headers = array(
 			'Content-Type' => 'application/json',
-			'User-Agent'   => 'cyberrakshak-guard-wp/' . CYBERRAKSHAK_GUARD_VERSION,
+			'User-Agent'   => 'soter-guard-wp/' . SOTER_GUARD_VERSION,
 		);
 		if ( $require_api_key ) {
 			$headers['x-api-key'] = $this->settings['api_key'];
@@ -154,7 +154,7 @@ class CyberRakshak_Client {
 				'error'      => true,
 				'decision'   => 'ALLOW',
 				'safe_text'  => $original,
-				'reason'     => __( 'Guard API unreachable; request passed through.', 'cyberrakshak-guard' ),
+				'reason'     => __( 'Guard API unreachable; request passed through.', 'soter-guard' ),
 				'risk_types' => array(),
 			);
 		}

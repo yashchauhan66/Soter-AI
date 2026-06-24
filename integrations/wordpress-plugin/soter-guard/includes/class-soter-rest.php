@@ -1,8 +1,8 @@
 <?php
 /**
- * REST proxy endpoints for CyberRakshak Guard.
+ * REST proxy endpoints for SoterAI Guard.
  *
- * @package CyberRakshak_Guard
+ * @package Soter_Guard
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,23 +10,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Exposes /wp-json/cyberrakshak/v1/guard-input and guard-output. These run
+ * Exposes /wp-json/soter/v1/guard-input and guard-output. These run
  * server-side so the API key never reaches the browser. Includes a lightweight
  * per-IP rate limit using transients.
  */
-class CyberRakshak_Rest {
+class Soter_Rest {
 
 	/**
 	 * Singleton instance.
 	 *
-	 * @var CyberRakshak_Rest|null
+	 * @var Soter_Rest|null
 	 */
 	private static $instance = null;
 
 	/**
 	 * Get instance.
 	 *
-	 * @return CyberRakshak_Rest
+	 * @return Soter_Rest
 	 */
 	public static function instance() {
 		if ( null === self::$instance ) {
@@ -49,7 +49,7 @@ class CyberRakshak_Rest {
 	 */
 	public function register_routes() {
 		register_rest_route(
-			'cyberrakshak/v1',
+			'soter/v1',
 			'/guard-input',
 			array(
 				'methods'             => 'POST',
@@ -65,7 +65,7 @@ class CyberRakshak_Rest {
 			)
 		);
 		register_rest_route(
-			'cyberrakshak/v1',
+			'soter/v1',
 			'/guard-output',
 			array(
 				'methods'             => 'POST',
@@ -102,10 +102,10 @@ class CyberRakshak_Rest {
 	public function permission( $request ) {
 		$nonce = $request->get_header( 'x-wp-nonce' );
 		if ( ! $nonce || ! wp_verify_nonce( $nonce, 'wp_rest' ) ) {
-			return new WP_Error( 'rest_forbidden', __( 'Invalid or missing nonce.', 'cyberrakshak-guard' ), array( 'status' => 403 ) );
+			return new WP_Error( 'rest_forbidden', __( 'Invalid or missing nonce.', 'soter-guard' ), array( 'status' => 403 ) );
 		}
 		if ( ! $this->within_rate_limit() ) {
-			return new WP_Error( 'rest_rate_limited', __( 'Too many requests. Please slow down.', 'cyberrakshak-guard' ), array( 'status' => 429 ) );
+			return new WP_Error( 'rest_rate_limited', __( 'Too many requests. Please slow down.', 'soter-guard' ), array( 'status' => 429 ) );
 		}
 		return true;
 	}
@@ -116,7 +116,7 @@ class CyberRakshak_Rest {
 	 * @return bool
 	 */
 	private function within_rate_limit() {
-		$settings = CyberRakshak_Settings::get();
+		$settings = Soter_Settings::get();
 		$limit    = isset( $settings['rate_limit'] ) ? (int) $settings['rate_limit'] : 30;
 		$ip       = $this->client_ip();
 		$key      = 'crg_rl_' . md5( $ip );
@@ -145,11 +145,11 @@ class CyberRakshak_Rest {
 	 * @return WP_REST_Response
 	 */
 	public function guard_input( $request ) {
-		$settings = CyberRakshak_Settings::get();
+		$settings = Soter_Settings::get();
 		if ( empty( $settings['enable_input'] ) ) {
 			return $this->passthrough( (string) $request->get_param( 'text' ) );
 		}
-		$client = new CyberRakshak_Client();
+		$client = new Soter_Client();
 		$result = $client->guard_input( (string) $request->get_param( 'text' ) );
 		return $this->public_response( $result );
 	}
@@ -161,11 +161,11 @@ class CyberRakshak_Rest {
 	 * @return WP_REST_Response
 	 */
 	public function guard_output( $request ) {
-		$settings = CyberRakshak_Settings::get();
+		$settings = Soter_Settings::get();
 		if ( empty( $settings['enable_output'] ) ) {
 			return $this->passthrough( (string) $request->get_param( 'text' ) );
 		}
-		$client = new CyberRakshak_Client();
+		$client = new Soter_Client();
 		$result = $client->guard_output( (string) $request->get_param( 'text' ) );
 		return $this->public_response( $result );
 	}

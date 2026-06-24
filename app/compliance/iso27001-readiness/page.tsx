@@ -1,4 +1,12 @@
+import type { Metadata } from "next";
 import { ReadinessPage } from "@/lib/compliance/publicContent";
+
+export const metadata: Metadata = {
+  title: "ISO 27001 Readiness | SoterAI",
+  description:
+    "SoterAI ISO 27001 readiness materials covering risk management, asset handling, access control, cryptography, operations security, and incident response planning.",
+  alternates: { canonical: "/compliance/iso27001-readiness" },
+};
 
 export default function Iso27001ReadinessPage() {
   return (

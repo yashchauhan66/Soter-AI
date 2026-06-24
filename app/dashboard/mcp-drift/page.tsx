@@ -33,11 +33,10 @@ export default async function McpDriftPage({ searchParams }: { searchParams: Pro
           { heading: "Detect drift", body: "When a new snapshot differs from the previous baseline, drift is detected. The system categorizes the change — new capabilities, description changes, schema changes, or endpoint changes — and re-assesses risk." },
           { heading: "Alert and quarantine", body: "Risky drifts trigger alerts. Servers with critical drifts can be automatically quarantined to prevent further tool access until reviewed." },
         ]}
-        integrationCode={`import { Soter } from "@soter/core";
+        integrationCode={`import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 await soter.registerMcpServer({ serverName: "filesystem-mcp", trustLevel: "INTERNAL" });

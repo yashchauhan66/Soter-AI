@@ -1,4 +1,16 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Enterprise AI Security | SoterAI",
+  description:
+    "Enterprise-grade AI security for high-stakes chatbots, RAG applications, and autonomous agents. SSO, SCIM, SIEM, tenant isolation, audit trails, and self-hosted deployment.",
+  alternates: { canonical: "/enterprise" },
+  openGraph: {
+    title: "Enterprise AI Security | SoterAI",
+    description: "Operational controls for high-stakes AI applications: SSO, SCIM, SIEM, tenant isolation, and defense-in-depth guardrails.",
+  },
+};
 
 const capabilities = ["Tenant isolation and RBAC", "SSO, SCIM, and audit trails", "RAG and agent security reviews", "Webhooks, SIEM export, and evidence reports"];
 

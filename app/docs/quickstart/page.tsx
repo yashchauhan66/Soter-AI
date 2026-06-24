@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AlertTriangle, ArrowRight, CheckCircle2, Copy, ExternalLink } from "lucide-react";
+import { ArrowRight, CheckCircle2, ExternalLink } from "lucide-react";
 import { CodeBlock, InlineCode, TipBox, WarnBox } from "@/components/ui/CodeBlock";
 import { DocViewTracker } from "@/components/docs/DocViewTracker";
 
@@ -33,26 +33,24 @@ const howToSchema = {
   totalTime: "PT5M",
   tool: { "@type": "HowToTool", name: "SoterAI API Key" },
   step: [
-    { "@type": "HowToStep", position: 1, name: "Install the SDK", text: "Run npm install @soter/core in your backend project." },
-    { "@type": "HowToStep", position: 2, name: "Add environment variables", text: "Set SOTER_BASE_URL and SOTER_API_KEY in your .env file." },
+    { "@type": "HowToStep", position: 1, name: "Install the SDK", text: "Run npm install @soterai/core in your backend project." },
+    { "@type": "HowToStep", position: 2, name: "Set your API key", text: "Set SOTER_API_KEY in your .env file." },
     { "@type": "HowToStep", position: 3, name: "Guard user input", text: "Call soter.protect({ input: message }) before your LLM sees it." },
     { "@type": "HowToStep", position: 4, name: "Call your LLM", text: "Only call the LLM if SoterAI allows the input." },
-    { "@type": "HowToStep", position: 5, name: "Guard model output", text: "Call soter.protect({ output: llmReply }) before showing it to users." },
+    { "@type": "HowToStep", position: 5, name: "Guard model output", text: "Call soter.guardOutput({ aiResponse: llmReply }) before showing it to users." },
     { "@type": "HowToStep", position: 6, name: "Test with an attack prompt", text: "Send a test prompt injection to verify protection works." },
   ],
 };
 
-const installCode = `npm install @soter/core`;
+const installCode = `npm install @soterai/core`;
 const envCode = `# 📁 .env file - Keep these on the server only!
-SOTER_BASE_URL=https://soterai.publicvm.com
 SOTER_API_KEY=ck_live_your_key_here`;
 const routeCode = `// app/api/chat/route.ts or any backend route
-import { Soter } from "@soter/core";
+import { Soter } from "@soterai/core";
 
 // Initialize once - reuse for all requests
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 export async function POST(request: Request) {
@@ -74,7 +72,7 @@ export async function POST(request: Request) {
   const llmReply = await callYourLLM(safeMessage);
 
   // STEP 3: Guard model output before user sees it
-  const output = await soter.protect({ output: llmReply });
+  const output = await soter.guardOutput({ aiResponse: llmReply });
 
   return Response.json({
     blocked: !output.allowed,
@@ -103,7 +101,7 @@ const expectedSafe = `{
 const steps = [
   ["Create project", "Open dashboard → New Project → Generate API key. Use a test key for development."],
   ["Install SDK", "Run one npm command in your backend project."],
-  ["Add env vars", "Set SOTER_BASE_URL and SOTER_API_KEY in your server environment."],
+  ["Set API key", "Set SOTER_API_KEY in your server environment."],
   ["Guard input", "Call SoterAI before your LLM. If blocked, don't call the model."],
   ["Guard output", "Call SoterAI again on the model's reply before sending it to the user."],
   ["Test it", "Send an attack prompt and verify it gets blocked."],
@@ -122,14 +120,14 @@ export default function QuickstartDocsPage() {
         <p className="eyebrow mt-6">Quickstart</p>
         <h1 className="mt-3 text-4xl font-bold leading-tight">Protect your AI chatbot in 5 minutes</h1>
         <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-300">
-          This guide is for <strong>beginners</strong>. You don't need AI security experience. 
+          This guide is for <strong>beginners</strong>. You don&apos;t need AI security experience.
           By the end, you will have a working chatbot route protected from prompt injection, 
           PII leakage, and unsafe model output.
         </p>
 
         {/* What you'll build */}
         <div className="docs-section">
-          <h2 className="text-2xl font-bold">What you'll build</h2>
+          <h2 className="text-2xl font-bold">What you&apos;ll build</h2>
           <p className="mt-3 leading-7 text-slate-400">
             A secure chat API endpoint that:
           </p>
@@ -174,7 +172,7 @@ export default function QuickstartDocsPage() {
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 2: Add environment variables</h2>
           <p className="mt-3 leading-7 text-slate-400">
-            Create a <InlineCode>.env</InlineCode> file in your project root and add:
+            Create a <InlineCode>.env</InlineCode> file in your project root and add your API key:
           </p>
           <CodeBlock language="bash" title=".env file">{envCode}</CodeBlock>
           <WarnBox>
@@ -184,7 +182,7 @@ export default function QuickstartDocsPage() {
           </WarnBox>
           <TipBox>
             <strong>Where to get an API key?</strong> Sign up at the SoterAI dashboard, create a project, 
-            and click "Generate API Key". Use <InlineCode>ck_test_*</InlineCode> keys while developing.
+            and click &quot;Generate API Key&quot;. Use <InlineCode>ck_test_*</InlineCode> keys while developing.
           </TipBox>
         </section>
 
@@ -193,13 +191,13 @@ export default function QuickstartDocsPage() {
           <h2 className="text-2xl font-bold">Step 3-5: Write the integration code</h2>
           <p className="mt-3 leading-7 text-slate-400">
             The pattern is simple: <strong>guard input → call model → guard output</strong>. 
-            Here's the complete code for a chat route:
+            Here&apos;s the complete code for a chat route:
           </p>
           <CodeBlock language="typescript" title="server route (e.g., app/api/chat/route.ts)" showLineNumbers>{routeCode}</CodeBlock>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             <div className="rounded-lg border border-cyan/20 bg-cyan/5 p-4 text-sm">
               <p className="font-semibold text-cyan">① Input Guard</p>
-              <p className="mt-2 text-slate-400">Checks the user's message for prompt injection, jailbreaks, PII, and secrets.</p>
+              <p className="mt-2 text-slate-400">Checks the user&apos;s message for prompt injection, jailbreaks, PII, and secrets.</p>
             </div>
             <div className="rounded-lg border border-lime/20 bg-lime/5 p-4 text-sm">
               <p className="font-semibold text-lime">② LLM Call</p>
@@ -207,7 +205,7 @@ export default function QuickstartDocsPage() {
             </div>
             <div className="rounded-lg border border-cyan/20 bg-cyan/5 p-4 text-sm">
               <p className="font-semibold text-cyan">③ Output Guard</p>
-              <p className="mt-2 text-slate-400">Checks the model's response for leaked data, unsafe content, or policy violations.</p>
+              <p className="mt-2 text-slate-400">Checks the model&apos;s response for leaked data, unsafe content, or policy violations.</p>
             </div>
           </div>
         </section>
@@ -216,7 +214,7 @@ export default function QuickstartDocsPage() {
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 6: Test your integration</h2>
           <p className="mt-3 leading-7 text-slate-400">
-            First, let's test with a <strong>dangerous prompt</strong> that should be blocked:
+            First, let&apos;s test with a <strong>dangerous prompt</strong> that should be blocked:
           </p>
           <CodeBlock language="bash" title="test prompt injection">{curlAttack}</CodeBlock>
           <p className="mt-4 font-semibold">✅ Expected result — blocked:</p>
@@ -230,7 +228,7 @@ export default function QuickstartDocsPage() {
           <CodeBlock language="json">{expectedSafe}</CodeBlock>
           <TipBox>
             <strong>Getting blocked when expected?</strong> If the safe message gets blocked, 
-            check that you're using the right JSON field names. The input guard uses 
+            check that you&apos;re using the right JSON field names. The input guard uses
             <InlineCode>message</InlineCode>, not <InlineCode>text</InlineCode> or <InlineCode>prompt</InlineCode>.
           </TipBox>
         </section>
@@ -263,7 +261,7 @@ export default function QuickstartDocsPage() {
         {/* What's next */}
         <section className="docs-section">
           <div className="rounded-lg border border-cyan/30 bg-gradient-to-r from-cyan/5 to-transparent p-6">
-            <h2 className="text-xl font-bold">✅ You're protected! What's next?</h2>
+            <h2 className="text-xl font-bold">✅ You&apos;re protected! What&apos;s next?</h2>
             <p className="mt-3 leading-7 text-slate-400">
               Your chatbot now has basic AI security. Here are some ways to level up:
             </p>

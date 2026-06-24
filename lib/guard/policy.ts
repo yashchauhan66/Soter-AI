@@ -10,6 +10,7 @@
 import type { ProjectPolicy, PolicyMode, UnsafeOutputMode } from "@prisma/client";
 import { db } from "../db";
 import { getLocalCache, setLocalCache } from "../localCache";
+import { getRedis } from "../redis";
 import { decideGuardAction } from "./decisionEngine";
 import { redactText } from "./redactor";
 import { rewriteRiskyText } from "./rewrite";
@@ -82,13 +83,59 @@ export function policyFromRow(row: ProjectPolicy | null): ResolvedPolicy {
   };
 }
 
+/** Redis key prefix for project policy cache. */
+const POLICY_REDIS_KEY_PREFIX = "crg:policy:";
+
+/** TTL for cached policies in seconds (5 seconds — short enough for multi-instance propagation). */
+const POLICY_REDIS_TTL_S = 5;
+
+/** TTL for local in-process cache in ms (also 5s to stay in sync with Redis). */
+const POLICY_LOCAL_TTL_MS = 5_000;
+
+async function loadPolicyFromRedis(projectId: string): Promise<ResolvedPolicy | null> {
+  try {
+    const redis = getRedis();
+    const raw = await redis.get<string>(`${POLICY_REDIS_KEY_PREFIX}${projectId}`);
+    if (!raw) return null;
+    return JSON.parse(raw) as ResolvedPolicy;
+  } catch (error) {
+    console.error("[SoterAI] Policy cache read error:", error);
+    return null;
+  }
+}
+
+async function savePolicyToRedis(projectId: string, policy: ResolvedPolicy): Promise<void> {
+  try {
+    const redis = getRedis();
+    await redis.set(`${POLICY_REDIS_KEY_PREFIX}${projectId}`, JSON.stringify(policy), { ex: POLICY_REDIS_TTL_S });
+  } catch (error) {
+    console.error("[SoterAI] Policy cache write error:", error);
+  }
+}
+
 export async function loadProjectPolicy(projectId: string): Promise<ResolvedPolicy> {
-  const cacheKey = `project-policy:${projectId}`;
-  const cached = getLocalCache<ResolvedPolicy>(cacheKey);
-  if (cached) return cached;
+  const localKey = `project-policy:${projectId}`;
+
+  // 1. Try local in-process cache first (fastest).
+  const localCached = getLocalCache<ResolvedPolicy>(localKey);
+  if (localCached) return localCached;
+
+  // 2. Try Redis (shared across instances).
+  const redisCached = await loadPolicyFromRedis(projectId);
+  if (redisCached) {
+    // Warm the local cache so subsequent requests in this process are instant.
+    setLocalCache(localKey, redisCached, POLICY_LOCAL_TTL_MS);
+    return redisCached;
+  }
+
+  // 3. Fall back to database.
   const row = await db.projectPolicy.findUnique({ where: { projectId } });
   const policy = policyFromRow(row);
-  setLocalCache(cacheKey, policy, 30_000);
+
+  // 4. Warm both caches so the next request (in any process) is fast.
+  setLocalCache(localKey, policy, POLICY_LOCAL_TTL_MS);
+  await savePolicyToRedis(projectId, policy);
+
   return policy;
 }
 
@@ -235,13 +282,17 @@ export function applyPolicy(
   // Mode-aware decision:
   // - MONITOR: cap action at HUMAN_REVIEW unless secrets are present.
   // - STRICT: promote any HUMAN_REVIEW to BLOCK.
+  // - WARN: downgrade BLOCK to ALLOW and replace content with a warning message.
   // - BALANCED: default decision engine.
   let action = decideGuardAction(riskScore, riskTypes, direction);
+  const mode = policy.mode as string;
   if (customMatched) {
     action = "BLOCK";
-  } else if (policy.mode === "MONITOR" && action === "BLOCK" && !riskTypes.includes("SECRET_DETECTED")) {
+  } else if (mode === "WARN" && action === "BLOCK" && !riskTypes.includes("SECRET_DETECTED")) {
+    action = "ALLOW";
+  } else if (mode === "MONITOR" && action === "BLOCK" && !riskTypes.includes("SECRET_DETECTED")) {
     action = "HUMAN_REVIEW";
-  } else if (policy.mode === "STRICT" && (action === "ALLOW_WITH_REDACTION" || action === "REWRITE")) {
+  } else if (mode === "STRICT" && (action === "ALLOW_WITH_REDACTION" || action === "REWRITE")) {
     if (riskScore >= 50) action = "BLOCK";
   }
 
@@ -258,36 +309,52 @@ export function applyPolicy(
 
   const redactedText = redactText(text, filtered);
   const changed = redactedText !== text;
-  const allowed = action === "ALLOW" || action === "ALLOW_WITH_REDACTION" || action === "REWRITE";
-  const safeText = action === "REWRITE"
-    ? rewriteRiskyText(text, filtered)
-    : changed
-      ? redactedText
-      : text;
-
+  const isWarnMode = mode === "WARN";
   const reasonLabels = [...new Set(filtered.map((f) => f.label))].slice(0, 3).join(", ") || "policy decision";
+  const allowed = action === "ALLOW" || action === "ALLOW_WITH_REDACTION" || action === "REWRITE";
+  const safeText = isWarnMode && action === "ALLOW" && riskTypes.length > 0 && !riskTypes.includes("LOW_RISK")
+    ? buildWarnMessage(riskTypes, reasonLabels, policy.customFallbackMessage)
+    : action === "REWRITE"
+      ? rewriteRiskyText(text, filtered)
+      : changed
+        ? redactedText
+        : text;
   let reason: string;
-  if (action === "BLOCK") reason = policy.customFallbackMessage ?? `Blocked: ${reasonLabels}.`;
-  else if (action === "HUMAN_REVIEW") reason = `Held for human review: ${reasonLabels}.`;
-  else if (action === "ALLOW_WITH_REDACTION") reason = `Allowed with redaction: ${reasonLabels}.`;
-  else if (action === "REWRITE") reason = `Risky instruction text was rewritten: ${reasonLabels}.`;
-  else reason = filtered.length ? `Allowed under policy mode ${policy.mode}.` : "No material risk patterns detected.";
+  if (isWarnMode && action === "ALLOW" && riskTypes.length > 0 && !riskTypes.includes("LOW_RISK")) {
+    reason = policy.customFallbackMessage ?? `Warning: ${reasonLabels} detected. Request allowed with warning.`;
+  } else  if (action === "BLOCK") {
+    reason = policy.customFallbackMessage ?? `⚠️ Security Warning: Your message was blocked because it contains potentially harmful content (${reasonLabels}). Please rephrase your request.`;
+  } else if (action === "HUMAN_REVIEW") {
+    reason = `Held for human review: ${reasonLabels}.`;
+  } else if (action === "ALLOW_WITH_REDACTION") {
+    reason = `Allowed with redaction: ${reasonLabels}.`;
+  } else if (action === "REWRITE") {
+    reason = `Risky instruction text was rewritten: ${reasonLabels}.`;
+  } else {
+    reason = filtered.length ? `Allowed under policy mode ${policy.mode}.` : "No material risk patterns detected.";
+  }
 
   return {
     allowed,
-    action,
+    action: isWarnMode && action === "ALLOW" && riskTypes.length > 0 && !riskTypes.includes("LOW_RISK") ? "ALLOW" : action,
     riskScore,
     riskTypes,
     originalText: text,
     redactedText: changed ? redactedText : undefined,
-    safeText: allowed ? safeText : action === "BLOCK" ? policy.customFallbackMessage ?? undefined : undefined,
+    safeText: allowed ? safeText : action === "BLOCK" ? (policy.customFallbackMessage ?? reason) : undefined,
     reason,
     findings: filtered,
     metadata: {
       ...baseline.metadata,
       direction,
       findingCount: filtered.length,
-      policyMode: policy.mode,
+      policyMode: isWarnMode ? "WARN" : policy.mode,
     },
   };
+}
+
+function buildWarnMessage(riskTypes: string[], reasonLabels: string, customFallbackMessage: string | null): string {
+  if (customFallbackMessage) return `⚠️ ${customFallbackMessage}`;
+  const riskLabelList = [...new Set(riskTypes.map((r) => r.replace(/_/g, " ").toLowerCase()))].join(", ");
+  return `⚠️ Security Warning: Your message was flagged as a potential security threat (${riskLabelList}). Please rephrase your request.`;
 }

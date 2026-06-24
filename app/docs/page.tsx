@@ -62,18 +62,16 @@ const faqSchema = {
 };
 
 const quickstartCode = `// 1. Install the SoterAI SDK
-npm install @soter/core
+npm install @soterai/core
 
-// 2. Add these to your .env file (server-side only!)
-SOTER_BASE_URL=https://soterai.publicvm.com
+// 2. Add your API key to .env (server-side only!)
 SOTER_API_KEY=ck_live_your_key_here
 
 // 3. Protect one message before your LLM sees it
-import { Soter } from "@soter/core";
+import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 const result = await soter.protect({ input: userMessage });

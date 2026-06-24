@@ -38,11 +38,10 @@ export default async function MemoryFirewallPage({ searchParams }: { searchParam
           { heading: "Automated quarantine", body: "High-risk memory is automatically quarantined — it is stored but never returned to the agent. Medium-risk records are marked for review." },
           { heading: "Audit and recovery", body: "All quarantine events are logged with findings. You can review, release, or permanently delete quarantined memory from the dashboard." },
         ]}
-        integrationCode={`import { Soter } from "@soter/core";
+        integrationCode={`import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 const check = await soter.checkMemory({

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { CodeBlock, InlineCode, TipBox, WarnBox } from "@/components/ui/CodeBlock";
+import { CodeBlock, InlineCode, WarnBox } from "@/components/ui/CodeBlock";
 import { DocViewTracker } from "@/components/docs/DocViewTracker";
 
 export const metadata: Metadata = {
@@ -26,7 +26,6 @@ const breadcrumbSchema = {
 };
 
 const envCode = `# 📁 .env file - server-side only!
-SOTER_BASE_URL=https://soterai.publicvm.com
 SOTER_API_KEY=ck_live_your_key_here`;
 const inputCurl = `curl -X POST "$SOTER_BASE_URL/api/guard/input" \
   -H "x-api-key: $SOTER_API_KEY" \
@@ -97,7 +96,7 @@ export default function RestApiDocsPage() {
           <CodeBlock language="bash" title="environment variables">{envCode}</CodeBlock>
           <WarnBox>
             <strong>Never expose the API key to clients.</strong> The API key should only exist on your backend server. 
-            Browser apps should call your server, and your server calls SoterAI.
+            The SDK uses a default base URL — no additional configuration needed.
           </WarnBox>
         </section>
 
@@ -140,7 +139,7 @@ export default function RestApiDocsPage() {
                 </tr>
               </thead>
               <tbody className="text-slate-400">
-                <tr className="border-b border-slate-800/50"><td className="px-4 py-2.5 font-mono text-xs">message</td><td className="px-4 py-2.5">string</td><td className="px-4 py-2.5 text-lime">Yes</td><td className="px-4 py-2.5">The user's message text</td></tr>
+                <tr className="border-b border-slate-800/50"><td className="px-4 py-2.5 font-mono text-xs">message</td><td className="px-4 py-2.5">string</td><td className="px-4 py-2.5 text-lime">Yes</td><td className="px-4 py-2.5">The user&apos;s message text</td></tr>
                 <tr className="border-b border-slate-800/50"><td className="px-4 py-2.5 font-mono text-xs">userId</td><td className="px-4 py-2.5">string</td><td className="px-4 py-2.5 text-slate-500">No</td><td className="px-4 py-2.5">Identifier for the user sending the message</td></tr>
                 <tr className="border-b border-slate-800/50"><td className="px-4 py-2.5 font-mono text-xs">sessionId</td><td className="px-4 py-2.5">string</td><td className="px-4 py-2.5 text-slate-500">No</td><td className="px-4 py-2.5">Session identifier for conversation context</td></tr>
               </tbody>
@@ -195,7 +194,7 @@ export default function RestApiDocsPage() {
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Code examples in every language</h2>
           <p className="mt-3 leading-7 text-slate-400">
-            Here's how to call the input guard endpoint from different backend languages:
+            Here&apos;s how to call the input guard endpoint from different backend languages:
           </p>
           <div className="mt-5 space-y-8">
             <div>
@@ -437,7 +436,7 @@ async fn guard_input(message: &str) -> Result<serde_json::Value, Box<dyn std::er
 
         <section className="docs-section">
           <div className="rounded-lg border border-cyan/30 bg-gradient-to-r from-cyan/5 to-transparent p-6">
-            <h2 className="text-xl font-bold">What's next?</h2>
+            <h2 className="text-xl font-bold">What&apos;s next?</h2>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/docs/js" className="button-primary gap-2">
                 JavaScript SDK <ArrowRight size={16} aria-hidden="true" />

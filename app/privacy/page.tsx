@@ -1,3 +1,12 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy Policy | SoterAI",
+  description:
+    "SoterAI privacy commitments: minimized content retention, redacted storage, no storage of raw API keys, SCIM tokens, SAML secrets, or detected secrets.",
+  alternates: { canonical: "/privacy" },
+};
+
 export default function PrivacyPage() {
   return (
     <main className="container-page py-16">

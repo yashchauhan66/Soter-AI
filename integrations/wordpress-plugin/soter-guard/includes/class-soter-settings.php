@@ -1,8 +1,8 @@
 <?php
 /**
- * Settings store for CyberRakshak Guard.
+ * Settings store for SoterAI Guard.
  *
- * @package CyberRakshak_Guard
+ * @package Soter_Guard
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -13,19 +13,19 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Registers and sanitizes plugin settings. The API key is stored in the WP
  * options table and never exposed to the frontend.
  */
-class CyberRakshak_Settings {
+class Soter_Settings {
 
 	/**
 	 * Singleton instance.
 	 *
-	 * @var CyberRakshak_Settings|null
+	 * @var Soter_Settings|null
 	 */
 	private static $instance = null;
 
 	/**
 	 * Get instance.
 	 *
-	 * @return CyberRakshak_Settings
+	 * @return Soter_Settings
 	 */
 	public static function instance() {
 		if ( null === self::$instance ) {
@@ -48,7 +48,7 @@ class CyberRakshak_Settings {
 	 */
 	public static function defaults() {
 		return array(
-			'base_url'      => 'https://api.cyberrakshak.dev',
+			'base_url'      => 'https://api.soterai.publicvm.com',
 			'api_key'       => '',
 			'project_id'    => '',
 			'enable_input'  => 1,
@@ -66,7 +66,7 @@ class CyberRakshak_Settings {
 	 * @return array
 	 */
 	public static function get() {
-		$stored = get_option( CYBERRAKSHAK_GUARD_OPTION, array() );
+		$stored = get_option( SOTER_GUARD_OPTION, array() );
 		if ( ! is_array( $stored ) ) {
 			$stored = array();
 		}
@@ -80,8 +80,8 @@ class CyberRakshak_Settings {
 	 */
 	public function register() {
 		register_setting(
-			'cyberrakshak_guard_group',
-			CYBERRAKSHAK_GUARD_OPTION,
+			'soter_guard_group',
+			SOTER_GUARD_OPTION,
 			array(
 				'type'              => 'array',
 				'sanitize_callback' => array( $this, 'sanitize' ),
@@ -106,7 +106,7 @@ class CyberRakshak_Settings {
 			$sanitized['base_url'] = $base_url;
 		} else {
 			$sanitized['base_url'] = $existing['base_url'];
-			add_settings_error( CYBERRAKSHAK_GUARD_OPTION, 'base_url', __( 'API Base URL must be a valid https:// URL.', 'cyberrakshak-guard' ) );
+			add_settings_error( SOTER_GUARD_OPTION, 'base_url', __( 'API Base URL must be a valid https:// URL.', 'soter-guard' ) );
 		}
 
 		$submitted_key = isset( $input['api_key'] ) ? trim( (string) $input['api_key'] ) : '';

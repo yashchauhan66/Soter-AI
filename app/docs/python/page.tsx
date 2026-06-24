@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { CodeBlock, InlineCode, TipBox, WarnBox } from "@/components/ui/CodeBlock";
+import { CodeBlock, InlineCode, TipBox } from "@/components/ui/CodeBlock";
 import { DocViewTracker } from "@/components/docs/DocViewTracker";
 
 export const metadata: Metadata = {
@@ -30,7 +30,6 @@ pip install soter
 
 # Optional extras
 pip install "soter[fastapi]"    # FastAPI support
-pip install "soter[langchain]"  # LangChain support
 pip install "soter[async]"     # Async support (requires httpx)`;
 const basicCode = `from soter import Soter
 
@@ -60,7 +59,7 @@ result = guard.protect_chat(
 const fullExampleCode = `from soter import Soter, SoterError
 
 # Initialize once - reuse for all requests
-guard = Soter(timeout=10, retries=2)
+guard = Soter(timeout=10, max_retries=2)
 
 def handle_chat_message(user_message: str) -> dict:
     try:
@@ -135,7 +134,6 @@ export default function PythonDocsPage() {
             Set these environment variables on your server:
           </p>
           <CodeBlock language="bash" title=".env">{`SOTER_API_KEY=ck_live_your_key_here
-SOTER_BASE_URL=https://api.your-soter-host.example
 SOTER_PROJECT_ID=                        # optional`}</CodeBlock>
           <p className="mt-3 text-sm text-slate-400">
 
@@ -159,7 +157,7 @@ SOTER_PROJECT_ID=                        # optional`}</CodeBlock>
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 4: Production-ready example</h2>
           <p className="mt-3 leading-7 text-slate-400">
-            Here's a complete example with error handling and proper response formatting:
+            Here&apos;s a complete example with error handling and proper response formatting:
           </p>
           <CodeBlock language="python" title="production handler" showLineNumbers>{fullExampleCode}</CodeBlock>
         </section>
@@ -196,7 +194,7 @@ app.add_api_route(
 from soter.langchain import protect_langchain_chain
 
 guard = Soter()
-safe_chain = protect_langchain_chain(my_chain.invoke, guard)
+safe_chain = protect_langchain_chain(my_chain, guard)
 result = safe_chain.invoke({"input": prompt})`}</CodeBlock>
           <p className="mt-3 text-sm text-slate-400">
             See the <Link href="/docs/rag" className="text-cyan underline">RAG/LangChain guide</Link> for full details.
@@ -210,7 +208,7 @@ result = safe_chain.invoke({"input": prompt})`}</CodeBlock>
           </p>
           <CodeBlock language="python" title="error handling">{errorCode}</CodeBlock>
           <TipBox>
-            Set <InlineCode>retries=2</InlineCode> in the constructor to auto-retry transient 
+            Set <InlineCode>max_retries=2</InlineCode> in the constructor to auto-retry transient
             5xx/network failures with exponential backoff.
           </TipBox>
         </section>
@@ -244,7 +242,7 @@ result = safe_chain.invoke({"input": prompt})`}</CodeBlock>
 
         <section className="docs-section">
           <div className="rounded-lg border border-cyan/30 bg-gradient-to-r from-cyan/5 to-transparent p-6">
-            <h2 className="text-xl font-bold">What's next?</h2>
+            <h2 className="text-xl font-bold">What&apos;s next?</h2>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/docs/fastapi" className="button-primary gap-2">
                 FastAPI Guide <ArrowRight size={16} aria-hidden="true" />

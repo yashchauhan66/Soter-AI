@@ -30,11 +30,10 @@ export default async function BlastRadiusPage({ searchParams }: { searchParams: 
           { heading: "Review score and findings", body: "Each agent receives a blast radius score and risk level. Detailed findings explain the specific risk vectors, and recommendations suggest how to reduce the blast radius." },
           { heading: "Iterate and improve", body: "Use the recommendations to tighten permissions, add approval gates, restrict data access, and reduce the agent's overall blast radius over time." },
         ]}
-        integrationCode={`import { Soter } from "@soter/core";
+        integrationCode={`import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 const result = await soter.simulateBlastRadius({

@@ -7,34 +7,24 @@ block, redact, monitor, and report**. It does not guarantee complete protection.
 ## Install
 
 ```bash
-pip install cyberrakshak-guard
+pip install soter
 # optional extras
-pip install "cyberrakshak-guard[fastapi]"
-pip install "cyberrakshak-guard[langchain]"
+pip install "soter[fastapi]"
+pip install "soter[async]"
 ```
 
-> Note: The PyPI package is currently published as `cyberrakshak-guard`. Users can import via either path:
+> Note: The Python import is `from soter import Soter`.
 
-```python
-# Primary (recommended):
-from soter import Soter
-
-# Legacy (backward compatible):
-from cyberrakshak_guard import CyberRakshakGuard
-```
-
-The core client uses only the standard library (`urllib`). No third-party HTTP
-dependency is required.
+The sync client depends on `requests`; the async client (`soter[async]`) uses
+`httpx`.
 
 ## Environment
 
 ```bash
 SOTER_API_KEY=ck_live_your_key_here     # server-side only
-SOTER_BASE_URL=https://api.your-soter-host.example
 SOTER_PROJECT_ID=                        # optional
+# SOTER_BASE_URL is optional — the SDK includes a default
 ```
-
-Legacy `CYBERRAKSHAK_*` environment variables are also supported as fallbacks.
 
 ## Basic usage
 
@@ -42,7 +32,6 @@ Legacy `CYBERRAKSHAK_*` environment variables are also supported as fallbacks.
 from soter import Soter
 
 # Reads SOTER_API_KEY / SOTER_BASE_URL from environment
-# Falls back to CYBERRAKSHAK_API_KEY / CYBERRAKSHAK_BASE_URL
 guard = Soter()
 
 input_result = guard.input(user_message)
@@ -62,7 +51,6 @@ result = guard.protect_chat(message=user_message, call_llm=call_llm)
 # {"allowed": bool, "safe_response": str, "input_guard": GuardResult, ...}
 ```
 
-> **Legacy import:** `from cyberrakshak_guard import CyberRakshakGuard` also works. `Soter` is an alias for `CyberRakshakGuard`.
 
 `GuardResult` attributes use snake_case (`allowed`, `action`, `risk_score`).
 
@@ -85,7 +73,6 @@ app.add_api_route(
 )
 ```
 
-> **Legacy import:** `from cyberrakshak_guard.fastapi import create_chat_route` also works.
 
 ## LangChain usage
 
@@ -99,7 +86,6 @@ result = safe_chain.invoke({"input": prompt})
 # {"safe_response": str, "blocked": bool, ...}
 ```
 
-> **Legacy import:** `from cyberrakshak_guard.langchain import protect_langchain_chain` also works.
 
 ## RAG usage
 
@@ -120,7 +106,6 @@ if not result.allowed:
 return {"reply": result.safe_response, "sources": result.used_sources}
 ```
 
-> **Legacy import:** `from cyberrakshak_guard import CyberRakshakGuard` also works.
 
 ## Error handling
 
@@ -137,9 +122,8 @@ except SoterError:
     ...  # catch all SDK errors
 ```
 
-> **Legacy names:** `CyberRakshakError`, `CyberRakshakAuthError`, `CyberRakshakRateLimitError`, etc. are also exported from both `soter` and `cyberrakshak_guard` for backward compatibility.
 
-Set `retries=2` to auto-retry transient 5xx/network failures with backoff.
+Set `max_retries=2` to auto-retry transient 5xx/network failures with backoff.
 
 ## Security notes
 

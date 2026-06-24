@@ -132,7 +132,7 @@ The main README organizes the project into capability phases.
 
 ### Phase 2 — SDKs and webhook + public product layer (still working)
 
-- `@soter/core` typed SDK and Next.js helper (`secureChatHandler`)
+- `@soterai/core` typed SDK and Next.js helper (`secureChatHandler`)
 - Webhook endpoints with HMAC signatures + delivery logs
 - Agency dashboard, clients, branding, white-label reporting
 - Public badge, embed script, status page

@@ -71,11 +71,10 @@ export default async function IntentGuardPage({ searchParams }: { searchParams: 
           { heading: "Check every action", body: "Before each tool call or action, the system checks whether the planned action matches the original user intent. Actions that don't match are scored by intent mismatch severity." },
           { heading: "Block or flag mismatches", body: "Actions that significantly deviate from the user's intent are blocked. Minor mismatches are flagged for review. All checks are logged with match scores and decisions." },
         ]}
-        integrationCode={`import { Soter } from "@soter/core";
+        integrationCode={`import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 // Step 1: Extract intent from user's request
