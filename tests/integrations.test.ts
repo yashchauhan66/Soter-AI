@@ -104,7 +104,7 @@ test("Integration packages and WordPress plugin remain Preview and do not leak A
     assert.equal(content.private, true, `${pkg} must remain private (Preview, unpublished)`);
     assert.match(content.version, /^0\./, `${pkg} preview version must remain 0.x`);
   }
-  assert.equal(existsSync("integrations/wordpress-plugin/cyberrakshak-guard.php"), true);
+  assert.equal(existsSync("integrations/wordpress-plugin/soter-guard.php"), true);
   const adminJs = readFileSync("integrations/wordpress-plugin/assets/admin.js", "utf8");
   assert.equal(/api[_-]?key\s*[:=]\s*["'`][^"'`]+/i.test(adminJs), false, "client JS must not embed an API key");
 });

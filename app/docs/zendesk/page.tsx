@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-import { CodeBlock, WarnBox } from "@/components/ui/CodeBlock";
+import { CodeBlock } from "@/components/ui/CodeBlock";
 import { DocViewTracker } from "@/components/docs/DocViewTracker";
 
 export const metadata: Metadata = {
@@ -80,7 +80,7 @@ export default function ZendeskDocsPage() {
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Environment</h2>
           <CodeBlock language="bash" title=".env">{`SOTER_API_KEY=ck_live_your_key_here
-SOTER_BASE_URL=https://your-soter-host.example`}</CodeBlock>
+# SOTER_BASE_URL is optional if using the SDK — a default is included`}</CodeBlock>
         </section>
 
         <section className="docs-section">
@@ -113,7 +113,7 @@ SOTER_BASE_URL=https://your-soter-host.example`}</CodeBlock>
 
         <section className="docs-section">
           <div className="rounded-lg border border-cyan/30 bg-gradient-to-r from-cyan/5 to-transparent p-6">
-            <h2 className="text-xl font-bold">What's next?</h2>
+            <h2 className="text-xl font-bold">What&apos;s next?</h2>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/docs/wordpress" className="button-primary gap-2">
                 WordPress Guide <ArrowRight size={16} aria-hidden="true" />

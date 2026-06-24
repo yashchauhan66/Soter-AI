@@ -8,6 +8,11 @@ export const metadata: Metadata = {
   title: "Adversarial Benchmark | SoterAI",
   description:
     "Independent adversarial benchmark results: 97/97 attack variants detected with F1=1.0000. Prompt injection, jailbreak, PII, secrets, encoding, multilingual, and indirect injection.",
+  alternates: { canonical: "/benchmarks" },
+  openGraph: {
+    title: "SoterAI Adversarial Benchmark | F1=1.0000",
+    description: "97/97 attack variants detected across 8 categories with zero false positives. Garak-style red-team evaluation.",
+  },
 };
 
 interface BenchmarkData {

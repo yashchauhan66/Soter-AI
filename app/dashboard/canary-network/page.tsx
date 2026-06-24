@@ -79,11 +79,10 @@ export default async function CanaryNetworkPage({ searchParams }: { searchParams
           { heading: "Detect and block leaks", body: "When a canary token is detected outside its intended context, the system blocks the leak, records the event with the exact location and content, and alerts your team." },
           { heading: "Investigate and respond", body: "Each leak event includes the session ID, location where the token was found, risk level, and redacted content — enabling rapid investigation of the breach source." },
         ]}
-        integrationCode={`import { Soter } from "@soter/core";
+        integrationCode={`import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 // Register canary tokens in sensitive contexts

@@ -1,2 +1,11 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Changelog | SoterAI Product Updates",
+  description:
+    "SoterAI product changelog and update history. Track new features, security enhancements, and platform improvements.",
+  alternates: { canonical: "/changelog" },
+};
+
 const changes=[{date:"June 14, 2026",title:"Phase 8 launch operations",items:["Beta, agency, and enterprise onboarding","Support and incident operations","Detection feedback review","Billing lifecycle and monitoring","Launch and sales assets"]},{date:"June 14, 2026",title:"Phase 7 production readiness",items:["Enterprise controls","Self-hosted deployment","Performance and beta readiness"]}];
 export default function ChangelogPage(){return <main className="container-page py-16"><p className="eyebrow">Changelog</p><h1 className="mt-2 text-4xl font-bold">Product updates</h1><div className="mt-10 space-y-10">{changes.map(change=><section className="border-l border-slate-700 pl-5" key={change.title}><p className="text-sm text-slate-500">{change.date}</p><h2 className="mt-1 text-xl font-semibold">{change.title}</h2><div className="mt-3 space-y-1 text-sm text-slate-400">{change.items.map(item=><p key={item}>• {item}</p>)}</div></section>)}</div></main>}

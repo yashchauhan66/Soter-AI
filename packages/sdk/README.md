@@ -20,7 +20,6 @@ import { Soter } from "@soterai/core";
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
   projectId: process.env.SOTER_PROJECT_ID,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 const result = await soter.protect({
@@ -36,7 +35,7 @@ if (!result.allowed) {
 }
 ```
 
-Soter reads `SOTER_API_KEY`, `SOTER_PROJECT_ID`, and `SOTER_BASE_URL` when explicit constructor values are omitted. Existing `CYBERGUARD_*`, `CYBERRAKSHAK_*`, and `CYBERSECURITYGUARD_*` variables remain supported as fallbacks.
+Soter reads `SOTER_API_KEY` and `SOTER_PROJECT_ID` when explicit constructor values are omitted. The SDK includes a default `SOTER_BASE_URL` — you only need to set it if you're using a self-hosted server. Existing `CYBERGUARD_*`, `CYBERRAKSHAK_*`, and `CYBERSECURITYGUARD_*` variables remain supported as fallbacks.
 
 For lower-level control, call `soter.guardInput()` before the model and `soter.guardOutput()` before returning its response.
 
@@ -70,7 +69,6 @@ import { secureChatHandler } from "@soterai/core/next";
 
 export const POST = secureChatHandler({
   apiKey: process.env.SOTER_API_KEY!,
-  baseUrl: process.env.SOTER_BASE_URL!,
   callLLM: async ({ safeInput }) => myLLM.chat(safeInput),
 });
 ```
@@ -84,7 +82,6 @@ app.post(
   "/chat",
   soterInputMiddleware({
     apiKey: process.env.SOTER_API_KEY!,
-    baseUrl: process.env.SOTER_BASE_URL!,
   }),
   async (req, res) => {
     const reply = await myLLM.chat(req.body.message);

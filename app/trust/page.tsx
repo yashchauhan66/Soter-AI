@@ -1,3 +1,16 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Trust Center | SoterAI Security",
+  description:
+    "SoterAI trust center: OWASP LLM Top 10 aligned AI security command layer for chatbots, RAG apps, and AI agents. Defense-in-depth risk reduction with transparent limitations.",
+  alternates: { canonical: "/trust" },
+  openGraph: {
+    title: "Trust Center | SoterAI",
+    description: "Transparent AI security with OWASP LLM Top 10 alignment, defense-in-depth controls, and honest scope limitations.",
+  },
+};
+
 export default function TrustPage() {
   return (
     <main className="container-page py-16">

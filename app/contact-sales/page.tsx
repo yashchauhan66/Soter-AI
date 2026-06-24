@@ -1,3 +1,12 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Enterprise Sales | SoterAI",
+  description:
+    "Plan your enterprise AI security deployment with SoterAI. SSO, SCIM, compliance readiness, data retention, SIEM, and self-hosting for high-scale AI workloads.",
+  alternates: { canonical: "/contact-sales" },
+};
+
 export default function ContactSalesPage() {
   return (
     <main className="container-page py-16">

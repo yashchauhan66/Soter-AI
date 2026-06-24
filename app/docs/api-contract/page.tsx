@@ -207,7 +207,7 @@ export default function ApiContractDocsPage() {
 
         <section className="docs-section">
           <div className="rounded-lg border border-cyan/30 bg-gradient-to-r from-cyan/5 to-transparent p-6">
-            <h2 className="text-xl font-bold">What's next?</h2>
+            <h2 className="text-xl font-bold">What&apos;s next?</h2>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/docs/rest-api" className="button-primary gap-2">
                 REST API Guide <ArrowRight size={16} aria-hidden="true" />

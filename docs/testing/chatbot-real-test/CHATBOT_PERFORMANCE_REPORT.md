@@ -4,8 +4,8 @@ This report evaluates guard latencies, mock LLM timings, and overall overhead.
 
 ## Latency Metrics
 
-- **Average Latency for Blocked Prompts**: 4033.9 ms (LLM call skipped)
-- **Average Latency for Safe Prompts**: 7288.7 ms (includes mock LLM execution and double guard overhead)
+- **Average Latency for Blocked Prompts**: 3282.0 ms (LLM call skipped)
+- **Average Latency for Safe Prompts**: 6613.8 ms (includes mock LLM execution and double guard overhead)
 
 ## Observations
 - Blocked prompts return significantly faster because the LLM is not called.

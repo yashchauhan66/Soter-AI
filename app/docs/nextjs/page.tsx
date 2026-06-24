@@ -25,18 +25,16 @@ const breadcrumbSchema = {
   ],
 };
 
-const installCode = `npm install @soter/core`;
+const installCode = `npm install @soterai/core`;
 const envCode = `# 📁 .env.local - server-side only!
 SOTER_API_KEY=ck_live_your_key_here
-SOTER_BASE_URL=https://api.your-soter-host.example
 SOTER_PROJECT_ID=                        # optional`;
 const routeHandler = `// app/api/chat/route.ts
-import { Soter } from "@soter/core";
+import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
   projectId: process.env.SOTER_PROJECT_ID,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 export async function POST(req: Request) {
@@ -61,7 +59,7 @@ export async function POST(req: Request) {
   const llmReply = await callYourLLM(safeMessage);
   
   // 3. Guard model output before user sees it
-  const output = await soter.protect({ output: llmReply });
+  const output = await soter.guardOutput({ text: llmReply });
 
   return Response.json({
     reply: output.safeText ?? output.redactedText ?? llmReply,
@@ -69,24 +67,22 @@ export async function POST(req: Request) {
   });
 }`;
 const oneLiner = `// app/api/chat/route.ts — one-line guarded route
-import { createGuardedRoute } from "@soter/core/next";
+import { createGuardedRoute } from "@soterai/core/next";
 
 export const runtime = "nodejs";
 
 export const POST = createGuardedRoute({
   apiKey: process.env.SOTER_API_KEY!,
-  baseUrl: process.env.SOTER_BASE_URL!,
   callLLM: async (safeInput) => myLLMCall(safeInput),
 });
 
 // The browser sends { message } and receives { reply, blocked }`;
 const serverActionCode = `"use server";
-import { Soter } from "@soter/core";
+import { Soter } from "@soterai/core";
 import { revalidatePath } from "next/cache";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 export async function submitMessage(formData: FormData) {
@@ -191,7 +187,7 @@ export default function NextjsDocsPage() {
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 4: One-line helper (recommended)</h2>
           <p className="mt-3 leading-7 text-slate-400">
-            Use <InlineCode>createGuardedRoute</InlineCode> from <InlineCode>@soter/core/next</InlineCode> 
+            Use <InlineCode>createGuardedRoute</InlineCode> from <InlineCode>@soterai/core/next</InlineCode> 
             for a minimal setup:
           </p>
           <CodeBlock language="typescript" title="app/api/chat/route.ts">{oneLiner}</CodeBlock>
@@ -248,7 +244,7 @@ export default function NextjsDocsPage() {
 
         <section className="docs-section">
           <div className="rounded-lg border border-cyan/30 bg-gradient-to-r from-cyan/5 to-transparent p-6">
-            <h2 className="text-xl font-bold">What's next?</h2>
+            <h2 className="text-xl font-bold">What&apos;s next?</h2>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/docs/js" className="button-primary gap-2">
                 JavaScript SDK <ArrowRight size={16} aria-hidden="true" />

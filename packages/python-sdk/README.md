@@ -30,7 +30,7 @@ The client reads configuration from the environment by default:
 | Variable | Purpose | Default |
 |----------|---------|---------|
 | `SOTER_API_KEY` | Your project API key (server-side only) | required |
-| `SOTER_BASE_URL` | API base URL | `https://api.soter.dev` |
+| `SOTER_BASE_URL` | API base URL (override for self-hosted) | `https://api.soter.dev` (built-in) |
 
 Or pass them explicitly:
 

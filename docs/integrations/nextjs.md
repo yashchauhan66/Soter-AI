@@ -3,18 +3,17 @@
 Install:
 
 ```bash
-npm install @soter/core
+npm install @soterai/core
 ```
 
 Create `app/api/chat/route.ts`:
 
 ```ts
-import { Soter } from "@soter/core";
+import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
   projectId: process.env.SOTER_PROJECT_ID,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 export async function POST(req: Request) {

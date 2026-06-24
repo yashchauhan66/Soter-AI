@@ -7,13 +7,12 @@ Open the dashboard, create a project, and generate a server-side API key.
 ## 2. Install the SDK
 
 ```bash
-npm install @soter/core
+npm install @soterai/core
 ```
 
 ## 3. Add Environment Variables
 
 ```bash
-SOTER_BASE_URL=https://api.your-soter-host.example
 SOTER_API_KEY=ck_test_...
 SOTER_PROJECT_ID=
 ```
@@ -21,12 +20,11 @@ SOTER_PROJECT_ID=
 ## 4. Wrap Your LLM Call
 
 ```ts
-import { Soter } from "@soter/core";
+import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
   projectId: process.env.SOTER_PROJECT_ID,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 const result = await soter.protect({

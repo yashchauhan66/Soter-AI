@@ -1,13 +1,13 @@
 (function () {
-  const buttons = document.querySelectorAll("[data-cyberrakshak-test]");
+  const buttons = document.querySelectorAll("[data-soter-test]");
   buttons.forEach((button) => {
     button.addEventListener("click", () => {
-      const result = document.querySelector("[data-cyberrakshak-test-result]");
+      const result = document.querySelector("[data-soter-test-result]");
       if (result) result.textContent = "Testing...";
       const body = new URLSearchParams();
-      body.set("action", "cyberrakshak_guard_test_connection");
-      body.set("nonce", window.CyberRakshakGuardAdmin?.nonce || "");
-      fetch(window.CyberRakshakGuardAdmin?.ajaxUrl || ajaxurl, {
+      body.set("action", "soter_guard_test_connection");
+      body.set("nonce", window.SoterAIGuardAdmin?.nonce || "");
+      fetch(window.SoterAIGuardAdmin?.ajaxUrl || ajaxurl, {
         method: "POST",
         credentials: "same-origin",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },

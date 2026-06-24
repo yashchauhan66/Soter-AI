@@ -1,2 +1,11 @@
+import type { Metadata } from "next";
 import { PilotRequestForm } from "@/components/ops/PilotRequestForm";
+
+export const metadata: Metadata = {
+  title: "Enterprise Pilot Program | SoterAI",
+  description:
+    "Request a scoped SoterAI enterprise pilot for chatbots, RAG applications, and AI agents. Includes OWASP LLM Top 10 alignment review and SIEM setup.",
+  alternates: { canonical: "/enterprise/pilot" },
+};
+
 export default function EnterprisePilotPage(){return <main className="container-page py-16"><p className="eyebrow">Enterprise pilot</p><h1 className="mt-2 text-4xl font-bold">Define a measurable AI security pilot</h1><p className="mb-10 mt-4 max-w-3xl text-slate-400">A pilot covers scoped integration, authorized defensive validation, OWASP LLM Top 10 alignment review, SIEM setup where required, and a final recommendation. It does not authorize testing third-party systems.</p><div className="max-w-4xl"><PilotRequestForm /></div></main>}

@@ -1,2 +1,11 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "RAG Security Demo | SoterAI",
+  description:
+    "Walk through SoterAI RAG security: upload sandbox, defensive document scan, quarantine review, tenant retrieval, and grounding guard stages.",
+  alternates: { canonical: "/demo/rag" },
+};
+
 const stages=[["1","Upload sandbox","Validate type, size, PDF structure, and OCR limits."],["2","Defensive scan","Detect injection, secrets, and sensitive content before indexing."],["3","Review","Quarantine risky documents and require approval before indexing."],["4","Tenant retrieval","Apply namespace and role ACL filtering."],["5","Grounding guard","Check source coverage and use a no-source fallback when required."]];
 export default function RagDemoPage(){return <main className="container-page py-16"><p className="eyebrow">Sample RAG demo</p><h1 className="mt-2 text-4xl font-bold">A safer document-to-answer path</h1><p className="mt-4 max-w-3xl text-slate-400">This static walkthrough uses no customer documents and sends no content to external ML services.</p><div className="mt-10 divide-y divide-slate-800 border-y border-slate-800">{stages.map(([id,title,copy])=><div className="grid gap-2 py-5 sm:grid-cols-[40px_220px_1fr]" key={id}><span className="text-cyan">{id}</span><h2 className="font-semibold">{title}</h2><p className="text-sm text-slate-400">{copy}</p></div>)}</div></main>}

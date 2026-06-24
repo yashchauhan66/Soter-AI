@@ -1,5 +1,5 @@
-=== CyberRakshak Guard ===
-Contributors: cyberrakshak
+=== SoterAI Guard ===
+Contributors: soter
 Tags: ai, security, chatbot, llm, owasp, prompt-injection, pii
 Requires at least: 5.8
 Tested up to: 6.5
@@ -12,7 +12,7 @@ OWASP LLM Top 10 aligned AI security gateway for chatbots. Guards chatbot input 
 
 == Description ==
 
-CyberRakshak Guard connects your WordPress chatbot to the CyberRakshak Guard API, an OWASP LLM Top 10 aligned AI security gateway. It inspects user input and AI output and can detect, block, redact, monitor, and report risky content such as prompt injection, jailbreaks, PII, and secrets.
+SoterAI Guard connects your WordPress chatbot to the SoterAI Guard API, an OWASP LLM Top 10 aligned AI security gateway. It inspects user input and AI output and can detect, block, redact, monitor, and report risky content such as prompt injection, jailbreaks, PII, and secrets.
 
 Defense-in-depth: this plugin reduces risk. It does not guarantee complete protection and is not a substitute for secure development practices.
 
@@ -21,17 +21,17 @@ Features:
 * Server-side proxy so your API key is never exposed to site visitors
 * Input Guard and Output Guard toggles
 * Test connection button in the admin
-* Shortcode `[cyberrakshak_chatbot_guard]`
-* PHP helpers `cyberrakshak_guard_input()` and `cyberrakshak_guard_output()`
-* REST endpoints `/wp-json/cyberrakshak/v1/guard-input` and `/guard-output`
+* Shortcode `[soter_chatbot_guard]`
+* PHP helpers `soter_guard_input()` and `soter_guard_output()`
+* REST endpoints `/wp-json/soter/v1/guard-input` and `/guard-output`
 * Optional security badge
 * Per-IP rate limiting on the public REST routes
 
 == Installation ==
 
-1. Upload the `cyberrakshak-guard` folder to `/wp-content/plugins/`.
+1. Upload the `soter-guard` folder to `/wp-content/plugins/`.
 2. Activate the plugin through the Plugins screen.
-3. Go to Settings > CyberRakshak Guard.
+3. Go to Settings > SoterAI Guard.
 4. Enter your API Base URL and API Key, then click Test connection.
 
 == Frequently Asked Questions ==

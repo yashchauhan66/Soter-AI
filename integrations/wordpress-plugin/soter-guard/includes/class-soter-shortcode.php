@@ -1,8 +1,8 @@
 <?php
 /**
- * Shortcode for CyberRakshak Guard.
+ * Shortcode for SoterAI Guard.
  *
- * @package CyberRakshak_Guard
+ * @package Soter_Guard
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -10,24 +10,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Provides the [cyberrakshak_chatbot_guard] shortcode. It renders a small
+ * Provides the [soter_chatbot_guard] shortcode. It renders a small
  * client widget that proxies messages through the WordPress REST routes (never
  * calling the Guard API or exposing the API key directly). It also renders an
  * optional security badge. No secret is ever printed to the page.
  */
-class CyberRakshak_Shortcode {
+class Soter_Shortcode {
 
 	/**
 	 * Singleton instance.
 	 *
-	 * @var CyberRakshak_Shortcode|null
+	 * @var Soter_Shortcode|null
 	 */
 	private static $instance = null;
 
 	/**
 	 * Get instance.
 	 *
-	 * @return CyberRakshak_Shortcode
+	 * @return Soter_Shortcode
 	 */
 	public static function instance() {
 		if ( null === self::$instance ) {
@@ -40,8 +40,8 @@ class CyberRakshak_Shortcode {
 	 * Constructor.
 	 */
 	private function __construct() {
-		add_shortcode( 'cyberrakshak_chatbot_guard', array( $this, 'render' ) );
-		add_shortcode( 'cyberrakshak_security_badge', array( $this, 'render_badge' ) );
+		add_shortcode( 'soter_chatbot_guard', array( $this, 'render' ) );
+		add_shortcode( 'soter_security_badge', array( $this, 'render_badge' ) );
 	}
 
 	/**
@@ -57,19 +57,19 @@ class CyberRakshak_Shortcode {
 				'show_badge' => 'true',
 			),
 			$atts,
-			'cyberrakshak_chatbot_guard'
+			'soter_chatbot_guard'
 		);
 
 		$config = array(
-			'inputUrl'  => esc_url_raw( rest_url( 'cyberrakshak/v1/guard-input' ) ),
-			'outputUrl' => esc_url_raw( rest_url( 'cyberrakshak/v1/guard-output' ) ),
+			'inputUrl'  => esc_url_raw( rest_url( 'soter/v1/guard-input' ) ),
+			'outputUrl' => esc_url_raw( rest_url( 'soter/v1/guard-output' ) ),
 			'nonce'     => wp_create_nonce( 'wp_rest' ),
 		);
 
 		ob_start();
 		?>
-		<div class="cyberrakshak-guard-widget" data-cyberrakshak-guard="1">
-			<script type="application/json" class="cyberrakshak-guard-config">
+		<div class="soter-guard-widget" data-soter-guard="1">
+			<script type="application/json" class="soter-guard-config">
 				<?php echo wp_json_encode( $config ); ?>
 			</script>
 			<?php if ( 'true' === $atts['show_badge'] ) : ?>
@@ -95,10 +95,10 @@ class CyberRakshak_Shortcode {
 	 * @return string
 	 */
 	private function badge_markup() {
-		$label   = esc_html__( 'Protected by CyberRakshak Guard', 'cyberrakshak-guard' );
-		$tooltip = esc_attr__( 'OWASP LLM Top 10 aligned. Reduces risk; does not guarantee complete protection.', 'cyberrakshak-guard' );
+		$label   = esc_html__( 'Protected by SoterAI Guard', 'soter-guard' );
+		$tooltip = esc_attr__( 'OWASP LLM Top 10 aligned. Reduces risk; does not guarantee complete protection.', 'soter-guard' );
 		return sprintf(
-			'<span class="cyberrakshak-guard-badge" title="%1$s">%2$s</span>',
+			'<span class="soter-guard-badge" title="%1$s">%2$s</span>',
 			$tooltip,
 			$label
 		);

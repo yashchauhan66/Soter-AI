@@ -1,9 +1,47 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ShieldAlert, ShieldCheck, ShieldOff } from "lucide-react";
-import { loadBadgeStatus } from "@/lib/badge";
+import { loadBadgeStatus, type BadgeStatus } from "@/lib/badge";
 
 export const dynamic = "force-dynamic";
+
+const statusLabels: Record<BadgeStatus, string> = {
+  PROTECTED: "Protected",
+  MONITORING_ACTIVE: "Monitoring Active",
+  ISSUES_FOUND: "Risks Blocked",
+  INACTIVE: "Inactive",
+};
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const status = await loadBadgeStatus(slug);
+  if (!status) {
+    return {
+      title: "Security Status Not Found | SoterAI",
+      description: "The requested security status page could not be found.",
+      robots: { index: false },
+    };
+  }
+
+  const label = statusLabels[status.status] ?? status.status;
+  const title = `${label} — ${slug} | SoterAI Security Status`;
+  const description = status.message;
+
+  return {
+    title,
+    description,
+    alternates: { canonical: `/security-status/${slug}` },
+    openGraph: {
+      title,
+      description,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+  };
+}
 
 export default async function PublicSecurityStatusPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

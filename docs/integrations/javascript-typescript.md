@@ -5,7 +5,7 @@ Soter is a developer-first safety layer for AI chatbots, agents, RAG systems, an
 ## Install
 
 ```bash
-npm install @soter/core
+npm install @soterai/core
 ```
 
 Requires Node.js ≥ 18.18 (built-in `fetch`).
@@ -14,8 +14,8 @@ Requires Node.js ≥ 18.18 (built-in `fetch`).
 
 ```bash
 SOTER_API_KEY=ck_live_your_key_here   # server-side only
-SOTER_BASE_URL=https://api.your-soter-host.example
 SOTER_PROJECT_ID=                      # optional
+# SOTER_BASE_URL is optional — the SDK includes a default
 ```
 
 > **Never** expose the API key in browser/client code. Do not prefix it with
@@ -24,11 +24,10 @@ SOTER_PROJECT_ID=                      # optional
 ## Basic usage
 
 ```ts
-import { Soter } from "@soter/core";
+import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
   projectId: process.env.SOTER_PROJECT_ID,
   timeoutMs: 5000,
 });
@@ -72,19 +71,18 @@ Route handler with the one-line helper:
 
 ```ts
 // app/api/chat/route.ts
-import { createGuardedRoute } from "@soter/core/next";
+import { createGuardedRoute } from "@soterai/core/next";
 
 export const runtime = "nodejs";
 
 export const POST = createGuardedRoute({
   apiKey: process.env.SOTER_API_KEY!,
-  baseUrl: process.env.SOTER_BASE_URL!,
   callLLM: async (safeInput) => myLLMCall(safeInput),
 });
 ```
 
 Lower-level helpers `guardNextInput(client, ...)`, `guardNextOutput(client, ...)`,
-and `secureChatHandler({...})` are also exported from `@soter/core/next`.
+and `secureChatHandler({...})` are also exported from `@soterai/core/next`.
 
 The browser only ever sends `{ message }` and receives `{ reply, blocked }`.
 
@@ -92,7 +90,7 @@ The browser only ever sends `{ message }` and receives `{ reply, blocked }`.
 
 ```ts
 import express from "express";
-import { soterInputMiddleware, soterOutputMiddleware } from "@soter/core/express";
+import { soterInputMiddleware, soterOutputMiddleware } from "@soterai/core/express";
 
 const app = express();
 app.use(express.json());
@@ -119,7 +117,7 @@ import {
   CyberRakshakValidationError,
   CyberRakshakNetworkError,
   CyberRakshakError,
-} from "@soter/core";
+} from "@soterai/core";
 
 try {
   await soter.guardInput({ text });

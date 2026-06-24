@@ -11,7 +11,11 @@ export function decideGuardAction(riskScore: number, riskTypes: RiskType[], dire
   if (has("SECRET_DETECTED")) return direction === "OUTPUT" ? "BLOCK" : "HUMAN_REVIEW";
   if (has("UNSAFE_OUTPUT")) return "HUMAN_REVIEW";
   if (riskScore >= 61) return has("PROMPT_INJECTION") || has("JAILBREAK") ? "BLOCK" : "HUMAN_REVIEW";
-  if (riskTypes.some((type) => sensitiveTypes.includes(type))) return "ALLOW_WITH_REDACTION";
+  // PII in OUTPUT direction is blocked to prevent data leakage in model responses
+  if (riskTypes.some((type) => sensitiveTypes.includes(type))) {
+    if (direction === "OUTPUT" && (has("PII_DETECTED") || has("INDIA_PII_DETECTED"))) return "BLOCK";
+    return "ALLOW_WITH_REDACTION";
+  }
   if (riskScore >= 31) return "REWRITE";
   return "ALLOW";
 }

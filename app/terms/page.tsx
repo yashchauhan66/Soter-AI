@@ -1,3 +1,12 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms of Service | SoterAI",
+  description:
+    "SoterAI terms of service: defense-in-depth software for AI risk reduction. Customers remain responsible for lawful data processing, application security, and human oversight.",
+  alternates: { canonical: "/terms" },
+};
+
 export default function TermsPage() {
   return (
     <main className="container-page py-16">

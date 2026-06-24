@@ -1,4 +1,4 @@
-/* global jQuery, CyberRakshakGuard */
+/* global jQuery, SoterAIGuard */
 ( function ( $ ) {
 	'use strict';
 
@@ -7,12 +7,12 @@
 		const result = $( '#crg-test-result' );
 
 		button.on( 'click', function () {
-			button.prop( 'disabled', true ).text( CyberRakshakGuard.testing );
+			button.prop( 'disabled', true ).text( SoterAIGuard.testing );
 			result.removeClass( 'crg-ok crg-error' ).text( '' );
 
-			$.post( CyberRakshakGuard.ajaxUrl, {
-				action: 'cyberrakshak_test_connection',
-				nonce: CyberRakshakGuard.nonce
+			$.post( SoterAIGuard.ajaxUrl, {
+				action: 'soter_test_connection',
+				nonce: SoterAIGuard.nonce
 			} )
 				.done( function ( response ) {
 					if ( response && response.success ) {
@@ -30,7 +30,7 @@
 					result.addClass( 'crg-error' ).text( message );
 				} )
 				.always( function () {
-					button.prop( 'disabled', false ).text( CyberRakshakGuard.test );
+					button.prop( 'disabled', false ).text( SoterAIGuard.test );
 				} );
 		} );
 	} );

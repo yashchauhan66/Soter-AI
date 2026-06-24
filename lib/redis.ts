@@ -9,6 +9,7 @@ interface RedisLike {
   incrBy(key: string, value: number): Promise<number>;
   expire(key: string, seconds: number): Promise<unknown>;
   get<T = unknown>(key: string): Promise<T | null>;
+  set(key: string, value: string | number, opts?: { ex?: number }): Promise<unknown>;
   ttl(key: string): Promise<number>;
   del(...keys: string[]): Promise<unknown>;
 }
@@ -31,7 +32,7 @@ function cleanEnvValue(value: string | undefined) {
   return cleaned;
 }
 class MemoryRedis implements RedisLike {
-  private store = new Map<string, { value: number; expireAt: number }>();
+  private store = new Map<string, { value: string | number; expireAt: number }>();
   private now() { return Date.now(); }
   private getEntry(key: string) {
     const entry = this.store.get(key);
@@ -48,8 +49,10 @@ class MemoryRedis implements RedisLike {
       this.store.set(key, { value: by, expireAt: 0 });
       return by;
     }
-    entry.value += by;
-    return entry.value;
+    const current = typeof entry.value === 'number' ? entry.value : 0;
+    const next = current + by;
+    entry.value = next;
+    return next;
   }
   async expire(key: string, seconds: number) {
     const entry = this.getEntry(key);
@@ -66,6 +69,12 @@ class MemoryRedis implements RedisLike {
     if (!entry.expireAt) return -1;
     return Math.max(0, Math.floor((entry.expireAt - this.now()) / 1000));
   }
+  async set(key: string, value: string | number, opts?: { ex?: number }) {
+    const expireAt = opts?.ex ? this.now() + opts.ex * 1000 : 0;
+    this.store.set(key, { value, expireAt });
+    return "OK";
+  }
+
   async del(...keys: string[]) {
     for (const key of keys) this.store.delete(key);
     return keys.length;
@@ -98,6 +107,13 @@ class NodeRedis implements RedisLike {
     return (Number.isNaN(numeric) ? value : numeric) as T;
   }
   async ttl(key: string) { return (await this.client()).ttl(key); }
+  async set(key: string, value: string | number, opts?: { ex?: number }) {
+    const client = await this.client();
+    if (opts?.ex) {
+      return client.setEx(key, opts.ex, String(value));
+    }
+    return client.set(key, String(value));
+  }
   async del(...keys: string[]) { return keys.length ? (await this.client()).del(keys) : 0; }
 }
 
@@ -116,6 +132,10 @@ export function getRedis(): RedisLike {
       async incrBy(key, by) { return Number(await client.incrby(key, by)); },
       async expire(key, seconds) { return client.expire(key, seconds); },
       async get<T>(key: string) { return (await client.get(key)) as T | null; },
+      async set(key: string, value: string | number, opts?: { ex?: number }) {
+        if (opts?.ex) return client.setex(key, opts.ex, String(value));
+        return client.set(key, String(value));
+      },
       async ttl(key) { return Number(await client.ttl(key)); },
       async del(...keys: string[]) { return keys.length ? client.del(...keys) : 0; },
     };

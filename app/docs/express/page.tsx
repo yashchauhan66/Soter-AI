@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { CodeBlock, InlineCode, TipBox, WarnBox } from "@/components/ui/CodeBlock";
+import { CodeBlock, InlineCode, TipBox } from "@/components/ui/CodeBlock";
 import { DocViewTracker } from "@/components/docs/DocViewTracker";
 
 export const metadata: Metadata = {
@@ -21,9 +21,9 @@ const breadcrumbSchema = {
   ],
 };
 
-const installCode = `npm install @soter/core express`;
+const installCode = `npm install @soterai/core express`;
 const basicCode = `import express from "express";
-import { Soter } from "@soter/core";
+import { Soter } from "@soterai/core";
 
 const app = express();
 app.use(express.json());
@@ -31,7 +31,6 @@ app.use(express.json());
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
   projectId: process.env.SOTER_PROJECT_ID,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 app.post("/chat", async (req, res) => {
@@ -63,14 +62,12 @@ app.post("/chat", async (req, res) => {
     blocked: !output.allowed,
   });
 });`;
-const middlewareCode = `import { soterInputMiddleware, soterOutputMiddleware } from "@soter/core/express";
+const middlewareCode = `import { soterInputMiddleware, soterOutputMiddleware } from "@soterai/core/express";
 
 app.post(
   "/chat",
   soterInputMiddleware({ apiKey: process.env.SOTER_API_KEY! }),
   async (req, res) => {
-    // req.body.message is now safe/redacted automatically
-    // Blocked requests already got a 403 response
     const reply = await callLLM(req.body.message);
     res.json({ reply });
   },
@@ -106,7 +103,7 @@ export default function ExpressDocsPage() {
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 3: Use middleware (recommended)</h2>
           <p className="mt-3 leading-7 text-slate-400">
-            Use built-in middleware from <InlineCode>@soter/core/express</InlineCode> for cleaner code:
+            Use built-in middleware from <InlineCode>@soterai/core/express</InlineCode> for cleaner code:
           </p>
           <CodeBlock language="typescript" title="middleware">{middlewareCode}</CodeBlock>
           <TipBox>
@@ -123,7 +120,7 @@ export default function ExpressDocsPage() {
 
         <section className="docs-section">
           <div className="rounded-lg border border-cyan/30 bg-gradient-to-r from-cyan/5 to-transparent p-6">
-            <h2 className="text-xl font-bold">What's next?</h2>
+            <h2 className="text-xl font-bold">What&apos;s next?</h2>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/docs/js" className="button-primary gap-2">
                 JavaScript SDK <ArrowRight size={16} aria-hidden="true" />

@@ -88,11 +88,10 @@ export default async function ToolChainPage({ searchParams }: { searchParams: Pr
           { heading: "Detect dangerous chains", body: "Findings are generated when a sequence of individually-safe steps creates a combined risk. Each finding identifies the pattern, the involved steps, and the risk level." },
           { heading: "Block or review", body: "Depending on your policy, dangerous chains can be blocked entirely or flagged for human review. Recommendations suggest how to break the chain." },
         ]}
-        integrationCode={`import { Soter } from "@soter/core";
+        integrationCode={`import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
 });
 
 // Each tool call is tracked as part of a session

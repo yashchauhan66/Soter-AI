@@ -1,4 +1,4 @@
-import { Soter } from "@soter/core";
+import { Soter } from "@soterai/core";
 import dotenv from "dotenv";
 import path from "path";
 

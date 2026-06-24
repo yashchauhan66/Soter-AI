@@ -168,6 +168,17 @@ export const DEFAULT_BLOCKED_FILE_PATTERNS = [
   "*.kdbx",
   "credentials.json",
   "token.json",
+  // Classic OS + cloud credential targets that agents should never read by default.
+  "/etc/shadow",
+  "/etc/passwd",
+  ".aws/credentials",
+  ".git-credentials",
+  ".netrc",
+  "*.ppk",
+  ".kube/config",
+  ".docker/config.json",
+  ".npmrc",
+  ".pypirc",
 ] as const;
 
 export const DEFAULT_DANGEROUS_TERMINAL_PATTERNS = [
@@ -658,7 +669,19 @@ function baseAgentRiskScore(tool: string, action: string, destination: AgentDest
   if (/filesystem\.write|write/.test(combined)) score = Math.max(score, 65);
   if (/filesystem\.delete|delete|remove|drop|truncate|purge/.test(combined)) score = Math.max(score, 90);
   if (/terminal\.run|shell|command|exec/.test(combined)) score = Math.max(score, 85);
-  if (/payment|checkout|charge|refund|bank|upi/.test(combined)) score = Math.max(score, 95);
+  // Financial operations are CRITICAL, but only when the agent is actually
+  // performing a transaction. Bare nouns like "refund"/"charge"/"bank"/"payment"
+  // appear constantly in benign read-only support queries ("search refund policy",
+  // "list charges", "read bank statement"), so they must not escalate a lookup.
+  const readOnlyAction = /\b(?:read|list|search|summari[sz]e|open|get|fetch|view|show|find|look\s*up|lookup|describe)\b/.test(action);
+  // Unambiguous transaction signals escalate regardless of phrasing.
+  if (/\b(?:checkout|upi|payout|wire\s*transfer|bank\s*transfer)\b/.test(combined) || /\bpayments?\.(?:charge|capture|transfer|payout|refund)\b/.test(combined)) {
+    score = Math.max(score, 95);
+  }
+  // Ambiguous financial terms escalate only for non-read-only (mutating) actions.
+  if (!readOnlyAction && /\b(?:payment|refund|charge|bank|pay|transfer|invoice|wire|disburse)\b/.test(combined)) {
+    score = Math.max(score, 95);
+  }
   if (/api\.call|http|post|external/.test(combined) && destination === "external") score = Math.max(score, 70);
   if (/clipboard\.write/.test(combined)) score = Math.max(score, 70);
   if (/calendar\.create/.test(combined)) score = Math.max(score, 50);

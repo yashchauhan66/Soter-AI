@@ -1,3 +1,12 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Case Studies | SoterAI AI Security",
+  description:
+    "SoterAI customer case studies showing AI security deployment for chatbots, RAG apps, and autonomous agents with measurable risk reduction.",
+  alternates: { canonical: "/case-studies" },
+};
+
 export default function CaseStudiesPage() {
   return (
     <main className="container-page py-16">

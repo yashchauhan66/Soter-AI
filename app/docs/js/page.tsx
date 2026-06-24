@@ -7,11 +7,11 @@ import { DocViewTracker } from "@/components/docs/DocViewTracker";
 export const metadata: Metadata = {
   title: "SoterAI JavaScript/TypeScript SDK Guide - Protect Your AI Chatbot",
   description:
-    "Complete JavaScript/TypeScript SDK guide for SoterAI. Learn to install, configure, and use the @soter/core package to protect Node.js, Deno, and Bun applications from prompt injection and PII leaks. Includes Next.js and Express.js examples.",
+    "Complete JavaScript/TypeScript SDK guide for SoterAI. Learn to install, configure, and use the @soterai/core package to protect Node.js, Deno, and Bun applications from prompt injection and PII leaks. Includes Next.js and Express.js examples.",
   alternates: { canonical: "/docs/js" },
   openGraph: {
     title: "SoterAI JavaScript/TypeScript SDK Guide",
-    description: "Protect your Node.js, Deno, or Bun applications from AI security threats with the @soter/core package.",
+    description: "Protect your Node.js, Deno, or Bun applications from AI security threats with the @soterai/core package.",
   },
 };
 
@@ -25,17 +25,15 @@ const breadcrumbSchema = {
   ],
 };
 
-const installCode = `npm install @soter/core`;
+const installCode = `npm install @soterai/core`;
 const envCode = `# 📁 .env file - server-side only!
 SOTER_API_KEY=ck_live_your_key_here
-SOTER_BASE_URL=https://api.your-soter-host.example
 SOTER_PROJECT_ID=                        # optional - for multi-project setups`;
-const basicCode = `import { Soter } from "@soter/core";
+const basicCode = `import { Soter } from "@soterai/core";
 
 // Initialize once - reuse for all requests
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
   projectId: process.env.SOTER_PROJECT_ID,  // optional
   timeoutMs: 5000,  // 5 second timeout
 });
@@ -65,11 +63,10 @@ const { reply, blocked } = await soter.guardConversation({
 
 // reply = safe/redacted LLM response
 // blocked = true if either guard blocked`;
-const fullExampleCode = `import { Soter } from "@soter/core";
+const fullExampleCode = `import { Soter } from "@soterai/core";
 
 const soter = new Soter({
   apiKey: process.env.SOTER_API_KEY,
-  baseUrl: process.env.SOTER_BASE_URL,
   projectId: process.env.SOTER_PROJECT_ID,
   timeoutMs: 5000,
   retries: 2,  // auto-retry on transient errors
@@ -111,7 +108,7 @@ const errorCode = `import {
   SoterRateLimitError,
   SoterValidationError,
   SoterNetworkError,
-} from "@soter/core";
+} from "@soterai/core";
 
 try {
   await soter.guardInput({ text });
@@ -143,7 +140,7 @@ export default function JSDocsPage() {
         <p className="eyebrow mt-6">Language guide</p>
         <h1 className="mt-3 text-4xl font-bold">JavaScript / TypeScript SDK</h1>
         <p className="mt-5 text-lg leading-8 text-slate-400">
-          The <InlineCode>@soter/core</InlineCode> package is the primary SDK for Node.js (≥18.18), 
+          The <InlineCode>@soterai/core</InlineCode> package is the primary SDK for Node.js (≥18.18), 
           Deno, Bun, and any JavaScript backend. It provides input/output guarding, 
           conversation protection, and framework-specific helpers.
         </p>
@@ -156,8 +153,8 @@ export default function JSDocsPage() {
           <CodeBlock language="bash" title="npm install">{installCode}</CodeBlock>
           <TipBox>
             <strong>Using Deno or Bun?</strong> You can also install via 
-            <InlineCode>deno add npm:@soter/core</InlineCode> or 
-            <InlineCode>bun add @soter/core</InlineCode>.
+            <InlineCode>deno add npm:@soterai/core</InlineCode> or 
+            <InlineCode>bun add @soterai/core</InlineCode>.
           </TipBox>
         </section>
 
@@ -197,7 +194,7 @@ export default function JSDocsPage() {
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 4: Complete example with error handling</h2>
           <p className="mt-3 leading-7 text-slate-400">
-            Here's a production-ready example that guards both input and output, handles errors, 
+            Here&apos;s a production-ready example that guards both input and output, handles errors,
             and decides whether to fail open or fail closed:
           </p>
           <CodeBlock language="typescript" title="production-ready handler" showLineNumbers>{fullExampleCode}</CodeBlock>
@@ -208,16 +205,15 @@ export default function JSDocsPage() {
           
           <h3 className="mt-8 text-xl font-bold">Next.js</h3>
           <p className="mt-3 leading-7 text-slate-400">
-            Use the <InlineCode>createGuardedRoute</InlineCode> helper from <InlineCode>@soter/core/next</InlineCode>:
+            Use the <InlineCode>createGuardedRoute</InlineCode> helper from <InlineCode>@soterai/core/next</InlineCode>:
           </p>
           <CodeBlock language="typescript" title="app/api/chat/route.ts">{`// One-line route handler
-import { createGuardedRoute } from "@soter/core/next";
+import { createGuardedRoute } from "@soterai/core/next";
 
 export const runtime = "nodejs";
 
 export const POST = createGuardedRoute({
   apiKey: process.env.SOTER_API_KEY!,
-  baseUrl: process.env.SOTER_BASE_URL!,
   callLLM: async (safeInput) => myLLMCall(safeInput),
 });`}</CodeBlock>
           <p className="mt-3 text-sm text-slate-400">
@@ -228,14 +224,13 @@ export const POST = createGuardedRoute({
           <p className="mt-3 leading-7 text-slate-400">
             Use <InlineCode>soterInputMiddleware</InlineCode> and <InlineCode>soterOutputMiddleware</InlineCode>:
           </p>
-          <CodeBlock language="typescript" title="Express middleware">{`import { soterInputMiddleware, soterOutputMiddleware } from "@soter/core/express";
+          <CodeBlock language="typescript" title="Express middleware">{`import { soterInputMiddleware, soterOutputMiddleware } from "@soterai/core/express";
 
 app.post(
   "/chat",
   soterInputMiddleware({ apiKey: process.env.SOTER_API_KEY! }),
   async (req, res) => {
     // req.body.message is now safe/redacted
-    // Blocked requests automatically get a 403 response
     const reply = await callLLM(req.body.message);
     res.json({ reply });
   },
@@ -283,7 +278,7 @@ app.post(
 
         <section className="docs-section">
           <div className="rounded-lg border border-cyan/30 bg-gradient-to-r from-cyan/5 to-transparent p-6">
-            <h2 className="text-xl font-bold">What's next?</h2>
+            <h2 className="text-xl font-bold">What&apos;s next?</h2>
             <div className="mt-6 flex flex-wrap gap-3">
               <Link href="/docs/python" className="button-primary gap-2">
                 Python Guide <ArrowRight size={16} aria-hidden="true" />
