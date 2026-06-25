@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ArrowRight, BarChart3, CheckCircle2, Gauge, ShieldCheck, Zap } from "lucide-react";
 import { FAQ } from "@/components/marketing/FAQ";
 import { Features } from "@/components/marketing/Features";
+import { DemoVideo } from "@/components/marketing/DemoVideo";
 import { Hero } from "@/components/marketing/Hero";
 import { HowItWorks } from "@/components/marketing/HowItWorks";
 import { Pricing } from "@/components/marketing/Pricing";
@@ -313,6 +314,28 @@ export default function Home() {
 
       <HowItWorks />
       <Features />
+
+      {/* ── Demo Video Section ── */}
+      <section className="border-y border-slate-800 bg-slate-950/40 py-20">
+        <div className="container-page">
+          <p className="eyebrow text-center">See it in action</p>
+          <h2 className="mt-3 text-center text-3xl font-bold sm:text-4xl">
+            Watch SoterAI <span className="text-cyan">block attacks</span> in real time
+          </h2>
+          <p className="mx-auto mt-4 max-w-2xl text-center text-slate-400">
+            An interactive walkthrough showing prompt injection blocking, India PII redaction,
+            secret detection, jailbreak prevention, and our F1=1.0000 benchmark in action.
+          </p>
+          <div className="mx-auto mt-10 max-w-5xl">
+            <DemoVideo />
+          </div>
+          <div className="mt-10 text-center">
+            <Link href="/demo" className="button-secondary inline-flex items-center gap-2">
+              View all demos <ArrowRight size={18} aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+      </section>
 
 
       <section className="border-y border-slate-800 bg-slate-950/40 py-20">

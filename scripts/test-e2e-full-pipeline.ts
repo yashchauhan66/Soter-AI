@@ -16,7 +16,6 @@
 import { analyzeText } from "../lib/guard/analyze";
 import dotenv from "dotenv";
 import path from "path";
-import fs from "fs";
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
@@ -188,7 +187,7 @@ async function run() {
       };
       results.push(result);
 
-      const groqLabel = sentToLlama
+      const _groqLabel = sentToLlama
         ? groqResponse
           ? `🤖 ${groqResponse.replace(/\n/g, " ").slice(0, 80)}...`
           : "🤖 (empty response)"
@@ -221,7 +220,7 @@ async function run() {
   const groqCalls = results.filter((r) => r.groqResponse !== null && !r.groqResponse.startsWith("[GROQ ERROR")).length;
   const blockedCorrectly = results.filter((r) => r.expectBlock && r.guardAction === "BLOCK").length;
   const allowedCorrectly = results.filter((r) => !r.expectBlock && !["BLOCK", "HUMAN_REVIEW"].includes(r.guardAction)).length;
-  const avgGuardLatency = Math.round(results.reduce((s, r) => s + r.riskScore, 0) > 0 ? 1 : 0); // just a placeholder
+  const _avgGuardLatency = Math.round(results.reduce((s, r) => s + r.riskScore, 0) > 0 ? 1 : 0); // just a placeholder
   const avgGroqLat = results.filter((r) => r.groqLatencyMs > 0).reduce((s, r) => s + r.groqLatencyMs, 0) / Math.max(1, results.filter((r) => r.groqLatencyMs > 0).length);
 
   console.log();
@@ -283,7 +282,7 @@ async function run() {
   ).slice(0, 5); // 5 HTTP tests
 
   let httpPassed = 0;
-  let httpFailed = 0;
+  let _httpFailed = 0;
   for (const tc of httpCases) {
     process.stdout.write(`[HTTP] ${tc.category}: ${tc.label}... `);
     try {
@@ -296,10 +295,10 @@ async function run() {
       const action = data.action ?? "UNKNOWN";
       const isBlocked = action === "BLOCK" || action === "HUMAN_REVIEW";
       const pass = tc.expectBlock ? isBlocked : !isBlocked;
-      if (pass) httpPassed++; else httpFailed++;
+      if (pass) httpPassed++; else _httpFailed++;
       process.stdout.write(`${pass ? "✅" : "❌"} (${action}, HTTP ${res.status})\n`);
     } catch (err: any) {
-      httpFailed++;
+      _httpFailed++;
       process.stdout.write(`❌ (HTTP error: ${err.message?.slice(0, 60)})\n`);
     }
     await sleep(1500); // Respect public analyze 20 RPM limit

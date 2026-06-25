@@ -30,8 +30,8 @@ Thank you for your interest in contributing to Soter! This guide will help you g
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/your-org/soter.git
-cd soter
+git clone https://github.com/yashchauhan66/Ai-Security-Guard.git
+cd Ai-Security-Guard
 
 # Install app dependencies
 npm install
@@ -135,6 +135,21 @@ twine upload dist/*
 4. Update documentation if needed
 5. Open a PR with a clear description
 
+## Contributor License Agreement (CLA)
+
+By opening a pull request you agree to the [Contributor License Agreement](CLA.md).
+Add this line to your PR description:
+
+```
+I have read and agree to the Contributor License Agreement (CLA.md).
+```
+
 ## License
 
-MIT
+SoterAI is **open core** — see [LICENSING.md](LICENSING.md):
+
+- Core product & server: **Business Source License 1.1** ([LICENSE](LICENSE))
+- Client SDKs & middleware (`packages/*`): **Apache-2.0**
+- Enterprise modules: **Commercial, all rights reserved**
+
+Copyright © 2026 Yash Chauhan.

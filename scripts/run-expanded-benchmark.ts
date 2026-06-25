@@ -11,7 +11,7 @@
  */
 
 import { analyzeText } from "../lib/guard/analyze";
-import type { BenchResult, BenchSummary } from "../examples/real-chatbot-test/src/benchmark-expanded";
+import type { BenchResult } from "../examples/real-chatbot-test/src/benchmark-expanded";
 import { BENCHMARK_CASES, BENCHMARK_CATEGORIES, summarizeResults } from "../examples/real-chatbot-test/src/benchmark-expanded";
 import fs from "fs";
 import path from "path";
