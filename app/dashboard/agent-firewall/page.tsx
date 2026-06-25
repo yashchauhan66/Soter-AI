@@ -60,7 +60,7 @@ export default async function AgentFirewallPage({
           <p className="eyebrow">Agent firewall</p>
           <h1 className="mt-2 text-3xl font-bold">Computer-use guardrails</h1>
           <p className="mt-3 max-w-3xl text-slate-400">
-            Every browser, file, email, terminal, MCP, API, and RAG tool action is checked before execution and logged with redacted-only content.
+            Every browser, file, email, terminal, MCP, API, and RAG tool action is checked before execution and logged with redacted-only content. (Note: this is preview tracking, not runtime agent enforcement yet.)
           </p>
         </div>
         <ProjectSwitcher projects={projects} selectedId={project.id} />

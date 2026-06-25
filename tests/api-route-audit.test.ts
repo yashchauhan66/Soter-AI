@@ -43,6 +43,7 @@ const publicRoutes = new Map<string, RegExp[]>([
   ["/api/ops/contact", [/enforcePublicRateLimit|recordProductEvent|contact/i, /schema\.parse|z\.object/]],
   ["/api/ops/pilot", [/enforcePublicRateLimit/, /schema\.parse/]],
   ["/api/docs/track", [/request\.json\(\)/, /recordProductEvent/]],
+  ["/api/ai-assistant", [/enforcePublicRateLimit/]],
 ]);
 
 const authPatterns = [
