@@ -39,7 +39,9 @@ export async function GET(request: Request) {
     return scimError((error as Error).message, error instanceof ScimError ? error.status : 401);
   }
   const url = new URL(request.url);
-  const filter = url.searchParams.get("filter") ?? "";
+  const rawFilter = url.searchParams.get("filter") ?? "";
+  // SECURITY (H-3): cap filter length before regex matching to prevent ReDoS.
+  const filter = rawFilter.slice(0, 500);
   const startIndex = Math.max(1, Number(url.searchParams.get("startIndex") ?? "1"));
   const count = Math.min(200, Math.max(0, Number(url.searchParams.get("count") ?? "100")));
 

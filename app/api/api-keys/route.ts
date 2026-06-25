@@ -1,6 +1,6 @@
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { generateApiKey } from "@/lib/apiKey";
-import { requireProjectPermission, getActiveOrganization } from "@/lib/auth/guards";
+import { requireProjectPermission, getActiveOrganization, requireUser } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { apiKeySchema } from "@/lib/validations";
 import { z } from "zod";
@@ -9,6 +9,10 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
+    // requireUser() provides defense-in-depth — the session check also happens
+    // in middleware, but an explicit guard here ensures this can never be exposed
+    // accidentally if the route is ever moved or the middleware config changes.
+    await requireUser();
     const active = await getActiveOrganization();
     if (!active) return jsonResponse([]);
     const keys = await db.apiKey.findMany({
@@ -45,10 +49,41 @@ export async function POST(request: Request) {
 
 export async function PATCH(request: Request) {
   try {
-    const body = z.object({ id: z.string(), isActive: z.boolean() }).parse(await readJson(request));
-    const target = await db.apiKey.findUnique({ where: { id: body.id } });
-    if (!target) return jsonResponse({ error: true, message: "API key not found." }, { status: 404 });
+    const body = z.object({ id: z.string().min(1), isActive: z.boolean() }).parse(await readJson(request));
     const permission = body.isActive ? "api_key:create" : "api_key:revoke";
+
+    // SECURITY (H-2 IDOR fix): do a single permission-scoped lookup.
+    // A universal findUnique before auth leaks whether a UUID is valid (404 vs 403).
+    // Here we resolve the session user's organizations first, then query only
+    // within those orgs — non-existent and unauthorized IDs both yield 404.
+    const user = await requireUser();
+    const target = await db.apiKey.findFirst({
+      where: {
+        id: body.id,
+        project: {
+          organization: {
+            members: { some: { userId: user.id } },
+          },
+        },
+      },
+      select: { id: true, projectId: true },
+    });
+    // Also allow platform admins to act on any key.
+    if (!target) {
+      if (user.isAdmin) {
+        // Admin path: check the key exists at all.
+        const adminTarget = await db.apiKey.findUnique({ where: { id: body.id }, select: { id: true, projectId: true } });
+        if (!adminTarget) return jsonResponse({ error: true, message: "API key not found." }, { status: 404 });
+        await requireProjectPermission(adminTarget.projectId, permission);
+        const key = await db.apiKey.update({
+          where: { id: body.id },
+          data: { isActive: body.isActive },
+          select: { id: true, name: true, prefix: true, projectId: true, isActive: true, lastUsedAt: true, createdAt: true },
+        });
+        return jsonResponse(key);
+      }
+      return jsonResponse({ error: true, message: "API key not found." }, { status: 404 });
+    }
     await requireProjectPermission(target.projectId, permission);
     const key = await db.apiKey.update({
       where: { id: body.id },
@@ -58,3 +93,4 @@ export async function PATCH(request: Request) {
     return jsonResponse(key);
   } catch (error) { return apiError(error, "API key could not be updated."); }
 }
+

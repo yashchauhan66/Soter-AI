@@ -17,6 +17,10 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     userId?: string;
+    email?: string;
     isAdmin?: boolean;
+    // Epoch ms of the last database revalidation; throttles the subject-exists
+    // check in the Node jwt callback (see auth.ts).
+    checkedAt?: number;
   }
 }

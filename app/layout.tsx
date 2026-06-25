@@ -5,6 +5,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 import { HeaderNav } from "@/components/auth/HeaderNav";
+import { AiAssistant } from "@/components/dashboard/AiAssistant";
 import "./globals.css";
 
 const inter = Inter({
@@ -182,6 +183,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             </div>
           </footer>
         </AuthProvider>
+        <AiAssistant />
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ""} />
       </body>
     </html>

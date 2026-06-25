@@ -16,8 +16,52 @@ const samlExchangeSchema = z.object({
   token: z.string().min(32).max(200),
 });
 
+// How often a live JWT re-checks that its subject still exists in the database.
+// A re-seeded / restored / pruned database leaves a cryptographically valid JWT
+// whose user row is gone ("zombie session"): the header trusts the cookie and
+// shows the user signed in, while DB-backed pages render the sign-in form. We
+// close that gap by revalidating the subject and invalidating the token when it
+// has disappeared. Throttled so routine session polls don't hit the DB.
+const SESSION_REVALIDATE_MS = 60_000;
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
+  callbacks: {
+    ...authConfig.callbacks,
+    // Node-runtime JWT callback with database revalidation. This overrides the
+    // edge-safe callback in auth.config.ts (which middleware keeps using, since
+    // Prisma cannot run on the edge). It backs auth(), /api/auth/session, and
+    // every server guard, so invalidating here logs a zombie session out of the
+    // header, the sign-in page, and the dashboard simultaneously.
+    async jwt({ token, user }) {
+      // Initial sign-in: persist identity and stamp the validation time.
+      if (user) {
+        token.userId = user.id;
+        token.email = user.email ?? token.email;
+        token.isAdmin = (user as { isAdmin?: boolean }).isAdmin ?? false;
+        token.checkedAt = Date.now();
+        return token;
+      }
+      // Defensive: a token without a subject is not a usable session.
+      if (!token.userId) return null;
+      // Throttle: only re-hit the DB once per interval, not on every poll.
+      const lastChecked = typeof token.checkedAt === "number" ? token.checkedAt : 0;
+      if (Date.now() - lastChecked < SESSION_REVALIDATE_MS) return token;
+      // Revalidate the subject still exists (and refresh role/email drift).
+      const dbUser = await db.user.findUnique({
+        where: { id: token.userId as string },
+        select: { id: true, email: true, isAdmin: true },
+      });
+      // Subject is gone (DB re-seeded/restored/pruned) → invalidate the session.
+      // Returning null clears the cookie everywhere, so the UI can never show a
+      // "signed in but no account" state again.
+      if (!dbUser) return null;
+      token.email = dbUser.email;
+      token.isAdmin = dbUser.isAdmin;
+      token.checkedAt = Date.now();
+      return token;
+    },
+  },
   providers: [
     Credentials({
       name: "Email and password",

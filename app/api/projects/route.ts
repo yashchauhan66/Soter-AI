@@ -1,5 +1,5 @@
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
-import { getActiveOrganization, requirePermission } from "@/lib/auth/guards";
+import { getActiveOrganization, requirePermission, requireUser } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { projectSchema } from "@/lib/validations";
 
@@ -7,6 +7,8 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
+    // Defense-in-depth: explicit auth check in addition to middleware protection.
+    await requireUser();
     const active = await getActiveOrganization();
     if (!active) return jsonResponse([]);
     const projects = await db.project.findMany({

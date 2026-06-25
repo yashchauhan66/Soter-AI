@@ -48,6 +48,8 @@ export const PUBLIC_API_PREFIXES = [
   // SAML SSO — IdP redirect (acs), SP metadata, SP-initiated login
   // all arrive without a session cookie.
   "/api/sso/saml",
+  // AI assistant (knowledge-base, no sensitive data)
+  "/api/ai-assistant",
   // Public readiness/health check.
   "/api/ready",
   // Public lead-generation forms (rate-limited in handler).

@@ -6,13 +6,13 @@ import { createRateLimitResult } from "@/lib/guard/rateLimitResult";
 import { checkRedisRateLimit } from "@/lib/rateLimit";
 import { analyzeSchema } from "@/lib/validations";
 import { recordRequestMetric } from "@/lib/ops/monitoring";
+import { trustedClientIp } from "@/lib/publicRateLimit";
 
 export async function POST(request: Request) {
   const startedAt = Date.now();
   let failed = false;
   try {
-    const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-    const identifier = forwarded || request.headers.get("x-real-ip") || "local-public";
+    const identifier = trustedClientIp(request) || "local-public";
     const rateLimit = await checkRedisRateLimit(`public:${identifier}`, PUBLIC_ANALYZE_RPM);
     if (!rateLimit.allowed) {
       const result = createRateLimitResult("Public playground rate limit was exceeded.");

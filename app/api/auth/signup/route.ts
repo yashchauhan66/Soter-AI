@@ -176,7 +176,7 @@ export async function POST(request: Request) {
         deliveryMode,
         token: created.token,
         emailSent,
-        extra: { userId: created.userId, organizationId: created.organizationId },
+        // SECURITY (M-3): do not expose internal DB IDs to unauthenticated callers.
       }),
       { status: 201 },
     );

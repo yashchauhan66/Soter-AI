@@ -108,7 +108,7 @@ const groups = [
   },
 ];
 
-export function DashboardSidebar() {
+export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
   const pathname = usePathname();
   const isActive = (href: string) => href === "/dashboard" ? pathname === href : pathname?.startsWith(href);
 
@@ -127,6 +127,7 @@ export function DashboardSidebar() {
                 <li key={href}>
                   <Link
                     href={href}
+                    onClick={onClose}
                     className={`flex items-center gap-3 rounded-xl px-3 py-2 text-sm transition ${
                       isActive(href) ? "bg-cyan/10 text-cyan" : "text-slate-400 hover:bg-slate-800 hover:text-white"
                     }`}
