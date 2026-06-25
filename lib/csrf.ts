@@ -26,6 +26,7 @@ const CSRF_EXEMPT_PREFIXES = [
   "/api/billing/webhook", // external webhook callers (Stripe etc.)
   "/api/scim/v2/",        // Bearer-token authenticated (SCIM provisioning)
   "/api/sso/saml/acs",    // SAML IdP sends form POST without Origin
+  "/api/ai-assistant",    // public endpoint (rate limited per IP, no session required)
 ];
 
 function getCanonicalOrigin(): string {
