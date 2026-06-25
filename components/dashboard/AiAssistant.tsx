@@ -644,8 +644,14 @@ export function AiAssistant() {
   });
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setIsMounted(true);
+  }, []);
 
 
   // Persist conversation whenever it changes.
@@ -762,6 +768,8 @@ export function AiAssistant() {
   }
 
   const activeActions = pageContext.actions;
+
+  if (!isMounted) return null;
 
   return (
     <>
