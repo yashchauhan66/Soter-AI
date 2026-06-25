@@ -6,6 +6,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 import { HeaderNav } from "@/components/auth/HeaderNav";
 import { AiAssistant } from "@/components/dashboard/AiAssistant";
+import { PHLaunchBanner } from "@/components/marketing/PHLaunchBanner";
 import "./globals.css";
 
 const inter = Inter({
@@ -125,6 +126,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           Skip to main content
         </a>
         <AuthProvider>
+          <PHLaunchBanner />
           <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-ink/90 backdrop-blur-xl">
             <div className="container-page flex h-16 items-center justify-between">
               <Link href="/" className="flex min-w-0 items-center font-semibold tracking-wide">
