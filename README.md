@@ -3,7 +3,7 @@
   
   # SoterAI — AI Security Command Layer
   
-  **Secure your AI agents, chatbots, and RAG applications from prompt injection, data leakage, and agent abuse.**
+  **Secure your AI agents, chatbots, and RAG applications from prompt injection, data leakage, and agent abuse using defense-in-depth.**
   
   <p align="center">
     <a href="https://soterai.publicvm.com"><img src="https://img.shields.io/badge/Live%20Demo-soterai.publicvm.com-31d7c8?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" /></a>
