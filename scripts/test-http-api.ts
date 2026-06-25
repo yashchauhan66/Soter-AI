@@ -77,7 +77,7 @@ async function guardViaHttp(
   const latencyMs = Date.now() - start;
 
   if (!res.ok) {
-    const body = await res.text().catch(() => "(no body)");
+    const _body = await res.text().catch(() => "(no body)");
     return {
       text,
       action: `HTTP_${res.status}`,

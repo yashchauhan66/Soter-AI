@@ -31,6 +31,8 @@ export const PUBLIC_ROUTES = [
   "/reset-password",
   "/security-status",
   "/badge.js",
+  "/scanner",
+  "/case-studies",
 ];
 
 export const PUBLIC_API_PREFIXES = [
@@ -55,6 +57,7 @@ export const PUBLIC_API_PREFIXES = [
   // Public lead-generation forms (rate-limited in handler).
   "/api/ops/contact",
   "/api/ops/pilot",
+  "/api/scanner",
 ];
 
 export const authConfig = {

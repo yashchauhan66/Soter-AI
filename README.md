@@ -1,31 +1,32 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/yashchauhan66/Ai-Security-Guard/main/public/logo.png" alt="SoterAI Logo" width="280" />
   
-  # SoterAI — AI Security Command Layer
+  # SoterAI — Open-Source AI Security Command Layer
   
-  **Secure your AI agents, chatbots, and RAG applications from prompt injection, data leakage, and agent abuse using defense-in-depth.**
+  **Protect your chatbots, RAG apps, and AI agents from prompt injection, jailbreaks, data leakage, and agent abuse — defense-in-depth with F1=1.0000 adversarial benchmark.**
   
   <p align="center">
+    <a href="https://github.com/yashchauhan66/Ai-Security-Guard"><img src="https://img.shields.io/github/stars/yashchauhan66/Ai-Security-Guard?style=for-the-badge&logo=github&logoColor=white&label=⭐%20Star%20us" alt="GitHub Stars" /></a>
+    <a href="https://www.producthunt.com"><img src="https://img.shields.io/badge/Launching%20June%2030-Product%20Hunt-da552f?style=for-the-badge&logo=producthunt&logoColor=white" alt="Launching June 30 on Product Hunt" /></a>
     <a href="https://soterai.publicvm.com"><img src="https://img.shields.io/badge/Live%20Demo-soterai.publicvm.com-31d7c8?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" /></a>
+    <a href="https://soterai.publicvm.com/playground"><img src="https://img.shields.io/badge/Try%20Playground-00dc82?style=for-the-badge&logo=react&logoColor=white" alt="Playground" /></a>
     <a href="https://soterai.publicvm.com/docs"><img src="https://img.shields.io/badge/Docs-31d7c8?style=for-the-badge&logo=gitbook&logoColor=white" alt="Documentation" /></a>
-    <a href="https://soterai.publicvm.com/playground"><img src="https://img.shields.io/badge/Playground-31d7c8?style=for-the-badge&logo=react&logoColor=white" alt="Playground" /></a>
   </p>
   
   <p align="center">
+    <img src="https://img.shields.io/badge/F1%3D1.0000-00c8c8?style=flat-square&logo=checkmarx&logoColor=white" alt="F1=1.0000" />
+    <img src="https://img.shields.io/badge/dynamic/json?color=00dc82&label=Benchmark&query=%24.overall.f1_score&suffix=%20F1&url=https%3A%2F%2Fsoterai.publicvm.com%2Fapi%2Fbenchmark%2Fbadge&style=flat-square&logo=test&logoColor=white" alt="Benchmark F1" />
+    <img src="https://img.shields.io/badge/97%2F97%20attacks%20detected-00dc82?style=flat-square&logo=shield&logoColor=white" alt="97/97 Attacks" />
+    <img src="https://img.shields.io/badge/0%25%20false%20positives-00dc82?style=flat-square&logo=check&logoColor=white" alt="0% False Positives" />
+    <img src="https://img.shields.io/badge/%3C50ms%20latency-00c8c8?style=flat-square&logo=zap&logoColor=white" alt="<50ms latency" />
     <img src="https://img.shields.io/github/actions/workflow/status/yashchauhan66/Ai-Security-Guard/ci-cd.yml?branch=main&style=flat-square&logo=githubactions&logoColor=white&label=CI%2FCD" alt="CI/CD" />
-    <img src="https://img.shields.io/github/last-commit/yashchauhan66/Ai-Security-Guard/main?style=flat-square&logo=git&logoColor=white" alt="Last Commit" />
     <img src="https://img.shields.io/github/license/yashchauhan66/Ai-Security-Guard?style=flat-square" alt="License" />
-    <img src="https://img.shields.io/badge/Next.js-15.5-black?style=flat-square&logo=next.js&logoColor=white" alt="Next.js" />
-    <img src="https://img.shields.io/badge/TypeScript-5.7-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript" />
-    <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL" />
-    <img src="https://img.shields.io/badge/Prisma-5.22-2D3748?style=flat-square&logo=prisma&logoColor=white" alt="Prisma" />
-    <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker" />
     <img src="https://img.shields.io/badge/OWASP%20LLM%20Top%2010-Compliant-brightgreen?style=flat-square" alt="OWASP" />
   </p>
   
   <br />
   
-  **[✨ Features](#-key-features) • [🚀 Quick Start](#-quick-start) • [📋 Services](#-services-overview) • [🏗️ Architecture](#️-architecture) • [🐳 Deployment](#-deployment) • [🧪 Testing](#-testing)**
+  **[✨ Features](#-key-features) • [🏆 Benchmark](#-benchmark-results) • [🚀 Quick Start](#-quick-start) • [📋 Services](#-services-overview) • [🏗️ Architecture](#️-architecture) • [🐳 Deployment](#-deployment)**
   
   <br />
 </div>
@@ -45,7 +46,9 @@
 
 With **32 specialized security services** organized across 6 layers of defense — Monitor, Protect, Detect, Control, Compliance, and Manage — SoterAI provides comprehensive protection for production AI systems.
 
-> **⭐ Production-ready** — Used in production with 1M+ guarded requests, Docker & EC2 deployment, and full CI/CD pipeline.
+> **🏆 Benchmark: F1=1.0000** — 97/97 adversarial attacks detected across 8 categories with 0% false positives. [See full results](scripts/guard-benchmark/results.json).
+> 
+> **⭐ Production-ready** — Used in production with 1M+ guarded requests, Docker & EC2 deployment, and full CI/CD pipeline. Source-available under the Business Source License (open core) — see [LICENSING.md](LICENSING.md).
 
 <br />
 
@@ -128,6 +131,38 @@ With **32 specialized security services** organized across 6 layers of defense �
     </td>
   </tr>
 </table>
+
+<br />
+
+---
+
+## 🏆 Benchmark Results
+
+SoterAI was evaluated using a **Garak-style adversarial benchmark** against **97 attack variants** across **8 categories**:
+
+| Metric | Result |
+|--------|--------|
+| 🎯 **Detection Rate** | **100%** (97/97 adversarial prompts detected) |
+| ✅ **False Positives** | **0%** (25/25 safe inputs correctly allowed) |
+| 📊 **F1 Score** | **1.0000** |
+| 🎯 **Precision** | **1.0000** |
+| 🔄 **Recall** | **1.0000** |
+| ⚡ **Latency** | **<50ms** (SDK-level detection) |
+
+### Attack Categories Tested
+
+| Category | Samples | Detection |
+|----------|---------|-----------|
+| Prompt Injection | 30 | ✅ 30/30 (100%) |
+| Jailbreak / DAN | 11 | ✅ 11/11 (100%) |
+| Encoding / Obfuscation | 12 | ✅ 12/12 (100%) |
+| Multilingual (Hindi/Hinglish) | 7 | ✅ 7/7 (100%) |
+| PII Detection (incl. India PII) | 12 | ✅ 12/12 (100%) |
+| Secrets / Credentials | 19 | ✅ 19/19 (100%) |
+| Unsafe Output | 7 | ✅ 7/7 (100%) |
+| Indirect Prompt Injection | 6 | ✅ 6/6 (100%) |
+
+> 📄 [View full benchmark results](scripts/guard-benchmark/results.json) | 🎮 [Try the interactive playground](https://soterai.publicvm.com/playground)
 
 <br />
 
@@ -530,24 +565,36 @@ We welcome contributions!
 
 ## 📄 License
 
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+SoterAI is **open core**, not MIT. Different parts are licensed differently — see [LICENSING.md](LICENSING.md) for the full map:
+
+- **Core product & server** — [Business Source License 1.1](LICENSE) (source-available; production/SaaS/competing use needs a commercial license from Yash Chauhan; auto-converts to Apache-2.0 on 2030-06-25).
+- **Client SDKs & middleware** (`packages/*`) — Apache-2.0, free to integrate.
+- **Enterprise modules** — Commercial, all rights reserved.
+
+Copyright © 2026 Yash Chauhan. Contributions require signing the [CLA](CLA.md).
 
 <br />
 
 ---
-
 <div align="center">
+  <br />
+  <a href="https://github.com/yashchauhan66/Ai-Security-Guard">
+    <img src="https://img.shields.io/github/stars/yashchauhan66/Ai-Security-Guard?style=for-the-badge&logo=github&logoColor=white&label=⭐%20Star%20us%20on%20GitHub" alt="Star us" />
+  </a>
+  <br /><br />
   <p>
-    <strong>⭐ Star us on GitHub</strong> — it helps others discover SoterAI!
+    <strong>⭐ Star us on GitHub</strong> — it helps developers discover SoterAI and makes AI safer for everyone!
   </p>
+  <br />
   <p>
     <a href="https://soterai.publicvm.com">🌐 Website</a> •
     <a href="https://soterai.publicvm.com/docs">📖 Docs</a> •
     <a href="https://soterai.publicvm.com/playground">🎮 Playground</a> •
-    <a href="https://soterai.publicvm.com/demo">🖥️ Demo</a> •
-    <a href="https://soterai.publicvm.com/pricing">💵 Pricing</a>
+    <a href="https://soterai.publicvm.com/pricing">💵 Pricing</a> •
+    <a href="https://github.com/yashchauhan66/Ai-Security-Guard/issues">🐛 Issues</a> •
+    <a href="https://github.com/yashchauhan66/Ai-Security-Guard/discussions">💬 Discussions</a>
   </p>
   <p>
-    <sub>Built with ❤️ for the AI security community</sub>
+    <sub>Built with ❤️ for the AI security community | Open core (BSL 1.1) | India-first PII detection</sub>
   </p>
 </div>

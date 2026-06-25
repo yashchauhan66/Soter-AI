@@ -212,7 +212,7 @@ async function runTest() {
       };
       results.push(result);
 
-      const groqLabel = sentToGroq
+      const _groqLabel = sentToGroq
         ? groqResponse
           ? `🤖 ${groqResponse.slice(0, 60).replace(/\n/g, " ")}...`
           : "🤖 (no response)"

@@ -4,6 +4,15 @@ const nextConfig = {
   output: "standalone",
   poweredByHeader: false,
   reactStrictMode: true,
+  compress: true,
+  // Tree-shake large icon/util barrels so only the icons actually used are bundled.
+  experimental: {
+    optimizePackageImports: ["lucide-react"],
+  },
+  images: {
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 60 * 60 * 24 * 30,
+  },
   async headers() {
     const scriptSources = ["'self'", "'unsafe-inline'", "https://checkout.razorpay.com", "https://www.googletagmanager.com", "https://www.google-analytics.com"];
     if (process.env.NODE_ENV !== "production") scriptSources.push("'unsafe-eval'");

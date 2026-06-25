@@ -4,11 +4,13 @@ const siteUrl = "https://soterai.publicvm.com";
 
 const marketingPages = [
   { url: "/", priority: 1.0, changeFrequency: "weekly" as const },
+  { url: "/scanner", priority: 0.8, changeFrequency: "weekly" as const },
   { url: "/benchmarks", priority: 0.9, changeFrequency: "weekly" as const },
   { url: "/comparison", priority: 0.9, changeFrequency: "weekly" as const },
   { url: "/pricing", priority: 0.8, changeFrequency: "weekly" as const },
   { url: "/playground", priority: 0.7, changeFrequency: "monthly" as const },
   { url: "/case-studies", priority: 0.7, changeFrequency: "monthly" as const },
+  { url: "/case-studies/prompt-injection-leaks-database", priority: 0.6, changeFrequency: "monthly" as const },
   { url: "/changelog", priority: 0.6, changeFrequency: "weekly" as const },
   { url: "/enterprise", priority: 0.8, changeFrequency: "monthly" as const },
   { url: "/enterprise/pilot", priority: 0.7, changeFrequency: "monthly" as const },

@@ -27,6 +27,7 @@ const CSRF_EXEMPT_PREFIXES = [
   "/api/scim/v2/",        // Bearer-token authenticated (SCIM provisioning)
   "/api/sso/saml/acs",    // SAML IdP sends form POST without Origin
   "/api/ai-assistant",    // public endpoint (rate limited per IP, no session required)
+  "/api/scanner",         // public endpoint for lead generation
 ];
 
 function getCanonicalOrigin(): string {

@@ -289,7 +289,8 @@ ${contextText}`;
       (m): m is { role: string; content: string } =>
         m !== null &&
         typeof m === "object" &&
-        (m as Record<string, unknown>).role === "user" || (m as Record<string, unknown>).role === "assistant"
+        ((m as Record<string, unknown>).role === "user" ||
+          (m as Record<string, unknown>).role === "assistant")
     )
     .filter((m) => typeof m.content === "string")
     .slice(-8)

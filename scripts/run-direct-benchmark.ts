@@ -8,8 +8,8 @@
  */
 
 import { analyzeText } from "../lib/guard/analyze";
-import type { BenchResult, BenchSummary } from "../examples/real-chatbot-test/src/benchmark-prompts";
-import { BENCHMARK_CASES, BENCHMARK_CATEGORIES, summarizeResults } from "../examples/real-chatbot-test/src/benchmark-prompts";
+import type { BenchResult } from "../examples/real-chatbot-test/src/benchmark-prompts";
+import { BENCHMARK_CASES, summarizeResults } from "../examples/real-chatbot-test/src/benchmark-prompts";
 import fs from "fs";
 import path from "path";
 

@@ -90,7 +90,7 @@ function randomItem(arr) {
 
 // ── Main Test ────────────────────────────────────────────────────────────────
 
-export default function () {
+export default function loadTest() {
   const isAttack = Math.random() < 0.3;
   const message = isAttack ? randomItem(ATTACK_MESSAGES) : randomItem(SAFE_MESSAGES);
 

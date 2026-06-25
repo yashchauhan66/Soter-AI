@@ -29,7 +29,8 @@ const eslintConfig = [
     rules: {
       "prefer-const": "error",
       "no-var": "error",
-      "react/no-unescaped-entities": "warn",
+      // Apostrophes/quotes in JSX text render fine; this rule is pure style noise.
+      "react/no-unescaped-entities": "off",
       "react-hooks/purity": "warn",
       "@typescript-eslint/no-unused-vars": [
         "warn",
