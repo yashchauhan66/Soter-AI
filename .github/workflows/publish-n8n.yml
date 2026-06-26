@@ -1,0 +1,50 @@
+# Publish n8n-nodes-soterai to npm
+#
+# PREREQUISITES:
+#   - Set the NPM_TOKEN repository secret in GitHub Settings > Secrets > Actions.
+#     Generate the token at https://www.npmjs.com with Automation type for CI usage.
+#
+# TRIGGER:
+#   Push a tag matching "n8n-v*" (e.g. "n8n-v0.1.0") to trigger this workflow.
+#   Example:
+#     git tag n8n-v0.1.0
+#     git push origin n8n-v0.1.0
+
+name: Publish n8n Community Node
+
+on:
+  push:
+    tags:
+      - "n8n-v*"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/integrations/n8n
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish to npm
+        run: npm publish --access public --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

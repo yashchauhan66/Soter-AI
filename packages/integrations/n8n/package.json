@@ -1,0 +1,53 @@
+{
+  "name": "n8n-nodes-soterai",
+  "version": "0.1.0",
+  "description": "SoterAI community node for n8n — protect AI workflows from prompt injection, jailbreaks, PII leakage, and unsafe outputs",
+  "license": "MIT",
+  "author": {
+    "name": "SoterAI",
+    "email": "support@soterai.dev",
+    "url": "https://soterai.dev"
+  },
+  "homepage": "https://github.com/SoterAI/n8n-nodes-soterai",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SoterAI/n8n-nodes-soterai.git"
+  },
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "ai-security",
+    "prompt-injection",
+    "jailbreak",
+    "pii",
+    "soter",
+    "soterai",
+    "guardrails"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/SoterApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/SoterGuard.node.js"
+    ]
+  },
+  "main": "dist/nodes/SoterGuard.node.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "n8n-workflow": ">=1.0.0"
+  },
+  "devDependencies": {
+    "n8n-workflow": "^1.0.0",
+    "typescript": "^5.0.0"
+  }
+}

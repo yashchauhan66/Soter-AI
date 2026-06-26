@@ -156,6 +156,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                       <Link href="/pricing" className="hover:text-slate-300">Pricing</Link>
                       <Link href="/playground" className="hover:text-slate-300">Playground</Link>
                       <Link href="/demo" className="hover:text-slate-300">Demo</Link>
+                      <Link href="/dashboard/integrations" className="hover:text-slate-300">Integrations</Link>
                     </div>
                   </div>
                   <div>
@@ -166,6 +167,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
                       <Link href="/terms" className="hover:text-slate-300">Terms</Link>
                       <Link href="/privacy" className="hover:text-slate-300">Privacy</Link>
                       <Link href="/security" className="hover:text-slate-300">Security</Link>
+                      <Link href="/support" className="hover:text-slate-300">Support</Link>
                     </div>
                   </div>
                   <div>

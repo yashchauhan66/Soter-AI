@@ -1,0 +1,19 @@
+# Changelog
+
+All notable changes to `n8n-nodes-soterai` will be documented in this file.
+
+## [0.1.0] - 2026-06-26
+
+### Added
+
+- Initial release of the SoterAI community node for n8n.
+- **Input Guard** action: scan user messages for prompt injection, jailbreaks, and other threats before they reach the LLM.
+- **Output Guard** action: scan AI-generated responses for unsafe content before sending to users.
+- **PII Redactor** action: detect and redact sensitive data (emails, phone numbers, secrets) with configurable redaction modes (partial, full, hash).
+- **RAG Scanner** action: scan documents and chunks for embedded threats before adding to vector databases.
+- **Incident Logger** action: log security incidents to the SoterAI ops dashboard with platform, workflow ID, risk score, and reason.
+- Configurable **Policy Mode** (Monitor, Balanced, Strict) for input and output guards.
+- Configurable **On Threat** behavior (Block, Redact, Warn, Continue).
+- Optional per-node **Project ID** override and **Metadata JSON** for audit trails.
+- Example workflow: Protected Chatbot with input guard, threat routing, and output guard.
+- SoterAI API credential type with API key, base URL, and default project ID.

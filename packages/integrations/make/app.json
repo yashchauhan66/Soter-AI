@@ -1,0 +1,37 @@
+{
+  "name": "soterai",
+  "label": "SoterAI",
+  "description": "SoterAI protects AI workflows from prompt injection, jailbreaks, PII leakage, and unsafe outputs.",
+  "version": "0.1.0",
+  "language": "en",
+  "categories": ["security", "ai"],
+  "baseUrl": "https://api.cybersecurityguard.com",
+  "connections": [
+    {
+      "name": "soterai-api-key",
+      "label": "SoterAI API Key",
+      "type": "apikey",
+      "parameters": [
+        {
+          "name": "apiKey",
+          "label": "API Key",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "baseUrl",
+          "label": "Base URL",
+          "type": "text",
+          "required": false,
+          "default": "https://api.cybersecurityguard.com"
+        },
+        {
+          "name": "projectId",
+          "label": "Project ID",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

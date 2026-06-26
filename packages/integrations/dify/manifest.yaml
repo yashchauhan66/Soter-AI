@@ -1,0 +1,33 @@
+version: "0.1.0"
+type: plugin
+author: SoterAI
+name: soterai
+label:
+  en_US: "SoterAI"
+  zh_Hans: "SoterAI"
+description:
+  en_US: "SoterAI protects AI workflows from prompt injection, jailbreaks, PII leakage, and unsafe outputs. Add security guardrails to any Dify app."
+  zh_Hans: "SoterAI — AI workflow security guardrails"
+icon: icon.svg
+category: security
+
+credentials_for_provider:
+  soter_api_key:
+    type: secret-input
+    required: true
+    label:
+      en_US: SoterAI API Key
+    placeholder:
+      en_US: sk_...
+  soter_base_url:
+    type: text-input
+    required: false
+    label:
+      en_US: Base URL
+    placeholder:
+      en_US: https://api.cybersecurityguard.com
+  soter_project_id:
+    type: text-input
+    required: false
+    label:
+      en_US: Project ID
