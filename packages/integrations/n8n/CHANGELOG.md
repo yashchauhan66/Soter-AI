@@ -2,6 +2,13 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.1.5] - 2026-06-26
+
+### Changed
+
+- Enlarged the n8n node icon artwork while preserving the original SoterAI logo.
+- Removed the baked-in square background from the icon so it renders cleanly on n8n node cards.
+
 ## [0.1.4] - 2026-06-26
 
 ### Fixed
