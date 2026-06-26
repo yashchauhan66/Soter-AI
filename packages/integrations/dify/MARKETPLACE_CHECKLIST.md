@@ -58,7 +58,10 @@
 | Version | 0.1.0 |
 | Tools count | 4 |
 | External dependencies | None (stdlib only) |
-| API documentation | https://docs.cybersecurityguard.com |
+| API documentation | https://docs.soterai.dev |
+| Privacy URL | https://soterai.dev/privacy |
+| Terms URL | https://soterai.dev/terms |
+| Support email | support@soterai.dev |
 
 ## Review Process
 

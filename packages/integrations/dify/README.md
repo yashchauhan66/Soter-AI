@@ -4,7 +4,9 @@ SoterAI protects AI workflows from prompt injection, jailbreaks, PII leakage, an
 
 ## Installation
 
-### From the Dify Marketplace (recommended)
+### From the Dify Marketplace (after approval)
+
+Once the marketplace pull request is approved and merged:
 
 1. Open Dify and navigate to **Plugins > Marketplace**.
 2. Search for **SoterAI**.
@@ -21,7 +23,7 @@ SoterAI protects AI workflows from prompt injection, jailbreaks, PII leakage, an
 | Field | Required | Description |
 |-------|----------|-------------|
 | **SoterAI API Key** | Yes | Your `sk_...` API key from the SoterAI dashboard. |
-| **Base URL** | No | API endpoint. Defaults to `https://api.cybersecurityguard.com`. |
+| **Base URL** | No | API endpoint. Defaults to `https://api.soterai.dev`. |
 | **Project ID** | No | Optional project scope for multi-tenant setups. |
 
 ## Tools
@@ -96,6 +98,9 @@ Strip PII from user messages before they enter the LLM context, ensuring no sens
 - All scanning is performed server-side by the SoterAI API. No user data is stored beyond the request lifecycle unless you opt in to audit logging.
 - The plugin uses only Python standard-library HTTP (`urllib.request`) with no third-party dependencies.
 - API keys are stored securely by Dify's credential manager and never exposed in workflow logs.
+- Privacy Policy: https://soterai.dev/privacy
+- Terms of Service: https://soterai.dev/terms
+- Support: support@soterai.dev
 
 ## Plugin Structure
 
@@ -118,6 +123,6 @@ dify/
 
 ## Marketplace Submission
 
-**Status: Ready for submission**
+**Status: Ready for Dify tooling validation and marketplace PR preparation.**
 
 See `MARKETPLACE_CHECKLIST.md` for the full submission checklist.

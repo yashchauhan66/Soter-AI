@@ -15,9 +15,8 @@ import {
 } from "./creates/guardActions";
 
 const App = {
-  version: require("./package.json").version,
+  version: require("../package.json").version,
   platformVersion: require("zapier-platform-core").version,
-
   authentication,
 
   creates: {
@@ -29,4 +28,4 @@ const App = {
   },
 };
 
-export default App;
+export = App;

@@ -8,9 +8,9 @@ This integration brings SoterAI's security scanning directly into your Zapier wo
 
 | Action | Key | Description |
 |--------|-----|-------------|
-| **Check Input for Threats** | `input_guard` | Scan user input for prompt injection, jailbreaks, PII, and other AI security threats before sending to an LLM. |
-| **Check AI Output for Threats** | `output_guard` | Scan AI-generated responses for unsafe content, system prompt leakage, and PII before delivering to users. |
-| **Redact PII from Text** | `pii_redactor` | Redact personally identifiable information and secrets from any text. Supports partial, full, and hash redaction modes. |
+| **Check Input Safety** | `input_guard` | Scan user input for prompt injection, jailbreaks, PII, and other AI security threats before sending to an LLM. |
+| **Check Output Safety** | `output_guard` | Scan AI-generated responses for unsafe content, system prompt leakage, and PII before delivering to users. |
+| **Redact PII From Text** | `pii_redactor` | Redact personally identifiable information and secrets from any text. Supports partial, full, and hash redaction modes. |
 | **Scan RAG Document** | `rag_scanner` | Scan documents for embedded threats before adding them to RAG or vector databases. |
 | **Create Incident** | `create_incident` | Log a security incident to the SoterAI dashboard for tracking and review. Requires admin API access. |
 
@@ -21,7 +21,7 @@ SoterAI uses API Key authentication. When you add the integration to a Zap you w
 | Field | Required | Description |
 |-------|----------|-------------|
 | **API Key** | Yes | Your SoterAI API key (starts with `sk_`). |
-| **Base URL** | No | Defaults to `https://api.cybersecurityguard.com`. Change only for self-hosted deployments. |
+| **Base URL** | No | Defaults to `https://api.soterai.dev`. Change only for self-hosted deployments. |
 | **Project ID** | No | Default SoterAI project ID applied to all actions unless overridden per-step. |
 
 ## Example Zaps
@@ -65,7 +65,9 @@ npm run push       # zapier push
 - All text is sent to the SoterAI API over HTTPS for scanning. No text is stored after analysis unless incident logging is enabled.
 - API keys should be treated as secrets. Use Zapier's built-in credential storage.
 - See [https://soterai.dev/privacy](https://soterai.dev/privacy) for the full privacy policy.
+- Terms of Service: [https://soterai.dev/terms](https://soterai.dev/terms)
+- Support: support@soterai.dev
 
 ## Status
 
-Ready for Zapier review.
+Ready for local Zapier validation and private app push preparation.

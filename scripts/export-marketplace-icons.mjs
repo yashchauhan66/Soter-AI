@@ -1,6 +1,8 @@
 /**
  * Export SoterAI marketplace icon SVGs to PNG at multiple sizes.
  *
+ * Official source logo: public/marketplace/icon-192.png
+ *
  * Usage:
  *   npx resvg-cli public/marketplace/soterai-icon.svg -w 256 -h 256 -o public/marketplace/soterai-icon-256.png
  *

@@ -24,7 +24,7 @@ class SoterAIProvider:
 
         base_url = (
             credentials
-            .get("soter_base_url", "https://api.cybersecurityguard.com")
+            .get("soter_base_url", "https://api.soterai.dev")
             .rstrip("/")
         )
 

@@ -25,7 +25,7 @@ zapier push
 ## Promote to Public
 
 ```bash
-zapier promote <version>
+zapier promote <version> public
 zapier migrate <old_version> <new_version> --percent 100
 ```
 

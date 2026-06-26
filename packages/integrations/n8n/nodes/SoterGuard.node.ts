@@ -11,11 +11,11 @@ export class SoterGuard implements INodeType {
   description: INodeTypeDescription = {
     displayName: "SoterAI",
     name: "soterGuard",
-    icon: "fa:shield-alt",
+    icon: "file:soterai.png",
     group: ["transform"],
     version: 1,
     subtitle: '={{$parameter["action"]}}',
-    description: "Protect AI workflows with SoterAI — input/output guard, PII redaction, RAG document scanning",
+    description: "Protect AI workflows with SoterAI - input/output guard, PII redaction, RAG document scanning",
     defaults: {
       name: "SoterAI",
     },
@@ -68,7 +68,7 @@ export class SoterGuard implements INodeType {
         default: "inputGuard",
       },
 
-      // ── Input Guard fields ──
+      // Input Guard fields
       {
         displayName: "Input Text",
         name: "inputText",
@@ -80,7 +80,7 @@ export class SoterGuard implements INodeType {
         description: "The user message to check for prompt injection, jailbreaks, and other threats",
       },
 
-      // ── Output Guard fields ──
+      // Output Guard fields
       {
         displayName: "AI Output Text",
         name: "outputText",
@@ -92,7 +92,7 @@ export class SoterGuard implements INodeType {
         description: "The AI-generated response to check before sending to the user",
       },
 
-      // ── PII Redactor fields ──
+      // PII Redactor fields
       {
         displayName: "Text",
         name: "piiText",
@@ -117,7 +117,7 @@ export class SoterGuard implements INodeType {
         description: "How to redact detected PII",
       },
 
-      // ── RAG Scanner fields ──
+      // RAG Scanner fields
       {
         displayName: "Document Text",
         name: "ragText",
@@ -137,7 +137,7 @@ export class SoterGuard implements INodeType {
         description: 'Optional label for the document source (e.g. "uploaded-pdf", "web-scrape")',
       },
 
-      // ── Incident Logger fields ──
+      // Incident Logger fields
       {
         displayName: "Platform",
         name: "incidentPlatform",
@@ -177,7 +177,7 @@ export class SoterGuard implements INodeType {
         description: "Human-readable reason or description for the incident",
       },
 
-      // ── Common fields ──
+      // Common fields
       {
         displayName: "Project ID",
         name: "projectId",
@@ -229,7 +229,7 @@ export class SoterGuard implements INodeType {
 
     const credentials = await this.getCredentials("soterApi");
     const apiKey = credentials.apiKey as string;
-    const baseUrl = (credentials.baseUrl as string) || "https://api.soterai.dev";
+    const baseUrl = (credentials.baseUrl as string) || "http://13.200.123.232:3000";
     const credentialProjectId = (credentials.projectId as string) || undefined;
 
     for (let i = 0; i < items.length; i++) {
@@ -309,7 +309,7 @@ export class SoterGuard implements INodeType {
   }
 }
 
-// ── Helpers ────────────────────────────────────────────────────────────
+// Helpers
 
 interface GuardParams {
   text: string;
@@ -354,7 +354,7 @@ async function soterPost(
     headers: {
       "Content-Type": "application/json",
       "x-api-key": apiKey,
-      "User-Agent": "n8n-nodes-soterai/0.1.0",
+      "User-Agent": "n8n-nodes-soterai/0.1.7",
     },
     body: JSON.stringify(body),
   });
@@ -580,7 +580,7 @@ function parseMetadata(raw: string): Record<string, unknown> | undefined {
       return parsed;
     }
   } catch {
-    // ignore invalid JSON — don't break the workflow for optional metadata
+    // Ignore invalid JSON so optional metadata does not break the workflow.
   }
   return undefined;
 }

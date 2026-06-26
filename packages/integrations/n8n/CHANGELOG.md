@@ -2,6 +2,54 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.1.7] - 2026-06-26
+
+### Changed
+
+- Temporarily changed the default n8n API Base URL to `http://13.200.123.232:3000` because `soterai.publicvm.com` DNS is currently not resolving reliably from n8n runtimes.
+- Added README guidance for updating existing n8n credentials that still point to `.dev` or `soterai.publicvm.com`.
+
+## [0.1.6] - 2026-06-26
+
+### Changed
+
+- Updated the default SoterAI API base URL to `https://soterai.publicvm.com`.
+- Replaced broken `.dev` documentation and dashboard links with working public app links.
+
+## [0.1.5] - 2026-06-26
+
+### Changed
+
+- Enlarged the n8n node icon artwork while preserving the original SoterAI logo.
+- Removed the baked-in square background from the icon so it renders cleanly on n8n node cards.
+
+## [0.1.4] - 2026-06-26
+
+### Fixed
+
+- Added fetch typings for the GitHub Actions TypeScript build environment.
+
+## [0.1.3] - 2026-06-26
+
+### Changed
+
+- Aligned the npm publishing workflow with Node.js 22 and a more resilient dependency install step.
+
+## [0.1.2] - 2026-06-26
+
+### Changed
+
+- Hardened the GitHub Actions npm publishing workflow with lint and package verification checks.
+- Updated the n8n node user agent and display text polish for marketplace release.
+
+## [0.1.1] - 2026-06-26
+
+### Changed
+
+- Updated package metadata for n8n Creator Portal review.
+- Added explicit SoterAI privacy, terms, pricing, status, and support links to the README.
+- Removed unsupported compliance wording from the README.
+
 ## [0.1.0] - 2026-06-26
 
 ### Added

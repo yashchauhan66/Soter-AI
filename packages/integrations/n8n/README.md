@@ -6,7 +6,7 @@
 
 SoterAI community node for [n8n](https://n8n.io) -- protect your AI workflows from prompt injection, jailbreaks, PII leakage, and unsafe outputs.
 
-SoterAI is an AI security platform that sits between your users and your LLMs. It analyses every input and output in real time, blocks threats, redacts sensitive data, and logs incidents for compliance. This n8n node lets you add that protection to any n8n workflow with drag-and-drop.
+SoterAI is an AI security platform that sits between your users and your LLMs. It analyses every input and output in real time, blocks threats, redacts sensitive data, and records incidents for audit review. This n8n node lets you add that protection to any n8n workflow with drag-and-drop.
 
 ## Installation
 
@@ -28,14 +28,16 @@ Restart n8n after installation.
 
 ## Credentials Setup
 
-1. Sign up at [https://app.soterai.dev](https://app.soterai.dev) and create a project.
+1. Sign up at [https://soterai.publicvm.com](https://soterai.publicvm.com) and create a project.
 2. Generate an API key from the project dashboard (it starts with `sk_`).
 3. In n8n, go to **Credentials > New Credential > SoterAI API**.
 4. Paste your API key.
-5. (Optional) Set a **Base URL** if you are running a self-hosted SoterAI instance.
+5. Keep the default **Base URL**: `http://13.200.123.232:3000`.
 6. (Optional) Set a default **Project ID** -- this can also be overridden per node.
 
-Full credential documentation: [https://docs.soterai.dev/integrations/n8n](https://docs.soterai.dev/integrations/n8n)
+> Temporary note: use `http://13.200.123.232:3000` for the Base URL until `soterai.publicvm.com` DNS is repaired. If an existing credential still uses `https://soterai.publicvm.com` or any `.dev` URL, edit the credential and replace it with `http://13.200.123.232:3000`.
+
+Full credential documentation: [https://soterai.publicvm.com/docs](https://soterai.publicvm.com/docs)
 
 ## Actions
 
@@ -87,7 +89,7 @@ Scan documents and text chunks for embedded threats, hidden instructions, or dat
 
 ### SoterAI Incident Logger
 
-Log a security incident to the SoterAI ops dashboard for tracking and compliance. This action requires admin-level API access and will return a graceful no-op if the caller lacks the required permissions.
+Log a security incident to the SoterAI ops dashboard for security review. This action requires admin-level API access and will return a graceful no-op if the caller lacks the required permissions.
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -168,17 +170,22 @@ To import: in n8n, go to **Workflows > Import from File** and select the JSON fi
 
 ## Resources
 
-- [SoterAI Documentation](https://docs.soterai.dev)
-- [n8n Integration Guide](https://docs.soterai.dev/integrations/n8n)
-- [SoterAI Dashboard](https://app.soterai.dev)
-- [GitHub Repository](https://github.com/SoterAI/n8n-nodes-soterai)
+- [SoterAI Documentation](https://soterai.publicvm.com/docs)
+- [n8n Integration Guide](https://soterai.publicvm.com/docs)
+- [SoterAI Dashboard](https://soterai.publicvm.com)
+- [Privacy Policy](https://soterai.publicvm.com/privacy)
+- [Terms of Service](https://soterai.publicvm.com/terms)
+- [Pricing](https://soterai.publicvm.com/pricing)
+- [Status](https://soterai.publicvm.com/status)
+- [Support](https://soterai.publicvm.com/support)
+- [GitHub Repository](https://github.com/yashchauhan66/Soter-AI/tree/main/packages/integrations/n8n)
 - [npm Package](https://www.npmjs.com/package/n8n-nodes-soterai)
 
 ## Support
 
 - **Email**: support@soterai.dev
-- **GitHub Issues**: [https://github.com/SoterAI/n8n-nodes-soterai/issues](https://github.com/SoterAI/n8n-nodes-soterai/issues)
-- **Documentation**: [https://docs.soterai.dev](https://docs.soterai.dev)
+- **GitHub Issues**: [https://github.com/yashchauhan66/Soter-AI/issues](https://github.com/yashchauhan66/Soter-AI/issues)
+- **Documentation**: [https://soterai.publicvm.com/docs](https://soterai.publicvm.com/docs)
 
 ## License
 

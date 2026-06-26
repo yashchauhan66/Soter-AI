@@ -8,7 +8,7 @@ export const inputGuard = {
   key: "input_guard",
   noun: "Input Guard",
   display: {
-    label: "Check Input for Threats",
+    label: "Check Input Safety",
     description:
       "Check user input for prompt injection, jailbreaks, PII, and other AI security threats using SoterAI.",
   },
@@ -66,7 +66,7 @@ export const inputGuard = {
     },
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
       const baseUrl = (
-        bundle.authData.baseUrl || "https://api.cybersecurityguard.com"
+        bundle.authData.baseUrl || "https://api.soterai.dev"
       ).replace(/\/$/, "");
       const meta: Record<string, unknown> = tryParseJson(
         bundle.inputData.metadata,
@@ -120,7 +120,7 @@ export const outputGuard = {
   key: "output_guard",
   noun: "Output Guard",
   display: {
-    label: "Check AI Output for Threats",
+    label: "Check Output Safety",
     description:
       "Check AI-generated responses for unsafe content, system prompt leakage, and PII using SoterAI.",
   },
@@ -156,7 +156,7 @@ export const outputGuard = {
     },
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
       const baseUrl = (
-        bundle.authData.baseUrl || "https://api.cybersecurityguard.com"
+        bundle.authData.baseUrl || "https://api.soterai.dev"
       ).replace(/\/$/, "");
       const meta: Record<string, unknown> = {};
       const pid = bundle.inputData.projectId || bundle.authData.projectId;
@@ -195,7 +195,7 @@ export const piiRedactor = {
   key: "pii_redactor",
   noun: "PII Redactor",
   display: {
-    label: "Redact PII from Text",
+    label: "Redact PII From Text",
     description:
       "Redact personally identifiable information and secrets from text using SoterAI.",
   },
@@ -228,7 +228,7 @@ export const piiRedactor = {
     },
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
       const baseUrl = (
-        bundle.authData.baseUrl || "https://api.cybersecurityguard.com"
+        bundle.authData.baseUrl || "https://api.soterai.dev"
       ).replace(/\/$/, "");
       const meta: Record<string, unknown> = {
         _redactionMode: bundle.inputData.redactionMode || "PARTIAL",
@@ -299,7 +299,7 @@ export const ragScanner = {
     },
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
       const baseUrl = (
-        bundle.authData.baseUrl || "https://api.cybersecurityguard.com"
+        bundle.authData.baseUrl || "https://api.soterai.dev"
       ).replace(/\/$/, "");
       const meta: Record<string, unknown> = {
         _ragScan: true,
@@ -380,7 +380,7 @@ export const createIncident = {
     },
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
       const baseUrl = (
-        bundle.authData.baseUrl || "https://api.cybersecurityguard.com"
+        bundle.authData.baseUrl || "https://api.soterai.dev"
       ).replace(/\/$/, "");
 
       try {
