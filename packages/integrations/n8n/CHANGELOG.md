@@ -2,6 +2,13 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.1.6] - 2026-06-26
+
+### Changed
+
+- Updated the default SoterAI API base URL to `https://soterai.publicvm.com`.
+- Replaced broken `.dev` documentation and dashboard links with working public app links.
+
 ## [0.1.5] - 2026-06-26
 
 ### Changed

@@ -28,14 +28,14 @@ Restart n8n after installation.
 
 ## Credentials Setup
 
-1. Sign up at [https://app.soterai.dev](https://app.soterai.dev) and create a project.
+1. Sign up at [https://soterai.publicvm.com](https://soterai.publicvm.com) and create a project.
 2. Generate an API key from the project dashboard (it starts with `sk_`).
 3. In n8n, go to **Credentials > New Credential > SoterAI API**.
 4. Paste your API key.
 5. (Optional) Set a **Base URL** if you are running a self-hosted SoterAI instance.
 6. (Optional) Set a default **Project ID** -- this can also be overridden per node.
 
-Full credential documentation: [https://docs.soterai.dev/integrations/n8n](https://docs.soterai.dev/integrations/n8n)
+Full credential documentation: [https://soterai.publicvm.com/docs](https://soterai.publicvm.com/docs)
 
 ## Actions
 
@@ -168,14 +168,14 @@ To import: in n8n, go to **Workflows > Import from File** and select the JSON fi
 
 ## Resources
 
-- [SoterAI Documentation](https://docs.soterai.dev)
-- [n8n Integration Guide](https://docs.soterai.dev/integrations/n8n)
-- [SoterAI Dashboard](https://app.soterai.dev)
-- [Privacy Policy](https://soterai.dev/privacy)
-- [Terms of Service](https://soterai.dev/terms)
-- [Pricing](https://soterai.dev/pricing)
-- [Status](https://soterai.dev/status)
-- [Support](https://soterai.dev/support)
+- [SoterAI Documentation](https://soterai.publicvm.com/docs)
+- [n8n Integration Guide](https://soterai.publicvm.com/docs)
+- [SoterAI Dashboard](https://soterai.publicvm.com)
+- [Privacy Policy](https://soterai.publicvm.com/privacy)
+- [Terms of Service](https://soterai.publicvm.com/terms)
+- [Pricing](https://soterai.publicvm.com/pricing)
+- [Status](https://soterai.publicvm.com/status)
+- [Support](https://soterai.publicvm.com/support)
 - [GitHub Repository](https://github.com/yashchauhan66/Soter-AI/tree/main/packages/integrations/n8n)
 - [npm Package](https://www.npmjs.com/package/n8n-nodes-soterai)
 
@@ -183,7 +183,7 @@ To import: in n8n, go to **Workflows > Import from File** and select the JSON fi
 
 - **Email**: support@soterai.dev
 - **GitHub Issues**: [https://github.com/yashchauhan66/Soter-AI/issues](https://github.com/yashchauhan66/Soter-AI/issues)
-- **Documentation**: [https://docs.soterai.dev](https://docs.soterai.dev)
+- **Documentation**: [https://soterai.publicvm.com/docs](https://soterai.publicvm.com/docs)
 
 ## License
 

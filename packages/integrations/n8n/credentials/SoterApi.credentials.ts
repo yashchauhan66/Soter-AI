@@ -6,7 +6,7 @@ import type {
 export class SoterApi implements ICredentialType {
   name = "soterApi";
   displayName = "SoterAI API";
-  documentationUrl = "https://docs.soterai.dev/integrations/n8n";
+  documentationUrl = "https://soterai.publicvm.com/docs";
 
   properties: INodeProperties[] = [
     {
@@ -22,7 +22,7 @@ export class SoterApi implements ICredentialType {
       displayName: "Base URL",
       name: "baseUrl",
       type: "string",
-      default: "https://api.soterai.dev",
+      default: "https://soterai.publicvm.com",
       description: "SoterAI API base URL. Change only for self-hosted deployments.",
     },
     {

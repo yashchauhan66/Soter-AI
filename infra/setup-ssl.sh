@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 # SoterAI - Nginx + SSL Setup for EC2
-# Usage: sudo bash infra/setup-ssl.sh yourdomain.com
+# Usage: sudo bash infra/setup-ssl.sh primary-domain.com [extra-domain.com ...]
 
 set -euo pipefail
 
-DOMAIN="${1:-}"
-EMAIL="${SSL_EMAIL:-admin@${DOMAIN}}"
+DOMAINS=("$@")
+PRIMARY_DOMAIN="${DOMAINS[0]:-}"
+EMAIL="${SSL_EMAIL:-admin@${PRIMARY_DOMAIN}}"
 APP_PORT="${APP_PORT:-3000}"
 SITE_NAME="soter-guard"
 NGINX_AVAILABLE="/etc/nginx/sites-available/${SITE_NAME}.conf"
@@ -15,17 +16,24 @@ log() { echo "[OK] $1"; }
 warn() { echo "[WARN] $1"; }
 fail() { echo "[ERROR] $1"; exit 1; }
 
-if [ -z "$DOMAIN" ]; then
-  fail "Usage: sudo bash infra/setup-ssl.sh yourdomain.com"
+if [ -z "$PRIMARY_DOMAIN" ]; then
+  fail "Usage: sudo bash infra/setup-ssl.sh primary-domain.com [extra-domain.com ...]"
 fi
 
 if [ "$(id -u)" -ne 0 ]; then
-  fail "Run as root: sudo bash infra/setup-ssl.sh ${DOMAIN}"
+  fail "Run as root: sudo bash infra/setup-ssl.sh ${PRIMARY_DOMAIN} ${DOMAINS[*]:1}"
 fi
+
+SERVER_NAMES="${DOMAINS[*]}"
+CERTBOT_DOMAINS=()
+for domain in "${DOMAINS[@]}"; do
+  CERTBOT_DOMAINS+=("-d" "$domain")
+done
 
 echo ""
 echo "SoterAI - Nginx + SSL Setup"
-echo "Domain: ${DOMAIN}"
+echo "Domains: ${SERVER_NAMES}"
+echo "Primary domain: ${PRIMARY_DOMAIN}"
 echo "App upstream: 127.0.0.1:${APP_PORT}"
 echo ""
 
@@ -46,7 +54,7 @@ upstream soter_app {
 server {
     listen 80;
     listen [::]:80;
-    server_name ${DOMAIN};
+    server_name ${SERVER_NAMES};
 
     client_max_body_size 100m;
 
@@ -82,20 +90,20 @@ certbot --nginx \
   --non-interactive \
   --agree-tos \
   --email "$EMAIL" \
-  -d "$DOMAIN" \
+  "${CERTBOT_DOMAINS[@]}" \
   --redirect \
   --hsts
 
 nginx -t
 systemctl reload nginx
-log "SSL setup complete: https://${DOMAIN}"
+log "SSL setup complete: https://${PRIMARY_DOMAIN}"
 
 echo ""
 echo "Next steps:"
 echo "1. Ensure EC2 Security Group allows inbound TCP 80 and 443."
 echo "2. Set these production env values and recreate the app container:"
-echo "   NEXTAUTH_URL=https://${DOMAIN}"
-echo "   NEXT_PUBLIC_APP_URL=https://${DOMAIN}"
-echo "   CYBERRAKSHAK_BASE_URL=https://${DOMAIN}"
-echo "   ZEROVEIL_BASE_URL=https://${DOMAIN}"
+echo "   NEXTAUTH_URL=https://${PRIMARY_DOMAIN}"
+echo "   NEXT_PUBLIC_APP_URL=https://${PRIMARY_DOMAIN}"
+echo "   CYBERRAKSHAK_BASE_URL=https://${PRIMARY_DOMAIN}"
+echo "   ZEROVEIL_BASE_URL=https://${PRIMARY_DOMAIN}"
 echo ""

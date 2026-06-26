@@ -229,7 +229,7 @@ export class SoterGuard implements INodeType {
 
     const credentials = await this.getCredentials("soterApi");
     const apiKey = credentials.apiKey as string;
-    const baseUrl = (credentials.baseUrl as string) || "https://api.soterai.dev";
+    const baseUrl = (credentials.baseUrl as string) || "https://soterai.publicvm.com";
     const credentialProjectId = (credentials.projectId as string) || undefined;
 
     for (let i = 0; i < items.length; i++) {
@@ -354,7 +354,7 @@ async function soterPost(
     headers: {
       "Content-Type": "application/json",
       "x-api-key": apiKey,
-      "User-Agent": "n8n-nodes-soterai/0.1.4",
+      "User-Agent": "n8n-nodes-soterai/0.1.6",
     },
     body: JSON.stringify(body),
   });
