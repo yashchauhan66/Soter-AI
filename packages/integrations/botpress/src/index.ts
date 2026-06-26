@@ -17,7 +17,7 @@ export const integration = {
   title: "SoterAI",
   description:
     "SoterAI protects chatbots from prompt injection, jailbreaks, PII leakage, and unsafe content",
-  icon: "shield",
+  icon: "icon.png",
 
   configuration: {
     schema: {

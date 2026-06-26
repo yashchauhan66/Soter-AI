@@ -33,7 +33,7 @@ class SoterInputGuard_Tools {
   name = "soterInputGuard";
   version = 1.0;
   type = "SoterInputGuard";
-  icon = "soter-guard.svg";
+  icon = "soterai.png";
   category = "Security";
   description = "Check user input for prompt injection, jailbreaks, and threats before LLM processing";
   baseClasses = [this.type, "Tool"];
@@ -125,7 +125,7 @@ class SoterOutputGuard_Tools {
   name = "soterOutputGuard";
   version = 1.0;
   type = "SoterOutputGuard";
-  icon = "soter-guard.svg";
+  icon = "soterai.png";
   category = "Security";
   description = "Check AI output for unsafe content, system prompt leakage, and PII before sending to the user";
   baseClasses = [this.type, "Tool"];
@@ -213,7 +213,7 @@ class SoterPiiRedactor_Tools {
   name = "soterPiiRedactor";
   version = 1.0;
   type = "SoterPiiRedactor";
-  icon = "soter-guard.svg";
+  icon = "soterai.png";
   category = "Security";
   description = "Redact PII, secrets, and sensitive data from text";
   baseClasses = [this.type, "Tool"];
@@ -284,7 +284,7 @@ class SoterRagScanner_Tools {
   name = "soterRagScanner";
   version = 1.0;
   type = "SoterRagScanner";
-  icon = "soter-guard.svg";
+  icon = "soterai.png";
   category = "Security";
   description = "Scan documents for threats before adding to RAG/vector databases";
   baseClasses = [this.type, "Tool"];
