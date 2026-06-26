@@ -2,6 +2,13 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.1.7] - 2026-06-26
+
+### Changed
+
+- Temporarily changed the default n8n API Base URL to `http://13.200.123.232:3000` because `soterai.publicvm.com` DNS is currently not resolving reliably from n8n runtimes.
+- Added README guidance for updating existing n8n credentials that still point to `.dev` or `soterai.publicvm.com`.
+
 ## [0.1.6] - 2026-06-26
 
 ### Changed

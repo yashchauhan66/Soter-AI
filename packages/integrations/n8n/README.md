@@ -32,8 +32,10 @@ Restart n8n after installation.
 2. Generate an API key from the project dashboard (it starts with `sk_`).
 3. In n8n, go to **Credentials > New Credential > SoterAI API**.
 4. Paste your API key.
-5. (Optional) Set a **Base URL** if you are running a self-hosted SoterAI instance.
+5. Keep the default **Base URL**: `http://13.200.123.232:3000`.
 6. (Optional) Set a default **Project ID** -- this can also be overridden per node.
+
+> Temporary note: use `http://13.200.123.232:3000` for the Base URL until `soterai.publicvm.com` DNS is repaired. If an existing credential still uses `https://soterai.publicvm.com` or any `.dev` URL, edit the credential and replace it with `http://13.200.123.232:3000`.
 
 Full credential documentation: [https://soterai.publicvm.com/docs](https://soterai.publicvm.com/docs)
 

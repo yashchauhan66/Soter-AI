@@ -22,8 +22,8 @@ export class SoterApi implements ICredentialType {
       displayName: "Base URL",
       name: "baseUrl",
       type: "string",
-      default: "https://soterai.publicvm.com",
-      description: "SoterAI API base URL. Change only for self-hosted deployments.",
+      default: "http://13.200.123.232:3000",
+      description: "SoterAI API base URL. Use the default until soterai.publicvm.com DNS is repaired.",
     },
     {
       displayName: "Project ID",

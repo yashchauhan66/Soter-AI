@@ -1,6 +1,8 @@
 import { db } from "../lib/db";
 import { phase5Benchmark } from "../lib/classifiers/datasets/phase5Benchmark";
+import { guardRedTeamBenchmark } from "../lib/classifiers/datasets/guardRedTeamBenchmark";
 import { runClassifierBenchmark } from "../lib/classifiers/evaluation";
+import { runGuardRedTeamBenchmark } from "../lib/classifiers/guardRedTeamEvaluation";
 import { HeuristicMLBackend } from "../lib/ml/training";
 
 async function main() {
@@ -32,6 +34,23 @@ async function main() {
         accuracy: correct / phase5Benchmark.length,
         calibrationError: calibration / phase5Benchmark.length,
         perRisk,
+      },
+      null,
+      2,
+    ),
+  );
+
+  const redTeam = runGuardRedTeamBenchmark(guardRedTeamBenchmark);
+  console.log("\nGuard red-team benchmark metrics:");
+  console.log(
+    JSON.stringify(
+      {
+        total: redTeam.total,
+        passed: redTeam.passed,
+        recall: redTeam.recall,
+        falsePositiveRate: redTeam.falsePositiveRate,
+        perCategory: redTeam.perCategory,
+        missed: redTeam.missed,
       },
       null,
       2,

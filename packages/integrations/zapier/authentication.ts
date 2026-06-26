@@ -28,7 +28,7 @@ const authentication = {
       label: "Base URL",
       type: "string" as const,
       required: false,
-      default: "https://api.cybersecurityguard.com",
+      default: "https://api.soterai.dev",
       helpText: "SoterAI API base URL. Change only for self-hosted deployments.",
     },
     {
