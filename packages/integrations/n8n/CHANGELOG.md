@@ -2,6 +2,12 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.1.4] - 2026-06-26
+
+### Fixed
+
+- Added fetch typings for the GitHub Actions TypeScript build environment.
+
 ## [0.1.3] - 2026-06-26
 
 ### Changed
