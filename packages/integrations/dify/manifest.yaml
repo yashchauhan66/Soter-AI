@@ -1,0 +1,33 @@
+version: "0.1.0"
+type: plugin
+author: Soter AI
+name: soter-guard
+label:
+  en_US: Soter Guard
+  zh_Hans: Soter Guard
+description:
+  en_US: AI security guard — protect your Dify workflows from prompt injection, jailbreaks, PII leakage, and unsafe AI outputs
+  zh_Hans: AI security guard
+icon: icon.svg
+category: security
+
+credentials_for_provider:
+  soter_api_key:
+    type: secret-input
+    required: true
+    label:
+      en_US: Soter API Key
+    placeholder:
+      en_US: sk_...
+  soter_base_url:
+    type: text-input
+    required: false
+    label:
+      en_US: Base URL
+    placeholder:
+      en_US: https://api.cybersecurityguard.com
+  soter_project_id:
+    type: text-input
+    required: false
+    label:
+      en_US: Project ID

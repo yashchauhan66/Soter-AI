@@ -1,0 +1,31 @@
+{
+  "name": "soter-guard",
+  "label": "Soter Guard",
+  "description": "AI security guard — protect workflows from prompt injection, jailbreaks, PII leakage, and unsafe AI outputs.",
+  "version": "1.0.0",
+  "language": "en",
+  "categories": ["security", "ai"],
+  "baseUrl": "https://api.cybersecurityguard.com",
+  "connections": [
+    {
+      "name": "soter-api-key",
+      "label": "Soter Guard API Key",
+      "type": "apikey",
+      "parameters": [
+        {
+          "name": "apiKey",
+          "label": "API Key",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "baseUrl",
+          "label": "Base URL",
+          "type": "text",
+          "required": false,
+          "default": "https://api.cybersecurityguard.com"
+        }
+      ]
+    }
+  ]
+}

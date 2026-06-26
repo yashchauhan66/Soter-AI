@@ -1,0 +1,47 @@
+identity:
+  name: input_guard
+  author: Soter AI
+  label:
+    en_US: Input Guard
+    zh_Hans: Input Guard
+description:
+  human:
+    en_US: Check user input for prompt injection, jailbreaks, PII leakage, and other threats before LLM processing.
+  llm: Check user input text for AI security threats using Soter Guard API.
+parameters:
+  - name: text
+    type: string
+    required: true
+    label:
+      en_US: Input Text
+    human_description:
+      en_US: The user message to check for threats.
+    llm_description: The user input text to scan for prompt injection, jailbreaks, and other threats.
+    form: llm
+  - name: policy_mode
+    type: select
+    required: false
+    label:
+      en_US: Policy Mode
+    human_description:
+      en_US: Server-side policy strictness.
+    options:
+      - value: MONITOR
+        label:
+          en_US: Monitor
+      - value: BALANCED
+        label:
+          en_US: Balanced
+      - value: STRICT
+        label:
+          en_US: Strict
+    default: BALANCED
+    form: form
+  - name: project_id
+    type: string
+    required: false
+    label:
+      en_US: Project ID
+    human_description:
+      en_US: Soter project ID (optional override).
+    form: form
