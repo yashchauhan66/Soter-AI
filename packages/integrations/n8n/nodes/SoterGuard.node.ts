@@ -11,7 +11,7 @@ export class SoterGuard implements INodeType {
   description: INodeTypeDescription = {
     displayName: "SoterAI",
     name: "soterGuard",
-    icon: "fa:shield-alt",
+    icon: "file:soterai.png",
     group: ["transform"],
     version: 1,
     subtitle: '={{$parameter["action"]}}',
