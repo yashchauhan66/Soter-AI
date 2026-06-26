@@ -2,6 +2,12 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.1.3] - 2026-06-26
+
+### Changed
+
+- Aligned the npm publishing workflow with Node.js 22 and a more resilient dependency install step.
+
 ## [0.1.2] - 2026-06-26
 
 ### Changed

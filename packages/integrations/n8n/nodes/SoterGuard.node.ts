@@ -354,7 +354,7 @@ async function soterPost(
     headers: {
       "Content-Type": "application/json",
       "x-api-key": apiKey,
-      "User-Agent": "n8n-nodes-soterai/0.1.2",
+      "User-Agent": "n8n-nodes-soterai/0.1.3",
     },
     body: JSON.stringify(body),
   });
