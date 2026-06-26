@@ -1,0 +1,91 @@
+{
+  "name": "Soter Guard Protected Chatbot",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "action": "inputGuard",
+        "inputText": "={{$json.message}}",
+        "policyMode": "BALANCED",
+        "onThreat": "BLOCK",
+        "projectId": ""
+      },
+      "name": "Soter Input Guard",
+      "type": "@soter/n8n-nodes-soter-guard.soterGuard",
+      "typeVersion": 1,
+      "position": [450, 300],
+      "credentials": {
+        "soterApi": {
+          "id": "1",
+          "name": "Soter Guard API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.blocked}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "name": "Threat Check",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "reply",
+              "value": "I'm sorry, I cannot process that request for security reasons."
+            }
+          ]
+        }
+      },
+      "name": "Blocked Response",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 1,
+      "position": [850, 200]
+    },
+    {
+      "parameters": {
+        "action": "outputGuard",
+        "outputText": "={{$json.llmResponse}}",
+        "policyMode": "BALANCED",
+        "onThreat": "REDACT"
+      },
+      "name": "Soter Output Guard",
+      "type": "@soter/n8n-nodes-soter-guard.soterGuard",
+      "typeVersion": 1,
+      "position": [1050, 400],
+      "credentials": {
+        "soterApi": {
+          "id": "1",
+          "name": "Soter Guard API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Start": { "main": [[{ "node": "Soter Input Guard", "type": "main", "index": 0 }]] },
+    "Soter Input Guard": { "main": [[{ "node": "Threat Check", "type": "main", "index": 0 }]] },
+    "Threat Check": {
+      "main": [
+        [{ "node": "Blocked Response", "type": "main", "index": 0 }],
+        [{ "node": "Soter Output Guard", "type": "main", "index": 0 }]
+      ]
+    }
+  }
+}

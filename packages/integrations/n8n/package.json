@@ -1,0 +1,33 @@
+{
+  "name": "@soter/n8n-nodes-soter-guard",
+  "version": "1.0.0",
+  "description": "n8n community node for Soter Guard AI security — input/output guard, PII redaction, RAG scanning",
+  "license": "MIT",
+  "homepage": "https://github.com/soter-ai/soter-guard",
+  "author": "Soter AI",
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/SoterApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/SoterGuard.node.js"
+    ]
+  },
+  "main": "dist/nodes/SoterGuard.node.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "tsc --noEmit"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "n8n-workflow": "^1.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "n8n-workflow": ">=1.0.0"
+  }
+}

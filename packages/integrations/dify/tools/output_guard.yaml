@@ -1,0 +1,43 @@
+identity:
+  name: output_guard
+  author: Soter AI
+  label:
+    en_US: Output Guard
+    zh_Hans: Output Guard
+description:
+  human:
+    en_US: Check AI output for unsafe content, system prompt leakage, and PII before sending to the user.
+  llm: Check AI-generated response for security threats using Soter Guard API.
+parameters:
+  - name: text
+    type: string
+    required: true
+    label:
+      en_US: AI Output Text
+    human_description:
+      en_US: The AI response to check before delivering to the user.
+    llm_description: The AI output text to scan for unsafe content.
+    form: llm
+  - name: policy_mode
+    type: select
+    required: false
+    label:
+      en_US: Policy Mode
+    options:
+      - value: MONITOR
+        label:
+          en_US: Monitor
+      - value: BALANCED
+        label:
+          en_US: Balanced
+      - value: STRICT
+        label:
+          en_US: Strict
+    default: BALANCED
+    form: form
+  - name: project_id
+    type: string
+    required: false
+    label:
+      en_US: Project ID
+    form: form

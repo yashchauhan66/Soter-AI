@@ -1,0 +1,101 @@
+[
+  {
+    "name": "inputGuard",
+    "label": "Check Input for Threats",
+    "description": "Check user input for prompt injection, jailbreaks, and other AI security threats using Soter Guard.",
+    "connection": "soter-api-key",
+    "expect": [
+      { "name": "text", "type": "text", "label": "Input Text", "required": true },
+      { "name": "policyMode", "type": "select", "label": "Policy Mode", "required": false, "default": "BALANCED", "options": [{ "label": "Monitor", "value": "MONITOR" }, { "label": "Balanced", "value": "BALANCED" }, { "label": "Strict", "value": "STRICT" }] },
+      { "name": "projectId", "type": "text", "label": "Project ID", "required": false }
+    ],
+    "url": "{{connection.baseUrl}}/api/guard/input",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "x-api-key": "{{connection.apiKey}}",
+      "User-Agent": "soter-make/1.0"
+    },
+    "body": {
+      "message": "{{parameters.text}}",
+      "metadata": {
+        "projectId": "{{parameters.projectId}}",
+        "policyMode": "{{parameters.policyMode}}"
+      }
+    },
+    "response": {
+      "output": {
+        "allowed": "{{body.allowed}}",
+        "riskScore": "{{body.riskScore}}",
+        "categories": "{{body.riskTypes}}",
+        "safeText": "{{body.safeText}}",
+        "reason": "{{body.reason}}"
+      }
+    }
+  },
+  {
+    "name": "outputGuard",
+    "label": "Check AI Output for Threats",
+    "description": "Check AI-generated responses for unsafe content before sending to users.",
+    "connection": "soter-api-key",
+    "expect": [
+      { "name": "text", "type": "text", "label": "AI Output Text", "required": true },
+      { "name": "policyMode", "type": "select", "label": "Policy Mode", "required": false, "default": "BALANCED", "options": [{ "label": "Monitor", "value": "MONITOR" }, { "label": "Balanced", "value": "BALANCED" }, { "label": "Strict", "value": "STRICT" }] },
+      { "name": "projectId", "type": "text", "label": "Project ID", "required": false }
+    ],
+    "url": "{{connection.baseUrl}}/api/guard/output",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "x-api-key": "{{connection.apiKey}}",
+      "User-Agent": "soter-make/1.0"
+    },
+    "body": {
+      "aiResponse": "{{parameters.text}}",
+      "metadata": {
+        "projectId": "{{parameters.projectId}}",
+        "policyMode": "{{parameters.policyMode}}"
+      }
+    },
+    "response": {
+      "output": {
+        "allowed": "{{body.allowed}}",
+        "riskScore": "{{body.riskScore}}",
+        "categories": "{{body.riskTypes}}",
+        "safeText": "{{body.safeText}}",
+        "reason": "{{body.reason}}"
+      }
+    }
+  },
+  {
+    "name": "piiRedactor",
+    "label": "Redact PII from Text",
+    "description": "Redact personally identifiable information and secrets from text.",
+    "connection": "soter-api-key",
+    "expect": [
+      { "name": "text", "type": "text", "label": "Text", "required": true },
+      { "name": "redactionMode", "type": "select", "label": "Redaction Mode", "required": false, "default": "PARTIAL", "options": [{ "label": "Partial", "value": "PARTIAL" }, { "label": "Full", "value": "FULL" }, { "label": "Hash", "value": "HASH" }] },
+      { "name": "projectId", "type": "text", "label": "Project ID", "required": false }
+    ],
+    "url": "{{connection.baseUrl}}/api/guard/input",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "x-api-key": "{{connection.apiKey}}",
+      "User-Agent": "soter-make/1.0"
+    },
+    "body": {
+      "message": "{{parameters.text}}",
+      "metadata": {
+        "projectId": "{{parameters.projectId}}",
+        "_redactionMode": "{{parameters.redactionMode}}"
+      }
+    },
+    "response": {
+      "output": {
+        "safeText": "{{body.safeText}}",
+        "riskScore": "{{body.riskScore}}"
+      }
+    }
+  }
+]

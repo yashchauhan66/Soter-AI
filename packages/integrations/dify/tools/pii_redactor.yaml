@@ -1,0 +1,43 @@
+identity:
+  name: pii_redactor
+  author: Soter AI
+  label:
+    en_US: PII Redactor
+    zh_Hans: PII Redactor
+description:
+  human:
+    en_US: Redact PII, secrets, and sensitive data from any text.
+  llm: Redact personally identifiable information from text using Soter Guard.
+parameters:
+  - name: text
+    type: string
+    required: true
+    label:
+      en_US: Text
+    human_description:
+      en_US: The text to scan and redact PII from.
+    llm_description: Text to redact PII and secrets from.
+    form: llm
+  - name: redaction_mode
+    type: select
+    required: false
+    label:
+      en_US: Redaction Mode
+    options:
+      - value: PARTIAL
+        label:
+          en_US: Partial
+      - value: FULL
+        label:
+          en_US: Full
+      - value: HASH
+        label:
+          en_US: Hash
+    default: PARTIAL
+    form: form
+  - name: project_id
+    type: string
+    required: false
+    label:
+      en_US: Project ID
+    form: form
