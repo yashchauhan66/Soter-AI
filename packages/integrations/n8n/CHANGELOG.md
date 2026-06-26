@@ -2,6 +2,13 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.1.2] - 2026-06-26
+
+### Changed
+
+- Hardened the GitHub Actions npm publishing workflow with lint and package verification checks.
+- Updated the n8n node user agent and display text polish for marketplace release.
+
 ## [0.1.1] - 2026-06-26
 
 ### Changed
