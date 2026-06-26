@@ -24,7 +24,7 @@ Follow these steps to publish the SoterAI n8n community node to npm.
    git push origin n8n-v0.1.0
    ```
 2. The `publish-n8n.yml` GitHub Actions workflow will automatically build and publish to npm.
-3. Monitor the workflow run at: `https://github.com/SoterAI/n8n-nodes-soterai/actions`
+3. Monitor the workflow run at: `https://github.com/yashchauhan66/Soter-AI/actions`
 
 ## Publish Manually
 

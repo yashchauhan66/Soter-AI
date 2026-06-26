@@ -6,7 +6,7 @@
 
 SoterAI community node for [n8n](https://n8n.io) -- protect your AI workflows from prompt injection, jailbreaks, PII leakage, and unsafe outputs.
 
-SoterAI is an AI security platform that sits between your users and your LLMs. It analyses every input and output in real time, blocks threats, redacts sensitive data, and logs incidents for compliance. This n8n node lets you add that protection to any n8n workflow with drag-and-drop.
+SoterAI is an AI security platform that sits between your users and your LLMs. It analyses every input and output in real time, blocks threats, redacts sensitive data, and records incidents for audit review. This n8n node lets you add that protection to any n8n workflow with drag-and-drop.
 
 ## Installation
 
@@ -87,7 +87,7 @@ Scan documents and text chunks for embedded threats, hidden instructions, or dat
 
 ### SoterAI Incident Logger
 
-Log a security incident to the SoterAI ops dashboard for tracking and compliance. This action requires admin-level API access and will return a graceful no-op if the caller lacks the required permissions.
+Log a security incident to the SoterAI ops dashboard for security review. This action requires admin-level API access and will return a graceful no-op if the caller lacks the required permissions.
 
 | Field | Type | Description |
 |-------|------|-------------|
@@ -171,13 +171,18 @@ To import: in n8n, go to **Workflows > Import from File** and select the JSON fi
 - [SoterAI Documentation](https://docs.soterai.dev)
 - [n8n Integration Guide](https://docs.soterai.dev/integrations/n8n)
 - [SoterAI Dashboard](https://app.soterai.dev)
-- [GitHub Repository](https://github.com/SoterAI/n8n-nodes-soterai)
+- [Privacy Policy](https://soterai.dev/privacy)
+- [Terms of Service](https://soterai.dev/terms)
+- [Pricing](https://soterai.dev/pricing)
+- [Status](https://soterai.dev/status)
+- [Support](https://soterai.dev/support)
+- [GitHub Repository](https://github.com/yashchauhan66/Soter-AI/tree/main/packages/integrations/n8n)
 - [npm Package](https://www.npmjs.com/package/n8n-nodes-soterai)
 
 ## Support
 
 - **Email**: support@soterai.dev
-- **GitHub Issues**: [https://github.com/SoterAI/n8n-nodes-soterai/issues](https://github.com/SoterAI/n8n-nodes-soterai/issues)
+- **GitHub Issues**: [https://github.com/yashchauhan66/Soter-AI/issues](https://github.com/yashchauhan66/Soter-AI/issues)
 - **Documentation**: [https://docs.soterai.dev](https://docs.soterai.dev)
 
 ## License

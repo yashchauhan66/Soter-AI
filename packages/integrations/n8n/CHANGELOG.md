@@ -2,6 +2,14 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.1.1] - 2026-06-26
+
+### Changed
+
+- Updated package metadata for n8n Creator Portal review.
+- Added explicit SoterAI privacy, terms, pricing, status, and support links to the README.
+- Removed unsupported compliance wording from the README.
+
 ## [0.1.0] - 2026-06-26
 
 ### Added
