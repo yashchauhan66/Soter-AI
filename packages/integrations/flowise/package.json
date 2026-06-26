@@ -1,9 +1,21 @@
 {
-  "name": "@soter/flowise-soter-guard",
-  "version": "1.0.0",
-  "description": "Flowise custom nodes for Soter Guard AI security — input/output guard, PII redaction",
+  "name": "flowise-nodes-soterai",
+  "version": "0.1.0",
+  "description": "SoterAI custom nodes for Flowise — protect AI workflows from prompt injection, jailbreaks, PII leakage, and unsafe outputs",
   "license": "MIT",
+  "author": "SoterAI <support@soterai.dev>",
+  "keywords": [
+    "flowise",
+    "custom-node",
+    "ai-security",
+    "soterai",
+    "prompt-injection",
+    "guardrails"
+  ],
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch"

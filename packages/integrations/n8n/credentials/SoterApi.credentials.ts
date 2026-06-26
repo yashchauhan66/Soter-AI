@@ -5,8 +5,8 @@ import type {
 
 export class SoterApi implements ICredentialType {
   name = "soterApi";
-  displayName = "Soter Guard API";
-  documentationUrl = "https://docs.cybersecurityguard.com/integrations/n8n";
+  displayName = "SoterAI API";
+  documentationUrl = "https://docs.soterai.dev/integrations/n8n";
 
   properties: INodeProperties[] = [
     {
@@ -16,14 +16,14 @@ export class SoterApi implements ICredentialType {
       typeOptions: { password: true },
       default: "",
       required: true,
-      description: "Your Soter Guard API key (sk_...)",
+      description: "Your SoterAI API key (sk_...)",
     },
     {
       displayName: "Base URL",
       name: "baseUrl",
       type: "string",
-      default: "https://api.cybersecurityguard.com",
-      description: "Soter Guard API base URL. Change only for self-hosted deployments.",
+      default: "https://api.soterai.dev",
+      description: "SoterAI API base URL. Change only for self-hosted deployments.",
     },
     {
       displayName: "Project ID",

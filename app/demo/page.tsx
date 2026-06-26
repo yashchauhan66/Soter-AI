@@ -59,21 +59,28 @@ export default function DemoPage(){
               }
             />
           ) : (
-            <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-700 bg-slate-950/60 py-20 text-center">
+            <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-700 bg-slate-950/60 py-16 text-center">
               <div className="mb-4 rounded-full bg-cyan/10 p-4">
                 <Film className="h-8 w-8 text-cyan" />
               </div>
-              <p className="text-lg font-semibold text-slate-300">Record your demo video</p>
-              <p className="mt-2 max-w-md text-sm text-slate-500">
-                Record with Loom or OBS, then save as <code className="rounded bg-slate-800 px-1.5 py-0.5 text-xs">public/videos/soterai-demo.mp4</code>
-                and set <code className="rounded bg-slate-800 px-1.5 py-0.5 text-xs">NEXT_PUBLIC_DEMO_VIDEO_SRC=/videos/soterai-demo.mp4</code> in your env.
+              <p className="text-lg font-semibold text-slate-200">Prefer hands-on?</p>
+              <p className="mt-2 max-w-md text-sm text-slate-400">
+                Skip the video — try SoterAI yourself. Fire a prompt-injection or PII attack in the live playground and watch it get blocked in under 50ms.
               </p>
-              <a
-                href="/docs/recording-demo-video-guide.md"
-                className="button-secondary mt-6 inline-flex items-center gap-2"
-              >
-                View recording guide
-              </a>
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                <Link href="/playground" className="button-primary inline-flex items-center gap-2">Open live playground</Link>
+                <button
+                  onClick={() => document.getElementById("demo-animated")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+                  className="button-secondary inline-flex items-center gap-2"
+                >
+                  Watch animated demo
+                </button>
+              </div>
+              {process.env.NODE_ENV !== "production" && (
+                <p className="mt-6 max-w-md text-xs text-slate-600">
+                  Dev note: drop a recording at <code className="rounded bg-slate-800 px-1 py-0.5">public/videos/soterai-demo.mp4</code> and set <code className="rounded bg-slate-800 px-1 py-0.5">NEXT_PUBLIC_DEMO_VIDEO_SRC</code> + <code className="rounded bg-slate-800 px-1 py-0.5">NEXT_PUBLIC_DEMO_VIDEO_ID</code> to embed it here.
+                </p>
+              )}
             </div>
           )}
         </div>

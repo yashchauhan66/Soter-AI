@@ -1,12 +1,12 @@
 /**
- * Soter Input Guard — Flowise Custom Tool
+ * SoterAI Guard — Flowise Custom Nodes
  *
  * Checks user messages for prompt injection, jailbreaks, PII leakage,
  * and other threats before they reach the LLM.
  *
  * Installation:
- * 1. Copy this file to your Flowise custom nodes directory
- * 2. Set your Soter API key in the node configuration
+ * 1. npm install flowise-nodes-soterai, or copy dist/ to your Flowise custom nodes directory
+ * 2. Set your SoterAI API key in the node configuration
  * 3. Connect before your LLM node in the flow
  */
 
@@ -29,7 +29,7 @@ interface SoterGuardResult {
 }
 
 class SoterInputGuard_Tools {
-  label = "Soter Input Guard";
+  label = "SoterAI Input Guard";
   name = "soterInputGuard";
   version = 1.0;
   type = "SoterInputGuard";
@@ -40,7 +40,7 @@ class SoterInputGuard_Tools {
 
   inputs = [
     {
-      label: "Soter API Key",
+      label: "SoterAI API Key",
       name: "apiKey",
       type: "password",
       placeholder: "sk_...",
@@ -121,7 +121,7 @@ class SoterInputGuard_Tools {
 }
 
 class SoterOutputGuard_Tools {
-  label = "Soter Output Guard";
+  label = "SoterAI Output Guard";
   name = "soterOutputGuard";
   version = 1.0;
   type = "SoterOutputGuard";
@@ -132,7 +132,7 @@ class SoterOutputGuard_Tools {
 
   inputs = [
     {
-      label: "Soter API Key",
+      label: "SoterAI API Key",
       name: "apiKey",
       type: "password",
       placeholder: "sk_...",
@@ -209,7 +209,7 @@ class SoterOutputGuard_Tools {
 }
 
 class SoterPiiRedactor_Tools {
-  label = "Soter PII Redactor";
+  label = "SoterAI PII Redactor";
   name = "soterPiiRedactor";
   version = 1.0;
   type = "SoterPiiRedactor";
@@ -220,7 +220,7 @@ class SoterPiiRedactor_Tools {
 
   inputs = [
     {
-      label: "Soter API Key",
+      label: "SoterAI API Key",
       name: "apiKey",
       type: "password",
       placeholder: "sk_...",
@@ -279,7 +279,114 @@ class SoterPiiRedactor_Tools {
   }
 }
 
-// ── Shared HTTP helper ──────────────────────────────────────────────────
+class SoterRagScanner_Tools {
+  label = "SoterAI RAG Scanner";
+  name = "soterRagScanner";
+  version = 1.0;
+  type = "SoterRagScanner";
+  icon = "soter-guard.svg";
+  category = "Security";
+  description = "Scan documents for threats before adding to RAG/vector databases";
+  baseClasses = [this.type, "Tool"];
+
+  inputs = [
+    {
+      label: "SoterAI API Key",
+      name: "apiKey",
+      type: "password",
+      placeholder: "sk_...",
+    },
+    {
+      label: "Base URL",
+      name: "baseUrl",
+      type: "string",
+      default: "https://api.cybersecurityguard.com",
+      optional: true,
+    },
+    {
+      label: "Project ID",
+      name: "projectId",
+      type: "string",
+      optional: true,
+    },
+    {
+      label: "Source Name",
+      name: "sourceName",
+      type: "string",
+      optional: true,
+    },
+    {
+      label: "Policy Mode",
+      name: "policyMode",
+      type: "options",
+      options: [
+        { label: "Monitor", name: "MONITOR" },
+        { label: "Balanced", name: "BALANCED" },
+        { label: "Strict", name: "STRICT" },
+      ],
+      default: "BALANCED",
+      optional: true,
+    },
+  ];
+
+  async init(nodeData: Record<string, unknown>): Promise<{
+    apiKey: string;
+    baseUrl: string;
+    projectId?: string;
+    sourceName?: string;
+    policyMode?: string;
+  }> {
+    const inputs = nodeData.inputs as Record<string, unknown>;
+    return {
+      apiKey: inputs.apiKey as string,
+      baseUrl: (inputs.baseUrl as string) || "https://api.cybersecurityguard.com",
+      projectId: inputs.projectId as string | undefined,
+      sourceName: inputs.sourceName as string | undefined,
+      policyMode: (inputs.policyMode as string) || "BALANCED",
+    };
+  }
+
+  async run(
+    params: { apiKey: string; baseUrl: string; projectId?: string; sourceName?: string; policyMode?: string },
+    input: string,
+  ): Promise<string> {
+    const metadata: Record<string, unknown> = { _ragScan: true };
+    if (params.sourceName) metadata._sourceName = params.sourceName;
+    if (params.projectId) metadata.projectId = params.projectId;
+    if (params.policyMode) metadata.policyMode = params.policyMode;
+
+    const response = await fetch(`${params.baseUrl.replace(/\/$/, "")}/api/guard/input`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": params.apiKey,
+        "User-Agent": "soterai-flowise/1.0",
+      },
+      body: JSON.stringify({ message: input, metadata }),
+    });
+
+    const data = (await response.json()) as Record<string, unknown>;
+    if (!response.ok) {
+      throw new Error(typeof data.message === "string" ? data.message : `SoterAI API error ${response.status}`);
+    }
+
+    const findings = (data.findings as Array<Record<string, unknown>>) ?? [];
+    const issues = findings.map((f) => ({
+      type: f.type,
+      severity: f.severity,
+      message: f.message ?? f.label ?? "",
+    }));
+
+    return JSON.stringify({
+      allowed: data.allowed ?? true,
+      riskScore: data.riskScore ?? 0,
+      issues,
+      safeText: (data.safeText as string) ?? (data.redactedText as string) ?? input,
+    });
+  }
+}
+
+// -- Shared HTTP helper --
 
 async function callSoterGuard(
   apiKey: string,
@@ -298,14 +405,14 @@ async function callSoterGuard(
     headers: {
       "Content-Type": "application/json",
       "x-api-key": apiKey,
-      "User-Agent": "soter-flowise-node/1.0",
+      "User-Agent": "soterai-flowise/1.0",
     },
     body: JSON.stringify({ ...body, metadata }),
   });
 
   const data = await response.json() as Record<string, unknown>;
   if (!response.ok) {
-    throw new Error(typeof data.message === "string" ? data.message : `Soter API error ${response.status}`);
+    throw new Error(typeof data.message === "string" ? data.message : `SoterAI API error ${response.status}`);
   }
   return data;
 }
@@ -343,6 +450,7 @@ module.exports = {
   nodeClass: SoterInputGuard_Tools,
   SoterOutputGuard: SoterOutputGuard_Tools,
   SoterPiiRedactor: SoterPiiRedactor_Tools,
+  SoterRagScanner: SoterRagScanner_Tools,
 };
 
-export { SoterInputGuard_Tools, SoterOutputGuard_Tools, SoterPiiRedactor_Tools };
+export { SoterInputGuard_Tools, SoterOutputGuard_Tools, SoterPiiRedactor_Tools, SoterRagScanner_Tools };

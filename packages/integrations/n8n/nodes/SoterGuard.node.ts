@@ -9,15 +9,15 @@ import { NodeOperationError } from "n8n-workflow";
 
 export class SoterGuard implements INodeType {
   description: INodeTypeDescription = {
-    displayName: "Soter Guard",
+    displayName: "SoterAI",
     name: "soterGuard",
     icon: "fa:shield-alt",
     group: ["transform"],
     version: 1,
     subtitle: '={{$parameter["action"]}}',
-    description: "Protect AI workflows with Soter Guard — input/output scanning, PII redaction, RAG security",
+    description: "Protect AI workflows with SoterAI — input/output guard, PII redaction, RAG document scanning",
     defaults: {
-      name: "Soter Guard",
+      name: "SoterAI",
     },
     inputs: ["main"],
     outputs: ["main"],
@@ -35,28 +35,34 @@ export class SoterGuard implements INodeType {
         noDataExpression: true,
         options: [
           {
-            name: "Input Guard",
+            name: "SoterAI Input Guard",
             value: "inputGuard",
             description: "Check user message before it reaches the LLM",
             action: "Check user input for threats",
           },
           {
-            name: "Output Guard",
+            name: "SoterAI Output Guard",
             value: "outputGuard",
             description: "Check AI response before it is sent to the user",
             action: "Check AI output for threats",
           },
           {
-            name: "PII Redactor",
+            name: "SoterAI PII Redactor",
             value: "piiRedactor",
             description: "Redact sensitive data (PII, secrets) from any text",
             action: "Redact PII from text",
           },
           {
-            name: "RAG Scanner",
+            name: "SoterAI RAG Scanner",
             value: "ragScanner",
             description: "Scan documents/chunks before adding to RAG/vector DB",
             action: "Scan RAG document for threats",
+          },
+          {
+            name: "SoterAI Incident Logger",
+            value: "incidentLogger",
+            description: "Log a security incident to the SoterAI ops dashboard. Requires admin access; returns a graceful no-op if the caller lacks permissions.",
+            action: "Log security incident",
           },
         ],
         default: "inputGuard",
@@ -131,13 +137,53 @@ export class SoterGuard implements INodeType {
         description: 'Optional label for the document source (e.g. "uploaded-pdf", "web-scrape")',
       },
 
+      // ── Incident Logger fields ──
+      {
+        displayName: "Platform",
+        name: "incidentPlatform",
+        type: "string",
+        default: "n8n",
+        required: true,
+        displayOptions: { show: { action: ["incidentLogger"] } },
+        description: 'Platform where the incident originated (e.g. "n8n", "slack", "api")',
+      },
+      {
+        displayName: "Workflow ID",
+        name: "incidentWorkflowId",
+        type: "string",
+        default: "",
+        required: true,
+        displayOptions: { show: { action: ["incidentLogger"] } },
+        description: "ID of the workflow or process where the incident was detected",
+      },
+      {
+        displayName: "Risk Score",
+        name: "incidentRiskScore",
+        type: "number",
+        typeOptions: { minValue: 0, maxValue: 1, numberStepSize: 0.01 },
+        default: 0,
+        required: true,
+        displayOptions: { show: { action: ["incidentLogger"] } },
+        description: "Risk score from 0.0 (safe) to 1.0 (critical)",
+      },
+      {
+        displayName: "Reason",
+        name: "incidentReason",
+        type: "string",
+        typeOptions: { rows: 2 },
+        default: "",
+        required: true,
+        displayOptions: { show: { action: ["incidentLogger"] } },
+        description: "Human-readable reason or description for the incident",
+      },
+
       // ── Common fields ──
       {
         displayName: "Project ID",
         name: "projectId",
         type: "string",
         default: "",
-        description: "Soter project ID (overrides the credential default)",
+        description: "SoterAI project ID (overrides the credential default)",
       },
       {
         displayName: "Policy Mode",
@@ -164,7 +210,7 @@ export class SoterGuard implements INodeType {
         ],
         default: "BLOCK",
         displayOptions: { show: { action: ["inputGuard", "outputGuard"] } },
-        description: "What to do locally when Soter flags a threat",
+        description: "What to do locally when SoterAI flags a threat",
       },
       {
         displayName: "Metadata JSON",
@@ -183,7 +229,7 @@ export class SoterGuard implements INodeType {
 
     const credentials = await this.getCredentials("soterApi");
     const apiKey = credentials.apiKey as string;
-    const baseUrl = (credentials.baseUrl as string) || "https://api.cybersecurityguard.com";
+    const baseUrl = (credentials.baseUrl as string) || "https://api.soterai.dev";
     const credentialProjectId = (credentials.projectId as string) || undefined;
 
     for (let i = 0; i < items.length; i++) {
@@ -230,6 +276,16 @@ export class SoterGuard implements INodeType {
             });
             break;
           }
+          case "incidentLogger": {
+            const platform = this.getNodeParameter("incidentPlatform", i) as string;
+            const workflowId = this.getNodeParameter("incidentWorkflowId", i) as string;
+            const riskScore = this.getNodeParameter("incidentRiskScore", i) as number;
+            const reason = this.getNodeParameter("incidentReason", i) as string;
+            result = await executeIncidentLogger(apiKey, baseUrl, {
+              platform, workflowId, riskScore, reason, projectId, metadata,
+            });
+            break;
+          }
           default:
             throw new NodeOperationError(this.getNode(), `Unknown action: ${action}`, { itemIndex: i });
         }
@@ -240,7 +296,7 @@ export class SoterGuard implements INodeType {
           returnData.push({
             json: {
               error: true,
-              message: error instanceof Error ? error.message : "Soter Guard request failed.",
+              message: error instanceof Error ? error.message : "SoterAI request failed.",
             },
           });
           continue;
@@ -277,6 +333,15 @@ interface RagParams {
   metadata?: Record<string, unknown>;
 }
 
+interface IncidentParams {
+  platform: string;
+  workflowId: string;
+  riskScore: number;
+  reason: string;
+  projectId?: string;
+  metadata?: Record<string, unknown>;
+}
+
 async function soterPost(
   apiKey: string,
   baseUrl: string,
@@ -289,7 +354,7 @@ async function soterPost(
     headers: {
       "Content-Type": "application/json",
       "x-api-key": apiKey,
-      "User-Agent": "soter-n8n-node/1.0",
+      "User-Agent": "n8n-nodes-soterai/0.1.0",
     },
     body: JSON.stringify(body),
   });
@@ -297,7 +362,7 @@ async function soterPost(
   const data = await response.json() as Record<string, unknown>;
 
   if (!response.ok) {
-    const msg = typeof data.message === "string" ? data.message : `Soter API error ${response.status}`;
+    const msg = typeof data.message === "string" ? data.message : `SoterAI API error ${response.status}`;
     throw new Error(msg);
   }
 
@@ -470,6 +535,41 @@ async function executeRagScanner(
     incidentId: (raw.incidentId as string) ?? null,
     rawResponse: raw as IDataObject,
   };
+}
+
+async function executeIncidentLogger(
+  apiKey: string,
+  baseUrl: string,
+  params: IncidentParams,
+): Promise<IDataObject> {
+  const body: Record<string, unknown> = {
+    platform: params.platform,
+    workflowId: params.workflowId,
+    riskScore: params.riskScore,
+    reason: params.reason,
+  };
+  if (params.projectId) body.projectId = params.projectId;
+  if (params.metadata) body.metadata = params.metadata;
+
+  try {
+    const raw = await soterPost(apiKey, baseUrl, "/api/ops/incidents", body);
+    return {
+      logged: true,
+      incidentId: (raw.incidentId as string) ?? (raw.id as string) ?? null,
+      rawResponse: raw as IDataObject,
+    };
+  } catch (error) {
+    // Graceful no-op: if the caller lacks admin permissions, return success with logged=false
+    const message = error instanceof Error ? error.message : "Unknown error";
+    if (message.includes("403") || message.includes("401") || message.includes("Forbidden") || message.includes("Unauthorized")) {
+      return {
+        logged: false,
+        reason: "Insufficient permissions to log incidents. Admin access is required.",
+        rawResponse: { error: message } as IDataObject,
+      };
+    }
+    throw error;
+  }
 }
 
 function parseMetadata(raw: string): Record<string, unknown> | undefined {

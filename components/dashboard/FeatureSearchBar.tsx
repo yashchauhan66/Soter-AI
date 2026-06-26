@@ -80,7 +80,21 @@ export function FeatureSearchBar() {
   const [focused, setFocused] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  // Close dropdown on click outside
+  useEffect(() => {
+    if (!focused) return;
+    function handleClickOutside(e: MouseEvent) {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setFocused(false);
+        setResults([]);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [focused]);
 
   // Search with debounce
   useEffect(() => {
@@ -121,9 +135,18 @@ export function FeatureSearchBar() {
     } else if (e.key === "Escape") {
       setQuery("");
       setResults([]);
+      setFocused(false);
       inputRef.current?.blur();
     }
   };
+
+  // Scroll selected item into view
+  useEffect(() => {
+    if (resultsRef.current && results.length > 0) {
+      const selected = resultsRef.current.children[selectedIndex] as HTMLElement | undefined;
+      selected?.scrollIntoView({ block: "nearest" });
+    }
+  }, [selectedIndex, results.length]);
 
   // Cmd+K to focus
   useEffect(() => {
@@ -138,7 +161,7 @@ export function FeatureSearchBar() {
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative" ref={containerRef}>
       <div className="relative">
         <Search
           size={16}
@@ -170,7 +193,7 @@ export function FeatureSearchBar() {
         <div
           ref={resultsRef}
           id="feature-search-results"
-          className="card absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden p-2 shadow-xl"
+          className="absolute left-0 right-0 top-full z-[60] mt-2 max-h-[320px] overflow-y-auto rounded-lg border border-slate-700 bg-slate-900 p-2 shadow-2xl shadow-black/50"
           role="listbox"
         >
           {results.map((item, index) => (

@@ -1,12 +1,14 @@
-# Soter Guard — Voiceflow API Step Templates
+# SoterAI — Voiceflow API Step Templates
+
+> **Note:** These are copy-paste templates for Voiceflow API Steps. Voiceflow does not have a traditional integration marketplace.
 
 Use these templates as custom **API Step** configurations in Voiceflow
-to protect your voice/chatbot flows with Soter Guard.
+to protect your voice/chatbot flows with SoterAI.
 
 ## Architecture
 
 ```
-User Message → [Soter Input Guard API Step] → LLM / Dialog → [Soter Output Guard API Step] → Reply
+User Message → [SoterAI Input Guard API Step] → LLM / Dialog → [SoterAI Output Guard API Step] → Reply
 ```
 
 ---
@@ -19,7 +21,8 @@ User Message → [Soter Input Guard API Step] → LLM / Dialog → [Soter Output
 **Headers:**
 ```
 Content-Type: application/json
-x-api-key: {your_soter_api_key}
+x-api-key: {your_soterai_api_key}
+User-Agent: soterai-voiceflow/1.0
 ```
 
 **Body (JSON):**
@@ -57,7 +60,8 @@ x-api-key: {your_soter_api_key}
 **Headers:**
 ```
 Content-Type: application/json
-x-api-key: {your_soter_api_key}
+x-api-key: {your_soterai_api_key}
+User-Agent: soterai-voiceflow/1.0
 ```
 
 **Body (JSON):**
@@ -93,7 +97,8 @@ x-api-key: {your_soter_api_key}
 **Headers:**
 ```
 Content-Type: application/json
-x-api-key: {your_soter_api_key}
+x-api-key: {your_soterai_api_key}
+User-Agent: soterai-voiceflow/1.0
 ```
 
 **Body (JSON):**
@@ -115,25 +120,64 @@ x-api-key: {your_soter_api_key}
 
 ---
 
+## 4. RAG Scanner API Step
+
+**Method:** POST  
+**URL:** `https://api.cybersecurityguard.com/api/guard/input`
+
+**Headers:**
+```
+Content-Type: application/json
+x-api-key: {your_soterai_api_key}
+User-Agent: soterai-voiceflow/1.0
+```
+
+**Body (JSON):**
+```json
+{
+  "message": "{rag_content}",
+  "metadata": {
+    "projectId": "{your_project_id}",
+    "_ragScan": true,
+    "_sourceName": "{knowledge_base_name}",
+    "platform": "voiceflow"
+  }
+}
+```
+
+**Response Mapping:**
+| Voiceflow Variable   | JSON Path              |
+|----------------------|------------------------|
+| `rag_allowed`        | `response.allowed`     |
+| `rag_risk_score`     | `response.riskScore`   |
+| `rag_issues`         | `response.issues`      |
+| `rag_safe_text`      | `response.safeText`    |
+
+**Condition After Step:**
+- If `{rag_allowed}` is `false` → Skip or sanitize the retrieved content before passing to LLM
+- If `{rag_allowed}` is `true` → Use `{rag_safe_text}` as context for the LLM
+
+---
+
 ## Example: Protected Chatbot Flow
 
 ```
 [Start] → [Capture User Input]
-        → [API Step: Soter Input Guard]
+        → [API Step: SoterAI Input Guard]
         → [Condition: soter_allowed?]
-            ├─ No → [Speak: "I cannot process that request."] → [End]
-            └─ Yes → [AI Step: GPT/Claude with soter_safe_text]
-                   → [API Step: Soter Output Guard]
+            |-- No → [Speak: "I cannot process that request."] → [End]
+            +-- Yes → [AI Step: GPT/Claude with soter_safe_text]
+                   → [API Step: SoterAI Output Guard]
                    → [Condition: soter_output_allowed?]
-                       ├─ No → [Speak: "Let me rephrase..."] → [End]
-                       └─ Yes → [Speak: soter_output_safe] → [End]
+                       |-- No → [Speak: "Let me rephrase..."] → [End]
+                       +-- Yes → [Speak: soter_output_safe] → [End]
 ```
 
 ---
 
 ## Setup Instructions
 
-1. Get your Soter API key from https://app.cybersecurityguard.com/dashboard
+1. Get your SoterAI API key from https://app.cybersecurityguard.com/dashboard
 2. Create a project and note the Project ID
 3. In Voiceflow, add an API Step block
 4. Configure the URL, headers, and body as shown above
@@ -145,4 +189,4 @@ x-api-key: {your_soter_api_key}
 - Store your API key in Voiceflow's secure variable storage
 - Never expose the API key in client-side code
 - Use BALANCED mode for most chatbots; STRICT for high-security use cases
-- Monitor the Soter dashboard for threat analytics
+- Monitor the SoterAI dashboard for threat analytics

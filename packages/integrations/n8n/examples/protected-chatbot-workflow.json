@@ -1,5 +1,5 @@
 {
-  "name": "Soter Guard Protected Chatbot",
+  "name": "SoterAI Protected Chatbot",
   "nodes": [
     {
       "parameters": {},
@@ -16,14 +16,14 @@
         "onThreat": "BLOCK",
         "projectId": ""
       },
-      "name": "Soter Input Guard",
-      "type": "@soter/n8n-nodes-soter-guard.soterGuard",
+      "name": "SoterAI Input Guard",
+      "type": "n8n-nodes-soterai.soterGuard",
       "typeVersion": 1,
       "position": [450, 300],
       "credentials": {
         "soterApi": {
           "id": "1",
-          "name": "Soter Guard API"
+          "name": "SoterAI API"
         }
       }
     },
@@ -66,25 +66,25 @@
         "policyMode": "BALANCED",
         "onThreat": "REDACT"
       },
-      "name": "Soter Output Guard",
-      "type": "@soter/n8n-nodes-soter-guard.soterGuard",
+      "name": "SoterAI Output Guard",
+      "type": "n8n-nodes-soterai.soterGuard",
       "typeVersion": 1,
       "position": [1050, 400],
       "credentials": {
         "soterApi": {
           "id": "1",
-          "name": "Soter Guard API"
+          "name": "SoterAI API"
         }
       }
     }
   ],
   "connections": {
-    "Start": { "main": [[{ "node": "Soter Input Guard", "type": "main", "index": 0 }]] },
-    "Soter Input Guard": { "main": [[{ "node": "Threat Check", "type": "main", "index": 0 }]] },
+    "Start": { "main": [[{ "node": "SoterAI Input Guard", "type": "main", "index": 0 }]] },
+    "SoterAI Input Guard": { "main": [[{ "node": "Threat Check", "type": "main", "index": 0 }]] },
     "Threat Check": {
       "main": [
         [{ "node": "Blocked Response", "type": "main", "index": 0 }],
-        [{ "node": "Soter Output Guard", "type": "main", "index": 0 }]
+        [{ "node": "SoterAI Output Guard", "type": "main", "index": 0 }]
       ]
     }
   }

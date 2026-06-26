@@ -1,13 +1,13 @@
 """
-Soter Guard Component for Langflow
+SoterAI Guard Components for Langflow
 
 Provides Input Guard, Output Guard, PII Redactor, and RAG Scanner
-as Langflow custom components that call the Soter REST API.
+as Langflow custom components that call the SoterAI REST API.
 
 Installation:
 1. Copy this file to your Langflow custom components directory
 2. Restart Langflow
-3. The Soter Guard components will appear in the sidebar
+3. The SoterAI Guard components will appear in the sidebar
 """
 
 import json
@@ -17,31 +17,31 @@ from typing import Optional
 
 
 class SoterGuardComponent:
-    """Base Langflow component for Soter Guard API calls."""
+    """Base Langflow component for SoterAI Guard API calls."""
 
-    display_name = "Soter Guard"
+    display_name = "SoterAI Guard"
     description = "AI security guard — checks text for prompt injection, jailbreaks, PII, and unsafe content"
     icon = "shield"
 
     def build_config(self):
         return {
             "api_key": {
-                "display_name": "Soter API Key",
+                "display_name": "SoterAI API Key",
                 "type": "password",
                 "required": True,
-                "info": "Your Soter Guard API key (sk_...)",
+                "info": "Your SoterAI API key (sk_...)",
             },
             "base_url": {
                 "display_name": "Base URL",
                 "type": "str",
                 "value": "https://api.cybersecurityguard.com",
-                "info": "Soter Guard API base URL",
+                "info": "SoterAI API base URL",
             },
             "project_id": {
                 "display_name": "Project ID",
                 "type": "str",
                 "required": False,
-                "info": "Soter project ID (optional)",
+                "info": "SoterAI project ID (optional)",
             },
             "policy_mode": {
                 "display_name": "Policy Mode",
@@ -68,7 +68,7 @@ class SoterGuardComponent:
         project_id: Optional[str] = None,
         policy_mode: Optional[str] = None,
     ) -> dict:
-        """Make an authenticated POST request to the Soter API."""
+        """Make an authenticated POST request to the SoterAI API."""
         url = f"{base_url.rstrip('/')}{path}"
         metadata = {}
         if project_id:
@@ -84,7 +84,7 @@ class SoterGuardComponent:
             headers={
                 "Content-Type": "application/json",
                 "x-api-key": api_key,
-                "User-Agent": "soter-langflow-component/1.0",
+                "User-Agent": "soterai-langflow/1.0",
             },
             method="POST",
         )
@@ -96,18 +96,18 @@ class SoterGuardComponent:
             error_body = e.read().decode("utf-8") if e.fp else "{}"
             try:
                 error_data = json.loads(error_body)
-                msg = error_data.get("message", f"Soter API error {e.code}")
+                msg = error_data.get("message", f"SoterAI API error {e.code}")
             except json.JSONDecodeError:
-                msg = f"Soter API error {e.code}"
+                msg = f"SoterAI API error {e.code}"
             raise RuntimeError(msg) from e
         except urllib.error.URLError as e:
-            raise RuntimeError(f"Cannot reach Soter API: {e.reason}") from e
+            raise RuntimeError(f"Cannot reach SoterAI API: {e.reason}") from e
 
 
 class SoterInputGuard(SoterGuardComponent):
     """Check user input for prompt injection, jailbreaks, and threats."""
 
-    display_name = "Soter Input Guard"
+    display_name = "SoterAI Input Guard"
     description = "Check user messages for prompt injection, jailbreaks, PII, and other threats before LLM processing"
 
     def build(
@@ -157,7 +157,7 @@ class SoterInputGuard(SoterGuardComponent):
 class SoterOutputGuard(SoterGuardComponent):
     """Check AI output for unsafe content before sending to the user."""
 
-    display_name = "Soter Output Guard"
+    display_name = "SoterAI Output Guard"
     description = "Check AI responses for unsafe content, system prompt leakage, and PII before sending to users"
 
     def build(
@@ -200,8 +200,8 @@ class SoterOutputGuard(SoterGuardComponent):
 class SoterPiiRedactor(SoterGuardComponent):
     """Redact PII and secrets from any text."""
 
-    display_name = "Soter PII Redactor"
-    description = "Redact PII, secrets, and sensitive data from text using Soter Guard"
+    display_name = "SoterAI PII Redactor"
+    description = "Redact PII, secrets, and sensitive data from text using SoterAI"
 
     def build_config(self):
         config = super().build_config()
@@ -252,7 +252,7 @@ class SoterPiiRedactor(SoterGuardComponent):
 class SoterRagScanner(SoterGuardComponent):
     """Scan documents/chunks before adding to a RAG vector database."""
 
-    display_name = "Soter RAG Scanner"
+    display_name = "SoterAI RAG Scanner"
     description = "Scan documents and chunks for threats before adding to RAG/vector DB"
 
     def build_config(self):

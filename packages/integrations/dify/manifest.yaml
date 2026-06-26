@@ -1,13 +1,13 @@
 version: "0.1.0"
 type: plugin
-author: Soter AI
-name: soter-guard
+author: SoterAI
+name: soterai
 label:
-  en_US: Soter Guard
-  zh_Hans: Soter Guard
+  en_US: "SoterAI"
+  zh_Hans: "SoterAI"
 description:
-  en_US: AI security guard — protect your Dify workflows from prompt injection, jailbreaks, PII leakage, and unsafe AI outputs
-  zh_Hans: AI security guard
+  en_US: "SoterAI protects AI workflows from prompt injection, jailbreaks, PII leakage, and unsafe outputs. Add security guardrails to any Dify app."
+  zh_Hans: "SoterAI — AI workflow security guardrails"
 icon: icon.svg
 category: security
 
@@ -16,7 +16,7 @@ credentials_for_provider:
     type: secret-input
     required: true
     label:
-      en_US: Soter API Key
+      en_US: SoterAI API Key
     placeholder:
       en_US: sk_...
   soter_base_url:

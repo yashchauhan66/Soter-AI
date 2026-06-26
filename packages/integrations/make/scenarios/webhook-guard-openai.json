@@ -1,0 +1,62 @@
+{
+  "_readme": "Example Make.com scenario configuration. This is documentation JSON showing how to wire SoterAI modules into a typical AI workflow. It is NOT an executable Make blueprint -- use it as a reference when building your own scenarios.",
+  "name": "Webhook -> SoterAI Input Guard -> OpenAI -> SoterAI Output Guard",
+  "description": "Receives a user message via webhook, scans it with SoterAI Input Guard, sends safe messages to OpenAI for completion, then scans the AI response with SoterAI Output Guard before returning the result.",
+  "modules": [
+    {
+      "step": 1,
+      "module": "webhook",
+      "label": "Receive User Message",
+      "notes": "Configure a custom webhook in Make. The incoming payload should include a 'message' field."
+    },
+    {
+      "step": 2,
+      "module": "soterai.inputGuard",
+      "label": "SoterAI: Check Input for Threats",
+      "config": {
+        "text": "{{1.message}}",
+        "policyMode": "BALANCED"
+      },
+      "notes": "If allowed=false, use a Make filter/router to block the request."
+    },
+    {
+      "step": 3,
+      "module": "filter",
+      "label": "Only if Allowed",
+      "condition": "{{2.allowed}} = true"
+    },
+    {
+      "step": 4,
+      "module": "openai.chatCompletion",
+      "label": "OpenAI: Chat Completion",
+      "config": {
+        "model": "gpt-4o",
+        "messages": [
+          { "role": "user", "content": "{{2.safeText}}" }
+        ]
+      },
+      "notes": "Use the safeText from step 2 (may have PII redacted) as the prompt."
+    },
+    {
+      "step": 5,
+      "module": "soterai.outputGuard",
+      "label": "SoterAI: Check AI Output",
+      "config": {
+        "text": "{{4.choices[0].message.content}}",
+        "policyMode": "BALANCED"
+      }
+    },
+    {
+      "step": 6,
+      "module": "webhook.response",
+      "label": "Return Safe Response",
+      "config": {
+        "body": {
+          "response": "{{5.safeText}}",
+          "riskScore": "{{5.riskScore}}",
+          "allowed": "{{5.allowed}}"
+        }
+      }
+    }
+  ]
+}
