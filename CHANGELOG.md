@@ -1,5 +1,31 @@
 # Changelog
 
+## [0.2.2] — 2026-06-27
+
+### Fixed
+- SDK env variable resolution now accepts both `SOTERAI_*` and `SOTER_*` prefixes
+- All 31 documented service API references updated from `/api/v1` to real `/api/*` routes
+- Legacy unverified SDK snippets hidden from customer-facing docs until integration-tested
+- False "1M+ production requests" claim removed; now accurately describes deployment assets
+- False "<50ms SDK latency" claim replaced with recorded HTTP p50 (891ms)
+- False "independent benchmark" claim corrected to "internal regression benchmark"
+- Service count updated from 32 to 33 documented services
+- "OWASP LLM Top 10 Compliant" corrected to "OWASP LLM Top 10 Mapped"
+
+### Added
+- `lib/guard/scheduledPersistence.ts` — fire-and-forget guard result persistence with parallelized pre-checks
+- `tests/guard/attack-pack-regression.test.ts` — 74 attack variant regression tests
+- `tests/docs-service-catalog.test.ts` — contract tests verifying API references resolve to implemented routes
+- `docs/APP_AUDIT_AND_COMPETITIVE_REPORT_2026-06-27.md` — comprehensive audit with competitor comparison and roadmap
+- `scripts/validate-env.ts` — production environment validation script (41 checks)
+
+### Changed
+- Parallelized Redis rate-limit and monthly-usage checks in input/output guard routes
+- Policy cache invalidation now uses dedicated `invalidateProjectPolicyCache()` instead of generic `deleteLocalCache()`
+- Benchmark text, homepage, metadata, and badge descriptions now accurately reflect internal benchmark limitations
+
+---
+
 ## [0.2.1] — 2026-06-21
 
 ### Fixed

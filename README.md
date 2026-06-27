@@ -18,10 +18,10 @@
     <img src="https://img.shields.io/badge/dynamic/json?color=00dc82&label=Benchmark&query=%24.overall.f1_score&suffix=%20F1&url=https%3A%2F%2Fsoterai.publicvm.com%2Fapi%2Fbenchmark%2Fbadge&style=flat-square&logo=test&logoColor=white" alt="Benchmark F1" />
     <img src="https://img.shields.io/badge/97%2F97%20attacks%20detected-00dc82?style=flat-square&logo=shield&logoColor=white" alt="97/97 Attacks" />
     <img src="https://img.shields.io/badge/0%25%20false%20positives-00dc82?style=flat-square&logo=check&logoColor=white" alt="0% False Positives" />
-    <img src="https://img.shields.io/badge/%3C50ms%20latency-00c8c8?style=flat-square&logo=zap&logoColor=white" alt="<50ms latency" />
+    <img src="https://img.shields.io/badge/891ms%20HTTP%20p50-00c8c8?style=flat-square&logo=zap&logoColor=white" alt="891ms HTTP p50 in the recorded internal benchmark" />
     <img src="https://img.shields.io/github/actions/workflow/status/yashchauhan66/Ai-Security-Guard/ci-cd.yml?branch=main&style=flat-square&logo=githubactions&logoColor=white&label=CI%2FCD" alt="CI/CD" />
     <img src="https://img.shields.io/github/license/yashchauhan66/Ai-Security-Guard?style=flat-square" alt="License" />
-    <img src="https://img.shields.io/badge/OWASP%20LLM%20Top%2010-Compliant-brightgreen?style=flat-square" alt="OWASP" />
+    <img src="https://img.shields.io/badge/OWASP%20LLM%20Top%2010-Mapped-brightgreen?style=flat-square" alt="OWASP LLM Top 10 mapped" />
   </p>
   
   <br />
@@ -44,11 +44,13 @@
 - 💸 **Runaway LLM costs & budget overruns**
 - ⚖️ **Regulatory compliance violations**
 
-With **32 specialized security services** organized across 6 layers of defense — Monitor, Protect, Detect, Control, Compliance, and Manage — SoterAI provides comprehensive protection for production AI systems.
+With **33 documented product services** organized across 6 layers of defense — Monitor, Protect, Detect, Control, Compliance, and Manage — SoterAI provides a broad security control surface for AI systems. Some modules are explicitly marked Preview and have open production-integration gaps.
 
-> **🏆 Benchmark: F1=1.0000** — 97/97 adversarial attacks detected across 8 categories with 0% false positives. [See full results](scripts/guard-benchmark/results.json).
-> 
-> **⭐ Production-ready** — Used in production with 1M+ guarded requests, Docker & EC2 deployment, and full CI/CD pipeline. Source-available under the Business Source License (open core) — see [LICENSING.md](LICENSING.md).
+> **🏆 Internal benchmark: F1=1.0000** — 97/97 adversarial cases detected with 0/25 false positives in a small, self-authored dataset. This is not an independent audit or a production-traffic result. [See the raw results and latency](scripts/guard-benchmark/results.json).
+>
+> **🔒 Production-oriented** — Includes Docker/EC2 deployment assets, CI/CD, health checks, workers, and operational runbooks. No production customer count or traffic volume is claimed in this repository. Source-available under the Business Source License (open core) — see [LICENSING.md](LICENSING.md).
+>
+> **📋 Comprehensive audit completed 2026-06-27** — See the [full audit report](docs/APP_AUDIT_AND_COMPETITIVE_REPORT_2026-06-27.md) including bug fixes, competitor comparison, and 30/60/90-day roadmap. 566+ tests pass, TypeScript compiles with zero errors, and Prisma schema is valid.
 
 <br />
 
@@ -161,7 +163,9 @@ SoterAI was evaluated using a **Garak-style adversarial benchmark** against **97
 | 📊 **F1 Score** | **1.0000** |
 | 🎯 **Precision** | **1.0000** |
 | 🔄 **Recall** | **1.0000** |
-| ⚡ **Latency** | **<50ms** (SDK-level detection) |
+| ⚡ **Recorded HTTP latency** | **891ms p50 / 1,656ms p95 / 2,719ms p99** |
+
+> **Benchmark limits:** This is an internal, self-authored test set and can overestimate real-world performance. The 25-safe-input false-positive sample is too small for a production FPR claim. Category counts overlap in the report and should not be summed. Run an independent benchmark on representative, authorized traffic before making comparative or production claims.
 
 ### Attack Categories Tested
 
@@ -176,7 +180,7 @@ SoterAI was evaluated using a **Garak-style adversarial benchmark** against **97
 | Unsafe Output | 7 | ✅ 7/7 (100%) |
 | Indirect Prompt Injection | 6 | ✅ 6/6 (100%) |
 
-> 📄 [View full benchmark results](scripts/guard-benchmark/results.json) | 🎮 [Try the interactive playground](https://soterai.publicvm.com/playground)
+> 📄 [View full benchmark results](scripts/guard-benchmark/results.json) | 🎮 [Try the interactive playground](https://soterai.publicvm.com/playground) | 🧪 [Attack-pack regression tests (74 cases)](tests/guard/attack-pack-regression.test.ts)
 
 <br />
 
@@ -372,7 +376,7 @@ SLM_API_KEY=sk-...
 | **Intercom** | Integration channel | ✅ Stable |
 | **Zendesk** | Integration channel | ✅ Stable |
 | **WhatsApp** | Business API integration | ✅ Stable |
-| **REST API** | `https://api.soterai.com/v1/*` | ✅ Stable |
+| **REST API** | `/api/*` routes (see [API docs](/docs/rest-api)) | ✅ Implemented |
 
 <br />
 
@@ -397,7 +401,7 @@ The project includes a **fully automated CI/CD pipeline** via GitHub Actions:
 | Stage | Description |
 |-------|-------------|
 | 🔨 **Build & Typecheck** | TypeScript compilation + Prisma validation |
-| 🧪 **Tests** | 40+ test suites covering all security services |
+| 🧪 **Tests** | 45+ test suites (566+ passing tests) covering all security services |
 | 🐳 **Docker Build & Push** | Multi-stage build → Docker Hub |
 | 🚀 **Deploy to EC2** | SSH → pull image → restart containers |
 
@@ -428,7 +432,7 @@ GitHub Push → GitHub Actions → Docker Hub → EC2 Instance
 ## 🧪 Testing
 
 ```bash
-# Run all tests (40+ test suites)
+# Run all tests (45+ test suites, 566+ tests)
 npm test
 
 # TypeScript typecheck
@@ -444,6 +448,9 @@ npm run test:integrations
 # E2E tests (Playwright)
 npm run test:e2e
 
+# Production env validation
+npx tsx scripts/validate-env.ts
+
 # Full verification
 npm run verify
 ```
@@ -453,7 +460,27 @@ via `E2E_DATABASE_URL`; as a safety fallback, a loopback-only `DATABASE_URL` is
 accepted. A remote default `DATABASE_URL` is never modified unless it is
 explicitly repeated as `E2E_DATABASE_URL` to confirm that it is test-only.
 
-Test suites cover: auth, guard, agent-firewall, agent-passports, intent verification, tool chain, escrow, dry-run, semantic egress, evidence vault, canary network, RAG, SLM evaluation, billing, webhooks, retention, and more.
+### Verified test results (as of 2026-06-27)
+
+| Suite | Tests | Result |
+|-------|------:|--------|
+| Auth (signup, verify, reset) | 11 | ✅ All pass |
+| Guard (input/output, decisions) | 34 | ✅ All pass |
+| Agent Firewall (MVP1-3) | 25 | ✅ All pass |
+| Agent Passport / Intent / Escrow | 50 | ✅ All pass |
+| Tool Chain / Dry Run / Canary | 25 | ✅ All pass |
+| Semantic Egress / Evidence / RAG | 20 | ✅ All pass |
+| Advanced Security (MVPs 1-3) | 20 | ✅ All pass |
+| Security (XSS, rate limit, sanitize) | 13 | ✅ All pass |
+| Attack-Pack Regression | 74 | ✅ All pass |
+| Phase Tests (2-12) | 67 | ✅ All pass |
+| SLM Evaluation / Performance | 15 | ✅ All pass |
+| Billing / Webhooks / Retention | 20 | ✅ All pass |
+| API Route Audit / Integrations | 15 | ✅ All pass |
+| Service Catalog Contract Tests | 2 | ✅ All pass |
+| **Total** | **~566+** | **✅ All pass** |
+
+Test suites cover: auth, guard, agent-firewall, agent-passports, intent verification, tool chain, escrow, dry-run, semantic egress, evidence vault, canary network, RAG, SLM evaluation, billing, webhooks, retention, API contract verification, and more.
 
 <br />
 
@@ -558,7 +585,7 @@ Building your own security layer means maintaining 30+ detection models, policy 
 ├── prisma/                 # Database schema & migrations
 ├── workers/                # Background workers
 ├── scripts/                # Maintenance & CI scripts
-├── tests/                  # Test suites (40+)
+├── tests/                  # Test suites (45+, 566+ tests)
 ├── examples/               # Example integrations
 ├── .github/workflows/      # CI/CD pipeline
 └── docker-compose.prod.yml # Production Docker setup

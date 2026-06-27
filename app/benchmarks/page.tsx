@@ -7,11 +7,11 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Adversarial Benchmark | SoterAI",
   description:
-    "Independent adversarial benchmark results: 97/97 attack variants detected with F1=1.0000. Prompt injection, jailbreak, PII, secrets, encoding, multilingual, and indirect injection.",
+    "Internal adversarial regression benchmark: 97/97 attack cases detected with F1=1.0000 on a small self-authored dataset. Includes limitations and raw latency results.",
   alternates: { canonical: "/benchmarks" },
   openGraph: {
     title: "SoterAI Adversarial Benchmark | F1=1.0000",
-    description: "97/97 attack variants detected across 8 categories with zero false positives. Garak-style red-team evaluation.",
+    description: "Internal Garak-style regression evaluation: 97/97 attack cases detected and 0/25 false positives on a small self-authored dataset.",
   },
 };
 
@@ -326,7 +326,7 @@ export default function BenchmarksPage() {
             <h2 className="text-2xl font-bold">Latency</h2>
           </div>
           <p className="mt-2 text-sm text-slate-400">
-            API-level latency including HTTP overhead. Inline SDK latency is significantly lower at &lt;50ms.
+            Recorded API-level latency including HTTP overhead. No separate inline SDK latency was captured by this benchmark.
           </p>
 
           <div className="mt-6 grid gap-4 sm:grid-cols-3">

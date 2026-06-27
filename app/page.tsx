@@ -141,23 +141,6 @@ const homepageJsonLd = {
         { "@type": "PropertyValue", "name": "Enterprise SSO", "value": "Yes" },
         { "@type": "PropertyValue", "name": "Adversarial Benchmark F1", "value": "1.0000" },
       ],
-      "review": {
-        "@type": "Review",
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": "5",
-          "bestRating": "5",
-        },
-        "author": { "@type": "Organization", "name": "Independent Benchmark" },
-        "reviewBody": "97/97 adversarial attack variants detected across 8 categories with zero false positives. F1=1.0000 benchmark result.",
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "5.0",
-        "bestRating": "5.0",
-        "ratingCount": "1",
-        "reviewCount": "1",
-      },
     },
     {
       "@type": "Dataset",
@@ -166,8 +149,8 @@ const homepageJsonLd = {
       "url": `${siteUrl}/benchmarks`,
       "mainEntityOfPage": { "@type": "WebPage", "@id": `${siteUrl}/benchmarks` },
       "creator": { "@id": `${siteUrl}#organization` },
-      "datePublished": "2025-01-01",
-      "dateModified": "2025-06-01",
+      "datePublished": "2026-06-21",
+      "dateModified": "2026-06-27",
       "measurementTechnique": "Garak-style adversarial probing",
       "keywords": "prompt injection, jailbreak, PII detection, security benchmark, AI guardrails",
       "variableMeasured": [
@@ -342,11 +325,11 @@ export default function Home() {
         <div className="container-page text-center">
           <p className="eyebrow">Adversarial Benchmark</p>
           <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
-            Proven detection: <span className="text-cyan">F1 = 1.0000</span>
+            Internal benchmark: <span className="text-cyan">F1 = 1.0000</span>
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-400">
-            97/97 adversarial attack variants detected across 8 categories with zero false positives.
-            Garak-style red-team evaluation against prompt injection, jailbreaks, PII leaks, and more.
+            97/97 adversarial cases detected with 0/25 false positives in a small, self-authored dataset.
+            This Garak-style evaluation is useful regression evidence, not an independent audit or production guarantee.
           </p>
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -364,9 +347,9 @@ export default function Home() {
             </div>
             <div className="card p-6">
               <Gauge className="mx-auto text-cyan" size={28} aria-hidden="true" />
-              <p className="mt-3 text-3xl font-black text-cyan">&lt;50ms</p>
-              <p className="mt-1 text-sm text-slate-400">Inline Latency</p>
-              <p className="text-xs text-slate-500">SDK-level detection</p>
+              <p className="mt-3 text-3xl font-black text-cyan">891ms</p>
+              <p className="mt-1 text-sm text-slate-400">Recorded HTTP p50</p>
+              <p className="text-xs text-slate-500">Internal benchmark run</p>
             </div>
             <div className="card p-6">
               <BarChart3 className="mx-auto text-cyan" size={28} aria-hidden="true" />

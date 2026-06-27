@@ -22,14 +22,6 @@ export const inputGuard = {
         helpText: "The user message to check.",
       },
       {
-        key: "policyMode",
-        label: "Policy Mode",
-        type: "string" as const,
-        required: false,
-        choices: { MONITOR: "Monitor", BALANCED: "Balanced", STRICT: "Strict" },
-        default: "BALANCED",
-      },
-      {
         key: "onThreat",
         label: "On Threat",
         type: "string" as const,
@@ -66,16 +58,13 @@ export const inputGuard = {
     },
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
       const baseUrl = (
-        bundle.authData.baseUrl || "https://api.soterai.dev"
+        bundle.authData.baseUrl || "https://soterai.publicvm.com"
       ).replace(/\/$/, "");
       const meta: Record<string, unknown> = tryParseJson(
         bundle.inputData.metadata,
       );
       const pid = bundle.inputData.projectId || bundle.authData.projectId;
       if (pid) meta.projectId = pid;
-      if (bundle.inputData.policyMode)
-        meta.policyMode = bundle.inputData.policyMode;
-
       const response = await z.request({
         url: `${baseUrl}/api/guard/input`,
         method: "POST",
@@ -86,6 +75,7 @@ export const inputGuard = {
         },
         body: JSON.stringify({ message: bundle.inputData.text, metadata: meta }),
       });
+      response.throwForStatus();
 
       const raw = response.json;
       const allowed = raw.allowed as boolean;
@@ -133,14 +123,6 @@ export const outputGuard = {
         required: true,
       },
       {
-        key: "policyMode",
-        label: "Policy Mode",
-        type: "string" as const,
-        required: false,
-        choices: { MONITOR: "Monitor", BALANCED: "Balanced", STRICT: "Strict" },
-        default: "BALANCED",
-      },
-      {
         key: "projectId",
         label: "Project ID",
         type: "string" as const,
@@ -156,14 +138,11 @@ export const outputGuard = {
     },
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
       const baseUrl = (
-        bundle.authData.baseUrl || "https://api.soterai.dev"
+        bundle.authData.baseUrl || "https://soterai.publicvm.com"
       ).replace(/\/$/, "");
       const meta: Record<string, unknown> = {};
       const pid = bundle.inputData.projectId || bundle.authData.projectId;
       if (pid) meta.projectId = pid;
-      if (bundle.inputData.policyMode)
-        meta.policyMode = bundle.inputData.policyMode;
-
       const response = await z.request({
         url: `${baseUrl}/api/guard/output`,
         method: "POST",
@@ -177,6 +156,7 @@ export const outputGuard = {
           metadata: meta,
         }),
       });
+      response.throwForStatus();
 
       const raw = response.json;
       return {
@@ -208,14 +188,6 @@ export const piiRedactor = {
         required: true,
       },
       {
-        key: "redactionMode",
-        label: "Redaction Mode",
-        type: "string" as const,
-        required: false,
-        choices: { PARTIAL: "Partial", FULL: "Full", HASH: "Hash" },
-        default: "PARTIAL",
-      },
-      {
         key: "projectId",
         label: "Project ID",
         type: "string" as const,
@@ -228,11 +200,9 @@ export const piiRedactor = {
     },
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
       const baseUrl = (
-        bundle.authData.baseUrl || "https://api.soterai.dev"
+        bundle.authData.baseUrl || "https://soterai.publicvm.com"
       ).replace(/\/$/, "");
-      const meta: Record<string, unknown> = {
-        _redactionMode: bundle.inputData.redactionMode || "PARTIAL",
-      };
+      const meta: Record<string, unknown> = {};
       const pid = bundle.inputData.projectId || bundle.authData.projectId;
       if (pid) meta.projectId = pid;
 
@@ -249,6 +219,7 @@ export const piiRedactor = {
           metadata: meta,
         }),
       });
+      response.throwForStatus();
 
       const raw = response.json;
       return {
@@ -278,11 +249,19 @@ export const ragScanner = {
         helpText: "The document content to scan before RAG ingestion.",
       },
       {
-        key: "sourceName",
-        label: "Source Name",
+        key: "documentId",
+        label: "Document ID",
+        type: "string" as const,
+        required: true,
+        helpText: "Stable identifier used to track this document scan.",
+      },
+      {
+        key: "source",
+        label: "Document Source",
         type: "string" as const,
         required: false,
-        helpText: "Name or identifier of the document source (e.g. filename, URL).",
+        choices: { api: "API", email: "Email", upload: "File Upload", url: "URL", unknown: "Unknown" },
+        default: "api",
       },
       {
         key: "projectId",
@@ -292,25 +271,19 @@ export const ragScanner = {
       },
     ],
     sample: {
-      allowed: true,
-      riskScore: 0.01,
-      issues: [],
-      safeText: "This is a clean document with no embedded threats.",
+      trustScore: 75,
+      trustLevel: "TRUSTED",
+      findings: [],
+      recommendedAction: "INDEX",
     },
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
       const baseUrl = (
-        bundle.authData.baseUrl || "https://api.soterai.dev"
+        bundle.authData.baseUrl || "https://soterai.publicvm.com"
       ).replace(/\/$/, "");
-      const meta: Record<string, unknown> = {
-        _ragScan: true,
-      };
-      if (bundle.inputData.sourceName)
-        meta._sourceName = bundle.inputData.sourceName;
       const pid = bundle.inputData.projectId || bundle.authData.projectId;
-      if (pid) meta.projectId = pid;
 
       const response = await z.request({
-        url: `${baseUrl}/api/guard/input`,
+        url: `${baseUrl}/api/rag/document/trust-score`,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -318,102 +291,21 @@ export const ragScanner = {
           "User-Agent": "soterai-zapier/1.0",
         },
         body: JSON.stringify({
-          message: bundle.inputData.text,
-          metadata: meta,
+          projectId: pid || undefined,
+          documentId: bundle.inputData.documentId,
+          content: bundle.inputData.text,
+          source: bundle.inputData.source || "api",
         }),
       });
+      response.throwForStatus();
 
       const raw = response.json;
       return {
-        allowed: raw.allowed,
-        riskScore: raw.riskScore,
-        issues: raw.riskTypes ?? [],
-        safeText:
-          raw.safeText ?? raw.redactedText ?? bundle.inputData.text,
+        trustScore: raw.trustScore,
+        trustLevel: raw.trustLevel,
+        findings: raw.findings ?? [],
+        recommendedAction: raw.recommendedAction,
       };
-    },
-  },
-};
-
-export const createIncident = {
-  key: "create_incident",
-  noun: "Incident",
-  display: {
-    label: "Create Incident",
-    description:
-      "Log a security incident to the SoterAI dashboard. Note: requires admin API access.",
-  },
-  operation: {
-    inputFields: [
-      {
-        key: "platform",
-        label: "Platform",
-        type: "string" as const,
-        required: true,
-        helpText: "The platform where the incident occurred (e.g. zapier, slack, custom).",
-      },
-      {
-        key: "workflowId",
-        label: "Workflow ID",
-        type: "string" as const,
-        required: false,
-        helpText: "Identifier of the workflow that triggered the incident.",
-      },
-      {
-        key: "riskScore",
-        label: "Risk Score",
-        type: "number" as const,
-        required: false,
-        helpText: "Risk score between 0 and 1.",
-      },
-      {
-        key: "reason",
-        label: "Reason",
-        type: "text" as const,
-        required: false,
-        helpText: "Human-readable description of why the incident was created.",
-      },
-    ],
-    sample: {
-      incidentId: "inc_abc123",
-      dashboardUrl: "https://app.soterai.dev/incidents/inc_abc123",
-    },
-    perform: async (z: ZapierZ, bundle: ZapierBundle) => {
-      const baseUrl = (
-        bundle.authData.baseUrl || "https://api.soterai.dev"
-      ).replace(/\/$/, "");
-
-      try {
-        const response = await z.request({
-          url: `${baseUrl}/api/ops/incidents`,
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-api-key": bundle.authData.apiKey,
-            "User-Agent": "soterai-zapier/1.0",
-          },
-          body: JSON.stringify({
-            platform: bundle.inputData.platform,
-            workflowId: bundle.inputData.workflowId || undefined,
-            riskScore: bundle.inputData.riskScore
-              ? Number(bundle.inputData.riskScore)
-              : undefined,
-            reason: bundle.inputData.reason || undefined,
-          }),
-        });
-
-        const raw = response.json;
-        return {
-          incidentId: raw.incidentId ?? raw.id ?? null,
-          dashboardUrl: raw.dashboardUrl ?? null,
-        };
-      } catch (err: unknown) {
-        return {
-          incidentId: null,
-          dashboardUrl: null,
-          error: err instanceof Error ? err.message : "Failed to create incident",
-        };
-      }
     },
   },
 };
@@ -439,7 +331,10 @@ function tryParseJson(value?: string): Record<string, unknown> {
 interface ZapierZ {
   request(
     opts: Record<string, unknown>,
-  ): Promise<{ json: Record<string, unknown> }>;
+  ): Promise<{
+    json: Record<string, unknown>;
+    throwForStatus(): void;
+  }>;
 }
 interface ZapierBundle {
   authData: Record<string, string>;

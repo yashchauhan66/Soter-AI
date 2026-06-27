@@ -8,11 +8,15 @@
 const authentication = {
   type: "custom" as const,
   test: {
-    url: "{{bundle.authData.baseUrl}}/api/health",
-    method: "GET" as const,
+    url: "{{bundle.authData.baseUrl}}/api/guard/input",
+    method: "POST" as const,
     headers: {
+      "Content-Type": "application/json",
       "x-api-key": "{{bundle.authData.apiKey}}",
       "User-Agent": "soterai-zapier/1.0",
+    },
+    body: {
+      message: "SoterAI connection test",
     },
   },
   fields: [
@@ -28,8 +32,8 @@ const authentication = {
       label: "Base URL",
       type: "string" as const,
       required: false,
-      default: "https://api.soterai.dev",
-      helpText: "SoterAI API base URL. Change only for self-hosted deployments.",
+      default: "https://soterai.publicvm.com",
+      helpText: "SoterAI production API base URL. Change only for a self-hosted HTTPS deployment.",
     },
     {
       key: "projectId",
@@ -39,7 +43,6 @@ const authentication = {
       helpText: "Default SoterAI project ID (optional).",
     },
   ],
-  connectionLabel: "SoterAI ({{bundle.authData.projectId}})",
 };
 
 export default authentication;

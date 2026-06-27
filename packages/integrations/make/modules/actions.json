@@ -6,7 +6,6 @@
     "connection": "soterai-api-key",
     "expect": [
       { "name": "text", "type": "text", "label": "Input Text", "required": true },
-      { "name": "policyMode", "type": "select", "label": "Policy Mode", "required": false, "default": "BALANCED", "options": [{ "label": "Monitor", "value": "MONITOR" }, { "label": "Balanced", "value": "BALANCED" }, { "label": "Strict", "value": "STRICT" }] },
       { "name": "projectId", "type": "text", "label": "Project ID", "required": false }
     ],
     "url": "{{connection.baseUrl}}/api/guard/input",
@@ -19,8 +18,7 @@
     "body": {
       "message": "{{parameters.text}}",
       "metadata": {
-        "projectId": "{{parameters.projectId}}",
-        "policyMode": "{{parameters.policyMode}}"
+        "projectId": "{{parameters.projectId}}"
       }
     },
     "response": {
@@ -40,7 +38,6 @@
     "connection": "soterai-api-key",
     "expect": [
       { "name": "text", "type": "text", "label": "AI Output Text", "required": true },
-      { "name": "policyMode", "type": "select", "label": "Policy Mode", "required": false, "default": "BALANCED", "options": [{ "label": "Monitor", "value": "MONITOR" }, { "label": "Balanced", "value": "BALANCED" }, { "label": "Strict", "value": "STRICT" }] },
       { "name": "projectId", "type": "text", "label": "Project ID", "required": false }
     ],
     "url": "{{connection.baseUrl}}/api/guard/output",
@@ -53,8 +50,7 @@
     "body": {
       "aiResponse": "{{parameters.text}}",
       "metadata": {
-        "projectId": "{{parameters.projectId}}",
-        "policyMode": "{{parameters.policyMode}}"
+        "projectId": "{{parameters.projectId}}"
       }
     },
     "response": {
@@ -74,7 +70,6 @@
     "connection": "soterai-api-key",
     "expect": [
       { "name": "text", "type": "text", "label": "Text", "required": true },
-      { "name": "redactionMode", "type": "select", "label": "Redaction Mode", "required": false, "default": "PARTIAL", "options": [{ "label": "Partial", "value": "PARTIAL" }, { "label": "Full", "value": "FULL" }, { "label": "Hash", "value": "HASH" }] },
       { "name": "projectId", "type": "text", "label": "Project ID", "required": false }
     ],
     "url": "{{connection.baseUrl}}/api/guard/input",
@@ -87,8 +82,7 @@
     "body": {
       "message": "{{parameters.text}}",
       "metadata": {
-        "projectId": "{{parameters.projectId}}",
-        "_redactionMode": "{{parameters.redactionMode}}"
+        "projectId": "{{parameters.projectId}}"
       }
     },
     "response": {
@@ -105,10 +99,11 @@
     "connection": "soterai-api-key",
     "expect": [
       { "name": "text", "type": "text", "label": "Document Text", "required": true },
-      { "name": "sourceName", "type": "text", "label": "Source Name", "required": false },
+      { "name": "documentId", "type": "text", "label": "Document ID", "required": true },
+      { "name": "source", "type": "select", "label": "Document Source", "required": false, "default": "api", "options": [{ "label": "API", "value": "api" }, { "label": "Email", "value": "email" }, { "label": "File Upload", "value": "upload" }, { "label": "URL", "value": "url" }, { "label": "Unknown", "value": "unknown" }] },
       { "name": "projectId", "type": "text", "label": "Project ID", "required": false }
     ],
-    "url": "{{connection.baseUrl}}/api/guard/input",
+    "url": "{{connection.baseUrl}}/api/rag/document/trust-score",
     "method": "POST",
     "headers": {
       "Content-Type": "application/json",
@@ -116,50 +111,17 @@
       "User-Agent": "soterai-make/1.0"
     },
     "body": {
-      "message": "{{parameters.text}}",
-      "metadata": {
-        "_ragScan": true,
-        "_sourceName": "{{parameters.sourceName}}",
-        "projectId": "{{parameters.projectId}}"
-      }
+      "projectId": "{{parameters.projectId}}",
+      "documentId": "{{parameters.documentId}}",
+      "content": "{{parameters.text}}",
+      "source": "{{parameters.source}}"
     },
     "response": {
       "output": {
-        "allowed": "{{body.allowed}}",
-        "riskScore": "{{body.riskScore}}",
-        "issues": "{{body.riskTypes}}",
-        "safeText": "{{body.safeText}}"
-      }
-    }
-  },
-  {
-    "name": "createIncident",
-    "label": "Create Incident",
-    "description": "Log a security incident to the SoterAI dashboard.",
-    "connection": "soterai-api-key",
-    "expect": [
-      { "name": "platform", "type": "text", "label": "Platform", "required": true },
-      { "name": "workflowId", "type": "text", "label": "Workflow ID", "required": false },
-      { "name": "riskScore", "type": "number", "label": "Risk Score", "required": false },
-      { "name": "reason", "type": "text", "label": "Reason", "required": false }
-    ],
-    "url": "{{connection.baseUrl}}/api/ops/incidents",
-    "method": "POST",
-    "headers": {
-      "Content-Type": "application/json",
-      "x-api-key": "{{connection.apiKey}}",
-      "User-Agent": "soterai-make/1.0"
-    },
-    "body": {
-      "platform": "{{parameters.platform}}",
-      "workflowId": "{{parameters.workflowId}}",
-      "riskScore": "{{parameters.riskScore}}",
-      "reason": "{{parameters.reason}}"
-    },
-    "response": {
-      "output": {
-        "incidentId": "{{body.incidentId}}",
-        "dashboardUrl": "{{body.dashboardUrl}}"
+        "trustScore": "{{body.trustScore}}",
+        "trustLevel": "{{body.trustLevel}}",
+        "findings": "{{body.findings}}",
+        "recommendedAction": "{{body.recommendedAction}}"
       }
     }
   }

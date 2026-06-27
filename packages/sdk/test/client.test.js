@@ -144,6 +144,54 @@ test("Soter reads SOTER_API_KEY, SOTER_PROJECT_ID, and SOTER_BASE_URL", async ()
   }
 });
 
+test("Soter accepts documented SOTERAI environment aliases", async () => {
+  const previous = {
+    apiKey: process.env.SOTERAI_API_KEY,
+    projectId: process.env.SOTERAI_PROJECT_ID,
+    baseUrl: process.env.SOTERAI_BASE_URL,
+    soterApiKey: process.env.SOTER_API_KEY,
+    soterProjectId: process.env.SOTER_PROJECT_ID,
+    soterBaseUrl: process.env.SOTER_BASE_URL,
+  };
+  delete process.env.SOTER_API_KEY;
+  delete process.env.SOTER_PROJECT_ID;
+  delete process.env.SOTER_BASE_URL;
+  process.env.SOTERAI_API_KEY = "ck_test_documented_alias";
+  process.env.SOTERAI_PROJECT_ID = "project_documented_alias";
+  process.env.SOTERAI_BASE_URL = "https://documented-alias.example";
+
+  try {
+    let url;
+    let headers;
+    let body;
+    const client = new Soter({
+      fetch: async (input, init) => {
+        url = String(input);
+        headers = new Headers(init.headers);
+        body = JSON.parse(init.body);
+        return json(allow());
+      },
+    });
+    await client.protect({ input: "hello" });
+
+    assert.equal(url, "https://documented-alias.example/api/guard/input");
+    assert.equal(headers.get("x-api-key"), "ck_test_documented_alias");
+    assert.equal(body.metadata.projectId, "project_documented_alias");
+  } finally {
+    for (const [name, value] of Object.entries({
+      SOTERAI_API_KEY: previous.apiKey,
+      SOTERAI_PROJECT_ID: previous.projectId,
+      SOTERAI_BASE_URL: previous.baseUrl,
+      SOTER_API_KEY: previous.soterApiKey,
+      SOTER_PROJECT_ID: previous.soterProjectId,
+      SOTER_BASE_URL: previous.soterBaseUrl,
+    })) {
+      if (value === undefined) delete process.env[name];
+      else process.env[name] = value;
+    }
+  }
+});
+
 test("Soter keeps CyberGuard environment fallbacks for compatibility", async () => {
   const previous = {
     soterApiKey: process.env.SOTER_API_KEY,
