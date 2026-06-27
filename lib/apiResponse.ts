@@ -2,12 +2,15 @@ import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import { AuthError } from "./auth/guards";
 import { isDatabaseUnavailableError } from "./databaseErrors";
+import { validateBodyStrings } from "./validateBodyStrings";
 
 const NO_STORE_HEADERS = { "Cache-Control": "no-store, max-age=0" };
 
 // SECURITY: Maximum body size enforced on the actual received bytes,
 // not on the client-supplied content-length header (which is forgeable).
 const MAX_BODY_BYTES = 32_000;
+
+
 
 export function jsonResponse(data: unknown, init: ResponseInit = {}) {
   return NextResponse.json(data, {
@@ -80,10 +83,17 @@ export async function readJson(request: Request) {
     reader.releaseLock();
   }
   const raw = Buffer.concat(chunks).toString("utf-8");
+  let parsed: unknown;
   try {
-    return JSON.parse(raw);
+    parsed = JSON.parse(raw);
   } catch {
     throw new ZodError([{ code: "custom", path: [], message: "Request body must be valid JSON." }]);
   }
+  // Defense-in-depth: enforce max string length on every value in the body.
+  // Individual Zod schemas in each route provide field-level constraints;
+  // this catch-all blocks excessively long strings that might slip through
+  // schema gaps or misspelled field names.
+  validateBodyStrings(parsed);
+  return parsed;
 }
 
