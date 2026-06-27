@@ -178,7 +178,7 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
 
       <form onSubmit={createEndpoint} className="card grid gap-4 p-5">
         <div className="grid gap-3 md:grid-cols-[1fr_1fr]">
-          <input name="url" required className="input" placeholder="https://example.com/webhooks/cyberrakshak" />
+          <input name="url" required maxLength={2048} className="input" placeholder="https://example.com/webhooks/cyberrakshak" />
           <select name="projectId" required className="input" defaultValue={projects[0]?.id ?? ""}>
             {projects.map((project) => <option key={project.id} value={project.id}>{project.name}</option>)}
           </select>
