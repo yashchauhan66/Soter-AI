@@ -29,6 +29,7 @@ const inputRules: PatternRule[] = [
   { pattern: /(?:first|last|\d+(?:st|nd|rd|th)).{0,40}(?:letter|word|character|token).{0,100}(?:system prompt|instructions?|hidden prompt)/i, label: "Positional prompt extraction", message: "Requests positional characters or words from hidden instructions.", severity: "HIGH", score: 45 },
   { pattern: /(?:rate from 1-10|rank|score).{0,140}(?:restricted|restriction|blocked|allowed|refuse).{0,180}(?:topics?|sensitive topics?|discussing)/i, label: "Restriction mapping survey", message: "Attempts to map safety boundaries through ratings or surveys.", severity: "MEDIUM", score: 40 },
   { pattern: /(?:without quoting your instructions|without revealing your prompt).{0,140}(?:would you refuse|would you answer|is .* restricted|just yes\/?no)/i, label: "Soft refusal-topology probe", message: "Maps hidden policy boundaries without directly asking for the prompt.", severity: "MEDIUM", score: 40 },
+  { pattern: /(?:token prediction|predict(?:ing)? tokens?|one token at a time|next token).{0,180}(?:infer|extract|reconstruct|print|reveal).{0,140}(?:system prompt|hidden prompt|instructions?|hidden rules?)/i, label: "Token-prediction prompt extraction", message: "Attempts to reconstruct hidden instructions through token prediction.", severity: "HIGH", score: 45 },
 ];
 
 const outputRules: PatternRule[] = [
