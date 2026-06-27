@@ -49,11 +49,11 @@ export function SignInForm({ callbackUrl, initialError }: { callbackUrl: string;
     <form onSubmit={submit} className="mt-6 space-y-4">
       <div>
         <label className="mb-1.5 block text-sm font-medium" htmlFor="email">Email</label>
-        <input id="email" name="email" type="email" autoComplete="email" required className="input" placeholder="you@example.com" />
+        <input id="email" name="email" type="email" autoComplete="email" required maxLength={254} className="input" placeholder="you@example.com" />
       </div>
       <div>
         <label className="mb-1.5 block text-sm font-medium" htmlFor="password">Password</label>
-        <input id="password" name="password" type="password" autoComplete="current-password" required minLength={8} className="input" placeholder="At least 8 characters" />
+        <input id="password" name="password" type="password" autoComplete="current-password" required minLength={8} maxLength={200} className="input" placeholder="At least 8 characters" />
       </div>
       <button disabled={loading} className="button-primary w-full gap-2">
         {loading ? <Loader2 className="animate-spin" size={16} /> : <LogIn size={16} />}

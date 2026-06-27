@@ -177,6 +177,7 @@ export function FeatureSearchBar() {
           onKeyDown={handleKeyDown}
           placeholder="Search features... (⌘K)"
           className="input h-10 pl-10 pr-24 text-sm"
+          maxLength={200}
           aria-label="Search dashboard features"
           role="combobox"
           aria-expanded={results.length > 0 && focused}

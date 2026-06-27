@@ -147,6 +147,7 @@ export default function ScannerPage() {
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="work@email.com"
                         className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-4 text-white focus:outline-none focus:border-cyan-500"
+                        maxLength={254}
                       />
                       <button
                         type="submit"

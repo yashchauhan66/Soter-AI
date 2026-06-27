@@ -70,16 +70,16 @@ export function BrandingForm({ agency, branding }: Props) {
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <label className="text-sm font-semibold">Contact email</label>
-          <input name="contactEmail" type="email" defaultValue={branding?.contactEmail ?? agency.contactEmail} className="input mt-2" />
+          <input name="contactEmail" type="email" defaultValue={branding?.contactEmail ?? agency.contactEmail} maxLength={254} className="input mt-2" />
         </div>
         <div>
           <label className="text-sm font-semibold">Brand colour</label>
-          <input name="brandColor" defaultValue={branding?.brandColor ?? "#31d7c8"} className="input mt-2" placeholder="#31d7c8" />
+          <input name="brandColor" defaultValue={branding?.brandColor ?? "#31d7c8"} maxLength={7} className="input mt-2" placeholder="#31d7c8" />
         </div>
       </div>
       <div>
         <label className="text-sm font-semibold">Logo URL</label>
-        <input name="logoUrl" type="url" defaultValue={branding?.logoUrl} className="input mt-2" placeholder="https://yourdomain.com/logo.png" />
+        <input name="logoUrl" type="url" defaultValue={branding?.logoUrl} maxLength={2048} className="input mt-2" placeholder="https://yourdomain.com/logo.png" />
       </div>
       <div>
         <label className="text-sm font-semibold">Report footer</label>
