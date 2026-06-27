@@ -6,10 +6,14 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 
 import { NextResponse } from "next/server";
+import { analyzeText } from "@/lib/guard/analyze";
 import { enforcePublicRateLimit } from "@/lib/publicRateLimit";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+const BLOCKED_PROMPT_WARNING =
+  "SoterAI blocked this prompt because it may contain prompt-injection or unsafe instruction patterns. Please rephrase your request and try again.";
 
 // ── Knowledge Base ─────────────────────────────────────────────────────────
 // Curated responses for common security questions.
@@ -378,12 +382,17 @@ async function streamCompletion(
   });
 }
 
-function plainTextResponse(text: string, source: string): Response {
+function plainTextResponse(
+  text: string,
+  source: string,
+  extraHeaders: Record<string, string> = {}
+): Response {
   return new Response(text, {
     headers: {
       "Content-Type": "text/plain; charset=utf-8",
       "Cache-Control": "no-store",
       "X-Assistant-Source": source,
+      ...extraHeaders,
     },
   });
 }
@@ -412,6 +421,16 @@ export async function POST(request: Request) {
         { error: "Message too long (max 2000 characters)" },
         { status: 400 }
       );
+    }
+
+    // Guard the prompt before it reaches either the knowledge base or the LLM.
+    // A blocked prompt is returned as assistant-safe text so the chat can show a
+    // useful warning instead of looking like a network failure.
+    const guardResult = analyzeText(message, "INPUT");
+    if (guardResult.action === "BLOCK") {
+      return plainTextResponse(BLOCKED_PROMPT_WARNING, "guard-block", {
+        "X-Assistant-Blocked": "true",
+      });
     }
 
     const cfg = getSlmConfig();

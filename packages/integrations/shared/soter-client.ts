@@ -39,7 +39,6 @@ import {
   normalizePolicyMode,
   normalizeMetadata,
   normalizeRedactionMode,
-  maskApiKey,
 } from "./validators";
 
 const DEFAULT_BASE_URL = "https://api.cybersecurityguard.com";
@@ -132,7 +131,7 @@ export class SoterClient {
           metadata: input.metadata,
         });
         return toScanRagResult(raw, text!);
-      } catch (e) {
+      } catch {
         this.log("RAG trust-score endpoint unavailable, falling back to guard/input");
       }
     }

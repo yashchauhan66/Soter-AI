@@ -143,11 +143,11 @@ test("CRG-RT-013: checkRedisRateLimit re-applies expiry when a key has no TTL", 
   // Reproduce a leaked TTL: a raw incrBy creates the counter with no expiry
   // (ttl -1), simulating a lost expire() after a crash. The next rate-limit
   // call must re-apply a TTL so the identifier is not locked out permanently.
-  // A unique identifier + explicit del keeps this deterministic whether the
-  // test runs against the in-memory fallback or a real Redis (loaded via .env).
-  const { getRedis } = await import("../lib/redis");
+  // Use an isolated store so this unit test never inherits real Redis
+  // credentials loaded by another test module in the shared test process.
+  const { createMemoryRedis } = await import("../lib/redis");
   const { checkRedisRateLimit } = await import("../lib/rateLimit");
-  const redis = getRedis();
+  const redis = createMemoryRedis();
 
   const identifier = `crg-rt-013-leak-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
   const minute = Math.floor(Date.now() / 60_000);
@@ -159,7 +159,7 @@ test("CRG-RT-013: checkRedisRateLimit re-applies expiry when a key has no TTL", 
   assert.equal(await redis.ttl(key), -1, "precondition: key has no TTL (leaked)");
 
   // count becomes 2 (not 1), so only the ttl===-1 self-heal path can fix this.
-  const healed = await checkRedisRateLimit(identifier, 100, 60_000);
+  const healed = await checkRedisRateLimit(identifier, 100, 60_000, redis);
   assert.ok(healed.resetAt > Date.now(), "resetAt must be in the future");
   assert.ok((await redis.ttl(key)) > 0, "key must carry a positive TTL after self-heal");
 

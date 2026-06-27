@@ -17,11 +17,11 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "SoterAI vs Competitors | AI Security Guardrail Comparison",
   description:
-    "Compare SoterAI against Lakera (Check Point), NVIDIA NeMo, Guardrails AI, LLM Guard, GA Guard, and AWS Bedrock. Feature matrix, benchmark scores, and market analysis.",
+    "Compare SoterAI against Lakera, Prompt Security, HiddenLayer, Protect AI, Pangea, Cisco AI Defense, NVIDIA NeMo, Guardrails AI, LLM Guard, GA Guard, AWS Bedrock, Azure AI Content Safety, and Patronus AI.",
   alternates: { canonical: "/comparison" },
   openGraph: {
     title: "SoterAI vs Competitors — AI Security Guardrail Comparison",
-    description: "Compare 7 AI security platforms across 22 features. Only Soter covers Input + Output + RAG + Agent Firewall + Policy + Enterprise.",
+    description: "Compare the core AI guardrail matrix plus the expanded 2026 AI security landscape. Soter covers Input + Output + RAG + Agent Firewall + Policy + Enterprise.",
   },
 };
 
@@ -233,6 +233,108 @@ const whoWins: Array<{ emoji: string; winner: string; reason: string }> = [
 
 // ─── JSON-LD ───────────────────────────────────────────────────────────────
 
+const bestByUseCase = [
+  {
+    useCase: "Production chatbot, RAG app, or AI agent security",
+    winner: "SoterAI",
+    why: "Broadest runtime coverage: input guard, output guard, RAG scanning, agent firewall, approvals, audit logs, webhooks, and enterprise controls in one stack.",
+  },
+  {
+    useCase: "Pure adversarial classifier accuracy",
+    winner: "GA Guard / Lakera",
+    why: "Stronger public third-party or large-scale adversarial detection proof. Soter has strong internal tests, but still needs independent benchmarking.",
+  },
+  {
+    useCase: "Open-source validation and structured outputs",
+    winner: "Guardrails AI",
+    why: "Large validator ecosystem and community; best fit when the primary need is schema and output validation rather than full runtime security.",
+  },
+  {
+    useCase: "Programmable conversation flow control",
+    winner: "NVIDIA NeMo Guardrails",
+    why: "Colang-based rails are best for teams that want explicit dialog flow programming and can absorb the DSL complexity.",
+  },
+  {
+    useCase: "AWS-native managed guardrails",
+    winner: "AWS Bedrock Guardrails",
+    why: "Best choice for teams already standardized on AWS Bedrock and prioritizing managed service operations over portability.",
+  },
+  {
+    useCase: "Enterprise AI asset protection",
+    winner: "HiddenLayer / Protect AI / Cisco AI Defense",
+    why: "Stronger focus on model inventory, AI asset security, ML supply chain, and enterprise security operations.",
+  },
+  {
+    useCase: "Employee AI governance and SaaS visibility",
+    winner: "Prompt Security / Pangea AI Guard",
+    why: "Better fit for workforce AI usage discovery, browser/proxy governance, and broad enterprise SaaS controls.",
+  },
+  {
+    useCase: "LLM evaluation, hallucination, and factuality testing",
+    winner: "Patronus AI / Galileo / Arthur AI",
+    why: "Evaluation-first tools remain stronger for offline evals, factuality, and observability workflows.",
+  },
+];
+
+const expandedCompetitors = [
+  {
+    name: "Lakera / Check Point",
+    category: "Prompt injection and AI app security",
+    bestAt: "Low-latency prompt injection and jailbreak detection with enterprise GTM.",
+    soterEdge: "Soter adds self-hosting, RAG quarantine, agent firewall, policy modes, India PII, and audit workflows.",
+    caveat: "Lakera has stronger brand maturity and public adversarial corpus visibility.",
+  },
+  {
+    name: "Prompt Security / SentinelOne",
+    category: "Employee AI and SaaS governance",
+    bestAt: "Workforce AI visibility, data controls, and enterprise browser/SaaS governance.",
+    soterEdge: "Soter is stronger for developer-integrated chatbot/RAG/agent runtime enforcement.",
+    caveat: "Soter is not yet a full employee-AI browser/proxy governance suite.",
+  },
+  {
+    name: "HiddenLayer",
+    category: "AI asset and model security",
+    bestAt: "Model inventory, attack simulation, supply-chain and runtime security for enterprise AI assets.",
+    soterEdge: "Soter is lighter and faster to integrate for app-layer guardrails and agent controls.",
+    caveat: "HiddenLayer is stronger for model artifact and enterprise AI asset protection.",
+  },
+  {
+    name: "Protect AI / Palo Alto",
+    category: "AI supply chain and model security",
+    bestAt: "Model scanning, ML supply-chain security, and LLM Guard ecosystem.",
+    soterEdge: "Soter bundles SaaS guard APIs, RAG, agent firewall, dashboards, and compliance workflows.",
+    caveat: "Protect AI has deeper model security and research footprint.",
+  },
+  {
+    name: "Pangea AI Guard / CrowdStrike ecosystem",
+    category: "Security platform-integrated AI guardrails",
+    bestAt: "Policy enforcement and security telemetry in broader enterprise security stacks.",
+    soterEdge: "Soter is more developer-centric and self-hostable for AI app teams.",
+    caveat: "Enterprise security graph and endpoint integrations are stronger in larger platforms.",
+  },
+  {
+    name: "Cisco AI Defense",
+    category: "Enterprise AI posture and protection",
+    bestAt: "Security operations, posture management, and enterprise governance.",
+    soterEdge: "Soter provides practical app-layer guard APIs and agent workflow controls for builders.",
+    caveat: "Cisco is stronger for large-enterprise procurement and platform coverage.",
+  },
+  {
+    name: "Azure AI Content Safety",
+    category: "Cloud-native content safety",
+    bestAt: "Managed moderation and PII/content safety for Azure customers.",
+    soterEdge: "Soter is cloud-portable, self-hostable, and covers RAG/agent runtime workflows.",
+    caveat: "Azure is stronger for teams standardized on Microsoft cloud governance.",
+  },
+  {
+    name: "Patronus AI / Galileo / Arthur AI",
+    category: "LLM evaluation and observability",
+    bestAt: "Offline evals, factuality, hallucination checks, and production monitoring.",
+    soterEdge: "Soter enforces runtime security decisions before risky actions execute.",
+    caveat: "Evaluation depth and analytics are stronger in eval-first platforms.",
+  },
+];
+
 function jsonLd() {
   const softwareItems = competitors.map((c) => {
     const featureProps = features.map((f) => ({
@@ -265,11 +367,11 @@ function jsonLd() {
         "@type": "AboutPage",
         "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soterai.publicvm.com/comparison" },
         "name": "Soter vs Competitors — AI Security Guardrail Comparison",
-        "description": "Compare 7 AI security platforms across 22 features. See how Soter compares against Lakera, NVIDIA NeMo, Guardrails AI, LLM Guard, GA Guard, and AWS Bedrock.",
+        "description": "Compare core AI guardrail platforms plus the expanded 2026 AI security landscape, including Lakera, Prompt Security, HiddenLayer, Protect AI, Pangea, Cisco, NVIDIA, Guardrails AI, LLM Guard, AWS, Azure, and Patronus.",
         "mainEntity": {
           "@type": "ItemList",
           "name": "AI Security Guardrail Platforms",
-          "description": "Comparison of 7 AI security guardrail platforms",
+          "description": "Comparison of core AI guardrail platforms and broader 2026 AI security competitors",
           "numberOfItems": competitors.length,
           "itemListOrder": "Descending",
           "itemListElement": softwareItems,
@@ -319,7 +421,7 @@ export default function ComparisonPage() {
             <Award className="text-cyan" size={24} aria-hidden="true" />
             Feature Comparison
           </h2>
-          <p className="mt-2 text-sm text-slate-400">22 features compared across 7 platforms</p>
+          <p className="mt-2 text-sm text-slate-400">Core feature matrix plus expanded 2026 competitor landscape</p>
 
           {/* Mobile: card layout */}
           <div className="mt-6 space-y-3 sm:hidden">
@@ -503,6 +605,66 @@ export default function ComparisonPage() {
         </section>
 
         {/* ── Competitor Profiles ── */}
+        <section className="mt-16">
+          <h2 className="flex items-center gap-3 text-2xl font-bold">
+            <Award className="text-cyan" size={24} aria-hidden="true" />
+            Best Platform by Use Case
+          </h2>
+          <p className="mt-2 text-sm text-slate-400">
+            The honest answer: Soter is best for broad app-layer runtime security, while some competitors win narrow categories.
+          </p>
+
+          <div className="mt-6 grid gap-4 lg:grid-cols-2">
+            {bestByUseCase.map((item) => (
+              <div key={item.useCase} className="card p-5">
+                <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{item.useCase}</p>
+                <p className="mt-2 text-lg font-bold text-cyan">{item.winner}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-400">{item.why}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-16">
+          <h2 className="flex items-center gap-3 text-2xl font-bold">
+            <ShieldCheck className="text-cyan" size={24} aria-hidden="true" />
+            Expanded Competitor Landscape
+          </h2>
+          <p className="mt-2 text-sm text-slate-400">
+            Major AI security competitors beyond the core guardrail table, with where Soter wins and where it should stay humble.
+          </p>
+
+          <div className="mt-6 grid gap-4 md:grid-cols-2">
+            {expandedCompetitors.map((competitor) => (
+              <div key={competitor.name} className="card p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <p className="font-semibold text-slate-100">{competitor.name}</p>
+                    <p className="mt-1 text-xs text-slate-500">{competitor.category}</p>
+                  </div>
+                  <span className="rounded-full bg-slate-900 px-2 py-1 text-[10px] font-medium text-slate-400">
+                    Compared
+                  </span>
+                </div>
+                <dl className="mt-4 space-y-3 text-sm">
+                  <div>
+                    <dt className="text-xs font-medium uppercase tracking-wide text-slate-500">Best at</dt>
+                    <dd className="mt-1 text-slate-300">{competitor.bestAt}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs font-medium uppercase tracking-wide text-cyan">Soter edge</dt>
+                    <dd className="mt-1 text-slate-300">{competitor.soterEdge}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-xs font-medium uppercase tracking-wide text-amber-300">Caveat</dt>
+                    <dd className="mt-1 text-slate-400">{competitor.caveat}</dd>
+                  </div>
+                </dl>
+              </div>
+            ))}
+          </div>
+        </section>
+
         <section className="mt-16">
           <h2 className="flex items-center gap-3 text-2xl font-bold">
             <Users className="text-cyan" size={24} aria-hidden="true" />

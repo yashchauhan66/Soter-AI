@@ -6,8 +6,6 @@
  * endpoints (see app/api/guard/input/route.ts).
  */
 
-import type { GuardCheckResult, RedactPiiResult, ScanRagResult, CreateIncidentResult } from "./types";
-
 export const MOCK_API_KEY = "sk_test_integration_000000000000";
 export const MOCK_BASE_URL = "https://mock.soter.test";
 export const MOCK_PROJECT_ID = "proj_test_001";
@@ -133,7 +131,7 @@ export function createMockFetch(responseMap?: Record<string, { status: number; b
     ...responseMap,
   };
 
-  return async (input: RequestInfo | URL, init?: RequestInit): Promise<Response> => {
+  return async (input: RequestInfo | URL, _init?: RequestInit): Promise<Response> => {
     const url = typeof input === "string" ? input : input instanceof URL ? input.toString() : input.url;
     const path = new URL(url).pathname;
     const entry = defaults[path];

@@ -5,7 +5,7 @@
 
 import { Redis } from "@upstash/redis";
 
-interface RedisLike {
+export interface RedisLike {
   incrBy(key: string, value: number): Promise<number>;
   expire(key: string, seconds: number): Promise<unknown>;
   get<T = unknown>(key: string): Promise<T | null>;
@@ -81,6 +81,17 @@ class MemoryRedis implements RedisLike {
   }
 }
 
+/**
+ * Creates an isolated in-memory Redis-compatible store.
+ *
+ * Keeping this as a factory (instead of sharing the process-wide fallback)
+ * lets tests and local tools exercise Redis-backed logic without inheriting
+ * credentials that another module may have loaded from an environment file.
+ */
+export function createMemoryRedis(): RedisLike {
+  return new MemoryRedis();
+}
+
 class NodeRedis implements RedisLike {
   private clientPromise: Promise<import("redis").RedisClientType> | null = null;
 
@@ -148,6 +159,6 @@ export function getRedis(): RedisLike {
     console.warn("[SoterAI] UPSTASH_REDIS_REST_URL is not set. Using in-memory rate limit store. Do NOT run multi-instance in this state.");
     warned = true;
   }
-  cached = new MemoryRedis();
+  cached = createMemoryRedis();
   return cached;
 }

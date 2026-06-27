@@ -34,8 +34,8 @@
     "verify:dashboard-metrics": "tsx scripts/verifyDashboardMetrics.ts",
     "demo:reset": "tsx scripts/resetDemoWorkspace.ts",
     "validate-env": "tsx scripts/validate-env.ts",
-    "test:e2e": "npx playwright test",
-    "test:e2e:ui": "npx playwright test --ui",
+    "test:e2e": "node scripts/runPlaywright.mjs",
+    "test:e2e:ui": "node scripts/runPlaywright.mjs --ui",
     "postinstall": "prisma generate"
   },
   "prisma": {

@@ -57,8 +57,13 @@ test("guard red-team benchmark has perfect recall against current SoterAI rules"
 });
 
 test("guard red-team benchmark examples include expected risk contracts", () => {
+  const ids = new Set<string>();
+  assert.ok(guardRedTeamBenchmark.length >= 70, `expected at least 70 benchmark examples, got ${guardRedTeamBenchmark.length}`);
+
   for (const example of guardRedTeamBenchmark) {
     assert.ok(example.id.length > 0);
+    assert.equal(ids.has(example.id), false, `duplicate benchmark id ${example.id}`);
+    ids.add(example.id);
     assert.ok(example.prompt.length > 10);
     assert.ok(example.expectedRiskTypes.length > 0);
     if (example.category !== "SAFE_BASELINE") assert.ok(example.owasp.length > 0, example.id);

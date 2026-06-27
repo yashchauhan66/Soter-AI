@@ -448,6 +448,11 @@ npm run test:e2e
 npm run verify
 ```
 
+Playwright applies migrations and seed fixtures. Use a dedicated local database
+via `E2E_DATABASE_URL`; as a safety fallback, a loopback-only `DATABASE_URL` is
+accepted. A remote default `DATABASE_URL` is never modified unless it is
+explicitly repeated as `E2E_DATABASE_URL` to confirm that it is test-only.
+
 Test suites cover: auth, guard, agent-firewall, agent-passports, intent verification, tool chain, escrow, dry-run, semantic egress, evidence vault, canary network, RAG, SLM evaluation, billing, webhooks, retention, and more.
 
 <br />

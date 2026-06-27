@@ -2,12 +2,13 @@
 
 import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Bot, X, Send, Loader2, Sparkles, Trash2, Compass } from "lucide-react";
+import { Bot, X, Send, Loader2, Sparkles, Trash2, Compass, ShieldAlert } from "lucide-react";
 import { ChatMarkdown } from "./ChatMarkdown";
 
 type Message = {
   role: "user" | "assistant";
   content: string;
+  variant?: "warning";
 };
 
 const STORAGE_KEY = "soterai-assistant-history";
@@ -703,10 +704,37 @@ export function AiAssistant() {
         }),
       });
 
-      if (!response.ok || !response.body) throw new Error("Failed to get response");
+      const isBlockedResponse =
+        response.headers.get("X-Assistant-Blocked") === "true" ||
+        response.status === 403;
+
+      if (!response.ok) {
+        if (isBlockedResponse) {
+          setMessages((prev) => [
+            ...prev,
+            {
+              role: "assistant",
+              variant: "warning",
+              content:
+                "SoterAI blocked this prompt because it may contain unsafe instructions. Please rephrase your request and try again.",
+            },
+          ]);
+          return;
+        }
+        throw new Error("Failed to get response");
+      }
+
+      if (!response.body) throw new Error("Response body is missing");
 
       // Open an empty assistant bubble, then stream tokens into it.
-      setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
+      setMessages((prev) => [
+        ...prev,
+        {
+          role: "assistant",
+          content: "",
+          variant: isBlockedResponse ? "warning" : undefined,
+        },
+      ]);
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
@@ -718,7 +746,11 @@ export function AiAssistant() {
         accumulated += decoder.decode(value, { stream: true });
         setMessages((prev) => {
           const next = prev.slice();
-          next[next.length - 1] = { role: "assistant", content: accumulated };
+          next[next.length - 1] = {
+            role: "assistant",
+            content: accumulated,
+            variant: isBlockedResponse ? "warning" : undefined,
+          };
           return next;
         });
       }
@@ -844,9 +876,17 @@ export function AiAssistant() {
                     className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
                       msg.role === "user"
                         ? "bg-cyan text-ink"
+                        : msg.variant === "warning"
+                          ? "border border-amber-500/40 bg-amber-950/40 text-amber-100"
                         : "border border-slate-700 bg-slate-900/60 text-slate-200"
                     }`}
                   >
+                    {msg.variant === "warning" && (
+                      <div className="mb-1.5 flex items-center gap-1.5 text-xs font-semibold text-amber-300">
+                        <ShieldAlert size={14} aria-hidden="true" />
+                        <span>Security warning</span>
+                      </div>
+                    )}
                     {msg.role === "user" ? (
                       <p className="whitespace-pre-wrap">{msg.content}</p>
                     ) : msg.content ? (

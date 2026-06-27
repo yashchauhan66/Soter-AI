@@ -15,7 +15,7 @@ import {
   USAGE_WARNING_THRESHOLD,
 } from "./guard/constants";
 import { db } from "./db";
-import { getRedis } from "./redis";
+import { getRedis, type RedisLike } from "./redis";
 
 export const PLAN_LIMITS: Record<string, number> = {
   FREE: FREE_PLAN_LIMIT_PER_MONTH,
@@ -47,8 +47,12 @@ export interface RateLimitResult {
   resetAt: number;
 }
 
-export async function checkRedisRateLimit(identifier: string, limit: number, windowMs = 60_000): Promise<RateLimitResult> {
-  const redis = getRedis();
+export async function checkRedisRateLimit(
+  identifier: string,
+  limit: number,
+  windowMs = 60_000,
+  redis: RedisLike = getRedis(),
+): Promise<RateLimitResult> {
   const key = minuteBucketKey(identifier);
   const count = await redis.incrBy(key, 1);
   const ttl = await redis.ttl(key);
@@ -64,8 +68,12 @@ export async function checkRedisRateLimit(identifier: string, limit: number, win
   return { allowed: count <= limit, remaining: Math.max(0, limit - count), resetAt };
 }
 
-export async function checkRedisFixedWindowRateLimit(identifier: string, limit: number, windowMs: number): Promise<RateLimitResult> {
-  const redis = getRedis();
+export async function checkRedisFixedWindowRateLimit(
+  identifier: string,
+  limit: number,
+  windowMs: number,
+  redis: RedisLike = getRedis(),
+): Promise<RateLimitResult> {
   const now = Date.now();
   const safeWindowMs = Math.max(1_000, windowMs);
   const bucket = Math.floor(now / safeWindowMs);

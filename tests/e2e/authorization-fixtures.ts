@@ -8,8 +8,10 @@ export const authorizationFixtures = {
   foreignProjectId: "e2e-foreign-project",
 } as const;
 
-export async function seedAuthorizationFixtures() {
-  const prisma = new PrismaClient();
+export async function seedAuthorizationFixtures(databaseUrl: string) {
+  const prisma = new PrismaClient({
+    datasources: { db: { url: databaseUrl } },
+  });
 
   try {
     const viewerPasswordHash = await bcrypt.hash(authorizationFixtures.viewerPassword, 12);
