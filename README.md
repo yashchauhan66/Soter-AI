@@ -56,7 +56,21 @@ With **32 specialized security services** organized across 6 layers of defense �
 
 ## ✨ Key Features
 
-### 🛡️ 6 Layers of AI Security
+
+### Advanced LLM Attack Coverage
+
+Recent guard updates expand SoterAI beyond classic prompt-injection and jailbreak detection. The guard now detects active indicators for:
+
+- **Encoded and obfuscated attacks** - base64/base64url, hex, binary, decimal bytes, Morse, leetspeak, compact spacing, Unicode controls, homoglyph markers, and Caesar-shift payloads.
+- **15 advanced jailbreak families** - roleplay jailbreaks, adversarial suffixes, multilingual trojans, token smuggling, ASCII-art smuggling, evolutionary jailbreak generation, cognitive-overload attacks, function-call wrappers, cross-modal payloads, automated chain attacks, and multi-agent compromise propagation.
+- **Adversarial NLP attacks** - imperceptible perturbations, gradient/word-substitution evasion, universal transferable suffixes, classifier/NER evasion, tabular entity-swap attacks, and cross-lingual adversarial adaptation.
+- **Backdoor and data-poisoning attempts** - trigger phrases, syntactic/style triggers, BadPrompt/BadPre/BITE-style poisoning, poisoned embeddings, LoRA/PEFT safety compromise, code-search poisoning, seq2seq backdoors, and model-hijacking prompts.
+- **llmsecurity.net-style attack families** - training-data extraction, membership/private-attribute inference, data reconstruction, LLM resource exhaustion, agent RCE/escalation, package hallucination/dependency confusion, XSS/CSRF/CPRF browser attacks, multimodal visual/audio prompt injection, model theft, attack automation, and detector evasion.
+- **Unsafe output handling** - model-generated HTML/script sinks, credentialed browser requests, script exfiltration, and unverified package installation guidance are held for review before reaching downstream systems.
+
+These rules are covered by regression tests in `tests/guard.test.ts` and red-team benchmark categories in `lib/classifiers/datasets/guardRedTeamBenchmark.ts`.
+
+### 6 Layers of AI Security
 
 <table>
   <tr>
