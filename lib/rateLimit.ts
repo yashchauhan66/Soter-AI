@@ -54,13 +54,12 @@ export async function checkRedisRateLimit(
   redis: RedisLike = getRedis(),
 ): Promise<RateLimitResult> {
   const key = minuteBucketKey(identifier);
-  const count = await redis.incrBy(key, 1);
-  const ttl = await redis.ttl(key);
+  const [count, ttl] = await Promise.all([redis.incrBy(key, 1), redis.ttl(key)]);
   // CRG-RT-013: incrBy + expire are two commands. If the expire after the first
   // increment was ever lost (process crash / partial failure), the key persists
   // with no TTL (-1) and would never reset — a permanent lockout. Self-heal by
   // re-applying the expiry whenever the key has no TTL.
-  if (count === 1 || ttl === -1) {
+  if (count === 1 || ttl < 0) {
     await redis.expire(key, Math.ceil(windowMs / 1000));
   }
   const effectiveTtl = ttl > 0 ? ttl : Math.ceil(windowMs / 1000);
@@ -78,9 +77,9 @@ export async function checkRedisFixedWindowRateLimit(
   const safeWindowMs = Math.max(1_000, windowMs);
   const bucket = Math.floor(now / safeWindowMs);
   const key = `crg:rl:${identifier}:w${safeWindowMs}:${bucket}`;
-  const count = await redis.incrBy(key, 1);
+  const [count, ttl] = await Promise.all([redis.incrBy(key, 1), redis.ttl(key)]);
   // CRG-RT-013: self-heal a missing TTL (see checkRedisRateLimit).
-  if (count === 1 || (await redis.ttl(key)) === -1) {
+  if (count === 1 || ttl < 0) {
     await redis.expire(key, Math.ceil(safeWindowMs / 1000));
   }
   const resetAt = (bucket + 1) * safeWindowMs;
@@ -100,13 +99,15 @@ export async function recordMonthlyUsage(organizationId: string, projectId: stri
   const redis = getRedis();
   const orgKey = monthBucketKey(`org:${organizationId}`);
   const projectKey = monthBucketKey(`project:${projectId}`);
-  const used = await redis.incrBy(orgKey, increment);
-  if (used === increment) {
-    // expire the bucket ~ 35 days into the future so it survives the calendar month
-    await redis.expire(orgKey, 60 * 60 * 24 * 35);
-  }
-  const projectUsed = await redis.incrBy(projectKey, increment);
-  if (projectUsed === increment) await redis.expire(projectKey, 60 * 60 * 24 * 35);
+  const [used, projectUsed] = await Promise.all([
+    redis.incrBy(orgKey, increment),
+    redis.incrBy(projectKey, increment),
+  ]);
+  const expireSeconds = 60 * 60 * 24 * 35;
+  await Promise.all([
+    used === increment ? redis.expire(orgKey, expireSeconds) : Promise.resolve(),
+    projectUsed === increment ? redis.expire(projectKey, expireSeconds) : Promise.resolve(),
+  ]);
 
   const limit = limitOverride && limitOverride > 0 ? limitOverride : planLimit(plan);
   const ratio = limit > 0 ? used / limit : 0;

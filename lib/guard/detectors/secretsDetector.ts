@@ -6,6 +6,10 @@ const secret = (pattern: RegExp, label: string, token = "[REDACTED_SECRET]"): Pa
 });
 
 const rules: PatternRule[] = [
+  secret(/(?:search|scan|inspect|look through|read).{0,120}(?:memory|context|conversation|tool outputs?|environment|env).{0,180}(?:api keys?|tokens?|passwords?|webhook secrets?|database urls?|private environment variables?|env vars?|credentials?)/i, "Secret extraction request"),
+  secret(/(?:return|list|show|print|extract|export).{0,160}(?:values? that look like|all values?|all secrets?|all credentials?|api keys?|tokens?|passwords?|database credentials?|environment variables?|env vars?)/i, "Secret listing request"),
+  secret(/\b(?:RAZORPAY_KEY_SECRET|DATABASE_URL|NEXTAUTH_SECRET|JWT_SECRET|AUTH_SECRET|SOTER_TEST_SECRET_DO_NOT_LEAK_[A-Z0-9_-]*|API_KEYS?|WEBHOOK_SECRET)\b/i, "Named secret reference"),
+  secret(/\b(?:sk-\*|pk_\*|JWT tokens?|AWS keys?|GitHub tokens?|database credentials?)\b/i, "Secret-family harvesting request"),
   secret(/\bsk-(?:proj-)?[A-Za-z0-9_-]{8,}\b/, "OpenAI-like API key"),
   secret(/\bAIza[0-9A-Za-z_-]{30,}\b/, "Google/Gemini-like API key"),
   secret(/\b(?:ghp|gho|ghu|ghs|github_pat)_[A-Za-z0-9_]{20,}\b/, "GitHub token"),

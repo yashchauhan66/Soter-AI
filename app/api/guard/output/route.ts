@@ -6,6 +6,7 @@ import { applyPolicy, loadProjectPolicy } from "@/lib/guard/policy";
 import { persistGuardResult } from "@/lib/guard/persistence";
 import { toPublicGuardResult } from "@/lib/guard/publicResult";
 import { createRateLimitResult } from "@/lib/guard/rateLimitResult";
+import { scheduleGuardResultPersistence } from "@/lib/guard/scheduledPersistence";
 import { checkRedisRateLimit, peekMonthlyUsage, planLimit } from "@/lib/rateLimit";
 import { outputGuardSchema } from "@/lib/validations";
 import { recordRequestMetric } from "@/lib/ops/monitoring";
@@ -18,11 +19,13 @@ export async function POST(request: Request) {
     if (!authenticated.ok) return authenticated.response;
     const { apiKey, project } = authenticated.auth;
 
-    const rpm = await checkRedisRateLimit(`key:${apiKey.id}`, DEFAULT_RPM);
     const orgId = project.organizationId;
-    const usage = orgId
-      ? await peekMonthlyUsage(orgId, project.plan, project.organization?.quotaOverride)
-      : { allowed: true, exceeded: false, remaining: planLimit(project.plan), limit: planLimit(project.plan), used: 0, ratio: 0, warning: false };
+    const [rpm, usage] = await Promise.all([
+      checkRedisRateLimit(`key:${apiKey.id}`, DEFAULT_RPM),
+      orgId
+        ? peekMonthlyUsage(orgId, project.plan, project.organization?.quotaOverride)
+        : Promise.resolve({ allowed: true, exceeded: false, remaining: planLimit(project.plan), limit: planLimit(project.plan), used: 0, ratio: 0, warning: false }),
+    ]);
 
     if (!rpm.allowed || usage.exceeded) {
       const result = createRateLimitResult(
@@ -52,11 +55,13 @@ export async function POST(request: Request) {
       });
     }
 
-    const body = outputGuardSchema.parse(await readJson(request));
+    const [body, policy] = await Promise.all([
+      readJson(request).then((json) => outputGuardSchema.parse(json)),
+      loadProjectPolicy(project.id),
+    ]);
     const baseline = runOutputGuard(body.aiResponse);
-    const policy = await loadProjectPolicy(project.id);
     const result = applyPolicy(body.aiResponse, baseline, policy, "OUTPUT");
-    await persistGuardResult({
+    scheduleGuardResultPersistence({
       projectId: project.id,
       apiKeyId: apiKey.id,
       direction: "OUTPUT",

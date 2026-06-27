@@ -11,7 +11,6 @@ import {
   outputGuard,
   piiRedactor,
   ragScanner,
-  createIncident,
 } from "./creates/guardActions";
 
 const App = {
@@ -24,7 +23,6 @@ const App = {
     [outputGuard.key]: outputGuard,
     [piiRedactor.key]: piiRedactor,
     [ragScanner.key]: ragScanner,
-    [createIncident.key]: createIncident,
   },
 };
 

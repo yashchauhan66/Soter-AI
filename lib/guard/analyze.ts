@@ -13,11 +13,12 @@ import { scoreRisk } from "./riskScoring";
 import { MAX_TEXT_LENGTH } from "./constants";
 import type { GuardDirection, GuardFinding, GuardResult, RiskType } from "./types";
 
+const COMMON_DETECTORS = [piiDetector, indiaPiiDetector, secretsDetector];
+const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, systemPromptLeakAttemptDetector, ...COMMON_DETECTORS];
+const OUTPUT_DETECTORS = [systemPromptLeakageDetector, unsafeOutputDetector, spamUrlDetector, ...COMMON_DETECTORS];
+
 export function analyzeText(text: string, direction: GuardDirection): GuardResult {
-  const common = [piiDetector, indiaPiiDetector, secretsDetector];
-  const detectors = direction === "OUTPUT"
-    ? [systemPromptLeakageDetector, unsafeOutputDetector, spamUrlDetector, ...common]
-    : [promptInjectionDetector, jailbreakDetector, systemPromptLeakAttemptDetector, ...common];
+  const detectors = direction === "OUTPUT" ? OUTPUT_DETECTORS : INPUT_DETECTORS;
   const findings: GuardFinding[] = detectors.flatMap((detector) => detector(text));
 
   if (direction === "OUTPUT" && /unsafe.*placeholder|simulation/i.test(text)) {
@@ -185,6 +186,20 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
         severity: "HIGH",
         score: 85,
         message: "Adversarial jailbreak pattern detected."
+      });
+    }
+
+    if (
+      /(?:generate|write|create).{0,120}(?:\d{4,}|\d{1,3},\d{3,}).{0,120}(?:words?|variations?|prompts?|responses?)/i.test(text) ||
+      /(?:repeat|continue).{0,120}(?:forever|until i say stop|without stopping|maximum context|context is exhausted)/i.test(text) ||
+      /(?:call|use).{0,120}(?:search|browser|tool|api).{0,120}(?:repeatedly|every possible result|until you find every)/i.test(text)
+    ) {
+      findings.push({
+        type: "TOKEN_ABUSE",
+        label: "Denial-of-wallet prompt",
+        severity: "HIGH",
+        score: 60,
+        message: "The request attempts to force excessive generation, looping, or tool usage."
       });
     }
   }

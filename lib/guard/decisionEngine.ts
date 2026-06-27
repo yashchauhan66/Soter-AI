@@ -10,6 +10,7 @@ export function decideGuardAction(riskScore: number, riskTypes: RiskType[], dire
   if (riskScore >= 86) return "BLOCK";
   if (has("SECRET_DETECTED")) return direction === "OUTPUT" ? "BLOCK" : "HUMAN_REVIEW";
   if (has("UNSAFE_OUTPUT")) return "HUMAN_REVIEW";
+  if (has("TOKEN_ABUSE")) return "HUMAN_REVIEW";
   if (riskScore >= 61) return has("PROMPT_INJECTION") || has("JAILBREAK") ? "BLOCK" : "HUMAN_REVIEW";
   // PII in OUTPUT direction is blocked to prevent data leakage in model responses
   if (riskTypes.some((type) => sensitiveTypes.includes(type))) {

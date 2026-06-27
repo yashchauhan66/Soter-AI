@@ -49,6 +49,9 @@ export default async function ServiceDocPage({ params }: Props) {
   const currentIndex = groupServices.findIndex((s) => s.id === service.id);
   const prevService = currentIndex > 0 ? groupServices[currentIndex - 1] : null;
   const nextService = currentIndex < groupServices.length - 1 ? groupServices[currentIndex + 1] : null;
+  // The legacy catalog snippets describe an unreleased /api/v1 surface. Keep
+  // them out of customer-facing docs until each snippet has an executable test.
+  const showLegacyIntegrationExample = false;
 
   return (
     <main className="py-12">
@@ -153,7 +156,7 @@ export default async function ServiceDocPage({ params }: Props) {
             </section>
 
             {/* Integration Code */}
-            {service.integrationCode && (
+            {showLegacyIntegrationExample && service.integrationCode && (
               <section className="docs-section" id="integration">
                 <div className="flex items-center gap-3">
                   <Code2 size={20} className="text-cyan" />
@@ -179,6 +182,25 @@ export default async function ServiceDocPage({ params }: Props) {
                     for request/response schemas.
                   </TipBox>
                 )}
+              </section>
+            )}
+
+            {service.apiEndpoint && (
+              <section className="docs-section" id="integration">
+                <div className="flex items-center gap-3">
+                  <Code2 size={20} className="text-cyan" />
+                  <h2 className="text-xl font-bold">API reference</h2>
+                </div>
+                <p className="mt-2 text-slate-400">
+                  This service is implemented at the application route below. Use the tested SDK and framework guides for copy-paste integration examples.
+                </p>
+                <TipBox>
+                  <strong>Implemented route:</strong> <code className="text-cyan">{service.apiEndpoint}</code>. API keys must stay server-side. See the{" "}
+                  <Link href="/docs/rest-api" className="text-cyan underline decoration-cyan/30 hover:decoration-cyan/70">
+                    REST API guide
+                  </Link>{" "}
+                  and related documentation before integrating.
+                </TipBox>
               </section>
             )}
 
@@ -215,7 +237,7 @@ export default async function ServiceDocPage({ params }: Props) {
                   <li><a href="#why" className="text-slate-400 transition hover:text-cyan">Why this matters</a></li>
                   <li><a href="#how-it-works" className="text-slate-400 transition hover:text-cyan">How it works</a></li>
                   <li><a href="#features" className="text-slate-400 transition hover:text-cyan">Key features</a></li>
-                  {service.integrationCode && (
+                  {service.apiEndpoint && (
                     <li><a href="#integration" className="text-slate-400 transition hover:text-cyan">Integration</a></li>
                   )}
                   {service.relatedDocs && service.relatedDocs.length > 0 && (

@@ -9,7 +9,7 @@
 
 import type { ProjectPolicy, PolicyMode, UnsafeOutputMode } from "@prisma/client";
 import { db } from "../db";
-import { getLocalCache, setLocalCache } from "../localCache";
+import { deleteLocalCache, getLocalCache, setLocalCache } from "../localCache";
 import { getRedis } from "../redis";
 import { decideGuardAction } from "./decisionEngine";
 import { redactText } from "./redactor";
@@ -86,16 +86,26 @@ export function policyFromRow(row: ProjectPolicy | null): ResolvedPolicy {
 /** Redis key prefix for project policy cache. */
 const POLICY_REDIS_KEY_PREFIX = "crg:policy:";
 
-/** TTL for cached policies in seconds (5 seconds — short enough for multi-instance propagation). */
-const POLICY_REDIS_TTL_S = 5;
+/** TTL for cached policies in seconds. Writes invalidate Redis explicitly. */
+const POLICY_REDIS_TTL_S = 300;
 
-/** TTL for local in-process cache in ms (also 5s to stay in sync with Redis). */
-const POLICY_LOCAL_TTL_MS = 5_000;
+/** TTL for local in-process cache in ms. Keep modest for multi-instance freshness. */
+const POLICY_LOCAL_TTL_MS = 30_000;
+
+const policyLoadInflight = new Map<string, Promise<ResolvedPolicy>>();
+
+function policyLocalCacheKey(projectId: string) {
+  return `project-policy:${projectId}`;
+}
+
+function policyRedisCacheKey(projectId: string) {
+  return `${POLICY_REDIS_KEY_PREFIX}${projectId}`;
+}
 
 async function loadPolicyFromRedis(projectId: string): Promise<ResolvedPolicy | null> {
   try {
     const redis = getRedis();
-    const raw = await redis.get<string>(`${POLICY_REDIS_KEY_PREFIX}${projectId}`);
+    const raw = await redis.get<string>(policyRedisCacheKey(projectId));
     if (!raw) return null;
     return JSON.parse(raw) as ResolvedPolicy;
   } catch (error) {
@@ -107,19 +117,32 @@ async function loadPolicyFromRedis(projectId: string): Promise<ResolvedPolicy | 
 async function savePolicyToRedis(projectId: string, policy: ResolvedPolicy): Promise<void> {
   try {
     const redis = getRedis();
-    await redis.set(`${POLICY_REDIS_KEY_PREFIX}${projectId}`, JSON.stringify(policy), { ex: POLICY_REDIS_TTL_S });
+    await redis.set(policyRedisCacheKey(projectId), JSON.stringify(policy), { ex: POLICY_REDIS_TTL_S });
   } catch (error) {
     console.error("[SoterAI] Policy cache write error:", error);
   }
 }
 
 export async function loadProjectPolicy(projectId: string): Promise<ResolvedPolicy> {
-  const localKey = `project-policy:${projectId}`;
+  const localKey = policyLocalCacheKey(projectId);
 
   // 1. Try local in-process cache first (fastest).
   const localCached = getLocalCache<ResolvedPolicy>(localKey);
   if (localCached) return localCached;
 
+  const inflight = policyLoadInflight.get(projectId);
+  if (inflight) return inflight;
+
+  const loadPromise = loadProjectPolicyFromStore(projectId, localKey);
+  policyLoadInflight.set(projectId, loadPromise);
+  try {
+    return await loadPromise;
+  } finally {
+    policyLoadInflight.delete(projectId);
+  }
+}
+
+async function loadProjectPolicyFromStore(projectId: string, localKey: string): Promise<ResolvedPolicy> {
   // 2. Try Redis (shared across instances).
   const redisCached = await loadPolicyFromRedis(projectId);
   if (redisCached) {
@@ -134,9 +157,18 @@ export async function loadProjectPolicy(projectId: string): Promise<ResolvedPoli
 
   // 4. Warm both caches so the next request (in any process) is fast.
   setLocalCache(localKey, policy, POLICY_LOCAL_TTL_MS);
-  await savePolicyToRedis(projectId, policy);
+  void savePolicyToRedis(projectId, policy);
 
   return policy;
+}
+
+export async function invalidateProjectPolicyCache(projectId: string): Promise<void> {
+  deleteLocalCache(policyLocalCacheKey(projectId));
+  try {
+    await getRedis().del(policyRedisCacheKey(projectId));
+  } catch (error) {
+    console.error("[SoterAI] Policy cache invalidation error:", error);
+  }
 }
 
 function customTopicMatches(text: string, topic: string) {

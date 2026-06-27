@@ -4,7 +4,7 @@ import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { z } from "zod";
 import { emitSecurityEvent } from "@/lib/events/emit";
-import { deleteLocalCache } from "@/lib/localCache";
+import { invalidateProjectPolicyCache } from "@/lib/guard/policy";
 
 export const dynamic = "force-dynamic";
 
@@ -70,7 +70,7 @@ export async function PUT(request: Request) {
       create: { projectId: body.projectId, ...data },
       update: data,
     });
-    deleteLocalCache(`project-policy:${body.projectId}`);
+    await invalidateProjectPolicyCache(body.projectId);
     await emitSecurityEvent({ organizationId: access.org.id, projectId: access.project.id, eventType: "policy.changed", severity: "MEDIUM", riskTypes: [], action: "UPDATED", source: "api.projects.policy", metadata: { mode: policy.mode, citationRequired: policy.citationRequired, minSourceCount: policy.minSourceCount } });
     return jsonResponse(policy);
   } catch (error) { return apiError(error, "Policy could not be saved."); }

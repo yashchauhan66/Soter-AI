@@ -112,7 +112,7 @@ const recentBlocked = await soter.guardInput({
   metadata: { queryType: "recent_blocked" },
 });`,
     codeLanguage: "typescript",
-    apiEndpoint: "GET /api/v1/logs",
+    apiEndpoint: "GET /api/logs",
     relatedDocs: [
       { label: "Guard API", href: "/docs/rest-api" },
       { label: "Webhooks", href: "/docs/services/webhooks" },
@@ -165,7 +165,7 @@ const pastReports = await fetch("https://api.soterai.com/v1/reports?limit=10", {
   headers: { "x-api-key": process.env.SOTERAI_API_KEY! },
 });`,
     codeLanguage: "typescript",
-    apiEndpoint: "GET /api/v1/reports",
+    apiEndpoint: "GET /api/reports",
     relatedDocs: [
       { label: "Guard Logs", href: "/docs/services/guard-logs" },
       { label: "Audit Exports", href: "/docs/services/audit-exports" },
@@ -224,7 +224,7 @@ const bulkResponse = await fetch("https://api.soterai.com/v1/feedback/bulk", {
   }),
 });`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/feedback",
+    apiEndpoint: "POST /api/feedback",
     relatedDocs: [
       { label: "Guard Logs", href: "/docs/services/guard-logs" },
       { label: "Policy Engine", href: "/docs/services/policy-engine" },
@@ -276,7 +276,6 @@ const trendResponse = await fetch(
   }
 );`,
     codeLanguage: "typescript",
-    apiEndpoint: "GET /api/v1/customer-success",
     relatedDocs: [
       { label: "Dashboard", href: "/dashboard" },
       { label: "Onboarding", href: "/docs/services/onboarding" },
@@ -336,7 +335,7 @@ if (checked.decision === "BLOCK") {
 // Safe to proceed
 await executeAction(checked.safeContent ?? fileContent);`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/agent-firewall/check",
+    apiEndpoint: "POST /api/agent-firewall/inspect",
     relatedDocs: [
       { label: "Policies", href: "/docs/services/policy-engine" },
       { label: "Agent Passports", href: "/docs/services/agent-passports" },
@@ -379,7 +378,7 @@ await executeAction(checked.safeContent ?? fileContent);`,
   }
 }`,
     codeLanguage: "json",
-    apiEndpoint: "PUT /api/v1/policies",
+    apiEndpoint: "PUT /api/projects/policy",
     relatedDocs: [
       { label: "Agent Firewall", href: "/docs/services/agent-firewall" },
       { label: "Guard API", href: "/docs/rest-api" },
@@ -420,7 +419,7 @@ const { safeChunks, blockedSources } = await ragGuard.guardRetrieval({
   documents: retrievedDocs,
 });`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/rag/guard",
+    apiEndpoint: "POST /api/rag/query",
     relatedDocs: [
       { label: "LangChain Integration", href: "/docs/rag" },
       { label: "Guard API", href: "/docs/rest-api" },
@@ -482,7 +481,7 @@ app.post("/webhooks/soterai", (req, res) => {
   res.status(200).json({ received: true });
 });`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/webhooks",
+    apiEndpoint: "POST /api/webhooks",
     relatedDocs: [
       { label: "API Contract", href: "/docs/api-contract" },
       { label: "Security Best Practices", href: "/docs/best-practices" },
@@ -538,7 +537,7 @@ await fetch("https://api.soterai.com/v1/shadow-ai/block", {
   body: JSON.stringify({ serviceId: "svc_abc123" }),
 });`,
     codeLanguage: "typescript",
-    apiEndpoint: "GET /api/v1/shadow-ai",
+    apiEndpoint: "GET /api/shadow/scan",
     relatedDocs: [
       { label: "Agent Firewall", href: "/docs/services/agent-firewall" },
       { label: "Compliance", href: "/docs/compliance/security-whitepaper" },
@@ -603,7 +602,7 @@ const batchResponse = await fetch("https://api.soterai.com/v1/redteam/run", {
 const batchResult = await batchResponse.json();
 console.log(batchResult.passed + "/" + batchResult.total + " tests passed");`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/redteam/run",
+    apiEndpoint: "POST /api/redteam/run",
     relatedDocs: [
       { label: "OWASP LLM Top 10", href: "/docs/compliance/owasp-llm-top-10-mapping" },
       { label: "Guard API", href: "/docs/rest-api" },
@@ -663,7 +662,7 @@ const rootCause = await fetch(
   }
 );`,
     codeLanguage: "typescript",
-    apiEndpoint: "GET /api/v1/forensics",
+    apiEndpoint: "GET /api/forensics",
     relatedDocs: [
       { label: "Guard Logs", href: "/docs/services/guard-logs" },
       { label: "Evidence Vault", href: "/docs/services/evidence-vault" },
@@ -733,7 +732,7 @@ const leaks = await fetch(
   }
 );`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/canary/check",
+    apiEndpoint: "POST /api/canary/check",
     relatedDocs: [
       { label: "Semantic Egress", href: "/docs/services/semantic-egress" },
       { label: "Agent Firewall", href: "/docs/services/agent-firewall" },
@@ -786,7 +785,7 @@ if (result.leakDetected) {
   return result.sanitizedOutput;
 }`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/egress/check",
+    apiEndpoint: "POST /api/semantic-egress/check",
     relatedDocs: [
       { label: "Agent Firewall", href: "/docs/services/agent-firewall" },
       { label: "Guard API", href: "/docs/rest-api" },
@@ -835,7 +834,7 @@ const signedAction = passport.sign({
 
 // SoterAI verifies the passport automatically`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/passports/issue",
+    apiEndpoint: "POST /api/agent/passport/issue",
     relatedDocs: [
       { label: "Agent Firewall", href: "/docs/services/agent-firewall" },
       { label: "Identity & Access", href: "/docs/compliance/access-control" },
@@ -905,7 +904,7 @@ const resolve = await soter.resolveAgentApproval({
 
 console.log(resolve.decision); // "ALLOW"`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/escrow",
+    apiEndpoint: "POST /api/escrow/create",
     relatedDocs: [
       { label: "Agent Firewall", href: "/docs/services/agent-firewall" },
       { label: "Policy Engine", href: "/docs/services/policy-engine" },
@@ -974,7 +973,7 @@ if (suspiciousAction.riskLevel === "HIGH") {
   console.log("Intent drift detected:", suspiciousAction.reason);
 }`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/intent/verify",
+    apiEndpoint: "POST /api/intent/action/check",
     relatedDocs: [
       { label: "Tool Chain", href: "/docs/services/tool-chain" },
       { label: "Agent Firewall", href: "/docs/services/agent-firewall" },
@@ -1022,7 +1021,7 @@ const firewall = new AgentFirewall({
   },
 });`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/tool-chain/analyze",
+    apiEndpoint: "POST /api/tool-chain/step/check",
     relatedDocs: [
       { label: "Agent Firewall", href: "/docs/services/agent-firewall" },
       { label: "Intent Guard", href: "/docs/services/intent-guard" },
@@ -1069,7 +1068,7 @@ console.log({
   matchedRules: result.matchedRules,
 });`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/guard?dry_run=true",
+    apiEndpoint: "POST /api/dry-run/simulate",
     relatedDocs: [
       { label: "Policy Engine", href: "/docs/services/policy-engine" },
       { label: "Guard API", href: "/docs/rest-api" },
@@ -1136,7 +1135,7 @@ if (scanResult.riskLevel === "HIGH") {
   await soter.quarantineMemory(scanResult.memoryRecordId);
 }`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/memory-firewall/scan",
+    apiEndpoint: "POST /api/memory/check",
     relatedDocs: [
       { label: "Agent Firewall", href: "/docs/services/agent-firewall" },
       { label: "Forensics", href: "/docs/services/forensics" },
@@ -1199,7 +1198,7 @@ drifts.forEach((drift) => {
 // Filter for high-risk drifts only
 const criticalDrifts = await soter.listMcpDrifts("CRITICAL");`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/mcp-drift/monitor",
+    apiEndpoint: "POST /api/mcp/tools/snapshot",
     relatedDocs: [
       { label: "Tool Chain", href: "/docs/services/tool-chain" },
       { label: "Agent Firewall", href: "/docs/services/agent-firewall" },
@@ -1255,7 +1254,7 @@ if (legalCheck.violation) {
 
 console.log("Action is legally compliant");`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/legal-boundary/check",
+    apiEndpoint: "POST /api/legal-boundary/check",
     relatedDocs: [
       { label: "Compliance", href: "/docs/compliance/security-whitepaper" },
       { label: "Access Control", href: "/docs/compliance/access-control" },
@@ -1319,7 +1318,7 @@ const packages = await fetch(
   }
 );`,
     codeLanguage: "typescript",
-    apiEndpoint: "GET /api/v1/evidence",
+    apiEndpoint: "GET /api/evidence/items",
     relatedDocs: [
       { label: "Compliance Overview", href: "/docs/compliance/security-whitepaper" },
       { label: "Audit Exports", href: "/docs/services/audit-exports" },
@@ -1380,7 +1379,7 @@ console.log("Data sources used:", lineage.sources);
 // List all cross-domain incidents
 const incidents = await soter.listLineageIncidents("OPEN");`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/lineage/check",
+    apiEndpoint: "POST /api/lineage/flow/check",
     relatedDocs: [
       { label: "RAG Security", href: "/docs/services/rag-security" },
       { label: "Compliance", href: "/docs/compliance/access-control" },
@@ -1449,7 +1448,7 @@ console.log("Scenario: " + scenario.scenarioName);
 console.log("Risk: " + scenario.riskLevel + " (score: " + scenario.blastRadiusScore + ")");
 console.log(scenario.narrative);`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/blast-radius/simulate",
+    apiEndpoint: "POST /api/blast-radius/simulate",
     relatedDocs: [
       { label: "Agent Firewall", href: "/docs/services/agent-firewall" },
       { label: "Risk Assessment", href: "/docs/compliance/security-controls-matrix" },
@@ -1520,7 +1519,7 @@ const rotated = await fetch(
   }
 );`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/vault/credentials",
+    apiEndpoint: "POST /api/credentials",
     relatedDocs: [
       { label: "Agent Passports", href: "/docs/services/agent-passports" },
       { label: "Security Best Practices", href: "/docs/best-practices" },
@@ -1582,7 +1581,7 @@ await fetch("https://api.soterai.com/v1/projects/" + project.id, {
   body: JSON.stringify({ name: "Production App v2" }),
 });`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/projects",
+    apiEndpoint: "POST /api/projects",
     relatedDocs: [
       { label: "API Keys", href: "/docs/services/api-keys" },
       { label: "Settings", href: "/docs/services/settings" },
@@ -1625,7 +1624,7 @@ const response = await fetch("https://api.soterai.com/v1/api-keys", {
 const { key } = await response.json();
 // Store the key securely — it won't be shown again!`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/api-keys",
+    apiEndpoint: "POST /api/api-keys",
     relatedDocs: [
       { label: "Projects", href: "/docs/services/projects" },
       { label: "Security Best Practices", href: "/docs/best-practices" },
@@ -1691,7 +1690,7 @@ const costPerRequest2 = usageData.totalRequests > 0
   : 0;
 console.log("Avg cost per request: $" + costPerRequest2);`,
     codeLanguage: "typescript",
-    apiEndpoint: "PUT /api/v1/cost-firewall",
+    apiEndpoint: "PUT /api/cost-firewall/budget",
     relatedDocs: [
       { label: "Billing", href: "/docs/services/billing" },
       { label: "Usage Dashboard", href: "/dashboard" },
@@ -1724,7 +1723,7 @@ console.log("Avg cost per request: $" + costPerRequest2);`,
      alt="Protected by SoterAI"
      height="28" />`,
     codeLanguage: "html",
-    apiEndpoint: "GET /api/v1/badges",
+    apiEndpoint: "GET /api/badge",
     relatedDocs: [
       { label: "Public Status", href: "/security-status" },
       { label: "API Reference", href: "/docs/api-contract" },
@@ -1779,7 +1778,7 @@ const paymentMethods = await fetch(
   }
 );`,
     codeLanguage: "typescript",
-    apiEndpoint: "GET /api/v1/billing",
+    apiEndpoint: "GET /api/billing/diagnostics",
     relatedDocs: [
       { label: "Pricing", href: "/pricing" },
       { label: "Cost Firewall", href: "/docs/services/cost-firewall" },
@@ -1853,7 +1852,6 @@ await fetch("https://api.soterai.com/v1/settings/security", {
   }),
 });`,
     codeLanguage: "typescript",
-    apiEndpoint: "GET /api/v1/settings",
     relatedDocs: [
       { label: "Projects", href: "/docs/services/projects" },
       { label: "API Keys", href: "/docs/services/api-keys" },
@@ -1931,7 +1929,7 @@ await fetch("https://api.soterai.com/v1/exports/schedule", {
   }),
 });`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/exports",
+    apiEndpoint: "GET /api/exports",
     relatedDocs: [
       { label: "Guard Logs", href: "/docs/services/guard-logs" },
       { label: "Evidence Vault", href: "/docs/services/evidence-vault" },
@@ -2007,7 +2005,7 @@ const outputResult = await soter.guardOutput({
 const safeOutput = soter.getSafeText(outputResult, llmResponse) ?? llmResponse;
 return { reply: safeOutput };`,
     codeLanguage: "typescript",
-    apiEndpoint: "POST /api/v1/guard/input",
+    apiEndpoint: "POST /api/guard/input",
     relatedDocs: [
       { label: "Quickstart", href: "/docs/quickstart" },
       { label: "Getting Started", href: "/docs/GETTING_STARTED" },

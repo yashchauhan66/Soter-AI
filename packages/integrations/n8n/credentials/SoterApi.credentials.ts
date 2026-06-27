@@ -1,4 +1,5 @@
 import type {
+  ICredentialTestRequest,
   ICredentialType,
   INodeProperties,
 } from "n8n-workflow";
@@ -7,6 +8,21 @@ export class SoterApi implements ICredentialType {
   name = "soterApi";
   displayName = "SoterAI API";
   documentationUrl = "https://soterai.publicvm.com/docs";
+
+  test: ICredentialTestRequest = {
+    request: {
+      baseURL: "={{$credentials.baseUrl}}",
+      url: "/api/guard/input",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": "={{$credentials.apiKey}}",
+      },
+      body: {
+        message: "SoterAI connection test",
+      },
+    },
+  };
 
   properties: INodeProperties[] = [
     {
@@ -22,8 +38,8 @@ export class SoterApi implements ICredentialType {
       displayName: "Base URL",
       name: "baseUrl",
       type: "string",
-      default: "http://13.200.123.232:3000",
-      description: "SoterAI API base URL. Use the default until soterai.publicvm.com DNS is repaired.",
+      default: "https://soterai.publicvm.com",
+      description: "SoterAI production API base URL. Change only for a self-hosted HTTPS deployment.",
     },
     {
       displayName: "Project ID",
