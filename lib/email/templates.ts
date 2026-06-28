@@ -1,7 +1,7 @@
 export type EmailTemplateName =
   | "verify-email" | "password-reset" | "invite-member" | "usage-warning"
   | "usage-exceeded" | "payment-failed" | "monthly-report-ready"
-  | "webhook-failure" | "high-risk-alert";
+  | "webhook-failure" | "high-risk-alert" | "governance-enforcement-alert";
 
 export interface RenderedEmail { subject: string; html: string; text: string }
 
@@ -23,6 +23,10 @@ export function renderEmailTemplate(name: EmailTemplateName, data: Record<string
     "monthly-report-ready": { subject: `${project} monthly security report`, body: `The monthly OWASP LLM Top 10 aligned report for ${project} is ready. ${url}` },
     "webhook-failure": { subject: `${project} webhook delivery failed`, body: `A webhook delivery entered the dead-letter queue after repeated failures.` },
     "high-risk-alert": { subject: `${project} high-risk alert`, body: `A high-risk event was blocked for ${project}. Review the redacted event metadata in the dashboard.` },
+    "governance-enforcement-alert": {
+      subject: `[Governance] ${String(data.providerName ?? "Unknown provider")} access ${String(data.enforcementAction ?? "blocked")}`,
+      body: `AI Usage Governance has ${String(data.enforcementAction ?? "blocked")} access to ${String(data.providerName ?? "an AI provider")}${data.modelName ? ` (${String(data.modelName)})` : ""} for ${project}.\n\nReason: ${String(data.reason ?? "No reason provided")}\n\nReview governance enforcement events and manage policies in the AI Usage Governance dashboard.\n${data.dashboardUrl ? `Dashboard: ${String(data.dashboardUrl)}` : ""}`,
+    },
   };
   const selected = templates[name];
   return {

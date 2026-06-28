@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { DEFAULT_RPM } from "@/lib/guard/constants";
 import { sanitizeLogText, sanitizeMetadata } from "@/lib/guard/logSafety";
 import { checkRedisRateLimit } from "@/lib/rateLimit";
+import { recordTrustEventSafe, trustTraceContextFromMetadata } from "@/lib/trust-events";
 import {
   AGENT_IDENTITY_STATUSES,
   AGENT_IDENTITY_TYPES,
@@ -13,6 +14,8 @@ import {
   createAgentPassportSessionId,
   createPassportId,
   createPassportToken,
+  createAgentDelegationProof,
+  deriveDelegatedPassportPolicy,
   hashPassportToken,
   mergePassportPolicy,
   normalizePassportPolicy,
@@ -49,6 +52,16 @@ export const agentPassportIssueSchema = passportPolicySchema.extend({
   sessionId: z.string().trim().min(1).max(200).optional(),
   ttlSeconds: z.number().int().min(60).max(60 * 60 * 24).default(60 * 60),
   expiresAt: z.string().datetime().optional(),
+  metadata: z.record(z.unknown()).optional(),
+});
+
+export const agentPassportDelegateSchema = passportPolicySchema.extend({
+  parentSessionId: z.string().trim().min(1).max(200),
+  parentPassportToken: z.string().trim().min(10).max(300),
+  childAgentIdentityId: z.string().trim().min(1).max(200),
+  childSessionId: z.string().trim().min(1).max(200).optional(),
+  intent: z.string().trim().min(1).max(2000),
+  ttlSeconds: z.number().int().min(60).max(60 * 60).default(15 * 60),
   metadata: z.record(z.unknown()).optional(),
 });
 
@@ -118,6 +131,8 @@ export type AgentPassportActionCheckResult = AgentPassportValidationResult & {
   agentIdentityId?: string;
   sessionId?: string;
   expiresAt?: Date;
+  trustTraceId?: string;
+  trustSpanId?: string;
 };
 
 export async function authenticateAgentPassport(request: Request) {
@@ -309,6 +324,73 @@ export async function issueAgentPassport(auth: AgentPassportAuth, input: z.infer
   }, { status: 201 });
 }
 
+export async function delegateAgentPassport(auth: AgentPassportAuth, input: z.infer<typeof agentPassportDelegateSchema>) {
+  const parent = await findPassportBySession(auth.project.id, input.parentSessionId);
+  if (!parent) return jsonResponse({ error: true, decision: "BLOCK", message: "Parent passport was not found." }, { status: 404 });
+  const parentValidation = validateAgentPassport({
+    agent: identitySnapshot(parent),
+    passport: passportSnapshot(parent),
+    passportToken: input.parentPassportToken,
+  });
+  if (parentValidation.decision !== "ALLOW") {
+    return jsonResponse({ error: true, ...parentValidation, message: "Parent passport is not valid for delegation." }, { status: 403 });
+  }
+
+  const children = await db.$queryRaw<IdentityRow[]>`
+    SELECT "id", "projectId", "name", "agentType", "description", "status", "defaultPolicyJson", "createdAt", "updatedAt"
+    FROM "AgentIdentity"
+    WHERE "id" = ${input.childAgentIdentityId} AND "projectId" = ${auth.project.id}
+    LIMIT 1
+  `;
+  const child = children[0];
+  if (!child || child.status !== "ACTIVE") return jsonResponse({ error: true, decision: "BLOCK", message: "Child agent identity is missing or inactive." }, { status: 403 });
+
+  const parentPolicy = jsonPolicy(parent);
+  const childRequestedPolicy = mergePassportPolicy(child.defaultPolicyJson, extractPolicyInput(input));
+  const delegated = deriveDelegatedPassportPolicy(parentPolicy, { ...childRequestedPolicy, intent: input.intent });
+  if (!delegated.allowed) {
+    return jsonResponse({ error: true, decision: "BLOCK", riskLevel: "CRITICAL", message: "Delegation would expand parent permissions.", violations: delegated.violations }, { status: 400 });
+  }
+
+  const parentIssueAudits = await db.$queryRaw<Array<{ metadataJson: unknown }>>`
+    SELECT "metadataJson" FROM "AgentPassportAudit"
+    WHERE "projectId" = ${auth.project.id} AND "sessionPassportId" = ${parent.id} AND "action" = 'ISSUE'
+    ORDER BY "createdAt" DESC LIMIT 1
+  `;
+  const parentMetadata = asRecord(parentIssueAudits[0]?.metadataJson);
+  const parentDepth = typeof parentMetadata.delegationDepth === "number" ? parentMetadata.delegationDepth : 0;
+  const delegationDepth = parentDepth + 1;
+  if (delegationDepth > 5) return jsonResponse({ error: true, decision: "BLOCK", message: "Maximum agent delegation depth exceeded." }, { status: 400 });
+
+  const remainingSeconds = Math.floor((parent.expiresAt.getTime() - Date.now()) / 1000);
+  const ttlSeconds = Math.min(input.ttlSeconds, remainingSeconds);
+  if (ttlSeconds < 60) return jsonResponse({ error: true, decision: "BLOCK", message: "Parent passport expires too soon to delegate." }, { status: 400 });
+  const childSessionId = input.childSessionId ?? createAgentPassportSessionId();
+  const delegationProof = createAgentDelegationProof({
+    parentPassportId: parent.id,
+    childAgentIdentityId: child.id,
+    childSessionId,
+    delegationDepth,
+    intentHash: delegated.intentHash,
+    policy: delegated.policy,
+  });
+
+  return issueAgentPassport(auth, {
+    agentIdentityId: child.id,
+    sessionId: childSessionId,
+    ttlSeconds,
+    ...delegated.policy,
+    metadata: {
+      ...sanitizeMetadata(input.metadata),
+      parentPassportId: parent.id,
+      parentAgentIdentityId: parent.agentIdentityId,
+      delegationDepth,
+      intentHash: delegated.intentHash,
+      delegationProof,
+    },
+  });
+}
+
 export async function validateAgentSessionPassport(auth: AgentPassportAuth, input: z.infer<typeof agentPassportValidateSchema>) {
   return jsonResponse(await checkAgentPassportForAction(auth, input));
 }
@@ -379,12 +461,38 @@ export async function checkAgentPassportForAction(auth: AgentPassportAuth, input
     },
   });
 
+  let trustTraceId: string | undefined;
+  let trustSpanId: string | undefined;
+  if (auth.project.organizationId) {
+    const trust = await recordTrustEventSafe({
+      organizationId: auth.project.organizationId,
+      projectId: auth.project.id,
+      ...trustTraceContextFromMetadata(input.metadata),
+      sessionId: row.sessionId,
+      agentIdentityId: row.agentIdentityId,
+      passportId: row.id,
+      eventType: "AGENT_PASSPORT_AUTHORIZATION",
+      source: "agent.passport",
+      action: input.action ?? input.tool ?? "validate",
+      severity: result.riskLevel,
+      decision: result.decision,
+      riskTypes: result.policyMatches.filter((match) => match.severity !== "LOW").map((match) => match.id.toUpperCase()),
+      controlIds: ["AI-CTRL-03"],
+      resource: input.tool ? { type: "AGENT_TOOL", id: input.tool } : undefined,
+      metadata: { policyMatchIds: result.policyMatches.map((match) => match.id), domain: input.domain ?? null },
+    });
+    trustTraceId = trust.event.traceId;
+    trustSpanId = trust.event.spanId;
+  }
+
   return {
     ...result,
     passportId: row.id,
     agentIdentityId: row.agentIdentityId,
     sessionId: row.sessionId,
     expiresAt: row.expiresAt,
+    trustTraceId,
+    trustSpanId,
   };
 }
 
@@ -534,6 +642,10 @@ function jsonPolicy(row: {
 function jsonStringArray(value: unknown) {
   if (!Array.isArray(value)) return undefined;
   return value.filter((item): item is string => typeof item === "string");
+}
+
+function asRecord(value: unknown): Record<string, unknown> {
+  return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {};
 }
 
 async function findPassportBySession(projectId: string, sessionId: string) {

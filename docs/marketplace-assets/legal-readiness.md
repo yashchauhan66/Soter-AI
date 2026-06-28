@@ -34,11 +34,12 @@
 - [x] SVG icon: public/marketplace/soterai-icon.svg
 - [x] PNG icon 192x192: public/marketplace/icon-192.png (official source)
 - [x] PNG icon 192x192 (alias): public/marketplace/soterai-icon-192.png
-- [ ] PNG icon 128x128: public/marketplace/soterai-icon-128.png
-- [ ] PNG icon 256x256: public/marketplace/soterai-icon-256.png
-- [ ] PNG icon 512x512: public/marketplace/soterai-icon-512.png
+- [x] PNG icon 128x128: public/marketplace/soterai-icon-128.png
+- [x] PNG icon 256x256: public/marketplace/soterai-icon-256.png
+- [x] PNG icon 512x512: public/marketplace/soterai-icon-512.png
 - [x] Icon export script: scripts/export-marketplace-icons.mjs
 - [x] Integration icons deployed to all platform packages
+- [x] Automated package validation: npm run validate:marketplaces
 - [ ] Screenshots captured (see screenshots-checklist.md)
 - [ ] Demo video recorded (see demo-video-script.md)
 
@@ -68,7 +69,7 @@
 
 1. [ ] Create support@soterai.dev mailbox
 2. [ ] Create security@soterai.dev mailbox
-3. [ ] Export PNG icons (run scripts/export-marketplace-icons.mjs)
+3. [x] Export PNG icons (run scripts/export-marketplace-icons.mjs)
 4. [ ] Capture all screenshots
 5. [ ] Record demo video
 6. [ ] Complete legal counsel review of Privacy Policy and Terms

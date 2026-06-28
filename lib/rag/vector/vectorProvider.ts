@@ -1,6 +1,7 @@
 import { createHash } from "crypto";
 import { db } from "../../db";
 import { isProduction, isTest } from "../../utils";
+import { evaluateRagAuthorization } from "../authorizationContinuity";
 import type { VectorChunk, VectorHealth, VectorNamespaceContext, VectorQueryContext, VectorQueryFilters, VectorQueryResult } from "./vectorTypes";
 
 export interface VectorProvider {
@@ -23,19 +24,7 @@ export function enforceVectorNamespace(namespace: string, context: VectorNamespa
 }
 
 export function retrievalPostFilter(chunks: VectorQueryResult[], context: VectorQueryContext, filters: VectorQueryFilters = {}) {
-  const collectionId = filters.collectionId ?? context.collectionId;
-  const allowedSources = filters.allowedSources ?? context.allowedSources;
-  const sensitivity = filters.allowedSensitivityLabels ?? context.allowedSensitivityLabels;
-  return chunks.filter((chunk) => {
-    if (chunk.organizationId !== context.organizationId || chunk.projectId !== context.projectId) return false;
-    if (chunk.documentStatus !== "APPROVED" && chunk.documentStatus !== "INDEXED") return false;
-    if (collectionId && chunk.collectionId !== collectionId) return false;
-    if (context.allowedDocumentIds?.length && !context.allowedDocumentIds.includes(chunk.documentId)) return false;
-    if (!chunk.allowedRoles?.length || !chunk.allowedRoles.includes(context.role)) return false;
-    if (allowedSources?.length && (!chunk.sourceUrl || !allowedSources.includes(chunk.sourceUrl))) return false;
-    if (sensitivity?.length && !sensitivity.includes(chunk.sensitivityLabel ?? "INTERNAL")) return false;
-    return true;
-  });
+  return chunks.filter((chunk) => evaluateRagAuthorization(chunk, context, filters).allowed);
 }
 
 export async function createEmbedding(text: string): Promise<number[]> {

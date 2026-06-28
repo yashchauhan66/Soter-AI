@@ -395,6 +395,8 @@ model User {
   incidentUpdates         IncidentUpdate[]
   feedbackReviews         FeedbackReview[]         @relation("FeedbackReviewer")
   productEvents           ProductEvent[]
+  governanceApprovalRequests AiUsageApprovalRequest[] @relation("GovernanceApprovalRequests")
+
   createdAt               DateTime                 @default(now())
   updatedAt               DateTime                 @updatedAt
 }
@@ -453,6 +455,9 @@ model Organization {
   incidents             Incident[]
   productEvents         ProductEvent[]
   productionMetrics     ProductionMetric[]
+  governancePolicies     AiUsageGovernancePolicy[]
+  governanceAuditLogs    AiUsageGovernanceAuditLog[]
+  governanceApprovalRequests AiUsageApprovalRequest[]
   quotaOverride         Int?
   disabled              Boolean                @default(false)
   disabledReason        String?
@@ -2287,6 +2292,81 @@ model AgentPassportAudit {
   @@index([decision, createdAt])
 }
 
+model AgentPermissionDeploymentGate {
+  id              String   @id @default(cuid())
+  projectId       String
+  deploymentId    String?
+  agentName       String
+  baselineHash    String
+  candidateHash   String
+  riskBefore      Int
+  riskAfter       Int
+  riskDelta       Int
+  riskLevel       String
+  decision        String
+  findingsJson    Json
+  policyJson      Json?
+  summary         String   @db.Text
+  recommendation  String   @db.Text
+  createdAt       DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([projectId, decision, createdAt])
+  @@index([projectId, deploymentId])
+}
+
+model AgentActionLedger {
+  id                   String    @id
+  projectId            String
+  sessionId            String?
+  agentIdentityId      String?
+  passportId           String?
+  tool                 String
+  action               String
+  targetRedacted       String?   @db.Text
+  actionHash           String
+  idempotencyKey       String
+  reversalStatus       String
+  decision             String
+  riskLevel            String
+  forwardActionJson    Json?
+  rollbackActionJson   Json?
+  requestHash          String
+  resultHash           String
+  rollbackDeadline     DateTime?
+  rollbackStatus       String    @default("NOT_REQUESTED")
+  rollbackAttemptedAt  DateTime?
+  irreversibleReason   String?   @db.Text
+  summary              String    @db.Text
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  @@unique([projectId, idempotencyKey])
+  @@index([projectId, createdAt])
+  @@index([projectId, sessionId, createdAt])
+  @@index([projectId, rollbackStatus])
+  @@index([projectId, decision, riskLevel])
+}
+
+model McpRiskScan {
+  id             String   @id @default(cuid())
+  projectId      String?
+  serverName     String
+  serverUrl      String?
+  repositoryUrl  String?
+  scanHash       String
+  riskLevel      String
+  riskScore      Int
+  findingsJson   Json
+  summary        String   @db.Text
+  publicBadge    Boolean  @default(false)
+  createdAt      DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([scanHash])
+  @@index([riskLevel, createdAt])
+}
+
 model AgentIntentRecord {
   id                            String                   @id @default(cuid())
   projectId                     String
@@ -2909,6 +2989,195 @@ model ThrottleEvent {
 //           AI Incident Forensics
 // ═══════════════════════════════════════════════════════════════════════════════
 
+// ── AI Provider Governance Enums ──────────────────────────────────────────────
+
+enum AiGovernanceRuleAction {
+  ALLOW
+  BLOCK
+  REQUIRE_APPROVAL
+  MONITOR_ONLY
+}
+
+enum AiGovernanceDataSensitivity {
+  PUBLIC
+  INTERNAL
+  CONFIDENTIAL
+  RESTRICTED
+  PII
+  FINANCIAL
+  HEALTH
+}
+
+enum AiApprovalRequestStatus {
+  PENDING
+  APPROVED
+  DENIED
+  CANCELLED
+}
+
+enum AiUsageReportPeriod {
+  WEEKLY
+  MONTHLY
+  QUARTERLY
+}
+
+// ── AI Usage Governance Models ────────────────────────────────────────────────
+
+model AiUsageGovernancePolicy {
+  id                        String                        @id @default(cuid())
+  organizationId            String
+  organization              Organization                  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  name                      String                        @default("Default AI Usage Governance Policy")
+  description               String?
+  enabled                   Boolean                       @default(true)
+  defaultAction             AiGovernanceRuleAction         @default(MONITOR_ONLY)
+  requireApprovalForNew     Boolean                       @default(true)
+  notifyOnBlocked           Boolean                       @default(true)
+  notifyOnApprovalRequest   Boolean                       @default(true)
+  restrictedDataAction       AiGovernanceRuleAction        @default(BLOCK)
+  piiDataAction             AiGovernanceRuleAction         @default(BLOCK)
+  employeeMonitoringEnabled Boolean                       @default(true)
+  auditRetentionDays        Int                           @default(365)
+  rules                     AiUsageGovernanceRule[]
+  departments               AiUsageGovernanceDepartment[]
+  dataClassifications       AiUsageGovernanceDataClassification[]
+  reports                   AiUsageReport[]
+  createdAt                 DateTime                      @default(now())
+  updatedAt                 DateTime                      @updatedAt
+
+  @@unique([organizationId, name])
+  @@index([organizationId, enabled])
+}
+
+model AiUsageGovernanceRule {
+  id             String                  @id @default(cuid())
+  policyId       String
+  policy         AiUsageGovernancePolicy @relation(fields: [policyId], references: [id], onDelete: Cascade)
+  providerName   String                  // e.g., "OpenAI", "Anthropic", or "*" for all
+  modelPattern   String?                 // glob pattern, e.g., "gpt-4*", or null for all models
+  action         AiGovernanceRuleAction
+  priority       Int                     @default(0) // higher = more specific match
+  reason         String?
+  createdById    String?
+  createdAt      DateTime                @default(now())
+  updatedAt      DateTime                @updatedAt
+
+  @@index([policyId, providerName])
+  @@index([policyId, action])
+}
+
+model AiUsageGovernanceDepartment {
+  id               String                          @id @default(cuid())
+  policyId         String
+  policy           AiUsageGovernancePolicy         @relation(fields: [policyId], references: [id], onDelete: Cascade)
+  name             String
+  description      String?
+  defaultAction    AiGovernanceRuleAction           @default(MONITOR_ONLY)
+  memberUserIds    String[]                         // user IDs belonging to this department
+  rules            AiUsageGovernanceDepartmentRule[]
+  createdAt        DateTime                        @default(now())
+  updatedAt        DateTime                        @updatedAt
+
+  @@unique([policyId, name])
+  @@index([policyId])
+}
+
+model AiUsageGovernanceDepartmentRule {
+  id             String                         @id @default(cuid())
+  departmentId   String
+  department     AiUsageGovernanceDepartment    @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  providerName   String
+  modelPattern   String?
+  action         AiGovernanceRuleAction
+  reason         String?
+  createdAt      DateTime                       @default(now())
+  updatedAt      DateTime                       @updatedAt
+
+  @@index([departmentId, providerName])
+}
+
+model AiUsageGovernanceDataClassification {
+  id               String                       @id @default(cuid())
+  policyId         String
+  policy           AiUsageGovernancePolicy      @relation(fields: [policyId], references: [id], onDelete: Cascade)
+  sensitivityLevel AiGovernanceDataSensitivity
+  providerName     String                       // which provider this applies to
+  allowedActions   AiGovernanceRuleAction[]      // what actions are allowed for this data
+  requiresApproval Boolean                     @default(true)
+  description      String?
+  createdAt        DateTime                     @default(now())
+  updatedAt        DateTime                     @updatedAt
+
+  @@unique([policyId, sensitivityLevel, providerName])
+  @@index([policyId, sensitivityLevel])
+}
+
+model AiUsageGovernanceAuditLog {
+  id               String       @id @default(cuid())
+  organizationId   String
+  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId           String?
+  providerName     String?
+  modelName        String?
+  action           String       // USAGE_EVENT, POLICY_CHANGE, APPROVAL_GRANTED, BLOCKED, etc.
+  decision         String       // ALLOWED, BLOCKED, APPROVED, DENIED, MONITORED
+  reason           String?
+  contextRedacted  String?      @db.Text
+  metadata         Json?
+  createdAt        DateTime     @default(now())
+
+  @@index([organizationId, createdAt])
+  @@index([organizationId, userId, createdAt])
+  @@index([organizationId, action, createdAt])
+  @@index([organizationId, decision, createdAt])
+}
+
+model AiUsageApprovalRequest {
+  id               String                    @id @default(cuid())
+  organizationId   String
+  organization     Organization              @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  requestedById    String?
+  requestedBy      User?                     @relation("GovernanceApprovalRequests", fields: [requestedById], references: [id], onDelete: SetNull)
+  reviewedById     String?
+  providerName     String
+  modelName        String?
+  useCase          String                    @db.Text
+  justification    String?                   @db.Text
+  dataSensitivity  AiGovernanceDataSensitivity?
+  status           AiApprovalRequestStatus   @default(PENDING)
+  decisionReason   String?
+  expiresAt        DateTime?
+  reviewedAt       DateTime?
+  createdAt        DateTime                  @default(now())
+  updatedAt        DateTime                  @updatedAt
+
+  @@index([organizationId, status, createdAt])
+  @@index([organizationId, requestedById])
+  @@index([organizationId, providerName])
+}
+
+model AiUsageReport {
+  id               String                  @id @default(cuid())
+  policyId         String
+  policy           AiUsageGovernancePolicy @relation(fields: [policyId], references: [id], onDelete: Cascade)
+  period           AiUsageReportPeriod
+  periodStart      DateTime
+  periodEnd        DateTime
+  totalUsageEvents Int                     @default(0)
+  allowedEvents    Int                     @default(0)
+  blockedEvents    Int                     @default(0)
+  approvalRequests Int                     @default(0)
+  topProviders     Json                    @default("[]")
+  topUsers         Json                    @default("[]")
+  complianceScore  Float?
+  findings         Json?                   @default("[]")
+  recommendations  Json?                   @default("[]")
+  generatedAt      DateTime                @default(now())
+
+  @@index([policyId, periodStart, periodEnd])
+  @@index([policyId, period])
+}
+
 // ── Shadow AI Scanner ─────────────────────────────────────────────────────────
 
 model ShadowAiScan {
@@ -3300,4 +3569,92 @@ model SlmEvaluation {
   @@index([projectId, createdAt])
   @@index([projectId, overallPassed, createdAt])
   @@index([projectId, modelUsed, createdAt])
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// Agent Identity Fabric — DB-backed persistent state for cryptographic
+// passports, revocation, service principals, delegations, and challenges.
+// ═══════════════════════════════════════════════════════════════════════════════
+
+model IdentityFabricPassport {
+  id               String   @id @default(cuid())
+  projectId        String
+  jti              String   @unique
+  subjectId        String
+  capabilitiesJson Json
+  audience         String?
+  scope            String?
+  parentJti        String?
+  depth            Int      @default(0)
+  issuedAt         DateTime
+  expiresAt        DateTime
+  revokedAt        DateTime?
+  createdAt        DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([jti])
+  @@index([projectId, expiresAt])
+  @@index([subjectId])
+  @@index([projectId, revokedAt])
+}
+
+model IdentityFabricRevocation {
+  id        String   @id @default(cuid())
+  projectId String
+  jti       String
+  reason    String?
+  revokedAt DateTime @default(now())
+
+  @@index([projectId, revokedAt])
+  @@index([jti])
+  @@unique([projectId, jti])
+}
+
+model IdentityFabricServicePrincipal {
+  id              String   @id @default(cuid())
+  projectId       String
+  principalId     String
+  provider        String
+  agentIdentityId String
+  scopesJson      Json     @default("[]")
+  lastUsedAt      DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([projectId, provider, principalId])
+  @@index([projectId, agentIdentityId])
+  @@index([projectId, createdAt])
+  @@index([provider, principalId])
+}
+
+model IdentityFabricDelegation {
+  id                   String   @id @default(cuid())
+  projectId            String
+  parentPassportJti    String
+  childAgentIdentityId String
+  policyHash           String
+  proofHash            String   @unique
+  depth                Int      @default(0)
+  createdAt            DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([parentPassportJti])
+  @@index([childAgentIdentityId])
+  @@index([proofHash])
+}
+
+model IdentityFabricChallenge {
+  id            String   @id @default(cuid())
+  projectId     String
+  sourceAgentId String
+  targetAgentId String
+  challenge     String   @unique
+  signature     String?
+  verified      Boolean  @default(false)
+  expiresAt     DateTime
+  createdAt     DateTime @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([challenge])
+  @@index([sourceAgentId, targetAgentId])
 }

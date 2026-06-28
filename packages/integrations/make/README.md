@@ -12,7 +12,6 @@ This custom app brings SoterAI's security scanning directly into your Make.com s
 | **Check AI Output for Threats** | `outputGuard` | Scan AI-generated responses for unsafe content, system prompt leakage, and PII before delivering to users. |
 | **Redact PII from Text** | `piiRedactor` | Redact personally identifiable information and secrets from any text. Supports partial, full, and hash redaction modes. |
 | **Scan RAG Document** | `ragScanner` | Scan documents for embedded threats before adding them to RAG or vector databases. |
-| **Create Incident** | `createIncident` | Log a security incident to the SoterAI dashboard for tracking and review. |
 
 ## Connection Setup
 
@@ -23,7 +22,7 @@ This custom app brings SoterAI's security scanning directly into your Make.com s
 | Field | Required | Description |
 |-------|----------|-------------|
 | **API Key** | Yes | Your SoterAI API key (starts with `sk_`). |
-| **Base URL** | No | Defaults to `https://api.cybersecurityguard.com`. Change only for self-hosted deployments. |
+| **Base URL** | No | Defaults to `https://soterai.publicvm.com`. Change only for self-hosted deployments. |
 | **Project ID** | No | Default SoterAI project ID applied to all modules unless overridden per-step. |
 
 ## Example Scenarios
@@ -46,11 +45,11 @@ Automatically strip PII from incoming data before storing it.
 
 Only clean documents are added to your vector database.
 
-### 4. Incident Logging
+### 4. Block and Notify on Threats
 
-> Any Module -> **SoterAI: Check Input** -> Router (allowed=false) -> **SoterAI: Create Incident**
+> Webhook -> **SoterAI: Check Input** -> Router (allowed=false) -> Slack/Email: Notify
 
-Automatically log blocked threats to the SoterAI dashboard.
+Route blocked threats to a notification channel for review.
 
 ## Installation (Custom App)
 
@@ -65,7 +64,7 @@ Automatically log blocked threats to the SoterAI dashboard.
 make/
   app.json                              # App metadata and connection config
   modules/
-    actions.json                        # All 5 action modules
+    actions.json                        # All 4 action modules
   scenarios/
     webhook-guard-openai.json           # Example scenario reference
 ```

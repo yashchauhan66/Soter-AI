@@ -7,6 +7,8 @@ export type WebhookEvent =
   | "guard.pii.redacted"
   | "guard.system_prompt_leak.blocked"
   | "guard.unsafe_output.blocked"
+  | "governance.enforcement.blocked"
+  | "governance.enforcement.approval_required"
   | "usage.limit.warning"
   | "usage.limit.exceeded";
 
@@ -17,6 +19,8 @@ export const WEBHOOK_EVENTS: WebhookEvent[] = [
   "guard.pii.redacted",
   "guard.system_prompt_leak.blocked",
   "guard.unsafe_output.blocked",
+  "governance.enforcement.blocked",
+  "governance.enforcement.approval_required",
   "usage.limit.warning",
   "usage.limit.exceeded",
 ];

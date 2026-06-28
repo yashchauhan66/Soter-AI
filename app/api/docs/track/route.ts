@@ -3,10 +3,20 @@
 // counts. No PII, no API key, no raw IP stored.
 // This endpoint is unauthenticated and rate-limited per IP.
 
+import { enforcePublicRateLimit } from "@/lib/publicRateLimit";
 import { recordProductEvent } from "@/lib/ops/onboarding";
 
 export async function POST(request: Request) {
   try {
+    const limited = await enforcePublicRateLimit({
+      request,
+      scope: "docs:track",
+      limit: 60,
+      windowMs: 60_000,
+      message: "Too many tracking requests. Please slow down.",
+    });
+    if (limited) return limited;
+
     const body = await request.json() as {
       page: string;
       referrer?: string;

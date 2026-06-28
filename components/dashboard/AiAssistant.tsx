@@ -171,6 +171,18 @@ const PAGE_CONTEXTS: Record<string, PageContext> = {
       { label: "Compliance status", prompt: "What is my current compliance status and what needs attention?" },
     ],
   },
+  "/dashboard/usage-governance": {
+    welcome: "🏛️ AI Usage Governance — define company-wide policies for AI provider usage. Set allow/block lists, department rules, data classification, and monitor employee AI usage across your organization.",
+    section: "AI Usage Governance",
+    actions: [
+      { label: "How governance works", prompt: "How does AI Usage Governance help my company control AI tool usage?" },
+      { label: "Set up provider rules", prompt: "How do I set up allow/block lists for AI providers?" },
+      { label: "Department policies", prompt: "How do I configure different AI usage policies per department?" },
+      { label: "Data classification", prompt: "How does data classification work for AI provider governance?" },
+      { label: "Compliance reports", prompt: "How do I generate AI usage governance compliance reports?" },
+      { label: "Approval workflow", prompt: "How does the AI provider approval workflow work?" },
+    ],
+  },
   "/dashboard/agent-firewall": {
     welcome: "🛡️ Agent Firewall — controlling every tool call your AI agents make. How can I help?",
     section: "Agent Firewall",

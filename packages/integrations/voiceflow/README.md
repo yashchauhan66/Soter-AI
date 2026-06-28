@@ -1,75 +1,28 @@
-# SoterAI for Voiceflow
+# SoterAI Voiceflow Templates
 
-Voiceflow does not have a traditional integration marketplace. Instead, SoterAI provides **copy-paste templates** that you can add directly into your Voiceflow projects to secure your AI agent conversations.
+Voiceflow can call SoterAI through API Step blocks. This package contains copy-ready templates for the core AI security checks:
 
-These templates let you add real-time input scanning, output filtering, PII redaction, and RAG content scanning to any Voiceflow chatbot or voice agent.
+- Input Guard: block prompt injection, jailbreaks, and malicious user input.
+- Output Guard: inspect assistant output before it is shown to users.
+- PII Redactor: redact sensitive data before storing or sending text.
+- RAG Document Scanner: score documents before retrieval ingestion.
 
-## Two Approaches
+## Files
 
-### API Step Templates (`api-template/`)
+- `api-template/README.md`: setup guide for Voiceflow API Steps.
+- `api-template/input-guard.json`: API Step template for `/api/guard/input`.
+- `api-template/output-guard.json`: API Step template for `/api/guard/output`.
+- `api-template/pii-redactor.json`: API Step template for redaction through `/api/guard/input`.
+- `api-template/rag-scanner.json`: API Step template for `/api/rag/document/trust-score`.
 
-Use Voiceflow's built-in **API Step** block to call SoterAI endpoints directly. No code required -- just configure the URL, headers, body, and response mapping.
+## Required Variables
 
-**Pros:**
-- No JavaScript knowledge needed
-- Visual configuration in the Voiceflow editor
-- Easy to inspect and debug in the flow
+Create these Voiceflow variables before importing or recreating the steps:
 
-**Cons:**
-- More blocks in your flow (one API Step per guard)
-- Less flexibility for custom logic
+- `{soter_api_key}`: SoterAI project API key.
+- `{soter_base_url}`: SoterAI API base URL, for example `https://soterai.dev`.
+- `{project_id}`: optional SoterAI project ID.
+- `{last_user_message}`: latest user input.
+- `{assistant_output}`: latest assistant response.
 
-### Function Step Templates (`function-template/`)
-
-Use Voiceflow's **Function** step to run JavaScript that calls SoterAI. Copy the provided `.js` files into a Function block.
-
-**Pros:**
-- More compact -- one Function block handles the full request/response cycle
-- Can add custom pre/post-processing logic
-- Easier to chain multiple guards
-
-**Cons:**
-- Requires basic JavaScript familiarity
-- Slightly harder to debug visually
-
-## Quick Start
-
-1. **Get your API key** from https://app.cybersecurityguard.com/dashboard
-2. **Choose your approach** -- API Steps or Function Steps (or mix both).
-3. **Copy the templates** into your Voiceflow project:
-   - For API Steps: configure an API Step block with the URL, headers, body, and response mapping from `api-template/README.md`.
-   - For Function Steps: paste the `.js` file contents into a Voiceflow Function step from `function-template/`.
-4. **Wire up conditions** to handle blocked or flagged content in your flow.
-
-## Available Guards
-
-| Guard          | Description                                              | API Step | Function Step |
-|----------------|----------------------------------------------------------|----------|---------------|
-| Input Guard    | Scans user messages for prompt injection, jailbreaks, toxicity | Yes      | Yes           |
-| Output Guard   | Filters LLM responses for data leaks, harmful content   | Yes      | Yes           |
-| PII Redactor   | Detects and redacts personal information (emails, SSNs, etc.) | Yes      | Yes           |
-| RAG Scanner    | Scans retrieved knowledge base content before LLM context | Yes      | --            |
-
-## Installation
-
-Copy the templates into your Voiceflow project. No packages to install, no marketplace to browse -- just paste and configure.
-
-## Directory Structure
-
-```
-voiceflow/
-  README.md                  ← You are here
-  api-template/
-    README.md                ← API Step configuration templates
-  function-template/
-    README.md                ← Function Step usage guide
-    soterai-input-guard.js   ← Input Guard function
-    soterai-output-guard.js  ← Output Guard function
-    soterai-pii-redactor.js  ← PII Redactor function
-```
-
-## Security Notes
-
-- Store your API key in Voiceflow's secure variable storage -- never hardcode it in visible flow blocks.
-- Use `BALANCED` policy mode for general chatbots; switch to `STRICT` for high-security use cases.
-- Monitor the SoterAI dashboard at https://app.cybersecurityguard.com for real-time threat analytics.
+Keep the API key in Voiceflow's secret or environment variable storage where available.

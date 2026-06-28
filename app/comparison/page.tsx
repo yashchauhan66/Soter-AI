@@ -17,11 +17,10 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "SoterAI vs Competitors | AI Security Guardrail Comparison",
   description:
-    "Compare SoterAI against Lakera, Prompt Security, HiddenLayer, Protect AI, Pangea, Cisco AI Defense, NVIDIA NeMo, Guardrails AI, LLM Guard, GA Guard, AWS Bedrock, Azure AI Content Safety, and Patronus AI.",
-  alternates: { canonical: "/comparison" },
-  openGraph: {
+    "Compare SoterAI against Lakera (Check Point), Palo Alto Prisma AIRS, Galileo, Arthur AI, Prompt Security, HiddenLayer, Protect AI, Pangea, Cisco AI Defense, NVIDIA NeMo, Guardrails AI, LLM Guard, GA Guard, AWS Bedrock, and Azure AI Content Safety.",
+  alternates: { canonical: "/comparison" },    openGraph: {
     title: "SoterAI vs Competitors — AI Security Guardrail Comparison",
-    description: "Compare the core AI guardrail matrix plus the expanded 2026 AI security landscape. Soter covers Input + Output + RAG + Agent Firewall + Policy + Enterprise.",
+    description: "Compare the core AI guardrail matrix plus the expanded 2026 AI security landscape including Check Point, Palo Alto Prisma AIRS, Galileo Agent Control, and AWS Cross-Account Safeguards.",
   },
 };
 
@@ -161,10 +160,32 @@ const profiles = [
     name: "Lakera → Check Point",
     status: "Acquired Sep 2025 ($300M)",
     focus: "Prompt injection / jailbreak detection API",
-    strength: "Purpose-built, sub-50ms latency, Gandalf red-team community",
-    weakness: "Cloud-only, no RAG/agent/enterprise features",
+    strength: "Purpose-built, sub-50ms latency, 100+ languages, Gandalf red-team community",
+    weakness: "Cloud-only (no self-host), no RAG/agent/enterprise features",
     pricing: "Enterprise only (Check Point sales-gated)",
     url: "https://www.checkpoint.com/press-releases/check-point-acquires-lakera-to-deliver-end-to-end-ai-security-for-enterprises/",
+  },
+  {
+    id: "paloalto",
+    icon: "🟠",
+    name: "Palo Alto Prisma AIRS",
+    status: "Proprietary · Palo Alto Networks",
+    focus: "AI runtime security with MCP/agent lifecycle protection",
+    strength: "Enterprise MCP discovery, WebSocket scanning, multi-cloud posture management",
+    weakness: "Requires Palo Alto security stack, no self-host, heavy enterprise deployment",
+    pricing: "Enterprise only (Palo Alto sales-gated)",
+    url: "https://www.paloaltonetworks.com/ai-runtime-security",
+  },
+  {
+    id: "galileo",
+    icon: "🟤",
+    name: "Galileo",
+    status: "Proprietary (Free/Pro/Enterprise)",
+    focus: "LLM evaluation and agent observability platform",
+    strength: "Luna-2 SLM-as-judge, Agent Control governance layer, deep trace visibility",
+    weakness: "Observation-only (no runtime enforcement), cloud-only, no agent security",
+    pricing: "Free (5K traces/mo) / Pro ($100/mo) / Enterprise (custom)",
+    url: "https://www.rungalileo.io",
   },
   {
     id: "nemo",
@@ -183,8 +204,8 @@ const profiles = [
     name: "Guardrails AI",
     status: "Apache 2.0 (Open Source) · 17K⭐",
     focus: "Output validation with structured schemas (Pydantic)",
-    strength: "Largest validator library, composable guards",
-    weakness: "No input security, no RAG/agent support, output-focused only",
+    strength: "Largest validator library, composable guards, custom Python agent security blocks",
+    weakness: "No runtime enforcement, no RAG/agent support, output-focused only",
     pricing: "Free (self-host) / Cloud (usage-based)",
     url: "https://github.com/guardrails-ai/guardrails",
   },
@@ -216,7 +237,7 @@ const profiles = [
     name: "AWS Bedrock Guardrails",
     status: "Proprietary (AWS)",
     focus: "Cloud-native guardrails for AWS ecosystem",
-    strength: "Deep AWS integration, zero-ops, pay-per-token",
+    strength: "Deep AWS integration, zero-ops, cross-account safeguards (new), pay-per-token",
     weakness: "AWS vendor lock-in, no self-host, no RAG/agent security",
     pricing: "Pay-per-token ($0.75-$1.50 per 1K units)",
     url: "https://aws.amazon.com/bedrock/guardrails/",
@@ -227,8 +248,10 @@ const whoWins: Array<{ emoji: string; winner: string; reason: string }> = [
   { emoji: "🛡️", winner: "Soter", reason: "Most comprehensive — Input + Output + RAG + Agent Firewall + Policy + Enterprise in one product" },
   { emoji: "🟢", winner: "GA Guard", reason: "Best adversarial detection — highest independent F1 (0.983), adversarially trained" },
   { emoji: "🟡", winner: "Guardrails AI", reason: "Largest open source community — 17K+ GitHub stars, richest validator library" },
-  { emoji: "🟣", winner: "AWS Bedrock", reason: "Best cloud integration — deepest AWS ecosystem integration" },
+  { emoji: "🟣", winner: "AWS Bedrock", reason: "Best cloud integration — deepest AWS ecosystem with new cross-account safeguards" },
   { emoji: "🔵", winner: "NVIDIA NeMo", reason: "Best flow control — only programmable dialog flow with Colang DSL" },
+  { emoji: "🟤", winner: "Galileo", reason: "Best observability — Luna-2 SLM-as-judge, Agent Control governance, deep trace visibility" },
+  { emoji: "🔴", winner: "Palo Alto Prisma AIRS", reason: "Best enterprise MCP security — agent lifecycle management, WebSocket scanning, multi-cloud posture" },
 ];
 
 // ─── JSON-LD ───────────────────────────────────────────────────────────────
@@ -265,6 +288,21 @@ const bestByUseCase = [
     why: "Stronger focus on model inventory, AI asset security, ML supply chain, and enterprise security operations.",
   },
   {
+    useCase: "Enterprise MCP/agent lifecycle and runtime security",
+    winner: "Palo Alto Prisma AIRS",
+    why: "Stronger MCP discovery, WebSocket scanning for real-time agents, and multi-cloud posture management across enterprise security stacks.",
+  },
+  {
+    useCase: "LLM observability, evaluation, and cost monitoring",
+    winner: "Galileo",
+    why: "Luna-2 SLM-as-judge provides cost-effective evaluation at scale; Agent Control enables fleet-wide governance without code changes.",
+  },
+  {
+    useCase: "Shadow agent discovery and EU AI Act compliance",
+    winner: "Arthur AI",
+    why: "Automated agent discovery across VPCs and OpenTelemetry streams; purpose-built for EU AI Act audit trails.",
+  },
+  {
     useCase: "Employee AI governance and SaaS visibility",
     winner: "Prompt Security / Pangea AI Guard",
     why: "Better fit for workforce AI usage discovery, browser/proxy governance, and broad enterprise SaaS controls.",
@@ -299,11 +337,32 @@ const expandedCompetitors = [
     caveat: "HiddenLayer is stronger for model artifact and enterprise AI asset protection.",
   },
   {
-    name: "Protect AI / Palo Alto",
+    name: "Palo Alto Prisma AIRS",
+    category: "Enterprise agent runtime security",
+    bestAt: "MCP/agent lifecycle discovery, WebSocket scanning for real-time agents, enterprise posture management.",
+    soterEdge: "Soter is self-hostable, has 12 agent security modules with runtime enforcement, and doesn't require Palo Alto security stack.",
+    caveat: "Prisma AIRS has stronger enterprise MCP discovery, cross-cloud posture, and Palo Alto's security operations maturity.",
+  },
+  {
+    name: "Protect AI",
     category: "AI supply chain and model security",
     bestAt: "Model scanning, ML supply-chain security, and LLM Guard ecosystem.",
     soterEdge: "Soter bundles SaaS guard APIs, RAG, agent firewall, dashboards, and compliance workflows.",
     caveat: "Protect AI has deeper model security and research footprint.",
+  },
+  {
+    name: "Galileo",
+    category: "AI evaluation and observability",
+    bestAt: "Luna-2 SLM-as-judge, Agent Control governance layer, deep trace visibility into agent thought paths.",
+    soterEdge: "Soter enforces runtime security decisions before risky actions execute, not just after-the-fact observability.",
+    caveat: "Galileo's evaluation depth, cost-effective SLM monitoring, and trace analytics are stronger for observability workflows.",
+  },
+  {
+    name: "Arthur AI",
+    category: "Agent discovery and governance",
+    bestAt: "Shadow agent discovery across VPCs, OTel streams, and network analysis; EU AI Act audit trails.",
+    soterEdge: "Soter provides runtime enforcement (block/allow/escrow) in addition to governance — Arthur is evaluation and discovery focused.",
+    caveat: "Arthur is stronger for discovering shadow agents and providing compliance audit trails for agent fleets.",
   },
   {
     name: "Pangea AI Guard / CrowdStrike ecosystem",
@@ -367,7 +426,7 @@ function jsonLd() {
         "@type": "AboutPage",
         "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soterai.publicvm.com/comparison" },
         "name": "Soter vs Competitors — AI Security Guardrail Comparison",
-        "description": "Compare core AI guardrail platforms plus the expanded 2026 AI security landscape, including Lakera, Prompt Security, HiddenLayer, Protect AI, Pangea, Cisco, NVIDIA, Guardrails AI, LLM Guard, AWS, Azure, and Patronus.",
+        "description": "Compare core AI guardrail platforms plus the expanded 2026 AI security landscape, including Lakera (Check Point), Palo Alto Prisma AIRS, Galileo, Arthur AI, Prompt Security, HiddenLayer, Protect AI, Pangea, Cisco, NVIDIA, Guardrails AI, LLM Guard, AWS, Azure, and Patronus.",
         "mainEntity": {
           "@type": "ItemList",
           "name": "AI Security Guardrail Platforms",
@@ -773,10 +832,14 @@ export default function ComparisonPage() {
             <div className="card p-5">
               <h3 className="font-semibold">Key Market Trends</h3>
               <ul className="mt-3 space-y-2 text-sm text-slate-400">
-                <li className="flex gap-2"><span className="text-cyan">→</span>Agentic Shift: Tool-call auth = #1 priority</li>
-                <li className="flex gap-2"><span className="text-cyan">→</span>EU AI Act enforcement begins (fines up to 7% revenue)</li>
-                <li className="flex gap-2"><span className="text-cyan">→</span>Small adversarial models beating LLM-as-judge</li>
-                <li className="flex gap-2"><span className="text-cyan">→</span>Function-call safety remains unsolved (Mozilla.ai κ~0.26)</li>
+                <li className="flex gap-2"><span className="text-cyan">→</span>Agentic Shift: Tool-call auth = #1 priority for AI security buyers</li>
+                <li className="flex gap-2"><span className="text-cyan">→</span>Shadow AI discovery becomes critical — Arthur AI pioneers Agent Discovery &amp; Governance (ADG)</li>
+                <li className="flex gap-2"><span className="text-cyan">→</span>AWS introduces Cross-Account Safeguards for org-wide immutable AI policies</li>
+                <li className="flex gap-2"><span className="text-cyan">→</span>Palo Alto launches WebSocket scanning for real-time voice/trading bot agents</li>
+                <li className="flex gap-2"><span className="text-cyan">→</span>EU AI Act enforcement begins (fines up to 7% global revenue)</li>
+                <li className="flex gap-2"><span className="text-cyan">→</span>Small adversarial SLMs beat LLM-as-judge in detection accuracy</li>
+                <li className="flex gap-2"><span className="text-cyan">→</span>Galileo Luna-2 sets new standard for cost-effective on-device evaluation</li>
+                <li className="flex gap-2"><span className="text-cyan">→</span>Function-call safety remains unsolved benchmark (Mozilla.ai κ~0.26)</li>
               </ul>
             </div>
           </div>
@@ -850,6 +913,12 @@ export default function ComparisonPage() {
         {/* ── Sources ── */}
         <p className="mt-8 text-center text-xs text-slate-600">
           Sources:{" "}
+          <a href="https://docs.lakera.ai/guard" className="text-cyan underline underline-offset-2" target="_blank" rel="noopener">Lakera (Check Point)</a>
+          {" · "}
+          <a href="https://docs.paloaltonetworks.com/ai-runtime-security" className="text-cyan underline underline-offset-2" target="_blank" rel="noopener">Palo Alto Prisma AIRS</a>
+          {" · "}
+          <a href="https://www.rungalileo.io" className="text-cyan underline underline-offset-2" target="_blank" rel="noopener">Galileo</a>
+          {" · "}
           <a href="https://generalanalysis.com/guides/best-ai-guardrails" className="text-cyan underline underline-offset-2" target="_blank" rel="noopener">General Analysis</a>
           {" · "}
           <a href="https://truefoundry.com/blog/ai-guardrails-comparison" className="text-cyan underline underline-offset-2" target="_blank" rel="noopener">TrueFoundry</a>

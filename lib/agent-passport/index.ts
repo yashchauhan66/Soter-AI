@@ -81,6 +81,17 @@ export interface AgentPassportValidationResult {
   policyMatches: Array<{ id: string; label: string; severity: AgentPassportRiskLevel }>;
 }
 
+export interface AgentDelegationRequest extends AgentPassportPolicyInput {
+  intent: string;
+}
+
+export interface AgentDelegationResult {
+  allowed: boolean;
+  policy: NormalizedAgentPassportPolicy;
+  violations: string[];
+  intentHash: string;
+}
+
 export const DEFAULT_AGENT_PASSPORT_POLICY: NormalizedAgentPassportPolicy = {
   allowedTools: ["browser.read", "browser.open", "rag.search", "calendar.read", "filesystem.read"],
   blockedTools: ["terminal.run", "filesystem.delete", "payments.charge", "secrets.read"],
@@ -118,6 +129,62 @@ export function hashPassportToken(token: string) {
     ?? process.env.NEXTAUTH_SECRET
     ?? "cybersecurityguard-agent-passport";
   return createHash("sha256").update(`agent-passport.${token}.${pepper}`).digest("hex");
+}
+
+export function hashAgentIntent(intent: string) {
+  const normalized = intent.trim().replace(/\s+/g, " ");
+  if (!normalized) throw new Error("Delegated intent is required.");
+  return createHash("sha256").update(normalized).digest("hex");
+}
+
+export function deriveDelegatedPassportPolicy(parent: NormalizedAgentPassportPolicy, request: AgentDelegationRequest): AgentDelegationResult {
+  const normalizedParent = normalizePassportPolicy(parent);
+  const requested = normalizePassportPolicy({
+    allowedTools: request.allowedTools ?? normalizedParent.allowedTools,
+    blockedTools: request.blockedTools ?? [],
+    approvalRequiredTools: request.approvalRequiredTools ?? normalizedParent.approvalRequiredTools,
+    allowedDomains: request.allowedDomains ?? normalizedParent.allowedDomains,
+    blockedDomains: request.blockedDomains ?? [],
+    dataScopes: request.dataScopes ?? normalizedParent.dataScopes,
+    memoryScopes: request.memoryScopes ?? normalizedParent.memoryScopes,
+  });
+  const violations: string[] = [];
+  checkSubset("allowedTools", requested.allowedTools, normalizedParent.allowedTools, violations);
+  checkSubset("approvalRequiredTools", requested.approvalRequiredTools, uniq([...normalizedParent.allowedTools, ...normalizedParent.approvalRequiredTools]), violations);
+  checkSubset("allowedDomains", requested.allowedDomains, normalizedParent.allowedDomains, violations);
+  checkSubset("dataScopes", requested.dataScopes, normalizedParent.dataScopes, violations);
+  checkSubset("memoryScopes", requested.memoryScopes, normalizedParent.memoryScopes, violations);
+
+  const policy = normalizePassportPolicy({
+    allowedTools: requested.allowedTools,
+    blockedTools: uniq([...normalizedParent.blockedTools, ...requested.blockedTools]),
+    approvalRequiredTools: uniq([...normalizedParent.approvalRequiredTools, ...requested.approvalRequiredTools]),
+    allowedDomains: requested.allowedDomains,
+    blockedDomains: uniq([...normalizedParent.blockedDomains, ...requested.blockedDomains]),
+    dataScopes: requested.dataScopes,
+    memoryScopes: requested.memoryScopes,
+  });
+  return { allowed: violations.length === 0, policy, violations, intentHash: hashAgentIntent(request.intent) };
+}
+
+export function createAgentDelegationProof(input: {
+  parentPassportId: string;
+  childAgentIdentityId: string;
+  childSessionId: string;
+  delegationDepth: number;
+  intentHash: string;
+  policy: NormalizedAgentPassportPolicy;
+}) {
+  const payload = {
+    format: "soter.agent-delegation.v1",
+    parentPassportId: input.parentPassportId,
+    childAgentIdentityId: input.childAgentIdentityId,
+    childSessionId: input.childSessionId,
+    delegationDepth: input.delegationDepth,
+    intentHash: input.intentHash,
+    policyHash: hashEvidence(input.policy),
+  };
+  return { ...payload, proofHash: hashEvidence(payload) };
 }
 
 export function createPassportId() {
@@ -320,6 +387,23 @@ function normalize(value: string | undefined) {
 
 function uniq(values: string[]) {
   return [...new Set(values.filter(Boolean))];
+}
+
+function checkSubset(label: string, requested: string[], parent: string[], violations: string[]) {
+  const parentSet = new Set(parent);
+  for (const value of requested) {
+    if (!parentSet.has(value)) violations.push(`${label}:${value} exceeds the parent passport.`);
+  }
+}
+
+function hashEvidence(value: unknown) {
+  return createHash("sha256").update(stableJson(value)).digest("hex");
+}
+
+function stableJson(value: unknown): string {
+  if (value === null || typeof value !== "object") return JSON.stringify(value);
+  if (Array.isArray(value)) return `[${value.map(stableJson).join(",")}]`;
+  return `{${Object.entries(value as Record<string, unknown>).sort(([a], [b]) => a.localeCompare(b)).map(([key, item]) => `${JSON.stringify(key)}:${stableJson(item)}`).join(",")}}`;
 }
 
 function clamp(value: number, min: number, max: number) {

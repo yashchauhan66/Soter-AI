@@ -12,8 +12,15 @@ function authErrorMessage(error?: string) {
 }
 
 function safeCallbackUrl(value: string) {
-  if (!value.startsWith("/") || value.startsWith("//")) return "/dashboard";
-  return value;
+  if (!value) return "/dashboard";
+  try {
+    const decoded = decodeURIComponent(value).trim();
+    if (!decoded.startsWith("/") || decoded.startsWith("//")) return "/dashboard";
+    if (decoded.includes("\\") || /[\u0000-\u001f]/.test(decoded)) return "/dashboard";
+    return decoded;
+  } catch {
+    return "/dashboard";
+  }
 }
 
 export function SignInForm({ callbackUrl, initialError }: { callbackUrl: string; initialError?: string }) {

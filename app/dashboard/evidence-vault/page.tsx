@@ -4,6 +4,7 @@ import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { FeatureGuide } from "@/components/docs/FeatureGuide";
 import { MetricCard, StatusBadge, RiskLevel, PayloadViewer, safeJson } from "@/components/dashboard/MetricCard";
+import { evaluateContinuousAssurance } from "@/lib/compliance/assurance";
 
 export const dynamic = "force-dynamic";
 
@@ -57,6 +58,7 @@ export default async function EvidenceVaultPage({ searchParams }: { searchParams
   const controls = new Set(items.map((item) => item.controlName)).size;
   const warnings = items.filter((item) => item.status === "WARNING" || item.status === "FAIL").length;
   const highRisk = items.filter((item) => item.riskLevel === "HIGH" || item.riskLevel === "CRITICAL").length;
+  const assurance = evaluateContinuousAssurance({ evidence: items });
 
   return (
     <div className="space-y-6">
@@ -75,12 +77,38 @@ export default async function EvidenceVaultPage({ searchParams }: { searchParams
       />
       <ProjectSwitcher projects={projects} selectedId={project.id} />
 
-      <div className="grid gap-4 sm:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+        <MetricCard label="Assurance score" value={`${assurance.assuranceScore}%`} tone={assurance.overallStatus === "PASS" ? "green" : assurance.overallStatus === "FAIL" ? "red" : "yellow"} />
         <MetricCard label="Evidence items" value={items.length} tone="gray" />
         <MetricCard label="Controls" value={controls} tone="cyan" />
         <MetricCard label="Warnings" value={warnings} tone="yellow" />
         <MetricCard label="High risk" value={highRisk} tone="red" />
       </div>
+
+      <section className="card overflow-x-auto p-5">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div>
+            <h2 className="text-lg font-semibold">Continuous control assurance</h2>
+            <p className="mt-1 max-w-3xl text-sm text-slate-400">Runtime evidence is checked for freshness, failures, and required control coverage. Missing evidence is not counted as a pass.</p>
+          </div>
+          <StatusBadge value={assurance.overallStatus} />
+        </div>
+        <table className="mt-4 w-full min-w-[980px] text-left text-sm">
+          <thead className="text-xs uppercase text-slate-500"><tr><th className="py-2">Status</th><th>Control</th><th>Fresh evidence</th><th>Latest evidence</th><th>Framework references</th></tr></thead>
+          <tbody className="divide-y divide-slate-800">
+            {assurance.controls.map((control) => (
+              <tr key={control.id}>
+                <td className="py-3"><StatusBadge value={control.status} /></td>
+                <td><p className="font-semibold">{control.name}</p><p className="mt-1 text-xs text-slate-500">{control.id}</p></td>
+                <td>{control.evidenceIds.length}</td>
+                <td>{control.latestEvidenceAt ? new Date(control.latestEvidenceAt).toLocaleString() : "No evidence"}</td>
+                <td className="max-w-[380px] text-xs text-slate-400">{Object.entries(control.frameworks).map(([framework, references]) => `${framework}: ${references.join(", ")}`).join(" · ")}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p className="mt-4 text-xs text-slate-500">{assurance.disclaimer}</p>
+      </section>
 
       <section className="card overflow-x-auto p-5">
         <div className="flex items-center justify-between gap-3">

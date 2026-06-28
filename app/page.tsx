@@ -7,6 +7,7 @@ import { DemoVideo } from "@/components/marketing/DemoVideo";
 import { Hero } from "@/components/marketing/Hero";
 import { HowItWorks } from "@/components/marketing/HowItWorks";
 import { Pricing } from "@/components/marketing/Pricing";
+import { TwoProducts } from "@/components/marketing/TwoProducts";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
 const siteUrl = "https://soterai.publicvm.com";
@@ -296,6 +297,7 @@ export default function Home() {
       </section>
 
       <HowItWorks />
+      <TwoProducts />
       <Features />
 
       {/* ── Demo Video Section ── */}

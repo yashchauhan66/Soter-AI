@@ -3,12 +3,15 @@ import { authenticateApiKeyRequest } from "@/lib/apiKeyMiddleware";
 import { runInputGuard } from "@/lib/guard/inputGuard";
 import { runOutputGuard } from "@/lib/guard/outputGuard";
 import { applyPolicy, loadProjectPolicy } from "@/lib/guard/policy";
+import type { RiskType } from "@/lib/guard/types";
 import { toPublicGuardResult } from "@/lib/guard/publicResult";
 import { createRateLimitResult } from "@/lib/guard/rateLimitResult";
 import { checkRedisRateLimit } from "@/lib/rateLimit";
 import { z } from "zod";
 import { recordRequestMetric } from "@/lib/ops/monitoring";
 import { DEFAULT_RPM } from "@/lib/guard/constants";
+import { evaluateGovernance, logAiUsageEvent } from "@/lib/usage-governance";
+import { dispatchGovernanceEnforcement } from "@/lib/usage-governance/notifications";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -23,7 +26,10 @@ const streamingGuardSchema = z.object({
   chunkSize: z.number().int().min(50).max(10_000).default(500),
   /** Include redacted text in response */
   includeRedacted: z.boolean().default(true),
+  userId: z.string().max(200).optional(),
   sessionId: z.string().max(200).optional(),
+  providerName: z.string().trim().max(100).optional(),
+  modelName: z.string().trim().max(100).optional(),
   metadata: z.record(z.unknown()).optional(),
 });
 
@@ -72,6 +78,123 @@ export async function POST(request: Request) {
 
     const body = streamingGuardSchema.parse(await readJson(request));
     const [policy] = await Promise.all([loadProjectPolicy(project.id)]);
+
+    // ── Provider governance enforcement ──
+    const orgId = project.organizationId;
+    if (body.providerName && orgId) {
+      const decision = await evaluateGovernance(
+        orgId,
+        body.providerName,
+        body.modelName,
+        body.userId ?? undefined,
+        undefined,
+      );
+
+      void logAiUsageEvent(
+        orgId,
+        body.userId ?? null,
+        body.providerName,
+        body.modelName ?? null,
+        decision.allowed ? "ALLOWED" : "BLOCKED",
+        `Streaming guard governance: ${decision.reason}`,
+        `Provider: ${body.providerName}, Model: ${body.modelName ?? "any"}`,
+      );
+
+      if (decision.action === "BLOCK") {
+        void dispatchGovernanceEnforcement({
+          organizationId: orgId,
+          projectId: project.id,
+          providerName: body.providerName,
+          modelName: body.modelName,
+          enforcementAction: "BLOCK",
+          reason: decision.reason,
+          userId: body.userId,
+        });
+
+        const governanceResult = {
+          allowed: false,
+          action: "BLOCK" as const,
+          riskScore: 0,
+          riskTypes: [] as RiskType[],
+          reason: `Blocked by governance policy: ${decision.reason}`,
+          findings: [],
+          metadata: {
+            governanceBlocked: true,
+            governanceAction: decision.action,
+            governanceReason: decision.reason,
+            providerName: body.providerName,
+          },
+        };
+        return jsonResponse({
+          direction: body.direction,
+          stream: body.stream,
+          chunkCount: 1,
+          totalLength: body.content.length,
+          chunks: [{
+            chunkIndex: 0,
+            chunkText: null,
+            result: toPublicGuardResult(governanceResult),
+            isFinal: true,
+          }],
+        }, {
+          status: 403,
+          headers: {
+            "X-RateLimit-Limit": String(DEFAULT_RPM),
+            "X-RateLimit-Remaining": String(rateLimit.remaining),
+            "X-Governance-Action": "BLOCK",
+            "X-Governance-Reason": encodeURIComponent(decision.reason.slice(0, 200)),
+          },
+        });
+      }
+
+      if (decision.action === "REQUIRE_APPROVAL") {
+        void dispatchGovernanceEnforcement({
+          organizationId: orgId,
+          projectId: project.id,
+          providerName: body.providerName,
+          modelName: body.modelName,
+          enforcementAction: "REQUIRE_APPROVAL",
+          reason: decision.reason,
+          userId: body.userId,
+        });
+
+        const governanceResult = {
+          allowed: false,
+          action: "HUMAN_REVIEW" as const,
+          riskScore: 0,
+          riskTypes: [] as RiskType[],
+          reason: `Requires governance approval: ${decision.reason}. Submit an approval request via the AI Usage Governance dashboard.`,
+          findings: [],
+          metadata: {
+            governanceBlocked: true,
+            governanceAction: decision.action,
+            governanceReason: decision.reason,
+            providerName: body.providerName,
+          },
+        };
+        return jsonResponse({
+          direction: body.direction,
+          stream: body.stream,
+          chunkCount: 1,
+          totalLength: body.content.length,
+          chunks: [{
+            chunkIndex: 0,
+            chunkText: null,
+            result: toPublicGuardResult(governanceResult),
+            isFinal: true,
+          }],
+        }, {
+          status: 403,
+          headers: {
+            "X-RateLimit-Limit": String(DEFAULT_RPM),
+            "X-RateLimit-Remaining": String(rateLimit.remaining),
+            "X-Governance-Action": "REQUIRE_APPROVAL",
+            "X-Governance-Reason": encodeURIComponent(decision.reason.slice(0, 200)),
+          },
+        });
+      }
+    }
+
     const guardFn = body.direction === "INPUT" ? runInputGuard : runOutputGuard;
     const chunks: StreamingGuardChunk[] = [];
     let cumulativeText = "";

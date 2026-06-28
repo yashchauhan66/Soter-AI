@@ -11,6 +11,8 @@
 
 import { randomUUID } from "crypto";
 import { db } from "../db";
+import { evaluateGovernance, logAiUsageEvent } from "@/lib/usage-governance";
+import { dispatchGovernanceEnforcement } from "@/lib/usage-governance/notifications";
 
 // ── Known provider signatures ─────────────────────────────────────────────────
 
@@ -729,6 +731,87 @@ export async function runShadowScan(input: ShadowScanInput): Promise<ShadowScanR
     }
   }
 
+  // ── Governance enforcement ───────────────────────────────────────────
+  // Evaluate each discovered provider against the organization's AI Usage
+  // Governance policy. This auto-enforces allow/block/approval rules and
+  // surfaces governance findings alongside technical risk findings.
+  const governanceDecisions = new Map<string, { allowed: boolean; action: string; reason: string; requiresApproval: boolean }>();
+  if (input.organizationId) {
+    for (const provider of providers) {
+      try {
+        const decision = await evaluateGovernance(input.organizationId, provider.name);
+        governanceDecisions.set(provider.name, {
+          allowed: decision.allowed,
+          action: decision.action,
+          reason: decision.reason,
+          requiresApproval: decision.requiresApproval,
+        });
+
+        // Log governance audit event
+        await logAiUsageEvent(
+          input.organizationId,
+          null,
+          provider.name,
+          null,
+          decision.allowed ? "ALLOWED" : "BLOCKED",
+          `Shadow scan auto-enforcement: ${decision.reason}`,
+          `Discovered via shadow scan — governance decision: ${decision.action}`,
+        );
+
+        // Add governance findings
+        if (decision.action === "BLOCK") {
+          // Fire governance enforcement notification (fire-and-forget)
+          if (input.projectId) {
+            void dispatchGovernanceEnforcement({
+              organizationId: input.organizationId,
+              projectId: input.projectId,
+              providerName: provider.name,
+              enforcementAction: "BLOCK",
+              reason: decision.reason,
+            });
+          }
+
+          findings.push({
+            findingType: "GOVERNANCE_BLOCKED",
+            providerName: provider.name,
+            riskLevel: "HIGH",
+            evidence: `Blocked by governance policy: ${decision.reason}`,
+            recommendation: `Contact your security team to review governance policy for ${provider.name} if access is needed.`,
+          });
+        } else if (decision.action === "REQUIRE_APPROVAL") {
+          // Fire governance enforcement notification (fire-and-forget)
+          if (input.projectId) {
+            void dispatchGovernanceEnforcement({
+              organizationId: input.organizationId,
+              projectId: input.projectId,
+              providerName: provider.name,
+              enforcementAction: "REQUIRE_APPROVAL",
+              reason: decision.reason,
+            });
+          }
+
+          findings.push({
+            findingType: "GOVERNANCE_REQUIRES_APPROVAL",
+            providerName: provider.name,
+            riskLevel: "MEDIUM",
+            evidence: `Requires approval: ${decision.reason}`,
+            recommendation: `Submit an approval request for ${provider.name} via the AI Usage Governance dashboard.`,
+          });
+        } else if (decision.action === "MONITOR_ONLY") {
+          findings.push({
+            findingType: "GOVERNANCE_MONITORING",
+            providerName: provider.name,
+            riskLevel: "LOW",
+            evidence: `Monitored by governance policy: ${decision.reason}`,
+            recommendation: `Review ${provider.name} usage patterns in the AI Usage Governance dashboard.`,
+          });
+        }
+      } catch (err) {
+        console.error(`[SoterAI] Governance evaluation failed for ${provider.name}:`, err);
+      }
+    }
+  }
+
   // Generate findings for unapproved tool usage
   for (const tool of tools) {
     if (tool.category === "DATABASE" || tool.category === "EMAIL" || tool.category === "EXTERNAL_API") {
@@ -781,19 +864,39 @@ export async function runShadowScan(input: ShadowScanInput): Promise<ShadowScanR
     },
   });
 
-  // Upsert discovered providers into the registry
+  // Upsert discovered providers into the registry with governance enforcement
   for (const provider of providers) {
+    const govDecision = governanceDecisions.get(provider.name);
+    let providerStatus = provider.riskLevel === "LOW" ? "APPROVED" : "REVIEW";
+    if (govDecision) {
+      if (govDecision.action === "BLOCK") providerStatus = "BLOCKED";
+      else if (govDecision.action === "ALLOW" || govDecision.action === "REQUIRE_APPROVAL") providerStatus = "REVIEW";
+      // MONITOR_ONLY keeps the default status based on risk level
+    }
+
     await db.aiProvider.upsert({
       where: { organizationId_name: { organizationId: input.organizationId, name: provider.name } },
-      update: { status: provider.riskLevel === "LOW" ? "APPROVED" : "REVIEW", riskLevel: provider.riskLevel },
+      update: {
+        status: providerStatus,
+        riskLevel: provider.riskLevel,
+        metadata: {
+          discoveredBy: "shadow-scan",
+          scanId,
+          ...(govDecision ? { governanceAction: govDecision.action, governanceReason: govDecision.reason } : {}),
+        },
+      },
       create: {
         organizationId: input.organizationId,
         name: provider.name,
         providerType: provider.type,
-        status: provider.riskLevel === "LOW" ? "APPROVED" : "REVIEW",
+        status: providerStatus,
         riskLevel: provider.riskLevel,
         dataRegion: provider.dataRegion,
-        metadata: { discoveredBy: "shadow-scan", scanId },
+        metadata: {
+          discoveredBy: "shadow-scan",
+          scanId,
+          ...(govDecision ? { governanceAction: govDecision.action, governanceReason: govDecision.reason } : {}),
+        },
       },
     });
   }

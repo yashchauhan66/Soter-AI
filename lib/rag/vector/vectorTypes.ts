@@ -16,6 +16,12 @@ export interface VectorChunk {
 
 export interface VectorQueryContext extends VectorNamespaceContext {
   role: string;
+  principalId?: string;
+  principalGroups?: string[];
+  requireExplicitPrincipalAcl?: boolean;
+  minimumPermissionVersion?: number;
+  maxPermissionAgeMs?: number;
+  authorizationTime?: Date;
   collectionId?: string;
   allowedDocumentIds?: string[];
   allowedSources?: string[];

@@ -6,11 +6,21 @@ import { apiError, jsonResponse } from "@/lib/apiResponse";
 import { safeCallbackUrl } from "@/lib/auth/callback";
 import { db } from "@/lib/db";
 import { buildAuthnRequest } from "@/lib/enterprise/saml";
+import { enforcePublicRateLimit } from "@/lib/publicRateLimit";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
   try {
+    const limited = await enforcePublicRateLimit({
+      request,
+      scope: "saml:login",
+      limit: 30,
+      windowMs: 60_000,
+      message: "Too many SAML login requests. Please try again later.",
+    });
+    if (limited) return limited;
+
     const url = new URL(request.url);
     const orgSlug = url.searchParams.get("org");
     const orgId = url.searchParams.get("organizationId");

@@ -39,6 +39,72 @@ export function buildAiBomExportPackage(input: AiBomExportInput) {
   };
 }
 
+export function exportAiBomCycloneDx(input: {
+  organizationId: string;
+  projectId: string;
+  snapshot: ReturnType<typeof generateAiBillOfMaterialsSnapshot>;
+  generatedAt?: string;
+}) {
+  const timestamp = input.generatedAt ?? input.snapshot.generatedAt;
+  const model = input.snapshot.model;
+  const provider = input.snapshot.modelProvider;
+  const tools = input.snapshot.toolsEnabled.map((tool) => ({
+    type: "application",
+    name: tool.name,
+    version: "unspecified",
+    properties: [
+      { name: "soter:component-kind", value: "agent-tool" },
+      { name: "soter:category", value: tool.category },
+      { name: "soter:enabled", value: String(tool.enabled) },
+      { name: "soter:approved", value: String(tool.approved) },
+    ],
+  }));
+  const components = [
+    ...(model ? [{
+      type: "machine-learning-model",
+      name: model.name,
+      version: model.version ?? "unspecified",
+      supplier: provider ? { name: provider.name } : undefined,
+      properties: [
+        { name: "soter:risk-level", value: model.riskLevel },
+        { name: "soter:provider-status", value: provider?.status ?? "UNKNOWN" },
+      ],
+    }] : []),
+    ...tools,
+  ];
+  const bom = {
+    bomFormat: "CycloneDX",
+    specVersion: "1.6",
+    serialNumber: `urn:uuid:${randomUUID()}`,
+    version: 1,
+    metadata: {
+      timestamp,
+      tools: [{ vendor: "SoterAI", name: "SoterAI AI-BOM Exporter", version: "1" }],
+      component: {
+        type: "application",
+        name: `SoterAI project ${input.projectId}`,
+        version: String(input.snapshot.systemPromptVersion ?? "unspecified"),
+        properties: [
+          { name: "soter:organization-id", value: input.organizationId },
+          { name: "soter:project-id", value: input.projectId },
+          { name: "soter:guard-policy-version", value: String(input.snapshot.guardPolicyVersion ?? "unspecified") },
+          { name: "soter:system-prompt-hash", value: input.snapshot.systemPromptHash ?? "not-recorded" },
+        ],
+      },
+    },
+    components,
+    properties: [
+      { name: "soter:vector-provider", value: input.snapshot.vectorProvider ?? "not-recorded" },
+      { name: "soter:ocr-provider", value: input.snapshot.ocrProvider ?? "not-recorded" },
+      { name: "soter:secret-store-provider", value: input.snapshot.secretStoreProvider ?? "not-recorded" },
+      { name: "soter:siem-export-status", value: input.snapshot.siemExportStatus },
+      { name: "soter:highest-risk", value: input.snapshot.riskSummary.highestSeverity },
+    ],
+  };
+  const serialized = JSON.stringify(bom);
+  return { format: "application/vnd.cyclonedx+json", specification: "CycloneDX 1.6", bom, contentHash: createHash("sha256").update(serialized).digest("hex") };
+}
+
 export interface AiBomInput {
   organizationId: string;
   projectId: string;

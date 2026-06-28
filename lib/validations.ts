@@ -21,12 +21,17 @@ export const inputGuardSchema = z.object({
   message: z.string().trim().min(1, "Message is required.").max(MAX_TEXT_LENGTH),
   userId: z.string().max(200).optional(),
   sessionId: z.string().max(200).optional(),
+  providerName: z.string().trim().max(100).optional(),
+  modelName: z.string().trim().max(100).optional(),
   metadata: metadataSchema.optional().default({}),
 });
 
 export const outputGuardSchema = z.object({
   aiResponse: z.string().trim().min(1, "AI response is required.").max(MAX_TEXT_LENGTH),
+  userId: z.string().max(200).optional(),
   sessionId: z.string().max(200).optional(),
+  providerName: z.string().trim().max(100).optional(),
+  modelName: z.string().trim().max(100).optional(),
   metadata: metadataSchema.optional().default({}),
 });
 
@@ -50,6 +55,8 @@ export const WEBHOOK_EVENT_VALUES = [
   "guard.pii.redacted",
   "guard.system_prompt_leak.blocked",
   "guard.unsafe_output.blocked",
+  "governance.enforcement.blocked",
+  "governance.enforcement.approval_required",
   "usage.limit.warning",
   "usage.limit.exceeded",
 ] as const;

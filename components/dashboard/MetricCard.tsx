@@ -61,6 +61,10 @@ const BADGE_TONES: Record<string, string> = {
   REQUIRE_APPROVAL: "bg-yellow-400/10 text-yellow-300",
   EDITED_AND_APPROVED: "bg-cyan/10 text-cyan",
   ALERT: "bg-yellow-400/10 text-yellow-300",
+  AVAILABLE: "bg-cyan/10 text-cyan",
+  READY: "bg-blue-400/10 text-blue-300",
+  BLOCKED: "bg-red-400/10 text-red-300",
+  IRREVERSIBLE: "bg-red-400/10 text-red-300",
   // MCP drift
   PROMPT_INJECTION_DETECTED: "bg-red-400/10 text-red-300",
   CAPABILITY_ADDED: "bg-orange-400/10 text-orange-300",

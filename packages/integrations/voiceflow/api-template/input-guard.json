@@ -1,0 +1,24 @@
+{
+  "name": "SoterAI Input Guard",
+  "method": "POST",
+  "url": "{soter_base_url}/api/guard/input",
+  "headers": {
+    "Content-Type": "application/json",
+    "x-api-key": "{soter_api_key}",
+    "User-Agent": "soterai-voiceflow/1.0"
+  },
+  "body": {
+    "message": "{last_user_message}",
+    "metadata": {
+      "projectId": "{project_id}",
+      "source": "voiceflow"
+    }
+  },
+  "saveResponse": {
+    "soter_allowed": "allowed",
+    "soter_risk_score": "riskScore",
+    "soter_risk_types": "riskTypes",
+    "soter_safe_text": "safeText",
+    "soter_reason": "reason"
+  }
+}

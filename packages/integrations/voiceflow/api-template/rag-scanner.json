@@ -1,0 +1,22 @@
+{
+  "name": "SoterAI RAG Document Scanner",
+  "method": "POST",
+  "url": "{soter_base_url}/api/rag/document/trust-score",
+  "headers": {
+    "Content-Type": "application/json",
+    "x-api-key": "{soter_api_key}",
+    "User-Agent": "soterai-voiceflow/1.0"
+  },
+  "body": {
+    "projectId": "{project_id}",
+    "documentId": "{document_id}",
+    "content": "{document_text}",
+    "source": "voiceflow"
+  },
+  "saveResponse": {
+    "soter_trust_score": "trustScore",
+    "soter_trust_level": "trustLevel",
+    "soter_findings": "findings",
+    "soter_recommended_action": "recommendedAction"
+  }
+}

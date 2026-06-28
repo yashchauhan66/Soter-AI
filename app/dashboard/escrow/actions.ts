@@ -50,6 +50,7 @@ export async function resolveDashboardEscrow(formData: FormData) {
     `;
     await insertAudit(project.id, escrow.id, "DENIED", "ADMIN", "Denied from dashboard.");
     revalidatePath("/dashboard/escrow");
+    revalidatePath("/dashboard/agent-control");
     return;
   }
 
@@ -75,6 +76,7 @@ export async function resolveDashboardEscrow(formData: FormData) {
     `;
     await insertAudit(project.id, escrow.id, "EDITED_AND_APPROVED", "ADMIN", "Edited and approved from dashboard.");
     revalidatePath("/dashboard/escrow");
+    revalidatePath("/dashboard/agent-control");
     return;
   }
 
@@ -85,6 +87,7 @@ export async function resolveDashboardEscrow(formData: FormData) {
   `;
   await insertAudit(project.id, escrow.id, "APPROVED", "ADMIN", "Approved from dashboard.");
   revalidatePath("/dashboard/escrow");
+  revalidatePath("/dashboard/agent-control");
 }
 
 async function insertAudit(projectId: string, escrowId: string, action: string, actor: "ADMIN", reason: string) {

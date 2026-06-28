@@ -1,38 +1,36 @@
 import {
   Ban,
   DatabaseZap,
-  ShieldCheck,
   UserRoundX,
   Activity,
+  ArrowRight,
+  Gauge,
+  Landmark,
   ShieldAlert,
+  ShieldHalf,
   BookOpen,
-  Box,
-  Crosshair,
+  FileBarChart,
+  ScrollText,
   Eye,
   EyeOff,
-  FileBarChart,
-  FileSearch,
   Fingerprint,
   FolderKanban,
   KeyRound,
-  Milestone,
-  Network,
-  Radio,
-  ScrollText,
-  ShieldClose,
-  ShieldHalf,
-  Siren,
-  SlidersHorizontal,
   Swords,
-  VenetianMask,
-  Wallet,
-  Webhook,
-  Wifi,
+  SlidersHorizontal,
   Settings,
   ListChecks,
-  CreditCard,
-  Download,
-  TrendingUp,
+  Wallet,
+  Box,
+  Crosshair,
+  VenetianMask,
+  Network,
+  Radio,
+  ShieldClose,
+  Milestone,
+  Siren,
+  FileSearch,
+  CodeXml,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
@@ -71,49 +69,47 @@ interface FeatureCard {
 }
 
 const FEATURE_CARDS: FeatureCard[] = [
+  // ── Agent Control ──
+  { title: "Agent firewall", description: "Block unauthorized tool calls and data exfiltration", href: "/dashboard/agent-firewall", icon: ShieldAlert, color: "text-orange-300", bg: "bg-orange-400/10", group: "Agent Control" },
+  { title: "Identity fabric", description: "Cryptographic agent identities and delegation chains", href: "/dashboard/identity-fabric", icon: VenetianMask, color: "text-cyan", bg: "bg-cyan/10", group: "Agent Control" },
+  { title: "Intent guard", description: "Verify actions match original user intent", href: "/dashboard/intent-guard", icon: Crosshair, color: "text-emerald-300", bg: "bg-emerald-400/10", group: "Agent Control" },
+  { title: "Tool chain", description: "Detect risky multi-tool sequences", href: "/dashboard/tool-chain", icon: Swords, color: "text-red-300", bg: "bg-red-400/10", group: "Agent Control" },
+  { title: "Transaction escrow", description: "Hold risky actions for human review", href: "/dashboard/escrow", icon: ShieldHalf, color: "text-yellow-300", bg: "bg-yellow-400/10", group: "Agent Control" },
+  { title: "Dry-run sandbox", description: "Simulate agent actions without executing", href: "/dashboard/dry-run", icon: Box, color: "text-blue-300", bg: "bg-blue-400/10", group: "Agent Control" },
+  { title: "Context lineage", description: "Track data sources and block cross-domain leaks", href: "/dashboard/lineage", icon: Network, color: "text-cyan", bg: "bg-cyan/10", group: "Agent Control" },
+  { title: "Blast radius", description: "Estimate damage if an agent is compromised", href: "/dashboard/blast-radius", icon: Radio, color: "text-orange-300", bg: "bg-orange-400/10", group: "Agent Control" },
+  { title: "Memory firewall", description: "Quarantine poisoned agent memory", href: "/dashboard/memory-firewall", icon: ShieldClose, color: "text-orange-300", bg: "bg-orange-400/10", group: "Agent Control" },
+  { title: "MCP drift", description: "Detect risky MCP server tool changes", href: "/dashboard/mcp-drift", icon: Milestone, color: "text-purple-300", bg: "bg-purple-400/10", group: "Agent Control" },
+  { title: "Legal boundary", description: "Stop agents crossing legal/compliance lines", href: "/dashboard/legal-boundary", icon: Siren, color: "text-red-300", bg: "bg-red-400/10", group: "Agent Control" },
+
+  // ── AI Usage Governance ──
+  { title: "Policy config", description: "Set default actions, data handling rules", href: "/dashboard/usage-governance/policy", icon: SlidersHorizontal, color: "text-violet-300", bg: "bg-violet-400/10", group: "Usage Governance" },
+  { title: "Provider rules", description: "Allow or block specific AI providers and models", href: "/dashboard/usage-governance/providers", icon: Ban, color: "text-violet-300", bg: "bg-violet-400/10", group: "Usage Governance" },
+  { title: "Department rules", description: "Per-department AI usage policies", href: "/dashboard/usage-governance/departments", icon: ListChecks, color: "text-purple-300", bg: "bg-purple-400/10", group: "Usage Governance" },
+  { title: "Employee monitoring", description: "Track AI usage across your organization", href: "/dashboard/usage-governance/monitoring", icon: Eye, color: "text-blue-300", bg: "bg-blue-400/10", group: "Usage Governance" },
+  { title: "Audit trail", description: "Complete log of AI usage and policy changes", href: "/dashboard/usage-governance/audit", icon: ScrollText, color: "text-emerald-300", bg: "bg-emerald-400/10", group: "Usage Governance" },
+
   // ── Monitor ──
   { title: "Guard logs", description: "Every input/output guard decision with filters and search", href: "/dashboard/logs", icon: ScrollText, color: "text-cyan", bg: "bg-cyan/10", group: "Monitor" },
   { title: "Reports", description: "Monthly security reports, trends, and recommendations", href: "/dashboard/reports", icon: FileBarChart, color: "text-emerald-300", bg: "bg-emerald-400/10", group: "Monitor" },
   { title: "Detection feedback", description: "Improve accuracy by marking false positives", href: "/dashboard/detection-feedback", icon: Eye, color: "text-blue-300", bg: "bg-blue-400/10", group: "Monitor" },
-  { title: "Customer success", description: "Activation rates, usage funnel, and churn risk", href: "/dashboard/customer-success", icon: TrendingUp, color: "text-purple-300", bg: "bg-purple-400/10", group: "Monitor" },
 
-  // ── Protect ──
-  { title: "Agent firewall", description: "Block unauthorized tool calls and data exfiltration", href: "/dashboard/agent-firewall", icon: ShieldAlert, color: "text-orange-300", bg: "bg-orange-400/10", group: "Protect" },
-  { title: "Policy engine", description: "Set risk thresholds and action defaults", href: "/dashboard/policy", icon: SlidersHorizontal, color: "text-cyan", bg: "bg-cyan/10", group: "Protect" },
-  { title: "RAG security", description: "Guard retrieval pipelines and filter risky sources", href: "/dashboard/rag", icon: BookOpen, color: "text-yellow-300", bg: "bg-yellow-400/10", group: "Protect" },
-  { title: "Webhooks", description: "Real-time signed events for attacks and alerts", href: "/dashboard/webhooks", icon: Webhook, color: "text-indigo-300", bg: "bg-indigo-400/10", group: "Protect" },
-
-  // ── Detect ──
-  { title: "Shadow AI", description: "Discover unauthorized AI tool usage", href: "/dashboard/shadow-ai", icon: EyeOff, color: "text-red-300", bg: "bg-red-400/10", group: "Detect" },
-  { title: "Red team lab", description: "Test against adversarial prompts and jailbreaks", href: "/dashboard/redteam/lab", icon: Swords, color: "text-orange-300", bg: "bg-orange-400/10", group: "Detect" },
-  { title: "Forensics", description: "Investigate incidents with full audit trails", href: "/dashboard/forensics", icon: FileSearch, color: "text-blue-300", bg: "bg-blue-400/10", group: "Detect" },
-  { title: "Semantic egress", description: "Catch paraphrased confidential data leaving", href: "/dashboard/semantic-egress", icon: Wifi, color: "text-pink-300", bg: "bg-pink-400/10", group: "Detect" },
-
-  // ── Control ──
-  { title: "Agent passports", description: "Cryptographically signed agent identities", href: "/dashboard/agent-passports", icon: VenetianMask, color: "text-cyan", bg: "bg-cyan/10", group: "Control" },
-  { title: "Transaction escrow", description: "Hold risky actions for human review", href: "/dashboard/escrow", icon: ShieldHalf, color: "text-yellow-300", bg: "bg-yellow-400/10", group: "Control" },
-  { title: "Intent guard", description: "Verify actions match original user intent", href: "/dashboard/intent-guard", icon: Crosshair, color: "text-emerald-300", bg: "bg-emerald-400/10", group: "Control" },
-  { title: "Tool chain", description: "Detect risky multi-tool sequences", href: "/dashboard/tool-chain", icon: Swords, color: "text-red-300", bg: "bg-red-400/10", group: "Control" },
-  { title: "Dry-run sandbox", description: "Simulate agent actions without executing", href: "/dashboard/dry-run", icon: Box, color: "text-blue-300", bg: "bg-blue-400/10", group: "Control" },
-  { title: "Memory firewall", description: "Quarantine poisoned agent memory", href: "/dashboard/memory-firewall", icon: ShieldClose, color: "text-orange-300", bg: "bg-orange-400/10", group: "Control" },
-  { title: "MCP drift", description: "Detect risky MCP server tool changes", href: "/dashboard/mcp-drift", icon: Milestone, color: "text-purple-300", bg: "bg-purple-400/10", group: "Control" },
-  { title: "Legal boundary", description: "Stop agents crossing legal/compliance lines", href: "/dashboard/legal-boundary", icon: Siren, color: "text-red-300", bg: "bg-red-400/10", group: "Control" },
+  // ── Security Tools ──
+  { title: "AI Code Review", description: "Catch secrets and flaws in AI-generated code", href: "/dashboard/code-security", icon: CodeXml, color: "text-cyan", bg: "bg-cyan/10", group: "Security Tools" },
+  { title: "Shadow AI", description: "Discover unauthorized AI tool usage", href: "/dashboard/shadow-ai", icon: EyeOff, color: "text-red-300", bg: "bg-red-400/10", group: "Security Tools" },
+  { title: "Red team lab", description: "Test against adversarial prompts and jailbreaks", href: "/dashboard/redteam/lab", icon: Swords, color: "text-orange-300", bg: "bg-orange-400/10", group: "Security Tools" },
+  { title: "Forensics", description: "Investigate incidents with full audit trails", href: "/dashboard/forensics", icon: FileSearch, color: "text-blue-300", bg: "bg-blue-400/10", group: "Security Tools" },
+  { title: "RAG security", description: "Guard retrieval pipelines and filter risky sources", href: "/dashboard/rag", icon: DatabaseZap, color: "text-yellow-300", bg: "bg-yellow-400/10", group: "Security Tools" },
 
   // ── Compliance ──
   { title: "Evidence vault", description: "Package SOC 2 / ISO 27001 compliance proof", href: "/dashboard/evidence-vault", icon: BookOpen, color: "text-emerald-300", bg: "bg-emerald-400/10", group: "Compliance" },
-  { title: "Context lineage", description: "Track data sources and block cross-domain leaks", href: "/dashboard/lineage", icon: Network, color: "text-cyan", bg: "bg-cyan/10", group: "Compliance" },
-  { title: "Blast radius", description: "Estimate damage if an agent is compromised", href: "/dashboard/blast-radius", icon: Radio, color: "text-orange-300", bg: "bg-orange-400/10", group: "Compliance" },
   { title: "Credential vault", description: "Server-side credential storage for agents", href: "/dashboard/credentials", icon: Fingerprint, color: "text-yellow-300", bg: "bg-yellow-400/10", group: "Compliance" },
 
   // ── Manage ──
   { title: "Projects", description: "Organize keys, logs, and config by environment", href: "/dashboard/projects", icon: FolderKanban, color: "text-slate-300", bg: "bg-slate-800/50", group: "Manage" },
   { title: "API keys", description: "Generate scoped test and live keys", href: "/dashboard/api-keys", icon: KeyRound, color: "text-yellow-300", bg: "bg-yellow-400/10", group: "Manage" },
   { title: "Cost firewall", description: "Prevent runaway LLM spending", href: "/dashboard/cost-firewall", icon: Wallet, color: "text-emerald-300", bg: "bg-emerald-400/10", group: "Manage" },
-  { title: "Security badges", description: "Show protected status on your site", href: "/dashboard/badges", icon: ShieldCheck, color: "text-cyan", bg: "bg-cyan/10", group: "Manage" },
-  { title: "Billing", description: "Plan, usage, and upgrade options", href: "/dashboard/billing", icon: CreditCard, color: "text-blue-300", bg: "bg-blue-400/10", group: "Manage" },
   { title: "Settings", description: "Profile, team, and preferences", href: "/dashboard/settings", icon: Settings, color: "text-slate-300", bg: "bg-slate-800/50", group: "Manage" },
-  { title: "Audit exports", description: "Download audit logs for compliance", href: "/dashboard/exports", icon: Download, color: "text-purple-300", bg: "bg-purple-400/10", group: "Manage" },
-  { title: "Onboarding", description: "Complete the guided setup checklist", href: "/dashboard/onboarding", icon: ListChecks, color: "text-cyan", bg: "bg-cyan/10", group: "Manage" },
 ];
 
 export default async function DashboardPage({
@@ -148,6 +144,64 @@ export default async function DashboardPage({
     }),
     db.guardLog.count({ where: { projectId: project.id, riskTypes: { has: "SECRET_DETECTED" } } }),
   ]);
+
+  // Agent Control stats
+  let agentPending = 0;
+  let agentBlocked = 0;
+  let agentReversible = 0;
+  try {
+    const [pendingCount, blockedCount2, reversibleCount] = await Promise.all([
+      db.$queryRawUnsafe<[{ count: bigint }]>(`SELECT COUNT(*)::bigint as count FROM "AgentApproval" WHERE "projectId" = $1 AND "status" = 'PENDING'`, project.id).then(r => Number(r[0]?.count ?? 0)).catch(() => 0),
+      db.$queryRawUnsafe<[{ count: bigint }]>(`SELECT COUNT(*)::bigint as count FROM "AgentActionLog" WHERE "projectId" = $1 AND "decision" = 'BLOCK'`, project.id).then(r => Number(r[0]?.count ?? 0)).catch(() => 0),
+      db.$queryRawUnsafe<[{ count: bigint }]>(`SELECT COUNT(*)::bigint as count FROM "AgentActionLedger" WHERE "projectId" = $1 AND "reversalStatus" IN ('REVERSIBLE', 'COMPENSATING_ACTION')`, project.id).then(r => Number(r[0]?.count ?? 0)).catch(() => 0),
+    ]);
+    agentPending = pendingCount;
+    agentBlocked = blockedCount2;
+    agentReversible = reversibleCount;
+  } catch {
+    // Tables may not exist yet
+  }
+
+  // Usage Governance stats
+  let govCompliance = 0;
+  let govRules = 0;
+  let govBlocked = 0;
+  let govPending = 0;
+  try {
+    const orgMembership = await db.organizationMember.findFirst({
+      where: { userId: project.userId },
+      select: { organizationId: true },
+    });
+    if (orgMembership) {
+      const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+      const [policy, blockedGov, pendingGov] = await Promise.all([
+        db.aiUsageGovernancePolicy.findFirst({
+          where: { organizationId: orgMembership.organizationId, enabled: true },
+          include: { rules: true },
+        }),
+        db.aiUsageGovernanceAuditLog.count({
+          where: {
+            organizationId: orgMembership.organizationId,
+            decision: { in: ["BLOCKED", "BLOCK", "DENIED"] },
+            createdAt: { gte: thirtyDaysAgo },
+          },
+        }),
+        db.aiUsageApprovalRequest.count({
+          where: {
+            organizationId: orgMembership.organizationId,
+            status: "PENDING",
+          },
+        }).catch(() => 0),
+      ]);
+      govRules = policy?.rules?.length ?? 0;
+      govBlocked = blockedGov;
+      govPending = pendingGov;
+      govCompliance = policy ? (policy.enabled ? 78 : 32) : 0;
+      if (govRules > 3) govCompliance = Math.min(95, govCompliance + govRules * 3);
+    }
+  } catch {
+    // Organization may not exist yet
+  }
 
   void recordDashboardLatency(startedAt);
 
@@ -195,8 +249,89 @@ export default async function DashboardPage({
         </AnimateIn>
       )}
 
-      {/* ── System Health ── */}
+      {/* ══════════ TWO-PRODUCT HERO CARDS ══════════ */}
       <AnimateIn variant="slide-up" delay={1}>
+        <div className="grid gap-5 lg:grid-cols-2">
+          {/* ── AI Agent Control ── */}
+          <Link
+            href="/dashboard/agent-control"
+            className="group relative overflow-hidden rounded-2xl border border-orange-500/25 bg-gradient-to-br from-orange-500/10 via-amber-500/5 to-slate-950/80 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/40 hover:shadow-xl hover:shadow-orange-500/10"
+          >
+            <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-orange-500/10 blur-3xl transition-all duration-500 group-hover:bg-orange-500/20" />
+            <div className="relative">
+              <div className="flex items-center gap-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/15">
+                  <Gauge size={20} className="text-orange-300" />
+                </span>
+                <div>
+                  <p className="text-lg font-bold text-white">AI Agent Control</p>
+                  <p className="text-xs text-slate-400">For AI agents using email, CRM, database, payments</p>
+                </div>
+              </div>
+
+              <div className="mt-5 grid grid-cols-3 gap-3">
+                <div className="rounded-xl bg-slate-950/60 p-3 text-center">
+                  <p className="text-xl font-bold text-orange-300">{agentPending}</p>
+                  <p className="mt-0.5 text-[10px] text-slate-500">Pending</p>
+                </div>
+                <div className="rounded-xl bg-slate-950/60 p-3 text-center">
+                  <p className="text-xl font-bold text-red-300">{agentBlocked}</p>
+                  <p className="mt-0.5 text-[10px] text-slate-500">Blocked</p>
+                </div>
+                <div className="rounded-xl bg-slate-950/60 p-3 text-center">
+                  <p className="text-xl font-bold text-emerald-300">{agentReversible}</p>
+                  <p className="mt-0.5 text-[10px] text-slate-500">Reversible</p>
+                </div>
+              </div>
+
+              <div className="mt-4 flex items-center gap-2 text-sm text-orange-300 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                Open control center <ArrowRight size={14} />
+              </div>
+            </div>
+          </Link>
+
+          {/* ── AI Usage Governance ── */}
+          <Link
+            href="/dashboard/usage-governance"
+            className="group relative overflow-hidden rounded-2xl border border-violet-500/25 bg-gradient-to-br from-violet-500/10 via-blue-500/5 to-slate-950/80 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/40 hover:shadow-xl hover:shadow-violet-500/10"
+          >
+            <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-violet-500/10 blur-3xl transition-all duration-500 group-hover:bg-violet-500/20" />
+            <div className="relative">
+              <div className="flex items-center gap-3">
+                <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-500/15">
+                  <Landmark size={20} className="text-violet-300" />
+                </span>
+                <div>
+                  <p className="text-lg font-bold text-white">AI Usage Governance</p>
+                  <p className="text-xs text-slate-400">For employees using ChatGPT, Claude, Cursor</p>
+                </div>
+              </div>
+
+              <div className="mt-5 grid grid-cols-3 gap-3">
+                <div className="rounded-xl bg-slate-950/60 p-3 text-center">
+                  <p className="text-xl font-bold text-violet-300">{govCompliance}%</p>
+                  <p className="mt-0.5 text-[10px] text-slate-500">Compliance</p>
+                </div>
+                <div className="rounded-xl bg-slate-950/60 p-3 text-center">
+                  <p className="text-xl font-bold text-red-300">{govBlocked}</p>
+                  <p className="mt-0.5 text-[10px] text-slate-500">Blocked</p>
+                </div>
+                <div className="rounded-xl bg-slate-950/60 p-3 text-center">
+                  <p className="text-xl font-bold text-amber-300">{govPending}</p>
+                  <p className="mt-0.5 text-[10px] text-slate-500">Pending</p>
+                </div>
+              </div>
+
+              <div className="mt-4 flex items-center gap-2 text-sm text-violet-300 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                Open governance dashboard <ArrowRight size={14} />
+              </div>
+            </div>
+          </Link>
+        </div>
+      </AnimateIn>
+
+      {/* ── System Health ── */}
+      <AnimateIn variant="slide-up" delay={2}>
         <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <div className="card p-5 transition hover:border-cyan/30 hover:shadow-lg hover:shadow-cyan/5">
             <div className="flex items-center justify-between">
@@ -235,7 +370,7 @@ export default async function DashboardPage({
       </AnimateIn>
 
       {/* ── Guard Stats ── */}
-      <AnimateIn variant="slide-up" delay={2}>
+      <AnimateIn variant="slide-up" delay={3}>
         <section className="grid gap-4 sm:grid-cols-3">
           <StatCard label="Blocked requests" value={blocked} icon={Ban} />
           <StatCard label="PII redactions" value={piiRedactions} icon={UserRoundX} />
@@ -244,12 +379,12 @@ export default async function DashboardPage({
       </AnimateIn>
 
       {/* ── Quick Actions ── */}
-      <AnimateIn variant="slide-up" delay={3}>
+      <AnimateIn variant="slide-up" delay={4}>
         <QuickActions />
       </AnimateIn>
 
       {/* ── Activity + Usage Sidebar ── */}
-      <AnimateIn variant="slide-up" delay={4}>
+      <AnimateIn variant="slide-up" delay={5}>
         <div className="grid gap-6 xl:grid-cols-[1fr_340px]">
           <div>
             <h2 className="mb-4 flex items-center gap-2 text-lg font-semibold">
@@ -266,7 +401,7 @@ export default async function DashboardPage({
       </AnimateIn>
 
       {/* ── Feature Discovery ── */}
-      <AnimateIn variant="slide-up" delay={5}>
+      <AnimateIn variant="slide-up" delay={6}>
         <section>
           <div className="mb-6 flex items-center justify-between">
             <div>
