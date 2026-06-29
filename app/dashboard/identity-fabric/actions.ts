@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
 import {
   createAgentPassport,
   verifyAgentPassport,
@@ -18,11 +17,6 @@ import {
 } from "@/lib/identity-fabric";
 import {
   recordPassportIssuance,
-  dbRevokePassport,
-  dbRegisterServicePrincipal,
-  dbRecordDelegation,
-  dbRecordChallenge,
-  dbVerifyChallenge,
 } from "@/lib/identity-fabric/db";
 
 // ── Issue Passport ───────────────────────────────────────────────────────────
@@ -123,9 +117,8 @@ export async function verifyIdentityPassport(
     };
   }
 
-  let capMatch: boolean | undefined;
   if (requiredCap && decoded.claims) {
-    capMatch = capabilityMatches(requiredCap, decoded.claims.cap[0] ?? "");
+    capabilityMatches(requiredCap, decoded.claims.cap[0] ?? "");
   }
 
   const remainingTtl = decoded.claims?.exp

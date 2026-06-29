@@ -6,7 +6,7 @@ import { Film } from "lucide-react";
 import { DemoVideo } from "@/components/marketing/DemoVideo";
 import { VideoPlayer } from "@/components/marketing/VideoPlayer";
 
-const demos=[["Sample chatbot","Inspect defensive input and output decisions.","/demo-chatbot"],["Sample RAG workflow","See document quarantine, ACL, and grounding stages.","/demo/rag"],["Red-team demo mode","Run safe scenarios only against an owned demo project.","/demo/red-team"],["Live playground","Test your own non-sensitive examples.","/playground"]];
+const demos=[["2-minute guided flow","Injection → tool blocked → human approval → evidence → SIEM trace.","/demo/guided"],["Sample chatbot","Inspect defensive input and output decisions.","/demo-chatbot"],["Sample RAG workflow","See document quarantine, ACL, and grounding stages.","/demo/rag"],["Red-team demo mode","Run safe scenarios only against an owned demo project.","/demo/red-team"],["Live playground","Test your own non-sensitive examples.","/playground"]];
 export default function DemoPage(){
   useEffect(() => {
     document.title = "AI Security Demos | SoterAI";

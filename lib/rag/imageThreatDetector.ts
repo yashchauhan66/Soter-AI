@@ -264,7 +264,7 @@ function detectThreatTextInImage(ocrText: string, findings: ImageThreatFinding[]
  */
 export function analyzeAudioThreats(
   content: Buffer,
-  mimeType: string,
+  _mimeType: string,
 ): AudioThreatFinding[] {
   const findings: AudioThreatFinding[] = [];
   const source = content.toString("latin1");

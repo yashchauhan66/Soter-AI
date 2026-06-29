@@ -7,15 +7,15 @@
 // the policy excludes are filtered out, and the action is recomputed against
 // the policy mode + thresholds.
 
-import type { ProjectPolicy, PolicyMode, UnsafeOutputMode } from "@prisma/client";
-import { db } from "../db";
-import { deleteLocalCache, getLocalCache, setLocalCache } from "../localCache";
-import { getRedis } from "../redis";
-import { decideGuardAction } from "./decisionEngine";
-import { redactText } from "./redactor";
-import { rewriteRiskyText } from "./rewrite";
-import { scoreRisk } from "./riskScoring";
-import type { GuardDirection, GuardFinding, GuardResult, RiskType } from "./types";
+import type { ProjectPolicy, PolicyMode, UnsafeOutputMode } from '@prisma/client';
+import { db } from '../db';
+import { deleteLocalCache, getLocalCache, setLocalCache } from '../localCache';
+import { getRedis } from '../redis';
+import { decideGuardAction } from './decisionEngine';
+import { redactText } from './redactor';
+import { rewriteRiskyText } from './rewrite';
+import { scoreRisk } from './riskScoring';
+import type { GuardDirection, GuardFinding, GuardResult, RiskType } from './types';
 
 export interface ResolvedPolicy {
   mode: PolicyMode;
@@ -26,6 +26,12 @@ export interface ResolvedPolicy {
   blockSecrets: boolean;
   blockSystemPromptLeak: boolean;
   unsafeOutputMode: UnsafeOutputMode;
+  /**
+   * How to handle a lone prompt-injection signal that scores below the hard-block
+   * thresholds (e.g. the bare "ignore all previous instructions" phrase with no
+   * jailbreak/leak co-signal). REWRITE keeps historical behaviour.
+   */
+  bareInjectionHandling: 'REWRITE' | 'HUMAN_REVIEW' | 'BLOCK';
   customBlockedTopics: string[];
   allowlistedDomains: string[];
   deniedPatterns: string[];
@@ -38,15 +44,28 @@ export interface ResolvedPolicy {
   requireSourceUrls: boolean;
 }
 
+const BARE_INJECTION_HANDLING_VALUES = new Set<ResolvedPolicy['bareInjectionHandling']>([
+  'REWRITE',
+  'HUMAN_REVIEW',
+  'BLOCK',
+]);
+
+function resolveBareInjectionHandling(value: string): ResolvedPolicy['bareInjectionHandling'] {
+  return BARE_INJECTION_HANDLING_VALUES.has(value as ResolvedPolicy['bareInjectionHandling'])
+    ? (value as ResolvedPolicy['bareInjectionHandling'])
+    : 'REWRITE';
+}
+
 export const DEFAULT_POLICY: ResolvedPolicy = {
-  mode: "BALANCED",
+  mode: 'BALANCED',
   blockPromptInjection: true,
   blockJailbreak: true,
   redactPII: true,
   redactIndiaPII: true,
   blockSecrets: true,
   blockSystemPromptLeak: true,
-  unsafeOutputMode: "BLOCK",
+  unsafeOutputMode: 'BLOCK',
+  bareInjectionHandling: 'REWRITE',
   customBlockedTopics: [],
   allowlistedDomains: [],
   deniedPatterns: [],
@@ -70,6 +89,7 @@ export function policyFromRow(row: ProjectPolicy | null): ResolvedPolicy {
     blockSecrets: row.blockSecrets,
     blockSystemPromptLeak: row.blockSystemPromptLeak,
     unsafeOutputMode: row.unsafeOutputMode,
+    bareInjectionHandling: resolveBareInjectionHandling(row.bareInjectionHandling),
     customBlockedTopics: row.customBlockedTopics ?? [],
     allowlistedDomains: row.allowlistedDomains ?? [],
     deniedPatterns: row.deniedPatterns ?? [],
@@ -84,7 +104,7 @@ export function policyFromRow(row: ProjectPolicy | null): ResolvedPolicy {
 }
 
 /** Redis key prefix for project policy cache. */
-const POLICY_REDIS_KEY_PREFIX = "crg:policy:";
+const POLICY_REDIS_KEY_PREFIX = 'crg:policy:';
 
 /** TTL for cached policies in seconds. Writes invalidate Redis explicitly. */
 const POLICY_REDIS_TTL_S = 300;
@@ -109,7 +129,7 @@ async function loadPolicyFromRedis(projectId: string): Promise<ResolvedPolicy | 
     if (!raw) return null;
     return JSON.parse(raw) as ResolvedPolicy;
   } catch (error) {
-    console.error("[SoterAI] Policy cache read error:", error);
+    console.error('[SoterAI] Policy cache read error:', error);
     return null;
   }
 }
@@ -117,9 +137,11 @@ async function loadPolicyFromRedis(projectId: string): Promise<ResolvedPolicy | 
 async function savePolicyToRedis(projectId: string, policy: ResolvedPolicy): Promise<void> {
   try {
     const redis = getRedis();
-    await redis.set(policyRedisCacheKey(projectId), JSON.stringify(policy), { ex: POLICY_REDIS_TTL_S });
+    await redis.set(policyRedisCacheKey(projectId), JSON.stringify(policy), {
+      ex: POLICY_REDIS_TTL_S,
+    });
   } catch (error) {
-    console.error("[SoterAI] Policy cache write error:", error);
+    console.error('[SoterAI] Policy cache write error:', error);
   }
 }
 
@@ -142,7 +164,10 @@ export async function loadProjectPolicy(projectId: string): Promise<ResolvedPoli
   }
 }
 
-async function loadProjectPolicyFromStore(projectId: string, localKey: string): Promise<ResolvedPolicy> {
+async function loadProjectPolicyFromStore(
+  projectId: string,
+  localKey: string,
+): Promise<ResolvedPolicy> {
   // 2. Try Redis (shared across instances).
   const redisCached = await loadPolicyFromRedis(projectId);
   if (redisCached) {
@@ -167,7 +192,7 @@ export async function invalidateProjectPolicyCache(projectId: string): Promise<v
   try {
     await getRedis().del(policyRedisCacheKey(projectId));
   } catch (error) {
-    console.error("[SoterAI] Policy cache invalidation error:", error);
+    console.error('[SoterAI] Policy cache invalidation error:', error);
   }
 }
 
@@ -178,7 +203,7 @@ function customTopicMatches(text: string, topic: string) {
 
 function customRegexMatches(text: string, pattern: string) {
   try {
-    const regex = new RegExp(pattern, "i");
+    const regex = new RegExp(pattern, 'i');
     return regex.test(text);
   } catch {
     return false;
@@ -196,8 +221,11 @@ function urlMatchesAllowlistedDomain(text: string, allowlistedDomains: string[])
     try {
       const hostname = new URL(match[0]).hostname.toLowerCase();
       for (const domain of allowlistedDomains) {
-        const d = domain.toLowerCase().replace(/^https?:\/\//, "").replace(/\/+$/, "");
-        if (hostname === d || hostname.endsWith("." + d)) return true;
+        const d = domain
+          .toLowerCase()
+          .replace(/^https?:\/\//, '')
+          .replace(/\/+$/, '');
+        if (hostname === d || hostname.endsWith('.' + d)) return true;
       }
     } catch {
       // Malformed URL; skip
@@ -213,12 +241,12 @@ function urlMatchesAllowlistedDomain(text: string, allowlistedDomains: string[])
  */
 function isPlainDomainPattern(pattern: string): boolean {
   // Allow dots, hyphens, alphanumeric, and colons (for ports)
-  return /^[a-zA-Z0-9._:-]+$/.test(pattern) && pattern.includes(".");
+  return /^[a-zA-Z0-9._:-]+$/.test(pattern) && pattern.includes('.');
 }
 
 function wrapDomainAsUrlPattern(domain: string): string {
   // Escape dots for regex
-  const escaped = domain.replace(/\./g, "\\.");
+  const escaped = domain.replace(/\./g, '\\.');
   return `https?:\\/\\/(?:[^\\s\\/]+\\.)?${escaped}\\b`;
 }
 
@@ -234,12 +262,16 @@ export function applyPolicy(
 ): GuardResult {
   const filtered: GuardFinding[] = [];
   for (const finding of baseline.findings) {
-    if (finding.type === "PROMPT_INJECTION" && !policy.blockPromptInjection) continue;
-    if (finding.type === "JAILBREAK" && !policy.blockJailbreak) continue;
-    if (finding.type === "PII_DETECTED" && !policy.redactPII) continue;
-    if (finding.type === "INDIA_PII_DETECTED" && !policy.redactIndiaPII) continue;
-    if (finding.type === "SECRET_DETECTED" && !policy.blockSecrets) continue;
-    if ((finding.type === "SYSTEM_PROMPT_LEAK_ATTEMPT" || finding.type === "SYSTEM_PROMPT_LEAKAGE") && !policy.blockSystemPromptLeak) continue;
+    if (finding.type === 'PROMPT_INJECTION' && !policy.blockPromptInjection) continue;
+    if (finding.type === 'JAILBREAK' && !policy.blockJailbreak) continue;
+    if (finding.type === 'PII_DETECTED' && !policy.redactPII) continue;
+    if (finding.type === 'INDIA_PII_DETECTED' && !policy.redactIndiaPII) continue;
+    if (finding.type === 'SECRET_DETECTED' && !policy.blockSecrets) continue;
+    if (
+      (finding.type === 'SYSTEM_PROMPT_LEAK_ATTEMPT' || finding.type === 'SYSTEM_PROMPT_LEAKAGE') &&
+      !policy.blockSystemPromptLeak
+    )
+      continue;
     filtered.push(finding);
   }
 
@@ -250,9 +282,9 @@ export function applyPolicy(
     if (!topic.trim()) continue;
     if (customTopicMatches(text, topic)) {
       filtered.push({
-        type: direction === "OUTPUT" ? "UNSAFE_OUTPUT" : "PROMPT_INJECTION",
+        type: direction === 'OUTPUT' ? 'UNSAFE_OUTPUT' : 'PROMPT_INJECTION',
         label: `Custom blocked topic: ${topic.slice(0, 40)}`,
-        severity: "HIGH",
+        severity: 'HIGH',
         score: 65,
         message: `Project policy blocks the topic "${topic.slice(0, 40)}".`,
       });
@@ -261,12 +293,14 @@ export function applyPolicy(
   for (const pattern of policy.deniedPatterns) {
     if (!pattern.trim()) continue;
     // Auto-convert plain domain names to URL-matching patterns
-    const resolvedPattern = isPlainDomainPattern(pattern) ? wrapDomainAsUrlPattern(pattern) : pattern;
+    const resolvedPattern = isPlainDomainPattern(pattern)
+      ? wrapDomainAsUrlPattern(pattern)
+      : pattern;
     if (customRegexMatches(text, resolvedPattern)) {
       filtered.push({
-        type: direction === "OUTPUT" ? "UNSAFE_OUTPUT" : "PROMPT_INJECTION",
+        type: direction === 'OUTPUT' ? 'UNSAFE_OUTPUT' : 'PROMPT_INJECTION',
         label: `Custom denylist pattern`,
-        severity: "HIGH",
+        severity: 'HIGH',
         score: 65,
         message: `Project policy denylist pattern matched: ${pattern.slice(0, 60)}.`,
       });
@@ -276,19 +310,26 @@ export function applyPolicy(
   // Allowlisted domains: suppress findings if the text contains URLs with allowlisted domains.
   // This lets users whitelist specific URLs/domains that they know are safe, even if the
   // automated detectors flagged them.
-  if (policy.allowlistedDomains.length > 0 && urlMatchesAllowlistedDomain(text, policy.allowlistedDomains)) {
+  if (
+    policy.allowlistedDomains.length > 0 &&
+    urlMatchesAllowlistedDomain(text, policy.allowlistedDomains)
+  ) {
     // Remove any spam URL / promotional URL findings (they came from detectors, not custom rules)
     const filteredAllowlist: GuardFinding[] = [];
     for (const finding of filtered) {
       // Keep synthetic custom findings (user explicitly denied them)
-      if (finding.label.startsWith("Custom blocked topic") || finding.label.startsWith("Custom denylist")) {
+      if (
+        finding.label.startsWith('Custom blocked topic') ||
+        finding.label.startsWith('Custom denylist')
+      ) {
         filteredAllowlist.push(finding);
-      } else if (finding.type === "UNSAFE_OUTPUT" && (
-        finding.label.includes("URL") ||
-        finding.label.includes("link") ||
-        finding.label.includes("Spam") ||
-        finding.label.includes("scam")
-      )) {
+      } else if (
+        finding.type === 'UNSAFE_OUTPUT' &&
+        (finding.label.includes('URL') ||
+          finding.label.includes('link') ||
+          finding.label.includes('Spam') ||
+          finding.label.includes('scam'))
+      ) {
         continue; // skip URL-related findings for allowlisted domains
       } else {
         filteredAllowlist.push(finding);
@@ -303,13 +344,17 @@ export function applyPolicy(
   }
 
   const riskScore = scoreRisk(filtered);
-  const riskTypes = ([...new Set(filtered.map((finding) => finding.type))] as RiskType[]);
-  if (riskTypes.length === 0) riskTypes.push("LOW_RISK");
+  const riskTypes = [...new Set(filtered.map((finding) => finding.type))] as RiskType[];
+  if (riskTypes.length === 0) riskTypes.push('LOW_RISK');
 
   // A custom denylist or topic match short-circuits to BLOCK regardless of
   // mode. Users opting into a denylist expect a hard block; anything softer
   // would silently leak the matched content.
-  const customMatched = filtered.some((finding) => finding.label.startsWith("Custom blocked topic") || finding.label.startsWith("Custom denylist"));
+  const customMatched = filtered.some(
+    (finding) =>
+      finding.label.startsWith('Custom blocked topic') ||
+      finding.label.startsWith('Custom denylist'),
+  );
 
   // Mode-aware decision:
   // - MONITOR: cap action at HUMAN_REVIEW unless secrets are present.
@@ -317,15 +362,28 @@ export function applyPolicy(
   // - WARN: downgrade BLOCK to ALLOW and replace content with a warning message.
   // - BALANCED: default decision engine.
   let action = decideGuardAction(riskScore, riskTypes, direction);
+  const isBareInjectionRewrite =
+    direction === 'INPUT' &&
+    action === 'REWRITE' &&
+    filtered.length === 1 &&
+    riskTypes.length === 1 &&
+    riskTypes[0] === 'PROMPT_INJECTION';
   const mode = policy.mode as string;
   if (customMatched) {
-    action = "BLOCK";
-  } else if (mode === "WARN" && action === "BLOCK" && !riskTypes.includes("SECRET_DETECTED")) {
-    action = "ALLOW";
-  } else if (mode === "MONITOR" && action === "BLOCK" && !riskTypes.includes("SECRET_DETECTED")) {
-    action = "HUMAN_REVIEW";
-  } else if (mode === "STRICT" && (action === "ALLOW_WITH_REDACTION" || action === "REWRITE")) {
-    if (riskScore >= 50) action = "BLOCK";
+    action = 'BLOCK';
+  } else if (mode === 'WARN' && action === 'BLOCK' && !riskTypes.includes('SECRET_DETECTED')) {
+    action = 'ALLOW';
+  } else if (mode === 'MONITOR' && action === 'BLOCK' && !riskTypes.includes('SECRET_DETECTED')) {
+    action = 'HUMAN_REVIEW';
+  } else if (mode === 'STRICT' && (action === 'ALLOW_WITH_REDACTION' || action === 'REWRITE')) {
+    if (riskScore >= 50) action = 'BLOCK';
+  }
+
+  // A single, sub-threshold injection finding historically resolves to REWRITE.
+  // Projects can explicitly hold or block that narrow case without changing the
+  // handling of multi-signal attacks, secrets, PII, or output findings.
+  if (isBareInjectionRewrite && policy.bareInjectionHandling !== 'REWRITE') {
+    action = policy.bareInjectionHandling;
   }
 
   // Unsafe output mode override.
@@ -333,60 +391,81 @@ export function applyPolicy(
   // by the project; it must NOT be downgraded by a softer unsafeOutputMode.
   // Without the `!customMatched` guard, a WARN/REDACT mode would silently turn a
   // denylist BLOCK into ALLOW/ALLOW_WITH_REDACTION and leak the matched content.
-  if (direction === "OUTPUT" && riskTypes.includes("UNSAFE_OUTPUT") && !customMatched) {
-    if (policy.unsafeOutputMode === "WARN") action = "ALLOW";
-    else if (policy.unsafeOutputMode === "REDACT") action = "ALLOW_WITH_REDACTION";
-    else action = "BLOCK";
+  if (direction === 'OUTPUT' && riskTypes.includes('UNSAFE_OUTPUT') && !customMatched) {
+    if (policy.unsafeOutputMode === 'WARN') action = 'ALLOW';
+    else if (policy.unsafeOutputMode === 'REDACT') action = 'ALLOW_WITH_REDACTION';
+    else action = 'BLOCK';
   }
 
   const redactedText = redactText(text, filtered);
   const changed = redactedText !== text;
-  const isWarnMode = mode === "WARN";
-  const reasonLabels = [...new Set(filtered.map((f) => f.label))].slice(0, 3).join(", ") || "policy decision";
-  const allowed = action === "ALLOW" || action === "ALLOW_WITH_REDACTION" || action === "REWRITE";
-  const safeText = isWarnMode && action === "ALLOW" && riskTypes.length > 0 && !riskTypes.includes("LOW_RISK")
-    ? buildWarnMessage(riskTypes, reasonLabels, policy.customFallbackMessage)
-    : action === "REWRITE"
-      ? rewriteRiskyText(text, filtered)
-      : changed
-        ? redactedText
-        : text;
+  const isWarnMode = mode === 'WARN';
+  const reasonLabels =
+    [...new Set(filtered.map((f) => f.label))].slice(0, 3).join(', ') || 'policy decision';
+  const allowed = action === 'ALLOW' || action === 'ALLOW_WITH_REDACTION' || action === 'REWRITE';
+  const safeText =
+    isWarnMode && action === 'ALLOW' && riskTypes.length > 0 && !riskTypes.includes('LOW_RISK')
+      ? buildWarnMessage(riskTypes, reasonLabels, policy.customFallbackMessage)
+      : action === 'REWRITE'
+        ? rewriteRiskyText(text, filtered)
+        : changed
+          ? redactedText
+          : text;
   let reason: string;
-  if (isWarnMode && action === "ALLOW" && riskTypes.length > 0 && !riskTypes.includes("LOW_RISK")) {
-    reason = policy.customFallbackMessage ?? `Warning: ${reasonLabels} detected. Request allowed with warning.`;
-  } else  if (action === "BLOCK") {
-    reason = policy.customFallbackMessage ?? `⚠️ Security Warning: Your message was blocked because it contains potentially harmful content (${reasonLabels}). Please rephrase your request.`;
-  } else if (action === "HUMAN_REVIEW") {
+  if (isWarnMode && action === 'ALLOW' && riskTypes.length > 0 && !riskTypes.includes('LOW_RISK')) {
+    reason =
+      policy.customFallbackMessage ??
+      `Warning: ${reasonLabels} detected. Request allowed with warning.`;
+  } else if (action === 'BLOCK') {
+    reason =
+      policy.customFallbackMessage ??
+      `⚠️ Security Warning: Your message was blocked because it contains potentially harmful content (${reasonLabels}). Please rephrase your request.`;
+  } else if (action === 'HUMAN_REVIEW') {
     reason = `Held for human review: ${reasonLabels}.`;
-  } else if (action === "ALLOW_WITH_REDACTION") {
+  } else if (action === 'ALLOW_WITH_REDACTION') {
     reason = `Allowed with redaction: ${reasonLabels}.`;
-  } else if (action === "REWRITE") {
+  } else if (action === 'REWRITE') {
     reason = `Risky instruction text was rewritten: ${reasonLabels}.`;
   } else {
-    reason = filtered.length ? `Allowed under policy mode ${policy.mode}.` : "No material risk patterns detected.";
+    reason = filtered.length
+      ? `Allowed under policy mode ${policy.mode}.`
+      : 'No material risk patterns detected.';
   }
 
   return {
     allowed,
-    action: isWarnMode && action === "ALLOW" && riskTypes.length > 0 && !riskTypes.includes("LOW_RISK") ? "ALLOW" : action,
+    action:
+      isWarnMode && action === 'ALLOW' && riskTypes.length > 0 && !riskTypes.includes('LOW_RISK')
+        ? 'ALLOW'
+        : action,
     riskScore,
     riskTypes,
     originalText: text,
     redactedText: changed ? redactedText : undefined,
-    safeText: allowed ? safeText : action === "BLOCK" ? (policy.customFallbackMessage ?? reason) : undefined,
+    safeText: allowed
+      ? safeText
+      : action === 'BLOCK'
+        ? (policy.customFallbackMessage ?? reason)
+        : undefined,
     reason,
     findings: filtered,
     metadata: {
       ...baseline.metadata,
       direction,
       findingCount: filtered.length,
-      policyMode: isWarnMode ? "WARN" : policy.mode,
+      policyMode: isWarnMode ? 'WARN' : policy.mode,
     },
   };
 }
 
-function buildWarnMessage(riskTypes: string[], reasonLabels: string, customFallbackMessage: string | null): string {
+function buildWarnMessage(
+  riskTypes: string[],
+  reasonLabels: string,
+  customFallbackMessage: string | null,
+): string {
   if (customFallbackMessage) return `⚠️ ${customFallbackMessage}`;
-  const riskLabelList = [...new Set(riskTypes.map((r) => r.replace(/_/g, " ").toLowerCase()))].join(", ");
+  const riskLabelList = [...new Set(riskTypes.map((r) => r.replace(/_/g, ' ').toLowerCase()))].join(
+    ', ',
+  );
   return `⚠️ Security Warning: Your message was flagged as a potential security threat (${riskLabelList}). Please rephrase your request.`;
 }

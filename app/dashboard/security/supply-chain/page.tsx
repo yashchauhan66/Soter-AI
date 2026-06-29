@@ -1,5 +1,6 @@
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import Link from "next/link";
 import { AI_BOM_PREVIEW_GAPS } from "@/lib/supply-chain";
 
 export const dynamic = "force-dynamic";
@@ -20,6 +21,9 @@ export default async function SupplyChainPage() {
       <p className="eyebrow">AI supply chain - Preview</p>
       <h1 className="mt-2 text-3xl font-bold">AI Bill of Materials and risk inventory</h1>
       <p className="mt-3 max-w-3xl text-slate-400">Preview inventory for model providers, prompt versions, tools, plugins, and AI BOM snapshots. Lifecycle workflows and exports are still being completed; raw system prompts are represented by hashes and redacted previews.</p>
+      <Link href="/dashboard/security/model-scan" className="mt-4 inline-flex items-center gap-2 rounded-lg border border-cyan/30 bg-cyan/10 px-4 py-2 text-sm font-semibold text-cyan hover:bg-cyan/20">
+        Scan a model artifact for malicious code →
+      </Link>
       <div className="mt-7 grid gap-4 sm:grid-cols-3">
         {[["Providers", providers], ["Models", models], ["Prompt versions", prompts], ["Tools", tools], ["AI BOMs", boms], ["Open findings", findings]].map(([label, value]) => (
           <section className="card p-5" key={String(label)}>

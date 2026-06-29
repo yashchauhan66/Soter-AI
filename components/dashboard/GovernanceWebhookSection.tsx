@@ -10,7 +10,6 @@ import {
   ExternalLink,
   Loader2,
   Plus,
-  Trash2,
   Webhook,
 } from "lucide-react";
 

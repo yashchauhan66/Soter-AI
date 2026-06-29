@@ -60,6 +60,12 @@ const features: Array<{ name: string; desc: string; values: Record<string, strin
     unique: true,
   },
   {
+    name: "Model Scanning",
+    desc: "Pickle RCE / unsafe deserialization",
+    values: { soter: "✅", lakera: "❌", nemo: "❌", ga: "❌", grail: "❌", llm: "❌", aws: "❌" },
+    unique: true,
+  },
+  {
     name: "Agent Firewall",
     desc: "Tool-call authorization",
     values: { soter: "✅", lakera: "❌", nemo: "✅", ga: "❌", grail: "❌", llm: "❌", aws: "❌" },
@@ -473,6 +479,26 @@ export default function ComparisonPage() {
             </Link>
           </div>
         </div>
+
+        {/* ── Head-to-head pages ── */}
+        <section className="mt-12">
+          <p className="text-center text-sm text-slate-400">Head-to-head breakdowns</p>
+          <div className="mx-auto mt-4 flex max-w-3xl flex-wrap justify-center gap-3">
+            {[
+              ["SoterAI vs Lakera", "/comparison/lakera"],
+              ["SoterAI vs Prompt Security", "/comparison/prompt-security"],
+              ["SoterAI vs HiddenLayer", "/comparison/hiddenlayer"],
+            ].map(([label, href]) => (
+              <Link
+                key={href}
+                href={href}
+                className="rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-cyan/50 hover:text-white"
+              >
+                {label} →
+              </Link>
+            ))}
+          </div>
+        </section>
 
         {/* ── Feature Comparison Table ── */}
         <section className="mt-16">

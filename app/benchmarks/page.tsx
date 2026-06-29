@@ -156,6 +156,38 @@ function jsonLd(data: BenchmarkData) {
   };
 }
 
+// Comprehensive adversarial battery — service-by-service hardening scenarios.
+// Source: docs/test-reports/comprehensive-adversarial-test-report.md (2026-06-29),
+// produced by `npx tsx tests/comprehensive-adversarial-test-battery.ts` (101/101).
+const BATTERY = {
+  date: "2026-06-29",
+  total: 101,
+  passed: 101,
+  services: [
+    { name: "Guard Analysis", tests: 11 },
+    { name: "Agent Firewall", tests: 10 },
+    { name: "Agent Passport", tests: 10 },
+    { name: "Agent Intent", tests: 8 },
+    { name: "Identity Fabric", tests: 8 },
+    { name: "Escrow", tests: 7 },
+    { name: "Dry-Run", tests: 6 },
+    { name: "Action Ledger", tests: 6 },
+    { name: "Legal Boundary", tests: 6 },
+    { name: "Semantic Egress", tests: 4 },
+    { name: "Tool Chain", tests: 4 },
+    { name: "Cost Firewall", tests: 4 },
+    { name: "Evidence Vault", tests: 3 },
+    { name: "Blast Radius", tests: 3 },
+    { name: "Compliance Assurance", tests: 2 },
+    { name: "Causal SIEM", tests: 2 },
+    { name: "Behavior Baseline", tests: 2 },
+    { name: "MCP Risk Scanner", tests: 2 },
+    { name: "Shadow AI", tests: 1 },
+    { name: "Usage Governance", tests: 1 },
+    { name: "Red Team", tests: 1 },
+  ],
+} as const;
+
 export default function BenchmarksPage() {
   const data = loadData();
 
@@ -190,8 +222,8 @@ export default function BenchmarksPage() {
             SoterAI <span className="text-cyan">F1 = 1.0000</span>
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg leading-7 text-slate-400">
-            97/97 adversarial attack variants detected across 8 categories with zero false positives.
-            Independent red-team evaluation using Garak-style probing methodology.
+            {overall.total_adversarial_detected}/{overall.total_adversarial} adversarial attack variants detected across 8 categories with zero false positives,
+            plus a {BATTERY.passed}/{BATTERY.total} service-hardening battery. Self-authored Garak-style probing; independent audit welcomed.
           </p>
           <div className="mt-4 text-sm text-slate-500">
             Run date: {formatDate(data.timestamp)}
@@ -317,6 +349,53 @@ export default function BenchmarksPage() {
               </div>
             </div>
           </div>
+        </section>
+
+        {/* Comprehensive Adversarial Battery (101/101) */}
+        <section className="mt-16">
+          <div className="flex items-center gap-3">
+            <ShieldCheck className="text-cyan" size={24} aria-hidden="true" />
+            <h2 className="text-2xl font-bold">Comprehensive Adversarial Battery</h2>
+          </div>
+          <p className="mt-2 max-w-3xl text-sm text-slate-400">
+            Beyond raw detection accuracy, every security service is hardened against end-to-end attack scenarios — agent
+            firewall bypass, passport forgery, delegation abuse, egress exfiltration, evidence tampering, and more. The
+            battery exits non-zero if any scenario regresses.
+          </p>
+
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+            <div className="card p-6 text-center">
+              <div className="text-4xl font-black text-lime">{BATTERY.passed}/{BATTERY.total}</div>
+              <p className="mt-2 text-sm text-slate-400">Scenarios passing</p>
+              <p className="text-xs text-slate-500">100% across {BATTERY.services.length} services</p>
+            </div>
+            <div className="card p-6 text-center">
+              <div className="text-4xl font-black text-cyan">{BATTERY.services.length}</div>
+              <p className="mt-2 text-sm text-slate-400">Services covered</p>
+              <p className="text-xs text-slate-500">Guard, agents, identity, evidence, SIEM</p>
+            </div>
+            <div className="card p-6 text-center">
+              <div className="text-4xl font-black text-emerald">0</div>
+              <p className="mt-2 text-sm text-slate-400">Failing scenarios</p>
+              <p className="text-xs text-slate-500">Run {formatDate(BATTERY.date)}</p>
+            </div>
+          </div>
+
+          <div className="mt-6 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            {BATTERY.services.map((s) => (
+              <div key={s.name} className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-950/40 px-4 py-2.5">
+                <span className="flex items-center gap-2 text-sm text-slate-300">
+                  <CheckCircle2 size={15} className="shrink-0 text-lime" aria-hidden="true" />
+                  {s.name}
+                </span>
+                <span className="text-xs font-semibold text-lime">{s.tests}/{s.tests}</span>
+              </div>
+            ))}
+          </div>
+          <p className="mt-4 text-xs text-slate-500">
+            Command: <code className="text-cyan">npx tsx tests/comprehensive-adversarial-test-battery.ts</code> — 101/101 passing.
+            Measures service hardening, distinct from the F1 detection benchmark above.
+          </p>
         </section>
 
         {/* Latency */}

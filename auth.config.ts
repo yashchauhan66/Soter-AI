@@ -45,6 +45,15 @@ export const PUBLIC_API_PREFIXES = [
   // route handlers enforce their own auth via authenticateApiKeyRequest.
   "/api/agent",
   "/api/agent-firewall",
+  "/api/canary",
+  "/api/lineage",
+  "/api/blast-radius",
+  "/api/memory",
+  "/api/mcp",
+  "/api/cost-firewall",
+  "/api/legal-boundary",
+  "/api/rag",
+  "/api/shadow",
   // Bearer-token-authenticated SCIM v2 routes.
   "/api/scim/v2",
   // SAML SSO — IdP redirect (acs), SP metadata, SP-initiated login
@@ -72,10 +81,10 @@ export const authConfig = {
       const { pathname } = request.nextUrl;
       const isPublicPage = PUBLIC_ROUTES.some((route) => pathname === route || pathname.startsWith(`${route}/`));
       const isPublicApi = PUBLIC_API_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
-      // /api/guard/input and /api/guard/output authenticate via x-api-key header,
-      // not the session cookie, so the middleware lets them through; they enforce
-      // their own auth at the route handler level.
-      const isGuardApi = pathname === "/api/guard/input" || pathname === "/api/guard/output";
+      // /api/guard/input, /api/guard/output, and /api/guard/streaming authenticate
+      // via x-api-key header, not the session cookie, so the middleware lets them
+      // through; they enforce their own auth at the route handler level.
+      const isGuardApi = pathname === "/api/guard/input" || pathname === "/api/guard/output" || pathname === "/api/guard/streaming";
       if (isPublicPage || isPublicApi || isGuardApi) return true;
       return !!auth?.user;
     },

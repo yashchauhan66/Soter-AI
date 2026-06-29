@@ -595,6 +595,11 @@ model ProjectPolicy {
   blockSecrets          Boolean          @default(true)
   blockSystemPromptLeak Boolean          @default(true)
   unsafeOutputMode      UnsafeOutputMode @default(BLOCK)
+  // How to handle a lone prompt-injection signal that scores below the hard-block
+  // thresholds (e.g. the bare "ignore all previous instructions" phrase with no
+  // jailbreak/leak co-signal). One of REWRITE | HUMAN_REVIEW | BLOCK. Defaults to
+  // REWRITE to preserve historical behaviour for existing projects.
+  bareInjectionHandling String           @default("REWRITE")
   customBlockedTopics   String[]
   allowlistedDomains    String[]
   deniedPatterns        String[]
@@ -2060,6 +2065,28 @@ model SupplyChainRiskFinding {
   resolvedAt     DateTime?
 
   @@index([organizationId, status, severity])
+  @@index([projectId])
+}
+
+model ModelArtifactScan {
+  id             String   @id @default(cuid())
+  organizationId String
+  projectId      String?
+  filename       String
+  format         String
+  sizeBytes      Int
+  sha256         String
+  verdict        String   @default("UNVERIFIED")
+  riskScore      Int      @default(0)
+  highestSeverity String  @default("LOW")
+  findingCount   Int      @default(0)
+  report         Json
+  scannedById    String?
+  createdAt      DateTime @default(now())
+
+  @@index([organizationId, createdAt])
+  @@index([organizationId, verdict])
+  @@index([sha256])
   @@index([projectId])
 }
 

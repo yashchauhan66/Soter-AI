@@ -13,7 +13,6 @@ import {
 } from "./types";
 import {
   createAgentPassport,
-  decodeAndVerifyPassport,
   verifyAgentPassport,
   getMaxDelegationDepth,
 } from "./passport";

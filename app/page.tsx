@@ -25,47 +25,9 @@ const owaspCoverage = [
 
 const homepageJsonLd = {
   "@context": "https://schema.org",
+  // Organization + WebSite entity nodes are injected site-wide from the root
+  // layout (lib/seo/schema.ts); the nodes below reference them via @id.
   "@graph": [
-    {
-      "@type": "Organization",
-      "@id": `${siteUrl}#organization`,
-      "name": "SoterAI",
-      "url": siteUrl,
-      "logo": `${siteUrl}/opengraph-image.png`,
-      "description": "SoterAI is an AI security command layer for chatbots, RAG apps, and autonomous agents, protecting teams from prompt injection, data leakage, unsafe outputs, and agent abuse.",
-      "foundingDate": "2024",
-      "email": "security@soterai.com",
-      "sameAs": [
-        "https://github.com/yashchauhan66/Ai-Security-Guard",
-        "https://twitter.com/soterai",
-      ],
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "contactType": "sales",
-        "email": "security@soterai.com",
-      },
-      "address": {
-        "@type": "PostalAddress",
-        "addressCountry": "IN",
-      },
-    },
-    {
-      "@type": "WebSite",
-      "@id": `${siteUrl}#website`,
-      "url": siteUrl,
-      "name": "SoterAI - AI Security Command Layer",
-      "description": "AI security guardrail platform protecting against prompt injection, jailbreaks, PII leakage, and unsafe outputs.",
-      "publisher": { "@id": `${siteUrl}#organization` },
-      "inLanguage": "en",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": `${siteUrl}/search?q={search_term_string}`,
-        },
-        "query-input": "required name=search_term_string",
-      },
-    },
     {
       "@type": "WebPage",
       "@id": siteUrl,

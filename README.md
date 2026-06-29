@@ -29,6 +29,24 @@
   **[✨ Features](#-key-features) • [🏆 Benchmark](#-benchmark-results) • [🚀 Quick Start](#-quick-start) • [📋 Services](#-services-overview) • [🏗️ Architecture](#️-architecture) • [🐳 Deployment](#-deployment)**
   
   <br />
+
+  ### Two Core Products
+
+  <table>
+    <tr>
+      <td align="center" width="50%">
+        <img src="https://img.shields.io/badge/🎛️%20AI%20Agent%20Control-orange?style=for-the-badge" alt="Agent Control" /><br /><br />
+        <sub><strong>For AI agents using email, CRM, databases, and payments</strong></sub><br /><br />
+        <sub>Action ledger with reversibility classification · Human-in-the-loop approval queue · Compensating action rollback with audit trail · Continuous compliance assurance</sub>
+      </td>
+      <td align="center" width="50%">
+        <img src="https://img.shields.io/badge/🏛️%20AI%20Usage%20Governance-7c3aed?style=for-the-badge" alt="Usage Governance" /><br /><br />
+        <sub><strong>For 50–500 employee companies using ChatGPT, Claude, Cursor</strong></sub><br /><br />
+        <sub>Company-wide AI usage policies · Department-specific rules · Provider allow/block lists · Employee DLP monitoring · Compliance reports for regulators</sub>
+      </td>
+    </tr>
+  </table>
+
 </div>
 
 ---
@@ -43,14 +61,16 @@
 - 🧠 **Memory poisoning & context manipulation**
 - 💸 **Runaway LLM costs & budget overruns**
 - ⚖️ **Regulatory compliance violations**
+- 🎛️ **Uncontrolled agent actions** (payments, emails, deployments)
+- 🏛️ **Shadow AI usage** by employees without governance
 
-With **33 documented product services** organized across 6 layers of defense — Monitor, Protect, Detect, Control, Compliance, and Manage — SoterAI provides a broad security control surface for AI systems. Some modules are explicitly marked Preview and have open production-integration gaps.
+With **40+ product services** organized across 6 layers of defense — Monitor, Protect, Detect, Control, Compliance, and Manage — plus two dedicated **core products** (AI Agent Control and AI Usage Governance), SoterAI provides a broad security control surface for AI systems. Some modules are explicitly marked Preview and have open production-integration gaps.
 
 > **🏆 Internal benchmark: F1=1.0000** — 97/97 adversarial cases detected with 0/25 false positives in a small, self-authored dataset. This is not an independent audit or a production-traffic result. [See the raw results and latency](scripts/guard-benchmark/results.json).
 >
 > **🔒 Production-oriented** — Includes Docker/EC2 deployment assets, CI/CD, health checks, workers, and operational runbooks. No production customer count or traffic volume is claimed in this repository. Source-available under the Business Source License (open core) — see [LICENSING.md](LICENSING.md).
 >
-> **📋 Comprehensive audit completed 2026-06-27** — See the [full audit report](docs/APP_AUDIT_AND_COMPETITIVE_REPORT_2026-06-27.md) including bug fixes, competitor comparison, and 30/60/90-day roadmap. 566+ tests pass, TypeScript compiles with zero errors, and Prisma schema is valid.
+> **📋 Comprehensive audit completed 2026-06-27** — See the [full audit report](docs/APP_AUDIT_AND_COMPETITIVE_REPORT_2026-06-27.md) including bug fixes, competitor comparison, and 30/60/90-day roadmap. 670+ tests pass, TypeScript compiles with zero errors, and Prisma schema is valid.
 
 <br />
 
@@ -71,6 +91,36 @@ Recent guard updates expand SoterAI beyond classic prompt-injection and jailbrea
 - **Unsafe output handling** - model-generated HTML/script sinks, credentialed browser requests, script exfiltration, and unverified package installation guidance are held for review before reaching downstream systems.
 
 These rules are covered by regression tests in `tests/guard.test.ts` and red-team benchmark categories in `lib/classifiers/datasets/guardRedTeamBenchmark.ts`.
+
+### 🎛️ AI Agent Control Center (NEW)
+
+> **For AI agents that take real-world actions** — email, CRM updates, database writes, payments, deployments.
+
+| Capability | Description |
+|------------|-------------|
+| **Agent Action Ledger** | Classifies every agent action as IRREVERSIBLE, COMPENSATING_ACTION, or REVERSIBLE using regex patterns against dotted action names (`gmail.send`, `payment.charge`, `filesystem.write`) |
+| **Reversibility Engine** | Automatically infers rollback actions (e.g., `ticket.close` → `reopen_ticket`, `draft` → `delete_draft`) with SHA-256 evidence hashing |
+| **Risk Scoring** | 4-level risk classification (LOW/MEDIUM/HIGH/CRITICAL) derived from reversal status + action keywords |
+| **Rollback Windows** | 15-minute window for COMPENSATING/HIGH-risk actions, 60-minute window for REVERSIBLE actions — with dry-run support |
+| **Human Approval Queue** | Unified queue for agent firewall holds and transaction escrow, with redacted payload review |
+| **Continuous Assurance** | Real-time compliance posture scoring with SOC 2 / ISO 27001 evidence collection |
+| **Operator Audit Trail** | Human rollback decisions are attributed to operators and retained separately from agent-generated logs |
+
+### 🏛️ AI Usage Governance (NEW)
+
+> **For companies where employees paste company data into ChatGPT, Claude, and Cursor every day.**
+
+| Capability | Description |
+|------------|-------------|
+| **5-Step Governance Engine** | Resolution order: dept rules → data classification → policy rules → sensitive data override → policy default |
+| **Provider Allow/Block Lists** | Allow or block specific AI providers (OpenAI, Anthropic, DeepSeek) with wildcard and model-level patterns |
+| **Department Rules** | Per-department AI usage policies — different rules for engineering, marketing, finance, legal |
+| **Data Classification** | Define what data sensitivity levels (PUBLIC, INTERNAL, RESTRICTED, PII, FINANCIAL, HEALTH) can go to which providers |
+| **Approval Workflows** | 14-day auto-expiry approval requests with GRANTED/DENIED audit log entries |
+| **Employee Monitoring** | 30-day stats, enforcement alerts, blocked provider breakdown, usage timeline |
+| **Compliance Reports** | WEEKLY/MONTHLY/QUARTERLY reports with compliance scoring, findings, and actionable recommendations |
+| **Governance Enforcement** | Integrated into all 3 guard routes (input/output/streaming) — returns HTTP 403 with `X-Governance-Action` and `X-Governance-Reason` headers |
+| **Notification Dispatch** | Webhooks + emails to OWNER/ADMIN users on blocked events and approval requests |
 
 ### 6 Layers of AI Security
 
@@ -113,7 +163,9 @@ These rules are covered by regression tests in `tests/guard.test.ts` and red-tea
       <h3>🎛️ Control</h3>
       <p><em>Govern agent behavior with fine-grained policies</em></p>
       <ul>
+        <li><strong>Agent Control Center</strong> — Unified approval queue, reversibility ledger, and compliance posture</li>
         <li><strong>Agent Passports</strong> — Cryptographic agent identity verification</li>
+        <li><strong>Action Ledger</strong> — Classify actions as irreversible/compensating/reversible with rollback windows</li>
         <li><strong>Transaction Escrow</strong> — Human-in-the-loop for risky actions</li>
         <li><strong>Intent Guard</strong> — Verify actions match original user intent</li>
         <li><strong>Tool Chain</strong> — Detect risky multi-tool attack sequences</li>
@@ -321,6 +373,27 @@ SLM_API_KEY=sk-...
 
 | Category | Service | Description |
 |----------|---------|-------------|
+| **🎛️ Agent Control** | [Agent Control Center](https://soterai.publicvm.com/docs/services/agent-control) | Unified approval queue, reversibility ledger, and compliance posture |
+| | [Agent Firewall](https://soterai.publicvm.com/docs/services/agent-firewall) | Real-time agent action monitoring and blocking |
+| | [Action Ledger](https://soterai.publicvm.com/docs/services/action-ledger) | Classify actions as irreversible/compensating/reversible with rollback |
+| | [Identity Fabric](https://soterai.publicvm.com/docs/services/identity-fabric) | Cryptographic agent identities, delegation chains, service principals |
+| | [Agent Passports](https://soterai.publicvm.com/docs/services/agent-passports) | Cryptographic agent identity verification |
+| | [Transaction Escrow](https://soterai.publicvm.com/docs/services/transaction-escrow) | Human-in-the-loop for risky agent actions |
+| | [Intent Guard](https://soterai.publicvm.com/docs/services/intent-guard) | Verify actions match original user intent |
+| | [Tool Chain](https://soterai.publicvm.com/docs/services/tool-chain) | Multi-step attack pattern detection |
+| | [Dry-Run Sandbox](https://soterai.publicvm.com/docs/services/dry-run-sandbox) | Simulate policies without production impact |
+| | [Memory Firewall](https://soterai.publicvm.com/docs/services/memory-firewall) | Quarantine poisoned agent memory |
+| | [MCP Drift](https://soterai.publicvm.com/docs/services/mcp-drift) | Monitor MCP server tool changes |
+| | [Legal Boundary](https://soterai.publicvm.com/docs/services/legal-boundary) | Hard guardrails for regulatory compliance |
+| **🏛️ Usage Governance** | [Governance Dashboard](https://soterai.publicvm.com/docs/services/usage-governance) | Company-wide AI usage policy management |
+| | [Policy Configuration](https://soterai.publicvm.com/docs/services/governance-policy) | Default actions, data handling rules, approval requirements |
+| | [Provider Rules](https://soterai.publicvm.com/docs/services/governance-providers) | Allow/block specific AI providers and models |
+| | [Department Rules](https://soterai.publicvm.com/docs/services/governance-departments) | Per-department AI usage policies |
+| | [Data Classification](https://soterai.publicvm.com/docs/services/governance-data-classification) | Sensitivity levels per provider mapping |
+| | [Approval Workflows](https://soterai.publicvm.com/docs/services/governance-approvals) | Review and manage AI provider access requests |
+| | [Employee Monitoring](https://soterai.publicvm.com/docs/services/governance-monitoring) | Track AI usage across the organization |
+| | [Audit Trail](https://soterai.publicvm.com/docs/services/governance-audit) | Complete log of AI usage and policy changes |
+| | [Compliance Reports](https://soterai.publicvm.com/docs/services/governance-reports) | Weekly/monthly/quarterly governance reports |
 | **👁️ Monitor** | [Guard Logs](https://soterai.publicvm.com/docs/services/guard-logs) | Full audit trail of every security decision |
 | | [Reports](https://soterai.publicvm.com/docs/services/reports) | Automated security reports with trend analysis |
 | | [Detection Feedback](https://soterai.publicvm.com/docs/services/detection-feedback) | Improve detection accuracy by marking false positives |
@@ -334,14 +407,6 @@ SLM_API_KEY=sk-...
 | | [Forensics](https://soterai.publicvm.com/docs/services/forensics) | Incident investigation and root cause analysis |
 | | [Semantic Egress](https://soterai.publicvm.com/docs/services/semantic-egress) | Detect paraphrased confidential data leaks |
 | | [Canary Network](https://soterai.publicvm.com/docs/services/canary-network) | Tripwire tokens for prompt injection detection |
-| **🎛️ Control** | [Agent Passports](https://soterai.publicvm.com/docs/services/agent-passports) | Cryptographic agent identity verification |
-| | [Transaction Escrow](https://soterai.publicvm.com/docs/services/transaction-escrow) | Human-in-the-loop for risky agent actions |
-| | [Intent Guard](https://soterai.publicvm.com/docs/services/intent-guard) | Verify actions match original user intent |
-| | [Tool Chain](https://soterai.publicvm.com/docs/services/tool-chain) | Multi-step attack pattern detection |
-| | [Dry-Run Sandbox](https://soterai.publicvm.com/docs/services/dry-run-sandbox) | Simulate policies without production impact |
-| | [Memory Firewall](https://soterai.publicvm.com/docs/services/memory-firewall) | Quarantine poisoned agent memory |
-| | [MCP Drift](https://soterai.publicvm.com/docs/services/mcp-drift) | Monitor MCP server tool changes |
-| | [Legal Boundary](https://soterai.publicvm.com/docs/services/legal-boundary) | Hard guardrails for regulatory compliance |
 | **📋 Compliance** | [Evidence Vault](https://soterai.publicvm.com/docs/services/evidence-vault) | SOC 2 / ISO 27001 evidence packaging |
 | | [Context Lineage](https://soterai.publicvm.com/docs/services/context-lineage) | Data provenance and cross-domain leak blocking |
 | | [Blast Radius](https://soterai.publicvm.com/docs/services/blast-radius) | Agent compromise damage estimation |
@@ -401,7 +466,7 @@ The project includes a **fully automated CI/CD pipeline** via GitHub Actions:
 | Stage | Description |
 |-------|-------------|
 | 🔨 **Build & Typecheck** | TypeScript compilation + Prisma validation |
-| 🧪 **Tests** | 45+ test suites (566+ passing tests) covering all security services |
+| 🧪 **Tests** | 50+ test suites (670+ passing tests) covering all security services |
 | 🐳 **Docker Build & Push** | Multi-stage build → Docker Hub |
 | 🚀 **Deploy to EC2** | SSH → pull image → restart containers |
 
@@ -432,7 +497,7 @@ GitHub Push → GitHub Actions → Docker Hub → EC2 Instance
 ## 🧪 Testing
 
 ```bash
-# Run all tests (45+ test suites, 566+ tests)
+# Run all tests (50+ test suites, 670+ tests)
 npm test
 
 # TypeScript typecheck
@@ -460,7 +525,7 @@ via `E2E_DATABASE_URL`; as a safety fallback, a loopback-only `DATABASE_URL` is
 accepted. A remote default `DATABASE_URL` is never modified unless it is
 explicitly repeated as `E2E_DATABASE_URL` to confirm that it is test-only.
 
-### Verified test results (as of 2026-06-27)
+### Verified test results (as of 2026-06-29)
 
 | Suite | Tests | Result |
 |-------|------:|--------|
@@ -478,9 +543,13 @@ explicitly repeated as `E2E_DATABASE_URL` to confirm that it is test-only.
 | Billing / Webhooks / Retention | 20 | ✅ All pass |
 | API Route Audit / Integrations | 15 | ✅ All pass |
 | Service Catalog Contract Tests | 2 | ✅ All pass |
-| **Total** | **~566+** | **✅ All pass** |
+| Deep Agent Control & Governance | 101 | ✅ All pass |
+| Governance Enforcement | 35 | ✅ All pass |
+| Identity Fabric | 100 | ✅ All pass |
+| Agent Control Metrics | 2 | ✅ All pass |
+| **Total** | **~670+** | **✅ All pass** |
 
-Test suites cover: auth, guard, agent-firewall, agent-passports, intent verification, tool chain, escrow, dry-run, semantic egress, evidence vault, canary network, RAG, SLM evaluation, billing, webhooks, retention, API contract verification, and more.
+Test suites cover: auth, guard, agent-firewall, agent-passports, identity-fabric, intent verification, tool chain, escrow, dry-run, semantic egress, evidence vault, canary network, RAG, SLM evaluation, billing, webhooks, retention, API contract verification, agent control (action ledger, reversibility, rollback), usage governance (5-step engine, enforcement, notifications, approval workflows, compliance reports), and more.
 
 <br />
 
@@ -566,7 +635,13 @@ Building your own security layer means maintaining 30+ detection models, policy 
 ```
 ├── app/                    # Next.js app (pages, API routes)
 │   ├── api/                #   REST API endpoints
-│   ├── dashboard/          #   Dashboard (42+ feature pages)
+│   │   ├── guard/          #     Input/output/streaming guard with governance enforcement
+│   │   └── agent/          #     23 agent API routes (firewall, ledger, passport, escrow)
+│   ├── dashboard/          #   Dashboard (50+ feature pages)
+│   │   ├── agent-control/  #     Agent Control Center (approval queue, ledger, compliance)
+│   │   ├── usage-governance/ #   9 governance sub-pages (policy, providers, departments, etc.)
+│   │   ├── agent-firewall/ #     8 agent firewall dashboard pages
+│   │   └── ...             #     12 advanced security dashboards + more
 │   ├── docs/               #   Documentation pages
 │   └── (public pages)      #   Marketing, pricing, etc.
 ├── components/             # React components
@@ -576,16 +651,19 @@ Building your own security layer means maintaining 30+ detection models, policy 
 │   └── ui/                 #   Shared UI primitives
 ├── lib/                    # Shared utilities & services
 │   ├── agent-firewall/     #   Agent firewall logic
+│   ├── agent-action-ledger/ #  Action classification & reversibility engine
+│   ├── agent-control/      #   Control metrics & rollback window state
+│   ├── usage-governance/   #   Governance engine, notifications, 5-step resolution
 │   ├── guard/              #   Guard analysis engine
 │   ├── auth/               #   Auth helpers
 │   └── docs/               #   Service documentation data
 ├── packages/               # SDK packages (monorepo)
 │   ├── sdk/                #   TypeScript SDK
 │   └── python-sdk/         #   Python SDK
-├── prisma/                 # Database schema & migrations
+├── prisma/                 # Database schema & migrations (14+ agent/governance models)
 ├── workers/                # Background workers
 ├── scripts/                # Maintenance & CI scripts
-├── tests/                  # Test suites (45+, 566+ tests)
+├── tests/                  # Test suites (50+, 670+ tests)
 ├── examples/               # Example integrations
 ├── .github/workflows/      # CI/CD pipeline
 └── docker-compose.prod.yml # Production Docker setup
