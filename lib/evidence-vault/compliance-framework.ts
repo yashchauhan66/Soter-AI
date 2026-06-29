@@ -167,7 +167,7 @@ export const CONTROL_MAPPINGS: ControlMapping[] = [
  * Returns the number of controls mapped vs. total controls required,
  * with a coverage percentage.
  */
-export function getFrameworkCoverage(framework: ComplianceFramework): {
+export function getFrameworkCoverage(_framework: ComplianceFramework): {
   mapped: number;
   total: number;
   percentage: number;

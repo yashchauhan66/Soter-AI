@@ -5,6 +5,10 @@
 
 import { db } from "./db";
 import { requireUser, getActiveOrganization, requireProjectAccess } from "./auth/guards";
+import {
+  assertProjectCreationAllowed,
+  projectCreationMonthRange,
+} from "./projects/projectCreationLimit";
 
 const DEMO_EMAIL = process.env.DEMO_USER_EMAIL ?? "demo@cyberrakshak.dev";
 
@@ -37,14 +41,39 @@ export async function getCurrentProject() {
       orderBy: { createdAt: "asc" },
     });
     if (existing) return existing;
-    return db.project.create({
-      data: {
-        name: "Demo Chatbot",
-        description: "Phase 1 protected chatbot project",
-        plan: "DEMO",
-        userId: user.id,
-        organizationId: active.org.id,
-      },
+    const { start, end } = projectCreationMonthRange();
+    return db.$transaction(async (tx) => {
+      await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${`project-create:${active.org.id}`}))`;
+
+      // A form submission may have created the first project while this call
+      // was waiting for the organization lock.
+      const projectCreatedWhileWaiting = await tx.project.findFirst({
+        where: { organizationId: active.org.id },
+        orderBy: { createdAt: "asc" },
+      });
+      if (projectCreatedWhileWaiting) return projectCreatedWhileWaiting;
+
+      const organization = await tx.organization.findUniqueOrThrow({
+        where: { id: active.org.id },
+        select: { plan: true },
+      });
+      const projectsCreatedThisMonth =
+        organization.plan === "FREE"
+          ? await tx.project.count({
+              where: { organizationId: active.org.id, createdAt: { gte: start, lt: end } },
+            })
+          : 0;
+      assertProjectCreationAllowed(organization.plan, projectsCreatedThisMonth);
+
+      return tx.project.create({
+        data: {
+          name: "Demo Chatbot",
+          description: "Phase 1 protected chatbot project",
+          plan: "DEMO",
+          userId: user.id,
+          organizationId: active.org.id,
+        },
+      });
     });
   }
   // Should not happen because getCurrentUser provisioned an org, but stay safe.

@@ -1,29 +1,15 @@
 import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { Inter, JetBrains_Mono } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { inter, jetbrainsMono } from "@/app/fonts";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 import { HeaderNav } from "@/components/auth/HeaderNav";
-import { AiAssistant } from "@/components/dashboard/AiAssistant";
+import { AiAssistantLoader } from "@/components/dashboard/AiAssistantLoader";
 import { PHLaunchBanner } from "@/components/marketing/PHLaunchBanner";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { siteJsonLd } from "@/lib/seo/schema";
 import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
-  preload: true,
-  fallback: ["system-ui", "-apple-system", "sans-serif"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-jetbrains-mono",
-  preload: true,
-  fallback: ["Consolas", "Monaco", "monospace"],
-});
 
 const siteUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://soterai.publicvm.com";
 const siteName = "SoterAI";
@@ -119,6 +105,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <body className="font-sans">
+        <JsonLd data={siteJsonLd} />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-cyan focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink"
@@ -187,7 +174,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
             </div>
           </footer>
         </AuthProvider>
-        <AiAssistant />
+        <AiAssistantLoader />
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ""} />
       </body>
     </html>

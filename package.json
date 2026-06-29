@@ -28,6 +28,7 @@
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
     "db:seed": "tsx prisma/seed.ts",
+    "demo:seed": "tsx scripts/seedDemo.ts",
     "worker:webhooks": "tsx workers/webhookWorker.ts",
     "worker:siem": "tsx workers/siemWorker.ts",
     "worker:background": "tsx workers/backgroundWorker.ts",

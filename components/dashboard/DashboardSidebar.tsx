@@ -16,6 +16,7 @@ import {
   Eye,
   EyeOff,
   FileBarChart,
+  FileSearch,
   Fingerprint,
   FolderKanban,
   Gauge,
@@ -129,6 +130,7 @@ const navGroups: NavGroup[] = [
     items: [
       { Icon: CodeXml, label: "AI Code Review", href: "/dashboard/code-security", badge: "NEW" },
       { Icon: DatabaseZap, label: "RAG security", href: "/dashboard/rag" },
+      { Icon: FileSearch, label: "Model scanner", href: "/dashboard/security/model-scan", badge: "NEW" },
       { Icon: EyeOff, label: "Shadow AI", href: "/dashboard/shadow-ai" },
       { Icon: Swords, label: "Red team lab", href: "/dashboard/redteam/lab" },
       { Icon: Wallet, label: "Cost firewall", href: "/dashboard/cost-firewall" },

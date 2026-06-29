@@ -2,6 +2,10 @@
 const nextConfig = {
   outputFileTracingRoot: process.cwd(),
   output: "standalone",
+  // PDFKit's fontkit dependency uses an older, nested @swc/helpers release.
+  // Keep it as a native Node dependency so Turbopack does not resolve those
+  // imports against Next's incompatible top-level helper package.
+  serverExternalPackages: ["pdfkit"],
   poweredByHeader: false,
   reactStrictMode: true,
   compress: true,

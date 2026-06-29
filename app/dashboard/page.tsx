@@ -27,6 +27,7 @@ import {
   Network,
   Radio,
   ShieldClose,
+  ShieldCheck,
   Milestone,
   Siren,
   FileSearch,
@@ -70,6 +71,7 @@ interface FeatureCard {
 
 const FEATURE_CARDS: FeatureCard[] = [
   // ── Agent Control ──
+  { title: "Agent Control Center", description: "Unified approval queue, reversibility ledger, and compliance posture", href: "/dashboard/agent-control", icon: Gauge, color: "text-orange-300", bg: "bg-orange-400/10", group: "Agent Control" },
   { title: "Agent firewall", description: "Block unauthorized tool calls and data exfiltration", href: "/dashboard/agent-firewall", icon: ShieldAlert, color: "text-orange-300", bg: "bg-orange-400/10", group: "Agent Control" },
   { title: "Identity fabric", description: "Cryptographic agent identities and delegation chains", href: "/dashboard/identity-fabric", icon: VenetianMask, color: "text-cyan", bg: "bg-cyan/10", group: "Agent Control" },
   { title: "Intent guard", description: "Verify actions match original user intent", href: "/dashboard/intent-guard", icon: Crosshair, color: "text-emerald-300", bg: "bg-emerald-400/10", group: "Agent Control" },
@@ -83,11 +85,15 @@ const FEATURE_CARDS: FeatureCard[] = [
   { title: "Legal boundary", description: "Stop agents crossing legal/compliance lines", href: "/dashboard/legal-boundary", icon: Siren, color: "text-red-300", bg: "bg-red-400/10", group: "Agent Control" },
 
   // ── AI Usage Governance ──
+  { title: "Governance overview", description: "Company-wide AI usage policy dashboard with compliance score", href: "/dashboard/usage-governance", icon: Landmark, color: "text-violet-300", bg: "bg-violet-400/10", group: "Usage Governance" },
   { title: "Policy config", description: "Set default actions, data handling rules", href: "/dashboard/usage-governance/policy", icon: SlidersHorizontal, color: "text-violet-300", bg: "bg-violet-400/10", group: "Usage Governance" },
   { title: "Provider rules", description: "Allow or block specific AI providers and models", href: "/dashboard/usage-governance/providers", icon: Ban, color: "text-violet-300", bg: "bg-violet-400/10", group: "Usage Governance" },
   { title: "Department rules", description: "Per-department AI usage policies", href: "/dashboard/usage-governance/departments", icon: ListChecks, color: "text-purple-300", bg: "bg-purple-400/10", group: "Usage Governance" },
+  { title: "Data classification", description: "Define what data sensitivity levels can go to which providers", href: "/dashboard/usage-governance/data-classification", icon: ShieldHalf, color: "text-yellow-300", bg: "bg-yellow-400/10", group: "Usage Governance" },
+  { title: "Approval requests", description: "Review and manage AI provider access requests with 14-day expiry", href: "/dashboard/usage-governance/approvals", icon: ShieldCheck, color: "text-amber-300", bg: "bg-amber-400/10", group: "Usage Governance" },
   { title: "Employee monitoring", description: "Track AI usage across your organization", href: "/dashboard/usage-governance/monitoring", icon: Eye, color: "text-blue-300", bg: "bg-blue-400/10", group: "Usage Governance" },
   { title: "Audit trail", description: "Complete log of AI usage and policy changes", href: "/dashboard/usage-governance/audit", icon: ScrollText, color: "text-emerald-300", bg: "bg-emerald-400/10", group: "Usage Governance" },
+  { title: "Compliance reports", description: "Weekly/monthly/quarterly governance reports with recommendations", href: "/dashboard/usage-governance/reports", icon: FileBarChart, color: "text-blue-300", bg: "bg-blue-400/10", group: "Usage Governance" },
 
   // ── Monitor ──
   { title: "Guard logs", description: "Every input/output guard decision with filters and search", href: "/dashboard/logs", icon: ScrollText, color: "text-cyan", bg: "bg-cyan/10", group: "Monitor" },
@@ -269,7 +275,9 @@ export default async function DashboardPage({
                 </div>
               </div>
 
-              <div className="mt-5 grid grid-cols-3 gap-3">
+              <p className="mt-3 text-xs leading-4 text-slate-500">Action ledger with reversibility classification, rollback windows, continuous compliance assurance.</p>
+
+              <div className="mt-4 grid grid-cols-3 gap-3">
                 <div className="rounded-xl bg-slate-950/60 p-3 text-center">
                   <p className="text-xl font-bold text-orange-300">{agentPending}</p>
                   <p className="mt-0.5 text-[10px] text-slate-500">Pending</p>
@@ -307,7 +315,9 @@ export default async function DashboardPage({
                 </div>
               </div>
 
-              <div className="mt-5 grid grid-cols-3 gap-3">
+              <p className="mt-3 text-xs leading-4 text-slate-500">5-step governance engine, provider allow/block lists, department rules, employee DLP monitoring.</p>
+
+              <div className="mt-4 grid grid-cols-3 gap-3">
                 <div className="rounded-xl bg-slate-950/60 p-3 text-center">
                   <p className="text-xl font-bold text-violet-300">{govCompliance}%</p>
                   <p className="mt-0.5 text-[10px] text-slate-500">Compliance</p>

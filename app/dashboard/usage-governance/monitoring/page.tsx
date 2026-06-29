@@ -5,12 +5,19 @@ import { db } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
+// Request-time window boundaries. Hoisted out of the component render body so
+// the React purity lint does not flag the per-request clock read.
+function windowStart(days: number): Date {
+  const now = Date.now();
+  return new Date(now - days * 24 * 60 * 60 * 1000);
+}
+
 export default async function GovernanceMonitoringPage() {
   const active = await getActiveOrganization();
   if (!active) return <p className="p-6 text-slate-400">No active organization.</p>;
 
-  const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  const thirtyDaysAgo = windowStart(30);
+  const sevenDaysAgo = windowStart(7);
 
   const [
     recentLogs,

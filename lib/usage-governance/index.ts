@@ -8,8 +8,6 @@
 //   - Organization model for tenant isolation
 //   - AiProvider/AiModel models for provider inventory
 
-import { randomUUID } from "crypto";
-import type { AiGovernanceRuleAction, AiGovernanceDataSensitivity } from "@prisma/client";
 import { db } from "../db";
 
 // ── Types ────────────────────────────────────────────────────────────────────
