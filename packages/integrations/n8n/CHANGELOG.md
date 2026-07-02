@@ -2,6 +2,12 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.2.2] - 2026-07-02
+
+### Changed
+
+- Prepared a new npm release for GitHub Actions provenance publishing required by n8n Creator Portal review.
+
 ## [0.2.0] - 2026-07-02
 
 ### Changed
