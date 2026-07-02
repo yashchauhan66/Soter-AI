@@ -20,8 +20,8 @@ Follow these steps to publish the SoterAI n8n community node to npm.
 
 1. Tag the commit with the version:
    ```bash
-   git tag n8n-v0.2.3
-   git push origin n8n-v0.2.3
+   git tag n8n-v0.2.4
+   git push origin n8n-v0.2.4
    ```
 2. The `publish-n8n.yml` GitHub Actions workflow will automatically build and publish to npm.
 3. Monitor the workflow run at: `https://github.com/yashchauhan66/Soter-AI/actions`
