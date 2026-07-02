@@ -32,10 +32,10 @@ Restart n8n after installation.
 2. Generate an API key from the project dashboard (it starts with `sk_`).
 3. In n8n, go to **Credentials > New Credential > SoterAI API**.
 4. Paste your API key.
-5. Keep the default **Base URL**: `http://13.200.123.232:3000`.
+5. Keep the default **Base URL**: `https://soterai.publicvm.com`.
 6. (Optional) Set a default **Project ID** -- this can also be overridden per node.
 
-> Temporary note: use `http://13.200.123.232:3000` for the Base URL until `soterai.publicvm.com` DNS is repaired. If an existing credential still uses `https://soterai.publicvm.com` or any `.dev` URL, edit the credential and replace it with `http://13.200.123.232:3000`.
+For self-hosted deployments, replace the Base URL with your own HTTPS SoterAI API endpoint.
 
 Full credential documentation: [https://soterai.publicvm.com/docs](https://soterai.publicvm.com/docs)
 
@@ -178,13 +178,13 @@ To import: in n8n, go to **Workflows > Import from File** and select the JSON fi
 - [Pricing](https://soterai.publicvm.com/pricing)
 - [Status](https://soterai.publicvm.com/status)
 - [Support](https://soterai.publicvm.com/support)
-- [GitHub Repository](https://github.com/yashchauhan66/Soter-AI/tree/main/packages/integrations/n8n)
+- [GitHub Repository](https://github.com/yashchauhan66/Ai-Security-Guard/tree/main/packages/integrations/n8n)
 - [npm Package](https://www.npmjs.com/package/n8n-nodes-soterai)
 
 ## Support
 
 - **Email**: support@soterai.dev
-- **GitHub Issues**: [https://github.com/yashchauhan66/Soter-AI/issues](https://github.com/yashchauhan66/Soter-AI/issues)
+- **GitHub Issues**: [https://github.com/yashchauhan66/Ai-Security-Guard/issues](https://github.com/yashchauhan66/Ai-Security-Guard/issues)
 - **Documentation**: [https://soterai.publicvm.com/docs](https://soterai.publicvm.com/docs)
 
 ## License
