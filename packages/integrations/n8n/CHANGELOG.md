@@ -2,6 +2,12 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.2.6] - 2026-07-02
+
+### Fixed
+
+- Add a repository-root credential compatibility mirror for n8n Creator Portal, whose automated source check does not resolve the package's monorepo `repository.directory` path.
+
 ## [0.2.5] - 2026-07-02
 
 ### Fixed
