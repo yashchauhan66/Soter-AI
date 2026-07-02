@@ -18,6 +18,7 @@ const rules: PatternRule[] = [
   secret(/\b(?:postgres(?:ql)?|mysql|mongodb(?:\+srv)?|redis):\/\/[^\s]+/i, "Database URL", "[REDACTED_DATABASE_URL]"),
   secret(/\b(?:sk|rk)_(?:live|test)_[A-Za-z0-9]{8,}\b/, "Stripe or Razorpay-like key"),
   secret(/\brzp_(?:live|test)_[A-Za-z0-9]{8,}\b/, "Razorpay-like key"),
+  secret(/\b(?:synthetic|fake|test)[_-]?(?:api[_-]?key|secret|token)[_-][A-Za-z0-9_-]{4,}\b/i, "Synthetic or test API key"),
   secret(/\b[A-Z][A-Z0-9_]{2,}\s*=\s*["']?[A-Za-z0-9_./+:-]{6,}["']?/, "Environment secret assignment"),
   secret(/-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----[\s\S]+?-----END (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/i, "Private key block"),
   secret(/-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----/i, "Private key header", "[REDACTED_PRIVATE_KEY]"),
