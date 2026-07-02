@@ -178,13 +178,13 @@ To import: in n8n, go to **Workflows > Import from File** and select the JSON fi
 - [Pricing](https://soterai.publicvm.com/pricing)
 - [Status](https://soterai.publicvm.com/status)
 - [Support](https://soterai.publicvm.com/support)
-- [GitHub Repository](https://github.com/yashchauhan66/Ai-Security-Guard/tree/main/packages/integrations/n8n)
+- [GitHub Repository](https://github.com/yashchauhan66/Soter-AI/tree/main/packages/integrations/n8n)
 - [npm Package](https://www.npmjs.com/package/n8n-nodes-soterai)
 
 ## Support
 
 - **Email**: support@soterai.dev
-- **GitHub Issues**: [https://github.com/yashchauhan66/Ai-Security-Guard/issues](https://github.com/yashchauhan66/Ai-Security-Guard/issues)
+- **GitHub Issues**: [https://github.com/yashchauhan66/Soter-AI/issues](https://github.com/yashchauhan66/Soter-AI/issues)
 - **Documentation**: [https://soterai.publicvm.com/docs](https://soterai.publicvm.com/docs)
 
 ## License

@@ -2,6 +2,12 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.2.3] - 2026-07-02
+
+### Fixed
+
+- Aligned package repository metadata with the GitHub Actions provenance repository for npm provenance verification.
+
 ## [0.2.2] - 2026-07-02
 
 ### Changed
