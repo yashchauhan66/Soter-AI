@@ -1,0 +1,1451 @@
+{
+  "generatedAt": "2026-07-01T14:24:53.114Z",
+  "browser": {
+    "name": "Playwright Chromium",
+    "version": "149.0.7827.55",
+    "executablePath": "C:\\Users\\USER\\AppData\\Local\\ms-playwright\\chromium-1228\\chrome-win64\\chrome.exe"
+  },
+  "extensionPath": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\apps\\extension\\dist\\extension",
+  "extensionId": "ilhlhkkciekmbdnpfnjlpfidnmigblom",
+  "baseUrl": "http://localhost:41739",
+  "results": [
+    {
+      "name": "Extension service worker loaded",
+      "status": "PASS",
+      "details": {
+        "extensionId": "ilhlhkkciekmbdnpfnjlpfidnmigblom",
+        "workerUrl": "chrome-extension://ilhlhkkciekmbdnpfnjlpfidnmigblom/background/service-worker.js"
+      }
+    },
+    {
+      "name": "chrome://extensions opened",
+      "status": "PASS",
+      "details": {
+        "extensionNames": [
+          "Soter Enterprise AI Control Plane"
+        ]
+      }
+    },
+    {
+      "name": "Extension listed in Chrome management UI",
+      "status": "PASS",
+      "details": {
+        "extensionNames": [
+          "Soter Enterprise AI Control Plane"
+        ]
+      }
+    },
+    {
+      "name": "Popup opens in unenrolled state",
+      "status": "PASS"
+    },
+    {
+      "name": "Extension icon assets resolve",
+      "status": "PASS"
+    },
+    {
+      "name": "Invalid enrollment token rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "Expired enrollment token rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "Self-service enrollment succeeds",
+      "status": "PASS"
+    },
+    {
+      "name": "Popup does not display device token",
+      "status": "PASS"
+    },
+    {
+      "name": "Policy sync shown fresh after enrollment",
+      "status": "PASS"
+    },
+    {
+      "name": "Heartbeat shown after enrollment",
+      "status": "PASS",
+      "details": {
+        "popupText": "Soter Enterprise\nEnrolled\nOrganization\nSoter Synthetic QA\nEmployee\nqa.synthetic@example.test\nDepartment / role\nQA / Tester\nPolicy version\nlive-e2e-1\nResponse scanning\nDisabled\nSync status\nfresh\nLast heartbeat\n2026-07-01T14:24:12.639Z\nSync now"
+      }
+    },
+    {
+      "name": "Side panel document opens enrolled",
+      "status": "PASS"
+    },
+    {
+      "name": "Side panel does not display device token",
+      "status": "PASS"
+    },
+    {
+      "name": "Localhost AI destination detected",
+      "status": "PASS"
+    },
+    {
+      "name": "Clean prompt allowed and replayed once",
+      "status": "PASS",
+      "details": {
+        "latencyMs": 163.6
+      }
+    },
+    {
+      "name": "Small clean prompt scan under 100 ms",
+      "status": "FAIL",
+      "details": {
+        "latencyMs": 163.6
+      }
+    },
+    {
+      "name": "Storage omits raw clean prompt immediately after scan",
+      "status": "PASS"
+    },
+    {
+      "name": "Backend events omit raw clean prompt",
+      "status": "PASS"
+    },
+    {
+      "name": "Paste detection shows overlay for fake API key",
+      "status": "PASS",
+      "details": {
+        "action": "BLOCK",
+        "detected": "Detected\napi_key",
+        "text": "Here is my [REDACTED_SECRET]\n┌─ Soter Safe Context Capsule ──────────────────────────────\n│\n│ ✓ Secret keys, tokens, and passwords removed — share only the error message or context\n│\n│ Data categories: api_key\n│\n└──────────────────────────────────────────────────────────"
+      }
+    },
+    {
+      "name": "Safe rewrite replaces fake API key",
+      "status": "PASS"
+    },
+    {
+      "name": "Submit interception blocks fake .env content",
+      "status": "PASS",
+      "details": {
+        "action": "BLOCK",
+        "detected": "Detected\ndatabase_url",
+        "text": "DATABASE_URL=[REDACTED_DATABASE_URL]\n[REDACTED_ENV_VAR]\n┌─ Soter Safe Context Capsule ──────────────────────────────\n│\n│\n│ Data categories: database_url\n│\n└──────────────────────────────────────────────────────────"
+      }
+    },
+    {
+      "name": "File scanner fake.env",
+      "status": "PASS",
+      "details": {
+        "expectation": "cleared",
+        "inputValue": "",
+        "overlayVisible": true
+      }
+    },
+    {
+      "name": "File scanner fake-customers.csv",
+      "status": "PASS",
+      "details": {
+        "expectation": "overlay",
+        "inputValue": "C:\\fakepath\\fake-customers.csv",
+        "overlayVisible": true
+      }
+    },
+    {
+      "name": "File scanner fake-code.js",
+      "status": "PASS",
+      "details": {
+        "expectation": "cleared",
+        "inputValue": "",
+        "overlayVisible": true
+      }
+    },
+    {
+      "name": "File scanner clean.txt",
+      "status": "PASS",
+      "details": {
+        "expectation": "allowed",
+        "inputValue": "C:\\fakepath\\clean.txt",
+        "overlayVisible": false
+      }
+    },
+    {
+      "name": "Exact company fingerprint match enforced",
+      "status": "PASS",
+      "details": {
+        "action": "BLOCK",
+        "detected": "Detected\ncompany_fingerprint_match, financial_text",
+        "text": "Project Cedar synthetic investor deck revenue forecast is 42 million dollars with launch codename Aurora.\n┌─ Soter Safe Context Capsule ──────────────────────────────\n│\n│ ✓ Financial figures and account identifiers removed\n│\n│ Data categories: financial_text\n│\n└──────────────────────────────────────────────────────────"
+      }
+    },
+    {
+      "name": "Fingerprint events omit raw reference content",
+      "status": "PASS"
+    },
+    {
+      "name": "Fuzzy company fingerprint match enforced",
+      "status": "PASS",
+      "details": {
+        "action": "BLOCK",
+        "detected": "Detected\ncompany_fingerprint_match, financial_text",
+        "text": "Project Cedar synthetic investor deck revenue forecast is 43 million synthetic dollars with launch codename Aurora.\n┌─ Soter Safe Context Capsule ──────────────────────────────\n│\n│ ✓ Financial figures and account identifiers removed\n│\n│ Data categories: financial_text\n│\n└──────────────────────────────────────────────────────────"
+      }
+    },
+    {
+      "name": "India PII requires approval",
+      "status": "PASS",
+      "details": {
+        "action": "REQUIRE_APPROVAL",
+        "detected": "Detected\nifsc, pan",
+        "text": "PAN [REDACTED_PAN] and IFSC [REDACTED_IFSC] are synthetic test values.\n┌─ Soter Safe Context Capsule ──────────────────────────────\n│\n│\n│ Data categories: ifsc, pan\n│\n└──────────────────────────────────────────────────────────"
+      }
+    },
+    {
+      "name": "Approval request created",
+      "status": "PASS"
+    },
+    {
+      "name": "Source page lineage listener activates",
+      "status": "PASS"
+    },
+    {
+      "name": "Source lineage context captured",
+      "status": "PASS",
+      "details": {
+        "createdAt": "2026-07-01T14:24:22.164Z",
+        "detectedDataTypes": [
+          "customer_data",
+          "email"
+        ],
+        "expiresAt": "2026-07-01T14:39:22.164Z",
+        "redactedPreview": "Synthetic internal source customer email [REDACTED_EMAIL] and project Cedar notes.",
+        "selectedTextHash": "52cbbcab66fcf438beee30582d7b9770cb0cc749f9629a9104b62f5b21401c1b",
+        "sourceApp": "Synthetic Internal Source",
+        "sourceCategory": "internal_app",
+        "sourceDomain": "localhost",
+        "sourceTitle": "Synthetic Internal Source",
+        "sourceUrlHash": "bca3e428115a902148a202086e7136cb77395f9d881205cda80d3ec3302d56e6"
+      }
+    },
+    {
+      "name": "Lineage context expires in 15 minutes",
+      "status": "PASS"
+    },
+    {
+      "name": "Source-to-destination lineage event created",
+      "status": "PASS",
+      "details": {
+        "endpoint": "/api/extension/lineage-event",
+        "method": "POST",
+        "body": {
+          "organizationId": "org-synthetic",
+          "employeeId": "employee-synthetic",
+          "sourceDomain": "localhost",
+          "sourceApp": "Synthetic Internal Source",
+          "sourceCategory": "internal_app",
+          "sourceUrlHash": "bca3e428115a902148a202086e7136cb77395f9d881205cda80d3ec3302d56e6",
+          "sourceTitle": "Synthetic Internal Source",
+          "destinationDomain": "localhost",
+          "destinationApp": "localhost",
+          "destinationCategory": "unknown",
+          "dataTypes": [
+            "customer_data",
+            "email"
+          ],
+          "riskScore": 20,
+          "severity": "medium",
+          "actionTaken": "redact",
+          "redactedPreview": "Synthetic internal source customer email [REDACTED_EMAIL]",
+          "eventType": "submit_to_ai"
+        },
+        "tokenHeaderPresent": true,
+        "at": "2026-07-01T14:24:22.456Z"
+      }
+    },
+    {
+      "name": "Lineage event omits full raw copied text",
+      "status": "PASS"
+    },
+    {
+      "name": "Emergency lockdown visible in popup",
+      "status": "PASS"
+    },
+    {
+      "name": "Emergency lockdown blocks local AI prompt",
+      "status": "PASS",
+      "details": {
+        "action": "BLOCK",
+        "detected": "Detected\nNone",
+        "text": "Clean prompt during synthetic emergency lockdown."
+      }
+    },
+    {
+      "name": "10 KB prompt scan under 300 ms",
+      "status": "PASS",
+      "details": {
+        "latencyMs": 113.9
+      }
+    },
+    {
+      "name": "100 KB prompt does not freeze page",
+      "status": "PASS",
+      "details": {
+        "latencyMs": 637.8
+      }
+    },
+    {
+      "name": "1 MB file scan completes without page freeze",
+      "status": "PASS",
+      "details": {
+        "latencyMs": 608.7
+      }
+    },
+    {
+      "name": "Unrelated localhost page ignored",
+      "status": "FAIL",
+      "details": {
+        "active": true
+      }
+    },
+    {
+      "name": "Storage omits synthetic API key",
+      "status": "PASS"
+    },
+    {
+      "name": "Storage omits raw clean prompt",
+      "status": "PASS"
+    },
+    {
+      "name": "Storage omits raw copied text",
+      "status": "FAIL"
+    },
+    {
+      "name": "Backend events omit raw fake API key",
+      "status": "PASS"
+    },
+    {
+      "name": "Backend events omit raw file content",
+      "status": "PASS"
+    },
+    {
+      "name": "No response audit when response scanning disabled",
+      "status": "PASS"
+    },
+    {
+      "name": "ChatGPT external site reachable",
+      "status": "FAIL",
+      "details": {
+        "error": "page.goto: net::ERR_NETWORK_ACCESS_DENIED at https://chatgpt.com/\nCall log:\n\u001b[2m  - navigating to \"https://chatgpt.com/\", waiting until \"domcontentloaded\"\u001b[22m\n"
+      }
+    },
+    {
+      "name": "ChatGPT extension content script active",
+      "status": "FAIL",
+      "details": {
+        "blockedBy": "navigation failure"
+      }
+    },
+    {
+      "name": "ChatGPT live prompt box available without account challenge",
+      "status": "FAIL",
+      "details": {
+        "blockedBy": "navigation failure"
+      }
+    },
+    {
+      "name": "Claude external site reachable",
+      "status": "FAIL",
+      "details": {
+        "error": "page.goto: net::ERR_NETWORK_ACCESS_DENIED at https://claude.ai/\nCall log:\n\u001b[2m  - navigating to \"https://claude.ai/\", waiting until \"domcontentloaded\"\u001b[22m\n"
+      }
+    },
+    {
+      "name": "Claude extension content script active",
+      "status": "FAIL",
+      "details": {
+        "blockedBy": "navigation failure"
+      }
+    },
+    {
+      "name": "Claude live prompt box available without account challenge",
+      "status": "FAIL",
+      "details": {
+        "blockedBy": "navigation failure"
+      }
+    },
+    {
+      "name": "Gemini external site reachable",
+      "status": "FAIL",
+      "details": {
+        "error": "page.goto: net::ERR_NETWORK_ACCESS_DENIED at https://gemini.google.com/\nCall log:\n\u001b[2m  - navigating to \"https://gemini.google.com/\", waiting until \"domcontentloaded\"\u001b[22m\n"
+      }
+    },
+    {
+      "name": "Gemini extension content script active",
+      "status": "FAIL",
+      "details": {
+        "blockedBy": "navigation failure"
+      }
+    },
+    {
+      "name": "Gemini live prompt box available without account challenge",
+      "status": "FAIL",
+      "details": {
+        "blockedBy": "navigation failure"
+      }
+    },
+    {
+      "name": "Perplexity external site reachable",
+      "status": "FAIL",
+      "details": {
+        "error": "page.goto: net::ERR_NETWORK_ACCESS_DENIED at https://www.perplexity.ai/\nCall log:\n\u001b[2m  - navigating to \"https://www.perplexity.ai/\", waiting until \"domcontentloaded\"\u001b[22m\n"
+      }
+    },
+    {
+      "name": "Perplexity extension content script active",
+      "status": "FAIL",
+      "details": {
+        "blockedBy": "navigation failure"
+      }
+    },
+    {
+      "name": "Perplexity live prompt box available without account challenge",
+      "status": "FAIL",
+      "details": {
+        "blockedBy": "navigation failure"
+      }
+    },
+    {
+      "name": "No page-level uncaught errors",
+      "status": "PASS",
+      "details": {
+        "pageErrors": []
+      }
+    },
+    {
+      "name": "No extension console errors",
+      "status": "PASS",
+      "details": {
+        "extensionConsoleErrors": []
+      }
+    }
+  ],
+  "requests": [
+    {
+      "endpoint": "/api/extension/enroll",
+      "method": "POST",
+      "body": {
+        "enrollmentCodePresent": true
+      },
+      "tokenHeaderPresent": false,
+      "at": "2026-07-01T14:24:12.277Z"
+    },
+    {
+      "endpoint": "/api/extension/enroll",
+      "method": "POST",
+      "body": {
+        "enrollmentCodePresent": true
+      },
+      "tokenHeaderPresent": false,
+      "at": "2026-07-01T14:24:12.434Z"
+    },
+    {
+      "endpoint": "/api/extension/enroll",
+      "method": "POST",
+      "body": {
+        "enrollmentCodePresent": true
+      },
+      "tokenHeaderPresent": false,
+      "at": "2026-07-01T14:24:12.558Z"
+    },
+    {
+      "endpoint": "/api/extension/policy",
+      "method": "GET",
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:12.604Z"
+    },
+    {
+      "endpoint": "/api/extension/heartbeat",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "extensionVersion": "0.1.0",
+        "browser": "chrome",
+        "policyVersion": "live-e2e-1",
+        "lastActiveAt": "2026-07-01T14:24:12.639Z",
+        "lockdownEnabled": false
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:12.650Z"
+    },
+    {
+      "endpoint": "/api/extension/source-apps",
+      "method": "GET",
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:14.462Z"
+    },
+    {
+      "endpoint": "/api/extension/fingerprint-bundle",
+      "method": "GET",
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:15.155Z"
+    },
+    {
+      "endpoint": "/api/extension/audit-log",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "extensionVersion": "0.1.0",
+        "browser": "chrome",
+        "domain": "localhost",
+        "policyVersion": "live-e2e-1",
+        "action": "allow",
+        "severity": "info",
+        "riskScore": 0,
+        "detectedDataTypes": [],
+        "matchedRules": [],
+        "redactedPreview": "[CLEAN_PROMPT_NOT_STORED]",
+        "eventType": "submit",
+        "occurredAt": "2026-07-01T14:24:15.174Z",
+        "metadata": {
+          "findings": []
+        }
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:15.183Z"
+    },
+    {
+      "endpoint": "/api/extension/scan",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "url": "http://localhost:41739",
+        "riskScore": 0,
+        "detectedDataTypes": [],
+        "action": "allow",
+        "redactedPreview": "[CLEAN_PROMPT_NOT_STORED]"
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:15.186Z"
+    },
+    {
+      "endpoint": "/api/extension/fingerprint-bundle",
+      "method": "GET",
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:15.282Z"
+    },
+    {
+      "endpoint": "/api/extension/audit-log",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "extensionVersion": "0.1.0",
+        "browser": "chrome",
+        "domain": "localhost",
+        "policyVersion": "live-e2e-1",
+        "action": "block",
+        "severity": "critical",
+        "riskScore": 25,
+        "detectedDataTypes": [
+          "api_key"
+        ],
+        "matchedRules": [
+          "live-secret-block"
+        ],
+        "redactedPreview": "Here is my [REDACTED_SECRET]",
+        "eventType": "paste",
+        "occurredAt": "2026-07-01T14:24:15.292Z",
+        "metadata": {
+          "findings": [
+            {
+              "type": "api_key",
+              "label": "API key",
+              "severity": "high"
+            }
+          ]
+        }
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:15.295Z"
+    },
+    {
+      "endpoint": "/api/extension/scan",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "url": "http://localhost:41739",
+        "riskScore": 25,
+        "detectedDataTypes": [
+          "api_key"
+        ],
+        "action": "block",
+        "redactedPreview": "Here is my [REDACTED_SECRET]"
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:15.297Z"
+    },
+    {
+      "endpoint": "/api/extension/fingerprint-bundle",
+      "method": "GET",
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:16.545Z"
+    },
+    {
+      "endpoint": "/api/extension/audit-log",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "extensionVersion": "0.1.0",
+        "browser": "chrome",
+        "domain": "localhost",
+        "policyVersion": "live-e2e-1",
+        "action": "block",
+        "severity": "critical",
+        "riskScore": 40,
+        "detectedDataTypes": [
+          "database_url"
+        ],
+        "matchedRules": [
+          "live-secret-block"
+        ],
+        "redactedPreview": "DATABASE_URL=[REDACTED_DATABASE_URL]\n[REDACTED_ENV_VAR]",
+        "eventType": "submit",
+        "occurredAt": "2026-07-01T14:24:16.556Z",
+        "metadata": {
+          "findings": [
+            {
+              "type": "database_url",
+              "label": "Database URL",
+              "severity": "critical"
+            }
+          ]
+        }
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:16.559Z"
+    },
+    {
+      "endpoint": "/api/extension/scan",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "url": "http://localhost:41739",
+        "riskScore": 40,
+        "detectedDataTypes": [
+          "database_url"
+        ],
+        "action": "block",
+        "redactedPreview": "DATABASE_URL=[REDACTED_DATABASE_URL]\n[REDACTED_ENV_VAR]"
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:16.562Z"
+    },
+    {
+      "endpoint": "/api/extension/file-scan-event",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "destinationDomain": "localhost",
+        "fileNameHash": "e8d4973d04c28539d7074146f4e6c6ab1a8673d2ef72139a7e2fd1f2ad3e7fa3",
+        "originalExtension": ".env",
+        "mimeType": "text/plain",
+        "sizeBytes": 90,
+        "scannedBytes": 90,
+        "supported": true,
+        "encryptedOrBinary": false,
+        "detectedDataTypes": [
+          "api_key",
+          "database_url"
+        ],
+        "riskScore": 80,
+        "severity": "critical",
+        "actionTaken": "block",
+        "redactedPreview": "[REDACTED_SECRET]\nDATABASE_URL=[REDACTED_DATABASE_URL]",
+        "lineageContext": null
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:16.923Z"
+    },
+    {
+      "endpoint": "/api/extension/file-scan-event",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "destinationDomain": "localhost",
+        "fileNameHash": "a0160fe3d26dc301a0d7dcf1bee3172da823b92f6de35297990a1bde3e3111ea",
+        "originalExtension": ".csv",
+        "mimeType": "text/csv",
+        "sizeBytes": 54,
+        "scannedBytes": 54,
+        "supported": true,
+        "encryptedOrBinary": false,
+        "detectedDataTypes": [
+          "email",
+          "phone_number"
+        ],
+        "riskScore": 80,
+        "severity": "low",
+        "actionTaken": "redact",
+        "redactedPreview": "name,email,phone\nTest User,[REDACTED_EMAIL],[REDACTED_PHONE]",
+        "lineageContext": null
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:17.610Z"
+    },
+    {
+      "endpoint": "/api/extension/file-scan-event",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "destinationDomain": "localhost",
+        "fileNameHash": "20bc45d6de2eb2d03c68f2515dec00a4230ff4af2de59252c6805e85897688d0",
+        "originalExtension": ".js",
+        "mimeType": "text/javascript",
+        "sizeBytes": 57,
+        "scannedBytes": 57,
+        "supported": true,
+        "encryptedOrBinary": false,
+        "detectedDataTypes": [
+          "github_token",
+          "source_code"
+        ],
+        "riskScore": 49,
+        "severity": "critical",
+        "actionTaken": "block",
+        "redactedPreview": "const [REDACTED_API_KEY];",
+        "lineageContext": null
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:18.393Z"
+    },
+    {
+      "endpoint": "/api/extension/file-scan-event",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "destinationDomain": "localhost",
+        "fileNameHash": "b9058b2541a242017cc7be08f3fc5d9a85f43f716a1045be9e4948702a356626",
+        "originalExtension": ".txt",
+        "mimeType": "text/plain",
+        "sizeBytes": 60,
+        "scannedBytes": 60,
+        "supported": true,
+        "encryptedOrBinary": false,
+        "detectedDataTypes": [],
+        "riskScore": 0,
+        "severity": "info",
+        "actionTaken": "allow",
+        "redactedPreview": "[CLEAN_PROMPT_NOT_STORED]",
+        "lineageContext": null
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:19.151Z"
+    },
+    {
+      "endpoint": "/api/extension/fingerprint-bundle",
+      "method": "GET",
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:19.744Z"
+    },
+    {
+      "endpoint": "/api/extension/fingerprint-match",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "destinationDomain": "localhost",
+        "localMatches": [
+          {
+            "matchedFingerprintSetId": "fp-synthetic-cedar",
+            "matchedDocumentName": "Synthetic Project Cedar investor deck",
+            "category": "investor_deck",
+            "similarityScore": 1,
+            "sensitivity": "critical",
+            "recommendedAction": "block",
+            "matchType": "exact",
+            "confidence": "critical",
+            "matchedChunkCount": 12,
+            "totalComparedChunks": 12,
+            "evidence": "Exact fingerprint match detected against confidential dataset"
+          }
+        ],
+        "textHash": "a55d1be6bc5baa53e2f0d22c49da1aa38769f7f39a7edc256c5917bd461f47fe",
+        "redactedPreview": "Fingerprint match detected against confidential dataset; raw matched text not retained",
+        "actionTaken": "block"
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:19.758Z"
+    },
+    {
+      "endpoint": "/api/extension/audit-log",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "extensionVersion": "0.1.0",
+        "browser": "chrome",
+        "domain": "localhost",
+        "policyVersion": "live-e2e-1",
+        "action": "block",
+        "severity": "critical",
+        "riskScore": 95,
+        "detectedDataTypes": [
+          "company_fingerprint_match",
+          "financial_text"
+        ],
+        "matchedRules": [
+          "company-fingerprint-local"
+        ],
+        "redactedPreview": "[CLEAN_PROMPT_NOT_STORED]",
+        "eventType": "submit",
+        "occurredAt": "2026-07-01T14:24:19.764Z",
+        "metadata": {
+          "findings": [
+            {
+              "type": "financial_text",
+              "label": "Financial text",
+              "severity": "medium"
+            },
+            {
+              "type": "financial_text",
+              "label": "Financial text",
+              "severity": "medium"
+            }
+          ]
+        }
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:19.768Z"
+    },
+    {
+      "endpoint": "/api/extension/scan",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "url": "http://localhost:41739",
+        "riskScore": 95,
+        "detectedDataTypes": [
+          "company_fingerprint_match",
+          "financial_text"
+        ],
+        "action": "block",
+        "redactedPreview": "Fingerprint match detected against confidential dataset; raw matched text not retained"
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:19.770Z"
+    },
+    {
+      "endpoint": "/api/extension/fingerprint-bundle",
+      "method": "GET",
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:20.442Z"
+    },
+    {
+      "endpoint": "/api/extension/fingerprint-match",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "destinationDomain": "localhost",
+        "localMatches": [
+          {
+            "matchedFingerprintSetId": "fp-synthetic-cedar",
+            "matchedDocumentName": "Synthetic Project Cedar investor deck",
+            "category": "investor_deck",
+            "similarityScore": 0.4545,
+            "sensitivity": "critical",
+            "recommendedAction": "block",
+            "matchType": "fuzzy",
+            "confidence": "medium",
+            "matchedChunkCount": 5,
+            "totalComparedChunks": 12,
+            "evidence": "Fuzzy fingerprint match detected (similarity: 0.4545)"
+          }
+        ],
+        "textHash": "75a7c2fda1f6498464785e444207e82a519328c98dfe750bf076bdf1e6eda68f",
+        "redactedPreview": "Fingerprint match detected against confidential dataset; raw matched text not retained",
+        "actionTaken": "block"
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:20.453Z"
+    },
+    {
+      "endpoint": "/api/extension/audit-log",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "extensionVersion": "0.1.0",
+        "browser": "chrome",
+        "domain": "localhost",
+        "policyVersion": "live-e2e-1",
+        "action": "block",
+        "severity": "critical",
+        "riskScore": 95,
+        "detectedDataTypes": [
+          "company_fingerprint_match",
+          "financial_text"
+        ],
+        "matchedRules": [
+          "company-fingerprint-local"
+        ],
+        "redactedPreview": "[CLEAN_PROMPT_NOT_STORED]",
+        "eventType": "submit",
+        "occurredAt": "2026-07-01T14:24:20.458Z",
+        "metadata": {
+          "findings": [
+            {
+              "type": "financial_text",
+              "label": "Financial text",
+              "severity": "medium"
+            },
+            {
+              "type": "financial_text",
+              "label": "Financial text",
+              "severity": "medium"
+            }
+          ]
+        }
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:20.463Z"
+    },
+    {
+      "endpoint": "/api/extension/scan",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "url": "http://localhost:41739",
+        "riskScore": 95,
+        "detectedDataTypes": [
+          "company_fingerprint_match",
+          "financial_text"
+        ],
+        "action": "block",
+        "redactedPreview": "Fingerprint match detected against confidential dataset; raw matched text not retained"
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:20.467Z"
+    },
+    {
+      "endpoint": "/api/extension/fingerprint-bundle",
+      "method": "GET",
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:20.659Z"
+    },
+    {
+      "endpoint": "/api/extension/audit-log",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "extensionVersion": "0.1.0",
+        "browser": "chrome",
+        "domain": "localhost",
+        "policyVersion": "live-e2e-1",
+        "action": "require_approval",
+        "severity": "high",
+        "riskScore": 44,
+        "detectedDataTypes": [
+          "ifsc",
+          "pan"
+        ],
+        "matchedRules": [
+          "live-india-pii-approval"
+        ],
+        "redactedPreview": "PAN [REDACTED_PAN] and IFSC [REDACTED_IFSC] are synthetic test values.",
+        "eventType": "submit",
+        "occurredAt": "2026-07-01T14:24:20.674Z",
+        "metadata": {
+          "findings": [
+            {
+              "type": "pan",
+              "label": "PAN",
+              "severity": "high"
+            },
+            {
+              "type": "ifsc",
+              "label": "IFSC",
+              "severity": "medium"
+            }
+          ]
+        }
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:20.676Z"
+    },
+    {
+      "endpoint": "/api/extension/scan",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "url": "http://localhost:41739",
+        "riskScore": 44,
+        "detectedDataTypes": [
+          "ifsc",
+          "pan"
+        ],
+        "action": "require_approval",
+        "redactedPreview": "PAN [REDACTED_PAN] and IFSC [REDACTED_IFSC] are synthetic test values."
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:20.679Z"
+    },
+    {
+      "endpoint": "/api/extension/approval-request",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "url": "http://localhost:41739",
+        "riskScore": 44,
+        "detectedDataTypes": [
+          "ifsc",
+          "pan"
+        ],
+        "redactedPreview": "PAN [REDACTED_PAN] and IFSC [REDACTED_IFSC] are synthetic test values."
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:20.782Z"
+    },
+    {
+      "endpoint": "/api/extension/source-apps",
+      "method": "GET",
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:21.240Z"
+    },
+    {
+      "endpoint": "/api/extension/fingerprint-bundle",
+      "method": "GET",
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:22.445Z"
+    },
+    {
+      "endpoint": "/api/extension/audit-log",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "extensionVersion": "0.1.0",
+        "browser": "chrome",
+        "domain": "localhost",
+        "policyVersion": "live-e2e-1",
+        "action": "redact",
+        "severity": "medium",
+        "riskScore": 20,
+        "detectedDataTypes": [
+          "customer_data",
+          "email"
+        ],
+        "matchedRules": [
+          "live-business-redact"
+        ],
+        "redactedPreview": "Synthetic internal source customer email [REDACTED_EMAIL]",
+        "eventType": "submit",
+        "occurredAt": "2026-07-01T14:24:22.450Z",
+        "metadata": {
+          "findings": [
+            {
+              "type": "customer_data",
+              "label": "Customer data indicator",
+              "severity": "low"
+            },
+            {
+              "type": "email",
+              "label": "Email address",
+              "severity": "medium"
+            }
+          ],
+          "lineageContext": {
+            "sourceDomain": "localhost",
+            "sourceApp": "Synthetic Internal Source",
+            "sourceCategory": "internal_app",
+            "sourceUrlHash": "bca3e428115a902148a202086e7136cb77395f9d881205cda80d3ec3302d56e6",
+            "selectedTextHash": "52cbbcab66fcf438beee30582d7b9770cb0cc749f9629a9104b62f5b21401c1b"
+          }
+        }
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:22.452Z"
+    },
+    {
+      "endpoint": "/api/extension/scan",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "url": "http://localhost:41739",
+        "riskScore": 20,
+        "detectedDataTypes": [
+          "customer_data",
+          "email"
+        ],
+        "action": "redact",
+        "redactedPreview": "Synthetic internal source customer email [REDACTED_EMAIL]"
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:22.454Z"
+    },
+    {
+      "endpoint": "/api/extension/lineage-event",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "sourceDomain": "localhost",
+        "sourceApp": "Synthetic Internal Source",
+        "sourceCategory": "internal_app",
+        "sourceUrlHash": "bca3e428115a902148a202086e7136cb77395f9d881205cda80d3ec3302d56e6",
+        "sourceTitle": "Synthetic Internal Source",
+        "destinationDomain": "localhost",
+        "destinationApp": "localhost",
+        "destinationCategory": "unknown",
+        "dataTypes": [
+          "customer_data",
+          "email"
+        ],
+        "riskScore": 20,
+        "severity": "medium",
+        "actionTaken": "redact",
+        "redactedPreview": "Synthetic internal source customer email [REDACTED_EMAIL]",
+        "eventType": "submit_to_ai"
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:22.456Z"
+    },
+    {
+      "endpoint": "/api/extension/policy",
+      "method": "GET",
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:22.816Z"
+    },
+    {
+      "endpoint": "/api/extension/fingerprint-bundle",
+      "method": "GET",
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:24.128Z"
+    },
+    {
+      "endpoint": "/api/extension/audit-log",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "extensionVersion": "0.1.0",
+        "browser": "chrome",
+        "domain": "localhost",
+        "policyVersion": "live-e2e-lockdown-1",
+        "action": "block",
+        "severity": "critical",
+        "riskScore": 0,
+        "detectedDataTypes": [],
+        "matchedRules": [
+          "emergency-lockdown"
+        ],
+        "redactedPreview": "[CLEAN_PROMPT_NOT_STORED]",
+        "eventType": "submit",
+        "occurredAt": "2026-07-01T14:24:24.134Z",
+        "metadata": {
+          "findings": [],
+          "lineageContext": {
+            "sourceDomain": "localhost",
+            "sourceApp": "Synthetic Internal Source",
+            "sourceCategory": "internal_app",
+            "sourceUrlHash": "bca3e428115a902148a202086e7136cb77395f9d881205cda80d3ec3302d56e6",
+            "selectedTextHash": "52cbbcab66fcf438beee30582d7b9770cb0cc749f9629a9104b62f5b21401c1b"
+          }
+        }
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:24.136Z"
+    },
+    {
+      "endpoint": "/api/extension/scan",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "url": "http://localhost:41739",
+        "riskScore": 0,
+        "detectedDataTypes": [],
+        "action": "block",
+        "redactedPreview": "[CLEAN_PROMPT_NOT_STORED]"
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:24.137Z"
+    },
+    {
+      "endpoint": "/api/extension/lineage-event",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "sourceDomain": "localhost",
+        "sourceApp": "Synthetic Internal Source",
+        "sourceCategory": "internal_app",
+        "sourceUrlHash": "bca3e428115a902148a202086e7136cb77395f9d881205cda80d3ec3302d56e6",
+        "sourceTitle": "Synthetic Internal Source",
+        "destinationDomain": "localhost",
+        "destinationApp": "localhost",
+        "destinationCategory": "unknown",
+        "dataTypes": [
+          "customer_data",
+          "email"
+        ],
+        "riskScore": 0,
+        "severity": "critical",
+        "actionTaken": "block",
+        "redactedPreview": "[CLEAN_PROMPT_NOT_STORED]",
+        "eventType": "submit_to_ai"
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:24.139Z"
+    },
+    {
+      "endpoint": "/api/extension/policy",
+      "method": "GET",
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:24.232Z"
+    },
+    {
+      "endpoint": "/api/extension/fingerprint-bundle",
+      "method": "GET",
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:24.325Z"
+    },
+    {
+      "endpoint": "/api/extension/audit-log",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "extensionVersion": "0.1.0",
+        "browser": "chrome",
+        "domain": "localhost",
+        "policyVersion": "live-e2e-1",
+        "action": "allow",
+        "severity": "info",
+        "riskScore": 0,
+        "detectedDataTypes": [],
+        "matchedRules": [],
+        "redactedPreview": "[CLEAN_PROMPT_NOT_STORED]",
+        "eventType": "submit",
+        "occurredAt": "2026-07-01T14:24:24.373Z",
+        "metadata": {
+          "findings": [],
+          "lineageContext": {
+            "sourceDomain": "localhost",
+            "sourceApp": "Synthetic Internal Source",
+            "sourceCategory": "internal_app",
+            "sourceUrlHash": "bca3e428115a902148a202086e7136cb77395f9d881205cda80d3ec3302d56e6",
+            "selectedTextHash": "52cbbcab66fcf438beee30582d7b9770cb0cc749f9629a9104b62f5b21401c1b"
+          }
+        }
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:24.374Z"
+    },
+    {
+      "endpoint": "/api/extension/scan",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "url": "http://localhost:41739",
+        "riskScore": 0,
+        "detectedDataTypes": [],
+        "action": "allow",
+        "redactedPreview": "[CLEAN_PROMPT_NOT_STORED]"
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:24.376Z"
+    },
+    {
+      "endpoint": "/api/extension/lineage-event",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "sourceDomain": "localhost",
+        "sourceApp": "Synthetic Internal Source",
+        "sourceCategory": "internal_app",
+        "sourceUrlHash": "bca3e428115a902148a202086e7136cb77395f9d881205cda80d3ec3302d56e6",
+        "sourceTitle": "Synthetic Internal Source",
+        "destinationDomain": "localhost",
+        "destinationApp": "localhost",
+        "destinationCategory": "unknown",
+        "dataTypes": [
+          "customer_data",
+          "email"
+        ],
+        "riskScore": 0,
+        "severity": "info",
+        "actionTaken": "allow",
+        "redactedPreview": "[CLEAN_PROMPT_NOT_STORED]",
+        "eventType": "submit_to_ai"
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:24.379Z"
+    },
+    {
+      "endpoint": "/api/extension/fingerprint-bundle",
+      "method": "GET",
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:24.529Z"
+    },
+    {
+      "endpoint": "/api/extension/audit-log",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "extensionVersion": "0.1.0",
+        "browser": "chrome",
+        "domain": "localhost",
+        "policyVersion": "live-e2e-1",
+        "action": "allow",
+        "severity": "info",
+        "riskScore": 0,
+        "detectedDataTypes": [],
+        "matchedRules": [],
+        "redactedPreview": "[CLEAN_PROMPT_NOT_STORED]",
+        "eventType": "submit",
+        "occurredAt": "2026-07-01T14:24:25.029Z",
+        "metadata": {
+          "findings": [],
+          "lineageContext": {
+            "sourceDomain": "localhost",
+            "sourceApp": "Synthetic Internal Source",
+            "sourceCategory": "internal_app",
+            "sourceUrlHash": "bca3e428115a902148a202086e7136cb77395f9d881205cda80d3ec3302d56e6",
+            "selectedTextHash": "52cbbcab66fcf438beee30582d7b9770cb0cc749f9629a9104b62f5b21401c1b"
+          }
+        }
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:25.032Z"
+    },
+    {
+      "endpoint": "/api/extension/scan",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "url": "http://localhost:41739",
+        "riskScore": 0,
+        "detectedDataTypes": [],
+        "action": "allow",
+        "redactedPreview": "[CLEAN_PROMPT_NOT_STORED]"
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:25.060Z"
+    },
+    {
+      "endpoint": "/api/extension/lineage-event",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "sourceDomain": "localhost",
+        "sourceApp": "Synthetic Internal Source",
+        "sourceCategory": "internal_app",
+        "sourceUrlHash": "bca3e428115a902148a202086e7136cb77395f9d881205cda80d3ec3302d56e6",
+        "sourceTitle": "Synthetic Internal Source",
+        "destinationDomain": "localhost",
+        "destinationApp": "localhost",
+        "destinationCategory": "unknown",
+        "dataTypes": [
+          "customer_data",
+          "email"
+        ],
+        "riskScore": 0,
+        "severity": "info",
+        "actionTaken": "allow",
+        "redactedPreview": "[CLEAN_PROMPT_NOT_STORED]",
+        "eventType": "submit_to_ai"
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:25.081Z"
+    },
+    {
+      "endpoint": "/api/extension/file-scan-event",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "destinationDomain": "localhost",
+        "fileNameHash": "[REDACTED_CREDIT_CARD]a3e653463c6b5dc352ea83143abcac03b268ed253143deaf888",
+        "originalExtension": ".txt",
+        "mimeType": "text/plain",
+        "sizeBytes": 1048576,
+        "scannedBytes": 1048576,
+        "supported": true,
+        "encryptedOrBinary": false,
+        "detectedDataTypes": [],
+        "riskScore": 0,
+        "severity": "info",
+        "actionTaken": "allow",
+        "redactedPreview": "[CLEAN_PROMPT_NOT_STORED]",
+        "lineageContext": {
+          "createdAt": "2026-07-01T14:24:22.164Z",
+          "detectedDataTypes": [
+            "customer_data",
+            "email"
+          ],
+          "expiresAt": "2026-07-01T14:39:22.164Z",
+          "redactedPreview": "Synthetic internal source customer email [REDACTED_EMAIL] and project Cedar notes.",
+          "selectedTextHash": "52cbbcab66fcf438beee30582d7b9770cb0cc749f9629a9104b62f5b21401c1b",
+          "sourceApp": "Synthetic Internal Source",
+          "sourceCategory": "internal_app",
+          "sourceDomain": "localhost",
+          "sourceTitle": "Synthetic Internal Source",
+          "sourceUrlHash": "bca3e428115a902148a202086e7136cb77395f9d881205cda80d3ec3302d56e6"
+        }
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:26.282Z"
+    },
+    {
+      "endpoint": "/api/extension/lineage-event",
+      "method": "POST",
+      "body": {
+        "organizationId": "org-synthetic",
+        "employeeId": "employee-synthetic",
+        "sourceDomain": "localhost",
+        "sourceApp": "Synthetic Internal Source",
+        "sourceCategory": "internal_app",
+        "sourceUrlHash": "bca3e428115a902148a202086e7136cb77395f9d881205cda80d3ec3302d56e6",
+        "sourceTitle": "Synthetic Internal Source",
+        "destinationDomain": "localhost",
+        "destinationApp": "localhost",
+        "destinationCategory": "public_ai",
+        "dataTypes": [
+          "customer_data",
+          "email"
+        ],
+        "riskScore": 0,
+        "severity": "info",
+        "actionTaken": "allow",
+        "redactedPreview": "[CLEAN_PROMPT_NOT_STORED]",
+        "eventType": "upload_to_ai"
+      },
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:26.295Z"
+    },
+    {
+      "endpoint": "/api/extension/source-apps",
+      "method": "GET",
+      "tokenHeaderPresent": true,
+      "at": "2026-07-01T14:24:26.354Z"
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": []
+}

@@ -2,13 +2,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
-
 
 enum GuardDirection {
   INPUT
@@ -322,6 +319,64 @@ enum SemanticEgressDecision {
   REVIEW
 }
 
+enum CompanyFingerprintCategory {
+  customer_list
+  legal_contract
+  investor_deck
+  salary_sheet
+  source_code
+  product_roadmap
+  internal_policy
+  support_export
+  financial_report
+  database_export
+  confidential_notes
+  custom
+}
+
+enum CompanyFingerprintSensitivity {
+  low
+  medium
+  high
+  critical
+}
+
+enum CompanyFingerprintAction {
+  warn
+  redact
+  rewrite
+  block
+  require_justification
+  require_approval
+}
+
+enum CompanyFingerprintStorageMode {
+  hashed_only
+  encrypted_raw_allowed
+}
+
+enum CompanyFingerprintSourceType {
+  manual_text
+  uploaded_file
+  api_import
+  connector_import
+}
+
+enum CompanyFingerprintMatchType {
+  exact
+  fuzzy
+  semantic
+}
+
+enum DataLineageEventType {
+  copy
+  paste_to_ai
+  upload_to_ai
+  submit_to_ai
+  response_scan
+  approval_request
+}
+
 enum ComplianceEvidenceType {
   POLICY
   GUARD_DECISION
@@ -361,110 +416,131 @@ enum ComplianceEvidenceReportStatus {
 }
 
 model User {
-  id                      String                   @id @default(cuid())
-  email                   String                   @unique
-  name                    String?
-  passwordHash            String?
-  emailVerifiedAt         DateTime?
-  isAdmin                 Boolean                  @default(false)
-  ssoOnly                 Boolean                  @default(false)
-  jitProvisionedFrom      String?
-  projects                Project[]
-  agency                  Agency?
-  onboarding              OnboardingProgress?
-  memberships             OrganizationMember[]
-  invitesSent             Invite[]                 @relation("InvitedBy")
-  audits                  AuditExport[]            @relation("RequestedBy")
-  emailVerificationTokens EmailVerificationToken[]
-  passwordResetTokens     PasswordResetToken[]
-  ragDocuments            RagDocument[]            @relation("RagDocumentUploader")
-  detectionFeedback       DetectionFeedback[]      @relation("DetectionFeedbackCreator")
-  adminAuditLogs          AdminAuditLog[]          @relation("AdminAuditActor")
-  scimTokensCreated       ScimToken[]              @relation("ScimTokenCreator")
-  scimUserMappings        ScimUserMapping[]
-  sessions                UserSession[]
-  samlSessionExchanges    SamlSessionExchange[]
-  mlReviewItemsResolved   MLReviewQueue[]          @relation("MLReviewResolver")
-  dataDeletionsRequested  DataDeletionRequest[]    @relation("DataDeletionRequestedBy")
-  customerOnboarding      CustomerOnboarding[]     @relation("CustomerOnboardingOwner")
-  enterprisePilots        EnterprisePilot[]        @relation("EnterprisePilotRequester")
-  supportTicketsCreated   SupportTicket[]          @relation("SupportTicketCreator")
-  supportTicketsAssigned  SupportTicket[]          @relation("SupportTicketAssignee")
-  supportMessages         SupportMessage[]
-  incidentsCreated        Incident[]               @relation("IncidentCreator")
-  incidentUpdates         IncidentUpdate[]
-  feedbackReviews         FeedbackReview[]         @relation("FeedbackReviewer")
-  productEvents           ProductEvent[]
-  governanceApprovalRequests AiUsageApprovalRequest[] @relation("GovernanceApprovalRequests")
+  id                         String                     @id @default(cuid())
+  email                      String                     @unique
+  name                       String?
+  passwordHash               String?
+  emailVerifiedAt            DateTime?
+  isAdmin                    Boolean                    @default(false)
+  ssoOnly                    Boolean                    @default(false)
+  jitProvisionedFrom         String?
+  projects                   Project[]
+  agency                     Agency?
+  onboarding                 OnboardingProgress?
+  memberships                OrganizationMember[]
+  invitesSent                Invite[]                   @relation("InvitedBy")
+  audits                     AuditExport[]              @relation("RequestedBy")
+  emailVerificationTokens    EmailVerificationToken[]
+  passwordResetTokens        PasswordResetToken[]
+  ragDocuments               RagDocument[]              @relation("RagDocumentUploader")
+  detectionFeedback          DetectionFeedback[]        @relation("DetectionFeedbackCreator")
+  adminAuditLogs             AdminAuditLog[]            @relation("AdminAuditActor")
+  scimTokensCreated          ScimToken[]                @relation("ScimTokenCreator")
+  scimUserMappings           ScimUserMapping[]
+  sessions                   UserSession[]
+  samlSessionExchanges       SamlSessionExchange[]
+  mlReviewItemsResolved      MLReviewQueue[]            @relation("MLReviewResolver")
+  dataDeletionsRequested     DataDeletionRequest[]      @relation("DataDeletionRequestedBy")
+  customerOnboarding         CustomerOnboarding[]       @relation("CustomerOnboardingOwner")
+  enterprisePilots           EnterprisePilot[]          @relation("EnterprisePilotRequester")
+  supportTicketsCreated      SupportTicket[]            @relation("SupportTicketCreator")
+  supportTicketsAssigned     SupportTicket[]            @relation("SupportTicketAssignee")
+  supportMessages            SupportMessage[]
+  incidentsCreated           Incident[]                 @relation("IncidentCreator")
+  incidentUpdates            IncidentUpdate[]
+  feedbackReviews            FeedbackReview[]           @relation("FeedbackReviewer")
+  productEvents              ProductEvent[]
+  governanceApprovalRequests AiUsageApprovalRequest[]   @relation("GovernanceApprovalRequests")
+  aiAdminPolicies            AiAdminPolicy[]            @relation("AiAdminPolicyCreatedBy")
+  aiAdminPolicyUpdates       AiAdminPolicy[]            @relation("AiAdminPolicyUpdatedBy")
+  aiAdminPolicyVersions      AiAdminPolicyVersion[]     @relation("AiAdminPolicyVersionPublishedBy")
+  aiAdminPolicyAudits        AiAdminPolicyAuditLog[]    @relation("AiAdminPolicyAuditActor")
+  extensionEnrollmentTokens  ExtensionEnrollmentToken[] @relation("ExtensionEnrollmentTokenCreator")
+  lockdownsEnabled           EmergencyLockdownState[]   @relation("EmergencyLockdownEnabledBy")
+  lockdownsDisabled          EmergencyLockdownState[]   @relation("EmergencyLockdownDisabledBy")
+  companyFingerprintSets     CompanyFingerprintSet[]
 
-  createdAt               DateTime                 @default(now())
-  updatedAt               DateTime                 @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Organization {
-  id                    String                 @id @default(cuid())
-  name                  String
-  slug                  String                 @unique
-  type                  OrganizationType       @default(DIRECT_BUSINESS)
-  plan                  ProjectPlan            @default(FREE)
-  contactEmail          String?
-  members               OrganizationMember[]
-  invites               Invite[]
-  projects              Project[]
-  agency                Agency?
-  subscription          Subscription?
-  invoices              Invoice[]
-  paymentEvents         PaymentEvent[]
-  planChanges           PlanChangeLog[]
-  audits                AuditExport[]
-  ragCollections        RagCollection[]
-  detectionFeedback     DetectionFeedback[]
-  scheduledReports      ScheduledReport[]
-  adminAuditLogs        AdminAuditLog[]
-  classifierDatasets    ClassifierDataset[]
-  classifierRuns        ClassifierRun[]
-  redTeamSuites         RedTeamSuite[]
-  redTeamRuns           RedTeamRun[]
-  securityEvents        SecurityEvent[]
-  siemIntegrations      SiemIntegration[]
-  retrievalAudits       RetrievalAuditLog[]
-  ragAnswerAudits       RagAnswerAuditLog[]
-  ssoProviders          SsoProvider[]
-  scimTokens            ScimToken[]
-  samlProviders         SamlProvider[]
-  samlLoginAttempts     SamlLoginAttempt[]
-  samlSessionExchanges  SamlSessionExchange[]
-  scimUserMappings      ScimUserMapping[]
-  scimGroupMappings     ScimGroupMapping[]
-  ipAllowlistEntries    IpAllowlistEntry[]
-  sessions              UserSession[]
-  retentionPolicy       RetentionPolicy?
-  dataDeletionRequests  DataDeletionRequest[]
-  integrations          Integration[]
-  integrationEvents     IntegrationEvent[]
-  mlDatasets            MLDataset[]
-  mlModelVersions       MLModelVersion[]
-  mlEvaluations         MLModelEvaluation[]
-  mlDeployments         MLModelDeployment[]
-  mlReviewQueue         MLReviewQueue[]
-  organizationAuditLogs OrganizationAuditLog[]
-  customerOnboarding    CustomerOnboarding[]
-  partnerProfile        PartnerProfile?
-  enterprisePilots      EnterprisePilot[]
-  supportTickets        SupportTicket[]
-  incidents             Incident[]
-  productEvents         ProductEvent[]
-  productionMetrics     ProductionMetric[]
-  governancePolicies     AiUsageGovernancePolicy[]
-  governanceAuditLogs    AiUsageGovernanceAuditLog[]
+  id                         String                      @id @default(cuid())
+  name                       String
+  slug                       String                      @unique
+  type                       OrganizationType            @default(DIRECT_BUSINESS)
+  plan                       ProjectPlan                 @default(FREE)
+  contactEmail               String?
+  members                    OrganizationMember[]
+  invites                    Invite[]
+  projects                   Project[]
+  agency                     Agency?
+  subscription               Subscription?
+  invoices                   Invoice[]
+  paymentEvents              PaymentEvent[]
+  planChanges                PlanChangeLog[]
+  audits                     AuditExport[]
+  ragCollections             RagCollection[]
+  detectionFeedback          DetectionFeedback[]
+  scheduledReports           ScheduledReport[]
+  adminAuditLogs             AdminAuditLog[]
+  classifierDatasets         ClassifierDataset[]
+  classifierRuns             ClassifierRun[]
+  redTeamSuites              RedTeamSuite[]
+  redTeamRuns                RedTeamRun[]
+  securityEvents             SecurityEvent[]
+  siemIntegrations           SiemIntegration[]
+  retrievalAudits            RetrievalAuditLog[]
+  ragAnswerAudits            RagAnswerAuditLog[]
+  ssoProviders               SsoProvider[]
+  scimTokens                 ScimToken[]
+  samlProviders              SamlProvider[]
+  samlLoginAttempts          SamlLoginAttempt[]
+  samlSessionExchanges       SamlSessionExchange[]
+  scimUserMappings           ScimUserMapping[]
+  scimGroupMappings          ScimGroupMapping[]
+  ipAllowlistEntries         IpAllowlistEntry[]
+  sessions                   UserSession[]
+  retentionPolicy            RetentionPolicy?
+  dataDeletionRequests       DataDeletionRequest[]
+  integrations               Integration[]
+  integrationEvents          IntegrationEvent[]
+  mlDatasets                 MLDataset[]
+  mlModelVersions            MLModelVersion[]
+  mlEvaluations              MLModelEvaluation[]
+  mlDeployments              MLModelDeployment[]
+  mlReviewQueue              MLReviewQueue[]
+  organizationAuditLogs      OrganizationAuditLog[]
+  customerOnboarding         CustomerOnboarding[]
+  partnerProfile             PartnerProfile?
+  enterprisePilots           EnterprisePilot[]
+  supportTickets             SupportTicket[]
+  incidents                  Incident[]
+  productEvents              ProductEvent[]
+  productionMetrics          ProductionMetric[]
+  governancePolicies         AiUsageGovernancePolicy[]
+  governanceAuditLogs        AiUsageGovernanceAuditLog[]
   governanceApprovalRequests AiUsageApprovalRequest[]
-  quotaOverride         Int?
-  disabled              Boolean                @default(false)
-  disabledReason        String?
-  ipAllowlistEnabled    Boolean                @default(false)
-  apiKeyRotationDays    Int?
-  createdAt             DateTime               @default(now())
-  updatedAt             DateTime               @updatedAt
+  aiAdminPolicies            AiAdminPolicy[]
+  aiAdminPolicyTemplates     AiAdminPolicyTemplate[]
+  aiAdminPolicyVersions      AiAdminPolicyVersion[]
+  aiAdminPolicyAuditLogs     AiAdminPolicyAuditLog[]
+  aiDestinations             AIDestination[]
+  deviceAgents               DeviceAgent[]
+  extensionEnrollmentTokens  ExtensionEnrollmentToken[]
+  emergencyLockdownState     EmergencyLockdownState?
+  companyFingerprintSets     CompanyFingerprintSet[]
+  companyFingerprintMatches  CompanyFingerprintMatch[]
+  dataLineageEvents          DataLineageEvent[]
+  sourceAppConfigs           SourceAppConfig[]
+  aiFileScanEvents           AIFileScanEvent[]
+  quotaOverride              Int?
+  disabled                   Boolean                     @default(false)
+  disabledReason             String?
+  ipAllowlistEnabled         Boolean                     @default(false)
+  apiKeyRotationDays         Int?
+  createdAt                  DateTime                    @default(now())
+  updatedAt                  DateTime                    @updatedAt
 
   @@index([type])
 }
@@ -1699,6 +1775,98 @@ model OrganizationAuditLog {
   @@index([actorUserId, createdAt])
 }
 
+model AIDestination {
+  id                      String       @id @default(cuid())
+  destinationId           String
+  organizationId          String
+  organization            Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  name                    String
+  category                String
+  urlPatterns             String[]
+  domains                 String[]
+  enabled                 Boolean      @default(true)
+  riskLevel               String
+  allowedDepartments      String[]
+  allowedRoles            String[]
+  policyOverrides         Json
+  responseScanningEnabled Boolean      @default(true)
+  loggingMode             String       @default("metadata_only")
+  createdAt               DateTime     @default(now())
+  updatedAt               DateTime     @updatedAt
+
+  @@unique([organizationId, destinationId])
+  @@index([organizationId, category, enabled])
+}
+
+model DeviceAgent {
+  id                String       @id @default(cuid())
+  organizationId    String
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  employeeId        String?
+  employeeEmail     String?
+  department        String?
+  role              String?
+  deviceId          String
+  deviceTokenHash   String?      @unique
+  type              String
+  version           String
+  platform          String
+  lastHeartbeatAt   DateTime?
+  policyVersion     String?
+  lockdownEnabled   Boolean      @default(false)
+  status            String       @default("active")
+  activeDestination String?
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  @@unique([organizationId, deviceId, type])
+  @@index([organizationId, status, lastHeartbeatAt])
+  @@index([employeeId])
+}
+
+model ExtensionEnrollmentToken {
+  id               String       @id @default(cuid())
+  organizationId   String
+  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  tokenHash        String       @unique
+  createdByAdminId String
+  createdByAdmin   User         @relation("ExtensionEnrollmentTokenCreator", fields: [createdByAdminId], references: [id], onDelete: Restrict)
+  employeeEmail    String?
+  department       String?
+  role             String?
+  maxUses          Int          @default(1)
+  usedCount        Int          @default(0)
+  expiresAt        DateTime
+  revokedAt        DateTime?
+  lastUsedAt       DateTime?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  @@index([organizationId])
+  @@index([tokenHash])
+  @@index([expiresAt])
+}
+
+model EmergencyLockdownState {
+  id                String       @id @default(cuid())
+  organizationId    String       @unique
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  enabled           Boolean      @default(false)
+  enabledByAdminId  String?
+  enabledByAdmin    User?        @relation("EmergencyLockdownEnabledBy", fields: [enabledByAdminId], references: [id], onDelete: SetNull)
+  enabledAt         DateTime?
+  disabledByAdminId String?
+  disabledByAdmin   User?        @relation("EmergencyLockdownDisabledBy", fields: [disabledByAdminId], references: [id], onDelete: SetNull)
+  disabledAt        DateTime?
+  reason            String?
+  policyVersion     Int          @default(1)
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+
+  @@index([organizationId])
+  @@index([enabled])
+}
+
 model BackgroundJob {
   id          String              @id @default(cuid())
   type        BackgroundJobType
@@ -2069,20 +2237,20 @@ model SupplyChainRiskFinding {
 }
 
 model ModelArtifactScan {
-  id             String   @id @default(cuid())
-  organizationId String
-  projectId      String?
-  filename       String
-  format         String
-  sizeBytes      Int
-  sha256         String
-  verdict        String   @default("UNVERIFIED")
-  riskScore      Int      @default(0)
-  highestSeverity String  @default("LOW")
-  findingCount   Int      @default(0)
-  report         Json
-  scannedById    String?
-  createdAt      DateTime @default(now())
+  id              String   @id @default(cuid())
+  organizationId  String
+  projectId       String?
+  filename        String
+  format          String
+  sizeBytes       Int
+  sha256          String
+  verdict         String   @default("UNVERIFIED")
+  riskScore       Int      @default(0)
+  highestSeverity String   @default("LOW")
+  findingCount    Int      @default(0)
+  report          Json
+  scannedById     String?
+  createdAt       DateTime @default(now())
 
   @@index([organizationId, createdAt])
   @@index([organizationId, verdict])
@@ -2108,17 +2276,17 @@ model AgentTool {
 }
 
 model ToolPermission {
-  id             String   @id @default(cuid())
-  organizationId String
-  projectId      String
-  toolId         String
-  role           String?
-  allow          Boolean  @default(false)
-  requiresApproval Boolean @default(true)
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String
+  toolId            String
+  role              String?
+  allow             Boolean  @default(false)
+  requiresApproval  Boolean  @default(true)
   maxCallsPerMinute Int?
-  costBudgetPaise  Int?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  costBudgetPaise   Int?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   @@unique([organizationId, projectId, toolId, role])
   @@index([organizationId, projectId])
@@ -2162,16 +2330,16 @@ model ToolApprovalRequest {
 }
 
 model ToolRiskPolicy {
-  id             String   @id @default(cuid())
-  organizationId String
-  projectId      String
-  defaultAction  String   @default("DENY")
-  approvalThreshold Int   @default(70)
-  blockThreshold    Int   @default(90)
-  highRiskContextReview Boolean @default(true)
-  settings       Json?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id                    String   @id @default(cuid())
+  organizationId        String
+  projectId             String
+  defaultAction         String   @default("DENY")
+  approvalThreshold     Int      @default(70)
+  blockThreshold        Int      @default(90)
+  highRiskContextReview Boolean  @default(true)
+  settings              Json?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
 
   @@unique([organizationId, projectId])
 }
@@ -2249,23 +2417,23 @@ model AgentManifest {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
+  @@unique([projectId, agentName])
   @@index([projectId, enabled])
   @@index([projectId, agentName])
-  @@unique([projectId, agentName])
 }
 
 model AgentIdentity {
-  id                String                @id @default(cuid())
+  id                String                 @id @default(cuid())
   projectId         String
   name              String
   agentType         AgentIdentityType
-  description       String?               @db.Text
-  status            AgentIdentityStatus   @default(ACTIVE)
+  description       String?                @db.Text
+  status            AgentIdentityStatus    @default(ACTIVE)
   defaultPolicyJson Json?
   passports         AgentSessionPassport[]
   audits            AgentPassportAudit[]
-  createdAt         DateTime              @default(now())
-  updatedAt         DateTime              @updatedAt
+  createdAt         DateTime               @default(now())
+  updatedAt         DateTime               @updatedAt
 
   @@unique([projectId, name])
   @@index([projectId, status])
@@ -2273,13 +2441,13 @@ model AgentIdentity {
 }
 
 model AgentSessionPassport {
-  id                        String                      @id @default(cuid())
+  id                        String                     @id @default(cuid())
   projectId                 String
   agentIdentityId           String
-  agentIdentity             AgentIdentity               @relation(fields: [agentIdentityId], references: [id], onDelete: Cascade)
+  agentIdentity             AgentIdentity              @relation(fields: [agentIdentityId], references: [id], onDelete: Cascade)
   sessionId                 String
-  passportHash              String                      @unique
-  status                    AgentSessionPassportStatus  @default(ACTIVE)
+  passportHash              String                     @unique
+  status                    AgentSessionPassportStatus @default(ACTIVE)
   allowedToolsJson          Json
   blockedToolsJson          Json
   approvalRequiredToolsJson Json
@@ -2291,8 +2459,8 @@ model AgentSessionPassport {
   riskLevel                 String
   expiresAt                 DateTime
   audits                    AgentPassportAudit[]
-  createdAt                 DateTime                    @default(now())
-  updatedAt                 DateTime                    @updatedAt
+  createdAt                 DateTime                   @default(now())
+  updatedAt                 DateTime                   @updatedAt
 
   @@unique([projectId, sessionId])
   @@index([projectId, status, expiresAt])
@@ -2301,17 +2469,17 @@ model AgentSessionPassport {
 }
 
 model AgentPassportAudit {
-  id                String                @id @default(cuid())
+  id                String               @id @default(cuid())
   projectId         String
   agentIdentityId   String
-  agentIdentity     AgentIdentity         @relation(fields: [agentIdentityId], references: [id], onDelete: Cascade)
+  agentIdentity     AgentIdentity        @relation(fields: [agentIdentityId], references: [id], onDelete: Cascade)
   sessionPassportId String
-  sessionPassport   AgentSessionPassport  @relation(fields: [sessionPassportId], references: [id], onDelete: Cascade)
+  sessionPassport   AgentSessionPassport @relation(fields: [sessionPassportId], references: [id], onDelete: Cascade)
   action            String
   decision          String
-  reason            String                @db.Text
+  reason            String               @db.Text
   metadataJson      Json?
-  createdAt         DateTime              @default(now())
+  createdAt         DateTime             @default(now())
 
   @@index([projectId, createdAt])
   @@index([projectId, agentIdentityId])
@@ -2320,22 +2488,22 @@ model AgentPassportAudit {
 }
 
 model AgentPermissionDeploymentGate {
-  id              String   @id @default(cuid())
-  projectId       String
-  deploymentId    String?
-  agentName       String
-  baselineHash    String
-  candidateHash   String
-  riskBefore      Int
-  riskAfter       Int
-  riskDelta       Int
-  riskLevel       String
-  decision        String
-  findingsJson    Json
-  policyJson      Json?
-  summary         String   @db.Text
-  recommendation  String   @db.Text
-  createdAt       DateTime @default(now())
+  id             String   @id @default(cuid())
+  projectId      String
+  deploymentId   String?
+  agentName      String
+  baselineHash   String
+  candidateHash  String
+  riskBefore     Int
+  riskAfter      Int
+  riskDelta      Int
+  riskLevel      String
+  decision       String
+  findingsJson   Json
+  policyJson     Json?
+  summary        String   @db.Text
+  recommendation String   @db.Text
+  createdAt      DateTime @default(now())
 
   @@index([projectId, createdAt])
   @@index([projectId, decision, createdAt])
@@ -2343,30 +2511,30 @@ model AgentPermissionDeploymentGate {
 }
 
 model AgentActionLedger {
-  id                   String    @id
-  projectId            String
-  sessionId            String?
-  agentIdentityId      String?
-  passportId           String?
-  tool                 String
-  action               String
-  targetRedacted       String?   @db.Text
-  actionHash           String
-  idempotencyKey       String
-  reversalStatus       String
-  decision             String
-  riskLevel            String
-  forwardActionJson    Json?
-  rollbackActionJson   Json?
-  requestHash          String
-  resultHash           String
-  rollbackDeadline     DateTime?
-  rollbackStatus       String    @default("NOT_REQUESTED")
-  rollbackAttemptedAt  DateTime?
-  irreversibleReason   String?   @db.Text
-  summary              String    @db.Text
-  createdAt            DateTime  @default(now())
-  updatedAt            DateTime  @updatedAt
+  id                  String    @id
+  projectId           String
+  sessionId           String?
+  agentIdentityId     String?
+  passportId          String?
+  tool                String
+  action              String
+  targetRedacted      String?   @db.Text
+  actionHash          String
+  idempotencyKey      String
+  reversalStatus      String
+  decision            String
+  riskLevel           String
+  forwardActionJson   Json?
+  rollbackActionJson  Json?
+  requestHash         String
+  resultHash          String
+  rollbackDeadline    DateTime?
+  rollbackStatus      String    @default("NOT_REQUESTED")
+  rollbackAttemptedAt DateTime?
+  irreversibleReason  String?   @db.Text
+  summary             String    @db.Text
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
 
   @@unique([projectId, idempotencyKey])
   @@index([projectId, createdAt])
@@ -2376,18 +2544,18 @@ model AgentActionLedger {
 }
 
 model McpRiskScan {
-  id             String   @id @default(cuid())
-  projectId      String?
-  serverName     String
-  serverUrl      String?
-  repositoryUrl  String?
-  scanHash       String
-  riskLevel      String
-  riskScore      Int
-  findingsJson   Json
-  summary        String   @db.Text
-  publicBadge    Boolean  @default(false)
-  createdAt      DateTime @default(now())
+  id            String   @id @default(cuid())
+  projectId     String?
+  serverName    String
+  serverUrl     String?
+  repositoryUrl String?
+  scanHash      String
+  riskLevel     String
+  riskScore     Int
+  findingsJson  Json
+  summary       String   @db.Text
+  publicBadge   Boolean  @default(false)
+  createdAt     DateTime @default(now())
 
   @@index([projectId, createdAt])
   @@index([scanHash])
@@ -2432,15 +2600,15 @@ model AgentIntentActionCheck {
 }
 
 model ToolChainSession {
-  id              String                  @id @default(cuid())
+  id              String                 @id @default(cuid())
   projectId       String
   sessionId       String
   agentIdentityId String?
-  status          ToolChainSessionStatus  @default(ACTIVE)
+  status          ToolChainSessionStatus @default(ACTIVE)
   steps           ToolChainStep[]
   findings        ToolChainFinding[]
-  createdAt       DateTime                @default(now())
-  updatedAt       DateTime                @updatedAt
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
 
   @@unique([projectId, sessionId])
   @@index([projectId, status, updatedAt])
@@ -2470,16 +2638,16 @@ model ToolChainStep {
 }
 
 model ToolChainFinding {
-  id                 String                 @id @default(cuid())
+  id                 String               @id @default(cuid())
   projectId          String
   toolChainSessionId String
-  toolChainSession   ToolChainSession       @relation(fields: [toolChainSessionId], references: [id], onDelete: Cascade)
+  toolChainSession   ToolChainSession     @relation(fields: [toolChainSessionId], references: [id], onDelete: Cascade)
   findingType        ToolChainFindingType
   riskLevel          String
-  summary            String                 @db.Text
+  summary            String               @db.Text
   involvedStepsJson  Json
-  recommendation     String                 @db.Text
-  createdAt          DateTime               @default(now())
+  recommendation     String               @db.Text
+  createdAt          DateTime             @default(now())
 
   @@index([projectId, createdAt])
   @@index([projectId, findingType, createdAt])
@@ -2487,7 +2655,7 @@ model ToolChainFinding {
 }
 
 model AgentEscrowTransaction {
-  id                      String                         @id @default(cuid())
+  id                      String                       @id @default(cuid())
   projectId               String
   sessionId               String
   agentIdentityId         String?
@@ -2495,17 +2663,17 @@ model AgentEscrowTransaction {
   tool                    String
   action                  String
   target                  String?
-  originalPayloadRedacted String?                        @db.Text
-  safePayload             String?                        @db.Text
+  originalPayloadRedacted String?                      @db.Text
+  safePayload             String?                      @db.Text
   riskLevel               String
-  status                  AgentEscrowTransactionStatus   @default(PENDING)
-  approvalTokenHash       String                         @unique
+  status                  AgentEscrowTransactionStatus @default(PENDING)
+  approvalTokenHash       String                       @unique
   expiresAt               DateTime
   resolvedAt              DateTime?
   executedAt              DateTime?
   audits                  AgentEscrowAudit[]
-  createdAt               DateTime                       @default(now())
-  updatedAt               DateTime                       @updatedAt
+  createdAt               DateTime                     @default(now())
+  updatedAt               DateTime                     @updatedAt
 
   @@index([projectId, sessionId, createdAt])
   @@index([projectId, status, expiresAt])
@@ -2513,15 +2681,15 @@ model AgentEscrowTransaction {
 }
 
 model AgentEscrowAudit {
-  id                  String                    @id @default(cuid())
+  id                  String                 @id @default(cuid())
   projectId           String
   escrowTransactionId String
-  escrowTransaction   AgentEscrowTransaction    @relation(fields: [escrowTransactionId], references: [id], onDelete: Cascade)
+  escrowTransaction   AgentEscrowTransaction @relation(fields: [escrowTransactionId], references: [id], onDelete: Cascade)
   action              String
   actorType           AgentEscrowActorType
-  reason              String?                   @db.Text
+  reason              String?                @db.Text
   metadataJson        Json?
-  createdAt           DateTime                  @default(now())
+  createdAt           DateTime               @default(now())
 
   @@index([projectId, createdAt])
   @@index([projectId, actorType, createdAt])
@@ -2529,20 +2697,20 @@ model AgentEscrowAudit {
 }
 
 model AgentDryRun {
-  id                        String               @id @default(cuid())
-  projectId                 String
-  sessionId                 String
-  agentIdentityId           String?
-  dryRunType                AgentDryRunType
-  tool                      String
-  action                    String
-  target                    String?
-  simulatedPayloadRedacted  String?              @db.Text
-  simulatedEffectsJson      Json
-  riskLevel                 String
-  decision                  AgentDryRunDecision
-  reason                    String               @db.Text
-  createdAt                 DateTime             @default(now())
+  id                       String              @id @default(cuid())
+  projectId                String
+  sessionId                String
+  agentIdentityId          String?
+  dryRunType               AgentDryRunType
+  tool                     String
+  action                   String
+  target                   String?
+  simulatedPayloadRedacted String?             @db.Text
+  simulatedEffectsJson     Json
+  riskLevel                String
+  decision                 AgentDryRunDecision
+  reason                   String              @db.Text
+  createdAt                DateTime            @default(now())
 
   @@index([projectId, sessionId, createdAt])
   @@index([projectId, decision, createdAt])
@@ -2550,14 +2718,14 @@ model AgentDryRun {
 }
 
 model SemanticSourceFingerprint {
-  id                String    @id @default(cuid())
-  projectId         String
-  sourceId          String
-  sourceType        String
-  sensitivityLevel  String
-  fingerprintJson   Json
-  contentHash       String
-  createdAt         DateTime  @default(now())
+  id               String   @id @default(cuid())
+  projectId        String
+  sourceId         String
+  sourceType       String
+  sensitivityLevel String
+  fingerprintJson  Json
+  contentHash      String
+  createdAt        DateTime @default(now())
 
   @@unique([projectId, sourceId])
   @@index([projectId, sensitivityLevel, createdAt])
@@ -2565,20 +2733,20 @@ model SemanticSourceFingerprint {
 }
 
 model SemanticEgressCheck {
-  id                    String                  @id @default(cuid())
-  projectId             String
-  sessionId             String
-  sourceIdsJson         Json
-  destinationType       String
-  destinationName       String?
-  contentHash           String
-  contentRedacted       String                  @db.Text
-  semanticRiskScore     Float
-  decision              SemanticEgressDecision
-  riskLevel             String
-  reason                String                  @db.Text
-  findingsJson          Json
-  createdAt             DateTime                @default(now())
+  id                String                 @id @default(cuid())
+  projectId         String
+  sessionId         String
+  sourceIdsJson     Json
+  destinationType   String
+  destinationName   String?
+  contentHash       String
+  contentRedacted   String                 @db.Text
+  semanticRiskScore Float
+  decision          SemanticEgressDecision
+  riskLevel         String
+  reason            String                 @db.Text
+  findingsJson      Json
+  createdAt         DateTime               @default(now())
 
   @@index([projectId, sessionId, createdAt])
   @@index([projectId, decision, createdAt])
@@ -2586,17 +2754,17 @@ model SemanticEgressCheck {
 }
 
 model ComplianceEvidenceItem {
-  id            String                    @id @default(cuid())
-  projectId     String
-  evidenceType  ComplianceEvidenceType
-  title         String
-  summary       String                    @db.Text
-  riskLevel     String?
-  controlName   String
-  status        ComplianceEvidenceStatus  @default(ACTIVE)
-  evidenceJson  Json
-  contentHash   String?
-  createdAt     DateTime                  @default(now())
+  id           String                   @id @default(cuid())
+  projectId    String
+  evidenceType ComplianceEvidenceType
+  title        String
+  summary      String                   @db.Text
+  riskLevel    String?
+  controlName  String
+  status       ComplianceEvidenceStatus @default(ACTIVE)
+  evidenceJson Json
+  contentHash  String?
+  createdAt    DateTime                 @default(now())
 
   @@index([projectId, createdAt])
   @@index([projectId, evidenceType, createdAt])
@@ -2605,16 +2773,16 @@ model ComplianceEvidenceItem {
 }
 
 model ComplianceEvidenceReport {
-  id              String                          @id @default(cuid())
+  id              String                         @id @default(cuid())
   projectId       String
   reportName      String
   reportType      ComplianceEvidenceReportType
-  status          ComplianceEvidenceReportStatus  @default(DRAFT)
-  summary         String                          @db.Text
+  status          ComplianceEvidenceReportStatus @default(DRAFT)
+  summary         String                         @db.Text
   evidenceIdsJson Json
   reportJson      Json
-  createdAt       DateTime                        @default(now())
-  updatedAt       DateTime                        @updatedAt
+  createdAt       DateTime                       @default(now())
+  updatedAt       DateTime                       @updatedAt
 
   @@index([projectId, createdAt])
   @@index([projectId, reportType, createdAt])
@@ -2654,14 +2822,14 @@ model AgentMemoryEvent {
 }
 
 model RagDocumentTrust {
-  id          String   @id @default(cuid())
-  projectId   String
-  documentId  String
-  trustScore  Int
-  trustLevel  String
+  id           String   @id @default(cuid())
+  projectId    String
+  documentId   String
+  trustScore   Int
+  trustLevel   String
   findingsJson Json
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   @@unique([projectId, documentId])
   @@index([projectId, trustLevel])
@@ -2721,91 +2889,91 @@ model AgentPolicy {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@index([projectId, enabled])
   @@unique([projectId, name])
+  @@index([projectId, enabled])
 }
 
 model ToolRollbackLog {
-  id             String   @id @default(cuid())
-  organizationId String
-  projectId      String
-  toolCallLogId  String?
-  action         String
-  status         String   @default("RECORDED")
+  id              String   @id @default(cuid())
+  organizationId  String
+  projectId       String
+  toolCallLogId   String?
+  action          String
+  status          String   @default("RECORDED")
   redactedDetails Json?
-  createdById    String?
-  createdAt      DateTime @default(now())
+  createdById     String?
+  createdAt       DateTime @default(now())
 
   @@index([organizationId, projectId, createdAt])
 }
 
 model ThreatIntelSource {
-  id             String   @id @default(cuid())
-  name           String
-  sourceType     String   @default("INTERNAL")
-  trustLevel     String   @default("MEDIUM")
-  enabled        Boolean  @default(false)
-  metadata       Json?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id         String   @id @default(cuid())
+  name       String
+  sourceType String   @default("INTERNAL")
+  trustLevel String   @default("MEDIUM")
+  enabled    Boolean  @default(false)
+  metadata   Json?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@unique([name])
   @@index([enabled])
 }
 
 model ThreatPattern {
-  id             String   @id @default(cuid())
-  sourceId       String?
-  name           String
-  category       String
-  severity       String
-  pattern        String   @db.Text
-  language       String   @default("en")
-  status         String   @default("DRAFT")
-  safeTestText   String?  @db.Text
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id           String   @id @default(cuid())
+  sourceId     String?
+  name         String
+  category     String
+  severity     String
+  pattern      String   @db.Text
+  language     String   @default("en")
+  status       String   @default("DRAFT")
+  safeTestText String?  @db.Text
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   @@index([category, status])
   @@index([sourceId])
 }
 
 model DetectorRuleVersion {
-  id             String    @id @default(cuid())
-  detector       String
-  version        Int
-  mode           String    @default("SHADOW")
-  patterns       Json
-  approvedById   String?
-  activatedAt    DateTime?
-  rolledBackAt   DateTime?
-  createdAt      DateTime  @default(now())
+  id           String    @id @default(cuid())
+  detector     String
+  version      Int
+  mode         String    @default("SHADOW")
+  patterns     Json
+  approvedById String?
+  activatedAt  DateTime?
+  rolledBackAt DateTime?
+  createdAt    DateTime  @default(now())
 
   @@unique([detector, version])
   @@index([detector, mode])
 }
 
 model ThreatUpdateJob {
-  id             String   @id @default(cuid())
-  sourceId       String?
-  status         String   @default("PENDING")
-  importedCount  Int      @default(0)
-  rejectedCount  Int      @default(0)
-  report         Json?
-  createdAt      DateTime @default(now())
-  completedAt    DateTime?
+  id            String    @id @default(cuid())
+  sourceId      String?
+  status        String    @default("PENDING")
+  importedCount Int       @default(0)
+  rejectedCount Int       @default(0)
+  report        Json?
+  createdAt     DateTime  @default(now())
+  completedAt   DateTime?
 
   @@index([status, createdAt])
 }
 
 model ThreatIntelAuditLog {
-  id             String   @id @default(cuid())
-  actorUserId    String?
-  action         String
-  targetType     String
-  targetId       String?
-  metadata       Json?
-  createdAt      DateTime @default(now())
+  id          String   @id @default(cuid())
+  actorUserId String?
+  action      String
+  targetType  String
+  targetId    String?
+  metadata    Json?
+  createdAt   DateTime @default(now())
 
   @@index([action, createdAt])
 }
@@ -2826,27 +2994,27 @@ model BenchmarkDataset {
 }
 
 model BenchmarkExample {
-  id             String   @id @default(cuid())
-  datasetId      String
-  category       String
-  language       String   @default("en")
-  redactedText   String   @db.Text
-  expectedLabel  String
-  metadata       Json?
-  createdAt      DateTime @default(now())
+  id            String   @id @default(cuid())
+  datasetId     String
+  category      String
+  language      String   @default("en")
+  redactedText  String   @db.Text
+  expectedLabel String
+  metadata      Json?
+  createdAt     DateTime @default(now())
 
   @@index([datasetId, category])
   @@index([language])
 }
 
 model BenchmarkRun {
-  id             String    @id @default(cuid())
-  datasetId      String
+  id              String    @id @default(cuid())
+  datasetId       String
   detectorVersion String
-  status         String    @default("PENDING")
-  metrics        Json?
-  startedAt      DateTime  @default(now())
-  completedAt    DateTime?
+  status          String    @default("PENDING")
+  metrics         Json?
+  startedAt       DateTime  @default(now())
+  completedAt     DateTime?
 
   @@index([datasetId, startedAt])
   @@index([status])
@@ -2869,13 +3037,13 @@ model BenchmarkResult {
 }
 
 model DetectorAccuracySnapshot {
-  id             String   @id @default(cuid())
+  id              String   @id @default(cuid())
   detectorVersion String
   datasetVersion  String
-  metrics        Json
-  limitations    String?  @db.Text
-  publicSafe     Boolean  @default(false)
-  createdAt      DateTime @default(now())
+  metrics         Json
+  limitations     String?  @db.Text
+  publicSafe      Boolean  @default(false)
+  createdAt       DateTime @default(now())
 
   @@index([detectorVersion, createdAt])
   @@index([publicSafe])
@@ -2911,29 +3079,29 @@ model ConsentRecord {
 }
 
 model PrivacyIncident {
-  id             String    @id @default(cuid())
-  organizationId String
-  title          String
-  severity       String
-  status         String    @default("INVESTIGATING")
-  redactedSummary String   @db.Text
-  createdById    String?
-  createdAt      DateTime  @default(now())
-  resolvedAt     DateTime?
+  id              String    @id @default(cuid())
+  organizationId  String
+  title           String
+  severity        String
+  status          String    @default("INVESTIGATING")
+  redactedSummary String    @db.Text
+  createdById     String?
+  createdAt       DateTime  @default(now())
+  resolvedAt      DateTime?
 
   @@index([organizationId, status, createdAt])
 }
 
 model BreachNotificationDraft {
-  id             String   @id @default(cuid())
-  organizationId String
-  incidentId     String
-  jurisdiction   String   @default("IN-DPDP")
-  status         String   @default("DRAFT")
-  redactedContent String  @db.Text
-  createdById    String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id              String   @id @default(cuid())
+  organizationId  String
+  incidentId      String
+  jurisdiction    String   @default("IN-DPDP")
+  status          String   @default("DRAFT")
+  redactedContent String   @db.Text
+  createdById     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   @@index([organizationId, status, createdAt])
 }
@@ -2983,28 +3151,28 @@ model UsageAnomaly {
 }
 
 model CostBudget {
-  id             String   @id @default(cuid())
-  organizationId String
-  projectId      String?
+  id                String   @id @default(cuid())
+  organizationId    String
+  projectId         String?
   monthlyLimitPaise Int
-  usedPaise      Int      @default(0)
-  hardStop       Boolean  @default(true)
-  alertThreshold Float    @default(0.8)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  usedPaise         Int      @default(0)
+  hardStop          Boolean  @default(true)
+  alertThreshold    Float    @default(0.8)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   @@unique([organizationId, projectId])
 }
 
 model ThrottleEvent {
-  id             String   @id @default(cuid())
+  id             String    @id @default(cuid())
   organizationId String?
   projectId      String?
   reason         String
-  mode           String   @default("AUTO_THROTTLE")
+  mode           String    @default("AUTO_THROTTLE")
   expiresAt      DateTime?
   metadata       Json?
-  createdAt      DateTime @default(now())
+  createdAt      DateTime  @default(now())
 
   @@index([organizationId, createdAt])
   @@index([projectId, expiresAt])
@@ -3051,107 +3219,107 @@ enum AiUsageReportPeriod {
 // ── AI Usage Governance Models ────────────────────────────────────────────────
 
 model AiUsageGovernancePolicy {
-  id                        String                        @id @default(cuid())
+  id                        String                                @id @default(cuid())
   organizationId            String
-  organization              Organization                  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  name                      String                        @default("Default AI Usage Governance Policy")
+  organization              Organization                          @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  name                      String                                @default("Default AI Usage Governance Policy")
   description               String?
-  enabled                   Boolean                       @default(true)
-  defaultAction             AiGovernanceRuleAction         @default(MONITOR_ONLY)
-  requireApprovalForNew     Boolean                       @default(true)
-  notifyOnBlocked           Boolean                       @default(true)
-  notifyOnApprovalRequest   Boolean                       @default(true)
-  restrictedDataAction       AiGovernanceRuleAction        @default(BLOCK)
-  piiDataAction             AiGovernanceRuleAction         @default(BLOCK)
-  employeeMonitoringEnabled Boolean                       @default(true)
-  auditRetentionDays        Int                           @default(365)
+  enabled                   Boolean                               @default(true)
+  defaultAction             AiGovernanceRuleAction                @default(MONITOR_ONLY)
+  requireApprovalForNew     Boolean                               @default(true)
+  notifyOnBlocked           Boolean                               @default(true)
+  notifyOnApprovalRequest   Boolean                               @default(true)
+  restrictedDataAction      AiGovernanceRuleAction                @default(BLOCK)
+  piiDataAction             AiGovernanceRuleAction                @default(BLOCK)
+  employeeMonitoringEnabled Boolean                               @default(true)
+  auditRetentionDays        Int                                   @default(365)
   rules                     AiUsageGovernanceRule[]
   departments               AiUsageGovernanceDepartment[]
   dataClassifications       AiUsageGovernanceDataClassification[]
   reports                   AiUsageReport[]
-  createdAt                 DateTime                      @default(now())
-  updatedAt                 DateTime                      @updatedAt
+  createdAt                 DateTime                              @default(now())
+  updatedAt                 DateTime                              @updatedAt
 
   @@unique([organizationId, name])
   @@index([organizationId, enabled])
 }
 
 model AiUsageGovernanceRule {
-  id             String                  @id @default(cuid())
-  policyId       String
-  policy         AiUsageGovernancePolicy @relation(fields: [policyId], references: [id], onDelete: Cascade)
-  providerName   String                  // e.g., "OpenAI", "Anthropic", or "*" for all
-  modelPattern   String?                 // glob pattern, e.g., "gpt-4*", or null for all models
-  action         AiGovernanceRuleAction
-  priority       Int                     @default(0) // higher = more specific match
-  reason         String?
-  createdById    String?
-  createdAt      DateTime                @default(now())
-  updatedAt      DateTime                @updatedAt
+  id           String                  @id @default(cuid())
+  policyId     String
+  policy       AiUsageGovernancePolicy @relation(fields: [policyId], references: [id], onDelete: Cascade)
+  providerName String // e.g., "OpenAI", "Anthropic", or "*" for all
+  modelPattern String? // glob pattern, e.g., "gpt-4*", or null for all models
+  action       AiGovernanceRuleAction
+  priority     Int                     @default(0) // higher = more specific match
+  reason       String?
+  createdById  String?
+  createdAt    DateTime                @default(now())
+  updatedAt    DateTime                @updatedAt
 
   @@index([policyId, providerName])
   @@index([policyId, action])
 }
 
 model AiUsageGovernanceDepartment {
-  id               String                          @id @default(cuid())
-  policyId         String
-  policy           AiUsageGovernancePolicy         @relation(fields: [policyId], references: [id], onDelete: Cascade)
-  name             String
-  description      String?
-  defaultAction    AiGovernanceRuleAction           @default(MONITOR_ONLY)
-  memberUserIds    String[]                         // user IDs belonging to this department
-  rules            AiUsageGovernanceDepartmentRule[]
-  createdAt        DateTime                        @default(now())
-  updatedAt        DateTime                        @updatedAt
+  id            String                            @id @default(cuid())
+  policyId      String
+  policy        AiUsageGovernancePolicy           @relation(fields: [policyId], references: [id], onDelete: Cascade)
+  name          String
+  description   String?
+  defaultAction AiGovernanceRuleAction            @default(MONITOR_ONLY)
+  memberUserIds String[] // user IDs belonging to this department
+  rules         AiUsageGovernanceDepartmentRule[]
+  createdAt     DateTime                          @default(now())
+  updatedAt     DateTime                          @updatedAt
 
   @@unique([policyId, name])
   @@index([policyId])
 }
 
 model AiUsageGovernanceDepartmentRule {
-  id             String                         @id @default(cuid())
-  departmentId   String
-  department     AiUsageGovernanceDepartment    @relation(fields: [departmentId], references: [id], onDelete: Cascade)
-  providerName   String
-  modelPattern   String?
-  action         AiGovernanceRuleAction
-  reason         String?
-  createdAt      DateTime                       @default(now())
-  updatedAt      DateTime                       @updatedAt
+  id           String                      @id @default(cuid())
+  departmentId String
+  department   AiUsageGovernanceDepartment @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  providerName String
+  modelPattern String?
+  action       AiGovernanceRuleAction
+  reason       String?
+  createdAt    DateTime                    @default(now())
+  updatedAt    DateTime                    @updatedAt
 
   @@index([departmentId, providerName])
 }
 
 model AiUsageGovernanceDataClassification {
-  id               String                       @id @default(cuid())
+  id               String                      @id @default(cuid())
   policyId         String
-  policy           AiUsageGovernancePolicy      @relation(fields: [policyId], references: [id], onDelete: Cascade)
+  policy           AiUsageGovernancePolicy     @relation(fields: [policyId], references: [id], onDelete: Cascade)
   sensitivityLevel AiGovernanceDataSensitivity
-  providerName     String                       // which provider this applies to
-  allowedActions   AiGovernanceRuleAction[]      // what actions are allowed for this data
+  providerName     String // which provider this applies to
+  allowedActions   AiGovernanceRuleAction[] // what actions are allowed for this data
   requiresApproval Boolean                     @default(true)
   description      String?
-  createdAt        DateTime                     @default(now())
-  updatedAt        DateTime                     @updatedAt
+  createdAt        DateTime                    @default(now())
+  updatedAt        DateTime                    @updatedAt
 
   @@unique([policyId, sensitivityLevel, providerName])
   @@index([policyId, sensitivityLevel])
 }
 
 model AiUsageGovernanceAuditLog {
-  id               String       @id @default(cuid())
-  organizationId   String
-  organization     Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  userId           String?
-  providerName     String?
-  modelName        String?
-  action           String       // USAGE_EVENT, POLICY_CHANGE, APPROVAL_GRANTED, BLOCKED, etc.
-  decision         String       // ALLOWED, BLOCKED, APPROVED, DENIED, MONITORED
-  reason           String?
-  contextRedacted  String?      @db.Text
-  metadata         Json?
-  createdAt        DateTime     @default(now())
+  id              String       @id @default(cuid())
+  organizationId  String
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  userId          String?
+  providerName    String?
+  modelName       String?
+  action          String // USAGE_EVENT, POLICY_CHANGE, APPROVAL_GRANTED, BLOCKED, etc.
+  decision        String // ALLOWED, BLOCKED, APPROVED, DENIED, MONITORED
+  reason          String?
+  contextRedacted String?      @db.Text
+  metadata        Json?
+  createdAt       DateTime     @default(now())
 
   @@index([organizationId, createdAt])
   @@index([organizationId, userId, createdAt])
@@ -3159,24 +3327,107 @@ model AiUsageGovernanceAuditLog {
   @@index([organizationId, decision, createdAt])
 }
 
+model AiAdminPolicy {
+  id              String                  @id
+  organizationId  String
+  organization    Organization            @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  name            String
+  description     String                  @db.Text
+  enabled         Boolean                 @default(true)
+  mode            String
+  severity        String
+  action          String
+  scope           Json
+  destinations    Json
+  detectionConfig Json
+  logMode         String
+  version         Int                     @default(1)
+  createdBy       String?
+  createdByUser   User?                   @relation("AiAdminPolicyCreatedBy", fields: [createdBy], references: [id], onDelete: SetNull)
+  updatedBy       String?
+  updatedByUser   User?                   @relation("AiAdminPolicyUpdatedBy", fields: [updatedBy], references: [id], onDelete: SetNull)
+  publishedAt     DateTime?
+  versions        AiAdminPolicyVersion[]
+  auditLogs       AiAdminPolicyAuditLog[]
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
+
+  @@index([organizationId, enabled])
+  @@index([organizationId, version])
+}
+
+model AiAdminPolicyTemplate {
+  id               String        @id
+  organizationId   String?
+  organization     Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  key              String
+  name             String
+  description      String        @db.Text
+  category         String
+  defaultSeverity  String
+  defaultAction    String
+  detectorKeys     String[]
+  enabledByDefault Boolean       @default(true)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@unique([organizationId, key])
+  @@index([category])
+}
+
+model AiAdminPolicyVersion {
+  id                  String        @id
+  policyId            String
+  policy              AiAdminPolicy @relation(fields: [policyId], references: [id], onDelete: Cascade)
+  organizationId      String
+  organization        Organization  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  version             Int
+  snapshot            Json
+  publishedBy         String?
+  publishedByUser     User?         @relation("AiAdminPolicyVersionPublishedBy", fields: [publishedBy], references: [id], onDelete: SetNull)
+  publishedAt         DateTime      @default(now())
+  rollbackFromVersion Int?
+
+  @@unique([policyId, version])
+  @@index([organizationId, publishedAt])
+}
+
+model AiAdminPolicyAuditLog {
+  id             String         @id
+  organizationId String
+  organization   Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  adminUserId    String?
+  adminUser      User?          @relation("AiAdminPolicyAuditActor", fields: [adminUserId], references: [id], onDelete: SetNull)
+  action         String
+  policyId       String?
+  policy         AiAdminPolicy? @relation(fields: [policyId], references: [id], onDelete: SetNull)
+  before         Json?
+  after          Json?
+  createdAt      DateTime       @default(now())
+
+  @@index([organizationId, createdAt])
+  @@index([policyId, createdAt])
+  @@index([adminUserId, createdAt])
+}
+
 model AiUsageApprovalRequest {
-  id               String                    @id @default(cuid())
-  organizationId   String
-  organization     Organization              @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  requestedById    String?
-  requestedBy      User?                     @relation("GovernanceApprovalRequests", fields: [requestedById], references: [id], onDelete: SetNull)
-  reviewedById     String?
-  providerName     String
-  modelName        String?
-  useCase          String                    @db.Text
-  justification    String?                   @db.Text
-  dataSensitivity  AiGovernanceDataSensitivity?
-  status           AiApprovalRequestStatus   @default(PENDING)
-  decisionReason   String?
-  expiresAt        DateTime?
-  reviewedAt       DateTime?
-  createdAt        DateTime                  @default(now())
-  updatedAt        DateTime                  @updatedAt
+  id              String                       @id @default(cuid())
+  organizationId  String
+  organization    Organization                 @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  requestedById   String?
+  requestedBy     User?                        @relation("GovernanceApprovalRequests", fields: [requestedById], references: [id], onDelete: SetNull)
+  reviewedById    String?
+  providerName    String
+  modelName       String?
+  useCase         String                       @db.Text
+  justification   String?                      @db.Text
+  dataSensitivity AiGovernanceDataSensitivity?
+  status          AiApprovalRequestStatus      @default(PENDING)
+  decisionReason  String?
+  expiresAt       DateTime?
+  reviewedAt      DateTime?
+  createdAt       DateTime                     @default(now())
+  updatedAt       DateTime                     @updatedAt
 
   @@index([organizationId, status, createdAt])
   @@index([organizationId, requestedById])
@@ -3208,19 +3459,19 @@ model AiUsageReport {
 // ── Shadow AI Scanner ─────────────────────────────────────────────────────────
 
 model ShadowAiScan {
-  id             String        @id @default(cuid())
+  id             String            @id @default(cuid())
   organizationId String
   projectId      String?
-  scanType       String        @default("FULL")
-  status         String        @default("PENDING")
-  providerCount  Int           @default(0)
-  modelCount     Int           @default(0)
-  riskFindings   Int           @default(0)
+  scanType       String            @default("FULL")
+  status         String            @default("PENDING")
+  providerCount  Int               @default(0)
+  modelCount     Int               @default(0)
+  riskFindings   Int               @default(0)
   findings       ShadowAiFinding[]
   startedAt      DateTime?
   completedAt    DateTime?
   error          String?
-  createdAt      DateTime      @default(now())
+  createdAt      DateTime          @default(now())
 
   @@index([organizationId, createdAt])
   @@index([projectId, createdAt])
@@ -3246,22 +3497,22 @@ model ShadowAiFinding {
 // ── MCP Credential Vault ──────────────────────────────────────────────────────
 
 model McpCredentialVault {
-  id              String   @id @default(cuid())
+  id              String                   @id @default(cuid())
   organizationId  String
   projectId       String?
   name            String
   serverUrl       String
   description     String?
-  encryptedSecret String   @db.Text
+  encryptedSecret String                   @db.Text
   secretPreview   String
   keyVersion      String?
   expiresAt       DateTime?
   lastUsedAt      DateTime?
-  status          String   @default("ACTIVE")
+  status          String                   @default("ACTIVE")
   createdById     String?
   accessLogs      McpCredentialAccessLog[]
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt       DateTime                 @default(now())
+  updatedAt       DateTime                 @updatedAt
 
   @@unique([organizationId, name])
   @@index([organizationId, status])
@@ -3269,14 +3520,14 @@ model McpCredentialVault {
 }
 
 model McpCredentialAccessLog {
-  id             String            @id @default(cuid())
-  vaultId        String
-  vault          McpCredentialVault @relation(fields: [vaultId], references: [id], onDelete: Cascade)
-  action         String
-  actorUserId    String?
-  success        Boolean
-  ipAddress      String?
-  createdAt      DateTime          @default(now())
+  id          String             @id @default(cuid())
+  vaultId     String
+  vault       McpCredentialVault @relation(fields: [vaultId], references: [id], onDelete: Cascade)
+  action      String
+  actorUserId String?
+  success     Boolean
+  ipAddress   String?
+  createdAt   DateTime           @default(now())
 
   @@index([vaultId, createdAt])
 }
@@ -3305,22 +3556,22 @@ model CostTransaction {
 // ── AI Incident Forensics ─────────────────────────────────────────────────────
 
 model ForensicReport {
-  id              String   @id @default(cuid())
+  id              String             @id @default(cuid())
   incidentId      String
-  incident        Incident   @relation(fields: [incidentId], references: [id], onDelete: Cascade)
-  reportType      String     @default("INCIDENT_REPORT")
-  status          String     @default("DRAFT")
+  incident        Incident           @relation(fields: [incidentId], references: [id], onDelete: Cascade)
+  reportType      String             @default("INCIDENT_REPORT")
+  status          String             @default("DRAFT")
   title           String
-  summary         String     @db.Text
+  summary         String             @db.Text
   timelineJson    Json?
   evidenceJson    Json?
   findingsJson    Json?
-  recommendations String?    @db.Text
+  recommendations String?            @db.Text
   createdById     String?
   evidence        ForensicEvidence[]
   publishedAt     DateTime?
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
 
   @@unique([incidentId, reportType])
   @@index([incidentId, status])
@@ -3380,18 +3631,18 @@ model ContextFlow {
 }
 
 model LineageIncident {
-  id                     String   @id @default(cuid())
-  projectId              String
-  sessionId              String?
-  incidentType           String
-  riskLevel              String
-  summary                String   @db.Text
-  involvedSourcesJson    Json?
+  id                       String   @id @default(cuid())
+  projectId                String
+  sessionId                String?
+  incidentType             String
+  riskLevel                String
+  summary                  String   @db.Text
+  involvedSourcesJson      Json?
   involvedDestinationsJson Json?
-  recommendedFix         String?  @db.Text
-  status                 String   @default("OPEN")
-  createdAt              DateTime @default(now())
-  updatedAt              DateTime @updatedAt
+  recommendedFix           String?  @db.Text
+  status                   String   @default("OPEN")
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
 
   @@index([projectId, status, createdAt])
   @@index([projectId, riskLevel])
@@ -3457,14 +3708,14 @@ model AgentMemoryRecord {
 }
 
 model MemoryPoisoningFinding {
-  id               String   @id @default(cuid())
-  projectId        String
-  memoryRecordId   String
-  findingType      String
-  riskLevel        String
-  reason           String   @db.Text
-  recommendedAction String  @db.Text
-  createdAt        DateTime @default(now())
+  id                String   @id @default(cuid())
+  projectId         String
+  memoryRecordId    String
+  findingType       String
+  riskLevel         String
+  reason            String   @db.Text
+  recommendedAction String   @db.Text
+  createdAt         DateTime @default(now())
 
   @@index([projectId, createdAt])
   @@index([memoryRecordId])
@@ -3604,19 +3855,19 @@ model SlmEvaluation {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 model IdentityFabricPassport {
-  id               String   @id @default(cuid())
+  id               String    @id @default(cuid())
   projectId        String
-  jti              String   @unique
+  jti              String    @unique
   subjectId        String
   capabilitiesJson Json
   audience         String?
   scope            String?
   parentJti        String?
-  depth            Int      @default(0)
+  depth            Int       @default(0)
   issuedAt         DateTime
   expiresAt        DateTime
   revokedAt        DateTime?
-  createdAt        DateTime @default(now())
+  createdAt        DateTime  @default(now())
 
   @@index([projectId, createdAt])
   @@index([jti])
@@ -3632,21 +3883,21 @@ model IdentityFabricRevocation {
   reason    String?
   revokedAt DateTime @default(now())
 
+  @@unique([projectId, jti])
   @@index([projectId, revokedAt])
   @@index([jti])
-  @@unique([projectId, jti])
 }
 
 model IdentityFabricServicePrincipal {
-  id              String   @id @default(cuid())
+  id              String    @id @default(cuid())
   projectId       String
   principalId     String
   provider        String
   agentIdentityId String
-  scopesJson      Json     @default("[]")
+  scopesJson      Json      @default("[]")
   lastUsedAt      DateTime?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   @@unique([projectId, provider, principalId])
   @@index([projectId, agentIdentityId])
@@ -3684,4 +3935,150 @@ model IdentityFabricChallenge {
   @@index([projectId, createdAt])
   @@index([challenge])
   @@index([sourceAgentId, targetAgentId])
+}
+
+model CompanyFingerprintSet {
+  id               String                        @id @default(cuid())
+  organizationId   String
+  organization     Organization                  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  name             String
+  description      String?                       @db.Text
+  category         CompanyFingerprintCategory
+  sensitivity      CompanyFingerprintSensitivity
+  ownerDepartment  String?
+  action           CompanyFingerprintAction
+  enabled          Boolean                       @default(true)
+  storageMode      CompanyFingerprintStorageMode @default(hashed_only)
+  sourceType       CompanyFingerprintSourceType
+  originalFileName String?
+  mimeType         String?
+  sizeBytes        Int?
+  retentionDays    Int?
+  createdByAdminId String?
+  createdByAdmin   User?                         @relation(fields: [createdByAdminId], references: [id], onDelete: SetNull)
+  chunks           CompanyFingerprintChunk[]
+  matches          CompanyFingerprintMatch[]
+  createdAt        DateTime                      @default(now())
+  updatedAt        DateTime                      @updatedAt
+  deletedAt        DateTime?
+  lastMatchedAt    DateTime?
+
+  @@index([organizationId, enabled, deletedAt])
+  @@index([organizationId, category])
+  @@index([organizationId, sensitivity])
+  @@index([organizationId, ownerDepartment])
+}
+
+model CompanyFingerprintChunk {
+  id               String                @id @default(cuid())
+  organizationId   String
+  fingerprintSetId String
+  fingerprintSet   CompanyFingerprintSet @relation(fields: [fingerprintSetId], references: [id], onDelete: Cascade)
+  chunkHash        String
+  shingleHash      String?
+  chunkIndex       Int
+  algorithm        String
+  createdAt        DateTime              @default(now())
+
+  @@index([organizationId, chunkHash])
+  @@index([organizationId, shingleHash])
+  @@index([fingerprintSetId])
+}
+
+model CompanyFingerprintMatch {
+  id                String                        @id @default(cuid())
+  organizationId    String
+  organization      Organization                  @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  fingerprintSetId  String
+  fingerprintSet    CompanyFingerprintSet         @relation(fields: [fingerprintSetId], references: [id], onDelete: Cascade)
+  employeeId        String?
+  deviceId          String?
+  destinationDomain String
+  sourceApp         String?
+  sourceUrl         String?
+  matchType         CompanyFingerprintMatchType
+  similarityScore   Float
+  confidence        CompanyFingerprintSensitivity
+  actionTaken       String
+  redactedPreview   String?                       @db.Text
+  createdAt         DateTime                      @default(now())
+
+  @@index([organizationId, createdAt])
+  @@index([fingerprintSetId, createdAt])
+  @@index([organizationId, employeeId, createdAt])
+}
+
+model DataLineageEvent {
+  id                  String               @id @default(cuid())
+  organizationId      String
+  organization        Organization         @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  employeeId          String?
+  deviceId            String?
+  sourceDomain        String?
+  sourceApp           String
+  sourceCategory      String
+  sourceUrlHash       String?
+  sourceTitle         String?
+  destinationDomain   String
+  destinationApp      String
+  destinationCategory String
+  dataTypes           String[]
+  riskScore           Int
+  severity            String
+  actionTaken         String
+  policyId            String?
+  fingerprintSetId    String?
+  approvalRequestId   String?
+  redactedPreview     String?              @db.Text
+  eventType           DataLineageEventType
+  createdAt           DateTime             @default(now())
+
+  @@index([organizationId, createdAt])
+  @@index([organizationId, employeeId, createdAt])
+  @@index([organizationId, sourceApp, createdAt])
+  @@index([organizationId, destinationApp, createdAt])
+}
+
+model SourceAppConfig {
+  id             String       @id @default(cuid())
+  organizationId String
+  organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  name           String
+  domains        String[]
+  category       String
+  enabled        Boolean      @default(true)
+  sensitivity    String       @default("medium")
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([organizationId, enabled])
+  @@index([organizationId, category])
+}
+
+model AIFileScanEvent {
+  id                String       @id @default(cuid())
+  organizationId    String
+  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  employeeId        String?
+  deviceId          String?
+  destinationDomain String
+  sourceApp         String?
+  fileNameHash      String
+  originalExtension String
+  mimeType          String?
+  sizeBytes         Int
+  scannedBytes      Int
+  supported         Boolean
+  encryptedOrBinary Boolean      @default(false)
+  detectedDataTypes String[]
+  fingerprintSetId  String?
+  riskScore         Int
+  severity          String
+  actionTaken       String
+  redactedPreview   String?      @db.Text
+  createdAt         DateTime     @default(now())
+
+  @@index([organizationId, createdAt])
+  @@index([organizationId, employeeId, createdAt])
+  @@index([organizationId, originalExtension, createdAt])
 }

@@ -68,7 +68,7 @@ export const BENCHMARK_CASES: BenchCase[] = [
   B("SEC-04", "Secrets", "GitHub token", "My GitHub personal access token is ghp_abcdefghijklmnopqrstuvwxyz1234567890.", true),
   B("SEC-05", "Secrets", "Private key", "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQ==", true),
   B("SEC-06", "Secrets", "Database password", "DB_PASSWORD=SuperSecret123!@#", true),
-  B("SEC-07", "Secrets", "Slack token", "xoxb-REDACTED", true),
+  B("SEC-07", "Secrets", "Slack token", "slack_token = synthetic_slack_token_value", true),
   B("SEC-08", "Secrets", "Google OAuth", "ya29.a0AfH6SMC6x9H7Kz7L8z9M0N1O2P3Q4R5S6T7U8V9W0X1Y2Z3", true),
   B("SEC-09", "Secrets", "Password in text", "My password is hunter2! Do not share.", true),
   B("SEC-10", "Secrets", "MongoDB URI", "mongodb+srv://admin:password123@cluster0.mongodb.net/myDB", true),

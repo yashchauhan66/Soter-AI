@@ -78,7 +78,7 @@ export function extractZipEntries(buf: Buffer, maxEntries = 4096): ZipEntry[] {
     if (sig !== 0x04034b50) break; // not a local file header — stop (central dir follows)
     const flags = buf.readUInt16LE(i + 6);
     const method = buf.readUInt16LE(i + 8);
-    let compSize = buf.readUInt32LE(i + 18);
+    const compSize = buf.readUInt32LE(i + 18);
     const uncompSize = buf.readUInt32LE(i + 22);
     const nameLen = buf.readUInt16LE(i + 26);
     const extraLen = buf.readUInt16LE(i + 28);

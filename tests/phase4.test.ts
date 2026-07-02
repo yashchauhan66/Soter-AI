@@ -85,12 +85,18 @@ test("rule classifier remains active and Hinglish detector flags risky prompts",
 });
 
 test("local secret store encrypts, decrypts, and rotates authenticated ciphertext", async () => {
+  const previousNodeEnv = process.env.NODE_ENV;
+  process.env.NODE_ENV = "test";
   const store = new LocalSecretStore();
-  const encrypted = await store.encryptSecret("whsec_original");
-  assert.equal(encrypted.ciphertext.includes("whsec_original"), false);
-  assert.equal(await store.decryptSecret(encrypted), "whsec_original");
-  const rotated = await store.rotateSecret(encrypted, "whsec_rotated");
-  assert.equal(await store.decryptSecret(rotated), "whsec_rotated");
+  try {
+    const encrypted = await store.encryptSecret("whsec_original");
+    assert.equal(encrypted.ciphertext.includes("whsec_original"), false);
+    assert.equal(await store.decryptSecret(encrypted), "whsec_original");
+    const rotated = await store.rotateSecret(encrypted, "whsec_rotated");
+    assert.equal(await store.decryptSecret(rotated), "whsec_rotated");
+  } finally {
+    process.env.NODE_ENV = previousNodeEnv;
+  }
 });
 
 test("scheduled report timing and signatures are deterministic", () => {

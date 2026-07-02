@@ -1,0 +1,56 @@
+{
+  "date": "2026-07-01T18:18:43.198Z",
+  "cdp": "http://127.0.0.1:9223",
+  "backend": "http://localhost:3000",
+  "extension": {
+    "status": "LOADED",
+    "extensionId": "ilhlhkkciekmbdnpfnjlpfidnmigblom"
+  },
+  "sites": {
+    "chatgpt": {
+      "status": "FAIL",
+      "error": "page.waitForSelector: Timeout 60000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#prompt-textarea, div.ProseMirror, rich-textarea, textarea, div.ql-editor, [contenteditable=\\'true\\']') to be visible\u001b[22m\n\u001b[2m    104 × locator resolved to 2 elements. Proceeding with the first one: <textarea autofocus=\"\" inputmode=\"text\" autocorrect=\"on\" spellcheck=\"true\" autocomplete=\"off\" name=\"prompt-textarea\" autocapitalize=\"sentences\" placeholder=\"Ask anything\" data-virtualkeyboard=\"true\" aria-label=\"Chat with ChatGPT\" class=\"wcDTda_fallbackTextarea\"></textarea>\u001b[22m\n",
+      "tests": []
+    },
+    "claude": {
+      "status": "AUTH_BLOCKED",
+      "note": "Not logged in in this Chrome profile"
+    },
+    "gemini": {
+      "status": "PARTIAL",
+      "tests": [
+        {
+          "test": "customer_data",
+          "overlay": false,
+          "signal": false
+        },
+        {
+          "test": "injection",
+          "overlay": false,
+          "signal": false
+        }
+      ]
+    },
+    "perplexity": {
+      "status": "PARTIAL",
+      "tests": [
+        {
+          "test": "fake_api_key",
+          "overlay": false,
+          "signal": false
+        }
+      ]
+    }
+  },
+  "admin": {
+    "status": "CAPTURED",
+    "screenshot": "13-admin-live-ai-events.png",
+    "privacy": {
+      "leaks_fake_key": false,
+      "leaks_clean": false,
+      "leaks_pan": false,
+      "leaks_fingerprint": false
+    }
+  },
+  "status": "BLOCKED"
+}

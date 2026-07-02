@@ -395,7 +395,7 @@ test('security event catalog and SIEM exporter keep secret metadata redacted', a
       metadata: { note: secret, authorization: secret },
     });
     assert.equal(sent.includes(secret), false);
-    assert.match(sent, /REDACTED_SECRET/);
+    assert.match(sent, /REDACTED_API_KEY/);
   } finally {
     global.fetch = originalFetch;
   }

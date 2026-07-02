@@ -6,7 +6,7 @@
  * endpoints (see app/api/guard/input/route.ts).
  */
 
-export const MOCK_API_KEY = "sk_test_integration_000000000000";
+export const MOCK_API_KEY = "synthetic_integration_api_key_000000";
 export const MOCK_BASE_URL = "https://mock.soter.test";
 export const MOCK_PROJECT_ID = "proj_test_001";
 

@@ -62,18 +62,18 @@ export interface ImportFinding {
 }
 
 export function classifyImport(imp: PickleImport): ImportFinding | null {
-  const module = imp.module.trim();
+  const mod = imp.module.trim();
   const name = imp.name.trim();
-  const root = module.split(".")[0];
+  const root = mod.split(".")[0];
 
-  const critSet = CRITICAL_CALLABLES[module] ?? CRITICAL_CALLABLES[root];
-  if (CRITICAL_MODULES.has(module) || CRITICAL_MODULES.has(root) || (critSet && (critSet.has("*") || critSet.has(name)))) {
-    return { module, name, severity: "CRITICAL", reason: `Imports ${module}.${name}, which enables arbitrary code or command execution.` };
+  const critSet = CRITICAL_CALLABLES[mod] ?? CRITICAL_CALLABLES[root];
+  if (CRITICAL_MODULES.has(mod) || CRITICAL_MODULES.has(root) || (critSet && (critSet.has("*") || critSet.has(name)))) {
+    return { module: mod, name, severity: "CRITICAL", reason: `Imports ${mod}.${name}, which enables arbitrary code or command execution.` };
   }
 
-  const highSet = HIGH_CALLABLES[module] ?? HIGH_CALLABLES[root];
-  if (HIGH_MODULES.has(module) || HIGH_MODULES.has(root) || (highSet && (highSet.has("*") || highSet.has(name)))) {
-    return { module, name, severity: "HIGH", reason: `Imports ${module}.${name}, which can reach the network, filesystem, or nested deserialization.` };
+  const highSet = HIGH_CALLABLES[mod] ?? HIGH_CALLABLES[root];
+  if (HIGH_MODULES.has(mod) || HIGH_MODULES.has(root) || (highSet && (highSet.has("*") || highSet.has(name)))) {
+    return { module: mod, name, severity: "HIGH", reason: `Imports ${mod}.${name}, which can reach the network, filesystem, or nested deserialization.` };
   }
 
   return null;

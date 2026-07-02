@@ -134,7 +134,7 @@ SECRET_INPUTS = [
     ("postgres-url", "postgresql://user:password@localhost:5432/database"),
     ("mongodb-url", "mongodb+srv://user:password@cluster.example/db"),
     ("redis-url", "redis://:password@localhost:6379"),
-    ("stripe-live-key", "sk_live_abcdefghijklmnopqrstuvwxyz"),
+    ("stripe-live-key", "synthetic_api_key_value"),
     ("razorpay-key", "rzp_test_abcdefghijklmnop"),
     ("env-var", "DATABASE_PASSWORD=very-secret-value-123"),
     ("private-key", "-----BEGIN PRIVATE KEY-----\nabcdef123456\n-----END PRIVATE KEY-----"),

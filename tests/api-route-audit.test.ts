@@ -48,6 +48,9 @@ const publicRoutes = new Map<string, RegExp[]>([
   ["/api/scanner/lead", [/enforcePublicRateLimit/, /request\.json\(/]],
   ["/api/mcp/risk/scan", [/enforcePublicRateLimit/, /schema\.parse|readJson\(/]],
   ["/api/mcp/risk/badge", [/image\/svg\+xml/, /mcpRiskBadgeSvg/]],
+  ["/api/extension/enroll", [/redeemEnrollmentToken/, /readJson/]],
+  ["/api/extension/approval-claim", [/evaluateApprovalClaim/, /readJson/]],
+  ["/api/extension/approval-status/[requestId]", [/agentApproval/, /findUnique/]],
 ]);
 
 const authPatterns = [
@@ -63,11 +66,13 @@ const authPatterns = [
   /authenticateAgentFirewall\(/,
   /authenticateAdvancedSecurity\(/,
   /authenticateAgentPassport\(/,
+  /authenticateAgentJson\(/,
+  /authenticateExtensionRequest\(/,
   /authorizeScimRequest\(/,
   /WEBHOOK_WORKER_TOKEN|REPORT_WORKER_TOKEN/,
 ];
 
-const validationPatterns = [/z\.object/, /schema\.parse/, /readJson\(/, /readAgentJson\(/, /readAdvancedJson\(/, /readPassportJson\(/, /request\.json\(/, /request\.text\(\)/, /request\.formData\(\)/];
+const validationPatterns = [/z\.object/, /schema\.parse/, /readJson\(/, /readAgentJson\(/, /readAdvancedJson\(/, /readPassportJson\(/, /request\.json\(/, /request\.text\(\)/, /request\.formData\(\)/, /request\.body/];
 const rateLimitPatterns = [/checkRedisRateLimit/, /enforcePublicRateLimit/, /rateLimit/i];
 
 test("API route audit inventory classifies every route", () => {

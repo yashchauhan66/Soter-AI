@@ -68,3 +68,10 @@
 - Prisma ORM with PostgreSQL
 - Docker production setup
 - E2E testing with Playwright
+# 2026-07-02
+
+- Completed same-day launch readiness check for the root app, extension, n8n node, Zapier integration, and Make.com app.
+- Fixed extension store privacy documentation for response scanning controls.
+- Fixed the Phase 4 local secret-store test harness so it does not depend on production `NODE_ENV`.
+- Built extension ZIP and n8n package tarball.
+- Pushed Zapier integration version `0.1.0`; public publication remains pending platform review/account tasks.

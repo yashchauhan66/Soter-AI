@@ -72,6 +72,44 @@ a, button, input, select, textarea, [tabindex] {
   to { transform: rotate(360deg); }
 }
 
+/* ── Live Threat Console (homepage hero) ────────────────────────── */
+@keyframes scanSweep {
+  0% { transform: translateY(-120%); opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateY(240%); opacity: 0; }
+}
+
+@keyframes radarSweep {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes caretBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes verdictPop {
+  0% { opacity: 0; transform: scale(0.82); }
+  60% { opacity: 1; transform: scale(1.04); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes chipIn {
+  from { opacity: 0; transform: translateX(-6px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes gridDrift {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 44px 44px, 44px 44px; }
+}
+
 /* ── Utility Animation Classes ──────────────────────────────────── */
 .animate-fade-in {
   animation: fadeIn 0.4s ease-out forwards;
@@ -155,7 +193,26 @@ pre code {
   .input { @apply w-full rounded-md border border-slate-700 bg-slate-950/80 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan focus:ring-2 focus:ring-cyan/10; }
   .eyebrow { @apply text-xs font-bold uppercase tracking-[0.18em] text-cyan; }
   .grid-fade { background-image: linear-gradient(rgba(49,215,200,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(49,215,200,.05) 1px, transparent 1px); background-size: 44px 44px; }
+  .grid-fade-anim { background-image: linear-gradient(rgba(49,215,200,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(49,215,200,.06) 1px, transparent 1px); background-size: 44px 44px; animation: gridDrift 9s linear infinite; }
+  .animate-scan-sweep { animation: scanSweep 1.15s ease-in-out infinite; }
+  .animate-radar { animation: radarSweep 4s linear infinite; transform-origin: center; }
+  .animate-caret { animation: caretBlink 1s step-end infinite; }
+  .animate-float-y { animation: floatY 6s ease-in-out infinite; }
+  .animate-verdict-pop { animation: verdictPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+  .animate-chip-in { animation: chipIn 0.32s ease-out forwards; }
   .tip-card { @apply rounded-lg border border-cyan/20 bg-cyan/5 p-4 text-sm leading-6 text-slate-300; }
   .warn-card { @apply rounded-lg border border-amber-500/25 bg-amber-500/5 p-4 text-sm leading-6 text-amber-100; }
   .docs-section { @apply mt-12 scroll-mt-24; }
+}
+
+/* ── Respect users who prefer reduced motion ────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

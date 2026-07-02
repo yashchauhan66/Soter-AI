@@ -104,8 +104,8 @@ export function scanPickle(buf: Buffer, start = 0, end = buf.length): PickleScan
           ops.global = true; isPickle = true; i = n.next; break;
         }
         case 0x93: { // STACK_GLOBAL — module & name are the two prior strings
-          const name = strstack.pop() ?? ""; const module = strstack.pop() ?? "";
-          imports.push({ module, name }); ops.stackGlobal = true; break;
+          const name = strstack.pop() ?? ""; const mod = strstack.pop() ?? "";
+          imports.push({ module: mod, name }); ops.stackGlobal = true; break;
         }
         case 0x69: { // INST 'i' module\n class\n
           const m = readLine(buf, i, end); const n = readLine(buf, m.next, end);

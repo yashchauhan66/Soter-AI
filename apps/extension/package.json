@@ -1,0 +1,24 @@
+{
+  "name": "@soter/extension",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite build --watch --mode development",
+    "build": "tsc && vite build && vite build --config vite.content.config.ts && vite build --config vite.lineage.config.ts",
+    "package": "npm run build && node scripts/package.js",
+    "lint": "eslint . --ext .ts,.tsx",
+    "typecheck": "tsc --noEmit",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@soter/detectors": "workspace:*",
+    "@soter/policy-engine": "workspace:*",
+    "@soter/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.268",
+    "typescript": "^5.5.4",
+    "vite": "^5.3.3",
+    "vite-plugin-static-copy": "^1.0.6"
+  }
+}

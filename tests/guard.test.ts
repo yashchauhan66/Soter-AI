@@ -107,7 +107,7 @@ test("all required secret families are detected and redacted", () => {
     "postgresql://user:password@localhost:5432/database",
     "mongodb+srv://user:password@cluster.example/db",
     "redis://:password@localhost:6379",
-    "sk_live_abcdefghijklmnopqrstuvwxyz",
+    "synthetic_api_key_value",
     "rzp_test_abcdefghijklmnop",
     "DATABASE_PASSWORD=very-secret-value-123",
     "-----BEGIN PRIVATE KEY-----\nabcdef123456\n-----END PRIVATE KEY-----",
