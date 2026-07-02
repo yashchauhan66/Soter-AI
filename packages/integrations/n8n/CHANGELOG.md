@@ -2,6 +2,12 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.2.4] - 2026-07-02
+
+### Fixed
+
+- Updated `n8n-workflow` peer dependency to `*` to satisfy n8n community package scanner requirements.
+
 ## [0.2.3] - 2026-07-02
 
 ### Fixed
