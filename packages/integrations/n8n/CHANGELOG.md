@@ -2,6 +2,12 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.2.5] - 2026-07-02
+
+### Fixed
+
+- Include generated n8n `dist` files in the GitHub repository so Creator Portal source checks can find the credential and node files referenced by package metadata.
+
 ## [0.2.4] - 2026-07-02
 
 ### Fixed
