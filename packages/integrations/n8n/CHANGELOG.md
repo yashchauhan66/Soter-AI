@@ -2,6 +2,14 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.2.0] - 2026-07-02
+
+### Changed
+
+- Restored the marketplace README to the HTTPS production SoterAI base URL.
+- Updated repository and issue links for npm and n8n Creator Portal review.
+- Clarified that verified n8n marketplace submission should use GitHub Actions npm provenance.
+
 ## [0.1.7] - 2026-06-26
 
 ### Changed

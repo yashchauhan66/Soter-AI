@@ -20,13 +20,15 @@ Follow these steps to publish the SoterAI n8n community node to npm.
 
 1. Tag the commit with the version:
    ```bash
-   git tag n8n-v0.1.0
-   git push origin n8n-v0.1.0
+   git tag n8n-v0.2.0
+   git push origin n8n-v0.2.0
    ```
 2. The `publish-n8n.yml` GitHub Actions workflow will automatically build and publish to npm.
-3. Monitor the workflow run at: `https://github.com/yashchauhan66/Soter-AI/actions`
+3. Monitor the workflow run at: `https://github.com/yashchauhan66/Ai-Security-Guard/actions`
 
 ## Publish Manually
+
+Manual publish is useful only for unverified testing. For n8n Creator Portal verification, publish from GitHub Actions with npm provenance.
 
 1. Log in to npm:
    ```bash
@@ -36,11 +38,7 @@ Follow these steps to publish the SoterAI n8n community node to npm.
    ```bash
    npm run build
    ```
-3. Publish with public access and provenance:
-   ```bash
-   npm publish --access public --provenance
-   ```
-   If publishing without provenance (local machine), omit `--provenance`:
+3. Publish with public access:
    ```bash
    npm publish --access public
    ```
@@ -58,7 +56,7 @@ Follow these steps to publish the SoterAI n8n community node to npm.
 
 ## n8n Creator Portal Submission
 
-After publishing to npm, submit the node to the n8n Creator Portal for official listing:
+After publishing to npm from GitHub Actions with provenance, submit the node to the n8n Creator Portal for official listing:
 
 1. Go to: https://creators.n8n.io
 2. Sign in with your n8n account (or create one).
