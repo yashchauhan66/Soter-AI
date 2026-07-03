@@ -6,6 +6,10 @@ export function decideGuardAction(riskScore: number, riskTypes: RiskType[], dire
   const has = (type: RiskType) => riskTypes.includes(type);
 
   if (has("RATE_LIMIT") || has("SYSTEM_PROMPT_LEAK_ATTEMPT") || has("SYSTEM_PROMPT_LEAKAGE")) return "BLOCK";
+  // Data-exfiltration beacons (zero-click markdown/image/link channels) are hard
+  // blocked on OUTPUT so a poisoned model response cannot leak context to an
+  // external destination; on INPUT they are held for human review.
+  if (has("DATA_EXFILTRATION")) return direction === "OUTPUT" ? "BLOCK" : "HUMAN_REVIEW";
   if (has("PROMPT_INJECTION") && has("JAILBREAK")) return "BLOCK";
   if (riskScore >= 86) return "BLOCK";
   if (has("SECRET_DETECTED")) return direction === "OUTPUT" ? "BLOCK" : "HUMAN_REVIEW";

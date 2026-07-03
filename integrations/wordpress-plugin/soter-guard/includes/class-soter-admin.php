@@ -104,7 +104,7 @@ class Soter_Admin {
 				<table class="form-table" role="presentation">
 					<tr>
 						<th scope="row"><label for="crg_base_url"><?php esc_html_e( 'API Base URL', 'soter-guard' ); ?></label></th>
-						<td><input name="<?php echo esc_attr( SOTER_GUARD_OPTION ); ?>[base_url]" id="crg_base_url" type="url" class="regular-text" value="<?php echo esc_attr( $settings['base_url'] ); ?>" placeholder="https://api.soterai.publicvm.com" /></td>
+						<td><input name="<?php echo esc_attr( SOTER_GUARD_OPTION ); ?>[base_url]" id="crg_base_url" type="url" class="regular-text" value="<?php echo esc_attr( $settings['base_url'] ); ?>" placeholder="https://api.soterai.in" /></td>
 					</tr>
 					<tr>
 						<th scope="row"><label for="crg_api_key"><?php esc_html_e( 'API Key', 'soter-guard' ); ?></label></th>

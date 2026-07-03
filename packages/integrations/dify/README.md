@@ -98,8 +98,8 @@ Strip PII from user messages before they enter the LLM context, ensuring no sens
 - All scanning is performed server-side by the SoterAI API. No user data is stored beyond the request lifecycle unless you opt in to audit logging.
 - The plugin uses only Python standard-library HTTP (`urllib.request`) with no third-party dependencies.
 - API keys are stored securely by Dify's credential manager and never exposed in workflow logs.
-- Privacy Policy: https://soterai.dev/privacy
-- Terms of Service: https://soterai.dev/terms
+- Privacy Policy: https://soterai.in/privacy
+- Terms of Service: https://soterai.in/terms
 - Support: support@soterai.dev
 
 ## Plugin Structure

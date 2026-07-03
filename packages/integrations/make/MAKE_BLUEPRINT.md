@@ -3,7 +3,7 @@
 Make ke Custom App editor me **ek-click import nahi hota**. Har section ka JSON alag se paste karna padta hai.
 Niche har block ke upar likha hai **kahan paste karna hai**. Order me chalo.
 
-> Base URL prod: `https://soterai.publicvm.com`
+> Base URL prod: `https://soterai.in`
 > Auth header: `x-api-key`
 > Modules: 4 (Check Input, Check Output, Redact PII, Scan RAG Document)
 
@@ -14,7 +14,7 @@ Editor: **left sidebar → Base** → `</>` (code view) → ye paste karo:
 
 ```json
 {
-  "baseUrl": "{{if(connection.baseUrl, connection.baseUrl, \"https://soterai.publicvm.com\")}}",
+  "baseUrl": "{{if(connection.baseUrl, connection.baseUrl, \"https://soterai.in\")}}",
   "headers": {
     "User-Agent": "soterai-make/1.0"
   },
@@ -35,7 +35,7 @@ Connection ke andar do block hote hain:
 
 ```json
 {
-  "url": "{{if(parameters.baseUrl, parameters.baseUrl, \"https://soterai.publicvm.com\")}}/api/guard/input",
+  "url": "{{if(parameters.baseUrl, parameters.baseUrl, \"https://soterai.in\")}}/api/guard/input",
   "method": "POST",
   "headers": {
     "x-api-key": "{{parameters.apiKey}}",
@@ -69,7 +69,7 @@ Connection ke andar do block hote hain:
     "type": "text",
     "label": "Base URL",
     "required": false,
-    "default": "https://soterai.publicvm.com"
+    "default": "https://soterai.in"
   },
   {
     "name": "projectId",
@@ -294,4 +294,4 @@ Name/key: `ragScanner` · Label: `Scan RAG Document`
 
 ## 5) PUBLISH / REVIEW
 - Public marketplace ke liye: https://www.make.com/en/partner pe apply
-- Chahiye: logo 512×512 PNG, description, privacy `https://soterai.dev/privacy`, terms `https://soterai.dev/terms`, support `support@soterai.dev`
+- Chahiye: logo 512×512 PNG, description, privacy `https://soterai.in/privacy`, terms `https://soterai.in/terms`, support `support@soterai.dev`

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       SoterAI Guard
- * Plugin URI:        https://soterai.publicvm.com
+ * Plugin URI:        https://soterai.in
  * Description:        OWASP LLM Top 10 aligned AI security gateway for chatbots. Guards chatbot input and output through the SoterAI Guard API. Reduces risk via detect, block, redact, monitor, and report. Does not guarantee complete protection.
  * Version:           0.1.0
  * Requires at least: 5.8

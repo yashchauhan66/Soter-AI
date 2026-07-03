@@ -127,7 +127,7 @@ async function dispatchGovernanceEmail(
         enforcementAction:
           event.enforcementAction === "BLOCK" ? "blocked" : "requires approval for",
         reason: event.reason,
-        dashboardUrl: `${process.env.APP_URL ?? "https://soterai.publicvm.com"}/dashboard/usage-governance/monitoring`,
+        dashboardUrl: `${process.env.APP_URL ?? "https://soterai.in"}/dashboard/usage-governance/monitoring`,
       },
     });
   } catch (error) {

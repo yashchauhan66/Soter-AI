@@ -1,3 +1,4 @@
+import { randomBytes } from "crypto";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { trialWindow } from "@/lib/ops/billing";
@@ -116,7 +117,9 @@ export async function POST(request: Request) {
     // email failure can only ever leave a consistent, recoverable pending state.
     const passwordHash = await bcrypt.hash(body.password, 12);
     const orgName = body.organizationName ?? `${body.name ?? body.email.split("@")[0]} workspace`;
-    const slug = `org-${Math.random().toString(36).slice(2, 14)}`;
+    // SECURITY: use CSPRNG for the workspace slug — Math.random is predictable
+    // and could allow guessing other tenants' slugs.
+    const slug = `org-${randomBytes(8).toString("hex")}`;
 
     let created: { userId: string; organizationId: string; token: string };
     try {

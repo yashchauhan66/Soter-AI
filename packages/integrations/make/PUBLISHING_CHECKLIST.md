@@ -30,8 +30,8 @@
 |-------|------|--------|
 | App Icon | 512x512 PNG | [ ] |
 | App Description | Clear, concise (submitted in partner dashboard) | [ ] |
-| Privacy Policy URL | https://soterai.dev/privacy | [ ] |
-| Terms of Service URL | https://soterai.dev/terms | [ ] |
+| Privacy Policy URL | https://soterai.in/privacy | [ ] |
+| Terms of Service URL | https://soterai.in/terms | [ ] |
 | Support Email | support@soterai.dev | [ ] |
 | Documentation URL | Link to integration docs | [ ] |
 

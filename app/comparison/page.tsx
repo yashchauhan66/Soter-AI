@@ -414,7 +414,7 @@ function jsonLd() {
       item: {
         "@type": "SoftwareApplication",
         name: c.name,
-        url: `https://soterai.publicvm.com/comparison#${c.id}`,
+        url: `https://soterai.in/comparison#${c.id}`,
         applicationCategory: "SecurityApplication",
         description: `AI security guardrail platform. Features: ${features
           .filter((f) => f.values[c.id as keyof typeof f.values] === "✅")
@@ -430,7 +430,7 @@ function jsonLd() {
     "@graph": [
       {
         "@type": "AboutPage",
-        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soterai.publicvm.com/comparison" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soterai.in/comparison" },
         "name": "Soter vs Competitors — AI Security Guardrail Comparison",
         "description": "Compare core AI guardrail platforms plus the expanded 2026 AI security landscape, including Lakera (Check Point), Palo Alto Prisma AIRS, Galileo, Arthur AI, Prompt Security, HiddenLayer, Protect AI, Pangea, Cisco, NVIDIA, Guardrails AI, LLM Guard, AWS, Azure, and Patronus.",
         "mainEntity": {

@@ -12,7 +12,6 @@
       "parameters": {
         "action": "inputGuard",
         "inputText": "={{$json.message}}",
-        "policyMode": "BALANCED",
         "onThreat": "BLOCK",
         "projectId": ""
       },
@@ -63,7 +62,6 @@
       "parameters": {
         "action": "outputGuard",
         "outputText": "={{$json.llmResponse}}",
-        "policyMode": "BALANCED",
         "onThreat": "REDACT"
       },
       "name": "SoterAI Output Guard",

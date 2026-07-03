@@ -7,7 +7,7 @@ import type {
 export class SoterApi implements ICredentialType {
   name = "soterApi";
   displayName = "SoterAI API";
-  documentationUrl = "https://soterai.publicvm.com/docs";
+  documentationUrl = "https://soterai.in/docs";
 
   test: ICredentialTestRequest = {
     request: {
@@ -38,7 +38,7 @@ export class SoterApi implements ICredentialType {
       displayName: "Base URL",
       name: "baseUrl",
       type: "string",
-      default: "https://soterai.publicvm.com",
+      default: "https://soterai.in",
       description: "SoterAI production API base URL. Change only for a self-hosted HTTPS deployment.",
     },
     {

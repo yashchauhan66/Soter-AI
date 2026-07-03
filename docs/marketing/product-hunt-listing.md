@@ -77,9 +77,9 @@ Built-in support for Aadhaar-like patterns, PAN, GSTIN, UPI ID, IFSC codes, and 
 
 **🔗 Links**
 • GitHub: https://github.com/yashchauhan66/Ai-Security-Guard
-• Live Demo: https://soterai.publicvm.com
-• Playground: https://soterai.publicvm.com/playground
-• Documentation: https://soterai.publicvm.com/docs
+• Live Demo: https://soterai.in
+• Playground: https://soterai.in/playground
+• Documentation: https://soterai.in/docs
 ```
 
 ---
@@ -107,7 +107,7 @@ Show a screen recording of:
 3. User types safe: *"What is the weather in Delhi?"*
 4. ✅ **Safe** | Risk: 0.02 | Action: PASS
 
-> Use the existing playground (soterai.publicvm.com/playground) to record this demo.
+> Use the existing playground (soterai.in/playground) to record this demo.
 
 **Option B — Static Hero Image**
 Use the OpenGraph image style with:
@@ -156,7 +156,7 @@ SoterAI is my attempt to fix this. It's:
 
 The benchmark result (F1=1.0000) is from a Garak-style red-team evaluation covering prompt injection, jailbreaks, encoding attacks, multilingual (Hindi) attacks, PII, secrets, indirect injection, and unsafe output.
 
-I'd love for you to try the live playground → https://soterai.publicvm.com/playground
+I'd love for you to try the live playground → https://soterai.in/playground
 
 And the code is on GitHub → https://github.com/yashchauhan66/Ai-Security-Guard
 

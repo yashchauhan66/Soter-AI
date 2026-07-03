@@ -7,10 +7,11 @@
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
+const { version } = require('../package.json');
 
 const DIST_DIR = path.join(__dirname, '..', 'dist', 'extension');
 const OUTPUT_DIR = path.join(__dirname, '..', 'dist');
-const ZIP_NAME = 'soter-extension-v0.1.0.zip';
+const ZIP_NAME = `soter-extension-v${version}.zip`;
 const OUTPUT_PATH = path.join(OUTPUT_DIR, ZIP_NAME);
 
 console.log('📦 Packaging Soter Extension...');

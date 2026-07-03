@@ -64,8 +64,8 @@ npm run push       # zapier push
 
 - All text is sent to the SoterAI API over HTTPS for scanning. No text is stored after analysis unless incident logging is enabled.
 - API keys should be treated as secrets. Use Zapier's built-in credential storage.
-- See [https://soterai.dev/privacy](https://soterai.dev/privacy) for the full privacy policy.
-- Terms of Service: [https://soterai.dev/terms](https://soterai.dev/terms)
+- See [https://soterai.in/privacy](https://soterai.in/privacy) for the full privacy policy.
+- Terms of Service: [https://soterai.in/terms](https://soterai.in/terms)
 - Support: support@soterai.dev
 
 ## Status

@@ -208,7 +208,7 @@ export default function Image() {
           }}
         >
           <span style={{ fontSize: 13, color: "#475569", fontWeight: 500 }}>
-            soterai.publicvm.com
+            soterai.in
           </span>
           <span style={{ fontSize: 12, color: "#334155" }}>
             OWASP LLM Top 10 Aligned - Free Tier Available

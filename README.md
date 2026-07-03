@@ -8,14 +8,14 @@
   <p align="center">
     <a href="https://github.com/yashchauhan66/Ai-Security-Guard"><img src="https://img.shields.io/github/stars/yashchauhan66/Ai-Security-Guard?style=for-the-badge&logo=github&logoColor=white&label=⭐%20Star%20us" alt="GitHub Stars" /></a>
     <a href="https://www.producthunt.com"><img src="https://img.shields.io/badge/Launching%20June%2030-Product%20Hunt-da552f?style=for-the-badge&logo=producthunt&logoColor=white" alt="Launching June 30 on Product Hunt" /></a>
-    <a href="https://soterai.publicvm.com"><img src="https://img.shields.io/badge/Live%20Demo-soterai.publicvm.com-31d7c8?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" /></a>
-    <a href="https://soterai.publicvm.com/playground"><img src="https://img.shields.io/badge/Try%20Playground-00dc82?style=for-the-badge&logo=react&logoColor=white" alt="Playground" /></a>
-    <a href="https://soterai.publicvm.com/docs"><img src="https://img.shields.io/badge/Docs-31d7c8?style=for-the-badge&logo=gitbook&logoColor=white" alt="Documentation" /></a>
+    <a href="https://soterai.in"><img src="https://img.shields.io/badge/Live%20Demo-soterai.in-31d7c8?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" /></a>
+    <a href="https://soterai.in/playground"><img src="https://img.shields.io/badge/Try%20Playground-00dc82?style=for-the-badge&logo=react&logoColor=white" alt="Playground" /></a>
+    <a href="https://soterai.in/docs"><img src="https://img.shields.io/badge/Docs-31d7c8?style=for-the-badge&logo=gitbook&logoColor=white" alt="Documentation" /></a>
   </p>
   
   <p align="center">
     <img src="https://img.shields.io/badge/F1%3D1.0000-00c8c8?style=flat-square&logo=checkmarx&logoColor=white" alt="F1=1.0000" />
-    <img src="https://img.shields.io/badge/dynamic/json?color=00dc82&label=Benchmark&query=%24.overall.f1_score&suffix=%20F1&url=https%3A%2F%2Fsoterai.publicvm.com%2Fapi%2Fbenchmark%2Fbadge&style=flat-square&logo=test&logoColor=white" alt="Benchmark F1" />
+    <img src="https://img.shields.io/badge/dynamic/json?color=00dc82&label=Benchmark&query=%24.overall.f1_score&suffix=%20F1&url=https%3A%2F%2Fsoterai.in%2Fapi%2Fbenchmark%2Fbadge&style=flat-square&logo=test&logoColor=white" alt="Benchmark F1" />
     <img src="https://img.shields.io/badge/97%2F97%20attacks%20detected-00dc82?style=flat-square&logo=shield&logoColor=white" alt="97/97 Attacks" />
     <img src="https://img.shields.io/badge/0%25%20false%20positives-00dc82?style=flat-square&logo=check&logoColor=white" alt="0% False Positives" />
     <img src="https://img.shields.io/badge/891ms%20HTTP%20p50-00c8c8?style=flat-square&logo=zap&logoColor=white" alt="891ms HTTP p50 in the recorded internal benchmark" />
@@ -232,7 +232,7 @@ SoterAI was evaluated using a **Garak-style adversarial benchmark** against **97
 | Unsafe Output | 7 | ✅ 7/7 (100%) |
 | Indirect Prompt Injection | 6 | ✅ 6/6 (100%) |
 
-> 📄 [View full benchmark results](scripts/guard-benchmark/results.json) | 🎮 [Try the interactive playground](https://soterai.publicvm.com/playground) | 🧪 [Attack-pack regression tests (74 cases)](tests/guard/attack-pack-regression.test.ts)
+> 📄 [View full benchmark results](scripts/guard-benchmark/results.json) | 🎮 [Try the interactive playground](https://soterai.in/playground) | 🧪 [Attack-pack regression tests (74 cases)](tests/guard/attack-pack-regression.test.ts)
 
 <br />
 
@@ -373,54 +373,54 @@ SLM_API_KEY=sk-...
 
 | Category | Service | Description |
 |----------|---------|-------------|
-| **🎛️ Agent Control** | [Agent Control Center](https://soterai.publicvm.com/docs/services/agent-control) | Unified approval queue, reversibility ledger, and compliance posture |
-| | [Agent Firewall](https://soterai.publicvm.com/docs/services/agent-firewall) | Real-time agent action monitoring and blocking |
-| | [Action Ledger](https://soterai.publicvm.com/docs/services/action-ledger) | Classify actions as irreversible/compensating/reversible with rollback |
-| | [Identity Fabric](https://soterai.publicvm.com/docs/services/identity-fabric) | Cryptographic agent identities, delegation chains, service principals |
-| | [Agent Passports](https://soterai.publicvm.com/docs/services/agent-passports) | Cryptographic agent identity verification |
-| | [Transaction Escrow](https://soterai.publicvm.com/docs/services/transaction-escrow) | Human-in-the-loop for risky agent actions |
-| | [Intent Guard](https://soterai.publicvm.com/docs/services/intent-guard) | Verify actions match original user intent |
-| | [Tool Chain](https://soterai.publicvm.com/docs/services/tool-chain) | Multi-step attack pattern detection |
-| | [Dry-Run Sandbox](https://soterai.publicvm.com/docs/services/dry-run-sandbox) | Simulate policies without production impact |
-| | [Memory Firewall](https://soterai.publicvm.com/docs/services/memory-firewall) | Quarantine poisoned agent memory |
-| | [MCP Drift](https://soterai.publicvm.com/docs/services/mcp-drift) | Monitor MCP server tool changes |
-| | [Legal Boundary](https://soterai.publicvm.com/docs/services/legal-boundary) | Hard guardrails for regulatory compliance |
-| **🏛️ Usage Governance** | [Governance Dashboard](https://soterai.publicvm.com/docs/services/usage-governance) | Company-wide AI usage policy management |
-| | [Policy Configuration](https://soterai.publicvm.com/docs/services/governance-policy) | Default actions, data handling rules, approval requirements |
-| | [Provider Rules](https://soterai.publicvm.com/docs/services/governance-providers) | Allow/block specific AI providers and models |
-| | [Department Rules](https://soterai.publicvm.com/docs/services/governance-departments) | Per-department AI usage policies |
-| | [Data Classification](https://soterai.publicvm.com/docs/services/governance-data-classification) | Sensitivity levels per provider mapping |
-| | [Approval Workflows](https://soterai.publicvm.com/docs/services/governance-approvals) | Review and manage AI provider access requests |
-| | [Employee Monitoring](https://soterai.publicvm.com/docs/services/governance-monitoring) | Track AI usage across the organization |
-| | [Audit Trail](https://soterai.publicvm.com/docs/services/governance-audit) | Complete log of AI usage and policy changes |
-| | [Compliance Reports](https://soterai.publicvm.com/docs/services/governance-reports) | Weekly/monthly/quarterly governance reports |
-| **👁️ Monitor** | [Guard Logs](https://soterai.publicvm.com/docs/services/guard-logs) | Full audit trail of every security decision |
-| | [Reports](https://soterai.publicvm.com/docs/services/reports) | Automated security reports with trend analysis |
-| | [Detection Feedback](https://soterai.publicvm.com/docs/services/detection-feedback) | Improve detection accuracy by marking false positives |
-| | [Customer Success](https://soterai.publicvm.com/docs/services/customer-success) | Activation rates and churn risk analytics |
-| **🛡️ Protect** | [Agent Firewall](https://soterai.publicvm.com/docs/services/agent-firewall) | Real-time agent action monitoring and blocking |
-| | [Policy Engine](https://soterai.publicvm.com/docs/services/policy-engine) | Configurable risk thresholds and action policies |
-| | [RAG Security](https://soterai.publicvm.com/docs/services/rag-security) | Document scanning and retrieval-time guard |
-| | [Webhooks](https://soterai.publicvm.com/docs/services/webhooks) | Signed real-time security event notifications |
-| **🔍 Detect** | [Shadow AI](https://soterai.publicvm.com/docs/services/shadow-ai) | Uncover unauthorized AI tool usage |
-| | [Red Team Lab](https://soterai.publicvm.com/docs/services/red-team-lab) | 100+ adversarial attack scenarios |
-| | [Forensics](https://soterai.publicvm.com/docs/services/forensics) | Incident investigation and root cause analysis |
-| | [Semantic Egress](https://soterai.publicvm.com/docs/services/semantic-egress) | Detect paraphrased confidential data leaks |
-| | [Canary Network](https://soterai.publicvm.com/docs/services/canary-network) | Tripwire tokens for prompt injection detection |
-| **📋 Compliance** | [Evidence Vault](https://soterai.publicvm.com/docs/services/evidence-vault) | SOC 2 / ISO 27001 evidence packaging |
-| | [Context Lineage](https://soterai.publicvm.com/docs/services/context-lineage) | Data provenance and cross-domain leak blocking |
-| | [Blast Radius](https://soterai.publicvm.com/docs/services/blast-radius) | Agent compromise damage estimation |
-| | [Credential Vault](https://soterai.publicvm.com/docs/services/credential-vault) | Secure credential storage for agents |
-| **⚙️ Manage** | [Projects](https://soterai.publicvm.com/docs/services/projects) | Multi-environment project organization |
-| | [API Keys](https://soterai.publicvm.com/docs/services/api-keys) | Scoped keys with independent rate limits |
-| | [Cost Firewall](https://soterai.publicvm.com/docs/services/cost-firewall) | Prevent runaway LLM spending |
-| | [Security Badges](https://soterai.publicvm.com/docs/services/security-badges) | Real-time protection status badges |
-| | [Billing](https://soterai.publicvm.com/docs/services/billing) | Plan management and usage tracking |
-| | [Settings](https://soterai.publicvm.com/docs/services/settings) | Profile, team, and preferences |
-| | [Audit Exports](https://soterai.publicvm.com/docs/services/audit-exports) | Compliance-ready audit log exports |
-| | [Onboarding](https://soterai.publicvm.com/docs/services/onboarding) | Guided setup with live validation |
+| **🎛️ Agent Control** | [Agent Control Center](https://soterai.in/docs/services/agent-control) | Unified approval queue, reversibility ledger, and compliance posture |
+| | [Agent Firewall](https://soterai.in/docs/services/agent-firewall) | Real-time agent action monitoring and blocking |
+| | [Action Ledger](https://soterai.in/docs/services/action-ledger) | Classify actions as irreversible/compensating/reversible with rollback |
+| | [Identity Fabric](https://soterai.in/docs/services/identity-fabric) | Cryptographic agent identities, delegation chains, service principals |
+| | [Agent Passports](https://soterai.in/docs/services/agent-passports) | Cryptographic agent identity verification |
+| | [Transaction Escrow](https://soterai.in/docs/services/transaction-escrow) | Human-in-the-loop for risky agent actions |
+| | [Intent Guard](https://soterai.in/docs/services/intent-guard) | Verify actions match original user intent |
+| | [Tool Chain](https://soterai.in/docs/services/tool-chain) | Multi-step attack pattern detection |
+| | [Dry-Run Sandbox](https://soterai.in/docs/services/dry-run-sandbox) | Simulate policies without production impact |
+| | [Memory Firewall](https://soterai.in/docs/services/memory-firewall) | Quarantine poisoned agent memory |
+| | [MCP Drift](https://soterai.in/docs/services/mcp-drift) | Monitor MCP server tool changes |
+| | [Legal Boundary](https://soterai.in/docs/services/legal-boundary) | Hard guardrails for regulatory compliance |
+| **🏛️ Usage Governance** | [Governance Dashboard](https://soterai.in/docs/services/usage-governance) | Company-wide AI usage policy management |
+| | [Policy Configuration](https://soterai.in/docs/services/governance-policy) | Default actions, data handling rules, approval requirements |
+| | [Provider Rules](https://soterai.in/docs/services/governance-providers) | Allow/block specific AI providers and models |
+| | [Department Rules](https://soterai.in/docs/services/governance-departments) | Per-department AI usage policies |
+| | [Data Classification](https://soterai.in/docs/services/governance-data-classification) | Sensitivity levels per provider mapping |
+| | [Approval Workflows](https://soterai.in/docs/services/governance-approvals) | Review and manage AI provider access requests |
+| | [Employee Monitoring](https://soterai.in/docs/services/governance-monitoring) | Track AI usage across the organization |
+| | [Audit Trail](https://soterai.in/docs/services/governance-audit) | Complete log of AI usage and policy changes |
+| | [Compliance Reports](https://soterai.in/docs/services/governance-reports) | Weekly/monthly/quarterly governance reports |
+| **👁️ Monitor** | [Guard Logs](https://soterai.in/docs/services/guard-logs) | Full audit trail of every security decision |
+| | [Reports](https://soterai.in/docs/services/reports) | Automated security reports with trend analysis |
+| | [Detection Feedback](https://soterai.in/docs/services/detection-feedback) | Improve detection accuracy by marking false positives |
+| | [Customer Success](https://soterai.in/docs/services/customer-success) | Activation rates and churn risk analytics |
+| **🛡️ Protect** | [Agent Firewall](https://soterai.in/docs/services/agent-firewall) | Real-time agent action monitoring and blocking |
+| | [Policy Engine](https://soterai.in/docs/services/policy-engine) | Configurable risk thresholds and action policies |
+| | [RAG Security](https://soterai.in/docs/services/rag-security) | Document scanning and retrieval-time guard |
+| | [Webhooks](https://soterai.in/docs/services/webhooks) | Signed real-time security event notifications |
+| **🔍 Detect** | [Shadow AI](https://soterai.in/docs/services/shadow-ai) | Uncover unauthorized AI tool usage |
+| | [Red Team Lab](https://soterai.in/docs/services/red-team-lab) | 100+ adversarial attack scenarios |
+| | [Forensics](https://soterai.in/docs/services/forensics) | Incident investigation and root cause analysis |
+| | [Semantic Egress](https://soterai.in/docs/services/semantic-egress) | Detect paraphrased confidential data leaks |
+| | [Canary Network](https://soterai.in/docs/services/canary-network) | Tripwire tokens for prompt injection detection |
+| **📋 Compliance** | [Evidence Vault](https://soterai.in/docs/services/evidence-vault) | SOC 2 / ISO 27001 evidence packaging |
+| | [Context Lineage](https://soterai.in/docs/services/context-lineage) | Data provenance and cross-domain leak blocking |
+| | [Blast Radius](https://soterai.in/docs/services/blast-radius) | Agent compromise damage estimation |
+| | [Credential Vault](https://soterai.in/docs/services/credential-vault) | Secure credential storage for agents |
+| **⚙️ Manage** | [Projects](https://soterai.in/docs/services/projects) | Multi-environment project organization |
+| | [API Keys](https://soterai.in/docs/services/api-keys) | Scoped keys with independent rate limits |
+| | [Cost Firewall](https://soterai.in/docs/services/cost-firewall) | Prevent runaway LLM spending |
+| | [Security Badges](https://soterai.in/docs/services/security-badges) | Real-time protection status badges |
+| | [Billing](https://soterai.in/docs/services/billing) | Plan management and usage tracking |
+| | [Settings](https://soterai.in/docs/services/settings) | Profile, team, and preferences |
+| | [Audit Exports](https://soterai.in/docs/services/audit-exports) | Compliance-ready audit log exports |
+| | [Onboarding](https://soterai.in/docs/services/onboarding) | Guided setup with live validation |
 
-> 📖 **Full documentation available at:** [soterai.publicvm.com/docs/services](https://soterai.publicvm.com/docs/services)
+> 📖 **Full documentation available at:** [soterai.in/docs/services](https://soterai.in/docs/services)
 
 <br />
 
@@ -711,10 +711,10 @@ Copyright © 2026 Yash Chauhan. Contributions require signing the [CLA](CLA.md).
   </p>
   <br />
   <p>
-    <a href="https://soterai.publicvm.com">🌐 Website</a> •
-    <a href="https://soterai.publicvm.com/docs">📖 Docs</a> •
-    <a href="https://soterai.publicvm.com/playground">🎮 Playground</a> •
-    <a href="https://soterai.publicvm.com/pricing">💵 Pricing</a> •
+    <a href="https://soterai.in">🌐 Website</a> •
+    <a href="https://soterai.in/docs">📖 Docs</a> •
+    <a href="https://soterai.in/playground">🎮 Playground</a> •
+    <a href="https://soterai.in/pricing">💵 Pricing</a> •
     <a href="https://github.com/yashchauhan66/Ai-Security-Guard/issues">🐛 Issues</a> •
     <a href="https://github.com/yashchauhan66/Ai-Security-Guard/discussions">💬 Discussions</a>
   </p>

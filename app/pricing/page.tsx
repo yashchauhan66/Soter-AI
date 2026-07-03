@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 
-const siteUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://soterai.dev";
+const siteUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://soterai.in";
 
 const pricingJsonLd = {
   "@context": "https://schema.org",

@@ -6,20 +6,37 @@ import { secretsDetector } from "./detectors/secretsDetector";
 import { systemPromptLeakageDetector, systemPromptLeakAttemptDetector } from "./detectors/systemPromptLeakDetector";
 import { spamUrlDetector } from "./detectors/spamUrlDetector";
 import { unsafeOutputDetector } from "./detectors/unsafeOutputDetector";
+import { outputExfiltrationDetector } from "./detectors/outputExfiltrationDetector";
 import { decideGuardAction } from "./decisionEngine";
 import { redactText } from "./redactor";
 import { rewriteRiskyText } from "./rewrite";
 import { scoreRisk } from "./riskScoring";
+import { classifySemantic } from "./semanticClassifier";
 import { MAX_TEXT_LENGTH } from "./constants";
 import type { GuardDirection, GuardFinding, GuardResult, RiskType } from "./types";
 
+// Risk types the regex/signature detectors emit for an adversarial input. When
+// any of these already fired we skip the semantic layer — it exists to catch
+// novel wordings the rules missed, not to re-flag what they already caught.
+const RULE_SECURITY_TYPES = new Set<RiskType>([
+  "PROMPT_INJECTION",
+  "JAILBREAK",
+  "SYSTEM_PROMPT_LEAK_ATTEMPT",
+]);
+
 const COMMON_DETECTORS = [piiDetector, indiaPiiDetector, secretsDetector];
 const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, systemPromptLeakAttemptDetector, ...COMMON_DETECTORS];
-const OUTPUT_DETECTORS = [systemPromptLeakageDetector, unsafeOutputDetector, spamUrlDetector, ...COMMON_DETECTORS];
+const OUTPUT_DETECTORS = [systemPromptLeakageDetector, unsafeOutputDetector, outputExfiltrationDetector, spamUrlDetector, ...COMMON_DETECTORS];
 
 export function analyzeText(text: string, direction: GuardDirection): GuardResult {
   const detectors = direction === "OUTPUT" ? OUTPUT_DETECTORS : INPUT_DETECTORS;
   const findings: GuardFinding[] = detectors.flatMap((detector) => detector(text));
+
+  // Set when the semantic layer (not the rules) is the sole reason a request is
+  // flagged. Such requests are held for human review rather than blocked, since
+  // the embedding heuristic is higher-recall but lower-precision than the rules.
+  let semanticOnly = false;
+  let semanticMetadata: Record<string, unknown> | undefined;
 
   if (direction === "OUTPUT" && /unsafe.*placeholder|simulation/i.test(text)) {
     findings.push({
@@ -202,6 +219,33 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
         message: "The request attempts to force excessive generation, looping, or tool usage."
       });
     }
+
+    // Semantic recall booster: only when the rules found no adversarial pattern,
+    // ask the embedding classifier whether the request *means* an injection /
+    // jailbreak / leak attempt in a wording the signatures never anticipated. A
+    // hit is reported as a MEDIUM finding and (below) routed to human review — it
+    // never hard-blocks on its own, bounding the false-positive cost.
+    const hasRuleSecurityFinding = findings.some((finding) => RULE_SECURITY_TYPES.has(finding.type));
+    if (!hasRuleSecurityFinding) {
+      const semantic = classifySemantic(text);
+      if (semantic.isAttack && semantic.family) {
+        semanticOnly = true;
+        semanticMetadata = {
+          family: semantic.family,
+          score: semantic.score,
+          margin: semantic.margin,
+          benignSimilarity: semantic.benignSimilarity,
+        };
+        findings.push({
+          type: "PROMPT_INJECTION",
+          label: `Semantic anomaly (${semantic.family})`,
+          severity: "MEDIUM",
+          score: 45,
+          message:
+            "No signature matched, but this request is semantically similar to known adversarial prompts and was held for review.",
+        });
+      }
+    }
   }
 
   if (text.length > MAX_TEXT_LENGTH * 0.75) {
@@ -211,7 +255,12 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
   const riskScore = scoreRisk(findings);
   const riskTypes = ([...new Set(findings.map((finding) => finding.type))] as RiskType[]);
   if (riskTypes.length === 0) riskTypes.push("LOW_RISK");
-  const action = decideGuardAction(riskScore, riskTypes, direction, text);
+  let action = decideGuardAction(riskScore, riskTypes, direction, text);
+  // A semantic-only detection is held for human review rather than allowed or
+  // silently rewritten, but is never escalated to a hard block on its own.
+  if (semanticOnly && action !== "BLOCK" && action !== "HUMAN_REVIEW") {
+    action = "HUMAN_REVIEW";
+  }
   const redactedText = redactText(text, findings);
   const changed = redactedText !== text;
   const allowed = action === "ALLOW" || action === "ALLOW_WITH_REDACTION" || action === "REWRITE";
@@ -240,7 +289,11 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
     safeText,
     reason,
     findings,
-    metadata: { direction, findingCount: findings.length },
+    metadata: {
+      direction,
+      findingCount: findings.length,
+      ...(semanticMetadata ? { semantic: semanticMetadata } : {}),
+    },
   };
 }
 

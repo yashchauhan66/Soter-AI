@@ -1,4 +1,5 @@
 import type { ExtensionState } from "./types";
+import { DEFAULT_EXTENSION_API_BASE_URL } from "../../../../packages/shared/src/constants";
 
 export function enrollmentMarkup(state: ExtensionState) {
   if (state.enrollmentStatus === "enrolled") return "";
@@ -7,10 +8,10 @@ export function enrollmentMarkup(state: ExtensionState) {
       <h2>Connect to your Soter organization</h2>
       <p class="help">Enter the enrollment code supplied by your administrator.</p>
       <label>Enrollment code<input data-enrollment-code type="password" autocomplete="off" spellcheck="false" /></label>
-      <label>API base URL<input data-api-base-url type="url" value="${escapeHtml(state.config.apiBaseUrl || "http://localhost:3000")}" /></label>
+      <label>API base URL<input data-api-base-url type="url" value="${escapeHtml(state.config.apiBaseUrl || DEFAULT_EXTENSION_API_BASE_URL)}" /></label>
       <button data-enroll>Connect</button>
       <p class="error" data-enrollment-error hidden></p>
-      <p class="help" style="margin-top:8px; text-align:center;">Don't have an enterprise account?<br><a href="https://soter-example.com/request-access" target="_blank" style="color:#1463ff;text-decoration:none;">Learn more or Request Access</a></p>
+      <p class="help" style="margin-top:8px; text-align:center;">Don't have an enterprise account?<br><a href="${DEFAULT_EXTENSION_API_BASE_URL}/enterprise/pilot" target="_blank" style="color:#1463ff;text-decoration:none;">Learn more or Request Access</a></p>
     </section>`;
 }
 

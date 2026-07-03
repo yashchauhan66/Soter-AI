@@ -35,8 +35,8 @@ zapier migrate <old_version> <new_version> --percent 100
 |-------|------|--------|
 | App Icon | 256x256 PNG, transparent background | [ ] |
 | App Category | Security | [ ] |
-| Privacy Policy URL | https://soterai.dev/privacy | [ ] |
-| Terms of Service URL | https://soterai.dev/terms | [ ] |
+| Privacy Policy URL | https://soterai.in/privacy | [ ] |
+| Terms of Service URL | https://soterai.in/terms | [ ] |
 | Support Email | support@soterai.dev | [ ] |
 | Demo Video | 2-5 min walkthrough of a working Zap | [ ] |
 | App Description | Submitted in Zapier partner dashboard | [ ] |

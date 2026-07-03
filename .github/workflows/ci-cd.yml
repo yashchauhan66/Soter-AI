@@ -241,11 +241,11 @@ jobs:
             if [ -d "$REPO_DIR/.git" ]; then
               cd "$REPO_DIR"
               git stash 2>/dev/null || true
-              git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/yashchauhan66/Ai-Security-Guard.git
+              git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/yashchauhan66/Soter-AI.git
               git pull --rebase
               echo "  ✅ Repo updated"
             else
-              git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/yashchauhan66/Ai-Security-Guard.git "$REPO_DIR"
+              git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/yashchauhan66/Soter-AI.git "$REPO_DIR"
               cd "$REPO_DIR"
               echo "  ✅ Repo cloned"
             fi
@@ -261,6 +261,13 @@ jobs:
               echo "  ❌ ERROR: .env.production not found!"
               exit 1
             fi
+
+            # Keep the canonical production URL correct even when the stored
+            # ENV_PRODUCTION secret still contains the retired hostname.
+            sed -i \
+              -e 's|^NEXTAUTH_URL=.*$|NEXTAUTH_URL=https://soterai.in|' \
+              -e 's|^NEXT_PUBLIC_APP_URL=.*$|NEXT_PUBLIC_APP_URL=https://soterai.in|' \
+              "$REPO_DIR/.env.production"
 
             # ── Step 3: Login to Docker Hub ────────────────────────
             echo ""

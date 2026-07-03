@@ -10,7 +10,7 @@ import { Pricing } from "@/components/marketing/Pricing";
 import { TwoProducts } from "@/components/marketing/TwoProducts";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
-const siteUrl = "https://soterai.publicvm.com";
+const siteUrl = "https://soterai.in";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },

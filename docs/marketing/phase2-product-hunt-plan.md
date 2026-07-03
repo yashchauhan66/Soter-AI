@@ -52,7 +52,7 @@ W-4      W-3      W-2      W-1      LAUNCH      W+1
 | **D-12** | **Resize images** — All to 1164×760px for PH gallery | ⬜ |
 | **D-11** | **Draft PH listing** — Fill in all fields on producthunt.com (don't submit yet) | ⬜ |
 | **D-10** | **Test all links** — GitHub, demo, playground, docs — sab kaam kar rahe hain? | ⬜ |
-| **D-9** | **Prepare landing page** — Make sure soterai.publicvm.com is optimized for PH traffic | ⬜ |
+| **D-9** | **Prepare landing page** — Make sure soterai.in is optimized for PH traffic | ⬜ |
 
 ### W-1: Final Hype (Days 8-1)
 

@@ -518,7 +518,12 @@ function passportDecisionToAgentDecision(result: Awaited<ReturnType<typeof check
 }
 
 function cryptoRandomFallback() {
-  return globalThis.crypto?.randomUUID?.() ?? Math.random().toString(36).slice(2);
+  const cryptoApi = globalThis.crypto;
+  if (cryptoApi?.randomUUID) return cryptoApi.randomUUID();
+  // SECURITY: never fall back to Math.random for identifiers — it is
+  // predictable. getRandomValues is available in Node 18+ and all edge runtimes.
+  const bytes = cryptoApi.getRandomValues(new Uint8Array(16));
+  return Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
 }
 
 export function routeError(error: unknown, fallback: string) {

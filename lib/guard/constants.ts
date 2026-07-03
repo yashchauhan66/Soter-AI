@@ -24,6 +24,7 @@ export const RISK_WEIGHTS: Record<Exclude<RiskType, "LOW_RISK">, number> = {
   INDIA_PII_DETECTED: 30,
   SECRET_DETECTED: 70,
   UNSAFE_OUTPUT: 40,
+  DATA_EXFILTRATION: 60,
   RATE_LIMIT: 30,
   TOKEN_ABUSE: 30,
 };

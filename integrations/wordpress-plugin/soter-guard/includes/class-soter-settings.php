@@ -48,7 +48,7 @@ class Soter_Settings {
 	 */
 	public static function defaults() {
 		return array(
-			'base_url'      => 'https://api.soterai.publicvm.com',
+			'base_url'      => 'https://api.soterai.in',
 			'api_key'       => '',
 			'project_id'    => '',
 			'enable_input'  => 1,

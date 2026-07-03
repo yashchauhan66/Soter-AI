@@ -8,6 +8,7 @@
 
 import { getState, setState } from "./storage";
 import type { ExtensionConfig, ExtensionState } from "./types";
+import { DEFAULT_EXTENSION_API_BASE_URL } from "../../../../packages/shared/src/constants";
 
 export const ENROLLMENT_STATUS_KEY = "soter.enrollment.status";
 
@@ -89,7 +90,7 @@ export async function enrollFromManagedConfig(): Promise<EnrollmentInfo> {
 
   // Build config from managed settings
   const config: Partial<ExtensionConfig> = {
-    apiBaseUrl: managed.apiBaseUrl || "https://api.soter.ai",
+    apiBaseUrl: managed.apiBaseUrl || DEFAULT_EXTENSION_API_BASE_URL,
     organizationId: managed.organizationId!,
     employeeId: managed.employeeId || managed.email || "unknown",
     employeeEmail: managed.email,
@@ -227,7 +228,7 @@ export async function unenroll(): Promise<void> {
     enrollmentStatus: "unenrolled",
     enrollmentMode: undefined,
     config: {
-      apiBaseUrl: "http://localhost:3000",
+      apiBaseUrl: DEFAULT_EXTENSION_API_BASE_URL,
       organizationId: "",
       employeeId: "",
     },

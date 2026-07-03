@@ -58,7 +58,7 @@ export const inputGuard = {
     },
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
       const baseUrl = (
-        bundle.authData.baseUrl || "https://soterai.publicvm.com"
+        bundle.authData.baseUrl || "https://soterai.in"
       ).replace(/\/$/, "");
       const meta: Record<string, unknown> = tryParseJson(
         bundle.inputData.metadata,
@@ -138,7 +138,7 @@ export const outputGuard = {
     },
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
       const baseUrl = (
-        bundle.authData.baseUrl || "https://soterai.publicvm.com"
+        bundle.authData.baseUrl || "https://soterai.in"
       ).replace(/\/$/, "");
       const meta: Record<string, unknown> = {};
       const pid = bundle.inputData.projectId || bundle.authData.projectId;
@@ -200,7 +200,7 @@ export const piiRedactor = {
     },
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
       const baseUrl = (
-        bundle.authData.baseUrl || "https://soterai.publicvm.com"
+        bundle.authData.baseUrl || "https://soterai.in"
       ).replace(/\/$/, "");
       const meta: Record<string, unknown> = {};
       const pid = bundle.inputData.projectId || bundle.authData.projectId;
@@ -278,7 +278,7 @@ export const ragScanner = {
     },
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
       const baseUrl = (
-        bundle.authData.baseUrl || "https://soterai.publicvm.com"
+        bundle.authData.baseUrl || "https://soterai.in"
       ).replace(/\/$/, "");
       const pid = bundle.inputData.projectId || bundle.authData.projectId;
 

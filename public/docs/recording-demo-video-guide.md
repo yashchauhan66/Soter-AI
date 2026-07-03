@@ -14,7 +14,7 @@ Loom is the simplest way to record a demo — works in browser, no software inst
 
 **Step 2: Record**
 1. Install Loom Chrome extension (or use desktop app)
-2. Open your app: https://soterai.publicvm.com
+2. Open your app: https://soterai.in
 3. Click Loom extension → "Screen + Camera" or "Screen Only"
 4. Record this script:
 

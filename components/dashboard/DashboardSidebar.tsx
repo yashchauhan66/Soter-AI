@@ -27,6 +27,7 @@ import {
   ListChecks,
   Milestone,
   Network,
+  Puzzle,
   Radio,
   ScrollText,
   Search,
@@ -129,6 +130,7 @@ const navGroups: NavGroup[] = [
     label: "Security Tools",
     items: [
       { Icon: CodeXml, label: "AI Code Review", href: "/dashboard/code-security", badge: "NEW" },
+      { Icon: Puzzle, label: "Browser Extension", href: "/dashboard/browser-extension", badge: "NEW" },
       { Icon: DatabaseZap, label: "RAG security", href: "/dashboard/rag" },
       { Icon: FileSearch, label: "Model scanner", href: "/dashboard/security/model-scan", badge: "NEW" },
       { Icon: EyeOff, label: "Shadow AI", href: "/dashboard/shadow-ai" },
