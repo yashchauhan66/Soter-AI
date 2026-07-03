@@ -2,6 +2,12 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.2.7] - 2026-07-03
+
+### Changed
+
+- Migrated the production API base URL, documentation, and marketplace links to `https://soterai.in`.
+
 ## [0.2.6] - 2026-07-02
 
 ### Fixed

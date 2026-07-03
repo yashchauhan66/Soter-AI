@@ -163,7 +163,7 @@ class SoterGuard {
         const returnData = [];
         const credentials = await this.getCredentials("soterApi");
         const apiKey = credentials.apiKey;
-        const baseUrl = credentials.baseUrl || "https://soterai.publicvm.com";
+        const baseUrl = credentials.baseUrl || "https://soterai.in";
         const credentialProjectId = credentials.projectId || undefined;
         for (let i = 0; i < items.length; i++) {
             try {
