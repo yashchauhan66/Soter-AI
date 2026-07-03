@@ -227,9 +227,9 @@ Use SoterAI as **one layer** in a defense-in-depth strategy — alongside secure
 ## Try It Yourself
 
 - **GitHub:** [github.com/yashchauhan66/Ai-Security-Guard](https://github.com/yashchauhan66/Ai-Security-Guard) ⭐
-- **Live Demo:** [soterai.publicvm.com](https://soterai.publicvm.com)
-- **Playground:** [soterai.publicvm.com/playground](https://soterai.publicvm.com/playground)
-- **Docs:** [soterai.publicvm.com/docs](https://soterai.publicvm.com/docs)
+- **Live Demo:** [soterai.in](https://soterai.in)
+- **Playground:** [soterai.in/playground](https://soterai.in/playground)
+- **Docs:** [soterai.in/docs](https://soterai.in/docs)
 
 ---
 

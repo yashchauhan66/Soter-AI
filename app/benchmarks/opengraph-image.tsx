@@ -289,7 +289,7 @@ export default function Image() {
             >
               &#x1F6E1;
             </span>
-            soterai.publicvm.com/benchmarks
+            soterai.in/benchmarks
           </div>
           <div
             style={{

@@ -8,7 +8,7 @@
  * reference these via their stable @id values.
  */
 
-export const SITE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://soterai.publicvm.com";
+export const SITE_URL = process.env.NEXT_PUBLIC_APP_URL ?? "https://soterai.in";
 export const SITE_NAME = "SoterAI";
 
 export const ORGANIZATION_ID = `${SITE_URL}#organization`;

@@ -22,7 +22,7 @@ This custom app brings SoterAI's security scanning directly into your Make.com s
 | Field | Required | Description |
 |-------|----------|-------------|
 | **API Key** | Yes | Your SoterAI API key (starts with `sk_`). |
-| **Base URL** | No | Defaults to `https://soterai.publicvm.com`. Change only for self-hosted deployments. |
+| **Base URL** | No | Defaults to `https://soterai.in`. Change only for self-hosted deployments. |
 | **Project ID** | No | Default SoterAI project ID applied to all modules unless overridden per-step. |
 
 ## Example Scenarios
@@ -73,7 +73,7 @@ make/
 
 - All text is sent to the SoterAI API over HTTPS for scanning. No text is stored after analysis unless incident logging is enabled.
 - API keys should be treated as secrets. Use Make.com's built-in connection storage.
-- See [https://soterai.dev/privacy](https://soterai.dev/privacy) for the full privacy policy.
+- See [https://soterai.in/privacy](https://soterai.in/privacy) for the full privacy policy.
 
 ## Status
 

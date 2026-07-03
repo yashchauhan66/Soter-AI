@@ -2,7 +2,7 @@
 
 A lightweight, zero-dependency Node.js utility for redacting Personally Identifiable Information (PII) from text.
 
-> **Sponsored by [SoterAI](https://soterai.publicvm.com)**  
+> **Sponsored by [SoterAI](https://soterai.in)**
 > This is a basic regex-based redactor. For enterprise-grade protection against **Prompt Injections**, **Jailbreaks**, and **Context Leaks**, upgrade to the full SoterAI Command Layer.
 
 ## Installation
@@ -38,4 +38,4 @@ Detects and redacts:
 ## Why use SoterAI instead of just Regex?
 Regex is great for basic PII, but LLMs are easily manipulated. A malicious user can prompt your bot to output sensitive data using base64 encoding, leetspeak, or prompt injections. 
 
-**[Get SoterAI for advanced AI security.](https://soterai.publicvm.com)**
+**[Get SoterAI for advanced AI security.](https://soterai.in)**

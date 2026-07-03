@@ -5,6 +5,7 @@
 
 import { createHash } from "crypto";
 import { analyzeText } from "@/lib/guard/analyze";
+import { normalizeForDetection } from "@/lib/guard/detectors/helpers";
 import { sanitizeLogText } from "@/lib/guard/logSafety";
 
 export type DriftRiskLevel = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
@@ -97,13 +98,18 @@ function schemaHasParam(schema: unknown, pattern: RegExp): boolean {
 
 export function snapshotTool(tool: McpToolInput): McpToolSnapshot {
   const description = tool.description ?? "";
-  const text = `${tool.name} ${description} ${JSON.stringify(tool.inputSchema ?? {})}`;
-  const capabilities = detectCapabilities(text);
+  // Normalize (fold homoglyphs, strip invisible/zero-width Unicode) before any
+  // keyword matching so obfuscated tool-poisoning metadata cannot hide its
+  // capabilities or injected instructions from the scanner.
+  const normalizedText = normalizeForDetection(`${tool.name} ${description} ${JSON.stringify(tool.inputSchema ?? {})}`);
+  const capabilities = detectCapabilities(normalizedText);
   const reasons = capabilities.map((cap) => cap.replace(/_/g, " "));
   let riskLevel = capabilities.length > 0 ? highestRisk(capabilities.map(riskForCapability)) : "LOW";
 
   const guard = analyzeText(description, "INPUT");
-  const promptInjectionDetected = PROMPT_INJECTION_IN_DESCRIPTION.test(description) || guard.riskTypes.includes("PROMPT_INJECTION");
+  const promptInjectionDetected =
+    PROMPT_INJECTION_IN_DESCRIPTION.test(normalizeForDetection(description)) ||
+    guard.riskTypes.includes("PROMPT_INJECTION");
   if (promptInjectionDetected) {
     riskLevel = "CRITICAL";
     reasons.push("prompt injection in tool description");

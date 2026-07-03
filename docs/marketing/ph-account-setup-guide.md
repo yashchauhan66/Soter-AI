@@ -58,7 +58,7 @@ Building SoterAI 🛡️ AI security for chatbots & agents. F1=1.0000, 97/97 att
 
 | Field | Value |
 |-------|-------|
-| **Website** | `https://soterai.publicvm.com` |
+| **Website** | `https://soterai.in` |
 | **GitHub** | `https://github.com/yashchauhan66/Ai-Security-Guard` |
 | **Twitter/X** | `https://twitter.com/soterai` (ya aapka personal) |
 | **LinkedIn** | Aapka LinkedIn profile link |
@@ -109,7 +109,7 @@ PH pe **karma** = aapki reputation. Zyada karma = zyada visibility.
 - [ ] Account created (`producthunt.com`)
 - [ ] Profile photo uploaded (real photo > logo)
 - [ ] Bio written (max 160 chars, includes "F1=1.0000")
-- [ ] Website link added (`soterai.publicvm.com`)
+- [ ] Website link added (`soterai.in`)
 - [ ] GitHub link added
 - [ ] Maker Profile 100% complete
 - [ ] Location: India

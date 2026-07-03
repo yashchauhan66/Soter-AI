@@ -117,8 +117,8 @@ Jab sab modules test ho jayein:
 3. Review ke liye chahiye:
    - Logo **512×512 PNG**
    - Short + long description
-   - Privacy: `https://soterai.dev/privacy`
-   - Terms: `https://soterai.dev/terms`
+   - Privacy: `https://soterai.in/privacy`
+   - Terms: `https://soterai.in/terms`
    - Support email: `support@soterai.dev`
 4. Make team review karegi (~2-4 hafte). Feedback aaye to thik karke resubmit.
 

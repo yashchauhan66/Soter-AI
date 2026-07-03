@@ -20,7 +20,7 @@ Voiceflow can call SoterAI through API Step blocks. This package contains copy-r
 Create these Voiceflow variables before importing or recreating the steps:
 
 - `{soter_api_key}`: SoterAI project API key.
-- `{soter_base_url}`: SoterAI API base URL, for example `https://soterai.dev`.
+- `{soter_base_url}`: SoterAI API base URL, for example `https://soterai.in`.
 - `{project_id}`: optional SoterAI project ID.
 - `{last_user_message}`: latest user input.
 - `{assistant_output}`: latest assistant response.

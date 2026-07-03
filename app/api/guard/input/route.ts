@@ -2,6 +2,13 @@ import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { authenticateApiKeyRequest } from "@/lib/apiKeyMiddleware";
 import { DEFAULT_RPM } from "@/lib/guard/constants";
 import { runInputGuard } from "@/lib/guard/inputGuard";
+import { applyCrescendoAssessment, trackCrescendo } from "@/lib/guard/crescendo";
+import {
+  applyAttackerReputation,
+  attackerFingerprint,
+  recordAndAssessAttacker,
+} from "@/lib/guard/attackerReputation";
+import { trustedClientIp } from "@/lib/publicRateLimit";
 import { applyPolicy, loadProjectPolicy } from "@/lib/guard/policy";
 import { persistGuardResult } from "@/lib/guard/persistence";
 import type { RiskType } from "@/lib/guard/types";
@@ -11,7 +18,7 @@ import { scheduleGuardResultPersistence } from "@/lib/guard/scheduledPersistence
 import { checkRedisRateLimit, peekMonthlyUsage, planLimit } from "@/lib/rateLimit";
 import { inputGuardSchema } from "@/lib/validations";
 import { recordRequestMetric } from "@/lib/ops/monitoring";
-import { recordTrustEventSafe, trustTraceContextFromHeaders } from "@/lib/trust-events";
+import { recordTrustEventDeferred, trustTraceContextFromHeaders } from "@/lib/trust-events";
 import { evaluateGovernance, logAiUsageEvent } from "@/lib/usage-governance";
 import { dispatchGovernanceEnforcement } from "@/lib/usage-governance/notifications";
 
@@ -180,7 +187,49 @@ export async function POST(request: Request) {
     }
 
     const baseline = runInputGuard(body.message);
-    const result = applyPolicy(body.message, baseline, policy, "INPUT");
+    let result = applyPolicy(body.message, baseline, policy, "INPUT");
+    // Crescendo detection: when the caller provides a sessionId, evaluate the
+    // session's rolling escalation pressure and hard-block turns that belong
+    // to a gradual multi-turn attack, even if this turn looks benign alone.
+    // Fails open so session-state issues never impact guard availability.
+    if (body.sessionId) {
+      try {
+        const crescendo = await trackCrescendo({
+          projectId: project.id,
+          sessionId: body.sessionId,
+          message: body.message,
+          result,
+        });
+        result = applyCrescendoAssessment(result, crescendo);
+      } catch (crescendoError) {
+        console.error("[SoterAI] Crescendo tracking failed (failing open)", crescendoError);
+      }
+    }
+
+    // Attacker fingerprinting: record this turn against a per-API-key/IP abuse
+    // memory and adaptively escalate. A caller who keeps probing the guard is
+    // treated more strictly on their next borderline request; a fully benign
+    // request from the same fingerprint still passes. Fails open so reputation
+    // storage never impacts guard availability.
+    try {
+      const crescendoEscalated =
+        (result.metadata as { crescendo?: { level?: string } } | undefined)?.crescendo?.level ===
+        "ESCALATED";
+      const reputation = await recordAndAssessAttacker({
+        projectId: project.id,
+        fingerprint: attackerFingerprint({ apiKeyId: apiKey.id, clientIp: trustedClientIp(request) }),
+        observation: {
+          action: result.action,
+          riskScore: result.riskScore,
+          riskTypes: result.riskTypes,
+          crescendoEscalated,
+        },
+      });
+      result = applyAttackerReputation(result, reputation);
+    } catch (reputationError) {
+      console.error("[SoterAI] Attacker reputation failed (failing open)", reputationError);
+    }
+
     scheduleGuardResultPersistence({
       projectId: project.id,
       apiKeyId: apiKey.id,
@@ -189,7 +238,11 @@ export async function POST(request: Request) {
       requestMetadata: { ...body.metadata, userId: body.userId ?? null, sessionId: body.sessionId ?? null },
       projectContext: project,
     });
-    const trust = orgId ? await recordTrustEventSafe({
+    // Trust-event persistence is deferred off the response path: the envelope
+    // (and its trace/span ids for the correlation headers) is built synchronously
+    // while the durable write completes in the background. This keeps guard
+    // latency free of the securityEvent + SIEM database round trips.
+    const trust = orgId ? recordTrustEventDeferred({
       organizationId: orgId,
       projectId: project.id,
       ...trustTraceContextFromHeaders(request),

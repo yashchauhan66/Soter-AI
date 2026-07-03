@@ -183,7 +183,7 @@ const KNOWLEDGE_BASE: KnowledgeEntry[] = [
   {
     keywords: ["badge", "security badge", "trust badge", "status badge", "shield"],
     response:
-      "**Security Badges** are trust indicators you can embed in your product to show users your AI is protected:\n\n• **Real-time status** — Badge shows LIVE ✅ when Guard is active and protecting traffic\n• **Customizable** — Multiple sizes (small, medium, large) and themes (dark, light, color)\n• **Embed anywhere** — HTML snippet, React component, or image URL for README/docs\n• **Open Source** — `<img src='https://your-instance.com/api/badge' />` — works in any README, docs site, or dashboard\n\nGet your badge snippet under **Badges** in your dashboard. Example: `https://soterai.publicvm.com/api/badge`",
+      "**Security Badges** are trust indicators you can embed in your product to show users your AI is protected:\n\n• **Real-time status** — Badge shows LIVE ✅ when Guard is active and protecting traffic\n• **Customizable** — Multiple sizes (small, medium, large) and themes (dark, light, color)\n• **Embed anywhere** — HTML snippet, React component, or image URL for README/docs\n• **Open Source** — `<img src='https://your-instance.com/api/badge' />` — works in any README, docs site, or dashboard\n\nGet your badge snippet under **Badges** in your dashboard. Example: `https://soterai.in/api/badge`",
   },
 ];
 

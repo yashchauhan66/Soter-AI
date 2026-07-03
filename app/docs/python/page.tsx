@@ -19,9 +19,9 @@ const breadcrumbSchema = {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.publicvm.com" },
-    { "@type": "ListItem", position: 2, name: "Docs", item: "https://soterai.publicvm.com/docs" },
-    { "@type": "ListItem", position: 3, name: "Python SDK", item: "https://soterai.publicvm.com/docs/python" },
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.in" },
+    { "@type": "ListItem", position: 2, name: "Docs", item: "https://soterai.in/docs" },
+    { "@type": "ListItem", position: 3, name: "Python SDK", item: "https://soterai.in/docs/python" },
   ],
 };
 

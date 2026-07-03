@@ -32,7 +32,7 @@ const authentication = {
       label: "Base URL",
       type: "string" as const,
       required: false,
-      default: "https://soterai.publicvm.com",
+      default: "https://soterai.in",
       helpText: "SoterAI production API base URL. Change only for a self-hosted HTTPS deployment.",
     },
     {

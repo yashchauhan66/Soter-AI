@@ -11,7 +11,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { siteJsonLd } from "@/lib/seo/schema";
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://soterai.publicvm.com";
+const siteUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://soterai.in";
 const siteName = "SoterAI";
 const siteDescription =
   "SoterAI is an AI security command layer for chatbots, RAG apps, and autonomous agents, protecting teams from prompt injection, data leakage, unsafe outputs, and agent abuse.";

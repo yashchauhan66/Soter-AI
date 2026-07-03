@@ -28,16 +28,16 @@ Restart n8n after installation.
 
 ## Credentials Setup
 
-1. Sign up at [https://soterai.publicvm.com](https://soterai.publicvm.com) and create a project.
+1. Sign up at [https://soterai.in](https://soterai.in) and create a project.
 2. Generate an API key from the project dashboard (it starts with `sk_`).
 3. In n8n, go to **Credentials > New Credential > SoterAI API**.
 4. Paste your API key.
-5. Keep the default **Base URL**: `https://soterai.publicvm.com`.
+5. Keep the default **Base URL**: `https://soterai.in`.
 6. (Optional) Set a default **Project ID** -- this can also be overridden per node.
 
 For self-hosted deployments, replace the Base URL with your own HTTPS SoterAI API endpoint.
 
-Full credential documentation: [https://soterai.publicvm.com/docs](https://soterai.publicvm.com/docs)
+Full credential documentation: [https://soterai.in/docs](https://soterai.in/docs)
 
 ## Actions
 
@@ -48,7 +48,6 @@ Check user messages for prompt injection, jailbreaks, and other threats **before
 | Field | Type | Description |
 |-------|------|-------------|
 | Input Text | string | The user message to analyse |
-| Policy Mode | MONITOR / BALANCED / STRICT | Server-side policy strictness |
 | On Threat | BLOCK / REDACT / WARN / CONTINUE | Local behavior when a threat is detected |
 | Project ID | string | Optional project override |
 | Metadata JSON | string | Optional audit metadata (JSON object) |
@@ -60,7 +59,6 @@ Check AI-generated responses for unsafe content, hallucinated PII, or policy vio
 | Field | Type | Description |
 |-------|------|-------------|
 | AI Output Text | string | The AI response to analyse |
-| Policy Mode | MONITOR / BALANCED / STRICT | Server-side policy strictness |
 | On Threat | BLOCK / REDACT / WARN / CONTINUE | Local behavior when a threat is detected |
 | Project ID | string | Optional project override |
 | Metadata JSON | string | Optional audit metadata (JSON object) |
@@ -72,7 +70,6 @@ Detect and redact sensitive data (emails, phone numbers, API keys, secrets) from
 | Field | Type | Description |
 |-------|------|-------------|
 | Text | string | The text to scan for PII |
-| Redaction Mode | PARTIAL / FULL / HASH | How detected PII is replaced |
 | Project ID | string | Optional project override |
 | Metadata JSON | string | Optional audit metadata (JSON object) |
 
@@ -83,20 +80,8 @@ Scan documents and text chunks for embedded threats, hidden instructions, or dat
 | Field | Type | Description |
 |-------|------|-------------|
 | Document Text | string | The document or chunk text to scan |
-| Source Name | string | Optional label for the document source |
-| Project ID | string | Optional project override |
-| Metadata JSON | string | Optional audit metadata (JSON object) |
-
-### SoterAI Incident Logger
-
-Log a security incident to the SoterAI ops dashboard for security review. This action requires admin-level API access and will return a graceful no-op if the caller lacks the required permissions.
-
-| Field | Type | Description |
-|-------|------|-------------|
-| Platform | string | Where the incident originated (default: `n8n`) |
-| Workflow ID | string | ID of the workflow where the incident was detected |
-| Risk Score | number | Risk score from 0.0 to 1.0 |
-| Reason | string | Human-readable incident description |
+| Document ID | string | Stable identifier used to track the document scan |
+| Document Source | API / Email / File Upload / URL / Unknown | Where the document entered the RAG pipeline |
 | Project ID | string | Optional project override |
 | Metadata JSON | string | Optional audit metadata (JSON object) |
 
@@ -130,20 +115,10 @@ Log a security incident to the SoterAI ops dashboard for security review. This a
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `allowed` | boolean | Whether the document is safe to ingest |
-| `riskScore` | number | Overall risk score |
-| `issues` | array | List of issues with type, severity, message |
-| `safeText` | string | Cleaned version of the document |
-| `incidentId` | string | Incident ID if one was created |
-| `rawResponse` | object | Full API response |
-
-### Incident Logger
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `logged` | boolean | Whether the incident was successfully logged |
-| `incidentId` | string | ID of the created incident (if logged) |
-| `reason` | string | Explanation if logging failed (e.g. insufficient permissions) |
+| `trustScore` | number | Document trust score from 0.0 to 1.0 |
+| `trustLevel` | string | Trust classification (e.g. `TRUSTED`, `NEEDS_REVIEW`, `UNTRUSTED`) |
+| `findings` | array | List of issues found in the document |
+| `recommendedAction` | string | Suggested action (e.g. `ALLOW`, `REVIEW`, `REJECT`) |
 | `rawResponse` | object | Full API response |
 
 ## Example Workflow
@@ -170,14 +145,14 @@ To import: in n8n, go to **Workflows > Import from File** and select the JSON fi
 
 ## Resources
 
-- [SoterAI Documentation](https://soterai.publicvm.com/docs)
-- [n8n Integration Guide](https://soterai.publicvm.com/docs)
-- [SoterAI Dashboard](https://soterai.publicvm.com)
-- [Privacy Policy](https://soterai.publicvm.com/privacy)
-- [Terms of Service](https://soterai.publicvm.com/terms)
-- [Pricing](https://soterai.publicvm.com/pricing)
-- [Status](https://soterai.publicvm.com/status)
-- [Support](https://soterai.publicvm.com/support)
+- [SoterAI Documentation](https://soterai.in/docs)
+- [n8n Integration Guide](https://soterai.in/docs)
+- [SoterAI Dashboard](https://soterai.in)
+- [Privacy Policy](https://soterai.in/privacy)
+- [Terms of Service](https://soterai.in/terms)
+- [Pricing](https://soterai.in/pricing)
+- [Status](https://soterai.in/status)
+- [Support](https://soterai.in/support)
 - [GitHub Repository](https://github.com/yashchauhan66/Soter-AI/tree/main/packages/integrations/n8n)
 - [npm Package](https://www.npmjs.com/package/n8n-nodes-soterai)
 
@@ -185,7 +160,7 @@ To import: in n8n, go to **Workflows > Import from File** and select the JSON fi
 
 - **Email**: support@soterai.dev
 - **GitHub Issues**: [https://github.com/yashchauhan66/Soter-AI/issues](https://github.com/yashchauhan66/Soter-AI/issues)
-- **Documentation**: [https://soterai.publicvm.com/docs](https://soterai.publicvm.com/docs)
+- **Documentation**: [https://soterai.in/docs](https://soterai.in/docs)
 
 ## License
 

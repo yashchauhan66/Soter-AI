@@ -168,6 +168,38 @@ export async function recordTrustEventSafe(input: TrustEventInput) {
   }
 }
 
+/**
+ * Latency-critical variant of {@link recordTrustEventSafe}.
+ *
+ * Trust-event persistence costs two-to-three awaited database round trips
+ * (securityEvent.create + siemIntegration lookup + optional delivery fan-out),
+ * which sit directly on the guard API response path. Callers on that hot path
+ * only need the envelope's `traceId`/`spanId` to emit correlation headers — the
+ * durable write can complete after the response is sent.
+ *
+ * This builds the signed envelope synchronously (so headers are available with
+ * zero I/O) and schedules the durable persist in the background, reusing the
+ * envelope's own `traceId`/`spanId`/`occurredAt` so the persisted record
+ * matches exactly what the client was told. It fails open: a background
+ * persistence error never affects the request that already returned.
+ */
+export function recordTrustEventDeferred(input: TrustEventInput): { event: TrustEventEnvelope } {
+  const event = buildTrustEvent(input);
+  void recordTrustEvent({
+    ...input,
+    traceId: event.traceId,
+    spanId: event.spanId,
+    parentSpanId: event.parentSpanId ?? undefined,
+    occurredAt: event.occurredAt,
+  }).catch((error) => {
+    console.error(
+      "[SoterAI] Deferred trust event persistence failed",
+      error instanceof Error ? error.message : "Unknown error",
+    );
+  });
+  return { event };
+}
+
 export function trustTraceContextFromHeaders(request: Request): TrustTraceContext {
   const traceId = request.headers.get("x-soter-trace-id")?.trim().toLowerCase();
   const parentSpanId = request.headers.get("x-soter-parent-span-id")?.trim().toLowerCase();

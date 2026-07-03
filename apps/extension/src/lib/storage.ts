@@ -1,4 +1,4 @@
-import { DEFAULT_POLICY_VERSION, EXTENSION_STATE_KEY, POLICY_CACHE_KEY } from "../../../../packages/shared/src/constants";
+import { DEFAULT_EXTENSION_API_BASE_URL, DEFAULT_POLICY_VERSION, EXTENSION_STATE_KEY, POLICY_CACHE_KEY } from "../../../../packages/shared/src/constants";
 import type { ExtensionOrgPolicy } from "../../../../packages/policy-engine/src/types";
 import type { ExtensionState } from "./types";
 import { BUILT_IN_AI_DESTINATIONS } from "../../../../packages/shared/src/ai-destinations";
@@ -46,7 +46,7 @@ const defaultPolicy: ExtensionOrgPolicy = {
 export const defaultState: ExtensionState = {
   enabled: true,
   config: {
-    apiBaseUrl: "http://localhost:3000",
+    apiBaseUrl: DEFAULT_EXTENSION_API_BASE_URL,
     organizationId: "demo-org",
     employeeId: "demo-employee",
   },

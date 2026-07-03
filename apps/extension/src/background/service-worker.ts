@@ -1,4 +1,4 @@
-import { SOTER_EXTENSION_VERSION } from "../../../../packages/shared/src/constants";
+import { DEFAULT_EXTENSION_API_BASE_URL, SOTER_EXTENSION_VERSION } from "../../../../packages/shared/src/constants";
 import type { ExtensionAuditEvent } from "../../../../packages/shared/src/audit-types";
 import { SCAN_CONTEXT_MENU_ID, registerContextMenu } from "./context-menu";
 import { browserName, sendHeartbeat } from "./heartbeat";
@@ -57,7 +57,7 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     return true;
   }
   if (message.type === "SOTER_ENROLL") {
-    void enrollWithCode(message.apiBaseUrl ?? "http://localhost:3000", message.enrollmentCode ?? "").then(async (result) => {
+    void enrollWithCode(message.apiBaseUrl ?? DEFAULT_EXTENSION_API_BASE_URL, message.enrollmentCode ?? "").then(async (result) => {
       if (result.ok) {
         await syncPolicy();
         await sendHeartbeat();

@@ -73,5 +73,5 @@
 4. [ ] Capture all screenshots
 5. [ ] Record demo video
 6. [ ] Complete legal counsel review of Privacy Policy and Terms
-7. [ ] Configure NEXT_PUBLIC_APP_URL=https://soterai.dev in production
+7. [ ] Configure NEXT_PUBLIC_APP_URL=https://soterai.in in production
 8. [ ] Verify all pages render on production domain

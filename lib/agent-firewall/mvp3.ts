@@ -1,7 +1,18 @@
 import { createHash, randomBytes } from "crypto";
 import { analyzeText } from "@/lib/guard/analyze";
+import { normalizeForDetection } from "@/lib/guard/detectors/helpers";
 import { sanitizeLogText } from "@/lib/guard/logSafety";
 import type { AgentDecision, AgentRiskLevel } from "@/lib/agent-firewall";
+
+// Guard risk types that, when found inside a tool's own description/schema, mean
+// the tool metadata itself is trying to steer the agent ("tool poisoning").
+const TOOL_POISONING_RISK_TYPES = new Set([
+  "PROMPT_INJECTION",
+  "JAILBREAK",
+  "SYSTEM_PROMPT_LEAK_ATTEMPT",
+  "DATA_EXFILTRATION",
+  "SECRET_DETECTED",
+]);
 
 export type Mvp3Decision = AgentDecision | "TAKEOVER_REQUIRED";
 export type McpCapability =
@@ -45,12 +56,26 @@ export interface McpToolScanResult {
 
 export function scanMcpTools(input: { serverName: string; tools: McpToolDefinition[] }): McpToolScanResult {
   const tools = input.tools.map((tool) => {
-    const text = `${tool.name} ${tool.description ?? ""} ${JSON.stringify(tool.inputSchema ?? {})}`.toLowerCase();
+    // Normalize FIRST so invisible-Unicode / homoglyph obfuscation in the tool
+    // metadata cannot hide capability keywords or injected instructions.
+    const rawText = `${tool.name} ${tool.description ?? ""} ${JSON.stringify(tool.inputSchema ?? {})}`;
+    const text = normalizeForDetection(rawText).toLowerCase();
     const capabilities = detectMcpCapabilities(text);
-    const riskLevel = highestRisk(capabilities.map(riskForMcpCapability));
     const reasons = capabilities.map(reasonForMcpCapability);
+    let riskLevel = highestRisk(capabilities.map(riskForMcpCapability));
+
+    // Tool poisoning: run the variant-aware guard over the tool's own
+    // description + schema. Any injection / leak / exfil / secret signal in the
+    // metadata means the tool is attempting to steer the agent, so quarantine it.
+    const guard = analyzeText(normalizeForDetection(`${tool.name}. ${tool.description ?? ""} ${JSON.stringify(tool.inputSchema ?? {})}`), "INPUT");
+    const poisoned = guard.riskTypes.some((type) => TOOL_POISONING_RISK_TYPES.has(type));
+    if (poisoned) {
+      riskLevel = "CRITICAL";
+      reasons.push("prompt-injection / poisoning detected in tool metadata");
+    }
+
     const recommendedDecision: "ALLOW" | "ASK_APPROVAL" | "BLOCK" =
-      riskLevel === "CRITICAL" ? "BLOCK" : riskLevel === "HIGH" ? "ASK_APPROVAL" : "ALLOW";
+      poisoned || riskLevel === "CRITICAL" ? "BLOCK" : riskLevel === "HIGH" ? "ASK_APPROVAL" : "ALLOW";
     return { tool: tool.name, riskLevel, capabilities, reasons, recommendedDecision };
   });
   return {

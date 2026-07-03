@@ -6,7 +6,7 @@
 3. Install Chrome extension OR use desktop app
 
 ## Step 2: Open your app
-- Go to https://soterai.publicvm.com/playground
+- Go to https://soterai.in/playground
 
 ## Step 3: Record this script (2 minutes)
 
@@ -19,7 +19,7 @@
 [1:00] Show benchmark stats on homepage
 [1:15] "F1=1.0000, 97/97 attacks, 0% false positives"
 [1:30] "Open source, MIT licensed. Star us on GitHub!"
-[1:45] "Try it yourself at soterai.publicvm.com"
+[1:45] "Try it yourself at soterai.in"
 ```
 
 ## Step 4: Download MP4

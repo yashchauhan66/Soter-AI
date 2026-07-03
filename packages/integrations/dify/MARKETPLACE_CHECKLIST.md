@@ -59,8 +59,8 @@
 | Tools count | 4 |
 | External dependencies | None (stdlib only) |
 | API documentation | https://docs.soterai.dev |
-| Privacy URL | https://soterai.dev/privacy |
-| Terms URL | https://soterai.dev/terms |
+| Privacy URL | https://soterai.in/privacy |
+| Terms URL | https://soterai.in/terms |
 | Support email | support@soterai.dev |
 
 ## Review Process

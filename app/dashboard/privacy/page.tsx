@@ -34,6 +34,10 @@ export default async function PrivacyDashboardPage() {
 }
 
 async function countTable(table: string, organizationId: string) {
+  // SECURITY: table names cannot be bound parameters; validate the identifier
+  // so this helper can never become a SQL-injection vector if a caller ever
+  // passes non-constant input.
+  if (!/^[A-Za-z][A-Za-z0-9_]*$/.test(table)) throw new Error(`Invalid table identifier: ${table}`);
   const rows = await db.$queryRawUnsafe<Array<{ count: bigint }>>(`SELECT COUNT(*)::bigint AS count FROM "${table}" WHERE "organizationId" = $1`, organizationId);
   return Number(rows[0]?.count ?? 0);
 }

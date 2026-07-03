@@ -44,14 +44,14 @@ All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
 ### Changed
 
-- Temporarily changed the default n8n API Base URL to `http://13.200.123.232:3000` because `soterai.publicvm.com` DNS is currently not resolving reliably from n8n runtimes.
-- Added README guidance for updating existing n8n credentials that still point to `.dev` or `soterai.publicvm.com`.
+- Temporarily changed the default n8n API Base URL to `http://13.200.123.232:3000` because `soterai.in` DNS is currently not resolving reliably from n8n runtimes.
+- Added README guidance for updating existing n8n credentials that still point to `.dev` or `soterai.in`.
 
 ## [0.1.6] - 2026-06-26
 
 ### Changed
 
-- Updated the default SoterAI API base URL to `https://soterai.publicvm.com`.
+- Updated the default SoterAI API base URL to `https://soterai.in`.
 - Replaced broken `.dev` documentation and dashboard links with working public app links.
 
 ## [0.1.5] - 2026-06-26
@@ -95,11 +95,9 @@ All notable changes to `n8n-nodes-soterai` will be documented in this file.
 - Initial release of the SoterAI community node for n8n.
 - **Input Guard** action: scan user messages for prompt injection, jailbreaks, and other threats before they reach the LLM.
 - **Output Guard** action: scan AI-generated responses for unsafe content before sending to users.
-- **PII Redactor** action: detect and redact sensitive data (emails, phone numbers, secrets) with configurable redaction modes (partial, full, hash).
+- **PII Redactor** action: detect and redact sensitive data (emails, phone numbers, secrets) from any text.
 - **RAG Scanner** action: scan documents and chunks for embedded threats before adding to vector databases.
-- **Incident Logger** action: log security incidents to the SoterAI ops dashboard with platform, workflow ID, risk score, and reason.
-- Configurable **Policy Mode** (Monitor, Balanced, Strict) for input and output guards.
-- Configurable **On Threat** behavior (Block, Redact, Warn, Continue).
+- Configurable **On Threat** behavior (Block, Redact, Warn, Continue) for the input and output guards.
 - Optional per-node **Project ID** override and **Metadata JSON** for audit trails.
 - Example workflow: Protected Chatbot with input guard, threat routing, and output guard.
 - SoterAI API credential type with API key, base URL, and default project ID.

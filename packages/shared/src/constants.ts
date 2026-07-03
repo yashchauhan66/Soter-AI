@@ -1,4 +1,5 @@
 export const SOTER_EXTENSION_VERSION = "0.1.0";
+export const DEFAULT_EXTENSION_API_BASE_URL = "https://soterai.in";
 
 export const AI_DESTINATION_DOMAINS = [
   "chatgpt.com",

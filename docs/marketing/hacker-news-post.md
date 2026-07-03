@@ -74,10 +74,10 @@ return { reply: soter.getSafeText(outputResult, llmResponse) ?? llmResponse };
 ### Links
 
 - **GitHub:** https://github.com/yashchauhan66/Ai-Security-Guard
-- **Live Demo:** https://soterai.publicvm.com
-- **Interactive Playground:** https://soterai.publicvm.com/playground
+- **Live Demo:** https://soterai.in
+- **Interactive Playground:** https://soterai.in/playground
 - **Full Benchmark Results:** https://github.com/yashchauhan66/Ai-Security-Guard/blob/main/scripts/guard-benchmark/results.json
-- **Docs:** https://soterai.publicvm.com/docs
+- **Docs:** https://soterai.in/docs
 
 ### What I'd love feedback on
 

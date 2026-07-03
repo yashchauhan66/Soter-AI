@@ -3,6 +3,7 @@ import { join } from "node:path";
 import { ArrowRight, ShieldCheck, CheckCircle2, AlertTriangle, BarChart3, Gauge, Zap } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { safeJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata: Metadata = {
   title: "Adversarial Benchmark | SoterAI",
@@ -116,22 +117,22 @@ function jsonLd(data: BenchmarkData) {
         "name": "SoterAI",
         "applicationCategory": "SecurityApplication",
         "operatingSystem": "Linux, macOS, Windows",
-        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soterai.publicvm.com/benchmarks" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soterai.in/benchmarks" },
         "description": "AI security guardrail platform protecting against prompt injection, jailbreaks, PII leakage, and unsafe outputs.",
         "offers": {
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "USD",
         },
-        "url": "https://soterai.publicvm.com/benchmarks",
+        "url": "https://soterai.in/benchmarks",
       },
       {
         "@type": "Dataset",
         "name": "SoterAI Adversarial Benchmark",
         "description": `Adversarial benchmark results: ${overall.total_adversarial_detected}/${overall.total_adversarial} attack variants detected (F1=${overall.f1_score.toFixed(4)}). Zero false positives across 25 safe inputs.`,
-        "url": "https://soterai.publicvm.com/benchmarks",
+        "url": "https://soterai.in/benchmarks",
         "datePublished": data.timestamp,
-        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soterai.publicvm.com/benchmarks" },
+        "mainEntityOfPage": { "@type": "WebPage", "@id": "https://soterai.in/benchmarks" },
         "creator": {
           "@type": "Organization",
           "name": "Soter",
@@ -212,7 +213,7 @@ export default function BenchmarksPage() {
     <main className="py-16 sm:py-24">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd(data)) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd(data)) }}
       />
       <div className="container-page">
         {/* Header */}
