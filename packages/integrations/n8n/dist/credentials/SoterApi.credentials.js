@@ -5,7 +5,7 @@ class SoterApi {
     constructor() {
         this.name = "soterApi";
         this.displayName = "SoterAI API";
-        this.documentationUrl = "https://soterai.publicvm.com/docs";
+        this.documentationUrl = "https://soterai.in/docs";
         this.test = {
             request: {
                 baseURL: "={{$credentials.baseUrl}}",
@@ -34,7 +34,7 @@ class SoterApi {
                 displayName: "Base URL",
                 name: "baseUrl",
                 type: "string",
-                default: "https://soterai.publicvm.com",
+                default: "https://soterai.in",
                 description: "SoterAI production API base URL. Change only for a self-hosted HTTPS deployment.",
             },
             {
