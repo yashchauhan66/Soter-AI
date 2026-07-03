@@ -1,0 +1,77 @@
+name: Configure production SSL
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/configure-ssl.yml
+
+permissions:
+  contents: read
+
+jobs:
+  ssl:
+    name: Configure soterai.in HTTPS
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Configure SSH
+        shell: bash
+        run: |
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H "${{ secrets.EC2_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null
+
+      - name: Install certificate and configure Nginx
+        shell: bash
+        run: |
+          ssh "${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}" 'bash -s' <<'SSL_SCRIPT'
+            set -euo pipefail
+
+            sudo apt-get update -y
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y nginx certbot python3-certbot-nginx
+
+            sudo tee /etc/nginx/sites-available/soterai >/dev/null <<'NGINX'
+          server {
+              listen 80;
+              listen [::]:80;
+              server_name soterai.in www.soterai.in;
+
+              location / {
+                  proxy_pass http://127.0.0.1:3000;
+                  proxy_http_version 1.1;
+                  proxy_set_header Host $host;
+                  proxy_set_header X-Real-IP $remote_addr;
+                  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_set_header X-Forwarded-Proto $scheme;
+                  proxy_set_header Upgrade $http_upgrade;
+                  proxy_set_header Connection "upgrade";
+              }
+          }
+          NGINX
+
+            sudo ln -sfn /etc/nginx/sites-available/soterai /etc/nginx/sites-enabled/soterai
+            sudo nginx -t
+            sudo systemctl enable --now nginx
+            sudo systemctl reload nginx
+
+            sudo certbot --nginx \
+              --domains soterai.in,www.soterai.in \
+              --non-interactive \
+              --agree-tos \
+              --register-unsafely-without-email \
+              --redirect
+
+            sudo nginx -t
+            sudo systemctl reload nginx
+            sudo certbot renew --dry-run
+          SSL_SCRIPT
+
+      - name: Verify HTTPS
+        shell: bash
+        run: |
+          curl --fail --silent --show-error --location --max-time 30 https://soterai.in/api/health
+          curl --fail --silent --show-error --head --max-time 30 https://www.soterai.in/
