@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FeedbackReviewForm } from "@/components/ops/AdminPhase8Forms";
 import { db } from "@/lib/db";
-import { detectionQualityMetrics } from "@/lib/phase8/quality";
+import { detectionQualityMetrics } from "@/lib/ops/quality";
 export const dynamic = "force-dynamic";
 
 const FEEDBACK_PAGE_SIZE = 50;

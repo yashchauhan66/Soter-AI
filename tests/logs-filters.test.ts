@@ -112,11 +112,19 @@ test("CRG-RT-006: list select omits raw originalText (no prompt leak)", async ()
 test("CRG-RT-006: logs API returns bounded take and paginated shape", async () => {
   const { readFileSync } = await import("node:fs");
   const src = readFileSync("app/api/logs/route.ts", "utf8");
-  assert.match(src, /take: filters\.limit \+ 1/);
-  assert.match(src, /nextCursor/);
+  // Pagination is delegated to the events store (DynamoDB/Postgres). The route
+  // must forward the clamped limit and surface the keyset cursor.
+  assert.match(src, /listGuardEventsBy(Org|Project)\(/);
+  assert.match(src, /limit: filters\.limit/);
+  assert.match(src, /nextCursor: page\.nextCursor/);
   // Tenant scope derived from the session org, never from a client param.
   assert.match(src, /organizationId: active\.org\.id/);
   assert.doesNotMatch(src, /originalText/);
+  // The bounded keyset guarantee (fetch limit+1, slice to limit, emit cursor)
+  // lives in the store; verify it is still enforced there.
+  const store = readFileSync("lib/events/store/postgres-event-store.ts", "utf8");
+  assert.match(store, /take: limit \+ 1/);
+  assert.match(store, /nextCursor:/);
 });
 
 test("CRG-RT-006: logs page wires filter bar, pagination, and end-of-day 'to'", async () => {
@@ -125,7 +133,11 @@ test("CRG-RT-006: logs page wires filter bar, pagination, and end-of-day 'to'", 
   assert.match(src, /LogsFilterBar/);
   assert.match(src, /Next page/);
   assert.match(src, /T23:59:59\.999Z/);
-  assert.match(src, /take: filters\.limit \+ 1/);
+  // The page delegates keyset pagination to the events store, forwarding the
+  // clamped limit and rendering the returned cursor as the next-page link.
+  assert.match(src, /listGuardEventsByProject\(/);
+  assert.match(src, /limit: filters\.limit/);
+  assert.match(src, /page\.nextCursor/);
 });
 
 test("CRG-RT-011: logs API enforces logs:read permission (BILLING role lacks it)", async () => {
