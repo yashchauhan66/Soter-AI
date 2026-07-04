@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { normalizeRiskCounts } from "../lib/dashboard/metrics";
-import { normalizeProductionMetricSummary } from "../lib/phase8/productionMetrics";
+import { normalizeProductionMetricSummary } from "../lib/ops/productionMetrics";
 
 test("dashboard risk counts normalize database bigint values", () => {
   assert.deepEqual(

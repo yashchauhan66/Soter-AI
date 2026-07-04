@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
-import { getProductionMetricSummary } from "@/lib/phase8/productionMetrics";
-import { PRODUCTION_THRESHOLDS } from "@/lib/phase8/quality";
+import { getProductionMetricSummary } from "@/lib/ops/productionMetrics";
+import { PRODUCTION_THRESHOLDS } from "@/lib/ops/quality";
 import { getVectorProvider } from "@/lib/rag/vector/vectorProvider";
 import { getRedis } from "@/lib/redis";
 import { checkSecretStoreHealth } from "@/lib/secrets/secretStoreHealth";
