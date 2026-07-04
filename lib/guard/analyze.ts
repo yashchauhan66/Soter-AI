@@ -7,6 +7,16 @@ import { systemPromptLeakageDetector, systemPromptLeakAttemptDetector } from "./
 import { spamUrlDetector } from "./detectors/spamUrlDetector";
 import { unsafeOutputDetector } from "./detectors/unsafeOutputDetector";
 import { outputExfiltrationDetector } from "./detectors/outputExfiltrationDetector";
+import { toxicityDetector } from "./detectors/toxicityDetector";
+import { hallucinationDetector } from "./detectors/hallucinationDetector";
+import { biasDetector } from "./detectors/biasDetector";
+import { multilingualAttackDetector } from "./detectors/multilingualAttackDetector";
+import { recursiveInjectionDetector } from "./detectors/recursiveInjectionDetector";
+import { ssrfDetector } from "./detectors/ssrfDetector";
+import { competitiveIntelDetector } from "./detectors/competitiveIntelDetector";
+import { socialEngineeringDetector } from "./detectors/socialEngineeringDetector";
+import { embeddingPoisoningDetector } from "./detectors/embeddingPoisoningDetector";
+import { insecureDeserializationDetector } from "./detectors/insecureDeserializationDetector";
 import { decideGuardAction } from "./decisionEngine";
 import { redactText } from "./redactor";
 import { rewriteRiskyText } from "./rewrite";
@@ -24,9 +34,9 @@ const RULE_SECURITY_TYPES = new Set<RiskType>([
   "SYSTEM_PROMPT_LEAK_ATTEMPT",
 ]);
 
-const COMMON_DETECTORS = [piiDetector, indiaPiiDetector, secretsDetector];
-const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, systemPromptLeakAttemptDetector, ...COMMON_DETECTORS];
-const OUTPUT_DETECTORS = [systemPromptLeakageDetector, unsafeOutputDetector, outputExfiltrationDetector, spamUrlDetector, ...COMMON_DETECTORS];
+const COMMON_DETECTORS = [piiDetector, indiaPiiDetector, secretsDetector, toxicityDetector];
+const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, systemPromptLeakAttemptDetector, multilingualAttackDetector, recursiveInjectionDetector, ssrfDetector, competitiveIntelDetector, socialEngineeringDetector, embeddingPoisoningDetector, insecureDeserializationDetector, ...COMMON_DETECTORS];
+const OUTPUT_DETECTORS = [systemPromptLeakageDetector, unsafeOutputDetector, outputExfiltrationDetector, spamUrlDetector, hallucinationDetector, biasDetector, ...COMMON_DETECTORS];
 
 export function analyzeText(text: string, direction: GuardDirection): GuardResult {
   const detectors = direction === "OUTPUT" ? OUTPUT_DETECTORS : INPUT_DETECTORS;
@@ -236,8 +246,21 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
           margin: semantic.margin,
           benignSimilarity: semantic.benignSimilarity,
         };
+        const familyToRiskType: Record<string, RiskType> = {
+          PROMPT_INJECTION: "PROMPT_INJECTION",
+          JAILBREAK: "JAILBREAK",
+          SYSTEM_PROMPT_LEAK_ATTEMPT: "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          TOXICITY: "TOXICITY",
+          COMPETITIVE_INTEL: "COMPETITIVE_INTEL_EXTRACTION",
+          RECURSIVE_INJECTION: "RECURSIVE_INJECTION",
+          SSRF: "SSRF_ATTEMPT",
+          SOCIAL_ENGINEERING: "PROMPT_INJECTION",
+          EMBEDDING_POISONING: "PROMPT_INJECTION",
+          INSECURE_DESERIALIZATION: "PROMPT_INJECTION",
+        };
+        const riskType = familyToRiskType[semantic.family] ?? "PROMPT_INJECTION";
         findings.push({
-          type: "PROMPT_INJECTION",
+          type: riskType,
           label: `Semantic anomaly (${semantic.family})`,
           severity: "MEDIUM",
           score: 45,

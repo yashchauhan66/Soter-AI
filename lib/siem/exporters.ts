@@ -3,6 +3,7 @@ import { decryptSecret, type EncryptedSecret } from "../secrets/secretStore";
 import { sanitizePrivacyPayload } from "../../packages/shared/src/privacy";
 import { assertPublicOutboundUrl } from "../network/outboundUrl";
 import { decodeWebhookConfig, redactedWebhookPayload, signWebhookPayload } from "./webhooks";
+import { writeSiemDeliveryEvent } from "../events/store";
 
 export interface ExportableSecurityEvent { id: string; organizationId: string; projectId: string | null; eventType: string; severity: string; riskTypes: string[]; action: string; source: string; createdAt: Date; metadata: unknown }
 export interface SiemExporter { export(event: ExportableSecurityEvent): Promise<{ status: number }> }
@@ -54,11 +55,36 @@ export async function processSiemDelivery(deliveryId: string) {
   }
   try {
     const result = await createSiemExporter(delivery.integration.provider, delivery.integration.endpointUrl, token).export(delivery.event);
-    return await db.siemDelivery.update({ where: { id: delivery.id }, data: { status: "DELIVERED", attempts: { increment: 1 }, responseCode: result.status, deliveredAt: new Date(), errorMessage: null } });
+    const updated = await db.siemDelivery.update({ where: { id: delivery.id }, data: { status: "DELIVERED", attempts: { increment: 1 }, responseCode: result.status, deliveredAt: new Date(), errorMessage: null } });
+    await writeSiemDeliveryEvent({
+      orgId: delivery.event.organizationId,
+      projectId: delivery.event.projectId,
+      targetType: "SiemDelivery",
+      targetId: delivery.id,
+      action: delivery.event.eventType,
+      provider: delivery.integration.provider,
+      status: "DELIVERED",
+      httpStatus: result.status,
+      metadata: { integrationId: delivery.integrationId, eventId: delivery.eventId, attempts: updated.attempts },
+    });
+    return updated;
   } catch (error) {
     const attempts = delivery.attempts + 1;
     const terminal = attempts >= delivery.integration.maxAttempts;
-    return db.siemDelivery.update({ where: { id: delivery.id }, data: { status: terminal ? "FAILED" : "RETRYING", attempts, errorMessage: error instanceof Error ? error.message.slice(0, 500) : "SIEM export failed.", nextAttemptAt: terminal ? null : new Date(Date.now() + Math.min(60 * 60_000, 2 ** attempts * 5_000)) } });
+    const message = error instanceof Error ? error.message.slice(0, 500) : "SIEM export failed.";
+    const updated = await db.siemDelivery.update({ where: { id: delivery.id }, data: { status: terminal ? "FAILED" : "RETRYING", attempts, errorMessage: message, nextAttemptAt: terminal ? null : new Date(Date.now() + Math.min(60 * 60_000, 2 ** attempts * 5_000)) } });
+    await writeSiemDeliveryEvent({
+      orgId: delivery.event.organizationId,
+      projectId: delivery.event.projectId,
+      targetType: "SiemDelivery",
+      targetId: delivery.id,
+      action: delivery.event.eventType,
+      provider: delivery.integration.provider,
+      status: updated.status,
+      errorMessage: message,
+      metadata: { integrationId: delivery.integrationId, eventId: delivery.eventId, attempts },
+    });
+    return updated;
   }
 }
 

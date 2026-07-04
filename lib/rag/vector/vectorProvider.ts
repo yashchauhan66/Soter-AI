@@ -3,6 +3,7 @@ import { db } from "../../db";
 import { isProduction, isTest } from "../../utils";
 import { evaluateRagAuthorization } from "../authorizationContinuity";
 import type { VectorChunk, VectorHealth, VectorNamespaceContext, VectorQueryContext, VectorQueryFilters, VectorQueryResult } from "./vectorTypes";
+import { eventStoreFlags, writeRagSecurityEvent } from "../../events/store";
 
 export interface VectorProvider {
   createNamespace(context: VectorNamespaceContext): Promise<string>;
@@ -67,7 +68,24 @@ export function buildRetrievalAuditData(input: { context: VectorQueryContext; qu
 export async function auditRetrieval(input: { context: VectorQueryContext; queryText: string; requestedFilters?: VectorQueryFilters; candidates: VectorQueryResult[]; accepted: VectorQueryResult[] }) {
   const data = buildRetrievalAuditData(input);
   if (isTest() && process.env.PERSIST_RETRIEVAL_AUDIT !== "true") return data;
-  await db.retrievalAuditLog.create({ data });
+  const flags = eventStoreFlags();
+  if (!flags.enabled || flags.dualWrite) await db.retrievalAuditLog.create({ data });
+  if (flags.enabled) {
+    await writeRagSecurityEvent({
+      orgId: data.organizationId,
+      projectId: data.projectId,
+      action: "rag.retrieval",
+      status: "COMPLETED",
+      metadata: {
+        namespace: data.namespace,
+        queryHash: data.queryHash,
+        requestedFilters: data.requestedFilters,
+        returnedChunkIds: data.returnedChunkIds,
+        rejectedChunkIds: data.rejectedChunkIds,
+        resultCount: data.resultCount,
+      },
+    });
+  }
   return data;
 }
 

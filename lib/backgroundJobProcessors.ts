@@ -15,6 +15,7 @@ import { emitSecurityEvent } from "./events/emit";
 import { runRedTeamSuite } from "./redteam/runner";
 import { evaluateModel, getDefaultBackend, HeuristicMLBackend } from "./ml";
 import { deliverScheduledReport } from "./reports/scheduled";
+import { writeRedTeamEvent } from "./events/store";
 
 const DEFAULT_RAG_ROLES = ["OWNER", "ADMIN", "DEVELOPER", "SECURITY_ANALYST", "BILLING", "VIEWER"];
 
@@ -172,6 +173,33 @@ async function processRedTeamRun(payload: Payload) {
         })),
       },
     },
+  });
+  await Promise.all(run.results.map((result) => writeRedTeamEvent({
+    orgId: suite.organizationId,
+    projectId,
+    jobId: runId,
+    targetType: "RedTeamRun",
+    targetId: runId,
+    detector: result.scenario.category,
+    action: "redteam.scenario.completed",
+    decision: result.observedAction,
+    status: result.passed ? "PASSED" : "FAILED",
+    severity: result.scenario.severity,
+    categories: result.riskTypes,
+    metadata: {
+      scenarioKey: result.scenario.key,
+      recommendation: result.recommendation,
+    },
+  })));
+  await writeRedTeamEvent({
+    orgId: suite.organizationId,
+    projectId,
+    jobId: runId,
+    targetType: "RedTeamRun",
+    targetId: runId,
+    action: "redteam.run.completed",
+    status: run.failed ? "FAILED" : "COMPLETED",
+    metadata: { passed: run.passed, failed: run.failed },
   });
   return { runId, passed: run.passed, failed: run.failed };
 }

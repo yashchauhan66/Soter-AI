@@ -1,10 +1,13 @@
 import { Prisma } from "@prisma/client";
 import { db } from "./db";
+import { eventStoreFlags, listGuardEventsByProject, writeReportEvent } from "./events/store";
 
 export async function buildMonthlyReport(projectId: string, date = new Date()) {
   const start = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), 1));
   const end = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth() + 1, 1));
-  const logs = await db.guardLog.findMany({ where: { projectId, createdAt: { gte: start, lt: end } }, select: { action: true, direction: true, riskScore: true, riskTypes: true } });
+  const logs = eventStoreFlags().enabled
+    ? await fetchGuardLogWindow(projectId, start, end)
+    : await db.guardLog.findMany({ where: { projectId, createdAt: { gte: start, lt: end } }, select: { action: true, direction: true, riskScore: true, riskTypes: true } });
   const counts = new Map<string, number>();
   logs.flatMap((log) => log.riskTypes).filter((type) => type !== "LOW_RISK").forEach((type) => counts.set(type, (counts.get(type) ?? 0) + 1));
   const topRiskTypes = [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([type, count]) => ({ type, count })).slice(0, 5);
@@ -24,7 +27,7 @@ export async function buildMonthlyReport(projectId: string, date = new Date()) {
 
 export async function generateAndStoreMonthlyReport(projectId: string, date = new Date()) {
   const summary = await buildMonthlyReport(projectId, date);
-  await db.report.upsert({
+  const report = await db.report.upsert({
     where: {
       projectId_month_year: {
         projectId,
@@ -52,7 +55,42 @@ export async function generateAndStoreMonthlyReport(projectId: string, date = ne
       recommendations: summary.recommendations as Prisma.InputJsonValue,
     },
   });
-  return summary;
+  const project = await db.project.findUnique({
+    where: { id: projectId },
+    select: { organizationId: true },
+  });
+  await writeReportEvent({
+    orgId: project?.organizationId,
+    projectId,
+    reportId: report.id,
+    action: "monthly_report.generated",
+    status: "COMPLETED",
+    metadata: {
+      month: summary.month,
+      year: summary.year,
+      totalRequests: summary.totalRequests,
+      blockedRequests: summary.blockedRequests,
+      redactedRequests: summary.redactedRequests,
+    },
+  });
+  return { ...summary, reportId: report.id };
+}
+
+export async function fetchGuardLogWindow(projectId: string, from: Date, to: Date) {
+  const rows: Array<{ action: string; direction: string; riskScore: number; riskTypes: string[]; createdAt: Date | string }> = [];
+  let cursor: string | null = null;
+  do {
+    const page = await listGuardEventsByProject(projectId, { from, to, limit: 100, cursor });
+    rows.push(...page.items.map((row) => ({
+      action: row.action,
+      direction: row.direction,
+      riskScore: row.riskScore,
+      riskTypes: row.riskTypes,
+      createdAt: row.createdAt,
+    })));
+    cursor = page.nextCursor;
+  } while (cursor && rows.length < 25_000);
+  return rows;
 }
 
 function buildRecommendations(

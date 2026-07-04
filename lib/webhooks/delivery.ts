@@ -14,6 +14,7 @@ import { assertPublicOutboundUrl } from "../network/outboundUrl";
 import type { GuardResult } from "../guard/types";
 import { signWebhookPayload, type WebhookEvent } from "./signing";
 import { getEndpointSecret } from "./store";
+import { writeWebhookDeliveryEvent } from "../events/store";
 
 const DELIVERY_TIMEOUT_MS = 5_000;
 const BACKOFF_SCHEDULE_MS = [30_000, 2 * 60_000, 10 * 60_000, 60 * 60_000, 6 * 60 * 60_000];
@@ -28,7 +29,7 @@ export type EnqueueInput = {
 
 export async function enqueueWebhook(input: EnqueueInput) {
   const payloadHash = createHash("sha256").update(JSON.stringify(input.payload)).digest("hex");
-  return db.webhookDelivery.create({
+  const delivery = await db.webhookDelivery.create({
     data: {
       endpointId: input.endpointId,
       event: input.event,
@@ -39,7 +40,17 @@ export async function enqueueWebhook(input: EnqueueInput) {
       idempotencyKey: input.idempotencyKey,
       nextAttemptAt: new Date(),
     },
+    include: {
+      endpoint: {
+        select: {
+          projectId: true,
+          project: { select: { organizationId: true } },
+        },
+      },
+    },
   });
+  await mirrorWebhookDelivery(delivery, "ENQUEUED");
+  return delivery;
 }
 
 async function postOnce(url: string, headers: Record<string, string>, body: string) {
@@ -73,6 +84,7 @@ export async function attemptDelivery(deliveryId: string) {
       where: { id: delivery.id },
       data: { status: "CANCELLED", errorMessage: "Endpoint disabled before delivery." },
     });
+    await mirrorWebhookDelivery(delivery, "CANCELLED", { errorMessage: "Endpoint disabled before delivery." });
     return { skipped: true, reason: "endpoint_disabled" };
   }
   const secret = await getEndpointSecret(delivery.endpoint.id);
@@ -81,6 +93,7 @@ export async function attemptDelivery(deliveryId: string) {
       where: { id: delivery.id },
       data: { status: "FAILED", errorMessage: "Signing secret unavailable. Rotate to issue a new one." },
     });
+    await mirrorWebhookDelivery(delivery, "FAILED", { errorMessage: "Signing secret unavailable." });
     if (delivery.endpoint.project.organizationId) await emitSecurityEvent({ organizationId: delivery.endpoint.project.organizationId, projectId: delivery.endpoint.projectId, eventType: "webhook.failed", severity: "HIGH", riskTypes: ["WEBHOOK_SECRET_UNAVAILABLE"], action: "FAILED", source: "webhook.delivery", metadata: { endpointId: delivery.endpoint.id, deliveryId: delivery.id } });
     return { skipped: true, reason: "missing_secret" };
   }
@@ -125,6 +138,7 @@ export async function attemptDelivery(deliveryId: string) {
         nextAttemptAt: null,
       },
     });
+    await mirrorWebhookDelivery(delivery, "DELIVERED", { httpStatus: result.status, attempts: attemptNumber });
     return { success: true, status: result.status, attempts: attemptNumber };
   }
 
@@ -140,6 +154,11 @@ export async function attemptDelivery(deliveryId: string) {
         nextAttemptAt: null,
         deadLetteredAt: new Date(),
       },
+    });
+    await mirrorWebhookDelivery(delivery, "DEAD_LETTER", {
+      httpStatus: result?.status,
+      attempts: attemptNumber,
+      errorMessage: networkError ?? `HTTP ${result?.status}`,
     });
     const project = delivery.endpoint.project;
     if (project.user.email) {
@@ -162,7 +181,42 @@ export async function attemptDelivery(deliveryId: string) {
       nextAttemptAt: new Date(Date.now() + backoff),
     },
   });
+  await mirrorWebhookDelivery(delivery, "RETRYING", {
+    httpStatus: result?.status,
+    attempts: attemptNumber,
+    errorMessage: networkError ?? `HTTP ${result?.status}`,
+  });
   return { success: false, terminal: false, attempts: attemptNumber, retryInMs: backoff };
+}
+
+async function mirrorWebhookDelivery(
+  delivery: {
+    id: string;
+    endpointId: string;
+    event: string;
+    payloadHash: string;
+    idempotencyKey: string;
+    endpoint: { projectId: string; project: { organizationId: string | null } };
+  },
+  status: string,
+  details: { httpStatus?: number; attempts?: number; errorMessage?: string } = {},
+) {
+  await writeWebhookDeliveryEvent({
+    orgId: delivery.endpoint.project.organizationId,
+    projectId: delivery.endpoint.projectId,
+    webhookId: delivery.endpointId,
+    targetType: "WebhookDelivery",
+    targetId: delivery.id,
+    action: delivery.event,
+    status,
+    httpStatus: details.httpStatus,
+    errorMessage: details.errorMessage,
+    metadata: {
+      payloadHash: delivery.payloadHash,
+      idempotencyKey: delivery.idempotencyKey,
+      attempts: details.attempts ?? 0,
+    },
+  });
 }
 
 export async function processDuePending(limit = 25) {

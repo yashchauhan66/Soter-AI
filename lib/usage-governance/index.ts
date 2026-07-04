@@ -9,6 +9,7 @@
 //   - AiProvider/AiModel models for provider inventory
 
 import { db } from "../db";
+import { listAuditEventsByOrg, writeAuditEvent } from "../events/store";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -339,15 +340,13 @@ async function recordGovernanceAudit(
   reason?: string,
 ) {
   try {
-    await db.aiUsageGovernanceAuditLog.create({
-      data: {
-        organizationId,
-        userId,
-        action,
-        decision,
-        reason: reason ?? null,
-        contextRedacted: null,
-      },
+    await writeAuditEvent({
+      orgId: organizationId,
+      userId,
+      action,
+      decision,
+      errorMessage: reason ?? null,
+      metadata: { reason: reason ?? null, source: "usage_governance" },
     });
   } catch (error) {
     console.error("[SoterAI] Failed to record governance audit log:", error);
@@ -363,17 +362,16 @@ export async function logAiUsageEvent(
   reason: string,
   contextRedacted?: string,
 ) {
-  await db.aiUsageGovernanceAuditLog.create({
-    data: {
-      organizationId,
-      userId,
-      providerName,
-      modelName,
-      action: "USAGE_EVENT",
-      decision,
-      reason,
-      contextRedacted,
-    },
+  await writeAuditEvent({
+    orgId: organizationId,
+    userId,
+    provider: providerName,
+    model: modelName,
+    action: "USAGE_EVENT",
+    decision,
+    errorMessage: reason,
+    redactedInputPreview: contextRedacted,
+    metadata: { reason, source: "usage_governance" },
   });
 }
 
@@ -390,28 +388,16 @@ export async function queryAuditLogs(
     toDate?: Date;
   },
 ) {
-  const where: any = { organizationId };
-  if (options?.userId) where.userId = options.userId;
-  if (options?.action) where.action = options.action;
-  if (options?.decision) where.decision = options.decision;
-  if (options?.providerName) where.providerName = options.providerName;
-  if (options?.fromDate || options?.toDate) {
-    where.createdAt = {};
-    if (options?.fromDate) where.createdAt.gte = options.fromDate;
-    if (options?.toDate) where.createdAt.lte = options.toDate;
-  }
-
-  const [logs, total] = await Promise.all([
-    db.aiUsageGovernanceAuditLog.findMany({
-      where,
-      orderBy: { createdAt: "desc" },
-      take: options?.limit ?? 50,
-      skip: options?.offset ?? 0,
-    }),
-    db.aiUsageGovernanceAuditLog.count({ where }),
-  ]);
-
-  return { logs, total };
+  const page = await listAuditEventsByOrg(organizationId, {
+    limit: options?.limit ?? 50,
+    action: options?.action,
+    decision: options?.decision,
+    provider: options?.providerName,
+    userId: options?.userId,
+    from: options?.fromDate,
+    to: options?.toDate,
+  });
+  return { logs: page.items, total: page.items.length, nextCursor: page.nextCursor };
 }
 
 // ── Governance Engine ────────────────────────────────────────────────────────

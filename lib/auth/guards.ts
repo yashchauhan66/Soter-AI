@@ -7,6 +7,7 @@ import type { OrgRole, Organization, OrganizationMember } from "@prisma/client";
 import { auth } from "../../auth";
 import { db } from "../db";
 import { hasPermission, type Permission } from "./permissions";
+import { listGuardEventsByProject } from "../events/store";
 
 export class AuthError extends Error {
   status: number;
@@ -127,9 +128,5 @@ export async function getScopedProject(projectId: string) {
 
 export async function getScopedLogs(projectId: string, take = 100) {
   const access = await requireProjectPermission(projectId, "logs:read");
-  return db.guardLog.findMany({
-    where: { projectId: access.project.id },
-    orderBy: { createdAt: "desc" },
-    take,
-  });
+  return (await listGuardEventsByProject(access.project.id, { limit: take })).items;
 }

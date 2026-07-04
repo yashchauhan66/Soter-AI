@@ -13,10 +13,12 @@ import { prepareSafeLogContent } from "./logSafety";
 import type { GuardDirection, GuardResult } from "./types";
 import { emitSecurityEvent } from "../events/emit";
 import { markGuardActivation } from "../ops/onboarding";
+import { eventStoreFlags, writeGuardEvent } from "../events/store";
 
 export async function persistGuardResult(input: {
   projectId: string;
   apiKeyId?: string;
+  apiKeyPrefix?: string;
   direction: GuardDirection;
   result: GuardResult;
   requestMetadata?: Record<string, unknown>;
@@ -30,24 +32,8 @@ export async function persistGuardResult(input: {
 }) {
   const { result } = input;
   const safeLog = prepareSafeLogContent(result, input.requestMetadata);
-
-  await db.$transaction([
-    db.guardLog.create({
-      data: {
-        projectId: input.projectId,
-        apiKeyId: input.apiKeyId,
-        direction: input.direction,
-        originalText: safeLog.originalText,
-        redactedText: safeLog.redactedText,
-        safeText: safeLog.safeText,
-        action: result.action,
-        riskScore: result.riskScore,
-        riskTypes: result.riskTypes,
-        reason: result.reason,
-        metadata: safeLog.metadata as Prisma.InputJsonValue,
-      },
-    }),
-    db.usageCounter.upsert({
+  const flags = eventStoreFlags();
+  const usageWrite = db.usageCounter.upsert({
       where: { projectId_date: { projectId: input.projectId, date: startOfUtcDay() } },
       create: {
         projectId: input.projectId,
@@ -61,8 +47,59 @@ export async function persistGuardResult(input: {
         blockedCount: { increment: result.action === "BLOCK" ? 1 : 0 },
         redactedCount: { increment: result.action === "ALLOW_WITH_REDACTION" ? 1 : 0 },
       },
-    }),
-  ]);
+    });
+
+  if (!flags.enabled) {
+    await db.$transaction([
+      db.guardLog.create({
+        data: {
+          projectId: input.projectId,
+          apiKeyId: input.apiKeyId,
+          direction: input.direction,
+          originalText: safeLog.originalText,
+          redactedText: safeLog.redactedText,
+          safeText: safeLog.safeText,
+          action: result.action,
+          riskScore: result.riskScore,
+          riskTypes: result.riskTypes,
+          reason: result.reason,
+          metadata: safeLog.metadata as Prisma.InputJsonValue,
+        },
+      }),
+      usageWrite,
+    ]);
+  } else {
+    await Promise.all([
+      usageWrite,
+      writeGuardEvent({
+        type: "guard_event",
+        orgId: input.projectContext?.organizationId,
+        projectId: input.projectId,
+        apiKeyId: input.apiKeyId,
+        apiKeyPrefix: input.apiKeyPrefix,
+        direction: input.direction,
+        guardType: input.direction,
+        decision: result.action,
+        riskScore: result.riskScore,
+        categories: result.riskTypes,
+        reason: result.reason,
+        originalText: safeLog.originalText,
+        safeText: safeLog.safeText,
+        redactedInputPreview: input.direction !== "OUTPUT" ? safeLog.redactedText : null,
+        redactedOutputPreview: input.direction === "OUTPUT" ? safeLog.redactedText : null,
+        inputLength: input.direction !== "OUTPUT" ? result.originalText?.length ?? null : null,
+        outputLength: input.direction === "OUTPUT" ? result.originalText?.length ?? null : null,
+        requestId: stringMetadata(input.requestMetadata, "requestId"),
+        sessionId: stringMetadata(input.requestMetadata, "sessionId"),
+        provider: stringMetadata(input.requestMetadata, "providerName"),
+        model: stringMetadata(input.requestMetadata, "modelName"),
+        metadata: {
+          ...safeLog.metadata,
+          reason: result.reason,
+        },
+      }),
+    ]);
+  }
 
   // Mark onboarding done for the owner.
   const project = input.projectContext ?? await db.project.findUnique({
@@ -116,6 +153,11 @@ export async function persistGuardResult(input: {
       console.error("[SoterAI] Usage webhook legacy failed for project", input.projectId, error),
     );
   }
+}
+
+function stringMetadata(metadata: Record<string, unknown> | undefined, key: string): string | null {
+  const value = metadata?.[key];
+  return typeof value === "string" && value ? value : null;
 }
 
 async function maybeFireUsageWebhook(projectId: string, organizationId: string, plan: string, quotaOverride?: number | null, email?: string, projectName?: string) {

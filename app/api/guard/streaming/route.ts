@@ -12,6 +12,8 @@ import { recordRequestMetric } from "@/lib/ops/monitoring";
 import { DEFAULT_RPM } from "@/lib/guard/constants";
 import { evaluateGovernance, logAiUsageEvent } from "@/lib/usage-governance";
 import { dispatchGovernanceEnforcement } from "@/lib/usage-governance/notifications";
+import { scheduleGuardResultPersistence } from "@/lib/guard/scheduledPersistence";
+import type { GuardResult } from "@/lib/guard/types";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -125,6 +127,15 @@ export async function POST(request: Request) {
             providerName: body.providerName,
           },
         };
+        scheduleGuardResultPersistence({
+          projectId: project.id,
+          apiKeyId: apiKey.id,
+          apiKeyPrefix: apiKey.prefix,
+          direction: body.direction,
+          result: governanceResult,
+          requestMetadata: { ...body.metadata, sessionId: body.sessionId ?? null, providerName: body.providerName ?? null, modelName: body.modelName ?? null, streaming: true },
+          projectContext: project,
+        });
         return jsonResponse({
           direction: body.direction,
           stream: body.stream,
@@ -172,6 +183,15 @@ export async function POST(request: Request) {
             providerName: body.providerName,
           },
         };
+        scheduleGuardResultPersistence({
+          projectId: project.id,
+          apiKeyId: apiKey.id,
+          apiKeyPrefix: apiKey.prefix,
+          direction: body.direction,
+          result: governanceResult,
+          requestMetadata: { ...body.metadata, sessionId: body.sessionId ?? null, providerName: body.providerName ?? null, modelName: body.modelName ?? null, streaming: true },
+          projectContext: project,
+        });
         return jsonResponse({
           direction: body.direction,
           stream: body.stream,
@@ -198,6 +218,7 @@ export async function POST(request: Request) {
     const guardFn = body.direction === "INPUT" ? runInputGuard : runOutputGuard;
     const chunks: StreamingGuardChunk[] = [];
     let cumulativeText = "";
+    let finalResult: GuardResult | null = null;
 
     if (body.stream) {
       // Process in chunks — each chunk runs the full guard pipeline
@@ -206,6 +227,7 @@ export async function POST(request: Request) {
         cumulativeText += (i > 0 ? " " : "") + textChunks[i];
         const baseline = guardFn(cumulativeText);
         const result = applyPolicy(cumulativeText, baseline, policy, body.direction);
+        finalResult = result;
         chunks.push({
           chunkIndex: i,
           chunkText: body.includeRedacted ? result.redactedText ?? textChunks[i] : null,
@@ -231,11 +253,31 @@ export async function POST(request: Request) {
       // Standard mode — single aggregated result
       const baseline = guardFn(body.content);
       const result = applyPolicy(body.content, baseline, policy, body.direction);
+      finalResult = result;
       chunks.push({
         chunkIndex: 0,
         chunkText: body.includeRedacted ? result.redactedText ?? null : null,
         result: toPublicGuardResult(result),
         isFinal: true,
+      });
+    }
+
+    if (finalResult) {
+      scheduleGuardResultPersistence({
+        projectId: project.id,
+        apiKeyId: apiKey.id,
+        apiKeyPrefix: apiKey.prefix,
+        direction: body.direction,
+        result: finalResult,
+        requestMetadata: {
+          ...body.metadata,
+          sessionId: body.sessionId ?? null,
+          providerName: body.providerName ?? null,
+          modelName: body.modelName ?? null,
+          streaming: body.stream,
+          chunkCount: chunks.length,
+        },
+        projectContext: project,
       });
     }
 

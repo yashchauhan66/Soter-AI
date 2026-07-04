@@ -1,0 +1,20 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "SoterAiEventsTableReadWrite",
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:PutItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:GetItem",
+        "dynamodb:Query",
+        "dynamodb:DescribeTable"
+      ],
+      "Resource": [
+        "arn:aws:dynamodb:ap-south-1:<ACCOUNT_ID>:table/soterai_events",
+        "arn:aws:dynamodb:ap-south-1:<ACCOUNT_ID>:table/soterai_events/index/*"
+      ]
+    }
+  ]
+}

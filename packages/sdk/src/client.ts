@@ -18,6 +18,8 @@ import type {
   BrowserFormCheckResponse,
   CanaryCheckRequest,
   CanaryCheckResponse,
+  CascadeEvaluateRequest,
+  CascadeEvaluateResponse,
   CheckContextFlowRequest,
   CheckContextFlowResponse,
   CheckLegalBoundaryRequest,
@@ -36,12 +38,17 @@ import type {
   GuardInputRequest,
   GuardOutputRequest,
   GuardResult,
+  InterAgentCheckRequest,
+  InterAgentCheckResponse,
   LineageIncidentsResponse,
   LineageSessionResponse,
   McpDriftsResponse,
   MemoryCheckRequest,
   MemoryCheckResponse,
   MetadataValue,
+  ModelDriftDetectRequest,
+  ModelDriftDetectResponse,
+  OwaspComplianceReport,
   ProtectChatOptions,
   ProtectChatResult,
   ProtectRagOptions,
@@ -53,6 +60,8 @@ import type {
   RegisterContextSourceResponse,
   RegisterMcpServerRequest,
   RegisterMcpServerResponse,
+  RogueAgentDetectRequest,
+  RogueAgentDetectResponse,
   RunBlastRadiusScenarioRequest,
   RunBlastRadiusScenarioResponse,
   ScanMcpToolsRequest,
@@ -151,6 +160,13 @@ export interface CyberRakshakGuard {
   };
   createExpressAgentMiddleware(): (req: ExpressLikeRequest, res: ExpressLikeResponse, next?: ExpressLikeNext) => Promise<unknown>;
   createNextAgentHandler(): (request: Request) => Promise<Response>;
+  // Advanced Security
+  checkInterAgentMessage(input: InterAgentCheckRequest): Promise<InterAgentCheckResponse>;
+  detectRogueAgent(input: RogueAgentDetectRequest): Promise<RogueAgentDetectResponse>;
+  evaluateCascade(input: CascadeEvaluateRequest): Promise<CascadeEvaluateResponse>;
+  detectModelDrift(input: ModelDriftDetectRequest): Promise<ModelDriftDetectResponse>;
+  getOwaspLlm2025Report(): Promise<OwaspComplianceReport>;
+  getOwaspAgentic2026Report(): Promise<OwaspComplianceReport>;
 }
 
 export function createClient(options: ClientOptions): CyberRakshakGuard {
@@ -554,6 +570,30 @@ export class GuardClient implements CyberRakshakGuard {
 
   checkLegalBoundary(input: CheckLegalBoundaryRequest): Promise<CheckLegalBoundaryResponse> {
     return this.post<CheckLegalBoundaryResponse>("/api/legal-boundary/check", input, true);
+  }
+
+  checkInterAgentMessage(input: InterAgentCheckRequest): Promise<InterAgentCheckResponse> {
+    return this.post<InterAgentCheckResponse>("/api/agent/inter-agent/check", input, true);
+  }
+
+  detectRogueAgent(input: RogueAgentDetectRequest): Promise<RogueAgentDetectResponse> {
+    return this.post<RogueAgentDetectResponse>("/api/agent/rogue/detect", input, true);
+  }
+
+  evaluateCascade(input: CascadeEvaluateRequest): Promise<CascadeEvaluateResponse> {
+    return this.post<CascadeEvaluateResponse>("/api/agent/cascade/evaluate", input, true);
+  }
+
+  detectModelDrift(input: ModelDriftDetectRequest): Promise<ModelDriftDetectResponse> {
+    return this.post<ModelDriftDetectResponse>("/api/agent/model-drift/detect", input, true);
+  }
+
+  getOwaspLlm2025Report(): Promise<OwaspComplianceReport> {
+    return this.get<OwaspComplianceReport>("/api/compliance/owasp-llm-2025", true);
+  }
+
+  getOwaspAgentic2026Report(): Promise<OwaspComplianceReport> {
+    return this.get<OwaspComplianceReport>("/api/compliance/owasp-agentic-2026", true);
   }
 
   wrapTool<TArgs, TResult>(

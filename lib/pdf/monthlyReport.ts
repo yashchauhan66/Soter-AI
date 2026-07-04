@@ -6,7 +6,8 @@
 import PDFDocument from "pdfkit";
 import { createHmac } from "crypto";
 import { db } from "../db";
-import { generateAndStoreMonthlyReport } from "../reports";
+import { fetchGuardLogWindow, generateAndStoreMonthlyReport } from "../reports";
+import { eventStoreFlags } from "../events/store";
 
 export interface PdfReportInput {
   projectId: string;
@@ -37,8 +38,14 @@ export async function buildMonthlyReportPdf(input: PdfReportInput): Promise<Buff
   const periodStart = new Date(Date.UTC(year, month - 1, 1));
   const periodEnd = new Date(Date.UTC(year, month, 1));
 
+  const dynamoLogs = eventStoreFlags().enabled
+    ? await fetchGuardLogWindow(projectId, periodStart, periodEnd)
+    : null;
   const [piiRedactions, secretsBlocked, unsafeBlocked, trendLogs, reportRecord] = await Promise.all([
-    db.guardLog.count({
+    dynamoLogs ? Promise.resolve(dynamoLogs.filter((log) =>
+      log.action === "ALLOW_WITH_REDACTION"
+      && (log.riskTypes.includes("PII_DETECTED") || log.riskTypes.includes("INDIA_PII_DETECTED"))
+    ).length) : db.guardLog.count({
       where: {
         projectId,
         action: "ALLOW_WITH_REDACTION",
@@ -46,13 +53,13 @@ export async function buildMonthlyReportPdf(input: PdfReportInput): Promise<Buff
         createdAt: { gte: periodStart, lt: periodEnd },
       },
     }),
-    db.guardLog.count({
+    dynamoLogs ? Promise.resolve(dynamoLogs.filter((log) => log.riskTypes.includes("SECRET_DETECTED")).length) : db.guardLog.count({
       where: { projectId, riskTypes: { has: "SECRET_DETECTED" }, createdAt: { gte: periodStart, lt: periodEnd } },
     }),
-    db.guardLog.count({
+    dynamoLogs ? Promise.resolve(dynamoLogs.filter((log) => log.action === "BLOCK" && log.riskTypes.includes("UNSAFE_OUTPUT")).length) : db.guardLog.count({
       where: { projectId, action: "BLOCK", riskTypes: { has: "UNSAFE_OUTPUT" }, createdAt: { gte: periodStart, lt: periodEnd } },
     }),
-    db.guardLog.findMany({ where: { projectId, createdAt: { gte: periodStart, lt: periodEnd } }, select: { createdAt: true, action: true } }),
+    dynamoLogs ? Promise.resolve(dynamoLogs.map((log) => ({ createdAt: new Date((log as { createdAt?: Date | string }).createdAt ?? periodStart), action: log.action }))) : db.guardLog.findMany({ where: { projectId, createdAt: { gte: periodStart, lt: periodEnd } }, select: { createdAt: true, action: true } }),
     db.report.findUnique({ where: { projectId_month_year: { projectId, month, year } } }),
   ]);
   if (!reportRecord) throw new Error("Report record was not created.");
