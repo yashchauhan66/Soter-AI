@@ -3,6 +3,7 @@ import { db } from "../db";
 import { sendTemplateEmail } from "../email/send";
 import { buildMonthlyReportPdf } from "../pdf/monthlyReport";
 import { generateAndStoreMonthlyReport } from "../reports";
+import { writeReportEvent } from "../events/store";
 
 export function nextMonthlyRun(from = new Date()) {
   return new Date(Date.UTC(from.getUTCFullYear(), from.getUTCMonth() + 1, 1, 6, 0, 0));
@@ -18,6 +19,15 @@ export async function deliverScheduledReport(scheduledReportId: string, now = ne
   const schedule = await db.scheduledReport.findUnique({ where: { id: scheduledReportId }, include: { project: true } });
   if (!schedule || !schedule.enabled) return { skipped: true };
   const delivery = await db.scheduledReportDelivery.create({ data: { scheduledReportId: schedule.id } });
+  await writeReportEvent({
+    orgId: schedule.organizationId,
+    projectId: schedule.projectId,
+    reportId: `scheduled-${schedule.id}`,
+    targetType: "ScheduledReportDelivery",
+    targetId: delivery.id,
+    action: "scheduled_report.started",
+    status: "PENDING",
+  });
   try {
     const reportDate = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - 1, 1));
     const summary = await generateAndStoreMonthlyReport(schedule.projectId, reportDate);
@@ -34,9 +44,30 @@ export async function deliverScheduledReport(scheduledReportId: string, now = ne
       db.scheduledReportDelivery.update({ where: { id: delivery.id }, data: { status: "SENT", sentAt: new Date(), reportId: report.id, signature } }),
       db.scheduledReport.update({ where: { id: schedule.id }, data: { lastSentAt: new Date(), nextRunAt: nextMonthlyRun(now) } }),
     ]);
+    await writeReportEvent({
+      orgId: schedule.organizationId,
+      projectId: schedule.projectId,
+      reportId: report.id,
+      targetType: "ScheduledReportDelivery",
+      targetId: delivery.id,
+      action: "scheduled_report.sent",
+      status: "SENT",
+      metadata: { scheduledReportId: schedule.id, signature },
+    });
     return { sent: true, deliveryId: delivery.id, reportId: report.id, signature };
   } catch (error) {
-    await db.scheduledReportDelivery.update({ where: { id: delivery.id }, data: { status: "FAILED", error: error instanceof Error ? error.message.slice(0, 1000) : "Unknown delivery error" } });
+    const message = error instanceof Error ? error.message.slice(0, 1000) : "Unknown delivery error";
+    await db.scheduledReportDelivery.update({ where: { id: delivery.id }, data: { status: "FAILED", error: message } });
+    await writeReportEvent({
+      orgId: schedule.organizationId,
+      projectId: schedule.projectId,
+      reportId: `scheduled-${schedule.id}`,
+      targetType: "ScheduledReportDelivery",
+      targetId: delivery.id,
+      action: "scheduled_report.failed",
+      status: "FAILED",
+      errorMessage: message,
+    });
     throw error;
   }
 }

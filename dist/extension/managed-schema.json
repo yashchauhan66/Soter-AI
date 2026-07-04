@@ -1,0 +1,61 @@
+{
+  "type": "object",
+  "properties": {
+    "apiBaseUrl": {
+      "title": "Soter API Base URL",
+      "description": "The base URL of the Soter Enterprise API server.",
+      "type": "string",
+      "default": "https://api.soter.ai"
+    },
+    "organizationId": {
+      "title": "Organization ID",
+      "description": "The unique identifier for the organization in Soter.",
+      "type": "string"
+    },
+    "employeeId": {
+      "title": "Employee ID",
+      "description": "The unique identifier for the employee within the organization.",
+      "type": "string"
+    },
+    "email": {
+      "title": "Employee Email",
+      "description": "The corporate email address of the employee.",
+      "type": "string"
+    },
+    "department": {
+      "title": "Department",
+      "description": "The employee's department within the organization.",
+      "type": "string"
+    },
+    "role": {
+      "title": "Role",
+      "description": "The employee's role or job function.",
+      "type": "string"
+    },
+    "deviceToken": {
+      "title": "Device Token",
+      "description": "Pre-configured device authentication token for the extension.",
+      "type": "string"
+    },
+    "policyChannel": {
+      "title": "Policy Channel",
+      "description": "The policy distribution channel (stable, beta, canary).",
+      "type": "string",
+      "default": "stable"
+    },
+    "enrollmentMode": {
+      "title": "Enrollment Mode",
+      "description": "Set to 'managed' to auto-enroll without user interaction.",
+      "type": "string",
+      "enum": ["managed", "self_service"],
+      "default": "managed"
+    },
+    "logLevel": {
+      "title": "Log Level",
+      "description": "Diagnostic logging level for troubleshooting.",
+      "type": "string",
+      "enum": ["error", "warn", "info", "debug"],
+      "default": "error"
+    }
+  }
+}

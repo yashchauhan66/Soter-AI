@@ -4,6 +4,7 @@ import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { enqueueBackgroundJob, jobAcceptedResponse } from "@/lib/backgroundJobs";
 import { safeRedTeamScenarios } from "@/lib/redteam/scenarios";
+import { writeRedTeamEvent } from "@/lib/events/store";
 
 const schema = z.object({ projectId: z.string().min(1), confirmed: z.literal(true) });
 
@@ -46,6 +47,16 @@ export async function POST(request: Request) {
         projectId: body.projectId,
         authorizedProjectId: access.project.id,
       },
+    });
+    await writeRedTeamEvent({
+      orgId: access.org.id,
+      projectId: access.project.id,
+      jobId: job.id,
+      targetType: "RedTeamRun",
+      targetId: run.id,
+      action: "redteam.run.queued",
+      status: "PENDING",
+      metadata: { suiteId: suite.id, scenarioCount: safeRedTeamScenarios.length },
     });
     return jsonResponse(jobAcceptedResponse(job, { runId: run.id }), { status: 202 });
   } catch (error) {

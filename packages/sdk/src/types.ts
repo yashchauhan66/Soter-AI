@@ -20,8 +20,15 @@ export type RiskType =
   | "INDIA_PII_DETECTED"
   | "SECRET_DETECTED"
   | "UNSAFE_OUTPUT"
+  | "DATA_EXFILTRATION"
   | "RATE_LIMIT"
   | "TOKEN_ABUSE"
+  | "TOXICITY"
+  | "BIAS_DETECTED"
+  | "COMPETITIVE_INTEL_EXTRACTION"
+  | "RECURSIVE_INJECTION"
+  | "SSRF_ATTEMPT"
+  | "HALLUCINATION"
   | "LOW_RISK";
 
 /** Alias kept for parity with the Python SDK / docs naming. */
@@ -702,4 +709,127 @@ export interface CheckLegalBoundaryResponse {
   requiredUserMessage: string;
   evidence: string[];
   auditId: string;
+}
+
+// ── Advanced Security Types ─────────────────────────────────────────────────
+
+export interface InterAgentCheckRequest {
+  fromAgentId: string;
+  toAgentId: string;
+  content: string;
+  sessionId: string;
+  delegationChain?: string[];
+  timestamp?: number;
+}
+
+export interface InterAgentCheckResponse {
+  allowed: boolean;
+  risk: "NONE" | "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+  findings: Array<{
+    type: string;
+    message: string;
+    severity: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+  }>;
+}
+
+export interface RogueAgentDetectRequest {
+  activity: {
+    agentId: string;
+    sessionId: string;
+    toolCalls: string[];
+    destinations: string[];
+    dataVolumeBytes: number;
+    durationMs: number;
+    riskScore: number;
+  };
+  baseline: {
+    avgToolCalls: number;
+    avgSessionDurationMs: number;
+    authorizedTools: string[];
+    authorizedDestinations: string[];
+    avgDataVolumeBytes: number;
+    avgRiskScore: number;
+  };
+}
+
+export interface RogueAgentDetectResponse {
+  isRogue: boolean;
+  confidence: number;
+  recommendation: "ALLOW" | "MONITOR" | "THROTTLE" | "SUSPEND" | "TERMINATE";
+  deviations: Array<{
+    type: string;
+    message: string;
+    severity: string;
+    score: number;
+  }>;
+}
+
+export interface CascadeEvaluateRequest {
+  state: {
+    chainId: string;
+    depth: number;
+    agents: Array<{ agentId: string; depth: number; startedAt: number; status: string }>;
+    errors: Array<{ agentId: string; error: string; timestamp: number; depth: number; recoverable?: boolean }>;
+    startedAt: number;
+    status: string;
+  };
+  config?: {
+    maxChainDepth?: number;
+    maxConcurrentAgents?: number;
+    timeoutPerDepthMs?: number;
+    errorThresholdPercent?: number;
+  };
+  checkSpawn?: boolean;
+}
+
+export interface CascadeEvaluateResponse {
+  action: "CONTINUE" | "CIRCUIT_OPEN" | "ROLLBACK" | "TIMEOUT" | "THROTTLE";
+  reason: string;
+  affectedAgents: string[];
+  canSpawn?: { allowed: boolean; reason?: string };
+}
+
+export interface ModelDriftDetectRequest {
+  baseline: {
+    modelId: string;
+    timestamp: number;
+    responseDistribution: { avgTokenLength: number; avgSentiment: number; avgComplexity: number; refusalRate: number; hallucinationRate: number };
+    safetyMetrics: { alignmentScore: number; harmfulnessRate: number; biasScore: number; consistencyScore: number };
+    performanceMetrics: { avgLatencyMs: number; errorRate: number; timeoutRate: number };
+  };
+  current: {
+    modelId: string;
+    timestamp: number;
+    responseDistribution: { avgTokenLength: number; avgSentiment: number; avgComplexity: number; refusalRate: number; hallucinationRate: number };
+    safetyMetrics: { alignmentScore: number; harmfulnessRate: number; biasScore: number; consistencyScore: number };
+    performanceMetrics: { avgLatencyMs: number; errorRate: number; timeoutRate: number };
+  };
+}
+
+export interface ModelDriftDetectResponse {
+  hasDrift: boolean;
+  overallDriftScore: number;
+  recommendation: "NORMAL" | "INVESTIGATE" | "ALERT" | "QUARANTINE" | "BLOCK";
+  drifts: Array<{
+    dimension: string;
+    metric: string;
+    baselineValue: number;
+    currentValue: number;
+    deviationPercent: number;
+    severity: Severity;
+    message: string;
+  }>;
+}
+
+export interface OwaspComplianceReport {
+  framework: string;
+  overallCoverage: number;
+  items: Array<{
+    id: string;
+    name: string;
+    coverage: number;
+    features: string[];
+    gaps: string[];
+  }>;
+  generatedAt: string;
 }

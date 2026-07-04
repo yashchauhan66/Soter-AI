@@ -1,6 +1,7 @@
 import { randomUUID } from "crypto";
 import { Prisma } from "@prisma/client";
 import { db } from "./db";
+import { writeWorkerTaskEvent } from "./events/store";
 
 export type BackgroundJobType =
   | "MONTHLY_REPORT"
@@ -70,6 +71,7 @@ export async function enqueueBackgroundJob(input: EnqueueJobInput): Promise<Back
     )
     RETURNING *
   `;
+  if (rows[0]) await recordJobEvent(rows[0], "ENQUEUED");
   return rows[0];
 }
 
@@ -83,6 +85,7 @@ export async function markJobComplete(id: string, result?: Prisma.InputJsonValue
     WHERE "id" = ${id}
     RETURNING *
   `;
+  if (rows[0]) await recordJobEvent(rows[0], "COMPLETED");
   return rows[0] ?? null;
 }
 
@@ -101,6 +104,7 @@ export async function markJobFailed(id: string, error: unknown) {
     WHERE "id" = ${id}
     RETURNING *
   `;
+  if (rows[0]) await recordJobEvent(rows[0], exhausted ? "FAILED" : "RETRY_SCHEDULED", message);
   return rows[0] ?? null;
 }
 
@@ -126,6 +130,7 @@ export async function claimNextBackgroundJob(types?: BackgroundJobType[]) {
     )
     RETURNING *
   `;
+  if (rows[0]) await recordJobEvent(rows[0], "RUNNING");
   return rows[0] ?? null;
 }
 
@@ -145,4 +150,28 @@ export function jobAcceptedResponse(job: { id: string; status: BackgroundJobStat
     status: job.status,
     ...extra,
   };
+}
+
+async function recordJobEvent(job: BackgroundJobRow, status: string, errorMessage?: string) {
+  const payload = job.payload && typeof job.payload === "object" && !Array.isArray(job.payload)
+    ? job.payload as Record<string, unknown>
+    : {};
+  await writeWorkerTaskEvent({
+    orgId: stringValue(payload.organizationId),
+    projectId: stringValue(payload.projectId),
+    jobId: job.id,
+    action: job.type,
+    status,
+    errorMessage,
+    metadata: {
+      dedupeKey: job.dedupeKey,
+      attempts: job.attempts,
+      maxAttempts: job.maxAttempts,
+      runAfter: job.runAfter.toISOString(),
+    },
+  });
+}
+
+function stringValue(value: unknown): string | null {
+  return typeof value === "string" && value ? value : null;
 }

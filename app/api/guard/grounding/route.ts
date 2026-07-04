@@ -8,6 +8,7 @@ import { db } from "@/lib/db";
 import { emitSecurityEvent } from "@/lib/events/emit";
 import { authorizeGroundingChunks } from "@/lib/rag/groundingSources";
 import { checkRedisRateLimit } from "@/lib/rateLimit";
+import { eventStoreFlags, writeRagSecurityEvent } from "@/lib/events/store";
 
 const schema = z.object({
   projectId: z.string().min(1),
@@ -29,7 +30,7 @@ export async function POST(request: Request) {
     }) : [];
     const sources = authorizeGroundingChunks(storedChunks, { organizationId: access.org.id, projectId: access.project.id, role: access.role });
     const result = guardGroundedAnswer({ answer: body.answer, sources, policy });
-    await db.ragAnswerAuditLog.create({ data: {
+    const answerAudit = {
       organizationId: access.org.id,
       projectId: access.project.id,
       answerHash: createHash("sha256").update(body.answer).digest("hex"),
@@ -38,7 +39,20 @@ export async function POST(request: Request) {
       unsupportedClaimCount: result.unsupportedClaims.length,
       fallbackUsed: !result.allowed,
       metadata: { highRiskTopic: result.highRiskTopic, citationCount: result.citationVerification.citationCount, requestedSourceCount: requestedIds.length },
-    } });
+    };
+    const flags = eventStoreFlags();
+    if (!flags.enabled || flags.dualWrite) await db.ragAnswerAuditLog.create({ data: answerAudit });
+    if (flags.enabled) {
+      await writeRagSecurityEvent({
+        orgId: access.org.id,
+        projectId: access.project.id,
+        action: "rag.grounding",
+        decision: result.allowed ? "ALLOW" : "BLOCK",
+        status: "COMPLETED",
+        riskScore: result.allowed ? 0 : result.privateDocumentLeak ? 100 : 60,
+        metadata: answerAudit,
+      });
+    }
     if (!result.allowed) await emitSecurityEvent({ organizationId: access.org.id, projectId: access.project.id, eventType: "rag.no_source_fallback", severity: result.privateDocumentLeak ? "CRITICAL" : "MEDIUM", riskTypes: result.privateDocumentLeak ? ["PRIVATE_DOCUMENT_LEAK"] : ["INSUFFICIENT_SOURCE_ATTRIBUTION"], action: "SAFE_FALLBACK", source: "guard.grounding", metadata: { sourceCount: result.sourceCount, sourceCoverageScore: result.sourceCoverageScore } });
     return jsonResponse(result);
   } catch (error) { return apiError(error, "Grounding guard failed."); }

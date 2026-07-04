@@ -2,8 +2,8 @@ import { apiError, jsonResponse } from "@/lib/apiResponse";
 import { getActiveOrganization, requireUser } from "@/lib/auth/guards";
 import { hasPermission } from "@/lib/auth/permissions";
 import { db } from "@/lib/db";
-import { guardLogListSelect } from "@/lib/guard/logSelect";
-import { buildLogWhere, encodeCursor, LOG_ORDER_BY, parseLogFilters } from "@/lib/guard/logFilters";
+import { parseLogFilters } from "@/lib/guard/logFilters";
+import { listGuardEventsByOrg, listGuardEventsByProject } from "@/lib/events/store";
 
 export const dynamic = "force-dynamic";
 
@@ -22,6 +22,15 @@ export async function GET(request: Request) {
     }
     const params = new URL(request.url).searchParams;
     const projectId = params.get("projectId");
+    if (projectId) {
+      const ownedProject = await db.project.findFirst({
+        where: { id: projectId, organizationId: active.org.id },
+        select: { id: true },
+      });
+      if (!ownedProject) {
+        return jsonResponse({ error: true, message: "Project not found." }, { status: 404 });
+      }
+    }
     const filters = parseLogFilters({
       action: params.get("action"),
       direction: params.get("direction"),
@@ -32,25 +41,37 @@ export async function GET(request: Request) {
       limit: params.get("limit"),
     });
 
-    // Tenant boundary is enforced here and never derived from user input.
-    const projectScope: Record<string, unknown> = {
-      project: { organizationId: active.org.id },
-      ...(projectId ? { projectId } : {}),
-    };
-    const where = buildLogWhere(projectScope, filters);
+    const page = projectId
+      ? await listGuardEventsByProject(projectId, {
+          limit: filters.limit,
+          cursor: params.get("cursor"),
+          from: filters.from,
+          to: filters.to,
+          decision: filters.action,
+          direction: filters.direction,
+          category: filters.riskType,
+        })
+      : await listGuardEventsByOrg(active.org.id, {
+          limit: filters.limit,
+          cursor: params.get("cursor"),
+          from: filters.from,
+          to: filters.to,
+          decision: filters.action,
+          direction: filters.direction,
+          category: filters.riskType,
+        });
 
-    // Fetch one extra row to detect whether a next page exists.
-    const rows = await db.guardLog.findMany({
-      where,
-      orderBy: LOG_ORDER_BY,
-      take: filters.limit + 1,
-      select: { ...guardLogListSelect, id: true, project: { select: { name: true } } },
-    });
+    const projectIds = [...new Set(page.items.map((row) => row.projectId))];
+    const projects = projectIds.length ? await db.project.findMany({
+      where: { id: { in: projectIds }, organizationId: active.org.id },
+      select: { id: true, name: true },
+    }) : [];
+    const projectNames = new Map(projects.map((project) => [project.id, project.name]));
+    const logs = page.items.map((row) => ({
+      ...row,
+      project: row.project ?? { name: projectNames.get(row.projectId) ?? "Project" },
+    }));
 
-    const hasMore = rows.length > filters.limit;
-    const logs = hasMore ? rows.slice(0, filters.limit) : rows;
-    const nextCursor = hasMore ? encodeCursor(logs[logs.length - 1]) : null;
-
-    return jsonResponse({ logs, nextCursor });
+    return jsonResponse({ logs, nextCursor: page.nextCursor });
   } catch (error) { return apiError(error, "Guard logs could not be loaded."); }
 }

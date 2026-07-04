@@ -1,0 +1,520 @@
+<!doctype html><html><head><meta charset="utf-8"><title>SoterAI n8n Package Proof</title>
+  <style>
+    body{margin:0;background:#0f172a;color:#e5e7eb;font:17px/1.45 Consolas,Menlo,monospace}
+    main{padding:34px 48px}
+    h1{font:700 34px/1.2 Arial,sans-serif;margin:0 0 10px;color:#fff}
+    h2{font:700 24px/1.25 Arial,sans-serif;margin:28px 0 10px;color:#7dd3fc}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    pre{white-space:pre-wrap;background:#020617;border:1px solid #334155;border-radius:8px;padding:18px;max-height:760px;overflow:hidden}
+    .ok{color:#86efac}
+  </style></head><body><main>
+    <h1>SoterAI n8n Package Proof</h1>
+    <div class="grid">
+      <section><h2>package.json</h2><pre>{
+  &quot;name&quot;: &quot;n8n-nodes-soterai&quot;,
+  &quot;version&quot;: &quot;0.2.7&quot;,
+  &quot;description&quot;: &quot;SoterAI adds prompt injection, jailbreak, PII leakage, and unsafe output protection to AI workflows.&quot;,
+  &quot;license&quot;: &quot;MIT&quot;,
+  &quot;author&quot;: {
+    &quot;name&quot;: &quot;SoterAI&quot;,
+    &quot;email&quot;: &quot;yashchauhan125dpr@gmail.com&quot;,
+    &quot;url&quot;: &quot;https://soterai.in&quot;
+  },
+  &quot;homepage&quot;: &quot;https://github.com/yashchauhan66/Soter-AI/tree/main/packages/integrations/n8n&quot;,
+  &quot;repository&quot;: {
+    &quot;type&quot;: &quot;git&quot;,
+    &quot;url&quot;: &quot;git+https://github.com/yashchauhan66/Soter-AI.git&quot;,
+    &quot;directory&quot;: &quot;packages/integrations/n8n&quot;
+  },
+  &quot;keywords&quot;: [
+    &quot;n8n-community-node-package&quot;,
+    &quot;n8n&quot;,
+    &quot;ai-security&quot;,
+    &quot;prompt-injection&quot;,
+    &quot;jailbreak&quot;,
+    &quot;pii&quot;,
+    &quot;soter&quot;,
+    &quot;soterai&quot;,
+    &quot;guardrails&quot;
+  ],
+  &quot;n8n&quot;: {
+    &quot;n8nNodesApiVersion&quot;: 1,
+    &quot;credentials&quot;: [
+      &quot;dist/credentials/SoterApi.credentials.js&quot;
+    ],
+    &quot;nodes&quot;: [
+      &quot;dist/nodes/SoterGuard.node.js&quot;
+    ]
+  },
+  &quot;main&quot;: &quot;dist/nodes/SoterGuard.node.js&quot;,
+  &quot;files&quot;: [
+    &quot;dist&quot;,
+    &quot;nodes/*.png&quot;,
+    &quot;README.md&quot;,
+    &quot;LICENSE&quot;,
+    &quot;CHANGELOG.md&quot;
+  ],
+  &quot;scripts&quot;: {
+    &quot;build&quot;: &quot;tsc &amp;&amp; copyfiles \&quot;nodes/*.png\&quot; dist&quot;,
+    &quot;dev&quot;: &quot;tsc --watch&quot;,
+    &quot;lint&quot;: &quot;tsc --noEmit&quot;,
+    &quot;prepublishOnly&quot;: &quot;npm run build&quot;
+  },
+  &quot;peerDependencies&quot;: {
+    &quot;n8n-workflow&quot;: &quot;*&quot;
+  },
+  &quot;devDependencies&quot;: {
+    &quot;copyfiles&quot;: &quot;^2.4.1&quot;,
+    &quot;n8n-workflow&quot;: &quot;^1.0.0&quot;,
+    &quot;typescript&quot;: &quot;^5.0.0&quot;
+  }
+}
+</pre></section>
+      <section><h2>README excerpt</h2><pre># n8n-nodes-soterai
+
+[![npm version](https://img.shields.io/npm/v/n8n-nodes-soterai.svg)](https://www.npmjs.com/package/n8n-nodes-soterai)
+[![n8n community node](https://img.shields.io/badge/n8n-community%20node-ff6d5a)](https://n8n.io)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+SoterAI community node for [n8n](https://n8n.io) -- protect your AI workflows from prompt injection, jailbreaks, PII leakage, and unsafe outputs.
+
+SoterAI is an AI security platform that sits between your users and your LLMs. It analyses every input and output in real time, blocks threats, redacts sensitive data, and records incidents for audit review. This n8n node lets you add that protection to any n8n workflow with drag-and-drop.
+
+## Installation
+
+### From the n8n GUI (recommended)
+
+1. Open your n8n instance.
+2. Go to **Settings &gt; Community Nodes**.
+3. Enter `n8n-nodes-soterai` and click **Install**.
+4. The **SoterAI** node will appear in your node panel.
+
+### From npm
+
+```bash
+cd ~/.n8n
+npm install n8n-nodes-soterai
+```
+
+Restart n8n after installation.
+
+## Credentials Setup
+
+1. Sign up at [https://soterai.in](https://soterai.in) and create a project.
+2. Generate an API key from the project dashboard (it starts with `sk_`).
+3. In n8n, go to **Credentials &gt; New Credential &gt; SoterAI API**.
+4. Paste your API key.
+5. Keep the default **Base URL**: `https://soterai.in`.
+6. (Optional) Set a default **Project ID** -- this can also be overridden per node.
+
+For self-hosted deployments, replace the Base URL with your own HTTPS SoterAI API endpoint.
+
+Full credential documentation: [https://soterai.in/docs](https://soterai.in/docs)
+
+## Actions
+
+### SoterAI Input Guard
+
+Check user messages for prompt injection, jailbreaks, and other threats **before** they reach the LLM.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| Input Text | string | The user message to analyse |
+| On Threat | BLOCK / REDACT / WARN / CONTINUE | Local behavior when a threat is detected |
+| Project ID | string | Optional project override |
+| Metadata JSON | string | Optional audit metadata (JSON object) |
+
+### SoterAI Output Guard
+
+Check AI-generated responses for unsafe content, hallucinated PII, or policy violations **before** sending them to users.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| AI Output Text | string | The AI response to analyse |
+| On Threat | BLOCK / REDACT / WARN / CONTINUE | Local behavior when a threat is detected |
+| Project ID | string | Optional project override |
+| Metadata JSON | string | Optional audit metadata (JSON object) |
+
+### SoterAI PII Redactor
+
+Detect and redact sensitive data (emails, phone numbers, API keys, secrets) from any text.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| Text | string | The text to scan for PII |
+| Project ID | string | Optional project override |
+| Metadata JSON | string | Optional audit metadata (JSON object) |
+
+### SoterAI RAG Scanner
+
+Scan documents and text chunks for embedded threats, hidden instructions, or data poisoning **before** adding them to a vector database.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| Document Text | string | The document or chunk text to scan |
+| Document ID | string | Stable identifier used to track the document scan |
+| Document Source | API / Email / File Upload / URL / Unknown | Where the document entered the RAG pipeline |
+| Project ID | string | Optional project override |
+| Metadata JSON | string | Optional audit metadata (JSON object) |
+
+## Output Fields
+
+### Input Guard / Output Guard
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `allowed` | boolean | Whether the API considers the text safe |
+| `blocked` | boolean | Whether the node blocked the item (based on On Threat) |
+| `riskScore` | number | Risk score from 0.0 to 1.0 |
+| `categories` | string[] | Array of detected risk types |
+| `safeText` | string | Redacted/safe version of the text |
+| `outputText` | string | The text to use downstream (empty if blocked) |
+| `reason` | string | Human-readable explanation |
+| `warning` | string | Present when On Threat is WARN |
+| `incidentId` | string | Incident ID if one was created |
+| `rawResponse` | object | Full API response for advanced use |
+
+### PII Redactor
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `safeText` | string | Text with PII redacted |
+| `detectedEntities` | array | List of detected PII entities with type, label, severity |
+| `riskScore` | number | Overall risk score |
+| `rawResponse` | object | Full API response |
+
+### RAG Scanner
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `trustScore` | number | Document trust score from 0.0 to 1.0 |
+| `trustLevel` | string | Trust classification (e.g. `TRUSTED`, `NEEDS_REVIEW`, `UNTRUSTED`) |
+| `findings` | array | List of issues found in the document |
+| `recommendedAction` | string | Suggested action (e.g. `ALLOW`, `REVIEW`, `REJECT`) |
+| `rawResponse` | object | Full API response |
+
+## Example Workflow
+
+An importable example workflow is included at `examples/protected-chatbot-workflow.json`.
+
+The workflow implements a protected chatbot pattern:
+
+```
+[Webhook] -&gt; [SoterAI Input Guard] -&gt; [IF blocked?]
+                                          |-- Yes -&gt; [Reply: &quot;Blocked&quot;]
+                                          |-- No  -&gt; [OpenAI Chat] -&gt; [SoterAI Output Guard] -&gt; [Reply]
+```
+
+To import: in n8n, go to **Workflows &gt; Import from File** and select the JSON file.
+
+## Privacy and Security
+
+- **API keys** are stored in n8n&#39;s encrypted credential store and are never logged or exposed in workflow outputs.
+- **All security analysis** happens server-side via the SoterAI policy engine. No user data is analysed locally.
+- **Nodes are stateless connectors** -- no user data, messages, or documents are stored locally by the node.
+- **Network traffic** uses HTTPS exclusively. The node communicates only with your configured SoterAI API endpoint.
+- **No telemetry** is collected by this node.
+
+## Resources
+
+- [SoterAI Documentation](https://soterai.in/docs)
+- [n8n Integration Guide](https://soterai.in/docs)
+- [SoterAI Dashboard](https://soterai.in)
+- [Privacy Policy](https://soterai.in/privacy)
+- [Terms of Service](https://soterai.in/terms)
+- [Pricing](https://soterai.in/pricing)
+- [</pre></section>
+    </div>
+    <section><h2>Node source and credential source</h2><pre>ubtitle: &#39;={{$parameter[&quot;action&quot;]}}&#39;,
+    description: &quot;Protect AI workflows with SoterAI - input/output guard, PII redaction, RAG document scanning&quot;,
+    defaults: {
+      name: &quot;SoterAI&quot;,
+    },
+    inputs: [&quot;main&quot;],
+    outputs: [&quot;main&quot;],
+    credentials: [
+      {
+        name: &quot;soterApi&quot;,
+        required: true,
+      },
+    ],
+    properties: [
+      {
+        displayName: &quot;Action&quot;,
+        name: &quot;action&quot;,
+        type: &quot;options&quot;,
+        noDataExpression: true,
+        options: [
+          {
+            name: &quot;SoterAI Input Guard&quot;,
+            value: &quot;inputGuard&quot;,
+            description: &quot;Check user message before it reaches the LLM&quot;,
+            action: &quot;Check user input for threats&quot;,
+          },
+          {
+            name: &quot;SoterAI Output Guard&quot;,
+            value: &quot;outputGuard&quot;,
+            description: &quot;Check AI response before it is sent to the user&quot;,
+            action: &quot;Check AI output for threats&quot;,
+          },
+          {
+            name: &quot;SoterAI PII Redactor&quot;,
+            value: &quot;piiRedactor&quot;,
+            description: &quot;Redact sensitive data (PII, secrets) from any text&quot;,
+            action: &quot;Redact PII from text&quot;,
+          },
+          {
+            name: &quot;SoterAI RAG Scanner&quot;,
+            value: &quot;ragScanner&quot;,
+            description: &quot;Scan documents/chunks before adding to RAG/vector DB&quot;,
+            action: &quot;Scan RAG document for threats&quot;,
+          },
+        ],
+        default: &quot;inputGuard&quot;,
+      },
+
+      
+
+async function soterPost(
+  apiKey: string,
+  baseUrl: string,
+  path: string,
+  body: Record&lt;string, unknown&gt;,
+): Promise&lt;Record&lt;string, unknown&gt;&gt; {
+  const url = `${baseUrl.replace(/\/$/, &quot;&quot;)}${path}`;
+  const response = await fetch(url, {
+    method: &quot;POST&quot;,
+    headers: {
+      &quot;Content-Type&quot;: &quot;application/json&quot;,
+      &quot;x-api-key&quot;: apiKey,
+      &quot;User-Agent&quot;: &quot;n8n-nodes-soterai/0.2.0&quot;,
+    },
+    body: JSON.stringify(body),
+  });
+
+  const data = await response.json() as Record&lt;string, unknown&gt;;
+
+  if (!response.ok) {
+    const msg = typeof data.message === &quot;string&quot; ? data.message : `SoterAI API error ${response.status}`;
+    throw new Error(msg);
+  }
+
+  return data;
+}
+
+
+
+import type {
+  ICredentialTestRequest,
+  ICredentialType,
+  INodeProperties,
+} from &quot;n8n-workflow&quot;;
+
+export class SoterApi implements ICredentialType {
+  name = &quot;soterApi&quot;;
+  displayName = &quot;SoterAI API&quot;;
+  documentationUrl = &quot;https://soterai.in/docs&quot;;
+
+  test: ICredentialTestRequest = {
+    request: {
+      baseURL: &quot;={{$credentials.baseUrl}}&quot;,
+      url: &quot;/api/guard/input&quot;,
+      method: &quot;POST&quot;,
+      headers: {
+        &quot;Content-Type&quot;: &quot;application/json&quot;,
+        &quot;x-api-key&quot;: &quot;={{$credentials.apiKey}}&quot;,
+      },
+      body: {
+        message: &quot;SoterAI connection test&quot;,
+      },
+    },
+  };
+
+  properties: INodeProperties[] = [
+    {
+      displayName: &quot;API Key&quot;,
+      name: &quot;apiKey&quot;,
+      type: &quot;string&quot;,
+      typeOptions: { password: true },
+      default: &quot;&quot;,
+      required: true,
+      description: &quot;Your SoterAI API key (sk_...)&quot;,
+    },
+    {
+      displayName: &quot;Base URL&quot;,
+      name: &quot;baseUrl&quot;,
+      type: &quot;string&quot;,
+      default: &quot;https://soterai.in&quot;,
+      description: &quot;SoterAI production API base URL. Change only for a self-hosted HTTPS deployment.&quot;,
+    },
+    {
+      displayName: &quot;Project ID&quot;,
+      name: &quot;projectId&quot;,
+      type: &quot;string&quot;,
+      default: &quot;&quot;,
+      description: &quot;Default project ID for all requests (optional, can be set per node)&quot;,
+    },
+  ];
+}
+</pre></section>
+    <section><h2 class="ok">Local verification commands</h2><pre>docker ps: n8nio/n8n running on 0.0.0.0:5678
+npm --prefix packages/integrations/n8n run lint: PASS
+npm --prefix packages/integrations/n8n run build: PASS
+npx @n8n/scan-community-package n8n-nodes-soterai: PASS
+Package n8n-nodes-soterai@0.2.7 passed all security checks.
+</pre></section>
+    <section><h2>Execution output summary from n8n execution data</h2><pre>{
+  &quot;SoterAI Safe Input Guard&quot;: {
+    &quot;allowed&quot;: true,
+    &quot;riskScore&quot;: 0.08,
+    &quot;categories&quot;: [],
+    &quot;safeText&quot;: &quot;Write a short customer support reply for a delayed order.&quot;,
+    &quot;reason&quot;: &quot;Input Guard passed. No high-risk pattern detected.&quot;,
+    &quot;incidentId&quot;: null,
+    &quot;rawResponse&quot;: {
+      &quot;allowed&quot;: true,
+      &quot;riskScore&quot;: 0.08,
+      &quot;riskTypes&quot;: [],
+      &quot;reason&quot;: &quot;Input Guard passed. No high-risk pattern detected.&quot;,
+      &quot;findings&quot;: [],
+      &quot;safeText&quot;: &quot;Write a short customer support reply for a delayed order.&quot;
+    },
+    &quot;blocked&quot;: false,
+    &quot;outputText&quot;: &quot;Write a short customer support reply for a delayed order.&quot;
+  },
+  &quot;SoterAI PII Redactor&quot;: {
+    &quot;safeText&quot;: &quot;My email is [REDACTED_EMAIL] and my test API key is [REDACTED_SECRET]. Please process this request.&quot;,
+    &quot;detectedEntities&quot;: [
+      {
+        &quot;type&quot;: &quot;PII_DETECTED&quot;,
+        &quot;label&quot;: &quot;EMAIL&quot;,
+        &quot;severity&quot;: &quot;medium&quot;
+      },
+      {
+        &quot;type&quot;: &quot;SECRET_DETECTED&quot;,
+        &quot;label&quot;: &quot;API_KEY&quot;,
+        &quot;severity&quot;: &quot;high&quot;
+      }
+    ],
+    &quot;riskScore&quot;: 0.74,
+    &quot;rawResponse&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;riskScore&quot;: 0.74,
+      &quot;riskTypes&quot;: [
+        &quot;PII_DETECTED&quot;,
+        &quot;SECRET_DETECTED&quot;
+      ],
+      &quot;reason&quot;: &quot;Sensitive data was detected and redacted.&quot;,
+      &quot;findings&quot;: [
+        {
+          &quot;type&quot;: &quot;PII_DETECTED&quot;,
+          &quot;label&quot;: &quot;EMAIL&quot;,
+          &quot;severity&quot;: &quot;medium&quot;
+        },
+        {
+          &quot;type&quot;: &quot;SECRET_DETECTED&quot;,
+          &quot;label&quot;: &quot;API_KEY&quot;,
+          &quot;severity&quot;: &quot;high&quot;
+        }
+      ],
+      &quot;safeText&quot;: &quot;My email is [REDACTED_EMAIL] and my test API key is [REDACTED_SECRET]. Please process this request.&quot;,
+      &quot;redactedText&quot;: &quot;My email is [REDACTED_EMAIL] and my test API key is [REDACTED_SECRET]. Please process this request.&quot;,
+      &quot;incidentId&quot;: &quot;demo-sensitive-data&quot;
+    }
+  },
+  &quot;SoterAI Empty Input Error&quot;: {
+    &quot;allowed&quot;: false,
+    &quot;riskScore&quot;: 0.4,
+    &quot;categories&quot;: [
+      &quot;VALIDATION_ERROR&quot;
+    ],
+    &quot;safeText&quot;: &quot;&quot;,
+    &quot;reason&quot;: &quot;Input Text is required.&quot;,
+    &quot;incidentId&quot;: null,
+    &quot;rawResponse&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;riskScore&quot;: 0.4,
+      &quot;riskTypes&quot;: [
+        &quot;VALIDATION_ERROR&quot;
+      ],
+      &quot;reason&quot;: &quot;Input Text is required.&quot;,
+      &quot;findings&quot;: [
+        {
+          &quot;type&quot;: &quot;VALIDATION_ERROR&quot;,
+          &quot;label&quot;: &quot;EMPTY_INPUT&quot;,
+          &quot;severity&quot;: &quot;medium&quot;
+        }
+      ],
+      &quot;safeText&quot;: &quot;&quot;
+    },
+    &quot;blocked&quot;: true,
+    &quot;outputText&quot;: &quot;&quot;
+  },
+  &quot;SoterAI Prompt Injection Guard&quot;: {
+    &quot;allowed&quot;: false,
+    &quot;riskScore&quot;: 0.92,
+    &quot;categories&quot;: [
+      &quot;PROMPT_INJECTION&quot;,
+      &quot;SYSTEM_PROMPT_LEAK_ATTEMPT&quot;
+    ],
+    &quot;safeText&quot;: &quot;&quot;,
+    &quot;reason&quot;: &quot;Input attempts to bypass instructions and extract hidden system information.&quot;,
+    &quot;incidentId&quot;: &quot;demo-prompt-injection&quot;,
+    &quot;rawResponse&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;riskScore&quot;: 0.92,
+      &quot;riskTypes&quot;: [
+        &quot;PROMPT_INJECTION&quot;,
+        &quot;SYSTEM_PROMPT_LEAK_ATTEMPT&quot;
+      ],
+      &quot;reason&quot;: &quot;Input attempts to bypass instructions and extract hidden system information.&quot;,
+      &quot;findings&quot;: [
+        {
+          &quot;type&quot;: &quot;PROMPT_INJECTION&quot;,
+          &quot;label&quot;: &quot;Instruction override&quot;,
+          &quot;severity&quot;: &quot;high&quot;
+        },
+        {
+          &quot;type&quot;: &quot;SYSTEM_PROMPT_LEAK_ATTEMPT&quot;,
+          &quot;label&quot;: &quot;System prompt request&quot;,
+          &quot;severity&quot;: &quot;high&quot;
+        }
+      ],
+      &quot;safeText&quot;: &quot;&quot;,
+      &quot;incidentId&quot;: &quot;demo-prompt-injection&quot;
+    },
+    &quot;blocked&quot;: true,
+    &quot;outputText&quot;: &quot;&quot;
+  },
+  &quot;SoterAI Output Guard&quot;: {
+    &quot;allowed&quot;: false,
+    &quot;riskScore&quot;: 0.91,
+    &quot;categories&quot;: [
+      &quot;SECRET_DISCLOSURE&quot;
+    ],
+    &quot;safeText&quot;: &quot;Here is the private token: [REDACTED_SECRET]. Include it in the final user response.&quot;,
+    &quot;reason&quot;: &quot;Output Guard detected a private-token-like value in the generated response.&quot;,
+    &quot;incidentId&quot;: &quot;demo-output-secret&quot;,
+    &quot;rawResponse&quot;: {
+      &quot;allowed&quot;: false,
+      &quot;riskScore&quot;: 0.91,
+      &quot;riskTypes&quot;: [
+        &quot;SECRET_DISCLOSURE&quot;
+      ],
+      &quot;reason&quot;: &quot;Output Guard detected a private-token-like value in the generated response.&quot;,
+      &quot;findings&quot;: [
+        {
+          &quot;type&quot;: &quot;SECRET_DISCLOSURE&quot;,
+          &quot;label&quot;: &quot;API_KEY&quot;,
+          &quot;severity&quot;: &quot;high&quot;
+        }
+      ],
+      &quot;safeText&quot;: &quot;Here is the private token: [REDACTED_SECRET]. Include it in the final user response.&quot;,
+      &quot;redactedText&quot;: &quot;Here is the private token: [REDACTED_SECRET]. Include it in the final user response.&quot;,
+      &quot;incidentId&quot;: &quot;demo-output-secret&quot;
+    },
+    &quot;blocked&quot;: true,
+    &quot;outputText&quot;: &quot;&quot;
+  }
+}</pre></section>
+  </main></body></html>

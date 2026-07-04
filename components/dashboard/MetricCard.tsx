@@ -73,6 +73,13 @@ const BADGE_TONES: Record<string, string> = {
   SCHEMA_CHANGED: "bg-blue-400/10 text-blue-300",
   DESCRIPTION_CHANGED: "bg-blue-400/10 text-blue-300",
   CAPABILITY_REMOVED: "bg-slate-700 text-slate-300",
+  // New security risk types
+  TOXICITY: "bg-red-400/10 text-red-300",
+  BIAS_DETECTED: "bg-orange-400/10 text-orange-300",
+  COMPETITIVE_INTEL_EXTRACTION: "bg-yellow-400/10 text-yellow-300",
+  RECURSIVE_INJECTION: "bg-red-400/10 text-red-300",
+  SSRF_ATTEMPT: "bg-red-400/10 text-red-300",
+  HALLUCINATION: "bg-amber-400/10 text-amber-300",
 };
 
 export function StatusBadge({ value }: { value: string }) {

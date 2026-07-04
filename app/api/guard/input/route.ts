@@ -47,6 +47,7 @@ export async function POST(request: Request) {
       await persistGuardResult({
         projectId: project.id,
         apiKeyId: apiKey.id,
+        apiKeyPrefix: apiKey.prefix,
         direction: "INPUT",
         result,
         requestMetadata: { limitType: usage.exceeded ? "monthly" : "rpm" },
@@ -124,6 +125,7 @@ export async function POST(request: Request) {
         scheduleGuardResultPersistence({
           projectId: project.id,
           apiKeyId: apiKey.id,
+          apiKeyPrefix: apiKey.prefix,
           direction: "INPUT",
           result: governanceResult,
           requestMetadata: { ...body.metadata, userId: body.userId ?? null, sessionId: body.sessionId ?? null },
@@ -169,6 +171,7 @@ export async function POST(request: Request) {
         scheduleGuardResultPersistence({
           projectId: project.id,
           apiKeyId: apiKey.id,
+          apiKeyPrefix: apiKey.prefix,
           direction: "INPUT",
           result: governanceResult,
           requestMetadata: { ...body.metadata, userId: body.userId ?? null, sessionId: body.sessionId ?? null },
@@ -233,6 +236,7 @@ export async function POST(request: Request) {
     scheduleGuardResultPersistence({
       projectId: project.id,
       apiKeyId: apiKey.id,
+      apiKeyPrefix: apiKey.prefix,
       direction: "INPUT",
       result,
       requestMetadata: { ...body.metadata, userId: body.userId ?? null, sessionId: body.sessionId ?? null },

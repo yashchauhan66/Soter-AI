@@ -12,6 +12,7 @@ import { applyPolicy } from "../guard/policy";
 import { loadProjectPolicy } from "../guard/policy";
 import { safeRedTeamScenarios, type RedTeamScenario } from "./scenarios";
 import { sanitizeLogText } from "../guard/logSafety";
+import { writeRedTeamEvent } from "../events/store";
 
 // ── Scenario management ───────────────────────────────────────────────────────
 
@@ -192,6 +193,23 @@ export async function executeRedTeamRun(input: RedTeamRunInput): Promise<RedTeam
       },
     },
   });
+  await Promise.all(results.map((result) => writeRedTeamEvent({
+    orgId: input.organizationId,
+    projectId: input.projectId,
+    jobId: runId,
+    targetType: "RedTeamRun",
+    targetId: runId,
+    detector: result.category,
+    action: "redteam.scenario.completed",
+    decision: result.observedAction,
+    status: result.passed ? "PASSED" : "FAILED",
+    severity: result.severity,
+    categories: result.riskTypes,
+    metadata: {
+      scenarioKey: result.scenarioKey,
+      recommendation: result.recommendation,
+    },
+  })));
 
   return { runId, total: results.length, passed, failed, results };
 }

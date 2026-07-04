@@ -7,6 +7,7 @@
 import { randomUUID } from "crypto";
 import { db } from "../db";
 import { sanitizeLogText } from "../guard/logSafety";
+import { eventStoreFlags, listGuardEventsByOrg, listIncidentEvents } from "../events/store";
 
 // ── Incident management ───────────────────────────────────────────────────────
 
@@ -94,24 +95,19 @@ export async function buildTimeline(incidentId: string): Promise<TimelineEvent[]
     });
   }
 
-  // Guard log events - no direct organizationId filter on GuardLog model
-  // Scoping would require knowing the project ID(s) associated with the incident
-  const guardLogs = await db.guardLog.findMany({
-    where: {
-      createdAt: {
-        gte: new Date(incident.startedAt.getTime() - 3600_000),
-        lte: incident.resolvedAt ?? new Date(),
-      },
-    },
-    orderBy: { createdAt: "asc" },
-    take: 100,
-  });
+  const guardLogs = incident.organizationId
+    ? (await listGuardEventsByOrg(incident.organizationId, {
+        from: new Date(incident.startedAt.getTime() - 3600_000),
+        to: incident.resolvedAt ?? new Date(),
+        limit: 100,
+      })).items
+    : [];
 
   for (const log of guardLogs) {
     if (log.action === "BLOCK" || log.action === "HUMAN_REVIEW") {
       events.push({
         id: `timeline-gl-${log.id}`,
-        timestamp: log.createdAt,
+        timestamp: new Date(log.createdAt),
         type: "DETECTION",
         source: "guard",
         description: `${log.direction} ${log.action}: ${log.reason}`,
@@ -131,6 +127,28 @@ export async function buildTimeline(incidentId: string): Promise<TimelineEvent[]
       description: sanitizeLogText(update.message).slice(0, 200),
       severity: incident.impact,
     });
+  }
+
+  if (eventStoreFlags().enabled) {
+    const incidentEvents = await listIncidentEvents(incident.id, { limit: 100 });
+    for (const event of incidentEvents.items) {
+      const description = typeof event.metadata?.message === "string"
+        ? event.metadata.message
+        : event.action ?? "Incident event";
+      const timestamp = new Date(event.createdAt);
+      if (events.some((existing) =>
+        existing.description === sanitizeLogText(description).slice(0, 200)
+        && Math.abs(existing.timestamp.getTime() - timestamp.getTime()) < 2_000
+      )) continue;
+      events.push({
+        id: `timeline-ddb-${event.id}`,
+        timestamp,
+        type: event.status === "RESOLVED" ? "RESOLUTION" : "UPDATE",
+        source: event.actorUserId ? "user" : "system",
+        description: sanitizeLogText(description).slice(0, 200),
+        severity: event.severity ?? incident.impact,
+      });
+    }
   }
 
   // Sort by timestamp

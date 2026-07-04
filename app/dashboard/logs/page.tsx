@@ -4,9 +4,8 @@ import { LogsTable } from "@/components/dashboard/LogsTable";
 import { LogsFilterBar, type LogFilterState } from "@/components/dashboard/LogsFilterBar";
 import { ProjectSwitcher } from "@/components/dashboard/ProjectSwitcher";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
-import { db } from "@/lib/db";
-import { guardLogListSelect } from "@/lib/guard/logSelect";
-import { buildLogWhere, encodeCursor, LOG_ORDER_BY, parseLogFilters } from "@/lib/guard/logFilters";
+import { listGuardEventsByProject } from "@/lib/events/store";
+import { parseLogFilters } from "@/lib/guard/logFilters";
 
 export const dynamic = "force-dynamic";
 
@@ -46,27 +45,24 @@ export default async function LogsPage({
     limit: params.limit,
   });
 
-  const where = buildLogWhere({ projectId: project.id }, filters);
-
-  const [rows, recent] = await Promise.all([
-    db.guardLog.findMany({
-      where,
-      orderBy: LOG_ORDER_BY,
-      take: filters.limit + 1,
-      select: { ...guardLogListSelect, id: true },
+  const [page, recentPage] = await Promise.all([
+    listGuardEventsByProject(project.id, {
+      limit: filters.limit,
+      cursor: params.cursor,
+      from: filters.from,
+      to: filters.to,
+      decision: filters.action,
+      direction: filters.direction,
+      category: filters.riskType,
     }),
-    db.guardLog.findMany({
-      where: { projectId: project.id },
-      orderBy: { createdAt: "desc" },
-      take: RISK_TYPE_SUGGESTION_SCAN,
-      select: { riskTypes: true },
+    listGuardEventsByProject(project.id, {
+      limit: RISK_TYPE_SUGGESTION_SCAN,
     }),
   ]);
 
-  const hasMore = rows.length > filters.limit;
-  const logs = hasMore ? rows.slice(0, filters.limit) : rows;
-  const nextCursor = hasMore ? encodeCursor(logs[logs.length - 1]) : null;
-  const riskTypeOptions = Array.from(new Set(recent.flatMap((row) => row.riskTypes))).sort();
+  const logs = page.items;
+  const nextCursor = page.nextCursor;
+  const riskTypeOptions = Array.from(new Set(recentPage.items.flatMap((row) => row.riskTypes))).sort();
 
   const filterState: LogFilterState = {
     project: project.id,
