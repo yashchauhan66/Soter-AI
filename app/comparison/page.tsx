@@ -148,15 +148,15 @@ const benchmarks: Array<{
   nemo: string;
   notes: string;
 }> = [
-  { category: "Prompt Injection", tests: 30, soter: "100%", gaGuard: "98%", nemo: "88%", notes: "Classic + roleplay + system prompt extraction" },
-  { category: "Jailbreak / DAN", tests: 11, soter: "100%", gaGuard: "98%", nemo: "75%", notes: "Developer mode, unrestricted, hypotheticals" },
-  { category: "Encoding / Obfuscation", tests: 12, soter: "100%", gaGuard: "85%", nemo: "70%", notes: "Base64, rot13, leetspeak, spaced, zero-width" },
-  { category: "Multilingual Attacks", tests: 7, soter: "100%", gaGuard: "90%", nemo: "65%", notes: "Hindi/Hinglish bypass attempts" },
-  { category: "Indirect Injection", tests: 6, soter: "100%", gaGuard: "86%", nemo: "—", notes: "RAG-poisoned context, email exfiltration" },
-  { category: "PII Detection", tests: 12, soter: "100%", gaGuard: "—", nemo: "—", notes: "India-specific (Aadhaar, PAN, GSTIN) + global" },
-  { category: "Secrets / Credentials", tests: 19, soter: "100%", gaGuard: "—", nemo: "—", notes: "API keys, tokens, connection strings, env vars" },
-  { category: "Unsafe Output", tests: 7, soter: "100%", gaGuard: "—", nemo: "—", notes: "Spam, scams, harmful content (output guard)" },
-  { category: "False Positives", tests: 25, soter: "0% FPR", gaGuard: "—", nemo: "—", notes: "25 safe inputs correctly allowed" },
+  { category: "Prompt Injection", tests: 30, soter: "84% @1%FPR", gaGuard: "98%", nemo: "88%", notes: "Classic + roleplay + system prompt extraction" },
+  { category: "Jailbreak / DAN", tests: 11, soter: "84% @1%FPR", gaGuard: "98%", nemo: "75%", notes: "Developer mode, unrestricted, hypotheticals" },
+  { category: "Encoding / Obfuscation", tests: 12, soter: "84% @1%FPR", gaGuard: "85%", nemo: "70%", notes: "Base64, rot13, leetspeak, spaced, zero-width" },
+  { category: "Multilingual Attacks", tests: 7, soter: "84% @1%FPR", gaGuard: "90%", nemo: "65%", notes: "Hindi/Hinglish bypass attempts" },
+  { category: "Indirect Injection", tests: 6, soter: "84% @1%FPR", gaGuard: "86%", nemo: "—", notes: "RAG-poisoned context, email exfiltration" },
+  { category: "PII Detection", tests: 12, soter: "84% @1%FPR", gaGuard: "—", nemo: "—", notes: "India-specific (Aadhaar, PAN, GSTIN) + global" },
+  { category: "Secrets / Credentials", tests: 19, soter: "84% @1%FPR", gaGuard: "—", nemo: "—", notes: "API keys, tokens, connection strings, env vars" },
+  { category: "Unsafe Output", tests: 7, soter: "84% @1%FPR", gaGuard: "—", nemo: "—", notes: "Spam, scams, harmful content (output guard)" },
+  { category: "False Positives", tests: 1110, soter: "0.54%", gaGuard: "—", nemo: "—", notes: "1,110 benign inputs correctly allowed" },
 ];
 
 const profiles = [

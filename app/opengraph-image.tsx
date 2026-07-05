@@ -142,7 +142,7 @@ export default function Image() {
                 border: "1px solid rgba(0, 200, 200, 0.2)",
               }}
             >
-              <span style={{ fontSize: 28, fontWeight: 800, color: "#00c8c8" }}>F1=1.0000</span>
+              <span style={{ fontSize: 28, fontWeight: 800, color: "#00c8c8" }}>ROC-AUC 0.92</span>
               <span style={{ fontSize: 14, color: "#94a3b8" }}>Benchmark</span>
             </div>
             <div
@@ -156,7 +156,7 @@ export default function Image() {
                 border: "1px solid rgba(0, 220, 130, 0.2)",
               }}
             >
-              <span style={{ fontSize: 28, fontWeight: 800, color: "#00dc82" }}>0%</span>
+              <span style={{ fontSize: 28, fontWeight: 800, color: "#00dc82" }}>0.54%</span>
               <span style={{ fontSize: 14, color: "#94a3b8" }}>False Positives</span>
             </div>
           </div>

@@ -9,10 +9,48 @@
 import { createCipheriv, createDecipheriv, createHash, randomBytes } from "crypto";
 import { db } from "../db";
 
+const INVALID_VAULT_KEY_MATERIAL = new Set([
+  "replace-with-a-long-random-secret",
+  "cybersecurityguard-vault-key",
+  "development-only",
+]);
+
+/**
+ * Resolve the credential-vault root key without changing the legacy source
+ * precedence used by existing ciphertext. A configured-but-invalid higher
+ * priority value fails closed instead of silently selecting a different key,
+ * which would make existing credentials undecryptable.
+ */
+export function resolveCredentialVaultKeyMaterial(
+  env: NodeJS.ProcessEnv = process.env,
+): string {
+  const candidates = [
+    ["API_KEY_PEPPER", env.API_KEY_PEPPER],
+    ["NEXTAUTH_SECRET", env.NEXTAUTH_SECRET],
+    ["AUTH_SECRET", env.AUTH_SECRET],
+  ] as const;
+  const selected = candidates.find(([, value]) => value !== undefined);
+
+  if (!selected) {
+    throw new Error(
+      "Credential vault encryption key material is required. Configure API_KEY_PEPPER, NEXTAUTH_SECRET, or AUTH_SECRET.",
+    );
+  }
+
+  const [source, value] = selected;
+  if (!value || value.length < 32) {
+    throw new Error(`${source} must contain at least 32 characters for credential vault encryption.`);
+  }
+  if (INVALID_VAULT_KEY_MATERIAL.has(value)) {
+    throw new Error(`${source} contains a placeholder value and cannot be used for credential vault encryption.`);
+  }
+  return value;
+}
+
 // ── Encryption ────────────────────────────────────────────────────────────────
 
 function vaultEncryptionKey(organizationId: string): Buffer {
-  const pepper = process.env.API_KEY_PEPPER ?? process.env.NEXTAUTH_SECRET ?? "cybersecurityguard-vault-key";
+  const pepper = resolveCredentialVaultKeyMaterial();
   return createHash("sha256").update(`${pepper}.${organizationId}`).digest();
 }
 

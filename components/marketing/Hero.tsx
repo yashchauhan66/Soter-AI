@@ -3,8 +3,8 @@ import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
 import { LiveThreatConsole } from "@/components/marketing/LiveThreatConsole";
 
 const trustStats = [
-  ["97/97", "Adversarial cases detected"],
-  ["0", "False positives (25/25 safe)"],
+  ["84%", "Recall @ 1% FPR"],
+  ["0.54%", "False-positive rate (1,110 benign)"],
   ["<50ms", "Guard decision latency"],
   ["4", "Languages incl. Hinglish"],
 ];
@@ -30,7 +30,7 @@ export function Hero() {
         <div>
           <span className="inline-flex items-center gap-2 rounded-full border border-cyan/30 bg-cyan/10 px-3 py-1 text-xs font-semibold text-cyan">
             <Sparkles size={14} aria-hidden="true" />
-            Adversarial benchmark · F1 = 1.0000
+            Adversarial benchmark · 84% recall @ 1% FPR
           </span>
 
           <h1 className="mt-5 max-w-5xl text-4xl font-bold leading-tight sm:text-5xl lg:text-[3.4rem]">

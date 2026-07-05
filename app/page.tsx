@@ -102,13 +102,13 @@ const homepageJsonLd = {
         { "@type": "PropertyValue", "name": "India PII Detection", "value": "Yes" },
         { "@type": "PropertyValue", "name": "Self-Hosted", "value": "Yes" },
         { "@type": "PropertyValue", "name": "Enterprise SSO", "value": "Yes" },
-        { "@type": "PropertyValue", "name": "Adversarial Benchmark F1", "value": "1.0000" },
+        { "@type": "PropertyValue", "name": "Adversarial Benchmark F1", "value": "0.89" },
       ],
     },
     {
       "@type": "Dataset",
       "name": "SoterAI Adversarial Benchmark",
-      "description": "97/97 adversarial attack variants detected across 8 categories with zero false positives (F1=1.0000). Internal Garak-style red-team evaluation covering prompt injection, jailbreaks, encoding, multilingual, PII, secrets, indirect injection, and unsafe output.",
+      "description": "84% of adversarial attack variants caught across 8 categories within a 1% false-positive budget (ROC-AUC 0.92, production F1 0.89, 0.54% false-positive rate). Internal Garak-style red-team evaluation covering prompt injection, jailbreaks, encoding, multilingual, PII, secrets, indirect injection, and unsafe output.",
       "url": `${siteUrl}/benchmarks`,
       "mainEntityOfPage": { "@type": "WebPage", "@id": `${siteUrl}/benchmarks` },
       "creator": { "@id": `${siteUrl}#organization` },
@@ -117,13 +117,13 @@ const homepageJsonLd = {
       "measurementTechnique": "Garak-style adversarial probing",
       "keywords": "prompt injection, jailbreak, PII detection, security benchmark, AI guardrails",
       "variableMeasured": [
-        { "name": "F1 Score", "value": "1.0000" },
-        { "name": "Precision", "value": "1.0000" },
-        { "name": "Recall", "value": "1.0000" },
-        { "name": "Specificity", "value": "100.0%" },
-        { "name": "False Positive Rate", "value": "0.0%" },
-        { "name": "Attacks Detected", "value": "97/97" },
-        { "name": "Safe Inputs Allowed", "value": "25/25" },
+        { "name": "F1 Score", "value": "0.89" },
+        { "name": "Precision", "value": "0.938" },
+        { "name": "Recall @ 1% FPR", "value": "0.84" },
+        { "name": "Specificity", "value": "99.46%" },
+        { "name": "False Positive Rate", "value": "0.54%" },
+        { "name": "ROC-AUC", "value": "0.92" },
+        { "name": "Safe Inputs Allowed", "value": "1,104/1,110" },
         { "name": "Attack Categories", "value": "8" },
       ],
     },
@@ -271,7 +271,7 @@ export default function Home() {
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-center text-slate-400">
             An interactive walkthrough showing prompt injection blocking, India PII redaction,
-            secret detection, jailbreak prevention, and our F1=1.0000 benchmark in action.
+            secret detection, jailbreak prevention, and our 84% recall @ 1% FPR benchmark in action.
           </p>
           <div className="mx-auto mt-10 max-w-5xl">
             <DemoVideo />
@@ -289,25 +289,26 @@ export default function Home() {
         <div className="container-page text-center">
           <p className="eyebrow">Adversarial Benchmark</p>
           <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
-            Internal benchmark: <span className="text-cyan">F1 = 1.0000</span>
+            Internal benchmark: <span className="text-cyan">84% recall @ 1% FPR</span>
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-400">
-            97/97 adversarial cases detected with 0/25 false positives in a small, self-authored dataset.
+            84% of adversarial cases caught within a 1% false-positive budget, at a 0.54% false-positive rate on a
+            self-authored 1,218-case dataset (108 attacks + 1,110 benign).
             This Garak-style evaluation is useful regression evidence, not an independent audit or production guarantee.
           </p>
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div className="card p-6">
               <ShieldCheck className="mx-auto text-cyan" size={28} aria-hidden="true" />
-              <p className="mt-3 text-3xl font-black text-cyan">100%</p>
-              <p className="mt-1 text-sm text-slate-400">Detection Rate</p>
-              <p className="text-xs text-slate-500">97/97 adversarial prompts</p>
+              <p className="mt-3 text-3xl font-black text-cyan">84%</p>
+              <p className="mt-1 text-sm text-slate-400">Recall @ 1% FPR</p>
+              <p className="text-xs text-slate-500">108 adversarial prompts</p>
             </div>
             <div className="card p-6">
               <Zap className="mx-auto text-lime" size={28} aria-hidden="true" />
-              <p className="mt-3 text-3xl font-black text-lime">0%</p>
-              <p className="mt-1 text-sm text-slate-400">False Positives</p>
-              <p className="text-xs text-slate-500">25/25 safe inputs allowed</p>
+              <p className="mt-3 text-3xl font-black text-lime">0.54%</p>
+              <p className="mt-1 text-sm text-slate-400">False-Positive Rate</p>
+              <p className="text-xs text-slate-500">1,110 benign inputs</p>
             </div>
             <div className="card p-6">
               <Gauge className="mx-auto text-cyan" size={28} aria-hidden="true" />
@@ -319,7 +320,7 @@ export default function Home() {
               <BarChart3 className="mx-auto text-cyan" size={28} aria-hidden="true" />
               <p className="mt-3 text-3xl font-black text-cyan">8</p>
               <p className="mt-1 text-sm text-slate-400">Attack Categories</p>
-              <p className="text-xs text-slate-500">All detected at 100%</p>
+              <p className="text-xs text-slate-500">84% recall @ 1% FPR overall</p>
             </div>
           </div>
 

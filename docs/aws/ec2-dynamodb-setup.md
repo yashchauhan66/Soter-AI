@@ -8,10 +8,12 @@ This is the preferred production setup.
 2. Create or update an IAM policy using that document.
 3. Attach the policy to an IAM role trusted by EC2.
 4. Attach the role to the application EC2 instance.
-5. Leave `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` blank.
+5. Do not set `AWS_ACCESS_KEY_ID` or `AWS_SECRET_ACCESS_KEY` in `.env.production`.
 6. Set `AWS_REGION=ap-south-1`.
 
 The application uses the AWS SDK default credential provider chain, so no credential-specific code is required.
+
+For Docker on EC2, make sure instance metadata is reachable from containers. If the role is attached but the SDK still reports missing credentials, set the instance metadata option `HttpPutResponseHopLimit` to `2` and keep `AWS_EC2_METADATA_DISABLED=false`.
 
 ## Option B: Environment Credentials
 
@@ -67,4 +69,3 @@ The application role itself needs only the data-plane policy in `docs/aws/dynamo
 5. Confirm no raw API key, Authorization header, cookie, prompt, or response is present.
 6. Open the guard logs dashboard and webhook delivery history.
 7. Review app and worker logs for `DynamoDB ... failed` messages.
-

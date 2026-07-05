@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 
 const testStatus = [
   { label: "Adversarial battery", value: "101 / 101", note: "Comprehensive attack scenarios across 40+ services" },
-  { label: "Garak-style benchmark", value: "97 / 97", note: "F1 = 1.0000, 0 / 25 false positives" },
+  { label: "Garak-style benchmark", value: "84% @ 1% FPR", note: "ROC-AUC 0.92 · 0.54% false-positive rate on 1,110 benign inputs" },
   { label: "Unit + integration suites", value: "60+ files", note: "Guard, agent-firewall, auth, billing, retention" },
   { label: "E2E guard scenarios", value: "Playwright", note: "Real attack flows against a live build" },
 ];
@@ -58,8 +58,8 @@ const deploymentModel = [
 
 // Compact, honest posture signals shown in the hero status board.
 const posture = [
-  { label: "Adversarial benchmark", value: "F1 = 1.0000", meter: 100, tone: "cyan" as const },
-  { label: "False-positive rate", value: "0 / 25 safe inputs", meter: 100, tone: "lime" as const },
+  { label: "Adversarial benchmark", value: "ROC-AUC 0.92", meter: 92, tone: "cyan" as const },
+  { label: "False-positive rate", value: "0.54% on 1,110 inputs", meter: 99, tone: "lime" as const },
   { label: "OWASP LLM Top 10", value: "Aligned coverage", meter: 90, tone: "cyan" as const },
 ];
 
