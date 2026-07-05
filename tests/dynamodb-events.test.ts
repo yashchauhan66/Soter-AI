@@ -4,6 +4,7 @@ import test from "node:test";
 
 import { PutCommand, QueryCommand } from "@aws-sdk/lib-dynamodb";
 
+import { awsCredentialSource, unsetBlankAwsCredentialEnv } from "../lib/dynamodb/aws-env";
 import { eventStoreFlags } from "../lib/events/store";
 import { DynamoDbEventStore } from "../lib/events/store/dynamodb-event-store";
 import { buildStoredEvent, eventExpiresAt } from "../lib/events/store/keys";
@@ -184,6 +185,36 @@ test("feature flags default disabled, support dual-write, and keep PostgreSQL re
   }
 });
 
+test("blank AWS credential env vars are ignored so EC2 IAM role can be used", () => {
+  const env = {
+    AWS_ACCESS_KEY_ID: "",
+    AWS_SECRET_ACCESS_KEY: "   ",
+    AWS_SESSION_TOKEN: "",
+    AWS_PROFILE: "",
+    AWS_EC2_METADATA_DISABLED: "false",
+  } as NodeJS.ProcessEnv;
+
+  assert.deepEqual(unsetBlankAwsCredentialEnv(env), [
+    "AWS_ACCESS_KEY_ID",
+    "AWS_SECRET_ACCESS_KEY",
+    "AWS_SESSION_TOKEN",
+    "AWS_PROFILE",
+  ]);
+  assert.equal(env.AWS_ACCESS_KEY_ID, undefined);
+  assert.equal(env.AWS_SECRET_ACCESS_KEY, undefined);
+  assert.equal(awsCredentialSource(env), "default-provider-chain");
+});
+
+test("explicit AWS environment credentials are preserved", () => {
+  const env = {
+    AWS_ACCESS_KEY_ID: "AKIAEXAMPLE",
+    AWS_SECRET_ACCESS_KEY: "secret",
+  } as NodeJS.ProcessEnv;
+
+  assert.deepEqual(unsetBlankAwsCredentialEnv(env), []);
+  assert.equal(awsCredentialSource(env), "environment");
+});
+
 test("logs API enforces tenant ownership before project-scoped DynamoDB reads", () => {
   const source = readFileSync("app/api/logs/route.ts", "utf8");
   assert.match(source, /organizationId:\s*active\.org\.id/);
@@ -243,4 +274,3 @@ function snapshotEnv(names: string[]) {
 function restoreSnapshot(snapshot: Map<string, string | undefined>) {
   for (const [name, value] of snapshot) restoreEnv(name, value);
 }
-

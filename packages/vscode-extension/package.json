@@ -1,0 +1,198 @@
+{
+    "name": "soterai-ide-guard",
+    "displayName": "SoterAI IDE Guard",
+    "description": "Enterprise-ready AI Security Guard extension to protect your codebase, terminal commands, and AI prompts locally.",
+    "version": "0.1.0",
+    "publisher": "soterai",
+    "engines": {
+        "vscode": "^1.85.0"
+    },
+    "categories": [
+        "Security",
+        "Linters",
+        "Programming Languages"
+    ],
+    "main": "./dist/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "soterai.scanCurrentFile",
+                "title": "SoterAI: Scan Current File"
+            },
+            {
+                "command": "soterai.scanSelection",
+                "title": "SoterAI: Scan Selection"
+            },
+            {
+                "command": "soterai.scanWorkspaceRisk",
+                "title": "SoterAI: Scan Workspace Risk"
+            },
+            {
+                "command": "soterai.scanBeforeAIPrompt",
+                "title": "SoterAI: Scan Before AI Prompt"
+            },
+            {
+                "command": "soterai.redactSelectionForAI",
+                "title": "SoterAI: Redact Selection for AI"
+            },
+            {
+                "command": "soterai.checkTerminalCommand",
+                "title": "SoterAI: Check Terminal Command"
+            },
+            {
+                "command": "soterai.scanGitChanges",
+                "title": "SoterAI: Scan Git Changes"
+            },
+            {
+                "command": "soterai.openSecurityPanel",
+                "title": "SoterAI: Open Security Panel"
+            },
+            {
+                "command": "soterai.configurePolicy",
+                "title": "SoterAI: Configure Policy"
+            },
+            {
+                "command": "soterai.connectToCloud",
+                "title": "SoterAI: Connect to SoterAI Cloud"
+            },
+            {
+                "command": "soterai.disconnectCloud",
+                "title": "SoterAI: Disconnect / Clear Token"
+            },
+            {
+                "command": "soterai.exportLocalRiskReport",
+                "title": "SoterAI: Export Local Risk Report"
+            },
+            {
+                "command": "soterai.reviewSelectedAICode",
+                "title": "SoterAI: Review Selected AI Code"
+            }
+        ],
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "soterai-explorer",
+                    "title": "SoterAI Guard",
+                    "icon": "media/icon.svg"
+                }
+            ]
+        },
+        "views": {
+            "soterai-explorer": [
+                {
+                    "id": "soterai-project-risk",
+                    "name": "Project Risk"
+                },
+                {
+                    "id": "soterai-latest-findings",
+                    "name": "Latest Findings"
+                },
+                {
+                    "id": "soterai-policy-status",
+                    "name": "Policy & Cloud Sync Status"
+                }
+            ]
+        },
+        "configuration": {
+            "title": "SoterAI IDE Guard Settings",
+            "properties": {
+                "soterai.cloud.enabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enable cloud features like policy sync and high-risk cloud scan escalation."
+                },
+                "soterai.cloud.baseUrl": {
+                    "type": "string",
+                    "default": "https://api.soterai.in",
+                    "description": "SoterAI cloud environment base URL."
+                },
+                "soterai.policy.mode": {
+                    "type": "string",
+                    "enum": [
+                        "local",
+                        "team",
+                        "enterprise"
+                    ],
+                    "default": "local",
+                    "description": "Security policy mode."
+                },
+                "soterai.scan.remoteEscalation": {
+                    "type": "string",
+                    "enum": [
+                        "never",
+                        "high-risk-only",
+                        "enterprise-required"
+                    ],
+                    "default": "never",
+                    "description": "Escalate high-risk scanning to cloud (redacted/minimized payload only)."
+                },
+                "soterai.telemetry.redactedEvents": {
+                    "type": "string",
+                    "enum": [
+                        "off",
+                        "high-risk-only",
+                        "batched"
+                    ],
+                    "default": "off",
+                    "description": "Redacted telemetry event collection level."
+                },
+                "soterai.scan.maxFileSizeKb": {
+                    "type": "number",
+                    "default": 256,
+                    "description": "Maximum file size to scan locally in KB."
+                },
+                "soterai.scan.maxWorkspaceFiles": {
+                    "type": "number",
+                    "default": 1000,
+                    "description": "Maximum files to check during workspace security scans."
+                },
+                "soterai.scan.excludeGlobs": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [
+                        "**/node_modules/**",
+                        "**/.git/**",
+                        "**/dist/**",
+                        "**/build/**",
+                        "**/*.bin",
+                        "**/*.exe",
+                        "**/*.zip",
+                        "**/*.png",
+                        "**/*.jpg"
+                    ],
+                    "description": "Exclude glob patterns from file scans."
+                },
+                "soterai.terminal.protectionMode": {
+                    "type": "string",
+                    "enum": [
+                        "manual",
+                        "warn",
+                        "approval"
+                    ],
+                    "default": "warn",
+                    "description": "Action on detecting dangerous terminal commands."
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p tsconfig.json",
+        "watch": "tsc -watch -p tsconfig.json",
+        "package": "vsce package",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.85.0",
+        "@types/node": "22.10.2",
+        "@types/mocha": "^10.0.6",
+        "typescript": "^5.9.3",
+        "@vscode/vsce": "^2.32.0",
+        "@vscode/test-electron": "^2.4.1"
+    },
+    "dependencies": {
+        "@soterai/guard-core": "file:../guard-core"
+    }
+}

@@ -1,6 +1,7 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient } from "@aws-sdk/lib-dynamodb";
 
+import { unsetBlankAwsCredentialEnv } from "./aws-env";
 import { dynamoEventsConfig } from "./config";
 
 let lowLevelClient: DynamoDBClient | undefined;
@@ -8,6 +9,7 @@ let documentClient: DynamoDBDocumentClient | undefined;
 
 export function getDynamoDbClient(): DynamoDBClient {
   if (!lowLevelClient) {
+    unsetBlankAwsCredentialEnv();
     const config = dynamoEventsConfig();
     lowLevelClient = new DynamoDBClient({
       region: config.region,

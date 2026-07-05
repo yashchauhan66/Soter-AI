@@ -13,8 +13,7 @@ npm run dynamodb:events:verify
 
 ```dotenv
 AWS_REGION=ap-south-1
-AWS_ACCESS_KEY_ID=<fill-or-leave-blank-for-iam-role>
-AWS_SECRET_ACCESS_KEY=<fill-or-leave-blank-for-iam-role>
+# For EC2 IAM role auth, do not set AWS_ACCESS_KEY_ID or AWS_SECRET_ACCESS_KEY.
 DYNAMODB_EVENTS_ENABLED=true
 DYNAMODB_EVENTS_TABLE=soterai_events
 DYNAMODB_EVENTS_DUAL_WRITE=true
@@ -22,6 +21,8 @@ DYNAMODB_EVENTS_READ_FALLBACK_POSTGRES=true
 ```
 
 Also copy the TTL and preview-size values from `.env.production.example`.
+
+If this runs inside Docker on EC2 and the app still cannot reach the role, check the instance metadata hop limit. Containers commonly need IMDSv2 `HttpPutResponseHopLimit=2` so the SDK can fetch role credentials from `169.254.169.254`.
 
 ## 3. Rebuild And Restart
 
@@ -38,6 +39,8 @@ docker compose -f docker-compose.prod.yml down
 docker compose -f docker-compose.prod.yml build --no-cache
 docker compose -f docker-compose.prod.yml up -d
 ```
+
+Run `npm run validate-env -- --file .env.production` before restart if you want a local readiness check. DynamoDB is ready only after `npm run dynamodb:events:verify` passes.
 
 ## 4. Check Logs
 
@@ -87,4 +90,3 @@ npm run logs:cleanup:postgres -- --execute --type guard_logs --before 2026-01-01
 ```
 
 Take and verify a PostgreSQL backup before executing cleanup. Cleanup never runs automatically.
-

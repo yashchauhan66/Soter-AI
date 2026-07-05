@@ -6,7 +6,7 @@ import { requireUser } from "@/lib/auth/guards";
 export async function GET() {
   try {
     await requireUser();
-    const filePath = join(process.cwd(), "scripts/guard-benchmark/results.json");
+    const filePath = join(process.cwd(), "scripts/guard-benchmark/honest-results.json");
     const raw = readFileSync(filePath, "utf-8");
     const data = JSON.parse(raw);
 
@@ -18,7 +18,7 @@ export async function GET() {
     });
   } catch {
     return NextResponse.json(
-      { error: "Benchmark results not found. Run `python scripts/guard-benchmark/run_garak_benchmark.py` first." },
+      { error: "Benchmark results not found. Run `npm run benchmark:honest` first." },
       { status: 404 }
     );
   }

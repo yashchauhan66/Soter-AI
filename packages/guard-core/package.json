@@ -1,0 +1,35 @@
+{
+    "name": "@soterai/guard-core",
+    "version": "0.1.0",
+    "description": "Shared local-first AI security guard engine for SoterAI IDE Guard and browser extension",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "require": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "build": "tsc -p tsconfig.json",
+        "test": "tsx --test src/__tests__/**/*.test.ts",
+        "typecheck": "tsc --noEmit",
+        "clean": "rimraf dist"
+    },
+    "keywords": [
+        "ai-security",
+        "guard",
+        "local-first",
+        "vscode",
+        "secrets",
+        "pii",
+        "prompt-injection"
+    ],
+    "license": "BSL-1.1",
+    "devDependencies": {
+        "typescript": "^5.9.3",
+        "tsx": "4.22.4",
+        "rimraf": "^6.0.0"
+    }
+}

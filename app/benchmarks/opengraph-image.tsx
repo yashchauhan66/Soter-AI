@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "SoterAI — Adversarial Benchmark: F1 = 1.0000";
+export const alt = "SoterAI — Adversarial Benchmark: 84% recall @ 1% FPR";
 export const size = {
   width: 1200,
   height: 630,
@@ -125,7 +125,7 @@ export default function Image() {
                 color: "#00c8c8",
               }}
             >
-              F1 = 1.0000
+              84% recall @ 1% FPR
             </span>
           </h1>
 
@@ -140,7 +140,7 @@ export default function Image() {
               maxWidth: "700px",
             }}
           >
-            97/97 adversarial attacks detected across 8 categories with zero false positives
+            84% of adversarial attacks caught across 8 categories within a 1% false-positive budget
           </p>
 
           {/* Stats bar */}
@@ -159,7 +159,7 @@ export default function Image() {
                   color: "#00dc82",
                 }}
               >
-                100%
+                84%
               </span>
               <span
                 style={{
@@ -168,7 +168,7 @@ export default function Image() {
                   fontWeight: 500,
                 }}
               >
-                Detection
+                Recall @ 1% FPR
               </span>
             </div>
             <div style={{ width: 1, height: 32, background: "#1e293b" }} />
@@ -180,7 +180,7 @@ export default function Image() {
                   color: "#00c8c8",
                 }}
               >
-                0%
+                0.54%
               </span>
               <span
                 style={{
