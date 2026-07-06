@@ -1,27 +1,55 @@
 {
     "name": "soterai-ide-guard",
-    "displayName": "SoterAI IDE Guard",
-    "description": "Enterprise-ready AI Security Guard extension to protect your codebase, terminal commands, and AI prompts locally.",
+    "displayName": "SoterAI IDE Guard — Local AI Security",
+    "description": "Protect secrets, prompts, MCP tools, terminal commands, and AI coding context locally before they reach AI.",
     "version": "0.1.0",
     "publisher": "soterai",
+    "preview": true,
+    "pricing": "Free",
+    "icon": "media/icon.png",
+    "galleryBanner": {
+        "color": "#0B1020",
+        "theme": "dark"
+    },
     "engines": {
         "vscode": "^1.85.0"
     },
     "categories": [
-        "Security",
+        "AI",
         "Linters",
-        "Programming Languages"
+        "Other"
+    ],
+    "keywords": [
+        "ai-security",
+        "ai-coding",
+        "prompt-injection",
+        "secret-scanning",
+        "mcp-security",
+        "cursor",
+        "copilot",
+        "claude",
+        "local-ai",
+        "data-leakage",
+        "vscode-security",
+        "developer-security",
+        "ai-agent-security",
+        "ai-safe-mode",
+        "ai-memory-inspector"
     ],
     "license": "SEE LICENSE IN LICENSE",
     "repository": {
         "type": "git",
-        "url": "https://github.com/soterai/soterai-guard.git",
+        "url": "https://github.com/yashchauhan66/Ai-Security-Guard.git",
         "directory": "packages/vscode-extension"
     },
     "bugs": {
-        "url": "https://github.com/soterai/soterai-guard/issues"
+        "url": "https://github.com/yashchauhan66/Ai-Security-Guard/issues"
     },
-    "homepage": "https://soterai.in",
+    "homepage": "https://soterai.in/vscode-ai-security",
+    "qna": "https://soterai.in/support",
+    "activationEvents": [
+        "workspaceContains:.soterai-policy.json"
+    ],
     "main": "./dist/extension.js",
     "capabilities": {
         "untrustedWorkspaces": {
@@ -470,23 +498,25 @@
             }
         }
     },
-   
-  "scripts": {
-    "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "node --import tsx --test src/__tests__/**/*.test.ts",
-    "bundle": "node esbuild.js --production",
-    "vscode:prepublish": "npm run bundle",
-    "package": "vsce package --allow-missing-repository --skip-license --no-dependencies",
-    "vscode:package": "vsce package --allow-missing-repository --skip-license --no-dependencies"
-  },
-
+    "scripts": {
+        "typecheck": "tsc --noEmit -p tsconfig.json",
+        "test": "node --import tsx --test src/__tests__/**/*.test.ts",
+        "bundle": "node esbuild.js --production",
+        "vscode:prepublish": "npm run bundle",
+        "package": "vsce package --allow-missing-repository --skip-license --no-dependencies",
+        "vscode:package": "vsce package --allow-missing-repository --skip-license --no-dependencies",
+        "vscode:publish": "vsce publish --no-dependencies",
+        "openvsx:package": "npm run vscode:package",
+    "openvsx:publish": "node ../../scripts/publish-openvsx.mjs"
+    },
     "devDependencies": {
-        "@types/vscode": "^1.85.0",
+        "@soterai/guard-core": "file:../guard-core",
         "@types/node": "22.10.2",
-        "typescript": "^5.9.3",
-        "esbuild": "^0.24.0",
-        "tsx": "^4.19.0",
+        "@types/vscode": "^1.85.0",
         "@vscode/vsce": "^2.32.0",
-        "@soterai/guard-core": "file:../guard-core"
+        "esbuild": "^0.24.0",
+        "ovsx": "^0.10.12",
+        "tsx": "^4.19.0",
+        "typescript": "^5.9.3"
     }
 }

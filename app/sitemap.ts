@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SERVICES } from "@/lib/docs/services";
+import { BLOG_POSTS } from "@/lib/blog/posts";
 import { SITE_URL } from "@/lib/seo/schema";
 
 const siteUrl = SITE_URL;
@@ -48,6 +49,18 @@ const marketingPages: Entry[] = [
   { url: "/partners/agency", priority: 0.6, changeFrequency: "monthly" },
 ];
 
+// AI-security feature landing pages (also the marketplace homepage targets).
+const featurePages: Entry[] = [
+  { url: "/vscode-ai-security", priority: 0.9, changeFrequency: "monthly" },
+  { url: "/prompt-injection-protection", priority: 0.8, changeFrequency: "monthly" },
+  { url: "/mcp-security", priority: 0.8, changeFrequency: "monthly" },
+  { url: "/ai-data-leakage-prevention", priority: 0.8, changeFrequency: "monthly" },
+  { url: "/local-ai-broker", priority: 0.7, changeFrequency: "monthly" },
+  { url: "/ai-safe-mode", priority: 0.7, changeFrequency: "monthly" },
+  { url: "/ai-memory-inspector", priority: 0.7, changeFrequency: "monthly" },
+  { url: "/limitations", priority: 0.6, changeFrequency: "monthly" },
+];
+
 const compliancePages: Entry[] = [
   { url: "/compliance/owasp-llm-top-10", priority: 0.7, changeFrequency: "monthly" },
   { url: "/compliance/iso27001-readiness", priority: 0.6, changeFrequency: "monthly" },
@@ -87,6 +100,18 @@ const docsPages: Entry[] = [
   { url: "/docs/api-contract", priority: 0.6, changeFrequency: "monthly" },
 ];
 
+// Blog: index + posts, derived from the post registry so the sitemap never
+// drifts from the actual /blog/<slug> routes.
+const blogPages: Entry[] = [
+  { url: "/blog", priority: 0.7, changeFrequency: "weekly" },
+  ...BLOG_POSTS.map((post) => ({
+    url: `/blog/${post.slug}`,
+    priority: 0.6,
+    changeFrequency: "monthly" as const,
+    lastModified: post.datePublished,
+  })),
+];
+
 // Per-service documentation pages, derived from the catalog so the sitemap
 // never drifts from the actual /docs/services/[id] routes.
 const servicePages: Entry[] = SERVICES.map((service) => ({
@@ -98,6 +123,8 @@ const servicePages: Entry[] = SERVICES.map((service) => ({
 export default function sitemap(): MetadataRoute.Sitemap {
   const allPages: Entry[] = [
     ...marketingPages,
+    ...featurePages,
+    ...blogPages,
     ...compliancePages,
     ...legalPages,
     ...docsPages,
