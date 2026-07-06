@@ -1,9 +1,34 @@
+# Package only the bundled output + manifest + docs + icon.
+# Everything else (source, tests, symlinked monorepo, caches) is excluded so
+# vsce never walks the 60k-file symlinked node_modules tree.
+
+# Source & build config
+src/**
+esbuild.js
+tsconfig.json
+tsconfig.*.json
+.eslintrc*
+eslint.config.*
+**/*.map
+
+# Dependencies — guard-core is bundled into dist/extension.js, so none are needed
+node_modules/**
+
+# Tests, coverage, fixtures
+**/__tests__/**
+**/*.test.*
+coverage/**
+.nyc_output/**
+out/**
+
+# Repo / tooling noise
 .vscode/**
 .git/**
-node_modules/**
-src/**
-tsconfig.json
+.gitignore
 .vscodeignore
+**/.DS_Store
 canaryVerify.ts
-test_output.txt
-test_output_utf8.txt
+test_output*.txt
+
+# Ad-hoc / large assets
+*.vsix

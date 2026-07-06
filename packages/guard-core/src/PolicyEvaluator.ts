@@ -46,13 +46,41 @@ export class PolicyEvaluator {
         return true;
     }
 
+    /**
+     * Map a risk score to a threshold action.
+     *
+     * Actions are keyed to configurable thresholds, so the correct action is the
+     * one whose threshold is the HIGHEST among those the score satisfies — not
+     * the first in a hard-coded list. The previous implementation checked
+     * `block` before `approval_required`, which made `approval_required`
+     * unreachable whenever its threshold sat above `block` (the default:
+     * block=70, approvalRequired=85). Selecting by highest satisfied threshold
+     * makes every tier reachable regardless of how the thresholds are ordered.
+     *
+     * Ties (two tiers sharing a threshold) are broken by action precedence so
+     * the more restrictive action wins.
+     */
     private thresholdAction(score: number): GuardAction {
         const t = this.policy.riskThresholds;
-        if (score >= t.block) return "block";
-        if (score >= t.approvalRequired) return "approval_required";
-        if (score >= t.redact) return "redact";
-        if (score >= t.warn) return "warn";
-        return "allow";
+        const tiers: Array<[number, GuardAction]> = [
+            [t.approvalRequired, "approval_required"],
+            [t.block, "block"],
+            [t.redact, "redact"],
+            [t.warn, "warn"],
+        ];
+        let best: GuardAction = "allow";
+        let bestThreshold = -1;
+        for (const [threshold, action] of tiers) {
+            if (score < threshold) continue;
+            if (
+                threshold > bestThreshold ||
+                (threshold === bestThreshold && ACTION_PRECEDENCE[action] > ACTION_PRECEDENCE[best])
+            ) {
+                bestThreshold = threshold;
+                best = action;
+            }
+        }
+        return best;
     }
 
     private severityForScore(score: number): Severity {

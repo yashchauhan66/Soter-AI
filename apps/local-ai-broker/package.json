@@ -1,0 +1,25 @@
+{
+  "name": "@soterai/local-ai-broker",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Authenticated local-first AI security broker for SoterAI IDE Guard",
+  "main": "dist/index.js",
+  "bin": {
+    "soterai-local-ai-broker": "dist/cli.js"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "tsx --test src/__tests__/**/*.test.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/cli.js"
+  },
+  "dependencies": {
+    "@soterai/guard-core": "file:../../packages/guard-core"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2",
+    "tsx": "4.22.4",
+    "typescript": "^5.9.3"
+  },
+  "license": "BSL-1.1"
+}

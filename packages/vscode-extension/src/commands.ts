@@ -1,10 +1,31 @@
 import * as vscode from "vscode";
 import * as path from "path";
-import * as fs from "fs";
+import { execFile } from "child_process";
+import { promisify } from "util";
 import { ExtensionState } from "./state";
 import { TelemetryManager } from "./telemetry";
 import { DashboardPanel } from "./webview/DashboardPanel";
-import type { Finding } from "@soterai/guard-core";
+import { redactForSharing, type Finding } from "@soterai/guard-core";
+
+const execFileAsync = promisify(execFile);
+
+/** Escape a string for safe interpolation into webview HTML (prevents XSS). */
+function escapeHtml(value: unknown): string {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+/** Random nonce for nonce-based webview CSP. */
+function getNonce(): string {
+    let text = "";
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (let i = 0; i < 32; i++) text += chars.charAt(Math.floor(Math.random() * chars.length));
+    return text;
+}
 
 const diagnosticsCollection = vscode.languages.createDiagnosticCollection("soterai-guard");
 
@@ -101,11 +122,13 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
 
         const decision = await state.engine.scan(text, { context: "selection" });
         if (decision.redactedText) {
+            // decision.redactedText is already fail-closed safe (redactForSharing).
             await vscode.env.clipboard.writeText(decision.redactedText);
             vscode.window.showInformationMessage("Selected text redacted and copied to your clipboard.");
         } else {
-            await vscode.env.clipboard.writeText(text);
-            vscode.window.showInformationMessage("No sensitive data found. Original selection copied to clipboard.");
+            // No findings, but still run the safety net before anything hits the clipboard.
+            await vscode.env.clipboard.writeText(redactForSharing(text));
+            vscode.window.showInformationMessage("No sensitive data found. Selection copied to clipboard.");
         }
     };
 
@@ -177,37 +200,222 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
             return;
         }
 
-        const panel = vscode.window.createWebviewPanel("soteraiCodeReview", "SoterAI AI Code Review", vscode.ViewColumn.Two, {});
-        panel.webview.html = `
-      <html>
+        const panel = vscode.window.createWebviewPanel(
+            "soteraiCodeReview",
+            "SoterAI AI Code Review",
+            vscode.ViewColumn.Two,
+            { enableScripts: false }
+        );
+        const nonce = getNonce();
+        // Strict CSP: no scripts, no remote resources, inline styles only.
+        const csp = `default-src 'none'; style-src 'unsafe-inline'; img-src 'none'; script-src 'nonce-${nonce}';`;
+        panel.webview.html = `<!DOCTYPE html>
+      <html lang="en">
         <head>
+          <meta charset="UTF-8">
+          <meta http-equiv="Content-Security-Policy" content="${csp}">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <style>
-            body { font-family: sans-serif; padding: 16px; color: var(--vscode-foreground); background: var(--vscode-editor-background); }
+            body { font-family: var(--vscode-font-family, sans-serif); padding: 16px; color: var(--vscode-foreground); background: var(--vscode-editor-background); }
             h2 { color: var(--vscode-textLink-foreground); }
             .finding { border-bottom: 1px solid var(--vscode-panel-border); padding: 12px 0; }
-            .severity { font-weight: bold; padding: 2px 6px; border-radius: 3px; display: inline-block; margin-bottom: 6px; }
-            .high { background: #ef4444; color: white; }
-            .medium { background: #f59e0b; color: white; }
-            .low { background: #3b82f6; color: white; }
+            .severity { font-weight: bold; padding: 2px 6px; border-radius: 3px; display: inline-block; margin-bottom: 6px; color: white; }
+            .critical, .high { background: #ef4444; }
+            .medium { background: #f59e0b; }
+            .low, .info { background: #3b82f6; }
           </style>
         </head>
         <body>
           <h2>🔍 AI Generated Code Review Report</h2>
           ${codeFindings.map((f: Finding) => `
             <div class="finding">
-              <span class="severity ${f.severity}">${f.severity.toUpperCase()}</span>
-              <h3>${f.title}</h3>
-              <p><strong>Reason:</strong> ${f.reason}</p>
-              <p><strong>Evidence:</strong> <code>${f.redactedEvidence}</code></p>
-              <p><em>Alternative approach suggested: Use parametrized API execution.</em></p>
+              <span class="severity ${escapeHtml(f.severity)}">${escapeHtml(f.severity.toUpperCase())}</span>
+              <h3>${escapeHtml(f.title)}</h3>
+              <p><strong>Reason:</strong> ${escapeHtml(f.reason)}</p>
+              <p><strong>Evidence:</strong> <code>${escapeHtml(f.redactedEvidence)}</code></p>
+              <p><em>Review this pattern before accepting AI-suggested code.</em></p>
             </div>
           `).join("")}
         </body>
-      </html>
-    `;
+      </html>`;
+    };
+
+    // ── Configure Policy: local/team/enterprise mode, thresholds, cloud, telemetry ──
+    const configurePolicyHandler = async () => {
+        const config = vscode.workspace.getConfiguration("soterai");
+        const trusted = vscode.workspace.isTrusted;
+
+        const pick = await vscode.window.showQuickPick(
+            [
+                { label: "$(shield) Policy Mode", detail: `Current: ${config.get("policy.mode", "local")}`, id: "mode" },
+                { label: "$(cloud) Cloud Features", detail: `Current: ${config.get("cloud.enabled", false) ? "enabled" : "disabled"}${trusted ? "" : " — requires a trusted workspace"}`, id: "cloud" },
+                { label: "$(broadcast) Telemetry", detail: `Current: ${config.get("telemetry.redactedEvents", "off")}`, id: "telemetry" },
+                { label: "$(arrow-up) Remote Escalation", detail: `Current: ${config.get("scan.remoteEscalation", "never")}`, id: "escalation" },
+                { label: "$(gear) Open Settings UI", detail: "Edit all SoterAI settings in the Settings editor", id: "settings" },
+            ],
+            { title: "SoterAI: Configure Policy", placeHolder: "Choose a policy setting to change" }
+        );
+        if (!pick) return;
+
+        const setGlobal = (key: string, value: unknown) =>
+            config.update(key, value, vscode.ConfigurationTarget.Global);
+
+        switch ((pick as any).id) {
+            case "mode": {
+                const mode = await vscode.window.showQuickPick(["local", "team", "enterprise"], { title: "Policy Mode", placeHolder: "Select policy mode" });
+                if (mode) { await setGlobal("policy.mode", mode); vscode.window.showInformationMessage(`SoterAI policy mode set to ${mode}.`); }
+                break;
+            }
+            case "cloud": {
+                if (!trusted) {
+                    vscode.window.showWarningMessage("Cloud features are disabled in restricted (untrusted) workspaces. Trust this workspace to enable them.");
+                    break;
+                }
+                const choice = await vscode.window.showQuickPick(["enabled", "disabled"], { title: "Cloud Features" });
+                if (choice) { await setGlobal("cloud.enabled", choice === "enabled"); vscode.window.showInformationMessage(`SoterAI cloud features ${choice}.`); }
+                break;
+            }
+            case "telemetry": {
+                const level = await vscode.window.showQuickPick(["off", "high-risk-only", "batched"], { title: "Redacted Telemetry" });
+                if (level) { await setGlobal("telemetry.redactedEvents", level); vscode.window.showInformationMessage(`SoterAI telemetry set to ${level}.`); }
+                break;
+            }
+            case "escalation": {
+                if (!trusted) {
+                    vscode.window.showWarningMessage("Remote escalation is disabled in restricted workspaces.");
+                    break;
+                }
+                const level = await vscode.window.showQuickPick(["never", "high-risk-only", "enterprise-required"], { title: "Remote Escalation" });
+                if (level) { await setGlobal("scan.remoteEscalation", level); vscode.window.showInformationMessage(`SoterAI remote escalation set to ${level}.`); }
+                break;
+            }
+            case "settings":
+                await vscode.commands.executeCommand("workbench.action.openSettings", "soterai");
+                break;
+        }
+        refreshViews();
+    };
+
+    // ── Scan Before AI Prompt: paste a prompt, scan locally, get safe version ──
+    const scanBeforeAIPromptHandler = async () => {
+        const prompt = await vscode.window.showInputBox({
+            title: "SoterAI: Scan Before AI Prompt",
+            prompt: "Paste the prompt you are about to send to an AI assistant. It is scanned locally — nothing leaves your machine.",
+            placeHolder: "e.g. Fix this bug. Here is my config: DATABASE_URL=postgres://...",
+            ignoreFocusOut: true,
+        });
+        if (!prompt) return;
+
+        const decision = await state.engine.scan(prompt, { context: "prompt" });
+        state.latestDecision = decision;
+        telemetry.trackDetection(decision, prompt.length, "prompt");
+        refreshViews();
+
+        if (decision.decision === "block" || decision.decision === "approval_required") {
+            vscode.window.showErrorMessage(`[SoterAI BLOCK] This prompt is high-risk (score ${decision.riskScore}). Do not send it as-is: ${decision.evidencePreview ?? ""}`);
+            return;
+        }
+
+        if (decision.redactedText) {
+            // redactedText is already fail-closed safe; guard once more defensively.
+            const safe = redactForSharing(decision.redactedText);
+            const action = await vscode.window.showWarningMessage(
+                `[SoterAI REDACT] Sensitive data found in your prompt (score ${decision.riskScore}). A safe, redacted version can be copied to your clipboard.`,
+                "Copy Safe Prompt"
+            );
+            if (action === "Copy Safe Prompt") {
+                await vscode.env.clipboard.writeText(safe);
+                vscode.window.showInformationMessage("Redacted prompt copied. Paste this into your AI assistant.");
+            }
+        } else {
+            const action = await vscode.window.showInformationMessage(
+                `[SoterAI ALLOW] No sensitive data detected (score ${decision.riskScore}). Safe to send.`,
+                "Copy Prompt"
+            );
+            if (action === "Copy Prompt") {
+                // Safety net still runs before anything reaches the clipboard.
+                await vscode.env.clipboard.writeText(redactForSharing(prompt));
+            }
+        }
+    };
+
+    // ── Scan Git Changes: scan the working/staged diff for secrets & risky files ──
+    const scanGitChangesHandler = async () => {
+        const folder = vscode.workspace.workspaceFolders?.[0];
+        if (!folder) {
+            vscode.window.showErrorMessage("No workspace folder open to scan git changes.");
+            return;
+        }
+        const cwd = folder.uri.fsPath;
+
+        let diff = "";
+        try {
+            // Include staged + unstaged changes plus the list of changed files.
+            const [{ stdout: unstaged }, { stdout: staged }, { stdout: nameOnly }] = await Promise.all([
+                execFileAsync("git", ["diff"], { cwd, maxBuffer: 20 * 1024 * 1024 }),
+                execFileAsync("git", ["diff", "--staged"], { cwd, maxBuffer: 20 * 1024 * 1024 }),
+                execFileAsync("git", ["diff", "--name-only", "HEAD"], { cwd, maxBuffer: 4 * 1024 * 1024 }).catch(() => ({ stdout: "" })),
+            ]);
+            diff = `${staged}\n${unstaged}`;
+            const changedFiles = nameOnly.split("\n").map((s) => s.trim()).filter(Boolean);
+            const sensitiveFiles = changedFiles.filter((f) =>
+                /(^|\/)\.env(\.|$)|\.pem$|\.key$|id_rsa|credentials|secrets?\.(ya?ml|json)|\.pfx$/i.test(f)
+            );
+            if (sensitiveFiles.length) {
+                vscode.window.showWarningMessage(`[SoterAI] Sensitive files in your changes: ${sensitiveFiles.map((f) => path.basename(f)).join(", ")}`);
+            }
+        } catch (err: any) {
+            vscode.window.showErrorMessage(`Could not read git changes (is this a git repository?): ${err.message}`);
+            return;
+        }
+
+        if (!diff.trim()) {
+            vscode.window.showInformationMessage("[SoterAI] No git changes to scan.");
+            return;
+        }
+
+        const decision = await state.engine.scan(diff, { context: "git" });
+        state.latestDecision = decision;
+        telemetry.trackDetection(decision, diff.length, "git");
+        refreshViews();
+
+        if (decision.findings.length === 0) {
+            vscode.window.showInformationMessage(`[SoterAI] Git changes look clean (risk score ${decision.riskScore}/100).`);
+            return;
+        }
+
+        const view = await vscode.window.showWarningMessage(
+            `[SoterAI] ${decision.findings.length} finding(s) in your git changes (risk ${decision.riskScore}/100, decision: ${decision.decision.toUpperCase()}).`,
+            "Show Report"
+        );
+        if (view === "Show Report") {
+            const report = {
+                scannedAt: new Date().toISOString(),
+                riskScore: decision.riskScore,
+                decision: decision.decision,
+                categories: decision.categories,
+                // Only redacted evidence — never raw diff content or secrets.
+                findings: decision.findings.map((f) => ({
+                    category: f.category,
+                    severity: f.severity,
+                    title: f.title,
+                    reason: f.reason,
+                    redactedEvidence: f.redactedEvidence,
+                })),
+            };
+            const doc = await vscode.workspace.openTextDocument({ content: JSON.stringify(report, null, 2), language: "json" });
+            await vscode.window.showTextDocument(doc);
+        }
     };
 
     const connectToCloudHandler = async () => {
+        // Cloud/token escalation is a trusted-workspace-only capability.
+        if (!vscode.workspace.isTrusted) {
+            vscode.window.showWarningMessage(
+                "SoterAI cloud connection is disabled in restricted (untrusted) workspaces. Trust this workspace to connect. Local scanning continues to work."
+            );
+            return;
+        }
         const token = await vscode.window.showInputBox({
             prompt: "Enter your SoterAI Cloud API/Connection Token",
             password: true
@@ -254,6 +462,9 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
         vscode.commands.registerCommand("soterai.redactSelectionForAI", redactSelectionForAIHandler),
         vscode.commands.registerCommand("soterai.checkTerminalCommand", checkTerminalCommandHandler),
         vscode.commands.registerCommand("soterai.reviewSelectedAICode", reviewSelectedAICodeHandler),
+        vscode.commands.registerCommand("soterai.configurePolicy", configurePolicyHandler),
+        vscode.commands.registerCommand("soterai.scanBeforeAIPrompt", scanBeforeAIPromptHandler),
+        vscode.commands.registerCommand("soterai.scanGitChanges", scanGitChangesHandler),
         vscode.commands.registerCommand("soterai.connectToCloud", connectToCloudHandler),
         vscode.commands.registerCommand("soterai.disconnectCloud", disconnectCloudHandler),
         vscode.commands.registerCommand("soterai.exportLocalRiskReport", exportLocalRiskReportHandler),
