@@ -1,5 +1,8 @@
 import * as vscode from "vscode";
 import { ExtensionState } from "../state";
+import { PolicyStore } from "../firewall/PolicyStore";
+import { LedgerStore } from "../firewall/LedgerStore";
+import { getBrokerManager } from "../broker/BrokerManager";
 
 export class DashboardPanel {
     public static currentPanel: DashboardPanel | undefined;
@@ -61,10 +64,10 @@ export class DashboardPanel {
     }
 
     public refresh(): void {
-        this._update();
+        void this._update();
     }
 
-    private _update(): void {
+    private async _update(): Promise<void> {
         const webview = this._panel.webview;
         const state = ExtensionState.getInstance();
         const config = vscode.workspace.getConfiguration("soterai");
@@ -72,17 +75,61 @@ export class DashboardPanel {
         const policyMode = config.get("policy.mode", "local");
         const decision = state.latestDecision;
 
+        // AI Context Firewall summary (no context/secrets needed here).
+        let firewall = { policyExists: false, protectedCount: 0, ledgerCount: 0, lastContext: "None" };
+        try {
+            const policyExists = await PolicyStore.exists();
+            const policy = await PolicyStore.load();
+            const entries = await LedgerStore.readAll();
+            const last = entries.filter((e) => e.eventType === "context_built").pop();
+            firewall = {
+                policyExists,
+                protectedCount: policy.protectedFiles.length,
+                ledgerCount: entries.length,
+                lastContext: last ? `${last.decision.toUpperCase()} — ${last.redactedEvidencePreview ?? ""}` : "None",
+            };
+        } catch {
+            /* no workspace / read error — leave defaults */
+        }
+
+        let broker = { running: false, url: "http://127.0.0.1:47321", safeMode: "Off", memory: "Idle", recentEvents: 0 };
+        try {
+            const manager = getBrokerManager();
+            if (manager) {
+                const status = await manager.status();
+                const recent = status.running
+                    ? await manager.request<{ events: unknown[] }>("/v1/events/recent", { method: "GET" })
+                    : { events: [] };
+                broker = {
+                    running: status.running,
+                    url: status.url,
+                    safeMode: status.safeMode?.enabled ? `On (${status.safeMode.level})` : "Off",
+                    memory: status.memorySessionId ? "Active" : "Idle",
+                    recentEvents: recent.events.length,
+                };
+            }
+        } catch { /* broker is optional and may be stopped */ }
+
         webview.html = this._getHtmlForWebview(webview, {
             cloudEnabled,
             policyMode,
             latestDecision: decision,
             trusted: state.isWorkspaceTrusted(),
+            firewall,
+            broker,
         });
     }
 
     private _getHtmlForWebview(
         webview: vscode.Webview,
-        data: { cloudEnabled: boolean; policyMode: string; latestDecision?: any; trusted: boolean }
+        data: {
+            cloudEnabled: boolean;
+            policyMode: string;
+            latestDecision?: any;
+            trusted: boolean;
+            firewall: { policyExists: boolean; protectedCount: number; ledgerCount: number; lastContext: string };
+            broker: { running: boolean; url: string; safeMode: string; memory: string; recentEvents: number };
+        }
     ): string {
         const nonce = getNonce();
         const hasFindings = data.latestDecision?.findings && data.latestDecision.findings.length > 0;
@@ -228,16 +275,36 @@ export class DashboardPanel {
     </div>
   </div>
 
+  <div class="card" style="margin-top:20px;">
+    <div class="card-title">🚦 AI Context Firewall</div>
+    <div class="stat-row"><span>Project Policy:</span><strong>${data.firewall.policyExists ? "Active (.soterai/policy.json)" : "Not created"}</strong></div>
+    <div class="stat-row"><span>Protected Patterns:</span><strong>${data.firewall.protectedCount}</strong></div>
+    <div class="stat-row"><span>What-AI-Saw Ledger:</span><strong>${data.firewall.ledgerCount} event(s)</strong></div>
+    <div class="stat-row"><span>Last AI Context:</span><strong>${escapeHtml(data.firewall.lastContext)}</strong></div>
+    <div class="finding-desc" style="margin-top:10px;">Prevents accidental exposure of secrets/protected files to AI tools by gating, redacting, and auditing context. Cannot block another extension from reading un-migrated files — see the limitations doc.</div>
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <div class="card-title">Local AI Broker</div>
+    <div class="stat-row"><span>Status:</span><strong>${data.broker.running ? "Running" : "Stopped"}</strong></div>
+    <div class="stat-row"><span>Endpoint:</span><strong>${escapeHtml(data.broker.url)}</strong></div>
+    <div class="stat-row"><span>Network:</span><strong>127.0.0.1 only + bearer auth</strong></div>
+    <div class="stat-row"><span>Safe Mode:</span><strong>${escapeHtml(data.broker.safeMode)}</strong></div>
+    <div class="stat-row"><span>AI Memory:</span><strong>${escapeHtml(data.broker.memory)}</strong></div>
+    <div class="stat-row"><span>Recent protected events:</span><strong>${data.broker.recentEvents}</strong></div>
+    <div class="finding-desc">Only traffic routed through the broker is fully inspected. Local auth tokens and provider keys are never sent to this webview.</div>
+  </div>
+
   <div class="card" style="margin-top:20px; grid-column:span 2;">
     <div class="card-title">⚠️ Latest Security Findings</div>
     ${hasFindings ?
                 `<div>
         ${data.latestDecision.findings.map((f: any) => `
           <div class="finding-item">
-            <span class="badge" style="background:${f.severity === 'critical' || f.severity === 'high' ? '#ef4444' : '#f59e0b'}">${f.severity.toUpperCase()}</span>
-            <span class="finding-id">${f.title}</span> - <span style="font-style:italic">${f.category}</span>
-            <div class="finding-desc">${f.reason}</div>
-            <div style="font-family:var(--vscode-editor-font-family); font-size:11px; margin-top:2px;">Redacted Evidence: <code>${f.redactedEvidence}</code></div>
+            <span class="badge" style="background:${f.severity === 'critical' || f.severity === 'high' ? '#ef4444' : '#f59e0b'}">${escapeHtml(String(f.severity).toUpperCase())}</span>
+            <span class="finding-id">${escapeHtml(f.title)}</span> - <span style="font-style:italic">${escapeHtml(f.category)}</span>
+            <div class="finding-desc">${escapeHtml(f.reason)}</div>
+            <div style="font-family:var(--vscode-editor-font-family); font-size:11px; margin-top:2px;">Redacted Evidence: <code>${escapeHtml(f.redactedEvidence)}</code></div>
           </div>
         `).join("")}
       </div>` :
@@ -269,6 +336,15 @@ export class DashboardPanel {
             if (x) x.dispose();
         }
     }
+}
+
+function escapeHtml(value: unknown): string {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
 }
 
 function getNonce(): string {

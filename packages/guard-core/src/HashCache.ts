@@ -1,8 +1,38 @@
 import type { CachedDecision, GuardDecision, HashCacheConfig } from "./types";
+import { containsRawSecret } from "./Redactor";
+
+/**
+ * Defensive sanitizer for anything about to be cached.
+ *
+ * DecisionEngine already guarantees `redactedText` is scrubbed and that
+ * findings carry only masked evidence, but the cache is the last line of
+ * defense: even if a future code path produced a decision with a raw secret in
+ * a string field, we must never persist it. Any high-risk secret that survives
+ * into a cacheable string is replaced with a placeholder here. The original
+ * decision object is left untouched (a shallow clone is cached).
+ */
+export function sanitizeDecisionForCache(decision: GuardDecision): GuardDecision {
+    const scrub = (value: string | undefined, placeholder: string): string | undefined => {
+        if (value === undefined) return undefined;
+        return containsRawSecret(value) ? placeholder : value;
+    };
+    return {
+        ...decision,
+        redactedText: scrub(decision.redactedText, "[REDACTED_CACHED_SECRET]"),
+        evidencePreview: scrub(decision.evidencePreview, "[REDACTED]"),
+        findings: (decision.findings ?? []).map((f) => ({
+            ...f,
+            redactedEvidence:
+                typeof f.redactedEvidence === "string" && containsRawSecret(f.redactedEvidence)
+                    ? "[REDACTED]"
+                    : f.redactedEvidence,
+        })),
+    };
+}
 
 /**
  * Local hash cache — stores decision by content hash.
- * Never stores raw content. Only hash + decision + metadata.
+ * Never stores raw content. Only hash + sanitized decision + metadata.
  */
 export class HashCache {
     private cache = new Map<string, CachedDecision>();
@@ -39,7 +69,7 @@ export class HashCache {
             this.evictOldest();
         }
         this.cache.set(hash, {
-            decision,
+            decision: sanitizeDecisionForCache(decision),
             cachedAt: Date.now(),
             policyVersion: this.config.policyVersion,
             detectorVersions: { ...this.config.detectorVersions },

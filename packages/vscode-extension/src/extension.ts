@@ -1,18 +1,33 @@
 import * as vscode from "vscode";
 import { ExtensionState } from "./state";
 import { registerCommands } from "./commands";
+import { registerFirewallCommands, readContextApproval } from "./firewall/commands";
+import { registerScannerCommands } from "./firewall/scanners";
+import { PolicyStore } from "./firewall/PolicyStore";
 import { RiskTreeProvider } from "./views/RiskTreeProvider";
 import { DashboardPanel } from "./webview/DashboardPanel";
 import { TelemetryManager } from "./telemetry";
+import { BrokerManager, setBrokerManager } from "./broker/BrokerManager";
+import { registerBrokerCommands } from "./broker/commands";
 
 let statusBarItem: vscode.StatusBarItem;
+let firewallStatusItem: vscode.StatusBarItem;
+let brokerStatusItem: vscode.StatusBarItem;
+let safeModeStatusItem: vscode.StatusBarItem;
+let memoryStatusItem: vscode.StatusBarItem;
+let extensionContext: vscode.ExtensionContext;
+let brokerManager: BrokerManager;
 
 export function activate(context: vscode.ExtensionContext): void {
     console.log("SoterAI IDE Guard activated successfully.");
+    extensionContext = context;
 
     // Init ExtensionState
     const state = ExtensionState.getInstance();
     state.initEngine();
+    brokerManager = new BrokerManager(context);
+    setBrokerManager(brokerManager);
+    context.subscriptions.push(brokerManager);
 
     // Create & Register Tree Views
     const projectRiskProvider = new RiskTreeProvider("soterai-project-risk");
@@ -33,17 +48,41 @@ export function activate(context: vscode.ExtensionContext): void {
             DashboardPanel.currentPanel.refresh();
         }
         updateStatusBar();
+        void updateFirewallStatus();
+        void updateBrokerStatus();
     };
 
-    // Register commands
+    // Register commands (core scanning + AI Context Firewall)
     registerCommands(context, refreshViews);
+    registerFirewallCommands(context, refreshViews);
+    registerScannerCommands(context);
+    registerBrokerCommands(context, brokerManager, refreshViews);
 
-    // Status Bar Indicator
+    // Status Bar Indicator (scan risk)
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
     statusBarItem.command = "soterai.openSecurityPanel";
     context.subscriptions.push(statusBarItem);
     updateStatusBar();
     statusBarItem.show();
+
+    // Status Bar Indicator (AI Context Firewall)
+    firewallStatusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 99);
+    firewallStatusItem.command = "soterai.inspectAIContext";
+    context.subscriptions.push(firewallStatusItem);
+    firewallStatusItem.show();
+    void updateFirewallStatus();
+
+    brokerStatusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 98);
+    brokerStatusItem.command = "soterai.showBrokerStatus";
+    safeModeStatusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 97);
+    safeModeStatusItem.command = "soterai.showAISafeModeRules";
+    memoryStatusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 96);
+    memoryStatusItem.command = "soterai.openAIMemoryInspector";
+    context.subscriptions.push(brokerStatusItem, safeModeStatusItem, memoryStatusItem);
+    brokerStatusItem.show();
+    safeModeStatusItem.show();
+    memoryStatusItem.show();
+    void updateBrokerStatus();
 
     // Event Listeners
     context.subscriptions.push(
@@ -70,6 +109,17 @@ export function activate(context: vscode.ExtensionContext): void {
     );
 }
 
+async function updateBrokerStatus(): Promise<void> {
+    if (!brokerStatusItem || !brokerManager) return;
+    const status = await brokerManager.status();
+    brokerStatusItem.text = status.running ? "$(radio-tower) SoterAI Broker: Running" : "$(circle-slash) SoterAI Broker: Stopped";
+    brokerStatusItem.tooltip = status.running ? `Authenticated local broker at ${status.url}` : "Local AI Broker is stopped";
+    safeModeStatusItem.text = `$(shield) SoterAI Safe Mode: ${status.safeMode?.enabled ? "On" : "Off"}`;
+    safeModeStatusItem.tooltip = status.safeMode?.enabled ? `Safe Mode level: ${status.safeMode.level}` : "AI Safe Mode is disabled";
+    memoryStatusItem.text = `$(history) SoterAI Memory: ${brokerManager.memorySessionId ? "Active" : "Idle"}`;
+    memoryStatusItem.tooltip = brokerManager.memorySessionId ? "AI Memory session is active" : "No active AI Memory session";
+}
+
 function updateStatusBar(): void {
     const state = ExtensionState.getInstance();
     const latestRisk = state.latestDecision ? state.latestDecision.riskScore : 0;
@@ -89,6 +139,46 @@ function updateStatusBar(): void {
     }
 }
 
-export function deactivate(): void {
+/**
+ * AI Context Firewall status bar. Honest states:
+ *  - Restricted Mode      — untrusted workspace (vault/cloud disabled)
+ *  - High Risk Context     — latest scan is high risk
+ *  - Protected Files Active — a project policy exists
+ *  - Local Protected       — firewall active, local-only
+ */
+async function updateFirewallStatus(): Promise<void> {
+    if (!firewallStatusItem) return;
+    const state = ExtensionState.getInstance();
+    const latestRisk = state.latestDecision ? state.latestDecision.riskScore : 0;
+
+    if (!vscode.workspace.isTrusted) {
+        firewallStatusItem.text = "$(lock) SoterAI: Restricted Mode";
+        firewallStatusItem.tooltip = "Untrusted workspace — vault and cloud disabled. Local scanning still works.";
+        firewallStatusItem.backgroundColor = new vscode.ThemeColor("statusBarItem.warningBackground");
+        return;
+    }
+    if (latestRisk >= 70) {
+        firewallStatusItem.text = "$(alert) SoterAI: High Risk Context";
+        firewallStatusItem.tooltip = "Latest context/scan is high risk. Review before sharing with AI.";
+        firewallStatusItem.backgroundColor = new vscode.ThemeColor("statusBarItem.errorBackground");
+        return;
+    }
+    firewallStatusItem.backgroundColor = undefined;
+    const approved = extensionContext ? await readContextApproval(extensionContext) : undefined;
+    const hasPolicy = await PolicyStore.exists().catch(() => false);
+    if (approved) {
+        firewallStatusItem.text = "$(unlock) SoterAI: Context Approved";
+        firewallStatusItem.tooltip = "A sensitive AI-context approval session is active.";
+    } else if (hasPolicy) {
+        firewallStatusItem.text = "$(shield) SoterAI: Protected Files Active";
+        firewallStatusItem.tooltip = "AI Context Firewall policy is active. Click to inspect AI context.";
+    } else {
+        firewallStatusItem.text = "$(shield) SoterAI: Local Protected";
+        firewallStatusItem.tooltip = "AI Context Firewall active (local-only). Click to inspect AI context.";
+    }
+}
+
+export async function deactivate(): Promise<void> {
     TelemetryManager.getInstance().dispose();
+    if (brokerManager) await brokerManager.stop();
 }

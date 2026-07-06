@@ -9,4 +9,5 @@ export { detectTerminalCommandRisk, TERMINAL_COMMAND_RISK_DETECTOR_VERSION } fro
 export { detectRepoInstructionPoisoning, REPO_INSTRUCTION_POISONING_DETECTOR_VERSION } from "./RepoInstructionPoisoningDetector";
 export { detectMCPConfigRisk, MCP_CONFIG_RISK_DETECTOR_VERSION } from "./MCPConfigRiskDetector";
 export { detectAIGeneratedCodeRisk, AI_CODE_RISK_DETECTOR_VERSION } from "./AIGeneratedCodeRiskDetector";
+export { detectOutputExfiltration, OUTPUT_EXFILTRATION_DETECTOR_VERSION } from "./OutputExfiltrationDetector";
 export { runRegexDetectors, deduplicateMatches, collapseOverlappingMatches, redactEvidence, findingId } from "./utils";
