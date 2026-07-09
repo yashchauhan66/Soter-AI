@@ -81,7 +81,7 @@ import type {
   WrappedToolResult,
 } from "./types";
 
-const DEFAULT_BASE_URL = "https://api.cybersecurityguard.com";
+const DEFAULT_BASE_URL = "https://api.soterai.com";
 const DEFAULT_TIMEOUT_MS = 8000;
 const DEFAULT_RETRY_BACKOFF_MS = 250;
 const DEFAULT_BLOCKED_RESPONSE = "This request was blocked for security reasons.";
@@ -457,7 +457,7 @@ export class GuardClient implements CyberRakshakGuard {
         return jsonResponse(result, 200);
       } catch (caught) {
         const status = (caught as { status?: number }).status ?? 500;
-        return jsonResponse({ error: true, message: caught instanceof Error ? caught.message : "cybersecurityguard request failed." }, status);
+        return jsonResponse({ error: true, message: caught instanceof Error ? caught.message : "SoterAI request failed." }, status);
       }
     };
   }

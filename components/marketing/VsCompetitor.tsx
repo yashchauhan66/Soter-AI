@@ -8,6 +8,7 @@ import {
   Award,
   AlertTriangle,
 } from "lucide-react";
+import { safeJsonLd } from "@/lib/seo/jsonLd";
 
 export interface VsRow {
   feature: string;
@@ -72,7 +73,7 @@ export function VsCompetitor({ data }: { data: VsContent }) {
 
   return (
     <main className="py-16 sm:py-24">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
       <div className="container-page">
         {/* Hero */}
         <div className="text-center">

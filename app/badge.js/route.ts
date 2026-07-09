@@ -55,6 +55,7 @@ export async function GET() {
       "Content-Type": "application/javascript; charset=utf-8",
       "Cache-Control": "public, max-age=300, s-maxage=300",
       "Access-Control-Allow-Origin": "*",
+      "Vary": "Origin",
       "X-Content-Type-Options": "nosniff",
     },
   });

@@ -33,8 +33,8 @@ const DANGEROUS_COMMANDS: CommandPattern[] = [
     { pattern: /\benv\b|\bprintenv\b|\bset\s*$|\bexport\s+-p\b/gm, type: "env_dump", label: "Environment dump", score: 20, confidence: 0.7, message: "Dumping environment variables." },
 
     // ── Network exfiltration ──────────────────────────────────────────────
-    { pattern: /\b(?:curl|wget)\s+.*--data.*(?:@|<)\s*(?:\/etc\/|\.env|\.aws)/gi, type: "data_exfil", label: "Data exfiltration", score: 45, confidence: 0.9, message: "Data exfiltration via HTTP." },
-    { pattern: /\b(?:scp|rsync)\s+.*(?:\.env|\.aws|credentials|\.pem|\.key|id_rsa)\b/gi, type: "data_exfil", label: "File exfiltration", score: 35, confidence: 0.85, message: "Sensitive file transfer." },
+    { pattern: /\b(?:curl|wget)\s+[^\n]{0,200}--data[^\n]{0,200}(?:@|<)\s*(?:\/etc\/|\.env|\.aws)/gi, type: "data_exfil", label: "Data exfiltration", score: 45, confidence: 0.9, message: "Data exfiltration via HTTP." },
+    { pattern: /\b(?:scp|rsync)\s+[^\n]{0,200}(?:\.env|\.aws|credentials|\.pem|\.key|id_rsa)\b/gi, type: "data_exfil", label: "File exfiltration", score: 35, confidence: 0.85, message: "Sensitive file transfer." },
 
     // ── Privilege escalation ──────────────────────────────────────────────
     { pattern: /\bsudo\s+(?:su\s*$|chmod\s+[40-7]{3,4}|chown\s+root)/gim, type: "priv_escalation", label: "Privilege escalation", score: 25, confidence: 0.8, message: "Privilege escalation attempt." },
@@ -54,9 +54,9 @@ export function detectTerminalCommandRisk(text: string): DetectorResult {
     const matches: DetectorMatch[] = [];
 
     for (const spec of DANGEROUS_COMMANDS) {
-        const pattern = new RegExp(spec.pattern.source, spec.pattern.flags);
+        spec.pattern.lastIndex = 0;
         let m: RegExpExecArray | null;
-        while ((m = pattern.exec(text)) !== null) {
+        while ((m = spec.pattern.exec(text)) !== null) {
             if (!m[0]) continue;
             matches.push({
                 type: spec.type,

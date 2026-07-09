@@ -1,3 +1,4 @@
+import { timingSafeEqual } from "crypto";
 import { db } from "../db";
 import { generateWebhookSecret, hashWebhookSecret } from "./signing";
 import { decryptSecret, encryptSecret, type EncryptedSecret } from "../secrets/secretStore";
@@ -84,7 +85,10 @@ export async function getEndpointSecret(endpointId: string) {
       ciphertext: endpoint.encryptedSecret,
       createdAt: endpoint.secretRotatedAt?.toISOString() ?? new Date(0).toISOString(),
     });
-    if (hashWebhookSecret(value) !== endpoint.secretHash) {
+    const candidateHash = hashWebhookSecret(value);
+    const candidateBuf = Buffer.from(candidateHash, "hex");
+    const expectedBuf = Buffer.from(endpoint.secretHash, "hex");
+    if (candidateBuf.length !== expectedBuf.length || !timingSafeEqual(candidateBuf, expectedBuf)) {
       await auditSecretAction({ endpointId, projectId: endpoint.projectId, action: "KMS_SECRET_DECRYPT_FAILED", success: false, message: "Decrypted webhook secret failed integrity verification." });
       return undefined;
     }

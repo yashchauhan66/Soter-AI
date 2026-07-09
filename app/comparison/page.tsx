@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { safeJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata: Metadata = {
   title: "SoterAI vs Competitors | AI Security Guardrail Comparison",
@@ -453,7 +454,7 @@ export default function ComparisonPage() {
     <main className="py-16 sm:py-24">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd()) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd()) }}
       />
       <div className="container-page">
         {/* ── Hero ── */}

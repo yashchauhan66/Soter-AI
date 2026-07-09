@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SoterAIGuardPackage.vsct - command table for the SoterAI IDE Guard adapter.
+  STATUS: PLANNED / UNBUILT. GUIDs match GuardCommands.cs and SoterAIGuardPackage.cs.
+-->
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable"
+              xmlns:xs="http://www.w3.org/2001/XMLSchema-instance">
+
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+
+  <Commands package="guidSoterAIGuardPackage">
+
+    <Groups>
+      <Group guid="guidSoterAICmdSet" id="SoterAIMenuGroup" priority="0x0600">
+        <!-- Placed on the Tools menu; adjust parent for a dedicated top-level menu. -->
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
+      </Group>
+    </Groups>
+
+    <Buttons>
+      <Button guid="guidSoterAICmdSet" id="cmdScanSelection" priority="0x0100" type="Button">
+        <Parent guid="guidSoterAICmdSet" id="SoterAIMenuGroup" />
+        <Strings>
+          <ButtonText>SoterAI: Scan Selection</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidSoterAICmdSet" id="cmdScanDocument" priority="0x0101" type="Button">
+        <Parent guid="guidSoterAICmdSet" id="SoterAIMenuGroup" />
+        <Strings>
+          <ButtonText>SoterAI: Scan Document</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidSoterAICmdSet" id="cmdRedactSelection" priority="0x0102" type="Button">
+        <Parent guid="guidSoterAICmdSet" id="SoterAIMenuGroup" />
+        <Strings>
+          <ButtonText>SoterAI: Redact Selection for AI</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidSoterAICmdSet" id="cmdBrokerStatus" priority="0x0103" type="Button">
+        <Parent guid="guidSoterAICmdSet" id="SoterAIMenuGroup" />
+        <Strings>
+          <ButtonText>SoterAI: Broker Status</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+  </Commands>
+
+  <Symbols>
+    <!-- Must match SoterAIGuardPackage.PackageGuidString. -->
+    <GuidSymbol name="guidSoterAIGuardPackage" value="{b2f6c3d4-9a11-4e2c-8d7a-0f3a1c6b9e21}" />
+
+    <!-- Must match GuardCommands.CommandSet and the command IDs there. -->
+    <GuidSymbol name="guidSoterAICmdSet" value="{6f2a9b71-3c8e-4d5a-b1c2-7e9d0a4f3b12}">
+      <IDSymbol name="SoterAIMenuGroup" value="0x1020" />
+      <IDSymbol name="cmdScanSelection" value="0x0100" />
+      <IDSymbol name="cmdScanDocument" value="0x0101" />
+      <IDSymbol name="cmdRedactSelection" value="0x0102" />
+      <IDSymbol name="cmdBrokerStatus" value="0x0103" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>

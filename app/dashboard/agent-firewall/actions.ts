@@ -14,7 +14,7 @@ export async function resolveDashboardAgentApproval(formData: FormData) {
   const editedContent = String(formData.get("editedContent") ?? "");
 
   if (!projectId || !approvalId || !["APPROVED", "DENIED"].includes(decision)) {
-    throw new Error("Invalid approval resolution request.");
+    throw new Error("Missing required fields: approvalId and resolution. Please refresh and try again.");
   }
 
   const access = await requireProjectPermission(projectId, "policy:manage");
@@ -26,8 +26,8 @@ export async function resolveDashboardAgentApproval(formData: FormData) {
     LIMIT 1
   `;
   const approval = rows[0];
-  if (!approval) throw new Error("Approval not found.");
-  if (approval.status !== "PENDING") throw new Error(`Approval is already ${approval.status.toLowerCase()}.`);
+  if (!approval) throw new Error("Approval not found. It may have already been processed. Refresh the page to see current status.");
+  if (approval.status !== "PENDING") throw new Error(`This approval has already been ${approval.status.toLowerCase()}. Refresh the page to see current status.`);
   if (approval.expiresAt.getTime() < Date.now()) {
     await db.$executeRaw`UPDATE "AgentApproval" SET "status" = 'EXPIRED', "resolvedAt" = NOW() WHERE "id" = ${approval.id}`;
     throw new Error("Approval expired.");

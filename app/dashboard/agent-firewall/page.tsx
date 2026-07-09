@@ -6,6 +6,7 @@ import { defaultAgentFirewallPolicy } from "@/lib/agent-firewall";
 import { db } from "@/lib/db";
 import { AGENT_FIREWALL_PREVIEW_GAPS } from "@/lib/agent-firewall";
 import { resolveDashboardAgentApproval } from "./actions";
+import { ConfirmableForm } from "@/components/dashboard/ConfirmableForm";
 
 export const dynamic = "force-dynamic";
 
@@ -151,7 +152,7 @@ export default async function AgentFirewallPage({
                     <pre className="mt-1 max-h-32 overflow-auto rounded bg-slate-950/70 p-2 text-xs text-slate-300">{approval.safeContent ?? approval.requestedContentRedacted ?? "No content supplied."}</pre>
                   </div>
                 </div>
-                <form action={resolveDashboardAgentApproval} className="mt-3 grid gap-2">
+                <ConfirmableForm action={resolveDashboardAgentApproval} className="mt-3 grid gap-2" getConfirmMessage={(decision) => decision === "APPROVED" ? "Approve this agent action? This cannot be undone." : "Deny this agent action?"}>
                   <input type="hidden" name="projectId" value={project.id} />
                   <input type="hidden" name="approvalId" value={approval.id} />
                   <textarea
@@ -164,7 +165,7 @@ export default async function AgentFirewallPage({
                     <button className="button-primary" name="decision" value="APPROVED" type="submit">Approve</button>
                     <button className="button-secondary" name="decision" value="DENIED" type="submit">Deny</button>
                   </div>
-                </form>
+                </ConfirmableForm>
               </div>
             ))}
             {approvals.length === 0 && <p className="text-sm text-slate-500">No pending approvals.</p>}

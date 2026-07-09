@@ -11,6 +11,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ slu
     headers: {
       "Cache-Control": "public, max-age=60, s-maxage=60",
       "Access-Control-Allow-Origin": "*",
+      "Vary": "Origin",
     },
   });
 }

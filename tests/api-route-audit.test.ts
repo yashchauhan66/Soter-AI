@@ -30,6 +30,8 @@ const publicRoutes = new Map<string, RegExp[]>([
   ["/api/auth/request-password-reset", [/enforcePublicRateLimit|checkRedisRateLimit/, /z\.object[\s\S]*\.parse/]],
   ["/api/auth/reset-password", [/enforcePublicRateLimit|checkRedisRateLimit/, /z\.object[\s\S]*\.parse/]],
   ["/api/auth/verify-email", [/enforcePublicRateLimit|checkRedisRateLimit/, /z\.object[\s\S]*\.parse/]],
+  ["/api/auth/send-otp", [/enforcePublicRateLimit/, /z\.object[\s\S]*\.parse/]],
+  ["/api/auth/verify-otp", [/enforcePublicRateLimit/, /z\.object[\s\S]*\.parse/]],
   ["/api/auth/[...nextauth]", [/handlers/, /GET/, /POST/]],
   ["/api/billing/webhook", [/verifyRazorpayWebhook/, /request\.text\(\)/]],
   ["/api/guard/analyze", [/checkRedisRateLimit/, /analyzeSchema\.parse/]],
@@ -49,7 +51,7 @@ const publicRoutes = new Map<string, RegExp[]>([
   ["/api/mcp/risk/scan", [/enforcePublicRateLimit/, /schema\.parse|readJson\(/]],
   ["/api/mcp/risk/badge", [/image\/svg\+xml/, /mcpRiskBadgeSvg/]],
   ["/api/extension/enroll", [/redeemEnrollmentToken/, /readJson/]],
-  ["/api/extension/approval-claim", [/evaluateApprovalClaim/, /readJson/]],
+  ["/api/extension/approval-claim", [/evaluateApprovalClaim/, /readJson/, /authenticateExtensionRequest\(/, /checkRateLimit\(/]],
   ["/api/extension/approval-status/[requestId]", [/agentApproval/, /findUnique/]],
 ]);
 

@@ -3,6 +3,7 @@ import { z } from "zod";
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { consumePasswordResetToken } from "@/lib/auth/tokens";
 import { enforcePublicRateLimit } from "@/lib/publicRateLimit";
+import { db } from "@/lib/db";
 
 export async function POST(request: Request) {
   try {
@@ -18,6 +19,10 @@ export async function POST(request: Request) {
     if (limited) return limited;
     const userId = await consumePasswordResetToken(body.token, await bcrypt.hash(body.password, 12));
     if (!userId) return jsonResponse({ error: true, message: "Reset link is invalid, expired, or already used." }, { status: 400 });
+    await db.user.update({
+      where: { id: userId },
+      data: { passwordChangedAt: new Date() },
+    });
     return jsonResponse({ ok: true });
   } catch (error) { return apiError(error, "Password reset failed."); }
 }

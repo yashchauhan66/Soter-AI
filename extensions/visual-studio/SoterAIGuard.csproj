@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SoterAIGuard.csproj - VSIX package project for the SoterAI IDE Guard adapter.
+
+  STATUS: PLANNED / UNBUILT. This project has NOT been restored or built in this
+  environment (no Visual Studio SDK / MSBuild here). It targets the classic
+  in-process VS SDK for VS 2022 (17.x). Package versions below are the intended
+  baseline; pin exact patch versions from a successful restore before release.
+
+  Build (on a machine with VS 2022 + the "Visual Studio extension development"
+  workload):
+      msbuild SoterAIGuard.csproj /t:Restore
+      msbuild SoterAIGuard.csproj /p:Configuration=Release
+  Output: bin\Release\SoterAIGuard.vsix
+-->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <UseWindowsForms>false</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>SoterAI.Guard</RootNamespace>
+    <AssemblyName>SoterAIGuard</AssemblyName>
+    <GeneratePkgDefFile>true</GeneratePkgDefFile>
+    <IncludeAssemblyInVSIXContainer>true</IncludeAssemblyInVSIXContainer>
+    <IncludeDebugSymbolsInVSIXContainer>false</IncludeDebugSymbolsInVSIXContainer>
+    <IncludeCopyLocalReferencesInVSIXContainer>false</IncludeCopyLocalReferencesInVSIXContainer>
+    <CopyBuildOutputToOutputDirectory>true</CopyBuildOutputToOutputDirectory>
+    <StartAction>Program</StartAction>
+    <!-- Launch the experimental instance for F5 debugging. -->
+    <StartProgram>$(DevEnvDir)devenv.exe</StartProgram>
+    <StartArguments>/rootsuffix Exp</StartArguments>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Meta-package that pulls the shell/editor/text assemblies. Pin the exact
+         version to the lowest VS 2022 you support from a real restore. -->
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.32112.339" ExcludeAssets="runtime" />
+    <!-- Build tools that produce the .vsix and .pkgdef. -->
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.0.5232" PrivateAssets="all" />
+    <!-- System.Text.Json is used by BrokerClient; VS ships a compatible version. -->
+    <PackageReference Include="System.Text.Json" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <VSCTCompile Include="src\SoterAIGuardPackage.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+    </VSCTCompile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="src\SoterAIGuardPackage.cs" />
+    <Compile Include="src\Commands\GuardCommands.cs" />
+    <Compile Include="src\Broker\BrokerClient.cs" />
+    <Compile Include="src\ToolWindows\SoterAIToolWindow.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="source.extension.vsixmanifest">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="LICENSE.txt">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="media\icon.png" Condition="Exists('media\icon.png')">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+  </ItemGroup>
+
+</Project>

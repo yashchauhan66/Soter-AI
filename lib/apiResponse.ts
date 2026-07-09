@@ -36,7 +36,7 @@ export function apiError(error: unknown, fallback = "Unexpected server error.") 
       { status: 503, headers: { "Retry-After": "30" } },
     );
   }
-  console.error(error);
+  console.error(error instanceof Error ? error.message : "unknown error");
   return jsonResponse({ error: true, message: fallback }, { status: 500 });
 }
 

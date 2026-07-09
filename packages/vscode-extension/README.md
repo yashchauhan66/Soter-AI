@@ -5,6 +5,24 @@ selections, terminal commands, git changes, and AI prompts for secrets, PII,
 prompt-injection, and insecure AI-generated code — **entirely on your machine**.
 Nothing leaves your computer unless you explicitly connect to SoterAI Cloud.
 
+---
+
+![Security Dashboard](https://raw.githubusercontent.com/yashchauhan66/Ai-Security-Guard/main/packages/vscode-extension/media/screenshots/dashboard-overview.png)
+
+![Scan Results](https://raw.githubusercontent.com/yashchauhan66/Ai-Security-Guard/main/packages/vscode-extension/media/screenshots/scan-results.png)
+
+![Command Palette](https://raw.githubusercontent.com/yashchauhan66/Ai-Security-Guard/main/packages/vscode-extension/media/screenshots/command-palette.png)
+
+![Settings Panel](https://raw.githubusercontent.com/yashchauhan66/Ai-Security-Guard/main/packages/vscode-extension/media/screenshots/settings-panel.png)
+
+---
+
+**Demo:** Watch the extension scan a file for secrets and display findings in the Security Dashboard:
+
+![SoterAI IDE Guard Demo](https://raw.githubusercontent.com/yashchauhan66/Ai-Security-Guard/main/packages/vscode-extension/media/screenshots/demo.gif)
+
+---
+
 ## Features
 
 - **Scan Current File / Selection / Workspace** — detect leaked secrets, PII, and

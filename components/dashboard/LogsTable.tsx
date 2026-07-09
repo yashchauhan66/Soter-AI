@@ -35,11 +35,11 @@ export function LogsTable({ logs }: { logs: LogRow[] }) {
 
   return (
     <div className="card overflow-x-auto">
-      <table className="w-full min-w-[800px] text-left text-sm">
+      <table className="w-full min-w-[800px] text-left text-sm" role="table" aria-label="Guard decision logs">
         <thead className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-500">
           <tr>
             {['Date', 'Direction', 'Action', 'Risk', 'Risk types', 'Reason', 'Details'].map((label) => (
-              <th className="px-4 py-3" key={label}>{label}</th>
+              <th className="px-4 py-3" key={label} scope="col">{label}</th>
             ))}
           </tr>
         </thead>

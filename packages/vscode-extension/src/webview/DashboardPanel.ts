@@ -3,6 +3,7 @@ import { ExtensionState } from "../state";
 import { PolicyStore } from "../firewall/PolicyStore";
 import { LedgerStore } from "../firewall/LedgerStore";
 import { getBrokerManager } from "../broker/BrokerManager";
+import { escapeHtml, getNonce } from "../firewall/util";
 
 export class DashboardPanel {
     public static currentPanel: DashboardPanel | undefined;
@@ -17,7 +18,19 @@ export class DashboardPanel {
         this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
         this._panel.webview.onDidReceiveMessage(
             async (message) => {
-                switch (message.command) {
+                // Only accept messages whose command is in the allowlist.
+                // This prevents unexpected or malicious payloads from the webview.
+                const knownCommands: ReadonlySet<string> = new Set([
+                    "scanCurrentFile",
+                    "connectCloud",
+                    "disconnectCloud",
+                ]);
+                const cmd = typeof message?.command === "string" ? message.command : undefined;
+                if (!cmd || !knownCommands.has(cmd)) {
+                    console.warn(`[SoterAI Dashboard] Rejected unknown webview message command: ${String(message?.command)}`);
+                    return;
+                }
+                switch (cmd) {
                     case "scanCurrentFile":
                         await vscode.commands.executeCommand("soterai.scanCurrentFile");
                         this.refresh();
@@ -338,20 +351,4 @@ export class DashboardPanel {
     }
 }
 
-function escapeHtml(value: unknown): string {
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-}
 
-function getNonce(): string {
-    let text = "";
-    const possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (let i = 0; i < 32; i++) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return text;
-}

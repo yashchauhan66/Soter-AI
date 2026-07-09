@@ -26,8 +26,8 @@ export function detectFileContextRisk(text: string, filePath?: string): Detector
     // Check file path itself
     if (filePath) {
         for (const spec of PROTECTED_FILE_PATTERNS) {
-            const pattern = new RegExp(spec.pattern.source, spec.pattern.flags);
-            if (pattern.test(filePath)) {
+            spec.pattern.lastIndex = 0;
+            if (spec.pattern.test(filePath)) {
                 matches.push({
                     type: spec.type,
                     label: spec.label,
@@ -45,9 +45,9 @@ export function detectFileContextRisk(text: string, filePath?: string): Detector
 
     // Check content for risky patterns
     for (const spec of RISKY_CONTENT_PATTERNS) {
-        const pattern = new RegExp(spec.pattern.source, spec.pattern.flags);
+        spec.pattern.lastIndex = 0;
         let m: RegExpExecArray | null;
-        while ((m = pattern.exec(text)) !== null) {
+        while ((m = spec.pattern.exec(text)) !== null) {
             if (!m[0]) continue;
             matches.push({
                 type: spec.type,

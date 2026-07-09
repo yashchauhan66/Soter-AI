@@ -92,12 +92,18 @@ export async function POST(request: Request) {
     return NextResponse.redirect(new URL(destination, baseUrl));
   } catch (error) {
     if (providerId) {
+      const rawMessage = (error as Error).message ?? "Unknown error";
+      const sanitized = rawMessage
+        .replace(/[A-Z]:\\[^\s"']+/gi, "[PATH]")
+        .replace(/\/[a-zA-Z0-9_/.-]+\.(ts|js|tsx|jsx)/g, "[FILE]")
+        .replace(/https?:\/\/[^\s"']+/g, "[URL]")
+        .slice(0, 500);
       await db.samlLoginAttempt.create({
         data: {
           organizationId: (await db.samlProvider.findUnique({ where: { id: providerId } }))?.organizationId ?? "unknown",
           providerId,
           status: "FAILURE",
-          error: (error as Error).message,
+          error: sanitized,
           ip: request.headers.get("x-forwarded-for") ?? null,
         },
       });

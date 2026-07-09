@@ -87,6 +87,18 @@ export function findingId(detectorName: string, type: string, start: number): st
     return `${detectorName}-${type}-${start}`;
 }
 
+const globalPatternCache = new WeakMap<RegExp, RegExp>();
+
 function ensureGlobal(pattern: RegExp): RegExp {
-    return pattern.global ? new RegExp(pattern.source, pattern.flags) : new RegExp(pattern.source, `${pattern.flags}g`);
+    if (pattern.global) {
+        pattern.lastIndex = 0;
+        return pattern;
+    }
+    let cached = globalPatternCache.get(pattern);
+    if (!cached) {
+        cached = new RegExp(pattern.source, `${pattern.flags}g`);
+        globalPatternCache.set(pattern, cached);
+    }
+    cached.lastIndex = 0;
+    return cached;
 }

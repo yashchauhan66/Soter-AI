@@ -25,7 +25,7 @@ export async function resolveDashboardEscrow(formData: FormData) {
   const decision = String(formData.get("decision") ?? "");
   const editedPayload = String(formData.get("editedPayload") ?? "");
   if (!projectId || !escrowId || !["APPROVED", "DENIED", "EDITED_AND_APPROVED"].includes(decision)) {
-    throw new Error("Invalid escrow resolution request.");
+    throw new Error("Missing escrow ID or resolution. Please refresh and try again.");
   }
 
   const project = await getCurrentProjectById(projectId);

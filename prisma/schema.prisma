@@ -431,6 +431,7 @@ model User {
   invitesSent                Invite[]                   @relation("InvitedBy")
   audits                     AuditExport[]              @relation("RequestedBy")
   emailVerificationTokens    EmailVerificationToken[]
+  emailVerificationOtps      EmailVerificationOtp[]
   passwordResetTokens        PasswordResetToken[]
   ragDocuments               RagDocument[]              @relation("RagDocumentUploader")
   detectionFeedback          DetectionFeedback[]        @relation("DetectionFeedbackCreator")
@@ -460,6 +461,7 @@ model User {
   lockdownsDisabled          EmergencyLockdownState[]   @relation("EmergencyLockdownDisabledBy")
   companyFingerprintSets     CompanyFingerprintSet[]
 
+  passwordChangedAt DateTime?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -941,6 +943,20 @@ model PasswordResetToken {
   usedAt    DateTime?
   createdAt DateTime  @default(now())
 
+  @@index([userId, expiresAt])
+}
+
+model EmailVerificationOtp {
+  id        String    @id @default(cuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  codeHash  String
+  expiresAt DateTime
+  usedAt    DateTime?
+  attempts  Int       @default(0)
+  createdAt DateTime  @default(now())
+
+  @@index([userId, createdAt])
   @@index([userId, expiresAt])
 }
 

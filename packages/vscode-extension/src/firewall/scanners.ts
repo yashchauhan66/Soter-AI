@@ -116,7 +116,7 @@ export async function generateExtensionRiskReport(): Promise<void> {
 // ── Phase 9: MCP / Tool Permission Monitor ───────────────────────────────────
 
 /** Common locations MCP configs live across AI tools. */
-const MCP_CONFIG_GLOBS = [
+export const MCP_CONFIG_GLOBS = [
     ".vscode/mcp.json",
     ".cursor/mcp.json",
     ".cursor/mcp.jsonc",
