@@ -21,6 +21,7 @@ import {
   FolderKanban,
   Gauge,
   Handshake,
+  HelpCircle,
   KeyRound,
   Landmark,
   LifeBuoy,
@@ -112,7 +113,7 @@ const heroProducts: HeroProduct[] = [
 
 interface NavGroup {
   label: string;
-  items: { Icon: typeof Gauge; label: string; href: string; badge?: string }[];
+  items: { Icon: typeof Gauge; label: string; href: string; badge?: string; status?: "Stable" | "Beta" | "Labs" }[];
 }
 
 const navGroups: NavGroup[] = [
@@ -120,10 +121,11 @@ const navGroups: NavGroup[] = [
     label: "Guard Operations",
     items: [
       { Icon: BarChart3, label: "Overview", href: "/dashboard" },
-      { Icon: ScrollText, label: "Guard logs", href: "/dashboard/logs" },
+      { Icon: ScrollText, label: "Guard logs", href: "/dashboard/logs", status: "Stable" },
       { Icon: FileBarChart, label: "Reports", href: "/dashboard/reports" },
       { Icon: TrendingUp, label: "Customer success", href: "/dashboard/customer-success" },
       { Icon: Eye, label: "Detection feedback", href: "/dashboard/detection-feedback" },
+      { Icon: Radio, label: "Agent Monitor", href: "/dashboard/agent-monitor", status: "Stable" },
     ],
   },
   {
@@ -140,6 +142,9 @@ const navGroups: NavGroup[] = [
       { Icon: Search, label: "Forensics", href: "/dashboard/forensics" },
       { Icon: Wifi, label: "Semantic egress", href: "/dashboard/semantic-egress" },
       { Icon: TrendingUp, label: "SLM evaluations", href: "/dashboard/evaluations" },
+      { Icon: BookOpen, label: "Playbooks", href: "/dashboard/playbooks", status: "Stable" },
+      { Icon: BarChart3, label: "Benchmarks", href: "/dashboard/benchmarks", status: "Labs" },
+      { Icon: Gauge, label: "AI Control Plane", href: "/dashboard/ai-control-plane", status: "Labs" },
     ],
   },
   {
@@ -148,6 +153,7 @@ const navGroups: NavGroup[] = [
       { Icon: BookOpen, label: "Evidence vault", href: "/dashboard/evidence-vault" },
       { Icon: ShieldCheck, label: "Security badges", href: "/dashboard/badges" },
       { Icon: Download, label: "Audit exports", href: "/dashboard/exports" },
+      { Icon: ScrollText, label: "Audit Log", href: "/dashboard/audit-log", status: "Beta" },
     ],
   },
   {
@@ -163,14 +169,22 @@ const navGroups: NavGroup[] = [
   {
     label: "Account",
     items: [
-      { Icon: FolderKanban, label: "Projects", href: "/dashboard/projects" },
-      { Icon: KeyRound, label: "API keys", href: "/dashboard/api-keys" },
+      { Icon: FolderKanban, label: "Projects", href: "/dashboard/projects", status: "Beta" },
+      { Icon: KeyRound, label: "API keys", href: "/dashboard/api-keys", status: "Stable" },
       { Icon: SlidersHorizontal, label: "Policy engine", href: "/dashboard/policy" },
       { Icon: Webhook, label: "Webhooks", href: "/dashboard/webhooks" },
       { Icon: ListChecks, label: "Onboarding", href: "/dashboard/onboarding" },
       { Icon: LifeBuoy, label: "Support", href: "/dashboard/support" },
-      { Icon: CreditCard, label: "Billing & usage", href: "/dashboard/billing" },
+      { Icon: CreditCard, label: "Billing & usage", href: "/dashboard/billing", status: "Beta" },
       { Icon: Settings, label: "Settings", href: "/dashboard/settings" },
+      { Icon: Puzzle, label: "Integrations", href: "/dashboard/integrations", status: "Beta" },
+      { Icon: Fingerprint, label: "SSO & SCIM", href: "/dashboard/sso", status: "Beta" },
+    ],
+  },
+  {
+    label: "Docs & Help",
+    items: [
+      { Icon: HelpCircle, label: "Docs & Help", href: "/docs" },
     ],
   },
 ];
@@ -205,7 +219,7 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
         <p className="mt-1 font-semibold">Security team</p>
       </div>
 
-      <nav className="space-y-3">
+      <nav className="space-y-3" aria-label="Dashboard navigation">
         {/* ── Hero Products ── */}
         {heroProducts.map((product) => {
           const isExpanded = expandedHero === product.label;
@@ -221,6 +235,7 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
               <button
                 onClick={() => setExpandedHero(isExpanded ? null : product.label)}
                 className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition hover:bg-white/5"
+                aria-expanded={isExpanded}
               >
                 <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${product.iconBg}`}>
                   <product.Icon size={16} className={product.accent} />
@@ -290,6 +305,7 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
               <button
                 onClick={() => setExpandedGroup(isExpanded ? null : group.label)}
                 className="flex w-full items-center justify-between px-3 py-2 text-left"
+                aria-expanded={isExpanded}
               >
                 <p
                   className={`text-[10px] font-bold uppercase tracking-[0.18em] ${
@@ -313,6 +329,7 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
                   {group.items.map((item) => {
                     const { Icon, label, href } = item;
                     const badge = item.badge ?? null;
+                    const status = item.status ?? null;
                     return (
                       <li key={href}>
                         <Link
@@ -329,6 +346,15 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
                           {badge && (
                             <span className="rounded-full bg-cyan/15 px-1.5 py-0.5 text-[9px] font-bold text-cyan">
                               {badge}
+                            </span>
+                          )}
+                          {status && (
+                            <span className={`ml-auto text-[10px] ${
+                              status === "Stable" ? "text-emerald-400/90" :
+                              status === "Beta" ? "text-yellow-400/90" :
+                              "text-purple-400/90"
+                            }`}>
+                              {status}
                             </span>
                           )}
                         </Link>

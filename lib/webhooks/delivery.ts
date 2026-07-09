@@ -6,7 +6,7 @@
 // - Retries use exponential backoff: 30s, 2m, 10m, 1h, 6h (max 5 attempts).
 // - Manual replay is supported via /api/webhooks/[id]/replay.
 
-import { createHash } from "crypto";
+import { createHash, randomUUID } from "crypto";
 import { db } from "../db";
 import { sanitizeLogText, sanitizeMetadata } from "../guard/logSafety";
 import { emitSecurityEvent } from "../events/emit";
@@ -16,7 +16,7 @@ import { signWebhookPayload, type WebhookEvent } from "./signing";
 import { getEndpointSecret } from "./store";
 import { writeWebhookDeliveryEvent } from "../events/store";
 
-const DELIVERY_TIMEOUT_MS = 5_000;
+const DELIVERY_TIMEOUT_MS = 10_000;
 const BACKOFF_SCHEDULE_MS = [30_000, 2 * 60_000, 10 * 60_000, 60 * 60_000, 6 * 60 * 60_000];
 const MAX_ATTEMPTS = BACKOFF_SCHEDULE_MS.length + 1; // initial + retries
 
@@ -37,7 +37,7 @@ export async function enqueueWebhook(input: EnqueueInput) {
       attempts: 0,
       payloadHash,
       payloadPreview: input.payload as object,
-      idempotencyKey: input.idempotencyKey,
+      idempotencyKey: input.idempotencyKey ?? randomUUID(),
       nextAttemptAt: new Date(),
     },
     include: {
@@ -109,11 +109,11 @@ export async function attemptDelivery(deliveryId: string) {
   const headers: Record<string, string> = {
     "Content-Type": "application/json",
     "User-Agent": "SoterAI-Webhooks/1.0",
-    "x-cyberrakshak-event": delivery.event,
-    "x-cyberrakshak-timestamp": String(timestamp),
-    "x-cyberrakshak-signature": `t=${timestamp},v1=${signature}`,
-    "x-cyberrakshak-idempotency-key": delivery.idempotencyKey,
-    "x-cyberrakshak-attempt": String(delivery.attempts + 1),
+    "x-soter-event": delivery.event,
+    "x-soter-timestamp": String(timestamp),
+    "x-soter-signature": `t=${timestamp},v1=${signature}`,
+    "x-soter-idempotency-key": delivery.idempotencyKey,
+    "x-soter-attempt": String(delivery.attempts + 1),
   };
 
   let result: { ok: boolean; status: number; body: string } | null = null;
@@ -169,7 +169,7 @@ export async function attemptDelivery(deliveryId: string) {
     return { success: false, terminal: true, attempts: attemptNumber, error: networkError ?? `HTTP ${result?.status}` };
   }
 
-  const backoff = BACKOFF_SCHEDULE_MS[attemptNumber - 1] ?? BACKOFF_SCHEDULE_MS[BACKOFF_SCHEDULE_MS.length - 1];
+  const backoff = (BACKOFF_SCHEDULE_MS[attemptNumber - 1] ?? BACKOFF_SCHEDULE_MS[BACKOFF_SCHEDULE_MS.length - 1]) * (0.8 + Math.random() * 0.4);
   await db.webhookDelivery.update({
     where: { id: delivery.id },
     data: {

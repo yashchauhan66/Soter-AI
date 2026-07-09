@@ -118,7 +118,10 @@ export function findSurvivingSecrets(text: string): string[] {
 
 /** True if any high-risk secret pattern survives in `text`. */
 export function containsRawSecret(text: string): boolean {
-    return findSurvivingSecrets(text).length > 0;
+    for (const [, pattern] of HIGH_RISK_SECRET_PATTERNS) {
+        if (pattern.test(text)) return true;
+    }
+    return false;
 }
 
 /**

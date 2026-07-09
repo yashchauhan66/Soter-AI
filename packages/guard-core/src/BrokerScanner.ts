@@ -81,7 +81,7 @@ export async function scanBrokerRequest(
     let decision: GuardAction = "allow";
     let riskScore = 0;
     let categories: string[] = [];
-    let findings: Finding[] = [];
+    const findings: Finding[] = [];
     let evidencePreview = "";
 
     try {

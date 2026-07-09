@@ -1,0 +1,20 @@
+{
+	// Base URL of the Local AI Broker. The broker listens on loopback only.
+	"broker_url": "http://127.0.0.1:47321",
+
+	// Optional: paste the broker bearer token directly.
+	// The token is a credential. Prefer "token_path" so the token is never
+	// stored inside Sublime settings files.
+	"token": "",
+
+	// Path to the broker auth-token file. "~" expands to your home directory.
+	// Used when "token" above is empty.
+	"token_path": "~/.soterai/broker/auth-token",
+
+	// Default Safe Mode level applied by "Toggle Safe Mode".
+	// One of: "developer", "strict", "enterprise".
+	"safe_mode_level": "developer",
+
+	// Network timeout, in seconds, for broker requests.
+	"timeout_seconds": 10
+}

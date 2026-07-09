@@ -10,6 +10,10 @@ test("new user can sign up and reach onboarding in mock-email mode", async ({ pa
   await page.getByLabel("Workspace name").fill(`E2E Signup ${suffix}`);
   await page.getByRole("button", { name: "Create account" }).click();
 
+  await expect(page.getByRole("heading", { name: "Check your email" })).toBeVisible();
+  // Mock-email mode returns and pre-fills the development-only OTP.
+  await page.getByRole("button", { name: "Verify email" }).click();
+
   await expect(page).toHaveURL(/\/dashboard\/onboarding$/);
   await expect(page.getByRole("heading", { name: "Get to a protected chatbot" })).toBeVisible();
 });

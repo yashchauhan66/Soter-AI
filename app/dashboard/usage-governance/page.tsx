@@ -85,7 +85,7 @@ export default async function UsageGovernancePage() {
           <Activity className="text-cyan" size={24} />
           <div>
             <p className="text-sm text-slate-400">Active policy</p>
-            <p className="text-xl font-bold">Enabled</p>
+            <p className="text-xl font-bold">{summary.hasEnabledPolicy ? "Enabled" : "Not configured"}</p>
           </div>
         </div>
       </div>

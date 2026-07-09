@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, BookOpen, CheckCircle2, Code2, Globe2, Search, ShieldCheck, Terminal, Zap } from "lucide-react";
 import { CodeBlock, TipBox } from "@/components/ui/CodeBlock";
 import { DocViewTracker } from "@/components/docs/DocViewTracker";
+import { safeJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata: Metadata = {
   title: "SoterAI Developer Docs - Integrate AI Security in 5 Minutes | JavaScript, Python, REST",
@@ -118,8 +119,8 @@ export default function DocsHubPage() {
   return (
     <main className="py-16">
       <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       
       <div className="container-page">
         {/* Hero Section */}

@@ -5,6 +5,7 @@ import { trialWindow } from "@/lib/ops/billing";
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { db } from "@/lib/db";
 import { createEmailVerificationToken } from "@/lib/auth/tokens";
+import { createEmailVerificationOtp } from "@/lib/auth/emailOtp";
 import { sendTemplateEmail } from "@/lib/email/send";
 import { enforcePublicRateLimit } from "@/lib/publicRateLimit";
 import {
@@ -24,26 +25,23 @@ const SIGNUP_TRANSACTION_OPTIONS = { maxWait: 10_000, timeout: 30_000 } as const
 
 const schema = z.object({
   email: z.string().trim().toLowerCase().email().max(200),
-  password: z.string().min(8).max(200),
+  password: z.string().min(8).max(200).regex(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/,
+    "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+  ),
   name: z.string().trim().min(1).max(120).optional(),
   organizationName: z.string().trim().min(2).max(120).optional(),
   organizationType: z.enum(["DIRECT_BUSINESS", "AGENCY"]).default("DIRECT_BUSINESS"),
 });
 
-function verifyUrlFor(token: string) {
-  const base = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
-  return `${base}/verify-email?token=${encodeURIComponent(token)}`;
-}
-
-// Sends the verification email. Returns whether it was mocked, or surfaces a
-// delivery failure to the caller WITHOUT leaking the raw token into logs.
+// Sends the OTP after the account transaction commits. Raw codes are never
+// logged or returned by a live email provider path.
 async function deliverVerification(to: string, token: string) {
-  const email = await sendTemplateEmail({ to, template: "verify-email", data: { url: verifyUrlFor(token) } });
+  const email = await sendTemplateEmail({ to, template: "verify-email-otp", data: { otp: token } });
   return { mocked: email.mocked };
 }
 
-// Shapes the success body. In mock mode we expose the verification URL so local
-// and e2e flows can complete; in live mode we never return the token.
+// Mock mode exposes the OTP for local/e2e use; live responses never contain it.
 function successBody(opts: {
   deliveryMode: EmailDeliveryMode;
   token: string;
@@ -56,7 +54,7 @@ function successBody(opts: {
     verificationRequired,
     emailSent: opts.emailSent,
     verificationEmailMocked: opts.deliveryMode === "mock",
-    ...(opts.deliveryMode === "mock" ? { developmentVerificationUrl: verifyUrlFor(opts.token) } : {}),
+    ...(opts.deliveryMode === "mock" ? { developmentOtp: opts.token } : {}),
     ...opts.extra,
   };
 }
@@ -97,7 +95,11 @@ export async function POST(request: Request) {
     // and resends verification instead of erroring or duplicating the user.
     if (plan.kind === "resend") {
       const userId = existing!.id;
-      const token = await createEmailVerificationToken(userId);
+      const token = await db.$transaction(async (tx) => {
+        // Keep legacy links invalidated while OTP becomes the primary flow.
+        await createEmailVerificationToken(userId, new Date(), tx);
+        return createEmailVerificationOtp(userId, new Date(), tx);
+      });
       let emailSent = true;
       try {
         await deliverVerification(body.email, token);
@@ -152,7 +154,10 @@ export async function POST(request: Request) {
         }
         // Token created inside the transaction: a user without a usable token
         // (or a token without a user) can never be committed.
-        const token = await createEmailVerificationToken(user.id, new Date(), tx);
+        // Keep issuing the legacy token for backwards compatibility, but the
+        // signup email and UI use the shorter OTP flow.
+        await createEmailVerificationToken(user.id, new Date(), tx);
+        const token = await createEmailVerificationOtp(user.id, new Date(), tx);
         return { userId: user.id, organizationId: org.id, token };
       }, SIGNUP_TRANSACTION_OPTIONS);
     } catch (txError) {

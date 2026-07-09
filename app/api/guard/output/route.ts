@@ -1,4 +1,4 @@
-import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
+import { apiError, jsonResponse, readJson, requireJsonContentType } from "@/lib/apiResponse";
 import { authenticateApiKeyRequest } from "@/lib/apiKeyMiddleware";
 import { DEFAULT_RPM } from "@/lib/guard/constants";
 import { runOutputGuard } from "@/lib/guard/outputGuard";
@@ -16,6 +16,8 @@ import { evaluateGovernance, logAiUsageEvent } from "@/lib/usage-governance";
 import { dispatchGovernanceEnforcement } from "@/lib/usage-governance/notifications";
 
 export async function POST(request: Request) {
+  const ctError = requireJsonContentType(request);
+  if (ctError) return ctError;
   const startedAt = Date.now();
   let failed = false;
   try {

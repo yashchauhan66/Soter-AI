@@ -1,4 +1,4 @@
-import { createHash, randomBytes, randomUUID } from "crypto";
+import { createHash, randomBytes, randomUUID, timingSafeEqual } from "crypto";
 
 export const AGENT_IDENTITY_TYPES = [
   "CHATBOT",
@@ -126,8 +126,10 @@ export function createPassportToken() {
 export function hashPassportToken(token: string) {
   const pepper = process.env.API_KEY_PEPPER
     ?? process.env.AUTH_SECRET
-    ?? process.env.NEXTAUTH_SECRET
-    ?? "cybersecurityguard-agent-passport";
+    ?? process.env.NEXTAUTH_SECRET;
+  if (!pepper) {
+    throw new Error("API_KEY_PEPPER (or AUTH_SECRET or NEXTAUTH_SECRET) must be set for passport token hashing");
+  }
   return createHash("sha256").update(`agent-passport.${token}.${pepper}`).digest("hex");
 }
 
@@ -266,7 +268,10 @@ export function validateAgentPassport(input: ValidateAgentPassportInput): AgentP
     if (!input.passportToken || !input.passport.passportHash) {
       return block("passport.token_missing", "Passport token is required and only a hash is stored.", "CRITICAL", matches);
     }
-    if (hashPassportToken(input.passportToken) !== input.passport.passportHash) {
+    const candidateHash = hashPassportToken(input.passportToken);
+    const candidateBuf = Buffer.from(candidateHash, "hex");
+    const expectedBuf = Buffer.from(input.passport.passportHash, "hex");
+    if (candidateBuf.length !== expectedBuf.length || !timingSafeEqual(candidateBuf, expectedBuf)) {
       return block("passport.token_invalid", "Passport token does not match the stored passport hash.", "CRITICAL", matches);
     }
   }

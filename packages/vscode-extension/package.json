@@ -1,27 +1,62 @@
 {
     "name": "soterai-ide-guard",
-    "displayName": "SoterAI IDE Guard",
-    "description": "Enterprise-ready AI Security Guard extension to protect your codebase, terminal commands, and AI prompts locally.",
+    "displayName": "SoterAI IDE Guard — Local AI Security",
+    "description": "Protect secrets, prompts, MCP tools, terminal commands, and AI coding context locally before they reach AI.",
     "version": "0.1.0",
     "publisher": "soterai",
+    "preview": false,
+    "pricing": "Free",
+    "icon": "media/icon.png",
+    "galleryBanner": {
+        "color": "#0B1020",
+        "theme": "dark"
+    },
     "engines": {
         "vscode": "^1.85.0"
     },
     "categories": [
-        "Security",
+        "AI",
         "Linters",
-        "Programming Languages"
+        "Other"
+    ],
+    "keywords": [
+        "ai-security",
+        "ai-coding",
+        "prompt-injection",
+        "secret-scanning",
+        "mcp-security",
+        "cursor",
+        "copilot",
+        "claude",
+        "local-ai",
+        "data-leakage",
+        "vscode-security",
+        "developer-security",
+        "ai-agent-security",
+        "ai-safe-mode",
+        "ai-memory-inspector",
+        "enterprise-security",
+        "ai-activity-sentinel",
+        "protected-workspace",
+        "mcp-firewall",
+        "dependency-guard",
+        "policy-packs",
+        "risk-dashboard"
     ],
     "license": "SEE LICENSE IN LICENSE",
     "repository": {
         "type": "git",
-        "url": "https://github.com/soterai/soterai-guard.git",
+        "url": "https://github.com/yashchauhan66/Ai-Security-Guard.git",
         "directory": "packages/vscode-extension"
     },
     "bugs": {
-        "url": "https://github.com/soterai/soterai-guard/issues"
+        "url": "https://github.com/yashchauhan66/Ai-Security-Guard/issues"
     },
-    "homepage": "https://soterai.in",
+    "homepage": "https://soterai.in/vscode-ai-security",
+    "qna": "https://soterai.in/support",
+    "activationEvents": [
+        "workspaceContains:.soterai-policy.json"
+    ],
     "main": "./dist/extension.js",
     "capabilities": {
         "untrustedWorkspaces": {
@@ -342,6 +377,126 @@
             {
                 "command": "soterai.clearAIApprovals",
                 "title": "SoterAI: Clear AI Approvals"
+            },
+            {
+                "command": "soterai.enableAISentinel",
+                "title": "SoterAI: Enable AI Activity Sentinel"
+            },
+            {
+                "command": "soterai.disableAISentinel",
+                "title": "SoterAI: Disable AI Activity Sentinel"
+            },
+            {
+                "command": "soterai.showAITimeline",
+                "title": "SoterAI: Show AI Activity Timeline"
+            },
+            {
+                "command": "soterai.exportAIActivityReport",
+                "title": "SoterAI: Export AI Activity Report"
+            },
+            {
+                "command": "soterai.clearAIActivityEvents",
+                "title": "SoterAI: Clear AI Activity Events"
+            },
+            {
+                "command": "soterai.openPermissionCenter",
+                "title": "SoterAI: Open AI Permission Center"
+            },
+            {
+                "command": "soterai.reviewPendingApprovals",
+                "title": "SoterAI: Review Pending AI Approvals"
+            },
+            {
+                "command": "soterai.clearApprovals",
+                "title": "SoterAI: Clear AI Approvals"
+            },
+            {
+                "command": "soterai.enableProtectedWorkspace",
+                "title": "SoterAI: Enable Protected Workspace Mode"
+            },
+            {
+                "command": "soterai.disableProtectedWorkspace",
+                "title": "SoterAI: Disable Protected Workspace Mode"
+            },
+            {
+                "command": "soterai.showProtectedFilesList",
+                "title": "SoterAI: Show Protected Files List"
+            },
+            {
+                "command": "soterai.addFileToProtected",
+                "title": "SoterAI: Add File to Protected List"
+            },
+            {
+                "command": "soterai.removeFileFromProtected",
+                "title": "SoterAI: Remove File from Protected List"
+            },
+            {
+                "command": "soterai.generateSafeEnvExample",
+                "title": "SoterAI: Generate Safe .env.example"
+            },
+            {
+                "command": "soterai.showWorkspaceRiskScore",
+                "title": "SoterAI: Show Workspace Risk Score"
+            },
+            {
+                "command": "soterai.openMCPToolFirewall",
+                "title": "SoterAI: Open MCP Tool Firewall"
+            },
+            {
+                "command": "soterai.generateSafeMCPPolicyFile",
+                "title": "SoterAI: Generate Safe MCP Policy"
+            },
+            {
+                "command": "soterai.blockMCPTool",
+                "title": "SoterAI: Block MCP Tool"
+            },
+            {
+                "command": "soterai.approveMCPTool",
+                "title": "SoterAI: Approve MCP Tool"
+            },
+            {
+                "command": "soterai.scanMemoryRisk",
+                "title": "SoterAI: Scan AI Memory Risk"
+            },
+            {
+                "command": "soterai.cleanPoisonedInstructions",
+                "title": "SoterAI: Clean Poisoned AI Instructions"
+            },
+            {
+                "command": "soterai.showMemoryPoisoningFindings",
+                "title": "SoterAI: Show Memory Poisoning Findings"
+            },
+            {
+                "command": "soterai.checkDependencyInstall",
+                "title": "SoterAI: Check Dependency Install"
+            },
+            {
+                "command": "soterai.scanPackageJsonRisk",
+                "title": "SoterAI: Scan package.json Risk"
+            },
+            {
+                "command": "soterai.reviewAISuggestedDependency",
+                "title": "SoterAI: Review AI Suggested Dependency"
+            },
+            {
+                "command": "soterai.applyPolicyPack",
+                "title": "SoterAI: Apply Policy Pack"
+            },
+            {
+                "command": "soterai.comparePolicyPacks",
+                "title": "SoterAI: Compare Policy Packs"
+            },
+            {
+                "command": "soterai.exportPolicy",
+                "title": "SoterAI: Export Policy"
+            },
+            {
+                "command": "soterai.openEnterpriseDashboard",
+                "title": "SoterAI: Open Enterprise Risk Dashboard"
+            },
+            {
+                "command": "soterai.exportEnterpriseRiskReport",
+                "title": "SoterAI: Export Enterprise Risk Report"
             }
         ],
         "viewsContainers": {
@@ -466,27 +621,44 @@
                     ],
                     "default": "warn",
                     "description": "Action on detecting dangerous terminal commands."
+                },
+                "soterai.sentinel.enabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enable AI Activity Sentinel background monitor."
+                },
+                "soterai.protectedWorkspace.enabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enable Protected Workspace Mode — auto-protect sensitive files."
+                },
+                "soterai.mcpFirewall.strictMode": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enable strict MCP Tool Firewall — block unknown tools."
                 }
             }
         }
     },
-   
-  "scripts": {
-    "typecheck": "tsc --noEmit -p tsconfig.json",
-    "test": "node --import tsx --test src/__tests__/**/*.test.ts",
-    "bundle": "node esbuild.js --production",
-    "vscode:prepublish": "npm run bundle",
-    "package": "vsce package --allow-missing-repository --skip-license --no-dependencies",
-    "vscode:package": "vsce package --allow-missing-repository --skip-license --no-dependencies"
-  },
-
+    "scripts": {
+        "typecheck": "tsc --noEmit -p tsconfig.json",
+        "test": "node --import tsx --test src/__tests__/**/*.test.ts",
+        "bundle": "node esbuild.js --production",
+        "vscode:prepublish": "npm run bundle",
+        "package": "vsce package --allow-missing-repository --skip-license --no-dependencies",
+        "vscode:package": "vsce package --allow-missing-repository --skip-license --no-dependencies",
+        "vscode:publish": "vsce publish --no-dependencies",
+        "openvsx:package": "npm run vscode:package",
+    "openvsx:publish": "node ../../scripts/publish-openvsx.mjs"
+    },
     "devDependencies": {
-        "@types/vscode": "^1.85.0",
+        "@soterai/guard-core": "file:../guard-core",
         "@types/node": "22.10.2",
-        "typescript": "^5.9.3",
-        "esbuild": "^0.24.0",
-        "tsx": "^4.19.0",
+        "@types/vscode": "^1.85.0",
         "@vscode/vsce": "^2.32.0",
-        "@soterai/guard-core": "file:../guard-core"
+        "esbuild": "^0.24.0",
+        "ovsx": "^0.10.12",
+        "tsx": "^4.19.0",
+        "typescript": "^5.9.3"
     }
 }

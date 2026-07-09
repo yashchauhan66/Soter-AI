@@ -1,0 +1,27 @@
+{
+  "jupyter.lab.setting-icon-label": "SoterAI IDE Guard",
+  "title": "SoterAI IDE Guard",
+  "description": "Settings for the SoterAI IDE Guard JupyterLab adapter (PLANNED / UNBUILT).",
+  "type": "object",
+  "properties": {
+    "useServerProxy": {
+      "type": "boolean",
+      "title": "Route broker calls through the same-host server extension",
+      "description": "Recommended. When true, broker calls go through a Jupyter server extension that holds the broker token server-side, so the token never enters the browser. Required for remote/hosted Jupyter. When false, the browser talks to http://127.0.0.1 directly (desktop, same machine only).",
+      "default": true
+    },
+    "brokerPort": {
+      "type": "number",
+      "title": "Local broker port",
+      "description": "Loopback port used only when 'useServerProxy' is false.",
+      "default": 47321
+    },
+    "outputMonitor": {
+      "type": "boolean",
+      "title": "Enable output-leak monitor",
+      "description": "When enabled, new code-cell output text is scanned by the broker and only redacted findings are shown. Off by default.",
+      "default": false
+    }
+  },
+  "additionalProperties": false
+}

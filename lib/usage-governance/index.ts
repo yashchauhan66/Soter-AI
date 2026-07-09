@@ -57,6 +57,7 @@ export interface GovernanceSummary {
   blockedEvents: number;
   allowedEvents: number;
   complianceScore: number;
+  hasEnabledPolicy: boolean;
   topProviders: Array<{ name: string; count: number }>;
   topUsers: Array<{ userId: string; count: number }>;
 }
@@ -713,6 +714,7 @@ export async function getGovernanceSummary(organizationId: string): Promise<Gove
     blockedEvents,
     allowedEvents,
     complianceScore,
+    hasEnabledPolicy: policy.enabled ?? false,
     topProviders,
     topUsers,
   };

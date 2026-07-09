@@ -107,11 +107,11 @@ function main() {
   const rows = [summarize("ALL", all)];
   for (const [bucket, durations] of perBucket) rows.push(summarize(bucket, durations));
 
-  // eslint-disable-next-line no-console
+   
   console.table(rows);
 
   const overall = rows[0];
-  // eslint-disable-next-line no-console
+   
   console.log(
     `\nGuard input p50=${overall.p50}ms p90=${overall.p90}ms p99=${overall.p99}ms over ${overall.n} calls.`,
   );

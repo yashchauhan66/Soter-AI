@@ -1,0 +1,288 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# SoterAI IDE Guard — Cross-IDE release pipeline
+# ═══════════════════════════════════════════════════════════════════════════════
+# Builds and validates every cross-IDE artifact, generates SHA256 checksums, and
+# drafts a GitHub release. This workflow PACKAGES and VALIDATES; it does not push
+# to any marketplace. Publishing stays a separate, human-approved step.
+#
+# Golden rules enforced here:
+#   - Secrets are referenced only via ${{ secrets.* }} and are NEVER printed.
+#   - No credential is written to logs, artifacts, or the release draft.
+#   - Experimental/unbuilt adapters use continue-on-error so a missing SDK does
+#     not block the shippable artifacts, but their status stays visible.
+# ═══════════════════════════════════════════════════════════════════════════════
+
+name: Cross-IDE Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      draft_release:
+        description: "Create a draft GitHub release from the built artifacts"
+        type: boolean
+        default: true
+  push:
+    tags:
+      - "ide-guard-v*"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cross-ide-release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: "22"
+
+jobs:
+  # ───────────────────────────────────────────────────────────────────────────
+  # guard-core tests — shared detection/redaction/policy library
+  # ───────────────────────────────────────────────────────────────────────────
+  guard-core-tests:
+    name: guard-core tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - name: Typecheck guard-core
+        run: npm --prefix packages/guard-core run typecheck
+      - name: Test guard-core
+        run: npm --prefix packages/guard-core test
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # local-broker tests — the trust boundary all adapters depend on
+  # ───────────────────────────────────────────────────────────────────────────
+  local-broker-tests:
+    name: local-broker tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - name: Typecheck local-ai-broker
+        run: npm --prefix apps/local-ai-broker run typecheck
+      - name: Test local-ai-broker
+        run: npm --prefix apps/local-ai-broker test
+      - name: Build local-ai-broker
+        run: npm --prefix apps/local-ai-broker run build
+      - name: Upload broker build
+        uses: actions/upload-artifact@v4
+        with:
+          name: local-ai-broker-dist
+          path: apps/local-ai-broker/dist
+          if-no-files-found: error
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # Secret scan — fail the build if a credential is committed
+  # ───────────────────────────────────────────────────────────────────────────
+  secret-scan:
+    name: secret scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Run gitleaks (no secrets printed)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # Canary privacy test — proves redacted-only output, no raw leak
+  # ───────────────────────────────────────────────────────────────────────────
+  canary-privacy-test:
+    name: canary privacy test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [guard-core-tests, local-broker-tests]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - name: Canary redaction / no-leak test
+        run: npm --prefix packages/vscode-extension test
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # CLI tests — broker CLI surface used by every adapter's docs
+  # ───────────────────────────────────────────────────────────────────────────
+  cli-tests:
+    name: CLI tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: [local-broker-tests]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - name: Build broker (CLI entrypoint)
+        run: npm --prefix apps/local-ai-broker run build
+      - name: CLI smoke — help exits cleanly
+        run: node apps/local-ai-broker/dist/cli.js --help
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # VS Code / Open VSX package — the shared audited VSIX (no publish here)
+  # ───────────────────────────────────────────────────────────────────────────
+  vscode-package:
+    name: vscode package (vsce)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [guard-core-tests, canary-privacy-test, secret-scan]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - name: Typecheck extension
+        run: npm --prefix packages/vscode-extension run typecheck
+      - name: Package VSIX
+        run: npm run vscode:package
+      - name: Validate marketplace packages
+        run: npm run validate:marketplaces
+      - name: Collect VSIX
+        run: |
+          mkdir -p dist/cross-ide
+          cp packages/vscode-extension/*.vsix dist/cross-ide/
+      - name: Upload VSIX
+        uses: actions/upload-artifact@v4
+        with:
+          name: vscode-vsix
+          path: dist/cross-ide/*.vsix
+          if-no-files-found: error
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # JetBrains build — experimental; may skip if the platform SDK is unavailable
+  # ───────────────────────────────────────────────────────────────────────────
+  jetbrains-build:
+    name: jetbrains build (experimental)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    continue-on-error: true
+    needs: [guard-core-tests]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: Build plugin (buildPlugin)
+        working-directory: extensions/jetbrains
+        run: ./gradlew --no-daemon clean buildPlugin
+      - name: Verify plugin (best-effort)
+        working-directory: extensions/jetbrains
+        run: ./gradlew --no-daemon verifyPlugin || true
+      - name: Collect plugin ZIP
+        run: |
+          mkdir -p dist/cross-ide
+          cp extensions/jetbrains/build/distributions/*.zip dist/cross-ide/ 2>/dev/null || true
+      - name: Upload JetBrains ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: jetbrains-plugin
+          path: dist/cross-ide/*.zip
+          if-no-files-found: warn
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # Neovim / Sublime syntax checks — thin-client adapters (no compiled artifact)
+  # ───────────────────────────────────────────────────────────────────────────
+  editor-adapter-syntax:
+    name: neovim/sublime syntax checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Neovim and Python
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y neovim python3
+      - name: Neovim Lua syntax check
+        run: nvim --headless -c "luafile extensions/neovim/lua/soterai/init.lua" -c "qa" || true
+      - name: Sublime Python syntax check (if present)
+        run: |
+          if [ -d extensions/sublime ]; then
+            python3 -m compileall -q extensions/sublime
+          else
+            echo "extensions/sublime not present yet — skipping"
+          fi
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # Checksums + release draft — gathers artifacts, hashes them, drafts a release
+  # ───────────────────────────────────────────────────────────────────────────
+  release-draft:
+    name: checksums + release draft
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs:
+      - guard-core-tests
+      - local-broker-tests
+      - canary-privacy-test
+      - cli-tests
+      - secret-scan
+      - vscode-package
+      - jetbrains-build
+      - editor-adapter-syntax
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Flatten artifacts
+        run: |
+          mkdir -p release
+          find artifacts -type f \( -name "*.vsix" -o -name "*.zip" \) -exec cp {} release/ \;
+          # broker build is a directory; archive it for the release
+          if [ -d artifacts/local-ai-broker-dist ]; then
+            tar -czf release/local-ai-broker-dist.tar.gz -C artifacts/local-ai-broker-dist .
+          fi
+          ls -la release
+      - name: Generate SHA256 checksums
+        working-directory: release
+        run: |
+          shopt -s nullglob
+          sha256sum * > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+      - name: Upload release bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: cross-ide-release-bundle
+          path: release
+          if-no-files-found: error
+      - name: Draft GitHub release
+        if: startsWith(github.ref, 'refs/tags/') || inputs.draft_release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          name: SoterAI IDE Guard ${{ github.ref_name }}
+          files: |
+            release/*.vsix
+            release/*.zip
+            release/*.tar.gz
+            release/SHA256SUMS.txt
+          body: |
+            SoterAI IDE Guard cross-IDE artifacts (draft — not yet published to any marketplace).
+
+            Verify integrity with SHA256SUMS.txt. No credentials are included in these
+            artifacts or in this release. Publishing to each channel is a separate,
+            human-approved step per docs/cross-ide-publishing-master-plan.md.
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

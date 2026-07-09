@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SoterAI IDE Guard
+Bundle-SymbolicName: ai.soterai.guard;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: SoterAI
+Bundle-Activator: ai.soterai.guard.Activator
+Automatic-Module-Name: ai.soterai.guard
+Bundle-RequiredExecutionEnvironment: JavaSE-17
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.jface.text,
+ org.eclipse.ui.workbench.texteditor,
+ org.eclipse.ui.editors,
+ org.eclipse.equinox.security
+Bundle-ActivationPolicy: lazy
+Import-Package: org.osgi.framework

@@ -157,6 +157,7 @@ export function PlanGrid({ organizationId, currentPlan, plans, enterpriseEmail }
                 <button
                   type="button"
                   disabled={isCurrent || loading === plan.id}
+                  aria-disabled={isCurrent}
                   onClick={() => checkout(plan.id)}
                   className={isCurrent ? "button-secondary block w-full text-center !py-2 text-xs" : "button-primary block w-full text-center !py-2 text-xs gap-2"}
                 >

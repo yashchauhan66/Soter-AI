@@ -2,6 +2,7 @@ import { ProjectSwitcher } from "@/components/dashboard/ProjectSwitcher";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { ConfirmableForm } from "@/components/dashboard/ConfirmableForm";
 import { resolveDashboardEscrow } from "./actions";
 import { FeatureGuide } from "@/components/docs/FeatureGuide";
 import { MetricCard, StatusBadge, PayloadViewer, RiskLevel } from "@/components/dashboard/MetricCard";
@@ -109,7 +110,7 @@ export default async function EscrowPage({ searchParams }: { searchParams: Promi
                 <PayloadViewer title="Original redacted payload" value={transaction.originalPayloadRedacted} />
                 <PayloadViewer title="Safe payload" value={transaction.safePayload ?? transaction.originalPayloadRedacted} />
               </div>
-              <form action={resolveDashboardEscrow} className="mt-3 grid gap-2">
+              <ConfirmableForm action={resolveDashboardEscrow} className="mt-3 grid gap-2" getConfirmMessage={(decision) => decision === "APPROVED" ? "Approve this escrow transaction? This cannot be undone." : decision === "EDITED_AND_APPROVED" ? "Approve the edited version? This cannot be undone." : "Deny this escrow transaction?"}>
                 <input type="hidden" name="projectId" value={project.id} />
                 <input type="hidden" name="escrowId" value={transaction.id} />
                 <textarea
@@ -118,11 +119,11 @@ export default async function EscrowPage({ searchParams }: { searchParams: Promi
                   defaultValue={transaction.safePayload ?? transaction.originalPayloadRedacted ?? ""}
                 />
                 <div className="flex flex-wrap gap-2">
-                  <button className="btn-secondary" name="decision" value="DENIED">Deny</button>
-                  <button className="btn-secondary" name="decision" value="EDITED_AND_APPROVED">Edit and approve</button>
-                  <button className="btn-primary" name="decision" value="APPROVED">Approve original</button>
+                  <button className="button-secondary" name="decision" value="DENIED">Deny</button>
+                  <button className="button-secondary" name="decision" value="EDITED_AND_APPROVED">Edit and approve</button>
+                  <button className="button-primary" name="decision" value="APPROVED">Approve original</button>
                 </div>
-              </form>
+              </ConfirmableForm>
             </div>
           ))}
           {pending.length === 0 && <p className="text-sm text-slate-500">No pending escrow transactions.</p>}

@@ -24,6 +24,7 @@ const RATE_LIMITS: Record<string, RateLimitConfig> = {
   scan: { windowMs: 60 * 60 * 1000, maxRequests: 600, name: "Scan" },
   "audit-log": { windowMs: 60 * 60 * 1000, maxRequests: 600, name: "Audit log" },
   "approval-request": { windowMs: 60 * 60 * 1000, maxRequests: 30, name: "Approval request" },
+  "approval-claim": { windowMs: 60 * 60 * 1000, maxRequests: 120, name: "Approval claim" },
   "admin-approval": { windowMs: 60 * 60 * 1000, maxRequests: 120, name: "Admin approval actions" },
   "approval-status": { windowMs: 60 * 60 * 1000, maxRequests: 60, name: "Approval status polling" },
   "emergency-lockdown": { windowMs: 60 * 60 * 1000, maxRequests: 10, name: "Emergency lockdown toggle" },

@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 export default async function SignInPage({
   searchParams,
 }: {
-  searchParams: Promise<{ callbackUrl?: string; error?: string }>;
+  searchParams: Promise<{ callbackUrl?: string; error?: string; verified?: string }>;
 }) {
   const session = await auth();
   if (session?.user?.id) {
@@ -30,7 +30,11 @@ export default async function SignInPage({
           <p className="eyebrow">Sign in</p>
           <h1 className="mt-3 text-2xl font-bold">Welcome back</h1>
           <p className="mt-2 text-sm leading-6 text-slate-400">Access your AI security dashboard, guard decisions, and workspace controls.</p>
-          <SignInForm callbackUrl={safeCallbackUrl(params.callbackUrl)} initialError={params.error} />
+          <SignInForm
+            callbackUrl={safeCallbackUrl(params.callbackUrl)}
+            initialError={params.error}
+            initialNotice={params.verified === "1" ? "Email verified successfully. You can sign in now." : undefined}
+          />
           <p className="mt-6 text-sm text-slate-500">
             New to SoterAI? <Link href="/signup" className="text-cyan hover:text-cyan/80">Create an account</Link>
           </p>

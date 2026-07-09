@@ -16,7 +16,7 @@ fs.rmSync(path.join(extensionRoot, "dist"), { recursive: true, force: true });
 /** @type {import('esbuild').BuildOptions} */
 const options = {
     absWorkingDir: extensionRoot,
-    entryPoints: ["./src/extension.ts"],
+    entryPoints: [path.join(extensionRoot, "src", "extension.ts")],
     bundle: true,
     outfile: path.join(extensionRoot, "dist", "extension.js"),
     platform: "node",

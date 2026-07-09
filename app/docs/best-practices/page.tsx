@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CodeBlock, InlineCode, TipBox } from "@/components/ui/CodeBlock";
 import { DocViewTracker } from "@/components/docs/DocViewTracker";
+import { safeJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata: Metadata = {
   title: "SoterAI Security Best Practices - OWASP LLM Top 10 Alignment Guide",
@@ -40,7 +41,7 @@ export default function BestPracticesDocsPage() {
   return (
     <main className="py-16">
       <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       <div className="container-docs">
         <Link href="/docs" className="text-sm text-slate-500 transition-colors hover:text-cyan">← Back to docs</Link>
         <p className="eyebrow mt-6">Security guide</p>

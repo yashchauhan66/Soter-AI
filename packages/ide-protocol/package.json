@@ -1,0 +1,33 @@
+{
+    "name": "@soterai/ide-protocol",
+    "version": "0.1.0",
+    "description": "Shared cross-IDE contract for SoterAI IDE Guard: command names, feature flags, Local AI Broker HTTP contract, and event/policy schemas. No detector logic.",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "require": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "build": "tsc -p tsconfig.json",
+        "test": "tsx --test src/__tests__/**/*.test.ts",
+        "typecheck": "tsc --noEmit",
+        "clean": "rimraf dist"
+    },
+    "keywords": [
+        "soterai",
+        "ide-guard",
+        "cross-ide",
+        "protocol",
+        "local-first"
+    ],
+    "license": "BSL-1.1",
+    "devDependencies": {
+        "typescript": "^5.9.3",
+        "tsx": "4.22.4",
+        "rimraf": "^6.0.0"
+    }
+}

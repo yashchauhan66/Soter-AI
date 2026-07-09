@@ -199,7 +199,11 @@ function verifySignature(xml: string, certificatePem: string): boolean {
 
   // Determine algorithm.
   const algo = safeMatch(signedInfo, /SignatureMethod[^>]*Algorithm=\"([^\"]+)\"/) ?? "";
-  const hashAlgo = algo.includes("rsa-sha512") ? "RSA-SHA512" : algo.includes("rsa-sha384") ? "RSA-SHA384" : algo.includes("rsa-sha1") ? "RSA-SHA1" : "RSA-SHA256";
+  if (algo.includes("rsa-sha1")) {
+    console.warn(`SAML signature algorithm ${algo} is deprecated (SHA-1). Rejecting.`);
+    return false;
+  }
+  const hashAlgo = algo.includes("rsa-sha512") ? "RSA-SHA512" : algo.includes("rsa-sha384") ? "RSA-SHA384" : "RSA-SHA256";
 
   let publicKey;
   try {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { DashboardSidebar } from "./DashboardSidebar";
 import { FeedbackWidget } from "@/components/ops/FeedbackWidget";
@@ -10,6 +10,16 @@ import { TourTrigger } from "@/components/onboarding/TourTrigger";
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && sidebarOpen) {
+        setSidebarOpen(false)
+      }
+    }
+    document.addEventListener("keydown", handleEscape)
+    return () => document.removeEventListener("keydown", handleEscape)
+  }, [sidebarOpen])
 
   return (
     <DashboardTourProvider>
@@ -34,7 +44,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           />
         )}
 
-        <div className="grid gap-7 lg:grid-cols-[240px_1fr]">
+        <div className="grid gap-7 lg:grid-cols-[208px_1fr] xl:grid-cols-[224px_1fr]">
           {/* Mobile sidebar (slide-in) */}
           <aside
             className={`fixed left-0 top-0 z-50 h-full w-[280px] overflow-y-auto bg-ink shadow-xl transition-transform duration-300 ease-in-out lg:static lg:z-auto lg:block lg:w-auto lg:translate-x-0 lg:shadow-none ${
