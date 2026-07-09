@@ -31,14 +31,14 @@ export class DecisionEngine {
     }
 
     async scan(text: string, options?: ScanOptions): Promise<GuardDecision> {
-        // Content size limit
         const content = text.slice(0, options?.maxContentLength ?? this.maxContentLength);
-        // Hash for caching
-        const inputHash = await hashContent(content);
-        // Check cache
+        let inputHash: string;
         if (!options?.skipCache) {
+            inputHash = await hashContent(content);
             const cached = this.hashCache.get(inputHash);
             if (cached) return cached;
+        } else {
+            inputHash = "";
         }
         // Run detectors
         const results = this.runDetectors(content, options);
@@ -85,7 +85,9 @@ export class DecisionEngine {
             createdAt: new Date().toISOString(),
         };
         // Cache result
-        this.hashCache.set(inputHash, decision);
+        if (inputHash) {
+            this.hashCache.set(inputHash, decision);
+        }
         return decision;
     }
 

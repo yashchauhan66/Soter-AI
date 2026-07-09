@@ -1,4 +1,4 @@
-import type { AnalyzeRequest, AgentActionCheckRequest, AgentActionCheckResponse, AgentApprovalResolveRequest, AgentApprovalResolveResponse, AgentDataCheckRequest, AgentOutputCheckRequest, AgentReplayResponse, BrowserFormCheckRequest, BrowserFormCheckResponse, CanaryCheckRequest, CanaryCheckResponse, CheckContextFlowRequest, CheckContextFlowResponse, CheckLegalBoundaryRequest, CheckLegalBoundaryResponse, CheckMemoryPoisoningRequest, CheckMemoryPoisoningResponse, ClientOptions, CreateCanaryRequest, CreateCanaryResponse, ExpressLikeNext, ExpressLikeRequest, ExpressLikeResponse, GuardAction, GuardConversationOptions, GuardDecision, GuardInputRequest, GuardOutputRequest, GuardResult, LineageIncidentsResponse, LineageSessionResponse, McpDriftsResponse, MemoryCheckRequest, MemoryCheckResponse, ProtectChatOptions, ProtectChatResult, ProtectRagOptions, ProtectRagResult, RagSource, RagTrustScoreRequest, RagTrustScoreResponse, RegisterContextSourceRequest, RegisterContextSourceResponse, RegisterMcpServerRequest, RegisterMcpServerResponse, RunBlastRadiusScenarioRequest, RunBlastRadiusScenarioResponse, ScanMcpToolsRequest, ScanMcpToolsResponse, SecureChatOptions, SecureChatResult, SimulateBlastRadiusRequest, SimulateBlastRadiusResponse, SnapshotMcpToolsRequest, SnapshotMcpToolsResponse, StartAgentSessionRequest, StartAgentSessionResponse, StoreSafeMemoryRequest, StoreSafeMemoryResponse, ToolExecutionContext, ToolExecutor, WrappedToolResult } from "./types";
+import type { AnalyzeRequest, AgentActionCheckRequest, AgentActionCheckResponse, AgentApprovalResolveRequest, AgentApprovalResolveResponse, AgentDataCheckRequest, AgentOutputCheckRequest, AgentReplayResponse, BrowserFormCheckRequest, BrowserFormCheckResponse, CanaryCheckRequest, CanaryCheckResponse, CascadeEvaluateRequest, CascadeEvaluateResponse, CheckContextFlowRequest, CheckContextFlowResponse, CheckLegalBoundaryRequest, CheckLegalBoundaryResponse, CheckMemoryPoisoningRequest, CheckMemoryPoisoningResponse, ClientOptions, CreateCanaryRequest, CreateCanaryResponse, ExpressLikeNext, ExpressLikeRequest, ExpressLikeResponse, GuardAction, GuardConversationOptions, GuardDecision, GuardInputRequest, GuardOutputRequest, GuardResult, InterAgentCheckRequest, InterAgentCheckResponse, LineageIncidentsResponse, LineageSessionResponse, McpDriftsResponse, MemoryCheckRequest, MemoryCheckResponse, ModelDriftDetectRequest, ModelDriftDetectResponse, OwaspComplianceReport, ProtectChatOptions, ProtectChatResult, ProtectRagOptions, ProtectRagResult, RagSource, RagTrustScoreRequest, RagTrustScoreResponse, RegisterContextSourceRequest, RegisterContextSourceResponse, RegisterMcpServerRequest, RegisterMcpServerResponse, RogueAgentDetectRequest, RogueAgentDetectResponse, RunBlastRadiusScenarioRequest, RunBlastRadiusScenarioResponse, ScanMcpToolsRequest, ScanMcpToolsResponse, SecureChatOptions, SecureChatResult, SimulateBlastRadiusRequest, SimulateBlastRadiusResponse, SnapshotMcpToolsRequest, SnapshotMcpToolsResponse, StartAgentSessionRequest, StartAgentSessionResponse, StoreSafeMemoryRequest, StoreSafeMemoryResponse, ToolExecutionContext, ToolExecutor, WrappedToolResult } from "./types";
 export declare function normalizeDecision(action: GuardAction): GuardDecision;
 /** @deprecated Use the Soter class for new integrations. */
 export interface CyberRakshakGuard {
@@ -70,6 +70,12 @@ export interface CyberRakshakGuard {
     };
     createExpressAgentMiddleware(): (req: ExpressLikeRequest, res: ExpressLikeResponse, next?: ExpressLikeNext) => Promise<unknown>;
     createNextAgentHandler(): (request: Request) => Promise<Response>;
+    checkInterAgentMessage(input: InterAgentCheckRequest): Promise<InterAgentCheckResponse>;
+    detectRogueAgent(input: RogueAgentDetectRequest): Promise<RogueAgentDetectResponse>;
+    evaluateCascade(input: CascadeEvaluateRequest): Promise<CascadeEvaluateResponse>;
+    detectModelDrift(input: ModelDriftDetectRequest): Promise<ModelDriftDetectResponse>;
+    getOwaspLlm2025Report(): Promise<OwaspComplianceReport>;
+    getOwaspAgentic2026Report(): Promise<OwaspComplianceReport>;
 }
 export declare function createClient(options: ClientOptions): CyberRakshakGuard;
 export declare function createAgentFirewallClient(options: ClientOptions): CyberRakshakGuard;
@@ -134,6 +140,12 @@ export declare class GuardClient implements CyberRakshakGuard {
     snapshotMcpTools(input: SnapshotMcpToolsRequest): Promise<SnapshotMcpToolsResponse>;
     listMcpDrifts(status?: string): Promise<McpDriftsResponse>;
     checkLegalBoundary(input: CheckLegalBoundaryRequest): Promise<CheckLegalBoundaryResponse>;
+    checkInterAgentMessage(input: InterAgentCheckRequest): Promise<InterAgentCheckResponse>;
+    detectRogueAgent(input: RogueAgentDetectRequest): Promise<RogueAgentDetectResponse>;
+    evaluateCascade(input: CascadeEvaluateRequest): Promise<CascadeEvaluateResponse>;
+    detectModelDrift(input: ModelDriftDetectRequest): Promise<ModelDriftDetectResponse>;
+    getOwaspLlm2025Report(): Promise<OwaspComplianceReport>;
+    getOwaspAgentic2026Report(): Promise<OwaspComplianceReport>;
     wrapTool<TArgs, TResult>(context: Omit<ToolExecutionContext<TArgs>, "args">, executor: ToolExecutor<TArgs, TResult>): (args: TArgs) => Promise<WrappedToolResult<TResult>>;
     wrapMcpTool<TArgs, TResult>(toolName: string, executor: ToolExecutor<TArgs, TResult>, defaults?: Partial<Omit<ToolExecutionContext<TArgs>, "args" | "tool">>): (args: TArgs) => Promise<WrappedToolResult<TResult>>;
     createOpenClawAdapter(options: {

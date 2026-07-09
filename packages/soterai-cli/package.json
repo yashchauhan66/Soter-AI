@@ -1,0 +1,34 @@
+{
+    "name": "@soterai/cli",
+    "version": "0.1.0",
+    "description": "soterai-guard CLI: a cross-platform local-first fallback so any editor can scan, redact, and manage the Local AI Broker without a native plugin.",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "bin": {
+        "soterai": "dist/cli.js"
+    },
+    "scripts": {
+        "build": "tsc -p tsconfig.json",
+        "test": "tsx --test src/__tests__/**/*.test.ts",
+        "typecheck": "tsc --noEmit",
+        "clean": "rimraf dist",
+        "start": "node dist/cli.js"
+    },
+    "keywords": [
+        "soterai",
+        "ai-security",
+        "cli",
+        "local-first",
+        "redaction"
+    ],
+    "license": "BSL-1.1",
+    "dependencies": {
+        "@soterai/ide-common": "file:../ide-common"
+    },
+    "devDependencies": {
+        "@types/node": "22.10.2",
+        "typescript": "^5.9.3",
+        "tsx": "4.22.4",
+        "rimraf": "^6.0.0"
+    }
+}

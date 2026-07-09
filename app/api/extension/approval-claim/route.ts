@@ -3,6 +3,7 @@ import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { db } from "@/lib/db";
 import { evaluateApprovalClaim, claimedApprovalMetadata, type ApprovalClaimMetadata } from "@/lib/extension/approvalClaims";
 import { checkRateLimit } from "@/lib/extension/rateLimiter";
+import { authenticateExtensionRequest } from "../_shared";
 
 export const dynamic = "force-dynamic";
 
@@ -17,6 +18,21 @@ const claimSchema = z.object({
 export async function POST(request: Request) {
   try {
     const body = claimSchema.parse(await readJson(request));
+
+    // Authenticate the extension/device before touching approval state (matches sibling
+    // extension routes). Without this the endpoint was an unauthenticated DB-write surface.
+    const auth = await authenticateExtensionRequest(request, body.organizationId);
+    if (!auth.ok) return auth.response;
+
+    // Rate-limit per org+employee+IP to prevent approval-ID enumeration and event-write flooding.
+    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+    const rateLimit = await checkRateLimit("approval-claim", body.organizationId, { employeeId: body.employeeId, ip });
+    if (!rateLimit.allowed) {
+      return jsonResponse(
+        { error: true, message: "Too many approval claim attempts." },
+        { status: 429, headers: { "Retry-After": String(rateLimit.retryAfter ?? 60) } },
+      );
+    }
 
     // Find the approval request (stored as AgentApproval or security event metadata)
     const approval = await db.agentApproval.findUnique({ where: { id: body.requestId } });

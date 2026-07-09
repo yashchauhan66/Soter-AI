@@ -14,9 +14,9 @@ const MCP_PATTERNS = [
 export function detectMCPConfigRisk(text: string): DetectorResult {
     const matches: DetectorMatch[] = [];
     for (const spec of MCP_PATTERNS) {
-        const p = new RegExp(spec.pattern.source, spec.pattern.flags);
+        spec.pattern.lastIndex = 0;
         let m: RegExpExecArray | null;
-        while ((m = p.exec(text)) !== null) {
+        while ((m = spec.pattern.exec(text)) !== null) {
             if (!m[0]) continue;
             matches.push({
                 type: spec.type, label: spec.label,

@@ -1,5 +1,4 @@
 import { db } from "@/lib/db";
-import { History, Shield, AlertTriangle, Filter } from "lucide-react";
 import { ExtensionEventsClient } from "@/components/admin/ai-policies/ExtensionEventsClient";
 
 export const dynamic = "force-dynamic";

@@ -23,7 +23,7 @@ function safeCallbackUrl(value: string) {
   }
 }
 
-export function SignInForm({ callbackUrl, initialError }: { callbackUrl: string; initialError?: string }) {
+export function SignInForm({ callbackUrl, initialError, initialNotice }: { callbackUrl: string; initialError?: string; initialNotice?: string }) {
   const router = useRouter();
   const [error, setError] = useState(authErrorMessage(initialError));
   const [loading, setLoading] = useState(false);
@@ -66,6 +66,7 @@ export function SignInForm({ callbackUrl, initialError }: { callbackUrl: string;
         {loading ? <Loader2 className="animate-spin" size={16} /> : <LogIn size={16} />}
         {loading ? "Signing in..." : "Sign in"}
       </button>
+      {initialNotice && <p role="status" className="rounded-xl bg-emerald-500/10 p-3 text-sm text-emerald-300">{initialNotice}</p>}
       {error && <p className="rounded-xl bg-red-500/10 p-3 text-sm text-red-300">{error}</p>}
     </form>
   );

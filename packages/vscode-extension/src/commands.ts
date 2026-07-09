@@ -6,26 +6,9 @@ import { ExtensionState } from "./state";
 import { TelemetryManager } from "./telemetry";
 import { DashboardPanel } from "./webview/DashboardPanel";
 import { redactForSharing, type Finding } from "@soterai/guard-core";
+import { escapeHtml, getNonce } from "./firewall/util";
 
 const execFileAsync = promisify(execFile);
-
-/** Escape a string for safe interpolation into webview HTML (prevents XSS). */
-function escapeHtml(value: unknown): string {
-    return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
-}
-
-/** Random nonce for nonce-based webview CSP. */
-function getNonce(): string {
-    let text = "";
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for (let i = 0; i < 32; i++) text += chars.charAt(Math.floor(Math.random() * chars.length));
-    return text;
-}
 
 const diagnosticsCollection = vscode.languages.createDiagnosticCollection("soterai-guard");
 
@@ -58,7 +41,7 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
             // Run DecisionEngine
             const decision = await state.engine.scan(text, { context: "file" });
             state.latestDecision = decision;
-            state.scannedFiles.set(targetUri.fsPath, decision);
+            state.setScannedFile(targetUri.fsPath, decision);
 
             telemetry.trackDetection(decision, text.length, "file");
             refreshViews();
@@ -135,26 +118,39 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
     const scanWorkspaceRiskHandler = async () => {
         const config = vscode.workspace.getConfiguration("soterai");
         const maxFiles = config.get<number>("scan.maxWorkspaceFiles", 1000);
+        const maxKb = config.get<number>("scan.maxFileSizeKb", 256);
         const excludeGlobs = config.get<string[]>("scan.excludeGlobs", []);
 
         vscode.window.withProgress({
             location: vscode.ProgressLocation.Notification,
             title: "SoterAI: Scanning Workspace Risks...",
-            cancellable: false
-        }, async (progress) => {
+            cancellable: true
+        }, async (progress, token) => {
             const files = await vscode.workspace.findFiles("**/*", `{${excludeGlobs.join(",")}}`, maxFiles);
             let scanned = 0;
             let totalRisk = 0;
+            const BATCH_SIZE = 8;
 
-            for (const file of files) {
-                try {
-                    const content = await vscode.workspace.fs.readFile(file);
-                    const text = new TextDecoder().decode(content);
-                    const decision = await state.engine.scan(text, { context: "workspace" });
-                    state.scannedFiles.set(file.fsPath, decision);
-                    totalRisk += decision.riskScore;
-                    scanned++;
-                } catch { }
+            for (let i = 0; i < files.length; i += BATCH_SIZE) {
+                if (token.isCancellationRequested) break;
+                const batch = files.slice(i, i + BATCH_SIZE);
+                const results = await Promise.allSettled(
+                    batch.map(async (file) => {
+                        const content = await vscode.workspace.fs.readFile(file);
+                        const text = new TextDecoder().decode(content);
+                        if (text.length > maxKb * 1024) return null;
+                        const decision = await state.engine.scan(text, { context: "workspace" });
+                        state.setScannedFile(file.fsPath, decision);
+                        return decision;
+                    })
+                );
+                for (const r of results) {
+                    if (r.status === "fulfilled" && r.value) {
+                        totalRisk += r.value.riskScore;
+                        scanned++;
+                    }
+                }
+                progress.report({ increment: (BATCH_SIZE / files.length) * 100, message: `${scanned}/${files.length} files` });
             }
 
             const meanScore = scanned > 0 ? Math.round(totalRisk / scanned) : 0;

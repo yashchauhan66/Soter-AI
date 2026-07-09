@@ -10,7 +10,11 @@ export const inter = localFont({
   ],
   display: "swap",
   variable: "--font-inter",
-  preload: true,
+  // The root layout emits both latin and latin-ext sources. Preloading the
+  // whole set makes the browser warn about whichever unicode subset is not
+  // needed on the current page; let the generated @font-face rules load the
+  // matching subset on demand instead.
+  preload: false,
   fallback: ["system-ui", "-apple-system", "sans-serif"],
 });
 
@@ -21,6 +25,6 @@ export const jetbrainsMono = localFont({
   ],
   display: "swap",
   variable: "--font-jetbrains-mono",
-  preload: true,
+  preload: false,
   fallback: ["Consolas", "Monaco", "monospace"],
 });

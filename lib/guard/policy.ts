@@ -362,12 +362,23 @@ export function applyPolicy(
   // - WARN: downgrade BLOCK to ALLOW and replace content with a warning message.
   // - BALANCED: default decision engine.
   let action = decideGuardAction(riskScore, riskTypes, direction);
-  const isBareInjectionRewrite =
+  // A lone prompt-injection signal that scores below the hard-block thresholds
+  // (e.g. the bare "ignore all previous instructions" phrase with no jailbreak/leak
+  // co-signal) historically resolves to REWRITE. Multiple PROMPT_INJECTION findings
+  // of the *same* family (e.g. the legacy signature rule + the generalized
+  // "Instruction override (generalized)" rule both firing on the same span) still
+  // represent a bare injection — what matters is that PROMPT_INJECTION is the only
+  // risk type and nothing else (jailbreak, leak, secret, PII) co-fired. We key on
+  // risk types + the absence of co-signals rather than a finding count so enabling
+  // the generalized detector does not silently turn every bare injection into a
+  // BLOCK. Note `dataExfiltrationInputDetector` emits DATA_EXFILTRATION (not
+  // PROMPT_INJECTION), so its presence here correctly disqualifies bare handling.
+  const bareInjectionOnly =
     direction === 'INPUT' &&
     action === 'REWRITE' &&
-    filtered.length === 1 &&
     riskTypes.length === 1 &&
     riskTypes[0] === 'PROMPT_INJECTION';
+  const isBareInjectionRewrite = bareInjectionOnly;
   const mode = policy.mode as string;
   if (customMatched) {
     action = 'BLOCK';

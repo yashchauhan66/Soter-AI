@@ -1,0 +1,36 @@
+{
+    "name": "@soterai/ide-common",
+    "version": "0.1.0",
+    "description": "Shared TypeScript client and helpers for SoterAI IDE adapters: authenticated Local AI Broker client, token loading, feature flags, and test fixtures. No detector logic.",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "require": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "build": "tsc -p tsconfig.json",
+        "test": "tsx --test src/__tests__/**/*.test.ts",
+        "typecheck": "tsc --noEmit",
+        "clean": "rimraf dist"
+    },
+    "keywords": [
+        "soterai",
+        "ide-guard",
+        "broker-client",
+        "local-first"
+    ],
+    "license": "BSL-1.1",
+    "dependencies": {
+        "@soterai/ide-protocol": "file:../ide-protocol"
+    },
+    "devDependencies": {
+        "@types/node": "22.10.2",
+        "typescript": "^5.9.3",
+        "tsx": "4.22.4",
+        "rimraf": "^6.0.0"
+    }
+}

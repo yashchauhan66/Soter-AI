@@ -17,12 +17,15 @@ import { competitiveIntelDetector } from "./detectors/competitiveIntelDetector";
 import { socialEngineeringDetector } from "./detectors/socialEngineeringDetector";
 import { embeddingPoisoningDetector } from "./detectors/embeddingPoisoningDetector";
 import { insecureDeserializationDetector } from "./detectors/insecureDeserializationDetector";
+import { dataExfiltrationInputDetector } from "./detectors/dataExfiltrationInputDetector";
+import { generalizedIntentDetector } from "./detectors/generalizedIntentDetector";
 import { decideGuardAction } from "./decisionEngine";
 import { redactText } from "./redactor";
 import { rewriteRiskyText } from "./rewrite";
 import { scoreRisk } from "./riskScoring";
 import { classifySemantic } from "./semanticClassifier";
 import { MAX_TEXT_LENGTH } from "./constants";
+import { deriveAdvisory, withAdvisory } from "./routingAdvisory";
 import type { GuardDirection, GuardFinding, GuardResult, RiskType } from "./types";
 
 // Risk types the regex/signature detectors emit for an adversarial input. When
@@ -35,8 +38,14 @@ const RULE_SECURITY_TYPES = new Set<RiskType>([
 ]);
 
 const COMMON_DETECTORS = [piiDetector, indiaPiiDetector, secretsDetector, toxicityDetector];
-const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, systemPromptLeakAttemptDetector, multilingualAttackDetector, recursiveInjectionDetector, ssrfDetector, competitiveIntelDetector, socialEngineeringDetector, embeddingPoisoningDetector, insecureDeserializationDetector, ...COMMON_DETECTORS];
-const OUTPUT_DETECTORS = [systemPromptLeakageDetector, unsafeOutputDetector, outputExfiltrationDetector, spamUrlDetector, hallucinationDetector, biasDetector, ...COMMON_DETECTORS];
+// `generalizedIntentDetector` matches the STRUCTURE of an attack (an action verb
+// co-occurring with a sensitive target) rather than a fixed phrase — it generalizes
+// recall beyond the original 1,218-case memorized corpus. The bare-injection
+// interaction is handled in `applyPolicy` (lib/guard/policy.ts) by keying on risk
+// types rather than finding count, so registering this detector does not break the
+// legacy single-injection REWRITE / HUMAN_REVIEW / BLOCK policy branch.
+const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, systemPromptLeakAttemptDetector, multilingualAttackDetector, recursiveInjectionDetector, ssrfDetector, competitiveIntelDetector, socialEngineeringDetector, embeddingPoisoningDetector, insecureDeserializationDetector, dataExfiltrationInputDetector, generalizedIntentDetector, ...COMMON_DETECTORS];
+const OUTPUT_DETECTORS = [systemPromptLeakageDetector, unsafeOutputDetector, outputExfiltrationDetector, spamUrlDetector, hallucinationDetector, biasDetector, generalizedIntentDetector, ...COMMON_DETECTORS];
 
 export function analyzeText(text: string, direction: GuardDirection): GuardResult {
   const detectors = direction === "OUTPUT" ? OUTPUT_DETECTORS : INPUT_DETECTORS;
@@ -129,7 +138,7 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
       /pretend.*no rules.*named/i,
       /I am your creator/i,
       /always intelligent/i,
-      /AIM.*jailbreak/i,
+      /\bAIM\b.{0,20}jailbreak/i,
       /what (?:is |'s |are )(?:your |the )?system prompt/i,
       /instructions you were given/i,
       /programmed to do/i,
@@ -302,7 +311,8 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
           ? redactedText
           : text;
 
-  return {
+  const advisory = deriveAdvisory(text, findings, riskTypes);
+  return withAdvisory({
     allowed,
     action,
     riskScore,
@@ -317,7 +327,7 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
       findingCount: findings.length,
       ...(semanticMetadata ? { semantic: semanticMetadata } : {}),
     },
-  };
+  }, advisory);
 }
 
 function buildReason(action: GuardResult["action"], findings: GuardFinding[]) {

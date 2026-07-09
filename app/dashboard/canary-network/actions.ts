@@ -10,7 +10,7 @@ export async function disableDashboardCanary(formData: FormData) {
   const canaryId = String(formData.get("canaryId") ?? "");
   const reason = String(formData.get("reason") ?? "Disabled from dashboard.").slice(0, 500);
 
-  if (!projectId || !canaryId) throw new Error("Invalid canary disable request.");
+  if (!projectId || !canaryId) throw new Error("Missing canary ID. Please select a canary and try again.");
   await requireProjectPermission(projectId, "policy:manage");
 
   const updated = await db.$executeRaw`

@@ -123,6 +123,9 @@ function loadFromFileOrSample(
   license: string,
   sample: BenchmarkCase[],
 ): ExternalDataset {
+  if (!/^[a-zA-Z0-9_-]+$/.test(name)) {
+    throw new Error(`Invalid dataset name: ${name}`);
+  }
   const filePath = path.join(EXTERNAL_DIR, `${name}.jsonl`);
   if (existsSync(filePath)) {
     const cases = parseExternalJsonl(name, readFileSync(filePath, "utf8"));

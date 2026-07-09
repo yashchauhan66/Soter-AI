@@ -39,7 +39,7 @@ const actions = [
   {
     label: "Take the tour",
     description: "Explore all 40+ features",
-    href: "#",
+    href: "/docs/quickstart-first-5-minutes",
     icon: Compass,
     color: "text-blue-300",
     bg: "bg-blue-400/10",

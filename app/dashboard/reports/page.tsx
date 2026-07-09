@@ -38,7 +38,7 @@ export default async function ReportsPage({
   const metrics = report ?? { totalRequests: 0, blockedRequests: 0, redactedRequests: 0, avgRiskScore: 0, topRiskTypes: [], recommendations: [] };
   const topRiskTypes = Array.isArray(metrics.topRiskTypes) ? metrics.topRiskTypes as Array<{ type: string; count: number }> : [];
   const recommendations = Array.isArray(metrics.recommendations) ? metrics.recommendations as string[] : [];
-  const mostCommonRisk = topRiskTypes[0]?.type ?? (report ? "No material risks detected" : "Report generation queued");
+  const mostCommonRisk = topRiskTypes[0]?.type ?? (report ? "No material risks detected" : "Report generation queued. This may take a few minutes. Refresh the page to check status.");
 
   return (
     <div>

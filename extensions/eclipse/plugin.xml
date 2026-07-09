@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <!-- Commands -->
+   <extension point="org.eclipse.ui.commands">
+      <category
+            id="ai.soterai.guard.commands.category"
+            name="SoterAI IDE Guard"/>
+      <command
+            categoryId="ai.soterai.guard.commands.category"
+            id="ai.soterai.guard.commands.scanSelection"
+            name="Scan Selection with SoterAI"
+            description="Scan selected text through the authenticated local broker"/>
+      <command
+            categoryId="ai.soterai.guard.commands.category"
+            id="ai.soterai.guard.commands.scanFile"
+            name="Scan Current File with SoterAI"
+            description="Scan the active editor document through the authenticated local broker"/>
+      <command
+            categoryId="ai.soterai.guard.commands.category"
+            id="ai.soterai.guard.commands.redactSelection"
+            name="Redact Selection for AI with SoterAI"
+            description="Replace the selection with a locally redacted version"/>
+      <command
+            categoryId="ai.soterai.guard.commands.category"
+            id="ai.soterai.guard.commands.brokerStatus"
+            name="Show SoterAI Broker Status"
+            description="Check the Local AI Broker health and Safe Mode state"/>
+   </extension>
+
+   <!-- Handlers -->
+   <extension point="org.eclipse.ui.handlers">
+      <handler
+            commandId="ai.soterai.guard.commands.scanSelection"
+            class="ai.soterai.guard.handlers.ScanSelectionHandler"/>
+      <handler
+            commandId="ai.soterai.guard.commands.scanFile"
+            class="ai.soterai.guard.handlers.ScanFileHandler"/>
+      <handler
+            commandId="ai.soterai.guard.commands.redactSelection"
+            class="ai.soterai.guard.handlers.RedactSelectionHandler"/>
+      <handler
+            commandId="ai.soterai.guard.commands.brokerStatus"
+            class="ai.soterai.guard.handlers.BrokerStatusHandler"/>
+   </extension>
+
+   <!-- Editor context menu -->
+   <extension point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <menu
+               id="ai.soterai.guard.menu"
+               label="SoterAI IDE Guard">
+            <command commandId="ai.soterai.guard.commands.scanSelection" style="push"/>
+            <command commandId="ai.soterai.guard.commands.redactSelection" style="push"/>
+            <command commandId="ai.soterai.guard.commands.scanFile" style="push"/>
+            <separator name="ai.soterai.guard.sep1" visible="true"/>
+            <command commandId="ai.soterai.guard.commands.brokerStatus" style="push"/>
+         </menu>
+      </menuContribution>
+      <!-- Top-level menu -->
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu id="ai.soterai.guard.mainMenu" label="SoterAI">
+            <command commandId="ai.soterai.guard.commands.scanSelection" style="push"/>
+            <command commandId="ai.soterai.guard.commands.scanFile" style="push"/>
+            <command commandId="ai.soterai.guard.commands.redactSelection" style="push"/>
+            <command commandId="ai.soterai.guard.commands.brokerStatus" style="push"/>
+         </menu>
+      </menuContribution>
+   </extension>
+
+   <!-- Report view -->
+   <extension point="org.eclipse.ui.views">
+      <category
+            id="ai.soterai.guard.views.category"
+            name="SoterAI IDE Guard"/>
+      <view
+            category="ai.soterai.guard.views.category"
+            class="ai.soterai.guard.views.SoterAIView"
+            id="ai.soterai.guard.views.report"
+            name="SoterAI Guard Report"
+            restorable="true"/>
+   </extension>
+
+</plugin>

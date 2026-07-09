@@ -11,7 +11,7 @@ export async function revokeDashboardAgentPassport(formData: FormData) {
   const passportId = String(formData.get("passportId") ?? "");
   const reason = String(formData.get("reason") ?? "Revoked from dashboard.").slice(0, 500);
 
-  if (!projectId || !passportId) throw new Error("Invalid passport revoke request.");
+  if (!projectId || !passportId) throw new Error("Missing passport ID. Please select a passport and try again.");
   await requireProjectPermission(projectId, "policy:manage");
 
   const rows = await db.$queryRaw<Array<{ id: string; agentIdentityId: string; sessionId: string; status: string }>>`

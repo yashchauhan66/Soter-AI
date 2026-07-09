@@ -373,6 +373,24 @@ class GuardClient {
     checkLegalBoundary(input) {
         return this.post("/api/legal-boundary/check", input, true);
     }
+    checkInterAgentMessage(input) {
+        return this.post("/api/agent/inter-agent/check", input, true);
+    }
+    detectRogueAgent(input) {
+        return this.post("/api/agent/rogue/detect", input, true);
+    }
+    evaluateCascade(input) {
+        return this.post("/api/agent/cascade/evaluate", input, true);
+    }
+    detectModelDrift(input) {
+        return this.post("/api/agent/model-drift/detect", input, true);
+    }
+    getOwaspLlm2025Report() {
+        return this.get("/api/compliance/owasp-llm-2025", true);
+    }
+    getOwaspAgentic2026Report() {
+        return this.get("/api/compliance/owasp-agentic-2026", true);
+    }
     wrapTool(context, executor) {
         return async (args) => {
             const content = context.content ?? JSON.stringify(args);

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CodeBlock, InlineCode } from "@/components/ui/CodeBlock";
 import { DocViewTracker } from "@/components/docs/DocViewTracker";
+import { safeJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata: Metadata = {
   title: "SoterAI API Contract - Complete API Reference for AI Security Endpoints",
@@ -50,7 +51,7 @@ export default function ApiContractDocsPage() {
     <main className="py-16">
       <DocViewTracker />
       <div className="container-docs">
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
         <Link href="/docs" className="text-sm text-slate-500 hover:text-cyan transition-colors">← Back to docs</Link>
         <p className="eyebrow mt-6">Reference</p>
         <h1 className="mt-3 text-4xl font-bold">API Contract</h1>

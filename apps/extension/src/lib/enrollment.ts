@@ -237,7 +237,7 @@ export async function unenroll(): Promise<void> {
   });
   // Clear enrollment-specific storage (chrome.storage available at runtime only)
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     const ext = (typeof chrome !== "undefined" ? (chrome as any) : null) as { storage?: { local?: { remove?: (keys: string[]) => void } } } | null;
     if (ext?.storage?.local?.remove) ext.storage.local.remove([ENROLLMENT_STATUS_KEY]);
   } catch { /* storage not available */ }

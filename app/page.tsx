@@ -9,6 +9,7 @@ import { HowItWorks } from "@/components/marketing/HowItWorks";
 import { Pricing } from "@/components/marketing/Pricing";
 import { TwoProducts } from "@/components/marketing/TwoProducts";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { safeJsonLd } from "@/lib/seo/jsonLd";
 
 const siteUrl = "https://soterai.in";
 
@@ -237,7 +238,7 @@ export default function Home() {
     <main>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(homepageJsonLd) }}
       />
       <Hero />
       <section className="py-20">

@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     const result = scanMcpServerRisk(body);
     return jsonResponse(result, {
       status: result.riskLevel === "CRITICAL" ? 422 : 200,
-      headers: { "Access-Control-Allow-Origin": "*" },
+      headers: { "Access-Control-Allow-Origin": "*", "Vary": "Origin" },
     });
   } catch (error) {
     return apiError(error, "MCP risk scan could not be completed.");

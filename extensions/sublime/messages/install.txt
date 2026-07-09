@@ -1,0 +1,44 @@
+SoterAI IDE Guard for Sublime Text
+==================================
+
+Thank you for installing the SoterAI IDE Guard package.
+
+This is a thin adapter. It forwards editor content and selections to your
+local SoterAI broker and shows the broker's findings. All detection, redaction
+and policy logic runs in the broker, not in this package.
+
+Setup
+-----
+1. Run the SoterAI Local AI Broker on your machine. By default this package
+   talks to it at http://127.0.0.1:47321 over loopback only.
+
+2. The broker requires a bearer token on every request except /health. By
+   default this package reads the token from:
+       ~/.soterai/broker/auth-token
+   If your token lives elsewhere, open:
+       Tools > SoterAI Guard > Settings
+   and set "token_path", or paste the token into "token".
+
+3. Verify the connection with the command palette:
+       SoterAI Guard: Broker Status
+
+Commands (command palette, Tools menu, and right-click)
+-------------------------------------------------------
+- Scan File / Scan Selection      show the broker's decision and findings
+- Redact Selection                replace the selection with a redacted copy
+- Copy Safe Prompt to Clipboard   copy a redacted copy without changing the file
+- Broker Status                   health, version and Safe Mode state
+- Toggle Safe Mode                enable/disable Safe Mode at the configured level
+
+Honest limitations
+-------------------
+- This package does nothing without a running, reachable broker.
+- It scans the text you explicitly send (a file or a selection). It does not
+  and cannot silently intercept every prompt typed into other AI extensions,
+  or every command typed into the terminal.
+- Redaction reduces exposure; it is not a guarantee that all sensitive data is
+  removed. Review results before sharing.
+- No content is sent to SoterAI Cloud by default; the broker is the boundary.
+
+There are no "100% secure" guarantees. Treat this as a helpful guard rail, not
+an absolute one.

@@ -12,6 +12,8 @@ const ALL_EVENTS = [
   "guard.pii.redacted",
   "guard.system_prompt_leak.blocked",
   "guard.unsafe_output.blocked",
+  "governance.enforcement.blocked",
+  "governance.enforcement.approval_required",
   "usage.limit.warning",
   "usage.limit.exceeded",
 ] as const;
@@ -43,12 +45,14 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
   const router = useRouter();
   const [revealed, setRevealed] = useState<{ id: string; secret: string } | null>(null);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [activeId, setActiveId] = useState(endpoints[0]?.id ?? "");
   const [deliveries, setDeliveries] = useState<Delivery[]>([]);
   const [loadingId, setLoadingId] = useState("");
   const [copied, setCopied] = useState(false);
   const [testStatus, setTestStatus] = useState<{ id: string; ok: boolean; message: string } | null>(null);
   const [creating, setCreating] = useState(false);
+  const [retryingId, setRetryingId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!activeId) return;
@@ -62,6 +66,7 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
     event.preventDefault();
     const formElement = event.currentTarget;
     setError("");
+    setSuccess("");
     setCreating(true);
     try {
       const form = new FormData(formElement);
@@ -80,6 +85,8 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
       const data = await response.json();
       if (!response.ok) throw new Error(data.message ?? "Could not create webhook.");
       setRevealed({ id: data.id, secret: data.signingSecret });
+      setSuccess("Webhook created successfully.");
+      setTimeout(() => setSuccess(""), 3000);
       formElement.reset();
       router.refresh();
     } catch (caught) {
@@ -110,6 +117,7 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
   }
 
   async function toggle(id: string, isActive: boolean) {
+    if (isActive && !confirm("Pause this webhook? Events will stop being delivered.")) return;
     setLoadingId(id);
     try {
       await fetch("/api/webhooks", {
@@ -124,13 +132,18 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
   }
 
   async function remove(id: string) {
+    if (!confirm("Delete this webhook? This cannot be undone.")) return;
     setLoadingId(id);
+    setError("");
+    setSuccess("");
     try {
       await fetch("/api/webhooks", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id }),
       });
+      setSuccess("Webhook deleted successfully.");
+      setTimeout(() => setSuccess(""), 3000);
       router.refresh();
     } finally {
       setLoadingId("");
@@ -149,14 +162,35 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
       const data = await response.json();
       if (!response.ok) {
         setTestStatus({ id, ok: false, message: data.message ?? "Test failed." });
-      } else if (data.success) {
-        setTestStatus({ id, ok: true, message: `Delivered (HTTP ${data.status}).` });
+      } else if (data.accepted) {
+        setTestStatus({ id, ok: true, message: `Test delivery accepted (HTTP ${data.status}).` });
       } else {
         setTestStatus({ id, ok: false, message: data.error ?? "Test delivery failed." });
       }
       router.refresh();
     } finally {
       setLoadingId("");
+    }
+  }
+
+  async function replayDelivery(deliveryId: string) {
+    setRetryingId(deliveryId);
+    setError("");
+    try {
+      const response = await fetch("/api/webhooks/replay", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ deliveryId }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message ?? "Replay failed.");
+      setSuccess("Delivery replayed successfully.");
+      setTimeout(() => setSuccess(""), 3000);
+      router.refresh();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Replay failed.");
+    } finally {
+      setRetryingId(null);
     }
   }
 
@@ -178,14 +212,23 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
 
       <form onSubmit={createEndpoint} className="card grid gap-4 p-5">
         <div className="grid gap-3 md:grid-cols-[1fr_1fr]">
-          <input name="url" required maxLength={2048} className="input" placeholder="https://example.com/webhooks/cyberrakshak" />
-          <select name="projectId" required className="input" defaultValue={projects[0]?.id ?? ""}>
-            {projects.map((project) => <option key={project.id} value={project.id}>{project.name}</option>)}
-          </select>
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-1">Webhook URL</label>
+            <input name="url" required maxLength={2048} className="input" placeholder="https://example.com/webhooks/cyberrakshak" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-300 mb-1">Project</label>
+            <select name="projectId" required className="input" defaultValue={projects[0]?.id ?? ""}>
+              {projects.map((project) => <option key={project.id} value={project.id}>{project.name}</option>)}
+            </select>
+          </div>
         </div>
-        <input name="description" className="input" maxLength={200} placeholder="Description (optional)" />
+        <div>
+          <label className="block text-sm font-medium text-slate-300 mb-1">Description</label>
+          <input name="description" className="input" maxLength={200} placeholder="Description (optional)" />
+        </div>
         <fieldset>
-          <legend className="text-xs font-bold uppercase tracking-wider text-slate-500">Events</legend>
+          <legend className="text-sm font-medium text-slate-300">Events</legend>
           <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {ALL_EVENTS.map((name) => (
               <label key={name} className="flex cursor-pointer items-center gap-2 rounded-lg border border-slate-800 bg-slate-950/70 px-3 py-2 text-sm text-slate-300 hover:border-cyan/50">
@@ -198,7 +241,8 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
         <button disabled={creating || !projects.length} className="button-primary gap-2 self-start">
           <Plus size={16} /> {creating ? "Creating..." : "Add webhook"}
         </button>
-        {error && <p className="rounded-xl bg-red-500/10 p-3 text-sm text-red-300">{error}</p>}
+        {error && <p className="rounded-xl bg-red-500/10 p-3 text-sm text-red-300" aria-live="assertive">{error}</p>}
+        {success && <p className="rounded-xl bg-emerald-500/10 p-3 text-sm text-emerald-300" aria-live="polite">{success}</p>}
       </form>
 
       {revealed && (
@@ -275,6 +319,7 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
                         <th className="px-3 py-2">HTTP</th>
                         <th className="px-3 py-2">Attempts</th>
                         <th className="px-3 py-2">Error</th>
+                        <th className="px-3 py-2">Action</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-800">
@@ -283,16 +328,33 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
                           <td className="whitespace-nowrap px-3 py-2 text-slate-400">{formatDate(delivery.createdAt)}</td>
                           <td className="px-3 py-2">{delivery.event}</td>
                           <td className="px-3 py-2">
-                            <span className={delivery.status === "SUCCESS" ? "text-emerald-300" : delivery.status === "FAILED" ? "text-red-300" : "text-slate-400"}>
+                            <span className={
+                              delivery.status === "DELIVERED" ? "text-emerald-300" :
+                              delivery.status === "DEAD_LETTER" || delivery.status === "FAILED" ? "text-red-300" :
+                              delivery.status === "RETRYING" ? "text-yellow-300" :
+                              "text-slate-400"
+                            }>
                               {delivery.status}
                             </span>
                           </td>
                           <td className="px-3 py-2">{delivery.responseCode ?? "-"}</td>
                           <td className="px-3 py-2">{delivery.attempts}</td>
                           <td className="max-w-72 truncate px-3 py-2 text-slate-500">{delivery.errorMessage ?? "-"}</td>
+                          <td className="px-3 py-2">
+                            {(delivery.status === "FAILED" || delivery.status === "DEAD_LETTER") && (
+                              <button
+                                onClick={() => replayDelivery(delivery.id)}
+                                disabled={retryingId === delivery.id}
+                                className="button-secondary !px-3 !py-1.5 text-xs gap-1"
+                              >
+                                <RefreshCw size={12} className={retryingId === delivery.id ? "animate-spin" : ""} />
+                                {retryingId === delivery.id ? "Retrying..." : "Retry"}
+                              </button>
+                            )}
+                          </td>
                         </tr>
                       )) : (
-                        <tr><td colSpan={6} className="px-3 py-6 text-center text-slate-500">No deliveries yet.</td></tr>
+                        <tr><td colSpan={7} className="px-3 py-6 text-center text-slate-500">No deliveries yet.</td></tr>
                       )}
                     </tbody>
                   </table>

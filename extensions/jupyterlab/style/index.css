@@ -1,0 +1,75 @@
+/*
+ * SoterAI IDE Guard for JupyterLab — report panel styles.
+ * PLANNED / UNBUILT. Uses JupyterLab CSS variables to respect the active theme.
+ */
+
+.soterai-report {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  min-width: 240px;
+  padding: 8px;
+  color: var(--jp-ui-font-color1);
+  background: var(--jp-layout-color1);
+  font-family: var(--jp-ui-font-family);
+  font-size: var(--jp-ui-font-size1);
+}
+
+.soterai-report-header {
+  padding: 6px 8px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  color: var(--jp-ui-font-color2);
+  background: var(--jp-layout-color2);
+  font-size: var(--jp-ui-font-size0);
+  line-height: 1.4;
+}
+
+.soterai-report-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.soterai-report-empty {
+  padding: 8px;
+  color: var(--jp-ui-font-color3);
+  font-style: italic;
+}
+
+.soterai-report-item {
+  padding: 8px;
+  border-radius: 4px;
+  border-left: 3px solid var(--jp-border-color1);
+  background: var(--jp-layout-color2);
+}
+
+.soterai-report-item-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.soterai-report-item-body {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: var(--jp-code-font-family);
+  font-size: var(--jp-code-font-size);
+}
+
+.soterai-decision-block {
+  border-left-color: var(--jp-error-color1);
+}
+
+.soterai-decision-warn {
+  border-left-color: var(--jp-warn-color1);
+}
+
+.soterai-decision-allow {
+  border-left-color: var(--jp-success-color1);
+}
+
+.soterai-decision-unknown,
+.soterai-notice {
+  border-left-color: var(--jp-info-color1);
+}
