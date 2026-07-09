@@ -37,6 +37,8 @@ if (!result.allowed) {
 
 Soter reads `SOTER_API_KEY` and `SOTER_PROJECT_ID` when explicit constructor values are omitted. The SDK includes a default `SOTER_BASE_URL` — you only need to set it if you're using a self-hosted server. Existing `CYBERGUARD_*`, `CYBERRAKSHAK_*`, and `CYBERSECURITYGUARD_*` variables remain supported as fallbacks.
 
+> **`maxRetries` defaults to `0`** (no automatic retries). For production use, we recommend setting `maxRetries: 3` in the constructor options to handle transient network failures gracefully.
+
 For lower-level control, call `soter.guardInput()` before the model and `soter.guardOutput()` before returning its response.
 
 ```ts
@@ -111,6 +113,10 @@ if (decision.decision === "BLOCK") throw new Error(decision.reason);
 
 The package also exports typed helpers for approvals, MCP scanning, memory checks, RAG protection, canaries, lineage, blast-radius simulation, dry runs, semantic egress, escrow, evidence vault, intent verification, and tool-chain detection.
 
+## Browser Support
+
+The SDK is designed for **server-side use only**. Running the SDK in a browser exposes your API key to end users. If you need to call Soter from a browser-based application, proxy requests through your own backend.
+
 ## Authentication
 
 Authenticated requests send the API key in the `x-api-key` header. The SDK does not add the key to request bodies or diagnostic logs.
@@ -129,4 +135,4 @@ Soter is a defense-in-depth safety layer. It reduces risk but does not guarantee
 
 ## License
 
-MIT
+Apache-2.0

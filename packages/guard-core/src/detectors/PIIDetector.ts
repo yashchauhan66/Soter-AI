@@ -36,7 +36,7 @@ const PII_SPECS: RegexDetectorSpec[] = [
         label: "Credit card number",
         severity: "high",
         score: 32,
-        pattern: /\b(?:\d[ -]*?){13,19}\b/g,
+        pattern: /\b\d(?:[ -]?\d){12,18}\b/g,
         message: "Credit-card-like number detected.",
         confidence: 0.7,
         validator: luhnCheck,

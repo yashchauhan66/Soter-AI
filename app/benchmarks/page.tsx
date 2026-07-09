@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { ArrowRight, ShieldCheck, CheckCircle2, AlertTriangle, BarChart3, Gauge, Zap, Layers } from "lucide-react";
+import { ArrowRight, ShieldCheck, AlertTriangle, BarChart3, Gauge, Zap, Layers } from "lucide-react";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { safeJsonLd } from "@/lib/seo/jsonLd";

@@ -10,8 +10,13 @@ export default async function OnboardingPage() {
   return (
     <div>
       <p className="eyebrow">Beta onboarding</p>
-      <h1 className="mt-2 text-3xl font-bold">Get to a protected chatbot</h1>
-      <p className="mt-3 text-slate-400">Each step unlocks a capability. Skip any step you do not need today.</p>
+      <div className="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h1 className="mt-2 text-3xl font-bold">Get to a protected chatbot</h1>
+          <p className="mt-3 text-slate-400">Each step unlocks a capability. Skip any step you do not need today.</p>
+        </div>
+        <Link href="/dashboard" className="text-sm text-slate-400 hover:text-slate-200 transition">Skip for now →</Link>
+      </div>
 
       <div className="card mt-7 p-6">
         <div className="flex flex-wrap items-end justify-between gap-3">

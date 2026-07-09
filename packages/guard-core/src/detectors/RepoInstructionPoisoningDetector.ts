@@ -3,8 +3,8 @@ import type { DetectorMatch, DetectorResult } from "../types";
 export const REPO_INSTRUCTION_POISONING_DETECTOR_VERSION = "1.0.0";
 
 const PATTERNS = [
-    { pattern: /<!--[\s\S]*?(?:ignore|disregard|override)\s+(?:all\s+)?(?:previous|prior)\s+(?:instructions?|rules?|guidelines?|prompts?)[\s\S]*?-->/gi, type: "html_comment_injection", label: "HTML comment injection", score: 40, confidence: 0.95, message: "AI instruction hidden in HTML comment." },
-    { pattern: /\/\*[\s\S]*?(?:ignore|override|system)\s*:[\s\S]*?\*\//gi, type: "code_comment_injection", label: "Code comment injection", score: 35, confidence: 0.85, message: "AI instruction in code comment." },
+    { pattern: /<!--[\s\S]{0,500}?(?:ignore|disregard|override)\s+(?:all\s+)?(?:previous|prior)\s+(?:instructions?|rules?|guidelines?|prompts?)[\s\S]{0,500}?-->/gi, type: "html_comment_injection", label: "HTML comment injection", score: 40, confidence: 0.95, message: "AI instruction hidden in HTML comment." },
+    { pattern: /\/\*[\s\S]{0,500}?(?:ignore|override|system)\s*:[\s\S]{0,500}?\*\//gi, type: "code_comment_injection", label: "Code comment injection", score: 35, confidence: 0.85, message: "AI instruction in code comment." },
     { pattern: /\/\/\s*(?:AI|LLM|GPT|SYSTEM|COPILOT)\s*:\s*.+/gim, type: "inline_comment_injection", label: "Inline AI instruction", score: 30, confidence: 0.8, message: "Inline comment with AI instructions." },
     { pattern: /[\u200b\u200c\u200d\u2060\ufeff]{3,}/g, type: "zero_width_smuggling", label: "Zero-width smuggling", score: 40, confidence: 0.95, message: "Zero-width chars for hidden instructions." },
     { pattern: /[\u2066\u2067\u2068\u2069\u202a-\u202e]+/g, type: "bidi_attack", label: "Bidi override", score: 35, confidence: 0.9, message: "Unicode bidi override detected." },
@@ -16,9 +16,9 @@ const PATTERNS = [
 export function detectRepoInstructionPoisoning(text: string): DetectorResult {
     const matches: DetectorMatch[] = [];
     for (const spec of PATTERNS) {
-        const p = new RegExp(spec.pattern.source, spec.pattern.flags);
+        spec.pattern.lastIndex = 0;
         let m: RegExpExecArray | null;
-        while ((m = p.exec(text)) !== null) {
+        while ((m = spec.pattern.exec(text)) !== null) {
             if (!m[0]) continue;
             matches.push({
                 type: spec.type, label: spec.label,

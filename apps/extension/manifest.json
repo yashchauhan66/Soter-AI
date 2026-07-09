@@ -42,9 +42,7 @@
     "*://localhost/*",
     "*://127.0.0.1/*"
   ],
-  "optional_host_permissions": [
-    "*://*/*"
-  ],
+  "optional_host_permissions": [],
   "background": {
     "service_worker": "background/service-worker.js",
     "type": "module"
@@ -79,7 +77,30 @@
       "run_at": "document_idle"
     },
     {
-      "matches": ["<all_urls>"],
+      "matches": [
+        "*://chatgpt.com/*",
+        "*://chat.openai.com/*",
+        "*://claude.ai/*",
+        "*://gemini.google.com/*",
+        "*://bard.google.com/*",
+        "*://perplexity.ai/*",
+        "*://poe.com/*",
+        "*://openrouter.ai/*",
+        "*://replit.com/*",
+        "*://*.replit.dev/*",
+        "*://stackblitz.com/*",
+        "*://*.stackblitz.io/*",
+        "*://codesandbox.io/*",
+        "*://*.csb.app/*",
+        "*://github.dev/*",
+        "*://*.github.dev/*",
+        "*://bolt.new/*",
+        "*://v0.dev/*",
+        "*://lovable.dev/*",
+        "*://openwebui.com/*",
+        "*://localhost/*",
+        "*://127.0.0.1/*"
+      ],
       "js": ["content/source-lineage-entry.js"],
       "run_at": "document_idle"
     }

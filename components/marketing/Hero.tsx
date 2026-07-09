@@ -50,6 +50,9 @@ export function Hero() {
             <Link href="/playground" className="button-primary gap-2">
               See it block an attack <ArrowRight size={18} aria-hidden="true" />
             </Link>
+            <Link href="/signup" className="button-secondary">
+              Start Free
+            </Link>
             <Link href="/docs" className="button-secondary">
               Read integration docs
             </Link>

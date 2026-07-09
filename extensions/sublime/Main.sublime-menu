@@ -1,0 +1,30 @@
+[
+	{
+		"caption": "Tools",
+		"id": "tools",
+		"children": [
+			{
+				"caption": "SoterAI Guard",
+				"id": "soterai-guard",
+				"children": [
+					{ "caption": "Scan File", "command": "soterai_scan_file" },
+					{ "caption": "Scan Selection", "command": "soterai_scan_selection" },
+					{ "caption": "Redact Selection (replace in place)", "command": "soterai_redact_selection" },
+					{ "caption": "Copy Safe Prompt to Clipboard", "command": "soterai_safe_prompt" },
+					{ "caption": "-" },
+					{ "caption": "Broker Status", "command": "soterai_broker_status" },
+					{ "caption": "Toggle Safe Mode", "command": "soterai_safe_mode_toggle" },
+					{ "caption": "-" },
+					{
+						"caption": "Settings",
+						"command": "edit_settings",
+						"args": {
+							"base_file": "${packages}/SoterAI Guard/SoterAI Guard.sublime-settings",
+							"default": "// SoterAI Guard user settings\n{\n\t$0\n}\n"
+						}
+					}
+				]
+			}
+		]
+	}
+]

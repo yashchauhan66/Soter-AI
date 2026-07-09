@@ -4,6 +4,7 @@ import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { FeatureGuide } from "@/components/docs/FeatureGuide";
 import { MetricCard, StatusBadge, RiskLevel, PayloadViewer } from "@/components/dashboard/MetricCard";
+import { ConfirmableForm } from "@/components/dashboard/ConfirmableForm";
 import { disableDashboardCanary } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -138,7 +139,7 @@ if (result.leakDetected) {
                 <td className="max-w-[240px] truncate text-slate-400">{t.tokenLabel || "-"}</td>
                 <td className="font-mono text-xs text-slate-500">{t.triggeredAt ? t.triggeredAt.toLocaleString() : "-"}</td>
                 <td className="py-3">
-                  <form action={disableDashboardCanary}>
+                  <ConfirmableForm action={disableDashboardCanary} getConfirmMessage={() => "Disable this canary? It will stop monitoring for unauthorized access."}>
                     <input type="hidden" name="projectId" value={project.id} />
                     <input type="hidden" name="canaryId" value={t.id} />
                     <input type="hidden" name="reason" value="Disabled from dashboard by user." />
@@ -149,7 +150,7 @@ if (result.leakDetected) {
                     >
                       Disable
                     </button>
-                  </form>
+                  </ConfirmableForm>
                 </td>
               </tr>
             ))}

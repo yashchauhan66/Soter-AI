@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, BookOpen, Shield, Zap, Layers, Eye, Sparkles } from "lucide-react";
 import { SERVICES, SERVICE_GROUPS } from "@/lib/docs/services";
 import { DocViewTracker } from "@/components/docs/DocViewTracker";
+import { safeJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata: Metadata = {
   title: "SoterAI Services Documentation - All Security Features Explained",
@@ -36,7 +37,7 @@ export default function ServicesHubPage() {
   return (
     <main className="py-16">
       <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
 
       <div className="container-page">
         {/* ── Hero Section ── */}

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ProjectSwitcher } from "@/components/dashboard/ProjectSwitcher";
 import { PlanGrid } from "@/components/dashboard/PlanGrid";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
@@ -35,7 +36,13 @@ export default async function BillingPage({
     getActiveOrganization(),
   ]);
   if (!active) {
-    return <div className="card p-10 text-center text-slate-400">No organization available.</div>;
+    return (
+      <div className="flex flex-col items-center py-12 text-center">
+        <p className="text-sm text-slate-400 mb-2">No organization configured</p>
+        <p className="text-xs text-slate-500">Set up your organization in Settings to manage billing.</p>
+        <Link href="/dashboard/settings" className="mt-3 text-xs text-emerald-400 hover:underline">Go to Settings →</Link>
+      </div>
+    );
   }
   const usage = await checkMonthlyLimit(project.id, project.plan);
   const limit = planLimit(project.plan);
@@ -92,7 +99,9 @@ export default async function BillingPage({
         {subscription && <BillingActions organizationId={active.org.id} status={subscription.status} />}
       </div>
 
-      <div className="mt-9 grid gap-8 lg:grid-cols-2"><section><h2 className="text-lg font-semibold">Invoices</h2><div className="mt-3 divide-y divide-slate-800 border-y border-slate-800">{invoices.length ? invoices.map(invoice => <div className="flex items-center justify-between py-3 text-sm" key={invoice.id}><div><p>{invoice.invoiceNumber ?? invoice.id}</p><p className="text-slate-500">{invoice.status} · {(invoice.amount/100).toLocaleString("en-IN",{style:"currency",currency:invoice.currency})}</p></div>{invoice.hostedUrl ? <a className="text-cyan hover:underline" href={invoice.hostedUrl} rel="noreferrer" target="_blank">Download</a> : <span className="text-slate-600">Unavailable</span>}</div>) : <p className="py-5 text-sm text-slate-500">No invoices yet.</p>}</div></section><section><h2 className="text-lg font-semibold">Plan history</h2><div className="mt-3 divide-y divide-slate-800 border-y border-slate-800">{planChanges.map(change => <div className="py-3 text-sm" key={change.id}><p>{change.fromPlan ?? "NEW"} → {change.toPlan}</p><p className="text-slate-500">{change.reason ?? "Plan change"} · {change.createdAt.toLocaleDateString()}</p></div>)}</div></section></div>
+      <div className="mt-9 grid gap-8 lg:grid-cols-2"><section><h2 className="text-lg font-semibold">Invoices</h2><div className="mt-3 divide-y divide-slate-800 border-y border-slate-800">{invoices.length ? invoices.map(invoice => <div className="flex items-center justify-between py-3 text-sm" key={invoice.id}><div><p>{invoice.invoiceNumber ?? invoice.id}</p><p className="text-slate-500">{invoice.status} · {(invoice.amount/100).toLocaleString("en-IN",{style:"currency",currency:invoice.currency})}</p></div>{invoice.hostedUrl ? <a className="text-cyan hover:underline" href={invoice.hostedUrl} rel="noreferrer" target="_blank">Download</a> : <span className="text-slate-600">Unavailable</span>}</div>) : <p className="py-5 text-sm text-slate-500">No invoices yet.</p>}</div></section><section><h2 className="text-lg font-semibold">Plan history</h2><div className="mt-3 divide-y divide-slate-800 border-y border-slate-800">{planChanges.length ? planChanges.map(change => <div className="py-3 text-sm" key={change.id}><p>{change.fromPlan ?? "NEW"} → {change.toPlan}</p><p className="text-slate-500">{change.reason ?? "Plan change"} · {change.createdAt.toLocaleDateString()}</p></div>) : (
+              <p className="py-5 text-sm text-slate-500">No plan changes yet. Your current plan will appear here.</p>
+            )}</div></section></div>
 
       <h2 className="mt-9 text-lg font-semibold">Plans</h2>
       <div className="mt-4">

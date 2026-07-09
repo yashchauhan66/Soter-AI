@@ -50,12 +50,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       // Revalidate the subject still exists (and refresh role/email drift).
       const dbUser = await db.user.findUnique({
         where: { id: token.userId as string },
-        select: { id: true, email: true, isAdmin: true },
+        select: { id: true, email: true, isAdmin: true, passwordChangedAt: true },
       });
       // Subject is gone (DB re-seeded/restored/pruned) → invalidate the session.
       // Returning null clears the cookie everywhere, so the UI can never show a
       // "signed in but no account" state again.
       if (!dbUser) return null;
+      // Password changed after this token was issued — invalidate the session.
+      if (dbUser.passwordChangedAt && token.iat) {
+        const passwordChangedTimestamp = Math.floor(new Date(dbUser.passwordChangedAt).getTime() / 1000);
+        if (passwordChangedTimestamp > (token.iat as number)) {
+          return null;
+        }
+      }
       token.email = dbUser.email;
       token.isAdmin = dbUser.isAdmin;
       token.checkedAt = Date.now();

@@ -19,6 +19,10 @@ function assertAuthSecretConfigured() {
 
 assertAuthSecretConfigured();
 
+if (!process.env.API_KEY_PEPPER && !process.env.AUTH_SECRET && !process.env.NEXTAUTH_SECRET) {
+  console.warn("WARNING: No API_KEY_PEPPER, AUTH_SECRET, or NEXTAUTH_SECRET set. Passport token hashing will fail.");
+}
+
 export const PUBLIC_ROUTES = [
   "/",
   "/docs",

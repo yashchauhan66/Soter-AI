@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { agentIdentitySchema, apiError, authenticateAgentJson, evaluatePolicy, jsonResponse, loadAgentPolicy, matchAIDestination, readJson, scanText } from "../_shared";
+import { requireJsonContentType } from "@/lib/apiResponse";
 
 const schema = agentIdentitySchema.pick({ organizationId: true, employeeId: true, deviceId: true }).extend({
   text: z.string().min(1).max(20000),
@@ -10,6 +11,8 @@ const schema = agentIdentitySchema.pick({ organizationId: true, employeeId: true
 });
 
 export async function POST(request: Request) {
+  const ctError = requireJsonContentType(request);
+  if (ctError) return ctError;
   try {
     const body = schema.parse(await readJson(request));
     const auth = await authenticateAgentJson(request, body.organizationId);

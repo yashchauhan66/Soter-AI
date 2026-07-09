@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CodeBlock, InlineCode } from "@/components/ui/CodeBlock";
 import { DocViewTracker } from "@/components/docs/DocViewTracker";
+import { safeJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata: Metadata = {
   title: "SoterAI FastAPI Integration Guide - AI Security for Python APIs",
@@ -72,7 +73,7 @@ export default function FastapiDocsPage() {
   return (
     <main className="py-16">
       <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       
       <div className="container-docs">
         <Link href="/docs" className="text-sm text-slate-500 transition-colors hover:text-cyan">← Back to docs</Link>

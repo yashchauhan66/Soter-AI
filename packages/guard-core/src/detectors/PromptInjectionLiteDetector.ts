@@ -41,16 +41,23 @@ const INJECTION_PATTERNS: InjectionPattern[] = [
     { pattern: /```\s*(?:system|prompt|instructions?)\b/gi, label: "Code block injection", score: 25, confidence: 0.8, message: "Code block used for instruction injection." },
 
     // ── Multi-step/indirect injection ─────────────────────────────────────
-    { pattern: /\b(?:first|step 1|initially)\s+.*\b(?:then|next|after that|step 2)\s+.*\b(?:ignore|bypass|override)\b/gi, label: "Multi-step injection", score: 28, confidence: 0.75, message: "Multi-step injection chain detected." },
+    { pattern: /\b(?:first|step 1|initially)\s+[^\n]{0,100}\b(?:then|next|after that|step 2)\s+[^\n]{0,100}\b(?:ignore|bypass|override)\b/gi, label: "Multi-step injection", score: 28, confidence: 0.75, message: "Multi-step injection chain detected." },
+
+    // ── Data exfiltration ──────────────────────────────────────────────────
+    { pattern: /\b(?:send|post|upload|transmit|forward|relay|exfiltrate|email|mail)\b[^\n]{0,80}?\b(?:to|at|via|through)\s+(?:https?:\/\/|ftp:\/\/|\w+@)/gi, label: "Data exfiltration", score: 40, confidence: 0.88, message: "Data exfiltration instruction detected — sending data to an external endpoint." },
+    { pattern: /\b(?:read|cat|fetch|get|grab|open|access|dump)\b[^\n]{0,60}\b(?:\/etc\/passwd|\/etc\/shadow|\.env|id_rsa|credentials|secret|private.?key|password|token|api.?key)\b[^\n]{0,60}\b(?:send|post|upload|transmit|exfiltrate|to|at|https?:\/\/)/gi, label: "Secret exfiltration", score: 45, confidence: 0.9, message: "Attempt to read a secret file and exfiltrate it." },
+    { pattern: /\b(?:curl|wget|fetch|http|requests?)\b[^\n]{0,80}\b(?:https?:\/\/[^\n]{0,40})?\b(?:send|post|put|upload)\b[^\n]{0,40}\b(?:\/etc\/passwd|\.env|secret|token|key|password|credential)/gi, label: "HTTP exfiltration", score: 42, confidence: 0.85, message: "HTTP request used to exfiltrate secrets." },
+    { pattern: /\b(?:base64|encode|btoa)\b[^\n]{0,40}\b(?:\/etc\/passwd|\.env|secret|token|key|password|credential)\b/gi, label: "Encoded exfiltration", score: 38, confidence: 0.82, message: "Encoding a secret file for exfiltration." },
+    { pattern: /\b(?:cat|echo|print|printf|write|output|type)\b[^\n]{0,60}\b(?:\/etc\/passwd|\.env|id_rsa|secret|token|key|password|credential)\b[^\n]{0,60}\b(?:\|\s*(?:curl|wget|nc|netcat|socat|ssh|python|node)|>>|>\s*\/dev\/tcp)/gi, label: "Pipe exfiltration", score: 48, confidence: 0.92, message: "Piping a secret to an external tool for exfiltration." },
 ];
 
 export function detectPromptInjection(text: string): DetectorResult {
     const matches: DetectorMatch[] = [];
 
     for (const spec of INJECTION_PATTERNS) {
-        const pattern = new RegExp(spec.pattern.source, spec.pattern.flags);
+        spec.pattern.lastIndex = 0;
         let m: RegExpExecArray | null;
-        while ((m = pattern.exec(text)) !== null) {
+        while ((m = spec.pattern.exec(text)) !== null) {
             if (!m[0]) continue;
             matches.push({
                 type: "prompt_injection",

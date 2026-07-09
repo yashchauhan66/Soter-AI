@@ -292,7 +292,7 @@ export default async function DashboardPage({
                 </div>
               </div>
 
-              <div className="mt-4 flex items-center gap-2 text-sm text-orange-300 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <div className="mt-4 flex items-center gap-2 text-sm text-orange-300 opacity-100 sm:opacity-0 sm:transition-opacity sm:duration-300 sm:group-hover:opacity-100">
                 Open control center <ArrowRight size={14} />
               </div>
             </div>
@@ -332,7 +332,7 @@ export default async function DashboardPage({
                 </div>
               </div>
 
-              <div className="mt-4 flex items-center gap-2 text-sm text-violet-300 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <div className="mt-4 flex items-center gap-2 text-sm text-violet-300 opacity-100 sm:opacity-0 sm:transition-opacity sm:duration-300 sm:group-hover:opacity-100">
                 Open governance dashboard <ArrowRight size={14} />
               </div>
             </div>
@@ -420,7 +420,7 @@ export default async function DashboardPage({
                 {FEATURE_CARDS.length} features across {groups.length} areas
               </p>
             </div>
-            <Link href="/onboarding" className="text-sm text-cyan hover:underline">
+            <Link href="/dashboard/onboarding" className="text-sm text-cyan hover:underline">
               Guided setup →
             </Link>
           </div>

@@ -92,15 +92,8 @@ export class HashCache {
     }
 
     private evictOldest(): void {
-        let oldestKey = "";
-        let oldestTime = Number.POSITIVE_INFINITY;
-        for (const [key, entry] of this.cache) {
-            if (entry.cachedAt < oldestTime) {
-                oldestTime = entry.cachedAt;
-                oldestKey = key;
-            }
-        }
-        if (oldestKey) this.cache.delete(oldestKey);
+        const first = this.cache.keys().next();
+        if (!first.done) this.cache.delete(first.value);
     }
 }
 

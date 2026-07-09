@@ -4,7 +4,7 @@
     "description": "Protect secrets, prompts, MCP tools, terminal commands, and AI coding context locally before they reach AI.",
     "version": "0.1.0",
     "publisher": "soterai",
-    "preview": true,
+    "preview": false,
     "pricing": "Free",
     "icon": "media/icon.png",
     "galleryBanner": {
@@ -34,7 +34,14 @@
         "developer-security",
         "ai-agent-security",
         "ai-safe-mode",
-        "ai-memory-inspector"
+        "ai-memory-inspector",
+        "enterprise-security",
+        "ai-activity-sentinel",
+        "protected-workspace",
+        "mcp-firewall",
+        "dependency-guard",
+        "policy-packs",
+        "risk-dashboard"
     ],
     "license": "SEE LICENSE IN LICENSE",
     "repository": {
@@ -370,6 +377,126 @@
             {
                 "command": "soterai.clearAIApprovals",
                 "title": "SoterAI: Clear AI Approvals"
+            },
+            {
+                "command": "soterai.enableAISentinel",
+                "title": "SoterAI: Enable AI Activity Sentinel"
+            },
+            {
+                "command": "soterai.disableAISentinel",
+                "title": "SoterAI: Disable AI Activity Sentinel"
+            },
+            {
+                "command": "soterai.showAITimeline",
+                "title": "SoterAI: Show AI Activity Timeline"
+            },
+            {
+                "command": "soterai.exportAIActivityReport",
+                "title": "SoterAI: Export AI Activity Report"
+            },
+            {
+                "command": "soterai.clearAIActivityEvents",
+                "title": "SoterAI: Clear AI Activity Events"
+            },
+            {
+                "command": "soterai.openPermissionCenter",
+                "title": "SoterAI: Open AI Permission Center"
+            },
+            {
+                "command": "soterai.reviewPendingApprovals",
+                "title": "SoterAI: Review Pending AI Approvals"
+            },
+            {
+                "command": "soterai.clearApprovals",
+                "title": "SoterAI: Clear AI Approvals"
+            },
+            {
+                "command": "soterai.enableProtectedWorkspace",
+                "title": "SoterAI: Enable Protected Workspace Mode"
+            },
+            {
+                "command": "soterai.disableProtectedWorkspace",
+                "title": "SoterAI: Disable Protected Workspace Mode"
+            },
+            {
+                "command": "soterai.showProtectedFilesList",
+                "title": "SoterAI: Show Protected Files List"
+            },
+            {
+                "command": "soterai.addFileToProtected",
+                "title": "SoterAI: Add File to Protected List"
+            },
+            {
+                "command": "soterai.removeFileFromProtected",
+                "title": "SoterAI: Remove File from Protected List"
+            },
+            {
+                "command": "soterai.generateSafeEnvExample",
+                "title": "SoterAI: Generate Safe .env.example"
+            },
+            {
+                "command": "soterai.showWorkspaceRiskScore",
+                "title": "SoterAI: Show Workspace Risk Score"
+            },
+            {
+                "command": "soterai.openMCPToolFirewall",
+                "title": "SoterAI: Open MCP Tool Firewall"
+            },
+            {
+                "command": "soterai.generateSafeMCPPolicyFile",
+                "title": "SoterAI: Generate Safe MCP Policy"
+            },
+            {
+                "command": "soterai.blockMCPTool",
+                "title": "SoterAI: Block MCP Tool"
+            },
+            {
+                "command": "soterai.approveMCPTool",
+                "title": "SoterAI: Approve MCP Tool"
+            },
+            {
+                "command": "soterai.scanMemoryRisk",
+                "title": "SoterAI: Scan AI Memory Risk"
+            },
+            {
+                "command": "soterai.cleanPoisonedInstructions",
+                "title": "SoterAI: Clean Poisoned AI Instructions"
+            },
+            {
+                "command": "soterai.showMemoryPoisoningFindings",
+                "title": "SoterAI: Show Memory Poisoning Findings"
+            },
+            {
+                "command": "soterai.checkDependencyInstall",
+                "title": "SoterAI: Check Dependency Install"
+            },
+            {
+                "command": "soterai.scanPackageJsonRisk",
+                "title": "SoterAI: Scan package.json Risk"
+            },
+            {
+                "command": "soterai.reviewAISuggestedDependency",
+                "title": "SoterAI: Review AI Suggested Dependency"
+            },
+            {
+                "command": "soterai.applyPolicyPack",
+                "title": "SoterAI: Apply Policy Pack"
+            },
+            {
+                "command": "soterai.comparePolicyPacks",
+                "title": "SoterAI: Compare Policy Packs"
+            },
+            {
+                "command": "soterai.exportPolicy",
+                "title": "SoterAI: Export Policy"
+            },
+            {
+                "command": "soterai.openEnterpriseDashboard",
+                "title": "SoterAI: Open Enterprise Risk Dashboard"
+            },
+            {
+                "command": "soterai.exportEnterpriseRiskReport",
+                "title": "SoterAI: Export Enterprise Risk Report"
             }
         ],
         "viewsContainers": {
@@ -494,6 +621,21 @@
                     ],
                     "default": "warn",
                     "description": "Action on detecting dangerous terminal commands."
+                },
+                "soterai.sentinel.enabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enable AI Activity Sentinel background monitor."
+                },
+                "soterai.protectedWorkspace.enabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enable Protected Workspace Mode — auto-protect sensitive files."
+                },
+                "soterai.mcpFirewall.strictMode": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enable strict MCP Tool Firewall — block unknown tools."
                 }
             }
         }

@@ -17,6 +17,18 @@ export interface EmailResult { id: string; provider: EmailProvider; mocked: bool
 
 export interface EmailClient { send(message: EmailMessage): Promise<EmailResult> }
 
+export function getEmailFrom() {
+  const configured = process.env.EMAIL_FROM?.trim();
+  if (!configured) return undefined;
+  const bracketedAddress = configured.match(/<\s*([^<>]+)\s*>$/)?.[1]?.trim();
+  return `SoterAI <${bracketedAddress ?? configured}>`;
+}
+
+function getEmailFromAddress() {
+  const from = getEmailFrom();
+  return from?.match(/<\s*([^<>]+)\s*>$/)?.[1]?.trim();
+}
+
 class MockEmailClient implements EmailClient {
   async send(message: EmailMessage): Promise<EmailResult> {
     console.info(JSON.stringify({ level: "info", event: "email.mock", to: message.to, subject: message.subject }));
@@ -32,7 +44,7 @@ class ResendEmailClient implements EmailClient {
       method: "POST",
       headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        from: process.env.EMAIL_FROM,
+        from: getEmailFrom(),
         to: message.to,
         subject: message.subject,
         html: message.html,
@@ -48,7 +60,7 @@ class ResendEmailClient implements EmailClient {
 
 function encodeMime(message: EmailMessage) {
   const boundary = `crg_${Date.now()}_${Math.random().toString(36).slice(2)}`;
-  const headers = [`From: ${process.env.EMAIL_FROM}`, `To: ${message.to.join(", ")}`, `Subject: ${message.subject}`, "MIME-Version: 1.0", `Content-Type: multipart/mixed; boundary=${boundary}`];
+  const headers = [`From: ${getEmailFrom()}`, `To: ${message.to.join(", ")}`, `Subject: ${message.subject}`, "MIME-Version: 1.0", `Content-Type: multipart/mixed; boundary=${boundary}`];
   const parts = [`--${boundary}`, "Content-Type: text/html; charset=UTF-8", "Content-Transfer-Encoding: base64", "", Buffer.from(message.html).toString("base64")];
   for (const item of message.attachments ?? []) parts.push(`--${boundary}`, `Content-Type: ${item.contentType}; name=${item.filename}`, `Content-Disposition: attachment; filename=${item.filename}`, "Content-Transfer-Encoding: base64", "", item.content.toString("base64"));
   return [...headers, "", ...parts, `--${boundary}--`, ""].join("\r\n");
@@ -58,7 +70,8 @@ class SmtpEmailClient implements EmailClient {
   async send(message: EmailMessage): Promise<EmailResult> {
     const host = process.env.SMTP_HOST;
     const port = Number(process.env.SMTP_PORT ?? 587);
-    if (!host || !process.env.EMAIL_FROM) throw new Error("SMTP_HOST and EMAIL_FROM are required.");
+    const fromAddress = getEmailFromAddress();
+    if (!host || !fromAddress) throw new Error("SMTP_HOST and EMAIL_FROM are required.");
     const secure = process.env.SMTP_TLS === "true" || port === 465;
     const socket = secure ? tls.connect({ host, port, servername: host }) : net.connect({ host, port });
     let buffer = "";
@@ -84,7 +97,7 @@ class SmtpEmailClient implements EmailClient {
         await command(Buffer.from(process.env.SMTP_USER).toString("base64"), [334]);
         await command(Buffer.from(process.env.SMTP_PASS ?? "").toString("base64"), [235]);
       }
-      await command(`MAIL FROM:<${process.env.EMAIL_FROM}>`);
+      await command(`MAIL FROM:<${fromAddress}>`);
       for (const recipient of message.to) await command(`RCPT TO:<${recipient}>`, [250, 251]);
       await command("DATA", [354]);
       socket.write(`${encodeMime(message).replace(/^\./gm, "..")}\r\n.\r\n`);
@@ -101,7 +114,7 @@ class SesEmailClient implements EmailClient {
     const region = process.env.AWS_REGION ?? "ap-south-1";
     const accessKey = process.env.AWS_ACCESS_KEY_ID;
     const secretKey = process.env.AWS_SECRET_ACCESS_KEY;
-    const from = process.env.EMAIL_FROM;
+    const from = getEmailFrom();
     if (!accessKey || !secretKey || !from) throw new Error("AWS credentials, AWS_REGION, and EMAIL_FROM are required for SES.");
     const host = `email.${region}.amazonaws.com`;
     const path = "/v2/email/outbound-emails";

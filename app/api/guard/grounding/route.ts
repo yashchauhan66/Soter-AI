@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     const body = schema.parse(await readJson(request));
     const access = await requireProjectPermission(body.projectId, "rag:read");
     const rate = await checkRedisRateLimit(`guard:grounding:${access.org.id}:${access.project.id}`, 60, 60_000);
-    if (!rate.allowed) return jsonResponse({ error: "Rate limit exceeded.", resetAt: rate.resetAt }, { status: 429 });
+    if (!rate.allowed) return jsonResponse({ error: true, message: "Rate limit exceeded.", resetAt: rate.resetAt }, { status: 429 });
     const policy = await loadProjectPolicy(body.projectId);
     const requestedIds = [...new Set(body.sources.map((source) => source.id))];
     const storedChunks = requestedIds.length ? await db.ragChunk.findMany({

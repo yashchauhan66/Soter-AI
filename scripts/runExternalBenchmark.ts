@@ -81,14 +81,14 @@ async function main() {
   const outPath = path.join(outDir, "external-benchmark.md");
   writeFileSync(outPath, lines.join("\n"), "utf8");
 
-  // eslint-disable-next-line no-console
+   
   console.log(lines.join("\n"));
-  // eslint-disable-next-line no-console
+   
   console.log(`\nReport written to ${path.relative(process.cwd(), outPath)}`);
 }
 
 main().catch((error) => {
-  // eslint-disable-next-line no-console
+   
   console.error(error);
   process.exit(1);
 });

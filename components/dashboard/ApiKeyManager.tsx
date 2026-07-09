@@ -21,6 +21,7 @@ export function ApiKeyManager({ projects, keys }: { projects: Project[]; keys: K
   const router = useRouter();
   const [rawKey, setRawKey] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
   const [updatingId, setUpdatingId] = useState("");
   const [copied, setCopied] = useState(false);
@@ -30,6 +31,7 @@ export function ApiKeyManager({ projects, keys }: { projects: Project[]; keys: K
     const formElement = event.currentTarget;
     setLoading(true);
     setError("");
+    setSuccess("");
     setCopied(false);
     try {
       const form = new FormData(formElement);
@@ -46,6 +48,8 @@ export function ApiKeyManager({ projects, keys }: { projects: Project[]; keys: K
       const data = await response.json();
       if (!response.ok) throw new Error(data.message ?? "API key generation failed.");
       setRawKey(data.apiKey);
+      setSuccess("API key generated successfully.");
+      setTimeout(() => setSuccess(""), 3000);
       formElement.reset();
       router.refresh();
     } catch (caught) {
@@ -56,6 +60,7 @@ export function ApiKeyManager({ projects, keys }: { projects: Project[]; keys: K
   }
 
   async function toggleKey(id: string, isActive: boolean) {
+    if (isActive && !confirm("Deactivate this API key? Existing integrations using this key will stop working.")) return;
     setUpdatingId(id);
     setError("");
     try {
@@ -77,26 +82,37 @@ export function ApiKeyManager({ projects, keys }: { projects: Project[]; keys: K
   async function copyKey() {
     await navigator.clipboard.writeText(rawKey);
     setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   }
 
 
   return (
     <div>
       <form onSubmit={createKey} className="card grid gap-4 p-5 md:grid-cols-[1fr_1fr_150px_auto]">
-        <input name="name" required minLength={2} maxLength={80} className="input" placeholder="Production gateway" />
-        <select name="projectId" required className="input" defaultValue={projects[0]?.id}>
-          {projects.map((project) => <option key={project.id} value={project.id}>{project.name}</option>)}
-        </select>
-        <select name="environment" className="input" defaultValue="test">
-          <option value="test">Test key</option>
-          <option value="live">Live key</option>
-        </select>
+        <div>
+          <label className="block text-sm font-medium text-slate-300 mb-1">API Key Name</label>
+          <input name="name" required minLength={2} maxLength={80} className="input" placeholder="Production gateway" />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-slate-300 mb-1">Project</label>
+          <select name="projectId" required className="input" defaultValue={projects[0]?.id}>
+            {projects.map((project) => <option key={project.id} value={project.id}>{project.name}</option>)}
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-slate-300 mb-1">Environment</label>
+          <select name="environment" className="input" defaultValue="test">
+            <option value="test">Test key</option>
+            <option value="live">Live key</option>
+          </select>
+        </div>
         <button disabled={loading || !projects.length} className="button-primary">
           {loading ? "Generating..." : "Generate"}
         </button>
       </form>
       
-      {error && <p className="mt-3 rounded-xl bg-red-500/10 p-3 text-sm text-red-300">{error}</p>}
+      {error && <p className="mt-3 rounded-xl bg-red-500/10 p-3 text-sm text-red-300" aria-live="assertive">{error}</p>}
+      {success && <p className="mt-3 rounded-xl bg-emerald-500/10 p-3 text-sm text-emerald-300" aria-live="polite">{success}</p>}
       {rawKey && (
         <div className="mt-4 rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5">
           <p className="font-semibold text-amber-200">Copy this key now. It will not be shown again.</p>

@@ -22,6 +22,8 @@ export function PolicyForm({ projectId, initial }: { projectId: string; initial:
   const [error, setError] = useState("");
 
   async function save() {
+    const originalMode = initial.mode;
+    if (policy.mode !== originalMode && !confirm("Changing policy mode may affect running agents. Continue?")) return;
     setSaving(true);
     setError("");
     try {

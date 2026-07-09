@@ -354,7 +354,7 @@ export class BrokerServer {
     private record(input: Omit<SafeBrokerEvent, "eventId" | "timestamp" | "source" | "safeMode" | "policyVersion">): void {
         const event: SafeBrokerEvent = { eventId: randomUUID(), timestamp: new Date().toISOString(), source: "broker", safeMode: this.safeMode.enabled, policyVersion: `safe-mode-${this.safeMode.level}`, ...input, redactedEvidence: input.redactedEvidence ? redactForSharing(input.redactedEvidence) : undefined };
         this.events.push(event);
-        if (this.events.length > 1000) this.events.shift();
+        if (this.events.length > 1000) this.events.splice(0, this.events.length - 1000);
     }
 
     private enforceOrigin(req: IncomingMessage): void {

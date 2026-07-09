@@ -2,6 +2,7 @@ import { ProjectSwitcher } from "@/components/dashboard/ProjectSwitcher";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { ConfirmableForm } from "@/components/dashboard/ConfirmableForm";
 import { revokeDashboardAgentPassport } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -148,14 +149,14 @@ export default async function AgentPassportsPage({ searchParams }: { searchParam
                   <td className="font-mono text-xs">{passport.sessionId}</td>
                   <td>
                     {status === "ACTIVE" ? (
-                      <form action={revokeDashboardAgentPassport}>
+                      <ConfirmableForm action={revokeDashboardAgentPassport} getConfirmMessage={() => "Revoke this passport? The agent will lose access immediately."}>
                         <input type="hidden" name="projectId" value={project.id} />
                         <input type="hidden" name="passportId" value={passport.id} />
                         <input type="hidden" name="reason" value="Revoked from Agent Passports dashboard." />
                         <button className="rounded border border-red-400/40 px-3 py-1 text-xs font-medium text-red-200 transition hover:bg-red-400/10" type="submit">
                           Revoke
                         </button>
-                      </form>
+                      </ConfirmableForm>
                     ) : (
                       <span className="text-xs text-slate-600">-</span>
                     )}

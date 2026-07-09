@@ -16,6 +16,7 @@ export async function GET(request: Request) {
       "Content-Type": "image/svg+xml; charset=utf-8",
       "Cache-Control": "public, max-age=300, s-maxage=300",
       "Access-Control-Allow-Origin": "*",
+      "Vary": "Origin",
       "X-Content-Type-Options": "nosniff",
     },
   });
