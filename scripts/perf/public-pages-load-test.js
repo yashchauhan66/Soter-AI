@@ -9,11 +9,11 @@
 //   LOAD_HTTP_URL=http://localhost:3000 node scripts/perf/public-pages-load-test.js
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const { BASE_URL, boundedNumber, summarize, runWorkers, printTable } = require("./utils");
+const { BASE_URL, boundedNumber, summarize, runMeasuredWorkers, statusCounts, printTable } = require("./utils");
 
 const CONCURRENCY_LEVELS = (process.env.LOAD_CONCURRENCY_LEVELS ?? "1,10,100,500")
   .split(",").map((v) => boundedNumber(v.trim(), 1, 1, 1000));
-const PER_LEVEL = boundedNumber(process.env.LOAD_ITERATIONS, 200, 20, 20_000);
+const PER_LEVEL = boundedNumber(process.env.LOAD_ITERATIONS, 500, 20, 20_000);
 const MAX_P95_MS = boundedNumber(process.env.LOAD_MAX_P95_MS, 5000, 1, 60_000);
 const MAX_ERROR_RATE = boundedNumber(process.env.LOAD_MAX_ERROR_RATE, 0.05, 0, 1);
 
@@ -65,7 +65,8 @@ async function main() {
   let worstError = 0;
 
   for (const concurrency of CONCURRENCY_LEVELS) {
-    const samples = await runWorkers(concurrency, PER_LEVEL, oneRequest);
+    const measured = await runMeasuredWorkers(concurrency, PER_LEVEL, oneRequest);
+    const { samples } = measured;
     const latencies = samples.map((s) => s.latencyMs);
     const errors = samples.filter((s) => !s.ok).length;
     const errorRate = errors / samples.length;
@@ -79,9 +80,13 @@ async function main() {
       ...stats,
       errors,
       errorRate: +(errorRate * 100).toFixed(2),
+      throughputRps: measured.throughputRps,
+      driverCpuPercent: measured.driverCpuPercent,
+      peakDriverRssMb: measured.peakDriverRssMb,
+      statuses: statusCounts(samples),
     });
 
-    console.log(`  c=${concurrency}: p50=${stats.p50Ms}ms p95=${stats.p95Ms}ms p99=${stats.p99Ms}ms errors=${errors}/${samples.length}`);
+    console.log(`  c=${concurrency}: p50=${stats.p50Ms}ms p95=${stats.p95Ms}ms p99=${stats.p99Ms}ms rps=${measured.throughputRps} errors=${errors}/${samples.length}`);
   }
 
   console.log("\n--- Summary ---");

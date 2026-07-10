@@ -2,27 +2,26 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 // SoterAI — Report Generation Load Test (Phase 5)
 // ═══════════════════════════════════════════════════════════════════════════════
-// Measures /api/reports (monthly report generation) and /api/evidence/report/generate
-// at 1/10 concurrency. These are heavier endpoints that trigger background jobs.
+// Measures /api/reports monthly report generation at 1/10/100/500 concurrency.
+// This is a heavier endpoint that may enqueue background jobs.
 //
 // Usage:
-//   DASHBOARD_SESSION=session-token node scripts/perf/report-generation-test.js
+//   DASHBOARD_COOKIE="authjs.session-token=..." node scripts/perf/report-generation-test.js
 //   LOAD_HTTP_URL=http://localhost:3000 node scripts/perf/report-generation-test.js
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const { BASE_URL, boundedNumber, summarize, runWorkers, printTable } = require("./utils");
+const { BASE_URL, boundedNumber, summarize, runMeasuredWorkers, statusCounts, printTable, requireDashboardHeaders } = require("./utils");
 
-const SESSION = process.env.DASHBOARD_SESSION ?? "";
 const PROJECT_ID = process.env.LOAD_PROJECT_ID ?? "test-project";
-const CONCURRENCY_LEVELS = (process.env.LOAD_CONCURRENCY_LEVELS ?? "1,10")
-  .split(",").map((v) => boundedNumber(v.trim(), 1, 1, 100));
-const PER_LEVEL = boundedNumber(process.env.LOAD_ITERATIONS, 50, 10, 1_000);
+const CONCURRENCY_LEVELS = (process.env.LOAD_CONCURRENCY_LEVELS ?? "1,10,100,500")
+  .split(",").map((v) => boundedNumber(v.trim(), 1, 1, 1000));
+const PER_LEVEL = boundedNumber(process.env.LOAD_ITERATIONS, 500, 10, 1_000);
 const MAX_P95_MS = boundedNumber(process.env.LOAD_MAX_P95_MS, 10000, 1, 60_000);
 const MAX_ERROR_RATE = boundedNumber(process.env.LOAD_MAX_ERROR_RATE, 0.15, 0, 1);
 
 const headers = {
   "Content-Type": "application/json",
-  ...(SESSION ? { Cookie: `next-auth.session-token=${SESSION}` } : {}),
+  ...requireDashboardHeaders(),
 };
 
 // Monthly report requests for different months
@@ -42,7 +41,7 @@ async function oneRequest(index) {
   try {
     const res = await fetch(url, { method: "GET", headers, redirect: "manual" });
     await res.arrayBuffer();
-    return { latencyMs: performance.now() - started, ok: res.ok || (res.status >= 300 && res.status < 400), status: res.status, month: `${m.year}-${m.month}` };
+    return { latencyMs: performance.now() - started, ok: res.status === 200 || res.status === 202, status: res.status, month: `${m.year}-${m.month}` };
   } catch {
     return { latencyMs: performance.now() - started, ok: false, status: 0, month: `${m.year}-${m.month}` };
   }
@@ -51,7 +50,9 @@ async function oneRequest(index) {
 async function preflight() {
   try {
     const res = await fetch(`${BASE_URL}/api/reports?projectId=${PROJECT_ID}&month=6&year=2026`, { headers, redirect: "manual" });
-    if (res.status >= 500) throw new Error(`Server returned ${res.status}`);
+    if (res.status !== 200 && res.status !== 202) {
+      throw new Error(`Authentication/project preflight failed with ${res.status}; verify DASHBOARD_COOKIE and LOAD_PROJECT_ID`);
+    }
   } catch (e) {
     throw new Error(`Cannot reach ${BASE_URL}: ${e.message}. Start the server first.`);
   }
@@ -61,22 +62,18 @@ async function main() {
   await preflight();
   console.log(`\n=== Report Generation Load Test ===`);
   console.log(`Base URL: ${BASE_URL}`);
-  console.log(`Authenticated: ${SESSION ? "yes" : "NO"}`);
+  console.log("Authenticated data path: yes (preflight verified)");
   console.log(`Project: ${PROJECT_ID}`);
   console.log(`Iterations per level: ${PER_LEVEL}`);
   console.log(`Concurrency levels: ${CONCURRENCY_LEVELS.join(", ")}\n`);
-
-  if (!SESSION) {
-    console.log("WARNING: No DASHBOARD_SESSION set. Reports may fail auth.");
-    console.log("Set DASHBOARD_SESSION=<session-token> for accurate measurements.\n");
-  }
 
   const results = [];
   let worstP95 = 0;
   let worstError = 0;
 
   for (const concurrency of CONCURRENCY_LEVELS) {
-    const samples = await runWorkers(concurrency, PER_LEVEL, oneRequest);
+    const measured = await runMeasuredWorkers(concurrency, PER_LEVEL, oneRequest);
+    const { samples } = measured;
     const latencies = samples.map((s) => s.latencyMs);
     const errors = samples.filter((s) => !s.ok).length;
     const errorRate = errors / samples.length;
@@ -90,9 +87,13 @@ async function main() {
       ...stats,
       errors,
       errorRate: +(errorRate * 100).toFixed(2),
+      throughputRps: measured.throughputRps,
+      driverCpuPercent: measured.driverCpuPercent,
+      peakDriverRssMb: measured.peakDriverRssMb,
+      statuses: statusCounts(samples),
     });
 
-    console.log(`  c=${concurrency}: p50=${stats.p50Ms}ms p95=${stats.p95Ms}ms p99=${stats.p99Ms}ms errors=${errors}/${samples.length}`);
+    console.log(`  c=${concurrency}: p50=${stats.p50Ms}ms p95=${stats.p95Ms}ms p99=${stats.p99Ms}ms rps=${measured.throughputRps} errors=${errors}/${samples.length}`);
   }
 
   console.log("\n--- Summary ---");

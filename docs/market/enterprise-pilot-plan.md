@@ -54,13 +54,15 @@
 
 ## Pilot Success Criteria
 
-| Criterion | Target |
-|---|---|
-| Time to value | <1 week |
-| Detection rate | >90% on real attacks |
-| False positive rate | <1% |
-| User satisfaction | >4/5 |
-| Security incidents prevented | >5 |
+Targets are measured on the customer's own traffic during the pilot and reported with their measurement boundary (per [`../marketing-claims-policy.md`](../marketing-claims-policy.md)).
+
+| Criterion | Target | Note |
+|---|---|---|
+| Time to value | <1 week | First guarded traffic in production |
+| Detection recall on **known** attack patterns | 100% on the pilot's tuned signature set | Matches the tuned-corpus result; novel-wording recall is ~64% today (regex ceiling — see [`../detection-honest-generalization.md`](../detection-honest-generalization.md)), improving with the ML/semantic tier |
+| Benign false-positive rate | <1% | Precision generalizes well in our benchmarks |
+| User satisfaction | >4/5 | Survey of pilot users |
+| Confirmed risky events caught & actioned | Documented, not a fixed quota | Reported as observed incidents (evidence level E3), not a marketing number |
 
 ## Pilot Pricing
 

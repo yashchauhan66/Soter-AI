@@ -6,7 +6,7 @@
 ## Pre-Launch (Week 1-2)
 
 ### Technical Readiness
-- [ ] All 670 tests passing
+- [ ] All 679 tests passing (2026-07-10 baseline)
 - [ ] Production build working
 - [ ] Free tier signup flow tested
 - [ ] API key generation working
