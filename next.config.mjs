@@ -18,7 +18,7 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
   async headers() {
-    const scriptSources = ["'self'", "https://checkout.razorpay.com", "https://www.googletagmanager.com", "https://www.google-analytics.com"];
+    const scriptSources = ["'self'", "'unsafe-inline'", "https://checkout.razorpay.com", "https://www.googletagmanager.com", "https://www.google-analytics.com"];
     if (process.env.NODE_ENV !== "production") scriptSources.push("'unsafe-eval'");
     const securityHeaders = [
       { key: "Content-Security-Policy", value: `default-src 'self'; script-src ${scriptSources.join(" ")}; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.razorpay.com https://www.google-analytics.com; font-src 'self'; connect-src 'self' https://*.razorpay.com https://www.google-analytics.com https://www.googletagmanager.com https://analytics.google.com; frame-src https://*.razorpay.com; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'` },
