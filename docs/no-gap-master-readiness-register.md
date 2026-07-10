@@ -40,7 +40,12 @@
 - **Runtime/external proof required:** Independent external red-team (EVIDENCE REQUIRED)
 - **Score affected:** Security Strength, Competitive Strength
 - **Owner type:** ML/Detection Engineer
-- **Status:** OPEN
+- **Status:** PARTIAL — held-out generalization now MEASURED (2026-07-10). See `docs/detection-honest-generalization.md`.
+  - **Precision target (<1% FPR): MET.** 0–0.33% FPR on the tuned corpus and on three independent held-out sets after fixing a real `\s*`-vs-`\s+` FPR bug in `analyze.ts` and three latent precision bugs.
+  - **Recall target (95% on unseen): NOT MET by rules alone.** Measured **~64% attack recall on an untuned validation set** (50%→62.5%→64.3% across tuning rounds). Tuned corpus is 100% but that is memorized coverage, not generalization.
+  - **Key finding:** each held-out set tuned to 100% leaves the *next* independent set at ~64% — the pure-regex engine has a ~64% recall ceiling on novel phrasings. Closing to 95% requires the **ML/semantic tier**, not more regex.
+  - **Permanent honest gate added:** `tests/guard/heldout-generalization.test.ts` (in `npm test`) — hard precision gate (FPR ≤5%) + honest recall floor (≥55% on untuned validation), does not pretend 100%.
+  - **Still OPEN:** ML/semantic detection tier to raise the recall ceiling; independent external red-team (EVIDENCE REQUIRED).
 
 ### GAP-02 — No external security validation (pentest / SOC2 / ISO)
 - **Gap ID:** GAP-02

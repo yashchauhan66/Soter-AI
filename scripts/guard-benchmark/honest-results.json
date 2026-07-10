@@ -1,6 +1,6 @@
 {
   "singleTurn": {
-    "generatedAtIso": "2026-07-09T15:15:39.802Z",
+    "generatedAtIso": "2026-07-10T06:52:05.363Z",
     "corpus": {
       "total": 1218,
       "attacks": 108,
@@ -42,12 +42,12 @@
       {
         "targetFpr": 0.001,
         "threshold": 60,
-        "recall": 0.5740740740740741,
+        "recall": 0.5648148148148148,
         "fprAchieved": 0.0009009009009009009,
         "allowedFalsePositives": 1
       }
     ],
-    "rocAuc": 0.9973848848848849,
+    "rocAuc": 0.9973723723723724,
     "perCategory": [
       {
         "category": "DIRECT_OVERRIDE",
@@ -303,10 +303,10 @@
       }
     ],
     "latencyMs": {
-      "p50": 10.240499999999884,
-      "p95": 63.92909999999938,
-      "p99": 116.15999999999985,
-      "max": 2733.8795999999998
+      "p50": 7.577900000000227,
+      "p95": 26.43630000000121,
+      "p99": 54.20639999999912,
+      "max": 2116.9429999999993
     },
     "limitations": [
       "Scores are from the deterministic production classifier (analyzeText) — no ML deep-scan tier is included in these numbers.",

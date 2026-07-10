@@ -40,12 +40,14 @@
 
 ## Competitive Pricing
 
-| Competitor | Entry Price | Notes |
+> Competitor figures are illustrative and **must be re-verified against each vendor's current public pricing page before external use** (captured ~2026-07-10; cloud pricing changes frequently and varies by region/tier). Cite the primary source and date when published.
+
+| Competitor | Entry Price | Notes (verify before publishing) |
 |---|---|---|
-| Lakera | Custom (enterprise) | No public pricing |
-| HiddenLayer | Custom (enterprise) | No public pricing |
-| Azure Content Safety | Pay-per-use | $0.75/1K requests |
-| Bedrock Guardrails | Pay-per-use | $0.0008/request |
+| Lakera | Custom (enterprise) | No public self-serve pricing identified |
+| HiddenLayer | Custom (enterprise) | No public self-serve pricing identified |
+| Azure Content Safety | Pay-per-use | ~$0.75/1K records (region/tier dependent — verify) |
+| Bedrock Guardrails | Pay-per-use | ~$0.0008/text unit (verify current AWS pricing) |
 | SoterAI STARTER | ₹999/mo (~$12) | Fixed monthly price |
 
 ## Revenue Projections

@@ -70,7 +70,11 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
   if (direction === "INPUT") {
     const normalized = text.replace(/[\s.-]/g, "");
     
-    const isLeak = /hidden instructions|internal prompt|developer.*tell|print.*hidden rules|repeat.*text before|reveal.*configuration|r\s*e\s*v\s*e\s*a\s*l|system\s+prompt\s+batao|hidden\s+instruction\s+dikhao/i.test(text) ||
+    // NOTE: the spaced-letter evasion signature must use \s+ (real gaps between
+    // letters, e.g. "r e v e a l"); \s* also matched the plain word "reveal",
+    // flagging any benign sentence that merely used it (e.g. "reveal the plot
+    // twist") as a prompt-leak. The genuine evasion case is covered below.
+    const isLeak = /hidden instructions|internal prompt|developer.*tell|print.*hidden rules|repeat.*text before|reveal.*configuration|r\s+e\s+v\s+e\s+a\s+l|system\s+prompt\s+batao|hidden\s+instruction\s+dikhao/i.test(text) ||
                    /hiddeninstructions|internalprompt|developertell|printhiddenrules|repeattextbefore|revealconfiguration/i.test(normalized);
                    
     if (isLeak) {

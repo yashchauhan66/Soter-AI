@@ -1,6 +1,8 @@
 # Use Cases
 
-**Date:** 2026-07-09
+**Date:** 2026-07-10
+
+> These describe **capabilities** (defense-in-depth), not guarantees. SoterAI reduces risk; it does not make any system completely secure, and false positives/negatives remain possible. See [`../marketing-claims-policy.md`](../marketing-claims-policy.md).
 
 ## Use Case 1: AI Chatbot Protection
 
@@ -42,7 +44,7 @@
 - Grounding guard prevents citation of untrusted sources
 - Retrieval audit logs all access
 
-**Value:** Secure knowledge base that can't be manipulated
+**Value:** Materially reduces the risk of knowledge-base manipulation (not an absolute guarantee)
 
 ## Use Case 4: Agent Workflow Security
 
@@ -56,7 +58,7 @@
 - Tool Chain Detection spots multi-step attacks
 - Canary tokens detect agent compromise
 
-**Value:** AI agents that can't go beyond their intended scope
+**Value:** Helps keep AI agents within their intended scope (with human approval on high-risk actions)
 
 ## Use Case 5: Enterprise Compliance
 
