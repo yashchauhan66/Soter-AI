@@ -6,7 +6,7 @@ exports.createClient = createClient;
 exports.createAgentFirewallClient = createAgentFirewallClient;
 exports.createCybersecurityGuardClient = createCybersecurityGuardClient;
 const errors_1 = require("./errors");
-const DEFAULT_BASE_URL = "https://api.cybersecurityguard.com";
+const DEFAULT_BASE_URL = "https://api.soterai.com";
 const DEFAULT_TIMEOUT_MS = 8000;
 const DEFAULT_RETRY_BACKOFF_MS = 250;
 const DEFAULT_BLOCKED_RESPONSE = "This request was blocked for security reasons.";
@@ -286,7 +286,7 @@ class GuardClient {
             }
             catch (caught) {
                 const status = caught.status ?? 500;
-                return jsonResponse({ error: true, message: caught instanceof Error ? caught.message : "cybersecurityguard request failed." }, status);
+                return jsonResponse({ error: true, message: caught instanceof Error ? caught.message : "SoterAI request failed." }, status);
             }
         };
     }
@@ -298,6 +298,18 @@ class GuardClient {
     }
     checkToolUse(input) {
         return this.post("/api/agent/tool/check", input, true);
+    }
+    // Advisory-friendly aliases. `analyzeText().metadata.advisory.recommendedSdkMethod`
+    // returns these names verbatim; keeping them thin wrappers guarantees the guidance
+    // the general guard hands back always resolves to a real, correctly-routed call.
+    agentAction(input) {
+        return this.checkAgentAction(input);
+    }
+    toolCall(input) {
+        return this.checkToolUse(input);
+    }
+    rag(input) {
+        return this.scoreRagDocument(input);
     }
     checkDataLeak(input) {
         return this.post("/api/agent/data/check", input, true);

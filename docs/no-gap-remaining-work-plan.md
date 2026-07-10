@@ -17,7 +17,7 @@
 - **Phase 3 (detection expansion)** — 1,450 NEW, non-overfit adversarial+benign cases created under `lib/classifiers/datasets/expanded/` (jailbreak 300, system-prompt-leak 150, data-exfil 150, tool-abuse 150, rag-poisoning 100, multilingual/Hinglish 150, benign 300). Scoring harness `tests/guard/_expanded-harness.ts` + `scripts/guard-benchmark/measure-expanded.ts`. New generalized detector `lib/guard/detectors/generalizedIntentDetector.ts` written.
   - **HONEST measured recall on the NEW cases (current, with the generalized detector active during tuning):** jailbreak **37.7%**, system-prompt-leak **55.3%**, data-exfil **29.3%**, tool-abuse **40.0%**, rag-poisoning **49.0%**, multilingual/Hinglish **35.3%**; benign FPR **3.0%**. This CONFIRMS the audit's core warning: the internal 100% was overfit; real generalization is far lower. This is the single most important finding of the pass.
   - The detector is currently **NOT registered** in `lib/guard/analyze.ts` (a `void generalizedIntentDetector;` placeholder + note). Reason: registering it double-fires on bare "ignore previous instructions" and breaks `tests/phase3.test.ts:130,139` (bare-injection policy escalation). Repo left at **669/669** deliberately.
-- **Phase 4 (guard routing unification)** — `lib/guard/routingAdvisory.ts` written (advisory: riskClass/severity/recommendedEndpoint/safeNextAction). NOT yet wired into `analyzeText` metadata, SDK, or tests.
+- **Phase 4 (guard routing unification)** — ✅ **COMPLETE (2026-07-10).** `lib/guard/routingAdvisory.ts` wired into `analyzeText` (`metadata.advisory`, additive). Fixed real defects found on verification: advisory pointed at non-existent routes (`/api/agent/tool-check`, `/api/agent/action-check`) and named SDK methods that did not exist. Corrected to `/api/agent/tool/check`, `/api/agent/action/check`, `/api/rag/document/trust-score`; added `guard.agentAction()` / `guard.toolCall()` / `guard.rag()` alias methods in the SDK. Tests: `tests/guard.test.ts` advisory test hardened (correct endpoints, method resolves, tool-abuse not silently allowed, benign not overblocked); SDK `test/client.test.js` + `tests/client.test.ts` assert each alias hits the right route (18/18). Docs: `docs/guard-modes-when-to-use.md` + SDK README "Routing advisory" section. Full suite 679/679, SDK 18/18, typecheck clean.
 
 **NOT STARTED:** Phases 5–18.
 
@@ -68,8 +68,20 @@
 
 **Goal:** Production Readiness >90 needs real scale proof.
 
-**Steps:** `npm run build` (✅ already passes) → `next start` → create `scripts/perf/{guard-api-load-test,public-pages-load-test,dashboard-load-test,logs-scale-test,report-generation-test}.js`. Drive 1/10/100/500 concurrency + large payloads; record p50/p95/p99, throughput, error rate, memory/CPU. Fix slow queries / missing pagination / missing indexes / heavy first-load. Write `docs/performance-production-benchmark.md`.
-**Note:** disk was 100% full this session (freed to ~3 GB); provision headroom before load runs. Mark the on-deployed-infra 100/500-concurrency run **EVIDENCE REQUIRED** if only local.
+**Status: ✅ LOCAL PORTION COMPLETE (2026-07-10).** Built prod app, ran `next start`, and executed the
+corrected harness against the live server at 1/10/100/500 concurrency with **real measured** numbers:
+- Guard API (`/api/guard/analyze`): c=1 p95 **225.6ms**, c=10 p95 **845.5ms**, c=100 p95 **17.4s** (CPU-bound, 0 errors); c=500 hit local socket resets (313/500 status-0) — a single-process loopback ceiling, not a code fault.
+- Public pages (SSR): **0 errors at all levels incl. c=500**, c=500 p95 **6.1s**, ~77 rps sustained.
+- **Closed the earlier "no server CPU/memory profiling" gap** by adding `scripts/perf/server-resource-monitor.js` (samples the *server* PID's RSS/CPU, not the driver). Guard-run server profile: peak RSS **492.8MB**, mean **410.4MB**, peak CPU **23.3%**, no leak. Added `npm run perf:monitor`.
+- **Verified the rate limiter** works (default `PUBLIC_ANALYZE_RPM=20`, `x-ratelimit-limit:20` + `Retry-After`); raised to 10,000 only for the compute run via a temporary gitignored `.env.local`, then removed.
+- Doc rewritten with the real numbers + honest EVIDENCE-REQUIRED table: `docs/performance-production-benchmark.md`.
+
+**Still EVIDENCE REQUIRED (honestly cannot be faked locally):** authenticated dashboard/logs/reports
+throughput (harness *refuses* to run without a real `DASHBOARD_COOKIE`), and any deployed multi-replica
+100/500-concurrency run (local single-process ≠ production replicas/CDN/pooling).
+
+**Original steps:** `npm run build` (✅) → `next start` (✅) → the 5 `scripts/perf/*.js` (✅ exist + run) → drive 1/10/100/500 + large payloads; record p50/p95/p99, throughput, error rate, memory/CPU (✅). Fix slow queries / pagination / indexes / heavy first-load (none surfaced on the no-auth paths; DB-path tuning deferred to the authenticated EVIDENCE-REQUIRED run).
+**Note:** disk was 100% full this session (only ~1.1 GB free); the existing `.next` build was reused. Provision headroom before any fresh build/deployed run.
 
 ---
 
@@ -128,9 +140,19 @@ Still create: `docs/security/{security-architecture,threat-model,data-flow-diagr
 
 ---
 
-## Phase 15 — market & competitor strength
+## Phase 15 — market & competitor strength — ✅ COMPLETE (2026-07-10)
 
-Create/update `docs/market/{competitor-comparison,positioning,pricing-strategy,why-soterai,target-customers,use-cases,beta-launch-plan,enterprise-pilot-plan}.md`. Evidence-based comparison vs Lakera/HiddenLayer/Protect AI/Prompt Security/Lasso/Bedrock Guardrails/Azure Content Safety/Google Model Armor/NeMo/LLM Guard/Promptfoo/Garak/PyRIT. Lead with reach + India/Hinglish + honesty, NOT "best detection" (can't claim yet — see Phase 3).
+All 8 docs existed but **violated the project's own `marketing-claims-policy.md`** and contradicted verified findings (they cited overfit "100% recall on internal corpus" and "<200ms p95"). Rewrote them to be honest and policy-compliant:
+- **`competitor-comparison.md`** — separated feature *breadth* from *efficacy*; competitor cells now use "public docs did not identify … (as of 2026-07-10)" instead of asserting absence with ❌; added correction-path + observation-date notes; added a policy-template **Honest Efficacy** table (tuned 100% @ 0.81% FPR **and** ~64% untuned held-out, external validation = not yet). Added the missing **Lasso** column — all 13 named competitors now covered.
+- **`why-soterai.md`** — replaced the boundary-free "Customer Proof Points" (100%/0.33%/<200ms/670 tests) with a bounded measured table; removed the invented testimonial in favor of a testimonial *policy*; softened "Only platform" → breadth claim with a dated "did not identify" caveat.
+- **`positioning.md`** — removed "the only platform" / "Unique" superiority claims; reframed as breadth.
+- **`enterprise-pilot-plan.md`** — success criterion ">90% on real attacks" (contradicts ~64% held-out) reframed to known-pattern recall + honest novel-wording caveat.
+- **`pricing-strategy.md`** — competitor pricing marked "verify before publishing" with capture date.
+- **`use-cases.md`** — softened absolute "can't be manipulated"/"can't go beyond scope"; added defense-in-depth disclaimer.
+- **`beta-launch-plan.md`** — 670 → 679 tests (2026-07-10).
+- **NEW `docs/market/README.md`** — index + an **honesty gate** (load-bearing honest facts + forbidden-words list + pre-publish checklist).
+
+Verified: grep sweep shows no remaining forbidden/superiority phrases (only disclaimers + fully-bounded claims). Leads with breadth + India/Hinglish + honesty, never "best detection." **Note:** no *external* validation exists yet, so any cross-vendor efficacy claim remains EVIDENCE REQUIRED (Phase 14 pentest / independent benchmark).
 
 ---
 

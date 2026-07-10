@@ -1,7 +1,21 @@
 // Shared utilities for Phase 5 load-test scripts.
-// Usage: import { percentile, boundedNumber, runWorkers, printTable } from "./utils.js";
+
+const os = require("node:os");
 
 const BASE_URL = process.env.LOAD_HTTP_URL ?? "http://localhost:3000";
+
+function requireDashboardHeaders() {
+  const rawCookie = process.env.DASHBOARD_COOKIE?.trim();
+  const legacyToken = process.env.DASHBOARD_SESSION?.trim();
+  const cookie = rawCookie || (legacyToken ? `authjs.session-token=${legacyToken}` : "");
+  if (!cookie) {
+    throw new Error(
+      "Authenticated load test requires DASHBOARD_COOKIE with the complete Cookie header value. " +
+      "Unauthenticated redirects are not performance evidence.",
+    );
+  }
+  return { Cookie: cookie };
+}
 
 function boundedNumber(value, fallback, min, max) {
   const parsed = Number(value ?? fallback);
@@ -29,6 +43,12 @@ function summarize(label, durations) {
 }
 
 async function runWorkers(concurrency, iterations, fn) {
+  if (iterations < concurrency) {
+    throw new Error(
+      `LOAD_ITERATIONS (${iterations}) must be >= concurrency (${concurrency}); ` +
+      "otherwise the requested concurrency cannot be reached.",
+    );
+  }
   const samples = [];
   let next = 0;
   async function worker() {
@@ -39,6 +59,42 @@ async function runWorkers(concurrency, iterations, fn) {
   }
   await Promise.all(Array.from({ length: concurrency }, () => worker()));
   return samples;
+}
+
+async function runMeasuredWorkers(concurrency, iterations, fn) {
+  const cpuStart = process.cpuUsage();
+  const wallStart = performance.now();
+  let peakDriverRss = process.memoryUsage().rss;
+  const memoryTimer = setInterval(() => {
+    peakDriverRss = Math.max(peakDriverRss, process.memoryUsage().rss);
+  }, 25);
+
+  try {
+    const samples = await runWorkers(concurrency, iterations, fn);
+    const wallMs = performance.now() - wallStart;
+    const cpu = process.cpuUsage(cpuStart);
+    const cpuMs = (cpu.user + cpu.system) / 1000;
+    return {
+      samples,
+      wallMs,
+      throughputRps: +(samples.length / (wallMs / 1000)).toFixed(2),
+      driverCpuPercent: +((cpuMs / wallMs) * 100).toFixed(2),
+      peakDriverRssMb: +(peakDriverRss / 1024 / 1024).toFixed(2),
+      systemLoad1m: +os.loadavg()[0].toFixed(2),
+      systemFreeMemoryMb: +(os.freemem() / 1024 / 1024).toFixed(2),
+    };
+  } finally {
+    clearInterval(memoryTimer);
+  }
+}
+
+function statusCounts(samples) {
+  const counts = {};
+  for (const sample of samples) counts[sample.status] = (counts[sample.status] ?? 0) + 1;
+  return Object.entries(counts)
+    .sort(([a], [b]) => Number(a) - Number(b))
+    .map(([status, count]) => `${status}:${count}`)
+    .join(",");
 }
 
 function printTable(rows) {
@@ -65,4 +121,15 @@ function jsonReport(endpoint, concurrencyLevel, results, thresholds) {
   return report;
 }
 
-module.exports = { BASE_URL, boundedNumber, percentile, summarize, runWorkers, printTable, jsonReport };
+module.exports = {
+  BASE_URL,
+  requireDashboardHeaders,
+  boundedNumber,
+  percentile,
+  summarize,
+  runWorkers,
+  runMeasuredWorkers,
+  statusCounts,
+  printTable,
+  jsonReport,
+};

@@ -2,7 +2,8 @@
 
 **Package:** soterai-ide-guard v0.1.0
 **Date:** 2026-07-09
-**Test environment:** PENDING (requires VS Code host)
+**Test environment:** PENDING (requires VS Code host)  
+**Release evidence:** EVIDENCE REQUIRED; no real-host pass is claimed by this report.
 
 ## Test Results
 

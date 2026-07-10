@@ -1,5 +1,13 @@
 # Final No-Gap Retest Report
 
+## 2026-07-10 verified correction
+
+The Phase 6-18 repository deliverables are complete, but launch readiness is not 100% because external/runtime evidence remains outstanding. This correction supersedes any older statement below that calls every phase fully verified.
+
+Verified in this pass: application typecheck; 679/679 core tests; 3/3 readiness-deliverable tests; JavaScript SDK 18/18; n8n TypeScript build; browser-extension typecheck and production build; lint with 0 errors and 89 warnings; expanded detection 1,000/1,000 attacks with 0.33% benign FPR; honest benchmark 100% mitigation recall with 0.81% FPR. The extension suite exposed a stale build-path assertion, which was corrected to the real `apps/extension/dist/extension` output path and requires a final rerun. The guard-core performance benchmark failed 6 latency gates during a heavily concurrent local run and must be rerun in isolation; those figures are not production evidence.
+
+EVIDENCE REQUIRED remains for the 15-step authenticated browser journey, running n8n workflows, a real VS Code host, Chrome and Edge hosts, Razorpay test mode, two-account tenant isolation, live SAML/SCIM IdP, live vector store with two tenants, third-party integration hosts, deployed 100/500-concurrency load, and an independent pentest. Therefore the honest readiness result is conditional, not 100%.
+
 **Date:** 2026-07-09
 **Branch:** seo-perf-full-pass
 **Build:** soterai@0.2.0, Node v22.16.0, Next.js 15.5.19

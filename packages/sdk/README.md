@@ -113,6 +113,34 @@ if (decision.decision === "BLOCK") throw new Error(decision.reason);
 
 The package also exports typed helpers for approvals, MCP scanning, memory checks, RAG protection, canaries, lineage, blast-radius simulation, dry runs, semantic egress, escrow, evidence vault, intent verification, and tool-chain detection.
 
+## Routing advisory
+
+Every `guardInput` / `guardOutput` / `analyze` result includes a
+`metadata.advisory` object. When the general guard sees text shaped like an agent
+action, a tool call, or poisoned retrieved content, the advisory names the
+specialized surface that fully covers it — so callers of only `guardInput` never
+have a silent coverage gap. It is additive and never changes the decision.
+
+```ts
+const result = await soter.guardInput({ message: userMessage });
+const advisory = result.metadata?.advisory;
+if (advisory && !advisory.generalGuardSufficient) {
+  // e.g. advisory.recommendedSdkMethod === "guard.toolCall()"
+  console.log(advisory.safeNextAction);
+}
+```
+
+The methods the advisory recommends are exposed directly:
+
+| Recommended method     | Routes to                            | Alias of            |
+| ---------------------- | ------------------------------------ | ------------------- |
+| `guard.agentAction()`  | `/api/agent/action/check`            | `checkAgentAction`  |
+| `guard.toolCall()`     | `/api/agent/tool/check`              | `checkToolUse`      |
+| `guard.rag()`          | `/api/rag/document/trust-score`      | `scoreRagDocument`  |
+| `guard.output()`       | `/api/guard/output`                  | `guardOutput`       |
+
+See `docs/guard-modes-when-to-use.md` for the full mode selector.
+
 ## Browser Support
 
 The SDK is designed for **server-side use only**. Running the SDK in a browser exposes your API key to end users. If you need to call Soter from a browser-based application, proxy requests through your own backend.

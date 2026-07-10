@@ -123,7 +123,7 @@ test("popup renders not-enrolled, enrolled, and managed states without exposing 
 });
 
 test("built extension has manifest at root and every referenced file exists", () => {
-  const dist = resolve(root, "dist", "extension");
+  const dist = resolve(root, "apps", "extension", "dist", "extension");
   const manifestPath = resolve(dist, "manifest.json");
   assert.equal(existsSync(manifestPath), true, "run npm run build:extension before this test");
   const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));

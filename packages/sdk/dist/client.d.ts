@@ -23,6 +23,14 @@ export interface CyberRakshakGuard {
     startAgentSession(input: StartAgentSessionRequest): Promise<StartAgentSessionResponse>;
     checkAgentAction(input: AgentActionCheckRequest): Promise<AgentActionCheckResponse>;
     checkToolUse(input: AgentActionCheckRequest): Promise<AgentActionCheckResponse>;
+    /**
+     * Advisory-friendly aliases. The general guard's `metadata.advisory` names
+     * these exact methods (`guard.agentAction()`, `guard.toolCall()`, `guard.rag()`)
+     * as the recommended next surface, so they must exist and hit the right route.
+     */
+    agentAction(input: AgentActionCheckRequest): Promise<AgentActionCheckResponse>;
+    toolCall(input: AgentActionCheckRequest): Promise<AgentActionCheckResponse>;
+    rag(input: RagTrustScoreRequest): Promise<RagTrustScoreResponse>;
     checkDataEgress(input: AgentDataCheckRequest): Promise<AgentActionCheckResponse>;
     checkDataLeak(input: AgentDataCheckRequest): Promise<AgentActionCheckResponse>;
     checkAgentOutput(input: AgentOutputCheckRequest): Promise<AgentActionCheckResponse>;
@@ -113,6 +121,9 @@ export declare class GuardClient implements CyberRakshakGuard {
     startAgentSession(input: StartAgentSessionRequest): Promise<StartAgentSessionResponse>;
     checkAgentAction(input: AgentActionCheckRequest): Promise<AgentActionCheckResponse>;
     checkToolUse(input: AgentActionCheckRequest): Promise<AgentActionCheckResponse>;
+    agentAction(input: AgentActionCheckRequest): Promise<AgentActionCheckResponse>;
+    toolCall(input: AgentActionCheckRequest): Promise<AgentActionCheckResponse>;
+    rag(input: RagTrustScoreRequest): Promise<RagTrustScoreResponse>;
     checkDataLeak(input: AgentDataCheckRequest): Promise<AgentActionCheckResponse>;
     checkDataEgress(input: AgentDataCheckRequest): Promise<AgentActionCheckResponse>;
     checkAgentOutput(input: AgentOutputCheckRequest): Promise<AgentActionCheckResponse>;
