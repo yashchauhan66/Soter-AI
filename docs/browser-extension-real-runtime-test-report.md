@@ -2,7 +2,8 @@
 
 **Package:** @soterai/extension v0.1.1
 **Date:** 2026-07-09
-**Test environment:** PENDING (requires Chrome host)
+**Test environment:** PENDING (requires Chrome/Edge host)  
+**Release evidence:** EVIDENCE REQUIRED; no real-browser pass is claimed by this report.
 
 ## Test Results
 

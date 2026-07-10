@@ -77,7 +77,7 @@ export function deriveAdvisory(text: string, findings: GuardFinding[], riskTypes
     return {
       riskClass: "TOOL_ABUSE",
       severity: severity === "LOW" ? "HIGH" : severity,
-      recommendedEndpoint: "/api/agent/tool-check",
+      recommendedEndpoint: "/api/agent/tool/check",
       recommendedSdkMethod: "guard.toolCall()",
       safeNextAction:
         "This looks like a tool/function invocation with destructive or unbounded intent. Route it through the agent tool-check firewall (guard.toolCall) which enforces per-tool policy, not just text analysis.",
@@ -89,7 +89,7 @@ export function deriveAdvisory(text: string, findings: GuardFinding[], riskTypes
     return {
       riskClass: "EXCESSIVE_AGENCY",
       severity: severity === "LOW" ? "MEDIUM" : severity,
-      recommendedEndpoint: "/api/agent/action-check",
+      recommendedEndpoint: "/api/agent/action/check",
       recommendedSdkMethod: "guard.agentAction()",
       safeNextAction:
         "This resembles an autonomous agent action. Evaluate it with the agent action firewall (guard.agentAction) so escrow/approval and blast-radius limits apply.",
@@ -101,10 +101,10 @@ export function deriveAdvisory(text: string, findings: GuardFinding[], riskTypes
     return {
       riskClass: "RAG_INDIRECT_INJECTION",
       severity: severity === "LOW" ? "HIGH" : severity,
-      recommendedEndpoint: "/api/guard/grounding",
+      recommendedEndpoint: "/api/rag/document/trust-score",
       recommendedSdkMethod: "guard.rag()",
       safeNextAction:
-        "This text contains instructions aimed at the AI reading it (indirect prompt injection typical of poisoned retrieved documents). Scan retrieved chunks with the RAG guard (guard.rag) before grounding.",
+        "This text contains instructions aimed at the AI reading it (indirect prompt injection typical of poisoned retrieved documents). Score retrieved chunks with the RAG document trust-score guard (guard.rag) before indexing or grounding on them.",
       generalGuardSufficient: false,
     };
   }

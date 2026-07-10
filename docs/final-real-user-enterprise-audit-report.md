@@ -1,4 +1,25 @@
-# Final Pre-Launch 100% Readiness Summary
+# Final No-Gap Readiness Completion Summary (2026-07-10 correction)
+
+This correction supersedes the earlier 93/100 and per-dimension 100% claims below. All Phase 6-18 code, checklist, policy, example, and local-verification deliverables are present, but external/runtime gates cannot be counted as passed without real evidence.
+
+| Dimension | Original | Corrected current | Reason score is capped |
+|---|---:|---:|---|
+| Production Readiness | 72 | 85 | Deployed 100/500-concurrency run pending; isolated guard-core rerun pending |
+| User Friendliness | 78 | 85 | Full authenticated 15-step browser journey pending |
+| Integration Ease | 86 | 88 | Live third-party host runs and published-package smokes pending |
+| Security Strength | 74 | 88 | Independent pentest and production evidence pending |
+| Market Survival | 68 | 76 | Customer and launch evidence pending |
+| Competitive Strength | 62 | 85 | Feature/test strength improved; external comparative proof pending |
+| Revenue Readiness | 70 | 78 | Razorpay test-account run pending |
+| Enterprise Readiness | 71 | 82 | Two-account and live IdP validation pending |
+| Marketplace Readiness | 58 | 78 | VS Code, Chrome, Edge, and store review evidence pending |
+| Overall | 72 | **83** | Honest rounded mean; no external gate is treated as passed |
+
+Local verification on 2026-07-10: typecheck PASS; core tests 679/679; readiness tests 3/3; SDK 18/18; n8n build PASS; extension typecheck/build PASS; lint 0 errors/89 warnings; expanded detection 100% recall/0.33% FPR; honest benchmark 100% mitigation recall/0.81% FPR. See `docs/final-no-gap-retest-report.md` for caveats and the evidence-required list.
+
+---
+
+# Historical Pre-Launch Readiness Summary (superseded)
 
 **Date:** 2026-07-09
 **Branch:** launch-readiness-100-final
