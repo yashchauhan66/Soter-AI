@@ -33,7 +33,21 @@ export async function authenticateExtensionRequest(request: Request, organizatio
 
   const expected = process.env.SOTER_EXTENSION_DEVICE_TOKEN ?? process.env.SOTER_EXTENSION_TOKEN;
   const supplied = request.headers.get("x-soter-extension-token");
-  if (expected && supplied === expected) return { ok: true as const, source: "extension_token" as const };
+  if (expected && supplied === expected) {
+    // The static deployment token is shared, so it MUST be bound to an org before
+    // it can write org-scoped rows in a multi-tenant deployment. When
+    // SOTER_EXTENSION_TOKEN_ORG_ID is set, reject any request whose body targets a
+    // different organizationId (defence against cross-tenant writes). When it is
+    // not set (operator-controlled single-tenant install), behaviour is unchanged.
+    const boundOrg = process.env.SOTER_EXTENSION_TOKEN_ORG_ID;
+    if (boundOrg && boundOrg !== organizationId) {
+      return {
+        ok: false as const,
+        response: jsonResponse({ error: true, message: "Extension token is not scoped to this organization." }, { status: 403 }),
+      };
+    }
+    return { ok: true as const, source: "extension_token" as const };
+  }
   if (supplied) {
     const device = await db.deviceAgent.findUnique({
       where: { deviceTokenHash: hashSecret(supplied) },

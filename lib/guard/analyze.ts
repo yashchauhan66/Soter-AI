@@ -37,6 +37,24 @@ const RULE_SECURITY_TYPES = new Set<RiskType>([
   "SYSTEM_PROMPT_LEAK_ATTEMPT",
 ]);
 
+// Detection tier is enterprise-configurable via SOTERAI_DETECTION_TIER:
+//   - "rules"    → deterministic signatures only; the semantic recall booster is
+//                  disabled entirely (lowest false-positive cost, lowest novel recall).
+//   - "hybrid"   → (default) rules first; the semantic booster runs only when no
+//                  rule security finding fired, and routes its hits to human review.
+//   - "semantic" → the semantic booster is also consulted even when rules already
+//                  fired, raising novel recall at a higher false-positive cost.
+// Any unrecognized value falls back to "hybrid". The semantic layer is
+// dependency-free (no model/network), so it is always available; if it ever
+// throws, analysis degrades safely to rules-only rather than failing the request.
+export type DetectionTier = "rules" | "hybrid" | "semantic";
+
+function resolveDetectionTier(): DetectionTier {
+  const raw = (process.env.SOTERAI_DETECTION_TIER ?? "").trim().toLowerCase();
+  if (raw === "rules" || raw === "semantic" || raw === "hybrid") return raw;
+  return "hybrid";
+}
+
 const COMMON_DETECTORS = [piiDetector, indiaPiiDetector, secretsDetector, toxicityDetector];
 // `generalizedIntentDetector` matches the STRUCTURE of an attack (an action verb
 // co-occurring with a sensitive target) rather than a fixed phrase — it generalizes
@@ -249,10 +267,24 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
     // hit is reported as a MEDIUM finding and (below) routed to human review — it
     // never hard-blocks on its own, bounding the false-positive cost.
     const hasRuleSecurityFinding = findings.some((finding) => RULE_SECURITY_TYPES.has(finding.type));
-    if (!hasRuleSecurityFinding) {
-      const semantic = classifySemantic(text);
-      if (semantic.isAttack && semantic.family) {
-        semanticOnly = true;
+    // Tier gate: "rules" disables the booster; "hybrid" consults it only when the
+    // rules found nothing; "semantic" consults it regardless. Wrapped so a failure
+    // in the heuristic degrades to rules-only rather than throwing.
+    const tier = resolveDetectionTier();
+    const semanticEnabled = tier !== "rules" && (tier === "semantic" || !hasRuleSecurityFinding);
+    if (semanticEnabled) {
+      let semantic: ReturnType<typeof classifySemantic> | null = null;
+      try {
+        semantic = classifySemantic(text);
+      } catch {
+        semantic = null; // fail safe: never let the recall booster break analysis
+      }
+      if (semantic && semantic.isAttack && semantic.family) {
+        // semanticOnly (→ human review escalation below) applies only when the
+        // rules found nothing; if a rule security finding already fired, the
+        // semantic hit is recorded as corroborating evidence but does not change
+        // the rules-driven action.
+        semanticOnly = !hasRuleSecurityFinding;
         semanticMetadata = {
           family: semantic.family,
           score: semantic.score,

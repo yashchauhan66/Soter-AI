@@ -441,6 +441,13 @@ const rules: IntentRule[] = [
       // SQL/database EDUCATION only — must be a how/what/explain question or a
       // performance/design topic, not an actual "SELECT * FROM accounts" command.
       /\b(?:query\s*plan|execution\s*plan|slow\s*query|database\s*(?:index|performance|optimization|normalization|design|schema|architecture))\b/i,
+      // Benign observability / diagnostics how-to — "what logging/metrics/tracing
+      // should I add to trace a slow database query", "what indexes to add".
+      // Here "query" is a NOUN (a slow database query), not an exfiltration verb.
+      // Bulk/cross-tenant extraction is still caught by the scope-creep and
+      // unbounded-query rules, so exempting these diagnostics questions is safe.
+      /\b(?:what|which)\s+(?:logging|logs?|log\s+lines?|metrics?|traces?|tracing|monitoring|instrumentation|observability|indexes?|indices|alerts?)\b[\s\S]{0,60}\b(?:add|use|configure|set\s*up|enable|capture|collect|emit|record|track|trace)\b/i,
+      /\b(?:slow|database|db|sql|search|analytics|expensive|long[- ]running)\s+quer(?:y|ies)\b/i,
     ],
   },
   // ── Data exfiltration: unbounded SQL / bulk-row extraction ───────────────
