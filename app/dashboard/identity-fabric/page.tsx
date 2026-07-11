@@ -58,7 +58,7 @@ export default async function IdentityFabricPage({
         <section className="card p-5">
           <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-400">Recent delegations</h2>
           <div className="mt-3 space-y-2">
-            {recentDelegations.length === 0 && <p className="text-sm text-slate-500">No delegations yet.</p>}
+            {recentDelegations.length === 0 && <p className="text-sm text-slate-500">No delegations yet. They appear here when an agent issues a scoped passport to a child agent.</p>}
             {recentDelegations.map((d: IdentityFabricDelegation) => (
               <div key={d.id} className="rounded-lg border border-slate-800 p-3 text-xs">
                 <p><span className="text-slate-500">Child:</span> {d.childAgentIdentityId}</p>
@@ -72,7 +72,7 @@ export default async function IdentityFabricPage({
         <section className="card p-5">
           <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-400">Recent revocations</h2>
           <div className="mt-3 space-y-2">
-            {recentRevocations.length === 0 && <p className="text-sm text-slate-500">No revocations yet.</p>}
+            {recentRevocations.length === 0 && <p className="text-sm text-slate-500">No revocations yet. Revoking a passport instantly invalidates an agent identity — revocations are logged here.</p>}
             {recentRevocations.map((r: IdentityFabricRevocation) => (
               <div key={r.id} className="rounded-lg border border-red-400/20 bg-red-400/5 p-3 text-xs">
                 <p><span className="text-slate-500">JTI:</span> <span className="font-mono">{r.jti.slice(0, 24)}...</span></p>

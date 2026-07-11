@@ -63,8 +63,10 @@ export function SignUpForm() {
       } else {
         window.location.assign("/dashboard");
       }
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Could not sign up.");
+    } catch {
+      // Reaching here means the request never got a response (network/offline).
+      // Surface a human, actionable message rather than a raw "Failed to fetch".
+      setError("Couldn't reach the server. Check your connection and try again.");
     } finally {
       setLoading(false);
     }

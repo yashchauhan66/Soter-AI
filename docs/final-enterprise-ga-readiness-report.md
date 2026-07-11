@@ -86,7 +86,7 @@ EVR-01 (ML tier→95%), EVR-02 (pentest), EVR-03 (deployed load), EVR-04/05 (VS 
 | Dimension | Score | Change |
 |---|---|---|
 | Production Readiness | 85 | = |
-| User Friendliness | 80 | = |
+| User Friendliness | **90** | +10 (first-run guide, 6 dead links fixed, wrong SDK pkg fixed, actionable empty states, friendly errors, a11y focus, branded 404 — all verified) |
 | Integration Ease | 88 | = |
 | Security Strength | **87** | +1 (F-01 fixed, self-pentest done) |
 | Market Survival | 72 | = |
@@ -94,7 +94,15 @@ EVR-01 (ML tier→95%), EVR-02 (pentest), EVR-03 (deployed load), EVR-04/05 (VS 
 | Revenue Readiness | 72 | = |
 | Enterprise Readiness | 76 | = |
 | Marketplace Readiness | 74 | = |
-| **Overall** | **~84** | +1 |
+| **Overall** | **~85** | +2 |
+
+### User Friendliness — honest path from 90 → 100
+
+Raised 80→90 with verified fixes (first-run activation guide, zero dead sidebar links + regression test, corrected SDK install command, actionable empty states, human network-error messages, a11y focus fix, branded 404 + recovery error pages). The remaining **10 points cannot be honestly claimed without evidence I can't produce headlessly**:
+- **F3** — two onboarding flows (`/dashboard/onboarding` checklist vs `/dashboard/get-started` wizard) still coexist; consolidating into one canonical flow is a larger UX decision, not a headless mechanical fix.
+- **Broad empty-state sweep** — 5 named dead-ends fixed; dozens of dashboard pages remain to standardize.
+- **Live evidence** — a literal 95–100 requires an **automated accessibility audit pass (axe/Lighthouse)** and a **real authenticated usability walkthrough**, neither runnable in this headless session.
+Per the scoring rules, 90 is the honest, defensible ceiling this session; 95+ needs the live a11y/usability evidence above.
 
 ## 20. Final Launch Decision
 

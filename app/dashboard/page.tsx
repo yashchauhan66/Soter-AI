@@ -43,7 +43,9 @@ import { UsageCard } from "@/components/dashboard/UsageCard";
 import { FeatureSearchBar } from "@/components/dashboard/FeatureSearchBar";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { MetricCard } from "@/components/dashboard/MetricCard";
+import { FirstRunGuide } from "@/components/dashboard/FirstRunGuide";
 import { AnimateIn } from "@/components/ui/AnimateIn";
+import { SITE_URL } from "@/lib/seo/schema";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { getTopRiskTypes } from "@/lib/dashboard/metrics";
 import { db } from "@/lib/db";
@@ -115,7 +117,7 @@ const FEATURE_CARDS: FeatureCard[] = [
   { title: "Projects", description: "Organize keys, logs, and config by environment", href: "/dashboard/projects", icon: FolderKanban, color: "text-slate-300", bg: "bg-slate-800/50", group: "Manage" },
   { title: "API keys", description: "Generate scoped test and live keys", href: "/dashboard/api-keys", icon: KeyRound, color: "text-yellow-300", bg: "bg-yellow-400/10", group: "Manage" },
   { title: "Cost firewall", description: "Prevent runaway LLM spending", href: "/dashboard/cost-firewall", icon: Wallet, color: "text-emerald-300", bg: "bg-emerald-400/10", group: "Manage" },
-  { title: "Settings", description: "Profile, team, and preferences", href: "/dashboard/settings", icon: Settings, color: "text-slate-300", bg: "bg-slate-800/50", group: "Manage" },
+  { title: "Settings", description: "Review guard defaults and configuration", href: "/dashboard/settings", icon: Settings, color: "text-slate-300", bg: "bg-slate-800/50", group: "Manage" },
 ];
 
 export default async function DashboardPage({
@@ -150,6 +152,10 @@ export default async function DashboardPage({
     }),
     db.guardLog.count({ where: { projectId: project.id, riskTypes: { has: "SECRET_DETECTED" } } }),
   ]);
+
+  // First-run signal: does this project have any API key yet? Drives the guided
+  // activation panel shown to brand-new projects (total === 0).
+  const apiKeyCount = await db.apiKey.count({ where: { projectId: project.id } });
 
   // Agent Control stats
   let agentPending = 0;
@@ -236,6 +242,15 @@ export default async function DashboardPage({
           </div>
         </div>
       </AnimateIn>
+
+      {/* ── First-run activation guide (new projects only) ── */}
+      {total === 0 && (
+        <FirstRunGuide
+          hasApiKey={apiKeyCount > 0}
+          hasActivity={total > 0}
+          apiBaseUrl={SITE_URL}
+        />
+      )}
 
       {/* ── Usage Banner ── */}
       {usage.exceeded && (

@@ -37,6 +37,13 @@
 | 12 | 2026-07-11 | Phase 12: integration verification | `docs/integrations/final-integration-verification-matrix.md` | Publish/marketing gating | `build:sdk:js`, `test:sdk:js`, `validate:extension-permissions` | JS SDK 18/18 + build; ext perms PASS; artifacts present | `/tmp/ga_sdk.log`, `/tmp/ga_extperm.log` | Py/examples beta |
 | 13 | 2026-07-11 | Phase 16: FINAL retest + report | `docs/final-enterprise-ga-readiness-report.md`, `docs/final-enterprise-ga-baseline-results.md` | Close-out | `npm test` (final) | **679/679** after all 3 code edits; report written | `/tmp/ga_test_final.log` | 8 EVRs remain external |
 
+| 14 | 2026-07-11 | UX pass: user-friendliness audit (subagent) | — | User asked to raise User Friendliness | static UX/a11y audit of onboarding/empty-states/errors/nav | 13 cited findings; first-run + dead links + wrong pkg name were top | agent report | — |
+| 15 | 2026-07-11 | UX-F2: first-run activation guide | `components/dashboard/FirstRunGuide.tsx`, `app/dashboard/page.tsx` | New users saw zeroed stats + 36-card wall, no guidance | `tsc`, build | 3-step guide (create key→first request curl→logs) shown when total===0; typecheck 0 | component + wiring | — |
+| 16 | 2026-07-11 | UX-F4: fix wrong SDK package name | `lib/onboarding.ts` | Onboarding said `npm install @cyberrakshak/guard`; real pkg is `@soterai/core` → first command failed | nav-integrity test | corrected; test asserts no `@cyberrakshak/guard` | `tests/dashboard-nav-integrity.test.ts` | — |
+| 17 | 2026-07-11 | UX-F1: fix 6 dead sidebar links + branded 404 | `components/dashboard/DashboardSidebar.tsx`, `app/not-found.tsx` | 6 sidebar links (agent-monitor, playbooks, ai-control-plane, audit-log, sso, benchmarks) 404'd; no custom 404 | full sidebar sweep + nav-integrity test | **0 dead links** now; branded not-found added | nav test 3/3 | — |
+| 18 | 2026-07-11 | UX-F6/F8/F9/F5: empty states, auth errors, a11y focus, copy | `ApiKeyManager.tsx`, `SignUp/SignInForm.tsx`, `dashboard/error.tsx`, `app/error.tsx`, `settings/page.tsx`, `dashboard/page.tsx` | No-project key form dead-end; raw "Failed to fetch"; autoFocus on h1; Settings over-promise; Phase 1/2 jargon | `tsc`, lint, `npm test` | all fixed; typecheck 0; lint clean; **679/679** | logs | — |
+| 19 | 2026-07-11 | UX: lock-in regression test | `tests/dashboard-nav-integrity.test.ts` | Prevent dead-link / wrong-pkg regressions | `tsx --test` | **3/3 pass** | test file | — |
+
 ## Final state
 - **Baseline:** typecheck 0, lint 0, **679/679 tests**, 0 prod vulns, build PASS — green after all edits.
 - **Code changes (3):** detection-tier flag, benign-FP fix, F-01 cross-tenant auth hardening. Zero regressions.

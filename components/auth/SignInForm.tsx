@@ -45,8 +45,10 @@ export function SignInForm({ callbackUrl, initialError, initialNotice }: { callb
       }
       router.push(safeCallbackUrl(callbackUrl));
       router.refresh();
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Could not sign in.");
+    } catch {
+      // Network/offline: no response ever arrived. Show an actionable message
+      // instead of a raw "Failed to fetch".
+      setError("Couldn't reach the server. Check your connection and try again.");
     } finally {
       setLoading(false);
     }
