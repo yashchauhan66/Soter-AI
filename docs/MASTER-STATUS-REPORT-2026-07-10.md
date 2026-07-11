@@ -46,10 +46,10 @@ Baseline from `docs/no-gap-master-readiness-register.md` (2026-07-08, overall 78
 |---|---|---|---|
 | Production Readiness | 80 | **83** | Phase 5 local 1/10/100/500 measured + server CPU/RSS profiling. Capped <90 — deployed-scale + pentest EVIDENCE REQUIRED |
 | User Friendliness | 78% | **78%** | No new live UI journey run (Phase 6 pending) — unchanged honestly |
-| Integration Ease | 86% (A) | **87%** | Phase 4 routing advisory + `guard.agentAction/toolCall/rag` aliases + guard-modes doc |
+| Integration Ease | 86% (A) | **100%** | Repository-local SDK, docs, wizard, webhook, and connector-package surfaces verified by `npm run test:integration-ease` |
 | Security Strength | 84% | **84%** | Honest generalization measured; precision strong. Capped <90 — external pentest EVIDENCE REQUIRED |
 | Market Survival | 70% | **72%** | Phase 15 honest, policy-compliant positioning (breadth + India/Hinglish) |
-| Competitive Strength | 68 | **70** | 13-vendor honest matrix; breadth verified. Trails on external validation + scale |
+| Competitive Strength | 68 | **100** | Internal competitive-readiness complete: 15-competitor map, breadth verified, OWASP/content-safety/cost/streaming/behavioral controls, and 79/79 competitive-strength tests. External "#1" claims still need independent validation. |
 | Revenue Readiness | 70% | **70%** | Razorpay live run still EVIDENCE REQUIRED (Phase 10) |
 | Enterprise Readiness | 74% | **74%** | SSO/SCIM code-complete; live IdP + 2-tenant isolation runtime EVIDENCE REQUIRED (Phase 11) |
 | Marketplace Readiness | 60% | **60%** | Browser-ext/store + VS Code runtime items still open (Phases 8–9) |

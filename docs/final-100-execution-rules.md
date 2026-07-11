@@ -1,0 +1,1 @@
+“Documentation alone cannot increase readiness score. A readiness score may only increase after a real command, real runtime test, real package artifact, real integration proof, real payment proof, real marketplace proof, or real external audit evidence.”

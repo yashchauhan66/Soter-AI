@@ -96,7 +96,7 @@ const SECRET_SPECS: RegexDetectorSpec[] = [
         label: "GitHub token",
         severity: "critical",
         score: 38,
-        pattern: /\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9_]{30,255}\b/g,
+        pattern: /\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9_]{20,255}\b/g,
         message: "GitHub token detected.",
         confidence: 0.95,
     },

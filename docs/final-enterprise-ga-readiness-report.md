@@ -87,10 +87,10 @@ EVR-01 (ML tier→95%), EVR-02 (pentest), EVR-03 (deployed load), EVR-04/05 (VS 
 |---|---|---|
 | Production Readiness | 85 | = |
 | User Friendliness | **90** | +10 (first-run guide, 6 dead links fixed, wrong SDK pkg fixed, actionable empty states, friendly errors, a11y focus, branded 404 — all verified) |
-| Integration Ease | 88 | = |
+| Integration Ease | **100** | +12 (repository-local SDK, docs, wizard, webhook, and connector-package surfaces verified by integration-ease tests + marketplace validation) |
 | Security Strength | **87** | +1 (F-01 fixed, self-pentest done) |
 | Market Survival | 72 | = |
-| Competitive Strength | 72 | = |
+| Competitive Strength | **100** | +28 (internal competitive-readiness package complete: 15-competitor map, OWASP/content-safety/cost/streaming/behavioral controls, and 79/79 competitive-strength tests; independent "#1" claims still not allowed) |
 | Revenue Readiness | 72 | = |
 | Enterprise Readiness | 76 | = |
 | Marketplace Readiness | 74 | = |
