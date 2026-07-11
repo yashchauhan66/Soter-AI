@@ -270,6 +270,7 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
           SOCIAL_ENGINEERING: "PROMPT_INJECTION",
           EMBEDDING_POISONING: "PROMPT_INJECTION",
           INSECURE_DESERIALIZATION: "PROMPT_INJECTION",
+          DATA_EXFILTRATION: "DATA_EXFILTRATION",
         };
         const riskType = familyToRiskType[semantic.family] ?? "PROMPT_INJECTION";
         findings.push({

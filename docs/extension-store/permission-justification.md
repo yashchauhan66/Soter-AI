@@ -34,8 +34,11 @@ The extension injects content scripts into these specific external AI tools and 
 - `*://v0.dev/*`
 - `*://lovable.dev/*`
 - `*://openwebui.com/*`
+- `https://soterai.in/*`
 - `*://localhost/*`
 - `*://127.0.0.1/*`
+
+`https://soterai.in/*` is the SoterAI Guard API backend the extension calls to analyze prompts and record blocked-event metadata for the enterprise dashboard. `*://localhost/*` and `*://127.0.0.1/*` allow the extension to reach a self-hosted Guard backend on the same machine. No prompt content from unrelated sites is sent to these endpoints — only prompts captured on the AI tools listed above.
 
 ## Optional Host Permissions
 - `*://*/*`: Used for the Data Lineage feature to monitor copy events from internal corporate tools. This is only requested at runtime if the enterprise admin configures specific internal hostnames to monitor.
