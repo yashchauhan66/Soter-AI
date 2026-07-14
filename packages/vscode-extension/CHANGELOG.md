@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] — 2026-07-14
+## [0.2.0] — 2026-07-14
 
 ### Added — UX pack (native, local-first, all tested)
 - **Live inline scanning** — supported files are scanned as you type and secrets / PII / prompt-injection appear as native squiggly diagnostics (`soterai.liveScan.enabled`, on by default). 100% local, debounced, skips oversized files / excluded globs / non-file schemes.
