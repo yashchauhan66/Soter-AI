@@ -22,6 +22,8 @@ export class DashboardPanel {
                 // This prevents unexpected or malicious payloads from the webview.
                 const knownCommands: ReadonlySet<string> = new Set([
                     "scanCurrentFile",
+                    "scanClipboard",
+                    "openWalkthrough",
                     "connectCloud",
                     "disconnectCloud",
                 ]);
@@ -34,6 +36,13 @@ export class DashboardPanel {
                     case "scanCurrentFile":
                         await vscode.commands.executeCommand("soterai.scanCurrentFile");
                         this.refresh();
+                        break;
+                    case "scanClipboard":
+                        await vscode.commands.executeCommand("soterai.scanClipboard");
+                        this.refresh();
+                        break;
+                    case "openWalkthrough":
+                        await vscode.commands.executeCommand("soterai.openWalkthrough");
                         break;
                     case "connectCloud":
                         await vscode.commands.executeCommand("soterai.connectToCloud");
@@ -86,6 +95,7 @@ export class DashboardPanel {
         const config = vscode.workspace.getConfiguration("soterai");
         const cloudEnabled = config.get("cloud.enabled", false);
         const policyMode = config.get("policy.mode", "local");
+        const liveScanEnabled = config.get("liveScan.enabled", true);
         const decision = state.latestDecision;
 
         // AI Context Firewall summary (no context/secrets needed here).
@@ -126,6 +136,7 @@ export class DashboardPanel {
         webview.html = this._getHtmlForWebview(webview, {
             cloudEnabled,
             policyMode,
+            liveScanEnabled,
             latestDecision: decision,
             trusted: state.isWorkspaceTrusted(),
             firewall,
@@ -138,6 +149,7 @@ export class DashboardPanel {
         data: {
             cloudEnabled: boolean;
             policyMode: string;
+            liveScanEnabled: boolean;
             latestDecision?: any;
             trusted: boolean;
             firewall: { policyExists: boolean; protectedCount: number; ledgerCount: number; lastContext: string };
@@ -252,6 +264,7 @@ export class DashboardPanel {
     <div class="title">🛡️ SoterAI IDE Guard</div>
     <div>
       <span class="badge">${data.trusted ? "Workspace Trusted" : "Restricted Mode"}</span>
+      <span class="badge" style="background:${data.liveScanEnabled ? 'var(--vscode-statusBarItem-remoteBackground)' : 'var(--vscode-statusBarItem-warningBackground)'}">Live Scan: ${data.liveScanEnabled ? "On" : "Off"}</span>
       <span class="badge" style="background:var(--vscode-statusBarItem-warningBackground)">Local Mode</span>
     </div>
   </div>
@@ -269,6 +282,8 @@ export class DashboardPanel {
         </div>
       </div>
       <button class="btn" id="scanBtn">Scan Current File</button>
+      <button class="btn" id="clipBtn" style="margin-left:8px;">Scan Clipboard</button>
+      <button class="btn" id="guideBtn" style="margin-left:8px; background-color:var(--vscode-button-secondaryBackground); color:var(--vscode-button-secondaryForeground);">Getting Started</button>
     </div>
 
     <div class="card">
@@ -329,6 +344,12 @@ export class DashboardPanel {
     const vscode = acquireVsCodeApi();
     document.getElementById('scanBtn')?.addEventListener('click', () => {
       vscode.postMessage({ command: 'scanCurrentFile' });
+    });
+    document.getElementById('clipBtn')?.addEventListener('click', () => {
+      vscode.postMessage({ command: 'scanClipboard' });
+    });
+    document.getElementById('guideBtn')?.addEventListener('click', () => {
+      vscode.postMessage({ command: 'openWalkthrough' });
     });
     document.getElementById('connectBtn')?.addEventListener('click', () => {
       vscode.postMessage({ command: 'connectCloud' });
