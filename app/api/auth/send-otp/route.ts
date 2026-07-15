@@ -72,7 +72,7 @@ export async function POST(request: Request) {
     } catch (sendError) {
       console.error("send-otp.email_failed", {
         userId: user.id,
-        reason: sendError instanceof Error ? sendError.name : "unknown",
+        reason: sendError instanceof Error ? sendError.message : "unknown",
       });
       return jsonResponse(
         { error: true, message: "We could not send the code. Please try again shortly." },

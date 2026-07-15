@@ -20,6 +20,9 @@ export class SoterApi implements ICredentialType {
       },
       body: {
         message: "SoterAI connection test",
+        metadata: {
+          source: "n8n-credential-test",
+        },
       },
     },
   };

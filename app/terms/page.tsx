@@ -353,7 +353,7 @@ export default function TermsPage() {
           SoterAI does not warrant that:
         </p>
         <ul className="list-disc pl-6 space-y-2 text-slate-400">
-          <li>The Service will detect all security threats or prevent all attacks</li>
+          <li>The Service will detect every security threat or prevent every attack</li>
           <li>The Service will be uninterrupted, error-free, or free of vulnerabilities</li>
           <li>Detection results will be accurate, complete, or suitable for any particular compliance requirement</li>
           <li>The Service will meet your specific security or regulatory requirements</li>

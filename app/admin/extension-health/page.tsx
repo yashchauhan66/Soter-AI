@@ -4,7 +4,7 @@ import { Activity, Wifi, WifiOff, Smartphone, Shield } from "lucide-react";
 export const dynamic = "force-dynamic";
 
 export default async function ExtensionHealthPage() {
-  const organizations = await db.organization.findMany({
+  const _organizations = await db.organization.findMany({
     orderBy: { createdAt: "asc" },
     take: 100,
     select: { id: true, name: true },

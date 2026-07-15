@@ -308,11 +308,15 @@ describe("Command-palette hygiene (clutter control)", () => {
         assert.deepStrictEqual(ungated, [], `These commands should be gated: ${ungated.join(", ")}`);
     });
 
-    it("the context key is driven by the showAllCommands setting and set on activation", () => {
+    it("the context key is driven by stable and experimental command visibility settings", () => {
         assert.ok(pkg.contributes.configuration.properties["soterai.showAllCommands"], "showAllCommands setting must exist");
         assert.strictEqual(pkg.contributes.configuration.properties["soterai.showAllCommands"].default, false);
+        assert.ok(pkg.contributes.configuration.properties["soterai.experimentalFeatures.enabled"], "experimentalFeatures.enabled setting must exist");
+        assert.strictEqual(pkg.contributes.configuration.properties["soterai.experimentalFeatures.enabled"].default, false);
         assert.match(extensionSrc, /setContext",\s*"soterai\.advancedCommands"/);
-        assert.match(extensionSrc, /getConfiguration\("soterai"\)\.get<boolean>\("showAllCommands"/);
+        assert.match(extensionSrc, /config\.get<boolean>\("showAllCommands"/);
+        assert.match(extensionSrc, /get<boolean>\("experimentalFeatures\.enabled"/);
+        assert.match(extensionSrc, /affectsConfiguration\("soterai\.experimentalFeatures\.enabled"\)/);
     });
 });
 
@@ -362,6 +366,8 @@ describe("Live inline scanning + Quick Fixes (UX)", () => {
         assert.ok(setting, "liveScan.enabled setting must exist");
         assert.strictEqual(setting.default, true);
         assert.match(extensionSrc, /registerLiveScanner\(context\)/);
+        assert.match(extensionSrc, /onDidSaveTextDocument/);
+        assert.match(extensionSrc, /get<boolean>\("liveScan\.enabled",\s*true\)/);
     });
 
     it("uses a debounced, local-only scan mapped to a DiagnosticCollection", () => {

@@ -83,7 +83,7 @@ export function analyzeContentSafety(
   options?: { categories?: SafetyCategory[]; threshold?: number }
 ): SafetyResult {
   const categories = options?.categories ?? (Object.keys(SAFETY_PATTERNS) as SafetyCategory[]);
-  const threshold = options?.threshold ?? 0.5;
+  const _threshold = options?.threshold ?? 0.5;
   const findings: SafetyFinding[] = [];
 
   for (const category of categories) {

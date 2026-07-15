@@ -1,0 +1,80 @@
+{
+  "name": "SoterAI Error Handling",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "action": "inputGuard",
+        "inputText": "",
+        "onThreat": "BLOCK",
+        "metadata": "{\"workflow\":\"soterai-error-handling\"}"
+      },
+      "id": "soterai-invalid-input",
+      "name": "SoterAI Invalid Input",
+      "type": "n8n-nodes-soterai.soterGuard",
+      "typeVersion": 1,
+      "position": [500, 300],
+      "alwaysOutputData": true,
+      "continueOnFail": true,
+      "credentials": {
+        "soterApi": {
+          "id": "SOTERAI_API_PLACEHOLDER",
+          "name": "SoterAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.error}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "if-error-branch",
+      "name": "IF Error Branch",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [750, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "handledError",
+              "value": "={{$json.message}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "safe-error-output",
+      "name": "Safe Error Output",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [990, 200]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [[{ "node": "SoterAI Invalid Input", "type": "main", "index": 0 }]]
+    },
+    "SoterAI Invalid Input": {
+      "main": [[{ "node": "IF Error Branch", "type": "main", "index": 0 }]]
+    },
+    "IF Error Branch": {
+      "main": [[{ "node": "Safe Error Output", "type": "main", "index": 0 }], []]
+    }
+  }
+}

@@ -72,7 +72,7 @@ export default function EmergencyLockdownPage() {
       } else {
         setMessage({ type: "error", text: data.message || "Failed to update lockdown state" });
       }
-    } catch (error) {
+    } catch {
       setMessage({ type: "error", text: "Network error. Please try again." });
     } finally {
       setLoading(false);

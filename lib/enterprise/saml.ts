@@ -124,8 +124,10 @@ export interface ValidationOptions {
 
 export function decodeSamlResponse(samlResponseB64: string): string {
   if (!samlResponseB64) throw new SamlError("Empty SAMLResponse.");
+  if (samlResponseB64.length > 300_000) throw new SamlError("SAMLResponse is too large.");
   try {
     const decoded = Buffer.from(samlResponseB64, "base64").toString("utf8");
+    if (decoded.length > 200_000) throw new SamlError("Decoded SAMLResponse is too large.");
     if (!decoded.includes("Response")) throw new SamlError("Decoded SAMLResponse does not look like a Response document.");
     return decoded;
   } catch (error) {
@@ -148,6 +150,18 @@ export async function validateSamlResponse(samlResponseB64: string, options: Val
   const expectedAudience = options.expectedAudience ?? options.sp.entityId;
   if (!audience || audience.trim() !== expectedAudience) {
     throw new SamlError("Audience restriction does not match the SP entity id.");
+  }
+
+  // ACS binding checks. Okta and Entra normally include Destination on the
+  // Response and Recipient on SubjectConfirmationData; when present, both must
+  // point at this tenant's configured ACS URL.
+  const destination = safeMatch(xml, /<(?:samlp:)?Response[^>]*\bDestination=\"([^\"]+)\"/);
+  if (destination && destination.trim() !== options.sp.acsUrl) {
+    throw new SamlError("SAML response destination does not match the ACS URL.");
+  }
+  const recipient = safeMatch(xml, /<(?:saml2?:)?SubjectConfirmationData[^>]*\bRecipient=\"([^\"]+)\"/);
+  if (recipient && recipient.trim() !== options.sp.acsUrl) {
+    throw new SamlError("SAML assertion recipient does not match the ACS URL.");
   }
 
   // Conditions / timing

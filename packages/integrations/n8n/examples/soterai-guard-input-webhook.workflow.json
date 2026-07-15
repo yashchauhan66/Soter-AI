@@ -1,0 +1,92 @@
+{
+  "name": "SoterAI Guard Input Webhook",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "soterai-guard-input-demo",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "webhook",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [220, 300],
+      "webhookId": "soterai-guard-input-demo"
+    },
+    {
+      "parameters": {
+        "action": "inputGuard",
+        "inputText": "={{$json.body.prompt || $json.prompt || \"Please summarize this public article.\"}}",
+        "onThreat": "BLOCK",
+        "metadata": "{\"workflow\":\"soterai-guard-input-webhook\"}"
+      },
+      "id": "soterai-guard-input",
+      "name": "SoterAI Guard Input",
+      "type": "n8n-nodes-soterai.soterGuard",
+      "typeVersion": 1,
+      "position": [480, 300],
+      "credentials": {
+        "soterApi": {
+          "id": "SOTERAI_API_PLACEHOLDER",
+          "name": "SoterAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.blocked}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "if-risk-high",
+      "name": "IF Risk High",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [730, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"allowed\":false,\"message\":\"Input blocked by SoterAI\",\"reason\":$json.reason,\"riskScore\":$json.riskScore}",
+        "options": {}
+      },
+      "id": "respond-blocked",
+      "name": "Respond Blocked",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [980, 200]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"allowed\":true,\"safeText\":$json.outputText,\"riskScore\":$json.riskScore}",
+        "options": {}
+      },
+      "id": "respond-allowed",
+      "name": "Respond Allowed",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [980, 410]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{ "node": "SoterAI Guard Input", "type": "main", "index": 0 }]]
+    },
+    "SoterAI Guard Input": {
+      "main": [[{ "node": "IF Risk High", "type": "main", "index": 0 }]]
+    },
+    "IF Risk High": {
+      "main": [
+        [{ "node": "Respond Blocked", "type": "main", "index": 0 }],
+        [{ "node": "Respond Allowed", "type": "main", "index": 0 }]
+      ]
+    }
+  }
+}

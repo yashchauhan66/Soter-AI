@@ -1,13 +1,20 @@
-import { scimResponse } from "@/lib/enterprise/scim";
+import { authorizeScimRequest, scimError, ScimError, scimResponse } from "@/lib/enterprise/scim";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
+  let auth;
+  try {
+    auth = await authorizeScimRequest(request);
+  } catch (error) {
+    return scimError((error as Error).message, error instanceof ScimError ? error.status : 401);
+  }
   const url = new URL(request.url);
   const baseUrl = process.env.NEXTAUTH_URL ?? `${url.protocol}//${url.host}`;
   return scimResponse({
     schemas: ["urn:ietf:params:scim:api:messages:2.0:ListResponse"],
     totalResults: 2,
+    organizationId: auth.organizationId,
     Resources: [
       {
         id: "User",

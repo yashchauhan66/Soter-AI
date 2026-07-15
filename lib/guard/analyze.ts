@@ -67,7 +67,21 @@ const OUTPUT_DETECTORS = [systemPromptLeakageDetector, unsafeOutputDetector, out
 
 export function analyzeText(text: string, direction: GuardDirection): GuardResult {
   const detectors = direction === "OUTPUT" ? OUTPUT_DETECTORS : INPUT_DETECTORS;
-  const findings: GuardFinding[] = detectors.flatMap((detector) => detector(text));
+  let findings: GuardFinding[] = detectors.flatMap((detector) => detector(text));
+
+  // Safe security-education prompts often mention "prompt injection" and
+  // "bypass" in a negated, high-level training context. Keep sensitive-data
+  // findings, but suppress bypass/injection findings for this narrow pattern so
+  // awareness material does not become user friction.
+  if (direction === "INPUT" && isSafeSecurityEducationRequest(text)) {
+    findings = findings.filter(
+      (finding) =>
+        !(
+          finding.type === "PROMPT_INJECTION" &&
+          /bypass|override|instruction|approval|control|jailbreak/i.test(finding.label)
+        ),
+    );
+  }
 
   // Set when the semantic layer (not the rules) is the sole reason a request is
   // flagged. Such requests are held for human review rather than blocked, since
@@ -365,6 +379,14 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
       ...(semanticMetadata ? { semantic: semanticMetadata } : {}),
     },
   }, advisory);
+}
+
+function isSafeSecurityEducationRequest(text: string): boolean {
+  const normalized = text.trim().toLowerCase();
+  if (!/^(explain|describe|summarize|outline|draft|write|create)\b/.test(normalized)) return false;
+  if (!/(prompt injection|security awareness|security training|protecting credentials|privacy review|least privilege)/i.test(text)) return false;
+  if (/(ignore previous|reveal system prompt|disable guardrails|dump|extract|exfiltrate|list all|admin mode|unrestricted|dan mode)/i.test(text)) return false;
+  return /(high level|awareness|training|without providing|without step-by-step|safe|benign|plain language)/i.test(text);
 }
 
 function buildReason(action: GuardResult["action"], findings: GuardFinding[]) {

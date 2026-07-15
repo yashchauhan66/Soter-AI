@@ -104,7 +104,7 @@ export async function POST(request: Request) {
       try {
         await deliverVerification(body.email, token);
       } catch (sendError) {
-        console.error("signup.resend.email_failed", { userId, reason: sendError instanceof Error ? sendError.name : "unknown" });
+        console.error("signup.resend.email_failed", { userId, reason: sendError instanceof Error ? sendError.message : "unknown" });
         emailSent = false;
       }
       return jsonResponse(successBody({ deliveryMode, token, emailSent, extra: { resent: true } }), { status: 200 });
@@ -175,7 +175,7 @@ export async function POST(request: Request) {
     try {
       await deliverVerification(body.email, created.token);
     } catch (sendError) {
-      console.error("signup.create.email_failed", { userId: created.userId, reason: sendError instanceof Error ? sendError.name : "unknown" });
+      console.error("signup.create.email_failed", { userId: created.userId, reason: sendError instanceof Error ? sendError.message : "unknown" });
       emailSent = false;
     }
 

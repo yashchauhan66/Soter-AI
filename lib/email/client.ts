@@ -52,7 +52,14 @@ class ResendEmailClient implements EmailClient {
         attachments: message.attachments?.map((item) => ({ filename: item.filename, content: item.content.toString("base64") })),
       }),
     });
-    if (!response.ok) throw new Error(`Resend rejected email (${response.status}).`);
+    if (!response.ok) {
+      // Surface Resend's actual reason (e.g. "The soterai.in domain is not
+      // verified", "You can only send testing emails to your own address").
+      // Without this only a bare status code reaches the logs, which is the
+      // difference between a diagnosable and an undiagnosable delivery failure.
+      const detail = await response.text().catch(() => "");
+      throw new Error(`Resend rejected email (${response.status})${detail ? `: ${detail.slice(0, 300)}` : ""}`);
+    }
     const data = await response.json() as { id: string };
     return { id: data.id, provider: "resend", mocked: false };
   }
@@ -131,7 +138,10 @@ class SesEmailClient implements EmailClient {
     const signingKey = hmac(hmac(hmac(hmac(`AWS4${secretKey}`, date), region), "ses"), "aws4_request");
     const signature = createHmac("sha256", signingKey).update(stringToSign).digest("hex");
     const response = await fetch(`https://${host}${path}`, { method: "POST", headers: { "Content-Type": "application/json", "X-Amz-Date": amzDate, Authorization: `AWS4-HMAC-SHA256 Credential=${accessKey}/${scope}, SignedHeaders=${signedHeaders}, Signature=${signature}` }, body });
-    if (!response.ok) throw new Error(`AWS SES rejected email (${response.status}).`);
+    if (!response.ok) {
+      const detail = await response.text().catch(() => "");
+      throw new Error(`AWS SES rejected email (${response.status})${detail ? `: ${detail.slice(0, 300)}` : ""}`);
+    }
     const data = await response.json() as { MessageId?: string };
     return { id: data.MessageId ?? `ses_${Date.now()}`, provider: "aws-ses", mocked: false };
   }

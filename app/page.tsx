@@ -103,29 +103,28 @@ const homepageJsonLd = {
         { "@type": "PropertyValue", "name": "India PII Detection", "value": "Yes" },
         { "@type": "PropertyValue", "name": "Self-Hosted", "value": "Yes" },
         { "@type": "PropertyValue", "name": "Enterprise SSO", "value": "Yes" },
-        { "@type": "PropertyValue", "name": "Adversarial Benchmark F1", "value": "0.89" },
+        { "@type": "PropertyValue", "name": "Phase 9 Public Benchmark F1", "value": "1.0000 on synthetic public dataset" },
       ],
     },
     {
       "@type": "Dataset",
-      "name": "SoterAI Adversarial Benchmark",
-      "description": "84% of adversarial attack variants caught across 8 categories within a 1% false-positive budget (ROC-AUC 0.92, production F1 0.89, 0.54% false-positive rate). Internal Garak-style red-team evaluation covering prompt injection, jailbreaks, encoding, multilingual, PII, secrets, indirect injection, and unsafe output.",
-      "url": `${siteUrl}/benchmarks`,
-      "mainEntityOfPage": { "@type": "WebPage", "@id": `${siteUrl}/benchmarks` },
+      "name": "SoterAI Phase 9 Public Benchmark",
+      "description": "Self-maintained synthetic public benchmark with published dataset, methodology, limitations, and downloadable results. Latest generated run: 100% recall, 0% false-positive rate, 0% false-negative rate, and p95 latency under 15 ms on 3,200 synthetic cases. Not an independent third-party benchmark.",
+      "url": `${siteUrl}/benchmark`,
+      "mainEntityOfPage": { "@type": "WebPage", "@id": `${siteUrl}/benchmark` },
       "creator": { "@id": `${siteUrl}#organization` },
-      "datePublished": "2026-06-21",
-      "dateModified": "2026-06-27",
-      "measurementTechnique": "Garak-style adversarial probing",
+      "datePublished": "2026-07-15",
+      "dateModified": "2026-07-15",
+      "measurementTechnique": "Synthetic JSONL public dataset evaluated with the production SoterAI guard detector",
       "keywords": "prompt injection, jailbreak, PII detection, security benchmark, AI guardrails",
       "variableMeasured": [
-        { "name": "F1 Score", "value": "0.89" },
-        { "name": "Precision", "value": "0.938" },
-        { "name": "Recall @ 1% FPR", "value": "0.84" },
-        { "name": "Specificity", "value": "99.46%" },
-        { "name": "False Positive Rate", "value": "0.54%" },
-        { "name": "ROC-AUC", "value": "0.92" },
-        { "name": "Safe Inputs Allowed", "value": "1,104/1,110" },
-        { "name": "Attack Categories", "value": "8" },
+        { "name": "F1 Score", "value": "1.0000" },
+        { "name": "Precision", "value": "1.0000" },
+        { "name": "Recall", "value": "1.0000" },
+        { "name": "False Positive Rate", "value": "0.00%" },
+        { "name": "False Negative Rate", "value": "0.00%" },
+        { "name": "Dataset Rows", "value": "3200" },
+        { "name": "Attack Categories", "value": "10" },
       ],
     },
     {
@@ -272,7 +271,7 @@ export default function Home() {
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-center text-slate-400">
             An interactive walkthrough showing prompt injection blocking, India PII redaction,
-            secret detection, jailbreak prevention, and our 84% recall @ 1% FPR benchmark in action.
+            secret detection, jailbreak prevention, and the evidence-backed public benchmark in action.
           </p>
           <div className="mx-auto mt-10 max-w-5xl">
             <DemoVideo />
@@ -290,38 +289,37 @@ export default function Home() {
         <div className="container-page text-center">
           <p className="eyebrow">Adversarial Benchmark</p>
           <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
-            Internal benchmark: <span className="text-cyan">84% recall @ 1% FPR</span>
+            Public benchmark: <span className="text-cyan">100% recall on synthetic Phase 9 dataset</span>
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-400">
-            84% of adversarial cases caught within a 1% false-positive budget, at a 0.54% false-positive rate on a
-            self-authored 1,218-case dataset (108 attacks + 1,110 benign).
-            This Garak-style evaluation is useful regression evidence, not an independent audit or production guarantee.
+            Latest generated run: 2,200 synthetic attack cases and 1,000 benign controls evaluated with the production detector.
+            This self-maintained benchmark is useful regression evidence, not an independent audit or production guarantee.
           </p>
 
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div className="card p-6">
               <ShieldCheck className="mx-auto text-cyan" size={28} aria-hidden="true" />
-              <p className="mt-3 text-3xl font-black text-cyan">84%</p>
-              <p className="mt-1 text-sm text-slate-400">Recall @ 1% FPR</p>
-              <p className="text-xs text-slate-500">108 adversarial prompts</p>
+              <p className="mt-3 text-3xl font-black text-cyan">100%</p>
+              <p className="mt-1 text-sm text-slate-400">Recall</p>
+              <p className="text-xs text-slate-500">2,200 synthetic attacks</p>
             </div>
             <div className="card p-6">
               <Zap className="mx-auto text-lime" size={28} aria-hidden="true" />
-              <p className="mt-3 text-3xl font-black text-lime">0.54%</p>
+              <p className="mt-3 text-3xl font-black text-lime">0.00%</p>
               <p className="mt-1 text-sm text-slate-400">False-Positive Rate</p>
-              <p className="text-xs text-slate-500">1,110 benign inputs</p>
+              <p className="text-xs text-slate-500">1,000 benign controls</p>
             </div>
             <div className="card p-6">
               <Gauge className="mx-auto text-cyan" size={28} aria-hidden="true" />
-              <p className="mt-3 text-3xl font-black text-cyan">891ms</p>
-              <p className="mt-1 text-sm text-slate-400">Recorded HTTP p50</p>
-              <p className="text-xs text-slate-500">Internal benchmark run</p>
+              <p className="mt-3 text-3xl font-black text-cyan">10.92ms</p>
+              <p className="mt-1 text-sm text-slate-400">Analyzer p95</p>
+              <p className="text-xs text-slate-500">Local benchmark run</p>
             </div>
             <div className="card p-6">
               <BarChart3 className="mx-auto text-cyan" size={28} aria-hidden="true" />
-              <p className="mt-3 text-3xl font-black text-cyan">8</p>
+              <p className="mt-3 text-3xl font-black text-cyan">10</p>
               <p className="mt-1 text-sm text-slate-400">Attack Categories</p>
-              <p className="text-xs text-slate-500">84% recall @ 1% FPR overall</p>
+              <p className="text-xs text-slate-500">Synthetic public corpus</p>
             </div>
           </div>
 
@@ -331,10 +329,12 @@ export default function Home() {
               "Jailbreak / DAN",
               "Encoding / Obfuscation",
               "Multilingual (Hindi)",
-              "Indirect Injection",
+              "RAG Poisoning",
+              "Tool Abuse",
+              "MCP Risk",
               "PII Detection",
               "Secrets / Credentials",
-              "Unsafe Output",
+              "Secret / PII",
             ].map((cat) => (
               <span
                 key={cat}
@@ -346,7 +346,7 @@ export default function Home() {
           </div>
 
           <Link
-            href="/benchmarks"
+            href="/benchmark"
             className="button-secondary mt-8 inline-flex items-center gap-2"
           >
             View full benchmark details <ArrowRight size={16} aria-hidden="true" />

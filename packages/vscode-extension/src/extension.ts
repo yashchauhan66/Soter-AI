@@ -43,10 +43,14 @@ export function activate(context: vscode.ExtensionContext): void {
     // `soterai.advancedCommands` context key so the default palette only shows
     // the 12 core commands. Every command still works from the SoterAI Guard
     // view, status bar, aliases, and executeCommand — this only controls palette
-    // visibility. Flipped by the `soterai.showAllCommands` setting.
+    // visibility. Flipped by either the launch-era `soterai.showAllCommands`
+    // setting or the marketplace-facing `soterai.experimentalFeatures.enabled`
+    // setting.
     const applyAdvancedCommandVisibility = () => {
-        const showAll = vscode.workspace.getConfiguration("soterai").get<boolean>("showAllCommands", false);
-        void vscode.commands.executeCommand("setContext", "soterai.advancedCommands", showAll);
+        const config = vscode.workspace.getConfiguration("soterai");
+        const showAll = config.get<boolean>("showAllCommands", false);
+        const experimental = config.get<boolean>("experimentalFeatures.enabled", false);
+        void vscode.commands.executeCommand("setContext", "soterai.advancedCommands", showAll || experimental);
     };
     applyAdvancedCommandVisibility();
 
@@ -140,7 +144,9 @@ export function activate(context: vscode.ExtensionContext): void {
     context.subscriptions.push(
         vscode.workspace.onDidChangeConfiguration((e) => {
             if (e.affectsConfiguration("soterai")) {
-                if (e.affectsConfiguration("soterai.showAllCommands")) applyAdvancedCommandVisibility();
+                if (e.affectsConfiguration("soterai.showAllCommands") || e.affectsConfiguration("soterai.experimentalFeatures.enabled")) {
+                    applyAdvancedCommandVisibility();
+                }
                 state.initEngine();
                 TelemetryManager.getInstance().startBatchTimer();
                 refreshViews();
@@ -151,7 +157,9 @@ export function activate(context: vscode.ExtensionContext): void {
     context.subscriptions.push(
         vscode.window.onDidChangeActiveTextEditor(() => { updateStatusBar(); }),
         vscode.workspace.onDidSaveTextDocument(async (doc) => {
-            if (doc.uri.scheme === "file") await vscode.commands.executeCommand("soterai.scanCurrentFile", doc.uri);
+            const config = vscode.workspace.getConfiguration("soterai");
+            const liveScanEnabled = config.get<boolean>("liveScan.enabled", true);
+            if (liveScanEnabled && doc.uri.scheme === "file") await vscode.commands.executeCommand("soterai.scanCurrentFile", doc.uri);
         })
     );
 

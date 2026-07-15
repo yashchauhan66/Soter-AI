@@ -142,7 +142,7 @@ export default function Image() {
                 border: "1px solid rgba(0, 200, 200, 0.2)",
               }}
             >
-              <span style={{ fontSize: 28, fontWeight: 800, color: "#00c8c8" }}>ROC-AUC 0.92</span>
+              <span style={{ fontSize: 28, fontWeight: 800, color: "#00c8c8" }}>Phase 9 benchmark</span>
               <span style={{ fontSize: 14, color: "#94a3b8" }}>Benchmark</span>
             </div>
             <div
@@ -156,8 +156,8 @@ export default function Image() {
                 border: "1px solid rgba(0, 220, 130, 0.2)",
               }}
             >
-              <span style={{ fontSize: 28, fontWeight: 800, color: "#00dc82" }}>0.54%</span>
-              <span style={{ fontSize: 14, color: "#94a3b8" }}>False Positives</span>
+              <span style={{ fontSize: 28, fontWeight: 800, color: "#00dc82" }}>0.00%</span>
+              <span style={{ fontSize: 14, color: "#94a3b8" }}>FPR on dataset</span>
             </div>
           </div>
 
@@ -174,7 +174,7 @@ export default function Image() {
               { label: "RAG Security", color: "#00dc82" },
               { label: "Agent Firewall", color: "#34d399" },
               { label: "India PII Detection", color: "#38bdf8" },
-              { label: "Enterprise Ready", color: "#a78bfa" },
+              { label: "Enterprise Controls", color: "#a78bfa" },
             ].map((feat) => (
               <div
                 key={feat.label}

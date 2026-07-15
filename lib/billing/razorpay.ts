@@ -110,6 +110,56 @@ export function verifyPaymentSignature(orderId: string, paymentId: string, signa
   return a.length === b.length && crypto.timingSafeEqual(a, b);
 }
 
+export interface RazorpayActivationSnapshot {
+  order: {
+    id?: unknown;
+    amount?: unknown;
+    currency?: unknown;
+    notes?: unknown;
+  };
+  payment?: {
+    id?: unknown;
+    order_id?: unknown;
+    amount?: unknown;
+    currency?: unknown;
+    status?: unknown;
+  };
+}
+
+export function validateRazorpayActivationSnapshot(input: {
+  organizationId: string;
+  plan: Exclude<ProjectPlan, "DEMO" | "ENTERPRISE" | "FREE">;
+  razorpayOrderId: string;
+  razorpayPaymentId: string;
+  snapshot: RazorpayActivationSnapshot;
+}): { ok: true } | { ok: false; reason: string } {
+  const expectedAmount = PLAN_PRICING[input.plan].amount;
+  const order = input.snapshot.order;
+  const orderNotes = order.notes && typeof order.notes === "object" ? order.notes as Record<string, unknown> : {};
+  const orderAmount = Number(order.amount);
+  const orderCurrency = String(order.currency ?? "").toUpperCase();
+
+  if (String(order.id ?? "") !== input.razorpayOrderId) return { ok: false, reason: "order_id_mismatch" };
+  if (orderAmount !== expectedAmount) return { ok: false, reason: "order_amount_mismatch" };
+  if (orderCurrency !== "INR") return { ok: false, reason: "order_currency_mismatch" };
+  if (String(orderNotes.organizationId ?? "") !== input.organizationId) return { ok: false, reason: "order_organization_mismatch" };
+  if (String(orderNotes.plan ?? "") !== input.plan) return { ok: false, reason: "order_plan_mismatch" };
+
+  const payment = input.snapshot.payment;
+  if (payment) {
+    const paymentAmount = Number(payment.amount);
+    const paymentCurrency = String(payment.currency ?? "").toUpperCase();
+    const paymentStatus = String(payment.status ?? "").toLowerCase();
+    if (String(payment.id ?? "") !== input.razorpayPaymentId) return { ok: false, reason: "payment_id_mismatch" };
+    if (String(payment.order_id ?? "") !== input.razorpayOrderId) return { ok: false, reason: "payment_order_mismatch" };
+    if (paymentAmount !== expectedAmount) return { ok: false, reason: "payment_amount_mismatch" };
+    if (paymentCurrency !== "INR") return { ok: false, reason: "payment_currency_mismatch" };
+    if (paymentStatus && paymentStatus !== "captured") return { ok: false, reason: "payment_not_captured" };
+  }
+
+  return { ok: true };
+}
+
 export function planForPriceId(razorpayPlanIdValue: string): ProjectPlan | null {
   if (!razorpayPlanIdValue) return null;
   for (const [plan, config] of Object.entries(PLAN_PRICING)) {

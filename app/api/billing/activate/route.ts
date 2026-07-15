@@ -1,7 +1,13 @@
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { requirePermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
-import { verifyPaymentSignature, razorpayConfigured, PLAN_PRICING } from "@/lib/billing/razorpay";
+import {
+  getRazorpayClient,
+  verifyPaymentSignature,
+  razorpayConfigured,
+  PLAN_PRICING,
+  validateRazorpayActivationSnapshot,
+} from "@/lib/billing/razorpay";
 import { z } from "zod";
 
 const PLAN_AMOUNT: Record<"STARTER" | "PRO" | "AGENCY", number> = {
@@ -48,6 +54,42 @@ export async function POST(request: Request) {
           },
         });
         return jsonResponse({ error: true, message: "Payment signature verification failed." }, { status: 400 });
+      }
+      const client = await getRazorpayClient();
+      if (!client) {
+        return jsonResponse({ error: true, message: "Razorpay client unavailable." }, { status: 503 });
+      }
+      try {
+        const razorpayClient = client as unknown as {
+          orders: { fetch: (orderId: string) => Promise<Record<string, unknown>> };
+          payments?: { fetch: (paymentId: string) => Promise<Record<string, unknown>> };
+        };
+        const [order, payment] = await Promise.all([
+          razorpayClient.orders.fetch(body.razorpayOrderId),
+          razorpayClient.payments?.fetch(body.razorpayPaymentId),
+        ]);
+        const validation = validateRazorpayActivationSnapshot({
+          organizationId: access.org.id,
+          plan: body.plan,
+          razorpayOrderId: body.razorpayOrderId,
+          razorpayPaymentId: body.razorpayPaymentId,
+          snapshot: { order, payment },
+        });
+        if (!validation.ok) {
+          await db.paymentEvent.create({
+            data: {
+              organizationId: access.org.id,
+              eventId: `activation_rejected_${body.razorpayPaymentId}`,
+              eventType: "payment.activation.rejected",
+              payloadHash: body.razorpayPaymentId,
+              signatureValid: true,
+              payload: { reason: validation.reason, orderId: body.razorpayOrderId, paymentId: body.razorpayPaymentId },
+            },
+          });
+          return jsonResponse({ error: true, message: "Payment order validation failed.", reason: validation.reason }, { status: 400 });
+        }
+      } catch {
+        return jsonResponse({ error: true, message: "Payment order could not be verified with Razorpay." }, { status: 502 });
       }
     }
 

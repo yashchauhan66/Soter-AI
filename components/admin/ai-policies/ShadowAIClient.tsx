@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Shield, AlertTriangle, CheckCircle2, Ban, Search, Filter, Globe, Layers } from "lucide-react";
+import { Shield, AlertTriangle, CheckCircle2, Ban, Search, Globe, Layers } from "lucide-react";
 import type { Organization } from "@prisma/client";
 
 interface Provider {

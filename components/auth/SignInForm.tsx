@@ -11,6 +11,20 @@ function authErrorMessage(error?: string) {
   return "Could not sign in. Please try again.";
 }
 
+// Client-side input validation so obviously-bad input is caught before a
+// network round-trip and the user gets a specific, actionable message instead
+// of a generic "incorrect" from the server. The server (zod in auth.ts) remains
+// the source of truth; this is a UX layer, not a security boundary.
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function validateCredentials(email: string, password: string) {
+  if (!email) return "Please enter your email address.";
+  if (email.length > 254 || !EMAIL_PATTERN.test(email)) return "Please enter a valid email address.";
+  if (!password) return "Please enter your password.";
+  if (password.length < 8) return "Password must be at least 8 characters.";
+  return "";
+}
+
 function safeCallbackUrl(value: string) {
   if (!value) return "/dashboard";
   try {
@@ -34,9 +48,16 @@ export function SignInForm({ callbackUrl, initialError, initialNotice }: { callb
     setLoading(true);
     try {
       const form = new FormData(event.currentTarget);
+      const email = String(form.get("email") ?? "").trim().toLowerCase();
+      const password = String(form.get("password") ?? "");
+      const validationError = validateCredentials(email, password);
+      if (validationError) {
+        setError(validationError);
+        return;
+      }
       const result = await signIn("credentials", {
-        email: form.get("email"),
-        password: form.get("password"),
+        email,
+        password,
         redirect: false,
       });
       if (!result || result.error) {

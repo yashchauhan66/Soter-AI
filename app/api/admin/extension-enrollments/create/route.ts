@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { requireAdmin } from "@/lib/auth/guards";
-import { db } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 

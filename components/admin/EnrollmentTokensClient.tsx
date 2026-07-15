@@ -113,7 +113,7 @@ export function EnrollmentTokensClient({ organizations, initialTokens }: Props) 
     } finally {
       setLoading(false);
     }
-  }, [organizationId, newEmail, newDept, newRole, newMaxUses, newExpiresHours, fetchTokens]);
+  }, [organizationId, newEmail, newDept, newRole, newMaxUses, newExpiresHours]);
 
   const revokeToken = useCallback(async (tokenId: string) => {
     if (!confirm("Revoke this enrollment token? Devices using it will not be able to enroll.")) return;

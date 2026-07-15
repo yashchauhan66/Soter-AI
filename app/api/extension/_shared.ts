@@ -123,7 +123,7 @@ export function defaultExtensionPolicy(organizationId: string): ExtensionOrgPoli
   };
 }
 
-export async function authenticateAgentRequest(request: Request, organizationId: string) {
+export async function authenticateAgentRequest(request: Request, _organizationId: string) {
   const supplied = request.headers.get("x-soter-device-token");
   const expected = process.env.SOTER_AGENT_DEVICE_TOKEN;
   if (expected && supplied === expected) return { ok: true as const, source: "device_token" as const };

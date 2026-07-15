@@ -743,6 +743,11 @@
                     "default": false,
                     "description": "Show all ~100 advanced SoterAI commands in the Command Palette. Off by default keeps the palette focused on the core commands; every command remains available from the SoterAI Guard view, status bar, and this setting."
                 },
+                "soterai.experimentalFeatures.enabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Show Labs and experimental SoterAI commands in the Command Palette. Keep this off for the stable marketplace experience."
+                },
                 "soterai.liveScan.enabled": {
                     "type": "boolean",
                     "default": true,
@@ -1273,8 +1278,8 @@
         "@soterai/guard-core": "file:../guard-core",
         "@types/node": "22.10.2",
         "@types/vscode": "^1.85.0",
-        "@vscode/vsce": "^2.32.0",
-        "esbuild": "^0.24.0",
+        "@vscode/vsce": "^3.9.2",
+        "esbuild": "^0.28.1",
         "ovsx": "^0.10.12",
         "tsx": "^4.19.0",
         "typescript": "^5.9.3"

@@ -11,7 +11,7 @@ class SoterGuard {
             group: ["transform"],
             version: 1,
             subtitle: '={{$parameter["action"]}}',
-            description: "Protect AI workflows with SoterAI - input/output guard, PII redaction, RAG document scanning",
+            description: "Detect prompt injection, jailbreaks, secrets, PII, and unsafe AI instructions in n8n workflows",
             defaults: {
                 name: "SoterAI",
             },
@@ -31,25 +31,31 @@ class SoterGuard {
                     noDataExpression: true,
                     options: [
                         {
-                            name: "SoterAI Input Guard",
+                            name: "Analyze Text",
+                            value: "analyzeText",
+                            description: "Analyze text and return a risk summary without local blocking",
+                            action: "Analyze text for AI security risks",
+                        },
+                        {
+                            name: "Guard Input",
                             value: "inputGuard",
                             description: "Check user message before it reaches the LLM",
                             action: "Check user input for threats",
                         },
                         {
-                            name: "SoterAI Output Guard",
+                            name: "Guard Output",
                             value: "outputGuard",
                             description: "Check AI response before it is sent to the user",
                             action: "Check AI output for threats",
                         },
                         {
-                            name: "SoterAI PII Redactor",
+                            name: "Redact Secrets or PII",
                             value: "piiRedactor",
                             description: "Redact sensitive data (PII, secrets) from any text",
                             action: "Redact PII from text",
                         },
                         {
-                            name: "SoterAI RAG Scanner",
+                            name: "Get RAG Risk Summary",
                             value: "ragScanner",
                             description: "Scan documents/chunks before adding to RAG/vector DB",
                             action: "Scan RAG document for threats",
@@ -65,7 +71,7 @@ class SoterGuard {
                     typeOptions: { rows: 4 },
                     default: "",
                     required: true,
-                    displayOptions: { show: { action: ["inputGuard"] } },
+                    displayOptions: { show: { action: ["analyzeText", "inputGuard"] } },
                     description: "The user message to check for prompt injection, jailbreaks, and other threats",
                 },
                 // Output Guard fields
@@ -173,6 +179,14 @@ class SoterGuard {
                 const metadata = metadataRaw ? parseMetadata(metadataRaw) : undefined;
                 let result;
                 switch (action) {
+                    case "analyzeText": {
+                        const text = this.getNodeParameter("inputText", i);
+                        result = await executeInputGuard(apiKey, baseUrl, {
+                            text, projectId, onThreat: "WARN", metadata,
+                        });
+                        result.operation = "analyzeText";
+                        break;
+                    }
                     case "inputGuard": {
                         const text = this.getNodeParameter("inputText", i);
                         const onThreat = this.getNodeParameter("onThreat", i);
@@ -215,7 +229,7 @@ class SoterGuard {
                     returnData.push({
                         json: {
                             error: true,
-                            message: error instanceof Error ? error.message : "SoterAI request failed.",
+                            message: sanitizeErrorMessage(error instanceof Error ? error.message : "SoterAI request failed."),
                         },
                     });
                     continue;
@@ -229,23 +243,44 @@ class SoterGuard {
 exports.SoterGuard = SoterGuard;
 async function soterPost(apiKey, baseUrl, path, body) {
     const url = `${baseUrl.replace(/\/$/, "")}${path}`;
-    const response = await fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "x-api-key": apiKey,
-            "User-Agent": "n8n-nodes-soterai/0.2.7",
-        },
-        body: JSON.stringify(body),
-    });
-    const data = await response.json();
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
+    let response;
+    try {
+        response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "x-api-key": apiKey,
+                "User-Agent": "n8n-nodes-soterai/0.2.8",
+            },
+            body: JSON.stringify(body),
+            signal: controller.signal,
+        });
+    }
+    catch (error) {
+        if (error instanceof Error && error.name === "AbortError") {
+            throw new Error("SoterAI API request timed out after 20 seconds.");
+        }
+        throw new Error("SoterAI API request failed. Check the Base URL and network access.");
+    }
+    finally {
+        clearTimeout(timeout);
+    }
+    let data = {};
+    try {
+        data = await response.json();
+    }
+    catch {
+        data = {};
+    }
     if (!response.ok) {
-        const msg = typeof data.message === "string" ? data.message : `SoterAI API error ${response.status}`;
-        throw new Error(msg);
+        throw new Error(formatApiError(response.status, data));
     }
     return data;
 }
 async function executeInputGuard(apiKey, baseUrl, params) {
+    validateText(params.text, "Input Text");
     const meta = { ...params.metadata };
     if (params.projectId)
         meta.projectId = params.projectId;
@@ -291,6 +326,7 @@ async function executeInputGuard(apiKey, baseUrl, params) {
     return result;
 }
 async function executeOutputGuard(apiKey, baseUrl, params) {
+    validateText(params.text, "AI Output Text");
     const meta = { ...params.metadata };
     if (params.projectId)
         meta.projectId = params.projectId;
@@ -336,6 +372,7 @@ async function executeOutputGuard(apiKey, baseUrl, params) {
     return result;
 }
 async function executePiiRedactor(apiKey, baseUrl, params) {
+    validateText(params.text, "Text");
     const meta = { ...params.metadata };
     if (params.projectId)
         meta.projectId = params.projectId;
@@ -359,6 +396,10 @@ async function executePiiRedactor(apiKey, baseUrl, params) {
     };
 }
 async function executeRagScanner(apiKey, baseUrl, params) {
+    validateText(params.text, "Document Text");
+    if (!params.documentId.trim()) {
+        throw new Error("Document ID is required for RAG risk summary.");
+    }
     const raw = await soterPost(apiKey, baseUrl, "/api/rag/document/trust-score", {
         projectId: params.projectId,
         documentId: params.documentId,
@@ -384,7 +425,37 @@ function parseMetadata(raw) {
         }
     }
     catch {
-        // Ignore invalid JSON so optional metadata does not break the workflow.
+        throw new Error("Metadata JSON must be a valid JSON object.");
     }
-    return undefined;
+    throw new Error("Metadata JSON must be a valid JSON object.");
+}
+function validateText(text, fieldName) {
+    if (!text || !text.trim()) {
+        throw new Error(`${fieldName} is required.`);
+    }
+    if (text.length > 200000) {
+        throw new Error(`${fieldName} is too large. Keep text under 200,000 characters per item.`);
+    }
+}
+function formatApiError(status, data) {
+    if (status === 401 || status === 403) {
+        return "SoterAI API authentication failed. Check the API key and Base URL.";
+    }
+    if (status === 408 || status === 504) {
+        return "SoterAI API request timed out upstream. Retry the workflow or reduce payload size.";
+    }
+    if (status === 413) {
+        return "SoterAI API rejected the payload as too large. Reduce the text size and retry.";
+    }
+    if (status === 429) {
+        return "SoterAI API rate limit reached. Retry later or reduce workflow concurrency.";
+    }
+    const message = typeof data.message === "string" ? sanitizeErrorMessage(data.message) : "";
+    return message || `SoterAI API error ${status}.`;
+}
+function sanitizeErrorMessage(message) {
+    return message
+        .replace(/sk-[A-Za-z0-9_-]+/g, "sk-[REDACTED]")
+        .replace(/sk_[A-Za-z0-9_-]+/g, "sk_[REDACTED]")
+        .replace(/x-api-key[=:]\s*[^,\s}]+/gi, "x-api-key=[REDACTED]");
 }
