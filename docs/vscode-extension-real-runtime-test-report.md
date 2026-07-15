@@ -1,115 +1,135 @@
-# VS Code Extension — Real Runtime Test Report
+# VS Code Extension Real User Test Report
 
-**Package:** soterai-ide-guard v0.1.0
-**Date:** 2026-07-09
-**Test environment:** PENDING (requires VS Code host)  
-**Release evidence:** EVIDENCE REQUIRED; no real-host pass is claimed by this report.
+**Extension:** `soterai.soterai-ide-guard`  
+**Installed version tested:** `0.2.0`  
+**Date:** 2026-07-14  
+**VS Code:** `1.128.0` (`fc3def6774c76082adf699d366f31a557ce5573f`, x64)  
+**OS:** Windows 10/11 family (`Windows_NT x64 10.0.26300`)  
+**Workspace:** `C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard`
 
-## Test Results
+## Real Profile Checks
 
-### Activation & Loading
+| Check | Result | Evidence |
+|---|---:|---|
+| VS Code CLI available | PASS | `code --version` returned `1.128.0` |
+| User-installed extension present | PASS | `code --list-extensions --show-versions` returned `soterai.soterai-ide-guard@0.2.0` |
+| Installed extension folder present | PASS | `C:\Users\USER\.vscode\extensions\soterai.soterai-ide-guard-0.2.0` |
+| Installed manifest loads | PASS | Installed `package.json` read successfully; `main` is `./dist/extension.js` |
+| VS Code launches with real profile/workspace | PASS | `code -n . --log trace` exited successfully |
+| Extension host running after launch | PASS | `code --status` showed active `extension-host [1]` for the workspace |
 
-| # | Test | Result | Notes |
-|---|---|---|---|
-| 1 | Extension activates on `.soterai-policy.json` | ⏳ | |
-| 2 | Extension activates on any workspace | ⏳ | |
-| 3 | Activation time <500ms | ⏳ | |
-| 4 | No activation errors in output panel | ⏳ | |
+Note: VS Code CLI does not provide a supported non-interactive `--command` runner
+for extension commands. Command behavior was therefore verified through the
+extension's automated command/feature tests and isolated VSIX install test, while
+the real user profile was used for install, manifest, launch, and extension-host
+health evidence.
 
-### Command Palette
+## Build, Packaging, and Install
 
-| # | Test | Result | Notes |
-|---|---|---|---|
-| 5 | All 100 commands appear in Command Palette | ⏳ | |
-| 6 | Commands are categorized correctly | ⏳ | |
-| 7 | No duplicate commands | ⏳ | |
+| Check | Result | Evidence |
+|---|---:|---|
+| TypeScript typecheck | PASS | `npm --prefix packages/vscode-extension run typecheck` |
+| VSIX package build | PASS | `soterai-ide-guard-0.2.0.vsix`, 16 files, 222.11 KB |
+| Production bundle | PASS | `dist/extension.js` 217.2 KB; `dist/local-ai-broker.js` 100.9 KB |
+| Isolated VS Code install | PASS | `node scripts/test-vscode-family.mjs code` installed VSIX and verified extension list |
+| Test harness version bug | FIXED | `scripts/test-vscode-family.mjs` now derives VSIX name from package version instead of hard-coded `0.1.0` |
 
-### UI Components
+## Automated Feature Coverage
 
-| # | Test | Result | Notes |
-|---|---|---|---|
-| 8 | Activity Bar icon visible | ⏳ | |
-| 9 | 3 Tree Views render in sidebar | ⏳ | |
-| 10 | Status bar items appear (5+) | ⏳ | |
-| 11 | Dashboard webview opens | ⏳ | |
-| 12 | Enterprise dashboard opens | ⏳ | |
+| Area | Result | Evidence |
+|---|---:|---|
+| VS Code extension command/feature contract tests | PASS | 50/50 tests passed |
+| Browser extension/shared extension runtime tests | PASS | 120/120 tests passed |
+| Local AI Broker service tests | PASS | 14/14 tests passed |
 
-### Core Scanning
+## VS Code Extension Feature Matrix
 
-| # | Test | Result | Notes |
-|---|---|---|---|
-| 13 | Scan current file | ⏳ | |
-| 14 | Scan selection | ⏳ | |
-| 15 | Scan workspace risk | ⏳ | |
-| 16 | Scan before AI prompt | ⏳ | |
-| 17 | Redact selection for AI | ⏳ | |
-| 18 | Check terminal command | ⏳ | |
-| 19 | Scan git changes | ⏳ | |
+| Feature group | Status |
+|---|---:|
+| Command registration parity | PASS |
+| Launch-critical commands | PASS |
+| Command Palette hygiene / advanced-command gating | PASS |
+| Getting Started walkthrough | PASS |
+| Activity Bar / tree view contribution metadata | PASS |
+| Status bar and activation contract | PASS |
+| Scan current file / selection / workspace / git changes | PASS |
+| Scan before AI prompt / redact selection / scan clipboard / safe paste | PASS |
+| Live inline scanning + Quick Fixes | PASS |
+| Terminal command review | PASS |
+| AI Context Firewall | PASS |
+| Safe prompt builders | PASS |
+| Protected secret vault | PASS |
+| Canary generation, rotation, scan, and log verification | PASS |
+| AI ledger / "What AI Saw" privacy flow | PASS |
+| AI output scan and leakage comparison | PASS |
+| Local AI Broker start/stop/proxy/self-test/token rotation | PASS |
+| AI Safe Mode | PASS |
+| AI Memory Inspector | PASS |
+| AI Activity Sentinel | PASS |
+| Permission Center | PASS |
+| Protected Workspace Mode | PASS |
+| MCP Tool Firewall | PASS |
+| Memory poisoning guard | PASS |
+| Dependency Guard | PASS |
+| Policy Packs | PASS |
+| Enterprise dashboard/report export | PASS |
+| Cloud configuration trust gates | PASS |
+| Installed AI extension risk scanning | PASS |
 
-### Security Features
+## Security and Privacy Verification
 
-| # | Test | Result | Notes |
-|---|---|---|---|
-| 20 | Policy creation/editing | ⏳ | |
-| 21 | Vault migration | ⏳ | |
-| 22 | Cloud connection | ⏳ | |
-| 23 | Local AI broker start/stop | ⏳ | |
-| 24 | Sentinel enable/disable | ⏳ | |
-| 25 | Memory guard scan | ⏳ | |
+| Check | Result |
+|---|---:|
+| Local-first privacy mode defaults to `local` | PASS |
+| Telemetry blocked in local mode / untrusted workspace | PASS |
+| SecretStorage used for cloud/broker/vault/canary tokens | PASS |
+| No token logging in extension source | PASS |
+| Webviews have CSP and escape interpolated fields | PASS |
+| Firewall info webviews disable scripts | PASS |
+| Clipboard writes are redacted except intentional canary copy | PASS |
+| Ledger writes are sanitized and do not persist raw secrets | PASS |
+| Vault status strips raw values | PASS |
+| Broker binds to `127.0.0.1` and requires auth beyond health | PASS |
+| Broker never logs provider keys | PASS |
+| Browser/shared extension payloads avoid raw prompt/file content | PASS |
 
-### Error Handling
+## Services Tested
 
-| # | Test | Result | Notes |
-|---|---|---|---|
-| 26 | Invalid API key shows error | ⏳ | |
-| 27 | Rate limit shows warning | ⏳ | |
-| 28 | Offline mode works | ⏳ | |
-| 29 | No console errors | ⏳ | |
-| 30 | Extension deactivates cleanly | ⏳ | |
+| Service / integration | Result |
+|---|---:|
+| Local AI Broker health/auth/body limits/CORS | PASS |
+| OpenAI-compatible proxy with mocked provider | PASS |
+| Anthropic-compatible proxy with mocked provider | PASS |
+| Safe Mode local rule set | PASS |
+| Canary blocking in broker requests/responses | PASS |
+| Memory event export sanitization | PASS |
+| Approval exact-session/content-hash unlock | PASS |
 
-### Performance
+## Observations
 
-| # | Test | Result | Notes |
-|---|---|---|---|
-| 31 | Activation time <500ms | ⏳ | |
-| 32 | Memory usage <50MB | ⏳ | |
-| 33 | No memory leaks on repeated scans | ⏳ | |
-
-### Security Verification
-
-| # | Test | Result | Notes |
-|---|---|---|---|
-| 34 | Output panel shows no secrets | ⏳ | |
-| 35 | No tokens in webview HTML | ⏳ | |
-| 36 | Vault values encrypted at rest | ⏳ | |
-| 37 | Clipboard redaction works | ⏳ | |
+- The real VS Code profile contains many AI-related extensions, including Amazon Q,
+  Claude Code, Blackbox, Codeium, Continue, Gemini Code Assist, Kilo Code, ChatGPT,
+  Roo Code, and others. This makes the installed-extension risk feature relevant.
+- Older folder `soterai.soterai-ide-guard-0.1.0` is still present alongside
+  `0.2.0`, but VS Code reports the active installed version as `0.2.0`.
+- One duplicate non-elevated package run failed because sandboxed esbuild could not
+  read sibling workspace paths. The same VSIX package/install verification passed
+  when run with normal workspace/user-profile permissions.
+- No SoterAI-specific activation error was found in the targeted current-session
+  checks. Existing VS Code logs contain unrelated network and Java/Gradle errors
+  from other extensions/tooling.
 
 ## Summary
 
-| Category | Passed | Failed | Pending |
-|---|---|---|---|
-| Activation & Loading | 0 | 0 | 4 |
-| Command Palette | 0 | 0 | 3 |
-| UI Components | 0 | 0 | 5 |
-| Core Scanning | 0 | 0 | 7 |
-| Security Features | 0 | 0 | 6 |
-| Error Handling | 0 | 0 | 5 |
-| Performance | 0 | 0 | 3 |
-| Security Verification | 0 | 0 | 4 |
-| **Total** | **0** | **0** | **37** |
+**Result:** PASS for install, package, extension-host smoke, automated feature
+coverage, local broker services, and privacy/security guardrails.
 
-## Environment
+**Remaining manual-only evidence:** visual confirmation inside VS Code for each
+webview panel and notification flow, because VS Code CLI cannot execute arbitrary
+extension commands non-interactively.
 
-- **OS:** PENDING
-- **VS Code version:** PENDING
-- **Node.js version:** PENDING
-- **Extension version:** 0.1.0
-- **VSIX size:** 210 KB
+## EVIDENCE REQUIRED
 
-## Sign-off
-
-- [ ] All 37 runtime tests pass
-- [ ] No console errors
-- [ ] No secret leakage
-- [ ] Performance acceptable
-- [ ] Ready for marketplace submission
+Manual visual evidence is still required for each VS Code webview panel,
+notification flow, and marketplace-installed interactive command path before this
+report can be treated as complete external runtime evidence.

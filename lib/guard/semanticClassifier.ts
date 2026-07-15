@@ -15,24 +15,37 @@ import {
  * How it works (no model, no network, fully deterministic):
  *   1. Each text is embedded via feature hashing over word unigrams/bigrams and
  *      character n-grams into a fixed-dimension L2-normalized vector.
- *   2. At module load, seed phrases for each attack family and a benign control
- *      set are embedded and averaged into centroids.
- *   3. Classification is the cosine similarity of the input to the nearest attack
- *      centroid minus its similarity to the benign centroid (the "margin").
+ *   2. At module load, every seed phrase for each attack family and a benign
+ *      control set is embedded and kept as an individual prototype vector.
+ *   3. Classification uses *nearest-prototype* similarity: the input's score for
+ *      a family is its highest cosine similarity to ANY single seed in that
+ *      family (a 1-NN estimate), and its benign score is the highest similarity
+ *      to any benign seed. The decision is the best attack score minus the
+ *      benign score (the "margin").
+ *
+ * Why nearest-prototype and not an averaged centroid: attack families are
+ * multi-modal (an "instruction override" and a "combine-the-parts" injection are
+ * both PROMPT_INJECTION but point in different directions). Averaging blurs those
+ * modes into a single vector that matches none of them well, capping recall on
+ * novel phrasings. Taking the max over individual seeds lets each distinct
+ * sub-pattern vote, which generalizes far better — adding a paraphrase widens
+ * coverage directly instead of being diluted into an average.
  *
  * It is intentionally used as a *recall booster that routes to human review*,
  * never as a standalone hard block — see analyzeText. Cosine of two unit vectors
- * is a dot product, so scoring is O(dim) and sub-millisecond.
+ * is a dot product, so scoring is O(seeds * dim) and still sub-millisecond.
  */
 
 const DIM = 512;
 
-// Decision thresholds. Tuned against the seed corpus + held-out novel attacks so
-// paraphrased attacks clear the bar while security-adjacent benign prose does
-// not. Because a hit only routes to HUMAN_REVIEW (and only when the rules found
-// nothing), these are set for recall with a bounded false-positive cost.
-const MARGIN_THRESHOLD = 0.06;
-const MIN_ATTACK_SIMILARITY = 0.58;
+// Decision thresholds. Calibrated (see scripts/guard-benchmark/ml-tier-heldout.ts
+// and the 300-case benign control) so paraphrased attacks clear the bar while
+// security-adjacent benign prose does not. Nearest-prototype similarity runs
+// higher than centroid similarity, so these floors are set accordingly. Because
+// a hit only routes to HUMAN_REVIEW (and only when the rules found nothing),
+// they are tuned for recall with a bounded false-positive cost.
+const MARGIN_THRESHOLD = 0.07;
+const MIN_ATTACK_SIMILARITY = 0.44;
 
 export interface SemanticAssessment {
   family: SemanticFamily | null;
@@ -111,8 +124,31 @@ function dot(a: Float64Array, b: Float64Array): number {
   return total;
 }
 
-// Precomputed once at module load. Centroids are unit vectors, so cosine
-// similarity to an (also unit) input vector is a single dot product.
+/** Highest cosine similarity of `vector` to any prototype in `prototypes`. */
+function maxSimilarity(vector: Float64Array, prototypes: Float64Array[]): number {
+  let best = -1;
+  for (const prototype of prototypes) {
+    const similarity = dot(vector, prototype);
+    if (similarity > best) best = similarity;
+  }
+  return best;
+}
+
+// Precomputed once at module load. Each seed is kept as its own unit prototype
+// (not averaged) so multi-modal families are represented by every distinct
+// sub-pattern. Cosine similarity to an (also unit) input is a single dot product.
+const FAMILY_PROTOTYPES: Array<{ family: SemanticFamily; vectors: Float64Array[] }> = (
+  Object.keys(SEMANTIC_SEEDS) as SemanticFamily[]
+).map((family) => ({
+  family,
+  vectors: SEMANTIC_SEEDS[family].map((seed) => embed(seed)),
+}));
+
+const BENIGN_PROTOTYPES: Float64Array[] = SEMANTIC_BENIGN_SEEDS.map((seed) => embed(seed));
+
+// A blurred centroid per family, kept as a cheap secondary signal: it captures
+// the family's shared "gist" and is averaged with the sharp 1-NN score so a text
+// that is broadly on-theme but not close to any single seed still scores.
 const FAMILY_CENTROIDS: Array<{ family: SemanticFamily; vector: Float64Array }> = (
   Object.keys(SEMANTIC_SEEDS) as SemanticFamily[]
 ).map((family) => ({ family, vector: centroid(SEMANTIC_SEEDS[family]) }));
@@ -120,8 +156,8 @@ const FAMILY_CENTROIDS: Array<{ family: SemanticFamily; vector: Float64Array }> 
 const BENIGN_CENTROID = centroid(SEMANTIC_BENIGN_SEEDS);
 
 /**
- * Classifies a text as an attack family or benign based on centroid similarity.
- * Deterministic and storage-free; safe to call on the guard hot path.
+ * Classifies a text as an attack family or benign based on nearest-prototype
+ * similarity. Deterministic and storage-free; safe to call on the guard hot path.
  */
 export function classifySemantic(text: string): SemanticAssessment {
   const clean = text.trim();
@@ -130,26 +166,39 @@ export function classifySemantic(text: string): SemanticAssessment {
   }
 
   const vector = embed(clean);
-  const benignSimilarity = dot(vector, BENIGN_CENTROID);
+
+  // Benign score blends the sharpest matching benign seed with the benign gist.
+  const benignNn = maxSimilarity(vector, BENIGN_PROTOTYPES);
+  const benignCentroidSim = dot(vector, BENIGN_CENTROID);
+  const benignSimilarity = 0.7 * benignNn + 0.3 * benignCentroidSim;
+
+  const centroidByFamily = new Map<SemanticFamily, number>();
+  for (const { family, vector: centroidVector } of FAMILY_CENTROIDS) {
+    centroidByFamily.set(family, dot(vector, centroidVector));
+  }
 
   let bestFamily: SemanticFamily | null = null;
-  let bestSimilarity = -1;
-  for (const { family, vector: centroidVector } of FAMILY_CENTROIDS) {
-    const similarity = dot(vector, centroidVector);
-    if (similarity > bestSimilarity) {
-      bestSimilarity = similarity;
+  let bestScore = -1;
+  for (const { family, vectors } of FAMILY_PROTOTYPES) {
+    // Blend the sharp 1-NN score (recall on distinct sub-patterns) with the
+    // family centroid (recall on broadly on-theme phrasings). 1-NN dominates.
+    const nn = maxSimilarity(vector, vectors);
+    const gist = centroidByFamily.get(family) ?? 0;
+    const score = 0.75 * nn + 0.25 * gist;
+    if (score > bestScore) {
+      bestScore = score;
       bestFamily = family;
     }
   }
 
-  const margin = bestSimilarity - benignSimilarity;
+  const margin = bestScore - benignSimilarity;
   const isAttack =
-    bestFamily !== null && bestSimilarity >= MIN_ATTACK_SIMILARITY && margin >= MARGIN_THRESHOLD;
+    bestFamily !== null && bestScore >= MIN_ATTACK_SIMILARITY && margin >= MARGIN_THRESHOLD;
 
   return {
     family: isAttack ? bestFamily : null,
     isAttack,
-    score: Number(bestSimilarity.toFixed(4)),
+    score: Number(bestScore.toFixed(4)),
     margin: Number(margin.toFixed(4)),
     benignSimilarity: Number(benignSimilarity.toFixed(4)),
   };

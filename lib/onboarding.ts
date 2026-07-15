@@ -72,7 +72,7 @@ export async function loadOnboarding() {
     {
       key: "sdk",
       title: "Install the SDK",
-      description: "npm install @cyberrakshak/guard for a typed client and Next.js helper.",
+      description: "npm install @soterai/core for a typed client and Next.js helper.",
       href: "/docs#sdk",
       done: progress.sdkInstalled,
     },

@@ -86,6 +86,9 @@ export async function gatherContext(): Promise<ContextItem[]> {
     const folder = firstWorkspaceFolder();
     if (folder) {
         try {
+            // Safe child process boundary: execFile invokes git directly with
+            // fixed arguments. No shell, command interpolation, or persistence
+            // of raw diff content is used here.
             const [{ stdout: unstaged }, { stdout: staged }] = await Promise.all([
                 execFileAsync("git", ["diff"], { cwd: folder.uri.fsPath, maxBuffer: 8 * 1024 * 1024 }),
                 execFileAsync("git", ["diff", "--staged"], { cwd: folder.uri.fsPath, maxBuffer: 8 * 1024 * 1024 }),

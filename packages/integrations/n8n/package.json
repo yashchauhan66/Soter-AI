@@ -1,7 +1,7 @@
 {
   "name": "n8n-nodes-soterai",
-  "version": "0.2.7",
-  "description": "SoterAI adds prompt injection, jailbreak, PII leakage, and unsafe output protection to AI workflows.",
+  "version": "0.2.8",
+  "description": "SoterAI helps protect n8n AI workflows by detecting prompt injection, jailbreaks, secrets, PII, and unsafe AI instructions.",
   "license": "MIT",
   "author": {
     "name": "SoterAI",
@@ -19,9 +19,11 @@
     "n8n",
     "ai-security",
     "prompt-injection",
+    "ai-guardrails",
     "jailbreak",
     "pii",
-    "soter",
+    "secrets",
+    "security",
     "soterai",
     "guardrails"
   ],
@@ -38,6 +40,7 @@
   "files": [
     "dist",
     "nodes/*.png",
+    "examples",
     "README.md",
     "LICENSE",
     "CHANGELOG.md"
@@ -46,6 +49,7 @@
     "build": "tsc && copyfiles \"nodes/*.png\" dist",
     "dev": "tsc --watch",
     "lint": "tsc --noEmit",
+    "test": "node scripts/validate-package.cjs",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {

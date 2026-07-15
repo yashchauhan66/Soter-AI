@@ -22,7 +22,7 @@ const REDACTION_RULES: Array<[RegExp, string]> = [
     // ── JWT (relaxed: short middle/signature segments allowed) ────────────
     [/\beyJ[A-Za-z0-9_-]{6,}\.[A-Za-z0-9_-]{2,}\.[A-Za-z0-9_-]{2,}\b/g, "[REDACTED_JWT]"],
     // ── VCS tokens ────────────────────────────────────────────────────────
-    [/\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9_]{30,255}\b/g, "[REDACTED_GITHUB_TOKEN]"],
+    [/\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9_]{20,255}\b/g, "[REDACTED_GITHUB_TOKEN]"],
     [/\bglpat-[A-Za-z0-9_-]{20,}\b/g, "[REDACTED_GITLAB_TOKEN]"],
     // ── Cloud / provider keys ─────────────────────────────────────────────
     [/\b(?:AKIA|ASIA)[A-Z0-9]{16}\b/g, "[REDACTED_AWS_ACCESS_KEY]"],
@@ -62,7 +62,7 @@ const REDACTION_RULES: Array<[RegExp, string]> = [
 const HIGH_RISK_SECRET_PATTERNS: Array<[string, RegExp]> = [
     ["private_key", /-----BEGIN (?:RSA |EC |OPENSSH |DSA |PGP |ENCRYPTED )?PRIVATE KEY-----/],
     ["jwt", /\beyJ[A-Za-z0-9_-]{6,}\.[A-Za-z0-9_-]{2,}\.[A-Za-z0-9_-]{2,}\b/],
-    ["github_token", /\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9_]{30,255}\b/],
+    ["github_token", /\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9_]{20,255}\b/],
     ["gitlab_token", /\bglpat-[A-Za-z0-9_-]{20,}\b/],
     ["aws_access_key", /\b(?:AKIA|ASIA)[A-Z0-9]{16}\b/],
     ["anthropic_key", /\bsk-ant-[A-Za-z0-9_-]{20,}\b/],

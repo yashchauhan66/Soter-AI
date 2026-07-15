@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { Eye, Shield, ShieldOff, AlertTriangle, Globe, Clock, Users, Filter, ExternalLink } from "lucide-react";
+import { Eye, Shield, AlertTriangle, Globe, Clock, Users, Filter } from "lucide-react";
 
 interface DiscoveredDestination {
   domain: string;
@@ -42,7 +42,7 @@ const RISK_STYLES: Record<string, string> = {
 
 export function ShadowAIDashboardClient({ organizations, initialDestinations, initialEvents }: Props) {
   const [destinations, setDestinations] = useState(initialDestinations);
-  const [events, setEvents] = useState(initialEvents);
+  const [events, _setEvents] = useState(initialEvents);
   const [organizationId, setOrganizationId] = useState("");
   const [filterRisk, setFilterRisk] = useState("");
   const [loading, setLoading] = useState(false);
@@ -83,7 +83,7 @@ export function ShadowAIDashboardClient({ organizations, initialDestinations, in
         await fetchDiscovery();
       }
     } catch { /* ignore */ }
-  }, [organizationId, organizations, fetchDiscovery]);
+  }, [organizations, fetchDiscovery]);
 
   return (
     <div>

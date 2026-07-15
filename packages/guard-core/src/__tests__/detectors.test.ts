@@ -9,7 +9,7 @@ import { detectJailbreak } from "../detectors/JailbreakLiteDetector";
 import { detectTerminalCommandRisk } from "../detectors/TerminalCommandRiskDetector";
 import { detectRepoInstructionPoisoning } from "../detectors/RepoInstructionPoisoningDetector";
 import { detectAIGeneratedCodeRisk } from "../detectors/AIGeneratedCodeRiskDetector";
-import { redactText } from "../Redactor";
+import { findSurvivingSecrets, redactForSharing, redactText } from "../Redactor";
 
 describe("SoterAI Guard Core Detectors", () => {
     it("should detect OpenAI and AWS keys", () => {
@@ -25,6 +25,14 @@ describe("SoterAI Guard Core Detectors", () => {
         const clean = redactText(rawText);
         assert.ok(!clean.includes("1234567890"), "Should not contain raw key material");
         assert.ok(clean.includes("[REDACTED_API_KEY]"), "Should contain redacted token");
+    });
+
+    it("should redact shorter GitHub token canaries before sharing", () => {
+        const token = "ghp_soterai_fake_canary_123456789";
+        const clean = redactForSharing(`key=${token}`);
+        assert.ok(!clean.includes(token), "Should not contain raw GitHub token material");
+        assert.ok(clean.includes("[REDACTED_GITHUB_TOKEN]"), "Should contain GitHub token redaction marker");
+        assert.deepStrictEqual(findSurvivingSecrets(clean), []);
     });
 
     it("should detect environment file blocks", () => {

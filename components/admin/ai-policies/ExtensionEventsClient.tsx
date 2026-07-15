@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { History, Shield, Filter, Search, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { History, Shield, Filter, Search } from "lucide-react";
 import type { Organization } from "@prisma/client";
 
 interface ExtensionEvent {

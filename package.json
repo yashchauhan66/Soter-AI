@@ -45,6 +45,7 @@
     "package:wordpress": "node scripts/packageWordpressPlugin.mjs",
     "validate:marketplaces": "node scripts/export-marketplace-icons.mjs && node scripts/validate-marketplace-packages.mjs",
     "test:integrations": "npm run test:sdk:js && tsx --test tests/integrations.test.ts",
+    "test:integration-ease": "tsx --test tests/integration-ease.test.ts && node scripts/validate-marketplace-packages.mjs",
     "verify:integrations": "npm --prefix packages/sdk run typecheck && npm run test:sdk:js && npm run build:sdk:js",
     "verify": "npm run typecheck && npm --prefix packages/sdk run typecheck && npm test && npx prisma validate && npm run build",
     "db:push": "prisma db push",

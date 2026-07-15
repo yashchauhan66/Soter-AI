@@ -346,7 +346,10 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
 
         let diff = "";
         try {
-            // Include staged + unstaged changes plus the list of changed files.
+            // Safe child process boundary: execFile invokes git directly with a
+            // fixed argv list, never through a shell or user-controlled command.
+            // The cwd is the active workspace folder and output is scanned only
+            // in memory with redacted reporting.
             const [{ stdout: unstaged }, { stdout: staged }, { stdout: nameOnly }] = await Promise.all([
                 execFileAsync("git", ["diff"], { cwd, maxBuffer: 20 * 1024 * 1024 }),
                 execFileAsync("git", ["diff", "--staged"], { cwd, maxBuffer: 20 * 1024 * 1024 }),

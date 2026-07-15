@@ -25,7 +25,7 @@ export default async function CanaryPage({ searchParams }: { searchParams: Promi
             <span className={row.triggeredAt ? "text-red-300" : "text-emerald-300"}>{row.triggeredAt ? `Triggered ${row.triggeredAt.toLocaleString()}` : row.active ? "Active" : "Inactive"}</span>
           </div>
         ))}
-        {rows.length === 0 && <section className="card p-5 text-sm text-slate-500">No canary tokens yet.</section>}
+        {rows.length === 0 && <section className="card p-5 text-sm text-slate-500">No canary tokens yet. Generate a canary to plant a decoy secret — you&apos;ll be alerted the moment an agent or model tries to use it.</section>}
       </section>
     </div>
   );

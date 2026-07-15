@@ -73,10 +73,61 @@ trusted workspace and surfaced clearly in the dashboard.
 
 ## Commands
 
-`SoterAI: Scan Current File`, `Scan Selection`, `Scan Workspace Risk`,
-`Redact Selection for AI`, `Scan Before AI Prompt`, `Scan Git Changes`,
-`Check Terminal Command`, `Review Selected AI Code`, `Configure Policy`,
-`Open Security Panel`, `Connect to / Disconnect Cloud`, `Export Local Risk Report`.
+| Command | Purpose |
+| --- | --- |
+| `SoterAI: Quick Start` | Choose privacy mode, policy pack, and first scan flow. |
+| `SoterAI: Check Extension Health` | Show version, privacy mode, token configured yes/no, workspace trust, policy status, and last scan without secrets. |
+| `SoterAI: Open Settings` | Open VS Code settings filtered to SoterAI. |
+| `SoterAI: Run Demo Scan` | Run a safe local demo against fake risky text. |
+| `SoterAI: Scan Selected Text` | Scan selected prompt/text before sending it to an AI assistant. |
+| `SoterAI: Scan Current File` | Scan the active file for secrets, PII, prompt injection, unsafe instructions, and insecure patterns. |
+| `SoterAI: Scan Git Diff` | Scan staged and unstaged git changes locally. |
+| `SoterAI: Scan MCP / Agent Tools` | Review MCP and agent tool configuration for broad or dangerous permissions. |
+| `SoterAI: Review Terminal Command` | Review a command before running it; SoterAI never executes it. |
+| `SoterAI: Open AI Activity Ledger` | View privacy-preserving local scan/share metadata. |
+| `SoterAI: Generate Canary Token` | Create a fake canary token for leak detection tests. |
+| `SoterAI: Choose Policy Pack` | Apply a built-in policy profile. |
+| `SoterAI: Open Security Panel` | Open the local security dashboard. |
+
+## Settings
+
+| Setting | Default | Description |
+| --- | --- | --- |
+| `soterai.privacyMode` | `local` | `local`, `cloud`, or `hybrid`. Local mode uses local detectors only. |
+| `soterai.cloud.enabled` | `false` | Enables configured cloud features in trusted workspaces only. |
+| `soterai.cloud.baseUrl` | `https://api.soterai.in` | Cloud API base URL. |
+| `soterai.policy.mode` | `local` | Local/team/enterprise policy mode. |
+| `soterai.scan.remoteEscalation` | `never` | Remote escalation mode for redacted/minimized high-risk scans. |
+| `soterai.scan.maxFileSizeKb` | `256` | Maximum file size for local scans. |
+| `soterai.scan.maxWorkspaceFiles` | `1000` | Maximum files checked during workspace scans. |
+| `soterai.scan.excludeGlobs` | common build/binary folders | Patterns excluded from workspace scans. |
+
+## Supported Files
+
+SoterAI focuses on developer text formats: JavaScript, TypeScript, Python,
+Markdown, MDX, text, JSON, YAML, `.env`-style files, MCP configuration, and
+agent prompt/config files. Binary files and oversized files are skipped.
+
+## API Key Setup
+
+Cloud and broker provider tokens are stored with VS Code `SecretStorage`. Use
+`SoterAI: Connect to SoterAI Cloud` or the broker configuration commands only
+in trusted workspaces. Local privacy mode does not require an API key and does
+not make network calls.
+
+## Troubleshooting
+
+- If commands do not appear, run `SoterAI: Quick Start` from the Command Palette.
+- If a file is skipped, check `soterai.scan.maxFileSizeKb` and exclude globs.
+- If cloud setup is disabled, verify VS Code Workspace Trust is enabled.
+- If the VSIX was installed manually, reload VS Code after installation.
+
+## Known Limitations
+
+- Detection is defense-in-depth, not a guarantee that every issue will be found.
+- MCP and extension risk analysis is heuristic and based on available local metadata/configuration.
+- Full cloud telemetry submission is disabled until a reviewed endpoint client is added.
+- SoterAI Guard is not a replacement for professional security review, secure SDLC, or incident response.
 
 ## Development
 

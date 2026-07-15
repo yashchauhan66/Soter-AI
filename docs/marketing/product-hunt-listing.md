@@ -6,17 +6,19 @@
 
 ## 🏷️ Recommended Title
 
-**SoterAI — Open-source AI security with F1=1.0000 benchmark**
+**SoterAI — Open-source AI security with F1=1.0000 on the in-house red-team corpus**
 
 *Backup options:*
-- *SoterAI — AI firewall that detects 97/97 attacks with zero false positives*
+- *SoterAI — AI firewall that detects 97/97 attack variants on the in-house red-team corpus (no FPs recorded)*
 - *SoterAI — Open-source guardrails for chatbots, RAG, and AI agents*
+
+> **Claim scope:** All benchmark numbers below come from SoterAI's own **synthetic 97-case red-team corpus + benign control set**. They are regression evidence only — **not** an independent audit, **not** a production measurement, and **not** a guarantee. Independent third-party benchmark pending. Per `docs/marketing-claims-policy.md`, do **not** publish these as "100% detection" / "zero false positives" / "world's best" without qualifier.
 
 ---
 
 ## 📝 Tagline (1-line description)
 
-*Open-source AI security command layer that detects prompt injection, jailbreaks, and PII leakage with F1=1.0000 — in under 50ms.*
+*Open-source AI security command layer that detects prompt injection, jailbreaks, and PII leakage with F1=1.0000 on the in-house red-team corpus — in under 50ms.*
 
 ---
 
@@ -34,14 +36,16 @@ Most AI security tools are either:
 
 SoterAI is protection-first, open source, and self-hostable.
 
-**🎯 Benchmark Results (Garak-style Red Team Evaluation)**
+**🎯 Benchmark Results (In-House Garak-style Red Team Corpus)**
 
-97/97 adversarial attack variants detected across 8 categories:
-• 100% detection rate
-• 0% false positives
+97/97 adversarial attack variants detected across 8 categories **on the project's synthetic red-team dataset**:
+• 100% detection rate (on this corpus)
+• 0% false positives recorded on benign control set
 • F1 = 1.0000
 • <50ms latency per check
 • Precision = 1.0000, Recall = 1.0000
+
+> **Qualifier:** All numbers are from SoterAI's self-maintained corpus — regression evidence only. Independent third-party benchmark pending. Per policy, do not publish these as absolute "true detection rate" claims.
 
 **🛡️ 6 Layers of Defense**
 
@@ -148,13 +152,13 @@ The existing solutions were either:
 
 SoterAI is my attempt to fix this. It's:
 
-✅ Open source (MIT)
+✅ Open source (Apache-2.0 SDK, BSL 1.1 for backend; see LICENSE)
 ✅ Self-hostable (Docker, PostgreSQL, Redis)
-✅ Benchmark-tested: F1=1.0000 across 97/97 attack variants
+✅ Benchmark-tested: F1=1.0000 on the in-house synthetic red-team corpus (97/97 attack variants, 0 FPs on control set)
 ✅ India-first: built-in Aadhaar, PAN, GSTIN detection
 ✅ 32 security services across 6 defense layers
 
-The benchmark result (F1=1.0000) is from a Garak-style red-team evaluation covering prompt injection, jailbreaks, encoding attacks, multilingual (Hindi) attacks, PII, secrets, indirect injection, and unsafe output.
+The benchmark result (F1=1.0000) is from SoterAI's **own self-maintained Garak-style red-team corpus** (synthetic) covering prompt injection, jailbreaks, encoding attacks, multilingual (Hindi) attacks, PII, secrets, indirect injection, and unsafe output. It is regression evidence only — not an independent audit, not a production measurement, and not a guarantee.
 
 I'd love for you to try the live playground → https://soterai.in/playground
 

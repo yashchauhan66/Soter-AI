@@ -23,7 +23,7 @@ export default async function AgentFirewallSessionsPage({ searchParams }: { sear
           <thead className="text-xs uppercase text-slate-500"><tr><th className="py-2">Agent</th><th>Type</th><th>Status</th><th>Started</th><th>Ended</th><th>Session</th></tr></thead>
           <tbody className="divide-y divide-slate-800">
             {sessions.map((row) => <tr key={row.id}><td className="py-3 font-medium">{row.agentName}</td><td>{row.agentType}</td><td>{row.status}</td><td>{row.createdAt.toLocaleString()}</td><td>{row.endedAt?.toLocaleString() ?? "-"}</td><td className="font-mono text-xs">{row.id}</td></tr>)}
-            {sessions.length === 0 && <tr><td className="py-5 text-slate-500" colSpan={6}>No sessions yet.</td></tr>}
+            {sessions.length === 0 && <tr><td className="py-5 text-slate-500" colSpan={6}>No agent sessions yet. Sessions appear here once an agent authenticates through the firewall with a passport and token.</td></tr>}
           </tbody>
         </table>
       </section>

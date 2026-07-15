@@ -19,6 +19,9 @@ import { MemoryGuard, registerMemoryGuardCommands } from "./memory-guard/MemoryG
 import { registerDepGuardCommands } from "./dep-guard/DepGuard";
 import { registerPolicyPackCommands } from "./policy-packs/commands";
 import { EnterpriseDashboard, registerDashboardCommands } from "./enterprise/EnterpriseDashboard";
+import { registerLaunchCommands } from "./launchCommands";
+import { registerLiveScanner } from "./diagnostics/LiveScanner";
+import { registerClipboardGuard } from "./clipboard/ClipboardGuard";
 
 let statusBarItem: vscode.StatusBarItem;
 let firewallStatusItem: vscode.StatusBarItem;
@@ -34,8 +37,35 @@ let extensionContext: vscode.ExtensionContext;
 let brokerManager: BrokerManager;
 
 export function activate(context: vscode.ExtensionContext): void {
-    console.log("SoterAI IDE Guard activated successfully.");
     extensionContext = context;
+
+    // Command-palette hygiene: ~100 advanced commands are gated behind the
+    // `soterai.advancedCommands` context key so the default palette only shows
+    // the 12 core commands. Every command still works from the SoterAI Guard
+    // view, status bar, aliases, and executeCommand — this only controls palette
+    // visibility. Flipped by either the launch-era `soterai.showAllCommands`
+    // setting or the marketplace-facing `soterai.experimentalFeatures.enabled`
+    // setting.
+    const applyAdvancedCommandVisibility = () => {
+        const config = vscode.workspace.getConfiguration("soterai");
+        const showAll = config.get<boolean>("showAllCommands", false);
+        const experimental = config.get<boolean>("experimentalFeatures.enabled", false);
+        void vscode.commands.executeCommand("setContext", "soterai.advancedCommands", showAll || experimental);
+    };
+    applyAdvancedCommandVisibility();
+
+    // First-run onboarding: open the native Getting Started walkthrough exactly
+    // once, so a brand-new user is guided instead of facing a cold palette. The
+    // flag lives in globalState; reinstalls/updates never re-trigger it, and it
+    // stays silent if VS Code is opening with no UI (e.g. CLI-only sessions).
+    if (!context.globalState.get<boolean>("soterai.onboarded")) {
+        void context.globalState.update("soterai.onboarded", true);
+        void vscode.commands.executeCommand(
+            "workbench.action.openWalkthrough",
+            "soterai.soterai-ide-guard#soterai.gettingStarted",
+            false,
+        );
+    }
 
     const state = ExtensionState.getInstance();
     brokerManager = new BrokerManager(context);
@@ -83,6 +113,9 @@ export function activate(context: vscode.ExtensionContext): void {
     registerDepGuardCommands(context);
     registerPolicyPackCommands(context, refreshViews);
     registerDashboardCommands(context, refreshViews);
+    registerLaunchCommands(context);
+    registerLiveScanner(context);
+    registerClipboardGuard(context);
 
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
     statusBarItem.command = "soterai.openSecurityPanel";
@@ -111,6 +144,9 @@ export function activate(context: vscode.ExtensionContext): void {
     context.subscriptions.push(
         vscode.workspace.onDidChangeConfiguration((e) => {
             if (e.affectsConfiguration("soterai")) {
+                if (e.affectsConfiguration("soterai.showAllCommands") || e.affectsConfiguration("soterai.experimentalFeatures.enabled")) {
+                    applyAdvancedCommandVisibility();
+                }
                 state.initEngine();
                 TelemetryManager.getInstance().startBatchTimer();
                 refreshViews();
@@ -121,7 +157,9 @@ export function activate(context: vscode.ExtensionContext): void {
     context.subscriptions.push(
         vscode.window.onDidChangeActiveTextEditor(() => { updateStatusBar(); }),
         vscode.workspace.onDidSaveTextDocument(async (doc) => {
-            if (doc.uri.scheme === "file") await vscode.commands.executeCommand("soterai.scanCurrentFile", doc.uri);
+            const config = vscode.workspace.getConfiguration("soterai");
+            const liveScanEnabled = config.get<boolean>("liveScan.enabled", true);
+            if (liveScanEnabled && doc.uri.scheme === "file") await vscode.commands.executeCommand("soterai.scanCurrentFile", doc.uri);
         })
     );
 

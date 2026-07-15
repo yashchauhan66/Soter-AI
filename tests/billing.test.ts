@@ -11,6 +11,7 @@ import {
   razorpayKeySecret,
   razorpayPlanId,
   razorpayWebhookSecret,
+  validateRazorpayActivationSnapshot,
   verifyPaymentSignature,
   verifyRazorpayWebhook,
 } from "../lib/billing/razorpay";
@@ -144,11 +145,76 @@ test("Razorpay receipt stays within the provider's 40-character limit", () => {
   assert.notEqual(receipt, createRazorpayReceipt("org_abcdefghijklmnopqrstuvwxyz0123456789", 1_765_000_000_001));
 });
 
+test("PH8-SEC-001: activation rejects a signed cheaper order for a higher plan", () => {
+  const result = validateRazorpayActivationSnapshot({
+    organizationId: "org_a",
+    plan: "AGENCY",
+    razorpayOrderId: "order_1",
+    razorpayPaymentId: "pay_1",
+    snapshot: {
+      order: { id: "order_1", amount: PLAN_PRICING.STARTER.amount, currency: "INR", notes: { organizationId: "org_a", plan: "STARTER" } },
+      payment: { id: "pay_1", order_id: "order_1", amount: PLAN_PRICING.STARTER.amount, currency: "INR", status: "captured" },
+    },
+  });
+  assert.deepEqual(result, { ok: false, reason: "order_amount_mismatch" });
+});
+
+test("PH8-SEC-001: activation rejects a signed order created for another organization", () => {
+  const result = validateRazorpayActivationSnapshot({
+    organizationId: "org_a",
+    plan: "PRO",
+    razorpayOrderId: "order_1",
+    razorpayPaymentId: "pay_1",
+    snapshot: {
+      order: { id: "order_1", amount: PLAN_PRICING.PRO.amount, currency: "INR", notes: { organizationId: "org_b", plan: "PRO" } },
+      payment: { id: "pay_1", order_id: "order_1", amount: PLAN_PRICING.PRO.amount, currency: "INR", status: "captured" },
+    },
+  });
+  assert.deepEqual(result, { ok: false, reason: "order_organization_mismatch" });
+});
+
+test("PH8-SEC-001: activation rejects a signed order whose notes name a different plan", () => {
+  const result = validateRazorpayActivationSnapshot({
+    organizationId: "org_a",
+    plan: "AGENCY",
+    razorpayOrderId: "order_1",
+    razorpayPaymentId: "pay_1",
+    snapshot: {
+      order: { id: "order_1", amount: PLAN_PRICING.AGENCY.amount, currency: "INR", notes: { organizationId: "org_a", plan: "PRO" } },
+      payment: { id: "pay_1", order_id: "order_1", amount: PLAN_PRICING.AGENCY.amount, currency: "INR", status: "captured" },
+    },
+  });
+  assert.deepEqual(result, { ok: false, reason: "order_plan_mismatch" });
+});
+
+test("PH8-SEC-001: activation accepts a captured payment matching org, plan, amount and currency", () => {
+  const result = validateRazorpayActivationSnapshot({
+    organizationId: "org_a",
+    plan: "PRO",
+    razorpayOrderId: "order_1",
+    razorpayPaymentId: "pay_1",
+    snapshot: {
+      order: { id: "order_1", amount: PLAN_PRICING.PRO.amount, currency: "INR", notes: { organizationId: "org_a", plan: "PRO" } },
+      payment: { id: "pay_1", order_id: "order_1", amount: PLAN_PRICING.PRO.amount, currency: "INR", status: "captured" },
+    },
+  });
+  assert.deepEqual(result, { ok: true });
+});
+
 test("activate route stores the real plan amount instead of zero", async () => {
   const fs = await import("node:fs");
   const source = fs.readFileSync("app/api/billing/activate/route.ts", "utf8");
   assert.match(source, /PLAN_AMOUNT\[body\.plan\]/);
   assert.doesNotMatch(source, /amount:\s*0,\s*\/\/\s*will be replaced/);
+});
+
+test("PH8-SEC-001: activate route validates Razorpay order metadata before subscription changes", async () => {
+  const fs = await import("node:fs");
+  const source = fs.readFileSync("app/api/billing/activate/route.ts", "utf8");
+  assert.match(source, /validateRazorpayActivationSnapshot/);
+  assert.match(source, /orders\.fetch\(body\.razorpayOrderId\)/);
+  assert.match(source, /payments\?\.fetch\(body\.razorpayPaymentId\)/);
+  assert.match(source, /Payment order validation failed/);
 });
 
 test("checkout route returns a 502 when Razorpay rejects the order", async () => {

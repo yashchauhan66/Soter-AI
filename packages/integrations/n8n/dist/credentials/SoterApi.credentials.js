@@ -17,6 +17,9 @@ class SoterApi {
                 },
                 body: {
                     message: "SoterAI connection test",
+                    metadata: {
+                        source: "n8n-credential-test",
+                    },
                 },
             },
         };

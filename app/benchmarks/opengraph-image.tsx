@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "SoterAI — Adversarial Benchmark: 84% recall @ 1% FPR";
+export const alt = "SoterAI public benchmark: Phase 9 synthetic dataset results";
 export const size = {
   width: 1200,
   height: 630,
@@ -125,7 +125,7 @@ export default function Image() {
                 color: "#00c8c8",
               }}
             >
-              84% recall @ 1% FPR
+              Phase 9 public benchmark
             </span>
           </h1>
 
@@ -140,7 +140,7 @@ export default function Image() {
               maxWidth: "700px",
             }}
           >
-            84% of adversarial attacks caught across 8 categories within a 1% false-positive budget
+            Self-maintained synthetic dataset results with methodology and limitations
           </p>
 
           {/* Stats bar */}
@@ -159,7 +159,7 @@ export default function Image() {
                   color: "#00dc82",
                 }}
               >
-                84%
+                100%
               </span>
               <span
                 style={{
@@ -168,7 +168,7 @@ export default function Image() {
                   fontWeight: 500,
                 }}
               >
-                Recall @ 1% FPR
+                Recall on dataset
               </span>
             </div>
             <div style={{ width: 1, height: 32, background: "#1e293b" }} />
@@ -180,7 +180,7 @@ export default function Image() {
                   color: "#00c8c8",
                 }}
               >
-                0.54%
+                0.00%
               </span>
               <span
                 style={{

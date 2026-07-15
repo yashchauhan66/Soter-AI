@@ -2,7 +2,6 @@ import { z } from "zod";
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { requireAdmin } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
-import { checkRateLimit } from "@/lib/extension/rateLimiter";
 
 export const dynamic = "force-dynamic";
 

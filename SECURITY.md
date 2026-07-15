@@ -112,3 +112,8 @@ Those items are tracked as **EVIDENCE REQUIRED** in
 `docs/final-real-user-enterprise-audit-report.md` and
 `docs/100-percent-readiness-fix-plan.md`, and will be updated here only when the
 external evidence exists.
+
+
+## Phase 8 Disclosure Update
+
+Security reports should be sent to security@soterai.in (confirm mailbox before public launch). Do not access customer data, perform destructive testing, or attack third-party systems. Include reproducible steps, affected assets, impact, and redacted evidence. SoterAI has prepared a vulnerability disclosure process, but a public bug bounty should not be launched until triage ownership, SLA, safe-harbor review, and reward policy are finalized.

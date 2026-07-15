@@ -167,7 +167,7 @@ export default function Image() {
                 "Agent Firewall",
                 "PII + Secrets",
                 "8 Frameworks",
-                "Enterprise Ready",
+                "Enterprise Controls",
               ].map((item) => (
                 <div key={item} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
                   <span style={{ color: "#00dc82", fontSize: 14 }}>OK</span>

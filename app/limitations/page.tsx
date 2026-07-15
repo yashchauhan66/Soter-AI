@@ -13,7 +13,7 @@ export const metadata: Metadata = buildMetadata({
 
 const faqs = [
   {
-    q: "Is SoterAI 100% secure?",
+    q: "Is SoterAI completely secure?",
     a: "No. No security product is. SoterAI reduces the risk of leaking secrets, PII, and sensitive context to AI tools and helps you review exposure, but it cannot guarantee that every sensitive value or every attack is caught.",
   },
   {

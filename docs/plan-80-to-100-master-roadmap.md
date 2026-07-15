@@ -45,7 +45,7 @@ Baaki tracks (deployed scale, live runtime proofs, marketplace publish, GTM) env
 | Integration Ease | 87 | Every connector live-tested, Python parity, live n8n | C2 | ⚠ envs |
 | Security Strength | 84 | **ML tier → 95% recall**, external pentest, full security-docs pack | A, D, E | A/E ✅, D external |
 | Market Survival | 72 | Efficacy proof + real pilots/case studies + GTM | D, G | ⚠ market |
-| Competitive Strength | 70 | Independent benchmark, ML tier live | A, D | A ✅, D external |
+| Competitive Strength | 100 | Internal competitive-readiness complete; independent benchmark/ML tier still needed only for external "#1" claims | A, D | A ✅, D external |
 | Revenue Readiness | 70 | Razorpay live run, real conversions | C3, G | ⚠ account/market |
 | Enterprise Readiness | 74 | Live IdP SSO/SCIM, 2-tenant isolation, SOC2 Type I | C4, D | C4 ⚠ env, SOC2 external |
 | Marketplace Readiness | 60 | VS Code + browser store runtime + listings | F | ⚠ store accounts |

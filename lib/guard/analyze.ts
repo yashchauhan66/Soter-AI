@@ -37,6 +37,24 @@ const RULE_SECURITY_TYPES = new Set<RiskType>([
   "SYSTEM_PROMPT_LEAK_ATTEMPT",
 ]);
 
+// Detection tier is enterprise-configurable via SOTERAI_DETECTION_TIER:
+//   - "rules"    → deterministic signatures only; the semantic recall booster is
+//                  disabled entirely (lowest false-positive cost, lowest novel recall).
+//   - "hybrid"   → (default) rules first; the semantic booster runs only when no
+//                  rule security finding fired, and routes its hits to human review.
+//   - "semantic" → the semantic booster is also consulted even when rules already
+//                  fired, raising novel recall at a higher false-positive cost.
+// Any unrecognized value falls back to "hybrid". The semantic layer is
+// dependency-free (no model/network), so it is always available; if it ever
+// throws, analysis degrades safely to rules-only rather than failing the request.
+export type DetectionTier = "rules" | "hybrid" | "semantic";
+
+function resolveDetectionTier(): DetectionTier {
+  const raw = (process.env.SOTERAI_DETECTION_TIER ?? "").trim().toLowerCase();
+  if (raw === "rules" || raw === "semantic" || raw === "hybrid") return raw;
+  return "hybrid";
+}
+
 const COMMON_DETECTORS = [piiDetector, indiaPiiDetector, secretsDetector, toxicityDetector];
 // `generalizedIntentDetector` matches the STRUCTURE of an attack (an action verb
 // co-occurring with a sensitive target) rather than a fixed phrase — it generalizes
@@ -49,7 +67,21 @@ const OUTPUT_DETECTORS = [systemPromptLeakageDetector, unsafeOutputDetector, out
 
 export function analyzeText(text: string, direction: GuardDirection): GuardResult {
   const detectors = direction === "OUTPUT" ? OUTPUT_DETECTORS : INPUT_DETECTORS;
-  const findings: GuardFinding[] = detectors.flatMap((detector) => detector(text));
+  let findings: GuardFinding[] = detectors.flatMap((detector) => detector(text));
+
+  // Safe security-education prompts often mention "prompt injection" and
+  // "bypass" in a negated, high-level training context. Keep sensitive-data
+  // findings, but suppress bypass/injection findings for this narrow pattern so
+  // awareness material does not become user friction.
+  if (direction === "INPUT" && isSafeSecurityEducationRequest(text)) {
+    findings = findings.filter(
+      (finding) =>
+        !(
+          finding.type === "PROMPT_INJECTION" &&
+          /bypass|override|instruction|approval|control|jailbreak/i.test(finding.label)
+        ),
+    );
+  }
 
   // Set when the semantic layer (not the rules) is the sole reason a request is
   // flagged. Such requests are held for human review rather than blocked, since
@@ -249,10 +281,24 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
     // hit is reported as a MEDIUM finding and (below) routed to human review — it
     // never hard-blocks on its own, bounding the false-positive cost.
     const hasRuleSecurityFinding = findings.some((finding) => RULE_SECURITY_TYPES.has(finding.type));
-    if (!hasRuleSecurityFinding) {
-      const semantic = classifySemantic(text);
-      if (semantic.isAttack && semantic.family) {
-        semanticOnly = true;
+    // Tier gate: "rules" disables the booster; "hybrid" consults it only when the
+    // rules found nothing; "semantic" consults it regardless. Wrapped so a failure
+    // in the heuristic degrades to rules-only rather than throwing.
+    const tier = resolveDetectionTier();
+    const semanticEnabled = tier !== "rules" && (tier === "semantic" || !hasRuleSecurityFinding);
+    if (semanticEnabled) {
+      let semantic: ReturnType<typeof classifySemantic> | null = null;
+      try {
+        semantic = classifySemantic(text);
+      } catch {
+        semantic = null; // fail safe: never let the recall booster break analysis
+      }
+      if (semantic && semantic.isAttack && semantic.family) {
+        // semanticOnly (→ human review escalation below) applies only when the
+        // rules found nothing; if a rule security finding already fired, the
+        // semantic hit is recorded as corroborating evidence but does not change
+        // the rules-driven action.
+        semanticOnly = !hasRuleSecurityFinding;
         semanticMetadata = {
           family: semantic.family,
           score: semantic.score,
@@ -270,6 +316,7 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
           SOCIAL_ENGINEERING: "PROMPT_INJECTION",
           EMBEDDING_POISONING: "PROMPT_INJECTION",
           INSECURE_DESERIALIZATION: "PROMPT_INJECTION",
+          DATA_EXFILTRATION: "DATA_EXFILTRATION",
         };
         const riskType = familyToRiskType[semantic.family] ?? "PROMPT_INJECTION";
         findings.push({
@@ -332,6 +379,14 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
       ...(semanticMetadata ? { semantic: semanticMetadata } : {}),
     },
   }, advisory);
+}
+
+function isSafeSecurityEducationRequest(text: string): boolean {
+  const normalized = text.trim().toLowerCase();
+  if (!/^(explain|describe|summarize|outline|draft|write|create)\b/.test(normalized)) return false;
+  if (!/(prompt injection|security awareness|security training|protecting credentials|privacy review|least privilege)/i.test(text)) return false;
+  if (/(ignore previous|reveal system prompt|disable guardrails|dump|extract|exfiltrate|list all|admin mode|unrestricted|dan mode)/i.test(text)) return false;
+  return /(high level|awareness|training|without providing|without step-by-step|safe|benign|plain language)/i.test(text);
 }
 
 function buildReason(action: GuardResult["action"], findings: GuardFinding[]) {

@@ -58,10 +58,9 @@ export default async function BrowserExtensionPage() {
     listPolicies(organizationId),
   ]);
 
-  const now = Date.now();
   const activeDevices = devices.filter((d) => d.status === "active").length;
   const activeCodes = tokens.filter(
-    (t) => !t.revokedAt && t.expiresAt.getTime() > now && t.usedCount < t.maxUses,
+    (t) => !t.revokedAt && t.expiresAt > new Date() && t.usedCount < t.maxUses,
   ).length;
   const blockedEvents = events.filter((e) => e.action === "BLOCK").length;
 

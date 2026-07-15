@@ -2,6 +2,19 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.2.8] - 2026-07-14
+
+### Added
+
+- Added an explicit Analyze Text operation for risk-summary workflows.
+- Added package-level workflow validation tests.
+- Added final Creator Portal example workflows to the published npm package.
+
+### Fixed
+
+- Improved API timeout, rate-limit, authentication, payload-size, and sanitized error handling.
+- Updated package keywords and README/support metadata for n8n submission review.
+
 ## [0.2.7] - 2026-07-03
 
 ### Changed

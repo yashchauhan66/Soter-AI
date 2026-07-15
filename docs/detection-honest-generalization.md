@@ -7,6 +7,43 @@
 
 ---
 
+## UPDATE 2026-07-10 (later) — Semantic-tier upgrade (Track A)
+
+The ~64% ceiling below was for the **pure-regex** engine. This pass upgraded the
+semantic recall booster (`lib/guard/semanticClassifier.ts`) from a single
+**averaged-centroid** design to **nearest-prototype (1-NN over individual seeds)**,
+blended with a family-gist centroid, plus an expanded, more diverse seed corpus
+(`lib/guard/semanticSeeds.ts`, incl. a new `DATA_EXFILTRATION` family and more
+hard-negative benign seeds). No trained model, still deterministic and
+dependency-free.
+
+**Honest measured effect (attack recall on novel phrasings the engine never saw):**
+
+| Held-out set | Baseline (regex only) | After semantic-tier upgrade | Notes |
+|---|---|---|---|
+| Old validation set (14) — never tuned this pass | 64.3% | **78.6%** | independent confirmation of real lift |
+| Post-tuning honest set A (24) — run once | — | **70.8%** | authored after tuning frozen |
+| Post-tuning honest set B (16) — run once | — | **75.0%** | third independent set |
+| **Honest generalization (avg of untouched sets)** | **~64%** | **~73%** | the number to quote |
+
+- **Precision held:** benign FPR **0.33%** on the 300-case control (only a
+  pre-existing HIPAA PII rule, unrelated to this change); **0%** on set B.
+- **No regression:** all Phase-3 expanded suites, the tuned held-out set, and the
+  105-case safety-regression suites stay green. Honest floor in
+  `tests/guard/heldout-generalization.test.ts` raised **55% → 70%**.
+- **Artifacts:** `scripts/guard-benchmark/ml-tier-heldout.ts` (dev set, iterated),
+  `scripts/guard-benchmark/ml-tier-honest-final.ts` (honest set A, run once).
+
+**Honest ceiling statement:** this is **~73%, not the 95% GAP-01 target.** The
+nearest-prototype method extracts most of what seed-based semantics can give;
+closing the remaining ~73→95 gap requires a **trained ML classifier** (embedding +
+calibrated model, or a small fine-tuned transformer via ONNX), which is a larger
+effort than this pass. Do **not** claim 95%. Publishable claim today:
+**"~100% on known attack patterns, ~73% on novel/unseen phrasings, <1% false
+positives — novel-attack recall actively being raised toward 95% via an ML tier."**
+
+---
+
 ## TL;DR
 
 - The guard's headline **"100% recall"** figure is measured on the **tuned corpus**

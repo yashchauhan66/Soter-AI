@@ -62,10 +62,10 @@ export default function SupportPage() {
             API issues, account questions, integration help
           </p>
           <a
-            href="mailto:support@soterai.dev"
+            href="mailto:support@soterai.in"
             className="mt-4 inline-block text-cyan hover:underline"
           >
-            support@soterai.dev
+            support@soterai.in
           </a>
         </article>
         <article className="card p-6">
@@ -74,10 +74,10 @@ export default function SupportPage() {
             Vulnerability reports, security concerns, responsible disclosure
           </p>
           <a
-            href="mailto:security@soterai.dev"
+            href="mailto:security@soterai.in"
             className="mt-4 inline-block text-cyan hover:underline"
           >
-            security@soterai.dev
+            security@soterai.in
           </a>
         </article>
       </div>
@@ -121,10 +121,10 @@ export default function SupportPage() {
           <p className="text-slate-400">
             To report a security vulnerability, email{" "}
             <a
-              href="mailto:security@soterai.dev"
+              href="mailto:security@soterai.in"
               className="text-cyan hover:underline"
             >
-              security@soterai.dev
+              security@soterai.in
             </a>{" "}
             with the following details:
           </p>

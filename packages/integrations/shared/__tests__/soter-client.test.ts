@@ -219,7 +219,7 @@ describe("applyOnThreat", () => {
 
 describe("validators", () => {
   it("maskApiKey masks correctly", () => {
-    assert.equal(maskApiKey("synthetic_api_key_value"), "sk_t…7890");
+    assert.equal(maskApiKey("synthetic_api_key_value"), "synt…alue");
     assert.equal(maskApiKey("short"), "****");
     assert.equal(maskApiKey(null), "(none)");
   });

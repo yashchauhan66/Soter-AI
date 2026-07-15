@@ -56,12 +56,21 @@ ChatGPT, Claude, Gemini, Perplexity, Poe, OpenRouter, Replit, StackBlitz, CodeSa
 
 | Permission | Purpose |
 |---|---|
-| `activeTab` | Access current tab for scanning |
-| `contextMenus` | Right-click "Scan with Soter" menu |
-| `sidePanel` | Side panel for scan results |
-| `storage` | Store policies and enrollment state |
-| `scripting` | Inject content scripts on AI pages |
-| `alarms` | Policy sync and heartbeat scheduling |
+| `contextMenus` | Right-click "Scan with Soter" menu on supported AI pages |
+| `sidePanel` | Side panel showing the latest scan result |
+| `storage` | Store org policy cache and enrollment state locally |
+| `alarms` | Schedule policy sync and heartbeat |
+
+Content scripts are declared statically in `manifest.json` scoped to the supported AI
+hosts, so no `scripting`, `activeTab`, or `tabs` permission is required. There are **no
+optional permissions** in the store build.
+
+### Host permissions
+
+`host_permissions` are limited to the specific AI destinations the extension scans,
+`https://` only. Local development hosts (`localhost` / `127.0.0.1`) live **only** in
+`manifest.dev.json` and are never included in the store package — `npm run validate:store`
+fails the build if a dev host, `http://`, `<all_urls>`, or an unused permission leaks in.
 
 ## Privacy
 

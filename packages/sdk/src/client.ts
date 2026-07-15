@@ -824,7 +824,13 @@ export class GuardClient implements CyberRakshakGuard {
     let attempt = 0;
     for (;;) {
       try {
-        return await this.fetchImpl(url, init);
+        const res = await this.fetchImpl(url, init);
+        if (res.status >= 500 && attempt < this.maxRetries) {
+          attempt += 1;
+          await delay(this.retryBackoffMs * attempt);
+          continue;
+        }
+        return res;
       } catch (caught) {
         const aborted = caught instanceof Error && caught.name === "AbortError";
         if (attempt >= this.maxRetries) {

@@ -48,7 +48,7 @@ export default async function EnterpriseSsoPage() {
       <section className="mt-6 card p-5">
         <h2 className="font-semibold">Recent SAML login attempts</h2>
         {recentAttempts.length === 0 ? (
-          <p className="mt-3 text-sm text-slate-400">No SAML attempts yet.</p>
+          <p className="mt-3 text-sm text-slate-400">No SAML attempts yet. Configure your identity provider above, then sign in through it — attempts (success and failure) show up here.</p>
         ) : (
           <table className="mt-4 w-full text-sm">
             <thead className="text-xs uppercase tracking-wider text-slate-500"><tr><th className="py-2 text-left">When</th><th className="py-2 text-left">Email</th><th className="py-2 text-left">Status</th><th className="py-2 text-left">Error</th></tr></thead>

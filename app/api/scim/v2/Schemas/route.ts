@@ -1,11 +1,18 @@
-import { scimResponse, SCIM_USER_SCHEMA, SCIM_GROUP_SCHEMA, SCIM_ENTERPRISE_USER_SCHEMA } from "@/lib/enterprise/scim";
+import { authorizeScimRequest, scimError, ScimError, scimResponse, SCIM_USER_SCHEMA, SCIM_GROUP_SCHEMA, SCIM_ENTERPRISE_USER_SCHEMA } from "@/lib/enterprise/scim";
 
 export const dynamic = "force-dynamic";
 
-export async function GET() {
+export async function GET(request: Request) {
+  let auth;
+  try {
+    auth = await authorizeScimRequest(request);
+  } catch (error) {
+    return scimError((error as Error).message, error instanceof ScimError ? error.status : 401);
+  }
   return scimResponse({
     schemas: ["urn:ietf:params:scim:api:messages:2.0:ListResponse"],
     totalResults: 3,
+    organizationId: auth.organizationId,
     Resources: [
       { id: SCIM_USER_SCHEMA, name: "User", description: "SCIM core User schema (subset).", attributes: [
         { name: "userName", type: "string", required: true, multiValued: false, mutability: "readWrite", returned: "always", uniqueness: "server" },
