@@ -28,7 +28,14 @@ export const semanticSourceFingerprintSchema = z.object({
 });
 
 export const semanticEgressCheckSchema = z.object({
-  sessionId: z.string().trim().min(1).max(200),
+  // SDK clients may omit sessionId; default to a fresh session so the check is
+  // still persisted and traceable.
+  sessionId: z
+    .string()
+    .trim()
+    .min(1)
+    .max(200)
+    .default(() => `semantic_session_${Date.now().toString(36)}`),
   sourceIds: z.array(z.string().trim().min(1).max(200)).max(50).default([]),
   destinationType,
   destinationName: z.string().trim().max(500).optional(),
