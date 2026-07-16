@@ -67,6 +67,9 @@ const SAFETY_PATTERNS: Record<SafetyCategory, { pattern: RegExp; severity: Safet
   DANGEROUS_ACTIVITY: [
     { pattern: /\b(how\s+to\s+(hack|compromise|breach|exploit))\s+(a\s+)?(system|network|server|database)\b/gi, severity: "HIGH" },
     { pattern: /\b(steal|exfiltrate|exfiltrate)\s+(data|credentials|passwords|secrets)\b/gi, severity: "HIGH" },
+    { pattern: /\b(?:phish|phishing|credential\s+harvest|harvest\s+credentials|steal\s+(?:mfa|otp|2fa)\s+codes?)\b/gi, severity: "HIGH" },
+    { pattern: /\b(?:write|create|build|generate)\s+(?:malware|ransomware|keylogger|credential\s+stealer|infostealer)\b/gi, severity: "CRITICAL" },
+    { pattern: /\b(?:bypass|disable)\s+(?:edr|antivirus|endpoint\s+protection|security\s+monitoring)\b/gi, severity: "HIGH" },
   ],
   MISINFORMATION: [
     { pattern: /\b(vaccines?\s+cause|covid\s+is\s+a\s+hoax|5g\s+causes)\b/gi, severity: "MEDIUM" },

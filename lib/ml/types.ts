@@ -8,7 +8,7 @@ import { redactText } from "../guard/redactor";
 import type { GuardDirection } from "../guard/types";
 import type { MLLabel } from "@prisma/client";
 
-export type MLBackend = "heuristic" | "external-api";
+export type MLBackend = "heuristic" | "external-api" | "onnx";
 
 export interface MLDatasetExampleInput {
   text: string;

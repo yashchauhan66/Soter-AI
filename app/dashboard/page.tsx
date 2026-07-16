@@ -44,9 +44,12 @@ import { FeatureSearchBar } from "@/components/dashboard/FeatureSearchBar";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { MetricCard } from "@/components/dashboard/MetricCard";
 import { FirstRunGuide } from "@/components/dashboard/FirstRunGuide";
+import { UserSuccessCommandCenter } from "@/components/dashboard/UserSuccessCommandCenter";
 import { AnimateIn } from "@/components/ui/AnimateIn";
 import { SITE_URL } from "@/lib/seo/schema";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
+import { loadOnboarding } from "@/lib/onboarding";
+import { nextOnboardingAction } from "@/lib/ux/activationPaths";
 import { getTopRiskTypes } from "@/lib/dashboard/metrics";
 import { db } from "@/lib/db";
 import { guardLogListSelect } from "@/lib/guard/logSelect";
@@ -131,6 +134,8 @@ export default async function DashboardPage({
     getCurrentProjectById(params.project),
     getCurrentUserProjects(),
   ]);
+  const onboarding = await loadOnboarding();
+  const nextAction = nextOnboardingAction(onboarding.items);
   const now = new Date();
   const monthStart = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
   const usage = await checkMonthlyLimit(project.id, project.plan);
@@ -251,6 +256,14 @@ export default async function DashboardPage({
           apiBaseUrl={SITE_URL}
         />
       )}
+
+      <AnimateIn variant="slide-up" delay={1}>
+        <UserSuccessCommandCenter
+          completed={onboarding.done}
+          total={onboarding.total}
+          nextAction={nextAction ? { title: nextAction.title, href: nextAction.href } : null}
+        />
+      </AnimateIn>
 
       {/* ── Usage Banner ── */}
       {usage.exceeded && (

@@ -2,6 +2,7 @@ import { createHash, createHmac } from "crypto";
 import net from "net";
 import tls from "tls";
 import { isProduction } from "../utils";
+import { resolveEmailProvider } from "../auth/signupPolicy";
 
 export type EmailProvider = "resend" | "aws-ses" | "smtp" | "mock";
 
@@ -17,8 +18,11 @@ export interface EmailResult { id: string; provider: EmailProvider; mocked: bool
 
 export interface EmailClient { send(message: EmailMessage): Promise<EmailResult> }
 
+const DEFAULT_EMAIL_FROM = "SoterAI <onboarding@soterai.in>";
+
 export function getEmailFrom() {
-  const configured = process.env.EMAIL_FROM?.trim();
+  const provider = resolveEmailProvider();
+  const configured = process.env.EMAIL_FROM?.trim() || (provider === "resend" ? DEFAULT_EMAIL_FROM : "");
   if (!configured) return undefined;
   const bracketedAddress = configured.match(/<\s*([^<>]+)\s*>$/)?.[1]?.trim();
   return `SoterAI <${bracketedAddress ?? configured}>`;
@@ -40,11 +44,13 @@ class ResendEmailClient implements EmailClient {
   async send(message: EmailMessage): Promise<EmailResult> {
     const apiKey = process.env.RESEND_API_KEY;
     if (!apiKey) throw new Error("RESEND_API_KEY is required for the Resend provider.");
+    const from = getEmailFrom();
+    if (!from) throw new Error("EMAIL_FROM is required for the Resend provider.");
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        from: getEmailFrom(),
+        from,
         to: message.to,
         subject: message.subject,
         html: message.html,
@@ -57,7 +63,14 @@ class ResendEmailClient implements EmailClient {
       // verified", "You can only send testing emails to your own address").
       // Without this only a bare status code reaches the logs, which is the
       // difference between a diagnosable and an undiagnosable delivery failure.
-      const detail = await response.text().catch(() => "");
+      const rawDetail = await response.text().catch(() => "");
+      let detail = rawDetail;
+      try {
+        const parsed = JSON.parse(rawDetail) as { message?: string; error?: string; name?: string };
+        detail = [parsed.name, parsed.message ?? parsed.error].filter(Boolean).join(": ") || rawDetail;
+      } catch {
+        // Keep the raw response text when Resend does not return JSON.
+      }
       throw new Error(`Resend rejected email (${response.status})${detail ? `: ${detail.slice(0, 300)}` : ""}`);
     }
     const data = await response.json() as { id: string };
@@ -148,7 +161,7 @@ class SesEmailClient implements EmailClient {
 }
 
 export function getEmailClient(): EmailClient {
-  const provider = (process.env.EMAIL_PROVIDER ?? "mock").toLowerCase() as EmailProvider;
+  const provider = resolveEmailProvider() as EmailProvider;
   if (provider === "mock" && isProduction()) {
     throw new Error("EMAIL_PROVIDER=mock is disabled in production. Configure resend, aws-ses, or smtp.");
   }

@@ -1,6 +1,7 @@
 import { detectPatterns, type PatternRule } from "./helpers";
 
 const rules: PatternRule[] = [
+  { pattern: /(?:extract|dump|export|copy|collect|pull)\s+(?:our|your|the|this company's)?\s*(?:internal|confidential|private|proprietary)?[\s\S]{0,180}\b(?:pricing algorithm|discount thresholds?|enterprise customer list|customer list|client list|product roadmap|feature roadmap|revenue model|margin formula)\b/i, label: "Confidential business extraction command", message: "Direct command to extract proprietary business or customer information.", severity: "HIGH", score: 50 },
   // ── Pricing/revenue extraction ─────────────────────────────────────
   { pattern: /(?:what (?:is|are) (?:your|the|this company's)|tell me|reveal|share|disclose)\s*(?:(?:exact|internal|actual|real|true|proprietary|confidential)\s*)*(?:pricing (?:algorithm|model|formula|strategy|logic)|revenue (?:model|numbers|figures|data|split)|profit (?:margins?|formula|calculations?)|cost (?:structure|breakdown|formula))/i, label: "Pricing model extraction", message: "Attempt to extract proprietary pricing or revenue information.", severity: "HIGH", score: 45 },
   { pattern: /(?:how (?:do you|does (?:the|this)|is the)\s+)?(?:calculate|determine|compute|set|decide)\s*(?:the\s*)?(?:price|pricing|rates?|fees?|commission|markup|margin)/i, label: "Pricing logic probing", message: "Attempt to extract pricing calculation logic.", severity: "MEDIUM", score: 35 },

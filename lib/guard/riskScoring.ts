@@ -12,9 +12,11 @@ export function scoreRisk(findings: GuardFinding[]) {
   const seenTypes = new Set<string>();
   let typeSum = 0;
   let base = 0;
+  let maxDeclaredScore = 0;
   let pairCount = 0;
   for (const f of findings) {
     if (f.type === "LOW_RISK") continue;
+    maxDeclaredScore = Math.max(maxDeclaredScore, f.score);
     const pairKey = `${f.type}::${f.label}`;
     if (!seenPairs.has(pairKey)) {
       seenPairs.add(pairKey);
@@ -28,7 +30,7 @@ export function scoreRisk(findings: GuardFinding[]) {
     }
   }
   const bonus = pairCount > 1 ? Math.round(base * 0.3 * (pairCount - 1)) : 0;
-  return Math.min(100, Math.max(typeSum, base + bonus));
+  return Math.min(100, Math.max(typeSum, base + bonus, maxDeclaredScore));
 }
 
 export function severityForScore(score: number): Severity {

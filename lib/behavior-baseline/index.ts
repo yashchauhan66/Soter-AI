@@ -73,6 +73,20 @@ export function assessBehaviorSequence(input: { profile: AgentBehaviorProfile; e
   return events.map((event, index) => ({ eventId: event.eventId, ...assessAgentBehavior({ profile: input.profile, event, previousEvent: events[index - 1] }) }));
 }
 
+export function updateAgentBehaviorProfile(input: {
+  profile: AgentBehaviorProfile;
+  events: TrustEventEnvelope[];
+  minimumSamples?: number;
+  now?: Date;
+}): AgentBehaviorProfile {
+  return buildAgentBehaviorProfile({
+    agentIdentityId: input.profile.agentIdentityId,
+    events: input.events,
+    minimumSamples: input.minimumSamples ?? Math.max(30, input.profile.sampleSize),
+    now: input.now,
+  });
+}
+
 function chronological(events: TrustEventEnvelope[]) {
   return [...events].sort((a, b) => new Date(a.occurredAt).getTime() - new Date(b.occurredAt).getTime());
 }

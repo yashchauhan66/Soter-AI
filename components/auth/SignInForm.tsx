@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Loader2, LogIn } from "lucide-react";
 
@@ -85,12 +86,24 @@ export function SignInForm({ callbackUrl, initialError, initialNotice }: { callb
         <label className="mb-1.5 block text-sm font-medium" htmlFor="password">Password</label>
         <input id="password" name="password" type="password" autoComplete="current-password" required minLength={8} maxLength={200} className="input" placeholder="At least 8 characters" />
       </div>
+      <div className="text-right text-sm">
+        <Link href="/forgot-password" className="text-cyan hover:text-cyan/80">
+          Forgot password?
+        </Link>
+      </div>
       <button disabled={loading} className="button-primary w-full gap-2">
         {loading ? <Loader2 className="animate-spin" size={16} /> : <LogIn size={16} />}
         {loading ? "Signing in..." : "Sign in"}
       </button>
       {initialNotice && <p role="status" className="rounded-xl bg-emerald-500/10 p-3 text-sm text-emerald-300">{initialNotice}</p>}
-      {error && <p className="rounded-xl bg-red-500/10 p-3 text-sm text-red-300">{error}</p>}
+      {error && (
+        <p className="rounded-xl bg-red-500/10 p-3 text-sm text-red-300">
+          {error}{" "}
+          <Link href="/forgot-password" className="font-medium text-cyan hover:text-cyan/80">
+            Reset your password
+          </Link>
+        </p>
+      )}
     </form>
   );
   

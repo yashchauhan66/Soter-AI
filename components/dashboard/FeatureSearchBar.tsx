@@ -175,7 +175,7 @@ export function FeatureSearchBar() {
           onFocus={() => setFocused(true)}
           onBlur={() => setTimeout(() => setFocused(false), 200)}
           onKeyDown={handleKeyDown}
-          placeholder="Search features... (⌘K)"
+          placeholder="Search features... (Ctrl+K)"
           className="input h-10 pl-10 pr-24 text-sm"
           maxLength={200}
           aria-label="Search dashboard features"
@@ -185,7 +185,7 @@ export function FeatureSearchBar() {
           aria-autocomplete="list"
         />
         <kbd className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg border border-slate-700 bg-slate-800/50 px-2 py-0.5 text-[10px] font-medium text-slate-500">
-          ⌘K
+          Ctrl K
         </kbd>
       </div>
 

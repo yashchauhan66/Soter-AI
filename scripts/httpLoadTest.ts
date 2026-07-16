@@ -1,3 +1,5 @@
+import { mkdirSync, writeFileSync } from "node:fs";
+import path from "node:path";
 import { performance } from "node:perf_hooks";
 
 // Deployment-level HTTP load test for the guard API (Task 4). Unlike the
@@ -17,10 +19,11 @@ interface Sample { latencyMs: number; ok: boolean; status: number }
 const baseUrl = (process.env.LOAD_HTTP_URL ?? "http://localhost:3199").replace(/\/$/, "");
 const endpoint = `${baseUrl}/api/guard/analyze`;
 const levels = (process.env.LOAD_HTTP_CONCURRENCY ?? "1,10,50,100")
-  .split(",").map((v) => Math.max(1, Math.min(500, Number(v.trim()) || 1)));
+  .split(",").map((v) => Math.max(1, Math.min(1000, Number(v.trim()) || 1)));
 const perLevel = boundedNumber(process.env.LOAD_HTTP_ITERATIONS, 200, 20, 20_000);
 const maxErrorRate = boundedNumber(process.env.LOAD_HTTP_MAX_ERROR_RATE, 0.01, 0, 1);
 const maxP95Ms = boundedNumber(process.env.LOAD_HTTP_P95_MS, 750, 1, 60_000);
+const reportPath = process.env.LOAD_HTTP_REPORT;
 
 const fixtures = [
   { text: "Summarize this support policy for a customer.", direction: "INPUT" },
@@ -107,7 +110,19 @@ async function main() {
       throttled429: throttled,
     });
   }
-  console.log(JSON.stringify({ endpoint, perLevel, thresholds: { maxP95Ms, maxErrorRate }, results }, null, 2));
+  const report = {
+    generatedAt: new Date().toISOString(),
+    endpoint,
+    perLevel,
+    thresholds: { maxP95Ms, maxErrorRate },
+    results,
+  };
+  if (reportPath) {
+    const absolute = path.resolve(process.cwd(), reportPath);
+    mkdirSync(path.dirname(absolute), { recursive: true });
+    writeFileSync(absolute, `${JSON.stringify(report, null, 2)}\n`, "utf8");
+  }
+  console.log(JSON.stringify(report, null, 2));
   if (worstError > maxErrorRate) throw new Error(`HTTP error rate ${worstError} exceeded ${maxErrorRate} (raise PUBLIC_ANALYZE_RPM if 429s).`);
   if (worstP95 > maxP95Ms) throw new Error(`HTTP p95 ${worstP95}ms exceeded ${maxP95Ms}ms.`);
 }

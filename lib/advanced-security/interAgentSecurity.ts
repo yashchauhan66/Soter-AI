@@ -1,3 +1,5 @@
+import { createHmac, timingSafeEqual } from "crypto";
+
 export interface AgentMessage {
   fromAgentId: string;
   toAgentId: string;
@@ -6,6 +8,13 @@ export interface AgentMessage {
   sessionId: string;
   delegationChain?: string[];
   integrityHash?: string;
+  signature?: AgentMessageSignature;
+}
+
+export interface AgentMessageSignature {
+  alg: "hmac-sha256";
+  keyId: string;
+  value: string;
 }
 
 export interface InterAgentSecurityResult {
@@ -15,7 +24,7 @@ export interface InterAgentSecurityResult {
 }
 
 export interface InterAgentFinding {
-  type: "INJECTION_RELAY" | "PRIVILEGE_ESCALATION" | "CIRCULAR_REFERENCE" | "UNAUTHORIZED_SPAWN" | "INSTRUCTION_OVERRIDE" | "DATA_LEAK_RELAY" | "TRUST_CHAIN_BREAK";
+  type: "INJECTION_RELAY" | "PRIVILEGE_ESCALATION" | "CIRCULAR_REFERENCE" | "UNAUTHORIZED_SPAWN" | "INSTRUCTION_OVERRIDE" | "DATA_LEAK_RELAY" | "TRUST_CHAIN_BREAK" | "INVALID_SIGNATURE";
   message: string;
   severity: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
 }
@@ -25,7 +34,7 @@ const INJECTION_PATTERNS = [
   /(?:override|bypass|disable)\s+(?:safety|security|restrictions?|policies?)/i,
   /(?:you are now|new instructions?|follow my instructions? instead)/i,
   /(?:system[_\s]?override|admin[_\s]?mode|developer[_\s]?mode)/i,
-  /(?:exfiltrate|extract|send|forward)\s+(?:all|the)\s+(?:data|context|conversation|memory|secrets?)/i,
+  /(?:exfiltrate|extract|send|forward)\s+(?:all|the)\s+(?:data|context|conversation|memory|secrets?|credentials?|api[_\s]?keys?|tokens?)/i,
   /(?:delete|drop|truncate|destroy)\s+(?:all|the)\s+(?:data|records?|files?|database)/i,
   /(?:grant|give|assign|escalate)\s+(?:admin|full|root|elevated)\s+(?:access|permissions?|privileges?)/i,
 ];
@@ -44,12 +53,49 @@ const CIRCULAR_PATTERNS = [
 
 const DATA_LEAK_PATTERNS = [
   /(?:include|attach|append|embed)\s+(?:all|the|full)\s+(?:conversation|context|memory|history|secrets?|credentials?|api[_\s]?keys?)/i,
-  /(?:forward|send|relay|transmit)\s+(?:the (?:user's?|customer's?|private)\s+)?(?:data|information|context|pii|secrets?)/i,
+  /(?:forward|send|relay|transmit)\s+(?:all|the|full)?\s*(?:user's?|customer's?|private)?\s*(?:data|information|context|pii|secrets?|credentials?|api[_\s]?keys?|tokens?)/i,
 ];
+
+function canonicalMessage(message: AgentMessage) {
+  const { signature: _signature, integrityHash: _integrityHash, ...unsigned } = message;
+  return JSON.stringify(unsigned, Object.keys(unsigned).sort());
+}
+
+export function signAgentMessage(message: AgentMessage, secret: string, keyId = "local"): AgentMessageSignature {
+  return {
+    alg: "hmac-sha256",
+    keyId,
+    value: createHmac("sha256", secret).update(canonicalMessage(message)).digest("hex"),
+  };
+}
+
+export function verifyAgentMessageSignature(message: AgentMessage, secretForKey: (keyId: string) => string | undefined) {
+  if (!message.signature) return { signed: false, valid: false, reason: "Inter-agent message is unsigned." };
+  const secret = secretForKey(message.signature.keyId);
+  if (!secret) return { signed: true, valid: false, reason: "Unknown inter-agent signing key." };
+  const expected = createHmac("sha256", secret).update(canonicalMessage(message)).digest("hex");
+  const actual = message.signature.value;
+  const valid = /^[a-f0-9]{64}$/i.test(actual) && timingSafeEqual(Buffer.from(expected, "hex"), Buffer.from(actual, "hex"));
+  return { signed: true, valid, reason: valid ? "Inter-agent message signature is valid." : "Inter-agent message signature mismatch." };
+}
 
 export function checkInterAgentMessage(message: AgentMessage): InterAgentSecurityResult {
   const findings: InterAgentFinding[] = [];
   const content = message.content;
+  const signingSecret = process.env.INTER_AGENT_SIGNING_SECRET;
+
+  if (signingSecret || message.signature) {
+    const verification = verifyAgentMessageSignature(message, (keyId) =>
+      signingSecret && (!message.signature || keyId === message.signature.keyId) ? signingSecret : undefined,
+    );
+    if (!verification.valid) {
+      findings.push({
+        type: "INVALID_SIGNATURE",
+        message: verification.reason,
+        severity: "CRITICAL",
+      });
+    }
+  }
 
   for (const pattern of INJECTION_PATTERNS) {
     if (pattern.test(content)) {

@@ -6,17 +6,15 @@ import { CheckCircle2, Loader2, Mail } from "lucide-react";
 type Props = {
   email: string;
   initialEmailSent?: boolean;
-  initialDevelopmentOtp?: string;
   onSuccess: () => void | Promise<void>;
 };
 
 export function VerifyEmailOtpForm({
   email,
   initialEmailSent = true,
-  initialDevelopmentOtp,
   onSuccess,
 }: Props) {
-  const [otp, setOtp] = useState(initialDevelopmentOtp ?? "");
+  const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState(
@@ -79,7 +77,7 @@ export function VerifyEmailOtpForm({
         return;
       }
       setMessage("A fresh code has been sent. It expires in 10 minutes.");
-      setOtp(data.developmentOtp ?? "");
+      setOtp("");
       setCooldown(60);
       inputRef.current?.focus();
     } catch (caught) {

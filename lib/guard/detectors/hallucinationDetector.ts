@@ -3,7 +3,7 @@ import { detectPatterns, type PatternRule } from "./helpers";
 const rules: PatternRule[] = [
   // ── Fabricated citations ───────────────────────────────────────────
   { pattern: /(?:according to|as (?:stated|reported|published) (?:in|by)|cited in)\s+(?:a (?:recent|2024|2025|2026) study|research)\s+(?:by|from|published in)\s+(?:the journal of|proceedings of)\s+[A-Z][a-z]+\s+[A-Z][a-z]+/i, label: "Potentially fabricated citation", message: "Response contains a specific citation that may be fabricated.", severity: "MEDIUM", score: 30 },
-  { pattern: /\bdoi:\s*10\.\d{4,}\/[a-z0-9.\-/]+\b/i, label: "DOI citation (verify)", message: "Response contains a DOI that should be verified against actual publications.", severity: "LOW", score: 20 },
+  { pattern: /\b(?:doi:?\s*)?10\.\d{4,}\/[a-z0-9.\-/]+\b/i, label: "DOI citation (verify)", message: "Response contains a DOI that should be verified against actual publications.", severity: "MEDIUM", score: 30 },
   { pattern: /(?:Smith et al\.|Jones et al\.|Johnson et al\.|Williams et al\.|Brown et al\.)\s*\(\s*20[2-3]\d\s*\)/i, label: "Generic author citation", message: "Response uses generic-sounding author names in citations that may be fabricated.", severity: "MEDIUM", score: 25 },
   { pattern: /\b(?:published in|appeared in|from)\s+(?:the )?(?:International Journal of|Journal of Advanced|Proceedings of the \d+(?:st|nd|rd|th) (?:Annual|International))\s+[A-Z]/i, label: "Potentially invented journal", message: "Response references a journal name that may not exist.", severity: "MEDIUM", score: 25 },
 

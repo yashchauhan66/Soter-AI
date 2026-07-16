@@ -14,6 +14,7 @@ export function guardGroundedAnswer(input: { answer: string; sources: GroundingS
   const sourceCoverageScore = calculateSourceCoverage(input.answer, validSources);
   const citationVerification = verifyCitations(input.answer, validSources);
   const sourceChunkMatches = validSources.map((source) => ({ sourceId: source.id, score: sourceChunkMatchScore(input.answer, source.text ?? "") }));
+  const embeddingAnomalies = detectEmbeddingSimilarityAnomalies(sourceChunkMatches);
   const highRisk = highRiskTopic.test(input.answer);
   const weakAttribution = sourceCoverageScore < 0.35 || (input.policy.citationRequired && !citationVerification.valid);
   const blocked = privateLeak || (input.policy.citationRequired && (insufficient || weakAttribution)) || (input.policy.highRiskTopicReview && highRisk && (insufficient || weakAttribution));
@@ -25,11 +26,22 @@ export function guardGroundedAnswer(input: { answer: string; sources: GroundingS
     sourceCoverageScore,
     citationVerification,
     sourceChunkMatches,
+    embeddingAnomalies,
     unsupportedClaims,
     highRiskTopic: highRisk,
     requiresReview: highRisk && input.policy.highRiskTopicReview,
     privateDocumentLeak: privateLeak,
   };
+}
+
+export function detectEmbeddingSimilarityAnomalies(matches: Array<{ sourceId: string; score: number }>) {
+  return matches
+    .filter((match) => match.score >= 0.98)
+    .map((match) => ({
+      sourceId: match.sourceId,
+      type: "TOO_PERFECT_SOURCE_MATCH" as const,
+      message: "Answer/source overlap is unusually high and may indicate copied poisoned text or cross-collection contamination.",
+    }));
 }
 
 function keywords(text: string) {
@@ -54,10 +66,30 @@ export function calculateSourceCoverage(answer: string, sources: GroundingSource
 export function verifyCitations(answer: string, sources: GroundingSource[]) {
   const citedIds = [...answer.matchAll(/\[(?:source:)?([^\]]+)\]/gi)].map((match) => match[1].trim());
   const citedUrls = [...answer.matchAll(/https?:\/\/[^\s)\]]+/g)].map((match) => match[0]);
+  const citedDois = [...answer.matchAll(/\b10\.\d{4,9}\/[-._;()/:A-Z0-9]+\b/gi)].map((match) => match[0].toLowerCase());
   const knownIds = new Set(sources.map((source) => source.id));
   const knownUrls = new Set(sources.flatMap((source) => source.url ? [source.url] : []));
+  const knownHosts = new Set(sources.flatMap((source) => source.url ? [hostname(source.url)] : []).filter(Boolean));
+  const sourceText = sources.map((source) => `${source.url ?? ""} ${source.text ?? ""}`).join(" ").toLowerCase();
   const invalidCitations = [...citedIds.filter((id) => !knownIds.has(id)), ...citedUrls.filter((url) => !knownUrls.has(url))];
-  return { valid: (citedIds.length > 0 || citedUrls.length > 0) && invalidCitations.length === 0, citationCount: citedIds.length + citedUrls.length, invalidCitations };
+  const untrustedHosts = citedUrls.map(hostname).filter((host): host is string => Boolean(host) && !knownHosts.has(host));
+  const fabricatedDoiCitations = citedDois.filter((doi) => !sourceText.includes(doi));
+  const citationCount = citedIds.length + citedUrls.length + citedDois.length;
+  return {
+    valid: citationCount > 0 && invalidCitations.length === 0 && untrustedHosts.length === 0 && fabricatedDoiCitations.length === 0,
+    citationCount,
+    invalidCitations,
+    untrustedHosts: [...new Set(untrustedHosts)],
+    fabricatedDoiCitations: [...new Set(fabricatedDoiCitations)],
+  };
+}
+
+function hostname(value: string) {
+  try {
+    return new URL(value).hostname.toLowerCase();
+  } catch {
+    return null;
+  }
 }
 
 export function detectPrivateDocumentLeak(answer: string, sources: GroundingSource[]) {
