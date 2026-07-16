@@ -1,7 +1,11 @@
+import { mkdirSync, writeFileSync } from "node:fs";
+import path from "node:path";
+
 // Live adversarial battery for the Agent Firewall (full HTTP stack).
 // Flow: start session -> drive tool/action/data/output checks + approval flow.
 const BASE = process.env.LIVE_BASE_URL ?? "http://localhost:3199";
 const KEY = process.env.SOTER_API_KEY;
+const REPORT = process.env.LIVE_AGENT_FIREWALL_REPORT ?? "reports/live-agent-firewall-battery.json";
 if (!KEY) { console.error("Set SOTER_API_KEY"); process.exit(2); }
 
 const H = { "Content-Type": "application/json", "x-api-key": KEY };
@@ -14,7 +18,12 @@ async function post(path, body, headers = H) {
 }
 
 let pass = 0, fail = 0;
-const log = (name, ok, detail) => { ok ? pass++ : fail++; console.log(`[${ok ? "PASS" : "FAIL"}] ${name} ${detail ?? ""}`); };
+const checks = [];
+const log = (name, ok, detail) => {
+  ok ? pass++ : fail++;
+  checks.push({ name, ok, detail: detail ?? "" });
+  console.log(`[${ok ? "PASS" : "FAIL"}] ${name} ${detail ?? ""}`);
+};
 
 // --- AuthZ checks ---
 {
@@ -115,5 +124,16 @@ if (approvalToken) {
   log("approval double-resolve -> rejected (409)", dbl.status === 409, `(status ${dbl.status})`);
 }
 
+const reportPath = path.resolve(process.cwd(), REPORT);
+mkdirSync(path.dirname(reportPath), { recursive: true });
+writeFileSync(reportPath, `${JSON.stringify({
+  generatedAt: new Date().toISOString(),
+  baseUrl: BASE,
+  pass,
+  fail,
+  checks,
+}, null, 2)}\n`, "utf8");
+
 console.log(`\nAGENT-FIREWALL LIVE: ${pass} pass / ${fail} fail`);
+console.log(`Report written: ${path.relative(process.cwd(), reportPath)}`);
 process.exit(fail > 0 ? 1 : 0);

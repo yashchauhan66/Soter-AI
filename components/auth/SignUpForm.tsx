@@ -9,7 +9,6 @@ type SignupSuccess = {
   email: string;
   password: string;
   emailSent: boolean;
-  developmentOtp?: string;
 };
 
 export function SignUpForm() {
@@ -49,7 +48,6 @@ export function SignUpForm() {
           email,
           password,
           emailSent: data.emailSent !== false,
-          developmentOtp: data.developmentOtp,
         });
         return;
       }
@@ -77,7 +75,6 @@ export function SignUpForm() {
       <VerifyEmailOtpForm
         email={success.email}
         initialEmailSent={success.emailSent}
-        initialDevelopmentOtp={success.developmentOtp}
         onSuccess={async () => {
           const result = await signIn("credentials", {
             email: success.email,

@@ -217,6 +217,16 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
         <p className="mt-1 font-semibold">Security team</p>
       </div>
 
+      <Link
+        href="/dashboard/onboarding"
+        onClick={onClose}
+        className="mb-3 flex items-center gap-3 rounded-xl border border-cyan/25 bg-cyan/10 px-3 py-3 text-sm font-semibold text-cyan transition hover:border-cyan/40 hover:bg-cyan/15"
+      >
+        <ListChecks size={16} aria-hidden="true" />
+        <span className="flex-1">Start here</span>
+        <span className="text-[10px] font-bold uppercase tracking-wider text-cyan">2 min</span>
+      </Link>
+
       <nav className="space-y-3" aria-label="Dashboard navigation">
         {/* ── Hero Products ── */}
         {heroProducts.map((product) => {

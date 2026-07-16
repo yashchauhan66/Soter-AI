@@ -2,10 +2,11 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import {
+  consumePendingEmailVerificationOtps,
   createEmailVerificationOtp,
   EMAIL_OTP_RESEND_COOLDOWN_MS,
 } from "@/lib/auth/emailOtp";
-import { resolveEmailDeliveryMode } from "@/lib/auth/signupPolicy";
+import { resolveEmailDeliveryMode, shouldExposeDevelopmentOtp } from "@/lib/auth/signupPolicy";
 import { sendTemplateEmail } from "@/lib/email/send";
 import { enforcePublicRateLimit } from "@/lib/publicRateLimit";
 
@@ -70,6 +71,12 @@ export async function POST(request: Request) {
         data: { otp: code },
       });
     } catch (sendError) {
+      await consumePendingEmailVerificationOtps(user.id).catch((consumeError) => {
+        console.error("send-otp.consume_failed", {
+          userId: user.id,
+          reason: consumeError instanceof Error ? consumeError.message : "unknown",
+        });
+      });
       console.error("send-otp.email_failed", {
         userId: user.id,
         reason: sendError instanceof Error ? sendError.message : "unknown",
@@ -83,7 +90,7 @@ export async function POST(request: Request) {
     return jsonResponse({
       ok: true,
       message: GENERIC_MESSAGE,
-      ...(deliveryMode === "mock" ? { developmentOtp: code } : {}),
+      ...(shouldExposeDevelopmentOtp(deliveryMode) ? { developmentOtp: code } : {}),
     });
   } catch (error) {
     return apiError(error, "Failed to send verification code.");

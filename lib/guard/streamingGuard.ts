@@ -10,6 +10,7 @@ export interface StreamingChunk {
   token: string;
   index: number;
   isFinal: boolean;
+  toolCall?: { name: string; args: unknown };
 }
 
 export interface StreamingDecision {
@@ -63,6 +64,18 @@ export function createStreamingGuard(config?: Partial<StreamingGuardConfig>) {
   function inspectChunk(chunk: StreamingChunk): StreamingDecision {
     tokenCount++;
     buffer += chunk.token;
+
+    if (chunk.toolCall && cfg.toolCallInterceptor) {
+      const action = cfg.toolCallInterceptor(chunk.toolCall);
+      if (action !== "ALLOW") {
+        return {
+          action,
+          chunk,
+          reason: `Tool call intercepted: ${chunk.toolCall.name}`,
+          findings: [`TOOL_CALL_INTERCEPTED: ${chunk.toolCall.name}`],
+        };
+      }
+    }
 
     if (tokenCount > cfg.maxTokens) {
       return {

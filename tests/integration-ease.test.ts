@@ -102,6 +102,18 @@ describe("Integration — API Reference", () => {
     const src = file("docs/api-reference.md");
     assert.ok(src.includes("rate") || src.includes("Rate"), "should document rate limits");
   });
+
+  it("API reference documents idempotency and decision actions", () => {
+    const src = file("docs/api-reference.md");
+    assert.ok(src.includes("Idempotency-Key"), "should document idempotency keys");
+    assert.ok(src.includes("HUMAN_REVIEW"), "should document review action");
+    assert.ok(src.includes("ALLOW_WITH_REDACTION"), "should document redaction action");
+  });
+
+  it("API reference warns against client-side API key exposure", () => {
+    const src = file("docs/api-reference.md");
+    assert.ok(src.includes("Do not call SoterAI directly from browser JavaScript"), "should warn against client-side keys");
+  });
 });
 
 describe("Integration — Webhook Documentation", () => {
@@ -220,5 +232,18 @@ describe("Integration — Quickstart Doc", () => {
   it("Quickstart mentions API key", () => {
     const src = file("docs/quickstart-first-5-minutes.md");
     assert.ok(src.includes("API key") || src.includes("api-key") || src.includes("apiKey"), "should mention API key");
+  });
+
+  it("Quickstart includes fail-closed and server-side guidance", () => {
+    const src = file("docs/quickstart-first-5-minutes.md");
+    assert.ok(src.includes("server-side only") || src.includes("server-side"), "should require server-side key handling");
+    assert.ok(src.includes("Fail closed"), "should mention fail-closed behavior");
+  });
+
+  it("Enterprise scorecard documents evidence-gated release rule", () => {
+    const src = file("docs/enterprise-quality-scorecard.md");
+    assert.ok(src.includes("evidence-gated"), "should be evidence-gated");
+    assert.ok(src.includes("Do not claim Enterprise GA"), "should prohibit unsupported GA claims");
+    assert.ok(src.includes("External pentest"), "should include external pentest gate");
   });
 });

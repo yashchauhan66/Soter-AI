@@ -12,6 +12,7 @@ import { MultilingualClassifier } from "../classifiers/multilingual";
 import type { GuardDirection } from "../guard/types";
 import type { MLLabel } from "@prisma/client";
 import type { ModelBackend, ModelInference } from "./types";
+import { createOnnxBackendFromEnv } from "./onnxBackend";
 
 function mapRiskTypeToLabel(riskType: string): MLLabel {
   if (riskType.includes("SYSTEM_PROMPT")) return "SYSTEM_PROMPT_LEAK_ATTEMPT";
@@ -94,6 +95,13 @@ export class ExternalApiBackend implements ModelBackend {
 }
 
 export function getDefaultBackend(): ModelBackend {
+  // 1. ONNX local model (in-process, lowest latency)
+  if (process.env.ML_BACKEND === "onnx") {
+    const onnxBackend = createOnnxBackendFromEnv();
+    if (onnxBackend) return onnxBackend;
+  }
+
+  // 2. External ML API (network call)
   if (process.env.ML_BACKEND === "external-api" && process.env.ML_API_URL) {
     return new ExternalApiBackend({
       url: process.env.ML_API_URL,
@@ -101,5 +109,7 @@ export function getDefaultBackend(): ModelBackend {
       timeoutMs: Number(process.env.ML_API_TIMEOUT_MS ?? "5000"),
     });
   }
+
+  // 3. Default: heuristic (rule-based)
   return new HeuristicMLBackend();
 }

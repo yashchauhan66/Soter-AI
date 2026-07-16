@@ -9,11 +9,21 @@ function escapeHtml(value: string) {
   return value.replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]!);
 }
 
+function absoluteEmailAssetUrl(path: string) {
+  const base = process.env.EMAIL_ASSET_BASE_URL ?? process.env.NEXT_PUBLIC_EMAIL_ASSET_BASE_URL ?? "https://soterai.in";
+  try {
+    return new URL(path, base).toString();
+  } catch {
+    return `https://soterai.in${path}`;
+  }
+}
+
 export function renderEmailTemplate(name: EmailTemplateName, data: Record<string, string | number>): RenderedEmail {
   const app = "SoterAI";
   const url = data.url ? String(data.url) : "";
   const otp = escapeHtml(String(data.otp ?? ""));
   const project = escapeHtml(String(data.projectName ?? "your project"));
+  const logoUrl = escapeHtml(absoluteEmailAssetUrl("/logo.png"));
 
   if (name === "verify-email-otp") {
     const subject = "Verify your email address | SoterAI";
@@ -44,7 +54,7 @@ export function renderEmailTemplate(name: EmailTemplateName, data: Record<string
           <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#ffffff;border:1px solid #e2e8f0;border-radius:16px;overflow:hidden;box-shadow:0 8px 24px rgba(15,23,42,.08);">
             <tr>
               <td style="background:#08111f;padding:24px 32px;">
-                <div style="font-size:22px;font-weight:700;letter-spacing:.2px;color:#ffffff;">Soter<span style="color:#31d7c8;">AI</span></div>
+                <img src="${logoUrl}" width="132" alt="SoterAI" style="display:block;width:132px;max-width:132px;height:auto;border:0;outline:none;text-decoration:none;">
                 <div style="margin-top:5px;font-size:12px;color:#94a3b8;">AI Security Command Layer</div>
               </td>
             </tr>
@@ -97,6 +107,6 @@ export function renderEmailTemplate(name: EmailTemplateName, data: Record<string
   return {
     subject: selected.subject,
     text: `${selected.body}\n\nOWASP LLM Top 10 aligned risk reduction, not complete protection.`,
-    html: `<div style="font-family:Arial,sans-serif;max-width:640px"><h2>${escapeHtml(selected.subject)}</h2><p>${escapeHtml(selected.body)}</p><p style="color:#64748b;font-size:12px">OWASP LLM Top 10 aligned risk reduction, not complete protection.</p></div>`,
+    html: `<div style="font-family:Arial,sans-serif;max-width:640px"><div style="background:#08111f;padding:20px 24px"><img src="${logoUrl}" width="132" alt="SoterAI" style="display:block;width:132px;max-width:132px;height:auto;border:0;outline:none;text-decoration:none"></div><div style="padding:24px;border:1px solid #e2e8f0;border-top:0"><h2>${escapeHtml(selected.subject)}</h2><p>${escapeHtml(selected.body)}</p><p style="color:#64748b;font-size:12px">OWASP LLM Top 10 aligned risk reduction, not complete protection.</p></div></div>`,
   };
 }

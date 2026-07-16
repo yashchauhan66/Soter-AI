@@ -5,13 +5,14 @@ import { trialWindow } from "@/lib/ops/billing";
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { db } from "@/lib/db";
 import { createEmailVerificationToken } from "@/lib/auth/tokens";
-import { createEmailVerificationOtp } from "@/lib/auth/emailOtp";
+import { consumePendingEmailVerificationOtps, createEmailVerificationOtp } from "@/lib/auth/emailOtp";
 import { sendTemplateEmail } from "@/lib/email/send";
 import { enforcePublicRateLimit } from "@/lib/publicRateLimit";
 import {
   planSignup,
   resolveEmailDeliveryMode,
   requireVerifiedEmailForLogin,
+  shouldExposeDevelopmentOtp,
   type EmailDeliveryMode,
 } from "@/lib/auth/signupPolicy";
 
@@ -54,7 +55,7 @@ function successBody(opts: {
     verificationRequired,
     emailSent: opts.emailSent,
     verificationEmailMocked: opts.deliveryMode === "mock",
-    ...(opts.deliveryMode === "mock" ? { developmentOtp: opts.token } : {}),
+    ...(shouldExposeDevelopmentOtp(opts.deliveryMode) ? { developmentOtp: opts.token } : {}),
     ...opts.extra,
   };
 }
@@ -93,9 +94,16 @@ export async function POST(request: Request) {
 
     // Idempotent recovery: an existing UNVERIFIED password account regenerates
     // and resends verification instead of erroring or duplicating the user.
+    // The password is refreshed from the latest signup attempt so the user can
+    // sign in with the password they just entered after completing OTP.
     if (plan.kind === "resend") {
       const userId = existing!.id;
+      const passwordHash = await bcrypt.hash(body.password, 12);
       const token = await db.$transaction(async (tx) => {
+        await tx.user.update({
+          where: { id: userId },
+          data: { passwordHash, name: body.name },
+        });
         // Keep legacy links invalidated while OTP becomes the primary flow.
         await createEmailVerificationToken(userId, new Date(), tx);
         return createEmailVerificationOtp(userId, new Date(), tx);
@@ -104,6 +112,12 @@ export async function POST(request: Request) {
       try {
         await deliverVerification(body.email, token);
       } catch (sendError) {
+        await consumePendingEmailVerificationOtps(userId).catch((consumeError) => {
+          console.error("signup.resend.consume_failed", {
+            userId,
+            reason: consumeError instanceof Error ? consumeError.message : "unknown",
+          });
+        });
         console.error("signup.resend.email_failed", { userId, reason: sendError instanceof Error ? sendError.message : "unknown" });
         emailSent = false;
       }
@@ -175,6 +189,12 @@ export async function POST(request: Request) {
     try {
       await deliverVerification(body.email, created.token);
     } catch (sendError) {
+      await consumePendingEmailVerificationOtps(created.userId).catch((consumeError) => {
+        console.error("signup.create.consume_failed", {
+          userId: created.userId,
+          reason: consumeError instanceof Error ? consumeError.message : "unknown",
+        });
+      });
       console.error("signup.create.email_failed", { userId: created.userId, reason: sendError instanceof Error ? sendError.message : "unknown" });
       emailSent = false;
     }

@@ -8,6 +8,7 @@ export const EMAIL_OTP_MAX_ATTEMPTS = 5;
 type EmailOtpClient = {
   emailVerificationOtp: {
     deleteMany: (args: { where: { userId: string; usedAt: null } }) => Promise<unknown>;
+    updateMany: (args: { where: { userId: string; usedAt: null }; data: { usedAt: Date } }) => Promise<unknown>;
     create: (args: {
       data: { userId: string; codeHash: string; expiresAt: Date };
     }) => Promise<unknown>;
@@ -55,4 +56,15 @@ export async function createEmailVerificationOtp(
     },
   });
   return code;
+}
+
+export async function consumePendingEmailVerificationOtps(
+  userId: string,
+  now = new Date(),
+  client: EmailOtpClient = db,
+) {
+  await client.emailVerificationOtp.updateMany({
+    where: { userId, usedAt: null },
+    data: { usedAt: now },
+  });
 }

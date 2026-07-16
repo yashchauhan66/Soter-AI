@@ -16,6 +16,8 @@ test("verification email keeps the OTP out of the subject and uses professional 
   assert.doesNotMatch(email.subject, /249883/);
   assert.match(email.html, />249883</);
   assert.match(email.html, /SoterAI Security Team/);
+  assert.match(email.html, /<img src="https:\/\/soterai\.in\/logo\.png"/);
+  assert.match(email.html, /alt="SoterAI"/);
   assert.match(email.text, /249883/);
 });
 
@@ -62,6 +64,7 @@ test("creating a new OTP invalidates the prior code and stores only its hash", a
           if (rows[index].userId === where.userId && rows[index].usedAt === null) rows.splice(index, 1);
         }
       },
+      async updateMany() {},
       async create({ data }: { data: { userId: string; codeHash: string; expiresAt: Date } }) {
         rows.push({ ...data, usedAt: null });
       },
@@ -74,4 +77,20 @@ test("creating a new OTP invalidates the prior code and stores only its hash", a
   assert.notEqual(first, second);
   assert.equal(rows[0].codeHash, hashEmailOtp("user-1", second));
   assert.equal(rows[0].expiresAt.getTime(), issuedAt.getTime() + EMAIL_OTP_TTL_MS);
+});
+
+test("resend provider defaults to the verified SoterAI sender domain", () => {
+  const previousProvider = process.env.EMAIL_PROVIDER;
+  const previousApiKey = process.env.RESEND_API_KEY;
+  const previousFrom = process.env.EMAIL_FROM;
+  delete process.env.EMAIL_PROVIDER;
+  process.env.RESEND_API_KEY = "re_test_key";
+  delete process.env.EMAIL_FROM;
+  assert.equal(getEmailFrom(), "SoterAI <onboarding@soterai.in>");
+  if (previousProvider === undefined) delete process.env.EMAIL_PROVIDER;
+  else process.env.EMAIL_PROVIDER = previousProvider;
+  if (previousApiKey === undefined) delete process.env.RESEND_API_KEY;
+  else process.env.RESEND_API_KEY = previousApiKey;
+  if (previousFrom === undefined) delete process.env.EMAIL_FROM;
+  else process.env.EMAIL_FROM = previousFrom;
 });

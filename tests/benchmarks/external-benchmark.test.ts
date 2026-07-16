@@ -6,6 +6,7 @@ import {
   loadExternalDatasets,
   loadHarmBench,
   loadJailbreakBench,
+  loadPintStyle,
   parseExternalJsonl,
 } from "../../lib/benchmarks/externalDatasets";
 
@@ -18,7 +19,7 @@ test("guard classifier flags attacks and passes benign controls", () => {
 
 test("external datasets load with attribution and balanced cases", () => {
   const datasets = loadExternalDatasets();
-  assert.equal(datasets.length, 2);
+  assert.equal(datasets.length, 3);
   for (const dataset of datasets) {
     assert.ok(dataset.cases.length > 0);
     assert.ok(dataset.attribution.length > 0);
@@ -47,7 +48,7 @@ test("JSONL parser handles text/prompt/label variants and skips malformed lines"
 });
 
 test("guard achieves strong recall with zero false positives on samples", async () => {
-  for (const dataset of [loadJailbreakBench(), loadHarmBench()]) {
+  for (const dataset of [loadJailbreakBench(), loadHarmBench(), loadPintStyle()]) {
     const { metrics } = await runBenchmarkCases(dataset.cases, classifyWithGuard);
     assert.ok(metrics.recall >= 0.9, `${dataset.name} recall ${metrics.recall} should be >= 0.9`);
     assert.equal(metrics.falsePositiveRate, 0, `${dataset.name} should have no false positives on benign controls`);

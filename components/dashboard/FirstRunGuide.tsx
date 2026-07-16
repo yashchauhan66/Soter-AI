@@ -17,7 +17,7 @@ interface FirstRunGuideProps {
 /**
  * Shown on the dashboard home ONLY for a brand-new project that has not yet sent
  * a guarded request. Replaces the wall of zero-value stat cards with a concrete,
- * ordered activation path: create a key → send the first guarded request → see it
+ * ordered activation path: create a key -> send the first guarded request -> see it
  * in logs. Each step reflects real project state (key present / activity present)
  * so the checklist ticks itself off as the user progresses.
  */
@@ -31,21 +31,21 @@ export function FirstRunGuide({ hasApiKey, hasActivity, apiBaseUrl }: FirstRunGu
     {
       done: hasApiKey,
       title: "Create your first API key",
-      body: "Generate a scoped test key. It authenticates your guarded requests — you only see the secret once, so copy it somewhere safe.",
+      body: "Generate a scoped test key. It authenticates your guarded requests. You only see the secret once, so copy it somewhere safe.",
       cta: hasApiKey ? null : { label: "Create API key", href: "/dashboard/api-keys" },
       icon: KeyRound,
     },
     {
       done: hasActivity,
       title: "Send your first guarded request",
-      body: "Paste your key into this call and run it. This example is a prompt-injection attempt — the guard should flag it. Swap the text for your own to test benign traffic.",
+      body: "Paste your key into this call and run it. This example is a prompt-injection attempt; the guard should flag it. Swap the text for your own to test benign traffic.",
       icon: Send,
       code: curl,
     },
     {
       done: hasActivity,
       title: "See the decision in your logs",
-      body: "Every input/output decision — allowed, redacted, rewritten, or blocked — lands in Guard logs with the reason and risk types.",
+      body: "Every input/output decision, allowed, redacted, rewritten, or blocked, lands in Guard logs with the reason and risk types.",
       cta: { label: "Open Guard logs", href: "/dashboard/logs" },
       icon: ScrollText,
     },
@@ -123,9 +123,9 @@ export function FirstRunGuide({ hasApiKey, hasActivity, apiBaseUrl }: FirstRunGu
 
         <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-slate-800/60 pt-4 text-xs text-slate-500">
           <span>Prefer a guided walkthrough?</span>
-          <Link href="/dashboard/onboarding" className="text-cyan hover:underline">Full setup checklist →</Link>
-          <Link href="/docs" className="text-cyan hover:underline">Read the docs →</Link>
-          <Link href="/dashboard/support" className="text-cyan hover:underline">Get help →</Link>
+          <Link href="/dashboard/onboarding" className="text-cyan hover:underline">Full setup checklist</Link>
+          <Link href="/docs" className="text-cyan hover:underline">Read the docs</Link>
+          <Link href="/dashboard/support" className="text-cyan hover:underline">Get help</Link>
         </div>
       </section>
     </AnimateIn>

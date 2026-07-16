@@ -43,7 +43,7 @@ export function Hero() {
 
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link href="/signup" className="button-primary gap-2">
-              {heroCopy.primaryCta} <ArrowRight size={18} aria-hidden="true" />
+              Start Free <ArrowRight size={18} aria-hidden="true" />
             </Link>
             <Link href="/contact-sales" className="button-secondary">
               {heroCopy.secondaryCta}

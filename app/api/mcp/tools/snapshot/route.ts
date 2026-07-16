@@ -58,6 +58,7 @@ export async function POST(request: Request) {
             riskLevel: prevRows[0].riskLevel as McpToolSnapshot["riskLevel"],
             riskReasons: Array.isArray(prevRows[0].riskReasonsJson) ? prevRows[0].riskReasonsJson as string[] : [],
             promptInjectionDetected: Array.isArray(prevRows[0].riskReasonsJson) && (prevRows[0].riskReasonsJson as string[]).some((reason) => /prompt injection/i.test(reason)),
+            signatureVerification: { signed: false, valid: false, reason: "Historical snapshot was recorded before MCP tool signature verification." },
           }
         : null;
 

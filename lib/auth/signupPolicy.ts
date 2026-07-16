@@ -17,9 +17,25 @@ export type EmailDeliveryMode = "live" | "mock" | "blocked";
 
 type SignupEnv = {
   EMAIL_PROVIDER?: string;
+  RESEND_API_KEY?: string;
+  SMTP_HOST?: string;
+  AWS_ACCESS_KEY_ID?: string;
+  AWS_SECRET_ACCESS_KEY?: string;
   NODE_ENV?: string;
   AUTH_REQUIRE_EMAIL_VERIFICATION?: string;
+  AUTH_EXPOSE_DEVELOPMENT_OTP?: string;
 };
+
+export type ConfiguredEmailProvider = "resend" | "aws-ses" | "smtp" | "mock";
+
+export function resolveEmailProvider(env: SignupEnv = process.env): ConfiguredEmailProvider {
+  const explicitProvider = env.EMAIL_PROVIDER?.trim().toLowerCase();
+  if (explicitProvider) return explicitProvider as ConfiguredEmailProvider;
+  if (env.RESEND_API_KEY) return "resend";
+  if (env.SMTP_HOST) return "smtp";
+  if (env.AWS_ACCESS_KEY_ID && env.AWS_SECRET_ACCESS_KEY) return "aws-ses";
+  return "mock";
+}
 
 /**
  * Resolves how verification email will be delivered for the current process.
@@ -30,12 +46,19 @@ type SignupEnv = {
  * - "live": a real provider (resend/aws-ses/smtp) is configured.
  */
 export function resolveEmailDeliveryMode(env: SignupEnv = process.env): EmailDeliveryMode {
-  const provider = (env.EMAIL_PROVIDER ?? "mock").toLowerCase();
+  const provider = resolveEmailProvider(env);
   const isProduction = env.NODE_ENV === "production";
   if (provider === "mock") {
     return isProduction ? "blocked" : "mock";
   }
   return "live";
+}
+
+export function shouldExposeDevelopmentOtp(
+  deliveryMode: EmailDeliveryMode,
+  env: SignupEnv = process.env,
+) {
+  return deliveryMode === "mock" && env.AUTH_EXPOSE_DEVELOPMENT_OTP === "true";
 }
 
 /**

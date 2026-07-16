@@ -3,7 +3,7 @@
 // dangerous capabilities, prompt injection in descriptions, schema parameter
 // changes, endpoint changes, and overall risk increases.
 
-import { createHash } from "crypto";
+import { createHash, createHmac, timingSafeEqual } from "crypto";
 import { analyzeText } from "@/lib/guard/analyze";
 import { normalizeForDetection } from "@/lib/guard/detectors/helpers";
 import { sanitizeLogText } from "@/lib/guard/logSafety";
@@ -24,6 +24,20 @@ export interface McpToolInput {
   inputSchema?: unknown;
   outputSchema?: unknown;
   endpoint?: string;
+  signature?: McpToolSignature;
+}
+
+export interface McpToolSignature {
+  alg: "hmac-sha256";
+  keyId: string;
+  value: string;
+}
+
+export interface McpToolSignatureVerification {
+  signed: boolean;
+  valid: boolean;
+  keyId?: string;
+  reason: string;
 }
 
 export interface McpToolSnapshot {
@@ -39,6 +53,7 @@ export interface McpToolSnapshot {
   riskLevel: DriftRiskLevel;
   riskReasons: string[];
   promptInjectionDetected: boolean;
+  signatureVerification: McpToolSignatureVerification;
 }
 
 export interface McpDrift {
@@ -54,6 +69,46 @@ const RISK_ORDER: Record<DriftRiskLevel, number> = { LOW: 1, MEDIUM: 2, HIGH: 3,
 
 function hash(value: string): string {
   return createHash("sha256").update(value ?? "").digest("hex");
+}
+
+function canonicalize(value: unknown): string {
+  if (value === null || typeof value !== "object") return JSON.stringify(value);
+  if (Array.isArray(value)) return `[${value.map(canonicalize).join(",")}]`;
+  const record = value as Record<string, unknown>;
+  return `{${Object.keys(record).sort().map((key) => `${JSON.stringify(key)}:${canonicalize(record[key])}`).join(",")}}`;
+}
+
+function signingPayload(tool: McpToolInput): string {
+  const { signature: _signature, ...unsigned } = tool;
+  return canonicalize(unsigned);
+}
+
+export function signMcpTool(tool: McpToolInput, secret: string, keyId = "local"): McpToolSignature {
+  return {
+    alg: "hmac-sha256",
+    keyId,
+    value: createHmac("sha256", secret).update(signingPayload(tool)).digest("hex"),
+  };
+}
+
+export function verifyMcpToolSignature(tool: McpToolInput, secretForKey: (keyId: string) => string | undefined): McpToolSignatureVerification {
+  if (!tool.signature) return { signed: false, valid: false, reason: "Tool metadata is unsigned." };
+  if (tool.signature.alg !== "hmac-sha256") {
+    return { signed: true, valid: false, keyId: tool.signature.keyId, reason: "Unsupported MCP tool signature algorithm." };
+  }
+  const secret = secretForKey(tool.signature.keyId);
+  if (!secret) return { signed: true, valid: false, keyId: tool.signature.keyId, reason: "Unknown MCP tool signing key." };
+  const expected = createHmac("sha256", secret).update(signingPayload(tool)).digest("hex");
+  const actual = tool.signature.value;
+  const valid =
+    /^[a-f0-9]{64}$/i.test(actual) &&
+    timingSafeEqual(Buffer.from(expected, "hex"), Buffer.from(actual, "hex"));
+  return {
+    signed: true,
+    valid,
+    keyId: tool.signature.keyId,
+    reason: valid ? "MCP tool signature is valid." : "MCP tool signature does not match tool metadata.",
+  };
 }
 
 function highestRisk(levels: DriftRiskLevel[]): DriftRiskLevel {
@@ -122,6 +177,14 @@ export function snapshotTool(tool: McpToolInput): McpToolSnapshot {
     riskLevel = highestRisk([riskLevel, "HIGH"]);
     reasons.push("schema exposes an external URL/destination parameter");
   }
+  const signingSecret = process.env.MCP_TOOL_SIGNING_SECRET;
+  const signatureVerification = verifyMcpToolSignature(tool, (keyId) =>
+    signingSecret && (!tool.signature || keyId === tool.signature.keyId) ? signingSecret : undefined,
+  );
+  if (signatureVerification.signed && !signatureVerification.valid) {
+    riskLevel = "CRITICAL";
+    reasons.push("invalid MCP tool signature");
+  }
 
   return {
     toolName: tool.name,
@@ -136,6 +199,7 @@ export function snapshotTool(tool: McpToolInput): McpToolSnapshot {
     riskLevel,
     riskReasons: [...new Set(reasons)],
     promptInjectionDetected,
+    signatureVerification,
   };
 }
 

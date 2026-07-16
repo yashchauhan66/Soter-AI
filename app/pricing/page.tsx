@@ -37,6 +37,15 @@ const plans = [
   { name: "Enterprise", price: "Custom", copy: "For regulated, high-scale, self-hosted, or paid pilot deployments.", features: ["SAML and SCIM", "SIEM and retention", "Pilot and SLA review"], cta: "Join Paid Pilot", href: "/enterprise/pilot" },
 ];
 
+const comparisonRows = [
+  { feature: "Input/output guard", starter: "Included", pro: "Included", enterprise: "Included" },
+  { feature: "Signed webhooks", starter: "Included", pro: "Included", enterprise: "Included" },
+  { feature: "Projects", starter: "5", pro: "20", enterprise: "Custom" },
+  { feature: "Monthly reports", starter: "Included", pro: "Advanced", enterprise: "Custom evidence pack" },
+  { feature: "SSO / SCIM", starter: "Not included", pro: "Not included", enterprise: "Included" },
+  { feature: "SIEM and retention", starter: "Basic", pro: "Advanced", enterprise: "Custom" },
+];
+
 const faqs = [
   {
     q: "What counts as a security check?",
@@ -78,6 +87,35 @@ export default function PricingPage() {
               <Link className="button-secondary mt-6 !px-3 !py-2" href={plan.href}>{plan.cta}</Link>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section className="container-page pb-16">
+        <h2 className="text-2xl font-semibold">Feature comparison</h2>
+        <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-400">
+          Compare Starter, Pro, and Enterprise before choosing a plan. Free is for evaluation and playground use.
+        </p>
+        <div className="mt-6 overflow-x-auto rounded-xl border border-slate-800">
+          <table className="w-full min-w-[720px] text-left text-sm">
+            <thead className="bg-slate-950/80 text-slate-300">
+              <tr>
+                <th scope="col" className="px-4 py-3 font-semibold">Feature</th>
+                <th scope="col" className="px-4 py-3 font-semibold">Starter</th>
+                <th scope="col" className="px-4 py-3 font-semibold">Pro</th>
+                <th scope="col" className="px-4 py-3 font-semibold">Enterprise</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-800">
+              {comparisonRows.map((row) => (
+                <tr key={row.feature} className="bg-slate-950/40">
+                  <th scope="row" className="px-4 py-3 font-medium text-white">{row.feature}</th>
+                  <td className="px-4 py-3 text-slate-300">{row.starter}</td>
+                  <td className="px-4 py-3 text-slate-300">{row.pro}</td>
+                  <td className="px-4 py-3 text-slate-300">{row.enterprise}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </section>
 

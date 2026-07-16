@@ -5,10 +5,10 @@ import { sanitizeLogText, sanitizeMetadata } from "@/lib/guard/logSafety";
 import { requireTenantProjectOwnership } from "@/lib/phase11/tenantIsolation";
 
 export const AGENT_FIREWALL_PREVIEW_GAPS = [
-  "Inspection and approval queue exist; runtime agent execution enforcement integration is not complete.",
   "Approver assignment, SLA, and notification routing are not wired to email/SIEM in this preview.",
   "Approval audit trail covers persistence only; reviewer attestation export is not complete.",
   "Provider-specific agent runtime hooks require authorized integration setup before production use.",
+  "Provider adapter certification and sustained live-runtime load tests must be completed per customer environment.",
 ] as const;
 
 export const TOOL_CATEGORIES = [
@@ -135,6 +135,29 @@ export interface AgentActionDecisionResult {
   };
   policyMatches: AgentPolicyMatch[];
   auditId?: string;
+}
+
+export interface AgentRuntimeExecutionRecord<T = unknown> {
+  executed: boolean;
+  decision: AgentActionDecisionResult;
+  sanitizedAction: AgentActionCheckInput;
+  output?: T;
+  executionSkippedReason?: string;
+}
+
+export type AgentActionExecutor<T = unknown> = (action: AgentActionCheckInput) => T | Promise<T>;
+
+export interface AgentRuntimeSecurityState {
+  sessionId: string;
+  privateSourceAccessed: boolean;
+  secretSourceAccessed: boolean;
+  promptAttackObserved: boolean;
+  externalDestinations: string[];
+  toolSequence: string[];
+  highRiskApprovalCount: number;
+  blockedCount: number;
+  cumulativeRisk: number;
+  findings: AgentPolicyMatch[];
 }
 
 export interface AgentSessionStartInput {
@@ -512,6 +535,156 @@ export function checkAgentAction(
   return agentDecision(readonly ? "READ_ONLY" : "ALLOW", riskLevelFromScore(riskScore), readonly ? "Read-only tool action allowed by policy." : "Agent action allowed by policy.", content, policyMatches, [], options.auditId);
 }
 
+export async function enforceAgentAction<T = unknown>(
+  input: AgentActionCheckInput,
+  executor: AgentActionExecutor<T>,
+  options: { policy?: Partial<AgentFirewallPolicy>; guardAvailable?: boolean; auditId?: string; runtimeState?: AgentRuntimeSecurityState } = {},
+): Promise<AgentRuntimeExecutionRecord<T>> {
+  const checkedDecision = checkAgentAction(input, options);
+  const decision = options.runtimeState
+    ? applyRuntimeSecurityState(options.runtimeState, input, checkedDecision)
+    : checkedDecision;
+  const sanitizedAction = sanitizeAgentActionForExecution(input, decision);
+
+  if (!isExecutableAgentDecision(decision.decision)) {
+    return {
+      executed: false,
+      decision,
+      sanitizedAction,
+      executionSkippedReason: decision.reason,
+    };
+  }
+
+  const output = await executor(sanitizedAction);
+  return {
+    executed: true,
+    decision,
+    sanitizedAction,
+    output,
+  };
+}
+
+export function isExecutableAgentDecision(decision: AgentDecision) {
+  return decision === "ALLOW" || decision === "READ_ONLY" || decision === "REDACT";
+}
+
+export function createAgentRuntimeSecurityState(sessionId: string): AgentRuntimeSecurityState {
+  return {
+    sessionId,
+    privateSourceAccessed: false,
+    secretSourceAccessed: false,
+    promptAttackObserved: false,
+    externalDestinations: [],
+    toolSequence: [],
+    highRiskApprovalCount: 0,
+    blockedCount: 0,
+    cumulativeRisk: 0,
+    findings: [],
+  };
+}
+
+export function applyRuntimeSecurityState(
+  state: AgentRuntimeSecurityState,
+  input: AgentActionCheckInput,
+  decision: AgentActionDecisionResult,
+): AgentActionDecisionResult {
+  const tool = normalize(input.tool);
+  const action = normalize(input.action);
+  const text = `${input.tool} ${input.action} ${input.target ?? ""} ${input.content ?? ""}`;
+  const external = input.destination === "external" || input.riskContext?.externalDestination === true;
+  const privateRead = isPrivateRuntimeRead(tool, action, text);
+  const secretRead = isSecretRuntimeRead(tool, action, text) || decision.redactions.some((item) => item.type === "SECRET_DETECTED");
+  const promptAttack = decision.policyMatches.some((match) => match.id === "prompt.tool_misuse")
+    || /prompt-injection|jailbreak|bypass/i.test(decision.reason);
+  const targetDomain = external ? extractDomain(`${input.target ?? ""} ${input.content ?? ""}`) : undefined;
+
+  state.toolSequence.push(`${tool}:${action}`.slice(0, 160));
+  state.cumulativeRisk += runtimeRiskWeight(decision.riskLevel);
+  if (privateRead) state.privateSourceAccessed = true;
+  if (secretRead) state.secretSourceAccessed = true;
+  if (promptAttack) state.promptAttackObserved = true;
+  if (decision.decision === "ASK_APPROVAL" && (decision.riskLevel === "HIGH" || decision.riskLevel === "CRITICAL")) {
+    state.highRiskApprovalCount += 1;
+  }
+  if (decision.decision === "BLOCK") state.blockedCount += 1;
+  if (targetDomain && !state.externalDestinations.includes(targetDomain)) state.externalDestinations.push(targetDomain);
+
+  const trajectoryFindings: AgentPolicyMatch[] = [];
+  if (external && state.secretSourceAccessed) {
+    trajectoryFindings.push({
+      id: "runtime.secret_to_external",
+      label: "Runtime trajectory attempted external disclosure after secret-bearing context.",
+      severity: "CRITICAL",
+    });
+  }
+  if (external && state.privateSourceAccessed && !isTrustedLowRiskExternalRead(tool, action)) {
+    trajectoryFindings.push({
+      id: "runtime.private_to_external",
+      label: "Runtime trajectory attempted external disclosure after private data access.",
+      severity: "CRITICAL",
+    });
+  }
+  if (external && state.promptAttackObserved) {
+    trajectoryFindings.push({
+      id: "runtime.injection_to_tool",
+      label: "Runtime trajectory observed prompt-attack behavior before external tool use.",
+      severity: "CRITICAL",
+    });
+  }
+  if (state.externalDestinations.length >= 3 && external) {
+    trajectoryFindings.push({
+      id: "runtime.destination_drift",
+      label: "Agent contacted too many distinct external destinations in one session.",
+      severity: "HIGH",
+    });
+  }
+  if (state.highRiskApprovalCount >= 3) {
+    trajectoryFindings.push({
+      id: "runtime.approval_fatigue",
+      label: "Repeated high-risk approval requests in one session require session-level review.",
+      severity: "HIGH",
+    });
+  }
+  if (state.cumulativeRisk >= 12 && external) {
+    trajectoryFindings.push({
+      id: "runtime.cumulative_risk",
+      label: "Cumulative session risk exceeded the external-action threshold.",
+      severity: "HIGH",
+    });
+  }
+
+  state.findings.push(...trajectoryFindings);
+  if (trajectoryFindings.some((finding) => finding.severity === "CRITICAL")) {
+    state.blockedCount += 1;
+    return agentDecision(
+      "BLOCK",
+      "CRITICAL",
+      "Blocked by stateful runtime security controller before execution.",
+      input.content ?? "",
+      [...decision.policyMatches, ...trajectoryFindings],
+      decision.redactions,
+      decision.auditId,
+      decision.safeContent,
+    );
+  }
+  if (trajectoryFindings.length > 0 && isExecutableAgentDecision(decision.decision)) {
+    return agentDecision(
+      "ASK_APPROVAL",
+      "HIGH",
+      "Paused by stateful runtime security controller for session-level review.",
+      input.content ?? "",
+      [...decision.policyMatches, ...trajectoryFindings],
+      decision.redactions,
+      decision.auditId,
+      decision.safeContent,
+    );
+  }
+  return {
+    ...decision,
+    policyMatches: [...decision.policyMatches, ...trajectoryFindings],
+  };
+}
+
 export function checkToolUse(
   input: Omit<AgentActionCheckInput, "content">,
   options: { policy?: Partial<AgentFirewallPolicy>; guardAvailable?: boolean; auditId?: string } = {},
@@ -655,6 +828,39 @@ function agentDecision(
     };
   }
   return result;
+}
+
+function sanitizeAgentActionForExecution(input: AgentActionCheckInput, decision: AgentActionDecisionResult): AgentActionCheckInput {
+  const safeContent = decision.safeContent ?? input.content;
+  return {
+    ...input,
+    content: typeof safeContent === "string" ? safeContent : input.content,
+    metadata: sanitizeMetadata(input.metadata ?? {}),
+  };
+}
+
+function isPrivateRuntimeRead(tool: string, action: string, text: string) {
+  return /(^|[._\-\s])(read|fetch|load|open|get|query|retrieve|search|summari[sz]e)([._\-\s]|$)/.test(action)
+    && /\b(crm|customer|private|confidential|internal|email|inbox|memory|rag|file|database|drive|slack|notion|sharepoint|dropbox|jira|salesforce)\b/i.test(`${tool} ${text}`);
+}
+
+function isSecretRuntimeRead(tool: string, action: string, text: string) {
+  const combined = `${tool} ${text}`;
+  return /(^|[._\-\s])(read|fetch|load|open|get|query|retrieve|cat|type)([._\-\s]|$)/.test(action)
+    && (/\b(secret|token|credential|password|api[_-]?key|private key|id_rsa|cookie|session|oauth|vault|kubeconfig|aws credentials)\b/i.test(combined)
+      || /(^|[/\\\s"'`])\.env(\.|$|[/\\\s"'`])/i.test(combined));
+}
+
+function isTrustedLowRiskExternalRead(tool: string, action: string) {
+  return /\b(read|open|fetch|get|search|list)\b/.test(action)
+    && /\b(browser\.read|browser\.open|rag\.search)\b/.test(tool);
+}
+
+function runtimeRiskWeight(riskLevel: AgentRiskLevel) {
+  if (riskLevel === "CRITICAL") return 5;
+  if (riskLevel === "HIGH") return 3;
+  if (riskLevel === "MEDIUM") return 1;
+  return 0;
 }
 
 function normalize(value: string | undefined) {
