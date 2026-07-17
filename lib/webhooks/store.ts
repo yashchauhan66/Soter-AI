@@ -3,6 +3,13 @@ import { db } from "../db";
 import { generateWebhookSecret, hashWebhookSecret } from "./signing";
 import { decryptSecret, encryptSecret, type EncryptedSecret } from "../secrets/secretStore";
 
+export class WebhookSecretRotationConflictError extends Error {
+  constructor() {
+    super("Webhook signing secret changed during rotation. Retry with the latest endpoint state.");
+    this.name = "WebhookSecretRotationConflictError";
+  }
+}
+
 async function auditSecretAction(input: { endpointId: string; projectId?: string; action: string; success: boolean; message: string }) {
   const organizationId = input.projectId
     ? (await db.project.findUnique({ where: { id: input.projectId }, select: { organizationId: true } }))?.organizationId
@@ -46,22 +53,43 @@ export async function createWebhookEndpoint(input: CreateInput) {
   return { endpoint, rawSecret: secret.raw };
 }
 
-export async function rotateWebhookSecret(endpointId: string) {
-  const endpoint = await db.webhookEndpoint.findUnique({ where: { id: endpointId }, select: { projectId: true } });
+export async function rotateWebhookSecret(endpointId: string, scopedProjectId?: string, expectedSecretRotatedAt?: Date | null) {
+  const endpoint = scopedProjectId
+    ? { projectId: scopedProjectId }
+    : await db.webhookEndpoint.findUnique({ where: { id: endpointId }, select: { projectId: true, secretRotatedAt: true } });
   try {
     const secret = generateWebhookSecret();
     const encrypted = await encryptSecret(secret.raw);
-    await db.webhookEndpoint.update({
-      where: { id: endpointId },
-      data: {
-        secretHash: secret.hash,
-        secretPreview: secret.preview,
-        encryptedSecret: encrypted.ciphertext,
-        secretKeyVersion: `${encrypted.provider}:${encrypted.version ?? encrypted.keyVersion ?? "unknown"}`,
-        secretRotatedAt: new Date(),
-      },
+    const organizationId = endpoint?.projectId
+      ? (await db.project.findUnique({ where: { id: endpoint.projectId }, select: { organizationId: true } }))?.organizationId
+      : null;
+    await db.$transaction(async (tx) => {
+      const updated = await tx.webhookEndpoint.updateMany({
+        where: {
+          id: endpointId,
+          ...(expectedSecretRotatedAt !== undefined ? { secretRotatedAt: expectedSecretRotatedAt } : {}),
+        },
+        data: {
+          secretHash: secret.hash,
+          secretPreview: secret.preview,
+          encryptedSecret: encrypted.ciphertext,
+          secretKeyVersion: `${encrypted.provider}:${encrypted.version ?? encrypted.keyVersion ?? "unknown"}`,
+          secretRotatedAt: new Date(),
+        },
+      });
+      if (updated.count !== 1) throw new WebhookSecretRotationConflictError();
+      await tx.adminAuditLog.create({
+        data: {
+          adminUserId: null,
+          organizationId,
+          action: "KMS_SECRET_ROTATED",
+          targetType: "WebhookEndpoint",
+          targetId: endpointId,
+          reason: "Webhook signing secret was rotated through the configured secret store.",
+          metadata: { projectId: endpoint?.projectId, success: true },
+        },
+      });
     });
-    await auditSecretAction({ endpointId, projectId: endpoint?.projectId, action: "KMS_SECRET_ROTATED", success: true, message: "Webhook signing secret was rotated through the configured secret store." });
     return secret.raw;
   } catch (error) {
     await auditSecretAction({ endpointId, projectId: endpoint?.projectId, action: "KMS_SECRET_ROTATION_FAILED", success: false, message: "Webhook signing secret rotation failed closed." });

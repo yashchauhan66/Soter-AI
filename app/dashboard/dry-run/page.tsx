@@ -3,6 +3,7 @@ import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { MetricCard, StatusBadge, PayloadViewer, RiskLevel } from "@/components/dashboard/MetricCard";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
 
 export const dynamic = "force-dynamic";
 
@@ -43,14 +44,39 @@ export default async function DryRunPage({ searchParams }: { searchParams: Promi
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Agent security</p>
-          <h1 className="mt-2 text-3xl font-bold">Sandbox dry-run</h1>
-          <p className="mt-3 max-w-3xl text-slate-400">Simulate risky agent actions before execution and fail closed when the predicted effects are unsafe.</p>
-        </div>
-        <ProjectSwitcher projects={projects} selectedId={project.id} />
-      </div>
+      <FeatureGuide
+        eyebrow="Agent security"
+        title="Sandbox dry-run"
+        description="Simulate a risky agent action before it runs — sending email, writing or deleting files, running a terminal command, making a payment — and get a decision plus predicted effects, so you can fail closed when the outcome looks unsafe."
+        useCase="Autonomous agents take real-world actions: they send emails, hit APIs, install packages, delete files, move money. A single bad tool call can cause irreversible damage. The dry-run sandbox lets you preview a proposed action first — it returns a risk level and a decision (safe to execute, require approval, review, or block) along with the predicted effects, so your agent can gate high-impact actions instead of blindly executing them."
+        howItWorks={[
+          { heading: "Describe the action", body: "Before executing, send the proposed tool call — its type (email, file write/delete, terminal, API call, payment, and so on), tool, action, target, and payload — to the simulate endpoint." },
+          { heading: "Simulate the effects", body: "The sandbox evaluates the action against your policies and produces the predicted effects and findings without actually performing the action. Payloads are stored redacted." },
+          { heading: "Return a decision", body: "You get back a decision — safe to execute, require approval, review, or block — plus a risk level and a plain-language reason your agent (or a human) can act on." },
+          { heading: "Fail closed", body: "Gate execution on the decision: only proceed on safe-to-execute, route require-approval and review to a human, and block the unsafe ones outright." },
+        ]}
+        integrationCode={`import { simulateAgentAction } from "@soterai/core";
+
+const options = { apiKey: process.env.SOTER_API_KEY };
+
+const result = await simulateAgentAction(options, {
+  sessionId: "agent-session-123",
+  dryRunType: "FILE_DELETE",
+  tool: "filesystem",
+  action: "delete",
+  target: "/var/data/customers.db",
+  simulatedPayload: proposedPayload,
+});
+
+if (result.decision === "SAFE_TO_EXECUTE") {
+  await runTheRealAction();
+} else {
+  // require approval / review / block — do NOT execute
+  console.warn(result.decision, result.riskLevel, result.reason);
+}`}
+        callout="Dry-run is a pre-execution simulation, not an enforcement layer. It predicts effects and returns a decision — it does not itself stop your agent. Safety depends on your code honoring the returned decision and failing closed on anything other than SAFE_TO_EXECUTE."
+      />
+      <ProjectSwitcher projects={projects} selectedId={project.id} />
 
       <div className="grid gap-4 sm:grid-cols-4">
         <MetricCard label="Simulations" value={dryRuns.length} tone="gray" />

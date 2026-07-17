@@ -5,6 +5,7 @@ const fs = require("fs");
 const path = require("path");
 
 const extensionRoot = __dirname;
+const repoRoot = path.resolve(extensionRoot, "..", "..");
 
 const production = process.argv.includes("--production");
 const watch = process.argv.includes("--watch");
@@ -16,9 +17,9 @@ fs.rmSync(path.join(extensionRoot, "dist"), { recursive: true, force: true });
 /** @type {import('esbuild').BuildOptions} */
 const options = {
     absWorkingDir: extensionRoot,
-    entryPoints: [path.join(extensionRoot, "src", "extension.ts")],
+    entryPoints: ["././src/extension.ts"],
     bundle: true,
-    outfile: path.join(extensionRoot, "dist", "extension.js"),
+    outfile: "dist/extension.js",
     platform: "node",
     format: "cjs",
     target: "node18",
@@ -33,10 +34,10 @@ const options = {
 
 /** Standalone broker entry bundled into the VSIX; no runtime node_modules needed. */
 const brokerOptions = {
-    absWorkingDir: extensionRoot,
-    entryPoints: [path.join(extensionRoot, "..", "..", "apps", "local-ai-broker", "src", "cli.ts")],
+    absWorkingDir: repoRoot,
+    entryPoints: ["././apps/local-ai-broker/src/cli.ts"],
     bundle: true,
-    outfile: path.join(extensionRoot, "dist", "local-ai-broker.js"),
+    outfile: "packages/vscode-extension/dist/local-ai-broker.js",
     platform: "node",
     format: "cjs",
     target: "node18",

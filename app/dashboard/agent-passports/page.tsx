@@ -3,6 +3,7 @@ import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { ConfirmableForm } from "@/components/dashboard/ConfirmableForm";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
 import { revokeDashboardAgentPassport } from "./actions";
 
 export const dynamic = "force-dynamic";
@@ -90,12 +91,35 @@ export default async function AgentPassportsPage({ searchParams }: { searchParam
 
   return (
     <div className="space-y-6">
+      <FeatureGuide
+        eyebrow="Agent security"
+        title="Agent passports"
+        description="Issue scoped, short-lived identities and session passports so an agent can only use the tools, domains, memory, and data scopes you explicitly grant before it runs."
+        useCase="An agent with an unrestricted API key can call any tool and reach any domain. Passports flip that around: each agent gets a cryptographic identity and a session passport that lists exactly what it may do. Requests outside that scope fail validation, and a risky or compromised session can be revoked without rotating shared secrets."
+        howItWorks={[
+          { heading: "Create an identity", body: "Register an agent identity with a name, type, and optional default policy. This is the durable principal that passports are issued against." },
+          { heading: "Issue a session passport", body: "Issue a short-lived passport that scopes allowed and blocked tools, approval-required tools, allowed and blocked domains, and data or memory scopes for one session." },
+          { heading: "Validate every action", body: "Before an agent uses a tool or reaches a domain, its passport is validated. Actions outside scope, or with expired passports, are rejected. Each passport carries a risk score." },
+          { heading: "Revoke when needed", body: "Revoke a passport to stop a session immediately. Status moves to REVOKED and the audit log records who acted and why." },
+        ]}
+        integrationCode={`// Issue a scoped session passport for an agent
+const res = await fetch("https://soterai.in/api/agent/passport/issue", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: \`Bearer \${process.env.SOTER_API_KEY}\`,
+  },
+  body: JSON.stringify({
+    agentIdentityId: "your-agent-identity-id",
+    ttlSeconds: 3600,
+    allowedTools: ["search", "read_file"],
+    blockedTools: ["send_email"],
+    allowedDomains: ["api.internal.example.com"],
+  }),
+});`}
+        callout="Passports only constrain agents that authenticate and validate through the SDK or passport API. Code paths that bypass passport validation are not restricted."
+      />
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Agent security</p>
-          <h1 className="mt-2 text-3xl font-bold">Agent passports</h1>
-          <p className="mt-3 max-w-3xl text-slate-400">Issue scoped identities and session passports before agents can use tools, memory, domains, or data scopes.</p>
-        </div>
         <ProjectSwitcher projects={projects} selectedId={project.id} />
       </div>
 

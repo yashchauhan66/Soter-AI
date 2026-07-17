@@ -3,6 +3,7 @@ import { ProjectSwitcher } from "@/components/dashboard/ProjectSwitcher";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
 
 export const dynamic = "force-dynamic";
 
@@ -27,8 +28,20 @@ export default async function AgentReplayPage({ searchParams }: { searchParams: 
   const replayBySession = new Map(replays.map((replay) => [replay.sessionId, replay]));
   return (
     <div className="space-y-6">
+      <FeatureGuide
+        eyebrow="Agent firewall"
+        title="Replay & forensics"
+        description="Reconstruct the full timeline of any agent session — input guard, planned actions, firewall decisions, approvals, memory events, and canary leaks — for incident review and audit."
+        useCase="When an agent does something unexpected, you need to see exactly what happened, in order. Replay reconstructs a session's entire timeline so you can trace how an input flowed through the guard, what the agent planned, which decisions the firewall made, what was approved, and whether any canary fired. It turns scattered logs into a single forensic story you can export for audit or an incident report."
+        howItWorks={[
+          { heading: "Pick a session", body: "Sessions are listed with their agent, type, and start time, alongside the risk level of the most recent replay generated for each." },
+          { heading: "Reconstruct the timeline", body: "A replay stitches together input guard results, planned actions, firewall decisions, approvals, memory events, and canary leaks into one ordered summary." },
+          { heading: "Fetch the JSON", body: "Pull the full machine-readable timeline from GET /api/agent/replay/:sessionId to feed dashboards, SIEMs, or your own analysis." },
+          { heading: "Export for audit", body: "Export a session as a PDF report so investigators and auditors get a shareable record of what the agent did and how the firewall responded." },
+        ]}
+        callout="Replay is a forensic, after-the-fact reconstruction of what was recorded for a session — it reviews history, it does not block actions in real time. A summary appears only once a replay has been generated for that session."
+      />
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <div><p className="eyebrow">Agent firewall</p><h1 className="mt-2 text-3xl font-bold">Replay &amp; forensics</h1></div>
         <ProjectSwitcher projects={projects} selectedId={project.id} />
       </div>
       <p className="text-sm text-slate-500">Open a session to replay its full timeline: input guard, planned actions, firewall decisions, approvals, memory events, and canary leaks. Fetch the JSON timeline from <span className="font-mono text-xs">GET /api/agent/replay/:sessionId</span>.</p>

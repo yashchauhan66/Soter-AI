@@ -1,6 +1,7 @@
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import Link from "next/link";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
 import { AI_BOM_PREVIEW_GAPS } from "@/lib/supply-chain";
 
 export const dynamic = "force-dynamic";
@@ -18,9 +19,19 @@ export default async function SupplyChainPage() {
   ]);
   return (
     <div>
-      <p className="eyebrow">AI supply chain - Preview</p>
-      <h1 className="mt-2 text-3xl font-bold">AI Bill of Materials and risk inventory</h1>
-      <p className="mt-3 max-w-3xl text-slate-400">Preview inventory for model providers, prompt versions, tools, plugins, and AI BOM snapshots. Lifecycle workflows and exports are still being completed; raw system prompts are represented by hashes and redacted previews.</p>
+      <FeatureGuide
+        eyebrow="AI supply chain - Preview"
+        title="AI Bill of Materials and risk inventory"
+        description="Preview inventory for model providers, prompt versions, tools, plugins, and AI BOM snapshots. Lifecycle workflows and exports are still being completed; raw system prompts are represented by hashes and redacted previews."
+        useCase="You cannot secure an AI system you cannot enumerate. As applications wire together model providers, prompt versions, tools, and plugins, the real attack surface becomes hard to see. This inventory builds an AI Bill of Materials — a catalog of every provider, model, prompt version, and tool integration your organization uses — so you have a single place to understand what components are in play and where supply-chain risk findings sit."
+        howItWorks={[
+          { heading: "Inventory AI components", body: "Providers, models, prompt versions, tools, and plugins are cataloged per organization, giving you counts and a running record of what is in use." },
+          { heading: "Snapshot the AI BOM", body: "AI Bill of Materials snapshots capture the set of components at a point in time so you can reason about what shipped together." },
+          { heading: "Protect sensitive prompts", body: "Raw system prompts are not stored in the clear here — they are represented by content hashes and redacted previews to limit exposure of proprietary instructions." },
+          { heading: "Track risk findings", body: "Supply-chain risk findings are surfaced against the inventory so open issues are visible alongside the components they affect." },
+        ]}
+        callout="Preview feature. The inventory and counts are live, but lifecycle workflows and exports are still being completed — review the preview gaps listed below before relying on this for production supply-chain governance. It records and surfaces risk; it does not block or enforce anything."
+      />
       <Link href="/dashboard/security/model-scan" className="mt-4 inline-flex items-center gap-2 rounded-lg border border-cyan/30 bg-cyan/10 px-4 py-2 text-sm font-semibold text-cyan hover:bg-cyan/20">
         Scan a model artifact for malicious code →
       </Link>

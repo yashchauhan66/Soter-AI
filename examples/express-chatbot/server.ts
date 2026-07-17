@@ -6,7 +6,7 @@ app.use(express.json());
 
 app.use("/api/chat", createExpressMiddleware({
   apiKey: process.env.SOTER_API_KEY!,
-  baseUrl: process.env.SOTER_BASE_URL || "https://api.soter.dev",
+  baseUrl: process.env.SOTER_BASE_URL || "https://api.soterai.in",
 }));
 
 app.listen(3000, () => {

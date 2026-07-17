@@ -81,7 +81,7 @@ import type {
   WrappedToolResult,
 } from "./types";
 
-const DEFAULT_BASE_URL = "https://api.soterai.com";
+const DEFAULT_BASE_URL = "https://api.soterai.in";
 const DEFAULT_TIMEOUT_MS = 8000;
 const DEFAULT_RETRY_BACKOFF_MS = 250;
 const DEFAULT_BLOCKED_RESPONSE = "This request was blocked for security reasons.";
@@ -101,8 +101,8 @@ export function normalizeDecision(action: GuardAction): GuardDecision {
   }
 }
 
-/** @deprecated Use the Soter class for new integrations. */
-export interface CyberRakshakGuard {
+/** Structural interface implemented by {@link GuardClient} and the Soter client. */
+export interface SoterGuard {
   input(message: string, options?: Omit<GuardInputRequest, "message" | "text">): Promise<GuardResult>;
   output(aiResponse: string, options?: Omit<GuardOutputRequest, "aiResponse" | "text">): Promise<GuardResult>;
   analyze(text: string, direction: AnalyzeRequest["direction"]): Promise<GuardResult>;
@@ -177,21 +177,24 @@ export interface CyberRakshakGuard {
   getOwaspAgentic2026Report(): Promise<OwaspComplianceReport>;
 }
 
-export function createClient(options: ClientOptions): CyberRakshakGuard {
+/** @deprecated Use {@link SoterGuard} for new integrations. */
+export type CyberRakshakGuard = SoterGuard;
+
+export function createClient(options: ClientOptions): SoterGuard {
   return new GuardClient(options);
 }
 
-export function createAgentFirewallClient(options: ClientOptions): CyberRakshakGuard {
+export function createAgentFirewallClient(options: ClientOptions): SoterGuard {
   return new GuardClient(options);
 }
 
 /** @deprecated Use new Soter(options) for new integrations. */
-export function createCybersecurityGuardClient(options: ClientOptions): CyberRakshakGuard {
+export function createCybersecurityGuardClient(options: ClientOptions): SoterGuard {
   return new GuardClient(options);
 }
 
 /** @deprecated Use Soter for new integrations. GuardClient remains supported. */
-export class GuardClient implements CyberRakshakGuard {
+export class GuardClient implements SoterGuard {
   private readonly apiKey: string;
   private readonly baseUrl: string;
   private readonly projectId?: string;

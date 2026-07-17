@@ -20,7 +20,7 @@ from .types import (
     SafeRagSource,
 )
 
-DEFAULT_BASE_URL = "https://api.soter.dev"
+DEFAULT_BASE_URL = "https://api.soterai.in"
 DEFAULT_TIMEOUT = 8.0
 USER_AGENT = "soter-python/0.2.0"
 

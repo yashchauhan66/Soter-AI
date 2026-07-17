@@ -1,6 +1,6 @@
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { generateApiKey } from "@/lib/apiKey";
-import { requireProjectPermission } from "@/lib/auth/guards";
+import { requireProjectPermission, requireUser } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { z } from "zod";
 
@@ -15,7 +15,28 @@ const rotateSchema = z.object({
 export async function POST(request: Request) {
   try {
     const body = rotateSchema.parse(await readJson(request));
-    const target = await db.apiKey.findUnique({ where: { id: body.id } });
+
+    // SECURITY: resolve the key only inside organizations visible to the caller.
+    // This prevents a cross-tenant key ID existence oracle before the later
+    // permission checks. Platform admins keep an explicit audited override path.
+    const user = await requireUser();
+    let target = await db.apiKey.findFirst({
+      where: {
+        id: body.id,
+        project: {
+          organization: {
+            members: { some: { userId: user.id } },
+          },
+        },
+      },
+      select: { id: true, name: true, prefix: true, projectId: true },
+    });
+    if (!target && user.isAdmin) {
+      target = await db.apiKey.findUnique({
+        where: { id: body.id },
+        select: { id: true, name: true, prefix: true, projectId: true },
+      });
+    }
     if (!target) return jsonResponse({ error: true, message: "API key not found." }, { status: 404 });
     await requireProjectPermission(target.projectId, "api_key:create");
     await requireProjectPermission(target.projectId, "api_key:revoke");

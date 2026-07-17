@@ -3,6 +3,7 @@ import { ShieldCheck, ShieldX, ShieldAlert, FileSearch } from "lucide-react";
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { ModelScanUploader } from "@/components/dashboard/ModelScanUploader";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
 import { recentModelScans, modelScanStats } from "@/lib/model-scan/store";
 
 export const dynamic = "force-dynamic";
@@ -35,13 +36,19 @@ export default async function ModelScanPage() {
 
   return (
     <div>
-      <p className="eyebrow">Model supply chain</p>
-      <h1 className="mt-2 text-3xl font-bold">Model artifact scanner</h1>
-      <p className="mt-3 max-w-3xl text-slate-400">
-        Scan model files for malicious serialization (pickle code execution), unsafe formats, integrity mismatches, and
-        weak provenance — before they ever reach <code className="text-cyan">load()</code>. Pure static analysis; nothing
-        is executed.
-      </p>
+      <FeatureGuide
+        eyebrow="Model supply chain"
+        title="Model artifact scanner"
+        description="Scan model files for malicious serialization (pickle code execution), unsafe formats, integrity mismatches, and weak provenance — before they ever reach load(). Pure static analysis; nothing is executed."
+        useCase="Downloaded model weights are executable payloads in disguise. Formats like Python pickle run arbitrary code the moment you call load(), so a model pulled from a hub or shared by a third party can compromise the machine that loads it. This scanner inspects the artifact statically — parsing structure, opcodes, and metadata — to flag code-execution risk, unsafe formats, integrity mismatches, and weak provenance before the file is ever deserialized."
+        howItWorks={[
+          { heading: "Upload the artifact", body: "Submit a model file. The scanner reads its bytes and structure statically — the file is never deserialized or executed, so a malicious artifact cannot run during the scan." },
+          { heading: "Detect dangerous serialization", body: "Pickle and similar formats are inspected for code-execution opcodes and reduce hooks; unsafe formats are flagged in favor of safer alternatives like safetensors." },
+          { heading: "Check integrity and provenance", body: "The scanner checks for hash and integrity mismatches and weak or missing provenance signals that suggest the artifact was tampered with or came from an untrusted source." },
+          { heading: "Verdict and history", body: "Each scan returns a verdict — malicious, suspicious, safe, or unverified — with a risk score, and recent scans are recorded so you can track what has been vetted." },
+        ]}
+        callout="This is static analysis of the artifact only. A safe verdict means no known malicious markers were found in the file, not a guarantee the model is benign or that its behavior at inference is safe. Combine with provenance controls and a trusted registry."
+      />
 
       <div className="mt-7 grid gap-4 sm:grid-cols-4">
         {cards.map((c) => (

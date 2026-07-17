@@ -92,7 +92,7 @@ const soter = new Soter({
 
 // Query recent guard log entries
 const response = await fetch(
-  "https://api.soterai.com/v1/logs?projectId=proj_abc123&limit=50",
+  "https://api.soterai.in/v1/logs?projectId=proj_abc123&limit=50",
   {
     headers: { "x-api-key": process.env.SOTERAI_API_KEY! },
   }
@@ -142,7 +142,7 @@ const recentBlocked = await soter.guardInput({
       { title: "White-label PDF", description: "Branded PDF exports for client-facing security reports" },
     ],
     integrationCode: `// Generate a security report via REST API
-const response = await fetch("https://api.soterai.com/v1/reports", {
+const response = await fetch("https://api.soterai.in/v1/reports", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -161,7 +161,7 @@ const report = await response.json();
 console.log("Report generated: " + report.id);
 
 // List past reports
-const pastReports = await fetch("https://api.soterai.com/v1/reports?limit=10", {
+const pastReports = await fetch("https://api.soterai.in/v1/reports?limit=10", {
   headers: { "x-api-key": process.env.SOTERAI_API_KEY! },
 });`,
     codeLanguage: "typescript",
@@ -195,7 +195,7 @@ const pastReports = await fetch("https://api.soterai.com/v1/reports?limit=10", {
       { title: "Privacy-first", description: "Feedback is anonymized — content is never stored with your identity" },
     ],
     integrationCode: `// Submit detection feedback via REST API
-const response = await fetch("https://api.soterai.com/v1/feedback", {
+const response = await fetch("https://api.soterai.in/v1/feedback", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -210,7 +210,7 @@ const response = await fetch("https://api.soterai.com/v1/feedback", {
 });
 
 // Submit bulk feedback
-const bulkResponse = await fetch("https://api.soterai.com/v1/feedback/bulk", {
+const bulkResponse = await fetch("https://api.soterai.in/v1/feedback/bulk", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -254,7 +254,7 @@ const bulkResponse = await fetch("https://api.soterai.com/v1/feedback/bulk", {
     ],
     integrationCode: `// Retrieve customer success metrics via REST API
 const response = await fetch(
-  "https://api.soterai.com/v1/customer-success?project=proj_abc123",
+  "https://api.soterai.in/v1/customer-success?project=proj_abc123",
   {
     headers: { "x-api-key": process.env.SOTERAI_API_KEY! },
   }
@@ -270,7 +270,7 @@ console.log({
 
 // Monitor usage trends
 const trendResponse = await fetch(
-  "https://api.soterai.com/v1/customer-success/trends?period=30d",
+  "https://api.soterai.in/v1/customer-success/trends?period=30d",
   {
     headers: { "x-api-key": process.env.SOTERAI_API_KEY! },
   }
@@ -512,7 +512,7 @@ app.post("/webhooks/soterai", (req, res) => {
       { title: "Compliance reporting", description: "Export shadow AI findings for compliance and audit purposes" },
     ],
     integrationCode: `// Query shadow AI detections via REST API
-const response = await fetch("https://api.soterai.com/v1/shadow-ai", {
+const response = await fetch("https://api.soterai.in/v1/shadow-ai", {
   headers: { "x-api-key": process.env.SOTERAI_API_KEY! },
 });
 const detections = await response.json();
@@ -528,7 +528,7 @@ detections.forEach((detection) => {
 });
 
 // Block a shadow AI service
-await fetch("https://api.soterai.com/v1/shadow-ai/block", {
+await fetch("https://api.soterai.in/v1/shadow-ai/block", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -587,7 +587,7 @@ console.log({
 });
 
 // Or run via REST API for batch testing
-const batchResponse = await fetch("https://api.soterai.com/v1/redteam/run", {
+const batchResponse = await fetch("https://api.soterai.in/v1/redteam/run", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -647,7 +647,7 @@ console.log({
 
 // Query forensic evidence via REST API
 const evidenceResponse = await fetch(
-  "https://api.soterai.com/v1/forensics?sessionId=session_abc123",
+  "https://api.soterai.in/v1/forensics?sessionId=session_abc123",
   {
     headers: { "x-api-key": process.env.SOTERAI_API_KEY! },
   }
@@ -656,7 +656,7 @@ const evidence = await evidenceResponse.json();
 
 // Get root cause analysis
 const rootCause = await fetch(
-  "https://api.soterai.com/v1/forensics/" + evidence.id + "/root-cause",
+  "https://api.soterai.in/v1/forensics/" + evidence.id + "/root-cause",
   {
     headers: { "x-api-key": process.env.SOTERAI_API_KEY! },
   }
@@ -718,7 +718,7 @@ if (result.leakDetected) {
 
 // List active tokens via REST API
 const tokens = await fetch(
-  "https://api.soterai.com/v1/canary/tokens?active=true",
+  "https://api.soterai.in/v1/canary/tokens?active=true",
   {
     headers: { "x-api-key": process.env.SOTERAI_API_KEY! },
   }
@@ -726,7 +726,7 @@ const tokens = await fetch(
 
 // Query recent leak events
 const leaks = await fetch(
-  "https://api.soterai.com/v1/canary/leaks?limit=20",
+  "https://api.soterai.in/v1/canary/leaks?limit=20",
   {
     headers: { "x-api-key": process.env.SOTERAI_API_KEY! },
   }
@@ -1285,7 +1285,7 @@ console.log("Action is legally compliant");`,
       { title: "Auditor portal", description: "Secure sharing portal for external auditors and assessors" },
     ],
     integrationCode: `// Generate an evidence package for compliance audit
-const response = await fetch("https://api.soterai.com/v1/evidence", {
+const response = await fetch("https://api.soterai.in/v1/evidence", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -1312,7 +1312,7 @@ console.log({
 
 // List existing evidence packages
 const packages = await fetch(
-  "https://api.soterai.com/v1/evidence?status=active",
+  "https://api.soterai.in/v1/evidence?status=active",
   {
     headers: { "x-api-key": process.env.SOTERAI_API_KEY! },
   }
@@ -1477,7 +1477,7 @@ console.log(scenario.narrative);`,
       { title: "Full audit trail", description: "Complete audit log of every credential access attempt" },
     ],
     integrationCode: `// Store a credential in the vault
-const response = await fetch("https://api.soterai.com/v1/vault/credentials", {
+const response = await fetch("https://api.soterai.in/v1/vault/credentials", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -1504,7 +1504,7 @@ console.log("Credential stored: " + credential.id);
 
 // List credentials accessible by an agent
 const agentCreds = await fetch(
-  "https://api.soterai.com/v1/vault/credentials?agent=customer-support-bot",
+  "https://api.soterai.in/v1/vault/credentials?agent=customer-support-bot",
   {
     headers: { "x-api-key": process.env.SOTERAI_API_KEY! },
   }
@@ -1512,7 +1512,7 @@ const agentCreds = await fetch(
 
 // Rotate a credential
 const rotated = await fetch(
-  "https://api.soterai.com/v1/vault/credentials/" + credential.id + "/rotate",
+  "https://api.soterai.in/v1/vault/credentials/" + credential.id + "/rotate",
   {
     method: "POST",
     headers: { "x-api-key": process.env.SOTERAI_API_KEY! },
@@ -1550,7 +1550,7 @@ const rotated = await fetch(
       { title: "Quick switching", description: "Easily switch between projects from dashboard or API" },
     ],
     integrationCode: `// Create a new project
-const response = await fetch("https://api.soterai.com/v1/projects", {
+const response = await fetch("https://api.soterai.in/v1/projects", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -1567,12 +1567,12 @@ const project = await response.json();
 console.log("Project created: " + project.id);
 
 // List all projects
-const projects = await fetch("https://api.soterai.com/v1/projects", {
+const projects = await fetch("https://api.soterai.in/v1/projects", {
   headers: { "x-api-key": process.env.SOTERAI_ADMIN_KEY! },
 });
 
 // Update project settings
-await fetch("https://api.soterai.com/v1/projects/" + project.id, {
+await fetch("https://api.soterai.in/v1/projects/" + project.id, {
   method: "PATCH",
   headers: {
     "Content-Type": "application/json",
@@ -1610,7 +1610,7 @@ await fetch("https://api.soterai.com/v1/projects/" + project.id, {
       { title: "Rotation support", description: "Overlapping key validity for zero-downtime rotation" },
     ],
     integrationCode: `// Generate a project-scoped API key
-const response = await fetch("https://api.soterai.com/v1/api-keys", {
+const response = await fetch("https://api.soterai.in/v1/api-keys", {
   method: "POST",
   headers: { "Authorization": "Bearer " + adminKey },
   body: JSON.stringify({
@@ -1653,7 +1653,7 @@ const { key } = await response.json();
       { title: "Hard enforcement", description: "Automatic request blocking when limits are exceeded" },
     ],
     integrationCode: `// Set a monthly budget for a project
-const response = await fetch("https://api.soterai.com/v1/cost-firewall", {
+const response = await fetch("https://api.soterai.in/v1/cost-firewall", {
   method: "PUT",
   headers: {
     "Content-Type": "application/json",
@@ -1676,7 +1676,7 @@ console.log("Budget configured: " + budget.id);
 
 // Get current spending
 const usageData = await fetch(
-  "https://api.soterai.com/v1/cost-firewall/usage?project=proj_abc123",
+  "https://api.soterai.in/v1/cost-firewall/usage?project=proj_abc123",
   {
     headers: { "x-api-key": process.env.SOTERAI_API_KEY! },
   }
@@ -1719,7 +1719,7 @@ console.log("Avg cost per request: $" + costPerRequest2);`,
       { title: "Easy embed", description: "Simple image URL or Markdown for instant embedding" },
     ],
     integrationCode: `<!-- Add this to your website or README -->
-<img src="https://api.soterai.com/v1/badges/protected?project=proj_abc123" 
+<img src="https://api.soterai.in/v1/badges/protected?project=proj_abc123" 
      alt="Protected by SoterAI"
      height="28" />`,
     codeLanguage: "html",
@@ -1752,7 +1752,7 @@ console.log("Avg cost per request: $" + costPerRequest2);`,
       { title: "Team billing", description: "Consolidated billing for teams and organizations" },
     ],
     integrationCode: `// Get current plan and usage details
-const billingInfo = await fetch("https://api.soterai.com/v1/billing", {
+const billingInfo = await fetch("https://api.soterai.in/v1/billing", {
   headers: { "x-api-key": process.env.SOTERAI_API_KEY! },
 }).then(r => r.json());
 
@@ -1761,7 +1761,7 @@ console.log("Status:", billingInfo.status);
 console.log("Monthly quota:", billingInfo.monthlyQuota);
 
 // Upgrade plan
-await fetch("https://api.soterai.com/v1/billing/plan", {
+await fetch("https://api.soterai.in/v1/billing/plan", {
   method: "PUT",
   headers: {
     "Content-Type": "application/json",
@@ -1772,7 +1772,7 @@ await fetch("https://api.soterai.com/v1/billing/plan", {
 
 // List payment methods
 const paymentMethods = await fetch(
-  "https://api.soterai.com/v1/billing/payment-methods",
+  "https://api.soterai.in/v1/billing/payment-methods",
   {
     headers: { "x-api-key": process.env.SOTERAI_API_KEY! },
   }
@@ -1807,7 +1807,7 @@ const paymentMethods = await fetch(
       { title: "Security config", description: "Configure MFA, session policies, and auth methods" },
     ],
     integrationCode: `// Update account settings
-const response = await fetch("https://api.soterai.com/v1/settings/profile", {
+const response = await fetch("https://api.soterai.in/v1/settings/profile", {
   method: "PATCH",
   headers: {
     "Content-Type": "application/json",
@@ -1825,7 +1825,7 @@ const response = await fetch("https://api.soterai.com/v1/settings/profile", {
 });
 
 // Invite a team member
-await fetch("https://api.soterai.com/v1/settings/team", {
+await fetch("https://api.soterai.in/v1/settings/team", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -1839,7 +1839,7 @@ await fetch("https://api.soterai.com/v1/settings/team", {
 });
 
 // Configure security settings
-await fetch("https://api.soterai.com/v1/settings/security", {
+await fetch("https://api.soterai.in/v1/settings/security", {
   method: "PUT",
   headers: {
     "Content-Type": "application/json",
@@ -1880,7 +1880,7 @@ await fetch("https://api.soterai.com/v1/settings/security", {
       { title: "Integrity verification", description: "Cryptographic hashes for export integrity verification" },
     ],
     integrationCode: `// Export guard logs for compliance
-const response = await fetch("https://api.soterai.com/v1/exports", {
+const response = await fetch("https://api.soterai.in/v1/exports", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -1902,7 +1902,7 @@ console.log("Export initiated: " + exportJob.id);
 
 // Check export status
 const exportStatus = await fetch(
-  "https://api.soterai.com/v1/exports/" + exportJob.id,
+  "https://api.soterai.in/v1/exports/" + exportJob.id,
   {
     headers: { "x-api-key": process.env.SOTERAI_API_KEY! },
   }
@@ -1915,7 +1915,7 @@ if (exportStatus.completed) {
 }
 
 // Schedule recurring export
-await fetch("https://api.soterai.com/v1/exports/schedule", {
+await fetch("https://api.soterai.in/v1/exports/schedule", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",

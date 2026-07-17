@@ -17,11 +17,11 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     const { id } = await params;
     const body = schema.parse(await readJson(request));
     const { user } = await requirePermission(body.organizationId, "policy:manage");
-    const device = await db.deviceAgent.findUnique({ where: { id }, select: { id: true, organizationId: true, status: true } });
+    const device = await db.deviceAgent.findFirst({
+      where: { id, organizationId: body.organizationId },
+      select: { id: true, organizationId: true, status: true },
+    });
     if (!device) return jsonResponse({ error: true, message: "Device not found." }, { status: 404 });
-    if (device.organizationId !== body.organizationId) {
-      return jsonResponse({ error: true, message: "Device does not belong to this organization." }, { status: 403 });
-    }
     await db.deviceAgent.update({ where: { id }, data: { status: "revoked" } });
     await db.adminAuditLog.create({
       data: {

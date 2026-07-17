@@ -4,6 +4,7 @@ import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { getCostSummary, listBudgets } from "@/lib/cost-firewall";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
 
 export const dynamic = "force-dynamic";
 
@@ -43,15 +44,31 @@ export default async function CostFirewallPage({
 
   return (
     <div className="space-y-7">
-      <div>
-        <p className="eyebrow">Cost control</p>
-        <h1 className="mt-2 text-3xl font-bold">AI Cost Firewall</h1>
-        <p className="mt-3 max-w-3xl text-slate-400">
-          Monitor, budget, and control AI API spending across providers and models.
-          Set hard or soft budget limits, detect cost anomalies, and auto-throttle
-          when spending spikes beyond normal patterns.
-        </p>
-      </div>
+      <FeatureGuide
+        eyebrow="Cost control"
+        title="AI Cost Firewall"
+        description="Monitor, budget, and control AI API spending across providers and models. Set budget limits, detect cost anomalies, and auto-throttle when spending spikes beyond normal patterns."
+        useCase="AI API costs can spiral quietly: a runaway agent loop, an accidental switch to a pricier model, or a prompt-injection attack that drives thousands of calls. The cost firewall tracks spend per project, warns as you approach a budget, and can throttle usage before a single incident produces a large bill."
+        howItWorks={[
+          { heading: "Track spend", body: "Every AI call reported through the SDK is priced and recorded. Month-to-date cost and transaction counts roll up per project and organization." },
+          { heading: "Set budgets", body: "Define a monthly limit per project. Usage is shown as a percentage of the limit so you can see how much headroom is left." },
+          { heading: "Detect anomalies", body: "Spending that deviates from normal patterns is flagged as a usage anomaly for review." },
+          { heading: "Auto-throttle", body: "When spend crosses configured thresholds, throttle events limit further usage until the window resets or the throttle expires." },
+        ]}
+        integrationCode={`// Record AI spend so the firewall can budget and throttle
+const res = await fetch("https://soterai.in/api/cost-firewall/budget", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: \`Bearer \${process.env.SOTER_API_KEY}\`,
+  },
+  body: JSON.stringify({
+    projectId: "your-project-id",
+    monthlyLimitPaise: 5000000, // ₹50,000 monthly cap
+  }),
+});`}
+        callout="Costs are computed from usage reported to SoterAI. Providers you do not route through the SDK will not appear in the firewall totals."
+      />
 
       <div className="grid gap-4 sm:grid-cols-4">
         <div className="card p-5">

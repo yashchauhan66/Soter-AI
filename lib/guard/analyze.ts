@@ -16,6 +16,8 @@ import { ssrfDetector } from "./detectors/ssrfDetector";
 import { competitiveIntelDetector } from "./detectors/competitiveIntelDetector";
 import { socialEngineeringDetector } from "./detectors/socialEngineeringDetector";
 import { embeddingPoisoningDetector } from "./detectors/embeddingPoisoningDetector";
+import { mcpToolPoisoningDetector } from "./detectors/mcpToolPoisoningDetector";
+import { memoryPoisoningDetector } from "./detectors/memoryPoisoningDetector";
 import { insecureDeserializationDetector } from "./detectors/insecureDeserializationDetector";
 import { dataExfiltrationInputDetector } from "./detectors/dataExfiltrationInputDetector";
 import { generalizedIntentDetector } from "./detectors/generalizedIntentDetector";
@@ -70,7 +72,7 @@ const COMMON_DETECTORS = [piiDetector, indiaPiiDetector, secretsDetector, toxici
 // interaction is handled in `applyPolicy` (lib/guard/policy.ts) by keying on risk
 // types rather than finding count, so registering this detector does not break the
 // legacy single-injection REWRITE / HUMAN_REVIEW / BLOCK policy branch.
-const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, systemPromptLeakAttemptDetector, multilingualAttackDetector, recursiveInjectionDetector, ssrfDetector, adversarialCyberDetector, competitiveIntelDetector, socialEngineeringDetector, embeddingPoisoningDetector, insecureDeserializationDetector, dataExfiltrationInputDetector, generalizedIntentDetector, ...COMMON_DETECTORS];
+const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, systemPromptLeakAttemptDetector, multilingualAttackDetector, recursiveInjectionDetector, ssrfDetector, adversarialCyberDetector, competitiveIntelDetector, socialEngineeringDetector, embeddingPoisoningDetector, mcpToolPoisoningDetector, memoryPoisoningDetector, insecureDeserializationDetector, dataExfiltrationInputDetector, generalizedIntentDetector, ...COMMON_DETECTORS];
 const OUTPUT_DETECTORS = [systemPromptLeakageDetector, unsafeOutputDetector, outputExfiltrationDetector, spamUrlDetector, hallucinationDetector, biasDetector, generalizedIntentDetector, ...COMMON_DETECTORS];
 
 export function analyzeText(text: string, direction: GuardDirection): GuardResult {

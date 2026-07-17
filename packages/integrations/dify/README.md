@@ -23,7 +23,7 @@ Once the marketplace pull request is approved and merged:
 | Field | Required | Description |
 |-------|----------|-------------|
 | **SoterAI API Key** | Yes | Your `sk_...` API key from the SoterAI dashboard. |
-| **Base URL** | No | API endpoint. Defaults to `https://api.soterai.dev`. |
+| **Base URL** | No | API endpoint. Defaults to `https://api.soterai.in`. |
 | **Project ID** | No | Optional project scope for multi-tenant setups. |
 
 ## Tools

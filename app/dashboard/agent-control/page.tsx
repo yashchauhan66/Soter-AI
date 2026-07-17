@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { ShieldCheck, RotateCcw, Fingerprint, Gauge } from "lucide-react";
 import { ProjectSwitcher } from "@/components/dashboard/ProjectSwitcher";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
 import { MetricCard, RiskLevel, StatusBadge } from "@/components/dashboard/MetricCard";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
@@ -41,35 +41,38 @@ export default async function AgentControlPage({ searchParams }: { searchParams:
 
   return (
     <div className="space-y-6">
-      {/* ── Premium Hero Header ── */}
-      <header className="relative overflow-hidden rounded-2xl border border-orange-500/20 bg-gradient-to-br from-orange-500/10 via-amber-500/5 to-slate-950/60 p-6 sm:p-8">
-        <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-orange-500/10 blur-3xl" />
-        <div className="relative flex flex-wrap items-end justify-between gap-5">
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="rounded-full border border-orange-500/30 bg-orange-500/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-orange-300">Core product</span>
-            </div>
-            <div className="mt-4 flex items-center gap-3">
-              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-orange-500/15">
-                <Gauge size={20} className="text-orange-300" />
-              </span>
-              <div>
-                <h1 className="text-3xl font-bold sm:text-4xl">Agent Control Center</h1>
-                <p className="mt-1 text-sm text-slate-400">High-trust operations for AI agents</p>
-              </div>
-            </div>
-            <p className="mt-4 max-w-3xl text-slate-300">
-              Approve risky tool use, trace every decision, stage safe compensating actions, and keep auditor-ready proof across email, CRM, database, and payment agents.
-            </p>
-          </div>
-          <ProjectSwitcher projects={projects} selectedId={project.id} />
-        </div>
-        <div className="relative mt-6 grid gap-3 sm:grid-cols-3">
-          <HeroFeature icon={<ShieldCheck size={18} />} title="Action approval" text="Hold risky tool calls for human review before execution." />
-          <HeroFeature icon={<RotateCcw size={18} />} title="Reversibility ledger" text="Stage compensating actions for safe rollback with audit trail." />
-          <HeroFeature icon={<Fingerprint size={18} />} title="Compliance proof" text="Continuous assurance with SOC 2 and ISO 27001 evidence." />
-        </div>
-      </header>
+      <FeatureGuide
+        eyebrow="Core product"
+        title="Agent Control Center"
+        description="Approve risky tool use, trace every decision, stage safe compensating actions, and keep auditor-ready proof across email, CRM, database, and payment agents."
+        useCase="Autonomous agents take real actions — sending email, writing to CRMs and databases, moving money — and a single bad tool call can cause damage that is hard to undo. This is the operator surface for high-trust agent operations: risky tool calls are held for human review, every decision is traced, compensating actions are staged so reversible operations can be rolled back, and continuous compliance evidence is captured for auditors."
+        howItWorks={[
+          { heading: "Hold risky actions", body: "Firewall holds and transaction escrow feed a single human approval queue. Reviewers see already-redacted payloads and can approve a safe edited version or deny the action before it executes." },
+          { heading: "Trace every decision", body: "A live action audit records each agent tool call with its decision, risk level, destination, and reason, so you can reconstruct exactly what an agent tried to do and why it was allowed or blocked." },
+          { heading: "Stage compensating rollback", body: "The reversibility ledger classifies each action and, where reversible, stages a stored compensating action for an authorized connector. A rollback request prepares that action; it does not falsely mark an external change as already reversed." },
+          { heading: "Keep audit-ready proof", body: "Continuous assurance scores controls against fresh compliance evidence (SOC 2, ISO 27001) and attributes human rollback decisions to an operator, retained separately from agent-generated logs." },
+        ]}
+        integrationCode={`import { Soter } from "@soterai/core";
+
+const soter = new Soter({
+  apiKey: process.env.SOTER_API_KEY,
+});
+
+// Route a risky tool call through the control plane before executing
+const decision = await soter.agent.guardAction({
+  tool: "email.send",
+  action: "send",
+  target: recipient,
+  payload: draft,
+});
+
+if (decision.decision === "ASK_APPROVAL") {
+  // action is held in the human approval queue; do not execute yet
+  return;
+}`}
+        callout="Approvals, tracing, and rollback only cover actions that agents route through the control plane. If an agent bypasses it, those actions are neither held nor logged here. Rollback stages a stored compensating action for an authorized connector — it prepares a reversal, it does not guarantee an external change was undone."
+      />
+      <ProjectSwitcher projects={projects} selectedId={project.id} />
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         <MetricCard label="Awaiting human" value={metrics.pendingApprovals} tone={metrics.pendingApprovals ? "yellow" : "green"} />
@@ -130,16 +133,4 @@ export default async function AgentControlPage({ searchParams }: { searchParams:
 async function safeRows<T>(strings: TemplateStringsArray, ...values: unknown[]) {
   try { return await db.$queryRawUnsafe<T[]>(strings.reduce((sql, chunk, index) => `${sql}${chunk}${index < values.length ? `$${index + 1}` : ""}`, ""), ...values); }
   catch { return []; }
-}
-
-function HeroFeature({ icon, title, text }: { icon: React.ReactNode; title: string; text: string }) {
-  return (
-    <div className="rounded-xl border border-white/10 bg-slate-950/40 p-4">
-      <div className="flex items-center gap-2 text-orange-300">
-        {icon}
-        <h2 className="text-sm font-semibold text-white">{title}</h2>
-      </div>
-      <p className="mt-2 text-xs leading-5 text-slate-400">{text}</p>
-    </div>
-  );
 }

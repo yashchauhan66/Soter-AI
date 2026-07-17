@@ -6,9 +6,9 @@
     "esModuleInterop": true,
     "incremental": true,
     "jsx": "react",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noEmitOnError": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
@@ -16,7 +16,8 @@
     "rootDir": "src",
     "strict": true,
     "strictNullChecks": true,
-    "target": "ES2018",
+    "skipLibCheck": true,
+    "target": "ES2022",
     "types": []
   },
   "include": ["src/*"]

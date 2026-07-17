@@ -22,7 +22,7 @@ class PIIRedactorTool:
         api_key = credentials.get("soter_api_key", "")
         base_url = (
             credentials
-            .get("soter_base_url", "https://api.soterai.dev")
+            .get("soter_base_url", "https://api.soterai.in")
             .rstrip("/")
         )
         project_id = (

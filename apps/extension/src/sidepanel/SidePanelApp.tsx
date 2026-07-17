@@ -23,7 +23,9 @@ export function renderSidePanel(root: HTMLElement, state: ExtensionState) {
           <div class="row"><span>Policy version</span><span class="value">${escapeHtml(state.policy?.version ?? "unknown")}</span></div>
           <div class="row"><span>Response scanning</span><span class="value">${responseScanningEnabled ? "Enabled for configured AI destinations" : "Disabled"}</span></div>
         </section>
+        ${privacySection({ enrolled, responseScanningEnabled, lockdown })}
         ${latest ? latestScanSection(latest) : '<section><h2>Latest Scan</h2><p class="empty">No prompt has been scanned on this AI site yet.</p></section>'}`}
+      ${!enrolled ? privacySection({ enrolled, responseScanningEnabled, lockdown }) : ""}
     </div></div>`;
   wireEnrollment(root, (next) => renderSidePanel(root, next));
   root.querySelector("[data-copy-safe]")?.addEventListener("click", () => { if (latest) void navigator.clipboard.writeText(latest.rewrittenSafeText || latest.redactedText); });
@@ -31,5 +33,29 @@ export function renderSidePanel(root: HTMLElement, state: ExtensionState) {
 }
 
 function latestScanSection(latest: NonNullable<ExtensionState["latestScan"]>) {
-  return `<section><h2>Latest Scan</h2><div class="row"><span>Action</span><span class="value">${escapeHtml(latest.action)}</span></div><div class="row"><span>Risk score</span><span class="value">${latest.riskScore}</span></div><div class="row"><span>Detected</span><span class="value">${escapeHtml(latest.detectedDataTypes.join(", ") || "None")}</span></div><textarea readonly>${escapeHtml(latest.rewrittenSafeText || latest.redactedText)}</textarea><button data-copy-safe>Copy safe prompt</button><button class="secondary" data-request-approval>Request approval</button></section>`;
+  return `<section><h2>Latest Scan</h2><div class="row"><span>Action</span><span class="value">${escapeHtml(latest.action)}</span></div><div class="row"><span>Risk score</span><span class="value">${latest.riskScore}</span></div><div class="row"><span>Detected</span><span class="value">${escapeHtml(latest.detectedDataTypes.join(", ") || "None")}</span></div><p class="help">Showing the safe rewrite or redacted preview from extension state; raw source text is not stored by default.</p><textarea readonly>${escapeHtml(latest.rewrittenSafeText || latest.redactedText)}</textarea><button data-copy-safe>Copy safe prompt</button><button class="secondary" data-request-approval>Request approval</button></section>`;
+}
+
+function privacySection({
+  enrolled,
+  responseScanningEnabled,
+  lockdown,
+}: {
+  enrolled: boolean;
+  responseScanningEnabled: boolean;
+  lockdown: boolean;
+}) {
+  const rawPromptStatus = enrolled
+    ? "No by default. Only explicit admin full-prompt logging can change this."
+    : "No. Enroll to receive organization policy.";
+  return `
+    <section aria-label="What leaves browser?">
+      <h2>What leaves browser?</h2>
+      <div class="row"><span>Raw prompt to SoterAI</span><span class="value">${escapeHtml(rawPromptStatus)}</span></div>
+      <div class="row"><span>Stored locally</span><span class="value">Redacted preview, safe rewrite, hashes, and policy cache</span></div>
+      <div class="row"><span>Backend audit event</span><span class="value">${enrolled ? "Metadata, decision, risk score, redacted preview" : "None before enrollment"}</span></div>
+      <div class="row"><span>Response scanning</span><span class="value">${responseScanningEnabled ? "Configured AI destinations only" : "Off"}</span></div>
+      <div class="row"><span>Emergency mode</span><span class="value">${lockdown ? "Strict cached policy active" : "Inactive"}</span></div>
+      <p class="help">Prompt scanning happens in the browser first, and extension storage avoids keeping raw prompt text by default.</p>
+    </section>`;
 }

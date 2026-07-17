@@ -21,7 +21,7 @@ SoterAI uses API Key authentication. When you add the integration to a Zap you w
 | Field | Required | Description |
 |-------|----------|-------------|
 | **API Key** | Yes | Your SoterAI API key (starts with `sk_`). |
-| **Base URL** | No | Defaults to `https://api.soterai.dev`. Change only for self-hosted deployments. |
+| **Base URL** | No | Defaults to `https://api.soterai.in`. Change only for self-hosted deployments. |
 | **Project ID** | No | Default SoterAI project ID applied to all actions unless overridden per-step. |
 
 ## Example Zaps

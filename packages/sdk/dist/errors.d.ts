@@ -1,47 +1,10 @@
 /**
  * Base error class for Soter SDK errors.
- * @deprecated Use {@link SoterError} for new integrations.
  */
-export declare class CyberRakshakError extends Error {
+export declare class SoterError extends Error {
     readonly status?: number;
     readonly code: string;
     readonly details?: unknown;
-    constructor(message: string, options?: {
-        status?: number;
-        code?: string;
-        details?: unknown;
-        cause?: unknown;
-    });
-}
-/**
- * @deprecated Use {@link SoterAuthError} for new integrations.
- */
-export declare class CyberRakshakAuthError extends CyberRakshakError {
-    constructor(message: string, status: number);
-}
-/**
- * @deprecated Use {@link SoterRateLimitError} for new integrations.
- */
-export declare class CyberRakshakRateLimitError extends CyberRakshakError {
-    readonly retryAfter?: number;
-    constructor(message: string, status: number, retryAfter?: number);
-}
-/**
- * @deprecated Use {@link SoterValidationError} for new integrations.
- */
-export declare class CyberRakshakValidationError extends CyberRakshakError {
-    constructor(message: string, status: number, details?: unknown);
-}
-/**
- * @deprecated Use {@link SoterNetworkError} for new integrations.
- */
-export declare class CyberRakshakNetworkError extends CyberRakshakError {
-    constructor(message: string, cause?: unknown);
-}
-/**
- * Base error class for Soter SDK errors.
- */
-export declare class SoterError extends CyberRakshakError {
     constructor(message: string, options?: {
         status?: number;
         code?: string;
@@ -74,4 +37,14 @@ export declare class SoterValidationError extends SoterError {
 export declare class SoterNetworkError extends SoterError {
     constructor(message: string, cause?: unknown);
 }
+/** @deprecated Use {@link SoterError} for new integrations. */
+export { SoterError as CyberRakshakError };
+/** @deprecated Use {@link SoterAuthError} for new integrations. */
+export { SoterAuthError as CyberRakshakAuthError };
+/** @deprecated Use {@link SoterRateLimitError} for new integrations. */
+export { SoterRateLimitError as CyberRakshakRateLimitError };
+/** @deprecated Use {@link SoterValidationError} for new integrations. */
+export { SoterValidationError as CyberRakshakValidationError };
+/** @deprecated Use {@link SoterNetworkError} for new integrations. */
+export { SoterNetworkError as CyberRakshakNetworkError };
 //# sourceMappingURL=errors.d.ts.map

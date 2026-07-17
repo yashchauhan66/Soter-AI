@@ -52,7 +52,7 @@ src/
 | Variable | Description |
 |---|---|
 | `SOTER_API_KEY` | Your API key from https://soter.dev (required) |
-| `SOTER_BASE_URL` | API base URL (default: `https://api.soter.dev`) |
+| `SOTER_BASE_URL` | API base URL (default: `https://api.soterai.in`) |
 
 ## Production
 

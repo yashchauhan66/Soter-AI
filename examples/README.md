@@ -127,7 +127,7 @@ from soter.flask import create_chat_view
 | Variable | Default | Required | Description |
 |----------|---------|----------|-------------|
 | `SOTER_API_KEY` | — | Yes | Your Soter API key (server-side only) |
-| `SOTER_BASE_URL` | `https://api.soter.dev` | No | Custom API server URL for self-hosted deployments |
+| `SOTER_BASE_URL` | `https://api.soterai.in` | No | Custom API server URL for self-hosted deployments |
 
 > **Security:** Always set the API key as a server-side environment variable. Never embed it in client-side code or commit it to version control.
 

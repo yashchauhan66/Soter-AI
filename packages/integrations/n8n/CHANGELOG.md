@@ -2,6 +2,27 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- Added **Universal AI Firewall (Best Protection)**, a single n8n action that orchestrates input guard, RAG risk scanning, agent tool-call checks, memory safety checks, output guard, semantic egress checks, and one clear `finalDecision`.
+- Added advanced Universal Guard fields for protection profile, RAG context, tool risk context, memory operation, output destination, protected source snapshots, and fail-closed routing.
+- Added **Audit n8n Workflow Security**, a local workflow posture scanner for AI Agent, webhook, Code node, tool, memory, RAG, secret, and output-egress risks with OWASP mapping and recommended SoterAI placement.
+- Simplified the Universal AI Firewall parameter strategy: the default UI now focuses on essential fields, while RAG/tool/memory/egress details are consolidated into optional Security Context JSON.
+- Added live-chat friendly Safe Rephrase handling for human-review decisions via `needsHumanReview`, `liveChatAction`, and `safeRephrasePrompt`.
+- Added copy-paste Security Context JSON templates and an importable example workflow for RAG, tool, memory, and output/egress context.
+- Added package validation for README/package/User-Agent version consistency and sanitized `rawResponse` output.
+
+### Security
+
+- Recursively sanitize `rawResponse` workflow output before returning it to downstream n8n nodes.
+- Expanded error redaction for bearer tokens, common provider tokens, AWS access key IDs, database URLs, and sensitive key/value pairs.
+- Clarified the privacy contract: n8n credentials store API keys, node output redacts secrets, and the node does not collect telemetry or write local files.
+- Added Base URL validation to require HTTPS except `http://localhost` local development and reject embedded credentials, query strings, and fragments.
+- Sanitized Metadata JSON before API calls by redacting sensitive keys/strings and truncating long metadata strings.
+- Added consistent `operation` output fields for downstream routing across all node actions.
+
 ## [0.2.8] - 2026-07-14
 
 ### Added

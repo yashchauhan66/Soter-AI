@@ -8,6 +8,7 @@ const manifestPath = path.join(root, "apps/extension/manifest.json");
 const docsDir = path.join(root, "docs/extension-store");
 const docFiles = [
   "permission-justification.md",
+  "privacy-practices-disclosure.md",
   "review-notes.md",
   "privacy-policy.md",
   "chrome-private-listing.md",
