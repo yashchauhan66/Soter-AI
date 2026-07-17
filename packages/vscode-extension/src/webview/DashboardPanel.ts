@@ -24,6 +24,10 @@ export class DashboardPanel {
                     "scanCurrentFile",
                     "scanClipboard",
                     "openWalkthrough",
+                    "openPrivacyGuarantee",
+                    "openLocalPrivacyStatus",
+                    "buildSafePromptForAI",
+                    "runSecretBrokerDemo",
                     "connectCloud",
                     "disconnectCloud",
                 ]);
@@ -43,6 +47,18 @@ export class DashboardPanel {
                         break;
                     case "openWalkthrough":
                         await vscode.commands.executeCommand("soterai.openWalkthrough");
+                        break;
+                    case "openPrivacyGuarantee":
+                        await vscode.commands.executeCommand("soterai.openPrivacyGuarantee");
+                        break;
+                    case "openLocalPrivacyStatus":
+                        await vscode.commands.executeCommand("soterai.openLocalPrivacyStatus");
+                        break;
+                    case "buildSafePromptForAI":
+                        await vscode.commands.executeCommand("soterai.buildSafePromptForAI");
+                        break;
+                    case "runSecretBrokerDemo":
+                        await vscode.commands.executeCommand("soterai.runSecretBrokerDemo");
                         break;
                     case "connectCloud":
                         await vscode.commands.executeCommand("soterai.connectToCloud");
@@ -277,7 +293,7 @@ export class DashboardPanel {
         <div>
           <div style="font-weight:600">Workspace Risk Score</div>
           <div style="font-size:12px; color:var(--vscode-descriptionForeground)">
-            Latest Decision: <strong>${data.latestDecision ? data.latestDecision.decision.toUpperCase() : "NONE"}</strong>
+            Latest Decision: <strong>${escapeHtml(data.latestDecision ? String(data.latestDecision.decision).toUpperCase() : "NONE")}</strong>
           </div>
         </div>
       </div>
@@ -294,13 +310,24 @@ export class DashboardPanel {
       </div>
       <div class="stat-row">
         <span>Policy Mode:</span>
-        <strong>${data.policyMode.toUpperCase()}</strong>
+        <strong>${escapeHtml(data.policyMode.toUpperCase())}</strong>
       </div>
       ${data.cloudEnabled ?
                 `<button class="btn" style="background-color: var(--vscode-statusBarItem-errorBackground)" id="disconnectBtn">Disconnect Cloud</button>` :
                 `<button class="btn" id="connectBtn">Connect to SoterAI Cloud</button>`
             }
     </div>
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <div class="card-title">Local Secret Privacy</div>
+    <div class="stat-row"><span>Raw secrets sent to SoterAI:</span><strong>No by default</strong></div>
+    <div class="stat-row"><span>Raw secrets sent to AI:</span><strong>No by default</strong></div>
+    <div class="stat-row"><span>Secret handling:</span><strong>Refs, redaction, brokered local actions</strong></div>
+    <button class="btn" id="privacyBtn">What Stays Local?</button>
+    <button class="btn" id="privacyStatusBtn" style="margin-left:8px;">Local Privacy Status</button>
+    <button class="btn" id="safePromptBtn" style="margin-left:8px;">Build Safe Prompt</button>
+    <button class="btn" id="demoBtn" style="margin-left:8px;">Secret Broker Demo</button>
   </div>
 
   <div class="card" style="margin-top:20px;">
@@ -336,7 +363,7 @@ export class DashboardPanel {
           </div>
         `).join("")}
       </div>` :
-                `<div style="font-size:13px; color:var(--vscode-descriptionForeground); text-align:center; padding:20px 0;">No active threats detected. System secure.</div>`
+                `<div style="font-size:13px; color:var(--vscode-descriptionForeground); text-align:center; padding:20px 0;">No findings in the latest scan. This reflects scanned content only — unscanned files and other tools' traffic are not covered.</div>`
             }
   </div>
 
@@ -350,6 +377,18 @@ export class DashboardPanel {
     });
     document.getElementById('guideBtn')?.addEventListener('click', () => {
       vscode.postMessage({ command: 'openWalkthrough' });
+    });
+    document.getElementById('privacyBtn')?.addEventListener('click', () => {
+      vscode.postMessage({ command: 'openPrivacyGuarantee' });
+    });
+    document.getElementById('privacyStatusBtn')?.addEventListener('click', () => {
+      vscode.postMessage({ command: 'openLocalPrivacyStatus' });
+    });
+    document.getElementById('safePromptBtn')?.addEventListener('click', () => {
+      vscode.postMessage({ command: 'buildSafePromptForAI' });
+    });
+    document.getElementById('demoBtn')?.addEventListener('click', () => {
+      vscode.postMessage({ command: 'runSecretBrokerDemo' });
     });
     document.getElementById('connectBtn')?.addEventListener('click', () => {
       vscode.postMessage({ command: 'connectCloud' });

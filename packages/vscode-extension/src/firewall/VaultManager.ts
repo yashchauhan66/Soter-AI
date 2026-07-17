@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { createHash } from "crypto";
 import {
     extractEnvSecrets,
     applyPlaceholders,
@@ -21,7 +22,10 @@ import {
  *    walking the workspace never see it.
  *  - The AES-256 key lives in VS Code SecretStorage, separate from the file.
  *  - Migration removes raw secrets from workspace files, replacing them with
- *    `[SOTERAI_PROTECTED_*]` placeholders, after writing a `.bak` backup.
+ *    `[SOTERAI_PROTECTED_*]` placeholders, after writing an ENCRYPTED backup
+ *    into extension global storage (never a plaintext file in the workspace —
+ *    a workspace `.bak` would hand the raw secrets straight to any AI tool or
+ *    extension that reads workspace files).
  *  - Raw secret values are never written to logs, telemetry, the ledger, or the
  *    webview — only hash-bearing metadata is ever surfaced.
  *
@@ -127,7 +131,9 @@ export class VaultManager {
 
     /**
      * Migrate secrets from a file into the vault:
-     *  1. write `<file>.bak` backup
+     *  1. write an encrypted backup into extension global storage (OUTSIDE the
+     *     workspace — a plaintext workspace `.bak` would leak every raw secret
+     *     to anything that reads workspace files)
      *  2. replace raw values with placeholders in the workspace file
      *  3. store encrypted entries in the vault (metadata + raw value)
      * Returns the number of secrets migrated.
@@ -139,9 +145,8 @@ export class VaultManager {
 
         const rel = vscode.workspace.asRelativePath(fileUri);
 
-        // 1. Backup before any destructive change.
-        const bakUri = fileUri.with({ path: `${fileUri.path}.bak` });
-        await vscode.workspace.fs.writeFile(bakUri, new TextEncoder().encode(text));
+        // 1. Encrypted backup before any destructive change.
+        await this.writeEncryptedBackup(fileUri, text);
 
         // 2. Replace raw values with placeholders in the workspace file.
         const masked = applyPlaceholders(text, candidates);
@@ -180,9 +185,9 @@ export class VaultManager {
         const count = Object.keys(map).length;
         if (count === 0) return 0;
 
-        // Backup the placeholder version before restoring raw secrets back in.
-        const bakUri = fileUri.with({ path: `${fileUri.path}.bak` });
-        await vscode.workspace.fs.writeFile(bakUri, new TextEncoder().encode(text));
+        // Backup the placeholder version (encrypted, outside the workspace)
+        // before restoring raw secrets back in.
+        await this.writeEncryptedBackup(fileUri, text);
 
         const restored = restorePlaceholders(text, map);
         await vscode.workspace.fs.writeFile(fileUri, new TextEncoder().encode(restored));
@@ -203,6 +208,46 @@ export class VaultManager {
     async knownPlaceholders(): Promise<string[]> {
         const vault = await this.readVault();
         return [...new Set(vault.entries.map((e) => e.placeholder))];
+    }
+
+    // ── Encrypted out-of-workspace backups ────────────────────────────────────
+    // Backups use the same AES key as the vault and live in globalStorage under
+    // `backups/`. Filenames are hash-derived so they leak neither the workspace
+    // path nor the file name to other processes browsing globalStorage.
+
+    private backupDir(): vscode.Uri {
+        return vscode.Uri.joinPath(this.context.globalStorageUri, "backups");
+    }
+
+    private backupUri(fileUri: vscode.Uri): vscode.Uri {
+        const id = createHash("sha256").update(fileUri.toString()).digest("hex").slice(0, 32);
+        return vscode.Uri.joinPath(this.backupDir(), `${id}.enc`);
+    }
+
+    /** Write an encrypted pre-change backup of a file OUTSIDE the workspace. */
+    private async writeEncryptedBackup(fileUri: vscode.Uri, content: string): Promise<void> {
+        await vscode.workspace.fs.createDirectory(this.backupDir());
+        const key = await this.getOrCreateKey();
+        const payload = await encryptVault(
+            JSON.stringify({ file: fileUri.toString(), savedAt: new Date().toISOString(), content }),
+            key,
+        );
+        await vscode.workspace.fs.writeFile(this.backupUri(fileUri), new TextEncoder().encode(payload));
+    }
+
+    /** Restore a file from its encrypted backup. Returns false if none exists. */
+    async restoreFromBackup(fileUri: vscode.Uri): Promise<boolean> {
+        try {
+            const bytes = await vscode.workspace.fs.readFile(this.backupUri(fileUri));
+            const key = await this.getOrCreateKey();
+            const json = await decryptVault(new TextDecoder().decode(bytes), key);
+            const parsed = JSON.parse(json) as { content?: string };
+            if (typeof parsed.content !== "string") return false;
+            await vscode.workspace.fs.writeFile(fileUri, new TextEncoder().encode(parsed.content));
+            return true;
+        } catch {
+            return false;
+        }
     }
 }
 

@@ -14,6 +14,8 @@ export * from "./SafeContextBuilder";
 export * from "./Ledger";
 export * from "./ExtensionRiskScanner";
 export * from "./MCPPolicyAnalyzer";
+export * from "./MCPCredentialBoundary";
+export * from "./CoverageMatrix";
 export * from "./SafeMode";
 export * from "./ApprovalToken";
 export * from "./BrokerScanner";

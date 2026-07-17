@@ -30,6 +30,9 @@ function readAllSrc(): string {
 
 const allSrc = readAllSrc();
 const pkg = JSON.parse(read("package.json"));
+const readmeSrc = read("README.md");
+const trustChecklistSrc = fs.readFileSync(path.resolve(root, "..", "..", "docs", "vscode-marketplace-trust-checklist.md"), "utf8");
+const productTrustMatrixSrc = fs.readFileSync(path.resolve(root, "..", "..", "docs", "product-trust-matrix.md"), "utf8");
 const commandsSrc = read("src/commands.ts");
 const extensionSrc = read("src/extension.ts");
 const telemetrySrc = read("src/telemetry.ts");
@@ -106,8 +109,11 @@ describe("Workspace Trust (#5)", () => {
 });
 
 describe("Vault safety — dry-run preview + backup + confirm", () => {
-    it("migration writes a .bak backup before overwriting", () => {
-        assert.match(vaultManagerSrc, /\.bak/, "vault migration must create a .bak backup");
+    it("migration backup is encrypted and OUTSIDE the workspace (no plaintext .bak)", () => {
+        assert.match(vaultManagerSrc, /writeEncryptedBackup/, "vault migration must back up via writeEncryptedBackup");
+        assert.match(vaultManagerSrc, /globalStorageUri,\s*"backups"/, "backups must live in extension global storage");
+        assert.doesNotMatch(vaultManagerSrc, /\$\{fileUri\.path\}\.bak/,
+            "vault must never write a plaintext .bak into the workspace — it would leak raw secrets to anything reading workspace files");
     });
     it("migration requires an explicit modal confirmation after previewing", () => {
         assert.match(firewallCommandsSrc, /modal:\s*true/, "vault migration must confirm via a modal dialog");
@@ -159,6 +165,7 @@ describe("Launch readiness command surface", () => {
     const expected = [
         "soterai.quickStart",
         "soterai.checkExtensionHealth",
+        "soterai.openPrivacyGuarantee",
         "soterai.openSettings",
         "soterai.runDemoScan",
         "soterai.scanSelectedText",
@@ -209,6 +216,33 @@ describe("Local-first privacy mode", () => {
         assert.match(launchCommandsSrc, /No API keys, prompts, secrets, or raw file contents/);
         assert.ok(!/cloudToken|providerApiKey|SOTERAI_PROVIDER_API_KEY/.test(launchCommandsSrc));
     });
+
+    it("privacy guarantee explains local-only secret handling", () => {
+        assert.ok(declaredCommands.includes("soterai.openPrivacyGuarantee"), "privacy guarantee command must be declared");
+        assert.ok(registeredCommands.has("soterai.openPrivacyGuarantee"), "privacy guarantee command must be registered");
+        assert.match(launchCommandsSrc, /Raw secrets stay on the user's machine/);
+        assert.match(launchCommandsSrc, /What SoterAI does not receive by default/);
+        assert.match(launchCommandsSrc, /Preview What AI Will See/);
+        assert.match(launchCommandsSrc, /No API keys, prompts, secrets, or raw file contents are included in this privacy report/);
+    });
+
+    it("README gives a marketplace-grade local privacy proof", () => {
+        assert.match(readmeSrc, /What Leaves Your Machine\?/);
+        assert.match(readmeSrc, /Raw API keys, tokens, private keys, `\.env` values/);
+        assert.match(readmeSrc, /Never sent by default; secret broker uses scoped references/);
+        assert.match(readmeSrc, /SoterAI: Local Privacy Status/);
+        assert.match(readmeSrc, /no API keys, prompts, secrets, raw files, private keys, database URLs, or PII/);
+    });
+
+    it("trust checklist and product matrix lock the reviewer-facing privacy contract", () => {
+        assert.match(trustChecklistSrc, /VS Code `SecretStorage`/);
+        assert.match(trustChecklistSrc, /capabilities\.untrustedWorkspaces\.supported/);
+        assert.match(trustChecklistSrc, /Raw secrets, raw prompts, raw file contents/);
+        assert.match(productTrustMatrixSrc, /VS Code extension/);
+        assert.match(productTrustMatrixSrc, /Browser extension/);
+        assert.match(productTrustMatrixSrc, /n8n node/);
+        assert.match(productTrustMatrixSrc, /A buyer can understand what leaves their machine in under 30 seconds/);
+    });
 });
 
 describe("Clipboard safety for firewall handlers (#1)", () => {
@@ -241,6 +275,9 @@ describe("Webview hardening (#7)", () => {
     it("dashboard message handler keeps a strict command allowlist including new actions", () => {
         assert.match(dashboardSrc, /knownCommands[\s\S]{0,200}scanClipboard/);
         assert.match(dashboardSrc, /knownCommands[\s\S]{0,200}openWalkthrough/);
+        assert.match(dashboardSrc, /knownCommands[\s\S]{0,300}openLocalPrivacyStatus/);
+        assert.match(dashboardSrc, /knownCommands[\s\S]{0,400}buildSafePromptForAI/);
+        assert.match(dashboardSrc, /knownCommands[\s\S]{0,500}runSecretBrokerDemo/);
         // The allowlist gate must still reject anything not in the set.
         assert.match(dashboardSrc, /!knownCommands\.has\(cmd\)/);
     });
@@ -285,6 +322,7 @@ describe("Command-palette hygiene (clutter control)", () => {
         "soterai.quickStart", "soterai.checkExtensionHealth", "soterai.openSettings", "soterai.runDemoScan",
         "soterai.scanSelectedText", "soterai.scanCurrentFile", "soterai.scanGitDiff", "soterai.reviewTerminalCommand",
         "soterai.scanMCPAgentTools", "soterai.openAIActivityLedger", "soterai.generateCanaryToken", "soterai.choosePolicyPack",
+        "soterai.openPrivacyGuarantee", "soterai.openLocalPrivacyStatus", "soterai.buildSafePromptForAI", "soterai.runSecretBrokerDemo",
         "soterai.openWalkthrough", "soterai.scanClipboard",
     ];
     const palette: Array<{ command: string; when?: string }> = pkg.contributes.menus?.commandPalette ?? [];

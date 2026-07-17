@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { ExtensionState } from "./state";
 import { registerCommands } from "./commands";
 import { registerFirewallCommands, readContextApproval } from "./firewall/commands";
+import { setProtectedFileChecker } from "./firewall/ContextGatherer";
 import { registerScannerCommands } from "./firewall/scanners";
 import { PolicyStore } from "./firewall/PolicyStore";
 import { RiskTreeProvider } from "./views/RiskTreeProvider";
@@ -22,6 +23,7 @@ import { EnterpriseDashboard, registerDashboardCommands } from "./enterprise/Ent
 import { registerLaunchCommands } from "./launchCommands";
 import { registerLiveScanner } from "./diagnostics/LiveScanner";
 import { registerClipboardGuard } from "./clipboard/ClipboardGuard";
+import { registerSecretBrokerCommands } from "./secret-broker/commands";
 
 let statusBarItem: vscode.StatusBarItem;
 let firewallStatusItem: vscode.StatusBarItem;
@@ -75,6 +77,10 @@ export function activate(context: vscode.ExtensionContext): void {
     sentinel = new AISentinel(context);
     permissionStore = new PermissionStore(context);
     workspaceGuard = new WorkspaceGuard(context);
+    // Enforce the Protected Workspace list on every SoterAI-built context
+    // bundle: protected files never enter gatherContext() output. Direct reads
+    // by other tools remain monitoring-only (see WorkspaceGuard honesty notes).
+    setProtectedFileChecker((relPath) => workspaceGuard.isEnabled && workspaceGuard.isProtected(relPath));
     mcpFirewall = new MCPFirewall(context);
     memoryGuard = new MemoryGuard();
 
@@ -116,6 +122,7 @@ export function activate(context: vscode.ExtensionContext): void {
     registerLaunchCommands(context);
     registerLiveScanner(context);
     registerClipboardGuard(context);
+    registerSecretBrokerCommands(context, refreshViews);
 
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
     statusBarItem.command = "soterai.openSecurityPanel";
@@ -179,7 +186,14 @@ async function updateBrokerStatus(): Promise<void> {
 
 function updateStatusBar(): void {
     const state = ExtensionState.getInstance();
-    const latestRisk = state.latestDecision ? state.latestDecision.riskScore : 0;
+    // Honest semantics: "no scan yet" is UNKNOWN coverage, not "Secure".
+    if (!state.latestDecision) {
+        statusBarItem.text = `$(shield) SoterAI: Monitoring`;
+        statusBarItem.tooltip = "Local scanning active. No scan has run yet — coverage unknown until content is scanned.";
+        statusBarItem.backgroundColor = undefined;
+        return;
+    }
+    const latestRisk = state.latestDecision.riskScore;
     if (latestRisk >= 70) {
         statusBarItem.text = `$(shield) SoterAI: Blocked (${latestRisk})`;
         statusBarItem.tooltip = `High-Risk Content Blocked. Score: ${latestRisk}/100.`;
@@ -189,8 +203,8 @@ function updateStatusBar(): void {
         statusBarItem.tooltip = `Risky content/patterns detected. Score: ${latestRisk}/100.`;
         statusBarItem.backgroundColor = new vscode.ThemeColor("statusBarItem.warningBackground");
     } else {
-        statusBarItem.text = `$(shield) SoterAI: Secure`;
-        statusBarItem.tooltip = "Local AI Security Shield Active.";
+        statusBarItem.text = `$(shield) SoterAI: No Risk Found`;
+        statusBarItem.tooltip = `Latest scan found no high-risk content (score ${latestRisk}/100). This reflects scanned content only, not unscanned paths.`;
         statusBarItem.backgroundColor = undefined;
     }
 }

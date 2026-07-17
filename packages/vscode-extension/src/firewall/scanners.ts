@@ -3,6 +3,7 @@ import {
     scanExtensions,
     analyzeMCPConfig,
     generateSafeMCPPolicy,
+    ROUTE_COVERAGE,
     type ExtensionMetadata,
     type MCPAnalysis,
 } from "@soterai/guard-core";
@@ -267,10 +268,36 @@ export async function generateMCPSafePolicy(): Promise<void> {
     );
 }
 
+/**
+ * Scenario B — honest coverage matrix. Shows exactly which AI routes SoterAI can
+ * enforce, redact, only monitor, or not observe at all. Never claims prevention
+ * for a route it does not control.
+ */
+export function showCoverageMatrix(): void {
+    const levelClass = (level: string) =>
+        level === "ENFORCED" ? "allow" : level === "REDACTED" ? "warn" : level === "MONITORED" ? "warn" : "block";
+    const rows = ROUTE_COVERAGE.map(
+        (r) =>
+            `<tr><td>${escapeHtml(r.route)}</td>` +
+            `<td><span class="badge ${levelClass(r.level)}">${escapeHtml(r.level)}</span></td>` +
+            `<td>${r.observable ? "yes" : "no"}</td><td>${r.transformable ? "yes" : "no"}</td><td>${r.enforceable ? "yes" : "no"}</td>` +
+            `<td>${escapeHtml(r.note)}</td></tr>`,
+    ).join("");
+    showInfoWebview(
+        "soteraiCoverage",
+        "SoterAI: AI Route Coverage",
+        `<h1>🛰️ What SoterAI Can Actually Protect</h1>
+     <p>Honest coverage per route. <strong>ENFORCED</strong> means SoterAI controls the path and can prevent plaintext exposure. <strong>MONITORED</strong>/<strong>UNKNOWN</strong> mean it cannot — no green status is shown for a path SoterAI does not control.</p>
+     <table><tr><th>Route</th><th>Coverage</th><th>Observe</th><th>Transform</th><th>Enforce</th><th>What this means</th></tr>${rows}</table>
+     <p class="note">Only the SoterAI Local Broker route is enforceable. For a plaintext secret an unknown extension could read directly, SoterAI reports Monitoring only and offers migration to the vault or an enforced broker path.</p>`,
+    );
+}
+
 /** Register Phase 8 & 9 commands. */
 export function registerScannerCommands(context: vscode.ExtensionContext): void {
     const reg = (id: string, handler: (...args: any[]) => any) =>
         context.subscriptions.push(vscode.commands.registerCommand(id, handler));
+    reg("soterai.showCoverageMatrix", showCoverageMatrix);
     reg("soterai.scanInstalledExtensionsRisk", scanInstalledExtensionsRisk);
     reg("soterai.showAIExtensions", showAIExtensions);
     reg("soterai.generateExtensionRiskReport", generateExtensionRiskReport);
