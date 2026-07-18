@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SoterGuard = void 0;
 const n8n_workflow_1 = require("n8n-workflow");
-const PACKAGE_VERSION = "0.2.10";
+const PACKAGE_VERSION = "0.3.0";
 const USER_AGENT = `n8n-nodes-soterai/${PACKAGE_VERSION}`;
 const MAX_SANITIZE_DEPTH = 8;
 const MAX_METADATA_STRING_LENGTH = 500;
@@ -338,7 +338,10 @@ class SoterGuard {
                     });
                     continue;
                 }
-                throw error;
+                if (error instanceof n8n_workflow_1.NodeOperationError || error instanceof n8n_workflow_1.NodeApiError) {
+                    throw error;
+                }
+                throw new n8n_workflow_1.NodeApiError(this.getNode(), error, { itemIndex: i });
             }
         }
         return [returnData];

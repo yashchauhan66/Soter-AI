@@ -4,10 +4,11 @@ import type {
   INodeType,
   INodeTypeDescription,
   IDataObject,
+  JsonObject,
 } from "n8n-workflow";
-import { NodeOperationError } from "n8n-workflow";
+import { NodeApiError, NodeOperationError } from "n8n-workflow";
 
-const PACKAGE_VERSION = "0.2.10";
+const PACKAGE_VERSION = "0.3.0";
 const USER_AGENT = `n8n-nodes-soterai/${PACKAGE_VERSION}`;
 const MAX_SANITIZE_DEPTH = 8;
 const MAX_METADATA_STRING_LENGTH = 500;
@@ -351,7 +352,10 @@ export class SoterGuard implements INodeType {
           });
           continue;
         }
-        throw error;
+        if (error instanceof NodeOperationError || error instanceof NodeApiError) {
+          throw error;
+        }
+        throw new NodeApiError(this.getNode(), error as JsonObject, { itemIndex: i });
       }
     }
 
