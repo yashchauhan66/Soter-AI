@@ -38,7 +38,7 @@ jobs:
           server {
               listen 80;
               listen [::]:80;
-              server_name soterai.in www.soterai.in;
+              server_name soterai.in www.soterai.in api.soterai.in;
 
               location / {
                   proxy_pass http://127.0.0.1:3000;
@@ -59,7 +59,7 @@ jobs:
             sudo systemctl reload nginx
 
             sudo certbot --nginx \
-              --domains soterai.in,www.soterai.in \
+              --domains soterai.in,www.soterai.in,api.soterai.in \
               --non-interactive \
               --agree-tos \
               --register-unsafely-without-email \
@@ -75,3 +75,4 @@ jobs:
         run: |
           curl --fail --silent --show-error --location --max-time 30 https://soterai.in/api/health
           curl --fail --silent --show-error --head --max-time 30 https://www.soterai.in/
+          curl --fail --silent --show-error --location --max-time 30 https://api.soterai.in/api/health
