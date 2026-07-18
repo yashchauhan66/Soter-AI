@@ -38,6 +38,19 @@ jobs:
             sudo pkill -f "certbot" 2>/dev/null || true
             sudo rm -f /var/lock/certbot /var/run/certbot.lock 2>/dev/null || true
 
+            # ── Remove stale sites that serve the wrong (soterai.publicvm.com) cert ──
+            # Any enabled site referencing the old hostname makes nginx present a cert
+            # whose name is soterai.publicvm.com, triggering ERR_CERT_COMMON_NAME_INVALID
+            # for visitors to soterai.in. Disable them and the default site.
+            for f in $(sudo grep -rl "publicvm" /etc/nginx/sites-enabled/ /etc/nginx/sites-available/ 2>/dev/null); do
+              echo "Removing stale nginx site: $f"
+              sudo rm -f "$f" "/etc/nginx/sites-enabled/$(basename "$f")"
+            done
+            sudo rm -f /etc/nginx/sites-enabled/default
+
+            # Drop the old publicvm certificate so nginx can't fall back to it.
+            sudo certbot delete --cert-name soterai.publicvm.com --non-interactive 2>/dev/null || true
+
             sudo tee /etc/nginx/sites-available/soterai >/dev/null <<'NGINX'
           server {
               listen 80;
@@ -78,6 +91,16 @@ jobs:
       - name: Verify HTTPS
         shell: bash
         run: |
+          # 1. Confirm the served certificate actually covers soterai.in.
+          #    Guards against the ERR_CERT_COMMON_NAME_INVALID regression where
+          #    nginx served the old soterai.publicvm.com cert.
+          SAN=$(echo | openssl s_client -connect soterai.in:443 -servername soterai.in 2>/dev/null \
+            | openssl x509 -noout -ext subjectAltName 2>/dev/null)
+          echo "Served SAN: $SAN"
+          echo "$SAN" | grep -q "DNS:soterai.in" \
+            || { echo "::error::Served certificate does not cover soterai.in"; exit 1; }
+
+          # 2. Confirm the app responds over HTTPS on every hostname.
           curl --fail --silent --show-error --location --max-time 30 https://soterai.in/api/health
           curl --fail --silent --show-error --head --max-time 30 https://www.soterai.in/
           curl --fail --silent --show-error --location --max-time 30 https://api.soterai.in/api/health
