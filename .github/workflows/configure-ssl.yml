@@ -34,6 +34,10 @@ jobs:
             sudo apt-get update -y
             sudo DEBIAN_FRONTEND=noninteractive apt-get install -y nginx certbot python3-certbot-nginx
 
+            # Kill any stale certbot processes and remove lockfile from previous runs
+            sudo pkill -f "certbot" 2>/dev/null || true
+            sudo rm -f /var/lock/certbot /var/run/certbot.lock 2>/dev/null || true
+
             sudo tee /etc/nginx/sites-available/soterai >/dev/null <<'NGINX'
           server {
               listen 80;
