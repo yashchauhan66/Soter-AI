@@ -60,6 +60,7 @@ jobs:
 
             sudo certbot --nginx \
               --domains soterai.in,www.soterai.in,api.soterai.in \
+              --expand \
               --non-interactive \
               --agree-tos \
               --register-unsafely-without-email \
