@@ -2,7 +2,17 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
-## Unreleased
+## 0.2.11
+
+### Changed
+
+- Wrap unexpected HTTP/runtime errors from the SoterAI API in `NodeApiError` so the n8n UI surfaces HTTP status and the failing item index. `NodeOperationError` (e.g. unknown action) is preserved as-is.
+
+### Fixed
+
+- Published via the GitHub Actions release workflow (`npm publish --provenance`) so the package carries an npm provenance statement, matching the tagged source.
+
+## [0.3.0] - 2026-07-18
 
 ### Added
 
