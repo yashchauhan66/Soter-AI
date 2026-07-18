@@ -57,10 +57,20 @@
     "activationEvents": [
         "onCommand:soterai.quickStart",
         "onCommand:soterai.checkExtensionHealth",
+        "onCommand:soterai.openPrivacyGuarantee",
         "onCommand:soterai.openSettings",
         "onCommand:soterai.runDemoScan",
         "onCommand:soterai.scanSelectedText",
         "onCommand:soterai.scanCurrentFile",
+        "onCommand:soterai.useSensitiveContextSafely",
+        "onCommand:soterai.buildSafePromptForAI",
+        "onCommand:soterai.runSecretBrokerDemo",
+        "onCommand:soterai.openLocalPrivacyStatus",
+        "onCommand:soterai.previewWhatAIWillSee",
+        "onCommand:soterai.manageSecretReferences",
+        "onCommand:soterai.clearSecretBrokerSession",
+        "onCommand:soterai.configurePrivacyMode",
+        "onCommand:soterai.chooseSecretHandlingPolicy",
         "onCommand:soterai.scanGitDiff",
         "onCommand:soterai.reviewTerminalCommand",
         "onCommand:soterai.scanMCPAgentTools",
@@ -91,6 +101,11 @@
                 "category": "SoterAI"
             },
             {
+                "command": "soterai.openPrivacyGuarantee",
+                "title": "SoterAI: What Stays Local?",
+                "category": "SoterAI"
+            },
+            {
                 "command": "soterai.openSettings",
                 "title": "SoterAI: Open Settings",
                 "category": "SoterAI"
@@ -103,6 +118,66 @@
             {
                 "command": "soterai.scanSelectedText",
                 "title": "SoterAI: Scan Selected Text",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.useSensitiveContextSafely",
+                "title": "SoterAI: Use Sensitive Context Safely",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.buildSafePromptForAI",
+                "title": "SoterAI: Build Safe Prompt for AI",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.runSecretBrokerDemo",
+                "title": "SoterAI: Run Secret Broker Demo",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openLocalPrivacyStatus",
+                "title": "SoterAI: Local Privacy Status",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.previewWhatAIWillSee",
+                "title": "SoterAI: Preview What AI Will See",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.manageSecretReferences",
+                "title": "SoterAI: Manage Secret References",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.clearSecretBrokerSession",
+                "title": "SoterAI: Clear Secret Broker Session",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.configurePrivacyMode",
+                "title": "SoterAI: Configure Privacy Mode",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.chooseSecretHandlingPolicy",
+                "title": "SoterAI: Choose Secret Handling Policy",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.runSecretBrokerDemoOperation",
+                "title": "SoterAI: Run Secret Broker Demo Operation",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.emergencyLockdown",
+                "title": "SoterAI: Emergency Lockdown (Revoke All Capabilities)",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.testProtection",
+                "title": "SoterAI: Test Protection (Enforced API Capability)",
                 "category": "SoterAI"
             },
             {
@@ -218,6 +293,10 @@
                 "title": "SoterAI: Restore Secret Placeholders"
             },
             {
+                "command": "soterai.restoreFileFromBackup",
+                "title": "SoterAI: Restore File From Encrypted Backup"
+            },
+            {
                 "command": "soterai.openVaultStatus",
                 "title": "SoterAI: Open Protected Vault Status"
             },
@@ -324,6 +403,10 @@
             {
                 "command": "soterai.generateExtensionRiskReport",
                 "title": "SoterAI: Generate Extension Risk Report"
+            },
+            {
+                "command": "soterai.showCoverageMatrix",
+                "title": "SoterAI: Show AI Route Coverage"
             },
             {
                 "command": "soterai.scanMCPConfigs",
@@ -658,6 +741,39 @@
                     "default": "local",
                     "description": "Controls whether SoterAI uses only local detectors, configured cloud checks, or local-first hybrid checks with user consent."
                 },
+                "soterai.sensitiveContext.defaultAction": {
+                    "type": "string",
+                    "enum": [
+                        "broker",
+                        "redact",
+                        "block",
+                        "summarize"
+                    ],
+                    "default": "broker",
+                    "description": "Default action when sensitive context is selected for AI use."
+                },
+                "soterai.sensitiveContext.allowRawReveal": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Allow dangerous reveal-once flows after explicit confirmation. Enterprise policy can still disable this."
+                },
+                "soterai.sensitiveContext.requireApproval": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Require user approval before brokered local actions can use a secret reference."
+                },
+                "soterai.sensitiveContext.ttlMinutes": {
+                    "type": "number",
+                    "default": 5,
+                    "minimum": 1,
+                    "maximum": 60,
+                    "description": "Maximum lifetime for scoped secret references."
+                },
+                "soterai.audit.storeRawPrompts": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Store raw prompts in the audit ledger. This should remain disabled for privacy."
+                },
                 "soterai.telemetry.redactedEvents": {
                     "type": "string",
                     "enum": [
@@ -758,6 +874,42 @@
         "menus": {
             "commandPalette": [
                 {
+                    "command": "soterai.useSensitiveContextSafely",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.previewWhatAIWillSee",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.manageSecretReferences",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.clearSecretBrokerSession",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.configurePrivacyMode",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.chooseSecretHandlingPolicy",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.runSecretBrokerDemoOperation",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.emergencyLockdown",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.testProtection",
+                    "when": "soterai.advancedCommands"
+                },
+                {
                     "command": "soterai.scanSelection",
                     "when": "soterai.advancedCommands"
                 },
@@ -831,6 +983,10 @@
                 },
                 {
                     "command": "soterai.restoreSecretPlaceholders",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.restoreFileFromBackup",
                     "when": "soterai.advancedCommands"
                 },
                 {
@@ -939,6 +1095,10 @@
                 },
                 {
                     "command": "soterai.generateExtensionRiskReport",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showCoverageMatrix",
                     "when": "soterai.advancedCommands"
                 },
                 {

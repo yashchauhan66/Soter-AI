@@ -1,0 +1,95 @@
+{
+  "name": "SoterAI Universal AI Firewall",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "soterai-universal-firewall-demo",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "webhook",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [220, 300],
+      "webhookId": "soterai-universal-firewall-demo"
+    },
+    {
+      "parameters": {
+        "action": "universalGuard",
+        "inputText": "={{$json.body.prompt || $json.prompt || \"Please summarize this public article.\"}}",
+        "universalOutputText": "={{$json.body.aiOutput || $json.aiOutput || \"\"}}",
+        "securityContextJson": "={{$json.body.securityContext ? JSON.stringify($json.body.securityContext) : \"\"}}",
+        "protectionProfile": "MAXIMUM",
+        "onThreat": "BLOCK",
+        "metadata": "{\"workflow\":\"soterai-universal-ai-firewall\",\"profile\":\"maximum\"}"
+      },
+      "id": "soterai-universal-firewall",
+      "name": "SoterAI Universal Firewall",
+      "type": "n8n-nodes-soterai.soterGuard",
+      "typeVersion": 1,
+      "position": [500, 300],
+      "credentials": {
+        "soterApi": {
+          "id": "SOTERAI_API_PLACEHOLDER",
+          "name": "SoterAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{$json.blocked}}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "if-blocked",
+      "name": "IF Blocked",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [760, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"allowed\":false,\"decision\":$json.finalDecision,\"liveChatAction\":$json.liveChatAction,\"message\":$json.userMessage,\"hint\":$json.safeRephrasePrompt,\"riskLevel\":$json.riskLevel,\"riskScore\":$json.riskScore,\"requestId\":$json.incidentId || $execution.id}",
+        "options": {}
+      },
+      "id": "respond-blocked",
+      "name": "Respond Blocked",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1020, 200]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"allowed\":true,\"decision\":$json.finalDecision,\"riskLevel\":$json.riskLevel,\"safeText\":$json.outputText,\"checks\":$json.checks}",
+        "options": {}
+      },
+      "id": "respond-allowed",
+      "name": "Respond Allowed",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1020, 410]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{ "node": "SoterAI Universal Firewall", "type": "main", "index": 0 }]]
+    },
+    "SoterAI Universal Firewall": {
+      "main": [[{ "node": "IF Blocked", "type": "main", "index": 0 }]]
+    },
+    "IF Blocked": {
+      "main": [
+        [{ "node": "Respond Blocked", "type": "main", "index": 0 }],
+        [{ "node": "Respond Allowed", "type": "main", "index": 0 }]
+      ]
+    }
+  }
+}

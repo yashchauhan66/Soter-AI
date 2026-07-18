@@ -1,4 +1,5 @@
-import { authenticateAdvancedSecurity, readAdvancedJson } from "@/lib/advanced-security/server";
+import { readJson } from "@/lib/apiResponse";
+import { authenticateAdvancedSecurity } from "@/lib/advanced-security/server";
 import {
   checkAndPersistSemanticEgress,
   routeError,
@@ -11,9 +12,9 @@ export async function POST(request: Request) {
   try {
     const authenticated = await authenticateAdvancedSecurity(request);
     if (!authenticated.ok) return authenticated.response;
-    const body = await readAdvancedJson(request, semanticEgressCheckSchema);
-    return checkAndPersistSemanticEgress(authenticated.auth, body);
+    const body = semanticEgressCheckSchema.parse(await readJson(request));
+    return await checkAndPersistSemanticEgress(authenticated.auth, body);
   } catch (error) {
-    return routeError(error, "Semantic egress could not be checked.");
+    return routeError(error, "Semantic egress check could not be completed.");
   }
 }

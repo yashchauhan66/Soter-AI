@@ -2,6 +2,7 @@ import { Activity, Users, Globe, ShieldBan, ShieldAlert, Clock, ArrowUpRight, Al
 import Link from "next/link";
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { Timestamp } from "@/components/ui/Timestamp";
 
 export const dynamic = "force-dynamic";
 
@@ -264,9 +265,7 @@ export default async function GovernanceMonitoringPage() {
                         {event.reason.length > 150 ? event.reason.slice(0, 150) + "…" : event.reason}
                       </p>
                     )}
-                    <p className="mt-0.5 text-xs text-slate-600">
-                      {new Date(event.createdAt).toLocaleString()}
-                    </p>
+                    <Timestamp value={event.createdAt} />
                   </div>
                 </div>
               ))}
@@ -345,9 +344,7 @@ export default async function GovernanceMonitoringPage() {
                       {log.decision}
                     </span>
                   </div>
-                  <p className="mt-0.5 text-xs text-slate-500">
-                    {new Date(log.createdAt).toLocaleString()}
-                  </p>
+                  <Timestamp value={log.createdAt} />
                 </div>
               </div>
             ))}

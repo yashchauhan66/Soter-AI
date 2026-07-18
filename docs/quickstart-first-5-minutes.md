@@ -19,7 +19,7 @@ Do not put `SOTER_API_KEY` in browser JavaScript, mobile apps, extension content
 4. Store the key in your server environment.
 
 ```env
-SOTER_BASE_URL=https://api.soterai.com
+SOTER_BASE_URL=https://api.soterai.in
 SOTER_API_KEY=ck_live_or_test_key_from_dashboard
 SOTER_PROJECT_ID=project_id_from_dashboard
 ```

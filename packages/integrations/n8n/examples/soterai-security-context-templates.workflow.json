@@ -1,0 +1,69 @@
+{
+  "name": "SoterAI Security Context Templates",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "prompt",
+              "value": "Please draft a short customer update from the retrieved context."
+            },
+            {
+              "name": "aiOutput",
+              "value": "Here is a draft customer update based on the approved context."
+            },
+            {
+              "name": "securityContext",
+              "value": "{\"rag\":{\"text\":\"Retrieved document chunk for the customer update.\",\"documentId\":\"demo-doc-1\",\"source\":\"api\"},\"tool\":{\"name\":\"send_email\",\"action\":\"draft\",\"destination\":\"external\",\"target\":\"customer@example.com\",\"content\":\"Draft email body created by the AI\",\"riskContext\":{\"externalDestination\":true,\"canSendMessage\":true,\"canModifyData\":false}},\"memory\":{\"action\":\"STORE\",\"content\":\"Customer prefers concise updates.\",\"memoryType\":\"preference\"},\"output\":{\"destinationType\":\"EMAIL\",\"destinationName\":\"customer email\"}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "security-context-template",
+      "name": "Security Context Template",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "action": "universalGuard",
+        "inputText": "={{$json.prompt}}",
+        "universalOutputText": "={{$json.aiOutput}}",
+        "securityContextJson": "={{$json.securityContext}}",
+        "protectionProfile": "MAXIMUM",
+        "onThreat": "BLOCK",
+        "metadata": "{\"workflow\":\"soterai-security-context-templates\"}"
+      },
+      "id": "soterai-universal-firewall",
+      "name": "SoterAI Universal Firewall",
+      "type": "n8n-nodes-soterai.soterGuard",
+      "typeVersion": 1,
+      "position": [750, 300],
+      "credentials": {
+        "soterApi": {
+          "id": "SOTERAI_API_PLACEHOLDER",
+          "name": "SoterAI API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [[{ "node": "Security Context Template", "type": "main", "index": 0 }]]
+    },
+    "Security Context Template": {
+      "main": [[{ "node": "SoterAI Universal Firewall", "type": "main", "index": 0 }]]
+    }
+  }
+}

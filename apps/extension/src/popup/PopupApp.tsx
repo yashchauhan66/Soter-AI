@@ -29,10 +29,35 @@ export function renderPopup(root: HTMLElement, state: ExtensionState) {
           <div class="row"><span>Last heartbeat</span><span class="value">${escapeHtml(state.lastHeartbeatAt ?? "never")}</span></div>
         </div>
         <button data-heartbeat>Sync now</button>`}
+      ${privacySection({ enrolled, responseScanningEnabled, lockdown })}
     </div>`;
   wireEnrollment(root, (next) => renderPopup(root, next));
   root.querySelector("[data-heartbeat]")?.addEventListener("click", () => chrome.runtime.sendMessage({ type: "SOTER_SYNC_POLICY" }, (response) => {
     const next = (response as { state?: ExtensionState } | undefined)?.state;
     if (next) renderPopup(root, next);
   }));
+}
+
+function privacySection({
+  enrolled,
+  responseScanningEnabled,
+  lockdown,
+}: {
+  enrolled: boolean;
+  responseScanningEnabled: boolean;
+  lockdown: boolean;
+}) {
+  const rawPromptStatus = enrolled
+    ? "No by default. Only explicit admin full-prompt logging can change this."
+    : "No. Enroll to receive organization policy.";
+  return `
+    <section aria-label="What leaves browser?">
+      <h2>What leaves browser?</h2>
+      <div class="row"><span>Raw prompt to SoterAI</span><span class="value">${escapeHtml(rawPromptStatus)}</span></div>
+      <div class="row"><span>Stored locally</span><span class="value">Redacted preview, safe rewrite, hashes, and policy cache</span></div>
+      <div class="row"><span>Backend audit event</span><span class="value">${enrolled ? "Metadata, decision, risk score, redacted preview" : "None before enrollment"}</span></div>
+      <div class="row"><span>Response scanning</span><span class="value">${responseScanningEnabled ? "Configured AI destinations only" : "Off"}</span></div>
+      <div class="row"><span>Emergency mode</span><span class="value">${lockdown ? "Strict cached policy active" : "Inactive"}</span></div>
+      <p class="help">Secrets are detected and rewritten in the browser first; extension storage avoids keeping raw prompt text by default.</p>
+    </section>`;
 }

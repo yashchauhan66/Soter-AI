@@ -1,6 +1,6 @@
 # SoterAI Guard API Reference
 
-Base URL: `https://api.soterai.com`
+Base URL: `https://api.soterai.in`
 
 All production calls must be made from a trusted server. Do not call SoterAI directly from browser JavaScript, mobile apps, extension content scripts, or public client code.
 

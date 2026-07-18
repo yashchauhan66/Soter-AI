@@ -50,7 +50,7 @@ import {
 
 // ── Hero product definitions ────────────────────────────────────────────
 
-interface HeroProduct {
+export interface HeroProduct {
   label: string;
   description: string;
   href: string;
@@ -62,7 +62,7 @@ interface HeroProduct {
   items: { Icon: typeof Gauge; label: string; href: string }[];
 }
 
-const heroProducts: HeroProduct[] = [
+export const heroProducts: HeroProduct[] = [
   {
     label: "AI Agent Control",
     description: "Approve, log, rollback agent actions",
@@ -111,12 +111,12 @@ const heroProducts: HeroProduct[] = [
 
 // ── Collapsed group definitions ─────────────────────────────────────────
 
-interface NavGroup {
+export interface NavGroup {
   label: string;
   items: { Icon: typeof Gauge; label: string; href: string; badge?: string; status?: "Stable" | "Beta" | "Labs" }[];
 }
 
-const navGroups: NavGroup[] = [
+export const navGroups: NavGroup[] = [
   {
     label: "Guard Operations",
     items: [

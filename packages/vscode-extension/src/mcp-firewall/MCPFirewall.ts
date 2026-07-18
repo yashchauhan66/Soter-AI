@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { escapeHtml, showInfoWebview, firstWorkspaceFolder } from "../firewall/util";
 import { MCP_CONFIG_GLOBS } from "../firewall/scanners";
+import { advisoryNotice, PROTECTION } from "../protection/ProtectionLevel";
 
 const TOOL_CLASSIFICATIONS: Record<string, string[]> = {
     filesystem: ["read", "write", "list", "glob", "search", "open", "create", "delete", "move", "copy"],
@@ -163,13 +164,17 @@ export function registerMCPFirewallCommands(context: vscode.ExtensionContext, fi
         const tools = await firewall.scanConfigs();
         const rows = tools.map((t) => {
             const riskClass = t.level === "critical" || t.level === "high" ? "block" : t.level === "medium" ? "warn" : "allow";
-            return `<tr><td><code>${escapeHtml(t.name)}</code></td><td><code>${escapeHtml(t.configPath)}</code></td><td>${t.permissions.map((p) => `<span class="badge ${escapeHtml(p)}">${escapeHtml(p)}</span>`).join(" ")}</td><td>${escapeHtml(t.envKeys.join(", "))}</td><td><span class="badge ${riskClass}">${escapeHtml(t.level.toUpperCase())} ${t.riskScore}</span></td><td>${t.reasons.map((r) => escapeHtml(r)).join("<br>")}</td></tr>`;
+            const denyCell = t.blocked
+                ? `<span class="badge block">DENY-LISTED — still in config (drift)</span>`
+                : `<span class="badge allow">not deny-listed</span>`;
+            return `<tr><td><code>${escapeHtml(t.name)}</code></td><td><code>${escapeHtml(t.configPath)}</code></td><td>${t.permissions.map((p) => `<span class="badge ${escapeHtml(p)}">${escapeHtml(p)}</span>`).join(" ")}</td><td>${escapeHtml(t.envKeys.join(", "))}</td><td><span class="badge ${riskClass}">${escapeHtml(t.level.toUpperCase())} ${t.riskScore}</span></td><td>${denyCell}</td><td>${t.reasons.map((r) => escapeHtml(r)).join("<br>")}</td></tr>`;
         }).join("");
 
         showInfoWebview("soteraiMCPFirewall", "SoterAI: MCP Tool Firewall",
             `<h1>MCP Tool Firewall</h1><p>${tools.length} tool(s) scanned across MCP configs.</p>
-            <table><tr><th>Tool</th><th>Config</th><th>Permissions</th><th>Secret Env</th><th>Risk</th><th>Reasons</th></tr>
-            ${rows || "<tr><td colspan='6'>No MCP tools found.</td></tr>"}</table>
+            <p class="note"><strong>${escapeHtml(PROTECTION.MONITORED.label)}:</strong> ${escapeHtml(PROTECTION.MONITORED.meaning)} SoterAI analyzes MCP configs and records your deny-list, but a VS Code extension cannot intercept another MCP client's traffic. Deny-listed tools still present in a config are flagged as drift below.</p>
+            <table><tr><th>Tool</th><th>Config</th><th>Permissions</th><th>Secret Env</th><th>Risk</th><th>Deny-list</th><th>Reasons</th></tr>
+            ${rows || "<tr><td colspan='7'>No MCP tools found.</td></tr>"}</table>
             <p class="note">Tool descriptions are treated as untrusted (possible prompt injection). Secret env var names shown; values never read.</p>`
         );
     });
@@ -185,25 +190,39 @@ export function registerMCPFirewallCommands(context: vscode.ExtensionContext, fi
         const tools = await firewall.scanConfigs();
         const pick = await vscode.window.showQuickPick(
             tools.map((t) => ({ label: t.name, detail: `${t.level} - ${t.reasons[0] ?? "No reasons"}`, name: t.name })),
-            { title: "Block MCP Tool", placeHolder: "Select a tool to block" }
+            { title: "Deny-list MCP Tool (advisory)", placeHolder: "Select a tool to deny-list" }
         );
         if (pick) {
             await firewall.blockTool(pick.name);
-            vscode.window.showInformationMessage(`MCP tool "${pick.name}" blocked.`);
+            const action = await vscode.window.showWarningMessage(
+                `MCP tool "${pick.name}" added to SoterAI's deny-list. ` + advisoryNotice("The MCP deny-list") +
+                " To actually stop the tool, remove it from the MCP config.",
+                "Open MCP Config",
+            );
+            if (action === "Open MCP Config") {
+                const tool = tools.find((t) => t.name === pick.name);
+                const folder = firstWorkspaceFolder();
+                if (tool && folder) {
+                    try {
+                        const doc = await vscode.workspace.openTextDocument(vscode.Uri.joinPath(folder.uri, tool.configPath));
+                        await vscode.window.showTextDocument(doc);
+                    } catch { /* config no longer present */ }
+                }
+            }
         }
     });
 
     reg("soterai.approveMCPTool", async () => {
         const tools = await firewall.scanConfigs();
         const blocked = tools.filter((t) => firewall.isToolBlocked(t.name));
-        if (blocked.length === 0) return vscode.window.showInformationMessage("No blocked MCP tools.");
+        if (blocked.length === 0) return vscode.window.showInformationMessage("No deny-listed MCP tools.");
         const pick = await vscode.window.showQuickPick(
             blocked.map((t) => ({ label: t.name, detail: t.level, name: t.name })),
-            { title: "Approve MCP Tool", placeHolder: "Select a blocked tool to approve" }
+            { title: "Remove MCP Tool From Deny-list", placeHolder: "Select a deny-listed tool to approve" }
         );
         if (pick) {
             await firewall.approveTool(pick.name);
-            vscode.window.showInformationMessage(`MCP tool "${pick.name}" approved.`);
+            vscode.window.showInformationMessage(`MCP tool "${pick.name}" removed from SoterAI's deny-list.`);
         }
     });
 }

@@ -6,6 +6,7 @@ import { ProjectSwitcher } from "@/components/dashboard/ProjectSwitcher";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { listGuardEventsByProject } from "@/lib/events/store";
 import { parseLogFilters } from "@/lib/guard/logFilters";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
 
 export const dynamic = "force-dynamic";
 
@@ -98,12 +99,21 @@ export default async function LogsPage({
   }).toString()}`;
 
   return (
-    <div>
+    <div className="space-y-6">
+      <FeatureGuide
+        eyebrow="Audit trail"
+        title="Guard logs"
+        description="A searchable, redacted record of every guard decision — what was allowed, blocked, or flagged — across your project's inbound prompts and outbound responses."
+        useCase="When an agent misbehaves or a customer disputes a block, you need to see exactly what the guard decided and why. Guard logs give you that timeline: filter by decision, direction, risk type, and date range to trace an incident or prove what your controls caught. Sensitive values are only ever stored redacted."
+        howItWorks={[
+          { heading: "Every decision is recorded", body: "Each time the guard evaluates a prompt or response, the decision, direction, and detected risk types are written to the log for the project." },
+          { heading: "Filter and search", body: "Narrow the view by decision (allow, block, flag), direction (inbound or outbound), risk type, and a date range to find the events you care about." },
+          { heading: "Page through history", body: "Results are cursor-paged newest-first, so you can walk back through the full history without loading everything at once." },
+          { heading: "Redacted by design", body: "Detected secrets and sensitive spans are shown and stored only in redacted form — the raw values are never persisted in the log." },
+        ]}
+        callout="Logs reflect only traffic sent through the guard. Requests that bypass SoterAI are not recorded here."
+      />
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Audit trail</p>
-          <h1 className="mt-2 text-3xl font-bold">Guard logs</h1>
-        </div>
         <ProjectSwitcher projects={projects} selectedId={project.id} />
       </div>
       <p className="mb-5 mt-3 text-slate-400">Sensitive values are displayed and stored only in redacted form.</p>

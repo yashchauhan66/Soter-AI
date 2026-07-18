@@ -36,7 +36,7 @@ async function mockLLM({ safeInput }: { safeInput: string }): Promise<string> {
 export const POST = secureChatHandler({
   // Falls back to SOTER_API_KEY env var when not passed explicitly
   apiKey: process.env.SOTER_API_KEY!,
-  baseUrl: process.env.SOTER_BASE_URL || "https://api.soter.dev",
+  baseUrl: process.env.SOTER_BASE_URL || "https://api.soterai.in",
   callLLM: async ({ safeInput }) => mockLLM({ safeInput }),
   blockedResponse: "⛔ This message was blocked by Soter's AI safety layer.",
   withholdResponse: "🛡️ The AI response was withheld by Soter's output guard.",

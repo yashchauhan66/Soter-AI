@@ -4,6 +4,7 @@ import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { dbGetFabricStats, dbRecentDelegations, dbRecentRevocations, dbRecentServicePrincipals } from "@/lib/identity-fabric/db";
 import type { IdentityFabricDelegation, IdentityFabricRevocation, IdentityFabricServicePrincipal } from "@prisma/client";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
 
 export const dynamic = "force-dynamic";
 
@@ -29,17 +30,36 @@ export default async function IdentityFabricPage({
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      <FeatureGuide
+        eyebrow="Agent security"
+        title="Agent identity fabric"
+        description="Treat every AI agent as a first-class security principal with its own cryptographic identity, scoped capabilities, and an auditable delegation chain — just like a user or service account in your IAM system."
+        useCase="When one agent spawns another, or a service principal acts on a user's behalf, you lose accountability fast. The identity fabric gives each agent a durable identity and records the full delegation chain, so you can always answer who authorized an action, what capabilities were passed down, and where a revocation should propagate."
+        howItWorks={[
+          { heading: "Register principals", body: "Each agent and service principal gets a cryptographic identity. This is the durable actor that passports and delegations reference." },
+          { heading: "Issue scoped passports", body: "A session passport grants a subset of capabilities. An agent can only act within the scope its passport allows." },
+          { heading: "Delegate down a chain", body: "A parent agent can issue a narrower passport to a child agent for a specific intent. Each delegation is recorded so the chain of authority stays auditable." },
+          { heading: "Revoke and audit", body: "Revocations are tracked here alongside recent delegations and service principals, giving you a live view of the identity graph and its history." },
+        ]}
+        integrationCode={`// Delegate a narrower passport from a parent agent to a child
+const res = await fetch("https://soterai.in/api/agent/passport/delegate", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: \`Bearer \${process.env.SOTER_API_KEY}\`,
+  },
+  body: JSON.stringify({
+    parentSessionId: "parent-session-id",
+    parentPassportToken: process.env.PARENT_PASSPORT_TOKEN,
+    childAgentIdentityId: "child-agent-identity-id",
+    intent: "Summarize the retrieved documents only",
+    ttlSeconds: 900,
+    allowedTools: ["read_file"],
+  }),
+});`}
+        callout="The delegation chain reflects passports issued and revoked through the SDK or passport API. Agents that bypass passport issuance do not appear in the fabric."
+      />
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Agent security</p>
-          <h1 className="mt-2 text-3xl font-bold">Agent identity fabric</h1>
-          <p className="mt-3 max-w-3xl text-slate-400">
-            Every AI agent operates as a first-class security principal with its own cryptographic
-            identity, scoped capabilities, and auditable delegation chain — just like a user or service
-            account in your existing IAM system.
-          </p>
-        </div>
         <ProjectSwitcher projects={projects} selectedId={project.id} />
       </div>
 

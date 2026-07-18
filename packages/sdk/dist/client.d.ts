@@ -1,7 +1,7 @@
 import type { AnalyzeRequest, AgentActionCheckRequest, AgentActionCheckResponse, AgentApprovalResolveRequest, AgentApprovalResolveResponse, AgentDataCheckRequest, AgentOutputCheckRequest, AgentReplayResponse, BrowserFormCheckRequest, BrowserFormCheckResponse, CanaryCheckRequest, CanaryCheckResponse, CascadeEvaluateRequest, CascadeEvaluateResponse, CheckContextFlowRequest, CheckContextFlowResponse, CheckLegalBoundaryRequest, CheckLegalBoundaryResponse, CheckMemoryPoisoningRequest, CheckMemoryPoisoningResponse, ClientOptions, CreateCanaryRequest, CreateCanaryResponse, ExpressLikeNext, ExpressLikeRequest, ExpressLikeResponse, GuardAction, GuardConversationOptions, GuardDecision, GuardInputRequest, GuardOutputRequest, GuardResult, InterAgentCheckRequest, InterAgentCheckResponse, LineageIncidentsResponse, LineageSessionResponse, McpDriftsResponse, MemoryCheckRequest, MemoryCheckResponse, ModelDriftDetectRequest, ModelDriftDetectResponse, OwaspComplianceReport, ProtectChatOptions, ProtectChatResult, ProtectRagOptions, ProtectRagResult, RagSource, RagTrustScoreRequest, RagTrustScoreResponse, RegisterContextSourceRequest, RegisterContextSourceResponse, RegisterMcpServerRequest, RegisterMcpServerResponse, RogueAgentDetectRequest, RogueAgentDetectResponse, RunBlastRadiusScenarioRequest, RunBlastRadiusScenarioResponse, ScanMcpToolsRequest, ScanMcpToolsResponse, SecureChatOptions, SecureChatResult, SimulateBlastRadiusRequest, SimulateBlastRadiusResponse, SnapshotMcpToolsRequest, SnapshotMcpToolsResponse, StartAgentSessionRequest, StartAgentSessionResponse, StoreSafeMemoryRequest, StoreSafeMemoryResponse, ToolExecutionContext, ToolExecutor, WrappedToolResult } from "./types";
 export declare function normalizeDecision(action: GuardAction): GuardDecision;
-/** @deprecated Use the Soter class for new integrations. */
-export interface CyberRakshakGuard {
+/** Structural interface implemented by {@link GuardClient} and the Soter client. */
+export interface SoterGuard {
     input(message: string, options?: Omit<GuardInputRequest, "message" | "text">): Promise<GuardResult>;
     output(aiResponse: string, options?: Omit<GuardOutputRequest, "aiResponse" | "text">): Promise<GuardResult>;
     analyze(text: string, direction: AnalyzeRequest["direction"]): Promise<GuardResult>;
@@ -85,12 +85,14 @@ export interface CyberRakshakGuard {
     getOwaspLlm2025Report(): Promise<OwaspComplianceReport>;
     getOwaspAgentic2026Report(): Promise<OwaspComplianceReport>;
 }
-export declare function createClient(options: ClientOptions): CyberRakshakGuard;
-export declare function createAgentFirewallClient(options: ClientOptions): CyberRakshakGuard;
+/** @deprecated Use {@link SoterGuard} for new integrations. */
+export type CyberRakshakGuard = SoterGuard;
+export declare function createClient(options: ClientOptions): SoterGuard;
+export declare function createAgentFirewallClient(options: ClientOptions): SoterGuard;
 /** @deprecated Use new Soter(options) for new integrations. */
-export declare function createCybersecurityGuardClient(options: ClientOptions): CyberRakshakGuard;
+export declare function createCybersecurityGuardClient(options: ClientOptions): SoterGuard;
 /** @deprecated Use Soter for new integrations. GuardClient remains supported. */
-export declare class GuardClient implements CyberRakshakGuard {
+export declare class GuardClient implements SoterGuard {
     private readonly apiKey;
     private readonly baseUrl;
     private readonly projectId?;

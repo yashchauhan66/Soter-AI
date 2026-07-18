@@ -157,6 +157,8 @@ Authenticated requests send the API key in the `x-api-key` header. The SDK does 
 
 ## Backward compatibility
 
+Migration note: the `CyberRakshak*` names are deprecated aliases of the canonical `Soter*` names and still work. `CyberRakshakClient` → `SoterClient`/`GuardClient`, `CyberRakshakGuard` (interface) → `SoterGuard`, `CyberRakshakConfig` → `SoterConfig`, and the error classes `CyberRakshakError`, `CyberRakshakAuthError`, `CyberRakshakRateLimitError`, `CyberRakshakValidationError`, `CyberRakshakNetworkError` → `SoterError`, `SoterAuthError`, `SoterRateLimitError`, `SoterValidationError`, `SoterNetworkError`. The error aliases point at the same class objects, so `instanceof` works with either name.
+
 `CyberRakshakGuard`, `CyberRakshakClient`, `CybersecurityGuard`, `GuardClient`, existing factories, old middleware names, and existing methods remain exported for compatibility. New integrations should use `Soter`.
 
 Soter is a defense-in-depth safety layer. It reduces risk but does not guarantee complete protection.

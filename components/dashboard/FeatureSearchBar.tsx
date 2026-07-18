@@ -4,14 +4,14 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Search, ArrowRight } from "lucide-react";
 
-interface FeatureItem {
+export interface FeatureItem {
   label: string;
   href: string;
   group: string;
   keywords: string[];
 }
 
-const FEATURES: FeatureItem[] = [
+export const FEATURES: FeatureItem[] = [
   // Operate
   { label: "Overview", href: "/dashboard", group: "Operate", keywords: ["dashboard", "home", "main", "stats"] },
   { label: "Guard logs", href: "/dashboard/logs", group: "Operate", keywords: ["logs", "activity", "history", "requests"] },
@@ -59,7 +59,7 @@ const FEATURES: FeatureItem[] = [
   { label: "Integration wizard", href: "/dashboard/integrations", group: "Resources", keywords: ["integration", "wizard", "setup", "code"] },
 ];
 
-function matchScore(query: string, item: FeatureItem): number {
+export function matchScore(query: string, item: FeatureItem): number {
   const q = query.toLowerCase();
   const label = item.label.toLowerCase();
   if (label === q) return 100;

@@ -51,7 +51,7 @@ fastapi-soter/
 | Variable | Default | Description |
 |---|---|---|
 | `SOTER_API_KEY` | required | Your API key from https://soter.dev |
-| `SOTER_BASE_URL` | `https://api.soter.dev` | Soter API base URL |
+| `SOTER_BASE_URL` | `https://api.soterai.in` | Soter API base URL |
 
 ## Async Version
 

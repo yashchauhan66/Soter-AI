@@ -34,7 +34,7 @@ describe("Integration — SDK Exports", () => {
 
   it("SDK has correct default base URL", () => {
     const src = file("packages/sdk/src/client.ts");
-    assert.ok(src.includes("api.soterai.com"), "should use soterai.com domain");
+    assert.ok(src.includes("api.soterai.in"), "should use canonical soterai.in domain");
     assert.ok(!src.includes("cybersecurityguard.com"), "should not use old brand domain");
   });
 

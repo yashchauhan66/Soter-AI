@@ -5,6 +5,9 @@ import {
     sanitizeLedgerEntry,
     serializeLedger,
     parseLedger,
+    chainLedgerEntry,
+    verifyLedgerChain,
+    LEDGER_GENESIS_HASH,
     type LedgerEntry,
 } from "../Ledger";
 
@@ -72,5 +75,62 @@ describe("serialize/parse ledger", () => {
     it("skips corrupt lines without throwing", () => {
         const parsed = parseLedger('{"eventId":"ok"}\nnot json\n\n');
         assert.strictEqual(parsed.length, 1);
+    });
+});
+
+describe("tamper-evident hash chain", () => {
+    function entry(id: string): LedgerEntry {
+        return buildLedgerEntry({
+            eventId: id, workspacePseudoId: "ws", eventType: "context_built",
+            action: "allow", severity: "info", riskScore: 0, policyVersion: "1",
+        });
+    }
+
+    it("chains entries and verifies a clean chain", async () => {
+        const a = await chainLedgerEntry(entry("a"), undefined);
+        const b = await chainLedgerEntry(entry("b"), a.entryHash);
+        const c = await chainLedgerEntry(entry("c"), b.entryHash);
+        assert.strictEqual(a.prevHash, LEDGER_GENESIS_HASH);
+        const result = await verifyLedgerChain([a, b, c]);
+        assert.strictEqual(result.valid, true);
+        assert.strictEqual(result.checkedEntries, 3);
+    });
+
+    it("detects an edited entry", async () => {
+        const a = await chainLedgerEntry(entry("a"), undefined);
+        const b = await chainLedgerEntry(entry("b"), a.entryHash);
+        const tampered = { ...b, riskScore: 99 };
+        const result = await verifyLedgerChain([a, tampered]);
+        assert.strictEqual(result.valid, false);
+        assert.strictEqual(result.firstInvalidIndex, 1);
+        assert.match(result.reason ?? "", /entryHash mismatch/);
+    });
+
+    it("detects a deleted middle entry", async () => {
+        const a = await chainLedgerEntry(entry("a"), undefined);
+        const b = await chainLedgerEntry(entry("b"), a.entryHash);
+        const c = await chainLedgerEntry(entry("c"), b.entryHash);
+        const result = await verifyLedgerChain([a, c]);
+        assert.strictEqual(result.valid, false);
+        assert.match(result.reason ?? "", /prevHash mismatch/);
+    });
+
+    it("accepts a retention-trimmed head (first entry prevHash taken as-is)", async () => {
+        const a = await chainLedgerEntry(entry("a"), undefined);
+        const b = await chainLedgerEntry(entry("b"), a.entryHash);
+        const c = await chainLedgerEntry(entry("c"), b.entryHash);
+        // a was trimmed by retention; chain from b onward must still verify.
+        const result = await verifyLedgerChain([b, c]);
+        assert.strictEqual(result.valid, true);
+        assert.strictEqual(result.checkedEntries, 2);
+    });
+
+    it("tolerates legacy unchained entries before the chain starts", async () => {
+        const legacy = entry("legacy");
+        const a = await chainLedgerEntry(entry("a"), undefined);
+        const result = await verifyLedgerChain([legacy, a]);
+        assert.strictEqual(result.valid, true);
+        assert.strictEqual(result.unchainedEntries, 1);
+        assert.strictEqual(result.checkedEntries, 1);
     });
 });

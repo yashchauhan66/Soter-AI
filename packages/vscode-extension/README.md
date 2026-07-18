@@ -1,11 +1,9 @@
 # SoterAI IDE Guard
 
-**Local-first AI security guard for VS Code.** SoterAI IDE Guard scans your code,
+**Local-first AI security guard for VS Code.** SoterAI IDE Guard scans code,
 selections, terminal commands, git changes, and AI prompts for secrets, PII,
-prompt-injection, and insecure AI-generated code — **entirely on your machine**.
+prompt injection, and insecure AI-generated code - entirely on your machine.
 Nothing leaves your computer unless you explicitly connect to SoterAI Cloud.
-
----
 
 ![Security Dashboard](https://raw.githubusercontent.com/yashchauhan66/Ai-Security-Guard/main/packages/vscode-extension/media/screenshots/dashboard-overview.png)
 
@@ -15,61 +13,51 @@ Nothing leaves your computer unless you explicitly connect to SoterAI Cloud.
 
 ![Settings Panel](https://raw.githubusercontent.com/yashchauhan66/Ai-Security-Guard/main/packages/vscode-extension/media/screenshots/settings-panel.png)
 
----
-
-**Demo:** Watch the extension scan a file for secrets and display findings in the Security Dashboard:
-
-![SoterAI IDE Guard Demo](https://raw.githubusercontent.com/yashchauhan66/Ai-Security-Guard/main/packages/vscode-extension/media/screenshots/demo.gif)
-
----
-
 ## Features
 
-- **Scan Current File / Selection / Workspace** — detect leaked secrets, PII, and
-  risky patterns with a redacted, evidence-minimized report.
-- **Redact Selection for AI** — copy a safe, redacted version of your selection to
-  the clipboard before pasting it into an AI assistant. Raw secrets are never
-  copied — a fail-closed safety net masks anything the detectors miss.
-- **Scan Before AI Prompt** — paste a prompt, scan it locally, and get an
-  allow / redact / block verdict plus a safe prompt to copy.
-- **Scan Git Changes** — scan your staged + unstaged diff for secrets and flag
-  sensitive files (`.env`, `*.pem`, `*.key`, credentials) before you commit.
-- **Check Terminal Command** — flag destructive or remote-exec shell commands.
-- **Review Selected AI Code** — surface likely vulnerabilities (SQL injection,
-  etc.) in AI-generated code in a hardened webview.
-- **Configure Policy** — pick local / team / enterprise mode, thresholds, cloud,
-  and telemetry level from a QuickPick.
-- **Security Dashboard** — risk score, latest findings, and cloud sync status.
-
-Additional v0.2 local controls:
-
-- **Local AI Broker** — authenticated loopback-only OpenAI/Anthropic-compatible routing with request/response scanning, redaction, and canary blocking.
-- **AI Safe Mode** — Developer, Strict, and Enterprise protection overlays for SoterAI-routed workflows.
-- **AI Memory Inspector** — hashes, decisions, redacted evidence, and file metadata showing what SoterAI brokered or built for AI.
+- **Scan Current File / Selection / Workspace** - detect leaked secrets, PII, prompt injection, unsafe instructions, and risky patterns with a redacted report.
+- **Redact Selection for AI** - copy a safe version of selected text before using it in an AI assistant. Raw secrets are not copied.
+- **Scan Before AI Prompt** - paste a prompt, scan it locally, and get an allow / redact / block verdict plus a safe prompt to copy.
+- **Scan Git Changes** - scan staged and unstaged diffs for secrets and sensitive files before commit.
+- **Check Terminal Command** - flag destructive, remote-exec, credential-exposing, or suspicious shell commands before you run them.
+- **Review Selected AI Code** - surface likely vulnerabilities in AI-generated code inside a hardened webview.
+- **Local AI Broker** - authenticated loopback-only OpenAI/Anthropic-compatible routing with request/response scanning, redaction, and canary blocking.
+- **Secret Broker** - replaces raw secrets with scoped `soterai://secret/...` references so AI sees structure and approved operations, not values.
+- **AI Safe Mode** - Developer, Strict, and Enterprise protection overlays for SoterAI-routed workflows.
+- **AI Memory Inspector** - hashes, decisions, redacted evidence, and file metadata showing what SoterAI brokered or built for AI.
+- **Security Dashboard** - risk score, latest findings, privacy mode, policy status, and local secret privacy proof.
 
 ## Privacy & Security
 
-- **Local-first.** All detection and redaction runs locally in the extension host.
-- **No raw secrets leave the extension.** `redactedText`, clipboard output, the
-  local hash cache, telemetry events, logs, webviews, and exported reports are all
-  guaranteed free of raw secret material (canary-tested — see
-  `docs/ide-guard-privacy-canary-report.md`).
-- **Redacted, opt-in telemetry only.** Off by default; when enabled, only
-  minimized, redacted event metadata is queued — never content or tokens.
-- **Cloud tokens** are stored in VS Code `SecretStorage`, never logged.
+- **Local-first by default.** Detection, redaction, policy checks, and secret reference creation run locally in the extension host.
+- **No raw secrets leave the extension by default.** Reports, webviews, telemetry, logs, clipboard output, hash caches, broker records, and exported views are designed to avoid raw secret material.
+- **Secret broker privacy proof.** `SoterAI: Local Privacy Status`, `SoterAI: Preview What AI Will See`, and `SoterAI: Open Privacy Guarantee` explain what stays local without displaying raw secrets.
+- **Redacted, opt-in telemetry only.** Telemetry is off by default. When enabled, it uses minimized event metadata, not raw content or tokens.
+- **Cloud tokens stay in VS Code SecretStorage.** Provider and cloud credentials are stored locally through VS Code's secret APIs and are never logged.
+
+### What Leaves Your Machine?
+
+| Data | Local mode default | Cloud/hybrid with explicit setup |
+| --- | --- | --- |
+| Raw API keys, tokens, private keys, `.env` values | Never sent | Never sent by default; secret broker uses scoped references |
+| Raw file contents and prompts | Never sent | Redacted/minimized checks only unless you explicitly enable a trusted cloud feature |
+| Telemetry | Off | Redacted metadata only, controlled by `soterai.telemetry.redactedEvents` |
+| Vaulted secrets | Stored locally through VS Code `SecretStorage` / encrypted vault | Not uploaded by SoterAI IDE Guard |
+| AI context | Redacted text, hashes, metadata, and secret references | Same local-first contract unless a trusted cloud feature is explicitly configured |
+
+Use `SoterAI: Local Privacy Status` anytime to show a user-safe report that contains no API keys, prompts, secrets, raw files, private keys, database URLs, or PII.
 
 ## Workspace Trust
 
 The extension declares **limited** untrusted-workspace support:
 
-| Capability | Trusted workspace | Restricted (untrusted) |
+| Capability | Trusted workspace | Restricted workspace |
 | --- | --- | --- |
-| Local scanning & redaction | ✅ | ✅ |
-| Cloud connect / token storage | ✅ | 🚫 disabled |
-| Remote scan escalation | ✅ | 🚫 disabled |
+| Local scanning and redaction | yes | yes |
+| Cloud connect / token storage | yes | disabled |
+| Remote scan escalation | yes | disabled |
 
-Local scanning always works; cloud/token/remote features are gated behind a
-trusted workspace and surfaced clearly in the dashboard.
+Local scanning always works. Cloud, token, and remote features are gated behind a trusted workspace and surfaced clearly in the dashboard.
 
 ## Commands
 
@@ -77,6 +65,10 @@ trusted workspace and surfaced clearly in the dashboard.
 | --- | --- |
 | `SoterAI: Quick Start` | Choose privacy mode, policy pack, and first scan flow. |
 | `SoterAI: Check Extension Health` | Show version, privacy mode, token configured yes/no, workspace trust, policy status, and last scan without secrets. |
+| `SoterAI: Local Privacy Status` | Show the local-only privacy proof without raw secrets, prompts, files, or PII. |
+| `SoterAI: Open Privacy Guarantee` | Explain exactly what SoterAI does not receive by default. |
+| `SoterAI: Preview What AI Will See` | Show the redacted AI context before copying or sending it. |
+| `SoterAI: Build Safe Prompt for AI` | Convert sensitive context into a safe prompt with secret references. |
 | `SoterAI: Open Settings` | Open VS Code settings filtered to SoterAI. |
 | `SoterAI: Run Demo Scan` | Run a safe local demo against fake risky text. |
 | `SoterAI: Scan Selected Text` | Scan selected prompt/text before sending it to an AI assistant. |
@@ -134,15 +126,15 @@ not make network calls.
 ```bash
 npm run typecheck   # tsc --noEmit
 npm run lint        # eslint
-npm run test        # node --test (static manifest/contract tests)
+npm run test        # node --test static manifest/contract tests
 npm run bundle      # extension + standalone local broker bundles
 npm run package     # bundle + vsce package -> .vsix
 ```
 
-The extension is bundled with **esbuild** into a single `dist/extension.js`
+The extension is bundled with esbuild into a single `dist/extension.js`
 (with `@soterai/guard-core` inlined) so the packaged VSIX stays small and never
 follows the symlinked monorepo.
 
 ## License
 
-See [LICENSE](./LICENSE) (Business Source License 1.1). © SoterAI.
+See [LICENSE](./LICENSE) (Business Source License 1.1). Copyright SoterAI.

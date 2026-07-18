@@ -7,6 +7,7 @@ import { db } from "@/lib/db";
 import { AGENT_FIREWALL_PREVIEW_GAPS } from "@/lib/agent-firewall";
 import { resolveDashboardAgentApproval } from "./actions";
 import { ConfirmableForm } from "@/components/dashboard/ConfirmableForm";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
 
 export const dynamic = "force-dynamic";
 
@@ -56,14 +57,37 @@ export default async function AgentFirewallPage({
 
   return (
     <div className="space-y-7">
+      <FeatureGuide
+        eyebrow="Agent firewall"
+        title="Computer-use guardrails"
+        description="A single control plane for AI agents that use tools — browser, file, email, terminal, MCP, API, and RAG actions are checked against policy, decided (allow, read-only, ask approval, or block), and logged with redacted-only content."
+        useCase="Agents that can browse, run commands, send email, and call APIs are powerful and dangerous. One prompt injection can turn a helpful agent into an exfiltration tool. The agent firewall gives every tool action a policy check and a recorded decision, keeps a human-in-the-loop approval inbox for risky actions, and stores only redacted content so you get an audit trail without leaking secrets into the log."
+        howItWorks={[
+          { heading: "Define a policy", body: "Set the rules for what agents may do — which tools, actions, and destinations are allowed, read-only, need approval, or are blocked outright." },
+          { heading: "Check each action", body: "Every planned tool action is evaluated against the policy and risk context, producing a decision: ALLOW, READ_ONLY, ASK_APPROVAL, or BLOCK." },
+          { heading: "Route approvals to a human", body: "Actions that require approval land in the approval inbox with redacted and safe-content views, where a reviewer can approve or deny." },
+          { heading: "Log with redaction", body: "Decisions and reasons are logged with content redacted, giving you an audit trail and metrics without storing raw sensitive data." },
+        ]}
+        integrationCode={`import { Soter } from "@soterai/core";
+
+const soter = new Soter({ apiKey: process.env.SOTER_API_KEY });
+
+const checked = await soter.checkAgentAction({
+  tool: "gmail.send",
+  action: "send_email",
+  target: "client@example.com",
+  content: emailBody,
+  destination: "external",
+  riskContext: { externalDestination: true, canSendMessage: true, canModifyData: true },
+});
+
+if (checked.decision === "BLOCK") throw new Error(checked.reason);
+if (checked.decision === "ASK_APPROVAL") return checked.requiredApproval;
+
+await sendEmail(checked.safeContent ?? emailBody);`}
+        callout="Preview: this is tracking and policy evaluation, not runtime agent enforcement yet. Actions are checked and logged, but the firewall does not by itself intercept and block a live agent — your integration must act on the returned decision. See the preview gap list below for what is not yet in place."
+      />
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Agent firewall</p>
-          <h1 className="mt-2 text-3xl font-bold">Computer-use guardrails</h1>
-          <p className="mt-3 max-w-3xl text-slate-400">
-            Every browser, file, email, terminal, MCP, API, and RAG tool action is checked before execution and logged with redacted-only content. (Note: this is preview tracking, not runtime agent enforcement yet.)
-          </p>
-        </div>
         <ProjectSwitcher projects={projects} selectedId={project.id} />
       </div>
 

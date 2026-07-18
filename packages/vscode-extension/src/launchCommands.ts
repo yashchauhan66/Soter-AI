@@ -59,6 +59,53 @@ export function registerLaunchCommands(context: vscode.ExtensionContext): void {
 
     reg("soterai.openSettings", () => vscode.commands.executeCommand("workbench.action.openSettings", "soterai"));
 
+    reg("soterai.openPrivacyGuarantee", async () => {
+        const report = [
+            "# SoterAI: What Stays Local?",
+            "",
+            "SoterAI is local-first by default. Raw secrets stay on the user's machine unless the user explicitly chooses a flow that sends data outside VS Code.",
+            "",
+            "## What stays local by default",
+            "",
+            "- API keys",
+            "- Tokens",
+            "- Passwords",
+            "- Database URLs",
+            "- Private keys",
+            "- PII and India PII",
+            "- Raw `.env` values",
+            "- Secret reference values",
+            "",
+            "## What SoterAI stores locally",
+            "",
+            "- Opaque secret references such as `soterai://secret/api_key/...`",
+            "- Secret type, source, TTL, allowed operations, and revocation state",
+            "- Hashes and redacted evidence for the local audit ledger",
+            "- VS Code SecretStorage values for credentials/tokens when storage is required",
+            "",
+            "## What SoterAI does not receive by default",
+            "",
+            "- Raw secrets",
+            "- Raw prompts",
+            "- Raw files",
+            "- Raw `.env` values",
+            "- Private keys",
+            "- Full database URLs",
+            "",
+            "## Before AI sees anything",
+            "",
+            "Use `SoterAI: Preview What AI Will See` to inspect the exact redacted prompt. The model sees placeholders and safe metadata, not raw sensitive values.",
+            "",
+            "## Reveal-once protection",
+            "",
+            "Raw reveal is off by default. If enabled by policy, it requires an explicit warning and typed confirmation. Enterprise policy can disable reveal entirely.",
+            "",
+            "No API keys, prompts, secrets, or raw file contents are included in this privacy report.",
+        ];
+        const doc = await vscode.workspace.openTextDocument({ content: report.join("\n"), language: "markdown" });
+        await vscode.window.showTextDocument(doc);
+    });
+
     reg("soterai.openWalkthrough", () => vscode.commands.executeCommand(
         "workbench.action.openWalkthrough",
         "soterai.soterai-ide-guard#soterai.gettingStarted",
@@ -87,6 +134,7 @@ export function registerLaunchCommands(context: vscode.ExtensionContext): void {
         const next = await vscode.window.showQuickPick(
             [
                 { label: "Choose Policy Pack", command: "soterai.choosePolicyPack" },
+                { label: "What Stays Local?", command: "soterai.openPrivacyGuarantee" },
                 { label: "Run Demo Scan", command: "soterai.runDemoScan" },
                 { label: "Scan Selected Text", command: "soterai.scanSelectedText" },
                 { label: "Open Settings", command: "soterai.openSettings" },

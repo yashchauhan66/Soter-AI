@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { DashboardSidebar } from "./DashboardSidebar";
+import { CommandPalette } from "./CommandPalette";
 import { FeedbackWidget } from "@/components/ops/FeedbackWidget";
 import { DashboardTourProvider } from "@/components/onboarding/DashboardTourProvider";
 import { TourOverlay } from "@/components/onboarding/TourOverlay";
@@ -72,6 +73,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
       </div>
       <TourOverlay />
       <TourTrigger />
+      <CommandPalette />
     </DashboardTourProvider>
   );
 }
