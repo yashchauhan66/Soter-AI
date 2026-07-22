@@ -2,10 +2,11 @@
   "name": "soterai",
   "label": "SoterAI",
   "description": "SoterAI protects AI workflows from prompt injection, jailbreaks, PII leakage, and unsafe outputs.",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "language": "en",
   "categories": ["security", "ai"],
-  "baseUrl": "https://soterai.in",
+  "icon": "soterai-icon-512.png",
+  "baseUrl": "https://api.soterai.in",
   "connections": [
     {
       "name": "soterai-api-key",
@@ -23,7 +24,7 @@
           "label": "Base URL",
           "type": "text",
           "required": false,
-          "default": "https://soterai.in"
+          "default": "https://api.soterai.in"
         },
         {
           "name": "projectId",

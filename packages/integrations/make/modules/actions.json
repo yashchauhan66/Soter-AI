@@ -18,7 +18,7 @@
     "body": {
       "message": "{{parameters.text}}",
       "metadata": {
-        "projectId": "{{parameters.projectId}}"
+        "projectId": "{{ifempty(parameters.projectId, connection.projectId)}}"
       }
     },
     "response": {
@@ -50,7 +50,7 @@
     "body": {
       "aiResponse": "{{parameters.text}}",
       "metadata": {
-        "projectId": "{{parameters.projectId}}"
+        "projectId": "{{ifempty(parameters.projectId, connection.projectId)}}"
       }
     },
     "response": {
@@ -82,7 +82,7 @@
     "body": {
       "message": "{{parameters.text}}",
       "metadata": {
-        "projectId": "{{parameters.projectId}}"
+        "projectId": "{{ifempty(parameters.projectId, connection.projectId)}}"
       }
     },
     "response": {
@@ -111,7 +111,7 @@
       "User-Agent": "soterai-make/1.0"
     },
     "body": {
-      "projectId": "{{parameters.projectId}}",
+      "projectId": "{{ifempty(parameters.projectId, connection.projectId)}}",
       "documentId": "{{parameters.documentId}}",
       "content": "{{parameters.text}}",
       "source": "{{parameters.source}}"
@@ -122,6 +122,230 @@
         "trustLevel": "{{body.trustLevel}}",
         "findings": "{{body.findings}}",
         "recommendedAction": "{{body.recommendedAction}}"
+      }
+    }
+  },
+  {
+    "name": "analyzeText",
+    "label": "Analyze Text for Threats",
+    "description": "Public text analysis — detect prompt injection, jailbreaks, PII, and unsafe content. No API key required (rate-limited).",
+    "connection": "soterai-api-key",
+    "expect": [
+      { "name": "text", "type": "text", "label": "Text", "required": true },
+      { "name": "direction", "type": "select", "label": "Direction", "required": false, "default": "INPUT", "options": [{ "label": "Input (User -> AI)", "value": "INPUT" }, { "label": "Output (AI -> User)", "value": "OUTPUT" }] },
+      { "name": "projectId", "type": "text", "label": "Project ID", "required": false }
+    ],
+    "url": "{{connection.baseUrl}}/api/guard/analyze",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "User-Agent": "soterai-make/1.0"
+    },
+    "body": {
+      "text": "{{parameters.text}}",
+      "direction": "{{parameters.direction}}"
+    },
+    "response": {
+      "output": {
+        "allowed": "{{body.allowed}}",
+        "action": "{{body.action}}",
+        "riskScore": "{{body.riskScore}}",
+        "categories": "{{body.riskTypes}}",
+        "safeText": "{{body.safeText}}",
+        "reason": "{{body.reason}}"
+      }
+    }
+  },
+  {
+    "name": "streamingGuard",
+    "label": "Streaming Guard",
+    "description": "Real-time streaming content inspection with per-chunk risk results. Ideal for live LLM output and progressive input validation.",
+    "connection": "soterai-api-key",
+    "expect": [
+      { "name": "content", "type": "text", "label": "Content", "required": true },
+      { "name": "direction", "type": "select", "label": "Direction", "required": false, "default": "INPUT", "options": [{ "label": "INPUT", "value": "INPUT" }, { "label": "OUTPUT", "value": "OUTPUT" }] },
+      { "name": "stream", "type": "boolean", "label": "Stream (per-chunk results)", "required": false, "default": false },
+      { "name": "chunkSize", "type": "number", "label": "Chunk Size (chars)", "required": false, "default": 500 },
+      { "name": "includeRedacted", "type": "boolean", "label": "Include Redacted Text", "required": false, "default": true },
+      { "name": "sessionId", "type": "text", "label": "Session ID", "required": false },
+      { "name": "providerName", "type": "text", "label": "AI Provider Name", "required": false },
+      { "name": "modelName", "type": "text", "label": "Model Name", "required": false },
+      { "name": "projectId", "type": "text", "label": "Project ID", "required": false }
+    ],
+    "url": "{{connection.baseUrl}}/api/guard/streaming",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "x-api-key": "{{connection.apiKey}}",
+      "User-Agent": "soterai-make/1.0"
+    },
+    "body": {
+      "content": "{{parameters.content}}",
+      "direction": "{{parameters.direction}}",
+      "stream": "{{parameters.stream}}",
+      "chunkSize": "{{parameters.chunkSize}}",
+      "includeRedacted": "{{parameters.includeRedacted}}",
+      "sessionId": "{{parameters.sessionId}}",
+      "providerName": "{{parameters.providerName}}",
+      "modelName": "{{parameters.modelName}}",
+      "metadata": {
+        "projectId": "{{ifempty(parameters.projectId, connection.projectId)}}"
+      }
+    },
+    "response": {
+      "output": {
+        "direction": "{{body.direction}}",
+        "stream": "{{body.stream}}",
+        "chunkCount": "{{body.chunkCount}}",
+        "totalLength": "{{body.totalLength}}",
+        "chunks": "{{body.chunks}}"
+      }
+    }
+  },
+  {
+    "name": "startAgentSession",
+    "label": "Start Agent Session",
+    "description": "Start a new AI agent session with firewall policy enforcement.",
+    "connection": "soterai-api-key",
+    "expect": [
+      { "name": "agentName", "type": "text", "label": "Agent Name", "required": true },
+      { "name": "agentType", "type": "select", "label": "Agent Type", "required": true, "options": [{ "label": "Chatbot", "value": "CHATBOT" }, { "label": "Coding Agent", "value": "CODING_AGENT" }, { "label": "Browser Agent", "value": "BROWSER_AGENT" }, { "label": "Data Agent", "value": "DATA_AGENT" }, { "label": "Email Agent", "value": "EMAIL_AGENT" }, { "label": "Custom", "value": "CUSTOM" }] },
+      { "name": "userId", "type": "text", "label": "User ID", "required": false }
+    ],
+    "url": "{{connection.baseUrl}}/api/agent/session/start",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "x-api-key": "{{connection.apiKey}}",
+      "User-Agent": "soterai-make/1.0"
+    },
+    "body": {
+      "agentName": "{{parameters.agentName}}",
+      "agentType": "{{parameters.agentType}}",
+      "userId": "{{parameters.userId}}"
+    },
+    "response": {
+      "output": {
+        "sessionId": "{{body.sessionId}}",
+        "status": "{{body.status}}",
+        "projectId": "{{body.projectId}}",
+        "agentName": "{{body.agentName}}",
+        "agentType": "{{body.agentType}}"
+      }
+    }
+  },
+  {
+    "name": "agentActionCheck",
+    "label": "Check Agent Action",
+    "description": "Check if an AI agent action (tool call, API request, file access) is allowed by the Agent Firewall policy.",
+    "connection": "soterai-api-key",
+    "expect": [
+      { "name": "sessionId", "type": "text", "label": "Session ID", "required": false },
+      { "name": "tool", "type": "text", "label": "Tool Name", "required": true },
+      { "name": "action", "type": "text", "label": "Action", "required": true },
+      { "name": "target", "type": "text", "label": "Target", "required": false },
+      { "name": "content", "type": "text", "label": "Content", "required": false },
+      { "name": "destination", "type": "select", "label": "Destination", "required": false, "default": "unknown", "options": [{ "label": "External", "value": "external" }, { "label": "Internal", "value": "internal" }, { "label": "Local", "value": "local" }, { "label": "Unknown", "value": "unknown" }] },
+      { "name": "agentName", "type": "text", "label": "Agent Name", "required": false },
+      { "name": "passportToken", "type": "text", "label": "Passport Token", "required": false },
+      { "name": "projectId", "type": "text", "label": "Project ID", "required": false }
+    ],
+    "url": "{{connection.baseUrl}}/api/agent/action/check",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "x-api-key": "{{connection.apiKey}}",
+      "User-Agent": "soterai-make/1.0"
+    },
+    "body": {
+      "sessionId": "{{parameters.sessionId}}",
+      "tool": "{{parameters.tool}}",
+      "action": "{{parameters.action}}",
+      "target": "{{parameters.target}}",
+      "content": "{{parameters.content}}",
+      "destination": "{{parameters.destination}}",
+      "agentName": "{{parameters.agentName}}",
+      "passportToken": "{{parameters.passportToken}}",
+      "metadata": {
+        "projectId": "{{ifempty(parameters.projectId, connection.projectId)}}"
+      }
+    },
+    "response": {
+      "output": {
+        "decision": "{{body.decision}}",
+        "riskLevel": "{{body.riskLevel}}",
+        "reason": "{{body.reason}}",
+        "safeContent": "{{body.safeContent}}",
+        "auditId": "{{body.auditId}}",
+        "sessionId": "{{body.sessionId}}"
+      }
+    }
+  },
+  {
+    "name": "agentDataCheck",
+    "label": "Check Agent Data Access",
+    "description": "Check if an AI agent accessing data (RAG context, files, clipboard, etc.) is allowed and detect potential data leaks.",
+    "connection": "soterai-api-key",
+    "expect": [
+      { "name": "content", "type": "text", "label": "Content", "required": true },
+      { "name": "sessionId", "type": "text", "label": "Session ID", "required": false },
+      { "name": "source", "type": "select", "label": "Data Source", "required": false, "default": "custom", "options": [{ "label": "RAG Context", "value": "rag_context" }, { "label": "Browser", "value": "browser" }, { "label": "File", "value": "file" }, { "label": "Email", "value": "email" }, { "label": "Clipboard", "value": "clipboard" }, { "label": "Terminal", "value": "terminal" }, { "label": "Memory", "value": "memory" }, { "label": "Custom", "value": "custom" }] },
+      { "name": "destination", "type": "select", "label": "Destination", "required": false, "default": "unknown", "options": [{ "label": "External", "value": "external" }, { "label": "Internal", "value": "internal" }, { "label": "Local", "value": "local" }, { "label": "Unknown", "value": "unknown" }] },
+      { "name": "target", "type": "text", "label": "Target", "required": false }
+    ],
+    "url": "{{connection.baseUrl}}/api/agent/data/check",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "x-api-key": "{{connection.apiKey}}",
+      "User-Agent": "soterai-make/1.0"
+    },
+    "body": {
+      "content": "{{parameters.content}}",
+      "sessionId": "{{parameters.sessionId}}",
+      "source": "{{parameters.source}}",
+      "destination": "{{parameters.destination}}",
+      "target": "{{parameters.target}}"
+    },
+    "response": {
+      "output": {
+        "decision": "{{body.decision}}",
+        "riskLevel": "{{body.riskLevel}}",
+        "reason": "{{body.reason}}",
+        "safeContent": "{{body.safeContent}}",
+        "auditId": "{{body.auditId}}"
+      }
+    }
+  },
+  {
+    "name": "agentOutputCheck",
+    "label": "Check Agent Output",
+    "description": "Check AI agent output for sensitive data leakage before delivering to users.",
+    "connection": "soterai-api-key",
+    "expect": [
+      { "name": "content", "type": "text", "label": "Content", "required": true },
+      { "name": "sessionId", "type": "text", "label": "Session ID", "required": false },
+      { "name": "destination", "type": "select", "label": "Destination", "required": false, "default": "unknown", "options": [{ "label": "External", "value": "external" }, { "label": "Internal", "value": "internal" }, { "label": "Local", "value": "local" }, { "label": "Unknown", "value": "unknown" }] }
+    ],
+    "url": "{{connection.baseUrl}}/api/agent/output/check",
+    "method": "POST",
+    "headers": {
+      "Content-Type": "application/json",
+      "x-api-key": "{{connection.apiKey}}",
+      "User-Agent": "soterai-make/1.0"
+    },
+    "body": {
+      "content": "{{parameters.content}}",
+      "sessionId": "{{parameters.sessionId}}",
+      "destination": "{{parameters.destination}}"
+    },
+    "response": {
+      "output": {
+        "decision": "{{body.decision}}",
+        "riskLevel": "{{body.riskLevel}}",
+        "reason": "{{body.reason}}",
+        "safeContent": "{{body.safeContent}}",
+        "auditId": "{{body.auditId}}"
       }
     }
   }

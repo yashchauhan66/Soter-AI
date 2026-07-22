@@ -16,7 +16,7 @@ export default async function SignInPage({
   const session = await auth();
   if (session?.user?.id) {
     const existing = await db.user.findUnique({ where: { id: session.user.id }, select: { id: true } });
-    if (existing) redirect("/dashboard");
+    if (existing) redirect(session.user.isAdmin ? "/admin" : "/dashboard");
   }
   const params = await searchParams;
   return (

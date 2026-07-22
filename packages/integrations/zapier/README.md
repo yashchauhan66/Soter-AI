@@ -12,7 +12,6 @@ This integration brings SoterAI's security scanning directly into your Zapier wo
 | **Check Output Safety** | `output_guard` | Scan AI-generated responses for unsafe content, system prompt leakage, and PII before delivering to users. |
 | **Redact PII From Text** | `pii_redactor` | Redact personally identifiable information and secrets from any text. Supports partial, full, and hash redaction modes. |
 | **Scan RAG Document** | `rag_scanner` | Scan documents for embedded threats before adding them to RAG or vector databases. |
-| **Create Incident** | `create_incident` | Log a security incident to the SoterAI dashboard for tracking and review. Requires admin API access. |
 
 ## Authentication
 
@@ -21,7 +20,7 @@ SoterAI uses API Key authentication. When you add the integration to a Zap you w
 | Field | Required | Description |
 |-------|----------|-------------|
 | **API Key** | Yes | Your SoterAI API key (starts with `sk_`). |
-| **Base URL** | No | Defaults to `https://api.soterai.in`. Change only for self-hosted deployments. |
+| **Base URL** | No | Defaults to `https://soterai.in`. Change only for self-hosted deployments. |
 | **Project ID** | No | Default SoterAI project ID applied to all actions unless overridden per-step. |
 
 ## Example Zaps
@@ -46,9 +45,9 @@ Only clean documents are added to the vector database.
 
 ### 4. Incident Logging
 
-> Any Trigger -> **SoterAI: Check Input** -> Filter (blocked = true) -> **SoterAI: Create Incident**
+> Any Trigger -> **SoterAI: Check Input** -> Filter (blocked = true) -> **SoterAI: Check Output**
 
-Automatically log blocked threats to the SoterAI dashboard.
+Automatically verify blocked threats are handled safely.
 
 ## Local Development
 
@@ -66,8 +65,8 @@ npm run push       # zapier push
 - API keys should be treated as secrets. Use Zapier's built-in credential storage.
 - See [https://soterai.in/privacy](https://soterai.in/privacy) for the full privacy policy.
 - Terms of Service: [https://soterai.in/terms](https://soterai.in/terms)
-- Support: support@soterai.dev
+- Support: support@soterai.in
 
 ## Status
 
-Ready for local Zapier validation and private app push preparation.
+Published on the Zapier marketplace.

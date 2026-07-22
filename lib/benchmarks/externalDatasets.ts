@@ -50,6 +50,8 @@ const ATTACK_RISK_TYPES = new Set<RiskType>([
   "JAILBREAK",
   "SYSTEM_PROMPT_LEAK_ATTEMPT",
   "SYSTEM_PROMPT_LEAKAGE",
+  "MCP_TOOL_POISONING",
+  "MEMORY_POISONING",
   "TOKEN_ABUSE",
   "DATA_EXFILTRATION",
 ]);
@@ -216,7 +218,7 @@ export function loadJailbreakBench(): ExternalDataset {
   return loadFromFileOrSample(
     "jailbreakbench",
     "JailbreakBench (Chao et al., 2024) — https://jailbreakbench.github.io",
-    "MIT (dataset); samples here are original paraphrases, not the corpus.",
+    "MIT dataset. If source=sample, rows are original paraphrases rather than the corpus.",
     JAILBREAKBENCH_SAMPLE,
   );
 }
@@ -225,7 +227,7 @@ export function loadHarmBench(): ExternalDataset {
   return loadFromFileOrSample(
     "harmbench",
     "HarmBench (Mazeika et al., 2024) — https://www.harmbench.org",
-    "MIT (dataset); samples here are original paraphrases, not the corpus.",
+    "MIT dataset. If source=sample, rows are original paraphrases rather than the corpus.",
     HARMBENCH_SAMPLE,
   );
 }

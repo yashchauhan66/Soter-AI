@@ -6,7 +6,12 @@ import {
   createEmailVerificationOtp,
   EMAIL_OTP_RESEND_COOLDOWN_MS,
 } from "@/lib/auth/emailOtp";
-import { resolveEmailDeliveryMode, shouldExposeDevelopmentOtp } from "@/lib/auth/signupPolicy";
+import {
+  resolveEmailDeliveryMode,
+  resolveEmailProvider,
+  shouldExposeDevelopmentOtp,
+  validateEmailDeliveryConfig,
+} from "@/lib/auth/signupPolicy";
 import { sendTemplateEmail } from "@/lib/email/send";
 import { enforcePublicRateLimit } from "@/lib/publicRateLimit";
 
@@ -33,6 +38,18 @@ export async function POST(request: Request) {
 
     const deliveryMode = resolveEmailDeliveryMode();
     if (deliveryMode === "blocked") {
+      return jsonResponse(
+        { error: true, message: "Email delivery is temporarily unavailable." },
+        { status: 503, headers: { "Retry-After": "60" } },
+      );
+    }
+    const missingConfig = validateEmailDeliveryConfig();
+    if (missingConfig.length > 0) {
+      console.error("send-otp.email_config_missing", {
+        provider: resolveEmailProvider(),
+        deliveryMode,
+        missingConfig,
+      });
       return jsonResponse(
         { error: true, message: "Email delivery is temporarily unavailable." },
         { status: 503, headers: { "Retry-After": "60" } },
@@ -79,6 +96,9 @@ export async function POST(request: Request) {
       });
       console.error("send-otp.email_failed", {
         userId: user.id,
+        provider: resolveEmailProvider(),
+        deliveryMode,
+        missingConfig: validateEmailDeliveryConfig(),
         reason: sendError instanceof Error ? sendError.message : "unknown",
       });
       return jsonResponse(

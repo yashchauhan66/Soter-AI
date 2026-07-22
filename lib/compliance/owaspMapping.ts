@@ -247,7 +247,7 @@ const OWASP_AGENTIC_2026: OwaspCoverageItem[] = [
     coverage: 96,
     features: [
       "MCP server registry and tool drift detection",
-      "Tool schema poisoning detection",
+      "Dedicated MCP_TOOL_POISONING risk telemetry and tool schema poisoning detection",
       "MCP risk scanner",
       "HMAC MCP tool signature verification",
       "Model file scanning (pickle, provenance)",
@@ -276,7 +276,7 @@ const OWASP_AGENTIC_2026: OwaspCoverageItem[] = [
     name: "Memory and Context Poisoning",
     coverage: 95,
     features: [
-      "Memory poisoning detection (9 finding types)",
+      "Dedicated MEMORY_POISONING risk telemetry and 9 finding types",
       "Memory poisoning instruction detection",
       "Cross-session memory manipulation prevention",
       "Context lineage firewall",

@@ -1,0 +1,107 @@
+{
+  "generated": "2026-07-20",
+  "generatedBy": "ml-v2 phase-zero forensic audit",
+  "note": "Local workspace is the authoritative source. GitHub not consulted for model state. Timestamps/sizes from local filesystem.",
+  "modelArtifacts": {
+    "active": {
+      "dir": "models/ml-classifier-v3",
+      "files": {
+        "model.onnx": { "bytes": 770201, "sha256_16": "dbec01d76888b5d0", "role": "ONNX graph (external-data format)" },
+        "model.onnx.data": { "bytes": 90332160, "sha256_16": "0fe1b743b363d6e8", "role": "external weights (~90MB)" },
+        "labels.json": { "bytes": 216, "sha256_16": "433fc04141fb4326", "role": "index->label map, 9 classes" },
+        "training_stats.json": { "bytes": 3712, "role": "training history + per-label val metrics" },
+        "eval_results.json": { "bytes": 1508, "role": "final val metrics (LEAKED split - see audit)" },
+        "tokenizer_config/": { "role": "tokenizer.json (711KB), vocab.txt (231KB), tokenizer_config.json" }
+      },
+      "gitStatus": "modified (M) - uncommitted local work, do not overwrite"
+    },
+    "stale": [
+      { "dir": "models/ml-classifier-v2", "note": "has pytorch_model.bin + onnx; superseded by v3" },
+      { "dir": "models/ml-classifier-smoke", "note": "tiny smoke placeholder (133-byte data stub)" }
+    ]
+  },
+  "architecture": {
+    "baseModel": "sentence-transformers/all-MiniLM-L6-v2",
+    "embeddingDim": 384,
+    "pooling": "mean-pooling over token embeddings (masked)",
+    "head": "single nn.Linear(384 -> 9) with dropout 0.1",
+    "outputMode": "SINGLE-LABEL softmax (multi-class, mutually exclusive)",
+    "numLabels": 9,
+    "labels": ["SAFE","PROMPT_INJECTION","JAILBREAK","SYSTEM_PROMPT_LEAK_ATTEMPT","PII","SECRET","UNSAFE_OUTPUT","RAG_POISONING","DATA_EXFILTRATION_ATTEMPT"],
+    "maxLength": 128,
+    "directionAware": false,
+    "sourceProvenanceAware": false,
+    "conversationAware": false,
+    "toolCallAware": false,
+    "calibration": "NONE (raw softmax used as confidence)",
+    "oodHandling": "NONE (low confidence coerced to SAFE via confidenceFloor)",
+    "abstention": "NONE"
+  },
+  "inferenceStack": [
+    { "path": "lib/ml/onnxBackend.ts", "purpose": "ONNX inference via onnxruntime-node + BertTokenizer", "activelyUsed": true, "testCovered": true, "concerns": ["single-label argmax cannot represent co-occurring risks","confidence<floor coerced to SAFE (unsafe fallback per mandate 4.3)","direction param accepted but unused (line 235)"] },
+    { "path": "lib/ml/bertTokenizer.ts", "purpose": "byte-exact WordPiece tokenizer, HF-parity verified", "activelyUsed": true, "testCovered": true, "concerns": ["parity fix already landed 2026-07-20 (memory: tokenizer-fidelity-fix)"] },
+    { "path": "lib/ml/rollout.ts", "purpose": "shouldRunModel + runWithFallback (SHADOW/PARTIAL/FULL)", "activelyUsed": true, "testCovered": true, "concerns": ["separate from the guard augment path; two ML entry systems coexist"] },
+    { "path": "lib/ml/registry.ts", "purpose": "active-deployment lookup for rollout", "activelyUsed": true },
+    { "path": "lib/ml/training.ts", "purpose": "HeuristicMLBackend + getDefaultBackend fallback", "activelyUsed": true },
+    { "path": "lib/ml/thresholds.ts", "purpose": "threshold helpers", "activelyUsed": "partial" },
+    { "path": "lib/ml/calibration? ", "purpose": "NOT FOUND - no calibration module exists", "activelyUsed": false, "concerns": ["release gate 9.5 unmet: no calibration"] }
+  ],
+  "productionCallPaths": {
+    "primaryGuardAugment": {
+      "path": "lib/guard/mlAugment.ts -> augmentWithMl()",
+      "wiredInto": ["app/api/guard/input/route.ts","app/api/guard/output/route.ts","app/api/guard/analyze/route.ts"],
+      "mode": "off by default; SOTERAI_ML_AUGMENT=shadow|enforce",
+      "gate": "precision gate: INPUT restricted to PROMPT_INJECTION/JAILBREAK/SYSTEM_PROMPT_LEAK_ATTEMPT + semantic-not-benign; floor 0.9",
+      "escalationCeiling": "HUMAN_REVIEW (never turns ALLOW into hard BLOCK on its own)",
+      "failMode": "fail-open (additive)"
+    },
+    "rolloutBackend": {
+      "path": "lib/ml/rollout.ts -> runWithFallback()",
+      "selectedBy": "ML_BACKEND=onnx",
+      "note": "independent of the guard augment path"
+    }
+  },
+  "envFlags": {
+    "SOTERAI_ML_AUGMENT": "off|shadow|enforce|on(=shadow)",
+    "ML_ONNX_MODEL_PATH": "selects model for guard augment path",
+    "ML_ONNX_LABELS_PATH": "label map path",
+    "ML_ONNX_CONFIDENCE_FLOOR": "default 0.9 in augment, 0.5 in standalone backend",
+    "SOTERAI_ML_SEMANTIC_MARGIN": "default 0 (semantic gate)",
+    "ML_BACKEND": "onnx selects rollout backend"
+  },
+  "trainingStack": {
+    "path": "scripts/ml/train-onnx-model.py",
+    "framework": "PyTorch + transformers, exports ONNX",
+    "splitMethod": "torch.utils.data.random_split (LINE 552) - ROW-LEVEL, ignores source/template lineage",
+    "leakageMechanism": "augmentation siblings (leet/unicode/reorder/synonym/prefix-suffix/spacing/punctuation of same seed) scattered across train and val",
+    "calibrationSet": "NONE",
+    "loss": "cross-entropy (single-label)",
+    "seed": 42
+  },
+  "datasets": {
+    "trainedOn": ["datasets/ml-augmented-v4.jsonl"],
+    "rows_v4": 75359,
+    "schema": ["text","label","language","source"],
+    "sourceFamilies": 32,
+    "distinctSourceTemplates": 3414,
+    "augmentationFamilies": ["prefix-suffix(19880)","leet(10475)","template(7845)","benign-variation(6431)","multi-turn(5230)","public-benchmark(3200)","unicode-obfuscation(2196)","reorder(2092)","punctuation(1769)","synonym(1487)","hinglish(1203)","spacing(61)","compress(346)"],
+    "labelDistribution": { "SAFE":18595,"PROMPT_INJECTION":9578,"DATA_EXFILTRATION_ATTEMPT":9578,"UNSAFE_OUTPUT":9578,"JAILBREAK":6191,"SYSTEM_PROMPT_LEAK_ATTEMPT":5853,"SECRET":5682,"PII":5278,"RAG_POISONING":5026 },
+    "attackToBenignRatio": "≈3.05:1 attack:benign (56764 attack / 18595 safe)",
+    "externalBenchmarks": ["datasets/external/harmbench.jsonl","datasets/external/jailbreakbench.jsonl"],
+    "manifest": "NONE (mandate 8.1 unmet - datasets loaded by hardcoded path list)"
+  },
+  "evaluationHarness": {
+    "honestHeldout": ["scripts/guard-benchmark/ml-tier-honest-final.ts","scripts/guard-benchmark/run-fresh-heldout-2026-07-20.ts","scripts/guard-benchmark/_fresh-heldout-2026-07-20.ts","scripts/guard-benchmark/ml-ensemble-gate-benchmark.ts"],
+    "note": "team already maintains honest post-tuning held-out sets separate from the leaked training-val split"
+  },
+  "gapsVsMandate": [
+    "single-label head cannot express multi-label co-occurring risks (mandate 6, 7-LayerC)",
+    "no source/direction/provenance conditioning (mandate 4.2, 7-LayerC)",
+    "no calibration (mandate 9.5, gate 11.4)",
+    "no OOD/abstention; low-confidence -> SAFE (mandate 7-LayerG, 4.3)",
+    "no long-context chunking; 128-token truncation (mandate 7-LayerD)",
+    "no conversation/trajectory model (mandate 7-LayerE)",
+    "no dataset manifest; grouped split absent (mandate 8.1, 8.7)",
+    "reported 99.29% val F1 is leaked random-split, not generalization (mandate 3.4, 4.5)"
+  ]
+}

@@ -1,5 +1,7 @@
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { analyzeText } from "@/lib/guard/analyze";
+import { augmentWithMl } from "@/lib/guard/mlAugment";
+import { augmentWithLlmJudge } from "@/lib/guard/llmJudge";
 import { PUBLIC_ANALYZE_RPM } from "@/lib/guard/constants";
 import { toPublicGuardResult } from "@/lib/guard/publicResult";
 import { createRateLimitResult } from "@/lib/guard/rateLimitResult";
@@ -26,7 +28,16 @@ export async function POST(request: Request) {
       });
     }
     const body = analyzeSchema.parse(await readJson(request));
-    const result = analyzeText(body.text, body.direction);
+    // The public playground previously ran rules-only, making it strictly weaker
+    // than the authenticated path — and it is the surface most likely to be probed.
+    // augmentWithMl is additive and fail-open: it is a no-op unless the ML tier is
+    // configured, and the precision gate keeps its benign FPR flat. So the public
+    // analyzer now gets the same ML-boosted recall as /api/guard/input.
+    const result = await augmentWithLlmJudge(
+      await augmentWithMl(analyzeText(body.text, body.direction), body.text, body.direction),
+      body.text,
+      body.direction,
+    );
     result.metadata = { ...result.metadata, guardDirection: body.direction, requestDirection: "ANALYZE" };
     return jsonResponse(toPublicGuardResult(result), {
       headers: { "X-RateLimit-Limit": String(PUBLIC_ANALYZE_RPM), "X-RateLimit-Remaining": String(rateLimit.remaining) },

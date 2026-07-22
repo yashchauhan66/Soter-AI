@@ -1,14 +1,15 @@
 import type {
   IExecuteFunctions,
+  INode,
   INodeExecutionData,
   INodeType,
   INodeTypeDescription,
   IDataObject,
   JsonObject,
 } from "n8n-workflow";
-import { NodeApiError, NodeOperationError } from "n8n-workflow";
+import { NodeApiError, NodeConnectionTypes, NodeOperationError } from "n8n-workflow";
 
-const PACKAGE_VERSION = "0.3.0";
+const PACKAGE_VERSION = "0.3.1";
 const USER_AGENT = `n8n-nodes-soterai/${PACKAGE_VERSION}`;
 const MAX_SANITIZE_DEPTH = 8;
 const MAX_METADATA_STRING_LENGTH = 500;
@@ -17,7 +18,7 @@ export class SoterGuard implements INodeType {
   description: INodeTypeDescription = {
     displayName: "SoterAI",
     name: "soterGuard",
-    icon: "file:soterai.png",
+    icon: { light: "file:soterai.svg", dark: "file:soterai.dark.svg" },
     group: ["transform"],
     version: 1,
     subtitle: '={{$parameter["action"]}}',
@@ -25,8 +26,9 @@ export class SoterGuard implements INodeType {
     defaults: {
       name: "SoterAI",
     },
-    inputs: ["main"],
-    outputs: ["main"],
+    usableAsTool: true,
+    inputs: [NodeConnectionTypes.Main],
+    outputs: [NodeConnectionTypes.Main],
     credentials: [
       {
         name: "soterApi",
@@ -41,10 +43,22 @@ export class SoterGuard implements INodeType {
         noDataExpression: true,
         options: [
           {
-            name: "Universal AI Firewall (Best Protection)",
-            value: "universalGuard",
-            description: "One drop-in guard for prompts, RAG context, tools, memory, output, PII, and data leakage",
-            action: "Protect an AI workflow end to end",
+            name: "Analyze Text",
+            value: "analyzeText",
+            description: "Analyze text and return a risk summary without local blocking",
+            action: "Analyze text for AI security risks",
+          },
+          {
+            name: "Audit N8N Workflow Security",
+            value: "workflowAudit",
+            description: "Score an exported n8n workflow for AI, tool, webhook, code, RAG, and data-leak risks",
+            action: "Audit an n8n workflow for AI security risks",
+          },
+          {
+            name: "Get RAG Risk Summary",
+            value: "ragScanner",
+            description: "Scan documents/chunks before adding to RAG/vector DB",
+            action: "Scan RAG document for threats",
           },
           {
             name: "Guard Input",
@@ -65,22 +79,10 @@ export class SoterGuard implements INodeType {
             action: "Redact PII from text",
           },
           {
-            name: "Get RAG Risk Summary",
-            value: "ragScanner",
-            description: "Scan documents/chunks before adding to RAG/vector DB",
-            action: "Scan RAG document for threats",
-          },
-          {
-            name: "Audit n8n Workflow Security",
-            value: "workflowAudit",
-            description: "Score an exported n8n workflow for AI, tool, webhook, code, RAG, and data-leak risks",
-            action: "Audit an n8n workflow for AI security risks",
-          },
-          {
-            name: "Analyze Text",
-            value: "analyzeText",
-            description: "Analyze text and return a risk summary without local blocking",
-            action: "Analyze text for AI security risks",
+            name: "Universal AI Firewall (Best Protection)",
+            value: "universalGuard",
+            description: "One drop-in guard for prompts, RAG context, tools, memory, output, PII, and data leakage",
+            action: "Protect an AI workflow end to end",
           },
         ],
         default: "universalGuard",
@@ -133,6 +135,11 @@ export class SoterGuard implements INodeType {
         type: "options",
         options: [
           {
+            name: "Balanced",
+            value: "BALANCED",
+            description: "Lower-friction protection for internal workflows and testing",
+          },
+          {
             name: "Maximum Protection",
             value: "MAXIMUM",
             description: "Strict fail-closed protection for production AI agents and public chatbots",
@@ -141,11 +148,6 @@ export class SoterGuard implements INodeType {
             name: "Strict",
             value: "STRICT",
             description: "Block critical threats and require review for high-risk behavior",
-          },
-          {
-            name: "Balanced",
-            value: "BALANCED",
-            description: "Lower-friction protection for internal workflows and testing",
           },
         ],
         default: "MAXIMUM",
@@ -192,8 +194,8 @@ export class SoterGuard implements INodeType {
           { name: "API", value: "api" },
           { name: "Email", value: "email" },
           { name: "File Upload", value: "upload" },
-          { name: "URL", value: "url" },
           { name: "Unknown", value: "unknown" },
+          { name: "URL", value: "url" },
         ],
         default: "api",
         displayOptions: { show: { action: ["ragScanner"] } },
@@ -224,9 +226,9 @@ export class SoterGuard implements INodeType {
         type: "options",
         options: [
           { name: "Block", value: "BLOCK", description: "Stop the workflow item" },
+          { name: "Continue", value: "CONTINUE", description: "Ignore the threat and continue" },
           { name: "Redact", value: "REDACT", description: "Continue with redacted safe text" },
           { name: "Warn", value: "WARN", description: "Continue but flag the threat in output" },
-          { name: "Continue", value: "CONTINUE", description: "Ignore the threat and continue" },
         ],
         default: "BLOCK",
         displayOptions: { show: { action: ["inputGuard", "outputGuard", "universalGuard"] } },
@@ -246,10 +248,11 @@ export class SoterGuard implements INodeType {
   async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
     const items = this.getInputData();
     const returnData: INodeExecutionData[] = [];
+    const node = this.getNode();
 
     const credentials = await this.getCredentials("soterApi");
     const apiKey = credentials.apiKey as string;
-    const baseUrl = validateBaseUrl((credentials.baseUrl as string) || "https://soterai.in");
+    const baseUrl = validateBaseUrl(node, (credentials.baseUrl as string) || "https://soterai.in");
     const credentialProjectId = (credentials.projectId as string) || undefined;
 
     for (let i = 0; i < items.length; i++) {
@@ -257,14 +260,14 @@ export class SoterGuard implements INodeType {
         const action = this.getNodeParameter("action", i) as string;
         const projectId = (this.getNodeParameter("projectId", i, "") as string) || credentialProjectId;
         const metadataRaw = this.getNodeParameter("metadata", i, "") as string;
-        const metadata = metadataRaw ? parseMetadata(metadataRaw) : undefined;
+        const metadata = metadataRaw ? parseMetadata(node, metadataRaw) : undefined;
 
         let result: IDataObject;
 
         switch (action) {
           case "analyzeText": {
             const text = this.getNodeParameter("inputText", i) as string;
-            result = await executeInputGuard(apiKey, baseUrl, {
+            result = await executeInputGuard(this, apiKey, baseUrl, {
               text, projectId, onThreat: "WARN", metadata,
             });
             result.operation = "analyzeText";
@@ -274,7 +277,7 @@ export class SoterGuard implements INodeType {
           case "inputGuard": {
             const text = this.getNodeParameter("inputText", i) as string;
             const onThreat = this.getNodeParameter("onThreat", i) as string;
-            result = await executeInputGuard(apiKey, baseUrl, {
+            result = await executeInputGuard(this, apiKey, baseUrl, {
               text, projectId, onThreat, metadata,
             });
             result.operation = "inputGuard";
@@ -285,8 +288,8 @@ export class SoterGuard implements INodeType {
             const onThreat = this.getNodeParameter("onThreat", i) as string;
             const profile = this.getNodeParameter("protectionProfile", i) as ProtectionProfile;
             const aiOutputText = this.getNodeParameter("universalOutputText", i, "") as string;
-            const securityContext = parseSecurityContext(this.getNodeParameter("securityContextJson", i, "") as string);
-            result = await executeUniversalGuard(apiKey, baseUrl, {
+            const securityContext = parseSecurityContext(node, this.getNodeParameter("securityContextJson", i, "") as string);
+            result = await executeUniversalGuard(this, apiKey, baseUrl, {
               text,
               projectId,
               onThreat,
@@ -308,7 +311,7 @@ export class SoterGuard implements INodeType {
           case "outputGuard": {
             const text = this.getNodeParameter("outputText", i) as string;
             const onThreat = this.getNodeParameter("onThreat", i) as string;
-            result = await executeOutputGuard(apiKey, baseUrl, {
+            result = await executeOutputGuard(this, apiKey, baseUrl, {
               text, projectId, onThreat, metadata,
             });
             result.operation = "outputGuard";
@@ -316,7 +319,7 @@ export class SoterGuard implements INodeType {
           }
           case "piiRedactor": {
             const text = this.getNodeParameter("piiText", i) as string;
-            result = await executePiiRedactor(apiKey, baseUrl, {
+            result = await executePiiRedactor(this, apiKey, baseUrl, {
               text, projectId, metadata,
             });
             result.operation = "piiRedactor";
@@ -326,7 +329,7 @@ export class SoterGuard implements INodeType {
             const text = this.getNodeParameter("ragText", i) as string;
             const documentId = this.getNodeParameter("documentId", i) as string;
             const source = this.getNodeParameter("documentSource", i) as string;
-            result = await executeRagScanner(apiKey, baseUrl, {
+            result = await executeRagScanner(this, apiKey, baseUrl, {
               text, projectId, documentId, source, metadata,
             });
             result.operation = "ragScanner";
@@ -334,14 +337,14 @@ export class SoterGuard implements INodeType {
           }
           case "workflowAudit": {
             const workflowJson = this.getNodeParameter("workflowJson", i) as string;
-            result = executeWorkflowAudit(workflowJson);
+            result = executeWorkflowAudit(node, workflowJson);
             break;
           }
           default:
-            throw new NodeOperationError(this.getNode(), `Unknown action: ${action}`, { itemIndex: i });
+            throw new NodeOperationError(node, `Unknown action: ${action}`, { itemIndex: i });
         }
 
-        returnData.push({ json: result });
+        returnData.push({ json: result, pairedItem: { item: i } });
       } catch (error) {
         if (this.continueOnFail()) {
           returnData.push({
@@ -349,13 +352,14 @@ export class SoterGuard implements INodeType {
               error: true,
               message: sanitizeErrorMessage(error instanceof Error ? error.message : "SoterAI request failed."),
             },
+            pairedItem: { item: i },
           });
           continue;
         }
-        if (error instanceof NodeOperationError || error instanceof NodeApiError) {
+        if (error instanceof NodeApiError || error instanceof NodeOperationError) {
           throw error;
         }
-        throw new NodeApiError(this.getNode(), error as JsonObject, { itemIndex: i });
+        throw new NodeOperationError(node, error as Error, { itemIndex: i });
       }
     }
 
@@ -443,60 +447,60 @@ interface RagParams {
 }
 
 async function soterPost(
+  ctx: IExecuteFunctions,
   apiKey: string,
   baseUrl: string,
   path: string,
   body: Record<string, unknown>,
 ): Promise<Record<string, unknown>> {
   const url = `${baseUrl.replace(/\/$/, "")}${path}`;
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 20000);
-  let response: Response;
+  let response: { statusCode?: number; body?: unknown };
 
   try {
-    response = await fetch(url, {
+    response = await ctx.helpers.httpRequest({
       method: "POST",
+      url,
       headers: {
         "Content-Type": "application/json",
         "x-api-key": apiKey,
         "User-Agent": USER_AGENT,
       },
-      body: JSON.stringify(body),
-      signal: controller.signal,
+      body: body as IDataObject,
+      json: true,
+      timeout: 20000,
+      returnFullResponse: true,
+      ignoreHttpStatusErrors: true,
     });
   } catch (error) {
-    if (error instanceof Error && error.name === "AbortError") {
-      throw new Error("SoterAI API request timed out after 20 seconds.");
-    }
-    throw new Error("SoterAI API request failed. Check the Base URL and network access.");
-  } finally {
-    clearTimeout(timeout);
+    throw new NodeApiError(ctx.getNode(), error as JsonObject, {
+      message: "SoterAI API request failed. Check the Base URL and network access.",
+    });
   }
 
-  let data: Record<string, unknown> = {};
-  try {
-    data = await response.json() as Record<string, unknown>;
-  } catch {
-    data = {};
-  }
+  const statusCode = typeof response.statusCode === "number" ? response.statusCode : 0;
+  const data = (response.body && typeof response.body === "object" ? response.body : {}) as Record<string, unknown>;
 
-  if (!response.ok) {
-    throw new Error(formatApiError(response.status, data));
+  if (statusCode < 200 || statusCode >= 300) {
+    throw new NodeApiError(ctx.getNode(), data as JsonObject, {
+      message: formatApiError(statusCode, data),
+      httpCode: String(statusCode),
+    });
   }
 
   return data;
 }
 
 async function executeInputGuard(
+  ctx: IExecuteFunctions,
   apiKey: string,
   baseUrl: string,
   params: GuardParams,
 ): Promise<IDataObject> {
-  validateText(params.text, "Input Text");
+  validateText(ctx.getNode(), params.text, "Input Text");
   const meta: Record<string, unknown> = { ...params.metadata };
   if (params.projectId) meta.projectId = params.projectId;
 
-  const raw = await soterPost(apiKey, baseUrl, "/api/guard/input", {
+  const raw = await soterPost(ctx, apiKey, baseUrl, "/api/guard/input", {
     message: params.text,
     metadata: meta,
   });
@@ -557,15 +561,16 @@ async function executeInputGuard(
 }
 
 async function executeOutputGuard(
+  ctx: IExecuteFunctions,
   apiKey: string,
   baseUrl: string,
   params: GuardParams,
 ): Promise<IDataObject> {
-  validateText(params.text, "AI Output Text");
+  validateText(ctx.getNode(), params.text, "AI Output Text");
   const meta: Record<string, unknown> = { ...params.metadata };
   if (params.projectId) meta.projectId = params.projectId;
 
-  const raw = await soterPost(apiKey, baseUrl, "/api/guard/output", {
+  const raw = await soterPost(ctx, apiKey, baseUrl, "/api/guard/output", {
     aiResponse: params.text,
     metadata: meta,
   });
@@ -626,11 +631,12 @@ async function executeOutputGuard(
 }
 
 async function executeUniversalGuard(
+  ctx: IExecuteFunctions,
   apiKey: string,
   baseUrl: string,
   params: UniversalGuardParams,
 ): Promise<IDataObject> {
-  validateText(params.text, "Input Text");
+  validateText(ctx.getNode(), params.text, "Input Text");
   const meta: Record<string, unknown> = {
     ...params.metadata,
     soteraiNodeMode: "universalGuard",
@@ -639,7 +645,7 @@ async function executeUniversalGuard(
   if (params.projectId) meta.projectId = params.projectId;
 
   const checks: IDataObject[] = [];
-  const input = await executeInputGuard(apiKey, baseUrl, {
+  const input = await executeInputGuard(ctx, apiKey, baseUrl, {
     text: params.text,
     projectId: params.projectId,
     onThreat: "WARN",
@@ -649,7 +655,7 @@ async function executeUniversalGuard(
 
   if (params.ragText?.trim()) {
     const documentId = params.ragDocumentId?.trim() || `n8n-${Date.now()}`;
-    const rag = await executeRagScanner(apiKey, baseUrl, {
+    const rag = await executeRagScanner(ctx, apiKey, baseUrl, {
       text: params.ragText,
       projectId: params.projectId,
       documentId,
@@ -660,9 +666,9 @@ async function executeUniversalGuard(
   }
 
   if (params.tool) {
-    if (!params.tool.name.trim()) throw new Error("Tool Name is required when Check Tool Call is enabled.");
-    if (!params.tool.action.trim()) throw new Error("Tool Action is required when Check Tool Call is enabled.");
-    const tool = await soterPost(apiKey, baseUrl, "/api/agent/tool/check", {
+    if (!params.tool.name.trim()) throw new NodeOperationError(ctx.getNode(), "Tool Name is required when Check Tool Call is enabled.");
+    if (!params.tool.action.trim()) throw new NodeOperationError(ctx.getNode(), "Tool Action is required when Check Tool Call is enabled.");
+    const tool = await soterPost(ctx, apiKey, baseUrl, "/api/agent/tool/check", {
       sessionId: typeof meta.sessionId === "string" ? meta.sessionId : undefined,
       agentName: typeof meta.agentName === "string" ? meta.agentName : "n8n-agent",
       tool: params.tool.name,
@@ -677,7 +683,7 @@ async function executeUniversalGuard(
   }
 
   if (params.memory) {
-    const memory = await soterPost(apiKey, baseUrl, "/api/agent/memory/check", {
+    const memory = await soterPost(ctx, apiKey, baseUrl, "/api/agent/memory/check", {
       sessionId: typeof meta.sessionId === "string" ? meta.sessionId : undefined,
       memoryAction: params.memory.action,
       content: params.memory.content || params.text,
@@ -688,7 +694,7 @@ async function executeUniversalGuard(
 
   let outputText = params.aiOutputText?.trim() ? params.aiOutputText : (input.outputText as string) || params.text;
   if (params.aiOutputText?.trim()) {
-    const output = await executeOutputGuard(apiKey, baseUrl, {
+    const output = await executeOutputGuard(ctx, apiKey, baseUrl, {
       text: params.aiOutputText,
       projectId: params.projectId,
       onThreat: "WARN",
@@ -697,7 +703,7 @@ async function executeUniversalGuard(
     outputText = (output.outputText as string) || params.aiOutputText;
     checks.push({ layer: "output", ...output });
 
-    const egress = await soterPost(apiKey, baseUrl, "/api/semantic-egress/check", {
+    const egress = await soterPost(ctx, apiKey, baseUrl, "/api/semantic-egress/check", {
       sessionId: typeof meta.sessionId === "string" ? meta.sessionId : undefined,
       content: params.aiOutputText,
       destinationType: params.outputDestinationType || "FINAL_OUTPUT",
@@ -751,15 +757,16 @@ async function executeUniversalGuard(
 }
 
 async function executePiiRedactor(
+  ctx: IExecuteFunctions,
   apiKey: string,
   baseUrl: string,
   params: PiiParams,
 ): Promise<IDataObject> {
-  validateText(params.text, "Text");
+  validateText(ctx.getNode(), params.text, "Text");
   const meta: Record<string, unknown> = { ...params.metadata };
   if (params.projectId) meta.projectId = params.projectId;
 
-  const raw = await soterPost(apiKey, baseUrl, "/api/guard/input", {
+  const raw = await soterPost(ctx, apiKey, baseUrl, "/api/guard/input", {
     message: params.text,
     metadata: meta,
   });
@@ -782,15 +789,16 @@ async function executePiiRedactor(
 }
 
 async function executeRagScanner(
+  ctx: IExecuteFunctions,
   apiKey: string,
   baseUrl: string,
   params: RagParams,
 ): Promise<IDataObject> {
-  validateText(params.text, "Document Text");
+  validateText(ctx.getNode(), params.text, "Document Text");
   if (!params.documentId.trim()) {
-    throw new Error("Document ID is required for RAG risk summary.");
+    throw new NodeOperationError(ctx.getNode(), "Document ID is required for RAG risk summary.");
   }
-  const raw = await soterPost(apiKey, baseUrl, "/api/rag/document/trust-score", {
+  const raw = await soterPost(ctx, apiKey, baseUrl, "/api/rag/document/trust-score", {
     projectId: params.projectId,
     documentId: params.documentId,
     content: params.text,
@@ -807,47 +815,49 @@ async function executeRagScanner(
   };
 }
 
-function parseMetadata(raw: string): Record<string, unknown> | undefined {
+function parseMetadata(node: INode, raw: string): Record<string, unknown> | undefined {
   if (!raw.trim()) return undefined;
+  let parsed: unknown;
   try {
-    const parsed = JSON.parse(raw);
-    if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
-      return sanitizeRequestMetadata(parsed as Record<string, unknown>);
-    }
+    parsed = JSON.parse(raw);
   } catch {
-    throw new Error("Metadata JSON must be a valid JSON object.");
+    throw new NodeOperationError(node, "Metadata JSON must be a valid JSON object.");
   }
-  throw new Error("Metadata JSON must be a valid JSON object.");
+  if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+    return sanitizeRequestMetadata(parsed as Record<string, unknown>);
+  }
+  throw new NodeOperationError(node, "Metadata JSON must be a valid JSON object.");
 }
 
-function parseOptionalJsonObject(raw: string, fieldName: string): Record<string, unknown> | undefined {
+function parseOptionalJsonObject(node: INode, raw: string, fieldName: string): Record<string, unknown> | undefined {
   if (!raw.trim()) return undefined;
+  let parsed: unknown;
   try {
-    const parsed = JSON.parse(raw);
-    if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
-      return parsed as Record<string, unknown>;
-    }
+    parsed = JSON.parse(raw);
   } catch {
-    throw new Error(`${fieldName} must be a valid JSON object.`);
+    throw new NodeOperationError(node, `${fieldName} must be a valid JSON object.`);
   }
-  throw new Error(`${fieldName} must be a valid JSON object.`);
+  if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+    return parsed as Record<string, unknown>;
+  }
+  throw new NodeOperationError(node, `${fieldName} must be a valid JSON object.`);
 }
 
-function validateBaseUrl(raw: string): string {
+function validateBaseUrl(node: INode, raw: string): string {
   let parsed: URL;
   try {
     parsed = new URL(raw);
   } catch {
-    throw new Error("SoterAI Base URL must be a valid URL.");
+    throw new NodeOperationError(node, "SoterAI Base URL must be a valid URL.");
   }
 
   if (parsed.username || parsed.password || parsed.search || parsed.hash) {
-    throw new Error("SoterAI Base URL must not include credentials, query parameters, or fragments.");
+    throw new NodeOperationError(node, "SoterAI Base URL must not include credentials, query parameters, or fragments.");
   }
 
   const isLocalDevHost = ["localhost", "127.0.0.1", "::1"].includes(parsed.hostname);
   if (parsed.protocol !== "https:" && !(parsed.protocol === "http:" && isLocalDevHost)) {
-    throw new Error("SoterAI Base URL must use HTTPS, except http://localhost for local development.");
+    throw new NodeOperationError(node, "SoterAI Base URL must use HTTPS, except http://localhost for local development.");
   }
 
   parsed.pathname = parsed.pathname.replace(/\/+$/, "");
@@ -877,20 +887,9 @@ function sanitizeMetadataValue(value: unknown, depth: number, key?: string): unk
   return value;
 }
 
-function parseOptionalJsonArray(raw: string, fieldName: string): unknown[] | undefined {
-  if (!raw.trim()) return undefined;
-  try {
-    const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed)) return parsed;
-  } catch {
-    throw new Error(`${fieldName} must be a valid JSON array.`);
-  }
-  throw new Error(`${fieldName} must be a valid JSON array.`);
-}
-
-function parseSecurityContext(raw: string): SecurityContext {
+function parseSecurityContext(node: INode, raw: string): SecurityContext {
   if (!raw.trim()) return {};
-  const parsed = parseOptionalJsonObject(raw, "Security Context JSON") ?? {};
+  const parsed = parseOptionalJsonObject(node, raw, "Security Context JSON") ?? {};
   const context: SecurityContext = {};
 
   if (isRecord(parsed.rag)) {
@@ -905,7 +904,7 @@ function parseSecurityContext(raw: string): SecurityContext {
     const name = stringValue(parsed.tool.name);
     const action = stringValue(parsed.tool.action);
     if (!name || !action) {
-      throw new Error("Security Context JSON tool requires name and action.");
+      throw new NodeOperationError(node, "Security Context JSON tool requires name and action.");
     }
     context.tool = {
       name,
@@ -1183,9 +1182,9 @@ function buildDeveloperMessage(input: {
   return `SoterAI flagged this ${input.direction}. Risk score: ${score}. Categories: ${categories}. Reason: ${input.reason || "No reason returned."}`;
 }
 
-function executeWorkflowAudit(workflowJson: string): IDataObject {
-  validateText(workflowJson, "Workflow JSON");
-  const workflow = parseWorkflowJson(workflowJson);
+function executeWorkflowAudit(node: INode, workflowJson: string): IDataObject {
+  validateText(node, workflowJson, "Workflow JSON");
+  const workflow = parseWorkflowJson(node, workflowJson);
   const nodes = Array.isArray(workflow.nodes) ? workflow.nodes.filter(isWorkflowNode) : [];
   const connections = workflow.connections && typeof workflow.connections === "object" ? workflow.connections as Record<string, unknown> : {};
   const findings: Array<Record<string, unknown>> = [];
@@ -1200,14 +1199,14 @@ function executeWorkflowAudit(workflowJson: string): IDataObject {
     ));
   }
 
-  const hasSoterNode = nodes.some((node) => node.type === "n8n-nodes-soterai.soterGuard");
-  const hasUniversalGuard = nodes.some((node) => node.type === "n8n-nodes-soterai.soterGuard" && getParam(node, "action") === "universalGuard");
-  const hasAiAgent = nodes.some((node) => /langchain\.agent|ai.?agent/i.test(`${node.type} ${node.name}`));
-  const hasToolLikeNode = nodes.some((node) => isToolLikeNode(node));
-  const hasWebhook = nodes.some((node) => /webhook|formTrigger/i.test(node.type));
-  const hasRespond = nodes.some((node) => /respondToWebhook|webhook/i.test(node.type));
-  const hasRagOrVector = nodes.some((node) => /vector|pinecone|qdrant|weaviate|supabase|retriever|document|embedding|splitter/i.test(`${node.type} ${node.name}`));
-  const hasMemory = nodes.some((node) => /memory|chatMemory|windowBuffer/i.test(`${node.type} ${node.name}`));
+  const hasSoterNode = nodes.some((wfNode) => wfNode.type === "n8n-nodes-soterai.soterGuard");
+  const hasUniversalGuard = nodes.some((wfNode) => wfNode.type === "n8n-nodes-soterai.soterGuard" && getParam(wfNode, "action") === "universalGuard");
+  const hasAiAgent = nodes.some((wfNode) => /langchain\.agent|ai.?agent/i.test(`${wfNode.type} ${wfNode.name}`));
+  const hasToolLikeNode = nodes.some((wfNode) => isToolLikeNode(wfNode));
+  const hasWebhook = nodes.some((wfNode) => /webhook|formTrigger/i.test(wfNode.type));
+  const hasRespond = nodes.some((wfNode) => /respondToWebhook|webhook/i.test(wfNode.type));
+  const hasRagOrVector = nodes.some((wfNode) => /vector|pinecone|qdrant|weaviate|supabase|retriever|document|embedding|splitter/i.test(`${wfNode.type} ${wfNode.name}`));
+  const hasMemory = nodes.some((wfNode) => /memory|chatMemory|windowBuffer/i.test(`${wfNode.type} ${wfNode.name}`));
 
   if ((hasAiAgent || hasToolLikeNode || hasRagOrVector) && !hasUniversalGuard) {
     findings.push(auditFinding(
@@ -1227,76 +1226,76 @@ function executeWorkflowAudit(workflowJson: string): IDataObject {
     ));
   }
 
-  for (const node of nodes) {
-    const searchable = `${node.name} ${node.type} ${JSON.stringify(node.parameters ?? {})}`;
-    if (/code|function|python/i.test(node.type)) {
+  for (const wfNode of nodes) {
+    const searchable = `${wfNode.name} ${wfNode.type} ${JSON.stringify(wfNode.parameters ?? {})}`;
+    if (/code|function|python/i.test(wfNode.type)) {
       findings.push(auditFinding(
         "n8n.code_node",
         "HIGH",
-        `Code execution node detected: ${node.name}.`,
+        `Code execution node detected: ${wfNode.name}.`,
         "Avoid executing LLM-generated content in Code nodes. Gate any AI-generated code or parameters through Universal AI Firewall and use least-privilege credentials.",
         "LLM05:2025 Improper Output Handling",
-        node.name,
+        wfNode.name,
       ));
     }
-    if (/httpRequest/i.test(node.type) || /webhook|http|https:\/\//i.test(searchable)) {
+    if (/httpRequest/i.test(wfNode.type) || /webhook|http|https:\/\//i.test(searchable)) {
       findings.push(auditFinding(
         "n8n.external_http",
         hasAiAgent ? "HIGH" : "MEDIUM",
-        `External HTTP or webhook behavior detected near ${node.name}.`,
+        `External HTTP or webhook behavior detected near ${wfNode.name}.`,
         "Check destination allowlists and scan AI-generated payloads with Universal AI Firewall before any external request.",
         "LLM02:2025 Sensitive Information Disclosure",
-        node.name,
+        wfNode.name,
       ));
     }
     if (/credential|api[_ -]?key|token|secret|password|bearer/i.test(searchable)) {
       findings.push(auditFinding(
         "workflow.secret_reference",
         "CRITICAL",
-        `Credential-like text appears in node parameters for ${node.name}.`,
+        `Credential-like text appears in node parameters for ${wfNode.name}.`,
         "Keep secrets in n8n credentials only. Do not store tokens, passwords, or API keys in workflow JSON or prompts.",
         "LLM02:2025 Sensitive Information Disclosure",
-        node.name,
+        wfNode.name,
       ));
     }
-    if (/langchain\.agent|ai.?agent/i.test(`${node.type} ${node.name}`) && !hasUniversalGuard) {
+    if (/langchain\.agent|ai.?agent/i.test(`${wfNode.type} ${wfNode.name}`) && !hasUniversalGuard) {
       findings.push(auditFinding(
         "ai_agent.unprotected",
         "CRITICAL",
-        `AI Agent node appears unprotected: ${node.name}.`,
+        `AI Agent node appears unprotected: ${wfNode.name}.`,
         "Gate user input, retrieved context, tool calls, memory writes, and final output with Universal AI Firewall.",
         "LLM06:2025 Excessive Agency",
-        node.name,
+        wfNode.name,
       ));
     }
-    if (/memory|chatMemory|windowBuffer/i.test(`${node.type} ${node.name}`) && !hasUniversalGuard) {
+    if (/memory|chatMemory|windowBuffer/i.test(`${wfNode.type} ${wfNode.name}`) && !hasUniversalGuard) {
       findings.push(auditFinding(
         "agent.memory_unprotected",
         "HIGH",
-        `Agent memory is present without Universal AI Firewall: ${node.name}.`,
+        `Agent memory is present without Universal AI Firewall: ${wfNode.name}.`,
         "Scan memory writes for poisoning, secrets, and PII before storage.",
         "LLM04:2025 Data and Model Poisoning",
-        node.name,
+        wfNode.name,
       ));
     }
-    if (/vector|pinecone|qdrant|weaviate|supabase|retriever|document|embedding|splitter/i.test(`${node.type} ${node.name}`) && !hasUniversalGuard) {
+    if (/vector|pinecone|qdrant|weaviate|supabase|retriever|document|embedding|splitter/i.test(`${wfNode.type} ${wfNode.name}`) && !hasUniversalGuard) {
       findings.push(auditFinding(
         "rag.ingestion_unprotected",
         "HIGH",
-        `RAG/vector workflow component detected: ${node.name}.`,
+        `RAG/vector workflow component detected: ${wfNode.name}.`,
         "Scan documents and chunks before indexing and before sending retrieved context to the LLM.",
         "LLM08:2025 Vector and Embedding Weaknesses",
-        node.name,
+        wfNode.name,
       ));
     }
-    if (/respondToWebhook|email|gmail|slack|telegram|discord|notion|sheets/i.test(node.type) && !hasUniversalGuard) {
+    if (/respondToWebhook|email|gmail|slack|telegram|discord|notion|sheets/i.test(wfNode.type) && !hasUniversalGuard) {
       findings.push(auditFinding(
         "output.egress_unprotected",
         "HIGH",
-        `External or user-visible output node may send unscanned AI content: ${node.name}.`,
+        `External or user-visible output node may send unscanned AI content: ${wfNode.name}.`,
         "Run AI Output Text through Universal AI Firewall with the correct Output Destination Type before this node.",
         "LLM05:2025 Improper Output Handling",
-        node.name,
+        wfNode.name,
       ));
     }
   }
@@ -1351,14 +1350,15 @@ interface WorkflowNode {
   parameters?: Record<string, unknown>;
 }
 
-function parseWorkflowJson(raw: string): Record<string, unknown> {
+function parseWorkflowJson(node: INode, raw: string): Record<string, unknown> {
+  let parsed: unknown;
   try {
-    const parsed = JSON.parse(raw);
-    if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) return parsed as Record<string, unknown>;
+    parsed = JSON.parse(raw);
   } catch {
-    throw new Error("Workflow JSON must be a valid exported n8n workflow object.");
+    throw new NodeOperationError(node, "Workflow JSON must be a valid exported n8n workflow object.");
   }
-  throw new Error("Workflow JSON must be a valid exported n8n workflow object.");
+  if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) return parsed as Record<string, unknown>;
+  throw new NodeOperationError(node, "Workflow JSON must be a valid exported n8n workflow object.");
 }
 
 function isWorkflowNode(value: unknown): value is WorkflowNode {
@@ -1421,12 +1421,12 @@ function recommendedSoterAIPlacement(nodes: WorkflowNode[], connections: Record<
   };
 }
 
-function validateText(text: string, fieldName: string): void {
+function validateText(node: INode, text: string, fieldName: string): void {
   if (!text || !text.trim()) {
-    throw new Error(`${fieldName} is required.`);
+    throw new NodeOperationError(node, `${fieldName} is required.`);
   }
   if (text.length > 200000) {
-    throw new Error(`${fieldName} is too large. Keep text under 200,000 characters per item.`);
+    throw new NodeOperationError(node, `${fieldName} is too large. Keep text under 200,000 characters per item.`);
   }
 }
 

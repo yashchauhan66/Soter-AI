@@ -2,6 +2,17 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.3.1] - 2026-07-21
+
+### Changed
+
+- Moved the node into a `SoterGuard/` directory to satisfy the n8n `node-dirname-against-convention` rule.
+- Replaced the raster node icon with themed SVG variants (`{ light, dark }`) for both the node and the credential, per the n8n icon-validation rules.
+- Marked the node `usableAsTool: true` so it can be attached to AI Agent tool inputs.
+- Switched HTTP calls to the built-in `this.helpers.httpRequest` (native timeout) instead of `fetch` + `setTimeout`/`clearTimeout`, removing restricted global usage.
+- Replaced raw `throw new Error(...)` with `NodeOperationError`/`NodeApiError` across the execute path and added `pairedItem` linking to every output item.
+- Used `NodeConnectionTypes.Main` for `inputs`/`outputs` and alphabetized all `options` lists.
+
 ## 0.2.11
 
 ### Changed

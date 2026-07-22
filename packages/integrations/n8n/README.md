@@ -427,7 +427,7 @@ API keys, bearer tokens, common provider tokens, AWS access key IDs, database UR
 ## Compatibility
 
 - Package: `n8n-nodes-soterai`
-- Version: `0.3.0`
+- Version: `0.3.1`
 - n8n node API: `1`
 - Peer dependency: `n8n-workflow` `*`
 - Runtime: n8n versions that support community nodes and Node.js 20+ are expected to work; verify in your own n8n host before production use.
@@ -443,7 +443,7 @@ API keys, bearer tokens, common provider tokens, AWS access key IDs, database UR
 - Website: [https://soterai.in](https://soterai.in)
 - Privacy: [https://soterai.in/privacy](https://soterai.in/privacy)
 - Support: [https://soterai.in/support](https://soterai.in/support)
-- Support email: [contact@soterai.in](mailto:contact@soterai.in)
+- Support email: [support@soterai.in](mailto:support@soterai.in)
 - GitHub: [https://github.com/yashchauhan66/Soter-AI/tree/main/packages/integrations/n8n](https://github.com/yashchauhan66/Soter-AI/tree/main/packages/integrations/n8n)
 - npm: [https://www.npmjs.com/package/n8n-nodes-soterai](https://www.npmjs.com/package/n8n-nodes-soterai)
 

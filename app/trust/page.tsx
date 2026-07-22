@@ -209,7 +209,7 @@ export default function TrustPage() {
             ))}
           </div>
           <p className="mt-4 text-sm text-slate-500">
-            SOC2: readiness in progress. Pentest: EVIDENCE REQUIRED unless a signed external report is added. Security contact: contact@soterai.in.
+            SOC2: readiness in progress. Pentest: EVIDENCE REQUIRED unless a signed external report is added. Security contact: support@soterai.in.
           </p>
         </section>
 

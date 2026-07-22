@@ -18,8 +18,15 @@ import { socialEngineeringDetector } from "./detectors/socialEngineeringDetector
 import { embeddingPoisoningDetector } from "./detectors/embeddingPoisoningDetector";
 import { mcpToolPoisoningDetector } from "./detectors/mcpToolPoisoningDetector";
 import { memoryPoisoningDetector } from "./detectors/memoryPoisoningDetector";
+import { multimodalAttackDetector } from "./detectors/multimodalAttackDetector";
+import { modelSupplyChainDetector } from "./detectors/modelSupplyChainDetector";
+import { behavioralAnomalyDetector } from "./detectors/behavioralAnomalyDetector";
+import { advancedUnicodeSmugglingDetector } from "./detectors/advancedUnicodeSmugglingDetector";
 import { insecureDeserializationDetector } from "./detectors/insecureDeserializationDetector";
 import { dataExfiltrationInputDetector } from "./detectors/dataExfiltrationInputDetector";
+import { replyChannelExfilDetector } from "./detectors/replyChannelExfilDetector";
+import { harmfulContentRequestDetector } from "./detectors/harmfulContentRequestDetector";
+import { broadHarmfulContentDetector } from "./detectors/broadHarmfulContentDetector";
 import { generalizedIntentDetector } from "./detectors/generalizedIntentDetector";
 import { adversarialCyberDetector } from "./detectors/adversarialCyberDetector";
 import { decideGuardAction } from "./decisionEngine";
@@ -38,13 +45,43 @@ const RULE_SECURITY_TYPES = new Set<RiskType>([
   "PROMPT_INJECTION",
   "JAILBREAK",
   "SYSTEM_PROMPT_LEAK_ATTEMPT",
+  "MCP_TOOL_POISONING",
+  "MEMORY_POISONING",
+  "TOXICITY",
+  "RECURSIVE_INJECTION",
+  "DATA_EXFILTRATION",
+  "MULTIMODAL_INJECTION",
+  "MODEL_SUPPLY_CHAIN",
+  "BEHAVIORAL_ANOMALY",
+  "ADVANCED_SMUGGLING",
 ]);
 
+// Families the semantic (feature-hash) layer is allowed to escalate on INPUT.
+// TOXICITY is intentionally EXCLUDED here: the dependency-free feature-hash
+// similarity generalizes well on *structural* attacks (injection / jailbreak /
+// leak) but over-fires on benign *topic/content* prose that merely shares
+// vocabulary with harm seeds — benign code-gen, tax/legal questions, fact-checks
+// and anti-abuse condemnation all scored just over the TOXICITY margin on the
+// JailbreakBench benign control (23% raw FPR, all semantic-or-keyword TOXICITY).
+// This mirrors the same exclusion mlAugment applies to content-harm labels on
+// INPUT (see lib/guard/mlAugment.ts INPUT_RELIABLE_LABELS). Real toxic INPUT is
+// still caught deterministically by toxicityDetector + harmfulContentRequestDetector,
+// and the meaning-based llmJudge tier, and TOXICITY semantic detection remains
+// fully active on OUTPUT (a toxic model reply).
 const SEMANTIC_INPUT_SECURITY_FAMILIES = new Set([
   "PROMPT_INJECTION",
   "JAILBREAK",
   "SYSTEM_PROMPT_LEAK_ATTEMPT",
   "DATA_EXFILTRATION",
+  "MCP_TOOL_POISONING",
+  "MEMORY_POISONING",
+  "RECURSIVE_INJECTION",
+  "SOCIAL_ENGINEERING",
+  "EMBEDDING_POISONING",
+  "SSRF",
+  "MULTIMODAL_INJECTION",
+  "BEHAVIORAL_ANOMALY",
+  "ADVANCED_SMUGGLING",
 ]);
 
 // Detection tier is enterprise-configurable via SOTERAI_DETECTION_TIER:
@@ -72,7 +109,7 @@ const COMMON_DETECTORS = [piiDetector, indiaPiiDetector, secretsDetector, toxici
 // interaction is handled in `applyPolicy` (lib/guard/policy.ts) by keying on risk
 // types rather than finding count, so registering this detector does not break the
 // legacy single-injection REWRITE / HUMAN_REVIEW / BLOCK policy branch.
-const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, systemPromptLeakAttemptDetector, multilingualAttackDetector, recursiveInjectionDetector, ssrfDetector, adversarialCyberDetector, competitiveIntelDetector, socialEngineeringDetector, embeddingPoisoningDetector, mcpToolPoisoningDetector, memoryPoisoningDetector, insecureDeserializationDetector, dataExfiltrationInputDetector, generalizedIntentDetector, ...COMMON_DETECTORS];
+const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, systemPromptLeakAttemptDetector, multilingualAttackDetector, recursiveInjectionDetector, ssrfDetector, adversarialCyberDetector, competitiveIntelDetector, socialEngineeringDetector, embeddingPoisoningDetector, mcpToolPoisoningDetector, memoryPoisoningDetector, multimodalAttackDetector, modelSupplyChainDetector, behavioralAnomalyDetector, advancedUnicodeSmugglingDetector, insecureDeserializationDetector, dataExfiltrationInputDetector, replyChannelExfilDetector, harmfulContentRequestDetector, broadHarmfulContentDetector, generalizedIntentDetector, ...COMMON_DETECTORS];
 const OUTPUT_DETECTORS = [systemPromptLeakageDetector, unsafeOutputDetector, outputExfiltrationDetector, spamUrlDetector, hallucinationDetector, biasDetector, generalizedIntentDetector, ...COMMON_DETECTORS];
 
 export function analyzeText(text: string, direction: GuardDirection): GuardResult {
@@ -124,14 +161,14 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
 
   if (direction === "INPUT") {
     const normalized = text.replace(/[\s.-]/g, "");
-    
+
     // NOTE: the spaced-letter evasion signature must use \s+ (real gaps between
     // letters, e.g. "r e v e a l"); \s* also matched the plain word "reveal",
     // flagging any benign sentence that merely used it (e.g. "reveal the plot
     // twist") as a prompt-leak. The genuine evasion case is covered below.
     const isLeak = /hidden instructions|internal prompt|developer.*tell|print.*hidden rules|repeat.*text before|reveal.*configuration|r\s+e\s+v\s+e\s+a\s+l|system\s+prompt\s+batao|hidden\s+instruction\s+dikhao/i.test(text) ||
-                   /hiddeninstructions|internalprompt|developertell|printhiddenrules|repeattextbefore|revealconfiguration/i.test(normalized);
-                   
+      /hiddeninstructions|internalprompt|developertell|printhiddenrules|repeattextbefore|revealconfiguration/i.test(normalized);
+
     if (isLeak) {
       findings.push({
         type: "SYSTEM_PROMPT_LEAK_ATTEMPT",
@@ -266,7 +303,7 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
       /وضع المطور|كسر الحماية|بدون قيود/i,
       /وضع المشرف/i
     ];
-    
+
     if (blockRegexes.some(rx => rx.test(text) || rx.test(normalized))) {
       findings.push({
         type: "PROMPT_INJECTION",
@@ -348,6 +385,8 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
           EMBEDDING_POISONING: "PROMPT_INJECTION",
           INSECURE_DESERIALIZATION: "PROMPT_INJECTION",
           DATA_EXFILTRATION: "DATA_EXFILTRATION",
+          MCP_TOOL_POISONING: "MCP_TOOL_POISONING",
+          MEMORY_POISONING: "MEMORY_POISONING",
         };
         const riskType = familyToRiskType[semantic.family] ?? "PROMPT_INJECTION";
         findings.push({

@@ -3,6 +3,7 @@ import { authenticateApiKeyRequest } from "@/lib/apiKeyMiddleware";
 import { DEFAULT_RPM } from "@/lib/guard/constants";
 import { runInputGuard } from "@/lib/guard/inputGuard";
 import { augmentWithMl } from "@/lib/guard/mlAugment";
+import { augmentWithLlmJudge } from "@/lib/guard/llmJudge";
 import { applyCrescendoAssessment, trackCrescendo } from "@/lib/guard/crescendo";
 import {
   applyAttackerReputation,
@@ -192,7 +193,11 @@ export async function POST(request: Request) {
       }
     }
 
-    const baseline = await augmentWithMl(runInputGuard(body.message), body.message, "INPUT");
+    const baseline = await augmentWithLlmJudge(
+      await augmentWithMl(runInputGuard(body.message), body.message, "INPUT"),
+      body.message,
+      "INPUT",
+    );
     let result = applyPolicy(body.message, baseline, policy, "INPUT");
     // Crescendo detection: when the caller provides a sessionId, evaluate the
     // session's rolling escalation pressure and hard-block turns that belong

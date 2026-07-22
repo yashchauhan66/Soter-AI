@@ -58,14 +58,14 @@ Ab app khulega — left me sections dikhenge: **Base, Connections, Webhooks, Mod
 
 ---
 
-## PART 4 — 4 MODULES banao
+## PART 4 — 10 MODULES banao
 
 Har module ke liye yahi pattern repeat karna hai. Left me **"Modules"** → **"Create a new module"**.
 
 Har module banate waqt:
 - **Module type:** `Action` chuno
 - **Name (key)** aur **Label** niche table se daalo
-- **Connection:** `SoterAI API Key` select karo
+- **Connection:** `SoterAI API Key` select karo (MODULE 5 ke liye bhi yahi connection select karo — API key zaroori nahi iske liye)
 - Phir module ke andar 3 tab bharne hain — har tab me corresponding block paste + Save:
   - **Communication** tab
   - **Mappable parameters** tab
@@ -77,6 +77,12 @@ Har module banate waqt:
 | 2 | `outputGuard` | Check AI Output for Threats | MODULE 2 ke teen blocks |
 | 3 | `piiRedactor` | Redact PII from Text | MODULE 3 ke teen blocks |
 | 4 | `ragScanner` | Scan RAG Document | MODULE 4 ke teen blocks |
+| 5 | `analyzeText` | Analyze Text for Threats | MODULE 5 ke teen blocks |
+| 6 | `streamingGuard` | Streaming Guard | MODULE 6 ke teen blocks |
+| 7 | `startAgentSession` | Start Agent Session | MODULE 7 ke teen blocks |
+| 8 | `agentActionCheck` | Check Agent Action | MODULE 8 ke teen blocks |
+| 9 | `agentDataCheck` | Check Agent Data Access | MODULE 9 ke teen blocks |
+| 10 | `agentOutputCheck` | Check Agent Output | MODULE 10 ke teen blocks |
 
 > Tip: ek module pura ho jaye to test kar lo (PART 5), phir agla banao. Ek-ek karke karna safe rehta hai.
 
@@ -86,7 +92,7 @@ Har module banate waqt:
 3. **Communication** tab → MODULE 1 ka Communication block paste → Save.
 4. **Mappable parameters** tab → MODULE 1 ka Mappable parameters block paste → Save.
 5. **Interface** tab → MODULE 1 ka Interface block paste → Save.
-6. Ho gaya. Baaki 3 modules bhi exactly aise hi.
+6. Ho gaya. Baaki 9 modules bhi exactly aise hi.
 
 ---
 
@@ -104,6 +110,12 @@ Sabse seedha tareeka — ek test scenario:
 Baaki modules ek-ek karke aise hi test kar lo:
 - **Redact PII:** `My email is test@example.com` → `safeText` me email redacted.
 - **Scan RAG Document:** koi clean text + koi `documentId` (e.g. `doc-1`) → `trustScore` aata hai.
+- **Analyze Text:** `hello` + direction `INPUT` → `allowed: true` (bina API key ke bhi test kar sakte ho)
+- **Streaming Guard:** `content: test` + direction `INPUT` → `chunks` array with results
+- **Start Agent Session:** `agentName: my-agent` + `agentType: CHATBOT` → `sessionId` milta hai
+- **Check Agent Action:** `tool: email.send` + `action: send_message` → `decision` aata hai
+- **Check Agent Data:** koi text + `source: file` → data leak check hota hai
+- **Check Agent Output:** koi AI response text → `decision` aata hai
 
 Agar kisi step pe error aaye → exact error message mujhe bhejo, main fix kar dunga.
 
@@ -119,7 +131,7 @@ Jab sab modules test ho jayein:
    - Short + long description
    - Privacy: `https://soterai.in/privacy`
    - Terms: `https://soterai.in/terms`
-   - Support email: `support@soterai.dev`
+   - Support email: `support@soterai.in`
 4. Make team review karegi (~2-4 hafte). Feedback aaye to thik karke resubmit.
 
 Review pass hone ke baad SoterAI Make marketplace me dikhega → real users milne shuru. 🎉

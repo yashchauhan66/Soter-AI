@@ -42,6 +42,7 @@ export async function runBenchmarkCases(cases: BenchmarkCase[], classify: (text:
 
 export function calculateBenchmarkMetrics(results: Array<{ expectedLabel: string; predictedLabel: string; latencyMs: number; correct: boolean }>) {
   const positives = results.filter((result) => result.expectedLabel !== "SAFE");
+  const negatives = results.filter((result) => result.expectedLabel === "SAFE");
   const predictedPositive = results.filter((result) => result.predictedLabel !== "SAFE");
   const truePositive = results.filter((result) => result.expectedLabel !== "SAFE" && result.predictedLabel !== "SAFE").length;
   const falsePositive = results.filter((result) => result.expectedLabel === "SAFE" && result.predictedLabel !== "SAFE").length;
@@ -55,8 +56,8 @@ export function calculateBenchmarkMetrics(results: Array<{ expectedLabel: string
     precision,
     recall,
     f1,
-    falsePositiveRate: results.length ? falsePositive / results.length : 0,
-    falseNegativeRate: results.length ? falseNegative / results.length : 0,
+    falsePositiveRate: negatives.length ? falsePositive / negatives.length : 0,
+    falseNegativeRate: positives.length ? falseNegative / positives.length : 0,
     latency: {
       p50: percentile(latencies, 0.5),
       p95: percentile(latencies, 0.95),

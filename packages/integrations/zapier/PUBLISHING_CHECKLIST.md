@@ -37,7 +37,7 @@ zapier migrate <old_version> <new_version> --percent 100
 | App Category | Security | [ ] |
 | Privacy Policy URL | https://soterai.in/privacy | [ ] |
 | Terms of Service URL | https://soterai.in/terms | [ ] |
-| Support Email | support@soterai.dev | [ ] |
+| Support Email | support@soterai.in | [ ] |
 | Demo Video | 2-5 min walkthrough of a working Zap | [ ] |
 | App Description | Submitted in Zapier partner dashboard | [ ] |
 

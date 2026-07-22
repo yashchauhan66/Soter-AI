@@ -1,11 +1,11 @@
 {
   "name": "n8n-nodes-soterai",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "SoterAI helps protect n8n AI workflows by detecting prompt injection, jailbreaks, secrets, PII, and unsafe AI instructions.",
   "license": "MIT",
   "author": {
     "name": "SoterAI",
-    "email": "yashchauhan125dpr@gmail.com",
+    "email": "support@soterai.in",
     "url": "https://soterai.in"
   },
   "homepage": "https://github.com/yashchauhan66/Soter-AI/tree/main/packages/integrations/n8n",
@@ -33,22 +33,22 @@
       "dist/credentials/SoterApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/SoterGuard.node.js"
+      "dist/nodes/SoterGuard/SoterGuard.node.js"
     ]
   },
-  "main": "dist/nodes/SoterGuard.node.js",
+  "main": "dist/nodes/SoterGuard/SoterGuard.node.js",
   "files": [
     "dist",
-    "nodes/*.png",
     "examples",
     "README.md",
     "LICENSE",
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "tsc && copyfiles \"nodes/*.png\" dist",
+    "build": "tsc && copyfiles \"nodes/**/*.svg\" \"credentials/**/*.svg\" dist",
     "dev": "tsc --watch",
-    "lint": "tsc --noEmit",
+    "lint": "npx @n8n/node-cli@latest lint",
+    "typecheck": "tsc --noEmit",
     "validate": "node scripts/validate-package.cjs",
     "test": "node scripts/validate-package.cjs",
     "prepublishOnly": "npm run build"

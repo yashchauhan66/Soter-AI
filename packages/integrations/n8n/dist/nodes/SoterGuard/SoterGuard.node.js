@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SoterGuard = void 0;
 const n8n_workflow_1 = require("n8n-workflow");
-const PACKAGE_VERSION = "0.3.0";
+const PACKAGE_VERSION = "0.3.1";
 const USER_AGENT = `n8n-nodes-soterai/${PACKAGE_VERSION}`;
 const MAX_SANITIZE_DEPTH = 8;
 const MAX_METADATA_STRING_LENGTH = 500;
@@ -11,7 +11,7 @@ class SoterGuard {
         this.description = {
             displayName: "SoterAI",
             name: "soterGuard",
-            icon: "file:soterai.png",
+            icon: { light: "file:soterai.svg", dark: "file:soterai.dark.svg" },
             group: ["transform"],
             version: 1,
             subtitle: '={{$parameter["action"]}}',
@@ -19,8 +19,9 @@ class SoterGuard {
             defaults: {
                 name: "SoterAI",
             },
-            inputs: ["main"],
-            outputs: ["main"],
+            usableAsTool: true,
+            inputs: [n8n_workflow_1.NodeConnectionTypes.Main],
+            outputs: [n8n_workflow_1.NodeConnectionTypes.Main],
             credentials: [
                 {
                     name: "soterApi",
@@ -35,10 +36,22 @@ class SoterGuard {
                     noDataExpression: true,
                     options: [
                         {
-                            name: "Universal AI Firewall (Best Protection)",
-                            value: "universalGuard",
-                            description: "One drop-in guard for prompts, RAG context, tools, memory, output, PII, and data leakage",
-                            action: "Protect an AI workflow end to end",
+                            name: "Analyze Text",
+                            value: "analyzeText",
+                            description: "Analyze text and return a risk summary without local blocking",
+                            action: "Analyze text for AI security risks",
+                        },
+                        {
+                            name: "Audit N8N Workflow Security",
+                            value: "workflowAudit",
+                            description: "Score an exported n8n workflow for AI, tool, webhook, code, RAG, and data-leak risks",
+                            action: "Audit an n8n workflow for AI security risks",
+                        },
+                        {
+                            name: "Get RAG Risk Summary",
+                            value: "ragScanner",
+                            description: "Scan documents/chunks before adding to RAG/vector DB",
+                            action: "Scan RAG document for threats",
                         },
                         {
                             name: "Guard Input",
@@ -59,22 +72,10 @@ class SoterGuard {
                             action: "Redact PII from text",
                         },
                         {
-                            name: "Get RAG Risk Summary",
-                            value: "ragScanner",
-                            description: "Scan documents/chunks before adding to RAG/vector DB",
-                            action: "Scan RAG document for threats",
-                        },
-                        {
-                            name: "Audit n8n Workflow Security",
-                            value: "workflowAudit",
-                            description: "Score an exported n8n workflow for AI, tool, webhook, code, RAG, and data-leak risks",
-                            action: "Audit an n8n workflow for AI security risks",
-                        },
-                        {
-                            name: "Analyze Text",
-                            value: "analyzeText",
-                            description: "Analyze text and return a risk summary without local blocking",
-                            action: "Analyze text for AI security risks",
+                            name: "Universal AI Firewall (Best Protection)",
+                            value: "universalGuard",
+                            description: "One drop-in guard for prompts, RAG context, tools, memory, output, PII, and data leakage",
+                            action: "Protect an AI workflow end to end",
                         },
                     ],
                     default: "universalGuard",
@@ -125,6 +126,11 @@ class SoterGuard {
                     type: "options",
                     options: [
                         {
+                            name: "Balanced",
+                            value: "BALANCED",
+                            description: "Lower-friction protection for internal workflows and testing",
+                        },
+                        {
                             name: "Maximum Protection",
                             value: "MAXIMUM",
                             description: "Strict fail-closed protection for production AI agents and public chatbots",
@@ -133,11 +139,6 @@ class SoterGuard {
                             name: "Strict",
                             value: "STRICT",
                             description: "Block critical threats and require review for high-risk behavior",
-                        },
-                        {
-                            name: "Balanced",
-                            value: "BALANCED",
-                            description: "Lower-friction protection for internal workflows and testing",
                         },
                     ],
                     default: "MAXIMUM",
@@ -183,8 +184,8 @@ class SoterGuard {
                         { name: "API", value: "api" },
                         { name: "Email", value: "email" },
                         { name: "File Upload", value: "upload" },
-                        { name: "URL", value: "url" },
                         { name: "Unknown", value: "unknown" },
+                        { name: "URL", value: "url" },
                     ],
                     default: "api",
                     displayOptions: { show: { action: ["ragScanner"] } },
@@ -214,9 +215,9 @@ class SoterGuard {
                     type: "options",
                     options: [
                         { name: "Block", value: "BLOCK", description: "Stop the workflow item" },
+                        { name: "Continue", value: "CONTINUE", description: "Ignore the threat and continue" },
                         { name: "Redact", value: "REDACT", description: "Continue with redacted safe text" },
                         { name: "Warn", value: "WARN", description: "Continue but flag the threat in output" },
-                        { name: "Continue", value: "CONTINUE", description: "Ignore the threat and continue" },
                     ],
                     default: "BLOCK",
                     displayOptions: { show: { action: ["inputGuard", "outputGuard", "universalGuard"] } },
@@ -236,21 +237,22 @@ class SoterGuard {
     async execute() {
         const items = this.getInputData();
         const returnData = [];
+        const node = this.getNode();
         const credentials = await this.getCredentials("soterApi");
         const apiKey = credentials.apiKey;
-        const baseUrl = validateBaseUrl(credentials.baseUrl || "https://soterai.in");
+        const baseUrl = validateBaseUrl(node, credentials.baseUrl || "https://soterai.in");
         const credentialProjectId = credentials.projectId || undefined;
         for (let i = 0; i < items.length; i++) {
             try {
                 const action = this.getNodeParameter("action", i);
                 const projectId = this.getNodeParameter("projectId", i, "") || credentialProjectId;
                 const metadataRaw = this.getNodeParameter("metadata", i, "");
-                const metadata = metadataRaw ? parseMetadata(metadataRaw) : undefined;
+                const metadata = metadataRaw ? parseMetadata(node, metadataRaw) : undefined;
                 let result;
                 switch (action) {
                     case "analyzeText": {
                         const text = this.getNodeParameter("inputText", i);
-                        result = await executeInputGuard(apiKey, baseUrl, {
+                        result = await executeInputGuard(this, apiKey, baseUrl, {
                             text, projectId, onThreat: "WARN", metadata,
                         });
                         result.operation = "analyzeText";
@@ -260,7 +262,7 @@ class SoterGuard {
                     case "inputGuard": {
                         const text = this.getNodeParameter("inputText", i);
                         const onThreat = this.getNodeParameter("onThreat", i);
-                        result = await executeInputGuard(apiKey, baseUrl, {
+                        result = await executeInputGuard(this, apiKey, baseUrl, {
                             text, projectId, onThreat, metadata,
                         });
                         result.operation = "inputGuard";
@@ -271,8 +273,8 @@ class SoterGuard {
                         const onThreat = this.getNodeParameter("onThreat", i);
                         const profile = this.getNodeParameter("protectionProfile", i);
                         const aiOutputText = this.getNodeParameter("universalOutputText", i, "");
-                        const securityContext = parseSecurityContext(this.getNodeParameter("securityContextJson", i, ""));
-                        result = await executeUniversalGuard(apiKey, baseUrl, {
+                        const securityContext = parseSecurityContext(node, this.getNodeParameter("securityContextJson", i, ""));
+                        result = await executeUniversalGuard(this, apiKey, baseUrl, {
                             text,
                             projectId,
                             onThreat,
@@ -294,7 +296,7 @@ class SoterGuard {
                     case "outputGuard": {
                         const text = this.getNodeParameter("outputText", i);
                         const onThreat = this.getNodeParameter("onThreat", i);
-                        result = await executeOutputGuard(apiKey, baseUrl, {
+                        result = await executeOutputGuard(this, apiKey, baseUrl, {
                             text, projectId, onThreat, metadata,
                         });
                         result.operation = "outputGuard";
@@ -302,7 +304,7 @@ class SoterGuard {
                     }
                     case "piiRedactor": {
                         const text = this.getNodeParameter("piiText", i);
-                        result = await executePiiRedactor(apiKey, baseUrl, {
+                        result = await executePiiRedactor(this, apiKey, baseUrl, {
                             text, projectId, metadata,
                         });
                         result.operation = "piiRedactor";
@@ -312,7 +314,7 @@ class SoterGuard {
                         const text = this.getNodeParameter("ragText", i);
                         const documentId = this.getNodeParameter("documentId", i);
                         const source = this.getNodeParameter("documentSource", i);
-                        result = await executeRagScanner(apiKey, baseUrl, {
+                        result = await executeRagScanner(this, apiKey, baseUrl, {
                             text, projectId, documentId, source, metadata,
                         });
                         result.operation = "ragScanner";
@@ -320,13 +322,13 @@ class SoterGuard {
                     }
                     case "workflowAudit": {
                         const workflowJson = this.getNodeParameter("workflowJson", i);
-                        result = executeWorkflowAudit(workflowJson);
+                        result = executeWorkflowAudit(node, workflowJson);
                         break;
                     }
                     default:
-                        throw new n8n_workflow_1.NodeOperationError(this.getNode(), `Unknown action: ${action}`, { itemIndex: i });
+                        throw new n8n_workflow_1.NodeOperationError(node, `Unknown action: ${action}`, { itemIndex: i });
                 }
-                returnData.push({ json: result });
+                returnData.push({ json: result, pairedItem: { item: i } });
             }
             catch (error) {
                 if (this.continueOnFail()) {
@@ -335,63 +337,60 @@ class SoterGuard {
                             error: true,
                             message: sanitizeErrorMessage(error instanceof Error ? error.message : "SoterAI request failed."),
                         },
+                        pairedItem: { item: i },
                     });
                     continue;
                 }
-                if (error instanceof n8n_workflow_1.NodeOperationError || error instanceof n8n_workflow_1.NodeApiError) {
+                if (error instanceof n8n_workflow_1.NodeApiError || error instanceof n8n_workflow_1.NodeOperationError) {
                     throw error;
                 }
-                throw new n8n_workflow_1.NodeApiError(this.getNode(), error, { itemIndex: i });
+                throw new n8n_workflow_1.NodeOperationError(node, error, { itemIndex: i });
             }
         }
         return [returnData];
     }
 }
 exports.SoterGuard = SoterGuard;
-async function soterPost(apiKey, baseUrl, path, body) {
+async function soterPost(ctx, apiKey, baseUrl, path, body) {
     const url = `${baseUrl.replace(/\/$/, "")}${path}`;
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 20000);
     let response;
     try {
-        response = await fetch(url, {
+        response = await ctx.helpers.httpRequest({
             method: "POST",
+            url,
             headers: {
                 "Content-Type": "application/json",
                 "x-api-key": apiKey,
                 "User-Agent": USER_AGENT,
             },
-            body: JSON.stringify(body),
-            signal: controller.signal,
+            body: body,
+            json: true,
+            timeout: 20000,
+            returnFullResponse: true,
+            ignoreHttpStatusErrors: true,
         });
     }
     catch (error) {
-        if (error instanceof Error && error.name === "AbortError") {
-            throw new Error("SoterAI API request timed out after 20 seconds.");
-        }
-        throw new Error("SoterAI API request failed. Check the Base URL and network access.");
+        throw new n8n_workflow_1.NodeApiError(ctx.getNode(), error, {
+            message: "SoterAI API request failed. Check the Base URL and network access.",
+        });
     }
-    finally {
-        clearTimeout(timeout);
-    }
-    let data = {};
-    try {
-        data = await response.json();
-    }
-    catch {
-        data = {};
-    }
-    if (!response.ok) {
-        throw new Error(formatApiError(response.status, data));
+    const statusCode = typeof response.statusCode === "number" ? response.statusCode : 0;
+    const data = (response.body && typeof response.body === "object" ? response.body : {});
+    if (statusCode < 200 || statusCode >= 300) {
+        throw new n8n_workflow_1.NodeApiError(ctx.getNode(), data, {
+            message: formatApiError(statusCode, data),
+            httpCode: String(statusCode),
+        });
     }
     return data;
 }
-async function executeInputGuard(apiKey, baseUrl, params) {
-    validateText(params.text, "Input Text");
+async function executeInputGuard(ctx, apiKey, baseUrl, params) {
+    validateText(ctx.getNode(), params.text, "Input Text");
     const meta = { ...params.metadata };
     if (params.projectId)
         meta.projectId = params.projectId;
-    const raw = await soterPost(apiKey, baseUrl, "/api/guard/input", {
+    const raw = await soterPost(ctx, apiKey, baseUrl, "/api/guard/input", {
         message: params.text,
         metadata: meta,
     });
@@ -448,12 +447,12 @@ async function executeInputGuard(apiKey, baseUrl, params) {
     }
     return result;
 }
-async function executeOutputGuard(apiKey, baseUrl, params) {
-    validateText(params.text, "AI Output Text");
+async function executeOutputGuard(ctx, apiKey, baseUrl, params) {
+    validateText(ctx.getNode(), params.text, "AI Output Text");
     const meta = { ...params.metadata };
     if (params.projectId)
         meta.projectId = params.projectId;
-    const raw = await soterPost(apiKey, baseUrl, "/api/guard/output", {
+    const raw = await soterPost(ctx, apiKey, baseUrl, "/api/guard/output", {
         aiResponse: params.text,
         metadata: meta,
     });
@@ -510,8 +509,8 @@ async function executeOutputGuard(apiKey, baseUrl, params) {
     }
     return result;
 }
-async function executeUniversalGuard(apiKey, baseUrl, params) {
-    validateText(params.text, "Input Text");
+async function executeUniversalGuard(ctx, apiKey, baseUrl, params) {
+    validateText(ctx.getNode(), params.text, "Input Text");
     const meta = {
         ...params.metadata,
         soteraiNodeMode: "universalGuard",
@@ -520,7 +519,7 @@ async function executeUniversalGuard(apiKey, baseUrl, params) {
     if (params.projectId)
         meta.projectId = params.projectId;
     const checks = [];
-    const input = await executeInputGuard(apiKey, baseUrl, {
+    const input = await executeInputGuard(ctx, apiKey, baseUrl, {
         text: params.text,
         projectId: params.projectId,
         onThreat: "WARN",
@@ -529,7 +528,7 @@ async function executeUniversalGuard(apiKey, baseUrl, params) {
     checks.push({ layer: "input", ...input });
     if (params.ragText?.trim()) {
         const documentId = params.ragDocumentId?.trim() || `n8n-${Date.now()}`;
-        const rag = await executeRagScanner(apiKey, baseUrl, {
+        const rag = await executeRagScanner(ctx, apiKey, baseUrl, {
             text: params.ragText,
             projectId: params.projectId,
             documentId,
@@ -540,10 +539,10 @@ async function executeUniversalGuard(apiKey, baseUrl, params) {
     }
     if (params.tool) {
         if (!params.tool.name.trim())
-            throw new Error("Tool Name is required when Check Tool Call is enabled.");
+            throw new n8n_workflow_1.NodeOperationError(ctx.getNode(), "Tool Name is required when Check Tool Call is enabled.");
         if (!params.tool.action.trim())
-            throw new Error("Tool Action is required when Check Tool Call is enabled.");
-        const tool = await soterPost(apiKey, baseUrl, "/api/agent/tool/check", {
+            throw new n8n_workflow_1.NodeOperationError(ctx.getNode(), "Tool Action is required when Check Tool Call is enabled.");
+        const tool = await soterPost(ctx, apiKey, baseUrl, "/api/agent/tool/check", {
             sessionId: typeof meta.sessionId === "string" ? meta.sessionId : undefined,
             agentName: typeof meta.agentName === "string" ? meta.agentName : "n8n-agent",
             tool: params.tool.name,
@@ -557,7 +556,7 @@ async function executeUniversalGuard(apiKey, baseUrl, params) {
         checks.push({ layer: "tool", ...tool });
     }
     if (params.memory) {
-        const memory = await soterPost(apiKey, baseUrl, "/api/agent/memory/check", {
+        const memory = await soterPost(ctx, apiKey, baseUrl, "/api/agent/memory/check", {
             sessionId: typeof meta.sessionId === "string" ? meta.sessionId : undefined,
             memoryAction: params.memory.action,
             content: params.memory.content || params.text,
@@ -567,7 +566,7 @@ async function executeUniversalGuard(apiKey, baseUrl, params) {
     }
     let outputText = params.aiOutputText?.trim() ? params.aiOutputText : input.outputText || params.text;
     if (params.aiOutputText?.trim()) {
-        const output = await executeOutputGuard(apiKey, baseUrl, {
+        const output = await executeOutputGuard(ctx, apiKey, baseUrl, {
             text: params.aiOutputText,
             projectId: params.projectId,
             onThreat: "WARN",
@@ -575,7 +574,7 @@ async function executeUniversalGuard(apiKey, baseUrl, params) {
         });
         outputText = output.outputText || params.aiOutputText;
         checks.push({ layer: "output", ...output });
-        const egress = await soterPost(apiKey, baseUrl, "/api/semantic-egress/check", {
+        const egress = await soterPost(ctx, apiKey, baseUrl, "/api/semantic-egress/check", {
             sessionId: typeof meta.sessionId === "string" ? meta.sessionId : undefined,
             content: params.aiOutputText,
             destinationType: params.outputDestinationType || "FINAL_OUTPUT",
@@ -625,12 +624,12 @@ async function executeUniversalGuard(apiKey, baseUrl, params) {
         checks,
     };
 }
-async function executePiiRedactor(apiKey, baseUrl, params) {
-    validateText(params.text, "Text");
+async function executePiiRedactor(ctx, apiKey, baseUrl, params) {
+    validateText(ctx.getNode(), params.text, "Text");
     const meta = { ...params.metadata };
     if (params.projectId)
         meta.projectId = params.projectId;
-    const raw = await soterPost(apiKey, baseUrl, "/api/guard/input", {
+    const raw = await soterPost(ctx, apiKey, baseUrl, "/api/guard/input", {
         message: params.text,
         metadata: meta,
     });
@@ -649,12 +648,12 @@ async function executePiiRedactor(apiKey, baseUrl, params) {
         rawResponse: sanitizeOutputObject(raw),
     };
 }
-async function executeRagScanner(apiKey, baseUrl, params) {
-    validateText(params.text, "Document Text");
+async function executeRagScanner(ctx, apiKey, baseUrl, params) {
+    validateText(ctx.getNode(), params.text, "Document Text");
     if (!params.documentId.trim()) {
-        throw new Error("Document ID is required for RAG risk summary.");
+        throw new n8n_workflow_1.NodeOperationError(ctx.getNode(), "Document ID is required for RAG risk summary.");
     }
-    const raw = await soterPost(apiKey, baseUrl, "/api/rag/document/trust-score", {
+    const raw = await soterPost(ctx, apiKey, baseUrl, "/api/rag/document/trust-score", {
         projectId: params.projectId,
         documentId: params.documentId,
         content: params.text,
@@ -669,48 +668,50 @@ async function executeRagScanner(apiKey, baseUrl, params) {
         rawResponse: sanitizeOutputObject(raw),
     };
 }
-function parseMetadata(raw) {
+function parseMetadata(node, raw) {
     if (!raw.trim())
         return undefined;
+    let parsed;
     try {
-        const parsed = JSON.parse(raw);
-        if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
-            return sanitizeRequestMetadata(parsed);
-        }
+        parsed = JSON.parse(raw);
     }
     catch {
-        throw new Error("Metadata JSON must be a valid JSON object.");
+        throw new n8n_workflow_1.NodeOperationError(node, "Metadata JSON must be a valid JSON object.");
     }
-    throw new Error("Metadata JSON must be a valid JSON object.");
+    if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+        return sanitizeRequestMetadata(parsed);
+    }
+    throw new n8n_workflow_1.NodeOperationError(node, "Metadata JSON must be a valid JSON object.");
 }
-function parseOptionalJsonObject(raw, fieldName) {
+function parseOptionalJsonObject(node, raw, fieldName) {
     if (!raw.trim())
         return undefined;
+    let parsed;
     try {
-        const parsed = JSON.parse(raw);
-        if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
-            return parsed;
-        }
+        parsed = JSON.parse(raw);
     }
     catch {
-        throw new Error(`${fieldName} must be a valid JSON object.`);
+        throw new n8n_workflow_1.NodeOperationError(node, `${fieldName} must be a valid JSON object.`);
     }
-    throw new Error(`${fieldName} must be a valid JSON object.`);
+    if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
+        return parsed;
+    }
+    throw new n8n_workflow_1.NodeOperationError(node, `${fieldName} must be a valid JSON object.`);
 }
-function validateBaseUrl(raw) {
+function validateBaseUrl(node, raw) {
     let parsed;
     try {
         parsed = new URL(raw);
     }
     catch {
-        throw new Error("SoterAI Base URL must be a valid URL.");
+        throw new n8n_workflow_1.NodeOperationError(node, "SoterAI Base URL must be a valid URL.");
     }
     if (parsed.username || parsed.password || parsed.search || parsed.hash) {
-        throw new Error("SoterAI Base URL must not include credentials, query parameters, or fragments.");
+        throw new n8n_workflow_1.NodeOperationError(node, "SoterAI Base URL must not include credentials, query parameters, or fragments.");
     }
     const isLocalDevHost = ["localhost", "127.0.0.1", "::1"].includes(parsed.hostname);
     if (parsed.protocol !== "https:" && !(parsed.protocol === "http:" && isLocalDevHost)) {
-        throw new Error("SoterAI Base URL must use HTTPS, except http://localhost for local development.");
+        throw new n8n_workflow_1.NodeOperationError(node, "SoterAI Base URL must use HTTPS, except http://localhost for local development.");
     }
     parsed.pathname = parsed.pathname.replace(/\/+$/, "");
     return parsed.toString().replace(/\/$/, "");
@@ -740,23 +741,10 @@ function sanitizeMetadataValue(value, depth, key) {
     }
     return value;
 }
-function parseOptionalJsonArray(raw, fieldName) {
-    if (!raw.trim())
-        return undefined;
-    try {
-        const parsed = JSON.parse(raw);
-        if (Array.isArray(parsed))
-            return parsed;
-    }
-    catch {
-        throw new Error(`${fieldName} must be a valid JSON array.`);
-    }
-    throw new Error(`${fieldName} must be a valid JSON array.`);
-}
-function parseSecurityContext(raw) {
+function parseSecurityContext(node, raw) {
     if (!raw.trim())
         return {};
-    const parsed = parseOptionalJsonObject(raw, "Security Context JSON") ?? {};
+    const parsed = parseOptionalJsonObject(node, raw, "Security Context JSON") ?? {};
     const context = {};
     if (isRecord(parsed.rag)) {
         context.rag = {
@@ -769,7 +757,7 @@ function parseSecurityContext(raw) {
         const name = stringValue(parsed.tool.name);
         const action = stringValue(parsed.tool.action);
         if (!name || !action) {
-            throw new Error("Security Context JSON tool requires name and action.");
+            throw new n8n_workflow_1.NodeOperationError(node, "Security Context JSON tool requires name and action.");
         }
         context.tool = {
             name,
@@ -1029,51 +1017,51 @@ function buildDeveloperMessage(input) {
     }
     return `SoterAI flagged this ${input.direction}. Risk score: ${score}. Categories: ${categories}. Reason: ${input.reason || "No reason returned."}`;
 }
-function executeWorkflowAudit(workflowJson) {
-    validateText(workflowJson, "Workflow JSON");
-    const workflow = parseWorkflowJson(workflowJson);
+function executeWorkflowAudit(node, workflowJson) {
+    validateText(node, workflowJson, "Workflow JSON");
+    const workflow = parseWorkflowJson(node, workflowJson);
     const nodes = Array.isArray(workflow.nodes) ? workflow.nodes.filter(isWorkflowNode) : [];
     const connections = workflow.connections && typeof workflow.connections === "object" ? workflow.connections : {};
     const findings = [];
     if (nodes.length === 0) {
         findings.push(auditFinding("workflow.empty", "HIGH", "No workflow nodes were found.", "Export the full n8n workflow JSON and scan it before production use.", "LLM03:2025 Supply Chain"));
     }
-    const hasSoterNode = nodes.some((node) => node.type === "n8n-nodes-soterai.soterGuard");
-    const hasUniversalGuard = nodes.some((node) => node.type === "n8n-nodes-soterai.soterGuard" && getParam(node, "action") === "universalGuard");
-    const hasAiAgent = nodes.some((node) => /langchain\.agent|ai.?agent/i.test(`${node.type} ${node.name}`));
-    const hasToolLikeNode = nodes.some((node) => isToolLikeNode(node));
-    const hasWebhook = nodes.some((node) => /webhook|formTrigger/i.test(node.type));
-    const hasRespond = nodes.some((node) => /respondToWebhook|webhook/i.test(node.type));
-    const hasRagOrVector = nodes.some((node) => /vector|pinecone|qdrant|weaviate|supabase|retriever|document|embedding|splitter/i.test(`${node.type} ${node.name}`));
-    const hasMemory = nodes.some((node) => /memory|chatMemory|windowBuffer/i.test(`${node.type} ${node.name}`));
+    const hasSoterNode = nodes.some((wfNode) => wfNode.type === "n8n-nodes-soterai.soterGuard");
+    const hasUniversalGuard = nodes.some((wfNode) => wfNode.type === "n8n-nodes-soterai.soterGuard" && getParam(wfNode, "action") === "universalGuard");
+    const hasAiAgent = nodes.some((wfNode) => /langchain\.agent|ai.?agent/i.test(`${wfNode.type} ${wfNode.name}`));
+    const hasToolLikeNode = nodes.some((wfNode) => isToolLikeNode(wfNode));
+    const hasWebhook = nodes.some((wfNode) => /webhook|formTrigger/i.test(wfNode.type));
+    const hasRespond = nodes.some((wfNode) => /respondToWebhook|webhook/i.test(wfNode.type));
+    const hasRagOrVector = nodes.some((wfNode) => /vector|pinecone|qdrant|weaviate|supabase|retriever|document|embedding|splitter/i.test(`${wfNode.type} ${wfNode.name}`));
+    const hasMemory = nodes.some((wfNode) => /memory|chatMemory|windowBuffer/i.test(`${wfNode.type} ${wfNode.name}`));
     if ((hasAiAgent || hasToolLikeNode || hasRagOrVector) && !hasUniversalGuard) {
         findings.push(auditFinding("soterai.universal_guard_missing", "CRITICAL", "AI, tool, or RAG workflow does not use SoterAI Universal AI Firewall.", "Place Universal AI Firewall before the LLM/AI Agent and again before external output or tool execution.", "LLM01:2025 Prompt Injection"));
     }
     else if (!hasSoterNode) {
         findings.push(auditFinding("soterai.guard_missing", "HIGH", "No SoterAI guard node was found in this workflow.", "Add SoterAI Universal AI Firewall or a focused SoterAI guard before risky AI steps.", "LLM05:2025 Improper Output Handling"));
     }
-    for (const node of nodes) {
-        const searchable = `${node.name} ${node.type} ${JSON.stringify(node.parameters ?? {})}`;
-        if (/code|function|python/i.test(node.type)) {
-            findings.push(auditFinding("n8n.code_node", "HIGH", `Code execution node detected: ${node.name}.`, "Avoid executing LLM-generated content in Code nodes. Gate any AI-generated code or parameters through Universal AI Firewall and use least-privilege credentials.", "LLM05:2025 Improper Output Handling", node.name));
+    for (const wfNode of nodes) {
+        const searchable = `${wfNode.name} ${wfNode.type} ${JSON.stringify(wfNode.parameters ?? {})}`;
+        if (/code|function|python/i.test(wfNode.type)) {
+            findings.push(auditFinding("n8n.code_node", "HIGH", `Code execution node detected: ${wfNode.name}.`, "Avoid executing LLM-generated content in Code nodes. Gate any AI-generated code or parameters through Universal AI Firewall and use least-privilege credentials.", "LLM05:2025 Improper Output Handling", wfNode.name));
         }
-        if (/httpRequest/i.test(node.type) || /webhook|http|https:\/\//i.test(searchable)) {
-            findings.push(auditFinding("n8n.external_http", hasAiAgent ? "HIGH" : "MEDIUM", `External HTTP or webhook behavior detected near ${node.name}.`, "Check destination allowlists and scan AI-generated payloads with Universal AI Firewall before any external request.", "LLM02:2025 Sensitive Information Disclosure", node.name));
+        if (/httpRequest/i.test(wfNode.type) || /webhook|http|https:\/\//i.test(searchable)) {
+            findings.push(auditFinding("n8n.external_http", hasAiAgent ? "HIGH" : "MEDIUM", `External HTTP or webhook behavior detected near ${wfNode.name}.`, "Check destination allowlists and scan AI-generated payloads with Universal AI Firewall before any external request.", "LLM02:2025 Sensitive Information Disclosure", wfNode.name));
         }
         if (/credential|api[_ -]?key|token|secret|password|bearer/i.test(searchable)) {
-            findings.push(auditFinding("workflow.secret_reference", "CRITICAL", `Credential-like text appears in node parameters for ${node.name}.`, "Keep secrets in n8n credentials only. Do not store tokens, passwords, or API keys in workflow JSON or prompts.", "LLM02:2025 Sensitive Information Disclosure", node.name));
+            findings.push(auditFinding("workflow.secret_reference", "CRITICAL", `Credential-like text appears in node parameters for ${wfNode.name}.`, "Keep secrets in n8n credentials only. Do not store tokens, passwords, or API keys in workflow JSON or prompts.", "LLM02:2025 Sensitive Information Disclosure", wfNode.name));
         }
-        if (/langchain\.agent|ai.?agent/i.test(`${node.type} ${node.name}`) && !hasUniversalGuard) {
-            findings.push(auditFinding("ai_agent.unprotected", "CRITICAL", `AI Agent node appears unprotected: ${node.name}.`, "Gate user input, retrieved context, tool calls, memory writes, and final output with Universal AI Firewall.", "LLM06:2025 Excessive Agency", node.name));
+        if (/langchain\.agent|ai.?agent/i.test(`${wfNode.type} ${wfNode.name}`) && !hasUniversalGuard) {
+            findings.push(auditFinding("ai_agent.unprotected", "CRITICAL", `AI Agent node appears unprotected: ${wfNode.name}.`, "Gate user input, retrieved context, tool calls, memory writes, and final output with Universal AI Firewall.", "LLM06:2025 Excessive Agency", wfNode.name));
         }
-        if (/memory|chatMemory|windowBuffer/i.test(`${node.type} ${node.name}`) && !hasUniversalGuard) {
-            findings.push(auditFinding("agent.memory_unprotected", "HIGH", `Agent memory is present without Universal AI Firewall: ${node.name}.`, "Scan memory writes for poisoning, secrets, and PII before storage.", "LLM04:2025 Data and Model Poisoning", node.name));
+        if (/memory|chatMemory|windowBuffer/i.test(`${wfNode.type} ${wfNode.name}`) && !hasUniversalGuard) {
+            findings.push(auditFinding("agent.memory_unprotected", "HIGH", `Agent memory is present without Universal AI Firewall: ${wfNode.name}.`, "Scan memory writes for poisoning, secrets, and PII before storage.", "LLM04:2025 Data and Model Poisoning", wfNode.name));
         }
-        if (/vector|pinecone|qdrant|weaviate|supabase|retriever|document|embedding|splitter/i.test(`${node.type} ${node.name}`) && !hasUniversalGuard) {
-            findings.push(auditFinding("rag.ingestion_unprotected", "HIGH", `RAG/vector workflow component detected: ${node.name}.`, "Scan documents and chunks before indexing and before sending retrieved context to the LLM.", "LLM08:2025 Vector and Embedding Weaknesses", node.name));
+        if (/vector|pinecone|qdrant|weaviate|supabase|retriever|document|embedding|splitter/i.test(`${wfNode.type} ${wfNode.name}`) && !hasUniversalGuard) {
+            findings.push(auditFinding("rag.ingestion_unprotected", "HIGH", `RAG/vector workflow component detected: ${wfNode.name}.`, "Scan documents and chunks before indexing and before sending retrieved context to the LLM.", "LLM08:2025 Vector and Embedding Weaknesses", wfNode.name));
         }
-        if (/respondToWebhook|email|gmail|slack|telegram|discord|notion|sheets/i.test(node.type) && !hasUniversalGuard) {
-            findings.push(auditFinding("output.egress_unprotected", "HIGH", `External or user-visible output node may send unscanned AI content: ${node.name}.`, "Run AI Output Text through Universal AI Firewall with the correct Output Destination Type before this node.", "LLM05:2025 Improper Output Handling", node.name));
+        if (/respondToWebhook|email|gmail|slack|telegram|discord|notion|sheets/i.test(wfNode.type) && !hasUniversalGuard) {
+            findings.push(auditFinding("output.egress_unprotected", "HIGH", `External or user-visible output node may send unscanned AI content: ${wfNode.name}.`, "Run AI Output Text through Universal AI Firewall with the correct Output Destination Type before this node.", "LLM05:2025 Improper Output Handling", wfNode.name));
         }
     }
     if (hasWebhook && hasAiAgent && !hasUniversalGuard) {
@@ -1105,16 +1093,17 @@ function executeWorkflowAudit(workflowJson) {
         ],
     };
 }
-function parseWorkflowJson(raw) {
+function parseWorkflowJson(node, raw) {
+    let parsed;
     try {
-        const parsed = JSON.parse(raw);
-        if (parsed && typeof parsed === "object" && !Array.isArray(parsed))
-            return parsed;
+        parsed = JSON.parse(raw);
     }
     catch {
-        throw new Error("Workflow JSON must be a valid exported n8n workflow object.");
+        throw new n8n_workflow_1.NodeOperationError(node, "Workflow JSON must be a valid exported n8n workflow object.");
     }
-    throw new Error("Workflow JSON must be a valid exported n8n workflow object.");
+    if (parsed && typeof parsed === "object" && !Array.isArray(parsed))
+        return parsed;
+    throw new n8n_workflow_1.NodeOperationError(node, "Workflow JSON must be a valid exported n8n workflow object.");
 }
 function isWorkflowNode(value) {
     return Boolean(value && typeof value === "object" && typeof value.name === "string" && typeof value.type === "string");
@@ -1175,12 +1164,12 @@ function recommendedSoterAIPlacement(nodes, connections) {
         connectionCount: Object.keys(connections).length,
     };
 }
-function validateText(text, fieldName) {
+function validateText(node, text, fieldName) {
     if (!text || !text.trim()) {
-        throw new Error(`${fieldName} is required.`);
+        throw new n8n_workflow_1.NodeOperationError(node, `${fieldName} is required.`);
     }
     if (text.length > 200000) {
-        throw new Error(`${fieldName} is too large. Keep text under 200,000 characters per item.`);
+        throw new n8n_workflow_1.NodeOperationError(node, `${fieldName} is too large. Keep text under 200,000 characters per item.`);
     }
 }
 function formatApiError(status, data) {

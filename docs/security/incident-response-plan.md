@@ -63,10 +63,10 @@
 
 | Role | Contact | When |
 |---|---|---|
-| Incident Commander | engineering@soterai.in | P1/P2 incidents |
-| Security Lead | security@soterai.in | All security incidents |
-| Legal | legal@soterai.in | Data breach, regulatory |
-| Comms | comms@soterai.in | User notification |
+| Incident Commander | support@soterai.in | P1/P2 incidents |
+| Security Lead | support@soterai.in | All security incidents |
+| Legal | support@soterai.in | Data breach, regulatory |
+| Comms | support@soterai.in | User notification |
 
 ## Post-Incident
 

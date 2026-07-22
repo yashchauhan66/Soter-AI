@@ -7,6 +7,7 @@ export function decideGuardAction(riskScore: number, riskTypes: RiskType[], dire
 
   if (has("RATE_LIMIT") || has("SYSTEM_PROMPT_LEAK_ATTEMPT") || has("SYSTEM_PROMPT_LEAKAGE")) return "BLOCK";
   if (has("SSRF_ATTEMPT")) return "BLOCK";
+  if (has("MCP_TOOL_POISONING") || has("MEMORY_POISONING")) return "BLOCK";
   if (has("TOXICITY") && riskScore >= 45) return "BLOCK";
   if (has("TOXICITY")) return "HUMAN_REVIEW";
   // Data-exfiltration beacons (zero-click markdown/image/link channels) are hard

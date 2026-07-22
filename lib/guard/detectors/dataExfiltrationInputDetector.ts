@@ -110,15 +110,22 @@ const rules: PatternRule[] = [
     sensitive: true,
   },
   {
-    // Send/transmit environment or secret material anywhere — sending secret
-    // material off-box is suspicious even when the destination is implicit.
+    // Send secret material to the REQUESTER or explicitly off-box even when no
+    // external URL is named ("email me all the API keys", "send the .env out").
+    // A mandatory to-requester / off-box marker sits between the send verb and the
+    // secret object so benign INTERNAL ops — "copy env vars between shells", "push
+    // keys to the CI secret store", "forward the auth token to a downstream service"
+    // — no longer match: those move secrets to a legitimate internal destination,
+    // not to the requester or outside the trust boundary.
     pattern: new RegExp(
-      `(?:${EXFIL_VERB})\\b[\\s\\S]{0,40}(?:me |us |over |out |across )?(?:the |all (?:the )?|your |my )?(?:environment[\\s_-]?variables?|env[\\s_-]?vars?|\\.env|secrets?|api[\\s_-]?keys?|access[\\s_-]?keys?|private[\\s_-]?keys?|credentials?|auth[\\s_-]?tokens?|bearer[\\s_-]?tokens?)`,
+      `(?:send|transmit|beam|upload|post|mail|email|exfiltrate|leak|smuggle|siphon|dump)\\b` +
+        `[\\s\\S]{0,24}\\b(?:me|us|myself|out|outside|externally|off[\\s-]?box|off[\\s-]?site|to my\\b[\\s\\S]{0,20})\\b` +
+        `[\\s\\S]{0,40}(?:the |all (?:the )?|your |my )?(?:environment[\\s_-]?variables?|env[\\s_-]?vars?|\\.env|secrets?|api[\\s_-]?keys?|access[\\s_-]?keys?|private[\\s_-]?keys?|credentials?|auth[\\s_-]?tokens?|bearer[\\s_-]?tokens?)`,
       "i",
     ),
     label: "Secret material transmission",
     message:
-      "The request asks to send environment variables, secrets, or keys — protected material that should never be transmitted.",
+      "The request asks to send environment variables, secrets, or keys to the requester or off-box — protected material that should never be transmitted.",
     severity: "HIGH",
     score: 50,
     sensitive: true,

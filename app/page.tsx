@@ -14,7 +14,22 @@ import { safeJsonLd } from "@/lib/seo/jsonLd";
 const siteUrl = "https://soterai.in";
 
 export const metadata: Metadata = {
+  title: "AI Security Platform for Prompt Injection, RAG Security and Agent Firewall",
+  description:
+    "SoterAI is an AI security platform for LLM apps, chatbots, RAG pipelines and autonomous agents. Block prompt injection, jailbreaks, AI data leakage, unsafe outputs, risky tool calls, secrets and Indian PII.",
   alternates: { canonical: "/" },
+  openGraph: {
+    title: "SoterAI - AI Security Platform | Prompt Injection, PII Redaction & Agent Firewall",
+    description:
+      "India's AI security command layer. Detect prompt injection, jailbreaks, and PII leakage. Redact Aadhaar, PAN, GSTIN. Protect chatbots, RAG apps, and AI agents. Free tier available.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SoterAI - AI Security Platform",
+    description:
+      "India's AI security platform. Protect against prompt injection, data leakage, and AI agent abuse.",
+    images: ["/opengraph-image.png"],
+  },
 };
 
 const owaspCoverage = [
@@ -22,6 +37,38 @@ const owaspCoverage = [
   ["LLM02", "Sensitive information disclosure", "Redact PII, Indian identifiers, credentials, tokens, and database URLs."],
   ["LLM05", "Improper output handling", "Inspect model output for leaked instructions, unsafe claims, and suspicious links."],
   ["LLM10", "Unbounded consumption", "Apply text-size, per-minute, and monthly usage controls."],
+];
+
+const aiSecurityTopics = [
+  {
+    title: "Prompt injection protection",
+    copy: "Block direct and indirect prompt injection, jailbreak prompts, hidden instruction overrides, prompt extraction attempts, and multilingual attack patterns before they reach your LLM.",
+    href: "/prompt-injection-protection",
+  },
+  {
+    title: "AI data leakage prevention",
+    copy: "Detect and redact secrets, credentials, database URLs, Aadhaar-like numbers, PAN, GSTIN, UPI IDs, IFSC codes, Indian phone numbers, and other sensitive context.",
+    href: "/ai-data-leakage-prevention",
+  },
+  {
+    title: "RAG security",
+    copy: "Inspect retrieved documents and model outputs for poisoned context, untrusted sources, sensitive snippets, unsafe citations, and disclosure risks in retrieval-augmented generation.",
+    href: "/docs/rag",
+  },
+  {
+    title: "AI agent firewall",
+    copy: "Review agent actions, MCP tools, browser automation, workflow steps, and high-risk operations before an AI agent can execute sensitive work.",
+    href: "/mcp-security",
+  },
+];
+
+const seoInternalLinks = [
+  ["LLM security docs", "/docs"],
+  ["OWASP LLM Top 10 alignment", "/compliance/owasp-llm-top-10"],
+  ["Public benchmark", "/benchmark"],
+  ["VS Code AI security", "/vscode-ai-security"],
+  ["Pricing", "/pricing"],
+  ["Trust center", "/trust"],
 ];
 
 const homepageJsonLd = {
@@ -240,6 +287,45 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: safeJsonLd(homepageJsonLd) }}
       />
       <Hero />
+      <section className="border-b border-slate-800 bg-slate-950/45 py-20">
+        <div className="container-page">
+          <div className="max-w-3xl">
+            <p className="eyebrow">AI security platform</p>
+            <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
+              Security controls for LLM apps, RAG pipelines, copilots, and AI agents
+            </h2>
+            <p className="mt-4 leading-7 text-slate-400">
+              SoterAI helps product, engineering, and security teams protect production AI systems from prompt injection,
+              jailbreaks, AI data leakage, unsafe model outputs, and risky agent tool calls. It works as a real-time
+              AI security guard between users, models, retrieval, tools, and your application.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-4 md:grid-cols-2">
+            {aiSecurityTopics.map((topic) => (
+              <article className="card p-6" key={topic.title}>
+                <h3 className="text-lg font-semibold">{topic.title}</h3>
+                <p className="mt-3 leading-7 text-slate-400">{topic.copy}</p>
+                <Link href={topic.href} className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan">
+                  Learn more <ArrowRight size={15} aria-hidden="true" />
+                </Link>
+              </article>
+            ))}
+          </div>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            {seoInternalLinks.map(([label, href]) => (
+              <Link
+                href={href}
+                key={href}
+                className="rounded-md border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-slate-300 transition hover:border-cyan/50 hover:text-cyan"
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
       <section className="py-20">
         <div className="container-page grid gap-5 md:grid-cols-3">
           <div className="card p-7 md:col-span-2">
