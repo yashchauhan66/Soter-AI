@@ -482,7 +482,7 @@ function isClearlyBenignKnowledgeQuestion(text: string): boolean {
   const normalized = text.trim().toLowerCase();
   return (
     /^(?:what\s+is|what\s+are|explain|describe|summarize|outline)\b/.test(normalized) &&
-    /\b(?:role|function|purpose|process|cycle|branch|concept|topic|definition|system\s+prompt)\b/.test(normalized) &&
+    /\b(?:role|function|purpose|process|cycle|branch|concept|topic|definition|system\s+prompt|hallucination|grounding|mitigations?|best practices?|compliance|records?)\b/.test(normalized) &&
     !/\b(?:your|developer|hidden|internal|instructions?|rules?|configuration|secret)\b/.test(normalized)
   );
 }
