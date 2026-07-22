@@ -39,5 +39,14 @@ const rules: PatternRule[] = [
 ];
 
 export function memoryPoisoningDetector(text: string) {
-  return detectPatterns(text, "PROMPT_INJECTION", rules);
+  const findings = detectPatterns(text, "MEMORY_POISONING", rules);
+  return findings.flatMap((finding) => [
+    finding,
+    {
+      ...finding,
+      type: "PROMPT_INJECTION" as const,
+      label: `${finding.label} (agent prompt attack)`,
+      score: Math.min(finding.score, 40),
+    },
+  ]);
 }

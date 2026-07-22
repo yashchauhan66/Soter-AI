@@ -7,6 +7,7 @@ import {
   resolveEmailDeliveryMode,
   requireVerifiedEmailForLogin,
   shouldExposeDevelopmentOtp,
+  validateEmailDeliveryConfig,
   planSignup,
   canStartCredentialsSession,
 } from "../lib/auth/signupPolicy";
@@ -76,6 +77,13 @@ test("email provider is inferred from configured provider credentials", () => {
   assert.equal(resolveEmailProvider({ SMTP_HOST: "smtp.example.com" }), "smtp");
   assert.equal(resolveEmailProvider({ AWS_ACCESS_KEY_ID: "akid", AWS_SECRET_ACCESS_KEY: "secret" }), "aws-ses");
   assert.equal(resolveEmailProvider({}), "mock");
+});
+
+test("live email provider config reports missing required values", () => {
+  assert.deepEqual(validateEmailDeliveryConfig({ EMAIL_PROVIDER: "resend" }), ["RESEND_API_KEY"]);
+  assert.deepEqual(validateEmailDeliveryConfig({ EMAIL_PROVIDER: "smtp" }), ["SMTP_HOST"]);
+  assert.deepEqual(validateEmailDeliveryConfig({ EMAIL_PROVIDER: "aws-ses", AWS_ACCESS_KEY_ID: "akid" }), ["AWS_SECRET_ACCESS_KEY"]);
+  assert.deepEqual(validateEmailDeliveryConfig({ EMAIL_PROVIDER: "resend", RESEND_API_KEY: "re_test_key" }), []);
 });
 
 test("development OTP is never exposed unless explicitly enabled", () => {

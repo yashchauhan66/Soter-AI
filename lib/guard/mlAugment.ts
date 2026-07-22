@@ -29,9 +29,63 @@
 
 import type { GuardResult, GuardFinding, RiskType, GuardDirection } from "./types";
 import { createOnnxBackendFromEnv, ONNXClassifierBackend } from "../ml/onnxBackend";
+import { classifySemantic } from "./semanticClassifier";
 import type { MLLabel } from "@prisma/client";
 
 export type MlAugmentMode = "off" | "shadow" | "enforce";
+
+// PRECISION GATE — why the model cannot escalate on its own label + confidence.
+//
+// The fine-tuned v3 classifier is a strong RECALL booster (it catches ~14 more
+// points of novel attacks than the rules on the untuned held-out set) but it has
+// a measured OVER-DEFENSE bias on benign INPUT: it fires UNSAFE_OUTPUT on ordinary
+// code/copy-writing generation and DATA_EXFILTRATION_ATTEMPT on non-English prose,
+// pushing raw benign FPR to ~18% (scripts/guard-benchmark/ml-ensemble-gate-benchmark.ts). Those
+// two label classes are therefore NOT trusted to escalate an INPUT on their own.
+//
+// On INPUT we only let the model escalate for the label classes it predicts
+// accurately — injection / jailbreak / system-prompt-leak — AND only when the
+// dependency-free semantic classifier agrees the text is not clearly benign.
+// On a 54-case frozen untuned attack corpus this measured recall 87.0% (up from
+// the 71-72% rules-only baseline) at 0.4% benign-control FPR
+// (scripts/guard-benchmark/ml-ensemble-gate-benchmark.ts) — the recall lift with
+// the false-positive cost held essentially flat. Per-label margin loosening was
+// evaluated (scripts/guard-benchmark/ml-per-label-calibration.ts) and REJECTED:
+// it bought +1 attack for +4 benign false positives (control FPR 0.4%→1.9%),
+// exactly the over-defense trade this gate exists to avoid. On OUTPUT the
+// exfiltration/unsafe classes ARE meaningful (a leaked secret or unsafe payload
+// in a model reply), so the label restriction does not apply there.
+const INPUT_RELIABLE_LABELS = new Set<string>([
+  "PROMPT_INJECTION",
+  "JAILBREAK",
+  "SYSTEM_PROMPT_LEAK_ATTEMPT",
+]);
+
+// The model may escalate only when the semantic classifier does NOT judge the
+// text closer to a benign prototype than to any attack prototype. Tunable via
+// SOTERAI_ML_SEMANTIC_MARGIN; 0.0 measured 0% validation-benign FPR.
+function resolveSemanticMarginGate(): number {
+  const raw = Number(process.env.SOTERAI_ML_SEMANTIC_MARGIN ?? "0");
+  return Number.isFinite(raw) ? raw : 0;
+}
+
+/**
+ * Precision gate for a model attack prediction. Returns true only when the
+ * prediction should be trusted enough to escalate to human review.
+ */
+function passesPrecisionGate(label: string, direction: GuardDirection, text: string): boolean {
+  if (direction === "INPUT" && !INPUT_RELIABLE_LABELS.has(label)) return false;
+  let benignBySemantic = false;
+  try {
+    const s = classifySemantic(text);
+    benignBySemantic = s.score - s.benignSimilarity < resolveSemanticMarginGate();
+  } catch {
+    // Fail safe: if the semantic gate throws, do not let the model escalate —
+    // a missed recall boost is preferable to an ungated false positive.
+    benignBySemantic = true;
+  }
+  return !benignBySemantic;
+}
 
 // Map the classifier's label space onto the guard RiskType space. SAFE is not
 // present here — a SAFE prediction is a no-op.
@@ -103,6 +157,8 @@ export async function augmentWithMl(
   const backend = getBackend();
   if (!backend) return base;
 
+  // 0.9 is the measured operating point (scripts/guard-benchmark/ml-ensemble-gate-benchmark.ts):
+  // recall 85.7% at ~0.4% benign-control FPR once the precision gate is applied.
   const floor = Number(process.env.ML_ONNX_CONFIDENCE_FLOOR ?? "0.9");
 
   let detail: MlAugmentDetail = { mode, ran: false, floor };
@@ -110,7 +166,11 @@ export async function augmentWithMl(
     const inference = await backend.infer(text, direction);
     const label = inference.predictedLabel;
     const confident = inference.confidence >= floor;
-    const isAttack = label !== "SAFE" && confident;
+    // isAttack requires the model be confident AND the prediction survive the
+    // precision gate (reliable label class + semantic not-benign). This is what
+    // keeps the recall boost from turning into the model's raw ~18% over-defense.
+    const isAttack =
+      label !== "SAFE" && confident && passesPrecisionGate(label, direction, text);
 
     detail = {
       mode,

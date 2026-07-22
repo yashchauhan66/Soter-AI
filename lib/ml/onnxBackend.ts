@@ -24,6 +24,7 @@ import * as path from "node:path";
 import type { GuardDirection } from "../guard/types";
 import type { MLLabel } from "@prisma/client";
 import type { ModelBackend, ModelInference } from "./types";
+import { BertTokenizer, parseVocabTxt } from "./bertTokenizer";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -117,135 +118,6 @@ function argmax(values: number[]): number {
   return bestIdx;
 }
 
-// ── Tokenizer (lightweight, for onnxruntime-node path) ────────────────────────
-
-interface TokenizerResult {
-  inputIds: number[];
-  attentionMask: number[];
-}
-
-/**
- * Minimal WordPiece tokenizer for BERT-family models.
- * Supports the same vocabulary format as HuggingFace's tokenizer_config/.
- * Not as robust as the full tokenizer, but sufficient for inference on
- * short text (attack prompts) with < 128 tokens.
- */
-class LightweightTokenizer {
-  private vocab: Map<string, number>;
-  private reverseVocab: Map<number, string>;
-  private clsTokenId: number;
-  private sepTokenId: number;
-  private padTokenId: number;
-  private unkTokenId: number;
-
-  readonly maxLength: number;
-
-  constructor(vocabPath?: string, maxLength = 128) {
-    this.vocab = new Map();
-    this.reverseVocab = new Map();
-    this.maxLength = maxLength;
-
-    if (vocabPath) {
-      this.loadVocab(vocabPath);
-    }
-
-    // Standard BERT special tokens
-    this.clsTokenId = this.vocab.get("[CLS]") ?? 101;
-    this.sepTokenId = this.vocab.get("[SEP]") ?? 102;
-    this.padTokenId = this.vocab.get("[PAD]") ?? 0;
-    this.unkTokenId = this.vocab.get("[UNK]") ?? 100;
-  }
-
-  private loadVocab(vocabPath: string): void {
-    const raw = fs.readFileSync(vocabPath, "utf-8");
-    const lines = raw.split("\n");
-
-    // HuggingFace vocab.txt: one token per line, where the line index IS the token ID.
-    // Some tokenizers also export "word<space>id" format. Handle both.
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i].trim();
-      if (!line) continue;
-      const parts = line.split(/\s+/);
-      if (parts.length >= 2) {
-        // "word 123" format — explicit ID
-        this.vocab.set(parts[0], parseInt(parts[1], 10));
-      } else {
-        // "word" format — line number is the ID
-        this.vocab.set(parts[0], i);
-      }
-    }
-
-    for (const [token, id] of this.vocab) {
-      this.reverseVocab.set(id, token);
-    }
-
-    if (this.vocab.size < 100) {
-      throw new OnnxBackendError(
-        `Vocabulary file ${vocabPath} appears invalid: only ${this.vocab.size} tokens loaded. ` +
-          "Expected 30,000+ tokens for a BERT-family model.",
-      );
-    }
-  }
-
-  /** Simple WordPiece tokenization. Handles basic cases. */
-  tokenize(text: string): TokenizerResult {
-    const normalized = text.toLowerCase().replace(/[^\w\s!?'.,;:-]/g, " ").trim();
-    const words = normalized.split(/\s+/).filter(Boolean);
-
-    const tokens: number[] = [this.clsTokenId];
-    const maxLen = this.maxLength;
-
-    for (const word of words) {
-      if (tokens.length >= maxLen - 1) break;
-
-      // Check if full word exists in vocabulary
-      if (this.vocab.has(word)) {
-        tokens.push(this.vocab.get(word)!);
-        continue;
-      }
-
-      // Try subword tokenization: prepend ## for continuations
-      let current = word;
-      let first = true;
-      while (current.length > 0 && tokens.length < maxLen - 1) {
-        let found = false;
-        for (let end = current.length; end > 0; end--) {
-          const subword = first ? current.slice(0, end) : "##" + current.slice(0, end);
-          if (this.vocab.has(subword)) {
-            tokens.push(this.vocab.get(subword)!);
-            current = current.slice(end);
-            first = false;
-            found = true;
-            break;
-          }
-        }
-        if (!found) {
-          tokens.push(this.unkTokenId);
-          break;
-        }
-      }
-    }
-
-    tokens.push(this.sepTokenId);
-
-    // Pad to max length
-    const inputIds = [...tokens];
-    const attentionMask: number[] = [];
-    for (let i = 0; i < maxLen; i++) {
-      if (i < inputIds.length) {
-        attentionMask.push(1);
-      } else {
-        inputIds.push(this.padTokenId);
-        attentionMask.push(0);
-      }
-    }
-
-    return {
-      inputIds: inputIds.slice(0, maxLen),
-      attentionMask: attentionMask.slice(0, maxLen),
-    };
-  }
-}
 
 // ── ONNX Backend ──────────────────────────────────────────────────────────────
 
@@ -264,7 +136,7 @@ export class ONNXClassifierBackend implements ModelBackend {
   private options: Required<OnnxBackendOptions>;
   private session: unknown = null;          // onnxruntime InferenceSession
   private labels: LabelMap = {};
-  private tokenizer: LightweightTokenizer | null = null;
+  private tokenizer: BertTokenizer | null = null;
 
   // Cached for reuse across infer() calls
   private initialized = false;
@@ -307,21 +179,51 @@ export class ONNXClassifierBackend implements ModelBackend {
     const ort = await tryImportOnnxRuntime();
     this.session = await ort.InferenceSession.create(this.options.modelPath);
 
-    // 4. Load tokenizer vocabulary (exported alongside the model)
+    // 4. Load the tokenizer. We use a faithful BERT WordPiece implementation
+    //    (lib/ml/bertTokenizer.ts) whose token ids are verified to match the
+    //    Python HuggingFace tokenizer the model trained with — see
+    //    scripts/ml/verify-tokenizer-parity.ts. This replaces an earlier regex
+    //    approximation that drifted confidence and dropped real attacks.
     const modelDir = path.dirname(this.options.labelsPath);
-    const vocabPath = path.join(modelDir, "tokenizer_config", "vocab.txt");
-    const altVocabPath = path.join(modelDir, "tokenizer_config", "vocab.json");
+    const tokCfgDir = path.join(modelDir, "tokenizer_config");
+    const vocabPath = path.join(tokCfgDir, "vocab.txt");
 
-    if (fs.existsSync(vocabPath)) {
-      this.tokenizer = new LightweightTokenizer(vocabPath, this.options.maxLength);
-    } else if (fs.existsSync(altVocabPath)) {
-      this.tokenizer = new LightweightTokenizer(altVocabPath, this.options.maxLength);
-    } else {
+    if (!fs.existsSync(vocabPath)) {
       throw new OnnxBackendError(
         `Tokenizer vocabulary not found. Expected at ${vocabPath}. ` +
           "The training script exports tokenizer_config/ alongside the model.",
       );
     }
+
+    const vocab = parseVocabTxt(fs.readFileSync(vocabPath, "utf-8"));
+
+    // Read tokenizer_config.json for the BERT normalization flags (falls back
+    // to standard uncased-BERT defaults if absent).
+    let doLowerCase = true;
+    let stripAccents: boolean | null = null;
+    let tokenizeChineseChars = true;
+    const tokCfgPath = path.join(tokCfgDir, "tokenizer_config.json");
+    if (fs.existsSync(tokCfgPath)) {
+      try {
+        const cfg = JSON.parse(fs.readFileSync(tokCfgPath, "utf-8")) as {
+          do_lower_case?: boolean;
+          strip_accents?: boolean | null;
+          tokenize_chinese_chars?: boolean;
+        };
+        if (typeof cfg.do_lower_case === "boolean") doLowerCase = cfg.do_lower_case;
+        if (cfg.strip_accents === true || cfg.strip_accents === false) stripAccents = cfg.strip_accents;
+        if (typeof cfg.tokenize_chinese_chars === "boolean") tokenizeChineseChars = cfg.tokenize_chinese_chars;
+      } catch {
+        // keep defaults on a malformed config
+      }
+    }
+
+    this.tokenizer = new BertTokenizer(vocab, {
+      doLowerCase,
+      stripAccents,
+      tokenizeChineseChars,
+      maxLength: this.options.maxLength,
+    });
 
     this.initialized = true;
   }

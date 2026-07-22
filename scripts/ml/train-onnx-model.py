@@ -40,8 +40,10 @@ code (lib/ml/onnxBackend.ts) to convert to probabilities.
 import argparse
 import json
 import os
+import re
 import sys
 import time
+import unicodedata
 from pathlib import Path
 
 import numpy as np
@@ -58,6 +60,10 @@ import onnxruntime
 
 # ── Constants ──────────────────────────────────────────────────────────────────
 
+# Product/model name for this fine-tuned classifier (what we call OUR model).
+# NOTE: this is the branding only. MODEL_NAME below is the base HuggingFace
+# architecture we fine-tune and MUST stay as the real HF id or the download breaks.
+PRODUCT_NAME = "SoterLLM"
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 EMBEDDING_DIM = 384  # MiniLM-L6-v2 output dimension
 
@@ -82,12 +88,41 @@ DEFAULT_DATASETS = [
 # ── Dataset ────────────────────────────────────────────────────────────────────
 
 
+def group_key_for(text: str) -> str:
+    """
+    Collapse a text to an augmentation-invariant skeleton so that variants of the
+    same seed (leet, spacing, punctuation, reordering, unicode-obfuscation, case)
+    map to ONE key. Used for GROUP-AWARE splitting so paraphrase/mutation siblings
+    never straddle the train/val boundary — the leakage that inflated the earlier
+    random_split evaluation (see docs/ml-v2/00-local-model-forensic-audit.md).
+
+    This is intentionally aggressive: it favours grouping siblings together over
+    keeping distinct seeds apart. Over-grouping only makes the split MORE honest.
+    """
+    import re
+    import unicodedata
+
+    # 1. Unicode normalize + strip combining marks (undoes diacritic/zero-width tricks)
+    t = unicodedata.normalize("NFKD", text)
+    t = "".join(ch for ch in t if not unicodedata.combining(ch))
+    t = t.lower()
+    # 2. Undo common leetspeak substitutions
+    leet = {"0": "o", "1": "i", "3": "e", "4": "a", "5": "s", "7": "t", "@": "a", "$": "s", "!": "i"}
+    t = "".join(leet.get(ch, ch) for ch in t)
+    # 3. Keep only letters, collapse everything else — kills spacing/punctuation tricks
+    letters = re.findall(r"[a-z]+", t)
+    # 4. Sort the token multiset — kills word-reordering augmentation
+    letters.sort()
+    return " ".join(letters)
+
+
 class AdversarialDataset(Dataset):
     """Loads JSONL files containing {'text': ..., 'label': ...} rows."""
 
     def __init__(self, file_paths: list[str], label_to_idx: dict[str, int], max_samples: int | None = None):
         self.texts: list[str] = []
         self.labels: list[int] = []
+        self.groups: list[str] = []  # group_key per row, for group-aware splitting
         self.label_to_idx = label_to_idx
 
         for fp in file_paths:
@@ -119,20 +154,23 @@ class AdversarialDataset(Dataset):
                             continue
                         self.texts.append(text)
                         self.labels.append(label_idx)
+                        self.groups.append(group_key_for(text))
                     except json.JSONDecodeError:
                         continue
 
         if max_samples and len(self.texts) > max_samples:
             # Stratified sampling to preserve class balance
-            combined = list(zip(self.texts, self.labels))
+            combined = list(zip(self.texts, self.labels, self.groups))
             rng = np.random.RandomState(42)
             rng.shuffle(combined)
             combined = combined[:max_samples]
-            self.texts, self.labels = zip(*combined)
+            self.texts, self.labels, self.groups = zip(*combined)
             self.texts = list(self.texts)
             self.labels = list(self.labels)
+            self.groups = list(self.groups)
 
         print(f"  [OK] Loaded {len(self.texts)} examples from {len(file_paths)} file(s)")
+        print(f"  [OK] {len(set(self.groups))} distinct group keys (for leak-free split)")
         self._print_label_distribution()
 
     def _print_label_distribution(self) -> None:
@@ -492,7 +530,7 @@ def main() -> None:
     else:
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"\n{'=' * 70}")
-    print(f"  SoterAI — MiniLM-L6-v2 ONNX Training")
+    print(f"  {PRODUCT_NAME} — fine-tuned MiniLM-L6-v2 ONNX Training")
     print(f"  Device: {device}")
     print(f"{'=' * 70}\n")
 
@@ -542,14 +580,41 @@ def main() -> None:
         print("[ERROR] Dataset is empty after loading.")
         sys.exit(1)
 
-    # ── Train/val split ──────────────────────────────────────────────────────────
-    val_size = max(1, int(len(full_dataset) * args.val_split))
-    train_size = len(full_dataset) - val_size
-    train_set, val_set = torch.utils.data.random_split(
-        full_dataset, [train_size, val_size],
-        generator=torch.Generator().manual_seed(args.seed),
-    )
-    print(f"\n[INFO] Split: {train_size} train / {val_size} validation")
+    # ── Train/val split (GROUP-AWARE) ─────────────────────────────────────────────
+    # A plain random_split leaks: an augmented sibling (leet/spacing/reorder/unicode
+    # variant) of a training row can land in validation, inflating val F1 far above
+    # true generalization (measured ~35.8% of val rows shared a train skeleton →
+    # docs/ml-v2/00-local-model-forensic-audit.md). We split by GROUP KEY instead so
+    # every sibling of a seed stays on the same side of the boundary.
+    from collections import defaultdict
+
+    group_to_indices: dict[str, list[int]] = defaultdict(list)
+    for idx, g in enumerate(full_dataset.groups):
+        group_to_indices[g].append(idx)
+
+    unique_groups = list(group_to_indices.keys())
+    rng = np.random.RandomState(args.seed)
+    rng.shuffle(unique_groups)
+
+    target_val = int(len(full_dataset) * args.val_split)
+    val_indices: list[int] = []
+    val_groups_used = 0
+    for g in unique_groups:
+        if len(val_indices) >= target_val:
+            break
+        val_indices.extend(group_to_indices[g])
+        val_groups_used += 1
+    val_index_set = set(val_indices)
+    train_indices = [i for i in range(len(full_dataset)) if i not in val_index_set]
+
+    from torch.utils.data import Subset
+
+    train_set = Subset(full_dataset, train_indices)
+    val_set = Subset(full_dataset, val_indices)
+    train_size, val_size = len(train_set), len(val_set)
+    print(f"\n[INFO] GROUP-AWARE split: {train_size} train / {val_size} validation")
+    print(f"       {len(unique_groups)} groups → {val_groups_used} val groups, "
+          f"{len(unique_groups) - val_groups_used} train groups (0 shared)")
 
     # ── Tokenizer ────────────────────────────────────────────────────────────────
     print(f"\n[INFO] Loading tokenizer ({MODEL_NAME})...")
@@ -698,6 +763,8 @@ def main() -> None:
     with open(stats_path, "w", encoding="utf-8") as f:
         json.dump(
             {
+                "product_name": PRODUCT_NAME,
+                "base_model": MODEL_NAME,
                 "model_name": MODEL_NAME,
                 "embedding_dim": EMBEDDING_DIM,
                 "num_labels": num_labels,

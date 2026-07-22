@@ -1,0 +1,45 @@
+{
+  "generated": "2026-07-20",
+  "note": "HONEST reproduced baseline. The model's own eval_results.json (99.29% val F1) is EXCLUDED as authoritative because it comes from a leaked random_split; it is recorded only as 'reportedLeaked' for contrast.",
+  "reportedLeaked": {
+    "source": "models/ml-classifier-v3/eval_results.json (train-onnx-model.py random_split, val_split=0.15)",
+    "accuracy": 0.9929,
+    "f1_macro": 0.9927,
+    "safe_recall": 1.0,
+    "verdict": "NOT a generalization estimate. ~35.8% of val rows share an augmentation-sibling skeleton with a train row (surface-only lower bound). Excluded from all claims."
+  },
+  "leakageQuantification": {
+    "method": "normalize each text to surface skeleton (undo leet/spacing/punctuation/reorder; NOT synonym/paraphrase), group by skeleton",
+    "totalRows": 75359,
+    "distinctSkeletons": 53910,
+    "skeletonsWith2PlusSiblings": 6574,
+    "rowsInSiblingGroups": 28018,
+    "pctRowsInSiblingGroups": 37.2,
+    "estimatedValRowsWithTrainTwin": 4041,
+    "estimatedValRows": 11304,
+    "pctValLeaked_lowerBound": 35.8,
+    "caveat": "lower bound; semantic paraphrase + prefix-suffix transforms leak further and are NOT undone by this skeletonizer"
+  },
+  "honestHeldout_rulesSemantic_noML": {
+    "harness": "scripts/guard-benchmark/ml-tier-honest-final.ts",
+    "reproCommand": "SOTERAI_ML_AUGMENT=off npx tsx scripts/guard-benchmark/ml-tier-honest-final.ts",
+    "attackRecall": { "hits": 17, "total": 24, "pct": 70.8 },
+    "benignFPR": { "fp": 0, "total": 16, "pct": 0.0 },
+    "missedFamilies": ["PROMPT_INJECTION(2)","JAILBREAK(2)","SYSTEM_PROMPT_LEAK_ATTEMPT(1)","SSRF(1)","RECURSIVE_INJECTION(1)"]
+  },
+  "honestHeldout_withMLGate_enforce": {
+    "harness": "scripts/guard-benchmark/run-fresh-heldout-2026-07-20.ts",
+    "reproCommand": "SOTERAI_ML_AUGMENT=enforce ML_ONNX_MODEL_PATH=models/ml-classifier-v3/model.onnx ML_ONNX_LABELS_PATH=models/ml-classifier-v3/labels.json npx tsx scripts/guard-benchmark/run-fresh-heldout-2026-07-20.ts",
+    "corpus": { "freshAttacks": 26, "freshBenignNearMiss": 15 },
+    "rulesOnlyRecall": { "hits": 20, "total": 26, "pct": 76.9 },
+    "gatedMLRecall": { "hits": 26, "total": 26, "pct": 100.0 },
+    "benignFPR": { "fp": 0, "total": 15, "pct": 0.0 },
+    "operatingPoint": { "confidenceFloor": 0.9, "semanticMargin": 0 }
+  },
+  "honestSummary": {
+    "trueGeneralizationRange": "70.8% (rules+semantic) to 100% (with ML gate) on small fresh held-out corpora; NOT the 99.29% leaked number",
+    "benignFPR": "0% on both fresh corpora (small n; not production-prevalence)",
+    "biggestUnknowns": ["no large-n production-prevalence FPR","no per-family blind recall with CIs","no multilingual breakdown beyond a few Hinglish cases","no latency/memory numbers captured yet"]
+  },
+  "reliabilityGatesUnmet": ["calibration","OOD/abstention","dataset manifest","grouped split in trainer","multi-label output","confusion matrix on blind set","latency/memory profile"]
+}
