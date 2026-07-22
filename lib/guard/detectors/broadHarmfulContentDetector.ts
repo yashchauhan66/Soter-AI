@@ -174,7 +174,7 @@ const EXTRA_PRODUCE =
 // ── Benign education/defense suppressor ──────────────────────────────────────
 
 const EDUCATION_DEFENSE = new RegExp(
-    "\\b(?:detect|detection|defend|defense|defens(?:e|ive)|mitigat|prevent|protect|" +
+    "\\b(?:detect|detection|defend|defense|defens(?:e|ive)|mitigat|mitigations?|prevent|protect|high level|" +
     "awareness|policy|regulat|screen(?:ing)?|classif|moderat|flag|block|" +
     "red[\\s-]?team|threat model|risk assessment|why (?:is|are)|history of|" +
     "warning signs|how (?:do|can) (?:i|we|you|one) (?:spot|recogni[sz]e|identify|report|" +

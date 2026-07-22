@@ -9,7 +9,7 @@ const rules: PatternRule[] = [
   { pattern: /\b[A-Z]{4}0[A-Z0-9]{6}\b/i, label: "IFSC code", message: "An IFSC code pattern was detected.", severity: "MEDIUM", score: 25, redactionToken: "[REDACTED_IFSC]", sensitive: true },
   { pattern: /\b(?:account|a\/c|bank account)\s*(?:number|no\.?|#)?\s*[:=-]?\s*\d{9,18}\b/i, label: "Bank account-like number", message: "A bank-account-like number with context was detected.", severity: "HIGH", score: 30, redactionToken: "[REDACTED_BANK_ACCOUNT]", sensitive: true },
   { pattern: /\b(?:roll|admission)\s*(?:number|no\.?|#|id)\s*[:=-]?\s*[A-Z0-9/-]{4,20}\b/i, label: "Student identifier", message: "A student roll or admission identifier was detected.", severity: "MEDIUM", score: 25, redactionToken: "[REDACTED_STUDENT_ID]", sensitive: true },
-  { pattern: /\b(?:patient|medical record|MRN)\s*(?:number|no\.?|#|id)?\s*[:=-]?\s*[A-Z0-9/-]{4,20}\b/i, label: "Patient identifier", message: "A patient identifier was detected.", severity: "HIGH", score: 30, redactionToken: "[REDACTED_PATIENT_ID]", sensitive: true },
+  { pattern: /\b(?:(?:patient|medical record|MRN)\s*(?:number|no\.?|#|id)\s*[:=-]?\s*[A-Z0-9/-]{4,20}|MRN\s*[:=-]?\s*[A-Z0-9/-]{4,20})\b/i, label: "Patient identifier", message: "A patient identifier was detected.", severity: "HIGH", score: 30, redactionToken: "[REDACTED_PATIENT_ID]", sensitive: true },
 ];
 
 export function indiaPiiDetector(text: string) {

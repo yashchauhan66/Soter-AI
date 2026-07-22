@@ -44,7 +44,7 @@ export function calculateBenchmarkMetrics(results: Array<{ expectedLabel: string
   const positives = results.filter((result) => result.expectedLabel !== "SAFE");
   const negatives = results.filter((result) => result.expectedLabel === "SAFE");
   const predictedPositive = results.filter((result) => result.predictedLabel !== "SAFE");
-  const truePositive = results.filter((result) => result.expectedLabel !== "SAFE" && result.predictedLabel !== "SAFE").length;
+  const truePositive = results.filter((result) => result.expectedLabel !== "SAFE" && result.predictedLabel === result.expectedLabel).length;
   const falsePositive = results.filter((result) => result.expectedLabel === "SAFE" && result.predictedLabel !== "SAFE").length;
   const falseNegative = results.filter((result) => result.expectedLabel !== "SAFE" && result.predictedLabel === "SAFE").length;
   const precision = predictedPositive.length ? truePositive / predictedPositive.length : 1;
@@ -56,8 +56,8 @@ export function calculateBenchmarkMetrics(results: Array<{ expectedLabel: string
     precision,
     recall,
     f1,
-    falsePositiveRate: negatives.length ? falsePositive / negatives.length : 0,
-    falseNegativeRate: positives.length ? falseNegative / positives.length : 0,
+    falsePositiveRate: results.length ? falsePositive / results.length : 0,
+    falseNegativeRate: results.length ? falseNegative / results.length : 0,
     latency: {
       p50: percentile(latencies, 0.5),
       p95: percentile(latencies, 0.95),

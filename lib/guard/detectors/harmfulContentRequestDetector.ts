@@ -208,7 +208,7 @@ const rules: PatternRule[] = [
 // We suppress only when an education/analysis framing is present AND no explicit
 // production imperative ("give me the steps", "write the recipe") co-occurs.
 const EDUCATION_CONTEXT =
-  /\b(?:detect|detection|defend|defense|mitigat|prevent|protect|awareness|policy|regulat|screen(?:ing)?|classif|moderat|flag|block|red[\s-]?team|threat model|risk assessment|why (?:is|are)|history of|signs of|warning signs|how (?:do|can) (?:i|we|you|one) (?:spot|recognize|identify|report))\b/i;
+  /\b(?:detect|detection|defend|defense|mitigat|mitigations?|prevent|protect|awareness|policy|regulat|screen(?:ing)?|classif|moderat|flag|block|red[\s-]?team|threat model|risk assessment|high level|why (?:is|are)|history of|signs of|warning signs|how (?:do|can) (?:i|we|you|one) (?:spot|recognize|identify|report))\b/i;
 
 export function harmfulContentRequestDetector(text: string) {
   const findings = detectPatterns(text, "TOXICITY", rules);
