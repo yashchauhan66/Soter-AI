@@ -1,0 +1,208 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# SoterAI IDE Guard — Signed & reproducible release
+# ═══════════════════════════════════════════════════════════════════════════════
+# This workflow closes the "signed-provenance" evidence gate HONESTLY. It:
+#   1. Builds the VSIX from a clean checkout and records SHA-256 provenance.
+#   2. Proves reproducibility by building a SECOND time on a fresh runner and
+#      comparing the artifact hash — reproducibleBuildVerified only flips true
+#      when the two hashes actually match.
+#   3. Signs the VSIX ONLY if an organization-controlled certificate secret is
+#      present, then verifies the signature. signatureVerified is set from the
+#      real verification result, never hardcoded.
+#
+# Golden rules:
+#   - Secrets are referenced only via ${{ secrets.* }} and NEVER printed.
+#   - No gate flag is ever set without a real verification step behind it.
+#   - Absent the org signing cert, the run still produces valid checksums and
+#     an honest "unsigned-local-build" provenance — it does not fake a signature.
+# ═══════════════════════════════════════════════════════════════════════════════
+
+name: Signed Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish_marketplace:
+        description: "Publish to VS Code Marketplace + Open VSX after signing (human-approved)"
+        type: boolean
+        default: false
+  push:
+    tags:
+      - "ide-guard-signed-v*"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: signed-release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  NODE_VERSION: "22"
+
+jobs:
+  # ───────────────────────────────────────────────────────────────────────────
+  # Build #1 — canonical build, tests, provenance + checksums
+  # ───────────────────────────────────────────────────────────────────────────
+  build-primary:
+    name: build (primary) + provenance
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    outputs:
+      vsix-sha256: ${{ steps.hash.outputs.sha256 }}
+      version: ${{ steps.meta.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+
+      - name: Typecheck extension
+        run: npm --prefix packages/vscode-extension run typecheck
+      - name: Test extension
+        run: npm --prefix packages/vscode-extension test
+      - name: Test guard-core
+        run: npm --prefix packages/guard-core test
+
+      - name: Package VSIX
+        run: npm run vscode:package
+
+      - name: Read version
+        id: meta
+        run: echo "version=$(node -p "require('./packages/vscode-extension/package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - name: Generate provenance + checksums
+        run: npm run release:vscode:provenance
+
+      - name: Record VSIX hash
+        id: hash
+        working-directory: packages/vscode-extension
+        run: |
+          FILE="soterai-ide-guard-${{ steps.meta.outputs.version }}.vsix"
+          SHA=$(sha256sum "$FILE" | cut -d' ' -f1)
+          echo "sha256=$SHA" >> "$GITHUB_OUTPUT"
+          echo "Primary VSIX sha256: $SHA"
+
+      - name: Upload primary artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: signed-release-primary
+          path: |
+            packages/vscode-extension/*.vsix
+            reports/release-provenance-attestation.json
+            reports/release-provenance-attestation.md
+            reports/vscode-release-checksums.sha256
+            artifacts/security/sbom.spdx-lite.json
+          if-no-files-found: error
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # Build #2 — independent reproducibility check on a fresh runner
+  # ───────────────────────────────────────────────────────────────────────────
+  build-repro:
+    name: build (reproducibility check)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    needs: [build-primary]
+    outputs:
+      matches: ${{ steps.compare.outputs.matches }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - name: Package VSIX (second build)
+        run: npm run vscode:package
+      - name: Compare hash to primary
+        id: compare
+        run: |
+          FILE="packages/vscode-extension/soterai-ide-guard-${{ needs.build-primary.outputs.version }}.vsix"
+          SHA=$(sha256sum "$FILE" | cut -d' ' -f1)
+          echo "Repro VSIX sha256:   $SHA"
+          echo "Primary VSIX sha256: ${{ needs.build-primary.outputs.vsix-sha256 }}"
+          if [ "$SHA" = "${{ needs.build-primary.outputs.vsix-sha256 }}" ]; then
+            echo "matches=true" >> "$GITHUB_OUTPUT"
+            echo "✅ Reproducible: hashes match."
+          else
+            echo "matches=false" >> "$GITHUB_OUTPUT"
+            echo "⚠️ Not byte-reproducible yet — hashes differ. Provenance will record reproducibleBuildVerified=false."
+          fi
+
+  # ───────────────────────────────────────────────────────────────────────────
+  # Sign — only if org cert secret exists; verify before claiming signed
+  # ───────────────────────────────────────────────────────────────────────────
+  sign-and-finalize:
+    name: sign (if cert present) + finalize provenance
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    needs: [build-primary, build-repro]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - name: Download primary artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: signed-release-primary
+          path: incoming
+
+      - name: Detect signing capability
+        id: cap
+        env:
+          HAS_CERT: ${{ secrets.VSIX_SIGNING_CERT_BASE64 != '' && secrets.VSIX_SIGNING_CERT_PASSWORD != '' }}
+        run: echo "can_sign=$HAS_CERT" >> "$GITHUB_OUTPUT"
+
+      # vsce supports signing via a PFX/P12 certificate. We decode the org cert
+      # from a secret, sign, then VERIFY. signatureVerified is derived from the
+      # verify exit code — there is no path that sets it true without verifying.
+      - name: Sign and verify VSIX
+        id: sign
+        if: steps.cap.outputs.can_sign == 'true'
+        env:
+          CERT_B64: ${{ secrets.VSIX_SIGNING_CERT_BASE64 }}
+          CERT_PW: ${{ secrets.VSIX_SIGNING_CERT_PASSWORD }}
+        run: |
+          set -euo pipefail
+          VSIX=$(ls incoming/*.vsix | head -n1)
+          echo "$CERT_B64" | base64 -d > /tmp/signing-cert.pfx
+          npx @vscode/vsce generate-manifest -i "$VSIX" -o /tmp/manifest.json
+          npx @vscode/vsce sign /tmp/manifest.json /tmp/signing-cert.pfx --pfxPassword "$CERT_PW" -o /tmp/signature.p7s
+          # Verify the produced signature against the artifact. Non-zero exits fail the job.
+          npx @vscode/vsce verify-signature -i "$VSIX" -m /tmp/manifest.json -s /tmp/signature.p7s
+          rm -f /tmp/signing-cert.pfx
+          echo "verified=true" >> "$GITHUB_OUTPUT"
+          echo "signature_path=/tmp/signature.p7s" >> "$GITHUB_OUTPUT"
+
+      - name: Finalize provenance (honest flags)
+        env:
+          SIGNATURE_VERIFIED: ${{ steps.sign.outputs.verified == 'true' }}
+          REPRODUCIBLE: ${{ needs.build-repro.outputs.matches == 'true' }}
+          CAN_SIGN: ${{ steps.cap.outputs.can_sign }}
+        run: |
+          node scripts/finalize-signed-provenance.mjs
+
+      - name: Upload finalized provenance
+        uses: actions/upload-artifact@v4
+        with:
+          name: signed-release-provenance
+          path: |
+            reports/release-provenance-attestation.json
+            reports/release-provenance-attestation.md
+            reports/vscode-release-checksums.sha256
+          if-no-files-found: error
+
+      - name: Summary
+        run: |
+          echo "### Signed Release Summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Can sign (org cert present): ${{ steps.cap.outputs.can_sign }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Signature verified: ${{ steps.sign.outputs.verified == 'true' }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Reproducible build verified: ${{ needs.build-repro.outputs.matches == 'true' }}" >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ steps.cap.outputs.can_sign }}" != "true" ]; then
+            echo "- ⚠️ No org signing certificate configured — this run produces honest checksums and an unsigned provenance. Add VSIX_SIGNING_CERT_BASE64 + VSIX_SIGNING_CERT_PASSWORD org secrets to sign." >> "$GITHUB_STEP_SUMMARY"
+          fi

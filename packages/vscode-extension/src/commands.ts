@@ -5,7 +5,7 @@ import { promisify } from "util";
 import { ExtensionState } from "./state";
 import { TelemetryManager } from "./telemetry";
 import { DashboardPanel } from "./webview/DashboardPanel";
-import { redactForSharing, type Finding } from "@soterai/guard-core";
+import { RuntimePolicyEngine, redactForSharing, type Finding, type ProtectionMode } from "@soterai/guard-core";
 import { escapeHtml, getNonce } from "./firewall/util";
 
 const execFileAsync = promisify(execFile);
@@ -167,15 +167,37 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
         if (!cmd) return;
 
         const decision = await state.engine.scan(cmd, { context: "terminal" });
+        const enforcement = new RuntimePolicyEngine().evaluate({
+            actionType: "terminal_command",
+            protectionMode: terminalProtectionMode(),
+            // Honest scope: this command reviews a pasted command before a user
+            // runs it. It does not intercept arbitrary integrated-terminal or
+            // child-process execution.
+            coverageLevel: "DETECTION_ONLY",
+            riskScore: decision.riskScore,
+            categories: decision.categories,
+            parserStatus: terminalParserStatus(cmd, decision.categories),
+            reversible: false,
+            productionContext: terminalMentionsProduction(cmd),
+            taintedByPromptInjection: decision.categories.includes("repo_instruction_poisoning") || decision.categories.includes("prompt_injection"),
+        });
         state.latestDecision = decision;
         refreshViews();
 
-        if (decision.decision === "block" || decision.decision === "approval_required") {
-            vscode.window.showErrorMessage(`[SoterAI BLOCK] Terminating command check: "${cmd}" is blocked or requires approval. Risk: ${decision.severity}`);
+        if (enforcement.action === "DENY") {
+            vscode.window.showErrorMessage(
+                `[SoterAI DENY] Terminal command should not run. Coverage: ${enforcement.coverageLevel}. Reasons: ${enforcement.reasonCodes.join(", ")}.`
+            );
+        } else if (enforcement.action === "ASK") {
+            vscode.window.showWarningMessage(
+                `[SoterAI ASK] Review before running. Coverage: ${enforcement.coverageLevel}. Reasons: ${enforcement.reasonCodes.join(", ")}.`
+            );
+        } else if (decision.decision === "block" || decision.decision === "approval_required") {
+            vscode.window.showErrorMessage(`[SoterAI BLOCK] Terminal command is blocked or requires approval. Risk: ${decision.severity}`);
         } else if (decision.decision === "warn") {
             vscode.window.showWarningMessage(`[SoterAI WARNING] Command contains risky patterns: ${decision.evidencePreview}`);
         } else {
-            vscode.window.showInformationMessage("Command matches safe local execution baseline.");
+            vscode.window.showInformationMessage(`Command matches safe local review baseline. Coverage: ${enforcement.coverageLevel}.`);
         }
     };
 
@@ -469,8 +491,36 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
         vscode.commands.registerCommand("soterai.exportLocalRiskReport", exportLocalRiskReportHandler),
         vscode.commands.registerCommand("soterai.openSecurityPanel", () => {
             DashboardPanel.createOrShow(context.extensionUri);
+        }),
+        vscode.commands.registerCommand("soterai.openControlPanel", async () => {
+            // Reveal the consolidated Control Panel webview in the SoterAI sidebar.
+            await vscode.commands.executeCommand("soterai-control-panel.focus");
         })
     );
+}
+
+function terminalProtectionMode(): ProtectionMode {
+    const config = vscode.workspace.getConfiguration("soterai");
+    const policyMode = config.get<string>("policy.mode", "local");
+    const terminalMode = config.get<string>("terminal.protectionMode", "warn");
+    if (policyMode === "enterprise") return "enterprise_locked";
+    if (terminalMode === "approval") return "strict";
+    if (terminalMode === "manual") return "observe";
+    return "standard";
+}
+
+function terminalParserStatus(cmd: string, categories: string[]): "parsed" | "failed_suspicious" {
+    if (categories.length > 0) return "parsed";
+    // Treat hard-to-reason shell metacharacter combinations as suspicious when
+    // no detector matched. This keeps unknown terminal syntax from becoming a
+    // silent allow in stricter modes.
+    return /[`$][({]|<\(|>\(|\|\s*(?:bash|sh|zsh|powershell|pwsh|cmd)\b|--%|\^\^|\r|\n/.test(cmd)
+        ? "failed_suspicious"
+        : "parsed";
+}
+
+function terminalMentionsProduction(cmd: string): boolean {
+    return /\b(?:prod|production|live|mainnet)\b|AWS_PROFILE\s*=\s*prod|kubectl\s+config\s+use-context\s+\S*prod/i.test(cmd);
 }
 
 function updateDiagnostics(document: vscode.TextDocument, findings: Finding[]): void {
