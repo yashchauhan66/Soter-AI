@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Loader2, LogIn } from "lucide-react";
@@ -63,6 +63,12 @@ export function SignInForm({ callbackUrl, initialError, initialNotice }: { callb
       });
       if (!result || result.error) {
         setError(authErrorMessage(result?.error) || "Email or password is incorrect.");
+        return;
+      }
+      const session = await getSession();
+      if (session?.user?.isAdmin) {
+        router.push("/admin");
+        router.refresh();
         return;
       }
       router.push(safeCallbackUrl(callbackUrl));

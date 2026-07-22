@@ -109,7 +109,7 @@ export default async function BillingPage({
           organizationId={active.org.id}
           currentPlan={active.org.plan}
           plans={PLANS}
-          enterpriseEmail={process.env.ENTERPRISE_CONTACT_EMAIL ?? "sales@soterai.com"}
+          enterpriseEmail={process.env.ENTERPRISE_CONTACT_EMAIL ?? "support@soterai.in"}
         />
       </div>
 

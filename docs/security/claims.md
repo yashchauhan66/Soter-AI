@@ -51,5 +51,4 @@ Logging behavior depends on the integration and policy path. Sensitive payload h
 
 ## Contact
 
-Security contact: security@soterai.in.
-
+Security contact: support@soterai.in.

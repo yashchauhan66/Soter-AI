@@ -28,7 +28,7 @@ pre-1.0, there is no long-term-support branch yet; upgrade to the latest
 **Please report privately. Do not open a public GitHub issue for a security
 vulnerability.**
 
-- **Email:** `security@soterai.in` *(placeholder — replace with the monitored
+- **Email:** `support@soterai.in` *(placeholder — replace with the monitored
   security inbox before public launch)*
 - **PGP:** A public key will be published at `/.well-known/security.txt`
   (`Encryption:` field) before public launch.
@@ -116,4 +116,4 @@ external evidence exists.
 
 ## Phase 8 Disclosure Update
 
-Security reports should be sent to security@soterai.in (confirm mailbox before public launch). Do not access customer data, perform destructive testing, or attack third-party systems. Include reproducible steps, affected assets, impact, and redacted evidence. SoterAI has prepared a vulnerability disclosure process, but a public bug bounty should not be launched until triage ownership, SLA, safe-harbor review, and reward policy are finalized.
+Security reports should be sent to support@soterai.in (confirm mailbox before public launch). Do not access customer data, perform destructive testing, or attack third-party systems. Include reproducible steps, affected assets, impact, and redacted evidence. SoterAI has prepared a vulnerability disclosure process, but a public bug bounty should not be launched until triage ownership, SLA, safe-harbor review, and reward policy are finalized.

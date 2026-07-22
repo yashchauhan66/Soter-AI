@@ -39,9 +39,9 @@ export function resolveEmailProvider(env: SignupEnv = process.env): ConfiguredEm
 
 /**
  * Resolves how verification email will be delivered for the current process.
- * - "blocked": production configured with the mock provider — unsafe, must
+ * - "blocked": production configured with the mock provider - unsafe, must
  *   fail before any database write.
- * - "mock": development/test with the mock provider — verification links are
+ * - "mock": development/test with the mock provider - verification links are
  *   surfaced in the response for local/e2e flows.
  * - "live": a real provider (resend/aws-ses/smtp) is configured.
  */
@@ -52,6 +52,20 @@ export function resolveEmailDeliveryMode(env: SignupEnv = process.env): EmailDel
     return isProduction ? "blocked" : "mock";
   }
   return "live";
+}
+
+export function validateEmailDeliveryConfig(env: SignupEnv = process.env): string[] {
+  const provider = resolveEmailProvider(env);
+  const missing: string[] = [];
+  if (provider === "resend" && !env.RESEND_API_KEY) missing.push("RESEND_API_KEY");
+  if (provider === "smtp") {
+    if (!env.SMTP_HOST) missing.push("SMTP_HOST");
+  }
+  if (provider === "aws-ses") {
+    if (!env.AWS_ACCESS_KEY_ID) missing.push("AWS_ACCESS_KEY_ID");
+    if (!env.AWS_SECRET_ACCESS_KEY) missing.push("AWS_SECRET_ACCESS_KEY");
+  }
+  return missing;
 }
 
 export function shouldExposeDevelopmentOtp(

@@ -11,8 +11,10 @@ import { enforcePublicRateLimit } from "@/lib/publicRateLimit";
 import {
   planSignup,
   resolveEmailDeliveryMode,
+  resolveEmailProvider,
   requireVerifiedEmailForLogin,
   shouldExposeDevelopmentOtp,
+  validateEmailDeliveryConfig,
   type EmailDeliveryMode,
 } from "@/lib/auth/signupPolicy";
 
@@ -38,8 +40,23 @@ const schema = z.object({
 // Sends the OTP after the account transaction commits. Raw codes are never
 // logged or returned by a live email provider path.
 async function deliverVerification(to: string, token: string) {
+  const missing = validateEmailDeliveryConfig();
+  if (missing.length > 0) {
+    throw new Error(`Email provider ${resolveEmailProvider()} is missing required configuration: ${missing.join(", ")}`);
+  }
   const email = await sendTemplateEmail({ to, template: "verify-email-otp", data: { otp: token } });
   return { mocked: email.mocked };
+}
+
+function emailFailureContext(error: unknown, stage: "create" | "resend", userId: string) {
+  return {
+    stage,
+    userId,
+    provider: resolveEmailProvider(),
+    deliveryMode: resolveEmailDeliveryMode(),
+    missingConfig: validateEmailDeliveryConfig(),
+    reason: error instanceof Error ? error.message : "unknown",
+  };
 }
 
 // Mock mode exposes the OTP for local/e2e use; live responses never contain it.
@@ -118,7 +135,7 @@ export async function POST(request: Request) {
             reason: consumeError instanceof Error ? consumeError.message : "unknown",
           });
         });
-        console.error("signup.resend.email_failed", { userId, reason: sendError instanceof Error ? sendError.message : "unknown" });
+        console.error("signup.resend.email_failed", emailFailureContext(sendError, "resend", userId));
         emailSent = false;
       }
       return jsonResponse(successBody({ deliveryMode, token, emailSent, extra: { resent: true } }), { status: 200 });
@@ -195,7 +212,7 @@ export async function POST(request: Request) {
           reason: consumeError instanceof Error ? consumeError.message : "unknown",
         });
       });
-      console.error("signup.create.email_failed", { userId: created.userId, reason: sendError instanceof Error ? sendError.message : "unknown" });
+      console.error("signup.create.email_failed", emailFailureContext(sendError, "create", created.userId));
       emailSent = false;
     }
 

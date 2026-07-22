@@ -4,13 +4,14 @@
 // emailing a real person. Run: npx tsx scripts/test-email-otp-delivery.ts [to]
 import "dotenv/config";
 import { sendTemplateEmail } from "../lib/email/send";
-import { resolveEmailDeliveryMode } from "../lib/auth/signupPolicy";
+import { resolveEmailDeliveryMode, validateEmailDeliveryConfig } from "../lib/auth/signupPolicy";
 
 async function main() {
   const to = process.argv[2] ?? "delivered@resend.dev";
   console.log("provider:", process.env.EMAIL_PROVIDER);
   console.log("from:", process.env.EMAIL_FROM);
   console.log("delivery mode:", resolveEmailDeliveryMode());
+  console.log("missing config:", validateEmailDeliveryConfig().join(", ") || "none");
   console.log("sending verify-email-otp to:", to);
   try {
     const result = await sendTemplateEmail({

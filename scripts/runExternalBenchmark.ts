@@ -81,10 +81,39 @@ async function main() {
   const outPath = path.join(outDir, "external-benchmark.md");
   writeFileSync(outPath, lines.join("\n"), "utf8");
 
+  const evidencePath = path.join(outDir, "independent-benchmark-validation.json");
+  writeFileSync(
+    evidencePath,
+    `${JSON.stringify(
+      {
+        generatedAt: new Date().toISOString(),
+        classifier: "analyzeText",
+        externalBenchmarks: reported.map(({ dataset, metrics }) => ({
+          dataset: dataset.name,
+          source: dataset.source,
+          representativeSample: dataset.isRepresentativeSample,
+          cases: metrics.total,
+          precision: metrics.precision,
+          recall: metrics.recall,
+          f1: metrics.f1,
+          falsePositiveRate: metrics.falsePositiveRate,
+          falseNegativeRate: metrics.falseNegativeRate,
+          latency: metrics.latency,
+          attribution: dataset.attribution,
+          license: dataset.license,
+        })),
+      },
+      null,
+      2,
+    )}\n`,
+    "utf8",
+  );
+
    
   console.log(lines.join("\n"));
    
   console.log(`\nReport written to ${path.relative(process.cwd(), outPath)}`);
+  console.log(`Evidence JSON written to ${path.relative(process.cwd(), evidencePath)}`);
 }
 
 main().catch((error) => {

@@ -235,8 +235,8 @@ export default function PrivacyPage() {
           While we take reasonable measures to protect your data, no system is
           completely secure. We encourage responsible disclosure of any security
           vulnerabilities to{" "}
-          <a href="mailto:security@soterai.in" className="text-cyan underline">
-            security@soterai.in
+          <a href="mailto:support@soterai.in" className="text-cyan underline">
+            support@soterai.in
           </a>
           .
         </p>
@@ -448,10 +448,10 @@ export default function PrivacyPage() {
           <li>
             <strong className="text-slate-300">Security concerns:</strong>{" "}
             <a
-              href="mailto:security@soterai.in"
+              href="mailto:support@soterai.in"
               className="text-cyan underline"
             >
-              security@soterai.in
+              support@soterai.in
             </a>
           </li>
         </ul>

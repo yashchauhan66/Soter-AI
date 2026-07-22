@@ -74,10 +74,10 @@ export default function SupportPage() {
             Vulnerability reports, security concerns, responsible disclosure
           </p>
           <a
-            href="mailto:security@soterai.in"
+            href="mailto:support@soterai.in"
             className="mt-4 inline-block text-cyan hover:underline"
           >
-            security@soterai.in
+            support@soterai.in
           </a>
         </article>
       </div>
@@ -121,10 +121,10 @@ export default function SupportPage() {
           <p className="text-slate-400">
             To report a security vulnerability, email{" "}
             <a
-              href="mailto:security@soterai.in"
+              href="mailto:support@soterai.in"
               className="text-cyan hover:underline"
             >
-              security@soterai.in
+              support@soterai.in
             </a>{" "}
             with the following details:
           </p>

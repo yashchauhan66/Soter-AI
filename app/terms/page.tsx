@@ -396,8 +396,8 @@ export default function TermsPage() {
         </h2>
         <p className="text-slate-400 leading-7">
           You may terminate your account at any time by contacting{" "}
-          <a href="mailto:support@soterai.dev" className="text-cyan underline">
-            support@soterai.dev
+          <a href="mailto:support@soterai.in" className="text-cyan underline">
+            support@soterai.in
           </a>{" "}
           or through the account settings in the dashboard.
         </p>
@@ -470,19 +470,19 @@ export default function TermsPage() {
           <li>
             <strong className="text-slate-300">General support:</strong>{" "}
             <a
-              href="mailto:support@soterai.dev"
+              href="mailto:support@soterai.in"
               className="text-cyan underline"
             >
-              support@soterai.dev
+              support@soterai.in
             </a>
           </li>
           <li>
             <strong className="text-slate-300">Security concerns:</strong>{" "}
             <a
-              href="mailto:security@soterai.dev"
+              href="mailto:support@soterai.in"
               className="text-cyan underline"
             >
-              security@soterai.dev
+              support@soterai.in
             </a>
           </li>
         </ul>
