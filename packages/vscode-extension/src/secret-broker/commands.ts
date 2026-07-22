@@ -3,7 +3,7 @@ import { randomBytes } from "crypto";
 import { hashContent } from "@soterai/guard-core";
 import { EnforcedApiCapabilityBroker } from "./EnforcedApiCapability";
 import { buildSafeLLMContext } from "./LLMContext";
-import { secretBrokerRuntime, useSecretValueStore } from "./runtime";
+import { secretBrokerRuntime, setSecretValueStore } from "./runtime";
 import { SecretStorageValueStore } from "./SecretStorageValueStore";
 import { SensitiveContextPolicyEngine, type SensitiveContextPolicy } from "./SensitiveContextPolicy";
 import { SensitiveContextRedactor } from "./SensitiveContextRedactor";
@@ -28,7 +28,7 @@ let lastPreview:
 export function registerSecretBrokerCommands(context: vscode.ExtensionContext, refreshViews: () => void): void {
     // Back raw secret values with VS Code SecretStorage (OS keychain) instead
     // of the extension-host heap for their TTL window.
-    useSecretValueStore(new SecretStorageValueStore(context.secrets));
+    setSecretValueStore(new SecretStorageValueStore(context.secrets));
 
     const reg = (id: string, handler: (...args: any[]) => any) =>
         context.subscriptions.push(vscode.commands.registerCommand(id, handler));

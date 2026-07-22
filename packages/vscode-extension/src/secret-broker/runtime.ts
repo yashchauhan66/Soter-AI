@@ -51,6 +51,6 @@ export const secretBrokerRuntime = {
 };
 
 /** Called once at activation to back secret values with VS Code SecretStorage. */
-export function useSecretValueStore(store: SecretValueStore): void {
+export function setSecretValueStore(store: SecretValueStore): void {
     valueStore.setTarget(store);
 }

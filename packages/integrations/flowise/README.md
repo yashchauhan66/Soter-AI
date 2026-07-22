@@ -98,4 +98,4 @@ Scans documents for embedded threats, PII, or policy violations before they ente
 ## Support
 
 - Documentation: [https://docs.soterai.dev](https://docs.soterai.dev)
-- Email: support@soterai.dev
+- Email: support@soterai.in

@@ -35,10 +35,12 @@ export const inputGuard = {
         default: "BLOCK",
       },
       {
-        key: "projectId",
+        key: "project",
         label: "Project ID",
         type: "string" as const,
         required: false,
+        helpText:
+          "Optional SoterAI project ID. Leave blank to use the default project from your connected account.",
       },
       {
         key: "metadata",
@@ -56,14 +58,21 @@ export const inputGuard = {
       reason: null,
       incidentId: null,
     },
+    outputFields: [
+      { key: "allowed", label: "Allowed", type: "boolean" as const },
+      { key: "blocked", label: "Blocked", type: "boolean" as const },
+      { key: "riskScore", label: "Risk Score", type: "number" as const },
+      { key: "categories", label: "Risk Categories", list: true },
+      { key: "safeText", label: "Safe Text", type: "string" as const },
+      { key: "reason", label: "Reason", type: "string" as const },
+      { key: "incidentId", label: "Incident ID", type: "string" as const },
+    ],
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
-      const baseUrl = (
-        bundle.authData.baseUrl || "https://soterai.in"
-      ).replace(/\/$/, "");
+      const baseUrl = getBaseUrl(bundle);
       const meta: Record<string, unknown> = tryParseJson(
         bundle.inputData.metadata,
       );
-      const pid = bundle.inputData.projectId || bundle.authData.projectId;
+      const pid = bundle.inputData.project || bundle.authData.project;
       if (pid) meta.projectId = pid;
       const response = await z.request({
         url: `${baseUrl}/api/guard/input`,
@@ -123,10 +132,12 @@ export const outputGuard = {
         required: true,
       },
       {
-        key: "projectId",
+        key: "project",
         label: "Project ID",
         type: "string" as const,
         required: false,
+        helpText:
+          "Optional SoterAI project ID. Leave blank to use the default project from your connected account.",
       },
     ],
     sample: {
@@ -136,12 +147,17 @@ export const outputGuard = {
       safeText: "The weather today is sunny with a high of 75F.",
       reason: null,
     },
+    outputFields: [
+      { key: "allowed", label: "Allowed", type: "boolean" as const },
+      { key: "riskScore", label: "Risk Score", type: "number" as const },
+      { key: "categories", label: "Risk Categories", list: true },
+      { key: "safeText", label: "Safe Text", type: "string" as const },
+      { key: "reason", label: "Reason", type: "string" as const },
+    ],
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
-      const baseUrl = (
-        bundle.authData.baseUrl || "https://soterai.in"
-      ).replace(/\/$/, "");
+      const baseUrl = getBaseUrl(bundle);
       const meta: Record<string, unknown> = {};
-      const pid = bundle.inputData.projectId || bundle.authData.projectId;
+      const pid = bundle.inputData.project || bundle.authData.project;
       if (pid) meta.projectId = pid;
       const response = await z.request({
         url: `${baseUrl}/api/guard/output`,
@@ -188,22 +204,26 @@ export const piiRedactor = {
         required: true,
       },
       {
-        key: "projectId",
+        key: "project",
         label: "Project ID",
         type: "string" as const,
         required: false,
+        helpText:
+          "Optional SoterAI project ID. Leave blank to use the default project from your connected account.",
       },
     ],
     sample: {
       safeText: "Contact me at [EMAIL REDACTED] or call [PHONE REDACTED].",
       riskScore: 0.6,
     },
+    outputFields: [
+      { key: "safeText", label: "Redacted Text", type: "string" as const },
+      { key: "riskScore", label: "Risk Score", type: "number" as const },
+    ],
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
-      const baseUrl = (
-        bundle.authData.baseUrl || "https://soterai.in"
-      ).replace(/\/$/, "");
+      const baseUrl = getBaseUrl(bundle);
       const meta: Record<string, unknown> = {};
-      const pid = bundle.inputData.projectId || bundle.authData.projectId;
+      const pid = bundle.inputData.project || bundle.authData.project;
       if (pid) meta.projectId = pid;
 
       const response = await z.request({
@@ -249,7 +269,7 @@ export const ragScanner = {
         helpText: "The document content to scan before RAG ingestion.",
       },
       {
-        key: "documentId",
+        key: "document_key",
         label: "Document ID",
         type: "string" as const,
         required: true,
@@ -264,10 +284,12 @@ export const ragScanner = {
         default: "api",
       },
       {
-        key: "projectId",
+        key: "project",
         label: "Project ID",
         type: "string" as const,
         required: false,
+        helpText:
+          "Optional SoterAI project ID. Leave blank to use the default project from your connected account.",
       },
     ],
     sample: {
@@ -276,11 +298,19 @@ export const ragScanner = {
       findings: [],
       recommendedAction: "INDEX",
     },
+    outputFields: [
+      { key: "trustScore", label: "Trust Score", type: "number" as const },
+      { key: "trustLevel", label: "Trust Level", type: "string" as const },
+      { key: "findings", label: "Findings", list: true },
+      {
+        key: "recommendedAction",
+        label: "Recommended Action",
+        type: "string" as const,
+      },
+    ],
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
-      const baseUrl = (
-        bundle.authData.baseUrl || "https://soterai.in"
-      ).replace(/\/$/, "");
-      const pid = bundle.inputData.projectId || bundle.authData.projectId;
+      const baseUrl = getBaseUrl(bundle);
+      const pid = bundle.inputData.project || bundle.authData.project;
 
       const response = await z.request({
         url: `${baseUrl}/api/rag/document/trust-score`,
@@ -292,7 +322,7 @@ export const ragScanner = {
         },
         body: JSON.stringify({
           projectId: pid || undefined,
-          documentId: bundle.inputData.documentId,
+          documentId: bundle.inputData.document_key,
           content: bundle.inputData.text,
           source: bundle.inputData.source || "api",
         }),
@@ -335,6 +365,10 @@ interface ZapierZ {
     json: Record<string, unknown>;
     throwForStatus(): void;
   }>;
+}
+
+function getBaseUrl(bundle: ZapierBundle): string {
+  return "https://soterai.in";
 }
 interface ZapierBundle {
   authData: Record<string, string>;

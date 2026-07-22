@@ -61,7 +61,7 @@
 | API documentation | https://docs.soterai.dev |
 | Privacy URL | https://soterai.in/privacy |
 | Terms URL | https://soterai.in/terms |
-| Support email | support@soterai.dev |
+| Support email | support@soterai.in |
 
 ## Review Process
 

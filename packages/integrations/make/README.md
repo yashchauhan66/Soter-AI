@@ -6,12 +6,18 @@ This custom app brings SoterAI's security scanning directly into your Make.com s
 
 ## Modules
 
-| Module | Name | Description |
-|--------|------|-------------|
-| **Check Input for Threats** | `inputGuard` | Scan user input for prompt injection, jailbreaks, PII, and other AI security threats before sending to an LLM. |
-| **Check AI Output for Threats** | `outputGuard` | Scan AI-generated responses for unsafe content, system prompt leakage, and PII before delivering to users. |
-| **Redact PII from Text** | `piiRedactor` | Redact personally identifiable information and secrets from any text. Supports partial, full, and hash redaction modes. |
-| **Scan RAG Document** | `ragScanner` | Scan documents for embedded threats before adding them to RAG or vector databases. |
+| # | Module | Name | Description |
+|---|--------|------|-------------|
+| 1 | **Check Input for Threats** | `inputGuard` | Scan user input for prompt injection, jailbreaks, PII, and other AI security threats before sending to an LLM. |
+| 2 | **Check AI Output for Threats** | `outputGuard` | Scan AI-generated responses for unsafe content, system prompt leakage, and PII before delivering to users. |
+| 3 | **Redact PII from Text** | `piiRedactor` | Redact personally identifiable information and secrets from any text. Supports partial, full, and hash redaction modes. |
+| 4 | **Scan RAG Document** | `ragScanner` | Scan documents for embedded threats before adding them to RAG or vector databases. |
+| 5 | **Analyze Text for Threats** | `analyzeText` | Public text analysis endpoint — detect threats without an API key (rate-limited). Supports INPUT and OUTPUT directions. |
+| 6 | **Streaming Guard** | `streamingGuard` | Real-time streaming content inspection with per-chunk risk results. Ideal for live LLM output and progressive input validation. |
+| 7 | **Start Agent Session** | `startAgentSession` | Start a new AI agent session with Agent Firewall policy enforcement. |
+| 8 | **Check Agent Action** | `agentActionCheck` | Check if an AI agent action (tool call, API request, file access) is allowed by the Agent Firewall policy. |
+| 9 | **Check Agent Data Access** | `agentDataCheck` | Check if an AI agent accessing data (RAG context, files, clipboard, etc.) is allowed and detect potential data leaks. |
+| 10 | **Check Agent Output** | `agentOutputCheck` | Check AI agent output for sensitive data leakage before delivering to users. |
 
 ## Connection Setup
 
@@ -22,8 +28,10 @@ This custom app brings SoterAI's security scanning directly into your Make.com s
 | Field | Required | Description |
 |-------|----------|-------------|
 | **API Key** | Yes | Your SoterAI API key (starts with `sk_`). |
-| **Base URL** | No | Defaults to `https://soterai.in`. Change only for self-hosted deployments. |
+| **Base URL** | No | Defaults to `https://api.soterai.in`. Change only for self-hosted deployments. |
 | **Project ID** | No | Default SoterAI project ID applied to all modules unless overridden per-step. |
+
+> **Note:** Module 5 (Analyze Text) uses the public `/api/guard/analyze` endpoint and does **not** require an API key. It works with or without authentication (rate-limited).
 
 ## Example Scenarios
 
@@ -51,6 +59,18 @@ Only clean documents are added to your vector database.
 
 Route blocked threats to a notification channel for review.
 
+### 5. Agent Action Firewall
+
+> Webhook -> **SoterAI: Start Agent Session** -> Agent Tool Call -> **SoterAI: Check Agent Action** -> Router (decision=ALLOW) -> Execute Action
+
+Secure your AI agents by checking every tool call against your Agent Firewall policy.
+
+### 6. Real-Time Streaming Guard
+
+> OpenAI Stream -> **SoterAI: Streaming Guard** -> Router (risk check) -> User
+
+Inspect each chunk of a streaming LLM response in real-time to detect unsafe content early.
+
 ## Installation (Custom App)
 
 1. In Make.com, go to **My Apps > Create a new app**
@@ -64,7 +84,7 @@ Route blocked threats to a notification channel for review.
 make/
   app.json                              # App metadata and connection config
   modules/
-    actions.json                        # All 4 action modules
+    actions.json                        # All 10 action modules
   scenarios/
     webhook-guard-openai.json           # Example scenario reference
 ```

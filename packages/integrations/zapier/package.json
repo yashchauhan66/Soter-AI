@@ -1,8 +1,8 @@
 {
   "name": "soterai-zapier",
   "version": "0.1.0",
-  "description": "SoterAI adds prompt injection, jailbreak, PII leakage, and unsafe output protection to AI workflows.",
-  "author": "SoterAI <support@soterai.dev>",
+  "description": "SoterAI is a comprehensive AI security platform that protects chatbots and agents from prompt injection, jailbreaks, PII leaks, and unsafe outputs.",
+  "author": "SoterAI <support@soterai.in>",
   "license": "MIT",
   "homepage": "https://soterai.in",
   "repository": {
@@ -23,14 +23,14 @@
   "scripts": {
     "build": "tsc",
     "test": "npm run build",
-    "validate": "zapier validate",
-    "push": "zapier push"
+    "validate": "zapier-platform validate",
+    "push": "zapier-platform push --skip-dep-install"
   },
   "dependencies": {
-    "zapier-platform-core": "15.19.0"
+    "zapier-platform-core": "19.0.0"
   },
   "devDependencies": {
-    "zapier-platform-cli": "15.19.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "zapier-platform-cli": "19.0.0"
   }
 }

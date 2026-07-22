@@ -16,6 +16,9 @@ import {
 const App = {
   version: require("../package.json").version,
   platformVersion: require("zapier-platform-core").version,
+  flags: {
+    cleanInputData: false,
+  },
   authentication,
 
   creates: {
