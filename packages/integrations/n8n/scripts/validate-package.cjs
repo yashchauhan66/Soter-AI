@@ -6,7 +6,7 @@ const packageJson = readJson(path.join(root, "package.json"));
 const readme = fs.readFileSync(path.join(root, "README.md"), "utf8");
 const changelog = fs.readFileSync(path.join(root, "CHANGELOG.md"), "utf8");
 const readiness = fs.readFileSync(path.resolve(root, "..", "..", "..", "docs", "integrations", "n8n-marketplace-readiness.md"), "utf8");
-const nodeSource = fs.readFileSync(path.join(root, "nodes", "SoterGuard.node.ts"), "utf8");
+const nodeSource = fs.readFileSync(path.join(root, "nodes", "SoterGuard", "SoterGuard.node.ts"), "utf8");
 
 const requiredKeywords = [
   "n8n-community-node-package",
@@ -34,7 +34,7 @@ const requiredWorkflows = [
 assert(packageJson.name === "n8n-nodes-soterai", "Package name must be n8n-nodes-soterai.");
 assert(readme.includes(`Version: \`${packageJson.version}\``), "README compatibility version must match package.json.");
 assert(nodeSource.includes(`const PACKAGE_VERSION = "${packageJson.version}"`), "Node User-Agent version must match package.json.");
-assert(packageJson.n8n?.nodes?.includes("dist/nodes/SoterGuard.node.js"), "n8n node dist path is missing.");
+assert(packageJson.n8n?.nodes?.includes("dist/nodes/SoterGuard/SoterGuard.node.js"), "n8n node dist path is missing.");
 assert(
   packageJson.n8n?.credentials?.includes("dist/credentials/SoterApi.credentials.js"),
   "n8n credential dist path is missing.",
