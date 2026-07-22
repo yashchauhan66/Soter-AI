@@ -16,12 +16,14 @@ import Link from "next/link";
 import { safeJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata: Metadata = {
-  title: "SoterAI vs Competitors | AI Security Guardrail Comparison",
+  title: "SoterAI vs Competitors | AI Security Guardrail Platform Comparison 2026",
   description:
-    "Compare SoterAI against Lakera (Check Point), Palo Alto Prisma AIRS, Galileo, Arthur AI, Prompt Security, HiddenLayer, Protect AI, Pangea, Cisco AI Defense, NVIDIA NeMo, Guardrails AI, LLM Guard, GA Guard, AWS Bedrock, and Azure AI Content Safety.",
-  alternates: { canonical: "/comparison" },    openGraph: {
-    title: "SoterAI vs Competitors — AI Security Guardrail Comparison",
-    description: "Compare the core AI guardrail matrix plus the expanded 2026 AI security landscape including Check Point, Palo Alto Prisma AIRS, Galileo Agent Control, and AWS Cross-Account Safeguards.",
+    "Compare SoterAI against 15+ AI security competitors: Lakera, Palo Alto Prisma AIRS, Galileo, Arthur AI, Prompt Security, HiddenLayer, Protect AI, Pangea, Cisco AI Defense, NVIDIA NeMo, Guardrails AI, and more. India's first AI security platform with Aadhaar/PAN PII detection.",
+  keywords: ["ai security comparison", "SoterAI vs Lakera", "best ai guardrail platform", "ai security vendor comparison", "prompt injection protection comparison", "enterprise ai security india"],
+  alternates: { canonical: "/comparison" },
+  openGraph: {
+    title: "SoterAI vs Competitors — AI Security Guardrail Comparison 2026",
+    description: "Compare 15+ AI security vendors including Lakera, Palo Alto, Galileo, and Arthur AI. See how SoterAI compares for India PII detection, agent firewall, and enterprise controls.",
   },
 };
 

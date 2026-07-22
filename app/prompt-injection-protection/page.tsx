@@ -12,6 +12,10 @@ export const metadata: Metadata = buildMetadata({
     "prompt injection detection",
     "ai instruction override",
     "indirect prompt injection",
+    "prompt injection prevention",
+    "llm jailbreak protection",
+    "prompt injection india",
+    "ai security prompt injection",
   ],
 });
 

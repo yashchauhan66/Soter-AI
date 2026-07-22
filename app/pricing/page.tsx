@@ -7,26 +7,58 @@ const siteUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://soterai.in";
 
 const pricingJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Product",
-  name: "SoterAI",
-  applicationCategory: "SecurityApplication",
-  description: "AI data and agent-action security for browsers, IDEs, workflows, and APIs.",
-  url: `${siteUrl}/pricing`,
-  brand: { "@type": "Brand", name: "SoterAI" },
-  offers: {
-    "@type": "AggregateOffer",
-    priceCurrency: "INR",
-    lowPrice: "0",
-    highPrice: "9999",
-    offerCount: "5",
-  },
+  "@graph": [
+    {
+      "@type": "Product",
+      "@id": `${siteUrl}/pricing#product`,
+      name: "SoterAI",
+      applicationCategory: "SecurityApplication",
+      description: "AI data and agent-action security for browsers, IDEs, workflows, and APIs.",
+      url: `${siteUrl}/pricing`,
+      brand: { "@type": "Brand", name: "SoterAI" },
+      offers: {
+        "@type": "AggregateOffer",
+        priceCurrency: "INR",
+        lowPrice: "0",
+        highPrice: "9999",
+        offerCount: "5",
+      },
+      mainEntityOfPage: { "@type": "WebPage", "@id": `${siteUrl}/pricing` },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${siteUrl}/pricing#faq`,
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What counts as a security check?",
+          acceptedAnswer: { "@type": "Answer", text: "Each API call to an input, output, PII, RAG, or grounding guard endpoint counts as one security check. Integration calls are counted the same way." },
+        },
+        {
+          "@type": "Question",
+          name: "Does SoterAI store my prompts or AI outputs?",
+          acceptedAnswer: { "@type": "Answer", text: "SoterAI is designed to avoid persisting raw prompts, secrets, and AI outputs on redaction paths. Audit records store metadata such as risk scores, categories, timestamps, and actions." },
+        },
+        {
+          "@type": "Question",
+          name: "Is SoterAI a replacement for human security review?",
+          acceptedAnswer: { "@type": "Answer", text: "No. SoterAI is a defense-in-depth control that reduces risk. It does not replace human review, secure design, monitoring, or incident response." },
+        },
+      ],
+    },
+  ],
 };
 
 export const metadata: Metadata = {
-  title: "Pricing | SoterAI AI Security Plans",
+  title: "AI Security Pricing: Free to Enterprise Plans | SoterAI",
   description:
-    "SoterAI pricing for guarded AI operations: Free, Starter, Pro, Agency, and Enterprise. Includes honest status labels for API, browser, VS Code, n8n, MCP, and audit evidence surfaces.",
+    "SoterAI AI security pricing for Indian businesses. Free plan at ₹0/mo, Starter at ₹999/mo, Pro at ₹2,999/mo, Agency and Enterprise plans. AI guardrails, PII redaction, and agent firewall for every budget.",
+  keywords: ["ai security pricing", "ai guardrail cost", "llm security pricing india", "prompt injection protection price", "aadhaar pii detection cost", "budget ai security"],
   alternates: { canonical: "/pricing" },
+  openGraph: {
+    title: "SoterAI Pricing: Free, Starter, Pro, Agency, Enterprise",
+    description: "AI security plans starting at ₹0/mo. Prompt injection protection, India PII detection, agent firewall, and guardrails for Indian businesses of every size.",
+  },
 };
 
 const plans = [
