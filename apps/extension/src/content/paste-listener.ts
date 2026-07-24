@@ -16,7 +16,10 @@ export function installPasteListener(adapter: AiSiteAdapter) {
       result: response.result,
       onReplace: () => target.setText(response.result.rewrittenSafeText || response.result.redactedText),
       onCopy: () => void navigator.clipboard?.writeText(response.result.rewrittenSafeText || response.result.redactedText),
-      onApproval: () => void chrome.runtime.sendMessage({ type: "SOTER_REQUEST_APPROVAL", text: pasted, url: location.href }),
+      onApproval: async () => {
+        chrome.runtime.sendMessage({ type: "SOTER_REQUEST_APPROVAL", text: pasted, url: location.href });
+        return null;
+      },
     });
   }, true);
 }

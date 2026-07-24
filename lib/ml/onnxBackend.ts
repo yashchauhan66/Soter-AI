@@ -1,22 +1,26 @@
 /**
- * ONNX Classifier Backend
+ * ONNX Classifier Backend (SoterLLM v3/v4)
  *
- * Loads a fine-tuned MiniLM-L6-v2 ONNX model exported by
- * scripts/ml/train-onnx-model.py and runs inference in-process using
- * onnxruntime-node + a lightweight WordPiece tokenizer.
+ * Loads a fine-tuned MiniLM ONNX model exported by:
+ *   - scripts/ml/train-onnx-model.py  (v3)
+ *   - scripts/ml/train-soterllm-v4.py (v4 — MLP head + temperature-baked logits)
  *
- * This backend implements the ModelBackend interface so it plugs into the
- * existing rollout infrastructure (lib/ml/rollout.ts → runWithFallback)
- * and supports SHADOW / PARTIAL / FULL deployment.
+ * and runs inference in-process using onnxruntime-node + BertTokenizer.
+ *
+ * v4 additions:
+ *   - optional calibration.json (per-label thresholds + OOD abstention)
+ *   - attackProbability = 1 - P(SAFE) as primary security score
+ *   - maxLength default 256 (v4) with override
+ *   - abstention: low max-prob never coerced silently to "trusted SAFE"
+ *   - multi-score topK always returned for ensemble fusion
  *
  * Environment variables:
- *   ML_BACKEND=onnx                           — selects this backend
- *   ML_ONNX_MODEL_PATH=models/ml-classifier-v1/model.onnx  — ONNX model file
- *   ML_ONNX_LABELS_PATH=models/ml-classifier-v1/labels.json — label mapping
- *   ML_ONNX_CONFIDENCE_FLOOR=0.50             — minimum confidence to accept
- *
- * Dependencies:
- *   npm install onnxruntime-node
+ *   ML_BACKEND=onnx
+ *   ML_ONNX_MODEL_PATH=models/ml-classifier-v4/model.onnx
+ *   ML_ONNX_LABELS_PATH=models/ml-classifier-v4/labels.json
+ *   ML_ONNX_CALIBRATION_PATH=models/ml-classifier-v4/calibration.json
+ *   ML_ONNX_CONFIDENCE_FLOOR=0.50
+ *   ML_ONNX_MAX_LENGTH=256
  */
 
 import * as fs from "node:fs";
@@ -25,25 +29,35 @@ import type { GuardDirection } from "../guard/types";
 import type { MLLabel } from "@prisma/client";
 import type { ModelBackend, ModelInference } from "./types";
 import { BertTokenizer, parseVocabTxt } from "./bertTokenizer";
+import {
+  attackProbability,
+  clearsLabelThreshold,
+  loadCalibration,
+  shouldAbstain,
+  type CalibrationConfig,
+} from "./calibration";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
 interface LabelMap {
-  [index: string]: string; // e.g. "0" → "PROMPT_INJECTION"
+  [index: string]: string;
 }
 
 interface OnnxBackendOptions {
-  /** Path to the ONNX model file (.onnx) */
   modelPath?: string;
-  /** Path to the labels JSON file */
   labelsPath?: string;
-  /** Minimum confidence threshold; predictions below this floor return SAFE */
+  calibrationPath?: string;
+  /** Global minimum confidence; also used as fallback when no per-label thr. */
   confidenceFloor?: number;
-  /** Max sequence length for tokenization */
   maxLength?: number;
+  /**
+   * When true (default for v4 calibration present), low-confidence predictions
+   * are marked abstained rather than silently rewritten as trusted SAFE.
+   */
+  enableAbstention?: boolean;
 }
 
-// ── Error types ───────────────────────────────────────────────────────────────
+// ── Errors ───────────────────────────────────────────────────────────────────
 
 class OnnxBackendError extends Error {
   constructor(message: string, public readonly cause?: unknown) {
@@ -79,7 +93,6 @@ const ALL_LABELS: MLLabel[] = [
 function loadLabelMap(labelsPath: string): LabelMap {
   const raw = fs.readFileSync(labelsPath, "utf-8");
   const parsed = JSON.parse(raw) as LabelMap;
-  // Validate: every index should map to a known label
   for (const [key, value] of Object.entries(parsed)) {
     if (!ALL_LABELS.includes(value as MLLabel)) {
       throw new Error(
@@ -108,7 +121,7 @@ function softmax(logits: number[]): number[] {
 
 function argmax(values: number[]): number {
   let bestIdx = 0;
-  let bestVal = values[0];
+  let bestVal = values[0] ?? Number.NEGATIVE_INFINITY;
   for (let i = 1; i < values.length; i++) {
     if (values[i] > bestVal) {
       bestVal = values[i];
@@ -118,72 +131,89 @@ function argmax(values: number[]): number {
   return bestIdx;
 }
 
+function resolveDefaultCalibrationPath(labelsPath: string, explicit?: string): string | undefined {
+  if (explicit) return explicit;
+  if (process.env.ML_ONNX_CALIBRATION_PATH) return process.env.ML_ONNX_CALIBRATION_PATH;
+  // Convention: calibration.json lives next to labels.json
+  const sibling = path.join(path.dirname(labelsPath), "calibration.json");
+  return fs.existsSync(sibling) ? sibling : undefined;
+}
 
 // ── ONNX Backend ──────────────────────────────────────────────────────────────
 
 /**
- * ONNXClassifierBackend — loads a fine-tuned MiniLM ONNX model and runs
- * inference in-process using either @xenova/transformers (preferred) or
- * onnxruntime-node (fallback).
- *
- * The backend is lazy-initialized: the model is loaded on the first infer()
- * call, not at construction time. This keeps startup fast and allows the
- * backend to be instantiated even when no model file exists yet.
+ * ONNXClassifierBackend — SoterLLM inference via onnxruntime-node.
+ * Lazy-initialized on first infer().
  */
 export class ONNXClassifierBackend implements ModelBackend {
   id = "onnx" as const;
 
-  private options: Required<OnnxBackendOptions>;
-  private session: unknown = null;          // onnxruntime InferenceSession
+  private options: Required<Omit<OnnxBackendOptions, "calibrationPath" | "enableAbstention">> & {
+    calibrationPath?: string;
+    enableAbstention: boolean;
+  };
+  private session: unknown = null;
   private labels: LabelMap = {};
   private tokenizer: BertTokenizer | null = null;
+  private calibration: CalibrationConfig = loadCalibration(null);
+  private safeIndex = 0;
 
-  // Cached for reuse across infer() calls
   private initialized = false;
   private initPromise: Promise<void> | null = null;
 
   constructor(options?: OnnxBackendOptions) {
+    const labelsPath =
+      options?.labelsPath ?? process.env.ML_ONNX_LABELS_PATH ?? "models/ml-classifier-v3/labels.json";
+    const modelPath =
+      options?.modelPath ?? process.env.ML_ONNX_MODEL_PATH ?? "models/ml-classifier-v3/model.onnx";
+    const maxLength = options?.maxLength
+      ?? (process.env.ML_ONNX_MAX_LENGTH ? Number(process.env.ML_ONNX_MAX_LENGTH) : undefined)
+      ?? (modelPath.includes("v4") ? 256 : 128);
+
     this.options = {
-      modelPath: options?.modelPath ?? process.env.ML_ONNX_MODEL_PATH ?? "models/ml-classifier-v1/model.onnx",
-      labelsPath: options?.labelsPath ?? process.env.ML_ONNX_LABELS_PATH ?? "models/ml-classifier-v1/labels.json",
-      confidenceFloor: options?.confidenceFloor ?? Number(process.env.ML_ONNX_CONFIDENCE_FLOOR ?? "0.5"),
-      maxLength: options?.maxLength ?? 128,
+      modelPath,
+      labelsPath,
+      calibrationPath: resolveDefaultCalibrationPath(
+        labelsPath,
+        options?.calibrationPath ?? process.env.ML_ONNX_CALIBRATION_PATH,
+      ),
+      confidenceFloor:
+        options?.confidenceFloor ?? Number(process.env.ML_ONNX_CONFIDENCE_FLOOR ?? "0.5"),
+      maxLength,
+      enableAbstention: options?.enableAbstention ?? true,
     };
   }
 
-  /**
-   * Lazy initialization — loads the ONNX model and label mapping.
-   * Safe to call multiple times; subsequent calls are no-ops.
-   */
   private async ensureInitialized(): Promise<void> {
     if (this.initialized) return;
     if (this.initPromise) return this.initPromise;
-
     this.initPromise = this._init();
     await this.initPromise;
   }
 
   private async _init(): Promise<void> {
-    // 1. Check model file exists
     if (!fs.existsSync(this.options.modelPath)) {
       throw new OnnxBackendError(
         `ONNX model not found at ${this.options.modelPath}. ` +
-          "Run scripts/ml/train-onnx-model.py first, or set ML_ONNX_MODEL_PATH.",
+          "Run scripts/ml/train-soterllm-v4.py (or train-onnx-model.py) first, or set ML_ONNX_MODEL_PATH.",
       );
     }
 
-    // 2. Load label mapping
     this.labels = loadLabelMap(this.options.labelsPath);
+    // SAFE is conventionally index 0; detect dynamically for safety.
+    this.safeIndex = 0;
+    for (const [idx, name] of Object.entries(this.labels)) {
+      if (name === "SAFE") {
+        this.safeIndex = Number(idx);
+        break;
+      }
+    }
 
-    // 3. Load model via onnxruntime-node
+    this.calibration = loadCalibration(this.options.calibrationPath);
+
     const ort = await tryImportOnnxRuntime();
     this.session = await ort.InferenceSession.create(this.options.modelPath);
 
-    // 4. Load the tokenizer. We use a faithful BERT WordPiece implementation
-    //    (lib/ml/bertTokenizer.ts) whose token ids are verified to match the
-    //    Python HuggingFace tokenizer the model trained with — see
-    //    scripts/ml/verify-tokenizer-parity.ts. This replaces an earlier regex
-    //    approximation that drifted confidence and dropped real attacks.
     const modelDir = path.dirname(this.options.labelsPath);
     const tokCfgDir = path.join(modelDir, "tokenizer_config");
     const vocabPath = path.join(tokCfgDir, "vocab.txt");
@@ -197,8 +227,6 @@ export class ONNXClassifierBackend implements ModelBackend {
 
     const vocab = parseVocabTxt(fs.readFileSync(vocabPath, "utf-8"));
 
-    // Read tokenizer_config.json for the BERT normalization flags (falls back
-    // to standard uncased-BERT defaults if absent).
     let doLowerCase = true;
     let stripAccents: boolean | null = null;
     let tokenizeChineseChars = true;
@@ -214,7 +242,7 @@ export class ONNXClassifierBackend implements ModelBackend {
         if (cfg.strip_accents === true || cfg.strip_accents === false) stripAccents = cfg.strip_accents;
         if (typeof cfg.tokenize_chinese_chars === "boolean") tokenizeChineseChars = cfg.tokenize_chinese_chars;
       } catch {
-        // keep defaults on a malformed config
+        // keep defaults
       }
     }
 
@@ -231,16 +259,19 @@ export class ONNXClassifierBackend implements ModelBackend {
   /**
    * Run inference on a text input.
    *
-   * @param text - The input text to classify
-   * @param _direction - Guard direction (INPUT/OUTPUT — currently unused by this model)
-   * @returns ModelInference with predicted label and confidence score
+   * @param text - Input text
+   * @param _direction - Guard direction (model is direction-agnostic today)
    */
   async infer(text: string, _direction: GuardDirection): Promise<ModelInference> {
     await this.ensureInitialized();
 
     const clean = text.trim();
     if (clean.length < 3) {
-      return { predictedLabel: "SAFE", confidence: 0.99 };
+      return {
+        predictedLabel: "SAFE",
+        confidence: 0.99,
+        raw: { abstained: false, attackProbability: 0, reason: "too_short" },
+      };
     }
 
     if (!this.session || !this.tokenizer) {
@@ -250,12 +281,10 @@ export class ONNXClassifierBackend implements ModelBackend {
     return this.inferOnnxRuntime(clean);
   }
 
-  /** Inference via onnxruntime-node + lightweight tokenizer. */
   private async inferOnnxRuntime(text: string): Promise<ModelInference> {
     const ort = await tryImportOnnxRuntime();
     const tokens = this.tokenizer!.tokenize(text);
 
-    // Build int64 tensors manually (BigInt64Array.from() not available everywhere)
     const inputIdsData = new BigInt64Array(tokens.inputIds.length);
     for (let i = 0; i < tokens.inputIds.length; i++) {
       inputIdsData[i] = BigInt(tokens.inputIds[i]);
@@ -276,28 +305,71 @@ export class ONNXClassifierBackend implements ModelBackend {
       throw new OnnxBackendError("ONNX model did not produce 'logits' output");
     }
 
+    // v4 exports temperature-scaled logits already (logits/T baked in export).
     const logits: number[] = Array.from(logitsOutput.data as Float32Array);
     const probabilities = softmax(logits);
     const predictedIdx = argmax(probabilities);
-    const predictedLabel = labelAtIndex(this.labels, predictedIdx);
-    const confidence = probabilities[predictedIdx];
+    let predictedLabel = labelAtIndex(this.labels, predictedIdx);
+    const confidence = probabilities[predictedIdx] ?? 0;
+    const atkProb = attackProbability(probabilities, this.safeIndex);
+    const maxProb = Math.max(...probabilities);
+    const top3 = this.topKLabels(probabilities, 3);
 
-    if (confidence < this.options.confidenceFloor) {
-      return { predictedLabel: "SAFE", confidence: Number(confidence.toFixed(4)) };
+    const abstained =
+      this.options.enableAbstention &&
+      predictedLabel !== "SAFE" &&
+      shouldAbstain(maxProb, probabilities, this.calibration);
+
+    // Per-label calibrated threshold (v4). Fallback: global confidenceFloor.
+    const isSafePred = predictedLabel === "SAFE";
+    const clears =
+      isSafePred ||
+      clearsLabelThreshold(
+        predictedLabel,
+        confidence,
+        this.calibration,
+        this.options.confidenceFloor,
+      );
+
+    // Legacy v3 behaviour: below global floor → SAFE.
+    // v4 improvement: if abstaining, still surface attackProbability in raw so
+    // the ensemble can fuse, but do not claim a high-confidence attack label.
+    let finalLabel: MLLabel = predictedLabel;
+    const finalConfidence = Number(confidence.toFixed(4));
+
+    if (abstained) {
+      finalLabel = "SAFE";
+    } else if (!isSafePred && !clears) {
+      // Below operating point — do not escalate; report SAFE with true conf.
+      finalLabel = "SAFE";
+    } else if (!isSafePred && confidence < this.options.confidenceFloor) {
+      // Global floor still applies when no per-label thr exists.
+      if (this.calibration.per_label_thresholds[predictedLabel] === undefined) {
+        finalLabel = "SAFE";
+      }
     }
 
+
     return {
-      predictedLabel,
-      confidence: Number(confidence.toFixed(4)),
+      predictedLabel: finalLabel,
+      confidence: finalConfidence,
       raw: {
         probabilities: probabilities.map((p) => Number(p.toFixed(4))),
-        top3: this.topKLabels(probabilities, 3),
+        top3,
+        attackProbability: Number(atkProb.toFixed(4)),
+        abstained,
+        rawPredictedLabel: predictedLabel,
+        rawConfidence: Number(confidence.toFixed(4)),
+        calibrationVersion: this.calibration.version ?? null,
+        maxLength: this.options.maxLength,
       },
     };
   }
 
-  /** Return the top-K labels with their scores. */
-  private topKLabels(probabilities: number[], k: number): Array<{ label: MLLabel; score: number }> {
+  private topKLabels(
+    probabilities: number[],
+    k: number,
+  ): Array<{ label: MLLabel; score: number }> {
     const indices = probabilities
       .map((p, i) => ({ p, i }))
       .sort((a, b) => b.p - a.p)
@@ -309,7 +381,11 @@ export class ONNXClassifierBackend implements ModelBackend {
     }));
   }
 
-  /** Clean up resources. */
+  /** Expose calibration for tests / diagnostics. */
+  getCalibration(): CalibrationConfig {
+    return this.calibration;
+  }
+
   async dispose(): Promise<void> {
     this.session = null;
     this.tokenizer = null;
@@ -318,7 +394,7 @@ export class ONNXClassifierBackend implements ModelBackend {
   }
 }
 
-// ── Dynamic imports (lazy, so the module loads even without deps installed) ───
+// ── Dynamic imports ───────────────────────────────────────────────────────────
 
 async function tryImportOnnxRuntime(): Promise<typeof import("onnxruntime-node")> {
   try {
@@ -330,10 +406,6 @@ async function tryImportOnnxRuntime(): Promise<typeof import("onnxruntime-node")
 
 // ── Factory ───────────────────────────────────────────────────────────────────
 
-/**
- * Create an ONNXClassifierBackend from environment variables.
- * Returns null if ML_BACKEND !== "onnx".
- */
 export function createOnnxBackendFromEnv(): ONNXClassifierBackend | null {
   if (process.env.ML_BACKEND?.toLowerCase() !== "onnx") {
     return null;
@@ -342,8 +414,12 @@ export function createOnnxBackendFromEnv(): ONNXClassifierBackend | null {
   return new ONNXClassifierBackend({
     modelPath: process.env.ML_ONNX_MODEL_PATH,
     labelsPath: process.env.ML_ONNX_LABELS_PATH,
+    calibrationPath: process.env.ML_ONNX_CALIBRATION_PATH,
     confidenceFloor: process.env.ML_ONNX_CONFIDENCE_FLOOR
       ? Number(process.env.ML_ONNX_CONFIDENCE_FLOOR)
+      : undefined,
+    maxLength: process.env.ML_ONNX_MAX_LENGTH
+      ? Number(process.env.ML_ONNX_MAX_LENGTH)
       : undefined,
   });
 }

@@ -28,4 +28,24 @@ export interface ExtensionHeartbeat {
   domain?: string;
   lastActiveAt: string;
   lockdownEnabled?: boolean;
+  integrity?: ExtensionIntegrityReport;
+}
+
+/**
+ * Runtime self-integrity/tamper signal the extension reports on each heartbeat.
+ * This is best-effort tamper VISIBILITY (not prevention): it lets admins see when
+ * a managed extension is running degraded — required host permissions revoked,
+ * the signed policy failing verification, or the extension unable to reach policy.
+ */
+export interface ExtensionIntegrityReport {
+  /** All host_permissions the extension declares are still granted. */
+  hostPermissionsGranted: boolean;
+  /** Count of declared origins the browser is NOT granting (revoked/removed). */
+  missingHostPermissions: number;
+  /** Last signed-policy signature verification result (false if verification failed). */
+  policySignatureValid: boolean;
+  /** Extension could reach the policy service on last sync attempt. */
+  policyReachable: boolean;
+  /** Overall verdict the extension computed for itself. */
+  healthy: boolean;
 }

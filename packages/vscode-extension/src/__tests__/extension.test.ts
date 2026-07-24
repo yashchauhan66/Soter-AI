@@ -463,9 +463,13 @@ describe("Live inline scanning + Quick Fixes (UX)", () => {
     it("uses a debounced, local-only scan mapped to a DiagnosticCollection", () => {
         assert.match(liveScannerSrc, /createDiagnosticCollection/);
         assert.match(liveScannerSrc, /setTimeout/, "scans must be debounced");
+        // Live path uses context "file". Prompt-injection/jailbreak parity for
+        // that context is enforced in guard-core pipeline 1.1.0 and proven by
+        // packages/guard-core/src/__tests__/live-scan-parity.test.ts (behavioral).
         assert.match(liveScannerSrc, /engine\.scan\(doc\.getText\(\),\s*\{\s*context:\s*"file"\s*\}\)/);
         assert.match(liveScannerSrc, /positionAt\(finding\.start\)/, "findings must map to editor ranges");
     });
+
 
     it("skips non-file schemes, oversized files, and excluded globs", () => {
         assert.match(liveScannerSrc, /scheme !== "file"/);
@@ -560,6 +564,33 @@ describe("Control Panel (consolidated sidebar toggles)", () => {
         }
     });
 
+    it("Phase 11: five primary workflows are allowlisted and wired to real commands", () => {
+        for (const action of [
+            "action:setupBroker",
+            "action:controlledTerminal",
+            "action:scanClipboard",
+            "action:mcpPreflight",
+            "action:depGuard",
+        ]) {
+            assert.ok(controlPanelSrc.includes(`"${action}"`), `ALLOWED must include ${action}`);
+        }
+        for (const c of [
+            "soterai.setupBrokerIntegration",
+            "soterai.runControlledTerminalCommand",
+            "soterai.scanClipboard",
+            "soterai.preflightMCPTool",
+            "soterai.checkDependencyInstall",
+
+        ]) {
+            assert.ok(controlPanelSrc.includes(c), `panel must reference ${c}`);
+            assert.ok(registeredCommands.has(c), `${c} must be registered`);
+            assert.ok(declaredCommands.includes(c), `${c} must be declared`);
+        }
+        assert.match(controlPanelSrc, /Primary workflows/);
+        assert.strictEqual(pkg.contributes.configuration.properties["soterai.showAllCommands"].default, false);
+    });
+
+
     it("only marks a control ENFORCED when a real control gate backs it (honest badge)", () => {
         // The single ENFORCED path in the panel is Safe Mode AND brokerRunning.
         // If this assertion ever fails, an ENFORCED badge was added without a
@@ -576,6 +607,18 @@ describe("Control Panel (consolidated sidebar toggles)", () => {
         assert.strictEqual(enforcedLiterals.length, 3, "only the broker-gated ENFORCED assignment (+ roll-up test/return) should exist");
         assert.match(controlPanelSrc, /t\.level === "ENFORCED"/, "roll-up must derive ENFORCED from a per-control gate, not assume it");
     });
+
+    it("resolves live-scan and MCP badges from CAPABILITY_REGISTRY (no stronger claim than registry)", () => {
+        assert.match(controlPanelSrc, /capabilityUiBadge\("live-scan"\)/);
+        assert.match(controlPanelSrc, /capabilityUiBadge\("mcp-config-scan"\)/);
+        assert.match(controlPanelSrc, /VISIBILITY_ONLY|registryLevel/);
+        const protectionSrc = read("src/protection/ProtectionLevel.ts");
+        assert.match(protectionSrc, /toUiLevel/);
+        assert.match(protectionSrc, /CAPABILITY_REGISTRY/);
+        assert.match(protectionSrc, /VISIBILITY_ONLY[\s\S]*MONITORED/);
+        assert.match(protectionSrc, /STRONG_ENFORCEMENT[\s\S]*ENFORCED/);
+    });
+
 
     it("rejects webview messages outside the allowlist", () => {
         assert.match(controlPanelSrc, /ALLOWED\s*=\s*new Set/);

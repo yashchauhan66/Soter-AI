@@ -15,6 +15,39 @@ export interface Finding {
     confidence: number;
 }
 
+/**
+ * Versioned scan policy shared by every entry path (live scan, manual scan,
+ * clipboard, broker, etc.). Prevents detector-list drift between surfaces.
+ */
+export interface ScanPipeline {
+    secretDetection: boolean;
+    piiDetection: boolean;
+    promptInjectionDetection: boolean;
+    jailbreakDetection: boolean;
+    unsafeCodeDetection: boolean;
+    dependencyDetection: boolean;
+    provenanceAnalysis: boolean;
+}
+
+/** Per-scan report of what actually ran — required for honest coverage claims. */
+export interface ScanPipelineReport {
+    version: string;
+    context: "file" | "selection" | "prompt" | "terminal" | "git" | "workspace";
+    pipeline: ScanPipeline;
+    detectorsExecuted: string[];
+    detectorsSkipped: Array<{ detector: string; reason: string }>;
+    protectionLevel:
+        | "FULL_ENFORCEMENT"
+        | "STRONG_ENFORCEMENT"
+        | "PARTIAL_ENFORCEMENT"
+        | "ADVISORY_ONLY"
+        | "DETECTION_ONLY"
+        | "VISIBILITY_ONLY"
+        | "UNSUPPORTED"
+        | "UNKNOWN_NOT_TESTED";
+    durationMs: number;
+}
+
 export interface GuardDecision {
     decision: GuardAction;
     riskScore: number;
@@ -27,7 +60,10 @@ export interface GuardDecision {
     detectorVersions: Record<string, string>;
     localOnly: boolean;
     createdAt: string;
+    /** Present on every fresh scan; may be absent on legacy cached decisions. */
+    pipeline?: ScanPipelineReport;
 }
+
 
 // ─── Detector Infrastructure ────────────────────────────────────────────────
 

@@ -46,6 +46,8 @@ export interface ExtensionOrgPolicy {
   rules: ExtensionPolicyRule[];
   updatedAt: string;
   signature?: string;
+  offlineFailClosed?: boolean;
+  hardEnforcement?: boolean;
 }
 
 export interface PolicyEvaluationInput {

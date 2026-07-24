@@ -32,6 +32,30 @@ export function scanPrompt(text: string, url: string, state: ExtensionState, eve
   const domain = domainFromUrl(url);
   const policy = state.policy;
   if (!policy) throw new Error("Soter policy cache is not initialized.");
+
+  if (state.policySyncStatus === "offline" && (policy.offlineFailClosed || state.config.offlineFailClosed)) {
+    const redactedText = redactSensitiveText(text, detectedDataTypes);
+    return {
+      hasFindings: true,
+      riskScore: 100,
+      detectedDataTypes: Array.from(new Set([...detectedDataTypes, "offline_block"])),
+      findings: localScan.findings.map((finding) => ({ ...finding, match: auditSafePreview(finding.match, [finding.type], 120) })),
+      action: "block",
+      policy: {
+        action: "block",
+        severity: "critical",
+        matchedRules: [{ id: "offline-fail-closed", name: "Offline Fail-Closed Policy", action: "block", severity: "critical" }],
+        userMessage: "Blocked by your organization's offline fail-closed policy (Soter is offline).",
+        adminMessage: "Offline fail-closed policy enforced locally by the extension.",
+        redactedText,
+        rewrittenSafeText: text,
+        auditMetadata: {},
+      },
+      redactedText,
+      rewrittenSafeText: text,
+      scannedAt: new Date().toISOString(),
+    };
+  }
   const destination = matchAIDestination(url, policy.destinations ?? [], state.config.department, state.config.role);
   const destinationRules = Object.entries(destination?.policyOverrides ?? {}).map(([dataType, action]) => ({
     id: `destination-${destination?.destinationId}-${dataType}`,
@@ -70,7 +94,7 @@ export function scanPrompt(text: string, url: string, state: ExtensionState, eve
     };
   }
   const redactedText = redactSensitiveText(text, detectedDataTypes);
-  return {
+  return withHardEnforcement({
     hasFindings: localScan.findings.length > 0 || customDetectedDataTypes.length > 0,
     riskScore,
     detectedDataTypes,
@@ -80,6 +104,34 @@ export function scanPrompt(text: string, url: string, state: ExtensionState, eve
     redactedText,
     rewrittenSafeText: rewritePromptSafely(redactedText, detectedDataTypes, evaluation.action),
     scannedAt: new Date().toISOString(),
+  }, hardEnforcementEnabled(state));
+}
+
+/** True when hard enforcement is on via signed org policy OR managed config. */
+export function hardEnforcementEnabled(state: ExtensionState) {
+  return state.policy?.hardEnforcement === true || state.config.hardEnforcement === true;
+}
+
+/**
+ * Tags a `block` result with the `hard-enforcement-block` rule so the overlay
+ * renders a locked, non-dismissible block (the user cannot casually close it
+ * and re-submit). No-op for non-block actions or when hard enforcement is off.
+ * Idempotent — will not add the rule twice.
+ */
+export function withHardEnforcement(result: ScanResult, enabled: boolean): ScanResult {
+  if (!enabled || result.action !== "block") return result;
+  if (result.policy.matchedRules.some((rule) => rule.id === "hard-enforcement-block")) return result;
+  return {
+    ...result,
+    policy: {
+      ...result.policy,
+      matchedRules: [
+        { id: "hard-enforcement-block", name: "Hard enforcement block", action: "block", severity: "critical" },
+        ...result.policy.matchedRules,
+      ],
+      userMessage: result.policy.userMessage
+        || "Blocked by your organization's enforcement policy. This submission cannot be sent.",
+    },
   };
 }
 

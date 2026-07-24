@@ -229,13 +229,10 @@
                 "category": "SoterAI"
             },
             {
-                "command": "soterai.scanWorkspaceRisk",
-                "title": "SoterAI: Scan Workspace Risk"
-            },
-            {
                 "command": "soterai.scanBeforeAIPrompt",
                 "title": "SoterAI: Scan Before AI Prompt"
             },
+
             {
                 "command": "soterai.redactSelectionForAI",
                 "title": "SoterAI: Redact Selection for AI"
@@ -613,6 +610,11 @@
                 "title": "SoterAI: Show Workspace Risk Score"
             },
             {
+                "command": "soterai.scanWorkspaceRisk",
+                "title": "SoterAI: Scan Workspace Risk"
+            },
+
+            {
                 "command": "soterai.openMCPToolFirewall",
                 "title": "SoterAI: Open MCP Tool Firewall"
             },
@@ -691,8 +693,24 @@
                 "command": "soterai.safePaste",
                 "title": "SoterAI: Safe Paste (scan clipboard, then paste)",
                 "category": "SoterAI"
+            },
+            {
+                "command": "soterai.setupBrokerIntegration",
+                "title": "SoterAI: Setup Broker Integration",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.restoreBrokerIntegration",
+                "title": "SoterAI: Restore Broker Integration",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.preflightMCPTool",
+                "title": "SoterAI: Preflight MCP Tool Call",
+                "category": "SoterAI"
             }
         ],
+
         "viewsContainers": {
             "activitybar": [
                 {
@@ -897,10 +915,21 @@
                 "soterai.liveScan.enabled": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Scan supported files as you type and show secrets, PII, and prompt-injection risks inline (squiggly underlines with lightbulb Quick Fixes). 100% local — nothing is sent anywhere."
+                    "description": "Scan supported files as you type and show secrets, PII, prompt-injection, and jailbreak risks inline (squiggly underlines with lightbulb Quick Fixes). 100% local regex/heuristic detection — nothing is sent anywhere. This is VISIBILITY_ONLY: diagnostics appear after content exists; SoterAI does not block other extensions or prevent you from sending text to AI."
+                },
+                "soterai.dependencyGuard.osvMode": {
+                    "type": "string",
+                    "enum": [
+                        "ask",
+                        "always",
+                        "never"
+                    ],
+                    "default": "ask",
+                    "markdownDescription": "How Dependency Guard obtains CVE advisories. `ask` prompts before contacting [OSV](https://osv.dev) (`api.osv.dev`); `always` queries OSV online (package name + version only); `never` uses local heuristics only (typosquat, unpinned, remote URL, install scripts). **Advisory only** — cannot block installs outside SoterAI-reviewed commands. SoterAI is not a full SCA product; OSV is the advisory source when online."
                 }
             }
         },
+
         "menus": {
             "commandPalette": [
                 {
@@ -1394,9 +1423,22 @@
                 {
                     "command": "soterai.safePaste",
                     "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.setupBrokerIntegration",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.restoreBrokerIntegration",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.preflightMCPTool",
+                    "when": "soterai.advancedCommands"
                 }
             ]
         },
+
         "walkthroughs": [
             {
                 "id": "soterai.gettingStarted",

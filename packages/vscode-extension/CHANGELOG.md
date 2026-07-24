@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.2.1] - 2026-07-22
+
+### Added
+- Controlled terminal flow that routes supported commands through the authenticated local broker with preview, fixed-argv execution, and redacted output.
+- Runtime capability summary and status coverage indicators for brokered, partial, unsupported, and unknown paths.
+- Extension isolation summary for risky non-allowlisted AI/agent extensions.
+- Broker preflight coverage for runtime capabilities, file operations, network egress, MCP tools, policy changes, process launches, and extension isolation.
+- Strongest local release gate evidence covering typecheck, tests, audit, VSIX packaging, and isolated VS Code install verification.
+
+### Security
+- Added process sandbox policy decisions for shell, environment-secret, unrestricted-network, and unrestricted-filesystem launches.
+- Added file-operation, network-egress, MCP, taint, rollback, and governance policy guardrails in the shared guard core.
+- Added release evidence gates that block `99+` and `100/100` claims unless external/deployment attestations are present.
+- Dependency audit now passes at high severity with `0` known vulnerabilities.
+
+### Verified
+- `npm run validate:strongest-local` passed 15/15 required local checks.
+- `npm test` passed 829 tests.
+- VSIX installs successfully in an isolated VS Code profile as `soterai.soterai-ide-guard@0.2.1`.
+
 ## [0.2.0] - 2026-07-14
 
 ### Added - UX pack (native, local-first, all tested)

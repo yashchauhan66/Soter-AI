@@ -537,6 +537,7 @@ model Organization {
   sourceAppConfigs           SourceAppConfig[]
   aiFileScanEvents           AIFileScanEvent[]
   quotaOverride              Int?
+  extensionSeatLimit         Int?
   disabled                   Boolean                     @default(false)
   disabledReason             String?
   ipAllowlistEnabled         Boolean                     @default(false)

@@ -7,7 +7,7 @@ import { AlertTriangle, BarChart3, Download, Gauge, ShieldCheck } from "lucide-r
 export const metadata: Metadata = {
   title: "AI Security Benchmark: Prompt Injection, Jailbreak & PII Detection",
   description:
-    "Public AI security benchmark with 100% recall on synthetic prompt injection, jailbreak, and PII detection tests. Dataset methodology, latency metrics (p95 10.92ms), and independent validation results for SoterAI's guard detectors.",
+    "Public SoterAI-maintained AI security benchmark for synthetic prompt injection, jailbreak, MCP, secret, PII, and benign controls. Includes methodology, latency metrics, downloads, and explicit limitations.",
   keywords: ["ai security benchmark", "prompt injection benchmark", "jailbreak detection test", "llm guardrail benchmark", "ai guard performance", "pii detection benchmark"],
   alternates: { canonical: "/benchmark" },
 };

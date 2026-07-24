@@ -1,12 +1,22 @@
 /**
- * Canonical protection-level semantics for every SoterAI badge, status bar,
- * webview, notification, and report. These six levels are the ONLY vocabulary
- * allowed for describing what SoterAI does about a risk.
+ * UI protection-level badges for every SoterAI status bar, webview, notification,
+ * and report. These six levels are the display vocabulary.
  *
- * The non-negotiable truth: never display ENFORCED or VERIFIED for a path
- * SoterAI does not technically control or cannot prove. If we merely observed
- * something, say MONITORED. If we can't observe it, say UNKNOWN.
+ * Canonical security claims use the eight-level CAPABILITY_REGISTRY vocabulary
+ * from @soterai/guard-core (FULL_ENFORCEMENT … UNKNOWN_NOT_TESTED). Always map
+ * through `toUiLevel()` / `capabilityUiBadge()` so badges cannot invent a
+ * stronger claim than the registry allows.
+ *
+ * Non-negotiable: never display ENFORCED or VERIFIED for a path SoterAI does
+ * not technically control or cannot prove. If we merely observed something,
+ * say MONITORED. If we can't observe it, say UNKNOWN.
  */
+
+import {
+    CAPABILITY_REGISTRY,
+    type ProtectionCapability,
+    type ProtectionLevelName,
+} from "@soterai/guard-core";
 
 export type ProtectionLevel =
     /** SoterAI controls the relevant path and technically prevented plaintext exposure. */
@@ -70,6 +80,62 @@ export const PROTECTION: Record<ProtectionLevel, ProtectionDescriptor> = {
         meaning: "Plaintext exposure was detected or an unsafe operation was stopped.",
     },
 };
+
+/**
+ * Map the eight-level CAPABILITY_REGISTRY claim → UI badge.
+ * Never upgrades: STRONG/FULL → ENFORCED only; detection/visibility → MONITORED.
+ */
+export function toUiLevel(registryLevel: ProtectionLevelName): ProtectionLevel {
+    switch (registryLevel) {
+        case "FULL_ENFORCEMENT":
+        case "STRONG_ENFORCEMENT":
+            return "ENFORCED";
+        case "PARTIAL_ENFORCEMENT":
+            return "REDACTED";
+        case "ADVISORY_ONLY":
+        case "DETECTION_ONLY":
+        case "VISIBILITY_ONLY":
+            return "MONITORED";
+        case "UNSUPPORTED":
+        case "UNKNOWN_NOT_TESTED":
+            return "UNKNOWN";
+        default: {
+            const _exhaustive: never = registryLevel;
+            void _exhaustive;
+            return "UNKNOWN";
+        }
+    }
+}
+
+/** Look up a capability by id from the shared registry (single source of truth). */
+export function getCapability(id: string): ProtectionCapability | undefined {
+    return CAPABILITY_REGISTRY.find((c) => c.id === id);
+}
+
+/**
+ * Honest UI badge + registry-level label for a capability id.
+ * Prefer this over hardcoding "ENFORCED"/"MONITORED" in webviews.
+ */
+export function capabilityUiBadge(id: string): {
+    uiLevel: ProtectionLevel;
+    registryLevel: ProtectionLevelName;
+    label: string;
+    meaning: string;
+    preExecutionBlock: boolean;
+    wiredInRuntime: boolean;
+} | undefined {
+    const cap = getCapability(id);
+    if (!cap) return undefined;
+    const uiLevel = toUiLevel(cap.level);
+    return {
+        uiLevel,
+        registryLevel: cap.level,
+        label: PROTECTION[uiLevel].label,
+        meaning: `${cap.name}: ${cap.level.replace(/_/g, " ").toLowerCase()}. ${PROTECTION[uiLevel].meaning}`,
+        preExecutionBlock: cap.preExecutionBlock,
+        wiredInRuntime: cap.wiredInRuntime,
+    };
+}
 
 /** `$(icon) Label` — for status bar / markdown strings. */
 export function badge(level: ProtectionLevel): string {

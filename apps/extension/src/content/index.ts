@@ -10,6 +10,7 @@ const SHADOW_AI_KNOWN_PLATFORMS = [
   "chatgpt.com", "chat.openai.com", "claude.ai", "gemini.google.com", "bard.google.com",
   "perplexity.ai", "poe.com", "replit.com", "stackblitz.com", "codesandbox.io",
   "bolt.new", "v0.dev", "lovable.dev", "openrouter.ai", "openwebui.com",
+  "copilot.microsoft.com", "copilot.live.com"
 ];
 
 /** Heuristically guess if the hostname belongs to an AI-like tool. */

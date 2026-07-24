@@ -107,11 +107,28 @@ To stay honest (and consistent with our published audit report):
 - We do **not** claim SOC 2 or ISO 27001 certification.
 - We do **not** claim a completed third-party penetration test.
 - We do **not** claim production-scale load validation.
+- We do **not** claim universal protection for raw terminals, arbitrary local
+  process network egress, third-party VS Code extensions, or MCP hosts that do
+  not route through SoterAI.
 
 Those items are tracked as **EVIDENCE REQUIRED** in
 `docs/final-real-user-enterprise-audit-report.md` and
 `docs/100-percent-readiness-fix-plan.md`, and will be updated here only when the
 external evidence exists.
+
+## Zero-Trust AI Agent Scope
+
+Current implementation evidence is scoped in:
+
+- `docs/security/capability-matrix.md`
+- `docs/security/bypass-matrix.md`
+- `docs/security/coverage-by-integration.md`
+- `docs/security/release-readiness-report.md`
+- `artifacts/security/all-phases-core-evidence.json`
+
+SoterAI may claim deterministic prevention only for explicitly supported
+SoterAI-routed paths. Unsupported routes must remain labelled with the
+appropriate coverage level.
 
 
 ## Phase 8 Disclosure Update

@@ -127,7 +127,8 @@ export function activate(context: vscode.ExtensionContext): void {
     registerSentinelCommands(context, sentinel);
     registerPermissionCommands(context, permissionStore);
     registerWorkspaceGuardCommands(context, workspaceGuard);
-    registerMCPFirewallCommands(context, mcpFirewall);
+    // Phase 8: pass brokerManager so soterai.preflightMCPTool can hit POST /v1/preflight/mcp-tool.
+    registerMCPFirewallCommands(context, mcpFirewall, brokerManager);
     registerMemoryGuardCommands(context, memoryGuard);
     registerDepGuardCommands(context);
     registerPolicyPackCommands(context, refreshViews);

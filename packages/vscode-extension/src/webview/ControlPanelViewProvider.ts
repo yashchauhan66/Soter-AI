@@ -1,9 +1,14 @@
 import * as vscode from "vscode";
 import { escapeHtml, getNonce } from "../firewall/util";
-import { PROTECTION, type ProtectionLevel } from "../protection/ProtectionLevel";
+import {
+    PROTECTION,
+    capabilityUiBadge,
+    type ProtectionLevel,
+} from "../protection/ProtectionLevel";
 import type { WorkspaceGuard } from "../workspace-guard/WorkspaceGuard";
 import type { AISentinel } from "../sentinel/AISentinel";
 import type { BrokerManager } from "../broker/BrokerManager";
+
 
 /**
  * SoterAI Control Panel — the single sidebar surface where a user manages every
@@ -57,6 +62,8 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     }
 
     // ── toggle handling ─────────────────────────────────────────────────────
+    // Phase 11: five primary workflows + toggles/lockdown/coverage. Advanced
+    // palette commands stay gated by soterai.showAllCommands (default false).
     private static readonly ALLOWED = new Set([
         "toggle:safeMode",
         "toggle:protectedWorkspace",
@@ -66,7 +73,13 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
         "action:lockdown",
         "action:openCoverage",
         "action:refresh",
+        "action:setupBroker",
+        "action:controlledTerminal",
+        "action:scanClipboard",
+        "action:mcpPreflight",
+        "action:depGuard",
     ]);
+
 
     private async handleMessage(message: unknown): Promise<void> {
         const msg = message as { type?: string; value?: boolean } | undefined;
@@ -106,7 +119,24 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
                     break;
                 case "action:refresh":
                     break;
+                case "action:setupBroker":
+                    await vscode.commands.executeCommand("soterai.setupBrokerIntegration");
+                    break;
+                case "action:controlledTerminal":
+                    await vscode.commands.executeCommand("soterai.runControlledTerminalCommand");
+                    break;
+                case "action:scanClipboard":
+                    await vscode.commands.executeCommand("soterai.scanClipboard");
+                    break;
+                case "action:mcpPreflight":
+                    await vscode.commands.executeCommand("soterai.preflightMCPTool");
+                    break;
+                case "action:depGuard":
+                    await vscode.commands.executeCommand("soterai.checkDependencyInstall");
+                    break;
+
             }
+
         } catch (error) {
             vscode.window.showErrorMessage(`SoterAI: could not apply that change — ${error instanceof Error ? error.message : String(error)}`);
         }
@@ -176,9 +206,10 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
                 id: "liveScan",
                 label: "Live Scan on Save",
                 on: state.liveScan,
-                level: state.liveScan ? "MONITORED" : undefined,
+                // Registry: live-scan = VISIBILITY_ONLY → UI MONITORED (never ENFORCED).
+                level: state.liveScan ? (capabilityUiBadge("live-scan")?.uiLevel ?? "MONITORED") : undefined,
                 note: state.liveScan
-                    ? "Files are scanned on save and findings are surfaced. This is advisory detection, not prevention."
+                    ? `Files are scanned as you type/save (pipeline 1.1.0: secrets, PII, prompt-injection, jailbreak). Registry level: ${capabilityUiBadge("live-scan")?.registryLevel ?? "VISIBILITY_ONLY"} — diagnostics only; does not block send-to-AI or other extensions.`
                     : "Files are not scanned automatically on save.",
             },
             {
@@ -194,11 +225,14 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
                 id: "mcpFirewall",
                 label: "MCP Firewall (strict)",
                 on: state.mcpFirewall,
-                level: state.mcpFirewall ? "MONITORED" : undefined,
+                // Registry: mcp-config-scan = DETECTION_ONLY → UI MONITORED.
+                level: state.mcpFirewall ? (capabilityUiBadge("mcp-config-scan")?.uiLevel ?? "MONITORED") : undefined,
                 note: state.mcpFirewall
-                    ? "MCP configs are scanned strictly and risky tools are flagged. SoterAI cannot forcibly stop another extension from launching an MCP server."
+                    ? `MCP configs are scanned strictly and risky tools are flagged (${capabilityUiBadge("mcp-config-scan")?.registryLevel ?? "DETECTION_ONLY"}). Optional broker preflight (soterai.preflightMCPTool) is DETECTION_ONLY unless the caller respects the decision; other MCP clients remain unenforced.`
                     : "MCP configs use standard (non-strict) checks.",
             },
+
+
         ];
     }
 
@@ -262,10 +296,13 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     .sw.on { background:#16a34a; } .sw.off { background: var(--vscode-input-background); border:1px solid var(--vscode-panel-border); }
     .sw .knob { position:absolute; top:2px; left:2px; width:18px; height:18px; border-radius:50%; background:#fff; transition:left .15s; }
     .sw.on .knob { left:18px; }
+    .workflows { margin-top:14px; display:flex; flex-direction:column; gap:6px; }
+    .wf-title { font-size:12px; font-weight:700; margin-bottom:2px; }
     .actions { margin-top:14px; display:flex; flex-direction:column; gap:8px; }
     .btn { padding:8px 12px; border:none; border-radius:5px; cursor:pointer; font-size:12px; font-weight:600; text-align:center; }
     .btn.secondary { background: var(--vscode-button-secondaryBackground); color: var(--vscode-button-secondaryForeground); }
     .btn.danger { background:#dc2626; color:#fff; }
+
     .foot { margin-top:12px; font-size:10px; color: var(--vscode-descriptionForeground); line-height:1.4; }
     .trust { font-size:10px; color: var(--vscode-descriptionForeground); margin-top:4px; }
   </style>
@@ -281,10 +318,20 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
 
   ${rows}
 
+  <div class="workflows">
+    <div class="wf-title">Primary workflows</div>
+    <button class="btn secondary" data-action="setupBroker">1. Setup Broker Integration</button>
+    <button class="btn secondary" data-action="controlledTerminal">2. Controlled Terminal</button>
+    <button class="btn secondary" data-action="scanClipboard">3. Scan Clipboard</button>
+    <button class="btn secondary" data-action="mcpPreflight">4. Preflight MCP Tool</button>
+    <button class="btn secondary" data-action="depGuard">5. Check Dependencies</button>
+  </div>
+
   <div class="actions">
     <button class="btn secondary" data-action="openCoverage">View Coverage Matrix</button>
     <button class="btn danger" data-action="lockdown">🔴 Emergency Lockdown</button>
   </div>
+
 
   <div class="trust">Workspace: ${state.trusted ? "Trusted" : "Restricted"} · Broker: ${state.brokerRunning ? "Running (enforced path available)" : "Stopped (advisory only)"}</div>
   <div class="foot">Badges are honest: <b>Enforced</b> means SoterAI technically controls that path; <b>Monitoring only</b> means advisory detection that cannot intercept other extensions or processes.</div>

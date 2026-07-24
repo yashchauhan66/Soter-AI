@@ -1,0 +1,145 @@
+{
+  "product_name": "SoterLLM",
+  "product_version": "v4",
+  "base_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "embedding_dim": 384,
+  "head": "LayerNorm + MLP(384,256,9) + attack_head",
+  "num_labels": 9,
+  "labels": [
+    "SAFE",
+    "PROMPT_INJECTION",
+    "JAILBREAK",
+    "SYSTEM_PROMPT_LEAK_ATTEMPT",
+    "PII",
+    "SECRET",
+    "UNSAFE_OUTPUT",
+    "RAG_POISONING",
+    "DATA_EXFILTRATION_ATTEMPT"
+  ],
+  "training_args": {
+    "train_datasets": null,
+    "val_split": 0.12,
+    "cal_split": 0.08,
+    "epochs": 1,
+    "batch_size": 8,
+    "lr": 2e-05,
+    "max_length": 128,
+    "dropout": 0.15,
+    "label_smoothing": 0.05,
+    "focal_gamma": 1.5,
+    "attack_loss_weight": 0.35,
+    "target_fpr": 0.01,
+    "output_dir": "models/ml-classifier-v4-smoke",
+    "sample": true,
+    "seed": 42,
+    "no_cuda": true,
+    "weight_decay": 0.01
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 1.6221,
+      "train_f1": 0.1007,
+      "val_loss": 2.1908,
+      "val_accuracy": 0.125,
+      "val_f1_macro": 0.0926,
+      "val_f1_weighted": 0.1597,
+      "val_attack_recall": 1.0,
+      "val_attack_precision": 0.6364,
+      "time_seconds": 9.4
+    }
+  ],
+  "calibration": {
+    "product": "SoterLLM",
+    "version": "v4",
+    "temperature": 5.26,
+    "ece_before": 0.029574384912848473,
+    "ece_after": 0.008204484961513228,
+    "target_fpr": 0.01,
+    "per_label_thresholds": {
+      "SAFE": 0.0,
+      "PROMPT_INJECTION": 0.15,
+      "JAILBREAK": 0.15,
+      "SYSTEM_PROMPT_LEAK_ATTEMPT": 0.15,
+      "PII": 0.15,
+      "SECRET": 0.15,
+      "UNSAFE_OUTPUT": 0.15,
+      "RAG_POISONING": 0.15,
+      "DATA_EXFILTRATION_ATTEMPT": 0.15
+    },
+    "ood": {
+      "max_prob_p05": 0.1174607704017143,
+      "max_prob_mean": 0.11679551503848677,
+      "entropy_mean": 2.1966874131893848,
+      "entropy_p95": 2.1971231491795065,
+      "suggested_abstain_max_prob": 0.25
+    },
+    "notes": "Temperature is baked into exported ONNX logits (logits_out = raw/T). Per-label thresholds and OOD floor are applied in lib/ml/onnxBackend.ts."
+  },
+  "final_metrics": {
+    "loss": 2.190771222114563,
+    "accuracy": 0.125,
+    "f1_macro": 0.09259259259259259,
+    "f1_weighted": 0.1597222222222222,
+    "attack_precision": 0.6363636363636364,
+    "attack_recall": 1.0,
+    "attack_f1": 0.7777777777777778,
+    "split": "group_aware_validation"
+  },
+  "per_label_metrics": {
+    "SAFE": {
+      "precision": 1.0,
+      "recall": 0.2,
+      "f1-score": 0.3333333333333333,
+      "support": 10.0
+    },
+    "PROMPT_INJECTION": {
+      "precision": 0.3333333333333333,
+      "recall": 1.0,
+      "f1-score": 0.5,
+      "support": 1.0
+    },
+    "JAILBREAK": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 2.0
+    },
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 3.0
+    },
+    "PII": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 2.0
+    },
+    "SECRET": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 1.0
+    },
+    "UNSAFE_OUTPUT": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 2.0
+    },
+    "RAG_POISONING": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 1.0
+    },
+    "DATA_EXFILTRATION_ATTEMPT": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 2.0
+    }
+  }
+}

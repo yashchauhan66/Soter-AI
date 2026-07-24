@@ -5,14 +5,6 @@ selections, terminal commands, git changes, and AI prompts for secrets, PII,
 prompt injection, and insecure AI-generated code - entirely on your machine.
 Nothing leaves your computer unless you explicitly connect to SoterAI Cloud.
 
-![Security Dashboard](https://raw.githubusercontent.com/yashchauhan66/Ai-Security-Guard/main/packages/vscode-extension/media/screenshots/dashboard-overview.png)
-
-![Scan Results](https://raw.githubusercontent.com/yashchauhan66/Ai-Security-Guard/main/packages/vscode-extension/media/screenshots/scan-results.png)
-
-![Command Palette](https://raw.githubusercontent.com/yashchauhan66/Ai-Security-Guard/main/packages/vscode-extension/media/screenshots/command-palette.png)
-
-![Settings Panel](https://raw.githubusercontent.com/yashchauhan66/Ai-Security-Guard/main/packages/vscode-extension/media/screenshots/settings-panel.png)
-
 ## Features
 
 - **Scan Current File / Selection / Workspace** - detect leaked secrets, PII, prompt injection, unsafe instructions, and risky patterns with a redacted report.
@@ -21,7 +13,8 @@ Nothing leaves your computer unless you explicitly connect to SoterAI Cloud.
 - **Scan Git Changes** - scan staged and unstaged diffs for secrets and sensitive files before commit.
 - **Check Terminal Command** - flag destructive, remote-exec, credential-exposing, or suspicious shell commands before you run them.
 - **Review Selected AI Code** - surface likely vulnerabilities in AI-generated code inside a hardened webview.
-- **Local AI Broker** - authenticated loopback-only OpenAI/Anthropic-compatible routing with request/response scanning, redaction, and canary blocking.
+- **Local AI Broker** - authenticated loopback-only OpenAI/Anthropic-compatible routing with request/response scanning, redaction, canary blocking, and **SSE streaming** (`stream: true`) with scan-before-forward output protection.
+
 - **Secret Broker** - replaces raw secrets with scoped `soterai://secret/...` references so AI sees structure and approved operations, not values.
 - **AI Safe Mode** - Developer, Strict, and Enterprise protection overlays for SoterAI-routed workflows.
 - **AI Memory Inspector** - hashes, decisions, redacted evidence, and file metadata showing what SoterAI brokered or built for AI.
@@ -93,8 +86,11 @@ Local scanning always works. Cloud, token, and remote features are gated behind 
 | `soterai.scan.maxFileSizeKb` | `256` | Maximum file size for local scans. |
 | `soterai.scan.maxWorkspaceFiles` | `1000` | Maximum files checked during workspace scans. |
 | `soterai.scan.excludeGlobs` | common build/binary folders | Patterns excluded from workspace scans. |
+| `soterai.dependencyGuard.osvMode` | `ask` | `ask` / `always` / `never` — whether Dependency Guard may query public OSV (`api.osv.dev`) for package name+version advisories. Heuristics always run locally. Advisory only. |
+| `soterai.liveScan.enabled` | `true` | Inline VISIBILITY_ONLY diagnostics (regex/heuristic; no ML in the VSIX). |
 
 ## Supported Files
+
 
 SoterAI focuses on developer text formats: JavaScript, TypeScript, Python,
 Markdown, MDX, text, JSON, YAML, `.env`-style files, MCP configuration, and
@@ -116,10 +112,17 @@ not make network calls.
 
 ## Known Limitations
 
-- Detection is defense-in-depth, not a guarantee that every issue will be found.
-- MCP and extension risk analysis is heuristic and based on available local metadata/configuration.
+- Detection is defense-in-depth, not a guarantee that every issue will be found. Detectors are **regex/heuristic** in the packaged extension — no ONNX/ML model ships in the VSIX.
+- **Live scan** is `VISIBILITY_ONLY`: squiggly diagnostics after content exists; it does not block send-to-AI or other extensions.
+- **Terminal review** is `DETECTION_ONLY` unless you use the broker **controlled terminal** allowlist route (`STRONG_ENFORCEMENT` for fixed-argv read-only commands only).
+- **MCP and extension risk analysis** is config/metadata heuristic (`DETECTION_ONLY`). The MCP gateway engine exists in guard-core but is **not wired** into the packaged extension (`UNKNOWN_NOT_TESTED` until routed).
+- **DepGuard** is `DETECTION_ONLY`: local heuristics always; optional online OSV advisory lookup (`soterai.dependencyGuard.osvMode`) with explicit consent. Not a full SCA product; cannot block installs outside SoterAI-reviewed commands.
+- **Broker streaming** is `STRONG_ENFORCEMENT` only for traffic routed through the loopback broker. Partial tokens already flushed before a late block cannot be recalled (honest residual risk).
+
 - Full cloud telemetry submission is disabled until a reviewed endpoint client is added.
 - SoterAI Guard is not a replacement for professional security review, secure SDLC, or incident response.
+- Universal claims (full terminal/MCP/network enforcement for arbitrary agents) are **UNSUPPORTED** without an OS-level broker/sandbox.
+
 
 ## Development
 

@@ -28,6 +28,14 @@ export class DashboardPanel {
                     "openLocalPrivacyStatus",
                     "buildSafePromptForAI",
                     "runSecretBrokerDemo",
+                    "showCoverageMatrix",
+                    "showRuntimeCapabilitySummary",
+                    "showExtensionIsolationSummary",
+                    "startLocalAIBroker",
+                    "testBrokerProtection",
+                    "scanMCPConfigs",
+                    "generateMCPSafePolicy",
+                    "exportEnterprisePolicy",
                     "connectCloud",
                     "disconnectCloud",
                 ]);
@@ -59,6 +67,34 @@ export class DashboardPanel {
                         break;
                     case "runSecretBrokerDemo":
                         await vscode.commands.executeCommand("soterai.runSecretBrokerDemo");
+                        break;
+                    case "showCoverageMatrix":
+                        await vscode.commands.executeCommand("soterai.showCoverageMatrix");
+                        break;
+                    case "showRuntimeCapabilitySummary":
+                        await vscode.commands.executeCommand("soterai.showRuntimeCapabilitySummary");
+                        this.refresh();
+                        break;
+                    case "showExtensionIsolationSummary":
+                        await vscode.commands.executeCommand("soterai.showExtensionIsolationSummary");
+                        this.refresh();
+                        break;
+                    case "startLocalAIBroker":
+                        await vscode.commands.executeCommand("soterai.startLocalAIBroker");
+                        this.refresh();
+                        break;
+                    case "testBrokerProtection":
+                        await vscode.commands.executeCommand("soterai.testBrokerProtection");
+                        this.refresh();
+                        break;
+                    case "scanMCPConfigs":
+                        await vscode.commands.executeCommand("soterai.scanMCPConfigs");
+                        break;
+                    case "generateMCPSafePolicy":
+                        await vscode.commands.executeCommand("soterai.generateMCPSafePolicy");
+                        break;
+                    case "exportEnterprisePolicy":
+                        await vscode.commands.executeCommand("soterai.exportPolicy");
                         break;
                     case "connectCloud":
                         await vscode.commands.executeCommand("soterai.connectToCloud");
@@ -273,6 +309,33 @@ export class DashboardPanel {
       font-size: 12px;
       color: var(--vscode-descriptionForeground);
     }
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .trust-tile {
+      border: 1px solid var(--vscode-panel-border);
+      border-radius: 6px;
+      padding: 12px;
+      background: var(--vscode-editor-background);
+      min-height: 92px;
+    }
+    .trust-tile strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+    .trust-tile span {
+      color: var(--vscode-descriptionForeground);
+      font-size: 12px;
+    }
+    .critical-path {
+      border-left: 3px solid ${data.broker.running ? "#10b981" : "#f59e0b"};
+      padding: 10px 12px;
+      margin-top: 12px;
+      background: var(--vscode-editor-background);
+    }
   </style>
 </head>
 <body>
@@ -348,6 +411,50 @@ export class DashboardPanel {
     <div class="stat-row"><span>AI Memory:</span><strong>${escapeHtml(data.broker.memory)}</strong></div>
     <div class="stat-row"><span>Recent protected events:</span><strong>${data.broker.recentEvents}</strong></div>
     <div class="finding-desc">Only traffic routed through the broker is fully inspected. Local auth tokens and provider keys are never sent to this webview.</div>
+    <div class="critical-path">
+      <strong>${data.broker.running ? "Enforced path available" : "Enforced path is off"}</strong>
+      <div class="finding-desc">${data.broker.running
+                ? "Route AI calls through the loopback broker when you need block-before-send protection."
+                : "Start the broker to move from advisory scanning to enforced request/response protection for routed AI traffic."}</div>
+    </div>
+    <button class="btn" id="startBrokerBtn">${data.broker.running ? "Refresh Broker" : "Start Broker"}</button>
+    <button class="btn" id="testBrokerBtn" style="margin-left:8px;">Run Broker Self-Test</button>
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <div class="card-title">Trust Center: Coverage, MCP, Isolation</div>
+    <div class="trust-grid">
+      <div class="trust-tile">
+        <strong>Route Coverage</strong>
+        <span>Shows what SoterAI can enforce, redact, monitor, or cannot observe. No fake green checks.</span>
+        <button class="btn" id="coverageBtn">Open Matrix</button>
+      </div>
+      <div class="trust-tile">
+        <strong>Runtime Posture</strong>
+        <span>Checks brokered runtime capabilities and calls out raw terminal or extension paths that bypass enforcement.</span>
+        <button class="btn" id="runtimeBtn">Runtime Summary</button>
+      </div>
+      <div class="trust-tile">
+        <strong>Extension Isolation</strong>
+        <span>Reviews installed AI-like extensions and explains where SoterAI has partial visibility only.</span>
+        <button class="btn" id="isolationBtn">Isolation Summary</button>
+      </div>
+      <div class="trust-tile">
+        <strong>MCP Risk</strong>
+        <span>Scans MCP configs for shell access, secret env keys, broad file access, and prompt-injected tool descriptions.</span>
+        <button class="btn" id="mcpScanBtn">Scan MCP</button>
+      </div>
+      <div class="trust-tile">
+        <strong>Safe MCP Policy</strong>
+        <span>Generates a least-privilege policy artifact without reading or displaying env secret values.</span>
+        <button class="btn" id="mcpPolicyBtn">Generate Policy</button>
+      </div>
+      <div class="trust-tile">
+        <strong>Buyer Proof</strong>
+        <span>Use these reports together in pilots: coverage matrix, runtime summary, MCP scan, enterprise policy, local risk report.</span>
+        <button class="btn" id="enterprisePolicyBtn">Export Policy</button>
+      </div>
+    </div>
   </div>
 
   <div class="card" style="margin-top:20px; grid-column:span 2;">
@@ -389,6 +496,30 @@ export class DashboardPanel {
     });
     document.getElementById('demoBtn')?.addEventListener('click', () => {
       vscode.postMessage({ command: 'runSecretBrokerDemo' });
+    });
+    document.getElementById('coverageBtn')?.addEventListener('click', () => {
+      vscode.postMessage({ command: 'showCoverageMatrix' });
+    });
+    document.getElementById('runtimeBtn')?.addEventListener('click', () => {
+      vscode.postMessage({ command: 'showRuntimeCapabilitySummary' });
+    });
+    document.getElementById('isolationBtn')?.addEventListener('click', () => {
+      vscode.postMessage({ command: 'showExtensionIsolationSummary' });
+    });
+    document.getElementById('startBrokerBtn')?.addEventListener('click', () => {
+      vscode.postMessage({ command: 'startLocalAIBroker' });
+    });
+    document.getElementById('testBrokerBtn')?.addEventListener('click', () => {
+      vscode.postMessage({ command: 'testBrokerProtection' });
+    });
+    document.getElementById('mcpScanBtn')?.addEventListener('click', () => {
+      vscode.postMessage({ command: 'scanMCPConfigs' });
+    });
+    document.getElementById('mcpPolicyBtn')?.addEventListener('click', () => {
+      vscode.postMessage({ command: 'generateMCPSafePolicy' });
+    });
+    document.getElementById('enterprisePolicyBtn')?.addEventListener('click', () => {
+      vscode.postMessage({ command: 'exportEnterprisePolicy' });
     });
     document.getElementById('connectBtn')?.addEventListener('click', () => {
       vscode.postMessage({ command: 'connectCloud' });

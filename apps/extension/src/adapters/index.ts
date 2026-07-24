@@ -5,6 +5,7 @@ import { codesandboxAdapter } from "./codesandbox";
 import { geminiAdapter } from "./gemini";
 import { githubCodespacesAdapter } from "./github-codespaces";
 import { genericAIChatAdapter } from "./generic-ai-chat";
+import { copilotAdapter } from "./copilot";
 import { localhostAIAdapter } from "./localhost-ai";
 import { lovableAdapter } from "./lovable";
 import { openWebUIAdapter } from "./openwebui";
@@ -16,6 +17,6 @@ import { v0Adapter } from "./v0";
 export const destinationAdapters = () => [
   chatgptAdapter(), claudeAdapter(), geminiAdapter(), perplexityAdapter(), replitAdapter(), stackblitzAdapter(),
   codesandboxAdapter(), githubCodespacesAdapter(), boltAdapter(), v0Adapter(), lovableAdapter(), openWebUIAdapter(),
-  localhostAIAdapter(), genericAIChatAdapter(),
+  localhostAIAdapter(), copilotAdapter(), genericAIChatAdapter(),
 ];
 export * from "./generic-editor";

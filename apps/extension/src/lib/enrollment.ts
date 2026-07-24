@@ -38,6 +38,14 @@ export interface ManagedConfig {
   policyChannel?: string;
   enrollmentMode?: "managed" | "self_service";
   logLevel?: string;
+  /**
+   * Enterprise enforcement flags. Settable via Chrome/Edge managed policy
+   * (Intune/GPO/MDM). These are applied on top of the cached org policy so a
+   * regulated org can force hard-block / fail-closed even before the first
+   * signed policy sync completes.
+   */
+  hardEnforcement?: boolean;
+  offlineFailClosed?: boolean;
 }
 
 /**
@@ -97,6 +105,8 @@ export async function enrollFromManagedConfig(): Promise<EnrollmentInfo> {
     department: managed.department,
     role: managed.role,
     deviceToken: managed.deviceToken,
+    hardEnforcement: managed.hardEnforcement === true,
+    offlineFailClosed: managed.offlineFailClosed === true,
   };
 
   await setState({

@@ -6,6 +6,14 @@ import { getEmergencyLockdown } from "@/lib/extension/emergencyLockdown";
 
 export const dynamic = "force-dynamic";
 
+const integritySchema = z.object({
+  hostPermissionsGranted: z.boolean(),
+  missingHostPermissions: z.number().int().min(0).max(10_000),
+  policySignatureValid: z.boolean(),
+  policyReachable: z.boolean(),
+  healthy: z.boolean(),
+});
+
 const heartbeatSchema = z.object({
   organizationId: z.string().trim().min(1).max(200),
   employeeId: z.string().trim().max(200).optional(),
@@ -15,6 +23,7 @@ const heartbeatSchema = z.object({
   domain: z.string().trim().max(300).optional(),
   lastActiveAt: z.string().datetime(),
   lockdownEnabled: z.boolean().optional().default(false),
+  integrity: integritySchema.optional(),
 });
 
 export async function POST(request: Request) {
@@ -22,14 +31,15 @@ export async function POST(request: Request) {
     const body = heartbeatSchema.parse(await readJson(request));
     const auth = await authenticateExtensionRequest(request, body.organizationId);
     if (!auth.ok) return auth.response;
+    const integrityHealthy = body.integrity ? body.integrity.healthy : true;
     const event = await recordExtensionSecurityEvent({
       organizationId: body.organizationId,
       projectId: "projectId" in auth ? auth.projectId : undefined,
-      eventType: "EXTENSION_HEARTBEAT",
-      severity: "info",
+      eventType: integrityHealthy ? "EXTENSION_HEARTBEAT" : "EXTENSION_TAMPER_SUSPECTED",
+      severity: integrityHealthy ? "info" : "high",
       action: "allow",
       source: "browser_extension",
-      riskTypes: [],
+      riskTypes: integrityHealthy ? [] : ["extension_integrity"],
       metadata: {
         employeeId: body.employeeId,
         extensionVersion: body.extensionVersion,
@@ -38,6 +48,7 @@ export async function POST(request: Request) {
         domain: body.domain,
         lastActiveAt: body.lastActiveAt,
         lockdownEnabled: body.lockdownEnabled,
+        integrity: body.integrity,
       },
     });
     if ("deviceId" in auth) {

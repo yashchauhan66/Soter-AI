@@ -1,0 +1,35 @@
+{
+  "date": "2026-07-22",
+  "phase": "Controlled terminal broker route",
+  "coverageClaim": "STRONG_ENFORCEMENT for allowlisted fixed-argv commands routed through the SoterAI local broker only",
+  "newControls": [
+    "ControlledTerminal analyzer in guard-core with conservative argv parsing",
+    "Read-only command allowlist for selected git, version, pwd, and ls commands",
+    "Denial of unsupported shell syntax, pipes, redirects, command substitution, destructive commands, and non-allowlisted commands before process spawn",
+    "Authenticated local broker preview and execute endpoints for controlled terminal commands",
+    "Fixed argv execution through execFile with shell disabled, bounded timeout, bounded output, and minimal environment",
+    "Redaction of stdout and stderr before returning terminal output",
+    "VS Code command soterai.runControlledTerminalCommand wired through the broker route"
+  ],
+  "tests": [
+    { "command": "npm --prefix packages/guard-core run build", "result": "PASS" },
+    { "command": "npm --prefix packages/guard-core run test", "result": "PASS", "testsPassed": 151 },
+    { "command": "npm --prefix apps/local-ai-broker run typecheck", "result": "PASS" },
+    { "command": "npm --prefix apps/local-ai-broker run test", "result": "PASS", "testsPassed": 18 },
+    { "command": "npm --prefix packages/vscode-extension run typecheck", "result": "PASS" },
+    { "command": "npm --prefix packages/vscode-extension run test", "result": "PASS", "testsPassed": 76 },
+    { "command": "npm --prefix packages/vscode-extension run build", "result": "PASS" },
+    { "command": "npm run typecheck", "result": "PASS" },
+    { "command": "npm run validate:extension-permissions", "result": "PASS" },
+    { "command": "npm test", "result": "PASS", "testsPassed": 823 },
+    { "command": "npm audit --audit-level=critical", "result": "PASS_CRITICAL_GATE_WITH_HIGH_FINDINGS", "highSeverityFindings": 5 }
+  ],
+  "remainingBypasses": [
+    "Raw VS Code integrated terminal commands are not intercepted",
+    "External terminals and OS shells are not intercepted",
+    "Child process trees are not controlled beyond the direct broker-spawned allowlisted process",
+    "Shell aliases and functions are avoided by shell:false but not controlled in raw shells",
+    "OS-level network egress is not enforced",
+    "Cloud, Docker, Kubernetes, database, and package-manager write actions are not allowlisted in this route"
+  ]
+}
