@@ -2,7 +2,7 @@
     "name": "soterai-ide-guard",
     "displayName": "SoterAI IDE Guard — Local AI Security",
     "description": "Protect secrets, prompts, MCP tools, terminal commands, and AI coding context locally before they reach AI.",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "publisher": "soterai",
     "preview": false,
     "pricing": "Free",
@@ -73,6 +73,9 @@
         "onCommand:soterai.chooseSecretHandlingPolicy",
         "onCommand:soterai.scanGitDiff",
         "onCommand:soterai.reviewTerminalCommand",
+        "onCommand:soterai.runControlledTerminalCommand",
+        "onCommand:soterai.showRuntimeCapabilitySummary",
+        "onCommand:soterai.showExtensionIsolationSummary",
         "onCommand:soterai.scanMCPAgentTools",
         "onCommand:soterai.openAIActivityLedger",
         "onCommand:soterai.generateCanaryToken",
@@ -90,6 +93,11 @@
     },
     "contributes": {
         "commands": [
+            {
+                "command": "soterai.openControlPanel",
+                "title": "SoterAI: Open Control Panel",
+                "category": "SoterAI"
+            },
             {
                 "command": "soterai.quickStart",
                 "title": "SoterAI: Quick Start",
@@ -221,13 +229,10 @@
                 "category": "SoterAI"
             },
             {
-                "command": "soterai.scanWorkspaceRisk",
-                "title": "SoterAI: Scan Workspace Risk"
-            },
-            {
                 "command": "soterai.scanBeforeAIPrompt",
                 "title": "SoterAI: Scan Before AI Prompt"
             },
+
             {
                 "command": "soterai.redactSelectionForAI",
                 "title": "SoterAI: Redact Selection for AI"
@@ -441,6 +446,14 @@
                 "title": "SoterAI: Show Broker Status"
             },
             {
+                "command": "soterai.showRuntimeCapabilitySummary",
+                "title": "SoterAI: Show Runtime Capability Summary"
+            },
+            {
+                "command": "soterai.showExtensionIsolationSummary",
+                "title": "SoterAI: Show Extension Isolation Summary"
+            },
+            {
                 "command": "soterai.configureAIBroker",
                 "title": "SoterAI: Configure AI Broker"
             },
@@ -455,6 +468,10 @@
             {
                 "command": "soterai.testBrokerProtection",
                 "title": "SoterAI: Test Broker Protection"
+            },
+            {
+                "command": "soterai.runControlledTerminalCommand",
+                "title": "SoterAI: Run Controlled Terminal Command"
             },
             {
                 "command": "soterai.rotateBrokerToken",
@@ -593,6 +610,11 @@
                 "title": "SoterAI: Show Workspace Risk Score"
             },
             {
+                "command": "soterai.scanWorkspaceRisk",
+                "title": "SoterAI: Scan Workspace Risk"
+            },
+
+            {
                 "command": "soterai.openMCPToolFirewall",
                 "title": "SoterAI: Open MCP Tool Firewall"
             },
@@ -671,8 +693,24 @@
                 "command": "soterai.safePaste",
                 "title": "SoterAI: Safe Paste (scan clipboard, then paste)",
                 "category": "SoterAI"
+            },
+            {
+                "command": "soterai.setupBrokerIntegration",
+                "title": "SoterAI: Setup Broker Integration",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.restoreBrokerIntegration",
+                "title": "SoterAI: Restore Broker Integration",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.preflightMCPTool",
+                "title": "SoterAI: Preflight MCP Tool Call",
+                "category": "SoterAI"
             }
         ],
+
         "viewsContainers": {
             "activitybar": [
                 {
@@ -684,6 +722,11 @@
         },
         "views": {
             "soterai-explorer": [
+                {
+                    "id": "soterai-control-panel",
+                    "name": "Control Panel",
+                    "type": "webview"
+                },
                 {
                     "id": "soterai-project-risk",
                     "name": "Project Risk"
@@ -839,6 +882,11 @@
                     "default": "warn",
                     "description": "Action on detecting dangerous terminal commands."
                 },
+                "soterai.terminal.warnOnRawTerminalOpen": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show a one-time warning when a raw VS Code terminal opens because raw terminal input is outside SoterAI broker enforcement. The warning offers the broker-controlled terminal route."
+                },
                 "soterai.sentinel.enabled": {
                     "type": "boolean",
                     "default": false,
@@ -867,10 +915,21 @@
                 "soterai.liveScan.enabled": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Scan supported files as you type and show secrets, PII, and prompt-injection risks inline (squiggly underlines with lightbulb Quick Fixes). 100% local — nothing is sent anywhere."
+                    "description": "Scan supported files as you type and show secrets, PII, prompt-injection, and jailbreak risks inline (squiggly underlines with lightbulb Quick Fixes). 100% local regex/heuristic detection — nothing is sent anywhere. This is VISIBILITY_ONLY: diagnostics appear after content exists; SoterAI does not block other extensions or prevent you from sending text to AI."
+                },
+                "soterai.dependencyGuard.osvMode": {
+                    "type": "string",
+                    "enum": [
+                        "ask",
+                        "always",
+                        "never"
+                    ],
+                    "default": "ask",
+                    "markdownDescription": "How Dependency Guard obtains CVE advisories. `ask` prompts before contacting [OSV](https://osv.dev) (`api.osv.dev`); `always` queries OSV online (package name + version only); `never` uses local heuristics only (typosquat, unpinned, remote URL, install scripts). **Advisory only** — cannot block installs outside SoterAI-reviewed commands. SoterAI is not a full SCA product; OSV is the advisory source when online."
                 }
             }
         },
+
         "menus": {
             "commandPalette": [
                 {
@@ -1134,6 +1193,14 @@
                     "when": "soterai.advancedCommands"
                 },
                 {
+                    "command": "soterai.showRuntimeCapabilitySummary",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showExtensionIsolationSummary",
+                    "when": "soterai.advancedCommands"
+                },
+                {
                     "command": "soterai.configureAIBroker",
                     "when": "soterai.advancedCommands"
                 },
@@ -1147,6 +1214,10 @@
                 },
                 {
                     "command": "soterai.testBrokerProtection",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.runControlledTerminalCommand",
                     "when": "soterai.advancedCommands"
                 },
                 {
@@ -1352,9 +1423,22 @@
                 {
                     "command": "soterai.safePaste",
                     "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.setupBrokerIntegration",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.restoreBrokerIntegration",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.preflightMCPTool",
+                    "when": "soterai.advancedCommands"
                 }
             ]
         },
+
         "walkthroughs": [
             {
                 "id": "soterai.gettingStarted",

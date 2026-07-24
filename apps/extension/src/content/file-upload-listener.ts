@@ -14,7 +14,10 @@ export function installFileUploadListener() {
     showSoterOverlay({
       result: response.result,
       onCopy: () => void navigator.clipboard?.writeText(names.join("\n")),
-      onApproval: () => void chrome.runtime.sendMessage({ type: "SOTER_REQUEST_APPROVAL", text: names.join("\n"), url: location.href }),
+      onApproval: async () => {
+        chrome.runtime.sendMessage({ type: "SOTER_REQUEST_APPROVAL", text: names.join("\n"), url: location.href });
+        return null;
+      },
     });
   }, true);
 }

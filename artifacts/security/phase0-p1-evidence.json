@@ -1,0 +1,47 @@
+{
+  "date": "2026-07-22",
+  "phase": "Phase 0 baseline plus Phase 1 runtime policy slice",
+  "branch": "ci-fix/main-benign-fpr...origin/main",
+  "preExistingDirtyFiles": [
+    "extensions/jetbrains/.gradle/8.9/fileHashes/fileHashes.lock",
+    "packages/vscode-extension/soterai-ide-guard-0.2.0.vsix"
+  ],
+  "baselineCommands": [
+    { "command": "npm --prefix packages/guard-core run typecheck", "result": "PASS" },
+    { "command": "npm --prefix packages/guard-core run test", "result": "PASS", "testsPassed": 137 },
+    { "command": "npm --prefix packages/vscode-extension run typecheck", "result": "PASS" },
+    { "command": "npm --prefix packages/vscode-extension run test", "result": "PASS", "testsPassed": 76 },
+    { "command": "npm --prefix packages/guard-core run build", "result": "PASS" },
+    { "command": "npm --prefix packages/vscode-extension run build", "result": "PASS" },
+    { "command": "npm run typecheck", "result": "PASS" },
+    { "command": "npm test", "result": "PASS", "testsPassed": 823 },
+    { "command": "npm audit --audit-level=critical", "result": "PASS_CRITICAL_GATE_WITH_HIGH_FINDINGS" },
+    { "command": "npm run validate:extension-permissions", "result": "PASS" }
+  ],
+  "newControls": [
+    "RuntimePolicyEngine with required enforcement vocabulary",
+    "Reason-code based deterministic policy decisions",
+    "Fail-safe behavior for policy-engine unhealthy state in locked modes",
+    "Manual terminal review wired to runtime policy decisions and DETECTION_ONLY coverage"
+  ],
+  "postChangeCommands": [
+    { "command": "npm --prefix packages/guard-core run typecheck", "result": "PASS_AFTER_FIX" },
+    { "command": "npm --prefix packages/guard-core run build", "result": "PASS" },
+    { "command": "npm --prefix packages/guard-core run test", "result": "PASS", "testsPassed": 145 },
+    { "command": "npm --prefix packages/vscode-extension run typecheck", "result": "PASS_AFTER_REBUILD" },
+    { "command": "npm --prefix packages/vscode-extension run test", "result": "PASS", "testsPassed": 76 },
+    { "command": "npm --prefix packages/vscode-extension run build", "result": "PASS" },
+    { "command": "npm run typecheck", "result": "PASS" },
+    { "command": "npm run validate:extension-permissions", "result": "PASS" },
+    { "command": "npm test", "result": "PASS", "testsPassed": 823 },
+    { "command": "npm audit --audit-level=critical", "result": "PASS_CRITICAL_GATE_WITH_HIGH_FINDINGS" }
+  ],
+  "remainingBypasses": [
+    "Arbitrary terminal execution is not intercepted",
+    "Child processes are not controlled",
+    "Arbitrary local network egress is not enforced",
+    "Other extensions and OS processes can read plaintext files",
+    "MCP runtime traffic is not fully gatewayed"
+  ],
+  "overallCoverageLevelForThisSlice": "PARTIAL_VISIBILITY"
+}

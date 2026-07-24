@@ -3,6 +3,7 @@ import type { ExtensionHeartbeat } from "../../../../packages/shared/src/audit-t
 import { SoterExtensionApiClient } from "../lib/api-client";
 import { getState, setState } from "../lib/storage";
 import { syncPolicy, configurePolicySyncAlarm } from "./policy-sync";
+import { computeIntegrityReport } from "./integrity";
 
 export function browserName(): ExtensionHeartbeat["browser"] {
   const ua = navigator.userAgent.toLowerCase();
@@ -13,6 +14,7 @@ export function browserName(): ExtensionHeartbeat["browser"] {
 
 export async function sendHeartbeat(domain?: string) {
   const state = await getState();
+  const integrity = await computeIntegrityReport(state);
   const heartbeat: ExtensionHeartbeat = {
     organizationId: state.config.organizationId,
     employeeId: state.config.employeeId,
@@ -22,6 +24,7 @@ export async function sendHeartbeat(domain?: string) {
     domain,
     lastActiveAt: new Date().toISOString(),
     lockdownEnabled: state.policy?.emergencyLockdown?.enabled ?? false,
+    integrity,
   };
   try {
     const response = await new SoterExtensionApiClient(state.config).heartbeat(heartbeat);

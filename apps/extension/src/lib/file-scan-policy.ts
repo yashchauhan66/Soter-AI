@@ -1,7 +1,7 @@
 import { scanText } from "../../../../packages/detectors/src/index";
 import { auditSafePreview, redactSensitiveText } from "./redaction";
 import type { ExtensionState, ScanResult } from "./types";
-import { domainFromUrl, scanPrompt } from "./scanner";
+import { domainFromUrl, scanPrompt, hardEnforcementEnabled, withHardEnforcement } from "./scanner";
 import { extensionForFile, extractTextFromFile, sha256Browser } from "./file-extractors";
 import { createPrivacySafePreview } from "./privacy-preview";
 
@@ -32,6 +32,15 @@ export async function scanFileText(file: File, url: string, state: ExtensionStat
   const riskScore = Math.max(result.riskScore, localScan.riskScore, metadataRisk(file, extracted.encryptedOrBinary));
   const action = applyFilePolicy({ ...result, riskScore, detectedDataTypes }, extension, extracted.encryptedOrBinary);
   const redactedText = redactSensitiveText(textForPolicy, detectedDataTypes);
+  const scanResult = withHardEnforcement({
+    ...result,
+    riskScore,
+    detectedDataTypes,
+    hasFindings: result.hasFindings || localScan.findings.length > 0 || riskScore >= 40,
+    action,
+    redactedText,
+    policy: { ...result.policy, action, redactedText },
+  }, hardEnforcementEnabled(state));
   return {
     fileNameHash: await sha256Browser(`${state.config.organizationId}:${file.name}`),
     fileName: file.name,
@@ -45,15 +54,7 @@ export async function scanFileText(file: File, url: string, state: ExtensionStat
     riskScore,
     action,
     redactedPreview: createPrivacySafePreview({ rawText: redactedText, dataTypes: detectedDataTypes, contextType: "file", logMode: "redacted_prompt", maxLength: 500 }),
-    scanResult: {
-      ...result,
-      riskScore,
-      detectedDataTypes,
-      hasFindings: result.hasFindings || localScan.findings.length > 0 || riskScore >= 40,
-      action,
-      redactedText,
-      policy: { ...result.policy, action, redactedText },
-    },
+    scanResult,
   };
 }
 

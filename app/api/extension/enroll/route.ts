@@ -19,7 +19,10 @@ export async function POST(request: Request) {
     const rateLimit = await checkRateLimit("extension-enroll", forwarded);
     if (!rateLimit.allowed) return jsonResponse({ error: true, message: "Too many enrollment attempts. Try again later." }, { status: 429, headers: { "Retry-After": String(rateLimit.retryAfter ?? 60) } });
     const result = await redeemEnrollmentToken({ ...body, apiBaseUrl: new URL(request.url).origin });
-    if (!result.ok) return jsonResponse({ error: true, code: result.status, message: result.message }, { status: result.status === "invalid" ? 401 : 410 });
+    if (!result.ok) {
+      const httpStatus = result.status === "invalid" ? 401 : result.status === "seat_limit_reached" ? 402 : 410;
+      return jsonResponse({ error: true, code: result.status, message: result.message }, { status: httpStatus });
+    }
     return jsonResponse(result, { status: 201 });
   } catch (error) {
     return apiError(error, "Extension enrollment failed.");

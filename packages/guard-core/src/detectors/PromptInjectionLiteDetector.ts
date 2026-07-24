@@ -1,6 +1,6 @@
 import type { DetectorMatch, DetectorResult } from "../types";
 
-export const PROMPT_INJECTION_DETECTOR_VERSION = "1.0.0";
+export const PROMPT_INJECTION_DETECTOR_VERSION = "1.1.0";
 
 interface InjectionPattern {
     pattern: RegExp;
@@ -49,6 +49,9 @@ const INJECTION_PATTERNS: InjectionPattern[] = [
     { pattern: /\b(?:curl|wget|fetch|http|requests?)\b[^\n]{0,80}\b(?:https?:\/\/[^\n]{0,40})?\b(?:send|post|put|upload)\b[^\n]{0,40}\b(?:\/etc\/passwd|\.env|secret|token|key|password|credential)/gi, label: "HTTP exfiltration", score: 42, confidence: 0.85, message: "HTTP request used to exfiltrate secrets." },
     { pattern: /\b(?:base64|encode|btoa)\b[^\n]{0,40}\b(?:\/etc\/passwd|\.env|secret|token|key|password|credential)\b/gi, label: "Encoded exfiltration", score: 38, confidence: 0.82, message: "Encoding a secret file for exfiltration." },
     { pattern: /\b(?:cat|echo|print|printf|write|output|type)\b[^\n]{0,60}\b(?:\/etc\/passwd|\.env|id_rsa|secret|token|key|password|credential)\b[^\n]{0,60}\b(?:\|\s*(?:curl|wget|nc|netcat|socat|ssh|python|node)|>>|>\s*\/dev\/tcp)/gi, label: "Pipe exfiltration", score: 48, confidence: 0.92, message: "Piping a secret to an external tool for exfiltration." },
+    // Pipe-to-curl without requiring a secret keyword on the left (classic reverse shell / exfil).
+    { pattern: /\|\s*(?:curl|wget)\b[^\n]{0,120}\bhttps?:\/\/[^\s"'`]+/gi, label: "Pipe to remote HTTP", score: 42, confidence: 0.88, message: "Piping data into curl/wget toward a remote URL." },
+    { pattern: /\b(?:curl|wget)\b[^\n]{0,80}(?:--data(?:-binary)?|-d|--upload-file|-T)\b[^\n]{0,80}https?:\/\//gi, label: "HTTP upload exfiltration", score: 40, confidence: 0.85, message: "HTTP upload of local data to a remote endpoint." },
 ];
 
 export function detectPromptInjection(text: string): DetectorResult {

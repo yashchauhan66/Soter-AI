@@ -157,30 +157,59 @@ export async function augmentWithMl(
   const backend = getBackend();
   if (!backend) return base;
 
-  // 0.9 is the measured operating point (scripts/guard-benchmark/ml-ensemble-gate-benchmark.ts):
-  // recall 85.7% at ~0.4% benign-control FPR once the precision gate is applied.
+  // 0.9 is the measured operating point for v3
+  // (scripts/guard-benchmark/ml-ensemble-gate-benchmark.ts): recall 85.7% at
+  // ~0.4% benign-control FPR once the precision gate is applied. v4 also uses
+  // per-label thresholds from calibration.json inside the backend; this floor
+  // remains a second-line global gate.
   const floor = Number(process.env.ML_ONNX_CONFIDENCE_FLOOR ?? "0.9");
+  // Attack-probability fusion (v4): 1-P(SAFE). When the backend surfaces this,
+  // we can escalate high attack-prob even if argmax landed on an unreliable
+  // class (still subject to the precision gate + semantic not-benign).
+  const attackProbFloor = Number(process.env.ML_ONNX_ATTACK_PROB_FLOOR ?? "0.85");
 
   let detail: MlAugmentDetail = { mode, ran: false, floor };
   try {
     const inference = await backend.infer(text, direction);
     const label = inference.predictedLabel;
-    const confident = inference.confidence >= floor;
+    const raw = (inference.raw ?? {}) as {
+      attackProbability?: number;
+      abstained?: boolean;
+      rawPredictedLabel?: string;
+      rawConfidence?: number;
+    };
+    const attackProb = typeof raw.attackProbability === "number" ? raw.attackProbability : undefined;
+    const abstained = raw.abstained === true;
+    // Prefer raw predicted label for precision-gate when backend demoted to SAFE
+    // only due to thresholding — attackProb fusion can still recover it.
+    const effectiveLabel =
+      label !== "SAFE"
+        ? label
+        : typeof raw.rawPredictedLabel === "string" && raw.rawPredictedLabel !== "SAFE"
+          ? raw.rawPredictedLabel
+          : label;
+    const confident =
+      inference.confidence >= floor ||
+      (typeof attackProb === "number" && attackProb >= attackProbFloor && !abstained);
     // isAttack requires the model be confident AND the prediction survive the
     // precision gate (reliable label class + semantic not-benign). This is what
     // keeps the recall boost from turning into the model's raw ~18% over-defense.
     const isAttack =
-      label !== "SAFE" && confident && passesPrecisionGate(label, direction, text);
+      effectiveLabel !== "SAFE" &&
+      !abstained &&
+      confident &&
+      passesPrecisionGate(effectiveLabel, direction, text);
 
     detail = {
       mode,
       ran: true,
-      predictedLabel: label,
+      predictedLabel: effectiveLabel,
       confidence: Number(inference.confidence.toFixed(4)),
       floor,
       wouldEscalate: isAttack && !PROTECTIVE_ACTIONS.has(base.action),
       escalated: false,
     };
+
 
     if (!isAttack) {
       return withMlMetadata(base, detail);
@@ -198,16 +227,22 @@ export async function augmentWithMl(
       return withMlMetadata(base, detail);
     }
 
-    const riskType = LABEL_TO_RISK[label as Exclude<MLLabel, "SAFE">] ?? "PROMPT_INJECTION";
+    const riskType =
+      LABEL_TO_RISK[effectiveLabel as Exclude<MLLabel, "SAFE">] ?? "PROMPT_INJECTION";
     const finding: GuardFinding = {
       type: riskType,
-      label: `ML anomaly (${label})`,
+      label: `ML anomaly (${effectiveLabel})`,
       severity: "MEDIUM",
       score: 45,
       message:
         "No deterministic signature matched, but a fine-tuned classifier judged this request " +
-        `similar to known adversarial prompts (${label}, confidence ${(inference.confidence * 100).toFixed(1)}%). Held for human review.`,
+        `similar to known adversarial prompts (${effectiveLabel}, confidence ${(inference.confidence * 100).toFixed(1)}` +
+        (typeof attackProb === "number"
+          ? `, attackProb ${(attackProb * 100).toFixed(1)}%`
+          : "") +
+        "). Held for human review.",
     };
+
     detail.escalated = true;
 
     const findings = [...base.findings, finding];

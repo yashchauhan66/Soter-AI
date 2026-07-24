@@ -16,11 +16,12 @@
     "test:otp": "tsx --test tests/email-otp.test.ts tests/auth-signup.test.ts tests/api-route-audit.test.ts",
     "test:readiness": "tsx --test tests/readiness-deliverables.test.ts",
     "test:phase3": "tsx --test tests/guard/jailbreak-expanded.test.ts tests/guard/system-prompt-leak-expanded.test.ts tests/guard/data-exfiltration-expanded.test.ts tests/guard/tool-abuse-expanded.test.ts tests/guard/rag-poisoning-expanded.test.ts tests/guard/multilingual-hinglish-expanded.test.ts tests/guard/benign-false-positive-expanded.test.ts",
-    "test": "tsx --test tests/dynamodb-events.test.ts tests/guard/governance-enforcement.test.ts tests/docs-service-catalog.test.ts tests/auth.test.ts tests/guard.test.ts tests/guard/security-strength-max.test.ts tests/guard/invisible-unicode-smuggling.test.ts tests/guard/output-exfiltration.test.ts tests/guard/mcp-poisoning-obfuscation.test.ts tests/guard-redteam-benchmark.test.ts tests/guard/safety-regression.test.ts tests/guard/safety-round2-regression.test.ts tests/guard/multi-turn-safety.test.ts tests/guard/heldout-generalization.test.ts tests/guard/new-detectors.test.ts tests/guard/echoleak-killchain.test.ts tests/guard/ml-augment.test.ts tests/integrations/integration-kit.test.ts tests/integrations/agent-firewall-integration.test.ts tests/security.test.ts tests/credential-vault-security.test.ts tests/webhooks.test.ts tests/agent-firewall.test.ts tests/agent-runtime-enforcement.test.ts tests/agent-stateful-runtime-security.test.ts tests/agent-firewall-mvp3.test.ts tests/agent-passport.test.ts tests/agent-intent.test.ts tests/tool-chain.test.ts tests/escrow.test.ts tests/dry-run.test.ts tests/semantic-egress.test.ts tests/evidence-vault.test.ts tests/canary-network-feature7.test.ts tests/rag-rescan.test.ts tests/advanced-security-mvp1.test.ts tests/advanced-security-mvp2.test.ts tests/advanced-security-mvp3.test.ts tests/phase2.test.ts tests/phase3.test.ts tests/phase4.test.ts tests/phase5.test.ts tests/phase6.test.ts tests/phase9.test.ts tests/phase10.test.ts tests/phase11.test.ts tests/phase12.test.ts tests/enterprise-market-survival.test.ts tests/enterprise-proof-kit.test.ts tests/security-99-evidence-gate.test.ts tests/competitive-moat.test.ts tests/user-friendliness-99.test.ts tests/slm-evaluation.test.ts tests/performance.test.ts tests/api-route-audit.test.ts tests/integrations.test.ts tests/retention.test.ts tests/billing.test.ts tests/project-flow.test.ts tests/auth-signup.test.ts tests/logs-filters.test.ts tests/ai-data-security.test.ts tests/ai-data-security-fingerprint-e2e.test.ts tests/ai-data-security-privacy.test.ts tests/benchmarks/honest-benchmark.test.ts tests/benchmarks/external-benchmark.test.ts",
+    "test": "tsx --test tests/dynamodb-events.test.ts tests/guard/governance-enforcement.test.ts tests/docs-service-catalog.test.ts tests/auth.test.ts tests/guard.test.ts tests/guard/security-strength-max.test.ts tests/guard/invisible-unicode-smuggling.test.ts tests/guard/output-exfiltration.test.ts tests/guard/mcp-poisoning-obfuscation.test.ts tests/guard-redteam-benchmark.test.ts tests/guard/safety-regression.test.ts tests/guard/safety-round2-regression.test.ts tests/guard/multi-turn-safety.test.ts tests/guard/heldout-generalization.test.ts tests/guard/new-detectors.test.ts tests/guard/echoleak-killchain.test.ts tests/guard/ml-augment.test.ts tests/integrations/integration-kit.test.ts tests/integrations/agent-firewall-integration.test.ts tests/security.test.ts tests/credential-vault-security.test.ts tests/webhooks.test.ts tests/agent-firewall.test.ts tests/agent-runtime-enforcement.test.ts tests/agent-stateful-runtime-security.test.ts tests/agent-firewall-mvp3.test.ts tests/agent-passport.test.ts tests/agent-intent.test.ts tests/tool-chain.test.ts tests/escrow.test.ts tests/dry-run.test.ts tests/semantic-egress.test.ts tests/evidence-vault.test.ts tests/canary-network-feature7.test.ts tests/rag-rescan.test.ts tests/advanced-security-mvp1.test.ts tests/advanced-security-mvp2.test.ts tests/advanced-security-mvp3.test.ts tests/phase2.test.ts tests/phase3.test.ts tests/phase4.test.ts tests/phase5.test.ts tests/phase6.test.ts tests/phase9.test.ts tests/phase10.test.ts tests/phase11.test.ts tests/phase12.test.ts tests/enterprise-market-survival.test.ts tests/enterprise-proof-kit.test.ts tests/security-99-evidence-gate.test.ts tests/security-100-evidence-gate.test.ts tests/strongest-local-release-gate.test.ts tests/competitive-moat.test.ts tests/user-friendliness-99.test.ts tests/slm-evaluation.test.ts tests/performance.test.ts tests/api-route-audit.test.ts tests/integrations.test.ts tests/retention.test.ts tests/billing.test.ts tests/project-flow.test.ts tests/auth-signup.test.ts tests/logs-filters.test.ts tests/ai-data-security.test.ts tests/ai-data-security-fingerprint-e2e.test.ts tests/ai-data-security-privacy.test.ts tests/benchmarks/honest-benchmark.test.ts tests/benchmarks/external-benchmark.test.ts",
     "test:market": "tsx --test tests/trust-events.test.ts tests/causal-siem.test.ts tests/compliance-assurance.test.ts tests/rag-authorization-continuity.test.ts tests/agent-passport-delegation.test.ts tests/agent-behavior-baseline.test.ts tests/ai-bom-cyclonedx.test.ts tests/a2a-security.test.ts tests/agent-market-gap-features.test.ts",
     "test:load": "tsx scripts/loadTest.ts",
     "test:load:http": "tsx scripts/httpLoadTest.ts",
     "test:load:security-matrix": "tsx scripts/httpLoadTest.ts",
+    "test:load:matrix": "tsx scripts/live-load-matrix.ts",
     "perf:guard": "node scripts/perf/guard-api-load-test.js",
     "perf:pages": "node scripts/perf/public-pages-load-test.js",
     "perf:dashboard": "node scripts/perf/dashboard-load-test.js",
@@ -29,6 +30,7 @@
     "perf:monitor": "node scripts/perf/server-resource-monitor.js",
     "build:sdk:js": "npm --prefix packages/sdk run build",
     "test:sdk:js": "npm --prefix packages/sdk run test",
+    "security:capabilities": "tsx scripts/generate-capabilities-artifact.ts",
     "build:extension": "npm --prefix apps/extension run build",
     "typecheck:extension": "npm --prefix apps/extension run typecheck",
     "test:extension": "tsx --test tests/extension/*.test.ts",
@@ -48,6 +50,10 @@
     "validate:enterprise-proof-kit": "tsx scripts/validate-enterprise-proof-kit.ts",
     "validate:security-99": "tsx scripts/validate-security-99-evidence.ts",
     "validate:security-99:strict": "tsx scripts/validate-security-99-evidence.ts --strict",
+    "validate:security-100": "tsx scripts/validate-security-100-evidence.ts",
+    "validate:security-100:strict": "tsx scripts/validate-security-100-evidence.ts --strict",
+    "validate:strongest-local": "tsx scripts/validate-strongest-local-release.ts",
+    "release:vscode:provenance": "node scripts/generate-vscode-release-provenance.mjs",
     "test:integrations": "npm run test:sdk:js && tsx --test tests/integrations.test.ts",
     "test:integration-ease": "tsx --test tests/integration-ease.test.ts && node scripts/validate-marketplace-packages.mjs",
     "verify:integrations": "npm --prefix packages/sdk run typecheck && npm run test:sdk:js && npm run build:sdk:js",
@@ -71,7 +77,14 @@
     "ml:generate": "tsx scripts/ml/generate-adversarial-dataset.ts",
     "ml:train:smoke": "python scripts/ml/train-onnx-model.py --sample --epochs 1 --batch-size 8 --output-dir models/ml-classifier-smoke --no-cuda",
     "ml:train:cpu": "python scripts/ml/train-onnx-model.py --epochs 5 --batch-size 8 --output-dir models/ml-classifier-v3 --no-cuda",
+    "ml:train:v4:smoke": "python scripts/ml/train-soterllm-v4.py --sample --epochs 1 --batch-size 8 --output-dir models/ml-classifier-v4-smoke --no-cuda",
+    "ml:train:v4:mid": "python scripts/ml/train-soterllm-v4.py --train-datasets datasets/ml-augmented-v6.jsonl --max-samples 8000 --epochs 3 --batch-size 16 --max-length 192 --output-dir models/ml-classifier-v4 --no-cuda",
+    "ml:train:v4": "python scripts/ml/train-soterllm-v4.py --train-datasets datasets/ml-augmented-v6.jsonl --epochs 4 --batch-size 12 --max-length 256 --output-dir models/ml-classifier-v4 --no-cuda",
+    "ml:train:v4:gpu": "python scripts/ml/train-soterllm-v4.py --train-datasets datasets/ml-augmented-v6.jsonl --epochs 5 --batch-size 64 --max-length 256 --output-dir models/ml-classifier-v4",
+    "ml:verify:v4": "tsx scripts/guard-benchmark/ml-v4-verify.ts",
+
     "ml:test": "node scripts/ml/test-onnx-model.js",
+
     "benchmark:independent": "tsx scripts/generate-independent-validation-report.ts",
     "benchmark:honest": "tsx scripts/guard-benchmark/run-honest-benchmark.ts",
     "bench:guard-core": "tsx packages/guard-core/benchmarks/bench.ts",
@@ -134,7 +147,13 @@
     "typescript": "^5.9.3"
   },
   "overrides": {
+    "adm-zip": "0.6.0",
+    "ajv": {
+      "fast-uri": "3.1.4"
+    },
+    "fast-uri": "3.1.4",
     "postcss": "8.5.10",
+    "sharp": "0.35.3",
     "uuid": "^9.0.1"
   },
   "optionalDependencies": {

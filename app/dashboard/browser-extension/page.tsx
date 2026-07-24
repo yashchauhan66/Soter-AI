@@ -30,7 +30,7 @@ export default async function BrowserExtensionPage() {
 
   const organizationId = active.org.id;
 
-  const [devices, tokens, events, policies] = await Promise.all([
+  const [devices, tokens, events, policies, org] = await Promise.all([
     db.deviceAgent.findMany({
       where: { organizationId, type: "browser_extension" },
       orderBy: { lastHeartbeatAt: "desc" },
@@ -56,8 +56,10 @@ export default async function BrowserExtensionPage() {
       select: { id: true, eventType: true, severity: true, action: true, riskTypes: true, metadata: true, createdAt: true },
     }),
     listPolicies(organizationId),
+    db.organization.findUnique({ where: { id: organizationId }, select: { extensionSeatLimit: true } }),
   ]);
 
+  const seatLimit = org?.extensionSeatLimit ?? null;
   const activeDevices = devices.filter((d) => d.status === "active").length;
   const activeCodes = tokens.filter(
     (t) => !t.revokedAt && t.expiresAt > new Date() && t.usedCount < t.maxUses,
@@ -88,7 +90,11 @@ export default async function BrowserExtensionPage() {
       </header>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <MetricCard label="Active devices" value={activeDevices} tone="green" />
+        <MetricCard
+          label="Licensed seats"
+          value={seatLimit === null ? `${activeDevices} / ∞` : `${activeDevices} / ${seatLimit}`}
+          tone={seatLimit !== null && activeDevices >= seatLimit ? "red" : "green"}
+        />
         <MetricCard label="Enrolled total" value={devices.length} tone="cyan" />
         <MetricCard label="Active enrollment codes" value={activeCodes} tone="yellow" />
         <MetricCard label="Blocked leaks (recent)" value={blockedEvents} tone="red" />

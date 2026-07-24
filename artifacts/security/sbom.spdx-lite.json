@@ -1,0 +1,34 @@
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "soterai-0.2.0-preliminary-sbom",
+  "documentNamespace": "https://soterai.local/sbom/2026-07-22/soterai-0.2.0",
+  "creationInfo": {
+    "created": "2026-07-22T00:00:00Z",
+    "creators": ["Tool: Codex generated from package-lock root package metadata"]
+  },
+  "packages": [
+    { "SPDXID": "SPDXRef-Package-soterai", "name": "soterai", "versionInfo": "0.2.0", "downloadLocation": "NOASSERTION" },
+    { "SPDXID": "SPDXRef-Package-next", "name": "next", "versionInfo": "15.5.19", "downloadLocation": "NOASSERTION" },
+    { "SPDXID": "SPDXRef-Package-react", "name": "react", "versionInfo": "18.2.0", "downloadLocation": "NOASSERTION" },
+    { "SPDXID": "SPDXRef-Package-react-dom", "name": "react-dom", "versionInfo": "18.2.0", "downloadLocation": "NOASSERTION" },
+    { "SPDXID": "SPDXRef-Package-typescript", "name": "typescript", "versionInfo": "^5.9.3", "downloadLocation": "NOASSERTION" },
+    { "SPDXID": "SPDXRef-Package-tsx", "name": "tsx", "versionInfo": "4.22.4", "downloadLocation": "NOASSERTION" },
+    { "SPDXID": "SPDXRef-Package-zod", "name": "zod", "versionInfo": "3.24.1", "downloadLocation": "NOASSERTION" },
+    { "SPDXID": "SPDXRef-Package-onnxruntime-node", "name": "onnxruntime-node", "versionInfo": "^1.27.0", "downloadLocation": "NOASSERTION" },
+    { "SPDXID": "SPDXRef-Package-adm-zip", "name": "adm-zip", "versionInfo": "0.6.0", "downloadLocation": "NOASSERTION" },
+    { "SPDXID": "SPDXRef-Package-fast-uri", "name": "fast-uri", "versionInfo": "3.1.4", "downloadLocation": "NOASSERTION" },
+    { "SPDXID": "SPDXRef-Package-sharp", "name": "sharp", "versionInfo": "0.35.3", "downloadLocation": "NOASSERTION" },
+    { "SPDXID": "SPDXRef-Package-vscode-extension", "name": "soterai-ide-guard", "versionInfo": "0.2.0", "downloadLocation": "NOASSERTION" },
+    { "SPDXID": "SPDXRef-Package-guard-core", "name": "@soterai/guard-core", "versionInfo": "0.1.0", "downloadLocation": "NOASSERTION" }
+  ],
+  "annotations": [
+    {
+      "annotationType": "OTHER",
+      "annotator": "Tool: Codex",
+      "annotationDate": "2026-07-22T00:00:00Z",
+      "comment": "Preliminary direct/root package SBOM. Full transitive SBOM generation remains required for release."
+    }
+  ]
+}

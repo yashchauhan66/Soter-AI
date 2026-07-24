@@ -86,6 +86,24 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     void handleFileScanEvent(message.event).then(sendResponse);
     return true;
   }
+  if (message.type === "SOTER_CHECK_APPROVAL_STATUS") {
+    void handleCheckApprovalStatus(String(message.approvalId ?? "")).then(sendResponse);
+    return true;
+  }
+  if (message.type === "SOTER_CLAIM_APPROVAL") {
+    void handleClaimApproval(String(message.requestId ?? ""), String(message.destination ?? "")).then(sendResponse);
+    return true;
+  }
+  if (message.type === "SOTER_AUDIT_BYPASS") {
+    void handleAuditBypass(
+      String(message.text ?? ""),
+      String(message.url ?? ""),
+      String(message.action ?? ""),
+      message.justification ? String(message.justification) : undefined,
+      message.dismissedOnly === true
+    ).then(sendResponse);
+    return true;
+  }
 });
 
 async function handleScan(request: RuntimeScanRequest): Promise<RuntimeResponse> {
@@ -293,7 +311,22 @@ async function handleFileScanEvent(event: unknown) {
   }
 }
 
-function isObject(value: unknown): value is { type?: string; text?: string; url?: string; justification?: string; state?: Record<string, unknown>; apiBaseUrl?: string; enrollmentCode?: string; event?: unknown; lineageContext?: RuntimeScanRequest["lineageContext"] } {
+function isObject(value: unknown): value is {
+  type?: string;
+  text?: string;
+  url?: string;
+  justification?: string;
+  state?: Record<string, unknown>;
+  apiBaseUrl?: string;
+  enrollmentCode?: string;
+  event?: unknown;
+  lineageContext?: RuntimeScanRequest["lineageContext"];
+  approvalId?: string;
+  requestId?: string;
+  destination?: string;
+  action?: string;
+  dismissedOnly?: boolean;
+} {
   return Boolean(value && typeof value === "object");
 }
 
@@ -308,4 +341,99 @@ function safeOrigin(url: string) {
   } catch {
     return "https://unknown.invalid";
   }
+}
+
+async function handleCheckApprovalStatus(approvalId: string) {
+  const state = await getState();
+  try {
+    const response = await fetch(`${state.config.apiBaseUrl}/api/extension/approval-status`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-soter-extension-token": state.config.deviceToken ?? "",
+      },
+      body: JSON.stringify({
+        organizationId: state.config.organizationId,
+        employeeId: state.config.employeeId,
+        approvalId,
+      }),
+    });
+    if (!response.ok) return { status: "PENDING" };
+    return await response.json();
+  } catch {
+    return { status: "PENDING" };
+  }
+}
+
+async function handleClaimApproval(requestId: string, destination: string) {
+  const state = await getState();
+  try {
+    const response = await fetch(`${state.config.apiBaseUrl}/api/extension/approval-claim`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-soter-extension-token": state.config.deviceToken ?? "",
+      },
+      body: JSON.stringify({
+        requestId,
+        organizationId: state.config.organizationId,
+        employeeId: state.config.employeeId,
+        destination,
+      }),
+    });
+    if (!response.ok) return { allowed: false };
+    return await response.json();
+  } catch {
+    return { allowed: false };
+  }
+}
+
+async function handleAuditBypass(text: string, url: string, action: string, justification?: string, dismissedOnly = false) {
+  const state = await getState();
+  const api = new SoterExtensionApiClient(state.config);
+  const result = scanPrompt(text, url, state);
+  const allowFullText = false;
+
+  const event: ExtensionAuditEvent = {
+    organizationId: state.config.organizationId,
+    employeeId: state.config.employeeId,
+    extensionVersion: SOTER_EXTENSION_VERSION,
+    browser: browserName(),
+    domain: domainFromUrl(url),
+    url: url,
+    policyVersion: state.policy?.version ?? "unknown",
+    action: messageActionToPolicyAction(action),
+    severity: result.policy.severity,
+    riskScore: result.riskScore,
+    detectedDataTypes: result.detectedDataTypes,
+    matchedRules: result.policy.matchedRules.map((rule) => rule.id),
+    redactedPreview: previewForScan(result, "prompt", 500, allowFullText),
+    eventType: "submit",
+    occurredAt: new Date().toISOString(),
+    metadata: {
+      // `dismissedOnly` = the user dismissed a hard-enforcement block WITHOUT
+      // the submission being allowed through. `bypassed` = the submission was
+      // actually let through (require_justification self-service bypass).
+      bypassed: !dismissedOnly,
+      dismissedOnly,
+      overrideAttempt: true,
+      originalAction: action,
+      justification: justification,
+      findings: result.findings.map(({ type, label, severity }) => ({ type, label, severity })),
+    },
+  };
+
+  try {
+    await api.audit(event);
+    return { ok: true };
+  } catch {
+    return { ok: false };
+  }
+}
+
+function messageActionToPolicyAction(action: string): any {
+  if (["block", "require_approval", "require_justification", "warn", "redact", "rewrite", "allow", "log_only"].includes(action)) {
+    return action;
+  }
+  return "allow";
 }

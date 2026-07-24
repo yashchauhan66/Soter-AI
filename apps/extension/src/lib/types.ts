@@ -14,6 +14,9 @@ export interface ExtensionConfig {
   role?: string;
   deviceToken?: string;
   policySigningSecret?: string;
+  /** Enterprise enforcement flags pushed via managed config (Intune/GPO/MDM). */
+  hardEnforcement?: boolean;
+  offlineFailClosed?: boolean;
 }
 
 export type EnrollmentStatus = "enrolled" | "pending" | "expired" | "unenrolled";

@@ -38,9 +38,11 @@ describe("scanAIOutput", () => {
     });
 
     it("flags raw secrets that leaked into output without exposing them", () => {
-        const result = scanAIOutput("OPENAI_API_KEY=sk-test-soter-canary-123456789012345678");
-        assert.ok(result.riskScore > 0);
-        assert.ok(!JSON.stringify(result).includes("sk-test-soter-canary-123456789012345678"));
+        // Use a real-shaped project key (not sk-test stub, which is intentionally FP-suppressed).
+        const raw = "sk-proj-abcdefghijklmnopqrstuvwxyz0123456789ABCDEF";
+        const result = scanAIOutput(`OPENAI_API_KEY=${raw}`);
+        assert.ok(result.riskScore > 0, `expected risk>0, got ${result.riskScore}`);
+        assert.ok(!JSON.stringify(result).includes(raw));
     });
 
     it("raises risk when known vault placeholders are referenced", () => {

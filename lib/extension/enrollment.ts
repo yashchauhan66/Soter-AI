@@ -2,6 +2,7 @@ import crypto from "node:crypto";
 import { db } from "@/lib/db";
 
 export type EnrollmentTokenStatus = "valid" | "invalid" | "expired" | "revoked" | "overused";
+export type EnrollmentRedeemStatus = EnrollmentTokenStatus | "seat_limit_reached";
 
 export function hashSecret(value: string) {
   return crypto.createHash("sha256").update(value, "utf8").digest("hex");
@@ -20,11 +21,23 @@ export function enrollmentTokenStatus(token: {
   return "valid";
 }
 
-export function enrollmentStatusMessage(status: Exclude<EnrollmentTokenStatus, "valid">) {
+export function enrollmentStatusMessage(status: Exclude<EnrollmentRedeemStatus, "valid">) {
   if (status === "expired") return "Enrollment code has expired.";
   if (status === "revoked") return "Enrollment code has been revoked.";
   if (status === "overused") return "Enrollment code has reached its usage limit.";
+  if (status === "seat_limit_reached") return "Your organization has reached its licensed seat limit. Contact your administrator to add seats.";
   return "Invalid enrollment code.";
+}
+
+/**
+ * Seat accounting for browser-extension licensing.
+ * `limit === null` means unlimited (backward-compatible default). A seat is one
+ * active enrolled browser-extension device. Returns whether one more device fits.
+ */
+export function seatCheck(limit: number | null | undefined, activeSeats: number): { withinLimit: boolean; limit: number | null; used: number; remaining: number | null } {
+  if (limit === null || limit === undefined) return { withinLimit: true, limit: null, used: activeSeats, remaining: null };
+  const remaining = Math.max(0, limit - activeSeats);
+  return { withinLimit: activeSeats < limit, limit, used: activeSeats, remaining };
 }
 
 export async function createEnrollmentToken(input: {
@@ -75,10 +88,20 @@ export async function redeemEnrollmentToken(input: {
   return database.$transaction(async (tx) => {
     const token = await tx.extensionEnrollmentToken.findUnique({
       where: { tokenHash },
-      include: { organization: { select: { name: true } } },
+      include: { organization: { select: { name: true, extensionSeatLimit: true } } },
     });
     const status = enrollmentTokenStatus(token, now);
-    if (status !== "valid" || !token) return { ok: false as const, status, message: enrollmentStatusMessage(status as Exclude<EnrollmentTokenStatus, "valid">) };
+    if (status !== "valid" || !token) return { ok: false as const, status, message: enrollmentStatusMessage(status as Exclude<EnrollmentRedeemStatus, "valid">) };
+
+    // Seat licensing gate: refuse enrollment once the org hits its licensed seat cap.
+    // Counted before consuming the token so a rejected enrollment does not burn a use.
+    const activeSeats = await tx.deviceAgent.count({
+      where: { organizationId: token.organizationId, type: "browser_extension", status: "active" },
+    });
+    const seats = seatCheck(token.organization.extensionSeatLimit, activeSeats);
+    if (!seats.withinLimit) {
+      return { ok: false as const, status: "seat_limit_reached" as const, message: enrollmentStatusMessage("seat_limit_reached") };
+    }
 
     // The conditional update is the concurrency boundary: only one request may consume the final use.
     const consumed = await tx.extensionEnrollmentToken.updateMany({

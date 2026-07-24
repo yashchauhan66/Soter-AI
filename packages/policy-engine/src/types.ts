@@ -54,6 +54,14 @@ export interface ExtensionOrgPolicy {
   signature?: string;
   policyHash?: string;
   emergencyLockdown?: EmergencyLockdownPolicy;
+  offlineFailClosed?: boolean;
+  /**
+   * When true, every `block` decision becomes a hard block: the submission is
+   * locked and cannot be casually dismissed/re-submitted. The user's only
+   * escape is a server-side approval (if `require_approval` applies) or an
+   * explicitly-audited dismiss that does NOT allow the submit through.
+   */
+  hardEnforcement?: boolean;
 }
 
 export interface EmergencyLockdownPolicy {
