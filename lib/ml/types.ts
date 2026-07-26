@@ -10,6 +10,22 @@ import type { MLLabel } from "@prisma/client";
 
 export type MLBackend = "heuristic" | "external-api";
 
+export const ML_LABELS = [
+  "SAFE",
+  "PROMPT_INJECTION",
+  "JAILBREAK",
+  "SYSTEM_PROMPT_LEAK_ATTEMPT",
+  "PII",
+  "SECRET",
+  "UNSAFE_OUTPUT",
+  "RAG_POISONING",
+  "DATA_EXFILTRATION_ATTEMPT",
+] as const satisfies readonly MLLabel[];
+
+export function isMLLabel(value: unknown): value is MLLabel {
+  return typeof value === "string" && (ML_LABELS as readonly string[]).includes(value);
+}
+
 export interface MLDatasetExampleInput {
   text: string;
   label: MLLabel;
@@ -34,6 +50,11 @@ export interface ModelInference {
   predictedLabel: MLLabel;
   confidence: number;
   raw?: Record<string, unknown>;
+}
+
+export function normalizeConfidence(value: unknown): number {
+  if (typeof value !== "number" || !Number.isFinite(value)) return 0;
+  return Math.max(0, Math.min(1, value));
 }
 
 export interface ModelBackend {

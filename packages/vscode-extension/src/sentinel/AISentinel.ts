@@ -58,6 +58,11 @@ export class AISentinel implements vscode.Disposable {
     private statusBarItem: vscode.StatusBarItem;
     private disposables: vscode.Disposable[] = [];
     private readonly maxEvents = 500;
+    /** Throttle file-change events: minimum ms between processing the same file. */
+    private readonly fileEventThrottleMs = 200;
+    private readonly fileEventThrottleCleanupInterval = 10_000; // cleanup old entries every 10s
+    private lastFileEvent = new Map<string, number>();
+    private lastThrottleCleanup = 0;
 
     constructor(private readonly context: vscode.ExtensionContext) {
         this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 95);
@@ -91,11 +96,14 @@ export class AISentinel implements vscode.Disposable {
         return this.events.filter((e) => e.risk === "high" || e.risk === "critical");
     }
 
-    recordEvent(event: Omit<SentinelEvent, "id" | "timestamp">): void {
+    async recordEvent(event: Omit<SentinelEvent, "id" | "timestamp">): Promise<void> {
         const full: SentinelEvent = { ...event, id: `sent_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`, timestamp: Date.now() };
         this.events.push(full);
         if (this.events.length > this.maxEvents) this.events.splice(0, this.events.length - this.maxEvents);
-        void this.context.globalState.update("soterai.sentinelEvents", this.events);
+        // Limit globalState writes to prevent storage exhaustion from rapid events
+        if (this.events.length % 10 === 0 || this.events.length <= 1) {
+            await this.context.globalState.update("soterai.sentinelEvents", this.events);
+        }
 
         if (event.risk === "high" || event.risk === "critical") {
             vscode.window.showWarningMessage(`[SoterAI Sentinel] ${event.risk.toUpperCase()}: ${event.redactedEvidence}`);
@@ -172,6 +180,20 @@ export class AISentinel implements vscode.Disposable {
 
     private async onFileChange(uri: vscode.Uri, changeType: string): Promise<void> {
         const rel = vscode.workspace.asRelativePath(uri);
+
+        // Throttle rapid file-change events to prevent storage flooding
+        const now = Date.now();
+        const last = this.lastFileEvent.get(rel) ?? 0;
+        if (now - last < this.fileEventThrottleMs) return;
+        this.lastFileEvent.set(rel, now);
+        // Periodically prune stale throttle entries to prevent unbounded Map growth
+        if (now - this.lastThrottleCleanup > this.fileEventThrottleCleanupInterval) {
+            this.lastThrottleCleanup = now;
+            for (const [path, ts] of this.lastFileEvent) {
+                if (now - ts > this.fileEventThrottleCleanupInterval) this.lastFileEvent.delete(path);
+            }
+        }
+
         const isHighRisk = HIGH_RISK_PATTERNS.some((p) => p.test(rel));
         const isRepoInstruction = REPO_INSTRUCTION_FILES.some((f) => rel.endsWith(f) || rel.includes(f));
 

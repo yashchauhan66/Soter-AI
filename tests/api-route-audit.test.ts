@@ -35,6 +35,7 @@ const publicRoutes = new Map<string, RegExp[]>([
   ["/api/auth/[...nextauth]", [/handlers/, /GET/, /POST/]],
   ["/api/billing/webhook", [/verifyRazorpayWebhook/, /request\.text\(\)/]],
   ["/api/guard/analyze", [/checkRedisRateLimit/, /analyzeSchema\.parse/]],
+  ["/api/openapi", [/openApiSpec/, /jsonResponse/]],
   ["/api/sso/saml/login", [/safeCallbackUrl/, /buildAuthnRequest/]],
   ["/api/sso/saml/metadata", [/buildSpMetadata/, /application\/xml/]],
   ["/api/sso/saml/acs", [/validateSamlResponse|parseSamlResponse|signIn/]],

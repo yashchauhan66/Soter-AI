@@ -6,6 +6,11 @@ import type { ClassifierResult, TextClassifier } from "./types";
 
 // ── Hindi / Hinglish signals (Phase 6) ─────────────────────────────────
 const hindiHinglishSignals = [
+  // JAILBREAK - unrestricted obedience / persona override. Keep this before the
+  // broader prompt-injection patterns below so "obey me over the rules" keeps
+  // the stronger jailbreak label.
+  { pattern: /upar wale (?:rules?|nirdesh) (?:ko )?ignore karke (?:sirf )?meri baat ma[na]o/i, riskType: "JAILBREAK" },
+
   // PROMPT_INJECTION — instruction override
   { pattern: /pichl[ei] (?:sabhi |saare )?(?:nirdesh|instructions?) (?:ignore|bhool|nazandaz|nazarandaz) karo/i, riskType: "PROMPT_INJECTION" },
   { pattern: /pichle instruction(?:s)? ignore karo/i, riskType: "PROMPT_INJECTION" },

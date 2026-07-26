@@ -1,10 +1,15 @@
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
-import { AuthError } from "./auth/guards";
+import { AuthError } from "./auth/errors";
+import { SOTERAI_API_VERSION, SOTERAI_CONTRACT_VERSION } from "./apiContract";
 import { isDatabaseUnavailableError } from "./databaseErrors";
 import { validateBodyStrings } from "./validateBodyStrings";
 
 const NO_STORE_HEADERS = { "Cache-Control": "no-store, max-age=0" };
+const CONTRACT_HEADERS = {
+  "X-SoterAI-API-Version": SOTERAI_API_VERSION,
+  "X-SoterAI-Contract-Version": SOTERAI_CONTRACT_VERSION,
+};
 
 // SECURITY: Maximum body size enforced on the actual received bytes,
 // not on the client-supplied content-length header (which is forgeable).
@@ -15,7 +20,7 @@ const MAX_BODY_BYTES = 32_000;
 export function jsonResponse(data: unknown, init: ResponseInit = {}) {
   return NextResponse.json(data, {
     ...init,
-    headers: { ...NO_STORE_HEADERS, ...init.headers },
+    headers: { ...NO_STORE_HEADERS, ...CONTRACT_HEADERS, ...init.headers },
   });
 }
 
@@ -96,4 +101,3 @@ export async function readJson(request: Request) {
   validateBodyStrings(parsed);
   return parsed;
 }
-

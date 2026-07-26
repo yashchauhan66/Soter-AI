@@ -56,11 +56,20 @@ Same as Chrome listing — see `chrome-private-listing.md`.
 
 | Host | Purpose |
 |------|---------|
-| `chatgpt.com`, `chat.openai.com` | Prompt monitoring on ChatGPT |
-| `claude.ai` | Prompt monitoring on Claude |
-| `gemini.google.com` | Prompt monitoring on Gemini |
-| `perplexity.ai` | Prompt monitoring on Perplexity |
-| `*.localhost` | Block local AI tools during lockdown |
+| `*://chatgpt.com/*`, `*://chat.openai.com/*` | Prompt monitoring on ChatGPT |
+| `*://claude.ai/*` | Prompt monitoring on Claude |
+| `*://gemini.google.com/*`, `*://bard.google.com/*` | Prompt monitoring on Gemini/Bard |
+| `*://perplexity.ai/*` | Prompt monitoring on Perplexity |
+| `*://poe.com/*` | Prompt monitoring on Poe |
+| `*://openrouter.ai/*` | Prompt monitoring on OpenRouter |
+| `*://replit.com/*`, `*://*.replit.dev/*` | Browser coding workspace protection |
+| `*://stackblitz.com/*`, `*://*.stackblitz.io/*` | Browser coding workspace protection |
+| `*://codesandbox.io/*`, `*://*.csb.app/*` | Browser coding workspace protection |
+| `*://github.dev/*`, `*://*.github.dev/*` | Browser coding workspace protection |
+| `*://bolt.new/*`, `*://v0.dev/*`, `*://lovable.dev/*` | AI-assisted browser builder protection |
+| `*://openwebui.com/*` | Supported self-hosted AI web UI protection |
+| `https://soterai.in/*` | SoterAI policy sync, enrollment and redacted event reporting |
+| `*://localhost/*`, `*://127.0.0.1/*` | Local AI and development endpoint protection |
 
 ## Support Checklist
 

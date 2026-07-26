@@ -1,4 +1,5 @@
 import { shouldPreventSubmit } from "../lib/scanner";
+import { sendMessageWithTimeout } from "../lib/runtime-messaging";
 import type { RuntimeResponse } from "../lib/types";
 import type { AiSiteAdapter, PromptTarget } from "./adapters/generic";
 import { currentPromptTarget } from "./dom-observer";
@@ -57,12 +58,12 @@ export async function evaluateSubmitInterception(
 }
 
 function sendScan(text: string, eventType: "submit" | "paste" | "scan" | "context_menu") {
-  return new Promise<RuntimeResponse>((resolve) => {
-    void getFreshLineageContext().then((lineageContext) => {
-      chrome.runtime.sendMessage({ type: "SOTER_SCAN_TEXT", text, url: location.href, eventType, lineageContext }, (response) => {
-        resolve((response as RuntimeResponse) ?? { ok: false, message: chrome.runtime.lastError?.message ?? "No response." });
-      });
-    });
+  return new Promise<RuntimeResponse>(async (resolve) => {
+    const lineageContext = await getFreshLineageContext();
+    const response = await sendMessageWithTimeout<RuntimeResponse>(
+      { type: "SOTER_SCAN_TEXT", text, url: location.href, eventType, lineageContext },
+    );
+    resolve(response ?? { ok: false, message: "No response." });
   });
 }
 

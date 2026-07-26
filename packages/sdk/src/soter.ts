@@ -1,3 +1,4 @@
+import { SoterAuthError } from "./errors";
 import { GuardClient } from "./client";
 import type {
   ClientOptions,
@@ -22,16 +23,18 @@ function firstValue(...values: Array<string | undefined>): string | undefined {
 /** Resolve Soter variables first while preserving the existing environment contract. */
 export function resolveSoterConfig(config: SoterConfig = {}): ClientOptions {
   const env = environment();
+  const apiKey = firstValue(
+    config.apiKey,
+    env.SOTER_API_KEY,
+    env.SOTERAI_API_KEY,
+    env.CYBERGUARD_API_KEY,
+    env.CYBERRAKSHAK_API_KEY,
+    env.CYBERSECURITYGUARD_API_KEY,
+  );
+  if (!apiKey?.trim()) throw new SoterAuthError("apiKey is required. Set SOTER_API_KEY in your environment or pass it in config.", 401);
   return {
     ...config,
-    apiKey: firstValue(
-      config.apiKey,
-      env.SOTER_API_KEY,
-      env.SOTERAI_API_KEY,
-      env.CYBERGUARD_API_KEY,
-      env.CYBERRAKSHAK_API_KEY,
-      env.CYBERSECURITYGUARD_API_KEY,
-    ) ?? "",
+    apiKey,
     projectId: firstValue(
       config.projectId,
       env.SOTER_PROJECT_ID,

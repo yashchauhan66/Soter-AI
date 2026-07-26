@@ -32,11 +32,20 @@ The extension monitors only known AI tool domains (e.g., chatgpt.com, claude.ai,
 
 | Host Permission | Justification |
 |----------------|---------------|
-| `chatgpt.com`, `chat.openai.com` | Monitor and enforce AI security policy on OpenAI ChatGPT |
-| `claude.ai` | Monitor and enforce AI security policy on Anthropic Claude |
-| `gemini.google.com` | Monitor and enforce AI security policy on Google Gemini |
-| `perplexity.ai` | Monitor and enforce AI security policy on Perplexity |
-| `*.localhost` | Block localhost AI tools during enterprise lockdown |
+| `*://chatgpt.com/*`, `*://chat.openai.com/*` | Monitor and enforce AI security policy on OpenAI ChatGPT |
+| `*://claude.ai/*` | Monitor and enforce AI security policy on Anthropic Claude |
+| `*://gemini.google.com/*`, `*://bard.google.com/*` | Monitor and enforce AI security policy on Google Gemini/Bard |
+| `*://perplexity.ai/*` | Monitor and enforce AI security policy on Perplexity |
+| `*://poe.com/*` | Monitor and enforce AI security policy on Poe |
+| `*://openrouter.ai/*` | Monitor and enforce AI security policy on OpenRouter |
+| `*://replit.com/*`, `*://*.replit.dev/*` | Prevent source-code and secret leakage in browser development workspaces |
+| `*://stackblitz.com/*`, `*://*.stackblitz.io/*` | Prevent source-code and secret leakage in browser development workspaces |
+| `*://codesandbox.io/*`, `*://*.csb.app/*` | Prevent source-code and secret leakage in browser development workspaces |
+| `*://github.dev/*`, `*://*.github.dev/*` | Prevent source-code and secret leakage in browser development workspaces |
+| `*://bolt.new/*`, `*://v0.dev/*`, `*://lovable.dev/*` | Prevent source-code and secret leakage in AI-assisted browser builders |
+| `*://openwebui.com/*` | Monitor and enforce policy on supported self-hosted AI web UI usage |
+| `https://soterai.in/*` | Connect enrolled extensions to the SoterAI control plane for policy sync, enrollment and redacted event reporting |
+| `*://localhost/*`, `*://127.0.0.1/*` | Protect local AI tools and development endpoints during enterprise policy enforcement |
 
 **Note:** The extension does NOT monitor general browsing, only specifically listed AI tool domains.
 

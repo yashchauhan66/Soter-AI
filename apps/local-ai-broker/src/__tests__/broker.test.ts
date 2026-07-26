@@ -66,11 +66,18 @@ describe("Local AI Broker server", () => {
         });
     });
 
-    it("rotates its local auth token", async () => {
+    it("rotates its local auth token with cooldown", async () => {
         await withBroker({}, async (url) => {
             const next = "replacement_local_broker_token_abcdef0123456789";
             assert.equal((await request(url, "/v1/auth/rotate", { method: "POST", body: JSON.stringify({ token: next }) })).status, 200);
+            // Immediate second rotation should hit cooldown (use new token)
+            const third = "another_replacement_broker_token_0000000000012345";
+            const cooldownResp = await request(url, "/v1/auth/rotate", { method: "POST", body: JSON.stringify({ token: third }) }, next);
+            assert.equal(cooldownResp.status, 429);
+            assert.equal((await cooldownResp.json() as { error: { code: string } }).error.code, "rotation_cooldown");
+            // Old token no longer works
             assert.equal((await request(url, "/version")).status, 401);
+            // New token works
             assert.equal((await request(url, "/version", {}, next)).status, 200);
         });
     });
@@ -96,6 +103,116 @@ describe("Local AI Broker server", () => {
             const text = await exported.text();
             assert.equal(text.includes(raw), false);
             assert.match(text, /session-1/);
+        });
+    });
+
+    it("sanitizes invalid session IDs in URL paths", async () => {
+        await withBroker({}, async (url) => {
+            // Path traversal attempt in session ID
+            const malicious = encodeURIComponent("../../etc/passwd");
+            const resp = await request(url, `/v1/memory/session/${malicious}`);
+            // Should get 404 (sanitized to a UUID that doesn't exist) rather than path traversal
+            assert.equal(resp.status, 404);
+        });
+    });
+
+    it("rejects unknown message roles", async () => {
+        await withBroker({}, async (url) => {
+            const resp = await request(url, "/v1/scan", { method: "POST", body: JSON.stringify({ messages: [{ role: "admin", content: "hello" }] }) });
+            assert.equal(resp.status, 400);
+            assert.equal((await resp.json() as { error: { code: string } }).error.code, "invalid_role");
+        });
+    });
+
+    it("rejects provider request with arbitrary extra fields", async () => {
+        const fetchImpl: typeof fetch = async (_input, init) => {
+            const body = JSON.parse(init?.body as string);
+            // Should only contain whitelisted fields, not "__proto__" or "script"
+            assert.equal(Object.keys(body).includes("__proto__"), false);
+            assert.equal(Object.keys(body).includes("script"), false);
+            assert.equal(Object.keys(body).includes("messages"), true);
+            assert.equal(Object.keys(body).includes("model"), true);
+            return new Response(JSON.stringify({ choices: [{ message: { role: "assistant", content: "ok" } }] }), { headers: { "content-type": "application/json" } });
+        };
+        await withBroker({ openAIProviderUrl: "https://provider.invalid/v1/chat/completions", providerApiKey: "local-key", fetchImpl }, async (url) => {
+            const resp = await request(url, "/v1/ai/openai-compatible/chat/completions", { method: "POST", body: JSON.stringify({ model: "mock", messages: [{ role: "user", content: "hello" }], "__proto__": { "admin": true }, "script": "evil_code" }) });
+            assert.equal(resp.status, 200);
+        });
+    });
+
+    it("rejects provider URL with HTTP to non-localhost", async () => {
+        await withBroker({ openAIProviderUrl: "http://evil.com/api", providerApiKey: "key" }, async (url) => {
+            const resp = await request(url, "/v1/ai/openai-compatible/chat/completions", { method: "POST", body: JSON.stringify({ model: "mock", messages: [{ role: "user", content: "hello" }] }) });
+            assert.equal(resp.status, 400);
+            assert.equal((await resp.json() as { error: { code: string } }).error.code, "unsafe_provider_url");
+        });
+    });
+
+    it("applies per-session memory event cap", async () => {
+        const fetchImpl: typeof fetch = async () => new Response(JSON.stringify({ choices: [{ message: { content: "ok" } }] }), { headers: { "content-type": "application/json" } });
+        await withBroker({ openAIProviderUrl: "https://provider.invalid/v1/chat/completions", providerApiKey: "local-key", fetchImpl }, async (url) => {
+            await request(url, "/v1/memory/session/start", { method: "POST", body: JSON.stringify({ sessionId: "cap-test" }) });
+            // Add a small number of events
+            for (let i = 0; i < 50; i++) {
+                const resp = await request(url, "/v1/memory/session/event", { method: "POST", body: JSON.stringify({ sessionId: "cap-test", event: { kind: "broker_request_scanned", decision: "allow", riskScore: 0, categories: [] } }) });
+                if (resp.status !== 201) break;
+            }
+            // Verify we can still read the session
+            const getResp = await request(url, `/v1/memory/session/cap-test`);
+            assert.equal(getResp.status, 200);
+        });
+    });
+
+    it("rejects HTTP provider URL for non-localhost (Anthropic)", async () => {
+        await withBroker({ anthropicProviderUrl: "http://external-insecure.com/api", providerApiKey: "key" }, async (url) => {
+            const resp = await request(url, "/v1/ai/anthropic-compatible/messages", { method: "POST", body: JSON.stringify({ model: "mock", messages: [{ role: "user", content: "hello" }] }) });
+            assert.equal(resp.status, 400);
+            assert.equal((await resp.json() as { error: { code: string } }).error.code, "unsafe_provider_url");
+        });
+    });
+
+    it("rejects oversized provider response beyond byte limit", async () => {
+        // Create a mock that returns a huge response body
+        const bigContent = "x".repeat(6 * 1024 * 1024); // 6 MB — exceeds 5 MB limit
+        const fetchImpl: typeof fetch = async () => {
+            const encoder = new TextEncoder();
+            const body = JSON.stringify({ choices: [{ message: { content: bigContent } }] });
+            return new Response(body, { headers: { "content-type": "application/json" } });
+        };
+        await withBroker({ openAIProviderUrl: "https://provider.invalid/v1/chat/completions", providerApiKey: "local-key", fetchImpl }, async (url) => {
+            const resp = await request(url, "/v1/ai/openai-compatible/chat/completions", { method: "POST", body: JSON.stringify({ model: "mock", messages: [{ role: "user", content: "hello" }] }) });
+            assert.equal(resp.status, 502);
+            const body = await resp.json() as { error: { code: string } };
+            assert.equal(body.error.code, "provider_response_too_large");
+        });
+    });
+
+    it("retries transient provider 5xx responses with a bounded retry", async () => {
+        let calls = 0;
+        const fetchImpl: typeof fetch = async () => {
+            calls++;
+            if (calls === 1) {
+                return new Response(JSON.stringify({ error: { message: "temporary overload" } }), { status: 503, headers: { "content-type": "application/json" } });
+            }
+            return new Response(JSON.stringify({ choices: [{ message: { role: "assistant", content: "Recovered safely." } }] }), { status: 200, headers: { "content-type": "application/json" } });
+        };
+        await withBroker({ openAIProviderUrl: "https://provider.invalid/v1/chat/completions", providerApiKey: "local-key", fetchImpl, providerRetryAttempts: 1 }, async (url) => {
+            const resp = await request(url, "/v1/ai/openai-compatible/chat/completions", { method: "POST", body: JSON.stringify({ model: "mock", messages: [{ role: "user", content: "hello" }] }) });
+            assert.equal(resp.status, 200);
+            assert.equal(calls, 2);
+        });
+    });
+
+    it("does not exceed configured provider retry attempts", async () => {
+        let calls = 0;
+        const fetchImpl: typeof fetch = async () => {
+            calls++;
+            return new Response(JSON.stringify({ error: { message: "still overloaded" } }), { status: 503, headers: { "content-type": "application/json" } });
+        };
+        await withBroker({ openAIProviderUrl: "https://provider.invalid/v1/chat/completions", providerApiKey: "local-key", fetchImpl, providerRetryAttempts: 1 }, async (url) => {
+            const resp = await request(url, "/v1/ai/openai-compatible/chat/completions", { method: "POST", body: JSON.stringify({ model: "mock", messages: [{ role: "user", content: "hello" }] }) });
+            assert.equal(resp.status, 503);
+            assert.equal(calls, 2);
         });
     });
 });
@@ -170,6 +287,39 @@ describe("OpenAI-compatible proxy", () => {
             const replay = await request(url, "/v1/ai/openai-compatible/chat/completions", { method: "POST", headers: { "x-soterai-session-id": "approved-session" }, body: JSON.stringify({ messages: [{ role: "user", content }] }) });
             assert.equal(replay.status, 403);
             assert.equal(calls, 1);
+        });
+    });
+
+    it("serves OpenAI-compatible buffered SSE after output scanning", async () => {
+        let providerStreamValue: unknown = undefined;
+        const fetchImpl: typeof fetch = async (_input, init) => {
+            const forwarded = JSON.parse(init?.body as string) as { stream?: unknown };
+            providerStreamValue = forwarded.stream;
+            return new Response(JSON.stringify({ id: "chatcmpl_stream_test", model: "mock", choices: [{ message: { role: "assistant", content: "Streamed after scan." } }] }), { status: 200, headers: { "content-type": "application/json" } });
+        };
+        await withBroker({ openAIProviderUrl: "https://provider.invalid/v1/chat/completions", providerApiKey: "local-key", fetchImpl }, async (url) => {
+            const response = await request(url, "/v1/ai/openai-compatible/chat/completions", { method: "POST", body: JSON.stringify({ model: "mock", stream: true, messages: [{ role: "user", content: "Write a short answer" }] }) });
+            const text = await response.text();
+            assert.equal(response.status, 200);
+            assert.equal(response.headers.get("content-type")?.startsWith("text/event-stream"), true);
+            assert.equal(response.headers.get("x-soterai-streaming-mode"), "buffered_scan");
+            assert.equal(providerStreamValue, false);
+            assert.match(text, /data: /);
+            assert.match(text, /Streamed after scan\./);
+            assert.match(text, /data: \[DONE\]/);
+        });
+    });
+
+    it("does not stream unsafe provider output before blocking it", async () => {
+        const canary = await generateCanary();
+        const fetchImpl: typeof fetch = async () => new Response(JSON.stringify({ choices: [{ message: { role: "assistant", content: canary.token } }] }), { status: 200, headers: { "content-type": "application/json" } });
+        await withBroker({ openAIProviderUrl: "https://provider.invalid/v1/chat/completions", providerApiKey: "local-key", fetchImpl, canaries: [canary] }, async (url) => {
+            const response = await request(url, "/v1/ai/openai-compatible/chat/completions", { method: "POST", body: JSON.stringify({ model: "mock", stream: true, messages: [{ role: "user", content: "Say hello" }] }) });
+            const text = await response.text();
+            assert.equal(response.status, 422);
+            assert.equal(response.headers.get("content-type")?.startsWith("application/json"), true);
+            assert.equal(text.includes(canary.token), false);
+            assert.equal((JSON.parse(text) as { error: { code: string } }).error.code, "unsafe_provider_response");
         });
     });
 });

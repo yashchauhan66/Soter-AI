@@ -1,0 +1,57 @@
+{
+  "name": "SoterAI Workflow Security Audit",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "workflowJson",
+              "value": "{\"name\":\"Demo AI Workflow\",\"nodes\":[{\"name\":\"Webhook\",\"type\":\"n8n-nodes-base.webhook\",\"parameters\":{\"path\":\"demo\"}},{\"name\":\"AI Agent\",\"type\":\"@n8n/n8n-nodes-langchain.agent\",\"parameters\":{}},{\"name\":\"HTTP Request\",\"type\":\"n8n-nodes-base.httpRequest\",\"parameters\":{\"url\":\"https://api.example.com/webhook\"}}],\"connections\":{}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "sample-workflow-json",
+      "name": "Sample Workflow JSON",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [470, 300]
+    },
+    {
+      "parameters": {
+        "action": "workflowAudit",
+        "workflowJson": "={{$json.workflowJson}}",
+        "metadata": "{\"workflow\":\"soterai-workflow-security-audit\"}"
+      },
+      "id": "soterai-workflow-audit",
+      "name": "SoterAI Workflow Audit",
+      "type": "n8n-nodes-soterai.soterGuard",
+      "typeVersion": 1,
+      "position": [730, 300],
+      "credentials": {
+        "soterApi": {
+          "id": "SOTERAI_API_PLACEHOLDER",
+          "name": "SoterAI API"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [[{ "node": "Sample Workflow JSON", "type": "main", "index": 0 }]]
+    },
+    "Sample Workflow JSON": {
+      "main": [[{ "node": "SoterAI Workflow Audit", "type": "main", "index": 0 }]]
+    }
+  }
+}

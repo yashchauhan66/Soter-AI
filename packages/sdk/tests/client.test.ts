@@ -1,7 +1,12 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { CyberRakshakClient, createClient, normalizeDecision } from "../src/client";
-import { CyberRakshakAuthError, CyberRakshakNetworkError, CyberRakshakRateLimitError } from "../src/errors";
+import {
+  SOTERAI_API_VERSION,
+  SOTERAI_SDK_NAME,
+  SOTERAI_SDK_VERSION,
+} from "../src/contract";
+import { CyberRakshakAuthError, CyberRakshakError, CyberRakshakNetworkError, CyberRakshakRateLimitError } from "../src/errors";
 import type { GuardResult } from "../src/types";
 
 const API_KEY = "ck_test_abcdefghijklmnopqrstuvwxyz123456";
@@ -50,6 +55,11 @@ test("guardInput sends x-api-key header and message field", async () => {
   assert.equal(calls.length, 1);
   assert.equal(calls[0].url, "https://guard.test/api/guard/input");
   assert.equal(calls[0].init.headers["x-api-key"], API_KEY);
+  assert.equal(calls[0].init.headers["Accept"], "application/json");
+  assert.equal(calls[0].init.headers["X-SoterAI-API-Version"], SOTERAI_API_VERSION);
+  assert.equal(calls[0].init.headers["X-SoterAI-SDK"], SOTERAI_SDK_NAME);
+  assert.equal(calls[0].init.headers["X-SoterAI-SDK-Version"], SOTERAI_SDK_VERSION);
+  assert.equal(calls[0].init.headers["User-Agent"], `soter-sdk/${SOTERAI_SDK_VERSION}`);
   const body = JSON.parse(calls[0].init.body as string);
   assert.equal(body.message, "hello there");
 });
@@ -85,6 +95,27 @@ test("response decision is normalized from action", async () => {
   const client = new CyberRakshakClient({ apiKey: API_KEY, baseUrl: "https://guard.test", fetch: fetchImpl });
   const result = await client.guardInput({ text: "my email is a@b.com" });
   assert.equal(result.decision, "REDACT");
+});
+
+test("compatible API version response header is accepted", async () => {
+  const { fetchImpl } = mockFetch(jsonResponse(allowResult(), { headers: { "x-soterai-api-version": SOTERAI_API_VERSION } }));
+  const client = new CyberRakshakClient({ apiKey: API_KEY, baseUrl: "https://guard.test", fetch: fetchImpl });
+  const result = await client.guardInput({ text: "hello" });
+  assert.equal(result.allowed, true);
+});
+
+test("incompatible API version response header fails closed", async () => {
+  const { fetchImpl } = mockFetch(jsonResponse(allowResult(), { headers: { "x-soterai-api-version": "v2" } }));
+  const client = new CyberRakshakClient({ apiKey: API_KEY, baseUrl: "https://guard.test", fetch: fetchImpl });
+  await assert.rejects(
+    () => client.guardInput({ text: "hello" }),
+    (err: unknown) => {
+      assert.ok(err instanceof CyberRakshakError);
+      assert.equal((err as CyberRakshakError).code, "api_version_unsupported");
+      assert.match((err as Error).message, /supports v1/);
+      return true;
+    },
+  );
 });
 
 test("normalizeDecision maps every action", () => {

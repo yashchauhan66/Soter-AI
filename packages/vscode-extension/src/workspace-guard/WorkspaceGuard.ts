@@ -92,8 +92,15 @@ export class WorkspaceGuard {
     isProtected(filePath: string): boolean {
         return this.protectedFiles.some((f) => {
             if (f.pattern.includes("*")) {
-                const regex = new RegExp(f.pattern.replace(/\*/g, ".*"), "i");
-                return regex.test(filePath);
+                // Escape regex special chars before replacing glob * with .*
+                // This prevents ReDoS from patterns containing crafted regex characters
+                const escaped = f.pattern.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, ".*");
+                try {
+                    const regex = new RegExp(`^${escaped}$`, "i");
+                    return regex.test(filePath);
+                } catch {
+                    return false;
+                }
             }
             return filePath.includes(f.pattern);
         });

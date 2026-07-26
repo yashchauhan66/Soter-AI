@@ -85,21 +85,38 @@ export function analyzeContentSafety(
   const categories = options?.categories ?? (Object.keys(SAFETY_PATTERNS) as SafetyCategory[]);
   const threshold = options?.threshold ?? 0.5;
   const findings: SafetyFinding[] = [];
+  const startTime = Date.now();
+  // Security hardening: max 500ms for content safety scanning
+  const CONTENT_SAFETY_TIMEOUT_MS = 500;
+  // Security hardening: max 200 matches per category (runaway guard)
+  const MAX_FINDINGS_PER_CATEGORY = 200;
 
   for (const category of categories) {
+    if (Date.now() - startTime > CONTENT_SAFETY_TIMEOUT_MS) break;
     const patterns = SAFETY_PATTERNS[category];
     if (!patterns) continue;
+    let categoryFindings = 0;
 
     for (const { pattern, severity } of patterns) {
-      const matches = text.matchAll(new RegExp(pattern.source, pattern.flags));
-      for (const match of matches) {
-        findings.push({
-          category,
-          severity,
-          confidence: severity === "CRITICAL" ? 0.95 : severity === "HIGH" ? 0.85 : severity === "MEDIUM" ? 0.7 : 0.6,
-          span: { start: match.index!, end: match.index! + match[0].length },
-          description: `Detected ${category.toLowerCase().replace(/_/g, " ")} pattern: "${match[0]}"`,
-        });
+      if (Date.now() - startTime > CONTENT_SAFETY_TIMEOUT_MS) break;
+      if (categoryFindings >= MAX_FINDINGS_PER_CATEGORY) break;
+
+      try {
+        const matches = text.matchAll(new RegExp(pattern.source, pattern.flags));
+        for (const match of matches) {
+          categoryFindings++;
+          if (categoryFindings > MAX_FINDINGS_PER_CATEGORY) break;
+          findings.push({
+            category,
+            severity,
+            confidence: severity === "CRITICAL" ? 0.95 : severity === "HIGH" ? 0.85 : severity === "MEDIUM" ? 0.7 : 0.6,
+            span: { start: match.index!, end: match.index! + match[0].length },
+            description: `Detected ${category.toLowerCase().replace(/_/g, " ")} pattern: "${match[0]}"`,
+          });
+        }
+      } catch {
+        // Scanner isolation: a crash in one pattern must not cascade
+        continue;
       }
     }
   }

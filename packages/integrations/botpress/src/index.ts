@@ -244,16 +244,21 @@ export async function handler(props: {
   return { error: "Unknown action" };
 }
 
-async function callGuard(
-  apiKey: string,
-  baseUrl: string,
-  path: string,
-  body: Record<string, unknown>,
-  onThreat: string,
-  originalText: string,
-) {
+const BOTPRESS_TIMEOUT_MS = 10_000;
+
+async function fetchWithTimeout(url: string, options: RequestInit): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), BOTPRESS_TIMEOUT_MS);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+async function apiPost(baseUrl: string, path: string, apiKey: string, body: Record<string, unknown>) {
   const url = `${baseUrl.replace(/\/$/, "")}${path}`;
-  const res = await fetch(url, {
+  const res = await fetchWithTimeout(url, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -262,38 +267,35 @@ async function callGuard(
     },
     body: JSON.stringify(body),
   });
+  const text = await res.text();
+  let raw: Record<string, unknown>;
+  try {
+    raw = JSON.parse(text) as Record<string, unknown>;
+  } catch {
+    throw new Error(`SoterAI API returned non-JSON response (HTTP ${res.status}).`);
+  }
+  if (!res.ok) throw new Error(typeof raw.message === "string" ? raw.message : `SoterAI API error ${res.status}`);
+  return raw;
+}
 
-  const raw = (await res.json()) as Record<string, unknown>;
-  if (!res.ok)
-    throw new Error(
-      typeof raw.message === "string"
-        ? raw.message
-        : `SoterAI API error ${res.status}`,
-    );
-
+async function callGuard(
+  apiKey: string,
+  baseUrl: string,
+  path: string,
+  body: Record<string, unknown>,
+  onThreat: string,
+  originalText: string,
+) {
+  const raw = await apiPost(baseUrl, path, apiKey, body);
   const allowed = raw.allowed as boolean;
-  const safeText =
-    (raw.safeText as string) ?? (raw.redactedText as string) ?? originalText;
+  const safeText = (raw.safeText as string) ?? (raw.redactedText as string) ?? originalText;
   let blocked = false;
   let outputText = safeText;
-
   if (!allowed) {
-    if (onThreat === "BLOCK") {
-      blocked = true;
-      outputText = "";
-    } else if (onThreat === "CONTINUE") {
-      outputText = originalText;
-    }
+    if (onThreat === "BLOCK") { blocked = true; outputText = ""; }
+    else if (onThreat === "CONTINUE") { outputText = originalText; }
   }
-
-  return {
-    allowed,
-    blocked,
-    riskScore: raw.riskScore,
-    safeText: outputText,
-    reason: raw.reason,
-    categories: raw.riskTypes ?? [],
-  };
+  return { allowed, blocked, riskScore: raw.riskScore, safeText: outputText, reason: raw.reason, categories: raw.riskTypes ?? [] };
 }
 
 async function callRedactPii(
@@ -304,28 +306,10 @@ async function callRedactPii(
   projectId?: string,
   policyMode?: string,
 ) {
-  const url = `${baseUrl.replace(/\/$/, "")}/api/guard/input`;
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": apiKey,
-      "User-Agent": "soterai-botpress/1.0",
-    },
-    body: JSON.stringify({
-      message: text,
-      metadata: { projectId, policyMode, _redactionMode: redactionMode },
-    }),
+  const raw = await apiPost(baseUrl, "/api/guard/input", apiKey, {
+    message: text,
+    metadata: { projectId, policyMode, _redactionMode: redactionMode },
   });
-
-  const raw = (await res.json()) as Record<string, unknown>;
-  if (!res.ok)
-    throw new Error(
-      typeof raw.message === "string"
-        ? raw.message
-        : `SoterAI API error ${res.status}`,
-    );
-
   return {
     safeText: (raw.safeText as string) ?? (raw.redactedText as string) ?? text,
     detectedEntities: (raw.detectedEntities as string[]) ?? [],
@@ -341,33 +325,10 @@ async function callScanRagDocument(
   projectId?: string,
   policyMode?: string,
 ) {
-  const url = `${baseUrl.replace(/\/$/, "")}/api/guard/input`;
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": apiKey,
-      "User-Agent": "soterai-botpress/1.0",
-    },
-    body: JSON.stringify({
-      message: text,
-      metadata: {
-        projectId,
-        policyMode,
-        _ragScan: true,
-        _sourceName: sourceName,
-      },
-    }),
+  const raw = await apiPost(baseUrl, "/api/guard/input", apiKey, {
+    message: text,
+    metadata: { projectId, policyMode, _ragScan: true, _sourceName: sourceName },
   });
-
-  const raw = (await res.json()) as Record<string, unknown>;
-  if (!res.ok)
-    throw new Error(
-      typeof raw.message === "string"
-        ? raw.message
-        : `SoterAI API error ${res.status}`,
-    );
-
   return {
     allowed: (raw.allowed as boolean) ?? true,
     riskScore: (raw.riskScore as number) ?? 0,

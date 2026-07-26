@@ -1,3 +1,4 @@
+import { sendMessageWithTimeout } from "../lib/runtime-messaging";
 import type { RuntimeResponse } from "../lib/types";
 import { showSoterOverlay } from "./overlay";
 import { clearBlockedFileInput, destinationDomainForFileScan, scanFileText } from "../lib/file-scan-policy";
@@ -14,7 +15,7 @@ export function installFileContentScanner() {
     for (const file of Array.from(input.files)) scans.push(await scanFileText(file, location.href, state));
     const strongest = scans.sort((left, right) => right.riskScore - left.riskScore)[0];
     if (!strongest) return;
-    await chrome.runtime.sendMessage({
+    await sendMessageWithTimeout({
       type: "SOTER_FILE_SCAN_EVENT",
       event: {
         organizationId: state.config.organizationId,
@@ -46,8 +47,7 @@ export function installFileContentScanner() {
 }
 
 export function sendFileScanFallback(text: string) {
-  return new Promise<RuntimeResponse>((resolve) => chrome.runtime.sendMessage(
+  return sendMessageWithTimeout<RuntimeResponse>(
     { type: "SOTER_SCAN_TEXT", text, url: location.href, eventType: "file_upload" },
-    (response) => resolve((response as RuntimeResponse) ?? { ok: false, message: chrome.runtime.lastError?.message ?? "No response." }),
-  ));
+  ).then((response) => response ?? { ok: false, message: "No response." });
 }

@@ -1,0 +1,389 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "SoterAI API",
+    "version": "v1",
+    "x-contract-version": "2026-07-26",
+    "description": "Machine-readable API contract for the SoterAI guard, agent, RAG, lineage, memory, MCP and compliance endpoints used by the official SDK."
+  },
+  "servers": [
+    {
+      "url": "https://api.soterai.com",
+      "description": "Production"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "tags": [
+    { "name": "Guard" },
+    { "name": "Agent" },
+    { "name": "RAG" },
+    { "name": "Lineage" },
+    { "name": "Memory" },
+    { "name": "MCP" },
+    { "name": "Compliance" }
+  ],
+  "paths": {
+    "/api/guard/input": {
+      "post": {
+        "tags": ["Guard"],
+        "operationId": "guardInput",
+        "summary": "Scan user input before it reaches an AI model.",
+        "parameters": [{ "$ref": "#/components/parameters/SoterApiVersionHeader" }],
+        "requestBody": { "$ref": "#/components/requestBodies/GuardInput" },
+        "responses": {
+          "200": { "$ref": "#/components/responses/GuardResult" },
+          "400": { "$ref": "#/components/responses/Error" },
+          "401": { "$ref": "#/components/responses/Error" },
+          "429": { "$ref": "#/components/responses/Error" }
+        }
+      }
+    },
+    "/api/guard/output": {
+      "post": {
+        "tags": ["Guard"],
+        "operationId": "guardOutput",
+        "summary": "Scan model output before returning it to a user.",
+        "parameters": [{ "$ref": "#/components/parameters/SoterApiVersionHeader" }],
+        "requestBody": { "$ref": "#/components/requestBodies/GuardOutput" },
+        "responses": {
+          "200": { "$ref": "#/components/responses/GuardResult" },
+          "400": { "$ref": "#/components/responses/Error" },
+          "401": { "$ref": "#/components/responses/Error" },
+          "429": { "$ref": "#/components/responses/Error" }
+        }
+      }
+    },
+    "/api/guard/analyze": {
+      "post": {
+        "tags": ["Guard"],
+        "operationId": "analyzeText",
+        "summary": "Analyze text in a declared input or output direction.",
+        "security": [],
+        "parameters": [{ "$ref": "#/components/parameters/SoterApiVersionHeader" }],
+        "requestBody": { "$ref": "#/components/requestBodies/Analyze" },
+        "responses": {
+          "200": { "$ref": "#/components/responses/GuardResult" },
+          "400": { "$ref": "#/components/responses/Error" },
+          "429": { "$ref": "#/components/responses/Error" }
+        }
+      }
+    },
+    "/api/agent/session/start": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/agent/action/check": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/agent/tool/check": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/agent/data/check": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/agent/output/check": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/agent/approval/resolve": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/agent/mcp/scan": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/agent/browser/form/check": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/agent/memory/check": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/rag/document/trust-score": { "post": { "$ref": "#/components/x-operations/RagPost" } },
+    "/api/canary/create": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/canary/check": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/agent/replay/{sessionId}": {
+      "get": {
+        "tags": ["Agent"],
+        "operationId": "getAgentReplay",
+        "parameters": [
+          { "$ref": "#/components/parameters/SoterApiVersionHeader" },
+          { "name": "sessionId", "in": "path", "required": true, "schema": { "type": "string", "minLength": 1 } }
+        ],
+        "responses": { "200": { "$ref": "#/components/responses/AnyObject" }, "401": { "$ref": "#/components/responses/Error" } }
+      }
+    },
+    "/api/lineage/source/register": { "post": { "$ref": "#/components/x-operations/LineagePost" } },
+    "/api/lineage/flow/check": { "post": { "$ref": "#/components/x-operations/LineagePost" } },
+    "/api/lineage/session/{sessionId}": {
+      "get": {
+        "tags": ["Lineage"],
+        "operationId": "getLineageSession",
+        "parameters": [
+          { "$ref": "#/components/parameters/SoterApiVersionHeader" },
+          { "name": "sessionId", "in": "path", "required": true, "schema": { "type": "string", "minLength": 1 } }
+        ],
+        "responses": { "200": { "$ref": "#/components/responses/AnyObject" }, "401": { "$ref": "#/components/responses/Error" } }
+      }
+    },
+    "/api/lineage/incidents": {
+      "get": {
+        "tags": ["Lineage"],
+        "operationId": "listLineageIncidents",
+        "parameters": [
+          { "$ref": "#/components/parameters/SoterApiVersionHeader" },
+          { "name": "status", "in": "query", "required": false, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "$ref": "#/components/responses/AnyObject" }, "401": { "$ref": "#/components/responses/Error" } }
+      }
+    },
+    "/api/blast-radius/simulate": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/blast-radius/scenario": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/memory/check": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/memory/store": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/memory/{memoryRecordId}/quarantine": {
+      "post": {
+        "tags": ["Memory"],
+        "operationId": "quarantineMemory",
+        "parameters": [
+          { "$ref": "#/components/parameters/SoterApiVersionHeader" },
+          { "name": "memoryRecordId", "in": "path", "required": true, "schema": { "type": "string", "minLength": 1 } }
+        ],
+        "requestBody": { "$ref": "#/components/requestBodies/AnyObject" },
+        "responses": { "200": { "$ref": "#/components/responses/AnyObject" }, "401": { "$ref": "#/components/responses/Error" } }
+      }
+    },
+    "/api/mcp/servers/register": { "post": { "$ref": "#/components/x-operations/McpPost" } },
+    "/api/mcp/tools/snapshot": { "post": { "$ref": "#/components/x-operations/McpPost" } },
+    "/api/mcp/drifts": {
+      "get": {
+        "tags": ["MCP"],
+        "operationId": "listMcpDrifts",
+        "parameters": [
+          { "$ref": "#/components/parameters/SoterApiVersionHeader" },
+          { "name": "status", "in": "query", "required": false, "schema": { "type": "string" } }
+        ],
+        "responses": { "200": { "$ref": "#/components/responses/AnyObject" }, "401": { "$ref": "#/components/responses/Error" } }
+      }
+    },
+    "/api/legal-boundary/check": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/agent/inter-agent/check": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/agent/rogue/detect": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/agent/cascade/evaluate": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/agent/model-drift/detect": { "post": { "$ref": "#/components/x-operations/AgentPost" } },
+    "/api/compliance/owasp-llm-2025": {
+      "get": {
+        "tags": ["Compliance"],
+        "operationId": "getOwaspLlm2025Report",
+        "parameters": [{ "$ref": "#/components/parameters/SoterApiVersionHeader" }],
+        "responses": { "200": { "$ref": "#/components/responses/AnyObject" }, "401": { "$ref": "#/components/responses/Error" } }
+      }
+    },
+    "/api/compliance/owasp-agentic-2026": {
+      "get": {
+        "tags": ["Compliance"],
+        "operationId": "getOwaspAgentic2026Report",
+        "parameters": [{ "$ref": "#/components/parameters/SoterApiVersionHeader" }],
+        "responses": { "200": { "$ref": "#/components/responses/AnyObject" }, "401": { "$ref": "#/components/responses/Error" } }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key"
+      }
+    },
+    "parameters": {
+      "SoterApiVersionHeader": {
+        "name": "X-SoterAI-API-Version",
+        "in": "header",
+        "required": false,
+        "schema": { "type": "string", "const": "v1" },
+        "description": "Optional client-requested API version. Official SDKs send v1."
+      }
+    },
+    "requestBodies": {
+      "GuardInput": {
+        "required": true,
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GuardInputRequest" } } }
+      },
+      "GuardOutput": {
+        "required": true,
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GuardOutputRequest" } } }
+      },
+      "Analyze": {
+        "required": true,
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnalyzeRequest" } } }
+      },
+      "AnyObject": {
+        "required": true,
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnyObject" } } }
+      }
+    },
+    "responses": {
+      "GuardResult": {
+        "description": "Guard decision.",
+        "headers": {
+          "X-SoterAI-API-Version": { "schema": { "type": "string", "const": "v1" } },
+          "X-SoterAI-Contract-Version": { "schema": { "type": "string", "const": "2026-07-26" } },
+          "X-RateLimit-Limit": { "schema": { "type": "string" } },
+          "X-RateLimit-Remaining": { "schema": { "type": "string" } }
+        },
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/GuardResult" } } }
+      },
+      "AnyObject": {
+        "description": "Endpoint-specific JSON object.",
+        "headers": {
+          "X-SoterAI-API-Version": { "schema": { "type": "string", "const": "v1" } },
+          "X-SoterAI-Contract-Version": { "schema": { "type": "string", "const": "2026-07-26" } }
+        },
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AnyObject" } } }
+      },
+      "Error": {
+        "description": "Error response.",
+        "headers": {
+          "X-SoterAI-API-Version": { "schema": { "type": "string", "const": "v1" } },
+          "X-SoterAI-Contract-Version": { "schema": { "type": "string", "const": "2026-07-26" } },
+          "Retry-After": { "schema": { "type": "string" } }
+        },
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ErrorResponse" } } }
+      }
+    },
+    "schemas": {
+      "AnyObject": {
+        "type": "object",
+        "additionalProperties": true
+      },
+      "Metadata": {
+        "type": "object",
+        "maxProperties": 20,
+        "additionalProperties": {
+          "oneOf": [
+            { "type": "string", "maxLength": 500 },
+            { "type": "number" },
+            { "type": "boolean" },
+            { "type": "null" }
+          ]
+        }
+      },
+      "GuardInputRequest": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": { "type": "string", "minLength": 1, "maxLength": 20000 },
+          "userId": { "type": "string", "maxLength": 200 },
+          "sessionId": { "type": "string", "maxLength": 200 },
+          "providerName": { "type": "string", "maxLength": 100 },
+          "modelName": { "type": "string", "maxLength": 100 },
+          "metadata": { "$ref": "#/components/schemas/Metadata" }
+        },
+        "additionalProperties": false
+      },
+      "GuardOutputRequest": {
+        "type": "object",
+        "required": ["aiResponse"],
+        "properties": {
+          "aiResponse": { "type": "string", "minLength": 1, "maxLength": 20000 },
+          "userId": { "type": "string", "maxLength": 200 },
+          "sessionId": { "type": "string", "maxLength": 200 },
+          "providerName": { "type": "string", "maxLength": 100 },
+          "modelName": { "type": "string", "maxLength": 100 },
+          "metadata": { "$ref": "#/components/schemas/Metadata" }
+        },
+        "additionalProperties": false
+      },
+      "AnalyzeRequest": {
+        "type": "object",
+        "required": ["text", "direction"],
+        "properties": {
+          "text": { "type": "string", "minLength": 1, "maxLength": 20000 },
+          "direction": { "type": "string", "enum": ["INPUT", "OUTPUT"] }
+        },
+        "additionalProperties": false
+      },
+      "GuardResult": {
+        "type": "object",
+        "required": ["allowed", "action", "riskScore", "riskTypes", "reason", "findings"],
+        "properties": {
+          "allowed": { "type": "boolean" },
+          "action": { "$ref": "#/components/schemas/GuardAction" },
+          "decision": { "$ref": "#/components/schemas/GuardDecision" },
+          "riskScore": { "type": "integer", "minimum": 0, "maximum": 100 },
+          "riskTypes": { "type": "array", "items": { "$ref": "#/components/schemas/RiskType" } },
+          "reason": { "type": "string" },
+          "redactedText": { "type": ["string", "null"] },
+          "safeText": { "type": ["string", "null"] },
+          "findings": { "type": "array", "items": { "$ref": "#/components/schemas/GuardFinding" } },
+          "metadata": { "type": "object", "additionalProperties": true }
+        },
+        "additionalProperties": true
+      },
+      "GuardFinding": {
+        "type": "object",
+        "required": ["type", "label", "severity", "score", "message"],
+        "properties": {
+          "type": { "$ref": "#/components/schemas/RiskType" },
+          "label": { "type": "string" },
+          "severity": { "type": "string", "enum": ["LOW", "MEDIUM", "HIGH", "CRITICAL"] },
+          "score": { "type": "number", "minimum": 0, "maximum": 1 },
+          "message": { "type": "string" },
+          "matched": { "type": "string" }
+        },
+        "additionalProperties": true
+      },
+      "GuardAction": {
+        "type": "string",
+        "enum": ["ALLOW", "ALLOW_WITH_REDACTION", "REWRITE", "BLOCK", "HUMAN_REVIEW"]
+      },
+      "GuardDecision": {
+        "type": "string",
+        "enum": ["ALLOW", "REDACT", "BLOCK", "HUMAN_REVIEW"]
+      },
+      "RiskType": {
+        "type": "string",
+        "enum": [
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "SYSTEM_PROMPT_LEAKAGE",
+          "PII_DETECTED",
+          "INDIA_PII_DETECTED",
+          "SECRET_DETECTED",
+          "UNSAFE_OUTPUT",
+          "DATA_EXFILTRATION",
+          "RATE_LIMIT",
+          "TOKEN_ABUSE",
+          "TOXICITY",
+          "BIAS_DETECTED",
+          "COMPETITIVE_INTEL_EXTRACTION",
+          "RECURSIVE_INJECTION",
+          "SSRF_ATTEMPT",
+          "HALLUCINATION",
+          "LOW_RISK"
+        ]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "required": ["error", "message"],
+        "properties": {
+          "error": { "type": "boolean", "const": true },
+          "message": { "type": "string" },
+          "code": { "type": "string" },
+          "details": { "type": "object", "additionalProperties": true }
+        },
+        "additionalProperties": true
+      }
+    },
+    "x-operations": {
+      "AgentPost": {
+        "tags": ["Agent"],
+        "parameters": [{ "$ref": "#/components/parameters/SoterApiVersionHeader" }],
+        "requestBody": { "$ref": "#/components/requestBodies/AnyObject" },
+        "responses": { "200": { "$ref": "#/components/responses/AnyObject" }, "400": { "$ref": "#/components/responses/Error" }, "401": { "$ref": "#/components/responses/Error" }, "429": { "$ref": "#/components/responses/Error" } }
+      },
+      "RagPost": {
+        "tags": ["RAG"],
+        "parameters": [{ "$ref": "#/components/parameters/SoterApiVersionHeader" }],
+        "requestBody": { "$ref": "#/components/requestBodies/AnyObject" },
+        "responses": { "200": { "$ref": "#/components/responses/AnyObject" }, "400": { "$ref": "#/components/responses/Error" }, "401": { "$ref": "#/components/responses/Error" }, "429": { "$ref": "#/components/responses/Error" } }
+      },
+      "LineagePost": {
+        "tags": ["Lineage"],
+        "parameters": [{ "$ref": "#/components/parameters/SoterApiVersionHeader" }],
+        "requestBody": { "$ref": "#/components/requestBodies/AnyObject" },
+        "responses": { "200": { "$ref": "#/components/responses/AnyObject" }, "400": { "$ref": "#/components/responses/Error" }, "401": { "$ref": "#/components/responses/Error" }, "429": { "$ref": "#/components/responses/Error" } }
+      },
+      "McpPost": {
+        "tags": ["MCP"],
+        "parameters": [{ "$ref": "#/components/parameters/SoterApiVersionHeader" }],
+        "requestBody": { "$ref": "#/components/requestBodies/AnyObject" },
+        "responses": { "200": { "$ref": "#/components/responses/AnyObject" }, "400": { "$ref": "#/components/responses/Error" }, "401": { "$ref": "#/components/responses/Error" }, "429": { "$ref": "#/components/responses/Error" } }
+      }
+    }
+  }
+}

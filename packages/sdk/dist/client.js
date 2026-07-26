@@ -5,11 +5,13 @@ exports.normalizeDecision = normalizeDecision;
 exports.createClient = createClient;
 exports.createAgentFirewallClient = createAgentFirewallClient;
 exports.createCybersecurityGuardClient = createCybersecurityGuardClient;
+const contract_1 = require("./contract");
 const errors_1 = require("./errors");
 const DEFAULT_BASE_URL = "https://api.soterai.com";
 const DEFAULT_TIMEOUT_MS = 8000;
 const DEFAULT_RETRY_BACKOFF_MS = 250;
 const DEFAULT_BLOCKED_RESPONSE = "This request was blocked for security reasons.";
+const MAX_RESPONSE_BYTES = 10 * 1024 * 1024; // 10 MB
 function normalizeDecision(action) {
     switch (action) {
         case "ALLOW":
@@ -529,8 +531,12 @@ class GuardClient {
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), this.timeoutMs);
         const headers = {
+            "Accept": "application/json",
             "Content-Type": "application/json",
-            "User-Agent": "soter-sdk/0.1",
+            "User-Agent": `soter-sdk/${contract_1.SOTERAI_SDK_VERSION}`,
+            "X-SoterAI-API-Version": contract_1.SOTERAI_API_VERSION,
+            "X-SoterAI-SDK": contract_1.SOTERAI_SDK_NAME,
+            "X-SoterAI-SDK-Version": contract_1.SOTERAI_SDK_VERSION,
             ...this.extraHeaders,
         };
         if (requireApiKey)
@@ -549,7 +555,11 @@ class GuardClient {
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), this.timeoutMs);
         const headers = {
-            "User-Agent": "soter-sdk/0.1",
+            "Accept": "application/json",
+            "User-Agent": `soter-sdk/${contract_1.SOTERAI_SDK_VERSION}`,
+            "X-SoterAI-API-Version": contract_1.SOTERAI_API_VERSION,
+            "X-SoterAI-SDK": contract_1.SOTERAI_SDK_NAME,
+            "X-SoterAI-SDK-Version": contract_1.SOTERAI_SDK_VERSION,
             ...this.extraHeaders,
         };
         if (requireApiKey)
@@ -563,7 +573,8 @@ class GuardClient {
         return this.handleResponse(response);
     }
     async handleResponse(response) {
-        const text = await response.text();
+        this.assertCompatibleApiVersion(response);
+        const text = await readBoundedResponseText(response);
         let data = undefined;
         if (text) {
             try {
@@ -592,11 +603,33 @@ class GuardClient {
         }
         return data;
     }
+    assertCompatibleApiVersion(response) {
+        const version = response.headers.get("x-soterai-api-version");
+        if (!version || (0, contract_1.isCompatibleSoterApiVersion)(version))
+            return;
+        throw new errors_1.CyberRakshakError(`Unsupported SoterAI API version "${version}". This SDK supports ${contract_1.SOTERAI_API_CONTRACT.apiVersion}.`, {
+            status: response.status,
+            code: "api_version_unsupported",
+            details: {
+                expectedApiVersion: contract_1.SOTERAI_API_CONTRACT.apiVersion,
+                receivedApiVersion: version,
+                sdkVersion: contract_1.SOTERAI_API_CONTRACT.sdkVersion,
+            },
+        });
+    }
     async fetchWithNetworkRetry(url, init) {
         let attempt = 0;
         for (;;) {
             try {
-                return await this.fetchImpl(url, init);
+                const response = await this.fetchImpl(url, init);
+                if (response.status >= 500 && response.status <= 599 && attempt < this.maxRetries) {
+                    attempt += 1;
+                    const baseDelay = this.retryBackoffMs * Math.pow(2, attempt - 1);
+                    const jitter = Math.random() * 0.5 + 0.75;
+                    await delay(Math.round(baseDelay * jitter));
+                    continue;
+                }
+                return response;
             }
             catch (caught) {
                 const aborted = caught instanceof Error && caught.name === "AbortError";
@@ -604,7 +637,10 @@ class GuardClient {
                     throw new errors_1.CyberRakshakNetworkError(aborted ? `Request timed out after ${this.timeoutMs}ms.` : caught instanceof Error ? caught.message : "Network request failed.", caught);
                 }
                 attempt += 1;
-                await delay(this.retryBackoffMs * attempt);
+                // Exponential backoff with jitter (±25%) to prevent thundering herd
+                const baseDelay = this.retryBackoffMs * Math.pow(2, attempt - 1);
+                const jitter = Math.random() * 0.5 + 0.75; // 0.75–1.25
+                await delay(Math.round(baseDelay * jitter));
             }
         }
     }
@@ -648,6 +684,25 @@ function extractMessage(data) {
             return message;
     }
     return undefined;
+}
+async function readBoundedResponseText(response) {
+    const reader = response.body?.getReader();
+    if (!reader)
+        return response.text();
+    const decoder = new TextDecoder();
+    let result = "";
+    for (;;) {
+        const { done, value } = await reader.read();
+        if (done)
+            break;
+        result += decoder.decode(value, { stream: true });
+        if (result.length > MAX_RESPONSE_BYTES) {
+            reader.cancel();
+            throw new errors_1.CyberRakshakError(`Server response exceeded ${(MAX_RESPONSE_BYTES / 1024 / 1024).toFixed(0)} MB limit.`, { status: 413 });
+        }
+    }
+    result += decoder.decode();
+    return result;
 }
 function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));

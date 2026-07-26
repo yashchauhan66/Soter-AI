@@ -34,11 +34,12 @@ The extension injects content scripts into these specific external AI tools and 
 - `*://v0.dev/*`
 - `*://lovable.dev/*`
 - `*://openwebui.com/*`
+- `https://soterai.in/*`
 - `*://localhost/*`
 - `*://127.0.0.1/*`
 
 ## Optional Host Permissions
-- `*://*/*`: Used for the Data Lineage feature to monitor copy events from internal corporate tools. This is only requested at runtime if the enterprise admin configures specific internal hostnames to monitor.
+None. The current package does not request broad runtime host access. Enterprise data-lineage monitoring is limited to the explicitly declared AI, coding, local AI, and SoterAI control-plane hosts above.
 
 ## Enterprise Justification
-This extension is explicitly for enterprise deployments and managed devices. Broad permissions are required to provide comprehensive DLP coverage across an organization's varying workflows. Raw prompts, files, or copied text are not stored by default; only metadata and redacted previews are sent to the customer's dedicated enterprise dashboard.
+This extension is explicitly for enterprise deployments and managed devices. The declared hosts are limited to supported AI tools, browser coding environments, local AI endpoints, and the SoterAI control plane. Raw prompts, files, or copied text are not stored by default; only metadata and redacted previews are sent to the customer's dedicated enterprise dashboard.

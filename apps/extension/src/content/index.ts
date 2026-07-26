@@ -4,6 +4,7 @@ import { installPasteListener } from "./paste-listener";
 import { installResponseObserver } from "./response-observer";
 import { installSubmitInterceptor } from "./submit-interceptor";
 import { installFileContentScanner } from "./file-content-scanner";
+import { sendMessageWithTimeout } from "../lib/runtime-messaging";
 import type { AIDestinationPolicy } from "../../../../packages/shared/src/ai-destinations";
 
 const SHADOW_AI_KNOWN_PLATFORMS = [
@@ -35,7 +36,7 @@ void getDestinationContext().then((context) => {
   if (!context.destination && context.legacyMatch !== true) {
     const hostname = location.hostname.replace(/^www\./, "");
     if (isAiLikelyHostname(hostname)) {
-      chrome.runtime.sendMessage({
+      void sendMessageWithTimeout({
         type: "SOTER_DISCOVER_SHADOW_AI",
         domain: hostname,
         destination: hostname,
@@ -71,8 +72,7 @@ function isObject(value: unknown): value is { type?: string } {
 }
 
 function getDestinationContext() {
-  return new Promise<{ active: boolean; destination?: AIDestinationPolicy; employeeId?: string; legacyMatch?: boolean }>((resolve) => chrome.runtime.sendMessage(
+  return sendMessageWithTimeout<{ active: boolean; destination?: AIDestinationPolicy; employeeId?: string; legacyMatch?: boolean }>(
     { type: "SOTER_GET_DESTINATION_CONTEXT", url: location.href },
-    (response) => resolve((response as { active: boolean; destination?: AIDestinationPolicy; employeeId?: string; legacyMatch?: boolean }) ?? { active: false }),
-  ));
+  ).then((response) => response ?? { active: false });
 }

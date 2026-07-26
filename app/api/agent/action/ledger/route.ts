@@ -1,12 +1,13 @@
 import { z } from "zod";
 import { createActionLedgerEntry } from "@/lib/agent-action-ledger";
-import { authenticateAgentPassport, readPassportJson, routeError } from "@/lib/agent-passport/server";
+import { authenticateAgentPassport, checkAgentPassportForAction, readPassportJson, routeError } from "@/lib/agent-passport/server";
 import { jsonResponse } from "@/lib/apiResponse";
 import { db } from "@/lib/db";
 import { sanitizeLogText } from "@/lib/guard/logSafety";
 
 const schema = z.object({
-  sessionId: z.string().trim().max(200).optional(),
+  sessionId: z.string().trim().min(1).max(200),
+  passportToken: z.string().trim().min(10).max(300).optional(),
   agentIdentityId: z.string().trim().max(200).optional(),
   passportId: z.string().trim().max(200).optional(),
   tool: z.string().trim().min(1).max(200),
@@ -26,7 +27,36 @@ export async function POST(request: Request) {
     const authenticated = await authenticateAgentPassport(request);
     if (!authenticated.ok) return authenticated.response;
     const body = await readPassportJson(request, schema);
-    const entry = createActionLedgerEntry({ ...body, projectId: authenticated.auth.project.id });
+    const passportDecision = await checkAgentPassportForAction(authenticated.auth, {
+      sessionId: body.sessionId,
+      passportToken: body.passportToken,
+      tool: body.tool,
+      action: body.action,
+      target: body.target,
+      metadata: {
+        source: "agent.action.ledger",
+        requestedAgentIdentityId: body.agentIdentityId ?? null,
+        requestedPassportId: body.passportId ?? null,
+      },
+    });
+
+    if (passportDecision.decision !== "ALLOW") {
+      return jsonResponse({
+        error: true,
+        decision: passportDecision.decision,
+        riskLevel: passportDecision.riskLevel,
+        reason: passportDecision.reason,
+        policyMatches: passportDecision.policyMatches,
+      }, { status: 403 });
+    }
+
+    const entry = createActionLedgerEntry({
+      ...body,
+      projectId: authenticated.auth.project.id,
+      sessionId: passportDecision.sessionId,
+      agentIdentityId: passportDecision.agentIdentityId,
+      passportId: passportDecision.passportId,
+    });
 
     await db.$executeRaw`
       INSERT INTO "AgentActionLedger" (
@@ -38,9 +68,9 @@ export async function POST(request: Request) {
       VALUES (
         ${entry.id},
         ${authenticated.auth.project.id},
-        ${body.sessionId ?? null},
-        ${body.agentIdentityId ?? null},
-        ${body.passportId ?? null},
+        ${passportDecision.sessionId ?? null},
+        ${passportDecision.agentIdentityId ?? null},
+        ${passportDecision.passportId ?? null},
         ${entry.tool},
         ${entry.action},
         ${entry.target ? sanitizeLogText(entry.target) : null},

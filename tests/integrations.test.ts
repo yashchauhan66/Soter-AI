@@ -103,8 +103,12 @@ test("Integration packages and WordPress plugin remain Preview and do not leak A
     const content = JSON.parse(readFileSync(pkg, "utf8"));
     assert.equal(content.private, true, `${pkg} must remain private (Preview, unpublished)`);
     assert.match(content.version, /^0\./, `${pkg} preview version must remain 0.x`);
+    // Explicitly reject public publishConfig (would override private: true on npm)
+    if (content.publishConfig && content.publishConfig.access) {
+      assert.notEqual(content.publishConfig.access, "public", `${pkg} publishConfig.access must not be "public"`);
+    }
   }
-  assert.equal(existsSync("integrations/wordpress-plugin/soter-guard.php"), true);
+  assert.equal(existsSync("integrations/wordpress-plugin/soter-guard.php"), true, "WordPress plugin entry point missing");
   const adminJs = readFileSync("integrations/wordpress-plugin/assets/admin.js", "utf8");
   assert.equal(/api[_-]?key\s*[:=]\s*["'`][^"'`]+/i.test(adminJs), false, "client JS must not embed an API key");
 });

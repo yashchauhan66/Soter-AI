@@ -86,12 +86,8 @@ export async function getCurrentProject() {
 
 export async function getCurrentProjectById(projectId?: string) {
   if (projectId) {
-    try {
-      const access = await requireProjectAccess(projectId);
-      return access.project;
-    } catch (error) {
-      console.warn("[SoterAI] Project access fallback for", projectId, error instanceof Error ? error.message : error);
-    }
+    const access = await requireProjectAccess(projectId);
+    return access.project;
   }
   return getCurrentProject();
 }

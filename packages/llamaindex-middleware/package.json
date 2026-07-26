@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build && node -e \"console.error('[SoterAI] @soterai/llamaindex-middleware is a preview/private package and must not be published.'); process.exit(1)\""
   },
   "engines": { "node": ">=18.18" },
   "keywords": [
@@ -29,6 +29,5 @@
   ],
   "devDependencies": {
     "typescript": "^5.0.0"
-  },
-  "publishConfig": { "access": "public" }
+  }
 }

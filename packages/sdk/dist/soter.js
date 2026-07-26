@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Soter = void 0;
 exports.resolveSoterConfig = resolveSoterConfig;
+const errors_1 = require("./errors");
 const client_1 = require("./client");
 function environment() {
     return globalThis.process?.env ?? {};
@@ -12,9 +13,12 @@ function firstValue(...values) {
 /** Resolve Soter variables first while preserving the existing environment contract. */
 function resolveSoterConfig(config = {}) {
     const env = environment();
+    const apiKey = firstValue(config.apiKey, env.SOTER_API_KEY, env.SOTERAI_API_KEY, env.CYBERGUARD_API_KEY, env.CYBERRAKSHAK_API_KEY, env.CYBERSECURITYGUARD_API_KEY);
+    if (!apiKey?.trim())
+        throw new errors_1.SoterAuthError("apiKey is required. Set SOTER_API_KEY in your environment or pass it in config.", 401);
     return {
         ...config,
-        apiKey: firstValue(config.apiKey, env.SOTER_API_KEY, env.SOTERAI_API_KEY, env.CYBERGUARD_API_KEY, env.CYBERRAKSHAK_API_KEY, env.CYBERSECURITYGUARD_API_KEY) ?? "",
+        apiKey,
         projectId: firstValue(config.projectId, env.SOTER_PROJECT_ID, env.SOTERAI_PROJECT_ID, env.CYBERGUARD_PROJECT_ID, env.CYBERRAKSHAK_PROJECT_ID, env.CYBERSECURITYGUARD_PROJECT_ID),
         baseUrl: firstValue(config.baseUrl, env.SOTER_BASE_URL, env.SOTERAI_BASE_URL, env.CYBERGUARD_BASE_URL, env.CYBERRAKSHAK_BASE_URL, env.CYBERSECURITYGUARD_BASE_URL),
     };

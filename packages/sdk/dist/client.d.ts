@@ -180,6 +180,7 @@ export declare class GuardClient implements CyberRakshakGuard {
     private post;
     private get;
     private handleResponse;
+    private assertCompatibleApiVersion;
     private fetchWithNetworkRetry;
     private decisionOf;
     private withProjectMetadata;

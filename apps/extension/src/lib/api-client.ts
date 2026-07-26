@@ -7,6 +7,9 @@ import type { AIDestinationPolicy } from "../../../../packages/shared/src/ai-des
 import { assertNoRawSensitiveData, createPrivacySafePreview, redactSensitiveText, sanitizePrivacyPayload } from "../../../../packages/shared/src/privacy";
 import { previewForScan } from "./privacy-preview";
 
+/** Default request timeout for extension API calls (10 seconds). */
+const API_REQUEST_TIMEOUT_MS = 10_000;
+
 export class SoterExtensionApiClient {
   constructor(private readonly config: ExtensionConfig) {}
 
@@ -38,6 +41,7 @@ export class SoterExtensionApiClient {
     url.searchParams.set("organizationId", this.config.organizationId);
     const response = await this.request(url, { method: "GET" });
     const body = await response.json() as { fingerprintBundle: FingerprintRecord[] };
+    if (!Array.isArray(body.fingerprintBundle)) return [];
     return body.fingerprintBundle;
   }
 
@@ -165,16 +169,26 @@ export class SoterExtensionApiClient {
   }
 
   private request(url: URL, init: RequestInit) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), API_REQUEST_TIMEOUT_MS);
     return fetch(url, {
       ...init,
+      signal: controller.signal,
       headers: {
         "content-type": "application/json",
         "x-soter-extension-token": this.config.deviceToken ?? "",
         ...(init.headers ?? {}),
       },
     }).then((response) => {
+      clearTimeout(timer);
       if (!response.ok) throw new Error(`Soter API request failed: ${response.status}`);
       return response;
+    }).catch((error) => {
+      clearTimeout(timer);
+      if (error instanceof DOMException && error.name === "AbortError") {
+        throw new Error("Soter API request timed out");
+      }
+      throw error;
     });
   }
 }

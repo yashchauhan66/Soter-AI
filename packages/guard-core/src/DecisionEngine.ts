@@ -11,7 +11,7 @@ export const DETECTOR_VERSIONS: Record<string, string> = {
     PIIDetector: PII_DETECTOR_VERSION,
     IndiaPIIDetector: INDIA_PII_DETECTOR_VERSION,
     PromptInjectionLiteDetector: PROMPT_INJECTION_DETECTOR_VERSION,
-    JailbreakLiteDetector: JAILBREAK_DETECTOR_VERSION,
+    JailbreakLiteDetector: JAILBREAK_DETECTOR_VERSION,  // v2.0.0 — ReDoS, timeout, isolation
     FileContextRiskDetector: FILE_CONTEXT_RISK_DETECTOR_VERSION,
     TerminalCommandRiskDetector: TERMINAL_COMMAND_RISK_DETECTOR_VERSION,
     RepoInstructionPoisoningDetector: REPO_INSTRUCTION_POISONING_DETECTOR_VERSION,

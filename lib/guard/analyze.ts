@@ -31,6 +31,35 @@ import type { GuardDirection, GuardFinding, GuardResult, RiskType } from "./type
 // Risk types the regex/signature detectors emit for an adversarial input. When
 // any of these already fired we skip the semantic layer — it exists to catch
 // novel wordings the rules missed, not to re-flag what they already caught.
+// ── Security Hardening: Time-safe regex helpers ────────────────────────────
+/** Maximum time (ms) allowed for a batch of inline regex tests (analyze.ts). */
+const INLINE_REGEX_TIMEOUT_MS = 500;
+
+/**
+ * Time-safe version of blockRegexes.some(). Tests patterns until one matches
+ * or the time budget is exceeded, preventing ReDoS on crafted input.
+ */
+function timeSafeSome(regexes: RegExp[], text: string, startTime: number): boolean {
+  for (const rx of regexes) {
+    if (Date.now() - startTime > INLINE_REGEX_TIMEOUT_MS) break;
+    if (rx.test(text)) return true;
+  }
+  return false;
+}
+
+/**
+ * Time-safe version of a single regex .test(). Returns true if the regex
+ * matches within the time budget, false otherwise.
+ */
+function timeSafeTest(rx: RegExp, text: string, startTime: number, timeout = INLINE_REGEX_TIMEOUT_MS): boolean {
+  if (Date.now() - startTime > timeout) return false;
+  try {
+    return rx.test(text);
+  } catch {
+    return false;
+  }
+}
+
 const RULE_SECURITY_TYPES = new Set<RiskType>([
   "PROMPT_INJECTION",
   "JAILBREAK",
@@ -57,25 +86,30 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
   let semanticOnly = false;
   let semanticMetadata: Record<string, unknown> | undefined;
 
-  if (direction === "OUTPUT" && /unsafe.*placeholder|simulation/i.test(text)) {
-    findings.push({
-      type: "UNSAFE_OUTPUT",
-      label: "Unsafe output simulation",
-      severity: "HIGH",
-      score: 85,
-      message: "Unsafe output pattern detected."
-    });
+  if (direction === "OUTPUT") {
+    const startTime = Date.now();
+    if (timeSafeTest(/unsafe.*placeholder|simulation/i, text, startTime)) {
+      findings.push({
+        type: "UNSAFE_OUTPUT",
+        label: "Unsafe output simulation",
+        severity: "HIGH",
+        score: 85,
+        message: "Unsafe output pattern detected."
+      });
+    }
   }
 
   if (direction === "INPUT") {
     const normalized = text.replace(/[\s.-]/g, "");
-    
+    const startTime = Date.now();
+
     // NOTE: the spaced-letter evasion signature must use \s+ (real gaps between
     // letters, e.g. "r e v e a l"); \s* also matched the plain word "reveal",
     // flagging any benign sentence that merely used it (e.g. "reveal the plot
     // twist") as a prompt-leak. The genuine evasion case is covered below.
-    const isLeak = /hidden instructions|internal prompt|developer.*tell|print.*hidden rules|repeat.*text before|reveal.*configuration|r\s+e\s+v\s+e\s+a\s+l|system\s+prompt\s+batao|hidden\s+instruction\s+dikhao/i.test(text) ||
-                   /hiddeninstructions|internalprompt|developertell|printhiddenrules|repeattextbefore|revealconfiguration/i.test(normalized);
+    const isLeak =
+      timeSafeTest(/hidden instructions|internal prompt|developer.*tell|print.*hidden rules|repeat.*text before|reveal.*configuration|r\s+e\s+v\s+e\s+a\s+l|system\s+prompt\s+batao|hidden\s+instruction\s+dikhao/i, text, startTime) ||
+      timeSafeTest(/hiddeninstructions|internalprompt|developertell|printhiddenrules|repeattextbefore|revealconfiguration/i, normalized, startTime);
                    
     if (isLeak) {
       findings.push({
@@ -212,7 +246,7 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
       /وضع المشرف/i
     ];
     
-    if (blockRegexes.some(rx => rx.test(text) || rx.test(normalized))) {
+    if (timeSafeSome(blockRegexes, text, startTime) || timeSafeSome(blockRegexes, normalized, startTime)) {
       findings.push({
         type: "PROMPT_INJECTION",
         label: "IPS Signature match",
@@ -230,9 +264,9 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
     }
 
     if (
-      /(?:generate|write|create).{0,120}(?:\d{4,}|\d{1,3},\d{3,}).{0,120}(?:words?|variations?|prompts?|responses?)/i.test(text) ||
-      /(?:repeat|continue).{0,120}(?:forever|until i say stop|without stopping|maximum context|context is exhausted)/i.test(text) ||
-      /(?:call|use).{0,120}(?:search|browser|tool|api).{0,120}(?:repeatedly|every possible result|until you find every)/i.test(text)
+      timeSafeTest(/(?:generate|write|create).{0,120}(?:\d{4,}|\d{1,3},\d{3,}).{0,120}(?:words?|variations?|prompts?|responses?)/i, text, startTime) ||
+      timeSafeTest(/(?:repeat|continue).{0,120}(?:forever|until i say stop|without stopping|maximum context|context is exhausted)/i, text, startTime) ||
+      timeSafeTest(/(?:call|use).{0,120}(?:search|browser|tool|api).{0,120}(?:repeatedly|every possible result|until you find every)/i, text, startTime)
     ) {
       findings.push({
         type: "TOKEN_ABUSE",

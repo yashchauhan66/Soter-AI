@@ -46,6 +46,7 @@ const DEFAULT_TIMEOUT_MS = 8_000;
 const DEFAULT_RETRY_BACKOFF_MS = 250;
 const DEFAULT_MAX_RETRIES = 1;
 const USER_AGENT = "soter-integration/1.0";
+const MAX_RESPONSE_BYTES = 10 * 1024 * 1024; // 10 MB
 
 export class SoterClient {
   private readonly apiKey: string;
@@ -251,13 +252,16 @@ export class SoterClient {
           );
         }
         attempt += 1;
-        await delay(this.retryBackoffMs * attempt);
+        // Exponential backoff with jitter (±25%) to prevent thundering herd
+        const baseDelay = this.retryBackoffMs * Math.pow(2, attempt - 1);
+        const jitter = Math.random() * 0.5 + 0.75;
+        await delay(Math.round(baseDelay * jitter));
       }
     }
   }
 
   private async handleResponse<T>(response: Response): Promise<T> {
-    const text = await response.text();
+    const text = await readBoundedResponseText(response);
     let data: unknown;
     if (text) {
       try {
@@ -400,6 +404,24 @@ function extractMessage(data: unknown): string | undefined {
 function maskSample(matched: string): string {
   if (matched.length <= 4) return "****";
   return `${matched.slice(0, 2)}…${matched.slice(-2)}`;
+}
+
+async function readBoundedResponseText(response: Response): Promise<string> {
+  const reader = response.body?.getReader();
+  if (!reader) return response.text();
+  const decoder = new TextDecoder();
+  let result = "";
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    result += decoder.decode(value, { stream: true });
+    if (result.length > MAX_RESPONSE_BYTES) {
+      reader.cancel();
+      throw new SoterIntegrationError(`Server response exceeded ${(MAX_RESPONSE_BYTES / 1024 / 1024).toFixed(0)} MB limit.`, { status: 413 });
+    }
+  }
+  result += decoder.decode();
+  return result;
 }
 
 function delay(ms: number): Promise<void> {

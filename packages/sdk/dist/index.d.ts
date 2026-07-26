@@ -1,5 +1,6 @@
 export * from "./types";
 export * from "./errors";
+export * from "./contract";
 export type { SoterConfig, SoterProtectRequest, SoterProtectResult, SoterRiskLevel, SoterDetection, SoterContext, SoterPolicy, SoterRedactionResult, } from "./types";
 export * from "./agent-passport";
 export * from "./agent-intent";

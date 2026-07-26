@@ -14,9 +14,9 @@ For the review process, we have provisioned a synthetic endpoint and token:
 *(Note: In an actual enterprise deployment, these are configured by the admin).*
 
 **Permission Explanations:**
-- **Broad Host Permissions (`*://*/*` etc.):** Required to monitor copy events from internal systems (data lineage) and paste events into external AI tools. This is core to the DLP functionality.
+- **Declared Host Permissions:** Required only for the supported AI tools, browser coding environments, local AI endpoints, and SoterAI control-plane host listed in the manifest. The package does not request broad all-site host access.
 - **Storage:** Required to store the local DLP policy, thresholds, and enrollment state.
-- **ClipboardRead/Write:** Required to detect sensitive patterns in copied data before it is pasted into AI tools.
+- **Copy/Paste Handling:** Performed by content scripts on declared hosts. The package does not request browser clipboard API permissions.
 
 **Privacy and Data Handling:**
 - The extension evaluates prompts LOCALLY in the browser.

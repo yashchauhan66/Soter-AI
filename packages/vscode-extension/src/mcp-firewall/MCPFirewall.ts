@@ -39,6 +39,8 @@ export interface MCPToolEntry {
 }
 
 const TOOL_STATE_KEY = "soterai.mcpToolPolicy";
+/** Maximum number of blocked tool entries stored in globalState. */
+const MAX_BLOCKED_TOOLS = 500;
 
 export class MCPFirewall {
     private tools: MCPToolEntry[] = [];
@@ -46,7 +48,9 @@ export class MCPFirewall {
 
     constructor(private readonly context: vscode.ExtensionContext) {
         const blocked = context.globalState.get<string[]>(TOOL_STATE_KEY);
-        if (blocked) this.blockedTools = new Set(blocked);
+        if (blocked) {
+            this.blockedTools = new Set(blocked.slice(0, MAX_BLOCKED_TOOLS));
+        }
     }
 
     async scanConfigs(): Promise<MCPToolEntry[]> {
@@ -69,6 +73,11 @@ export class MCPFirewall {
     }
 
     async blockTool(toolName: string): Promise<void> {
+        if (this.blockedTools.size >= MAX_BLOCKED_TOOLS) {
+            // Evict oldest entry before adding new one
+            const first = this.blockedTools.values().next().value;
+            if (first) this.blockedTools.delete(first);
+        }
         this.blockedTools.add(toolName);
         await this.context.globalState.update(TOOL_STATE_KEY, Array.from(this.blockedTools));
     }

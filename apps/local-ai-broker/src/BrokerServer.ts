@@ -22,9 +22,40 @@ import {
 } from "@soterai/guard-core";
 import { tokenMatches } from "./auth";
 
-export const BROKER_VERSION = "0.1.0";
+export const BROKER_VERSION = "0.2.0";
 export const DEFAULT_BROKER_PORT = 47321;
 export const BROKER_HOST = "127.0.0.1" as const;
+
+// ── Security hardening constants ─────────────────────────────────────────
+/** Maximum response body size from provider proxy (5 MB). */
+const MAX_PROVIDER_RESPONSE_BYTES = 5 * 1024 * 1024;
+/** Maximum automatic provider retries after the first attempt. */
+const MAX_PROVIDER_RETRY_ATTEMPTS = 2;
+/** Minimum cooldown between auth token rotations (5 seconds). */
+const TOKEN_ROTATION_COOLDOWN_MS = 5_000;
+/** Maximum events per memory session. */
+const MAX_EVENTS_PER_SESSION = 500;
+/**
+ * Allowed field whitelist for forwardProvider body.
+ * Covers standard OpenAI and Anthropic API parameters.
+ * Extend as providers add new parameters.
+ */
+const ALLOWED_PROVIDER_FIELDS = new Set([
+    // Common
+    "model", "messages", "system", "max_tokens", "temperature", "top_p", "top_k",
+    "stop", "stream", "metadata", "user", "n",
+    // OpenAI-specific
+    "presence_penalty", "frequency_penalty", "logit_bias", "seed",
+    "tools", "tool_choice", "response_format", "functions",
+    // Anthropic-specific
+    "max_tokens_to_sample", "stop_sequences", "thinking",
+]);
+/** Known message roles for validation. */
+const KNOWN_ROLES = new Set(["system", "user", "assistant", "tool"]);
+/** Session ID validation pattern (alphanumeric, dots, dashes, underscores, colons). */
+const SESSION_ID_RE = /^[a-zA-Z0-9._\-:]{1,128}$/;
+/** Rate bucket cleanup interval (5 minutes). */
+const RATE_BUCKET_CLEANUP_MS = 5 * 60 * 1000;
 
 export interface SafeBrokerEvent {
     eventId: string;
@@ -54,6 +85,7 @@ export interface BrokerServerOptions {
     openAIProviderUrl?: string;
     anthropicProviderUrl?: string;
     providerApiKey?: string;
+    providerRetryAttempts?: number;
     fetchImpl?: typeof fetch;
     logger?: (message: string, metadata?: Record<string, unknown>) => void;
     canaries?: Array<Pick<Canary, "id" | "token" | "hash" | "redactedPreview">>;
@@ -76,6 +108,8 @@ export class BrokerServer {
     private readonly rateBuckets = new Map<string, { minute: number; count: number }>();
     private safeMode = { enabled: false, level: "developer" as SafeModeLevel };
     private startedAt?: string;
+    private lastTokenRotationAt = 0;
+    private rateCleanupTimer?: ReturnType<typeof setInterval>;
 
     constructor(private readonly options: BrokerServerOptions) {
         if (!options.token || options.token.length < 32) throw new Error("A broker auth token of at least 32 characters is required");
@@ -95,12 +129,16 @@ export class BrokerServer {
             this.server.listen(port, BROKER_HOST);
         });
         this.startedAt = new Date().toISOString();
+        // Start periodic rate-bucket cleanup to prevent unbounded growth
+        this.rateCleanupTimer = setInterval(() => this.cleanRateBuckets(), RATE_BUCKET_CLEANUP_MS);
+        this.rateCleanupTimer.unref();
         this.safeLog("broker_started", { host: BROKER_HOST, port: this.address().port });
         return this.address();
     }
 
     async stop(): Promise<void> {
         if (!this.server.listening) return;
+        if (this.rateCleanupTimer) clearInterval(this.rateCleanupTimer);
         await new Promise<void>((resolve, reject) => this.server.close((error) => error ? reject(error) : resolve()));
     }
 
@@ -212,6 +250,11 @@ export class BrokerServer {
 
     private addMemoryEvent(res: ServerResponse, body: JsonBody): void {
         const sessionId = requireString(body.sessionId, "sessionId");
+        // Enforce per-session event cap
+        const session = this.memory.getSession(sessionId);
+        if (session && session.events.length >= MAX_EVENTS_PER_SESSION) {
+            throw new HttpError(429, "session_event_limit", "Memory session has reached the maximum number of events");
+        }
         const input = body.event;
         if (!input || typeof input !== "object" || Array.isArray(input)) throw new HttpError(400, "invalid_request", "event must be an object");
         const event = input as Partial<MemoryEvent>;
@@ -251,6 +294,8 @@ export class BrokerServer {
     }
 
     private async createApproval(res: ServerResponse, body: JsonBody): Promise<void> {
+        // Prune expired/consumed approvals to prevent unbounded memory growth
+        this.approvals.prune();
         const scope = (stringValue(body.scope) ?? "once") as ApprovalScope;
         if (!(["once", "session", "workspace"] as string[]).includes(scope)) throw new HttpError(400, "invalid_scope", "scope must be once, session, or workspace");
         const grant = await createApprovalGrant({
@@ -266,16 +311,23 @@ export class BrokerServer {
     }
 
     private rotateAuth(res: ServerResponse, body: JsonBody): void {
+        // Rate-limit token rotation to prevent rapid cycling as a DoS vector
+        const now = Date.now();
+        if (now - this.lastTokenRotationAt < TOKEN_ROTATION_COOLDOWN_MS) {
+            throw new HttpError(429, "rotation_cooldown", "Token rotation is rate-limited. Please wait before rotating again.");
+        }
         const next = requireString(body.token, "token");
         if (next.length < 32) throw new HttpError(400, "weak_token", "The replacement token must be at least 32 characters");
         this.options.token = next;
+        this.lastTokenRotationAt = now;
         this.json(res, 200, { rotated: true });
     }
 
     private async proxyOpenAI(res: ServerResponse, body: JsonBody, req: IncomingMessage): Promise<void> {
-        if (body.stream === true) throw new HttpError(400, "streaming_not_supported", "Streaming proxy responses are not supported in this MVP");
+        const streamRequested = body.stream === true;
         const messages = normalizeMessages(body.messages);
-        const sessionId = stringValue(body.session_id) ?? stringValue(req.headers["x-soterai-session-id"]) ?? randomUUID();
+        const rawSessionId = stringValue(body.session_id) ?? stringValue(req.headers["x-soterai-session-id"]) ?? randomUUID();
+        const sessionId = sanitizeSessionId(rawSessionId);
         const model = stringValue(body.model);
         const scan = await scanBrokerRequest(messages, { engine: this.engine, safeMode: this.safeMode, canaries: this.options.canaries });
         const approved = this.approvals.consume(sessionId, scan.contentHash);
@@ -284,7 +336,8 @@ export class BrokerServer {
             this.record({ sessionId, eventType: "broker_request_blocked", decision: scan.decision, riskScore: scan.riskScore, categories: scan.categories, contentHash: scan.contentHash, model, provider: "openai-compatible", redactedEvidence: scan.evidencePreview });
             throw new HttpError(scan.decision === "approval_required" ? 403 : 422, scan.decision, scan.decision === "approval_required" ? "Local approval is required for this content hash" : "The request was blocked by local policy");
         }
-        const forward = { ...body, messages: messagesToForward(scan.redacted ? "redact" : scan.decision, messages, scan.redactedMessages) };
+        const safeBody = sanitizeProviderBody(body);
+        const forward = { ...safeBody, stream: false, messages: messagesToForward(scan.redacted ? "redact" : scan.decision, messages, scan.redactedMessages) };
         const provider = await this.forwardProvider("openai", forward, req);
         const responseText = extractOpenAIResponse(provider.body);
         const responseScan = await scanBrokerResponse(responseText, { canaries: this.options.canaries });
@@ -292,6 +345,9 @@ export class BrokerServer {
         if (responseScan.decision === "block") throw new HttpError(422, "unsafe_provider_response", "The provider response was blocked by local output protection");
         res.setHeader("x-soterai-request-decision", scan.decision);
         res.setHeader("x-soterai-response-decision", responseScan.decision);
+        if (streamRequested && provider.status >= 200 && provider.status < 300) {
+            return this.openAIStream(res, provider.body, responseText, model);
+        }
         this.json(res, provider.status, provider.body);
     }
 
@@ -299,7 +355,8 @@ export class BrokerServer {
         if (body.stream === true) throw new HttpError(400, "streaming_not_supported", "Streaming proxy responses are not supported in this MVP");
         const system = typeof body.system === "string" ? [{ role: "system", content: body.system }] : [];
         const messages = [...system, ...normalizeMessages(body.messages)];
-        const sessionId = stringValue(body.session_id) ?? stringValue(req.headers["x-soterai-session-id"]) ?? randomUUID();
+        const rawSessionId = stringValue(body.session_id) ?? stringValue(req.headers["x-soterai-session-id"]) ?? randomUUID();
+        const sessionId = sanitizeSessionId(rawSessionId);
         const model = stringValue(body.model);
         const scan = await scanBrokerRequest(messages, { engine: this.engine, safeMode: this.safeMode, canaries: this.options.canaries });
         const approved = this.approvals.consume(sessionId, scan.contentHash);
@@ -308,7 +365,8 @@ export class BrokerServer {
             throw new HttpError(scan.decision === "approval_required" ? 403 : 422, scan.decision, "The request was blocked by local policy");
         }
         const forwarded = messagesToForward(scan.redacted ? "redact" : scan.decision, messages, scan.redactedMessages);
-        const forward = { ...body, system: forwarded.find((m) => m.role === "system")?.content, messages: forwarded.filter((m) => m.role !== "system") };
+        const safeBody = sanitizeProviderBody(body);
+        const forward = { ...safeBody, system: forwarded.find((m) => m.role === "system")?.content, messages: forwarded.filter((m) => m.role !== "system") };
         const provider = await this.forwardProvider("anthropic", forward, req);
         const responseText = extractAnthropicResponse(provider.body);
         const responseScan = await scanBrokerResponse(responseText, { canaries: this.options.canaries });
@@ -319,23 +377,42 @@ export class BrokerServer {
         this.json(res, provider.status, provider.body);
     }
 
-    private async forwardProvider(kind: "openai" | "anthropic", body: JsonBody, req: IncomingMessage): Promise<{ status: number; body: JsonBody }> {
+    private async forwardProvider(kind: "openai" | "anthropic", body: JsonBody, req: IncomingMessage): Promise<{ status: number; body: JsonBody; attempts: number }> {
         const target = kind === "openai" ? this.options.openAIProviderUrl : this.options.anthropicProviderUrl;
         if (!target) throw new HttpError(503, "provider_not_configured", `${kind} provider routing is not configured`);
+        // Require HTTPS for provider URLs (allow HTTP for localhost in dev)
+        if (!isSafeProviderUrl(target)) throw new HttpError(400, "unsafe_provider_url", "Provider URL must use HTTPS or be localhost");
         const apiKey = this.options.providerApiKey ?? stringValue(req.headers["x-soterai-provider-key"]);
         if (!apiKey) throw new HttpError(401, "provider_key_required", "A local provider key is required");
         const headers: Record<string, string> = { "content-type": "application/json" };
         if (kind === "openai") headers.authorization = `Bearer ${apiKey}`;
         else { headers["x-api-key"] = apiKey; headers["anthropic-version"] = stringValue(req.headers["anthropic-version"]) ?? "2023-06-01"; }
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), this.options.requestTimeoutMs ?? 30_000);
-        try {
-            const response = await (this.options.fetchImpl ?? fetch)(target, { method: "POST", headers, body: JSON.stringify(body), signal: controller.signal });
-            const parsed = await response.json() as JsonBody;
-            return { status: response.status, body: parsed };
-        } catch {
-            throw new HttpError(502, "provider_error", "The configured provider could not be reached or returned invalid JSON");
-        } finally { clearTimeout(timeout); }
+        const retryAttempts = Math.max(0, Math.min(this.options.providerRetryAttempts ?? 1, MAX_PROVIDER_RETRY_ATTEMPTS));
+        let lastError: unknown;
+        for (let attempt = 0; attempt <= retryAttempts; attempt++) {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), this.options.requestTimeoutMs ?? 30_000);
+            try {
+                const response = await (this.options.fetchImpl ?? fetch)(target, { method: "POST", headers, body: JSON.stringify(body), signal: controller.signal });
+                // Enforce response body size limit
+                const raw = await readBodyWithLimit(response, MAX_PROVIDER_RESPONSE_BYTES);
+                const parsed = JSON.parse(raw) as JsonBody;
+                if (shouldRetryProviderStatus(response.status) && attempt < retryAttempts) {
+                    this.safeLog("provider_retry", { kind, attempt: attempt + 1, status: response.status });
+                    continue;
+                }
+                return { status: response.status, body: parsed, attempts: attempt + 1 };
+            } catch (error) {
+                if (error instanceof HttpError && !isRetryableProviderError(error)) throw error;
+                lastError = error;
+                if (attempt < retryAttempts) {
+                    this.safeLog("provider_retry", { kind, attempt: attempt + 1, status: "network_or_parse_error" });
+                    continue;
+                }
+            } finally { clearTimeout(timeout); }
+        }
+        if (lastError instanceof HttpError) throw lastError;
+        throw new HttpError(502, "provider_error", "The configured provider could not be reached or returned invalid JSON");
     }
 
     private recordRequestMemory(sessionId: string, scan: Awaited<ReturnType<typeof scanBrokerRequest>>, model: string | undefined, provider: string): void {
@@ -361,6 +438,14 @@ export class BrokerServer {
         const origin = stringValue(req.headers.origin);
         if (!origin) return;
         if (!(this.options.allowedOrigins ?? []).includes(origin)) throw new HttpError(403, "origin_rejected", "Browser origins are rejected by default");
+    }
+
+    /** Periodically evict stale rate-limit buckets to prevent unbounded memory growth. */
+    private cleanRateBuckets(): void {
+        const currentMinute = Math.floor(Date.now() / 60_000);
+        for (const [key, bucket] of this.rateBuckets) {
+            if (bucket.minute !== currentMinute) this.rateBuckets.delete(key);
+        }
     }
 
     private enforceRateLimit(req: IncomingMessage): void {
@@ -403,6 +488,35 @@ export class BrokerServer {
         res.end(JSON.stringify(body));
     }
 
+    private openAIStream(res: ServerResponse, providerBody: JsonBody, content: string, model?: string): void {
+        res.statusCode = 200;
+        res.setHeader("content-type", "text/event-stream; charset=utf-8");
+        res.setHeader("connection", "keep-alive");
+        res.setHeader("x-accel-buffering", "no");
+        res.setHeader("x-soterai-streaming-mode", "buffered_scan");
+
+        const id = stringValue(providerBody.id) ?? `chatcmpl_${randomUUID()}`;
+        const created = typeof providerBody.created === "number" ? providerBody.created : Math.floor(Date.now() / 1000);
+        const chunk = {
+            id,
+            object: "chat.completion.chunk",
+            created,
+            model: model ?? stringValue(providerBody.model) ?? "unknown",
+            choices: [{ index: 0, delta: { content }, finish_reason: null }],
+        };
+        const finalChunk = {
+            id,
+            object: "chat.completion.chunk",
+            created,
+            model: model ?? stringValue(providerBody.model) ?? "unknown",
+            choices: [{ index: 0, delta: {}, finish_reason: "stop" }],
+        };
+
+        res.write(`data: ${JSON.stringify(chunk)}\n\n`);
+        res.write(`data: ${JSON.stringify(finalChunk)}\n\n`);
+        res.end("data: [DONE]\n\n");
+    }
+
     private safeLog(message: string, metadata: Record<string, unknown>): void {
         this.options.logger?.(message, metadata);
     }
@@ -414,12 +528,89 @@ function normalizeMessages(value: unknown): BrokerMessage[] {
         if (!raw || typeof raw !== "object") throw new HttpError(400, "invalid_messages", "each message must be an object");
         const item = raw as Record<string, unknown>;
         const role = requireString(item.role, "message.role");
+        // Validate message role against known set
+        if (!KNOWN_ROLES.has(role)) throw new HttpError(400, "invalid_role", `Unknown message role: ${role}`);
         let content: string;
         if (typeof item.content === "string") content = item.content;
         else if (Array.isArray(item.content)) content = item.content.map((part) => typeof part === "object" && part && typeof (part as Record<string, unknown>).text === "string" ? (part as Record<string, unknown>).text : "").join("\n");
         else throw new HttpError(400, "invalid_messages", "message.content must be text or text parts");
         return { role, content, name: stringValue(item.name) };
     });
+}
+
+/**
+ * Sanitize a user-supplied session ID for safe use in URL paths.
+ * Falls back to a random UUID when the value is missing, too long, or contains unsafe characters.
+ */
+function sanitizeSessionId(raw: string): string {
+    if (!raw || raw.length > 128 || !SESSION_ID_RE.test(raw)) return randomUUID();
+    return raw;
+}
+
+/**
+ * Filter the request body to only include fields that are safe to forward to AI providers.
+ * This prevents injection of arbitrary fields via the proxy.
+ */
+function sanitizeProviderBody(body: JsonBody): JsonBody {
+    const safe: JsonBody = {};
+    for (const key of Object.keys(body)) {
+        if (ALLOWED_PROVIDER_FIELDS.has(key)) {
+            safe[key] = body[key];
+        }
+    }
+    return safe;
+}
+
+/**
+ * Validate that a provider URL uses a safe scheme.
+ * Accepts HTTPS always, HTTP only for localhost/127.0.0.1 (developer convenience).
+ */
+function isSafeProviderUrl(url: string): boolean {
+    try {
+        const parsed = new URL(url);
+        if (parsed.protocol === "https:") return true;
+        if (parsed.protocol === "http:") {
+            const host = parsed.hostname;
+            return host === "localhost" || host === "127.0.0.1" || host === "::1" || host.startsWith("127.");
+        }
+        return false;
+    } catch {
+        return false;
+    }
+}
+
+function shouldRetryProviderStatus(status: number): boolean {
+    return status === 429 || (status >= 500 && status <= 599);
+}
+
+function isRetryableProviderError(error: HttpError): boolean {
+    return error.code === "provider_error";
+}
+
+/**
+ * Read a response body with an explicit byte limit to prevent memory exhaustion.
+ */
+async function readBodyWithLimit(response: Response, limit: number): Promise<string> {
+    const reader = response.body?.getReader();
+    if (!reader) throw new HttpError(502, "provider_error", "Provider response body could not be read");
+    const chunks: Uint8Array[] = [];
+    let total = 0;
+    try {
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            total += value.length;
+            if (total > limit) {
+                await reader.cancel();
+                throw new HttpError(502, "provider_response_too_large", "Provider response exceeds the maximum body size");
+            }
+            chunks.push(value);
+        }
+    } finally {
+        reader.releaseLock();
+    }
+    const decoder = new TextDecoder();
+    return chunks.map((chunk) => decoder.decode(chunk, { stream: true })).join("") + decoder.decode();
 }
 
 function safeRequestResult(result: Awaited<ReturnType<typeof scanBrokerRequest>>): JsonBody {

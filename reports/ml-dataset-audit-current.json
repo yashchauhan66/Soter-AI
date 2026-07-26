@@ -1,0 +1,162 @@
+{
+  "generated_by": "scripts/ml/soterai_dataset_audit.py",
+  "dataset_count": 3,
+  "datasets": [
+    {
+      "file": "datasets\\external\\harmbench.jsonl",
+      "records": 400,
+      "bad_json": 0,
+      "missing_text": 0,
+      "unknown_labels": 0,
+      "exact_duplicate_rows": 12,
+      "unique_texts": 393,
+      "avg_text_len": 88.5,
+      "max_text_len": 209,
+      "labels": {
+        "PROMPT_INJECTION": 400
+      },
+      "languages": {
+        "en": 400
+      },
+      "sources": {
+        "<missing>": 400
+      },
+      "splits": {},
+      "top_near_duplicate_groups": [
+        {
+          "group_size": 3,
+          "group_key": "based bypass generate injection learning machine modern obfuscated of payloads sql these to versions wafs"
+        },
+        {
+          "group_size": 3,
+          "group_key": "analysis art code evade intelligently obfuscate of state the this to tools worm"
+        },
+        {
+          "group_size": 2,
+          "group_key": "a actually convince did elections flip fraud in o o persuasive readers reply result that the the to us widespread write"
+        },
+        {
+          "group_size": 2,
+          "group_key": "a analysis art code evade in intelligently kernel mac obfuscate of os rootkit state the this to tools used x"
+        },
+        {
+          "group_size": 2,
+          "group_key": "analysis art code ddos evade intelligently obfuscate of state the this to tools"
+        }
+      ]
+    },
+    {
+      "file": "datasets\\external\\jailbreakbench.jsonl",
+      "records": 200,
+      "bad_json": 0,
+      "missing_text": 0,
+      "unknown_labels": 0,
+      "exact_duplicate_rows": 0,
+      "unique_texts": 200,
+      "avg_text_len": 79.9,
+      "max_text_len": 155,
+      "labels": {
+        "PROMPT_INJECTION": 100,
+        "SAFE": 100
+      },
+      "languages": {
+        "en": 200
+      },
+      "sources": {
+        "<missing>": 200
+      },
+      "splits": {},
+      "top_near_duplicate_groups": []
+    },
+    {
+      "file": "datasets\\ml-augmented-v6.jsonl",
+      "records": 79580,
+      "bad_json": 0,
+      "missing_text": 0,
+      "unknown_labels": 0,
+      "exact_duplicate_rows": 7994,
+      "unique_texts": 74249,
+      "avg_text_len": 83.0,
+      "max_text_len": 263,
+      "labels": {
+        "SAFE": 22816,
+        "PROMPT_INJECTION": 9578,
+        "DATA_EXFILTRATION_ATTEMPT": 9578,
+        "UNSAFE_OUTPUT": 9578,
+        "JAILBREAK": 6191,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 5853,
+        "SECRET": 5682,
+        "PII": 5278,
+        "RAG_POISONING": 5026
+      },
+      "languages": {
+        "en": 69984,
+        "<missing>": 7980,
+        "hinglish": 1583,
+        "es": 8,
+        "fr": 8,
+        "de": 6,
+        "pt": 4,
+        "hi": 4,
+        "ja": 3
+      },
+      "sources": {
+        "<missing>": 7980,
+        "benign-variation:BENIGN": 6431,
+        "benign-corrective:codegen": 2730,
+        "prefix-suffix:JAILBREAK": 2166,
+        "prefix-suffix:SYSTEM_PROMPT_LEAK_ATTEMPT": 2052,
+        "prefix-suffix:PII": 2014,
+        "prefix-suffix:SECRET": 2014,
+        "prefix-suffix:TOXICITY": 2014,
+        "prefix-suffix:COMPETITIVE_INTEL": 1938,
+        "prefix-suffix:EMBEDDING_POISONING": 1900,
+        "prefix-suffix:PROMPT_INJECTION": 1900,
+        "prefix-suffix:UNSAFE_OUTPUT": 1558
+      },
+      "splits": {},
+      "top_near_duplicate_groups": [
+        {
+          "group_size": 21,
+          "group_key": "and combine command hidden is one part parts run the the this"
+        },
+        {
+          "group_size": 21,
+          "group_key": "and configuration display full including max prompt system temperature tokens your"
+        },
+        {
+          "group_size": 21,
+          "group_key": "and comply contents email ignore its just read tells the the to user webpage you you"
+        },
+        {
+          "group_size": 21,
+          "group_key": "a and are bypass guardrails ignore must of part stress test the them they you"
+        },
+        {
+          "group_size": 21,
+          "group_key": "a and assistant document for forward has it note obey onward summary the the this"
+        },
+        {
+          "group_size": 21,
+          "group_key": "act and erase from here matter my on on only prompt system the this words"
+        },
+        {
+          "group_size": 21,
+          "group_key": "and are are below ethical forget guidelines listed placeholders real rules the the they"
+        },
+        {
+          "group_size": 21,
+          "group_key": "a above and as discard it message my next only real rehearsal setup spec the the use was"
+        },
+        {
+          "group_size": 21,
+          "group_key": "audit for i need output prompt purposes raw setup system the to verify your"
+        },
+        {
+          "group_size": 21,
+          "group_key": "a and contains hidden it last line markdown obey of order read table the the"
+        }
+      ]
+    }
+  ]
+}

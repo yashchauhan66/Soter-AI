@@ -34,8 +34,65 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   });
 });
 
+/**
+ * Known message types handled by the service worker.
+ * Used for message type validation to prevent processing unknown message types.
+ */
+const ALLOWED_MESSAGE_TYPES = new Set([
+  "SOTER_SCAN_TEXT",
+  "SOTER_GET_STATE",
+  "SOTER_SET_STATE",
+  "SOTER_REQUEST_APPROVAL",
+  "SOTER_HEARTBEAT",
+  "SOTER_ENROLL",
+  "SOTER_SYNC_POLICY",
+  "SOTER_GET_DESTINATION_CONTEXT",
+  "SOTER_GET_SOURCE_APPS",
+  "SOTER_DISCOVER_SHADOW_AI",
+  "SOTER_FILE_SCAN_EVENT",
+]);
+
+/**
+ * Validate that a message sender is trusted to process the request.
+ * For content script messages, checks that the sender tab URL matches
+ * one of the monitored AI host patterns or is localhost.
+ */
+function isTrustedSender(sender: { tab?: { id?: number }; url?: string }, messageUrl?: string): boolean {
+  // Extension-internal messages (popup, options, side panel) have no tab
+  if (!sender.tab) return true;
+  // Trust messages from the extension's own pages
+  if (sender.url?.startsWith("chrome-extension://")) return true;
+  // For content script messages, validate the tab URL matches monitored patterns
+  const url = sender.url || messageUrl || "";
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.replace(/^www\./, "");
+    // Allow known AI platforms and localhost
+    if (host === "localhost" || host === "127.0.0.1") return true;
+    if (/^(chatgpt\.com|chat\.openai\.com|claude\.ai|gemini\.google\.com|bard\.google\.com|perplexity\.ai|poe\.com|openrouter\.ai|openwebui\.com)$/i.test(host)) return true;
+    if (/^(replit\.com|stackblitz\.com|codesandbox\.io|github\.dev|bolt\.new|v0\.dev|lovable\.dev)$/i.test(host)) return true;
+    if (host.endsWith(".replit.dev") || host.endsWith(".stackblitz.io") || host.endsWith(".csb.app") || host.endsWith(".github.dev")) return true;
+    return false;
+  } catch {
+    return false;
+  }
+}
+
 chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
   if (!isObject(message)) return;
+  // Validate message type against known set
+  if (typeof (message as Record<string, unknown>).type !== "string") return;
+  const msgType = (message as Record<string, unknown>).type as string;
+  if (!ALLOWED_MESSAGE_TYPES.has(msgType)) return;
+  // Validate sender origin: for content script messages, the tab URL must
+  // be from a known monitored domain or localhost
+  const sender = _sender as { tab?: { id?: number }; url?: string } | undefined;
+  const msgUrl = (message as Record<string, unknown>).url as string | undefined;
+  if (!isTrustedSender(sender ?? {}, msgUrl)) {
+    console.warn("[Soter] Ignoring message from untrusted sender:", sender?.url);
+    sendResponse({ ok: false, message: "Untrusted sender." });
+    return;
+  }
   if (message.type === "SOTER_SCAN_TEXT") {
     void handleScan(message as RuntimeScanRequest).then(sendResponse);
     return true;

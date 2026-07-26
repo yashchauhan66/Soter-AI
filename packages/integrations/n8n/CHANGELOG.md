@@ -2,6 +2,68 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.3.2] - 2026-07-26
+
+### Fixed
+
+- Added the credential dark-mode SVG and pointed the credential icon at `soterai.dark.svg`.
+- Reworked unexpected-error wrapping so n8n errors are re-thrown only after non-n8n errors are converted to `NodeOperationError`.
+
+## [0.3.1] - 2026-07-21
+
+### Changed
+
+- Moved the node into a `SoterGuard/` directory to satisfy the n8n `node-dirname-against-convention` rule.
+- Replaced the raster node icon with themed SVG variants (`{ light, dark }`) for both the node and the credential, per the n8n icon-validation rules.
+- Marked the node `usableAsTool: true` so it can be attached to AI Agent tool inputs.
+- Switched HTTP calls to the built-in `this.helpers.httpRequest` (native timeout) instead of `fetch` + `setTimeout`/`clearTimeout`, removing restricted global usage.
+- Replaced raw `throw new Error(...)` with `NodeOperationError`/`NodeApiError` across the execute path and added `pairedItem` linking to every output item.
+- Used `NodeConnectionTypes.Main` for `inputs`/`outputs` and alphabetized all `options` lists.
+
+## 0.2.11
+
+### Changed
+
+- Wrap unexpected HTTP/runtime errors from the SoterAI API in `NodeApiError` so the n8n UI surfaces HTTP status and the failing item index. `NodeOperationError` (e.g. unknown action) is preserved as-is.
+
+### Fixed
+
+- Published via the GitHub Actions release workflow (`npm publish --provenance`) so the package carries an npm provenance statement, matching the tagged source.
+
+## [0.3.0] - 2026-07-18
+
+### Added
+
+- Added **Universal AI Firewall (Best Protection)**, a single n8n action that orchestrates input guard, RAG risk scanning, agent tool-call checks, memory safety checks, output guard, semantic egress checks, and one clear `finalDecision`.
+- Added advanced Universal Guard fields for protection profile, RAG context, tool risk context, memory operation, output destination, protected source snapshots, and fail-closed routing.
+- Added **Audit n8n Workflow Security**, a local workflow posture scanner for AI Agent, webhook, Code node, tool, memory, RAG, secret, and output-egress risks with OWASP mapping and recommended SoterAI placement.
+- Simplified the Universal AI Firewall parameter strategy: the default UI now focuses on essential fields, while RAG/tool/memory/egress details are consolidated into optional Security Context JSON.
+- Added live-chat friendly Safe Rephrase handling for human-review decisions via `needsHumanReview`, `liveChatAction`, and `safeRephrasePrompt`.
+- Added copy-paste Security Context JSON templates and an importable example workflow for RAG, tool, memory, and output/egress context.
+- Added package validation for README/package/User-Agent version consistency and sanitized `rawResponse` output.
+
+### Security
+
+- Recursively sanitize `rawResponse` workflow output before returning it to downstream n8n nodes.
+- Expanded error redaction for bearer tokens, common provider tokens, AWS access key IDs, database URLs, and sensitive key/value pairs.
+- Clarified the privacy contract: n8n credentials store API keys, node output redacts secrets, and the node does not collect telemetry or write local files.
+- Added Base URL validation to require HTTPS except `http://localhost` local development and reject embedded credentials, query strings, and fragments.
+- Sanitized Metadata JSON before API calls by redacting sensitive keys/strings and truncating long metadata strings.
+- Added consistent `operation` output fields for downstream routing across all node actions.
+
+## [0.2.8] - 2026-07-14
+
+### Added
+
+- Added an explicit Analyze Text operation for risk-summary workflows.
+- Added package-level workflow validation tests.
+- Added final Creator Portal example workflows to the published npm package.
+
+### Fixed
+
+- Improved API timeout, rate-limit, authentication, payload-size, and sanitized error handling.
+- Updated package keywords and README/support metadata for n8n submission review.
+
 ## [0.2.7] - 2026-07-03
 
 ### Changed
