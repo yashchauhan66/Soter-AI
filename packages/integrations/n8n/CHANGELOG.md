@@ -2,6 +2,13 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.3.2] - 2026-07-26
+
+### Fixed
+
+- Added the credential dark-mode SVG and pointed the credential icon at `soterai.dark.svg`.
+- Reworked unexpected-error wrapping so n8n errors are re-thrown only after non-n8n errors are converted to `NodeOperationError`.
+
 ## [0.3.1] - 2026-07-21
 
 ### Changed

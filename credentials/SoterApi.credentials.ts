@@ -1,5 +1,6 @@
 // Compatibility mirror for n8n Creator Portal's repository-root source check.
 import type {
+  Icon,
   ICredentialTestRequest,
   ICredentialType,
   INodeProperties,
@@ -9,6 +10,7 @@ export class SoterApi implements ICredentialType {
   name = "soterApi";
   displayName = "SoterAI API";
   documentationUrl = "https://soterai.in/docs";
+  icon: Icon = { light: "file:soterai.svg", dark: "file:soterai.dark.svg" };
 
   test: ICredentialTestRequest = {
     request: {

@@ -6,7 +6,7 @@ class SoterApi {
         this.name = "soterApi";
         this.displayName = "SoterAI API";
         this.documentationUrl = "https://soterai.in/docs";
-        this.icon = { light: "file:soterai.svg", dark: "file:soterai.svg" };
+        this.icon = { light: "file:soterai.svg", dark: "file:soterai.dark.svg" };
         this.test = {
             request: {
                 baseURL: "={{$credentials.baseUrl}}",
