@@ -1,9 +1,19 @@
-import type { DetectorResult, Finding, GuardDecision, ScanOptions } from "./types";
+import type {
+    DetectorResult,
+    Finding,
+    GuardDecision,
+    ScanOptions,
+    ScanPipeline,
+    ScanPipelineReport,
+} from "./types";
 import { detectSecrets, SECRET_DETECTOR_VERSION, detectEnvFile, ENV_FILE_DETECTOR_VERSION, detectPII, PII_DETECTOR_VERSION, detectIndiaPII, INDIA_PII_DETECTOR_VERSION, detectPromptInjection, PROMPT_INJECTION_DETECTOR_VERSION, detectJailbreak, JAILBREAK_DETECTOR_VERSION, detectFileContextRisk, FILE_CONTEXT_RISK_DETECTOR_VERSION, detectTerminalCommandRisk, TERMINAL_COMMAND_RISK_DETECTOR_VERSION, detectRepoInstructionPoisoning, REPO_INSTRUCTION_POISONING_DETECTOR_VERSION, detectMCPConfigRisk, MCP_CONFIG_RISK_DETECTOR_VERSION, detectAIGeneratedCodeRisk, AI_CODE_RISK_DETECTOR_VERSION, deduplicateMatches, collapseOverlappingMatches } from "./detectors";
 import { minimizeEvidence, createEvidencePreview } from "./EvidenceMinimizer";
 import { findSurvivingSecrets, redactForSharing } from "./Redactor";
 import { PolicyEvaluator } from "./PolicyEvaluator";
 import { HashCache, hashContent } from "./HashCache";
+
+/** Bump when detector selection / pipeline semantics change (invalidates cache). */
+export const SCAN_PIPELINE_VERSION = "1.1.0";
 
 export const DETECTOR_VERSIONS: Record<string, string> = {
     SecretDetector: SECRET_DETECTOR_VERSION,
@@ -11,13 +21,38 @@ export const DETECTOR_VERSIONS: Record<string, string> = {
     PIIDetector: PII_DETECTOR_VERSION,
     IndiaPIIDetector: INDIA_PII_DETECTOR_VERSION,
     PromptInjectionLiteDetector: PROMPT_INJECTION_DETECTOR_VERSION,
-    JailbreakLiteDetector: JAILBREAK_DETECTOR_VERSION,  // v2.0.0 — ReDoS, timeout, isolation
+    JailbreakLiteDetector: JAILBREAK_DETECTOR_VERSION,
     FileContextRiskDetector: FILE_CONTEXT_RISK_DETECTOR_VERSION,
     TerminalCommandRiskDetector: TERMINAL_COMMAND_RISK_DETECTOR_VERSION,
     RepoInstructionPoisoningDetector: REPO_INSTRUCTION_POISONING_DETECTOR_VERSION,
     MCPConfigRiskDetector: MCP_CONFIG_RISK_DETECTOR_VERSION,
     AIGeneratedCodeRiskDetector: AI_CODE_RISK_DETECTOR_VERSION,
+    ScanPipeline: SCAN_PIPELINE_VERSION,
 };
+
+/**
+ * Shared scan-policy for every entry path (live scan, manual scan, clipboard,
+ * broker preflight, etc.). Callers must not invent private detector lists.
+ */
+export function resolveScanPipeline(context: ScanOptions["context"] = "file"): ScanPipeline {
+    const ctx = context ?? "file";
+    return {
+        secretDetection: true,
+        piiDetection: true,
+        // Live file/workspace paths must run the same injection detectors as
+        // prompt/selection — otherwise marketplace "prompt-injection" claims
+        // for live scan are false (verified gap, fixed in pipeline 1.1.0).
+        promptInjectionDetection:
+            ctx === "prompt" || ctx === "selection" || ctx === "file" || ctx === "workspace" || ctx === "git",
+        jailbreakDetection:
+            ctx === "prompt" || ctx === "selection" || ctx === "file" || ctx === "workspace" || ctx === "git",
+        unsafeCodeDetection:
+            ctx === "file" || ctx === "workspace" || ctx === "selection" || ctx === "git",
+        dependencyDetection: false, // separate DepGuard path; not content-regex
+        provenanceAnalysis:
+            ctx === "file" || ctx === "workspace" || ctx === "selection",
+    };
+}
 
 export class DecisionEngine {
     private policyEvaluator: PolicyEvaluator;
@@ -31,6 +66,7 @@ export class DecisionEngine {
     }
 
     async scan(text: string, options?: ScanOptions): Promise<GuardDecision> {
+        const started = Date.now();
         const content = text.slice(0, options?.maxContentLength ?? this.maxContentLength);
         let inputHash: string;
         if (!options?.skipCache) {
@@ -40,8 +76,8 @@ export class DecisionEngine {
         } else {
             inputHash = "";
         }
-        // Run detectors
-        const results = this.runDetectors(content, options);
+        // Run detectors via the shared pipeline (single source of truth).
+        const { results, pipelineReport } = this.runDetectors(content, options);
         const allMatches = deduplicateMatches(results.flatMap((r) => r.matches));
         // Build findings
         const findings: Finding[] = [];
@@ -71,6 +107,8 @@ export class DecisionEngine {
             }
         }
 
+        pipelineReport.durationMs = Date.now() - started;
+
         const decision: GuardDecision = {
             decision: action,
             riskScore,
@@ -83,6 +121,7 @@ export class DecisionEngine {
             detectorVersions: DETECTOR_VERSIONS,
             localOnly: true,
             createdAt: new Date().toISOString(),
+            pipeline: pipelineReport,
         };
         // Cache result
         if (inputHash) {
@@ -91,33 +130,104 @@ export class DecisionEngine {
         return decision;
     }
 
-    private runDetectors(text: string, options?: ScanOptions): DetectorResult[] {
+    /**
+     * Shared detector selection. Every scan path (live, manual, clipboard,
+     * broker) must go through this so detector lists cannot drift.
+     */
+    private runDetectors(
+        text: string,
+        options?: ScanOptions,
+    ): { results: DetectorResult[]; pipelineReport: ScanPipelineReport } {
         const ctx = options?.context ?? "file";
+        const pipeline = resolveScanPipeline(ctx);
         const results: DetectorResult[] = [];
-        // Always run these
-        results.push(detectSecrets(text));
-        results.push(detectEnvFile(text));
-        results.push(detectPII(text));
-        results.push(detectIndiaPII(text));
-        // Context-specific detectors
-        if (ctx === "prompt" || ctx === "selection") {
-            results.push(detectPromptInjection(text));
-            results.push(detectJailbreak(text));
+        const executed: string[] = [];
+        const skipped: Array<{ detector: string; reason: string }> = [];
+
+        const run = (name: string, enabled: boolean, fn: () => DetectorResult, skipReason?: string) => {
+            if (!enabled) {
+                skipped.push({ detector: name, reason: skipReason ?? `disabled for context=${ctx}` });
+                return;
+            }
+            results.push(fn());
+            executed.push(name);
+        };
+
+        // Always-on content detectors
+        run("SecretDetector", pipeline.secretDetection, () => detectSecrets(text));
+        run("EnvFileDetector", pipeline.secretDetection, () => detectEnvFile(text));
+        run("PIIDetector", pipeline.piiDetection, () => detectPII(text));
+        run("IndiaPIIDetector", pipeline.piiDetection, () => detectIndiaPII(text));
+
+        // Injection / jailbreak — required for live file scan parity (pipeline 1.1.0)
+        run(
+            "PromptInjectionLiteDetector",
+            pipeline.promptInjectionDetection,
+            () => detectPromptInjection(text),
+            "promptInjectionDetection=false for this context",
+        );
+        run(
+            "JailbreakLiteDetector",
+            pipeline.jailbreakDetection,
+            () => detectJailbreak(text),
+            "jailbreakDetection=false for this context",
+        );
+
+        // File / workspace / selection structural detectors
+        const fileish = ctx === "file" || ctx === "workspace" || ctx === "selection";
+        run(
+            "FileContextRiskDetector",
+            pipeline.unsafeCodeDetection && (fileish || ctx === "git"),
+            () => detectFileContextRisk(text),
+        );
+        run(
+            "AIGeneratedCodeRiskDetector",
+            pipeline.unsafeCodeDetection && (fileish || ctx === "git"),
+            () => detectAIGeneratedCodeRisk(text),
+        );
+        run(
+            "RepoInstructionPoisoningDetector",
+            pipeline.provenanceAnalysis && fileish,
+            () => detectRepoInstructionPoisoning(text),
+        );
+        run(
+            "MCPConfigRiskDetector",
+            pipeline.provenanceAnalysis && fileish,
+            () => detectMCPConfigRisk(text),
+        );
+
+        // Terminal-only
+        run(
+            "TerminalCommandRiskDetector",
+            ctx === "terminal",
+            () => detectTerminalCommandRisk(text),
+            "only runs for context=terminal",
+        );
+
+        if (!pipeline.dependencyDetection) {
+            skipped.push({
+                detector: "DependencyGuard",
+                reason: "dependency intelligence is a separate path (DepGuard), not content-regex",
+            });
         }
-        if (ctx === "file" || ctx === "workspace" || ctx === "selection") {
-            results.push(detectFileContextRisk(text));
-            results.push(detectAIGeneratedCodeRisk(text));
-            results.push(detectRepoInstructionPoisoning(text));
-            results.push(detectMCPConfigRisk(text));
-        }
-        if (ctx === "terminal") {
-            results.push(detectTerminalCommandRisk(text));
-        }
-        if (ctx === "git") {
-            results.push(detectFileContextRisk(text));
-            results.push(detectAIGeneratedCodeRisk(text));
-        }
-        return results;
+
+        const pipelineReport: ScanPipelineReport = {
+            version: SCAN_PIPELINE_VERSION,
+            context: ctx,
+            pipeline,
+            detectorsExecuted: executed,
+            detectorsSkipped: skipped,
+            // Live scan is visibility/detection — not pre-execution enforcement.
+            protectionLevel:
+                ctx === "terminal"
+                    ? "DETECTION_ONLY"
+                    : ctx === "prompt" || ctx === "selection"
+                      ? "DETECTION_ONLY"
+                      : "VISIBILITY_ONLY",
+            durationMs: 0,
+        };
+
+        return { results, pipelineReport };
     }
 
     getCache(): HashCache { return this.hashCache; }

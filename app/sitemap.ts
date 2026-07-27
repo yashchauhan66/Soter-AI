@@ -15,7 +15,7 @@ const siteUrl = SITE_URL;
  * content that actually changes often. Bump this when the site is meaningfully
  * updated.
  */
-const SITE_LAST_MODIFIED = "2026-06-29";
+const SITE_LAST_MODIFIED = "2026-07-22";
 
 type ChangeFrequency = NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>;
 
@@ -29,7 +29,7 @@ interface Entry {
 
 const marketingPages: Entry[] = [
   { url: "/", priority: 1.0, changeFrequency: "weekly" },
-  { url: "/scanner", priority: 0.8, changeFrequency: "weekly" },
+  { url: "/benchmark", priority: 0.9, changeFrequency: "weekly", lastModified: "2026-07-15" },
   { url: "/benchmarks", priority: 0.9, changeFrequency: "weekly" },
   { url: "/comparison", priority: 0.9, changeFrequency: "weekly" },
   { url: "/pricing", priority: 0.8, changeFrequency: "weekly" },

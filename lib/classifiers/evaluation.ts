@@ -8,6 +8,7 @@ export interface EvaluationMetrics { precision: number; recall: number; f1: numb
 function normalizeRiskType(riskType: string): EvaluationLabel {
   if (riskType.includes("SYSTEM_PROMPT")) return "SYSTEM_PROMPT_LEAK_ATTEMPT";
   if (riskType.includes("JAILBREAK")) return "JAILBREAK";
+  if (riskType.includes("MCP_TOOL_POISONING") || riskType.includes("MEMORY_POISONING")) return "PROMPT_INJECTION";
   if (riskType.includes("PROMPT_INJECTION")) return "PROMPT_INJECTION";
   if (riskType.includes("SECRET")) return "SECRET";
   if (riskType.includes("PII")) return "PII";

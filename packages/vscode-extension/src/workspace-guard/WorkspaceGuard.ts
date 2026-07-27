@@ -90,19 +90,22 @@ export class WorkspaceGuard {
     }
 
     isProtected(filePath: string): boolean {
+        const normalized = filePath.replace(/\\/g, "/");
         return this.protectedFiles.some((f) => {
-            if (f.pattern.includes("*")) {
-                // Escape regex special chars before replacing glob * with .*
-                // This prevents ReDoS from patterns containing crafted regex characters
-                const escaped = f.pattern.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, ".*");
+            const pattern = f.pattern.replace(/\\/g, "/");
+            if (pattern.includes("*")) {
+                // Escape everything regex-special EXCEPT the glob star, then
+                // expand stars. Prevents regex injection from filenames.
+                const source = pattern
+                    .replace(/[.+^${}()|[\]\\?]/g, "\\$&")
+                    .replace(/\*/g, ".*");
                 try {
-                    const regex = new RegExp(`^${escaped}$`, "i");
-                    return regex.test(filePath);
+                    return new RegExp(source, "i").test(normalized);
                 } catch {
                     return false;
                 }
             }
-            return filePath.includes(f.pattern);
+            return normalized.includes(pattern);
         });
     }
 
@@ -167,8 +170,10 @@ export class WorkspaceGuard {
 
     private updateStatusBar(): void {
         if (this.enabled) {
-            this.statusBarItem.text = `$(lock) Protected (${this.protectedFiles.length})`;
-            this.statusBarItem.tooltip = `Protected Workspace Mode: Active. ${this.protectedFiles.length} files protected.`;
+            this.statusBarItem.text = `$(lock) Protected list (${this.protectedFiles.length})`;
+            this.statusBarItem.tooltip =
+                `Protected Workspace Mode: ${this.protectedFiles.length} file(s) excluded from SoterAI-built AI context bundles. ` +
+                `Direct reads by other extensions/tools are not intercepted (monitoring-only).`;
         } else {
             this.statusBarItem.text = "$(unlock) Protected Off";
             this.statusBarItem.tooltip = "Protected Workspace Mode is disabled.";
@@ -184,7 +189,9 @@ export function registerWorkspaceGuardCommands(context: vscode.ExtensionContext,
 
     reg("soterai.enableProtectedWorkspace", async () => {
         await guard.enable();
-        vscode.window.showInformationMessage("SoterAI Protected Workspace Mode enabled. Sensitive files auto-protected.");
+        vscode.window.showInformationMessage(
+            "Protected Workspace Mode enabled: listed files are excluded from SoterAI-built AI context bundles. Direct reads by other tools are not intercepted.",
+        );
     });
 
     reg("soterai.disableProtectedWorkspace", async () => {
@@ -199,7 +206,7 @@ export function registerWorkspaceGuardCommands(context: vscode.ExtensionContext,
             `<h1>Protected Workspace Files</h1><p>${files.length} protected file(s).</p>
             <table><tr><th>Pattern</th><th>Level</th><th>Source</th><th>Added</th></tr>
             ${rows || "<tr><td colspan='4'>No protected files.</td></tr>"}</table>
-            <p class="note">Protected files are excluded from AI context. Auto-detected patterns include .env*, *.pem, id_rsa, .npmrc, .aws/credentials, and repo instruction files.</p>`
+            <p class="note"><strong>Coverage (honest):</strong> when Protected Workspace Mode is on, these files are excluded from every context bundle SoterAI builds (Inspect/Build/Copy Safe AI Context, safe prompts). SoterAI cannot technically stop another extension or AI tool from reading these files directly — that path is monitoring-only. Auto-detected patterns include .env*, *.pem, id_rsa, .npmrc, .aws/credentials, and repo instruction files.</p>`
         );
     });
 

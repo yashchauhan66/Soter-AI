@@ -3,6 +3,7 @@ import { RunRedTeamButton } from "@/components/dashboard/RunRedTeamButton";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { getOrCreateSuite, getRedTeamSummary } from "@/lib/redteam/lab";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
 
 export const dynamic = "force-dynamic";
 
@@ -31,15 +32,19 @@ export default async function RedTeamLabPage({
 
   return (
     <div className="space-y-7">
-      <div>
-        <p className="eyebrow">Authorized testing</p>
-        <h1 className="mt-2 text-3xl font-bold">AI Red Team Lab</h1>
-        <p className="mt-3 max-w-3xl text-slate-400">
-          Automatically test your guard policies against known attack patterns including
-          prompt injection, jailbreaks, PII exfiltration, tool misuse, and more. Each run
-          executes non-destructive test prompts against your policies and reports results.
-        </p>
-      </div>
+      <FeatureGuide
+        eyebrow="Authorized testing"
+        title="AI Red Team Lab"
+        description="Run your defensive red-team suite on demand and track how your guard policies hold up over time — pass rate, weakest categories, and trend across runs."
+        useCase="A one-off red-team run tells you where you stand today; the Lab tells you whether you are getting better or worse. It executes the same non-destructive attack scenarios against the guard policies of a project you administer, records every run, and surfaces the categories where your policies are weakest so you can prioritize fixes."
+        howItWorks={[
+          { heading: "Provision a suite", body: "The Lab creates (or reuses) a default red-team suite for your project, seeded with the built-in OWASP-mapped scenarios. All prompt templates are stored redacted." },
+          { heading: "Run non-destructive tests", body: "Each run replays the suite's safe test prompts against your current guard policies and records, per scenario, whether the policy responded as expected." },
+          { heading: "Score pass rate", body: "Results roll up into a pass rate for the run and per-category pass rates, so you can see exactly which attack classes your policies handle well." },
+          { heading: "Track trend and weak spots", body: "Across runs the Lab computes an average pass rate, a trend (improving, declining, or flat), and your weakest categories — a prioritized list of what to harden next." },
+        ]}
+        callout="Authorized validation only. The Lab tests guard policies for a project you own or administer using non-destructive prompts. It reports how your policies responded to test inputs; it is not a real-time enforcement layer and is not for use against systems you do not control."
+      />
 
       <div className="grid gap-4 sm:grid-cols-4">
         <div className="card p-5">

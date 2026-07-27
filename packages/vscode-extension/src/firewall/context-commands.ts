@@ -32,14 +32,14 @@ export function registerContextCommands(deps: FirewallDeps): void {
             eventId: `ctx_${Date.now()}`,
             workspacePseudoId: await workspacePseudoId(),
             eventType: "context_built",
-            action: safe.summary.blocked > 0 ? "block" : safe.summary.approvalRequired > 0 ? "approval_required" : "allow",
-            severity: safe.summary.blocked > 0 ? "high" : "medium",
-            riskScore: safe.summary.blocked * 20 + safe.summary.approvalRequired * 10,
+            action: safe.summary.blocked > 0 || safe.summary.quarantined > 0 ? "block" : safe.summary.approvalRequired > 0 ? "approval_required" : "allow",
+            severity: safe.summary.blocked > 0 || safe.summary.quarantined > 0 ? "high" : "medium",
+            riskScore: safe.summary.blocked * 20 + safe.summary.quarantined * 25 + safe.summary.approvalRequired * 10,
             categories: [...new Set(safe.decisions.map((d) => d.level))],
             filePaths: safe.decisions.map((d) => d.path),
             contentHashes: hashes,
             policyVersion: String(policy.version),
-            redactedEvidencePreview: `${safe.summary.included} included, ${safe.summary.blocked} blocked, ${safe.summary.approvalRequired} need approval`,
+            redactedEvidencePreview: `${safe.summary.included} included, ${safe.summary.blocked} blocked, ${safe.summary.quarantined} quarantined, ${safe.summary.approvalRequired} need approval`,
         });
         const broker = getBrokerManager();
         if (broker) {
@@ -62,12 +62,17 @@ export function registerContextCommands(deps: FirewallDeps): void {
         const { safe } = await buildAndRecord(policy);
         const rows = safe.decisions
             .map(
-                (d) =>
-                    `<tr><td><code>${escapeHtml(d.path)}</code></td><td>${escapeHtml(d.kind)}</td>` +
+                (d) => {
+                    const chain = d.causalChain?.length
+                        ? `<br><span class="note">${d.causalChain.map((c) => `↳ ${escapeHtml(c)}`).join("<br>")}</span>`
+                        : "";
+                    const includedLabel = d.injectionQuarantined ? "quarantined" : d.rawIncluded ? "raw" : d.included ? "redacted" : "excluded";
+                    return `<tr><td><code>${escapeHtml(d.path)}</code></td><td>${escapeHtml(d.kind)}${d.untrusted ? ' <span class="badge warn">untrusted</span>' : ""}</td>` +
                     `<td><span class="badge ${escapeHtml(d.level)}">${escapeHtml(d.level)}</span></td>` +
                     `<td><span class="badge ${escapeHtml(d.action)}">${escapeHtml(d.action)}</span></td>` +
-                    `<td>${d.rawIncluded ? "raw" : d.included ? "redacted" : "excluded"}</td>` +
-                    `<td>${escapeHtml(d.reason)}</td><td><code>${escapeHtml(d.safePreview)}</code></td></tr>`,
+                    `<td>${escapeHtml(includedLabel)}</td>` +
+                    `<td>${escapeHtml(d.reason)}${chain}</td><td><code>${escapeHtml(d.safePreview)}</code></td></tr>`;
+                },
             )
             .join("");
         showInfoWebview(
@@ -75,9 +80,9 @@ export function registerContextCommands(deps: FirewallDeps): void {
             "SoterAI: Inspect AI Context",
             `<h1>🔎 AI Context Inspection</h1>
          <p>What SoterAI would include if you build a safe context now: <strong>${safe.summary.included} included</strong>,
-         <strong>${safe.summary.blocked} blocked</strong>, <strong>${safe.summary.approvalRequired} need approval</strong>.</p>
+         <strong>${safe.summary.blocked} blocked</strong>, <strong>${safe.summary.quarantined} quarantined</strong>, <strong>${safe.summary.approvalRequired} need approval</strong>.</p>
          <table><tr><th>Path</th><th>Source</th><th>Level</th><th>Action</th><th>Included</th><th>Reason</th><th>Safe preview</th></tr>${rows}</table>
-         <p class="note">Protected files are excluded; sensitive files are summarized. No raw secrets are ever included in the safe context.</p>`,
+         <p class="note">Protected files are excluded; sensitive files are summarized; untrusted content that tries to instruct or exfiltrate is quarantined as data. No raw secrets are ever included in the safe context.</p>`,
         );
     };
 

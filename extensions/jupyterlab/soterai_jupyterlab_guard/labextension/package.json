@@ -1,0 +1,73 @@
+{
+  "name": "@soterai/jupyterlab-guard",
+  "version": "0.1.0",
+  "description": "SoterAI IDE Guard for JupyterLab (PLANNED / UNBUILT scaffold): a thin adapter that routes explicitly selected cells/notebooks to the authenticated loopback Local AI Broker. All detection and redaction logic lives in the broker.",
+  "keywords": [
+    "jupyter",
+    "jupyterlab",
+    "jupyterlab-extension",
+    "soterai",
+    "security"
+  ],
+  "homepage": "https://soterai.in",
+  "license": "SEE LICENSE IN ../../LICENSE",
+  "author": {
+    "name": "SoterAI"
+  },
+  "files": [
+    "lib/**/*.{d.ts,js,js.map}",
+    "style/**/*.{css,js}",
+    "schema/*.json"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "style": "style/index.css",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soterai/ai-agent-security-guard.git"
+  },
+  "scripts": {
+    "//": "PLANNED / UNBUILT. These scripts have not been run in this repo; JupyterLab build tooling (jlpm/jupyterlab) is not installed here.",
+    "build": "npm run build:lib && npm run build:labextension:dev",
+    "build:prod": "npm run clean && npm run build:lib:prod && npm run build:labextension",
+    "build:lib": "tsc --sourceMap",
+    "build:lib:prod": "tsc",
+    "build:labextension": "jupyter labextension build .",
+    "build:labextension:dev": "jupyter labextension build --development True .",
+    "clean": "jlpm clean:lib",
+    "clean:lib": "rimraf lib tsconfig.tsbuildinfo",
+    "clean:labextension": "rimraf soterai_jupyterlab_guard/labextension soterai_jupyterlab_guard/_version.py",
+    "install:extension": "npm run build",
+    "watch": "run-p watch:src watch:labextension",
+    "watch:src": "tsc -w --sourceMap",
+    "watch:labextension": "jupyter labextension watch ."
+  },
+  "dependencies": {
+    "@jupyterlab/application": "^4.2.0",
+    "@jupyterlab/apputils": "^4.3.0",
+    "@jupyterlab/cells": "^4.2.0",
+    "@jupyterlab/coreutils": "^6.2.0",
+    "@jupyterlab/notebook": "^4.2.0",
+    "@jupyterlab/services": "^7.2.0",
+    "@jupyterlab/settingregistry": "^4.2.0",
+    "@lumino/coreutils": "^2.1.0",
+    "@lumino/widgets": "^2.3.0"
+  },
+  "devDependencies": {
+    "@jupyterlab/builder": "^4.2.0",
+    "@types/json-schema": "^7.0.11",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^5.0.1",
+    "typescript": "~5.4.0"
+  },
+  "jupyterlab": {
+    "extension": true,
+    "outputDir": "soterai_jupyterlab_guard/labextension",
+    "schemaDir": "schema",
+    "_build": {
+      "load": "static\\remoteEntry.256504329312bc5ce6c1.js",
+      "extension": "./extension",
+      "style": "./style"
+    }
+  }
+}

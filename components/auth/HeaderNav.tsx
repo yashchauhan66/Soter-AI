@@ -8,6 +8,7 @@ import { SignOutButton } from "./SignOutButton";
 export function HeaderNav() {
   const { data: session, status } = useSession();
   const signedIn = status === "authenticated" && session?.user;
+  const isAdmin = Boolean(session?.user?.isAdmin);
 
   const apiKeyLink = (compact = false) => (
     <Link
@@ -24,7 +25,7 @@ export function HeaderNav() {
       <nav className="hidden items-center gap-5 text-sm text-slate-300 md:flex">
         {signedIn ? (
           <>
-            <Link href="/dashboard" className="font-semibold text-cyan hover:text-white">Dashboard</Link>
+            <Link href={isAdmin ? "/admin" : "/dashboard"} className="font-semibold text-cyan hover:text-white">{isAdmin ? "Admin" : "Dashboard"}</Link>
             <Link href="/docs" className="hover:text-white">Docs</Link>
             <Link href="/benchmarks" className="hover:text-white">Benchmarks</Link>
             <Link href="/playground" className="hover:text-white">Playground</Link>
@@ -52,7 +53,7 @@ export function HeaderNav() {
         {signedIn ? (
           <>
             {apiKeyLink(true)}
-            <Link href="/dashboard" className="button-primary !px-4 !py-2">Dashboard</Link>
+            <Link href={isAdmin ? "/admin" : "/dashboard"} className="button-primary !px-4 !py-2">{isAdmin ? "Admin" : "Dashboard"}</Link>
           </>
         ) : (
           <>

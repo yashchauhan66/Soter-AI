@@ -1,4 +1,3 @@
-import { sendMessageWithTimeout } from "../lib/runtime-messaging";
 import type { RuntimeResponse } from "../lib/types";
 import type { AiSiteAdapter } from "./adapters/generic";
 import { currentPromptTarget } from "./dom-observer";
@@ -17,17 +16,20 @@ export function installPasteListener(adapter: AiSiteAdapter) {
       result: response.result,
       onReplace: () => target.setText(response.result.rewrittenSafeText || response.result.redactedText),
       onCopy: () => void navigator.clipboard?.writeText(response.result.rewrittenSafeText || response.result.redactedText),
-      onApproval: () => void chrome.runtime.sendMessage({ type: "SOTER_REQUEST_APPROVAL", text: pasted, url: location.href }),
+      onApproval: async () => {
+        chrome.runtime.sendMessage({ type: "SOTER_REQUEST_APPROVAL", text: pasted, url: location.href });
+        return null;
+      },
     });
   }, true);
 }
 
 function sendPasteScan(text: string) {
-  return new Promise<RuntimeResponse>(async (resolve) => {
-    const lineageContext = await getFreshLineageContext();
-    const response = await sendMessageWithTimeout<RuntimeResponse>(
-      { type: "SOTER_SCAN_TEXT", text, url: location.href, eventType: "paste", lineageContext },
-    );
-    resolve(response ?? { ok: false, message: "No response." });
+  return new Promise<RuntimeResponse>((resolve) => {
+    void getFreshLineageContext().then((lineageContext) => {
+      chrome.runtime.sendMessage({ type: "SOTER_SCAN_TEXT", text, url: location.href, eventType: "paste", lineageContext }, (response) => {
+        resolve((response as RuntimeResponse) ?? { ok: false, message: chrome.runtime.lastError?.message ?? "No response." });
+      });
+    });
   });
 }

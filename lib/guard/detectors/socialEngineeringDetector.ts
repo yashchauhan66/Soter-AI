@@ -138,6 +138,27 @@ const rules: PatternRule[] = [
     severity: "HIGH",
     score: 40,
   },
+  {
+    pattern: /\b(?:voice note|audio|video|deepfake|voice clone|cloned voice|synthetic voice)\b.{0,180}(?:CEO|CFO|founder|manager|admin|executive|boss|client)\b.{0,180}(?:approve|approved|authorize|authorized|wire|transfer|share|send|reveal|provide|grant|override|bypass)/i,
+    label: "Deepfake authority pretext",
+    message: "Uses a synthetic media or voice-clone pretext to request a privileged action.",
+    severity: "CRITICAL",
+    score: 65,
+  },
+  {
+    pattern: /\b(?:CEO|CFO|founder|manager|admin|executive|boss|client)\b.{0,180}(?:sent|shared|recorded|left)\b.{0,80}(?:a )?(?:voice note|audio|video)\b.{0,180}(?:approve|approved|authorized|wire|transfer|share|send|reveal|provide|grant|override|bypass)/i,
+    label: "Recorded executive approval pretext",
+    message: "Claims recorded executive approval for a sensitive action.",
+    severity: "CRITICAL",
+    score: 65,
+  },
+  {
+    pattern: /\b(?:verify|confirm|validate|authenticate)\b.{0,80}(?:your|the)\b.{0,40}(?:password|api key|token|otp|mfa code|2fa code|recovery code|secret)\b.{0,120}(?:so|or|otherwise|to avoid|to prevent|before|during).{0,120}(?:suspend|lock|delete|lose access|security incident|account closure|breach)/i,
+    label: "Credential solicitation pressure",
+    message: "Pressures disclosure of credentials under a false security pretext.",
+    severity: "CRITICAL",
+    score: 65,
+  },
 
   // ── Emotional manipulation ───────────────────────────────────────────
   {

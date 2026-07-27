@@ -91,3 +91,14 @@
 | Embedding poisoning | Embedding poisoning detector |
 | Tool abuse | Tool chain detection, approval workflow |
 | Canary theft | Canary network, leak detection |
+# 2026-07-22 All-Phases Core Delta
+
+New deterministic controls now address additional actor paths when routed through SoterAI:
+
+- Fallible AI: `RuntimeDiscovery`, `FileOperationFirewall`, `ControlledTerminal`, and `CheckpointRollback` reduce accidental destructive action in supported routes.
+- Prompt-injected AI: `TaintEngine`, `NetworkEgressPolicy`, and `MCPGateway` escalate or deny high-risk actions influenced by untrusted sources.
+- Malicious insider: `GovernancePolicy` blocks signed enterprise policy downgrade, mandatory-control removal, and non-admin enterprise changes in managed policy paths.
+- Compromised MCP server: `MCPGateway` denies prompt-injected metadata, secret-bearing args, unknown servers, and disallowed permissions before invocation when the MCP host integrates.
+- External attacker: `NetworkEgressPolicy` blocks cloud metadata, localhost/private destinations, dangerous redirects, and secret payloads for routed requests.
+
+The threat model still treats raw terminals, arbitrary OS processes, other VS Code extensions, and non-gatewayed MCP hosts as outside full enforcement.

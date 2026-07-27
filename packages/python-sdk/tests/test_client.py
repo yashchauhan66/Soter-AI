@@ -36,7 +36,7 @@ def test_missing_api_key_raises_clear_error(monkeypatch):
 def test_base_url_defaults(monkeypatch, fake_session):
     monkeypatch.delenv("SOTER_BASE_URL", raising=False)
     guard = Soter(api_key="ck_test_key_123456", session=fake_session)
-    assert guard.base_url == "https://api.soter.dev"
+    assert guard.base_url == "https://api.soterai.in"
 
 
 def test_input_sends_api_key_header(guard, fake_session):

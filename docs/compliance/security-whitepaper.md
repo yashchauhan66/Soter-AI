@@ -1,14 +1,13 @@
 # Security Whitepaper
 
-CyberRakshak Guard is an AI security gateway for chatbots, RAG applications, and AI agents. It provides OWASP LLM Top 10 aligned risk reduction through defense-in-depth controls.
+## Approach
+OWASP LLM Top 10 aligned. Defense-in-depth strategy for AI security.
 
-Core controls:
+## Coverage
+This document describes our security approach and controls. It does not claim complete security or absolute protection. No solution fully addresses all OWASP vulnerabilities. We are pursuing SOC 2 and ISO 27001 readiness programs and are not yet certified. These are readiness programs in progress.
 
-- Input, output, and analyze guard APIs.
-- PII and secret redaction.
-- Prompt injection, jailbreak, unsafe output, and system prompt leakage detection.
-- RAG document quarantine, vector tenant isolation, and grounding checks.
-- RBAC, tenant isolation, audit exports, SIEM delivery, SAML SSO, and SCIM v2.
-- Data retention and deletion workflows.
-
-No control provides complete protection. Production readiness still requires customer-specific threat modeling, IdP validation, restore drills, monitoring, and authorized testing.
+## Key Areas
+- Prompt injection prevention
+- Data exfiltration detection
+- Access control and authentication
+- Audit logging and monitoring

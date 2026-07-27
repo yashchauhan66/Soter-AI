@@ -1,61 +1,52 @@
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from "node:http";
 import { randomUUID } from "node:crypto";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 import {
     ApprovalStore,
+    analyzeControlledTerminalCommand,
     DecisionEngine,
+    discoverRuntimeCapabilities,
+    evaluateFileOperation,
+    evaluateExtensionIsolation,
+    evaluateMCPToolInvocation,
+    evaluateNetworkEgress,
+    evaluatePolicyChange,
+    evaluateProcessLaunch,
     MemoryStore,
     createApprovalGrant,
     generateSafeModePolicy,
     messagesToForward,
     redactForSharing,
+    findSurvivingSecrets,
     scanBrokerRequest,
     scanBrokerResponse,
     shouldForward,
+
     type ApprovalScope,
     type BrokerMessage,
     type Canary,
+    type FileOperation,
     type GuardAction,
+    type GovernanceRole,
     type MemoryEvent,
     type MemoryEventKind,
     type MemorySource,
+    type MCPPermission,
+    type ProcessFilesystemMode,
+    type ProcessNetworkMode,
+    type ProcessSandboxStrength,
+    type ProtectionMode,
     type SafeModeLevel,
+    type TaintedSource,
 } from "@soterai/guard-core";
 import { tokenMatches } from "./auth";
 
-export const BROKER_VERSION = "0.2.0";
+const execFileAsync = promisify(execFile);
+
+export const BROKER_VERSION = "0.1.0";
 export const DEFAULT_BROKER_PORT = 47321;
 export const BROKER_HOST = "127.0.0.1" as const;
-
-// ── Security hardening constants ─────────────────────────────────────────
-/** Maximum response body size from provider proxy (5 MB). */
-const MAX_PROVIDER_RESPONSE_BYTES = 5 * 1024 * 1024;
-/** Maximum automatic provider retries after the first attempt. */
-const MAX_PROVIDER_RETRY_ATTEMPTS = 2;
-/** Minimum cooldown between auth token rotations (5 seconds). */
-const TOKEN_ROTATION_COOLDOWN_MS = 5_000;
-/** Maximum events per memory session. */
-const MAX_EVENTS_PER_SESSION = 500;
-/**
- * Allowed field whitelist for forwardProvider body.
- * Covers standard OpenAI and Anthropic API parameters.
- * Extend as providers add new parameters.
- */
-const ALLOWED_PROVIDER_FIELDS = new Set([
-    // Common
-    "model", "messages", "system", "max_tokens", "temperature", "top_p", "top_k",
-    "stop", "stream", "metadata", "user", "n",
-    // OpenAI-specific
-    "presence_penalty", "frequency_penalty", "logit_bias", "seed",
-    "tools", "tool_choice", "response_format", "functions",
-    // Anthropic-specific
-    "max_tokens_to_sample", "stop_sequences", "thinking",
-]);
-/** Known message roles for validation. */
-const KNOWN_ROLES = new Set(["system", "user", "assistant", "tool"]);
-/** Session ID validation pattern (alphanumeric, dots, dashes, underscores, colons). */
-const SESSION_ID_RE = /^[a-zA-Z0-9._\-:]{1,128}$/;
-/** Rate bucket cleanup interval (5 minutes). */
-const RATE_BUCKET_CLEANUP_MS = 5 * 60 * 1000;
 
 export interface SafeBrokerEvent {
     eventId: string;
@@ -85,8 +76,8 @@ export interface BrokerServerOptions {
     openAIProviderUrl?: string;
     anthropicProviderUrl?: string;
     providerApiKey?: string;
-    providerRetryAttempts?: number;
     fetchImpl?: typeof fetch;
+    terminalExecutor?: (executable: string, args: string[], options: { timeoutMs: number; maxBufferBytes: number }) => Promise<{ stdout: string; stderr: string; exitCode: number }>;
     logger?: (message: string, metadata?: Record<string, unknown>) => void;
     canaries?: Array<Pick<Canary, "id" | "token" | "hash" | "redactedPreview">>;
 }
@@ -108,8 +99,6 @@ export class BrokerServer {
     private readonly rateBuckets = new Map<string, { minute: number; count: number }>();
     private safeMode = { enabled: false, level: "developer" as SafeModeLevel };
     private startedAt?: string;
-    private lastTokenRotationAt = 0;
-    private rateCleanupTimer?: ReturnType<typeof setInterval>;
 
     constructor(private readonly options: BrokerServerOptions) {
         if (!options.token || options.token.length < 32) throw new Error("A broker auth token of at least 32 characters is required");
@@ -129,16 +118,12 @@ export class BrokerServer {
             this.server.listen(port, BROKER_HOST);
         });
         this.startedAt = new Date().toISOString();
-        // Start periodic rate-bucket cleanup to prevent unbounded growth
-        this.rateCleanupTimer = setInterval(() => this.cleanRateBuckets(), RATE_BUCKET_CLEANUP_MS);
-        this.rateCleanupTimer.unref();
         this.safeLog("broker_started", { host: BROKER_HOST, port: this.address().port });
         return this.address();
     }
 
     async stop(): Promise<void> {
         if (!this.server.listening) return;
-        if (this.rateCleanupTimer) clearInterval(this.rateCleanupTimer);
         await new Promise<void>((resolve, reject) => this.server.close((error) => error ? reject(error) : resolve()));
     }
 
@@ -199,6 +184,15 @@ export class BrokerServer {
             if (req.method === "POST" && url.pathname === "/v1/approvals") return void await this.createApproval(res, body);
             if (req.method === "POST" && url.pathname === "/v1/approvals/clear") { this.approvals.clear(); return this.json(res, 200, { cleared: true }); }
             if (req.method === "POST" && url.pathname === "/v1/auth/rotate") return this.rotateAuth(res, body);
+            if (req.method === "POST" && url.pathname === "/v1/terminal/preview") return this.previewTerminal(res, body);
+            if (req.method === "POST" && url.pathname === "/v1/terminal/execute") return void await this.executeTerminal(res, body);
+            if (req.method === "POST" && url.pathname === "/v1/preflight/runtime-capabilities") return this.previewRuntimeCapabilities(res, body);
+            if (req.method === "POST" && url.pathname === "/v1/preflight/file-operation") return this.previewFileOperation(res, body);
+            if (req.method === "POST" && url.pathname === "/v1/preflight/network-egress") return this.previewNetworkEgress(res, body);
+            if (req.method === "POST" && url.pathname === "/v1/preflight/mcp-tool") return this.previewMCPTool(res, body);
+            if (req.method === "POST" && url.pathname === "/v1/preflight/policy-change") return this.previewPolicyChange(res, body);
+            if (req.method === "POST" && url.pathname === "/v1/preflight/process-launch") return this.previewProcessLaunch(res, body);
+            if (req.method === "POST" && url.pathname === "/v1/preflight/extension-isolation") return this.previewExtensionIsolation(res, body);
             if (req.method === "POST" && url.pathname === "/v1/ai/openai-compatible/chat/completions") {
                 return void await this.proxyOpenAI(res, body, req);
             }
@@ -250,11 +244,6 @@ export class BrokerServer {
 
     private addMemoryEvent(res: ServerResponse, body: JsonBody): void {
         const sessionId = requireString(body.sessionId, "sessionId");
-        // Enforce per-session event cap
-        const session = this.memory.getSession(sessionId);
-        if (session && session.events.length >= MAX_EVENTS_PER_SESSION) {
-            throw new HttpError(429, "session_event_limit", "Memory session has reached the maximum number of events");
-        }
         const input = body.event;
         if (!input || typeof input !== "object" || Array.isArray(input)) throw new HttpError(400, "invalid_request", "event must be an object");
         const event = input as Partial<MemoryEvent>;
@@ -294,8 +283,6 @@ export class BrokerServer {
     }
 
     private async createApproval(res: ServerResponse, body: JsonBody): Promise<void> {
-        // Prune expired/consumed approvals to prevent unbounded memory growth
-        this.approvals.prune();
         const scope = (stringValue(body.scope) ?? "once") as ApprovalScope;
         if (!(["once", "session", "workspace"] as string[]).includes(scope)) throw new HttpError(400, "invalid_scope", "scope must be once, session, or workspace");
         const grant = await createApprovalGrant({
@@ -311,23 +298,206 @@ export class BrokerServer {
     }
 
     private rotateAuth(res: ServerResponse, body: JsonBody): void {
-        // Rate-limit token rotation to prevent rapid cycling as a DoS vector
-        const now = Date.now();
-        if (now - this.lastTokenRotationAt < TOKEN_ROTATION_COOLDOWN_MS) {
-            throw new HttpError(429, "rotation_cooldown", "Token rotation is rate-limited. Please wait before rotating again.");
-        }
         const next = requireString(body.token, "token");
         if (next.length < 32) throw new HttpError(400, "weak_token", "The replacement token must be at least 32 characters");
         this.options.token = next;
-        this.lastTokenRotationAt = now;
         this.json(res, 200, { rotated: true });
     }
 
+    private previewTerminal(res: ServerResponse, body: JsonBody): void {
+        const command = requireString(body.command, "command");
+        const analysis = analyzeControlledTerminalCommand(command, { protectionMode: brokerProtectionMode(this.safeMode) });
+        this.record({
+            eventType: "terminal_command_previewed",
+            decision: analysis.action === "DENY" ? "block" : analysis.action === "ASK" ? "approval_required" : "allow",
+            riskScore: analysis.riskScore,
+            categories: analysis.categories,
+            redactedEvidence: analysis.reasonCodes.join(","),
+        });
+        this.json(res, 200, safeTerminalAnalysis(analysis));
+    }
+
+    private async executeTerminal(res: ServerResponse, body: JsonBody): Promise<void> {
+        const command = requireString(body.command, "command");
+        const analysis = analyzeControlledTerminalCommand(command, { protectionMode: brokerProtectionMode(this.safeMode) });
+        if (analysis.action !== "ALLOW" || !analysis.executable) {
+            this.record({
+                eventType: "terminal_command_blocked",
+                decision: "block",
+                riskScore: analysis.riskScore,
+                categories: analysis.categories,
+                redactedEvidence: analysis.reasonCodes.join(","),
+            });
+            throw new HttpError(403, "terminal_command_denied", "The controlled terminal policy denied this command before execution");
+        }
+        const timeoutMs = boundedNumber(body.timeoutMs, 10_000, 1_000, 30_000);
+        const maxBufferBytes = boundedNumber(body.maxBufferBytes, 128 * 1024, 4 * 1024, 1024 * 1024);
+        const result = await this.runControlledCommand(analysis.executable, analysis.args, { timeoutMs, maxBufferBytes });
+        this.record({
+            eventType: "terminal_command_executed",
+            decision: "allow",
+            riskScore: analysis.riskScore,
+            categories: analysis.categories,
+            redactedEvidence: `exit=${result.exitCode}`,
+        });
+        this.json(res, 200, {
+            analysis: safeTerminalAnalysis(analysis),
+            result: {
+                exitCode: result.exitCode,
+                stdout: redactForSharing(result.stdout).slice(0, maxBufferBytes),
+                stderr: redactForSharing(result.stderr).slice(0, maxBufferBytes),
+            },
+        });
+    }
+
+    private async runControlledCommand(
+        executable: string,
+        args: string[],
+        options: { timeoutMs: number; maxBufferBytes: number },
+    ): Promise<{ stdout: string; stderr: string; exitCode: number }> {
+        if (this.options.terminalExecutor) return this.options.terminalExecutor(executable, args, options);
+        try {
+            const result = await execFileAsync(executable, args, {
+                shell: false,
+                windowsHide: true,
+                timeout: options.timeoutMs,
+                maxBuffer: options.maxBufferBytes,
+                env: minimalTerminalEnv(process.env),
+            });
+            return { stdout: result.stdout, stderr: result.stderr, exitCode: 0 };
+        } catch (error) {
+            const err = error as { stdout?: string; stderr?: string; code?: number | string };
+            return {
+                stdout: String(err.stdout ?? ""),
+                stderr: String(err.stderr ?? "Controlled command failed"),
+                exitCode: typeof err.code === "number" ? err.code : 1,
+            };
+        }
+    }
+
+    private previewRuntimeCapabilities(res: ServerResponse, body: JsonBody): void {
+        const map = discoverRuntimeCapabilities({
+            agentName: stringValue(body.agentName),
+            integrationType: stringValue(body.integrationType),
+            protectionMode: brokerProtectionMode(this.safeMode),
+            workspaceTrusted: typeof body.workspaceTrusted === "boolean" ? body.workspaceTrusted : undefined,
+            workspaceRoots: stringArray(body.workspaceRoots),
+            terminalEnabled: typeof body.terminalEnabled === "boolean" ? body.terminalEnabled : undefined,
+            shell: stringValue(body.shell),
+            networkReach: parseNetworkReach(body.networkReach),
+            gitRemotePresent: typeof body.gitRemotePresent === "boolean" ? body.gitRemotePresent : undefined,
+            gitAuthAvailable: typeof body.gitAuthAvailable === "boolean" ? body.gitAuthAvailable : undefined,
+            cloudContexts: stringArray(body.cloudContexts),
+            kubernetesContext: stringValue(body.kubernetesContext),
+            dockerSocketAvailable: typeof body.dockerSocketAvailable === "boolean" ? body.dockerSocketAvailable : undefined,
+            mcpServerCount: numberValue(body.mcpServerCount),
+            installedAIExtensions: stringArray(body.installedAIExtensions),
+            remoteEnvironment: parseRemoteEnvironment(body.remoteEnvironment),
+            sandbox: parseSandbox(body.sandbox),
+            productionIndicators: stringArray(body.productionIndicators),
+        });
+        this.record({ eventType: "runtime_capabilities_previewed", decision: map.effectiveRisk === "critical" ? "approval_required" : "allow", riskScore: map.effectiveRiskScore, categories: map.capabilities.filter((item) => item.present).map((item) => item.id), redactedEvidence: map.unsupportedWarnings.join("; ") });
+        this.json(res, 200, map);
+    }
+
+    private previewFileOperation(res: ServerResponse, body: JsonBody): void {
+        const decision = evaluateFileOperation({
+            operation: parseFileOperation(body.operation),
+            targetPath: requireString(body.targetPath, "targetPath"),
+            workspaceRoot: requireString(body.workspaceRoot, "workspaceRoot"),
+            realPath: stringValue(body.realPath),
+            destinationPath: stringValue(body.destinationPath),
+            fileCount: numberValue(body.fileCount),
+            contentPreview: stringValue(body.contentPreview),
+            protectionMode: brokerProtectionMode(this.safeMode),
+        });
+        this.record({ eventType: "file_operation_previewed", decision: actionToGuardAction(decision.action), riskScore: decision.riskScore, categories: decision.categories, redactedEvidence: decision.reasonCodes.join(",") });
+        this.json(res, 200, decision);
+    }
+
+    private previewNetworkEgress(res: ServerResponse, body: JsonBody): void {
+        const decision = evaluateNetworkEgress({
+            url: requireString(body.url, "url"),
+            method: stringValue(body.method),
+            payloadPreview: stringValue(body.payloadPreview),
+            allowedHosts: stringArray(body.allowedHosts),
+            protectionMode: brokerProtectionMode(this.safeMode),
+            redirectChain: stringArray(body.redirectChain),
+            sourceClassifications: stringArray(body.sourceClassifications),
+        });
+        this.record({ eventType: "network_egress_previewed", decision: actionToGuardAction(decision.action), riskScore: decision.riskScore, categories: decision.categories, redactedEvidence: decision.reasonCodes.join(",") });
+        this.json(res, 200, decision);
+    }
+
+    private previewMCPTool(res: ServerResponse, body: JsonBody): void {
+        const decision = evaluateMCPToolInvocation({
+            mcpConfig: parseMCPConfig(body.mcpConfig),
+            serverName: requireString(body.serverName, "serverName"),
+            toolName: requireString(body.toolName, "toolName"),
+            args: objectValue(body.args),
+            protectionMode: brokerProtectionMode(this.safeMode),
+            allowedPermissions: stringArray(body.allowedPermissions) as MCPPermission[],
+            taintedSources: arrayObjectValue(body.taintedSources) as unknown as TaintedSource[],
+        });
+        this.record({ eventType: "mcp_tool_previewed", decision: actionToGuardAction(decision.action), riskScore: decision.riskScore, categories: decision.categories, redactedEvidence: decision.reasonCodes.join(",") });
+        this.json(res, 200, decision);
+    }
+
+    private previewPolicyChange(res: ServerResponse, body: JsonBody): void {
+        const decision = evaluatePolicyChange({
+            actorRole: parseGovernanceRole(body.actorRole),
+            current: objectValue(body.current) as unknown as Parameters<typeof evaluatePolicyChange>[0]["current"],
+            next: objectValue(body.next) as unknown as Parameters<typeof evaluatePolicyChange>[0]["next"],
+            now: stringValue(body.now),
+        });
+        this.record({ eventType: "policy_change_previewed", decision: decision.decision === "DENY" ? "block" : decision.decision === "ASK" ? "approval_required" : "allow", riskScore: decision.decision === "DENY" ? 90 : decision.decision === "ASK" ? 60 : 0, categories: decision.changedControls, redactedEvidence: decision.reasonCodes.join(",") });
+        this.json(res, 200, decision);
+    }
+
+    private previewProcessLaunch(res: ServerResponse, body: JsonBody): void {
+        const decision = evaluateProcessLaunch({
+            executable: requireString(body.executable, "executable"),
+            args: stringArray(body.args),
+            cwd: stringValue(body.cwd),
+            workspaceRoot: stringValue(body.workspaceRoot),
+            env: stringRecord(body.env),
+            requestedNetwork: parseProcessNetworkMode(body.requestedNetwork),
+            allowedHosts: stringArray(body.allowedHosts),
+            filesystemMode: parseProcessFilesystemMode(body.filesystemMode),
+            allowChildProcesses: typeof body.allowChildProcesses === "boolean" ? body.allowChildProcesses : undefined,
+            shell: typeof body.shell === "boolean" ? body.shell : undefined,
+            productionContext: typeof body.productionContext === "boolean" ? body.productionContext : undefined,
+            sandboxStrength: parseProcessSandboxStrength(body.sandboxStrength),
+            protectionMode: brokerProtectionMode(this.safeMode),
+        });
+        this.record({ eventType: "process_launch_previewed", decision: actionToGuardAction(decision.action), riskScore: decision.riskScore, categories: decision.categories, redactedEvidence: decision.reasonCodes.join(",") });
+        this.json(res, 200, decision);
+    }
+
+    private previewExtensionIsolation(res: ServerResponse, body: JsonBody): void {
+        const decision = evaluateExtensionIsolation({
+            extensions: arrayObjectValue(body.extensions).map((extension) => ({
+                id: requireString(extension.id, "extension.id"),
+                publisher: stringValue(extension.publisher),
+                displayName: stringValue(extension.displayName),
+                verifiedPublisher: typeof extension.verifiedPublisher === "boolean" ? extension.verifiedPublisher : undefined,
+                activationEvents: stringArray(extension.activationEvents),
+                capabilities: stringArray(extension.capabilities),
+                aiLike: typeof extension.aiLike === "boolean" ? extension.aiLike : undefined,
+            })),
+            allowlist: stringArray(body.allowlist),
+            blocklist: stringArray(body.blocklist),
+            trustedPublishers: stringArray(body.trustedPublishers),
+            workspaceTrusted: typeof body.workspaceTrusted === "boolean" ? body.workspaceTrusted : undefined,
+            protectionMode: brokerProtectionMode(this.safeMode),
+        });
+        this.record({ eventType: "extension_isolation_previewed", decision: actionToGuardAction(decision.action), riskScore: decision.riskScore, categories: decision.findings.flatMap((finding) => finding.categories), redactedEvidence: decision.findings.map((finding) => `${finding.id}:${finding.action}`).join(",") });
+        this.json(res, 200, decision);
+    }
+
     private async proxyOpenAI(res: ServerResponse, body: JsonBody, req: IncomingMessage): Promise<void> {
-        const streamRequested = body.stream === true;
         const messages = normalizeMessages(body.messages);
-        const rawSessionId = stringValue(body.session_id) ?? stringValue(req.headers["x-soterai-session-id"]) ?? randomUUID();
-        const sessionId = sanitizeSessionId(rawSessionId);
+        const sessionId = stringValue(body.session_id) ?? stringValue(req.headers["x-soterai-session-id"]) ?? randomUUID();
         const model = stringValue(body.model);
         const scan = await scanBrokerRequest(messages, { engine: this.engine, safeMode: this.safeMode, canaries: this.options.canaries });
         const approved = this.approvals.consume(sessionId, scan.contentHash);
@@ -336,27 +506,27 @@ export class BrokerServer {
             this.record({ sessionId, eventType: "broker_request_blocked", decision: scan.decision, riskScore: scan.riskScore, categories: scan.categories, contentHash: scan.contentHash, model, provider: "openai-compatible", redactedEvidence: scan.evidencePreview });
             throw new HttpError(scan.decision === "approval_required" ? 403 : 422, scan.decision, scan.decision === "approval_required" ? "Local approval is required for this content hash" : "The request was blocked by local policy");
         }
-        const safeBody = sanitizeProviderBody(body);
-        const forward = { ...safeBody, stream: false, messages: messagesToForward(scan.redacted ? "redact" : scan.decision, messages, scan.redactedMessages) };
+        const forward = { ...body, messages: messagesToForward(scan.redacted ? "redact" : scan.decision, messages, scan.redactedMessages) };
+        res.setHeader("x-soterai-request-decision", scan.decision);
+
+        if (body.stream === true) {
+            await this.proxyStreaming("openai", res, forward, req, sessionId, model, "openai-compatible");
+            return;
+        }
+
         const provider = await this.forwardProvider("openai", forward, req);
         const responseText = extractOpenAIResponse(provider.body);
         const responseScan = await scanBrokerResponse(responseText, { canaries: this.options.canaries });
         this.recordResponseMemory(sessionId, responseScan, model, "openai-compatible");
         if (responseScan.decision === "block") throw new HttpError(422, "unsafe_provider_response", "The provider response was blocked by local output protection");
-        res.setHeader("x-soterai-request-decision", scan.decision);
         res.setHeader("x-soterai-response-decision", responseScan.decision);
-        if (streamRequested && provider.status >= 200 && provider.status < 300) {
-            return this.openAIStream(res, provider.body, responseText, model);
-        }
         this.json(res, provider.status, provider.body);
     }
 
     private async proxyAnthropic(res: ServerResponse, body: JsonBody, req: IncomingMessage): Promise<void> {
-        if (body.stream === true) throw new HttpError(400, "streaming_not_supported", "Streaming proxy responses are not supported in this MVP");
         const system = typeof body.system === "string" ? [{ role: "system", content: body.system }] : [];
         const messages = [...system, ...normalizeMessages(body.messages)];
-        const rawSessionId = stringValue(body.session_id) ?? stringValue(req.headers["x-soterai-session-id"]) ?? randomUUID();
-        const sessionId = sanitizeSessionId(rawSessionId);
+        const sessionId = stringValue(body.session_id) ?? stringValue(req.headers["x-soterai-session-id"]) ?? randomUUID();
         const model = stringValue(body.model);
         const scan = await scanBrokerRequest(messages, { engine: this.engine, safeMode: this.safeMode, canaries: this.options.canaries });
         const approved = this.approvals.consume(sessionId, scan.contentHash);
@@ -365,55 +535,211 @@ export class BrokerServer {
             throw new HttpError(scan.decision === "approval_required" ? 403 : 422, scan.decision, "The request was blocked by local policy");
         }
         const forwarded = messagesToForward(scan.redacted ? "redact" : scan.decision, messages, scan.redactedMessages);
-        const safeBody = sanitizeProviderBody(body);
-        const forward = { ...safeBody, system: forwarded.find((m) => m.role === "system")?.content, messages: forwarded.filter((m) => m.role !== "system") };
+        const forward = { ...body, system: forwarded.find((m) => m.role === "system")?.content, messages: forwarded.filter((m) => m.role !== "system") };
+        res.setHeader("x-soterai-request-decision", scan.decision);
+
+        if (body.stream === true) {
+            await this.proxyStreaming("anthropic", res, forward, req, sessionId, model, "anthropic-compatible");
+            return;
+        }
+
         const provider = await this.forwardProvider("anthropic", forward, req);
         const responseText = extractAnthropicResponse(provider.body);
         const responseScan = await scanBrokerResponse(responseText, { canaries: this.options.canaries });
         this.recordResponseMemory(sessionId, responseScan, model, "anthropic-compatible");
         if (responseScan.decision === "block") throw new HttpError(422, "unsafe_provider_response", "The provider response was blocked by local output protection");
-        res.setHeader("x-soterai-request-decision", scan.decision);
         res.setHeader("x-soterai-response-decision", responseScan.decision);
         this.json(res, provider.status, provider.body);
     }
 
-    private async forwardProvider(kind: "openai" | "anthropic", body: JsonBody, req: IncomingMessage): Promise<{ status: number; body: JsonBody; attempts: number }> {
+    /**
+     * Phase 6 — SSE/chunked streaming proxy with fail-closed output scanning.
+     * Each chunk is scanned for secrets/canaries before being forwarded. On a
+     * block decision the stream is aborted and a terminal error event is sent.
+     * Limitation: partial tokens already flushed cannot be recalled (honest).
+     */
+    private async proxyStreaming(
+        kind: "openai" | "anthropic",
+        res: ServerResponse,
+        body: JsonBody,
+        req: IncomingMessage,
+        sessionId: string,
+        model: string | undefined,
+        providerLabel: string,
+    ): Promise<void> {
         const target = kind === "openai" ? this.options.openAIProviderUrl : this.options.anthropicProviderUrl;
         if (!target) throw new HttpError(503, "provider_not_configured", `${kind} provider routing is not configured`);
-        // Require HTTPS for provider URLs (allow HTTP for localhost in dev)
-        if (!isSafeProviderUrl(target)) throw new HttpError(400, "unsafe_provider_url", "Provider URL must use HTTPS or be localhost");
+        const apiKey = this.options.providerApiKey ?? stringValue(req.headers["x-soterai-provider-key"]);
+        if (!apiKey) throw new HttpError(401, "provider_key_required", "A local provider key is required");
+
+        const headers: Record<string, string> = {
+            "content-type": "application/json",
+            accept: "text/event-stream",
+        };
+        if (kind === "openai") headers.authorization = `Bearer ${apiKey}`;
+        else {
+            headers["x-api-key"] = apiKey;
+            headers["anthropic-version"] = stringValue(req.headers["anthropic-version"]) ?? "2023-06-01";
+        }
+
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), this.options.requestTimeoutMs ?? 60_000);
+        let upstream: Response;
+        try {
+            upstream = await (this.options.fetchImpl ?? fetch)(target, {
+                method: "POST",
+                headers,
+                body: JSON.stringify({ ...body, stream: true }),
+                signal: controller.signal,
+            });
+        } catch {
+            clearTimeout(timeout);
+            throw new HttpError(502, "provider_error", "The configured provider could not be reached for streaming");
+        }
+
+        if (!upstream.ok || !upstream.body) {
+            clearTimeout(timeout);
+            const errText = await upstream.text().catch(() => "");
+            throw new HttpError(502, "provider_error", `Provider streaming failed (${upstream.status}): ${errText.slice(0, 200)}`);
+        }
+
+        res.statusCode = 200;
+        res.setHeader("content-type", "text/event-stream; charset=utf-8");
+        res.setHeader("cache-control", "no-cache, no-store");
+        res.setHeader("connection", "keep-alive");
+        res.setHeader("x-soterai-streaming", "1");
+        res.setHeader("x-soterai-response-decision", "pending");
+
+        const reader = upstream.body.getReader();
+        const decoder = new TextDecoder();
+        let accumulated = "";
+        let blocked = false;
+        let buffer = "";
+        let wroteBody = false;
+        let finalDecision: GuardAction = "allow";
+
+        const writeBlockAndAbort = async (
+            responseScan: Awaited<ReturnType<typeof scanBrokerResponse>>,
+        ): Promise<void> => {
+            blocked = true;
+            finalDecision = "block";
+            this.recordResponseMemory(sessionId, responseScan, model, providerLabel);
+            // Headers may already be sent after the first safe chunk — never call setHeader then.
+            if (!wroteBody && !res.headersSent) {
+                res.setHeader("x-soterai-response-decision", "block");
+            }
+            res.write(
+                `data: ${JSON.stringify({ error: { code: "unsafe_provider_response", message: "Stream aborted: local output protection blocked secret/canary leak" } })}\n\n`,
+            );
+            res.write("data: [DONE]\n\n");
+            wroteBody = true;
+            try { await reader.cancel(); } catch { /* ignore */ }
+        };
+
+        /**
+         * Fail-closed stream gate: block canaries, explicit block decisions, and any
+         * high-risk secret that still survives in the accumulated assistant text.
+         * Secrets often score as "warn" in scanAIOutput; for streaming we still refuse
+         * to forward raw credentials (scan-before-forward invariant).
+         */
+        const shouldBlockStream = async (text: string): Promise<Awaited<ReturnType<typeof scanBrokerResponse>> | null> => {
+            if (!text) return null;
+            const responseScan = await scanBrokerResponse(text, { canaries: this.options.canaries });
+            const survivors = findSurvivingSecrets(text);
+            if (responseScan.decision === "block" || responseScan.canaryLeaked || survivors.length > 0) {
+                return responseScan;
+            }
+            return null;
+        };
+
+        try {
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                const chunk = decoder.decode(value, { stream: true });
+                buffer += chunk;
+
+                // Scan on SSE event boundaries; never forward a part until the
+                // accumulated assistant-visible text is clean.
+                const parts = buffer.split("\n\n");
+                buffer = parts.pop() ?? "";
+                for (const part of parts) {
+                    if (!part.trim()) continue;
+                    const content = extractStreamDelta(part);
+                    if (content) accumulated += content;
+
+                    const blockScan = await shouldBlockStream(accumulated);
+                    if (blockScan) {
+                        await writeBlockAndAbort(blockScan);
+                        break;
+                    }
+                    res.write(part + "\n\n");
+                    wroteBody = true;
+                }
+                if (blocked) break;
+            }
+
+            if (!blocked && buffer.trim()) {
+                const content = extractStreamDelta(buffer);
+                if (content) accumulated += content;
+                const blockScan = await shouldBlockStream(accumulated || buffer);
+                if (blockScan) {
+                    await writeBlockAndAbort(blockScan);
+                } else {
+                    res.write(buffer);
+                    wroteBody = true;
+                    const responseScan = await scanBrokerResponse(accumulated || buffer, { canaries: this.options.canaries });
+                    this.recordResponseMemory(sessionId, responseScan, model, providerLabel);
+                    finalDecision = responseScan.decision;
+                    if (!res.headersSent) res.setHeader("x-soterai-response-decision", responseScan.decision);
+                }
+            } else if (!blocked && accumulated) {
+                const responseScan = await scanBrokerResponse(accumulated, { canaries: this.options.canaries });
+                this.recordResponseMemory(sessionId, responseScan, model, providerLabel);
+                finalDecision = responseScan.decision;
+            }
+
+            // Best-effort final decision header if nothing was written yet.
+            if (!wroteBody && !res.headersSent) {
+                res.setHeader("x-soterai-response-decision", blocked ? "block" : finalDecision);
+            }
+
+            this.record({
+                sessionId,
+                eventType: blocked ? "broker_stream_blocked" : "broker_stream_completed",
+                decision: blocked ? "block" : finalDecision,
+                riskScore: blocked ? 90 : 0,
+                categories: blocked ? ["stream_output_block"] : [],
+                model,
+                provider: providerLabel,
+            });
+        } finally {
+            clearTimeout(timeout);
+            try { reader.releaseLock(); } catch { /* ignore */ }
+            res.end();
+        }
+    }
+
+
+    private async forwardProvider(kind: "openai" | "anthropic", body: JsonBody, req: IncomingMessage): Promise<{ status: number; body: JsonBody }> {
+        const target = kind === "openai" ? this.options.openAIProviderUrl : this.options.anthropicProviderUrl;
+        if (!target) throw new HttpError(503, "provider_not_configured", `${kind} provider routing is not configured`);
         const apiKey = this.options.providerApiKey ?? stringValue(req.headers["x-soterai-provider-key"]);
         if (!apiKey) throw new HttpError(401, "provider_key_required", "A local provider key is required");
         const headers: Record<string, string> = { "content-type": "application/json" };
         if (kind === "openai") headers.authorization = `Bearer ${apiKey}`;
         else { headers["x-api-key"] = apiKey; headers["anthropic-version"] = stringValue(req.headers["anthropic-version"]) ?? "2023-06-01"; }
-        const retryAttempts = Math.max(0, Math.min(this.options.providerRetryAttempts ?? 1, MAX_PROVIDER_RETRY_ATTEMPTS));
-        let lastError: unknown;
-        for (let attempt = 0; attempt <= retryAttempts; attempt++) {
-            const controller = new AbortController();
-            const timeout = setTimeout(() => controller.abort(), this.options.requestTimeoutMs ?? 30_000);
-            try {
-                const response = await (this.options.fetchImpl ?? fetch)(target, { method: "POST", headers, body: JSON.stringify(body), signal: controller.signal });
-                // Enforce response body size limit
-                const raw = await readBodyWithLimit(response, MAX_PROVIDER_RESPONSE_BYTES);
-                const parsed = JSON.parse(raw) as JsonBody;
-                if (shouldRetryProviderStatus(response.status) && attempt < retryAttempts) {
-                    this.safeLog("provider_retry", { kind, attempt: attempt + 1, status: response.status });
-                    continue;
-                }
-                return { status: response.status, body: parsed, attempts: attempt + 1 };
-            } catch (error) {
-                if (error instanceof HttpError && !isRetryableProviderError(error)) throw error;
-                lastError = error;
-                if (attempt < retryAttempts) {
-                    this.safeLog("provider_retry", { kind, attempt: attempt + 1, status: "network_or_parse_error" });
-                    continue;
-                }
-            } finally { clearTimeout(timeout); }
-        }
-        if (lastError instanceof HttpError) throw lastError;
-        throw new HttpError(502, "provider_error", "The configured provider could not be reached or returned invalid JSON");
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), this.options.requestTimeoutMs ?? 30_000);
+        try {
+            const response = await (this.options.fetchImpl ?? fetch)(target, { method: "POST", headers, body: JSON.stringify(body), signal: controller.signal });
+            const parsed = await response.json() as JsonBody;
+            return { status: response.status, body: parsed };
+        } catch {
+            throw new HttpError(502, "provider_error", "The configured provider could not be reached or returned invalid JSON");
+        } finally { clearTimeout(timeout); }
     }
+
 
     private recordRequestMemory(sessionId: string, scan: Awaited<ReturnType<typeof scanBrokerRequest>>, model: string | undefined, provider: string): void {
         if (!this.memory.getSession(sessionId)) this.memory.startSession({ sessionId, source: "broker", provider });
@@ -438,14 +764,6 @@ export class BrokerServer {
         const origin = stringValue(req.headers.origin);
         if (!origin) return;
         if (!(this.options.allowedOrigins ?? []).includes(origin)) throw new HttpError(403, "origin_rejected", "Browser origins are rejected by default");
-    }
-
-    /** Periodically evict stale rate-limit buckets to prevent unbounded memory growth. */
-    private cleanRateBuckets(): void {
-        const currentMinute = Math.floor(Date.now() / 60_000);
-        for (const [key, bucket] of this.rateBuckets) {
-            if (bucket.minute !== currentMinute) this.rateBuckets.delete(key);
-        }
     }
 
     private enforceRateLimit(req: IncomingMessage): void {
@@ -488,35 +806,6 @@ export class BrokerServer {
         res.end(JSON.stringify(body));
     }
 
-    private openAIStream(res: ServerResponse, providerBody: JsonBody, content: string, model?: string): void {
-        res.statusCode = 200;
-        res.setHeader("content-type", "text/event-stream; charset=utf-8");
-        res.setHeader("connection", "keep-alive");
-        res.setHeader("x-accel-buffering", "no");
-        res.setHeader("x-soterai-streaming-mode", "buffered_scan");
-
-        const id = stringValue(providerBody.id) ?? `chatcmpl_${randomUUID()}`;
-        const created = typeof providerBody.created === "number" ? providerBody.created : Math.floor(Date.now() / 1000);
-        const chunk = {
-            id,
-            object: "chat.completion.chunk",
-            created,
-            model: model ?? stringValue(providerBody.model) ?? "unknown",
-            choices: [{ index: 0, delta: { content }, finish_reason: null }],
-        };
-        const finalChunk = {
-            id,
-            object: "chat.completion.chunk",
-            created,
-            model: model ?? stringValue(providerBody.model) ?? "unknown",
-            choices: [{ index: 0, delta: {}, finish_reason: "stop" }],
-        };
-
-        res.write(`data: ${JSON.stringify(chunk)}\n\n`);
-        res.write(`data: ${JSON.stringify(finalChunk)}\n\n`);
-        res.end("data: [DONE]\n\n");
-    }
-
     private safeLog(message: string, metadata: Record<string, unknown>): void {
         this.options.logger?.(message, metadata);
     }
@@ -528,89 +817,12 @@ function normalizeMessages(value: unknown): BrokerMessage[] {
         if (!raw || typeof raw !== "object") throw new HttpError(400, "invalid_messages", "each message must be an object");
         const item = raw as Record<string, unknown>;
         const role = requireString(item.role, "message.role");
-        // Validate message role against known set
-        if (!KNOWN_ROLES.has(role)) throw new HttpError(400, "invalid_role", `Unknown message role: ${role}`);
         let content: string;
         if (typeof item.content === "string") content = item.content;
         else if (Array.isArray(item.content)) content = item.content.map((part) => typeof part === "object" && part && typeof (part as Record<string, unknown>).text === "string" ? (part as Record<string, unknown>).text : "").join("\n");
         else throw new HttpError(400, "invalid_messages", "message.content must be text or text parts");
         return { role, content, name: stringValue(item.name) };
     });
-}
-
-/**
- * Sanitize a user-supplied session ID for safe use in URL paths.
- * Falls back to a random UUID when the value is missing, too long, or contains unsafe characters.
- */
-function sanitizeSessionId(raw: string): string {
-    if (!raw || raw.length > 128 || !SESSION_ID_RE.test(raw)) return randomUUID();
-    return raw;
-}
-
-/**
- * Filter the request body to only include fields that are safe to forward to AI providers.
- * This prevents injection of arbitrary fields via the proxy.
- */
-function sanitizeProviderBody(body: JsonBody): JsonBody {
-    const safe: JsonBody = {};
-    for (const key of Object.keys(body)) {
-        if (ALLOWED_PROVIDER_FIELDS.has(key)) {
-            safe[key] = body[key];
-        }
-    }
-    return safe;
-}
-
-/**
- * Validate that a provider URL uses a safe scheme.
- * Accepts HTTPS always, HTTP only for localhost/127.0.0.1 (developer convenience).
- */
-function isSafeProviderUrl(url: string): boolean {
-    try {
-        const parsed = new URL(url);
-        if (parsed.protocol === "https:") return true;
-        if (parsed.protocol === "http:") {
-            const host = parsed.hostname;
-            return host === "localhost" || host === "127.0.0.1" || host === "::1" || host.startsWith("127.");
-        }
-        return false;
-    } catch {
-        return false;
-    }
-}
-
-function shouldRetryProviderStatus(status: number): boolean {
-    return status === 429 || (status >= 500 && status <= 599);
-}
-
-function isRetryableProviderError(error: HttpError): boolean {
-    return error.code === "provider_error";
-}
-
-/**
- * Read a response body with an explicit byte limit to prevent memory exhaustion.
- */
-async function readBodyWithLimit(response: Response, limit: number): Promise<string> {
-    const reader = response.body?.getReader();
-    if (!reader) throw new HttpError(502, "provider_error", "Provider response body could not be read");
-    const chunks: Uint8Array[] = [];
-    let total = 0;
-    try {
-        while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            total += value.length;
-            if (total > limit) {
-                await reader.cancel();
-                throw new HttpError(502, "provider_response_too_large", "Provider response exceeds the maximum body size");
-            }
-            chunks.push(value);
-        }
-    } finally {
-        reader.releaseLock();
-    }
-    const decoder = new TextDecoder();
-    return chunks.map((chunk) => decoder.decode(chunk, { stream: true })).join("") + decoder.decode();
 }
 
 function safeRequestResult(result: Awaited<ReturnType<typeof scanBrokerRequest>>): JsonBody {
@@ -629,6 +841,70 @@ function extractAnthropicResponse(body: JsonBody): string {
     return content.map((part) => part && typeof part === "object" ? stringValue((part as Record<string, unknown>).text) ?? "" : "").join("\n");
 }
 
+/**
+ * Phase 6 — Extract assistant-visible text deltas from one SSE event block.
+ * Supports OpenAI chat.completion.chunk (`choices[].delta.content`) and
+ * Anthropic `content_block_delta` (`delta.text`). Tool-call argument fragments
+ * are also collected so secret scanning covers function/tool payloads.
+ * Returns "" for control frames ([DONE], ping, empty data).
+ */
+export function extractStreamDelta(ssePart: string): string {
+    if (!ssePart || !ssePart.trim()) return "";
+    const pieces: string[] = [];
+    for (const line of ssePart.split(/\r?\n/)) {
+        const trimmed = line.trim();
+        if (!trimmed.startsWith("data:")) continue;
+        const payload = trimmed.slice(5).trim();
+        if (!payload || payload === "[DONE]") continue;
+        try {
+            const parsed = JSON.parse(payload) as Record<string, unknown>;
+            // OpenAI-compatible: choices[].delta.content | choices[].delta.tool_calls[].function.arguments
+            const choices = parsed.choices;
+            if (Array.isArray(choices)) {
+                for (const choice of choices) {
+                    if (!choice || typeof choice !== "object") continue;
+                    const delta = (choice as Record<string, unknown>).delta;
+                    if (!delta || typeof delta !== "object") continue;
+                    const d = delta as Record<string, unknown>;
+                    if (typeof d.content === "string") pieces.push(d.content);
+                    // Tool call argument streaming (OpenAI)
+                    if (Array.isArray(d.tool_calls)) {
+                        for (const tc of d.tool_calls) {
+                            if (!tc || typeof tc !== "object") continue;
+                            const fn = (tc as Record<string, unknown>).function;
+                            if (fn && typeof fn === "object") {
+                                const args = (fn as Record<string, unknown>).arguments;
+                                if (typeof args === "string") pieces.push(args);
+                            }
+                        }
+                    }
+                }
+            }
+            // Anthropic-compatible: type content_block_delta → delta.text
+            if (parsed.type === "content_block_delta") {
+                const delta = parsed.delta;
+                if (delta && typeof delta === "object") {
+                    const text = (delta as Record<string, unknown>).text;
+                    if (typeof text === "string") pieces.push(text);
+                    const partialJson = (delta as Record<string, unknown>).partial_json;
+                    if (typeof partialJson === "string") pieces.push(partialJson);
+                }
+            }
+            // Anthropic message_delta stop / usage — no text
+            // Some providers put content at top-level
+            if (typeof parsed.content === "string") pieces.push(parsed.content);
+        } catch {
+            // Non-JSON data line: treat as raw text only if it looks content-like
+            // (never treat control frames as content)
+            if (payload.length > 0 && !payload.startsWith(":")) {
+                pieces.push(payload);
+            }
+        }
+    }
+    return pieces.join("");
+}
+
+
 function parseSafeModeLevel(value: unknown): SafeModeLevel {
     return value === "strict" || value === "enterprise" ? value : "developer";
 }
@@ -637,9 +913,93 @@ function parseAction(value: unknown): GuardAction {
     return value === "warn" || value === "redact" || value === "block" || value === "approval_required" ? value : "allow";
 }
 
+function actionToGuardAction(value: string): GuardAction {
+    if (value === "DENY" || value === "QUARANTINE") return "block";
+    if (value === "ASK" || value === "ALLOW_ONCE" || value === "ALLOW_IN_SANDBOX") return "approval_required";
+    if (value === "ALLOW_WITH_TRANSFORMATION") return "redact";
+    return "allow";
+}
+
+function parseFileOperation(value: unknown): FileOperation {
+    const allowed: FileOperation[] = ["read", "write", "delete", "rename", "chmod", "mass_change", "config_change"];
+    return typeof value === "string" && allowed.includes(value as FileOperation) ? value as FileOperation : "read";
+}
+
+function parseNetworkReach(value: unknown): "none" | "restricted" | "unrestricted" | "unknown" | undefined {
+    return value === "none" || value === "restricted" || value === "unrestricted" || value === "unknown" ? value : undefined;
+}
+
+function parseRemoteEnvironment(value: unknown): "local" | "ssh" | "wsl" | "container" | "codespaces" | "unknown" | undefined {
+    return value === "local" || value === "ssh" || value === "wsl" || value === "container" || value === "codespaces" || value === "unknown" ? value : undefined;
+}
+
+function parseSandbox(value: unknown): "enabled" | "available" | "disabled" | "unknown" | undefined {
+    return value === "enabled" || value === "available" || value === "disabled" || value === "unknown" ? value : undefined;
+}
+
+function parseGovernanceRole(value: unknown): GovernanceRole {
+    return value === "security_reviewer" || value === "org_admin" || value === "platform_admin" ? value : "developer";
+}
+
+function parseMCPConfig(value: unknown): string | Record<string, unknown> | undefined {
+    if (typeof value === "string") return value;
+    if (value && typeof value === "object" && !Array.isArray(value)) return value as Record<string, unknown>;
+    return undefined;
+}
+
+function parseProcessNetworkMode(value: unknown): ProcessNetworkMode | undefined {
+    return value === "none" || value === "allowlist" || value === "unrestricted" ? value : undefined;
+}
+
+function parseProcessFilesystemMode(value: unknown): ProcessFilesystemMode | undefined {
+    return value === "read_only_workspace" || value === "read_write_workspace" || value === "unrestricted" ? value : undefined;
+}
+
+function parseProcessSandboxStrength(value: unknown): ProcessSandboxStrength | undefined {
+    return value === "os_enforced" || value === "broker_constrained" || value === "none" ? value : undefined;
+}
+
 function parseMemorySource(value: unknown): MemorySource {
     const allowed: MemorySource[] = ["broker", "safe-context-builder", "scan-before-ai-prompt", "manual-output-scan", "git-scan", "terminal-check", "mcp-scan"];
     return typeof value === "string" && allowed.includes(value as MemorySource) ? value as MemorySource : "broker";
+}
+
+function brokerProtectionMode(safeMode: { enabled: boolean; level: SafeModeLevel }): ProtectionMode {
+    if (!safeMode.enabled) return "standard";
+    if (safeMode.level === "enterprise") return "enterprise_locked";
+    if (safeMode.level === "strict") return "strict";
+    return "standard";
+}
+
+function safeTerminalAnalysis(analysis: ReturnType<typeof analyzeControlledTerminalCommand>): JsonBody {
+    return {
+        action: analysis.action,
+        executable: analysis.executable,
+        args: analysis.args,
+        riskScore: analysis.riskScore,
+        categories: analysis.categories,
+        reasonCodes: analysis.reasonCodes,
+        explanation: analysis.explanation,
+        coverageLevel: analysis.coverageLevel,
+        deterministic: analysis.deterministic,
+    };
+}
+
+function boundedNumber(value: unknown, fallback: number, min: number, max: number): number {
+    if (typeof value !== "number" || !Number.isFinite(value)) return fallback;
+    return Math.max(min, Math.min(max, Math.floor(value)));
+}
+
+function minimalTerminalEnv(env: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
+    const clean: NodeJS.ProcessEnv = {
+        PATH: env.PATH ?? env.Path ?? "",
+        Path: env.Path ?? env.PATH ?? "",
+        GIT_TERMINAL_PROMPT: "0",
+        LC_ALL: "C",
+    };
+    if (env.SystemRoot) clean.SystemRoot = env.SystemRoot;
+    if (env.windir) clean.windir = env.windir;
+    return clean;
 }
 
 function stringValue(value: unknown): string | undefined {
@@ -653,3 +1013,19 @@ function requireString(value: unknown, field: string): string {
 }
 function stringArray(value: unknown): string[] { return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : []; }
 function numberValue(value: unknown): number { return typeof value === "number" && Number.isFinite(value) ? value : 0; }
+function objectValue(value: unknown): Record<string, unknown> {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+    return value as Record<string, unknown>;
+}
+function stringRecord(value: unknown): Record<string, string | undefined> | undefined {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return undefined;
+    const out: Record<string, string | undefined> = {};
+    for (const [key, raw] of Object.entries(value as Record<string, unknown>)) {
+        if (typeof raw === "string" || typeof raw === "undefined") out[key] = raw;
+    }
+    return out;
+}
+function arrayObjectValue(value: unknown): Array<Record<string, unknown>> {
+    if (!Array.isArray(value)) return [];
+    return value.filter((item): item is Record<string, unknown> => Boolean(item) && typeof item === "object" && !Array.isArray(item));
+}

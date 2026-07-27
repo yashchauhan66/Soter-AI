@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { getForensicSummary } from "@/lib/forensics";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
 
 export const dynamic = "force-dynamic";
 
@@ -37,15 +38,34 @@ export default async function ForensicsPage({
 
   return (
     <div className="space-y-7">
-      <div>
-        <p className="eyebrow">Investigation</p>
-        <h1 className="mt-2 text-3xl font-bold">AI Incident Forensics</h1>
-        <p className="mt-3 max-w-3xl text-slate-400">
-          Investigate AI security incidents, reconstruct timelines, collect evidence,
-          and generate forensic reports. Track incidents from discovery through
-          identification, monitoring, and resolution.
-        </p>
-      </div>
+      <FeatureGuide
+        eyebrow="Investigation"
+        title="AI Incident Forensics"
+        description="Investigate AI security incidents, reconstruct timelines, collect evidence, and generate forensic reports. Track incidents from discovery through identification, monitoring, and resolution."
+        useCase="When something goes wrong — a prompt-injection attack, a data leak, a rogue agent action — you need a structured record, not scattered notes. Forensics gives each incident a lifecycle, ties affected components together, and produces a report you can hand to auditors, customers, or regulators."
+        howItWorks={[
+          { heading: "Open an incident", body: "Create an incident with a title, summary, impact level (NONE to CRITICAL), and the affected components when you detect suspicious AI activity or a policy violation." },
+          { heading: "Work the lifecycle", body: "Move the incident through INVESTIGATING, IDENTIFIED, MONITORING, and RESOLVED as you learn more. Open incident count is tracked at a glance." },
+          { heading: "Collect evidence", body: "Reconstruct the timeline and gather the evidence tied to the incident and its affected components for a complete picture." },
+          { heading: "Generate a report", body: "Produce a forensic report from an incident to document findings and share an auditable account of what happened and how it was handled." },
+        ]}
+        integrationCode={`// Open an incident when suspicious AI activity is detected
+const res = await fetch("https://soterai.in/api/forensics", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: \`Bearer \${process.env.SOTER_API_KEY}\`,
+  },
+  body: JSON.stringify({
+    projectId: "your-project-id",
+    title: "Possible prompt-injection via RAG document",
+    summary: "Agent attempted to exfiltrate a confidential contract.",
+    impact: "MAJOR",
+    affectedComponents: ["rag-collection-42", "agent-session-7"],
+  }),
+});`}
+        callout="Incidents and reports are records you create and maintain. Forensics documents and organizes an investigation; it does not automatically detect incidents on its own."
+      />
 
       <div className="grid gap-4 sm:grid-cols-4">
         <div className="card p-5">

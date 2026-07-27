@@ -109,6 +109,39 @@ export default function PrivacyPage() {
           unredacted content is discarded after processing.
         </p>
 
+        <h2
+          id="browser-extension"
+          className="text-2xl font-semibold text-white mt-12 mb-4"
+        >
+          3a. Browser Extension Data
+        </h2>
+        <p className="text-slate-400 leading-7">
+          The SoterAI Guard browser extension runs only on supported AI and
+          developer-tool websites declared in its Chrome Web Store and Microsoft
+          Edge Add-ons manifest. It does not request browser history access and
+          does not monitor unrelated websites.
+        </p>
+        <p className="text-slate-400 leading-7">
+          The extension scans prompts, AI responses, selected text, and supported
+          uploaded file text to detect prompt injection, jailbreak attempts,
+          fake secrets, PII, and unsafe AI instructions. Detection runs locally
+          in the browser first. When enterprise reporting is enabled, the
+          extension sends only HTTPS requests to the configured SoterAI API with
+          redacted previews, hashes, risk scores, detected categories, policy
+          actions, and destination metadata. Raw secrets and raw prompt text are
+          not intentionally stored in audit logs.
+        </p>
+        <p className="text-slate-400 leading-7">
+          Extension enrollment tokens and device tokens are stored in browser
+          extension storage for authentication to the SoterAI API. Users or
+          administrators can disable the extension, remove it from the browser,
+          revoke enrollment, or request deletion by contacting{" "}
+          <a href="mailto:support@soterai.in" className="text-cyan underline">
+            support@soterai.in
+          </a>
+          .
+        </p>
+
         {/* 4. Logs and Audit Records */}
         <h2
           id="logs-and-audit-records"
@@ -202,8 +235,8 @@ export default function PrivacyPage() {
           While we take reasonable measures to protect your data, no system is
           completely secure. We encourage responsible disclosure of any security
           vulnerabilities to{" "}
-          <a href="mailto:security@soterai.dev" className="text-cyan underline">
-            security@soterai.dev
+          <a href="mailto:support@soterai.in" className="text-cyan underline">
+            support@soterai.in
           </a>
           .
         </p>
@@ -243,8 +276,8 @@ export default function PrivacyPage() {
         <p className="text-slate-400 leading-7">
           You may request deletion of your account and associated data by
           contacting{" "}
-          <a href="mailto:support@soterai.dev" className="text-cyan underline">
-            support@soterai.dev
+          <a href="mailto:support@soterai.in" className="text-cyan underline">
+            support@soterai.in
           </a>
           .
         </p>
@@ -347,8 +380,8 @@ export default function PrivacyPage() {
         </ul>
         <p className="text-slate-400 leading-7">
           To exercise any of these rights, please contact us at{" "}
-          <a href="mailto:support@soterai.dev" className="text-cyan underline">
-            support@soterai.dev
+          <a href="mailto:support@soterai.in" className="text-cyan underline">
+            support@soterai.in
           </a>
           . We will respond to requests within 30 days.
         </p>
@@ -365,8 +398,8 @@ export default function PrivacyPage() {
           not knowingly collect personal information from children. If you
           believe we have inadvertently collected information from a child under
           18, please contact us at{" "}
-          <a href="mailto:support@soterai.dev" className="text-cyan underline">
-            support@soterai.dev
+          <a href="mailto:support@soterai.in" className="text-cyan underline">
+            support@soterai.in
           </a>{" "}
           and we will promptly delete such information.
         </p>
@@ -406,19 +439,19 @@ export default function PrivacyPage() {
           <li>
             <strong className="text-slate-300">General support:</strong>{" "}
             <a
-              href="mailto:support@soterai.dev"
+              href="mailto:support@soterai.in"
               className="text-cyan underline"
             >
-              support@soterai.dev
+              support@soterai.in
             </a>
           </li>
           <li>
             <strong className="text-slate-300">Security concerns:</strong>{" "}
             <a
-              href="mailto:security@soterai.dev"
+              href="mailto:support@soterai.in"
               className="text-cyan underline"
             >
-              security@soterai.dev
+              support@soterai.in
             </a>
           </li>
         </ul>

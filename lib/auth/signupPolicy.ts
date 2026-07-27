@@ -17,25 +17,62 @@ export type EmailDeliveryMode = "live" | "mock" | "blocked";
 
 type SignupEnv = {
   EMAIL_PROVIDER?: string;
+  RESEND_API_KEY?: string;
+  SMTP_HOST?: string;
+  AWS_ACCESS_KEY_ID?: string;
+  AWS_SECRET_ACCESS_KEY?: string;
   NODE_ENV?: string;
   AUTH_REQUIRE_EMAIL_VERIFICATION?: string;
+  AUTH_EXPOSE_DEVELOPMENT_OTP?: string;
 };
+
+export type ConfiguredEmailProvider = "resend" | "aws-ses" | "smtp" | "mock";
+
+export function resolveEmailProvider(env: SignupEnv = process.env): ConfiguredEmailProvider {
+  const explicitProvider = env.EMAIL_PROVIDER?.trim().toLowerCase();
+  if (explicitProvider) return explicitProvider as ConfiguredEmailProvider;
+  if (env.RESEND_API_KEY) return "resend";
+  if (env.SMTP_HOST) return "smtp";
+  if (env.AWS_ACCESS_KEY_ID && env.AWS_SECRET_ACCESS_KEY) return "aws-ses";
+  return "mock";
+}
 
 /**
  * Resolves how verification email will be delivered for the current process.
- * - "blocked": production configured with the mock provider — unsafe, must
+ * - "blocked": production configured with the mock provider - unsafe, must
  *   fail before any database write.
- * - "mock": development/test with the mock provider — verification links are
+ * - "mock": development/test with the mock provider - verification links are
  *   surfaced in the response for local/e2e flows.
  * - "live": a real provider (resend/aws-ses/smtp) is configured.
  */
 export function resolveEmailDeliveryMode(env: SignupEnv = process.env): EmailDeliveryMode {
-  const provider = (env.EMAIL_PROVIDER ?? "mock").toLowerCase();
+  const provider = resolveEmailProvider(env);
   const isProduction = env.NODE_ENV === "production";
   if (provider === "mock") {
     return isProduction ? "blocked" : "mock";
   }
   return "live";
+}
+
+export function validateEmailDeliveryConfig(env: SignupEnv = process.env): string[] {
+  const provider = resolveEmailProvider(env);
+  const missing: string[] = [];
+  if (provider === "resend" && !env.RESEND_API_KEY) missing.push("RESEND_API_KEY");
+  if (provider === "smtp") {
+    if (!env.SMTP_HOST) missing.push("SMTP_HOST");
+  }
+  if (provider === "aws-ses") {
+    if (!env.AWS_ACCESS_KEY_ID) missing.push("AWS_ACCESS_KEY_ID");
+    if (!env.AWS_SECRET_ACCESS_KEY) missing.push("AWS_SECRET_ACCESS_KEY");
+  }
+  return missing;
+}
+
+export function shouldExposeDevelopmentOtp(
+  deliveryMode: EmailDeliveryMode,
+  env: SignupEnv = process.env,
+) {
+  return deliveryMode === "mock" && env.AUTH_EXPOSE_DEVELOPMENT_OTP === "true";
 }
 
 /**

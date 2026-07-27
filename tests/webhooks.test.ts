@@ -12,6 +12,7 @@ import {
 } from "../lib/webhooks/signing";
 import { buildGuardEventPayload, eventsForGuardResult } from "../lib/webhooks/delivery";
 import { analyzeText } from "../lib/guard/analyze";
+import { isPrivateNetworkAddress } from "../lib/network/outboundUrl";
 
 test("generated webhook secrets are prefixed, unique, and hashed with the pepper", () => {
   const first = generateWebhookSecret();
@@ -71,4 +72,51 @@ test("CRG-RT-012: replay route resets attempts so dead-lettered deliveries can r
   // (attempts == MAX_ATTEMPTS) re-dead-letters on the first replay attempt.
   assert.match(src, /status:\s*"PENDING"[\s\S]*attempts:\s*0/);
   assert.match(src, /deadLetteredAt:\s*null/);
+});
+
+test("webhook outbound URL guard blocks private, link-local, metadata, and special-use IP ranges", () => {
+  for (const address of [
+    "0.0.0.0",
+    "10.0.0.1",
+    "127.0.0.1",
+    "169.254.169.254",
+    "172.16.0.1",
+    "192.168.1.1",
+    "100.64.0.1",
+    "192.0.0.8",
+    "198.18.0.1",
+    "::1",
+    "fe80::1",
+    "fc00::1",
+  ]) {
+    assert.equal(isPrivateNetworkAddress(address), true, `${address} must be blocked`);
+  }
+});
+
+test("webhook routes scope object IDs before observable lookup and never return secret storage fields", async () => {
+  const { readFileSync } = await import("node:fs");
+  const route = readFileSync("app/api/webhooks/route.ts", "utf8");
+  const rotate = readFileSync("app/api/webhooks/rotate/route.ts", "utf8");
+  const testRoute = readFileSync("app/api/webhooks/test/route.ts", "utf8");
+  const deliveries = readFileSync("app/api/webhooks/deliveries/route.ts", "utf8");
+  const replay = readFileSync("app/api/webhooks/replay/route.ts", "utf8");
+  const access = readFileSync("lib/webhooks/access.ts", "utf8");
+  const delivery = readFileSync("lib/webhooks/delivery.ts", "utf8");
+
+  for (const source of [route, rotate, testRoute, deliveries]) {
+    assert.match(source, /findWebhookEndpointForCurrentUser\(/);
+    assert.doesNotMatch(source, /webhookEndpoint\.findUnique\(\{\s*where:\s*\{\s*id:/);
+  }
+  assert.match(replay, /findWebhookDeliveryForCurrentUser\(/);
+  assert.doesNotMatch(replay, /webhookDelivery\.findUnique\(\{\s*[\s\S]*where:\s*\{\s*id:\s*body\.deliveryId/);
+
+  assert.match(access, /WEBHOOK_ENDPOINT_SAFE_SELECT/);
+  const safeSelectBlock = access.match(/WEBHOOK_ENDPOINT_SAFE_SELECT = \{[\s\S]*?\} satisfies/)?.[0] ?? "";
+  assert.doesNotMatch(safeSelectBlock, /secretHash|encryptedSecret|secretKeyVersion/);
+  assert.match(route, /select:\s*\{\s*\.\.\.WEBHOOK_ENDPOINT_SAFE_SELECT/);
+  assert.match(route, /select:\s*WEBHOOK_ENDPOINT_SAFE_SELECT/);
+
+  assert.match(delivery, /redirect:\s*"manual"/);
+  assert.match(delivery, /MAX_RESPONSE_BYTES/);
+  assert.doesNotMatch(delivery, /response\.text\(\)/);
 });

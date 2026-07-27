@@ -1,36 +1,37 @@
-# Privacy Policy for Soter Enterprise AI Guard
+# SoterAI Browser Extension Privacy Policy
 
-**Effective Date:** (Current Date)
+SoterAI protects AI work in the browser by scanning prompts, pasted content, file metadata, and optional AI responses on configured AI destinations. The extension is designed so sensitive content is evaluated locally first and raw prompt text is not stored by default.
 
-Soter Enterprise AI Guard ("the Extension") is designed with enterprise privacy and data security as its core focus.
+## What Is Scanned
 
-## What is processed locally
-- All prompt scanning and policy evaluation occurs **locally** in the browser.
-- Response scanning, when enabled by an enterprise admin for a supported AI destination, occurs **locally** in the browser before any event is reported.
-- Clipboard monitoring for Data Lineage occurs **locally**.
-- Document text extraction (where applicable) occurs **locally**.
+- Prompt text entered into configured AI destinations such as supported chat, coding, and enterprise AI tools.
+- Optional response scans when an admin enables response scanning for a destination.
+- File names, file type metadata, and locally inspected text content for supported file uploads.
+- Lineage metadata for copy/paste context when source tracking is enabled by policy.
 
-## What metadata is sent to your enterprise dashboard
-- Audit logs of blocked or flagged prompts (containing rule IDs, timestamps, and redacted snippets).
-- Response scan events for flagged AI outputs store metadata and redacted previews by default, not raw response text.
-- Metadata of uploaded files (name, size, file type).
-- Hash values for Data Lineage matching.
+The extension does not monitor unrelated browsing and does not scan sites outside the configured destination list.
 
-## What is NOT sent or stored by default
-- We do **NOT** store or send raw prompts.
-- We do **NOT** store or send raw file contents.
-- We do **NOT** store or send raw copied text.
-- We do **NOT** monitor or send browsing history on non-AI domains.
+## What Is Stored By Default
 
-## How admins configure policies
-Enterprise administrators configure the active DLP policies, allowed domains, and event tracking thresholds through the Soter Admin Control Plane. These policies are securely synced to the extension.
-Admins can enable or disable response scanning per destination. If response scanning is disabled for a destination, the extension does not scan AI responses on that destination.
+By default, extension storage contains metadata and redacted previews, including:
 
-## Contacting Support
-For pilot customers and end-users, please contact your internal IT or Security team for primary support.
-For bug reports, enterprise inquiries, or security issues, contact `security@soter-example.com`.
+- Policy cache and enrollment status.
+- Decision, risk score, detected data types, and timestamps.
+- Redacted preview or safe rewrite.
+- Hashes and lengths for source text where needed for privacy-preserving verification.
 
-## Limitations
-- PDF/DOCX/XLSX/PPTX scanning relies on metadata extraction in v0.1.0 beta.
-- The extension's functionality is dependent on the DOM structure of external AI sites; updates to those sites may temporarily degrade detection until the extension is updated.
-- Semantic fingerprinting is planned but not fully implemented in v0.1.0 beta.
+Raw prompts, raw copied text, and raw file content are not stored by default.
+
+## What Leaves The Browser
+
+When enrolled, the extension may send security events to SoterAI containing metadata, decision details, risk score, detected data types, destination URL context, and a redacted preview. Backend payloads are sanitized again before processing.
+
+Raw prompt logging is off by default. It can only be changed by an explicit admin policy mode for full prompt logging.
+
+## Response Scanning Controls
+
+Response scanning is controlled per destination. An admin can enable, disable, or disable response scanning per destination through policy. Clean response scans remain local unless policy requires an event; response findings use redacted previews by default.
+
+## Data Minimization
+
+SoterAI uses local detection, redaction, hashing, and policy checks to minimize what is stored or sent. The extension avoids broad browser permissions and does not request access to all websites.

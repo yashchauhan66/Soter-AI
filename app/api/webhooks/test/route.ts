@@ -1,6 +1,6 @@
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { requireProjectPermission } from "@/lib/auth/guards";
-import { db } from "@/lib/db";
+import { findWebhookEndpointForCurrentUser } from "@/lib/webhooks/access";
 import { enqueueWebhook } from "@/lib/webhooks/delivery";
 import { getEndpointSecret } from "@/lib/webhooks/store";
 import { z } from "zod";
@@ -8,10 +8,10 @@ import { z } from "zod";
 export async function POST(request: Request) {
   try {
     const body = z.object({ id: z.string().min(1) }).parse(await readJson(request));
-    const endpoint = await db.webhookEndpoint.findUnique({ where: { id: body.id } });
-    if (!endpoint) return jsonResponse({ error: true, message: "Webhook not found." }, { status: 404 });
-    await requireProjectPermission(endpoint.projectId, "webhook:update");
-    const secret = await getEndpointSecret(endpoint.id);
+    const scoped = await findWebhookEndpointForCurrentUser(body.id);
+    if (!scoped.endpoint) return jsonResponse({ error: true, message: "Webhook not found." }, { status: 404 });
+    await requireProjectPermission(scoped.endpoint.projectId, "webhook:update");
+    const secret = await getEndpointSecret(scoped.endpoint.id);
     if (!secret) {
       return jsonResponse({
         error: true,
@@ -19,7 +19,7 @@ export async function POST(request: Request) {
       }, { status: 409 });
     }
     const enqueued = await enqueueWebhook({
-      endpointId: endpoint.id,
+      endpointId: scoped.endpoint.id,
       event: "guard.prompt_injection.blocked",
       payload: {
         test: true,

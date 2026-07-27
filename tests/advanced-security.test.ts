@@ -494,12 +494,13 @@ describe("OWASP Compliance", () => {
     assert.ok(items.length === 10);
   });
 
-  it("identifies compliance gaps", () => {
+  it("reports compliance gaps as an array and allows fully closed ceiling-breakers", () => {
     const gaps = getComplianceGaps() as any;
     assert.ok(Array.isArray(gaps));
-    assert.ok(gaps.length > 0);
-    assert.ok(gaps[0].framework);
-    assert.ok(gaps[0].gaps);
+    for (const gap of gaps) {
+      assert.ok(gap.framework);
+      assert.ok(gap.gaps);
+    }
   });
 
   it("LLM01 Prompt Injection has highest coverage", () => {

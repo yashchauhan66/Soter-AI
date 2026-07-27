@@ -17,6 +17,7 @@ import {
   parsePatchPayload,
   scimGroupMembersFromValue,
 } from "../lib/enterprise/scim";
+import { decodeSamlResponse, validateSamlResponse } from "../lib/enterprise/saml";
 import { expectedDeletionConfirmation, retentionCutoff, retentionDays } from "../lib/retention/policy";
 
 test("SCIM tokens are hashed and raw values are not embedded in the hash", () => {
@@ -93,6 +94,71 @@ test("SCIM v2 routes cover users, groups, auth, tenant scope, and audits", async
   assert.match(files[4], /token: token\.rawToken/);
   assert.match(files[4], /tokenHash/);
   assert.doesNotMatch(files[4], /tokenHash.*rawToken/);
+});
+
+test("SAML validation rejects wrong ACS destination before accepting assertions", async () => {
+  const xml = `<?xml version="1.0"?>
+<samlp:Response xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" ID="res-1" Destination="https://evil.example/acs">
+  <saml:Issuer xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">https://idp.example/entity</saml:Issuer>
+  <saml:Assertion xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">
+    <saml:Subject>
+      <saml:NameID>alice@example.com</saml:NameID>
+      <saml:SubjectConfirmation>
+        <saml:SubjectConfirmationData Recipient="https://app.example/api/sso/saml/acs" NotOnOrAfter="2099-01-01T00:00:00Z"/>
+      </saml:SubjectConfirmation>
+    </saml:Subject>
+    <saml:Conditions NotBefore="2020-01-01T00:00:00Z" NotOnOrAfter="2099-01-01T00:00:00Z">
+      <saml:AudienceRestriction><saml:Audience>https://app.example/api/sso/saml/metadata</saml:Audience></saml:AudienceRestriction>
+    </saml:Conditions>
+  </saml:Assertion>
+</samlp:Response>`;
+  await assert.rejects(
+    validateSamlResponse(Buffer.from(xml).toString("base64"), {
+      sp: {
+        entityId: "https://app.example/api/sso/saml/metadata",
+        acsUrl: "https://app.example/api/sso/saml/acs",
+      },
+      idp: {
+        entityId: "https://idp.example/entity",
+        ssoUrl: "https://idp.example/sso",
+        x509Certificate: "-----BEGIN CERTIFICATE-----\ninvalid\n-----END CERTIFICATE-----",
+      },
+    }),
+    /destination does not match/,
+  );
+});
+
+test("SAML validation rejects wrong assertion recipient and oversized payloads", async () => {
+  const xml = `<?xml version="1.0"?>
+<samlp:Response xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol" ID="res-2" Destination="https://app.example/api/sso/saml/acs">
+  <saml:Issuer xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">https://idp.example/entity</saml:Issuer>
+  <saml:Assertion xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">
+    <saml:Subject>
+      <saml:NameID>alice@example.com</saml:NameID>
+      <saml:SubjectConfirmation>
+        <saml:SubjectConfirmationData Recipient="https://other.example/acs" NotOnOrAfter="2099-01-01T00:00:00Z"/>
+      </saml:SubjectConfirmation>
+    </saml:Subject>
+    <saml:Conditions NotBefore="2020-01-01T00:00:00Z" NotOnOrAfter="2099-01-01T00:00:00Z">
+      <saml:AudienceRestriction><saml:Audience>https://app.example/api/sso/saml/metadata</saml:Audience></saml:AudienceRestriction>
+    </saml:Conditions>
+  </saml:Assertion>
+</samlp:Response>`;
+  await assert.rejects(
+    validateSamlResponse(Buffer.from(xml).toString("base64"), {
+      sp: {
+        entityId: "https://app.example/api/sso/saml/metadata",
+        acsUrl: "https://app.example/api/sso/saml/acs",
+      },
+      idp: {
+        entityId: "https://idp.example/entity",
+        ssoUrl: "https://idp.example/sso",
+        x509Certificate: "-----BEGIN CERTIFICATE-----\ninvalid\n-----END CERTIFICATE-----",
+      },
+    }),
+    /recipient does not match/,
+  );
+  assert.throws(() => decodeSamlResponse("A".repeat(300_001)), /too large/);
 });
 
 test("retention windows and deletion confirmations are deterministic", () => {

@@ -15,8 +15,7 @@
         "build": "tsc -p tsconfig.json",
         "test": "tsx --test src/__tests__/**/*.test.ts",
         "typecheck": "tsc --noEmit",
-        "clean": "rimraf dist",
-        "prepublishOnly": "npm run build && npm test"
+        "clean": "rimraf dist"
     },
     "keywords": [
         "ai-security",
@@ -27,9 +26,7 @@
         "pii",
         "prompt-injection"
     ],
-    "files": ["dist", "README.md", "LICENSE"],
     "license": "BSL-1.1",
-    "publishConfig": { "access": "public" },
     "devDependencies": {
         "typescript": "^5.9.3",
         "tsx": "4.22.4",

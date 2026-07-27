@@ -4,6 +4,7 @@ import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { getShadowAiSummary } from "@/lib/shadow-ai";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
 
 export const dynamic = "force-dynamic";
 
@@ -35,15 +36,36 @@ export default async function ShadowAIPage({
 
   return (
     <div className="space-y-7">
-      <div>
-        <p className="eyebrow">Discovery</p>
-        <h1 className="mt-2 text-3xl font-bold">Shadow AI Scanner</h1>
-        <p className="mt-3 max-w-3xl text-slate-400">
-          Detect and catalog every AI provider, model, SDK, and tool being used across your
-          organization. Run scans against your project dependencies, codebase, and environment
-          to discover shadow AI usage and surface risk findings.
-        </p>
-      </div>
+      <FeatureGuide
+        eyebrow="Discovery"
+        title="Shadow AI Scanner"
+        description="Detect and catalog every AI provider, model, SDK, and tool used across your organization by scanning project dependencies, code snippets, and environment variables."
+        useCase="Teams adopt AI tools faster than security can track them. An engineer adds an unvetted LLM SDK, or an env var points at a provider in an unapproved data region. The scanner surfaces that shadow AI usage so you can review risk, approve models, and catch high-risk providers before they handle sensitive data."
+        howItWorks={[
+          { heading: "Run a scan", body: "Submit your package.json, code snippets, and environment variable keys. The scanner inspects them for known AI SDKs, providers, and model references." },
+          { heading: "Discover providers and models", body: "Detected AI providers and models are cataloged with their type, data region, and status so you can see everything in use in one place." },
+          { heading: "Assess risk", body: "Each provider and model is assigned a risk level. High and critical-risk providers are flagged at the top for immediate review." },
+          { heading: "Approve or review", body: "Models start as pending review. Approve the ones your organization sanctions and follow up on the rest from the providers view." },
+        ]}
+        integrationCode={`// Scan a project for shadow AI usage
+const res = await fetch("https://soterai.in/api/shadow/scan", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: \`Bearer \${process.env.SOTER_API_KEY}\`,
+  },
+  body: JSON.stringify({
+    projectId: "your-project-id",
+    scanType: "FULL",
+    packageJson: packageJsonString,
+    codeSnippets: ["import OpenAI from 'openai'"],
+    envKeys: ["OPENAI_API_KEY", "ANTHROPIC_API_KEY"],
+  }),
+});
+
+const { scan } = await res.json();`}
+        callout="The scanner detects AI usage from the code, dependencies, and env keys you submit. It cannot discover providers used in code paths or systems you do not include in the scan."
+      />
 
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="card p-5">

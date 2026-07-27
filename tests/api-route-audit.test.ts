@@ -35,7 +35,6 @@ const publicRoutes = new Map<string, RegExp[]>([
   ["/api/auth/[...nextauth]", [/handlers/, /GET/, /POST/]],
   ["/api/billing/webhook", [/verifyRazorpayWebhook/, /request\.text\(\)/]],
   ["/api/guard/analyze", [/checkRedisRateLimit/, /analyzeSchema\.parse/]],
-  ["/api/openapi", [/openApiSpec/, /jsonResponse/]],
   ["/api/sso/saml/login", [/safeCallbackUrl/, /buildAuthnRequest/]],
   ["/api/sso/saml/metadata", [/buildSpMetadata/, /application\/xml/]],
   ["/api/sso/saml/acs", [/validateSamlResponse|parseSamlResponse|signIn/]],
@@ -178,6 +177,9 @@ test("API key rotation route revokes the old key atomically and only shows raw k
   const file = "app/api/api-keys/rotate/route.ts";
   assert.equal(existsSync(file), true);
   const source = readFileSync(file, "utf8");
+  assert.match(source, /requireUser\(\)/);
+  assert.match(source, /db\.apiKey\.findFirst\(\{[\s\S]*members:\s*\{\s*some:\s*\{\s*userId:\s*user\.id/);
+  assert.doesNotMatch(source, /const target = await db\.apiKey\.findUnique/);
   assert.match(source, /requireProjectPermission\(target\.projectId, "api_key:create"\)/);
   assert.match(source, /requireProjectPermission\(target\.projectId, "api_key:revoke"\)/);
   assert.match(source, /db\.\$transaction\(/);

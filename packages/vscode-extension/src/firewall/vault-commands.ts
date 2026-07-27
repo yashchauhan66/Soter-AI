@@ -28,13 +28,13 @@ export function registerVaultCommands(deps: FirewallDeps): void {
             "soteraiVaultPreview",
             "SoterAI: Vault Migration Preview",
             `<h1>🔐 Migration preview — ${escapeHtml(preview.file)}</h1>
-         <p>These secrets will be moved into the encrypted vault and replaced with placeholders. A <code>.bak</code> backup is written first.</p>
+         <p>These secrets will be moved into the encrypted vault and replaced with placeholders. An encrypted backup is written to extension storage (outside the workspace) first.</p>
          <table><tr><th>Key</th><th>Type</th><th>Placeholder</th><th>Value (masked)</th></tr>${rows}</table>
          <p class="note">Raw values are shown masked only. They are stored encrypted outside the workspace; never in logs or reports.</p>`,
         );
 
         const confirm = await vscode.window.showWarningMessage(
-            `Migrate ${preview.candidates.length} secret(s) from ${preview.file} into the protected vault? A .bak backup will be created.`,
+            `Migrate ${preview.candidates.length} secret(s) from ${preview.file} into the protected vault? An encrypted backup (outside the workspace) will be created.`,
             { modal: true },
             "Migrate & Backup",
         );
@@ -53,7 +53,9 @@ export function registerVaultCommands(deps: FirewallDeps): void {
             policyVersion: String((await PolicyStore.load()).version),
             redactedEvidencePreview: `${count} secret(s) vaulted`,
         });
-        vscode.window.showInformationMessage(`Migrated ${count} secret(s) to the vault. Backup: ${preview.file}.bak`);
+        vscode.window.showInformationMessage(
+            `Migrated ${count} secret(s) to the vault. Encrypted backup saved outside the workspace (SoterAI: Restore File From Backup to undo).`,
+        );
         refreshViews();
     };
 
@@ -62,7 +64,7 @@ export function registerVaultCommands(deps: FirewallDeps): void {
         const uri = activeFileUri();
         if (!uri) return void vscode.window.showErrorMessage("Open the file whose placeholders to restore.");
         const confirm = await vscode.window.showWarningMessage(
-            "Restore raw secrets from the vault back into this file? A .bak backup will be created.",
+            "Restore raw secrets from the vault back into this file? An encrypted backup (outside the workspace) will be created.",
             { modal: true },
             "Restore & Backup",
         );
@@ -102,8 +104,25 @@ export function registerVaultCommands(deps: FirewallDeps): void {
         vscode.window.showInformationMessage("Generated .env.example (no secret values).");
     };
 
+    const restoreFileFromBackup = async () => {
+        if (!requireTrust("Vault backup restore")) return;
+        const uri = activeFileUri();
+        if (!uri) return void vscode.window.showErrorMessage("Open the file to restore from its encrypted backup.");
+        const confirm = await vscode.window.showWarningMessage(
+            "Overwrite this file with its last encrypted SoterAI backup?",
+            { modal: true },
+            "Restore Backup",
+        );
+        if (confirm !== "Restore Backup") return;
+        const ok = await vault.restoreFromBackup(uri);
+        vscode.window.showInformationMessage(
+            ok ? "File restored from encrypted backup." : "No encrypted backup found for this file.",
+        );
+    };
+
     reg("soterai.migrateSecretsToVault", migrateSecretsToVault);
     reg("soterai.restoreSecretPlaceholders", restoreSecretPlaceholders);
+    reg("soterai.restoreFileFromBackup", restoreFileFromBackup);
     reg("soterai.openVaultStatus", openVaultStatus);
     reg("soterai.generateEnvExample", generateEnvExampleSafely);
 }

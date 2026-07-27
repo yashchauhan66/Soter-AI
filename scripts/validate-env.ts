@@ -415,14 +415,14 @@ const conditionalChecks: ConditionalCheck[] = [
   },
   {
     name: "AWS_ACCESS_KEY_ID",
-    condition: (env) => env.SECRET_STORE_PROVIDER === "aws-kms" && !env.AWS_ACCESS_KEY_ID,
-    description: "Required when SECRET_STORE_PROVIDER=aws-kms",
+    condition: (env) => env.SECRET_STORE_PROVIDER === "aws-kms" && !env.AWS_ACCESS_KEY_ID && env.AWS_EC2_METADATA_DISABLED === "true",
+    description: "Required when SECRET_STORE_PROVIDER=aws-kms and EC2 instance metadata credentials are disabled",
     severity: "ERROR",
   },
   {
     name: "AWS_SECRET_ACCESS_KEY",
-    condition: (env) => env.SECRET_STORE_PROVIDER === "aws-kms" && !env.AWS_SECRET_ACCESS_KEY,
-    description: "Required when SECRET_STORE_PROVIDER=aws-kms",
+    condition: (env) => env.SECRET_STORE_PROVIDER === "aws-kms" && !env.AWS_SECRET_ACCESS_KEY && env.AWS_EC2_METADATA_DISABLED === "true",
+    description: "Required when SECRET_STORE_PROVIDER=aws-kms and EC2 instance metadata credentials are disabled",
     severity: "ERROR",
   },
   {

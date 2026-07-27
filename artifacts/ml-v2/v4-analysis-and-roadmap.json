@@ -1,0 +1,72 @@
+{
+  "generated": "2026-07-23",
+  "title": "SoterLLM v4 — forensic analysis of v3 + market-beating redesign",
+  "v3Diagnosis": {
+    "product": "SoterLLM",
+    "baseModel": "sentence-transformers/all-MiniLM-L6-v2",
+    "head": "Linear(384→9)",
+    "reportedValF1": 0.9928,
+    "reportedValF1IsLeaked": true,
+    "leakagePctValLowerBound": 35.8,
+    "honestHeldoutRulesSemanticRecall": 0.708,
+    "honestGatedMlRecall": "0.85–1.00 on small fresh sets (n≈26–54)",
+    "benignOverDefenseRawFpr": "~0.18 without precision gate",
+    "criticalGaps": [
+      "single linear head under-capacity",
+      "no calibration (raw softmax)",
+      "no OOD/abstention",
+      "max_length 128 truncates long attacks",
+      "no class-balanced loss",
+      "no per-label operating points",
+      "direction/provenance unused",
+      "single-label cannot express co-occurring risks"
+    ]
+  },
+  "marketPositioning": {
+    "peerClass": "local/on-prem ONNX AI prompt-attack classifiers",
+    "notPeerClass": "hosted multi-GB cloud guards (Lakera, Prompt Security, Protect AI) — different latency/privacy/cost tradeoff",
+    "v4WinningAxes": [
+      "group-aware honest evaluation (no leak inflation)",
+      "temperature calibration + ECE reporting",
+      "per-label FPR-controlled thresholds",
+      "OOD abstention + attackProbability fusion",
+      "MLP capacity head + focal/class-balanced loss",
+      "256-token context",
+      "fail-open ensemble with rules precision gate",
+      "~90MB local, no cloud dependency"
+    ],
+    "honestClaim": "Best-in-class local calibrated 9-way AI-attack classifier with honest group-aware eval and production-safe HUMAN_REVIEW ceiling"
+  },
+  "v4Delivered": {
+    "trainer": "scripts/ml/train-soterllm-v4.py",
+    "inference": ["lib/ml/onnxBackend.ts", "lib/ml/calibration.ts", "lib/guard/mlAugment.ts"],
+    "verify": "scripts/guard-benchmark/ml-v4-verify.ts",
+    "docs": "docs/ml-v2/soterllm-v4.md",
+    "npmScripts": [
+      "ml:train:v4:smoke",
+      "ml:train:v4:mid",
+      "ml:train:v4",
+      "ml:train:v4:gpu",
+      "ml:verify:v4"
+    ],
+    "smokeTrain": {
+      "rows": 200,
+      "epochs": 1,
+      "artifact": "models/ml-classifier-v4-smoke",
+      "onnxOk": true,
+      "nodeInferenceOk": true,
+      "note": "Undertrained by design; proves pipeline. Use ml:train:v4:mid or :gpu for production weights."
+    },
+    "regression": {
+      "tests/guard/ml-augment.test.ts": "10/10 pass (v3 production path unchanged + safe)"
+    }
+  },
+  "nextStepsToBeatMarketOnNumbers": [
+    "Run npm run ml:train:v4:gpu on Colab/A100 with full ml-augmented-v6 (79,580 rows)",
+    "Run npm run ml:verify:v4 and publish honest held-out recall/FPR",
+    "Optional: multi-label head (sigmoid per class) for co-occurring PII+injection",
+    "Optional: direction token / source provenance embeddings",
+    "Optional: long-context chunking + max-pool over windows for >256 tokens",
+    "Shadow → enforce rollout with production prevalence FPR monitoring"
+  ]
+}

@@ -29,8 +29,6 @@ export interface RagScanResult {
   status: "SAFE" | "QUARANTINED";
 }
 
-const MAX_CHUNKS = 10_000;
-
 const documentInjectionRules = [
   { type: "DOCUMENT_PROMPT_INJECTION", pattern: /(?:ignore|disregard) (?:all |the )?(?:previous|system) instructions?/i, message: "Document contains an instruction override." },
   { type: "DOCUMENT_PROMPT_INJECTION", pattern: /(?:override|replace) (?:assistant|system) rules?/i, message: "Document attempts to replace assistant rules." },
@@ -39,7 +37,7 @@ const documentInjectionRules = [
   { type: "SUSPICIOUS_TOOL_INSTRUCTION", pattern: /(?:call|invoke|run|execute) (?:the )?(?:tool|function|shell|command)/i, message: "Document contains suspicious tool instructions." },
   { type: "HIDDEN_INSTRUCTION", pattern: /(?:<!--[^>]*(?:ignore|instruction|system)[^>]*-->|display\s*:\s*none|font-size\s*:\s*0)/i, message: "Document contains hidden instruction markers or hidden text." },
   { type: "DECEPTIVE_TRUST_CLAIM", pattern: /tell (?:the )?user (?:that )?this document is safe/i, message: "Document attempts to manufacture a trust decision." },
-  { type: "SUSPICIOUS_BASE64", pattern: /(?:instruction|prompt|execute).{0,40}?[A-Za-z0-9+/]{80,}={0,2}\b/i, message: "Document includes a base64-like payload near instruction text." },
+  { type: "SUSPICIOUS_BASE64", pattern: /(?:instruction|prompt|execute).{0,40}\b[A-Za-z0-9+/]{80,}={0,2}\b/i, message: "Document includes a base64-like payload near instruction text." },
 ];
 
 export function chunkDocument(text: string, maxChars = 1800): string[] {
@@ -49,17 +47,13 @@ export function chunkDocument(text: string, maxChars = 1800): string[] {
   const chunks: string[] = [];
   let current = "";
   for (const paragraph of paragraphs) {
-    if (chunks.length >= MAX_CHUNKS) break;
     if (current && current.length + paragraph.length + 2 > maxChars) { chunks.push(current); current = ""; }
     if (paragraph.length > maxChars) {
       if (current) { chunks.push(current); current = ""; }
-      for (let offset = 0; offset < paragraph.length; offset += maxChars) {
-        if (chunks.length >= MAX_CHUNKS) break;
-        chunks.push(paragraph.slice(offset, offset + maxChars));
-      }
+      for (let offset = 0; offset < paragraph.length; offset += maxChars) chunks.push(paragraph.slice(offset, offset + maxChars));
     } else current += `${current ? "\n\n" : ""}${paragraph}`;
   }
-  if (current && chunks.length < MAX_CHUNKS) chunks.push(current);
+  if (current) chunks.push(current);
   return chunks;
 }
 
@@ -77,12 +71,8 @@ export function scanRagDocument(text: string): RagScanResult {
       findings.push({ type: finding.type, severity: finding.severity, message: finding.message, redactedSnippet: safeSnippet(chunk, textRedacted, finding.start ?? 0), chunkIndex });
     }
     for (const rule of documentInjectionRules) {
-      try {
-        const match = chunk.match(rule.pattern);
-        if (match?.index !== undefined) findings.push({ type: rule.type, severity: "HIGH", message: rule.message, redactedSnippet: safeSnippet(chunk, textRedacted, match.index), chunkIndex });
-      } catch {
-        findings.push({ type: rule.type, severity: "HIGH", message: "Document injection rule pattern caused a processing error (possible ReDoS).", chunkIndex });
-      }
+      const match = chunk.match(rule.pattern);
+      if (match?.index !== undefined) findings.push({ type: rule.type, severity: "HIGH", message: rule.message, redactedSnippet: safeSnippet(chunk, textRedacted, match.index), chunkIndex });
     }
     const extraTypes = findings.filter((item) => item.chunkIndex === chunkIndex).map((item) => item.type);
     const injectionCount = extraTypes.filter((type) => type.startsWith("DOCUMENT_") || type.includes("EXFILTRATION") || type === "HIDDEN_INSTRUCTION").length;

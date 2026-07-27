@@ -1,0 +1,211 @@
+{
+  "generatedAt": "2026-07-22T11:58:46.305Z",
+  "startedAt": "2026-07-22T11:56:21.508Z",
+  "completedAt": "2026-07-22T11:58:46.305Z",
+  "localGatePassed": true,
+  "passed": 15,
+  "total": 15,
+  "results": [
+    {
+      "id": "root-typecheck",
+      "command": "npm",
+      "args": [
+        "run",
+        "typecheck"
+      ],
+      "required": true,
+      "status": "PASS",
+      "durationMs": 21960,
+      "exitCode": 0
+    },
+    {
+      "id": "guard-core-typecheck",
+      "command": "npm",
+      "args": [
+        "--prefix",
+        "packages/guard-core",
+        "run",
+        "typecheck"
+      ],
+      "required": true,
+      "status": "PASS",
+      "durationMs": 6999,
+      "exitCode": 0
+    },
+    {
+      "id": "guard-core-test",
+      "command": "npm",
+      "args": [
+        "--prefix",
+        "packages/guard-core",
+        "run",
+        "test"
+      ],
+      "required": true,
+      "status": "PASS",
+      "durationMs": 7814,
+      "exitCode": 0
+    },
+    {
+      "id": "guard-core-build",
+      "command": "npm",
+      "args": [
+        "--prefix",
+        "packages/guard-core",
+        "run",
+        "build"
+      ],
+      "required": true,
+      "status": "PASS",
+      "durationMs": 6997,
+      "exitCode": 0
+    },
+    {
+      "id": "broker-typecheck",
+      "command": "npm",
+      "args": [
+        "--prefix",
+        "apps/local-ai-broker",
+        "run",
+        "typecheck"
+      ],
+      "required": true,
+      "status": "PASS",
+      "durationMs": 6147,
+      "exitCode": 0
+    },
+    {
+      "id": "broker-test",
+      "command": "npm",
+      "args": [
+        "--prefix",
+        "apps/local-ai-broker",
+        "run",
+        "test"
+      ],
+      "required": true,
+      "status": "PASS",
+      "durationMs": 3353,
+      "exitCode": 0
+    },
+    {
+      "id": "vscode-extension-typecheck",
+      "command": "npm",
+      "args": [
+        "--prefix",
+        "packages/vscode-extension",
+        "run",
+        "typecheck"
+      ],
+      "required": true,
+      "status": "PASS",
+      "durationMs": 7560,
+      "exitCode": 0
+    },
+    {
+      "id": "vscode-extension-test",
+      "command": "npm",
+      "args": [
+        "--prefix",
+        "packages/vscode-extension",
+        "run",
+        "test"
+      ],
+      "required": true,
+      "status": "PASS",
+      "durationMs": 2635,
+      "exitCode": 0
+    },
+    {
+      "id": "vscode-extension-build",
+      "command": "npm",
+      "args": [
+        "--prefix",
+        "packages/vscode-extension",
+        "run",
+        "build"
+      ],
+      "required": true,
+      "status": "PASS",
+      "durationMs": 3759,
+      "exitCode": 0
+    },
+    {
+      "id": "vscode-isolated-install",
+      "command": "node",
+      "args": [
+        "scripts/test-vscode-family.mjs",
+        "code"
+      ],
+      "required": true,
+      "status": "PASS",
+      "durationMs": 14335,
+      "exitCode": 0
+    },
+    {
+      "id": "manifest-permissions",
+      "command": "npm",
+      "args": [
+        "run",
+        "validate:extension-permissions"
+      ],
+      "required": true,
+      "status": "PASS",
+      "durationMs": 1519,
+      "exitCode": 0
+    },
+    {
+      "id": "dependency-audit-high",
+      "command": "npm",
+      "args": [
+        "audit",
+        "--audit-level=high"
+      ],
+      "required": true,
+      "status": "PASS",
+      "durationMs": 5171,
+      "exitCode": 0
+    },
+    {
+      "id": "full-test-suite",
+      "command": "npm",
+      "args": [
+        "test"
+      ],
+      "required": true,
+      "status": "PASS",
+      "durationMs": 51958,
+      "exitCode": 0
+    },
+    {
+      "id": "security-99-evidence-advisory",
+      "command": "npm",
+      "args": [
+        "run",
+        "validate:security-99"
+      ],
+      "required": true,
+      "status": "PASS",
+      "durationMs": 2503,
+      "exitCode": 0
+    },
+    {
+      "id": "security-100-evidence-advisory",
+      "command": "npm",
+      "args": [
+        "run",
+        "validate:security-100"
+      ],
+      "required": true,
+      "status": "PASS",
+      "durationMs": 2080,
+      "exitCode": 0
+    }
+  ],
+  "claimEligibility": {
+    "security99Score": 95,
+    "canClaim99Plus": false,
+    "security100Score": 94,
+    "canClaim100": false
+  }
+}

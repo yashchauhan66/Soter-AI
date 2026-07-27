@@ -1,6 +1,6 @@
 {
   "singleTurn": {
-    "generatedAtIso": "2026-07-26T15:24:25.432Z",
+    "generatedAtIso": "2026-07-17T11:58:35.780Z",
     "corpus": {
       "total": 1218,
       "attacks": 108,
@@ -43,11 +43,11 @@
         "targetFpr": 0.001,
         "threshold": 60,
         "recall": 0.5648148148148148,
-        "fprAchieved": 0.0009009009009009009,
+        "fprAchieved": 0,
         "allowedFalsePositives": 1
       }
     ],
-    "rocAuc": 0.9973723723723724,
+    "rocAuc": 0.9977686019352686,
     "perCategory": [
       {
         "category": "DIRECT_OVERRIDE",
@@ -303,10 +303,10 @@
       }
     ],
     "latencyMs": {
-      "p50": 4.4408000000003085,
-      "p95": 9.239599999999882,
-      "p99": 27.315900000000056,
-      "max": 644.8307000000001
+      "p50": 9.71349999999984,
+      "p95": 18.15059999999903,
+      "p99": 28.707400000000234,
+      "max": 967.3852999999999
     },
     "limitations": [
       "Scores are from the deterministic production classifier (analyzeText) — no ML deep-scan tier is included in these numbers.",
@@ -328,7 +328,7 @@
         "isAttack": true,
         "escalated": true,
         "finalLevel": "ESCALATED",
-        "peakPressure": 75,
+        "peakPressure": 100,
         "detectedAtTurn": 2,
         "correct": true
       },
@@ -355,7 +355,7 @@
         "isAttack": true,
         "escalated": true,
         "finalLevel": "ESCALATED",
-        "peakPressure": 75,
+        "peakPressure": 100,
         "detectedAtTurn": 2,
         "correct": true
       },

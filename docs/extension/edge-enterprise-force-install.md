@@ -19,6 +19,29 @@ Soter Enterprise AI Control Plane can be deployed to Microsoft Edge with Microso
    - employee identity mapping
    - department and role claims
    - device or employee token provisioning
+   - `hardEnforcement` (optional, boolean) — when `true`, every `block` decision
+     becomes a locked block: the submission cannot be casually dismissed and
+     re-sent. The only escape paths are a server-approved unlock or an
+     explicitly audited dismiss that does **not** allow the data through.
+   - `offlineFailClosed` (optional, boolean) — when `true`, the extension blocks
+     all monitored submissions while it cannot reach the policy service, instead
+     of failing open. Recommended for regulated orgs.
+
+Example managed configuration (Intune / GPO `3rdparty` managed policy):
+
+```json
+{
+  "apiBaseUrl": { "Value": "https://guard.yourco.example" },
+  "organizationId": { "Value": "org_abc123" },
+  "hardEnforcement": { "Value": true },
+  "offlineFailClosed": { "Value": true }
+}
+```
+
+These two flags are enforced by the extension locally and take effect even
+before the first signed policy sync completes. They can also be delivered by a
+signed org policy (`hardEnforcement` / `offlineFailClosed` on the policy
+bundle); the extension applies whichever source enables them.
 
 ## Prevent Removal
 

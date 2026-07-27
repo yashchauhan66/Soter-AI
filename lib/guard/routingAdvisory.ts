@@ -17,6 +17,8 @@ import type { GuardFinding, GuardResult, RiskType } from "./types";
  */
 
 export type AdvisoryRiskClass =
+  | "MCP_TOOL_POISONING"
+  | "MEMORY_POISONING"
   | "TOOL_ABUSE"
   | "EXCESSIVE_AGENCY"
   | "RAG_INDIRECT_INJECTION"
@@ -69,10 +71,36 @@ export function deriveAdvisory(text: string, findings: GuardFinding[], riskTypes
   const looksToolCall = TOOL_INVOCATION.test(text);
   const looksUnbounded = UNBOUNDED_AGENCY.test(text);
   const looksRagPoison = RAG_DOC_INSTRUCTION.test(text);
+  const hasMcpPoisoning = riskTypes.includes("MCP_TOOL_POISONING");
+  const hasMemoryPoisoning = riskTypes.includes("MEMORY_POISONING");
   const hasExfil = riskTypes.includes("DATA_EXFILTRATION") || riskTypes.includes("SSRF_ATTEMPT");
   const hasSensitive = riskTypes.includes("PII_DETECTED") || riskTypes.includes("INDIA_PII_DETECTED") || riskTypes.includes("SECRET_DETECTED");
 
   // Order matters: most-specialized surface first.
+  if (hasMcpPoisoning) {
+    return {
+      riskClass: "MCP_TOOL_POISONING",
+      severity: severity === "LOW" ? "CRITICAL" : severity,
+      recommendedEndpoint: "/api/agent/mcp/scan",
+      recommendedSdkMethod: "guard.scanMcpTools()",
+      safeNextAction:
+        "This looks like poisoned MCP/tool metadata. Quarantine the tool and scan the full server manifest with the MCP scanner before any agent can use it.",
+      generalGuardSufficient: false,
+    };
+  }
+
+  if (hasMemoryPoisoning) {
+    return {
+      riskClass: "MEMORY_POISONING",
+      severity: severity === "LOW" ? "CRITICAL" : severity,
+      recommendedEndpoint: "/api/memory/check",
+      recommendedSdkMethod: "guard.memory()",
+      safeNextAction:
+        "This attempts to write an unsafe persistent instruction or false privilege into agent memory. Block the write and route memory changes through the memory guard.",
+      generalGuardSufficient: false,
+    };
+  }
+
   if (looksDestructive || (looksToolCall && looksUnbounded)) {
     return {
       riskClass: "TOOL_ABUSE",

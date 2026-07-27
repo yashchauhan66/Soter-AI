@@ -1,13 +1,8 @@
+import { Prisma } from "@prisma/client";
 import { apiError, jsonResponse } from "@/lib/apiResponse";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { scanRagDocument } from "@/lib/rag/scanner";
-import {
-  buildRagRescanChunkRows,
-  nextRagRescanStatus,
-  ragRescanVectorSyncPlan,
-} from "@/lib/rag/rescanPlan";
-import { getVectorProvider } from "@/lib/rag/vector/vectorProvider";
 import { emitSecurityEvent } from "@/lib/events/emit";
 
 export const runtime = "nodejs";
@@ -66,27 +61,11 @@ export async function POST(
       .map((chunk) => chunk.textRedacted)
       .join("\n\n");
 
-    // Re-run the scanner with current detector rules.
+    // Re-run the scanner with current detector rules
     const scan = scanRagDocument(reconstructedText);
 
+    // Delete old chunks and findings, create new document version
     const newVersion = document.version + 1;
-    const nextStatus = nextRagRescanStatus(document.status, scan.quarantine);
-    const chunkRows = buildRagRescanChunkRows({
-      documentId: id,
-      previousVersion: document.version,
-      newVersion,
-      previousChunks: document.chunks,
-      scannedChunks: scan.chunks,
-    });
-    const vectorPlan = ragRescanVectorSyncPlan(document.status, nextStatus);
-
-    const provider = vectorPlan.deleteExisting ? await getVectorProvider() : null;
-    if (provider) {
-      await provider.deleteDocument(document.id, {
-        organizationId: access.org.id,
-        projectId: access.project.id,
-      });
-    }
 
     await db.$transaction(async (tx) => {
       // Delete old findings and chunks
@@ -98,14 +77,31 @@ export async function POST(
         where: { id },
         data: {
           version: newVersion,
-          status: nextStatus,
+          status: scan.status,
           trustScore: scan.trustScore,
           riskTypes: scan.riskTypes,
         },
       });
 
+      // Create new chunks
       await tx.ragChunk.createMany({
-        data: chunkRows,
+        data: scan.chunks.map((chunk) => ({
+          documentId: id,
+          chunkIndex: chunk.chunkIndex,
+          textRedacted: chunk.textRedacted,
+          hash: chunk.hash,
+          riskScore: chunk.riskScore,
+          riskTypes: chunk.riskTypes,
+          allowedRoles: [
+            "OWNER",
+            "ADMIN",
+            "DEVELOPER",
+            "SECURITY_ANALYST",
+            "BILLING",
+            "VIEWER",
+          ],
+          metadata: chunk.metadata as Prisma.InputJsonValue,
+        })),
       });
 
       // Create new findings
@@ -132,32 +128,6 @@ export async function POST(
       }
     });
 
-    if (provider && vectorPlan.reindexFresh) {
-      const updatedChunks = await db.ragChunk.findMany({
-        where: { documentId: id },
-        orderBy: { chunkIndex: "asc" },
-      });
-      await provider.createNamespace({
-        organizationId: access.org.id,
-        projectId: access.project.id,
-      });
-      await provider.indexChunks(updatedChunks.map((chunk) => ({
-        id: chunk.id,
-        organizationId: access.org.id,
-        projectId: access.project.id,
-        collectionId: document.collectionId,
-        documentId: document.id,
-        documentStatus: "INDEXED",
-        textRedacted: chunk.textRedacted,
-        allowedRoles: chunk.allowedRoles,
-        sourceUrl: chunk.sourceUrl ?? undefined,
-        sensitivityLabel: chunk.sensitivityLabel,
-        metadata: chunk.metadata && typeof chunk.metadata === "object" && !Array.isArray(chunk.metadata)
-          ? chunk.metadata as Record<string, unknown>
-          : undefined,
-      })));
-    }
-
     // Emit security event if newly quarantined
     if (scan.quarantine) {
       await emitSecurityEvent({
@@ -180,7 +150,7 @@ export async function POST(
     return jsonResponse({
       id: document.id,
       version: newVersion,
-      status: nextStatus,
+      status: scan.status,
       trustScore: scan.trustScore,
       riskScore: scan.riskScore,
       riskTypes: scan.riskTypes,

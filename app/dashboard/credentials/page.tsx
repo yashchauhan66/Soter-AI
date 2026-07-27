@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { listCredentials, getCredentialAccessLogs } from "@/lib/credentials/vault";
+import { FeatureGuide } from "@/components/docs/FeatureGuide";
 
 export const dynamic = "force-dynamic";
 
@@ -32,15 +33,33 @@ export default async function CredentialsPage({
 
   return (
     <div className="space-y-7">
-      <div>
-        <p className="eyebrow">Secrets management</p>
-        <h1 className="mt-2 text-3xl font-bold">MCP Credential Vault</h1>
-        <p className="mt-3 max-w-3xl text-slate-400">
-          Securely store and manage credentials for MCP servers, tool integrations,
-          and AI services. Secrets are encrypted at rest and never exposed in logs
-          or API responses. Every access is audited.
-        </p>
-      </div>
+      <FeatureGuide
+        eyebrow="Secrets management"
+        title="MCP Credential Vault"
+        description="Securely store and manage credentials for MCP servers, tool integrations, and AI services. Secrets are encrypted at rest with AES-256-GCM and never exposed in logs or API responses."
+        useCase="AI agents and MCP servers need credentials to reach the tools they operate. Scattering those secrets across env files and configs makes rotation painful and leaks likely. The vault centralizes them, keeps only an encrypted value plus a short preview, and records every access so you have a full audit trail."
+        howItWorks={[
+          { heading: "Store a credential", body: "Register an MCP server or tool credential with its server URL and secret. The secret is encrypted with AES-256-GCM before it is written; only a short preview is ever shown." },
+          { heading: "Access is audited", body: "Every read, use, and rotation is logged with success or failure so you can see who or what touched each credential and when." },
+          { heading: "Rotate on schedule", body: "Rotate secrets in place without changing references. Credentials expiring within 7 days are flagged so you can rotate before they lapse." },
+          { heading: "Revoke when done", body: "Revoke a credential to disable it immediately. Its status moves out of ACTIVE and it can no longer be used." },
+        ]}
+        integrationCode={`// Store an MCP server credential (server-side only)
+const res = await fetch("https://soterai.in/api/credentials", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: \`Bearer \${process.env.SOTER_API_KEY}\`,
+  },
+  body: JSON.stringify({
+    projectId: "your-project-id",
+    name: "GitHub MCP token",
+    serverUrl: "https://api.githubcopilot.com/mcp/",
+    secret: process.env.GITHUB_MCP_TOKEN,
+  }),
+});`}
+        callout="Secret values are never returned by the list or access-log APIs — only an encrypted record and a short preview. Rotate a credential to change its value."
+      />
 
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="card p-5">

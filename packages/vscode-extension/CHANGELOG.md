@@ -1,5 +1,58 @@
 # Changelog
 
+## [0.2.1] - 2026-07-22
+
+### Added
+- Controlled terminal flow that routes supported commands through the authenticated local broker with preview, fixed-argv execution, and redacted output.
+- Runtime capability summary and status coverage indicators for brokered, partial, unsupported, and unknown paths.
+- Extension isolation summary for risky non-allowlisted AI/agent extensions.
+- Broker preflight coverage for runtime capabilities, file operations, network egress, MCP tools, policy changes, process launches, and extension isolation.
+- Strongest local release gate evidence covering typecheck, tests, audit, VSIX packaging, and isolated VS Code install verification.
+
+### Security
+- Added process sandbox policy decisions for shell, environment-secret, unrestricted-network, and unrestricted-filesystem launches.
+- Added file-operation, network-egress, MCP, taint, rollback, and governance policy guardrails in the shared guard core.
+- Added release evidence gates that block `99+` and `100/100` claims unless external/deployment attestations are present.
+- Dependency audit now passes at high severity with `0` known vulnerabilities.
+
+### Verified
+- `npm run validate:strongest-local` passed 15/15 required local checks.
+- `npm test` passed 829 tests.
+- VSIX installs successfully in an isolated VS Code profile as `soterai.soterai-ide-guard@0.2.1`.
+
+## [0.2.0] - 2026-07-14
+
+### Added - UX pack (native, local-first, all tested)
+- **Live inline scanning** - supported files are scanned as you type and secrets / PII / prompt-injection appear as native squiggly diagnostics (`soterai.liveScan.enabled`, on by default). 100% local, debounced, skips oversized files / excluded globs / non-file schemes.
+- **One-click Quick Fixes** - lightbulb actions on every finding: *Redact this finding* (undoable edit), *Copy safe version of this line*, and *Move secrets to protected vault* for secret categories. Internal `soterai.applyFindingFix` command is hidden from the palette.
+- **Clipboard / paste guard** - `SoterAI: Scan Clipboard Before AI` checks what's on the clipboard and offers a redacted replacement; `SoterAI: Safe Paste` scans the clipboard and can insert a redacted version instead of the raw secret. Raw clipboard values are never logged.
+- **Rich status dashboard** - the existing security dashboard now shows a Live Scan badge and has *Scan Clipboard* and *Getting Started* actions, all through the strict webview message allowlist.
+- **Native Getting Started walkthrough** (`contributes.walkthroughs`) - 5-step guided onboarding (privacy mode -> demo scan -> scan selection -> policy pack -> sidebar), auto-opened once on first install via a `soterai.onboarded` flag. `soterai.openWalkthrough` command added.
+
+### Changed
+- **Command Palette hygiene:** of 123 contributed commands, only the core commands show by default; the rest are gated behind `soterai.advancedCommands` (`soterai.showAllCommands` or `soterai.experimentalFeatures.enabled`, default false) or hidden outright for internal commands. Nothing unregistered.
+
+### Verified (2026-07-14, real runs)
+- `tsc --noEmit` clean; **50 tests / 17 suites pass**; esbuild production bundle (extension.js 217 KB); VSIX packages to 16 files / ~222 KB with no `src`/tests/`.env`/secrets; no `console.log`/`eval`/`innerHTML` in extension source; VSIX installs via VS Code 1.128.0 CLI and Cursor 3.10.17 CLI and registers as `soterai.soterai-ide-guard@0.2.0`.
+
+## [0.1.0-marketplace-readiness] - 2026-07-13
+
+### Added
+- Launch command surface: `SoterAI: Quick Start`, `Check Extension Health`, `Open Settings`, `Run Demo Scan`, `Scan Selected Text`, `Scan Git Diff`, `Review Terminal Command`, `Scan MCP / Agent Tools`, `Open AI Activity Ledger`, `Generate Canary Token`, and `Choose Policy Pack`.
+- `soterai.privacyMode` setting with `local`, `cloud`, and `hybrid` options. Local mode is the default.
+- Static tests covering launch commands, command aliases, build/lint scripts, privacy mode, no-console logging, and documented child-process boundaries.
+
+### Changed
+- Added `build` and `lint` package scripts required by release automation.
+- Telemetry now fails closed in local privacy mode and untrusted workspaces; reviewed network telemetry remains disabled.
+- Removed activation and telemetry console logging from extension source.
+- Documented fixed-argv non-shell boundaries for git diff scanning and local broker startup.
+
+### Verified
+- Extension package typecheck, lint, test, build, and VSIX package completed successfully.
+- Root typecheck and root test completed successfully.
+- Generated VSIX installed through VS Code CLI as `soterai.soterai-ide-guard@0.1.0`.
+
 ## [0.2.2] — 2026-06-27
 
 ### Fixed

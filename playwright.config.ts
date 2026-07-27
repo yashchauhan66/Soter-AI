@@ -31,6 +31,12 @@ if (!usesExplicitE2eDatabase && !usesLoopbackDatabase && process.env.CI !== "tru
 const e2eEnvironment = {
   ...process.env,
   DATABASE_URL: configuredDatabaseUrl,
+  API_KEY_PEPPER: process.env.API_KEY_PEPPER ?? "phase0-runtime-api-key-pepper-at-least-32-chars",
+  AUTH_SECRET: process.env.AUTH_SECRET ?? "phase0-runtime-auth-secret-at-least-32-characters",
+  NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET ?? process.env.AUTH_SECRET ?? "phase0-runtime-auth-secret-at-least-32-characters",
+  LOCAL_SECRET_STORE_KEY: process.env.LOCAL_SECRET_STORE_KEY ?? "phase0-runtime-local-secret-store-key",
+  SECRET_STORE_PROVIDER: "local",
+  EMAIL_PROVIDER: "mock",
 };
 
 export default defineConfig({

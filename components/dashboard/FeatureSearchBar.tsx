@@ -4,14 +4,14 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Search, ArrowRight } from "lucide-react";
 
-interface FeatureItem {
+export interface FeatureItem {
   label: string;
   href: string;
   group: string;
   keywords: string[];
 }
 
-const FEATURES: FeatureItem[] = [
+export const FEATURES: FeatureItem[] = [
   // Operate
   { label: "Overview", href: "/dashboard", group: "Operate", keywords: ["dashboard", "home", "main", "stats"] },
   { label: "Guard logs", href: "/dashboard/logs", group: "Operate", keywords: ["logs", "activity", "history", "requests"] },
@@ -59,7 +59,7 @@ const FEATURES: FeatureItem[] = [
   { label: "Integration wizard", href: "/dashboard/integrations", group: "Resources", keywords: ["integration", "wizard", "setup", "code"] },
 ];
 
-function matchScore(query: string, item: FeatureItem): number {
+export function matchScore(query: string, item: FeatureItem): number {
   const q = query.toLowerCase();
   const label = item.label.toLowerCase();
   if (label === q) return 100;
@@ -175,7 +175,7 @@ export function FeatureSearchBar() {
           onFocus={() => setFocused(true)}
           onBlur={() => setTimeout(() => setFocused(false), 200)}
           onKeyDown={handleKeyDown}
-          placeholder="Search features... (⌘K)"
+          placeholder="Search features... (Ctrl+K)"
           className="input h-10 pl-10 pr-24 text-sm"
           maxLength={200}
           aria-label="Search dashboard features"
@@ -185,7 +185,7 @@ export function FeatureSearchBar() {
           aria-autocomplete="list"
         />
         <kbd className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg border border-slate-700 bg-slate-800/50 px-2 py-0.5 text-[10px] font-medium text-slate-500">
-          ⌘K
+          Ctrl K
         </kbd>
       </div>
 

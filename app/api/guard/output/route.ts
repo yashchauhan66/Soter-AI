@@ -2,6 +2,8 @@ import { apiError, jsonResponse, readJson, requireJsonContentType } from "@/lib/
 import { authenticateApiKeyRequest } from "@/lib/apiKeyMiddleware";
 import { DEFAULT_RPM } from "@/lib/guard/constants";
 import { runOutputGuard } from "@/lib/guard/outputGuard";
+import { augmentWithMl } from "@/lib/guard/mlAugment";
+import { augmentWithLlmJudge } from "@/lib/guard/llmJudge";
 import { applyPolicy, loadProjectPolicy } from "@/lib/guard/policy";
 import { persistGuardResult } from "@/lib/guard/persistence";
 import type { RiskType } from "@/lib/guard/types";
@@ -178,7 +180,11 @@ export async function POST(request: Request) {
       }
     }
 
-    const baseline = runOutputGuard(body.aiResponse);
+    const baseline = await augmentWithLlmJudge(
+      await augmentWithMl(runOutputGuard(body.aiResponse), body.aiResponse, "OUTPUT"),
+      body.aiResponse,
+      "OUTPUT",
+    );
     const result = applyPolicy(body.aiResponse, baseline, policy, "OUTPUT");
     scheduleGuardResultPersistence({
       projectId: project.id,

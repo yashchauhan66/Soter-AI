@@ -1,13 +1,6 @@
 import { MAX_DOCUMENT_PAGES } from "./fileValidation";
 import { inflateSync } from "node:zlib";
 
-/** Maximum time (ms) spent inspecting a single PDF before declaring it suspicious. */
-const PDF_INSPECT_TIMEOUT_MS = 5_000;
-/** Maximum number of compressed streams to attempt decompression on. */
-const PDF_MAX_DECODE_STREAMS = 50;
-/** Maximum decompressed bytes across all streams. */
-const PDF_TOTAL_DECOMPRESSED_BYTES = 50 * 1024 * 1024;
-
 export interface PdfInspection {
   pageCount: number;
   suspicious: boolean;
@@ -22,30 +15,12 @@ function decodePdfLiteral(value: string) {
 
 export function inspectPdf(content: Buffer): PdfInspection {
   if (content.subarray(0, 5).toString("ascii") !== "%PDF-") throw new Error("Invalid PDF signature.");
-  const startTime = Date.now();
   const source = content.toString("latin1");
   const findings: PdfInspection["findings"] = [];
   const decodedStreams: string[] = [];
-  let streamCount = 0;
-  let totalDecompressedBytes = 0;
   for (const match of source.matchAll(/<<(?:.|\r|\n)*?\/Filter\s*\/FlateDecode(?:.|\r|\n)*?>>\s*stream\r?\n([\s\S]*?)\r?\nendstream/g)) {
-    if (Date.now() - startTime > PDF_INSPECT_TIMEOUT_MS) {
-      findings.push({ type: "PDF_INSPECT_TIMEOUT", severity: "HIGH", message: "PDF inspection timed out — document may be maliciously crafted." });
-      break;
-    }
-    streamCount++;
-    if (streamCount > PDF_MAX_DECODE_STREAMS) {
-      findings.push({ type: "PDF_TOO_MANY_STREAMS", severity: "HIGH", message: "PDF has too many compressed streams to inspect safely." });
-      break;
-    }
     try {
-      const decompressed = inflateSync(Buffer.from(match[1], "latin1"), { maxOutputLength: 5 * 1024 * 1024 });
-      totalDecompressedBytes += decompressed.length;
-      if (totalDecompressedBytes > PDF_TOTAL_DECOMPRESSED_BYTES) {
-        findings.push({ type: "PDF_DECOMPRESSED_TOO_LARGE", severity: "HIGH", message: "Total decompressed PDF content exceeds the inspection limit." });
-        break;
-      }
-      decodedStreams.push(decompressed.toString("latin1"));
+      decodedStreams.push(inflateSync(Buffer.from(match[1], "latin1"), { maxOutputLength: 5 * 1024 * 1024 }).toString("latin1"));
     } catch {
       findings.push({ type: "PDF_UNINSPECTABLE_STREAM", severity: "HIGH", message: "PDF contains a compressed stream that could not be safely inspected." });
     }

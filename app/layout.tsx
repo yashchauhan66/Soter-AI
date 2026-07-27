@@ -1,12 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import Link from "next/link";
-import Image from "next/image";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { inter, jetbrainsMono } from "@/app/fonts";
 import { AuthProvider } from "@/components/auth/AuthProvider";
-import { HeaderNav } from "@/components/auth/HeaderNav";
-import { AiAssistantLoader } from "@/components/dashboard/AiAssistantLoader";
-import { PHLaunchBanner } from "@/components/marketing/PHLaunchBanner";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { siteJsonLd } from "@/lib/seo/schema";
 import "./globals.css";
@@ -14,7 +10,7 @@ import "./globals.css";
 const siteUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://soterai.in";
 const siteName = "SoterAI";
 const siteDescription =
-  "SoterAI is an AI security command layer for chatbots, RAG apps, and autonomous agents, protecting teams from prompt injection, data leakage, unsafe outputs, and agent abuse.";
+  "SoterAI is an AI security platform for chatbots, RAG apps, copilots, and autonomous agents. Detect prompt injection, jailbreaks, AI data leakage, unsafe outputs, risky tool calls, secrets, and Indian PII such as Aadhaar, PAN, GSTIN, UPI, and IFSC.";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -28,26 +24,42 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${siteName} | AI Security Command Layer`,
+    default: `${siteName} | AI Security Platform for Prompt Injection, RAG and Agent Security`,
     template: `%s | ${siteName}`,
   },
   description: siteDescription,
   keywords: [
     "AI security",
+    "AI security platform",
+    "AI security guard",
+    "AI security guardrails",
     "prompt injection protection",
+    "prompt injection detector",
     "LLM guardrails",
+    "LLM security",
+    "LLM firewall",
     "chatbot security",
     "jailbreak detection",
     "PII redaction",
     "RAG security",
+    "RAG security platform",
     "AI agent firewall",
+    "AI agent security",
     "OWASP LLM Top 10",
     "India PII detection",
     "agent security",
     "SoterAI",
     "AI safety",
-    "LLM security",
     "AI guardrail platform",
+    "AI security India",
+    "Aadhaar PII detection",
+    "Indian AI compliance",
+    "generative AI security",
+    "LLM security India",
+    "chatbot security India",
+    "AI agent protection",
+    "enterprise AI security",
+    "AI data leakage prevention",
   ],
   authors: [{ name: "SoterAI" }],
   creator: "SoterAI",
@@ -68,7 +80,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName,
-    title: `${siteName} - AI Security Command Layer`,
+    title: `${siteName} - AI Security Platform for LLM Apps and AI Agents`,
     description: siteDescription,
     images: [
       {
@@ -81,7 +93,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteName} - AI Security Command Layer`,
+    title: `${siteName} - AI Security Platform`,
     description: siteDescription,
     images: ["/opengraph-image.png"],
     site: "@soterai",
@@ -99,6 +111,15 @@ export const metadata: Metadata = {
   other: {
     "mobile-web-app-capable": "yes",
   },
+  alternates: {
+    canonical: siteUrl,
+    languages: {
+      "en": siteUrl,
+      "en-IN": siteUrl,
+      "hi": siteUrl,
+      "x-default": siteUrl,
+    },
+  },
 };
 
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -113,68 +134,8 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           Skip to main content
         </a>
         <AuthProvider>
-          <PHLaunchBanner />
-          <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-ink/90 backdrop-blur-xl">
-            <div className="container-page flex h-16 items-center justify-between">
-              <Link href="/" className="flex min-w-0 items-center font-semibold tracking-wide">
-                <Image src="/logo.png" alt="SoterAI" width={114} height={40} priority className="h-9 w-auto" />
-              </Link>
-              <HeaderNav />
-            </div>
-          </header>
-          <div id="main-content" tabIndex={-1}>{children}</div>
-          <footer className="border-t border-slate-800 bg-slate-950/45 py-12 text-sm text-slate-500">
-            <div className="container-page">
-              <div className="flex flex-col justify-between gap-8 sm:flex-row">
-                <div className="max-w-xs">
-                  <Link href="/" className="flex items-center font-semibold tracking-wide">
-                    <Image src="/logo.png" alt="SoterAI" width={97} height={34} className="h-8 w-auto" />
-                  </Link>
-                  <p className="mt-3 leading-6 text-slate-500">
-                    AI security command layer for chatbots, RAG apps, and autonomous agents.
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-10">
-                  <div>
-                    <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-400">Product</p>
-                    <div className="flex flex-col gap-2">
-                      <Link href="/#features" className="hover:text-slate-300">Features</Link>
-                      <Link href="/docs" className="hover:text-slate-300">Documentation</Link>
-                      <Link href="/pricing" className="hover:text-slate-300">Pricing</Link>
-                      <Link href="/playground" className="hover:text-slate-300">Playground</Link>
-                      <Link href="/demo" className="hover:text-slate-300">Demo</Link>
-                      <Link href="/dashboard/integrations" className="hover:text-slate-300">Integrations</Link>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-400">Company</p>
-                    <div className="flex flex-col gap-2">
-                      <Link href="/trust" className="hover:text-slate-300">Trust</Link>
-                      <Link href="/status" className="hover:text-slate-300">Status</Link>
-                      <Link href="/terms" className="hover:text-slate-300">Terms</Link>
-                      <Link href="/privacy" className="hover:text-slate-300">Privacy</Link>
-                      <Link href="/security" className="hover:text-slate-300">Security</Link>
-                      <Link href="/support" className="hover:text-slate-300">Support</Link>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-400">Compare</p>
-                    <div className="flex flex-col gap-2">
-                      <Link href="/comparison" className="hover:text-slate-300">vs Competitors</Link>
-                      <Link href="/benchmarks" className="hover:text-slate-300">Benchmarks</Link>
-                      <Link href="/case-studies" className="hover:text-slate-300">Case Studies</Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-6 sm:flex-row">
-                <p className="text-xs">&copy; {new Date().getFullYear()} SoterAI. All rights reserved.</p>
-                <p className="text-xs">Security intelligence for AI systems in production.</p>
-              </div>
-            </div>
-          </footer>
+          <SiteChrome currentYear={new Date().getFullYear()}>{children}</SiteChrome>
         </AuthProvider>
-        <AiAssistantLoader />
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ""} />
       </body>
     </html>

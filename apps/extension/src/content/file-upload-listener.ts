@@ -1,4 +1,3 @@
-import { sendMessageWithTimeout } from "../lib/runtime-messaging";
 import type { RuntimeResponse } from "../lib/types";
 import { showSoterOverlay } from "./overlay";
 
@@ -15,13 +14,17 @@ export function installFileUploadListener() {
     showSoterOverlay({
       result: response.result,
       onCopy: () => void navigator.clipboard?.writeText(names.join("\n")),
-      onApproval: () => void chrome.runtime.sendMessage({ type: "SOTER_REQUEST_APPROVAL", text: names.join("\n"), url: location.href }),
+      onApproval: async () => {
+        chrome.runtime.sendMessage({ type: "SOTER_REQUEST_APPROVAL", text: names.join("\n"), url: location.href });
+        return null;
+      },
     });
   }, true);
 }
 
 function sendFileScan(text: string) {
-  return sendMessageWithTimeout<RuntimeResponse>(
+  return new Promise<RuntimeResponse>((resolve) => chrome.runtime.sendMessage(
     { type: "SOTER_SCAN_TEXT", text, url: location.href, eventType: "file_upload" },
-  ).then((response) => response ?? { ok: false, message: "No response." });
+    (response) => resolve((response as RuntimeResponse) ?? { ok: false, message: chrome.runtime.lastError?.message ?? "No response." }),
+  ));
 }

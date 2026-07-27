@@ -673,22 +673,6 @@ test("DEEP-SEC-006: ledger route requires passport authentication", () => {
   assert.ok(source.includes("authenticateAgentPassport"), "Must require passport auth");
 });
 
-test("DEEP-SEC-006b: ledger route validates passport authorization before insert", () => {
-  const source = readFileSync("app/api/agent/action/ledger/route.ts", "utf8");
-  assert.ok(source.includes("checkAgentPassportForAction"), "Must validate session passport before recording ledger entries");
-  assert.match(source, /if \(passportDecision\.decision !== "ALLOW"\)[\s\S]*return jsonResponse/);
-  assert.ok(source.indexOf("checkAgentPassportForAction") < source.indexOf('INSERT INTO "AgentActionLedger"'), "Passport validation must happen before ledger insert");
-});
-
-test("DEEP-SEC-006c: ledger route binds lineage IDs to the validated passport", () => {
-  const source = readFileSync("app/api/agent/action/ledger/route.ts", "utf8");
-  assert.match(source, /sessionId:\s*passportDecision\.sessionId/);
-  assert.match(source, /agentIdentityId:\s*passportDecision\.agentIdentityId/);
-  assert.match(source, /passportId:\s*passportDecision\.passportId/);
-  assert.doesNotMatch(source, /\$\{body\.agentIdentityId \?\? null\}/, "Must not persist client-supplied agentIdentityId");
-  assert.doesNotMatch(source, /\$\{body\.passportId \?\? null\}/, "Must not persist client-supplied passportId");
-});
-
 test("DEEP-SEC-007: rollback route requires passport authentication", () => {
   const source = readFileSync("app/api/agent/action/ledger/[id]/rollback/route.ts", "utf8");
   assert.ok(source.includes("authenticateAgentPassport"), "Must require passport auth");

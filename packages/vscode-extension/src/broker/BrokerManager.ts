@@ -42,6 +42,8 @@ export class BrokerManager implements vscode.Disposable {
             SOTERAI_ANTHROPIC_PROVIDER_URL: config.get<string>("broker.anthropicProviderUrl", ""),
             SOTERAI_PROVIDER_API_KEY: providerKey,
         };
+        // Launches only the bundled local broker entry with Electron's Node
+        // runtime. User input never controls the executable or argv.
         this.child = spawn(process.execPath, [script], { env, windowsHide: true, stdio: "ignore" });
         this.child.once("exit", () => { this.child = undefined; });
         for (let attempt = 0; attempt < 30; attempt++) {

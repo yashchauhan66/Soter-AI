@@ -1,0 +1,56 @@
+{
+  "date": "2026-07-22",
+  "phase": "All phases core enforcement pass",
+  "scope": "Shared guard-core policy modules plus docs/evidence for phases 2 through 12",
+  "implementedControls": [
+    "Runtime capability discovery and effective-risk summary",
+    "File operation firewall for normalized path, realpath escape, hidden path, protected path, mass change, and secret-bearing content decisions",
+    "Network egress policy for URL parsing, private/link-local/cloud metadata blocking, redirect-chain checks, allowed hosts, and secret payload detection",
+    "MCP gateway pre-invocation policy with server inventory, permission allowlist, prompt-injection handling, taint escalation, and argument redaction",
+    "Taint engine for prompt-injection and untrusted-source influence on high-risk actions",
+    "Transaction preview and in-memory checkpoint metadata with redacted previews",
+    "Enterprise policy-change validation for signed policy downgrade, mandatory control removal, disabled controls, expired exceptions, and admin-only enterprise changes",
+    "Authenticated local broker preflight endpoints for runtime capabilities, file operations, network egress, MCP tools, and policy changes",
+    "Raw terminal open warning and runtime coverage status item in the VS Code extension",
+    "Dependency overrides for adm-zip, sharp, and fast-uri to clear known high-severity npm advisories",
+    "Process sandbox preflight policy with deny-before-launch shell/env-secret checks and constrained sandbox profiles",
+    "Extension isolation preflight policy with enterprise allowlist/block recommendations for risky third-party AI extensions",
+    "Security 100 evidence gate requiring 99+ foundation, OS enforcement, enterprise extension control, signed provenance, and recovery drill evidence"
+  ],
+  "focusedTests": [
+    { "command": "npm --prefix packages/guard-core run typecheck", "result": "PASS" },
+    { "command": "npm --prefix packages/guard-core run test", "result": "PASS", "testsPassed": 165 },
+    { "command": "npm --prefix packages/guard-core run build", "result": "PASS" },
+    { "command": "npm --prefix apps/local-ai-broker run typecheck", "result": "PASS" },
+    { "command": "npm --prefix apps/local-ai-broker run test", "result": "PASS", "testsPassed": 25 },
+    { "command": "npm --prefix packages/vscode-extension run typecheck", "result": "PASS" },
+    { "command": "npm --prefix packages/vscode-extension run test", "result": "PASS", "testsPassed": 78 },
+    { "command": "npm --prefix packages/vscode-extension run build", "result": "PASS" },
+    { "command": "npm run typecheck", "result": "PASS" },
+    { "command": "npm run validate:extension-permissions", "result": "PASS" },
+    { "command": "npm test", "result": "PASS", "testsPassed": 823 },
+    { "command": "npm audit --audit-level=critical", "result": "PASS" },
+    { "command": "npm audit --audit-level=high", "result": "PASS", "highSeverityFindings": 0 }
+  ],
+  "coverageByPhase": {
+    "phase2CapabilityDiscovery": "PARTIAL_VISIBILITY",
+    "phase3ContextFirewall": "STRONG_ENFORCEMENT for SoterAI-built context",
+    "phase4FileChangeFirewall": "STRONG_ENFORCEMENT for callers routed through FileOperationFirewall",
+    "phase5TerminalFirewall": "STRONG_ENFORCEMENT for broker-controlled allowlisted commands; DETECTION_ONLY for manual/raw terminal review",
+    "phase6CredentialBroker": "STRONG_ENFORCEMENT for brokered credentials",
+    "phase7NetworkEgress": "STRONG_ENFORCEMENT for routed requests; UNSUPPORTED for arbitrary process egress",
+    "phase8MCPGateway": "STRONG_ENFORCEMENT for gateway-routed invocations; PARTIAL_VISIBILITY for config scanning",
+    "phase9Taint": "STRONG_ENFORCEMENT for callers that pass source provenance into policy",
+    "phase10Rollback": "PARTIAL_VISIBILITY for preview/checkpoint metadata; rollback execution not universally wired",
+    "phase11Governance": "STRONG_ENFORCEMENT for policy changes routed through GovernancePolicy",
+    "phase12RedTeamReadiness": "PARTIAL_VISIBILITY with internal tests; external validation still required"
+  },
+  "remainingUnsupported": [
+    "Universal interception of third-party VS Code extensions",
+    "Raw terminal and external shell enforcement",
+    "Process-tree and child-process control",
+    "OS-level arbitrary network egress enforcement",
+    "Universal MCP host interception",
+    "Independent third-party assessment"
+  ]
+}

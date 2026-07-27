@@ -4,13 +4,13 @@ import { installPasteListener } from "./paste-listener";
 import { installResponseObserver } from "./response-observer";
 import { installSubmitInterceptor } from "./submit-interceptor";
 import { installFileContentScanner } from "./file-content-scanner";
-import { sendMessageWithTimeout } from "../lib/runtime-messaging";
 import type { AIDestinationPolicy } from "../../../../packages/shared/src/ai-destinations";
 
 const SHADOW_AI_KNOWN_PLATFORMS = [
   "chatgpt.com", "chat.openai.com", "claude.ai", "gemini.google.com", "bard.google.com",
   "perplexity.ai", "poe.com", "replit.com", "stackblitz.com", "codesandbox.io",
   "bolt.new", "v0.dev", "lovable.dev", "openrouter.ai", "openwebui.com",
+  "copilot.microsoft.com", "copilot.live.com"
 ];
 
 /** Heuristically guess if the hostname belongs to an AI-like tool. */
@@ -36,7 +36,7 @@ void getDestinationContext().then((context) => {
   if (!context.destination && context.legacyMatch !== true) {
     const hostname = location.hostname.replace(/^www\./, "");
     if (isAiLikelyHostname(hostname)) {
-      void sendMessageWithTimeout({
+      chrome.runtime.sendMessage({
         type: "SOTER_DISCOVER_SHADOW_AI",
         domain: hostname,
         destination: hostname,
@@ -72,7 +72,8 @@ function isObject(value: unknown): value is { type?: string } {
 }
 
 function getDestinationContext() {
-  return sendMessageWithTimeout<{ active: boolean; destination?: AIDestinationPolicy; employeeId?: string; legacyMatch?: boolean }>(
+  return new Promise<{ active: boolean; destination?: AIDestinationPolicy; employeeId?: string; legacyMatch?: boolean }>((resolve) => chrome.runtime.sendMessage(
     { type: "SOTER_GET_DESTINATION_CONTEXT", url: location.href },
-  ).then((response) => response ?? { active: false });
+    (response) => resolve((response as { active: boolean; destination?: AIDestinationPolicy; employeeId?: string; legacyMatch?: boolean }) ?? { active: false }),
+  ));
 }

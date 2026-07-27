@@ -1,0 +1,27 @@
+{
+  "product": "SoterLLM",
+  "version": "v4",
+  "temperature": 5.26,
+  "ece_before": 0.029574384912848473,
+  "ece_after": 0.008204484961513228,
+  "target_fpr": 0.01,
+  "per_label_thresholds": {
+    "SAFE": 0.0,
+    "PROMPT_INJECTION": 0.15,
+    "JAILBREAK": 0.15,
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": 0.15,
+    "PII": 0.15,
+    "SECRET": 0.15,
+    "UNSAFE_OUTPUT": 0.15,
+    "RAG_POISONING": 0.15,
+    "DATA_EXFILTRATION_ATTEMPT": 0.15
+  },
+  "ood": {
+    "max_prob_p05": 0.1174607704017143,
+    "max_prob_mean": 0.11679551503848677,
+    "entropy_mean": 2.1966874131893848,
+    "entropy_p95": 2.1971231491795065,
+    "suggested_abstain_max_prob": 0.25
+  },
+  "notes": "Temperature is baked into exported ONNX logits (logits_out = raw/T). Per-label thresholds and OOD floor are applied in lib/ml/onnxBackend.ts."
+}

@@ -1,4 +1,3 @@
-import { sendMessageWithTimeout } from "../lib/runtime-messaging";
 import { installSourceLineageListener } from "./source-lineage-listener";
 import { matchSourceApp, type SourceAppConfig } from "../lib/source-apps";
 
@@ -10,7 +9,8 @@ void getSourceApps().then((sourceApps) => {
 });
 
 function getSourceApps() {
-  return sendMessageWithTimeout<{ ok?: boolean; sourceApps?: SourceAppConfig[] }>(
+  return new Promise<SourceAppConfig[]>((resolve) => chrome.runtime.sendMessage(
     { type: "SOTER_GET_SOURCE_APPS" },
-  ).then((response) => response?.sourceApps ?? []);
+    (response) => resolve((response as { ok?: boolean; sourceApps?: SourceAppConfig[] })?.sourceApps ?? []),
+  ));
 }

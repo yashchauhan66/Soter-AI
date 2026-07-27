@@ -22,9 +22,28 @@ const REDACTION_RULES: Array<[RegExp, string]> = [
     // ── JWT (relaxed: short middle/signature segments allowed) ────────────
     [/\beyJ[A-Za-z0-9_-]{6,}\.[A-Za-z0-9_-]{2,}\.[A-Za-z0-9_-]{2,}\b/g, "[REDACTED_JWT]"],
     // ── VCS tokens ────────────────────────────────────────────────────────
-    [/\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9_]{30,255}\b/g, "[REDACTED_GITHUB_TOKEN]"],
+    [/\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9_]{20,255}\b/g, "[REDACTED_GITHUB_TOKEN]"],
     [/\bglpat-[A-Za-z0-9_-]{20,}\b/g, "[REDACTED_GITLAB_TOKEN]"],
+    [/\bhf_[A-Za-z0-9]{20,}\b/g, "[REDACTED_HUGGINGFACE_TOKEN]"],
+    [/\bnpm_[A-Za-z0-9]{36,}\b/g, "[REDACTED_NPM_TOKEN]"],
+    [/\bpypi-[A-Za-z0-9_-]{20,}\b/g, "[REDACTED_PYPI_TOKEN]"],
+    [/\bSG\.[A-Za-z0-9_-]{22}\.[A-Za-z0-9_-]{43}\b/g, "[REDACTED_SENDGRID_KEY]"],
+    [/\bdop_v1_[a-f0-9]{64}\b/g, "[REDACTED_DIGITALOCEAN_TOKEN]"],
+    [/\bshpat_[a-fA-F0-9]{32}\b/g, "[REDACTED_SHOPIFY_TOKEN]"],
+    [/\bdapi[a-f0-9]{32,}\b/gi, "[REDACTED_DATABRICKS_TOKEN]"],
+    [/\bsb[pa]_[A-Za-z0-9_-]{20,}\b/g, "[REDACTED_SUPABASE_KEY]"],
+    [/\bgithub_pat_[A-Za-z0-9_]{20,}\b/g, "[REDACTED_GITHUB_FINE_GRAINED]"],
+    [/\bdckr_pat_[A-Za-z0-9_-]{20,}\b/g, "[REDACTED_DOCKER_PAT]"],
+    [/\bkey-[0-9a-zA-Z]{32}\b/g, "[REDACTED_MAILGUN_KEY]"],
+    [/\bATBB[A-Za-z0-9]{20,}\b/g, "[REDACTED_BITBUCKET_TOKEN]"],
+    [/\bgl(?:cbt|dt|rt)-[A-Za-z0-9_-]{20,}\b/g, "[REDACTED_GITLAB_CI_TOKEN]"],
+    [/\batlasv1\.[A-Za-z0-9]{50,}\b/g, "[REDACTED_TERRAFORM_TOKEN]"],
+    [/\b[MN][A-Za-z0-9]{23,}\.[\w-]{6}\.[\w-]{27,}\b/g, "[REDACTED_DISCORD_TOKEN]"],
+    [/(?:DefaultEndpointsProtocol|AccountKey)=[A-Za-z0-9+/=]{20,}/gi, "[REDACTED_AZURE_STORAGE]"],
+    [/\b(?:Server|Data Source|Host)=[^;\s]+;[^;\n]*(?:Password|Pwd)=[^;\s]{6,}/gi, "[REDACTED_CONNECTION_STRING]"],
+
     // ── Cloud / provider keys ─────────────────────────────────────────────
+
     [/\b(?:AKIA|ASIA)[A-Z0-9]{16}\b/g, "[REDACTED_AWS_ACCESS_KEY]"],
     [/(?:aws_secret_access_key|secret_key)\s*[:=]\s*["']?[A-Za-z0-9/+=]{40}["']?/gi, "[REDACTED_AWS_SECRET_KEY]"],
     [/\bsk-ant-[A-Za-z0-9_-]{20,}\b/g, "[REDACTED_ANTHROPIC_KEY]"],
@@ -62,8 +81,26 @@ const REDACTION_RULES: Array<[RegExp, string]> = [
 const HIGH_RISK_SECRET_PATTERNS: Array<[string, RegExp]> = [
     ["private_key", /-----BEGIN (?:RSA |EC |OPENSSH |DSA |PGP |ENCRYPTED )?PRIVATE KEY-----/],
     ["jwt", /\beyJ[A-Za-z0-9_-]{6,}\.[A-Za-z0-9_-]{2,}\.[A-Za-z0-9_-]{2,}\b/],
-    ["github_token", /\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9_]{30,255}\b/],
+    ["github_token", /\b(?:ghp|gho|ghu|ghs|ghr)_[A-Za-z0-9_]{20,255}\b/],
     ["gitlab_token", /\bglpat-[A-Za-z0-9_-]{20,}\b/],
+    ["huggingface_token", /\bhf_[A-Za-z0-9]{20,}\b/],
+    ["npm_token", /\bnpm_[A-Za-z0-9]{36,}\b/],
+    ["pypi_token", /\bpypi-[A-Za-z0-9_-]{20,}\b/],
+    ["sendgrid_key", /\bSG\.[A-Za-z0-9_-]{22}\.[A-Za-z0-9_-]{43}\b/],
+    ["digitalocean_token", /\bdop_v1_[a-f0-9]{64}\b/],
+    ["shopify_token", /\bshpat_[a-fA-F0-9]{32}\b/],
+    ["databricks_token", /\bdapi[a-f0-9]{32,}\b/i],
+    ["supabase_key", /\bsb[pa]_[A-Za-z0-9_-]{20,}\b/],
+    ["github_fine_grained", /\bgithub_pat_[A-Za-z0-9_]{20,}\b/],
+    ["docker_pat", /\bdckr_pat_[A-Za-z0-9_-]{20,}\b/],
+    ["mailgun_key", /\bkey-[0-9a-zA-Z]{32}\b/],
+    ["bitbucket_token", /\bATBB[A-Za-z0-9]{20,}\b/],
+    ["gitlab_ci_token", /\bgl(?:cbt|dt|rt)-[A-Za-z0-9_-]{20,}\b/],
+    ["terraform_token", /\batlasv1\.[A-Za-z0-9]{50,}\b/],
+    ["discord_token", /\b[MN][A-Za-z0-9]{23,}\.[\w-]{6}\.[\w-]{27,}\b/],
+    ["azure_storage", /(?:DefaultEndpointsProtocol|AccountKey)=[A-Za-z0-9+/=]{20,}/i],
+    ["connection_string", /\b(?:Server|Data Source|Host)=[^;\s]+;[^;\n]*(?:Password|Pwd)=[^;\s]{6,}/i],
+
     ["aws_access_key", /\b(?:AKIA|ASIA)[A-Z0-9]{16}\b/],
     ["anthropic_key", /\bsk-ant-[A-Za-z0-9_-]{20,}\b/],
     ["stripe_key", /\b(?:sk|pk|rk)_(?:test|live)_[A-Za-z0-9]{16,}\b/],
@@ -73,6 +110,7 @@ const HIGH_RISK_SECRET_PATTERNS: Array<[string, RegExp]> = [
     ["slack_token", /\bxox(?:b|p|o|a|r|s)-[A-Za-z0-9-]{10,}\b/i],
     ["database_url", /\b(?:postgres(?:ql)?|mysql|mongodb(?:\+srv)?|redis|mssql):\/\/[^\s"'<>]+/i],
 ];
+
 
 /**
  * Redact sensitive content. Detector findings (when supplied) are masked by

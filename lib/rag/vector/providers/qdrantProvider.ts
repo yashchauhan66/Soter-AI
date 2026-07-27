@@ -11,6 +11,9 @@ export class QdrantProvider implements VectorProvider {
     const { url, apiKey } = this.config();
     const response = await fetch(`${url}${path}`, { ...init, headers: { "content-type": "application/json", ...(apiKey ? { "api-key": apiKey } : {}), ...init.headers }, signal: AbortSignal.timeout(10_000) });
     if (!response.ok) throw new Error(`Qdrant request failed with HTTP ${response.status}.`);
+    if (response.status === 204) return undefined as T;
+    const contentType = response.headers.get("content-type") ?? "";
+    if (!contentType.includes("application/json")) return await response.text() as T;
     return await response.json() as T;
   }
   async createNamespace(context: VectorNamespaceContext) { const namespace = createVectorNamespace(context.organizationId, context.projectId); await this.request(`/collections/${encodeURIComponent(namespace)}`, { method: "PUT", body: JSON.stringify({ vectors: { size: Number(process.env.VECTOR_DIMENSIONS ?? 64), distance: "Cosine" } }) }); return namespace; }

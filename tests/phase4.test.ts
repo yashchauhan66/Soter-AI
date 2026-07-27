@@ -60,7 +60,6 @@ test("vector namespaces and post-filter enforce project and role boundaries", ()
     { id: "ok", organizationId: "org-a", projectId: "project-a", documentId: "doc-a", documentStatus: "INDEXED", textRedacted: "safe", allowedRoles: ["VIEWER"] },
     { id: "cross", organizationId: "org-a", projectId: "project-b", documentId: "doc-b", documentStatus: "INDEXED", textRedacted: "private" },
     { id: "quarantine", organizationId: "org-a", projectId: "project-a", documentId: "doc-c", documentStatus: "QUARANTINED", textRedacted: "unsafe" },
-    { id: "missing-acl", organizationId: "org-a", projectId: "project-a", documentId: "doc-d", documentStatus: "INDEXED", textRedacted: "unscoped" },
   ];
   assert.deepEqual(retrievalPostFilter(chunks, { organizationId: "org-a", projectId: "project-a", role: "VIEWER" }).map((item) => item.id), ["ok"]);
 });

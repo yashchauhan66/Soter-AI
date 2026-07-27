@@ -1,45 +1,62 @@
-# Permission Justification for Soter Enterprise AI Guard
+# Browser Extension Permission Justification
 
-## Required Permissions
-- `activeTab`: Required to interact with the currently active AI tab when the user clicks the extension action.
-- `contextMenus`: Required to add right-click options for quickly scanning selected text or images.
-- `sidePanel`: Required to display the Soter Control Plane side panel for scan results and policy status.
-- `storage`: Required to securely cache policies, rules, semantic thresholds, and the enrollment token locally.
-- `scripting`: Required to inject content scripts programmatically into allowed AI domains to monitor input fields.
-- `alarms`: Required to schedule background policy syncs and health heartbeats.
-
-## Optional Permissions
-- `identity` & `identity.email`: Required to attribute blocked events to the employee in the enterprise dashboard. This is optional and only used if the enterprise specifically configures user attribution.
+This document explains why the SoterAI browser extension requests each permission and how those permissions are limited.
 
 ## Host Permissions
-The extension injects content scripts into these specific external AI tools and development environments to intercept and redact sensitive prompts, and to optionally perform response scanning to protect users from malicious AI outputs (if enabled by the admin). Admins can disable response scanning per destination. Unrelated browsing is not monitored or scanned.
 
-- `*://chatgpt.com/*`
-- `*://chat.openai.com/*`
-- `*://claude.ai/*`
-- `*://gemini.google.com/*`
-- `*://bard.google.com/*`
-- `*://perplexity.ai/*`
-- `*://poe.com/*`
-- `*://openrouter.ai/*`
-- `*://replit.com/*`
-- `*://*.replit.dev/*`
-- `*://stackblitz.com/*`
-- `*://*.stackblitz.io/*`
-- `*://codesandbox.io/*`
-- `*://*.csb.app/*`
-- `*://github.dev/*`
-- `*://*.github.dev/*`
-- `*://bolt.new/*`
-- `*://v0.dev/*`
-- `*://lovable.dev/*`
-- `*://openwebui.com/*`
+The extension uses host permissions only for configured AI, coding, and SoterAI service destinations. It does not request `<all_urls>` and does not monitor unrelated browsing.
+
+Host permissions are needed to:
+
+- Scan prompts before they are submitted to configured AI destinations.
+- Perform optional response scanning when an admin enables it for a destination.
+- Apply organization policy and emergency lockdown rules.
+- Show local block, redaction, warning, or approval controls.
+
+An admin can disable response scanning or disable it per destination through policy.
+
+Exact host permissions:
+
+- `https://chatgpt.com/*`
+- `https://chat.openai.com/*`
+- `https://claude.ai/*`
+- `https://gemini.google.com/*`
+- `https://www.perplexity.ai/*`
+- `https://poe.com/*`
+- `https://openrouter.ai/*`
+- `https://replit.com/*`
+- `https://*.replit.dev/*`
+- `https://stackblitz.com/*`
+- `https://*.stackblitz.io/*`
+- `https://codesandbox.io/*`
+- `https://*.csb.app/*`
+- `https://github.dev/*`
+- `https://*.github.dev/*`
+- `https://bolt.new/*`
+- `https://v0.dev/*`
+- `https://lovable.dev/*`
+- `https://openwebui.com/*`
 - `https://soterai.in/*`
-- `*://localhost/*`
-- `*://127.0.0.1/*`
 
-## Optional Host Permissions
-None. The current package does not request broad runtime host access. Enterprise data-lineage monitoring is limited to the explicitly declared AI, coding, local AI, and SoterAI control-plane hosts above.
+Exact required extension permissions:
 
-## Enterprise Justification
-This extension is explicitly for enterprise deployments and managed devices. The declared hosts are limited to supported AI tools, browser coding environments, local AI endpoints, and the SoterAI control plane. Raw prompts, files, or copied text are not stored by default; only metadata and redacted previews are sent to the customer's dedicated enterprise dashboard.
+- `contextMenus`: adds user-visible right-click actions for safe prompt review and approval workflows.
+- `sidePanel`: shows enrollment, latest scan, response scan, and privacy status without injecting extra UI into the page.
+- `storage`: stores policy cache, enrollment status, hashes, scan metadata, and redacted previews.
+- `alarms`: schedules policy sync, heartbeat, and lockdown refresh.
+
+## Storage
+
+Storage is used for enrollment state, policy cache, last heartbeat status, local scan metadata, hashes, and redacted previews. Raw prompt text, raw copied text, and raw file content are not stored by default.
+
+## Context Menus And Side Panel
+
+Context menus and the side panel provide user-visible controls for safe prompt review, approval requests, enrollment status, and privacy status. They do not grant access to unrelated browsing.
+
+## Alarms
+
+Alarms are used for policy sync, heartbeat scheduling, and lockdown refresh. This keeps protection available when the browser is offline or the SoterAI service is temporarily unreachable.
+
+## Remote Calls
+
+Remote calls send policy metadata, decisions, risk scores, detected data types, and redacted previews by default. Full prompt logging is off by default and requires explicit admin policy configuration.

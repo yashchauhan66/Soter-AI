@@ -2,10 +2,16 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import {
+  consumePendingEmailVerificationOtps,
   createEmailVerificationOtp,
   EMAIL_OTP_RESEND_COOLDOWN_MS,
 } from "@/lib/auth/emailOtp";
-import { resolveEmailDeliveryMode } from "@/lib/auth/signupPolicy";
+import {
+  resolveEmailDeliveryMode,
+  resolveEmailProvider,
+  shouldExposeDevelopmentOtp,
+  validateEmailDeliveryConfig,
+} from "@/lib/auth/signupPolicy";
 import { sendTemplateEmail } from "@/lib/email/send";
 import { enforcePublicRateLimit } from "@/lib/publicRateLimit";
 
@@ -32,6 +38,18 @@ export async function POST(request: Request) {
 
     const deliveryMode = resolveEmailDeliveryMode();
     if (deliveryMode === "blocked") {
+      return jsonResponse(
+        { error: true, message: "Email delivery is temporarily unavailable." },
+        { status: 503, headers: { "Retry-After": "60" } },
+      );
+    }
+    const missingConfig = validateEmailDeliveryConfig();
+    if (missingConfig.length > 0) {
+      console.error("send-otp.email_config_missing", {
+        provider: resolveEmailProvider(),
+        deliveryMode,
+        missingConfig,
+      });
       return jsonResponse(
         { error: true, message: "Email delivery is temporarily unavailable." },
         { status: 503, headers: { "Retry-After": "60" } },
@@ -70,9 +88,18 @@ export async function POST(request: Request) {
         data: { otp: code },
       });
     } catch (sendError) {
+      await consumePendingEmailVerificationOtps(user.id).catch((consumeError) => {
+        console.error("send-otp.consume_failed", {
+          userId: user.id,
+          reason: consumeError instanceof Error ? consumeError.message : "unknown",
+        });
+      });
       console.error("send-otp.email_failed", {
         userId: user.id,
-        reason: sendError instanceof Error ? sendError.name : "unknown",
+        provider: resolveEmailProvider(),
+        deliveryMode,
+        missingConfig: validateEmailDeliveryConfig(),
+        reason: sendError instanceof Error ? sendError.message : "unknown",
       });
       return jsonResponse(
         { error: true, message: "We could not send the code. Please try again shortly." },
@@ -83,7 +110,7 @@ export async function POST(request: Request) {
     return jsonResponse({
       ok: true,
       message: GENERIC_MESSAGE,
-      ...(deliveryMode === "mock" ? { developmentOtp: code } : {}),
+      ...(shouldExposeDevelopmentOtp(deliveryMode) ? { developmentOtp: code } : {}),
     });
   } catch (error) {
     return apiError(error, "Failed to send verification code.");

@@ -23,7 +23,7 @@ export interface IncidentInput {
 }
 
 export async function createIncident(input: IncidentInput) {
-  const slug = `incident-${Date.now()}-${randomUUID().replace(/-/g, "").slice(0, 12)}`;
+  const slug = `incident-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
   const incident = await db.incident.create({
     data: {
       organizationId: input.organizationId,

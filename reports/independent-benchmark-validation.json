@@ -1,0 +1,60 @@
+{
+  "generatedAt": "2026-07-20T08:53:39.091Z",
+  "classifier": "analyzeText",
+  "externalBenchmarks": [
+    {
+      "dataset": "jailbreakbench",
+      "source": "file",
+      "representativeSample": false,
+      "cases": 200,
+      "precision": 0.7872340425531915,
+      "recall": 0.37,
+      "f1": 0.5034013605442177,
+      "falsePositiveRate": 0.1,
+      "falseNegativeRate": 0.63,
+      "latency": {
+        "p50": 19,
+        "p95": 73,
+        "p99": 155
+      },
+      "attribution": "JailbreakBench (Chao et al., 2024) — https://jailbreakbench.github.io",
+      "license": "MIT dataset. If source=sample, rows are original paraphrases rather than the corpus."
+    },
+    {
+      "dataset": "harmbench",
+      "source": "file",
+      "representativeSample": false,
+      "cases": 400,
+      "precision": 1,
+      "recall": 0.5475,
+      "f1": 0.7075928917609047,
+      "falsePositiveRate": 0,
+      "falseNegativeRate": 0.4525,
+      "latency": {
+        "p50": 19,
+        "p95": 60,
+        "p99": 91
+      },
+      "attribution": "HarmBench (Mazeika et al., 2024) — https://www.harmbench.org",
+      "license": "MIT dataset. If source=sample, rows are original paraphrases rather than the corpus."
+    },
+    {
+      "dataset": "pint",
+      "source": "sample",
+      "representativeSample": true,
+      "cases": 12,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1,
+      "falsePositiveRate": 0,
+      "falseNegativeRate": 0,
+      "latency": {
+        "p50": 16,
+        "p95": 31,
+        "p99": 31
+      },
+      "attribution": "PINT-style indirect prompt-injection and tool-confusion validation; local full corpus file may be supplied at datasets/external/pint.jsonl",
+      "license": "Samples here are original paraphrases, not copied third-party data."
+    }
+  ]
+}

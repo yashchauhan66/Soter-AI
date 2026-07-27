@@ -88,6 +88,12 @@ export function ApiKeyManager({ projects, keys }: { projects: Project[]; keys: K
 
   return (
     <div>
+      {!projects.length && (
+        <div className="mb-4 rounded-xl border border-amber-500/30 bg-amber-500/5 p-4 text-sm text-amber-200">
+          You need a project before you can issue an API key.{" "}
+          <a href="/dashboard/projects" className="font-medium underline">Create your first project →</a>
+        </div>
+      )}
       <form onSubmit={createKey} className="card grid gap-4 p-5 md:grid-cols-[1fr_1fr_150px_auto]">
         <div>
           <label className="block text-sm font-medium text-slate-300 mb-1">API Key Name</label>
@@ -146,7 +152,7 @@ export function ApiKeyManager({ projects, keys }: { projects: Project[]; keys: K
               {updatingId === key.id ? "Updating..." : key.isActive ? "Deactivate" : "Activate"}
             </button>
           </div>
-        )) : <div className="card p-10 text-center text-slate-500">No API keys issued yet.</div>}
+        )) : <div className="card p-10 text-center text-slate-500">No API keys yet — use the form above to generate your first key, then send a guarded request to see decisions in your logs.</div>}
       </div>
     </div>
   );

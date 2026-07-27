@@ -38,6 +38,21 @@ export interface CascadeDecision {
   affectedAgents: string[];
 }
 
+export interface CascadeRollbackStep {
+  agentId: string;
+  action: "ROLLBACK_COMPLETED_ACTIONS" | "CANCEL_RUNNING_AGENT" | "QUARANTINE_AGENT";
+  priority: number;
+  reason: string;
+}
+
+export interface ServiceHealthEvent {
+  service: string;
+  chainId?: string;
+  timestamp: number;
+  severity: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
+  errorCode?: string;
+}
+
 const DEFAULT_CONFIG: CascadeConfig = {
   maxChainDepth: 8,
   maxConcurrentAgents: 16,
@@ -141,4 +156,41 @@ export function shouldSpawnAgent(
   }
 
   return { allowed: true, reason: "Within safe operating parameters." };
+}
+
+export function buildCascadeRollbackPlan(state: AgentChainState, decision = evaluateCascade(state)): {
+  required: boolean;
+  steps: CascadeRollbackStep[];
+  reason: string;
+} {
+  if (!["ROLLBACK", "CIRCUIT_OPEN", "TIMEOUT"].includes(decision.action)) {
+    return { required: false, steps: [], reason: "No rollback plan is required while the cascade can continue safely." };
+  }
+  const steps: CascadeRollbackStep[] = [];
+  for (const agent of state.agents) {
+    if (agent.status === "COMPLETED") {
+      steps.push({ agentId: agent.agentId, action: "ROLLBACK_COMPLETED_ACTIONS", priority: 10 - agent.depth, reason: "Completed action may need compensation after cascade failure." });
+    } else if (agent.status === "RUNNING" || agent.status === "PENDING") {
+      steps.push({ agentId: agent.agentId, action: "CANCEL_RUNNING_AGENT", priority: 20 - agent.depth, reason: "Stop unfinished work before it expands the failure." });
+    } else if (agent.status === "FAILED") {
+      steps.push({ agentId: agent.agentId, action: "QUARANTINE_AGENT", priority: 5, reason: "Failed agent should be isolated until reviewed." });
+    }
+  }
+  return { required: steps.length > 0, steps: steps.sort((a, b) => b.priority - a.priority), reason: decision.reason };
+}
+
+export function correlateCrossServiceFailures(events: ServiceHealthEvent[], windowMs = 60_000) {
+  const sorted = [...events].sort((a, b) => a.timestamp - b.timestamp);
+  const latest = sorted.at(-1);
+  if (!latest) return { correlated: false, affectedServices: [], severity: "LOW" as const, recommendation: "CONTINUE" as const };
+  const window = sorted.filter((event) => latest.timestamp - event.timestamp <= windowMs);
+  const affectedServices = [...new Set(window.map((event) => event.service))];
+  const highCount = window.filter((event) => event.severity === "HIGH" || event.severity === "CRITICAL").length;
+  const correlated = affectedServices.length >= 3 && highCount >= 2;
+  return {
+    correlated,
+    affectedServices,
+    severity: correlated && highCount >= 3 ? "CRITICAL" as const : correlated ? "HIGH" as const : "LOW" as const,
+    recommendation: correlated ? "OPEN_GLOBAL_CIRCUIT" as const : "CONTINUE" as const,
+  };
 }

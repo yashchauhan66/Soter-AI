@@ -12,7 +12,6 @@ import type {
   MLModelVersion,
 } from "@prisma/client";
 import { ALL_ML_LABELS } from "./registry";
-import { expectedCalibrationError } from "./thresholds";
 import type { ModelBackend } from "./types";
 
 export interface EvaluationOptions {
@@ -24,10 +23,6 @@ export interface PerRiskMetric {
   total: number;
   correct: number;
   recall: number;
-  precision: number;
-  f1: number;
-  falsePositives: number;
-  falseNegatives: number;
 }
 
 export interface EvaluationMetrics {
@@ -69,6 +64,7 @@ export async function evaluateModel(
   let fp = 0;
   let fn = 0;
   let tn = 0;
+  let calibrationSum = 0;
   const perRisk: Record<string, PerRiskMetric> = {};
   const reviewItems: Array<{
     exampleId: string;
@@ -98,14 +94,18 @@ export async function evaluateModel(
       confidence,
       correct,
     });
-    // These aggregate metrics are binary safety metrics (SAFE vs any risk), not
-    // exact multiclass accuracy. A risky sample predicted as a different risky
-    // category is still a caught attack and must count as TP here; the exact
-    // category error remains visible in perRisk and the review queue.
-    if (isPositive(example.label) && isPositive(predicted)) tp += 1;
+    if (isPositive(example.label) && isPositive(predicted)) tp += correct ? 1 : 0;
     if (isPositive(example.label) && !isPositive(predicted)) fn += 1;
     if (!isPositive(example.label) && isPositive(predicted)) fp += 1;
     if (!isPositive(example.label) && !isPositive(predicted)) tn += 1;
+    calibrationSum += Math.abs(confidence - Number(correct));
+
+    const bucket = perRisk[example.label] ?? { total: 0, correct: 0, recall: 0 };
+    bucket.total += 1;
+    bucket.correct += Number(correct);
+    bucket.recall = bucket.correct / bucket.total;
+    perRisk[example.label] = bucket;
+
     if (!correct && (options.seedReviewQueue ?? true)) {
       reviewItems.push({
         exampleId: example.id,
@@ -122,26 +122,7 @@ export async function evaluateModel(
   const f1 = (2 * precision * recall) / Math.max(Number.EPSILON, precision + recall);
   const falsePositiveRate = fp / Math.max(1, fp + tn);
   const falseNegativeRate = fn / Math.max(1, fn + tp);
-  const calibrationError = expectedCalibrationError(predictions);
-
-  for (const label of ALL_ML_LABELS) {
-    const labelPredictions = predictions.filter((item) => item.predicted === label);
-    const labelTruth = predictions.filter((item) => item.expected === label);
-    const labelTp = predictions.filter((item) => item.expected === label && item.predicted === label).length;
-    const labelFp = labelPredictions.length - labelTp;
-    const labelFn = labelTruth.length - labelTp;
-    const labelPrecision = labelTp / Math.max(1, labelTp + labelFp);
-    const labelRecall = labelTp / Math.max(1, labelTp + labelFn);
-    perRisk[label] = {
-      total: labelTruth.length,
-      correct: labelTp,
-      recall: labelRecall,
-      precision: labelPrecision,
-      f1: (2 * labelPrecision * labelRecall) / Math.max(Number.EPSILON, labelPrecision + labelRecall),
-      falsePositives: labelFp,
-      falseNegatives: labelFn,
-    };
-  }
+  const calibrationError = calibrationSum / Math.max(1, examples.length);
 
   const metrics: EvaluationMetrics = {
     precision,
@@ -178,7 +159,7 @@ export async function evaluateModel(
       data: slice.map((item) => ({
         organizationId: modelVersion.organizationId,
         modelVersionId: modelVersion.id,
-        kind: item.expected !== "SAFE" ? "FALSE_NEGATIVE" : "FALSE_POSITIVE",
+        kind: isPositive(item.expected) && !isPositive(item.predicted) ? "FALSE_NEGATIVE" : "FALSE_POSITIVE",
         expectedLabel: item.expected,
         predictedLabel: item.predicted,
         redactedText: item.text,

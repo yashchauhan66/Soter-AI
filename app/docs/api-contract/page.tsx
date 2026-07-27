@@ -58,11 +58,6 @@ export default function ApiContractDocsPage() {
         <p className="mt-5 text-lg leading-8 text-slate-400">
           Complete API reference for all SoterAI endpoints, request/response shapes, error codes, and webhook events.
         </p>
-        <p className="mt-3 text-sm text-slate-400">
-          Machine-readable contract: <InlineCode>GET /api/openapi</InlineCode>. Current version headers are{" "}
-          <InlineCode>X-SoterAI-API-Version: v1</InlineCode> and{" "}
-          <InlineCode>X-SoterAI-Contract-Version: 2026-07-26</InlineCode>.
-        </p>
 
         <section className="mt-10">
           <h2 className="text-2xl font-bold">Endpoints</h2>

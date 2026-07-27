@@ -23,7 +23,7 @@ Once the marketplace pull request is approved and merged:
 | Field | Required | Description |
 |-------|----------|-------------|
 | **SoterAI API Key** | Yes | Your `sk_...` API key from the SoterAI dashboard. |
-| **Base URL** | No | API endpoint. Defaults to `https://api.soterai.dev`. |
+| **Base URL** | No | API endpoint. Defaults to `https://api.soterai.in`. |
 | **Project ID** | No | Optional project scope for multi-tenant setups. |
 
 ## Tools
@@ -100,7 +100,7 @@ Strip PII from user messages before they enter the LLM context, ensuring no sens
 - API keys are stored securely by Dify's credential manager and never exposed in workflow logs.
 - Privacy Policy: https://soterai.in/privacy
 - Terms of Service: https://soterai.in/terms
-- Support: support@soterai.dev
+- Support: support@soterai.in
 
 ## Plugin Structure
 

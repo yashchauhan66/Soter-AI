@@ -4,28 +4,10 @@
  * - Every field is quoted and internal quotes are doubled (RFC 4180).
  * - Leading =, +, -, @ are prefixed with a single quote to neutralise
  *   spreadsheet formula injection (CSV injection / CWE-1236).
- * - Maximum row limit prevents unbounded memory allocation from large datasets.
  */
-
-/** Maximum number of rows to serialize in a single CSV export. */
-const MAX_CSV_ROWS = 100_000;
-/** Maximum total CSV output bytes. */
-const MAX_CSV_BYTES = 50 * 1024 * 1024;
-
 export function toCsv(headers: string[], rows: Array<Array<unknown>>): string {
-  if (rows.length > MAX_CSV_ROWS) {
-    throw new Error(`CSV export limited to ${MAX_CSV_ROWS.toLocaleString()} rows.`);
-  }
   const lines = [headers.map(csvCell).join(",")];
-  let totalBytes = 0;
-  for (const row of rows) {
-    const line = row.map(csvCell).join(",");
-    totalBytes += Buffer.byteLength(line, "utf8") + 2; // +2 for \r\n
-    if (totalBytes > MAX_CSV_BYTES) {
-      throw new Error(`CSV export exceeds the ${(MAX_CSV_BYTES / 1024 / 1024).toFixed(0)} MB limit.`);
-    }
-    lines.push(line);
-  }
+  for (const row of rows) lines.push(row.map(csvCell).join(","));
   return lines.join("\r\n");
 }
 

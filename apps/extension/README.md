@@ -1,82 +1,104 @@
-# Soter Enterprise AI Control Plane — Browser Extension
+# Soter Enterprise AI Control Plane - Browser Extension
 
 Chrome/Edge browser extension that stops secrets, PII, source code, and sensitive business data from leaking into AI tools.
 
 ## Features
 
-- **Prompt Interception** — Scans prompts before they reach AI tools (ChatGPT, Claude, Gemini, Perplexity, and 15+ more)
-- **File Upload Scanning** — Blocks risky file uploads (.env, secrets, credentials)
-- **Response Scanning** — Detects sensitive data in AI responses
-- **Source Lineage Tracking** — Tracks where data originates before being pasted into AI tools
-- **Shadow AI Discovery** — Detects unknown AI tools being used in the organization
-- **Emergency Lockdown** — Instantly block all AI tool access across the organization
-- **Policy Enforcement** — Organization-wide policies with HMAC-SHA256 signature verification
-- **Privacy-First Design** — Raw text never leaves your browser; only SHA-256 hashes and metadata are sent
+- **Prompt interception** - scans prompts before they reach supported AI tools such as ChatGPT, Claude, Gemini, Perplexity, Poe, OpenRouter, Replit, StackBlitz, CodeSandbox, GitHub Dev, Bolt, v0, Lovable, and OpenWebUI.
+- **File upload scanning** - blocks or warns on risky uploads such as `.env`, private keys, credentials, customer exports, and unsupported binary files.
+- **Response scanning** - detects sensitive data in AI responses when an admin enables it for a destination.
+- **Source lineage tracking** - stores hashes and redacted context so teams can understand where pasted data originated.
+- **Shadow AI discovery** - identifies unsupported AI destination usage without monitoring unrelated browsing.
+- **Emergency lockdown** - enforces stricter cached policy locally when an organization enables incident response mode.
+- **Policy enforcement** - organization-wide policies with HMAC-SHA256 signature verification.
+- **Privacy proof UI** - popup and side panel show exactly what leaves the browser.
+
+## Privacy Model
+
+The extension is designed for local-first protection:
+
+| Data | Default behavior |
+| --- | --- |
+| Raw prompt text | Not sent to SoterAI by default |
+| Raw file content | Scanned locally for supported text files; not sent as backend event content |
+| Clean prompt storage | Stored as hash, length, and marker only |
+| Risky prompt storage | Redacted preview, safe rewrite, hashes, metadata, and policy decision |
+| Backend audit event | Metadata, decision, risk score, detected data types, destination context, and redacted preview |
+| Response scans | Controlled per destination; clean response scans stay local unless policy requires an event |
+| Full prompt logging | Off by default; requires explicit admin policy mode |
+
+The extension does not request `<all_urls>`, `tabs`, `activeTab`, `scripting`, or `webNavigation` in the store build.
 
 ## Installation
 
-### From Source (Development)
+### From Source
 
 ```bash
 npm install
 npm run build
 ```
 
-Then load the `dist/` folder as an unpacked extension in Chrome:
-1. Open `chrome://extensions/`
-2. Enable "Developer mode"
-3. Click "Load unpacked"
-4. Select the `dist/` folder
+Then load `apps/extension/dist/extension` as an unpacked extension in Chrome or Edge:
 
-### From Chrome Web Store
+1. Open `chrome://extensions/` or `edge://extensions/`.
+2. Enable developer mode.
+3. Click "Load unpacked".
+4. Select `apps/extension/dist/extension`.
 
-1. Visit the [Chrome Web Store listing](https://chromewebstore.google.com/detail/soter-enterprise-ai-contr/placeholder)
-2. Click "Add to Chrome"
-3. Pin the extension to your toolbar
+### From Store
+
+1. Install from the approved Chrome Web Store or Microsoft Edge Add-ons listing.
+2. Pin the extension to the toolbar.
+3. Enroll with your organization code or managed policy.
 
 ## Configuration
 
 ### Enterprise Enrollment
 
-1. Click the SoterAI icon in your toolbar
-2. Enter your enrollment code and API base URL
-3. Click "Connect"
+1. Click the SoterAI icon in the toolbar.
+2. Enter the enrollment code and API base URL.
+3. Click "Connect".
 
 ### Managed Deployment
 
-IT admins can deploy via Chrome Enterprise policy:
-- Set `SoterAPIKey` and `SoterBaseUrl` in managed storage
-- Extension auto-enrolls on first launch
+IT admins can deploy through Chrome/Edge enterprise policy:
 
-## Supported AI Tools
-
-ChatGPT, Claude, Gemini, Perplexity, Poe, OpenRouter, Replit, StackBlitz, CodeSandbox, GitHub Codespaces, Bolt, v0, Lovable, OpenWebUI, and any generic text editor.
+- Configure managed enrollment settings.
+- Configure policy signing secret when signature verification is required.
+- Configure response scanning per destination.
+- Use emergency lockdown for incident response.
 
 ## Permissions
 
 | Permission | Purpose |
-|---|---|
-| `activeTab` | Access current tab for scanning |
-| `contextMenus` | Right-click "Scan with Soter" menu |
-| `sidePanel` | Side panel for scan results |
-| `storage` | Store policies and enrollment state |
-| `scripting` | Inject content scripts on AI pages |
-| `alarms` | Policy sync and heartbeat scheduling |
+| --- | --- |
+| `contextMenus` | Adds user-visible scan and approval actions on supported AI pages. |
+| `sidePanel` | Shows enrollment, latest scan, response scanning, and privacy status. |
+| `storage` | Stores enrollment state, policy cache, hashes, redacted previews, and scan metadata locally. |
+| `alarms` | Schedules policy sync, heartbeat, and lockdown refresh. |
 
-## Privacy
+Content scripts are declared statically in `manifest.json` and scoped to supported AI hosts. There are no optional permissions in the store build.
 
-- Raw prompt text is never sent to the backend
-- Only SHA-256 hashes and redacted previews are transmitted
-- All data stays in your browser unless you enroll in an organization
-- No telemetry without explicit consent
+### Host Permissions
+
+`host_permissions` are limited to specific `https://` AI destinations plus `https://soterai.in/*` for SoterAI API calls. Local development hosts such as `localhost` and `127.0.0.1` live only in `manifest.dev.json` and are excluded from the store package.
+
+Run:
+
+```bash
+npm run validate:extension-permissions
+```
+
+This fails if manifest permissions and store docs drift apart.
 
 ## Development
 
 ```bash
-npm run dev          # Watch mode with hot reload
-npm run build        # Production build
-npm run typecheck    # TypeScript type checking
-npm run package      # Build + create ZIP for store submission
+npm run dev                 # Watch mode with hot reload
+npm run build               # Production build
+npm --prefix apps/extension run typecheck
+npm run test:extension      # Browser extension privacy/security tests
+npm run package             # Build + create ZIP for store submission
 ```
 
 ## License

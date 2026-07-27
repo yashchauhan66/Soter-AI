@@ -5,13 +5,16 @@ import { trialWindow } from "@/lib/ops/billing";
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { db } from "@/lib/db";
 import { createEmailVerificationToken } from "@/lib/auth/tokens";
-import { createEmailVerificationOtp } from "@/lib/auth/emailOtp";
+import { consumePendingEmailVerificationOtps, createEmailVerificationOtp } from "@/lib/auth/emailOtp";
 import { sendTemplateEmail } from "@/lib/email/send";
 import { enforcePublicRateLimit } from "@/lib/publicRateLimit";
 import {
   planSignup,
   resolveEmailDeliveryMode,
+  resolveEmailProvider,
   requireVerifiedEmailForLogin,
+  shouldExposeDevelopmentOtp,
+  validateEmailDeliveryConfig,
   type EmailDeliveryMode,
 } from "@/lib/auth/signupPolicy";
 
@@ -37,8 +40,23 @@ const schema = z.object({
 // Sends the OTP after the account transaction commits. Raw codes are never
 // logged or returned by a live email provider path.
 async function deliverVerification(to: string, token: string) {
+  const missing = validateEmailDeliveryConfig();
+  if (missing.length > 0) {
+    throw new Error(`Email provider ${resolveEmailProvider()} is missing required configuration: ${missing.join(", ")}`);
+  }
   const email = await sendTemplateEmail({ to, template: "verify-email-otp", data: { otp: token } });
   return { mocked: email.mocked };
+}
+
+function emailFailureContext(error: unknown, stage: "create" | "resend", userId: string) {
+  return {
+    stage,
+    userId,
+    provider: resolveEmailProvider(),
+    deliveryMode: resolveEmailDeliveryMode(),
+    missingConfig: validateEmailDeliveryConfig(),
+    reason: error instanceof Error ? error.message : "unknown",
+  };
 }
 
 // Mock mode exposes the OTP for local/e2e use; live responses never contain it.
@@ -54,7 +72,7 @@ function successBody(opts: {
     verificationRequired,
     emailSent: opts.emailSent,
     verificationEmailMocked: opts.deliveryMode === "mock",
-    ...(opts.deliveryMode === "mock" ? { developmentOtp: opts.token } : {}),
+    ...(shouldExposeDevelopmentOtp(opts.deliveryMode) ? { developmentOtp: opts.token } : {}),
     ...opts.extra,
   };
 }
@@ -93,9 +111,16 @@ export async function POST(request: Request) {
 
     // Idempotent recovery: an existing UNVERIFIED password account regenerates
     // and resends verification instead of erroring or duplicating the user.
+    // The password is refreshed from the latest signup attempt so the user can
+    // sign in with the password they just entered after completing OTP.
     if (plan.kind === "resend") {
       const userId = existing!.id;
+      const passwordHash = await bcrypt.hash(body.password, 12);
       const token = await db.$transaction(async (tx) => {
+        await tx.user.update({
+          where: { id: userId },
+          data: { passwordHash, name: body.name },
+        });
         // Keep legacy links invalidated while OTP becomes the primary flow.
         await createEmailVerificationToken(userId, new Date(), tx);
         return createEmailVerificationOtp(userId, new Date(), tx);
@@ -104,7 +129,13 @@ export async function POST(request: Request) {
       try {
         await deliverVerification(body.email, token);
       } catch (sendError) {
-        console.error("signup.resend.email_failed", { userId, reason: sendError instanceof Error ? sendError.name : "unknown" });
+        await consumePendingEmailVerificationOtps(userId).catch((consumeError) => {
+          console.error("signup.resend.consume_failed", {
+            userId,
+            reason: consumeError instanceof Error ? consumeError.message : "unknown",
+          });
+        });
+        console.error("signup.resend.email_failed", emailFailureContext(sendError, "resend", userId));
         emailSent = false;
       }
       return jsonResponse(successBody({ deliveryMode, token, emailSent, extra: { resent: true } }), { status: 200 });
@@ -175,7 +206,13 @@ export async function POST(request: Request) {
     try {
       await deliverVerification(body.email, created.token);
     } catch (sendError) {
-      console.error("signup.create.email_failed", { userId: created.userId, reason: sendError instanceof Error ? sendError.name : "unknown" });
+      await consumePendingEmailVerificationOtps(created.userId).catch((consumeError) => {
+        console.error("signup.create.consume_failed", {
+          userId: created.userId,
+          reason: consumeError instanceof Error ? consumeError.message : "unknown",
+        });
+      });
+      console.error("signup.create.email_failed", emailFailureContext(sendError, "create", created.userId));
       emailSent = false;
     }
 

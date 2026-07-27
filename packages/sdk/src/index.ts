@@ -1,6 +1,5 @@
 export * from "./types";
 export * from "./errors";
-export * from "./contract";
 export type {
   SoterConfig,
   SoterProtectRequest,

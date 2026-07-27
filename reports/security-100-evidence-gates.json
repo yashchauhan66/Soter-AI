@@ -1,0 +1,89 @@
+{
+  "generatedAt": "2026-07-23T12:24:54.544Z",
+  "score": 94,
+  "canClaim100": false,
+  "foundation": {
+    "score": 95,
+    "canClaim99Plus": false,
+    "gates": [
+      {
+        "id": "external-pentest",
+        "label": "Independent third-party pentest",
+        "status": "BLOCKED",
+        "evidencePath": "reports/external-pentest-attestation.json",
+        "reason": "Missing vendor attestation JSON."
+      },
+      {
+        "id": "live-runtime",
+        "label": "Live deployed runtime security battery",
+        "status": "BLOCKED",
+        "evidencePath": "reports/live-agent-firewall-battery.json",
+        "reason": "Missing live runtime battery JSON."
+      },
+      {
+        "id": "load-matrix",
+        "label": "100/500/1000 concurrency live load matrix",
+        "status": "BLOCKED",
+        "evidencePath": "reports/live-load-matrix.json",
+        "reason": "Missing live load matrix JSON."
+      },
+      {
+        "id": "external-benchmark",
+        "label": "JailbreakBench/HarmBench/PINT-style external benchmark",
+        "status": "PARTIAL",
+        "evidencePath": "reports/independent-benchmark-validation.json",
+        "reason": "Benchmark report exists, but one or more datasets are representative samples or below thresholds."
+      }
+    ],
+    "nextActions": [
+      "Independent third-party pentest: Missing vendor attestation JSON.",
+      "Live deployed runtime security battery: Missing live runtime battery JSON.",
+      "100/500/1000 concurrency live load matrix: Missing live load matrix JSON.",
+      "JailbreakBench/HarmBench/PINT-style external benchmark: Benchmark report exists, but one or more datasets are representative samples or below thresholds."
+    ]
+  },
+  "gates": [
+    {
+      "id": "security-99-foundation",
+      "label": "99+ foundation evidence",
+      "status": "BLOCKED",
+      "evidencePath": "reports/security-99-evidence-gates.json",
+      "reason": "100/100 requires all 99+ gates to pass first."
+    },
+    {
+      "id": "os-enforcement",
+      "label": "OS-enforced process and network boundary",
+      "status": "BLOCKED",
+      "evidencePath": "reports/os-enforcement-attestation.json",
+      "reason": "Missing OS enforcement attestation."
+    },
+    {
+      "id": "enterprise-extension-control",
+      "label": "Enterprise extension allowlist enforcement",
+      "status": "BLOCKED",
+      "evidencePath": "reports/extension-control-attestation.json",
+      "reason": "Missing enterprise extension-control attestation."
+    },
+    {
+      "id": "signed-provenance",
+      "label": "Signed reproducible release provenance",
+      "status": "PARTIAL",
+      "evidencePath": "reports/release-provenance-attestation.json",
+      "reason": "Release provenance is incomplete or unsigned."
+    },
+    {
+      "id": "recovery-drill",
+      "label": "Incident recovery and rollback drill",
+      "status": "BLOCKED",
+      "evidencePath": "reports/recovery-drill-report.json",
+      "reason": "Missing recovery drill report."
+    }
+  ],
+  "nextActions": [
+    "99+ foundation evidence: 100/100 requires all 99+ gates to pass first.",
+    "OS-enforced process and network boundary: Missing OS enforcement attestation.",
+    "Enterprise extension allowlist enforcement: Missing enterprise extension-control attestation.",
+    "Signed reproducible release provenance: Release provenance is incomplete or unsigned.",
+    "Incident recovery and rollback drill: Missing recovery drill report."
+  ]
+}

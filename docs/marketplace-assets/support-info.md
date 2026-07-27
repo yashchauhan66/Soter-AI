@@ -1,52 +1,24 @@
-# SoterAI — Support Information
+# Support Info
 
-> For marketplace listings, app review submissions, and help pages.
+Primary support channels:
 
----
+- In-app support form for authenticated dashboard users.
+- Security reports through the responsible disclosure process in `SECURITY.md`.
+- Enterprise pilot support through the assigned customer success or security contact.
 
-## Support channels
+Support expectations:
 
-| Channel | Contact | Response time |
-|---------|---------|---------------|
-| Email | support@soterai.dev | 24-48 hours |
-| Security issues | security@soterai.dev | 24 hours |
-| Privacy questions | privacy@soterai.dev | 48 hours |
-| GitHub Issues | github.com/SoterAI | Community response |
-| Documentation | docs.soterai.dev | Self-service |
+- Triage security-impacting reports first.
+- Confirm reproduction steps, affected integration, version, and deployment mode.
+- Avoid asking users to send raw secrets, private keys, customer data, or full prompt transcripts.
+- Request redacted logs, hashes, event IDs, workflow IDs, package versions, and screenshots when possible.
 
-## Documentation
+Required bug report fields:
 
-- **Getting started**: docs.soterai.dev/quickstart
-- **API reference**: docs.soterai.dev/api
-- **Integration guides**: docs.soterai.dev/integrations
-- **Dashboard guide**: docs.soterai.dev/dashboard
-- **Security best practices**: docs.soterai.dev/security
+- Integration or package name.
+- Version and platform.
+- Expected behavior.
+- Actual behavior.
+- Sanitized reproduction steps.
+- Relevant policy mode, decision action, or error code.
 
-## Common issues
-
-### "Invalid API key" error
-- Verify your API key starts with `sk_`
-- Check the key hasn't been revoked in the dashboard
-- Ensure the key is for the correct project
-
-### "Request timed out" error
-- Check your network connectivity
-- The default timeout is 8 seconds — increase if on a slow connection
-- Check the SoterAI status page for outages
-
-### "Rate limit exceeded" error
-- Free tier: 100 requests/month
-- Check your current usage on the dashboard
-- Upgrade your plan or wait for the rate limit to reset
-
-### Integration node not appearing
-- n8n: Restart n8n after installing the community node
-- Flowise: Restart Flowise after copying custom nodes
-- Langflow: Restart Langflow after adding components
-
-## Pricing
-
-- **Free tier**: 100 checks/month, 1 project, community support
-- **Pro tier**: Higher limits, priority support, advanced analytics
-- **Enterprise**: Custom limits, SLA, dedicated support, self-hosted option
-- See soterai.dev/pricing for current plans

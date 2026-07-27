@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-07-22T11:58:44.133Z",
+  "score": 95,
+  "canClaim99Plus": false,
+  "gates": [
+    {
+      "id": "external-pentest",
+      "label": "Independent third-party pentest",
+      "status": "BLOCKED",
+      "evidencePath": "reports/external-pentest-attestation.json",
+      "reason": "Missing vendor attestation JSON."
+    },
+    {
+      "id": "live-runtime",
+      "label": "Live deployed runtime security battery",
+      "status": "BLOCKED",
+      "evidencePath": "reports/live-agent-firewall-battery.json",
+      "reason": "Missing live runtime battery JSON."
+    },
+    {
+      "id": "load-matrix",
+      "label": "100/500/1000 concurrency live load matrix",
+      "status": "BLOCKED",
+      "evidencePath": "reports/live-load-matrix.json",
+      "reason": "Missing live load matrix JSON."
+    },
+    {
+      "id": "external-benchmark",
+      "label": "JailbreakBench/HarmBench/PINT-style external benchmark",
+      "status": "PARTIAL",
+      "evidencePath": "reports/independent-benchmark-validation.json",
+      "reason": "Benchmark report exists, but one or more datasets are representative samples or below thresholds."
+    }
+  ],
+  "nextActions": [
+    "Independent third-party pentest: Missing vendor attestation JSON.",
+    "Live deployed runtime security battery: Missing live runtime battery JSON.",
+    "100/500/1000 concurrency live load matrix: Missing live load matrix JSON.",
+    "JailbreakBench/HarmBench/PINT-style external benchmark: Benchmark report exists, but one or more datasets are representative samples or below thresholds."
+  ]
+}

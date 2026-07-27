@@ -1,11 +1,4 @@
 import {
-  isCompatibleSoterApiVersion,
-  SOTERAI_API_CONTRACT,
-  SOTERAI_API_VERSION,
-  SOTERAI_SDK_NAME,
-  SOTERAI_SDK_VERSION,
-} from "./contract";
-import {
   CyberRakshakAuthError,
   CyberRakshakError,
   CyberRakshakNetworkError,
@@ -88,11 +81,10 @@ import type {
   WrappedToolResult,
 } from "./types";
 
-const DEFAULT_BASE_URL = "https://api.soterai.com";
+const DEFAULT_BASE_URL = "https://api.soterai.in";
 const DEFAULT_TIMEOUT_MS = 8000;
 const DEFAULT_RETRY_BACKOFF_MS = 250;
 const DEFAULT_BLOCKED_RESPONSE = "This request was blocked for security reasons.";
-const MAX_RESPONSE_BYTES = 10 * 1024 * 1024; // 10 MB
 
 export function normalizeDecision(action: GuardAction): GuardDecision {
   switch (action) {
@@ -109,8 +101,8 @@ export function normalizeDecision(action: GuardAction): GuardDecision {
   }
 }
 
-/** @deprecated Use the Soter class for new integrations. */
-export interface CyberRakshakGuard {
+/** Structural interface implemented by {@link GuardClient} and the Soter client. */
+export interface SoterGuard {
   input(message: string, options?: Omit<GuardInputRequest, "message" | "text">): Promise<GuardResult>;
   output(aiResponse: string, options?: Omit<GuardOutputRequest, "aiResponse" | "text">): Promise<GuardResult>;
   analyze(text: string, direction: AnalyzeRequest["direction"]): Promise<GuardResult>;
@@ -185,21 +177,24 @@ export interface CyberRakshakGuard {
   getOwaspAgentic2026Report(): Promise<OwaspComplianceReport>;
 }
 
-export function createClient(options: ClientOptions): CyberRakshakGuard {
+/** @deprecated Use {@link SoterGuard} for new integrations. */
+export type CyberRakshakGuard = SoterGuard;
+
+export function createClient(options: ClientOptions): SoterGuard {
   return new GuardClient(options);
 }
 
-export function createAgentFirewallClient(options: ClientOptions): CyberRakshakGuard {
+export function createAgentFirewallClient(options: ClientOptions): SoterGuard {
   return new GuardClient(options);
 }
 
 /** @deprecated Use new Soter(options) for new integrations. */
-export function createCybersecurityGuardClient(options: ClientOptions): CyberRakshakGuard {
+export function createCybersecurityGuardClient(options: ClientOptions): SoterGuard {
   return new GuardClient(options);
 }
 
 /** @deprecated Use Soter for new integrations. GuardClient remains supported. */
-export class GuardClient implements CyberRakshakGuard {
+export class GuardClient implements SoterGuard {
   private readonly apiKey: string;
   private readonly baseUrl: string;
   private readonly projectId?: string;
@@ -768,12 +763,8 @@ export class GuardClient implements CyberRakshakGuard {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), this.timeoutMs);
     const headers: Record<string, string> = {
-      "Accept": "application/json",
       "Content-Type": "application/json",
-      "User-Agent": `soter-sdk/${SOTERAI_SDK_VERSION}`,
-      "X-SoterAI-API-Version": SOTERAI_API_VERSION,
-      "X-SoterAI-SDK": SOTERAI_SDK_NAME,
-      "X-SoterAI-SDK-Version": SOTERAI_SDK_VERSION,
+      "User-Agent": "soter-sdk/0.1",
       ...this.extraHeaders,
     };
     if (requireApiKey) headers["x-api-key"] = this.apiKey;
@@ -793,11 +784,7 @@ export class GuardClient implements CyberRakshakGuard {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), this.timeoutMs);
     const headers: Record<string, string> = {
-      "Accept": "application/json",
-      "User-Agent": `soter-sdk/${SOTERAI_SDK_VERSION}`,
-      "X-SoterAI-API-Version": SOTERAI_API_VERSION,
-      "X-SoterAI-SDK": SOTERAI_SDK_NAME,
-      "X-SoterAI-SDK-Version": SOTERAI_SDK_VERSION,
+      "User-Agent": "soter-sdk/0.1",
       ...this.extraHeaders,
     };
     if (requireApiKey) headers["x-api-key"] = this.apiKey;
@@ -812,8 +799,7 @@ export class GuardClient implements CyberRakshakGuard {
   }
 
   private async handleResponse<T>(response: Response): Promise<T> {
-    this.assertCompatibleApiVersion(response);
-    const text = await readBoundedResponseText(response);
+    const text = await response.text();
     let data: unknown = undefined;
     if (text) {
       try { data = JSON.parse(text); } catch {
@@ -837,36 +823,17 @@ export class GuardClient implements CyberRakshakGuard {
     return data as T;
   }
 
-  private assertCompatibleApiVersion(response: Response): void {
-    const version = response.headers.get("x-soterai-api-version");
-    if (!version || isCompatibleSoterApiVersion(version)) return;
-    throw new CyberRakshakError(
-      `Unsupported SoterAI API version "${version}". This SDK supports ${SOTERAI_API_CONTRACT.apiVersion}.`,
-      {
-        status: response.status,
-        code: "api_version_unsupported",
-        details: {
-          expectedApiVersion: SOTERAI_API_CONTRACT.apiVersion,
-          receivedApiVersion: version,
-          sdkVersion: SOTERAI_API_CONTRACT.sdkVersion,
-        },
-      },
-    );
-  }
-
   private async fetchWithNetworkRetry(url: string, init: RequestInit): Promise<Response> {
     let attempt = 0;
     for (;;) {
       try {
-        const response = await this.fetchImpl(url, init);
-        if (response.status >= 500 && response.status <= 599 && attempt < this.maxRetries) {
+        const res = await this.fetchImpl(url, init);
+        if (res.status >= 500 && attempt < this.maxRetries) {
           attempt += 1;
-          const baseDelay = this.retryBackoffMs * Math.pow(2, attempt - 1);
-          const jitter = Math.random() * 0.5 + 0.75;
-          await delay(Math.round(baseDelay * jitter));
+          await delay(this.retryBackoffMs * attempt);
           continue;
         }
-        return response;
+        return res;
       } catch (caught) {
         const aborted = caught instanceof Error && caught.name === "AbortError";
         if (attempt >= this.maxRetries) {
@@ -876,10 +843,7 @@ export class GuardClient implements CyberRakshakGuard {
           );
         }
         attempt += 1;
-        // Exponential backoff with jitter (±25%) to prevent thundering herd
-        const baseDelay = this.retryBackoffMs * Math.pow(2, attempt - 1);
-        const jitter = Math.random() * 0.5 + 0.75; // 0.75–1.25
-        await delay(Math.round(baseDelay * jitter));
+        await delay(this.retryBackoffMs * attempt);
       }
     }
   }
@@ -927,24 +891,6 @@ function extractMessage(data: unknown): string | undefined {
     if (typeof message === "string") return message;
   }
   return undefined;
-}
-
-async function readBoundedResponseText(response: Response): Promise<string> {
-  const reader = response.body?.getReader();
-  if (!reader) return response.text();
-  const decoder = new TextDecoder();
-  let result = "";
-  for (;;) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    result += decoder.decode(value, { stream: true });
-    if (result.length > MAX_RESPONSE_BYTES) {
-      reader.cancel();
-      throw new CyberRakshakError(`Server response exceeded ${(MAX_RESPONSE_BYTES / 1024 / 1024).toFixed(0)} MB limit.`, { status: 413 });
-    }
-  }
-  result += decoder.decode();
-  return result;
 }
 
 function delay(ms: number) {

@@ -44,7 +44,7 @@ export default function GuidedDemoPage() {
         <div className="mt-6 grid gap-4 sm:grid-cols-3">
           {[
             ["Live playground", "Fire your own non-sensitive test inputs and watch the verdict.", "/playground"],
-            ["Adversarial benchmark", "84% of attack variants caught within a 1% false-positive budget (ROC-AUC 0.92).", "/benchmarks"],
+            ["Adversarial benchmark", "Phase 9 synthetic benchmark results with methodology, limitations, and downloads.", "/benchmark"],
             ["Agent firewall approvals", "See the real approvals queue in the dashboard.", "/dashboard/agent-firewall/approvals"],
           ].map(([title, copy, href]) => (
             <Link key={title} href={href} className="card p-5 transition hover:border-cyan/50">

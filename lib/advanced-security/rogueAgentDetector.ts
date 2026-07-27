@@ -66,12 +66,12 @@ export function detectRogueAgent(
 
   if (baseline.avgToolCallsPerSession > 0) {
     const toolCallRatio = activity.toolCalls.length / baseline.avgToolCallsPerSession;
-    if (toolCallRatio > 3) {
+    if (toolCallRatio > 2) {
       deviations.push({
         type: "PATTERN_BREAK",
         message: `Tool call volume is ${toolCallRatio.toFixed(1)}x the baseline average.`,
         severity: toolCallRatio > 5 ? "HIGH" : "MEDIUM",
-        score: Math.min(30, Math.round((toolCallRatio - 3) * 10)),
+        score: Math.min(30, Math.max(10, Math.round((toolCallRatio - 2) * 12))),
       });
     }
   }
@@ -134,4 +134,38 @@ export function detectRogueAgent(
   else recommendation = "ALLOW";
 
   return { isRogue, confidence, deviations, recommendation };
+}
+
+export function correlateRogueAgentHistory(
+  activities: AgentActivity[],
+  baseline: BehaviorBaseline,
+): RogueAgentResult & { sessionsAnalyzed: number } {
+  const results = activities
+    .filter((activity) => activity.agentId === baseline.agentId)
+    .sort((a, b) => a.timestamp - b.timestamp)
+    .map((activity) => detectRogueAgent(activity, baseline));
+  const deviations = results.flatMap((result) => result.deviations);
+  const sessionsAnalyzed = results.length;
+  const repeatedDeviationTypes = new Set<string>();
+  for (const deviation of deviations) {
+    const count = deviations.filter((item) => item.type === deviation.type).length;
+    if (count >= 2) repeatedDeviationTypes.add(deviation.type);
+  }
+  const confidence = Math.min(100, Math.round(results.reduce((sum, result) => sum + result.confidence, 0) / Math.max(1, sessionsAnalyzed)) + repeatedDeviationTypes.size * 40);
+  let recommendation: RogueAgentResult["recommendation"];
+  if (confidence >= 80) recommendation = "TERMINATE";
+  else if (confidence >= 60) recommendation = "SUSPEND";
+  else if (confidence >= 40) recommendation = "THROTTLE";
+  else if (confidence >= 20) recommendation = "MONITOR";
+  else recommendation = "ALLOW";
+  const correlated: RogueDeviation[] = [...deviations];
+  for (const type of repeatedDeviationTypes) {
+    correlated.push({
+      type: type as RogueDeviation["type"],
+      message: `Repeated ${type.toLowerCase().replace(/_/g, " ")} across ${sessionsAnalyzed} sessions.`,
+      severity: "HIGH",
+      score: 20,
+    });
+  }
+  return { isRogue: confidence >= 50, confidence, deviations: correlated, recommendation, sessionsAnalyzed };
 }

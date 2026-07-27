@@ -229,7 +229,7 @@ export function smokeTest() {
 //   k6 run scripts/k6-load-test.js
 //
 //   # Custom endpoint + API key
-//   k6 run -e BASE_URL=https://api.soterai.com -e API_KEY=sk_prod_xxx scripts/k6-load-test.js
+//   k6 run -e BASE_URL=https://api.soterai.in -e API_KEY=sk_prod_xxx scripts/k6-load-test.js
 //
 //   # Quick smoke test for CI
 //   k6 run scripts/k6-load-test.js --execution-segment=0:1/100

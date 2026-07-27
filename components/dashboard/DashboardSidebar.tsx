@@ -50,7 +50,7 @@ import {
 
 // ── Hero product definitions ────────────────────────────────────────────
 
-interface HeroProduct {
+export interface HeroProduct {
   label: string;
   description: string;
   href: string;
@@ -62,7 +62,7 @@ interface HeroProduct {
   items: { Icon: typeof Gauge; label: string; href: string }[];
 }
 
-const heroProducts: HeroProduct[] = [
+export const heroProducts: HeroProduct[] = [
   {
     label: "AI Agent Control",
     description: "Approve, log, rollback agent actions",
@@ -111,12 +111,12 @@ const heroProducts: HeroProduct[] = [
 
 // ── Collapsed group definitions ─────────────────────────────────────────
 
-interface NavGroup {
+export interface NavGroup {
   label: string;
   items: { Icon: typeof Gauge; label: string; href: string; badge?: string; status?: "Stable" | "Beta" | "Labs" }[];
 }
 
-const navGroups: NavGroup[] = [
+export const navGroups: NavGroup[] = [
   {
     label: "Guard Operations",
     items: [
@@ -125,7 +125,7 @@ const navGroups: NavGroup[] = [
       { Icon: FileBarChart, label: "Reports", href: "/dashboard/reports" },
       { Icon: TrendingUp, label: "Customer success", href: "/dashboard/customer-success" },
       { Icon: Eye, label: "Detection feedback", href: "/dashboard/detection-feedback" },
-      { Icon: Radio, label: "Agent Monitor", href: "/dashboard/agent-monitor", status: "Stable" },
+      { Icon: Radio, label: "Agent Monitor", href: "/dashboard/agent-control", status: "Stable" },
     ],
   },
   {
@@ -142,9 +142,7 @@ const navGroups: NavGroup[] = [
       { Icon: Search, label: "Forensics", href: "/dashboard/forensics" },
       { Icon: Wifi, label: "Semantic egress", href: "/dashboard/semantic-egress" },
       { Icon: TrendingUp, label: "SLM evaluations", href: "/dashboard/evaluations" },
-      { Icon: BookOpen, label: "Playbooks", href: "/dashboard/playbooks", status: "Stable" },
-      { Icon: BarChart3, label: "Benchmarks", href: "/dashboard/benchmarks", status: "Labs" },
-      { Icon: Gauge, label: "AI Control Plane", href: "/dashboard/ai-control-plane", status: "Labs" },
+      { Icon: BarChart3, label: "Benchmarks", href: "/benchmarks", status: "Labs" },
     ],
   },
   {
@@ -153,7 +151,7 @@ const navGroups: NavGroup[] = [
       { Icon: BookOpen, label: "Evidence vault", href: "/dashboard/evidence-vault" },
       { Icon: ShieldCheck, label: "Security badges", href: "/dashboard/badges" },
       { Icon: Download, label: "Audit exports", href: "/dashboard/exports" },
-      { Icon: ScrollText, label: "Audit Log", href: "/dashboard/audit-log", status: "Beta" },
+      { Icon: ScrollText, label: "Audit Log", href: "/dashboard/usage-governance/audit", status: "Beta" },
     ],
   },
   {
@@ -178,7 +176,7 @@ const navGroups: NavGroup[] = [
       { Icon: CreditCard, label: "Billing & usage", href: "/dashboard/billing", status: "Beta" },
       { Icon: Settings, label: "Settings", href: "/dashboard/settings" },
       { Icon: Puzzle, label: "Integrations", href: "/dashboard/integrations", status: "Beta" },
-      { Icon: Fingerprint, label: "SSO & SCIM", href: "/dashboard/sso", status: "Beta" },
+      { Icon: Fingerprint, label: "SSO & SCIM", href: "/dashboard/enterprise/sso", status: "Beta" },
     ],
   },
   {
@@ -218,6 +216,16 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
         <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Workspace</p>
         <p className="mt-1 font-semibold">Security team</p>
       </div>
+
+      <Link
+        href="/dashboard/onboarding"
+        onClick={onClose}
+        className="mb-3 flex items-center gap-3 rounded-xl border border-cyan/25 bg-cyan/10 px-3 py-3 text-sm font-semibold text-cyan transition hover:border-cyan/40 hover:bg-cyan/15"
+      >
+        <ListChecks size={16} aria-hidden="true" />
+        <span className="flex-1">Start here</span>
+        <span className="text-[10px] font-bold uppercase tracking-wider text-cyan">2 min</span>
+      </Link>
 
       <nav className="space-y-3" aria-label="Dashboard navigation">
         {/* ── Hero Products ── */}

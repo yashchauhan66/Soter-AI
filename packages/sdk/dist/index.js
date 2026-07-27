@@ -51,7 +51,6 @@ exports.checkLegalBoundary = checkLegalBoundary;
 exports.createNextAgentHandler = createNextAgentHandler;
 __exportStar(require("./types"), exports);
 __exportStar(require("./errors"), exports);
-__exportStar(require("./contract"), exports);
 __exportStar(require("./agent-passport"), exports);
 __exportStar(require("./agent-intent"), exports);
 __exportStar(require("./tool-chain"), exports);

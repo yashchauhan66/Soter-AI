@@ -1,4 +1,3 @@
-import { sendMessageWithTimeout } from "../lib/runtime-messaging";
 import type { AiSiteAdapter } from "../adapters/generic-editor";
 import type { RuntimeResponse } from "../lib/types";
 
@@ -29,7 +28,8 @@ export function installResponseObserver(adapter: AiSiteAdapter, enabled: boolean
 }
 
 function sendResponseScan(text: string) {
-  return sendMessageWithTimeout<RuntimeResponse>(
+  return new Promise<RuntimeResponse>((resolve) => chrome.runtime.sendMessage(
     { type: "SOTER_SCAN_TEXT", text, url: location.href, eventType: "response" },
-  ).then((response) => response ?? { ok: false, message: "No response." });
+    (response) => resolve((response as RuntimeResponse) ?? { ok: false, message: chrome.runtime.lastError?.message ?? "No response." }),
+  ));
 }

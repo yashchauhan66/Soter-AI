@@ -17,6 +17,7 @@ import { getEndpointSecret } from "./store";
 import { writeWebhookDeliveryEvent } from "../events/store";
 
 const DELIVERY_TIMEOUT_MS = 10_000;
+const MAX_RESPONSE_BYTES = 4096;
 const BACKOFF_SCHEDULE_MS = [30_000, 2 * 60_000, 10 * 60_000, 60 * 60_000, 6 * 60 * 60_000];
 const MAX_ATTEMPTS = BACKOFF_SCHEDULE_MS.length + 1; // initial + retries
 
@@ -63,12 +64,37 @@ async function postOnce(url: string, headers: Record<string, string>, body: stri
       headers,
       body,
       signal: controller.signal,
+      redirect: "manual",
     });
-    const text = await response.text().catch(() => "");
+    if (response.status >= 300 && response.status < 400) {
+      return { ok: false, status: response.status, body: "Redirects are not followed for webhook delivery." };
+    }
+    const text = await readBoundedResponseText(response, MAX_RESPONSE_BYTES);
     return { ok: response.ok, status: response.status, body: sanitizeLogText(text.slice(0, 1000)) };
   } finally {
     clearTimeout(timer);
   }
+}
+
+async function readBoundedResponseText(response: Response, maxBytes: number) {
+  if (!response.body) return "";
+  const reader = response.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  try {
+    while (total < maxBytes) {
+      const { done, value } = await reader.read();
+      if (done || !value) break;
+      const remaining = maxBytes - total;
+      chunks.push(value.byteLength > remaining ? value.slice(0, remaining) : value);
+      total += Math.min(value.byteLength, remaining);
+      if (value.byteLength > remaining) break;
+    }
+  } finally {
+    reader.cancel().catch(() => undefined);
+    reader.releaseLock();
+  }
+  return Buffer.concat(chunks).toString("utf8");
 }
 
 export async function attemptDelivery(deliveryId: string) {

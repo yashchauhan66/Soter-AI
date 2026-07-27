@@ -1,4 +1,6 @@
 node_modules
+**/.npm-cache/
+.claude/
 .next
 .next-e2e
 .env
@@ -34,8 +36,6 @@ pytest-cache-files-*/
 NUL
 
 # accidental / junk artifacts
-.gradle/
-*.mp4
 *.pid
 testout.txt
 /Microsoft/
@@ -47,7 +47,12 @@ headers.txt
 *.cookies
 cookies-*.txt
 
-.npm-cache/
-# temp / kilonpm-cache/
-.kilo/
-tmp/
+# ML training artifacts (not needed at runtime; regenerable via Colab notebook)
+/datasets/
+/colab-train-bundle/
+soterai-train-bundle.zip
+# Keep runtime ONNX model under models/ tracked, but never the training-only weights
+models/**/pytorch_model.bin
+
+# scratch/runtime test dirs
+/tmp/

@@ -1,11 +1,12 @@
 {
   "name": "@soterai/extension",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "scripts": {
     "dev": "vite build --watch --mode development",
     "build": "tsc && vite build && vite build --config vite.content.config.ts && vite build --config vite.lineage.config.ts",
-    "package": "npm run build && node scripts/package.js",
+    "validate:store": "node scripts/validate-store-manifest.mjs",
+    "package": "npm run build && npm run validate:store && node scripts/package.js",
     "lint": "eslint . --ext .ts,.tsx",
     "typecheck": "tsc --noEmit",
     "type-check": "tsc --noEmit"

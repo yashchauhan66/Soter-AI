@@ -3,8 +3,11 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 
 import {
+  resolveEmailProvider,
   resolveEmailDeliveryMode,
   requireVerifiedEmailForLogin,
+  shouldExposeDevelopmentOtp,
+  validateEmailDeliveryConfig,
   planSignup,
   canStartCredentialsSession,
 } from "../lib/auth/signupPolicy";
@@ -65,7 +68,28 @@ test("CRG-RT-005: production with mock email is a blocked delivery mode", () => 
   assert.equal(resolveEmailDeliveryMode({ EMAIL_PROVIDER: "mock", NODE_ENV: "production" }), "blocked");
   assert.equal(resolveEmailDeliveryMode({ EMAIL_PROVIDER: "mock", NODE_ENV: "development" }), "mock");
   assert.equal(resolveEmailDeliveryMode({ EMAIL_PROVIDER: "resend", NODE_ENV: "production" }), "live");
+  assert.equal(resolveEmailDeliveryMode({ RESEND_API_KEY: "re_test_key" }), "live");
   assert.equal(resolveEmailDeliveryMode({ EMAIL_PROVIDER: "aws-ses", NODE_ENV: "development" }), "live");
+});
+
+test("email provider is inferred from configured provider credentials", () => {
+  assert.equal(resolveEmailProvider({ RESEND_API_KEY: "re_test_key" }), "resend");
+  assert.equal(resolveEmailProvider({ SMTP_HOST: "smtp.example.com" }), "smtp");
+  assert.equal(resolveEmailProvider({ AWS_ACCESS_KEY_ID: "akid", AWS_SECRET_ACCESS_KEY: "secret" }), "aws-ses");
+  assert.equal(resolveEmailProvider({}), "mock");
+});
+
+test("live email provider config reports missing required values", () => {
+  assert.deepEqual(validateEmailDeliveryConfig({ EMAIL_PROVIDER: "resend" }), ["RESEND_API_KEY"]);
+  assert.deepEqual(validateEmailDeliveryConfig({ EMAIL_PROVIDER: "smtp" }), ["SMTP_HOST"]);
+  assert.deepEqual(validateEmailDeliveryConfig({ EMAIL_PROVIDER: "aws-ses", AWS_ACCESS_KEY_ID: "akid" }), ["AWS_SECRET_ACCESS_KEY"]);
+  assert.deepEqual(validateEmailDeliveryConfig({ EMAIL_PROVIDER: "resend", RESEND_API_KEY: "re_test_key" }), []);
+});
+
+test("development OTP is never exposed unless explicitly enabled", () => {
+  assert.equal(shouldExposeDevelopmentOtp("mock", { NODE_ENV: "development" }), false);
+  assert.equal(shouldExposeDevelopmentOtp("mock", { AUTH_EXPOSE_DEVELOPMENT_OTP: "true" }), true);
+  assert.equal(shouldExposeDevelopmentOtp("live", { AUTH_EXPOSE_DEVELOPMENT_OTP: "true" }), false);
 });
 
 test("CRG-RT-005: verification enforced for live/blocked, relaxed for dev mock, override wins", () => {
@@ -90,6 +114,18 @@ test("Test 2: duplicate UNVERIFIED password signup resends (no duplicate user)",
     deliveryMode: "live",
   });
   assert.deepEqual(plan, { kind: "resend" });
+});
+
+test("duplicate unverified signup refreshes the password before resending OTP", () => {
+  const src = readFileSync("app/api/auth/signup/route.ts", "utf8");
+  const resendIndex = src.indexOf('if (plan.kind === "resend")');
+  const hashIndex = src.indexOf("const passwordHash = await bcrypt.hash(body.password, 12);", resendIndex);
+  const updateIndex = src.indexOf("tx.user.update", resendIndex);
+  const tokenIndex = src.indexOf("createEmailVerificationOtp(userId", resendIndex);
+  assert.ok(resendIndex >= 0, "expected duplicate-unverified resend branch");
+  assert.ok(hashIndex > resendIndex, "resend branch must hash the latest submitted password");
+  assert.ok(updateIndex > hashIndex, "resend branch must update the pending user's password");
+  assert.ok(tokenIndex > updateIndex, "password refresh should happen before the fresh OTP is issued");
 });
 
 test("Test 3: duplicate VERIFIED signup is rejected (no second user)", () => {
@@ -231,6 +267,14 @@ test("no raw verification token is logged in the signup route", () => {
   // Error logs reference reason/name only, never the token or password.
   assert.doesNotMatch(src, /console\.(log|info|warn|error)\([^)]*\btoken\b/);
   assert.doesNotMatch(src, /console\.(log|info|warn|error)\([^)]*password/);
+});
+
+test("OTP UI does not auto-fill development OTP values", () => {
+  const verifyForm = readFileSync("components/auth/VerifyEmailOtpForm.tsx", "utf8");
+  const signupForm = readFileSync("components/auth/SignUpForm.tsx", "utf8");
+  assert.doesNotMatch(verifyForm, /initialDevelopmentOtp/);
+  assert.doesNotMatch(verifyForm, /setOtp\(data\.developmentOtp/);
+  assert.doesNotMatch(signupForm, /developmentOtp/);
 });
 
 test("database connectivity failures are classified as temporary outages", () => {

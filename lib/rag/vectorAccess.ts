@@ -26,7 +26,7 @@ export function enforceTenantNamespace(namespace: string, context: Pick<VectorQu
   return true;
 }
 
-export function filterByRole(chunks: VectorChunk[], role: string) { return chunks.filter((chunk) => Boolean(chunk.allowedRoles?.length) && chunk.allowedRoles!.includes(role)); }
+export function filterByRole(chunks: VectorChunk[], role: string) { return chunks.filter((chunk) => !chunk.allowedRoles?.length || chunk.allowedRoles.includes(role)); }
 export function filterByDocumentStatus(chunks: VectorChunk[]) { return chunks.filter((chunk) => chunk.documentStatus === "APPROVED" || chunk.documentStatus === "INDEXED"); }
 export function filterByAllowedSources(chunks: VectorChunk[], sources?: string[]) { return !sources?.length ? chunks : chunks.filter((chunk) => chunk.sourceUrl && sources.includes(chunk.sourceUrl)); }
 

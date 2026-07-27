@@ -13,6 +13,7 @@ import {
   Eye,
   KeyRound,
 } from "lucide-react";
+import { trustProof } from "@/lib/marketing/launchStatus";
 
 export const metadata: Metadata = {
   title: "Trust Center | SoterAI Security",
@@ -27,8 +28,8 @@ export const metadata: Metadata = {
 };
 
 const testStatus = [
-  { label: "Adversarial battery", value: "101 / 101", note: "Comprehensive attack scenarios across 40+ services" },
-  { label: "Garak-style benchmark", value: "84% @ 1% FPR", note: "ROC-AUC 0.92 · 0.54% false-positive rate on 1,110 benign inputs" },
+  { label: "Public benchmark", value: "3,200 rows", note: "Self-maintained synthetic dataset with public methodology" },
+  { label: "Latest benchmark run", value: "100% recall", note: "0.00% false-positive rate on 1,000 synthetic benign controls" },
   { label: "Unit + integration suites", value: "60+ files", note: "Guard, agent-firewall, auth, billing, retention" },
   { label: "E2E guard scenarios", value: "Playwright", note: "Real attack flows against a live build" },
 ];
@@ -58,8 +59,8 @@ const deploymentModel = [
 
 // Compact, honest posture signals shown in the hero status board.
 const posture = [
-  { label: "Adversarial benchmark", value: "ROC-AUC 0.92", meter: 92, tone: "cyan" as const },
-  { label: "False-positive rate", value: "0.54% on 1,110 inputs", meter: 99, tone: "lime" as const },
+  { label: "Public benchmark", value: "100% recall", meter: 100, tone: "cyan" as const },
+  { label: "False-positive rate", value: "0.00% on Phase 9 dataset", meter: 100, tone: "lime" as const },
   { label: "OWASP LLM Top 10", value: "Aligned coverage", meter: 90, tone: "cyan" as const },
 ];
 
@@ -90,9 +91,9 @@ export default function TrustPage() {
             </h1>
             <div className="mt-6 max-w-2xl space-y-4 leading-7 text-slate-400">
               <p>
-                SoterAI is an OWASP LLM Top 10 aligned AI security command layer focused on risk reduction for
-                chatbots, RAG apps, and AI agents. This page documents what we test, how we handle data, the controls
-                we run, how you can deploy us, and how to report a vulnerability.
+                SoterAI protects company data and AI-agent actions before sensitive context reaches external AI systems.
+                This page documents what we test, how we handle data, the controls we run, how you can deploy us,
+                and how to report a vulnerability.
               </p>
               <p>
                 We do not claim complete protection or certification. Customers remain responsible for secure design,
@@ -100,7 +101,7 @@ export default function TrustPage() {
               </p>
             </div>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/benchmarks" className="button-primary gap-2">
+              <Link href="/benchmark" className="button-primary gap-2">
                 View the benchmark <ArrowRight size={18} aria-hidden="true" />
               </Link>
               <Link href="/status" className="button-secondary gap-2">
@@ -181,13 +182,34 @@ export default function TrustPage() {
           </div>
           <p className="mt-4 text-xs text-slate-500">
             Full benchmark data:{" "}
-            <Link href="/benchmarks" className="text-cyan underline underline-offset-2 hover:text-cyan/80">
-              /benchmarks
+            <Link href="/benchmark" className="text-cyan underline underline-offset-2 hover:text-cyan/80">
+              /benchmark
             </Link>{" "}
             · live system status:{" "}
             <Link href="/status" className="text-cyan underline underline-offset-2 hover:text-cyan/80">
               /status
             </Link>
+          </p>
+        </section>
+
+        <section className="mt-16">
+          <h2 className="flex items-center gap-3 text-2xl font-bold">
+            <span className="rounded-lg border border-cyan/20 bg-cyan/10 p-2">
+              <ShieldCheck className="text-cyan" size={20} aria-hidden="true" />
+            </span>
+            Enterprise trust status
+          </h2>
+          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {trustProof.map((item) => (
+              <article key={item.label} className="card p-5">
+                <p className="text-sm font-semibold text-slate-200">{item.label}</p>
+                <p className="mt-2 text-lg font-bold text-cyan">{item.value}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-400">{item.note}</p>
+              </article>
+            ))}
+          </div>
+          <p className="mt-4 text-sm text-slate-500">
+            SOC2: readiness in progress. Pentest: EVIDENCE REQUIRED unless a signed external report is added. Security contact: support@soterai.in.
           </p>
         </section>
 

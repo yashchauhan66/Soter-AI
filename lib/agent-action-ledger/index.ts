@@ -4,11 +4,6 @@ export type AgentActionReversalStatus = "REVERSIBLE" | "COMPENSATING_ACTION" | "
 export type AgentActionLedgerDecision = "ALLOW" | "REQUIRE_APPROVAL" | "BLOCK";
 export type AgentActionLedgerRiskLevel = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
 
-/** Maximum length for tool and action string inputs to prevent storage abuse. */
-const MAX_TOOL_LENGTH = 200;
-const MAX_ACTION_LENGTH = 200;
-const MAX_TARGET_LENGTH = 2000;
-
 export interface AgentActionLedgerInput {
   projectId?: string;
   sessionId?: string;
@@ -52,16 +47,6 @@ const COMPENSATING_PATTERN = /(gmail\.send|email\.send|slack\.post|ticket\.close
 const REVERSIBLE_PATTERN = /(draft|filesystem\.write|memory\.write|database\.update|ticket\.update|calendar\.update|label|tag|note|comment)/i;
 
 export function createActionLedgerEntry(input: AgentActionLedgerInput): AgentActionLedgerEntry {
-  // Validate input lengths to prevent storage abuse
-  const rawTool = (input.tool ?? "").trim();
-  const rawAction = (input.action ?? "").trim();
-  const rawTarget = (input.target ?? "").trim();
-  if (!rawTool) throw new Error("Agent action ledger: tool is required.");
-  if (!rawAction) throw new Error("Agent action ledger: action is required.");
-  if (rawTool.length > MAX_TOOL_LENGTH) throw new Error(`Agent action ledger: tool exceeds maximum length of ${MAX_TOOL_LENGTH}.`);
-  if (rawAction.length > MAX_ACTION_LENGTH) throw new Error(`Agent action ledger: action exceeds maximum length of ${MAX_ACTION_LENGTH}.`);
-  if (rawTarget.length > MAX_TARGET_LENGTH) throw new Error(`Agent action ledger: target exceeds maximum length of ${MAX_TARGET_LENGTH}.`);
-
   const tool = normalize(input.tool);
   const action = normalize(input.action);
   const combined = `${tool} ${action}`;

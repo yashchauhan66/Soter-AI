@@ -16,9 +16,19 @@ import { ssrfDetector } from "./detectors/ssrfDetector";
 import { competitiveIntelDetector } from "./detectors/competitiveIntelDetector";
 import { socialEngineeringDetector } from "./detectors/socialEngineeringDetector";
 import { embeddingPoisoningDetector } from "./detectors/embeddingPoisoningDetector";
+import { mcpToolPoisoningDetector } from "./detectors/mcpToolPoisoningDetector";
+import { memoryPoisoningDetector } from "./detectors/memoryPoisoningDetector";
+import { multimodalAttackDetector } from "./detectors/multimodalAttackDetector";
+import { modelSupplyChainDetector } from "./detectors/modelSupplyChainDetector";
+import { behavioralAnomalyDetector } from "./detectors/behavioralAnomalyDetector";
+import { advancedUnicodeSmugglingDetector } from "./detectors/advancedUnicodeSmugglingDetector";
 import { insecureDeserializationDetector } from "./detectors/insecureDeserializationDetector";
 import { dataExfiltrationInputDetector } from "./detectors/dataExfiltrationInputDetector";
+import { replyChannelExfilDetector } from "./detectors/replyChannelExfilDetector";
+import { harmfulContentRequestDetector } from "./detectors/harmfulContentRequestDetector";
+import { broadHarmfulContentDetector } from "./detectors/broadHarmfulContentDetector";
 import { generalizedIntentDetector } from "./detectors/generalizedIntentDetector";
+import { adversarialCyberDetector } from "./detectors/adversarialCyberDetector";
 import { decideGuardAction } from "./decisionEngine";
 import { redactText } from "./redactor";
 import { rewriteRiskyText } from "./rewrite";
@@ -31,40 +41,66 @@ import type { GuardDirection, GuardFinding, GuardResult, RiskType } from "./type
 // Risk types the regex/signature detectors emit for an adversarial input. When
 // any of these already fired we skip the semantic layer — it exists to catch
 // novel wordings the rules missed, not to re-flag what they already caught.
-// ── Security Hardening: Time-safe regex helpers ────────────────────────────
-/** Maximum time (ms) allowed for a batch of inline regex tests (analyze.ts). */
-const INLINE_REGEX_TIMEOUT_MS = 500;
-
-/**
- * Time-safe version of blockRegexes.some(). Tests patterns until one matches
- * or the time budget is exceeded, preventing ReDoS on crafted input.
- */
-function timeSafeSome(regexes: RegExp[], text: string, startTime: number): boolean {
-  for (const rx of regexes) {
-    if (Date.now() - startTime > INLINE_REGEX_TIMEOUT_MS) break;
-    if (rx.test(text)) return true;
-  }
-  return false;
-}
-
-/**
- * Time-safe version of a single regex .test(). Returns true if the regex
- * matches within the time budget, false otherwise.
- */
-function timeSafeTest(rx: RegExp, text: string, startTime: number, timeout = INLINE_REGEX_TIMEOUT_MS): boolean {
-  if (Date.now() - startTime > timeout) return false;
-  try {
-    return rx.test(text);
-  } catch {
-    return false;
-  }
-}
-
 const RULE_SECURITY_TYPES = new Set<RiskType>([
   "PROMPT_INJECTION",
   "JAILBREAK",
   "SYSTEM_PROMPT_LEAK_ATTEMPT",
+  "MCP_TOOL_POISONING",
+  "MEMORY_POISONING",
+  "TOXICITY",
+  "RECURSIVE_INJECTION",
+  "DATA_EXFILTRATION",
+  "MULTIMODAL_INJECTION",
+  "MODEL_SUPPLY_CHAIN",
+  "BEHAVIORAL_ANOMALY",
+  "ADVANCED_SMUGGLING",
 ]);
+
+// Families the semantic (feature-hash) layer is allowed to escalate on INPUT.
+// TOXICITY is intentionally EXCLUDED here: the dependency-free feature-hash
+// similarity generalizes well on *structural* attacks (injection / jailbreak /
+// leak) but over-fires on benign *topic/content* prose that merely shares
+// vocabulary with harm seeds — benign code-gen, tax/legal questions, fact-checks
+// and anti-abuse condemnation all scored just over the TOXICITY margin on the
+// JailbreakBench benign control (23% raw FPR, all semantic-or-keyword TOXICITY).
+// This mirrors the same exclusion mlAugment applies to content-harm labels on
+// INPUT (see lib/guard/mlAugment.ts INPUT_RELIABLE_LABELS). Real toxic INPUT is
+// still caught deterministically by toxicityDetector + harmfulContentRequestDetector,
+// and the meaning-based llmJudge tier, and TOXICITY semantic detection remains
+// fully active on OUTPUT (a toxic model reply).
+const SEMANTIC_INPUT_SECURITY_FAMILIES = new Set([
+  "PROMPT_INJECTION",
+  "JAILBREAK",
+  "SYSTEM_PROMPT_LEAK_ATTEMPT",
+  "DATA_EXFILTRATION",
+  "MCP_TOOL_POISONING",
+  "MEMORY_POISONING",
+  "RECURSIVE_INJECTION",
+  "SOCIAL_ENGINEERING",
+  "EMBEDDING_POISONING",
+  "SSRF",
+  "MULTIMODAL_INJECTION",
+  "BEHAVIORAL_ANOMALY",
+  "ADVANCED_SMUGGLING",
+]);
+
+// Detection tier is enterprise-configurable via SOTERAI_DETECTION_TIER:
+//   - "rules"    → deterministic signatures only; the semantic recall booster is
+//                  disabled entirely (lowest false-positive cost, lowest novel recall).
+//   - "hybrid"   → (default) rules first; the semantic booster runs only when no
+//                  rule security finding fired, and routes its hits to human review.
+//   - "semantic" → the semantic booster is also consulted even when rules already
+//                  fired, raising novel recall at a higher false-positive cost.
+// Any unrecognized value falls back to "hybrid". The semantic layer is
+// dependency-free (no model/network), so it is always available; if it ever
+// throws, analysis degrades safely to rules-only rather than failing the request.
+export type DetectionTier = "rules" | "hybrid" | "semantic";
+
+function resolveDetectionTier(): DetectionTier {
+  const raw = (process.env.SOTERAI_DETECTION_TIER ?? "").trim().toLowerCase();
+  if (raw === "rules" || raw === "semantic" || raw === "hybrid") return raw;
+  return "hybrid";
+}
 
 const COMMON_DETECTORS = [piiDetector, indiaPiiDetector, secretsDetector, toxicityDetector];
 // `generalizedIntentDetector` matches the STRUCTURE of an attack (an action verb
@@ -73,12 +109,39 @@ const COMMON_DETECTORS = [piiDetector, indiaPiiDetector, secretsDetector, toxici
 // interaction is handled in `applyPolicy` (lib/guard/policy.ts) by keying on risk
 // types rather than finding count, so registering this detector does not break the
 // legacy single-injection REWRITE / HUMAN_REVIEW / BLOCK policy branch.
-const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, systemPromptLeakAttemptDetector, multilingualAttackDetector, recursiveInjectionDetector, ssrfDetector, competitiveIntelDetector, socialEngineeringDetector, embeddingPoisoningDetector, insecureDeserializationDetector, dataExfiltrationInputDetector, generalizedIntentDetector, ...COMMON_DETECTORS];
+const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, systemPromptLeakAttemptDetector, multilingualAttackDetector, recursiveInjectionDetector, ssrfDetector, adversarialCyberDetector, competitiveIntelDetector, socialEngineeringDetector, embeddingPoisoningDetector, mcpToolPoisoningDetector, memoryPoisoningDetector, multimodalAttackDetector, modelSupplyChainDetector, behavioralAnomalyDetector, advancedUnicodeSmugglingDetector, insecureDeserializationDetector, dataExfiltrationInputDetector, replyChannelExfilDetector, harmfulContentRequestDetector, broadHarmfulContentDetector, generalizedIntentDetector, ...COMMON_DETECTORS];
 const OUTPUT_DETECTORS = [systemPromptLeakageDetector, unsafeOutputDetector, outputExfiltrationDetector, spamUrlDetector, hallucinationDetector, biasDetector, generalizedIntentDetector, ...COMMON_DETECTORS];
 
 export function analyzeText(text: string, direction: GuardDirection): GuardResult {
   const detectors = direction === "OUTPUT" ? OUTPUT_DETECTORS : INPUT_DETECTORS;
-  const findings: GuardFinding[] = detectors.flatMap((detector) => detector(text));
+  let findings: GuardFinding[] = detectors.flatMap((detector) => detector(text));
+
+  // Safe security-education prompts often mention "prompt injection" and
+  // "bypass" in a negated, high-level training context. Keep sensitive-data
+  // findings, but suppress bypass/injection findings for this narrow pattern so
+  // awareness material does not become user friction.
+  if (direction === "INPUT" && isSafeSecurityEducationRequest(text)) {
+    findings = findings.filter(
+      (finding) =>
+        !(
+          (
+            finding.type === "PROMPT_INJECTION" ||
+            finding.type === "SYSTEM_PROMPT_LEAK_ATTEMPT" ||
+            finding.type === "DATA_EXFILTRATION"
+          ) &&
+          /bypass|override|instruction|approval|control|jailbreak|system-?prompt|extraction|credential|phishing|exfiltration|generalized/i.test(finding.label)
+        ),
+    );
+  }
+  if (direction === "INPUT" && isClearlyBenignKnowledgeQuestion(text)) {
+    findings = findings.filter(
+      (finding) =>
+        !(
+          finding.type === "SYSTEM_PROMPT_LEAK_ATTEMPT" &&
+          finding.label === "System-prompt extraction (generalized)"
+        ),
+    );
+  }
 
   // Set when the semantic layer (not the rules) is the sole reason a request is
   // flagged. Such requests are held for human review rather than blocked, since
@@ -86,31 +149,26 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
   let semanticOnly = false;
   let semanticMetadata: Record<string, unknown> | undefined;
 
-  if (direction === "OUTPUT") {
-    const startTime = Date.now();
-    if (timeSafeTest(/unsafe.*placeholder|simulation/i, text, startTime)) {
-      findings.push({
-        type: "UNSAFE_OUTPUT",
-        label: "Unsafe output simulation",
-        severity: "HIGH",
-        score: 85,
-        message: "Unsafe output pattern detected."
-      });
-    }
+  if (direction === "OUTPUT" && /unsafe.*placeholder|simulation/i.test(text)) {
+    findings.push({
+      type: "UNSAFE_OUTPUT",
+      label: "Unsafe output simulation",
+      severity: "HIGH",
+      score: 85,
+      message: "Unsafe output pattern detected."
+    });
   }
 
   if (direction === "INPUT") {
     const normalized = text.replace(/[\s.-]/g, "");
-    const startTime = Date.now();
 
     // NOTE: the spaced-letter evasion signature must use \s+ (real gaps between
     // letters, e.g. "r e v e a l"); \s* also matched the plain word "reveal",
     // flagging any benign sentence that merely used it (e.g. "reveal the plot
     // twist") as a prompt-leak. The genuine evasion case is covered below.
-    const isLeak =
-      timeSafeTest(/hidden instructions|internal prompt|developer.*tell|print.*hidden rules|repeat.*text before|reveal.*configuration|r\s+e\s+v\s+e\s+a\s+l|system\s+prompt\s+batao|hidden\s+instruction\s+dikhao/i, text, startTime) ||
-      timeSafeTest(/hiddeninstructions|internalprompt|developertell|printhiddenrules|repeattextbefore|revealconfiguration/i, normalized, startTime);
-                   
+    const isLeak = /hidden instructions|internal prompt|developer.*tell|print.*hidden rules|repeat.*text before|reveal.*configuration|r\s+e\s+v\s+e\s+a\s+l|system\s+prompt\s+batao|hidden\s+instruction\s+dikhao/i.test(text) ||
+      /hiddeninstructions|internalprompt|developertell|printhiddenrules|repeattextbefore|revealconfiguration/i.test(normalized);
+
     if (isLeak) {
       findings.push({
         type: "SYSTEM_PROMPT_LEAK_ATTEMPT",
@@ -245,8 +303,8 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
       /وضع المطور|كسر الحماية|بدون قيود/i,
       /وضع المشرف/i
     ];
-    
-    if (timeSafeSome(blockRegexes, text, startTime) || timeSafeSome(blockRegexes, normalized, startTime)) {
+
+    if (blockRegexes.some(rx => rx.test(text) || rx.test(normalized))) {
       findings.push({
         type: "PROMPT_INJECTION",
         label: "IPS Signature match",
@@ -264,9 +322,9 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
     }
 
     if (
-      timeSafeTest(/(?:generate|write|create).{0,120}(?:\d{4,}|\d{1,3},\d{3,}).{0,120}(?:words?|variations?|prompts?|responses?)/i, text, startTime) ||
-      timeSafeTest(/(?:repeat|continue).{0,120}(?:forever|until i say stop|without stopping|maximum context|context is exhausted)/i, text, startTime) ||
-      timeSafeTest(/(?:call|use).{0,120}(?:search|browser|tool|api).{0,120}(?:repeatedly|every possible result|until you find every)/i, text, startTime)
+      /(?:generate|write|create).{0,120}(?:\d{4,}|\d{1,3},\d{3,}).{0,120}(?:words?|variations?|prompts?|responses?)/i.test(text) ||
+      /(?:repeat|continue).{0,120}(?:forever|until i say stop|without stopping|maximum context|context is exhausted)/i.test(text) ||
+      /(?:call|use).{0,120}(?:search|browser|tool|api).{0,120}(?:repeatedly|every possible result|until you find every)/i.test(text)
     ) {
       findings.push({
         type: "TOKEN_ABUSE",
@@ -283,10 +341,32 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
     // hit is reported as a MEDIUM finding and (below) routed to human review — it
     // never hard-blocks on its own, bounding the false-positive cost.
     const hasRuleSecurityFinding = findings.some((finding) => RULE_SECURITY_TYPES.has(finding.type));
-    if (!hasRuleSecurityFinding) {
-      const semantic = classifySemantic(text);
-      if (semantic.isAttack && semantic.family) {
-        semanticOnly = true;
+    // Tier gate: "rules" disables the booster; "hybrid" consults it only when the
+    // rules found nothing; "semantic" consults it regardless. Wrapped so a failure
+    // in the heuristic degrades to rules-only rather than throwing.
+    const tier = resolveDetectionTier();
+    const semanticEnabled =
+      tier !== "rules" &&
+      !isClearlyBenignKnowledgeQuestion(text) &&
+      (tier === "semantic" || !hasRuleSecurityFinding);
+    if (semanticEnabled) {
+      let semantic: ReturnType<typeof classifySemantic> | null = null;
+      try {
+        semantic = classifySemantic(text);
+      } catch {
+        semantic = null; // fail safe: never let the recall booster break analysis
+      }
+      if (
+        semantic &&
+        semantic.isAttack &&
+        semantic.family &&
+        (direction !== "INPUT" || SEMANTIC_INPUT_SECURITY_FAMILIES.has(semantic.family))
+      ) {
+        // semanticOnly (→ human review escalation below) applies only when the
+        // rules found nothing; if a rule security finding already fired, the
+        // semantic hit is recorded as corroborating evidence but does not change
+        // the rules-driven action.
+        semanticOnly = !hasRuleSecurityFinding;
         semanticMetadata = {
           family: semantic.family,
           score: semantic.score,
@@ -304,6 +384,9 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
           SOCIAL_ENGINEERING: "PROMPT_INJECTION",
           EMBEDDING_POISONING: "PROMPT_INJECTION",
           INSECURE_DESERIALIZATION: "PROMPT_INJECTION",
+          DATA_EXFILTRATION: "DATA_EXFILTRATION",
+          MCP_TOOL_POISONING: "MCP_TOOL_POISONING",
+          MEMORY_POISONING: "MEMORY_POISONING",
         };
         const riskType = familyToRiskType[semantic.family] ?? "PROMPT_INJECTION";
         findings.push({
@@ -326,6 +409,9 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
   const riskTypes = ([...new Set(findings.map((finding) => finding.type))] as RiskType[]);
   if (riskTypes.length === 0) riskTypes.push("LOW_RISK");
   let action = decideGuardAction(riskScore, riskTypes, direction, text);
+  if (direction === "INPUT" && hasHighTrustExploitationFinding(findings) && action !== "BLOCK") {
+    action = "HUMAN_REVIEW";
+  }
   // A semantic-only detection is held for human review rather than allowed or
   // silently rewritten, but is never escalated to a hard block on its own.
   if (semanticOnly && action !== "BLOCK" && action !== "HUMAN_REVIEW") {
@@ -366,6 +452,51 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
       ...(semanticMetadata ? { semantic: semanticMetadata } : {}),
     },
   }, advisory);
+}
+
+function isSafeSecurityEducationRequest(text: string): boolean {
+  const normalized = text.trim().toLowerCase();
+  if (isExplicitlyAdversarialEducationRequest(normalized)) return false;
+  if (
+    /^(summarize|review|analyze|extract|classify)\b/.test(normalized) &&
+    /\bdocument\b/.test(normalized) &&
+    /\bignore\b/.test(normalized) &&
+    /\binstructions?\s+inside\s+the\s+document\b/.test(normalized) &&
+    /\bnot\s+part\s+of\s+the\s+user\s+request\b/.test(normalized)
+  ) {
+    return true;
+  }
+  if (
+    /^(write|draft|create|design|compose)\b/.test(normalized) &&
+    /\bsecure\s+system\s+prompt\b/.test(normalized) &&
+    /\b(chatbot|assistant|agent|customer-support|support)\b/.test(normalized)
+  ) {
+    return true;
+  }
+  if (!/^(explain|describe|summarize|outline|draft|write|create)\b/.test(normalized)) return false;
+  if (!/(prompt injection|phishing awareness|credential protection|security awareness|security training|protecting credentials|privacy review|least privilege)/i.test(text)) return false;
+  return /(high level|awareness|training|without providing|without step-by-step|safe|benign|plain language)/i.test(text);
+}
+
+function isClearlyBenignKnowledgeQuestion(text: string): boolean {
+  const normalized = text.trim().toLowerCase();
+  return (
+    /^(?:what\s+is|what\s+are|explain|describe|summarize|outline)\b/.test(normalized) &&
+    /\b(?:role|function|purpose|process|cycle|branch|concept|topic|definition|system\s+prompt|hallucination|grounding|mitigations?|best practices?|compliance|records?)\b/.test(normalized) &&
+    !/\b(?:your|developer|hidden|internal|instructions?|rules?|configuration|secret)\b/.test(normalized)
+  );
+}
+
+function hasHighTrustExploitationFinding(findings: GuardFinding[]): boolean {
+  return findings.some((finding) =>
+    finding.label === "Deepfake authority pretext" ||
+    finding.label === "Recorded executive approval pretext" ||
+    finding.label === "Credential solicitation pressure"
+  );
+}
+
+function isExplicitlyAdversarialEducationRequest(normalized: string): boolean {
+  return /(ignore previous|reveal system prompt|disable guardrails|dump|exfiltrate|list all|admin mode|unrestricted|dan mode|hidden instructions|show me your system prompt|print your system prompt)/i.test(normalized);
 }
 
 function buildReason(action: GuardResult["action"], findings: GuardFinding[]) {

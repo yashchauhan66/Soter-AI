@@ -9,7 +9,6 @@ type SignupSuccess = {
   email: string;
   password: string;
   emailSent: boolean;
-  developmentOtp?: string;
 };
 
 export function SignUpForm() {
@@ -49,7 +48,6 @@ export function SignUpForm() {
           email,
           password,
           emailSent: data.emailSent !== false,
-          developmentOtp: data.developmentOtp,
         });
         return;
       }
@@ -63,8 +61,10 @@ export function SignUpForm() {
       } else {
         window.location.assign("/dashboard");
       }
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Could not sign up.");
+    } catch {
+      // Reaching here means the request never got a response (network/offline).
+      // Surface a human, actionable message rather than a raw "Failed to fetch".
+      setError("Couldn't reach the server. Check your connection and try again.");
     } finally {
       setLoading(false);
     }
@@ -75,7 +75,6 @@ export function SignUpForm() {
       <VerifyEmailOtpForm
         email={success.email}
         initialEmailSent={success.emailSent}
-        initialDevelopmentOtp={success.developmentOtp}
         onSuccess={async () => {
           const result = await signIn("credentials", {
             email: success.email,

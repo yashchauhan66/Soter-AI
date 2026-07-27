@@ -31,10 +31,28 @@ export function sanitizeDecisionForCache(decision: GuardDecision): GuardDecision
 }
 
 /**
+ * True when every key/value in `required` is present and equal in `actual`.
+ * Extra keys in `actual` are allowed (forward-compatible). Empty required
+ * means "no detector version constraint" (legacy callers).
+ */
+export function detectorVersionsMatch(
+    actual: Record<string, string> | undefined,
+    required: Record<string, string> | undefined,
+): boolean {
+    if (!required || Object.keys(required).length === 0) return true;
+    if (!actual) return false;
+    for (const [key, value] of Object.entries(required)) {
+        if (actual[key] !== value) return false;
+    }
+    return true;
+}
+
+/**
  * Local hash cache — stores decision by content hash.
  * Never stores raw content. Only hash + sanitized decision + metadata.
  */
 export class HashCache {
+
     private cache = new Map<string, CachedDecision>();
     private config: HashCacheConfig;
 
@@ -60,8 +78,16 @@ export class HashCache {
             this.cache.delete(hash);
             return null;
         }
+        // Detector / pipeline version mismatch must invalidate — otherwise a
+        // pipeline expansion (e.g. enabling prompt-injection on file context)
+        // would silently serve stale allow decisions (fail-open cache).
+        if (!detectorVersionsMatch(entry.detectorVersions, this.config.detectorVersions)) {
+            this.cache.delete(hash);
+            return null;
+        }
         return entry.decision;
     }
+
 
     set(hash: string, decision: GuardDecision): void {
         // Evict if at capacity

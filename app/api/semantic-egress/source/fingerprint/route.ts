@@ -1,4 +1,5 @@
-import { authenticateAdvancedSecurity, readAdvancedJson } from "@/lib/advanced-security/server";
+import { readJson } from "@/lib/apiResponse";
+import { authenticateAdvancedSecurity } from "@/lib/advanced-security/server";
 import {
   fingerprintAndPersistSemanticSource,
   routeError,
@@ -11,9 +12,9 @@ export async function POST(request: Request) {
   try {
     const authenticated = await authenticateAdvancedSecurity(request);
     if (!authenticated.ok) return authenticated.response;
-    const body = await readAdvancedJson(request, semanticSourceFingerprintSchema);
-    return fingerprintAndPersistSemanticSource(authenticated.auth, body);
+    const body = semanticSourceFingerprintSchema.parse(await readJson(request));
+    return await fingerprintAndPersistSemanticSource(authenticated.auth, body);
   } catch (error) {
-    return routeError(error, "Semantic source fingerprint could not be stored.");
+    return routeError(error, "Semantic source fingerprint could not be completed.");
   }
 }

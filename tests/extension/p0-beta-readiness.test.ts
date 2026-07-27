@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { createEnrollmentToken, enrollmentTokenStatus, hashSecret, redeemEnrollmentToken } from "../../lib/extension/enrollment";
+import { createEnrollmentToken, enrollmentTokenStatus, hashSecret, redeemEnrollmentToken, seatCheck } from "../../lib/extension/enrollment";
 import { applyEmergencyLockdown, lockdownPolicy, setEmergencyLockdown } from "../../lib/extension/emergencyLockdown";
 import { defaultState } from "../../apps/extension/src/lib/storage";
 import { validateManagedConfig } from "../../apps/extension/src/lib/enrollment";
@@ -48,14 +48,17 @@ test("expired, revoked, and overused enrollment tokens fail", () => {
 });
 
 test("successful enrollment returns a device credential and a single-use token cannot be reused", async () => {
-  const token = { id: "token-1", organizationId: "org-1", organization: { name: "Acme" }, employeeEmail: "user@acme.test", department: "Security", role: "Engineer", maxUses: 1, usedCount: 0, expiresAt: new Date(Date.now() + 60_000), revokedAt: null };
+  const token = { id: "token-1", organizationId: "org-1", organization: { name: "Acme", extensionSeatLimit: null }, employeeEmail: "user@acme.test", department: "Security", role: "Engineer", maxUses: 1, usedCount: 0, expiresAt: new Date(Date.now() + 60_000), revokedAt: null };
   const audits: unknown[] = [];
   const tx = {
     extensionEnrollmentToken: {
       findUnique: async () => ({ ...token }),
       updateMany: async () => token.usedCount < token.maxUses ? (token.usedCount += 1, { count: 1 }) : { count: 0 },
     },
-    deviceAgent: { create: async ({ data }: { data: Record<string, unknown> }) => ({ id: "device-1", ...data }) },
+    deviceAgent: {
+      create: async ({ data }: { data: Record<string, unknown> }) => ({ id: "device-1", ...data }),
+      count: async () => 0,
+    },
     emergencyLockdownState: { findUnique: async () => ({ policyVersion: 7 }) },
     adminAuditLog: { create: async ({ data }: { data: unknown }) => { audits.push(data); return data; } },
   };
@@ -71,6 +74,31 @@ test("successful enrollment returns a device credential and a single-use token c
   }
   assert.deepEqual(second, { ok: false, status: "overused", message: "Enrollment code has reached its usage limit." });
   assert.equal(audits.length, 1);
+});
+
+test("seatCheck: null limit is always within limit", () => {
+  assert.deepEqual(seatCheck(null, 0), { withinLimit: true, limit: null, used: 0, remaining: null });
+  assert.deepEqual(seatCheck(null, 9999), { withinLimit: true, limit: null, used: 9999, remaining: null });
+});
+
+test("seatCheck: enforces numeric seat cap", () => {
+  assert.deepEqual(seatCheck(10, 9), { withinLimit: true, limit: 10, used: 9, remaining: 1 });
+  assert.deepEqual(seatCheck(10, 10), { withinLimit: false, limit: 10, used: 10, remaining: 0 });
+  assert.deepEqual(seatCheck(10, 11), { withinLimit: false, limit: 10, used: 11, remaining: 0 });
+});
+
+test("redeemEnrollmentToken: blocked when seat limit reached", async () => {
+  const token = { id: "token-1", organizationId: "org-1", organization: { name: "Acme", extensionSeatLimit: 5 }, employeeEmail: null, department: null, role: null, maxUses: 10, usedCount: 0, expiresAt: new Date(Date.now() + 60_000), revokedAt: null };
+  const tx = {
+    extensionEnrollmentToken: { findUnique: async () => ({ ...token }), updateMany: async () => ({ count: 1 }) },
+    deviceAgent: { create: async ({ data }: { data: Record<string, unknown> }) => ({ id: "device-1", ...data }), count: async () => 5 },
+    emergencyLockdownState: { findUnique: async () => ({ policyVersion: 1 }) },
+    adminAuditLog: { create: async ({ data }: { data: unknown }) => data },
+  };
+  const fakeDb = { $transaction: async (work: (transaction: typeof tx) => unknown) => work(tx) };
+  const result = await redeemEnrollmentToken({ enrollmentCode: "soter_enroll_test", apiBaseUrl: "https://soter.example" }, fakeDb as never);
+  assert.equal(result.ok, false);
+  if (!result.ok) assert.equal(result.status, "seat_limit_reached");
 });
 
 test("emergency lockdown enable and disable increment policy state and are audited", async () => {

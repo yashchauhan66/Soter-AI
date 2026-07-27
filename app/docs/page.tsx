@@ -4,6 +4,7 @@ import { ArrowRight, BookOpen, CheckCircle2, Code2, Globe2, Search, ShieldCheck,
 import { CodeBlock, TipBox } from "@/components/ui/CodeBlock";
 import { DocViewTracker } from "@/components/docs/DocViewTracker";
 import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { productStatus } from "@/lib/marketing/launchStatus";
 
 export const metadata: Metadata = {
   title: "SoterAI Developer Docs - Integrate AI Security in 5 Minutes | JavaScript, Python, REST",
@@ -132,8 +133,8 @@ export default function DocsHubPage() {
             </h1>
             <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-300">
               New to AI security? <strong>Start here.</strong> SoterAI helps developers of all skill levels 
-              protect chatbots, RAG apps, and AI agents from prompt injection, PII leaks, unsafe responses, 
-              and tool abuse. Pick your language below and copy-paste the code.
+              protect company data and AI-agent actions across browsers, IDEs, workflows, and APIs before sensitive
+              context reaches external AI systems. Pick your language below and copy-paste the code.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href="/docs/quickstart" className="button-primary gap-2">
@@ -180,6 +181,22 @@ export default function DocsHubPage() {
             <code className="text-cyan"> server.js </code> for Node.js). The browser sends the message, 
             your server sends it to SoterAI, and only safe text reaches your AI model.
           </TipBox>
+        </section>
+
+        <section className="mt-16">
+          <h2 className="text-2xl font-bold">Product status</h2>
+          <p className="mt-3 text-slate-400">Use these labels for launch planning, pilot expectations, and integration risk review.</p>
+          <div className="mt-6 grid gap-4 md:grid-cols-3">
+            {productStatus.map((product) => (
+              <Link key={product.name} href={product.href} className="card p-4 transition hover:border-cyan/50">
+                <div className="flex items-center justify-between gap-3">
+                  <h3 className="font-semibold">{product.name}</h3>
+                  <span className="rounded-md border border-cyan/30 bg-cyan/10 px-2 py-0.5 text-xs text-cyan">{product.status}</span>
+                </div>
+                <p className="mt-2 text-sm leading-6 text-slate-400">{product.copy}</p>
+              </Link>
+            ))}
+          </div>
         </section>
 
         {/* Language guides */}

@@ -1,0 +1,445 @@
+{
+  "generatedFor": "0.2.1",
+  "honest": true,
+  "counts": {
+    "STRONG_ENFORCEMENT": 6,
+    "DETECTION_ONLY": 5,
+    "VISIBILITY_ONLY": 1,
+    "UNKNOWN_NOT_TESTED": 6,
+    "UNSUPPORTED": 2
+  },
+  "capabilities": [
+    {
+      "id": "secret-broker",
+      "name": "SoterAI Local Broker credential capability calls",
+      "category": "credential-brokering",
+      "level": "STRONG_ENFORCEMENT",
+      "integration": "SoterAI Local Broker + VS Code extension",
+      "enforcementPoint": "apps/local-ai-broker/src/BrokerServer.ts, packages/vscode-extension/src/secret-broker/*",
+      "preExecutionBlock": true,
+      "rollbackSupported": false,
+      "conditions": [
+        "Request originates through the broker",
+        "Capability not expired, not revoked, within use count",
+        "Host/method/path/HTTPS all match the bound capability"
+      ],
+      "knownBypasses": [
+        "Raw CLI, browser, or other-extension credentials never routed through the broker",
+        "A process that already has the plaintext secret on disk"
+      ],
+      "evidenceTestIds": [
+        "enforced-capability.test.ts",
+        "broker.test.ts"
+      ],
+      "wiredInRuntime": true,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "safe-context",
+      "name": "SoterAI-built safe AI context / prompts",
+      "category": "context-minimization",
+      "level": "STRONG_ENFORCEMENT",
+      "integration": "guard-core SafeContextBuilder + extension context commands",
+      "enforcementPoint": "packages/guard-core/src/SafeContextBuilder.ts, packages/vscode-extension/src/firewall/context-commands.ts",
+      "preExecutionBlock": true,
+      "rollbackSupported": false,
+      "conditions": [
+        "Context is assembled by SoterAI before being handed to the user/AI"
+      ],
+      "knownBypasses": [
+        "What the user pastes or sends after SoterAI hands over the text"
+      ],
+      "evidenceTestIds": [
+        "safecontext.test.ts"
+      ],
+      "wiredInRuntime": true,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "secret-redaction",
+      "name": "Secret redaction + no-raw-evidence cache/ledger",
+      "category": "data-minimization",
+      "level": "STRONG_ENFORCEMENT",
+      "integration": "guard-core DecisionEngine/Redactor/EvidenceMinimizer/Ledger",
+      "enforcementPoint": "packages/guard-core/src/{Redactor,EvidenceMinimizer,HashCache,Ledger}.ts",
+      "preExecutionBlock": true,
+      "rollbackSupported": false,
+      "conditions": [
+        "Content passes through the guard-core decision pipeline"
+      ],
+      "knownBypasses": [
+        "Detector completeness is not universal; binary/image paths partial or untested"
+      ],
+      "evidenceTestIds": [
+        "redaction.test.ts",
+        "ledger.test.ts",
+        "outputleak.test.ts"
+      ],
+      "wiredInRuntime": true,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "clipboard-safe-paste",
+      "name": "Clipboard scan / safe paste through SoterAI commands",
+      "category": "data-minimization",
+      "level": "STRONG_ENFORCEMENT",
+      "integration": "extension ClipboardGuard command",
+      "enforcementPoint": "packages/vscode-extension/src/clipboard/ClipboardGuard.ts",
+      "preExecutionBlock": true,
+      "rollbackSupported": false,
+      "conditions": [
+        "Paste routed through SoterAI's guarded paste command"
+      ],
+      "knownBypasses": [
+        "Ordinary OS copy/paste is not intercepted"
+      ],
+      "evidenceTestIds": [
+        "clipboard behavioral tests"
+      ],
+      "wiredInRuntime": true,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "broker-streaming",
+      "name": "Local AI Broker SSE/chunked streaming proxy",
+      "category": "credential-brokering",
+      "level": "STRONG_ENFORCEMENT",
+      "integration": "apps/local-ai-broker proxyStreaming + scanBrokerResponse",
+      "enforcementPoint": "apps/local-ai-broker/src/BrokerServer.ts#proxyStreaming, extractStreamDelta",
+      "preExecutionBlock": true,
+      "rollbackSupported": false,
+      "conditions": [
+        "Client routes stream:true OpenAI/Anthropic-compatible traffic through the loopback broker",
+        "Provider configured; auth token valid",
+        "Each SSE event is scanned (accumulated assistant text + tool-call args) before forward"
+      ],
+      "knownBypasses": [
+        "Partial safe tokens already flushed before a later block cannot be recalled",
+        "Traffic not routed through the broker is unenforced",
+        "Non-SSE binary/media streams are not supported"
+      ],
+      "evidenceTestIds": [
+        "broker.test.ts (Phase 6 streaming proxy)"
+      ],
+      "wiredInRuntime": true,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "dependency-guard",
+      "name": "Dependency Guard (heuristics + optional OSV)",
+      "category": "supply-chain",
+      "level": "DETECTION_ONLY",
+      "integration": "extension DepGuard + public OSV API when online",
+      "enforcementPoint": "packages/vscode-extension/src/dep-guard/DepGuard.ts",
+      "preExecutionBlock": false,
+      "rollbackSupported": false,
+      "conditions": [
+        "User runs SoterAI dependency check commands",
+        "OSV online mode requires user consent or soterai.dependencyGuard.osvMode=always"
+      ],
+      "knownBypasses": [
+        "Cannot block npm/pip/OS installs outside SoterAI-reviewed commands",
+        "OSV requires concrete versions; unpinned packages skip advisory lookup",
+        "Not a full SCA product; heuristics + OSV only"
+      ],
+      "evidenceTestIds": [
+        "dep-guard.test.ts"
+      ],
+      "wiredInRuntime": true,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "controlled-terminal",
+      "name": "Broker-controlled terminal execution (allowlisted fixed-argv)",
+      "category": "terminal-enforcement",
+      "level": "STRONG_ENFORCEMENT",
+      "integration": "guard-core ControlledTerminal + broker + extension broker commands",
+      "enforcementPoint": "packages/guard-core/src/ControlledTerminal.ts, apps/local-ai-broker/src/BrokerServer.ts",
+      "preExecutionBlock": true,
+      "rollbackSupported": false,
+      "conditions": [
+        "Command executed through the SoterAI broker route",
+        "Command matches read-only fixed-argv allowlist"
+      ],
+      "knownBypasses": [
+        "Raw integrated terminals, shells, aliases, subprocess trees, OS network egress"
+      ],
+      "evidenceTestIds": [
+        "controlled-terminal.test.ts"
+      ],
+      "wiredInRuntime": true,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "terminal-manual-review",
+      "name": "Manual terminal command review",
+      "category": "terminal-enforcement",
+      "level": "DETECTION_ONLY",
+      "integration": "extension command + RuntimePolicyEngine",
+      "enforcementPoint": "packages/vscode-extension/src/commands.ts, packages/guard-core/src/RuntimePolicyEngine.ts",
+      "preExecutionBlock": false,
+      "rollbackSupported": false,
+      "conditions": [
+        "User explicitly submits a command string for review"
+      ],
+      "knownBypasses": [
+        "Does not intercept arbitrary integrated-terminal execution, subprocesses, aliases, shells"
+      ],
+      "evidenceTestIds": [
+        "runtime-policy.test.ts"
+      ],
+      "wiredInRuntime": true,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "live-scan",
+      "name": "VS Code live file diagnostics",
+      "category": "detection",
+      "level": "VISIBILITY_ONLY",
+      "integration": "extension LiveScanner diagnostics + guard-core DecisionEngine pipeline 1.1.0",
+      "enforcementPoint": "packages/vscode-extension/src/diagnostics/LiveScanner.ts, packages/guard-core/src/DecisionEngine.ts",
+      "preExecutionBlock": false,
+      "rollbackSupported": false,
+      "conditions": [
+        "File content already exists in the editor",
+        "soterai.liveScan.enabled is true",
+        "Pipeline 1.1.0 runs secrets, PII, prompt-injection, and jailbreak on context=file"
+      ],
+      "knownBypasses": [
+        "Runs after content exists; cannot stop other extensions/processes reading files",
+        "Detection is regex/heuristic only — not ML-backed in the packaged extension",
+        "Does not prevent the user from sending content to AI after the diagnostic appears"
+      ],
+      "evidenceTestIds": [
+        "live-scan-parity.test.ts"
+      ],
+      "wiredInRuntime": true,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "mcp-config-scan",
+      "name": "MCP config / tool risk scanning",
+      "category": "mcp-security",
+      "level": "DETECTION_ONLY",
+      "integration": "guard-core MCPPolicyAnalyzer + extension MCPFirewall",
+      "enforcementPoint": "packages/guard-core/src/MCPPolicyAnalyzer.ts, packages/vscode-extension/src/mcp-firewall/MCPFirewall.ts",
+      "preExecutionBlock": false,
+      "rollbackSupported": false,
+      "conditions": [
+        "MCP config files are present and scanned"
+      ],
+      "knownBypasses": [
+        "Scans config only; optional preflight via mcp-gateway when caller uses soterai.preflightMCPTool"
+      ],
+      "evidenceTestIds": [
+        "mcp.test.ts"
+      ],
+      "wiredInRuntime": true,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "extension-risk-scan",
+      "name": "Extension risk scanning",
+      "category": "extension-isolation",
+      "level": "DETECTION_ONLY",
+      "integration": "guard-core ExtensionRiskScanner",
+      "enforcementPoint": "packages/guard-core/src/ExtensionRiskScanner.ts",
+      "preExecutionBlock": false,
+      "rollbackSupported": false,
+      "conditions": [
+        "Installed extensions enumerated and scored"
+      ],
+      "knownBypasses": [
+        "Cannot prevent a malicious extension with existing VS Code/OS access from reading files or network"
+      ],
+      "evidenceTestIds": [
+        "extensionrisk.test.ts"
+      ],
+      "wiredInRuntime": true,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "mcp-gateway",
+      "name": "MCP gateway policy engine (broker preflight)",
+      "category": "mcp-security",
+      "level": "DETECTION_ONLY",
+      "integration": "guard-core MCPGateway + broker /v1/preflight/mcp-tool + extension soterai.preflightMCPTool",
+      "enforcementPoint": "packages/guard-core/src/MCPGateway.ts, apps/local-ai-broker/src/BrokerServer.ts#previewMCPTool, packages/vscode-extension/src/mcp-firewall/MCPFirewall.ts",
+      "preExecutionBlock": false,
+      "rollbackSupported": false,
+      "conditions": [
+        "Caller uses SoterAI preflight command or broker POST /v1/preflight/mcp-tool before execute",
+        "Broker running and authenticated"
+      ],
+      "knownBypasses": [
+        "Other MCP clients that never call SoterAI preflight are unenforced",
+        "Config scan alone remains DETECTION_ONLY",
+        "Do not claim FULL/STRONG without a mandatory pre-execution host integration"
+      ],
+      "evidenceTestIds": [
+        "phase-controls.test.ts",
+        "broker.test.ts (mcp-tool preflight)"
+      ],
+      "wiredInRuntime": true,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "taint-engine",
+      "name": "Taint / source-influence engine",
+      "category": "provenance",
+      "level": "UNKNOWN_NOT_TESTED",
+      "integration": "guard-core TaintEngine (engine only)",
+      "enforcementPoint": "packages/guard-core/src/TaintEngine.ts",
+      "preExecutionBlock": false,
+      "rollbackSupported": false,
+      "conditions": [
+        "Requires a runtime that supplies provenance and consults the engine (NOT YET WIRED)"
+      ],
+      "knownBypasses": [
+        "No runtime caller in the packaged extension; enforcement proven only in guard-core unit tests"
+      ],
+      "evidenceTestIds": [
+        "phase-controls.test.ts"
+      ],
+      "wiredInRuntime": false,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "file-operation-firewall",
+      "name": "File / change firewall policy",
+      "category": "file-enforcement",
+      "level": "UNKNOWN_NOT_TESTED",
+      "integration": "guard-core FileOperationFirewall (engine only)",
+      "enforcementPoint": "packages/guard-core/src/FileOperationFirewall.ts",
+      "preExecutionBlock": false,
+      "rollbackSupported": false,
+      "conditions": [
+        "Requires a caller to route file operations through the policy before execution (NOT YET WIRED)"
+      ],
+      "knownBypasses": [
+        "No runtime caller in the packaged extension; does not intercept OS file I/O"
+      ],
+      "evidenceTestIds": [
+        "phase-controls.test.ts"
+      ],
+      "wiredInRuntime": false,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "network-egress-policy",
+      "name": "Network egress policy",
+      "category": "network-egress",
+      "level": "UNKNOWN_NOT_TESTED",
+      "integration": "guard-core NetworkEgressPolicy (engine only)",
+      "enforcementPoint": "packages/guard-core/src/NetworkEgressPolicy.ts",
+      "preExecutionBlock": false,
+      "rollbackSupported": false,
+      "conditions": [
+        "Requires a caller to route requests through the policy (NOT YET WIRED)"
+      ],
+      "knownBypasses": [
+        "No runtime caller in the packaged extension; does not enforce process/terminal egress"
+      ],
+      "evidenceTestIds": [
+        "phase-controls.test.ts"
+      ],
+      "wiredInRuntime": false,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "process-sandbox-policy",
+      "name": "Process sandbox policy",
+      "category": "process-sandbox",
+      "level": "UNKNOWN_NOT_TESTED",
+      "integration": "guard-core ProcessSandboxPolicy (engine only)",
+      "enforcementPoint": "packages/guard-core/src/ProcessSandboxPolicy.ts",
+      "preExecutionBlock": false,
+      "rollbackSupported": false,
+      "conditions": [
+        "Requires a controlled launcher to consult the policy (NOT YET WIRED)"
+      ],
+      "knownBypasses": [
+        "No runtime caller in the packaged extension; cannot sandbox arbitrary child processes"
+      ],
+      "evidenceTestIds": [
+        "phase-controls.test.ts"
+      ],
+      "wiredInRuntime": false,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "governance-policy",
+      "name": "Enterprise policy-change validation",
+      "category": "governance",
+      "level": "UNKNOWN_NOT_TESTED",
+      "integration": "guard-core GovernancePolicy (engine only)",
+      "enforcementPoint": "packages/guard-core/src/GovernancePolicy.ts",
+      "preExecutionBlock": false,
+      "rollbackSupported": false,
+      "conditions": [
+        "Requires a managed/signed policy path to route changes through the validator (NOT YET WIRED)"
+      ],
+      "knownBypasses": [
+        "No runtime caller in the packaged extension; cannot stop policy edits made outside managed paths"
+      ],
+      "evidenceTestIds": [
+        "phase-controls.test.ts"
+      ],
+      "wiredInRuntime": false,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "checkpoint-rollback",
+      "name": "Transaction preview / checkpoint metadata",
+      "category": "rollback",
+      "level": "UNKNOWN_NOT_TESTED",
+      "integration": "guard-core CheckpointRollback (engine only)",
+      "enforcementPoint": "packages/guard-core/src/CheckpointRollback.ts",
+      "preExecutionBlock": false,
+      "rollbackSupported": false,
+      "conditions": [
+        "Requires wiring into an execution flow to capture/restore checkpoints (NOT YET WIRED)"
+      ],
+      "knownBypasses": [
+        "No runtime caller in the packaged extension; does not roll back external systems or arbitrary file changes"
+      ],
+      "evidenceTestIds": [
+        "phase-controls.test.ts"
+      ],
+      "wiredInRuntime": false,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "network-egress-firewall-processes",
+      "name": "Network egress firewall for arbitrary local processes",
+      "category": "network-egress",
+      "level": "UNSUPPORTED",
+      "integration": "none",
+      "preExecutionBlock": false,
+      "rollbackSupported": false,
+      "conditions": [],
+      "knownBypasses": [
+        "No local network proxy or OS firewall component ships; terminal/process egress cannot be stopped"
+      ],
+      "evidenceTestIds": [],
+      "wiredInRuntime": false,
+      "lastVerifiedVersion": "0.2.1"
+    },
+    {
+      "id": "child-process-control",
+      "name": "Child-process control for arbitrary AI agents",
+      "category": "process-sandbox",
+      "level": "UNSUPPORTED",
+      "integration": "none",
+      "preExecutionBlock": false,
+      "rollbackSupported": false,
+      "conditions": [],
+      "knownBypasses": [
+        "No process-tree sandbox/broker enforcement ships; requires controlled terminal or OS-level broker"
+      ],
+      "evidenceTestIds": [],
+      "wiredInRuntime": false,
+      "lastVerifiedVersion": "0.2.1"
+    }
+  ]
+}

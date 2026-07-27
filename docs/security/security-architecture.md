@@ -125,3 +125,16 @@ SoterAI is an AI security platform that protects organizations from prompt injec
 - [ ] Rate limits are enforced
 - [ ] CSP headers are set
 - [ ] No secrets in logs or error messages
+# 2026-07-22 All-Phases Core Update
+
+The guard-core package now exposes shared deterministic controls for the remaining master-prompt phases:
+
+- `RuntimeDiscovery` for capability discovery and effective-risk summaries.
+- `FileOperationFirewall` for routed file/change decisions.
+- `NetworkEgressPolicy` for routed outbound request decisions.
+- `MCPGateway` for pre-invocation MCP tool policy.
+- `TaintEngine` for source-provenance and prompt-injection influence.
+- `CheckpointRollback` for transaction preview and redacted checkpoint metadata.
+- `GovernancePolicy` for managed enterprise policy-change validation.
+
+These modules are enforcement building blocks, not universal platform hooks. A route is strongly enforced only when the extension, broker, agent host, MCP host, or future companion component calls the relevant module before execution.

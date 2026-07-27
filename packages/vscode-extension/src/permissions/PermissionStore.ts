@@ -1,4 +1,3 @@
-import { randomUUID } from "node:crypto";
 import * as vscode from "vscode";
 
 export interface PermissionEntry {
@@ -13,8 +12,6 @@ export interface PermissionEntry {
 }
 
 const APPROVALS_KEY = "soterai.permissionApprovals";
-/** Maximum stored permission entries before pruning expired ones. */
-const MAX_APPROVALS = 10_000;
 
 export class PermissionStore implements vscode.Disposable {
     private approvals: PermissionEntry[] = [];
@@ -22,8 +19,6 @@ export class PermissionStore implements vscode.Disposable {
     constructor(private readonly context: vscode.ExtensionContext) {
         const stored = context.globalState.get<PermissionEntry[]>(APPROVALS_KEY);
         if (stored) this.approvals = stored;
-        // Prune expired entries on load to keep storage bounded
-        this.pruneExpired();
     }
 
     /**
@@ -32,7 +27,6 @@ export class PermissionStore implements vscode.Disposable {
      * created entry.
      */
     request(type: PermissionEntry["type"], target: string, contentHash: string): PermissionEntry {
-        this.pruneExpired();
         const existing = this.approvals.find(
             (a) =>
                 a.type === type &&
@@ -44,7 +38,7 @@ export class PermissionStore implements vscode.Disposable {
         if (existing) return existing;
 
         const pending: PermissionEntry = {
-            id: `perm_${randomUUID().slice(0, 12)}`,
+            id: `perm_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
             timestamp: Date.now(),
             type,
             target,
@@ -58,7 +52,6 @@ export class PermissionStore implements vscode.Disposable {
     }
 
     async approve(type: PermissionEntry["type"], target: string, contentHash: string, scope: PermissionEntry["scope"]): Promise<PermissionEntry> {
-        this.pruneExpired();
         // Update existing pending entry in-place to avoid duplicates.
         const existing = this.approvals.find(
             (a) => a.type === type && a.target === target && a.contentHash === contentHash && a.outcome === "pending",
@@ -72,7 +65,7 @@ export class PermissionStore implements vscode.Disposable {
             return existing;
         }
         const entry: PermissionEntry = {
-            id: `perm_${randomUUID().slice(0, 12)}`,
+            id: `perm_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
             timestamp: Date.now(),
             type,
             target,
@@ -87,7 +80,6 @@ export class PermissionStore implements vscode.Disposable {
     }
 
     async deny(type: PermissionEntry["type"], target: string, contentHash: string): Promise<PermissionEntry> {
-        this.pruneExpired();
         const existing = this.approvals.find(
             (a) => a.type === type && a.target === target && a.contentHash === contentHash && a.outcome === "pending",
         );
@@ -99,7 +91,7 @@ export class PermissionStore implements vscode.Disposable {
             return existing;
         }
         const entry: PermissionEntry = {
-            id: `perm_${randomUUID().slice(0, 12)}`,
+            id: `perm_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
             timestamp: Date.now(),
             type,
             target,
@@ -113,7 +105,6 @@ export class PermissionStore implements vscode.Disposable {
     }
 
     async redactApprove(type: PermissionEntry["type"], target: string, contentHash: string): Promise<PermissionEntry> {
-        this.pruneExpired();
         const existing = this.approvals.find(
             (a) => a.type === type && a.target === target && a.contentHash === contentHash && a.outcome === "pending",
         );
@@ -125,7 +116,7 @@ export class PermissionStore implements vscode.Disposable {
             return existing;
         }
         const entry: PermissionEntry = {
-            id: `perm_${randomUUID().slice(0, 12)}`,
+            id: `perm_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
             timestamp: Date.now(),
             type,
             target,
@@ -154,19 +145,6 @@ export class PermissionStore implements vscode.Disposable {
     async clear(): Promise<void> {
         this.approvals = [];
         await this.persist();
-    }
-
-    /** Remove expired entries to prevent unbounded storage growth. */
-    private pruneExpired(): void {
-        const now = Date.now();
-        const before = this.approvals.length;
-        this.approvals = this.approvals.filter((a) => !a.expiresAt || a.expiresAt > now);
-        if (this.approvals.length > MAX_APPROVALS) {
-            // Sort by timestamp ascending and keep the most recent MAX_APPROVALS
-            this.approvals.sort((a, b) => b.timestamp - a.timestamp);
-            this.approvals = this.approvals.slice(0, MAX_APPROVALS);
-        }
-        if (this.approvals.length < before) void this.persist();
     }
 
     private async persist(): Promise<void> {

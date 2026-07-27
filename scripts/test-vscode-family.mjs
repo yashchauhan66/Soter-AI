@@ -6,7 +6,8 @@ import { tmpdir } from "node:os";
 const repoRoot = resolve(import.meta.dirname, "..");
 const extensionRoot = join(repoRoot, "packages", "vscode-extension");
 const extensionId = "soterai.soterai-ide-guard";
-const vsix = join(extensionRoot, "soterai-ide-guard-0.1.0.vsix");
+const extensionPackage = JSON.parse(readFileSync(join(extensionRoot, "package.json"), "utf8"));
+const vsix = join(extensionRoot, `soterai-ide-guard-${extensionPackage.version}.vsix`);
 const requested = process.argv[2] ?? "all";
 const requireEditor = process.env.SOTERAI_REQUIRE_EDITOR === "1";
 

@@ -1,5 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { hashSecret, enrollmentTokenStatus, enrollmentStatusMessage } from "../../lib/extension/enrollment";
 
 test("hashSecret returns a 64-char hex string", () => {
@@ -64,4 +65,23 @@ test("enrollmentStatusMessage returns correct messages", () => {
   assert.match(enrollmentStatusMessage("revoked"), /revoked/i);
   assert.match(enrollmentStatusMessage("overused"), /usage limit/i);
   assert.match(enrollmentStatusMessage("invalid"), /invalid/i);
+});
+
+test("dashboard enrollment and device revocation routes scope IDs before observable lookup", () => {
+  const tokenRevoke = readFileSync("app/api/dashboard/extension/tokens/[id]/revoke/route.ts", "utf8");
+  const deviceRevoke = readFileSync("app/api/dashboard/extension/devices/[id]/revoke/route.ts", "utf8");
+  const tokenList = readFileSync("app/api/dashboard/extension/tokens/route.ts", "utf8");
+
+  assert.match(tokenRevoke, /requirePermission\(body\.organizationId,\s*"policy:manage"\)/);
+  assert.match(tokenRevoke, /extensionEnrollmentToken\.findFirst\(\{\s*where:\s*\{\s*id,\s*organizationId:\s*body\.organizationId/);
+  assert.doesNotMatch(tokenRevoke, /extensionEnrollmentToken\.findUnique\(\{\s*where:\s*\{\s*id/);
+  assert.doesNotMatch(tokenRevoke, /does not belong to this organization/);
+
+  assert.match(deviceRevoke, /requirePermission\(body\.organizationId,\s*"policy:manage"\)/);
+  assert.match(deviceRevoke, /deviceAgent\.findFirst\(\{\s*where:\s*\{\s*id,\s*organizationId:\s*body\.organizationId/);
+  assert.doesNotMatch(deviceRevoke, /deviceAgent\.findUnique\(\{\s*where:\s*\{\s*id/);
+  assert.doesNotMatch(deviceRevoke, /does not belong to this organization/);
+
+  const tokenListReadPath = tokenList.split("export async function GET")[1] ?? "";
+  assert.doesNotMatch(tokenListReadPath, /tokenHash|rawToken|deviceToken|deviceTokenHash/);
 });

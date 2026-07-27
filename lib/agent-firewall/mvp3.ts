@@ -7,6 +7,8 @@ import type { AgentDecision, AgentRiskLevel } from "@/lib/agent-firewall";
 // Guard risk types that, when found inside a tool's own description/schema, mean
 // the tool metadata itself is trying to steer the agent ("tool poisoning").
 const TOOL_POISONING_RISK_TYPES = new Set([
+  "MCP_TOOL_POISONING",
+  "MEMORY_POISONING",
   "PROMPT_INJECTION",
   "JAILBREAK",
   "SYSTEM_PROMPT_LEAK_ATTEMPT",
@@ -120,7 +122,7 @@ export function checkMemory(input: { memoryAction: string; content?: string; mem
   const content = input.content ?? "";
   const guard = analyzeText(content, "INPUT");
   const poisoning = /ignore.*future|future agent.*ignore|exfiltrate.*later|store.*bypass|change.*permission|hidden instruction|disable.*safety/i.test(content);
-  if (poisoning) {
+  if (poisoning || guard.riskTypes.includes("MEMORY_POISONING")) {
     return memoryDecision("BLOCK", "CRITICAL", "Blocked memory poisoning instruction.", content, guard.findings);
   }
   if (guard.riskTypes.includes("SECRET_DETECTED") || /password|otp|private key|database_url|client_secret/i.test(content)) {

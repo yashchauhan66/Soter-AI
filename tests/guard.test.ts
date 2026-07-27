@@ -77,7 +77,23 @@ test("India-specific identifiers are independently detected and redacted", () =>
   for (const [label, text, token] of cases) {
     const result = analyzeText(text, "INPUT");
     assert.ok(result.findings.some((finding) => finding.label === label), label);
-    assert.match(result.safeText ?? "", new RegExp(token.replace(/[\[\]]/g, "\\$&")));
+    assert.match(result.redactedText ?? result.safeText ?? "", new RegExp(token.replace(/[\[\]]/g, "\\$&")));
+  }
+});
+
+test("EU and Latin America identifiers are independently detected and redacted", () => {
+  const cases = [
+    ["EU NL BSN-like identifier", "BSN 123456782", "[REDACTED_EU_BSN]"],
+    ["EU ES NIE/NIF/DNI-like identifier", "NIE X1234567L", "[REDACTED_EU_ID]"],
+    ["EU IT codice fiscale-like identifier", "Codice Fiscale RSSMRA85M01H501Z", "[REDACTED_EU_TAX_ID]"],
+    ["BR CPF-like identifier", "CPF 123.456.789-09", "[REDACTED_BR_CPF]"],
+    ["IBAN-like bank identifier", "IBAN DE89 3704 0044 0532 0130 00", "[REDACTED_IBAN]"],
+  ];
+
+  for (const [label, text, token] of cases) {
+    const result = analyzeText(text, "INPUT");
+    assert.ok(result.findings.some((finding) => finding.label === label), label);
+    assert.match(result.safeText ?? result.redactedText ?? "", new RegExp(token.replace(/[\[\]]/g, "\\$&")));
   }
 });
 

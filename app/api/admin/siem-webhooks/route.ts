@@ -3,7 +3,7 @@ import { z } from "zod";
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { requireAdmin } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
-import { parseWebhookEndpoint, hashWebhookSecret, previewWebhookSecret, SIEM_WEBHOOK_EVENT_TYPES, type SiemWebhookEventType } from "@/lib/siem/webhooks";
+import { parseWebhookEndpoint, hashWebhookSecret, previewWebhookSecret, SIEM_WEBHOOK_EVENT_TYPES } from "@/lib/siem/webhooks";
 
 export const dynamic = "force-dynamic";
 
@@ -17,7 +17,7 @@ const createSchema = z.object({
 
 export async function GET(request: Request) {
   try {
-    const admin = await requireAdmin();
+    await requireAdmin();
     const organizationId = new URL(request.url).searchParams.get("organizationId");
     if (!organizationId) return jsonResponse({ error: true, message: "organizationId required." }, { status: 400 });
 

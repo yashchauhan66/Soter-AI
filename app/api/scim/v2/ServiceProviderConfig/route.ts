@@ -1,8 +1,14 @@
-import { scimResponse, SCIM_USER_SCHEMA, SCIM_GROUP_SCHEMA } from "@/lib/enterprise/scim";
+import { authorizeScimRequest, scimError, ScimError, scimResponse, SCIM_USER_SCHEMA, SCIM_GROUP_SCHEMA } from "@/lib/enterprise/scim";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
+  let auth;
+  try {
+    auth = await authorizeScimRequest(request);
+  } catch (error) {
+    return scimError((error as Error).message, error instanceof ScimError ? error.status : 401);
+  }
   const url = new URL(request.url);
   const baseUrl = process.env.NEXTAUTH_URL ?? `${url.protocol}//${url.host}`;
   return scimResponse({
@@ -21,7 +27,7 @@ export async function GET(request: Request) {
         description: "Bearer token issued via /api/enterprise/scim-tokens.",
       },
     ],
-    meta: { resourceType: "ServiceProviderConfig", location: `${baseUrl}/api/scim/v2/ServiceProviderConfig` },
+    meta: { resourceType: "ServiceProviderConfig", location: `${baseUrl}/api/scim/v2/ServiceProviderConfig`, organizationId: auth.organizationId },
     _supportedSchemas: [SCIM_USER_SCHEMA, SCIM_GROUP_SCHEMA],
   });
 }

@@ -64,9 +64,10 @@ export class TelemetryManager {
     public async flush(): Promise<void> {
         if (this.queue.length === 0) return;
         const config = vscode.workspace.getConfiguration("soterai");
+        const privacyMode = config.get<string>("privacyMode", "local");
         const cloudEnabled = config.get<boolean>("cloud.enabled", false);
 
-        if (!cloudEnabled || this.isOffline) {
+        if (privacyMode === "local" || !cloudEnabled || this.isOffline || !vscode.workspace.isTrusted) {
             return; // Hold in queue if offline or cloud disabled
         }
 
@@ -83,12 +84,9 @@ export class TelemetryManager {
     }
 
     private async sendEventsToCloud(events: RedactedEvent[]): Promise<boolean> {
-        const config = vscode.workspace.getConfiguration("soterai");
-        const baseUrl = config.get<string>("cloud.baseUrl", "https://api.soterai.in");
-
-        // Stub logging locally. If backend REST endpoint is available, we perform the call.
-        // Console logs should never contain raw content or secret tokens.
-        console.log(`[SoterAI Telemetry] Sending batched redacted events list (${events.length} items) to ${baseUrl}/telemetry`);
+        void events;
+        // Network telemetry is intentionally disabled until a reviewed endpoint
+        // client is added. Local mode and untrusted workspaces never call this.
         return true;
     }
 

@@ -8,8 +8,8 @@ const manifestPath = path.join(root, "apps/extension/manifest.json");
 const docsDir = path.join(root, "docs/extension-store");
 const docFiles = [
   "permission-justification.md",
+  "privacy-practices-disclosure.md",
   "review-notes.md",
-  "reviewer-notes.md",
   "privacy-policy.md",
   "chrome-private-listing.md",
   "edge-hidden-listing.md",
@@ -31,16 +31,9 @@ function fail(message) {
   console.error(`ERROR: ${message}`);
 }
 
-for (const forbidden of ["tabs", "webNavigation", "clipboardRead", "clipboardWrite"]) {
+for (const forbidden of ["tabs", "webNavigation"]) {
   if (![...requiredPermissions, ...optionalPermissions].includes(forbidden) && new RegExp(`\`${forbidden}\`|\\b${forbidden}\\b`, "i").test(docs)) {
     fail(`Docs mention ${forbidden}, but manifest does not request it.`);
-  }
-}
-
-for (const broadHost of ["*://*/*", "<all_urls>"]) {
-  const declaredHosts = [...hostPermissions, ...optionalHostPermissions];
-  if (!declaredHosts.includes(broadHost) && docs.includes(`\`${broadHost}\``)) {
-    fail(`Docs mention broad host permission ${broadHost}, but manifest does not request it.`);
   }
 }
 

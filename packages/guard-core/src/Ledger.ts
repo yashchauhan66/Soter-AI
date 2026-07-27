@@ -66,6 +66,11 @@ export interface LedgerEntry {
     provider?: string;
     protectedFileAttempt?: boolean;
     safeMode?: boolean;
+    // ── Tamper evidence (additive) ──
+    /** SHA-256 of the previous entry's entryHash ("genesis" for the first). */
+    prevHash?: string;
+    /** SHA-256 over this entry's canonical JSON (excluding entryHash itself). */
+    entryHash?: string;
 }
 
 export interface BuildLedgerEntryInput {
@@ -159,4 +164,73 @@ export function parseLedger(jsonl: string): LedgerEntry[] {
         }
     }
     return out;
+}
+
+// ── Tamper-evident hash chain ───────────────────────────────────────────────
+// Each entry records prevHash (the previous entry's entryHash) and entryHash
+// (SHA-256 over its own canonical JSON minus entryHash). Editing, reordering,
+// or deleting mid-chain entries breaks verification. This is TAMPER EVIDENCE,
+// not immutability: an attacker who can rewrite the whole file can rebuild the
+// chain — but cannot do so silently against an exported/remembered head hash.
+
+export const LEDGER_GENESIS_HASH = "genesis";
+
+async function sha256Hex(text: string): Promise<string> {
+    // Web Crypto is available in Node ≥18 and the extension host.
+    const bytes = new TextEncoder().encode(text);
+    const digest = await crypto.subtle.digest("SHA-256", bytes);
+    return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+function canonicalForHash(entry: LedgerEntry): string {
+    const { entryHash, ...rest } = entry;
+    return JSON.stringify(rest, Object.keys(rest).sort());
+}
+
+/** Return a copy of `entry` chained onto `prevEntryHash`. */
+export async function chainLedgerEntry(entry: LedgerEntry, prevEntryHash: string | undefined): Promise<LedgerEntry> {
+    const chained: LedgerEntry = { ...entry, prevHash: prevEntryHash ?? LEDGER_GENESIS_HASH };
+    chained.entryHash = await sha256Hex(canonicalForHash(chained));
+    return chained;
+}
+
+export interface LedgerChainVerification {
+    valid: boolean;
+    checkedEntries: number;
+    /** Entries predating the hash chain (no entryHash) — reported, not failed. */
+    unchainedEntries: number;
+    firstInvalidIndex?: number;
+    reason?: string;
+}
+
+/**
+ * Verify the hash chain over parsed entries (in file order).
+ *
+ * The first chained entry's prevHash is accepted as-is (it may be "genesis"
+ * or reference an entry dropped by retention trimming); every later entry must
+ * link to its predecessor and every entryHash must match its content.
+ */
+export async function verifyLedgerChain(entries: LedgerEntry[]): Promise<LedgerChainVerification> {
+    let prev: string | undefined;
+    let checked = 0;
+    let unchained = 0;
+    for (let i = 0; i < entries.length; i++) {
+        const entry = entries[i];
+        if (!entry.entryHash) {
+            // Pre-chain legacy entry: allowed only before the first chained one.
+            if (checked > 0) return { valid: false, checkedEntries: checked, unchainedEntries: unchained, firstInvalidIndex: i, reason: "unchained entry after chained entries" };
+            unchained++;
+            continue;
+        }
+        if (prev !== undefined && (entry.prevHash ?? LEDGER_GENESIS_HASH) !== prev) {
+            return { valid: false, checkedEntries: checked, unchainedEntries: unchained, firstInvalidIndex: i, reason: "prevHash mismatch (entry removed, reordered, or edited)" };
+        }
+        const recomputed = await sha256Hex(canonicalForHash(entry));
+        if (recomputed !== entry.entryHash) {
+            return { valid: false, checkedEntries: checked, unchainedEntries: unchained, firstInvalidIndex: i, reason: "entryHash mismatch (entry content edited)" };
+        }
+        prev = entry.entryHash;
+        checked++;
+    }
+    return { valid: true, checkedEntries: checked, unchainedEntries: unchained };
 }

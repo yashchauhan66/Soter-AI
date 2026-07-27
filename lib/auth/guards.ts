@@ -8,14 +8,29 @@ import { auth } from "../../auth";
 import { db } from "../db";
 import { hasPermission, type Permission } from "./permissions";
 import { listGuardEventsByProject } from "../events/store";
-import { AuthError, ForbiddenError, NotFoundError } from "./errors";
-import {
-  assertOrganizationAvailable,
-  assertProjectAvailable,
-  buildActiveMembershipWhere,
-} from "./availability";
 
-export { AuthError, ForbiddenError, NotFoundError } from "./errors";
+export class AuthError extends Error {
+  status: number;
+  constructor(message: string, status = 401) {
+    super(message);
+    this.name = "AuthError";
+    this.status = status;
+  }
+}
+
+export class ForbiddenError extends AuthError {
+  constructor(message = "Forbidden") {
+    super(message, 403);
+    this.name = "ForbiddenError";
+  }
+}
+
+export class NotFoundError extends AuthError {
+  constructor(message = "Not found") {
+    super(message, 404);
+    this.name = "NotFoundError";
+  }
+}
 
 export interface SessionUser {
   id: string;
@@ -41,13 +56,16 @@ export const getActiveOrganization = cache(async (input?: { organizationId?: str
   const user = await requireUser();
   const targetId = input?.organizationId ?? null;
 
+  const where = targetId
+    ? { userId: user.id, organizationId: targetId }
+    : { userId: user.id };
+
   const membership = await db.organizationMember.findFirst({
-    where: buildActiveMembershipWhere(user, targetId),
+    where,
     include: { organization: true },
     orderBy: { createdAt: "asc" },
   });
   if (!membership) return null;
-  assertOrganizationAvailable(membership.organization, user);
   return { org: membership.organization, membership };
 });
 
@@ -65,7 +83,6 @@ export async function requireOrganizationAccess(organizationId: string): Promise
     }
     throw new ForbiddenError("You do not have access to this organization.");
   }
-  assertOrganizationAvailable(membership.organization, user);
   return { user, org: membership.organization, role: membership.role };
 }
 
@@ -75,13 +92,11 @@ export async function requireProjectAccess(projectId: string): Promise<{ user: S
   if (!project) throw new NotFoundError("Project not found.");
   if (!project.organizationId) {
     if (project.userId !== user.id && !user.isAdmin) throw new ForbiddenError("You do not have access to this project.");
-    assertProjectAvailable(project, user);
     const fallback = await getActiveOrganization();
     if (!fallback) throw new ForbiddenError("No organization available.");
     return { user, org: fallback.org, role: fallback.membership.role, project };
   }
   const access = await requireOrganizationAccess(project.organizationId);
-  assertProjectAvailable(project, access.user);
   return { ...access, project };
 }
 

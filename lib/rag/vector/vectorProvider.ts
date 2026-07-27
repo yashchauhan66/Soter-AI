@@ -28,13 +28,10 @@ export function retrievalPostFilter(chunks: VectorQueryResult[], context: Vector
   return chunks.filter((chunk) => evaluateRagAuthorization(chunk, context, filters).allowed);
 }
 
-const MAX_EMBEDDING_TEXT_LENGTH = 32_000;
-
 export async function createEmbedding(text: string): Promise<number[]> {
-  const truncated = text.slice(0, MAX_EMBEDDING_TEXT_LENGTH);
   const endpoint = process.env.EMBEDDING_API_URL;
   if (endpoint) {
-    const response = await fetch(endpoint, { method: "POST", headers: { "content-type": "application/json", ...(process.env.EMBEDDING_API_KEY ? { authorization: `Bearer ${process.env.EMBEDDING_API_KEY}` } : {}) }, body: JSON.stringify({ input: truncated }), signal: AbortSignal.timeout(10_000) });
+    const response = await fetch(endpoint, { method: "POST", headers: { "content-type": "application/json", ...(process.env.EMBEDDING_API_KEY ? { authorization: `Bearer ${process.env.EMBEDDING_API_KEY}` } : {}) }, body: JSON.stringify({ input: text }), signal: AbortSignal.timeout(10_000) });
     if (!response.ok) throw new Error(`Embedding endpoint failed with HTTP ${response.status}.`);
     const payload = await response.json() as { embedding?: number[]; data?: Array<{ embedding: number[] }> };
     const embedding = payload.embedding ?? payload.data?.[0]?.embedding;
@@ -46,7 +43,7 @@ export async function createEmbedding(text: string): Promise<number[]> {
   }
   const dimensions = Number(process.env.VECTOR_DIMENSIONS ?? 64);
   const vector = Array.from({ length: dimensions }, () => 0);
-  for (const token of truncated.toLowerCase().match(/[a-z0-9_]{2,}/g) ?? []) {
+  for (const token of text.toLowerCase().match(/[a-z0-9_]{2,}/g) ?? []) {
     const digest = createHash("sha256").update(token).digest();
     vector[digest.readUInt16BE(0) % dimensions] += digest[2] % 2 ? 1 : -1;
   }

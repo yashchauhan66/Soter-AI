@@ -16,12 +16,14 @@ import Link from "next/link";
 import { safeJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata: Metadata = {
-  title: "SoterAI vs Competitors | AI Security Guardrail Comparison",
+  title: "SoterAI vs Competitors | AI Security Guardrail Platform Comparison 2026",
   description:
-    "Compare SoterAI against Lakera (Check Point), Palo Alto Prisma AIRS, Galileo, Arthur AI, Prompt Security, HiddenLayer, Protect AI, Pangea, Cisco AI Defense, NVIDIA NeMo, Guardrails AI, LLM Guard, GA Guard, AWS Bedrock, and Azure AI Content Safety.",
-  alternates: { canonical: "/comparison" },    openGraph: {
-    title: "SoterAI vs Competitors — AI Security Guardrail Comparison",
-    description: "Compare the core AI guardrail matrix plus the expanded 2026 AI security landscape including Check Point, Palo Alto Prisma AIRS, Galileo Agent Control, and AWS Cross-Account Safeguards.",
+    "Compare SoterAI against 15+ AI security competitors: Lakera, Palo Alto Prisma AIRS, Galileo, Arthur AI, Prompt Security, HiddenLayer, Protect AI, Pangea, Cisco AI Defense, NVIDIA NeMo, Guardrails AI, and more. India's first AI security platform with Aadhaar/PAN PII detection.",
+  keywords: ["ai security comparison", "SoterAI vs Lakera", "best ai guardrail platform", "ai security vendor comparison", "prompt injection protection comparison", "enterprise ai security india"],
+  alternates: { canonical: "/comparison" },
+  openGraph: {
+    title: "SoterAI vs Competitors — AI Security Guardrail Comparison 2026",
+    description: "Compare 15+ AI security vendors including Lakera, Palo Alto, Galileo, and Arthur AI. See how SoterAI compares for India PII detection, agent firewall, and enterprise controls.",
   },
 };
 
@@ -149,15 +151,15 @@ const benchmarks: Array<{
   nemo: string;
   notes: string;
 }> = [
-  { category: "Prompt Injection", tests: 30, soter: "84% @1%FPR", gaGuard: "98%", nemo: "88%", notes: "Classic + roleplay + system prompt extraction" },
-  { category: "Jailbreak / DAN", tests: 11, soter: "84% @1%FPR", gaGuard: "98%", nemo: "75%", notes: "Developer mode, unrestricted, hypotheticals" },
-  { category: "Encoding / Obfuscation", tests: 12, soter: "84% @1%FPR", gaGuard: "85%", nemo: "70%", notes: "Base64, rot13, leetspeak, spaced, zero-width" },
-  { category: "Multilingual Attacks", tests: 7, soter: "84% @1%FPR", gaGuard: "90%", nemo: "65%", notes: "Hindi/Hinglish bypass attempts" },
-  { category: "Indirect Injection", tests: 6, soter: "84% @1%FPR", gaGuard: "86%", nemo: "—", notes: "RAG-poisoned context, email exfiltration" },
-  { category: "PII Detection", tests: 12, soter: "84% @1%FPR", gaGuard: "—", nemo: "—", notes: "India-specific (Aadhaar, PAN, GSTIN) + global" },
-  { category: "Secrets / Credentials", tests: 19, soter: "84% @1%FPR", gaGuard: "—", nemo: "—", notes: "API keys, tokens, connection strings, env vars" },
-  { category: "Unsafe Output", tests: 7, soter: "84% @1%FPR", gaGuard: "—", nemo: "—", notes: "Spam, scams, harmful content (output guard)" },
-  { category: "False Positives", tests: 1110, soter: "0.54%", gaGuard: "—", nemo: "—", notes: "1,110 benign inputs correctly allowed" },
+  { category: "Prompt Injection", tests: 30, soter: "See /benchmark", gaGuard: "Not measured", nemo: "Not measured", notes: "Classic + roleplay + system prompt extraction" },
+  { category: "Jailbreak / DAN", tests: 11, soter: "See /benchmark", gaGuard: "Not measured", nemo: "Not measured", notes: "Developer mode, unrestricted, hypotheticals" },
+  { category: "Encoding / Obfuscation", tests: 12, soter: "See /benchmark", gaGuard: "Not measured", nemo: "Not measured", notes: "Base64, rot13, leetspeak, spaced, zero-width" },
+  { category: "Multilingual Attacks", tests: 7, soter: "See /benchmark", gaGuard: "Not measured", nemo: "Not measured", notes: "Hindi/Hinglish bypass attempts" },
+  { category: "Indirect Injection", tests: 6, soter: "See /benchmark", gaGuard: "Not measured", nemo: "—", notes: "RAG-poisoned context, email exfiltration" },
+  { category: "PII Detection", tests: 12, soter: "See /benchmark", gaGuard: "—", nemo: "—", notes: "India-specific (Aadhaar, PAN, GSTIN) + global" },
+  { category: "Secrets / Credentials", tests: 19, soter: "See /benchmark", gaGuard: "—", nemo: "—", notes: "API keys, tokens, connection strings, env vars" },
+  { category: "Unsafe Output", tests: 7, soter: "See /benchmark", gaGuard: "—", nemo: "—", notes: "Spam, scams, harmful content (output guard)" },
+  { category: "False Positives", tests: 1110, soter: "See /benchmark", gaGuard: "—", nemo: "—", notes: "1,110 benign inputs correctly allowed" },
 ];
 
 const profiles = [
@@ -472,7 +474,7 @@ export default function ComparisonPage() {
             <Link href="/signup" className="button-primary gap-2">
               Get started free <ArrowRight size={16} aria-hidden="true" />
             </Link>
-            <Link href="/benchmarks" className="button-secondary gap-2">
+            <Link href="/benchmark" className="button-secondary gap-2">
               <BarChart3 size={16} aria-hidden="true" /> View benchmarks
             </Link>
             <Link href="/playground" className="text-sm text-slate-400 hover:text-white">
@@ -952,7 +954,7 @@ export default function ComparisonPage() {
           {" · "}
           <a href="https://mozilla.ai" className="text-cyan underline underline-offset-2" target="_blank" rel="noopener">Mozilla.ai</a>
           {" · "}
-          <a href="/api/benchmarks" className="text-cyan underline underline-offset-2">Soter Internal Benchmark</a>
+          <a href="/api/benchmark" className="text-cyan underline underline-offset-2">Soter Internal Benchmark</a>
         </p>
       </div>
     </main>

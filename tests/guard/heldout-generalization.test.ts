@@ -96,6 +96,11 @@ test("validation set (untuned): precision hard gate, honest recall floor", () =>
   const f = fpr(VALIDATION_BENIGN);
   // Precision is a HARD gate — false positives break real users.
   assert.ok(f <= 0.05, `untuned benign FPR too high: ${(f * 100).toFixed(1)}%`);
-  // Recall is asserted at an honest floor, not 100%. Measured ~0.64.
-  assert.ok(r >= 0.55, `untuned attack recall below honest floor: ${(r * 100).toFixed(1)}%`);
+  // Recall is asserted at an honest floor, not 100%. The nearest-prototype
+  // semantic-tier upgrade (2026-07-10) lifted this set from ~0.64 to ~0.79, and
+  // two independent post-tuning held-out sets measure ~0.71–0.75. Floor set at
+  // 0.70 — below the measured value so it stays a genuine gate, not a tuned peak.
+  // Raising it further requires a trained ML classifier (see the roadmap), not
+  // more seeds. See docs/detection-honest-generalization.md and GAP-01.
+  assert.ok(r >= 0.7, `untuned attack recall below honest floor: ${(r * 100).toFixed(1)}%`);
 });

@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { escapeHtml, showInfoWebview, firstWorkspaceFolder } from "../firewall/util";
 import { MCP_CONFIG_GLOBS } from "../firewall/scanners";
+import { advisoryNotice, PROTECTION } from "../protection/ProtectionLevel";
 
 const TOOL_CLASSIFICATIONS: Record<string, string[]> = {
     filesystem: ["read", "write", "list", "glob", "search", "open", "create", "delete", "move", "copy"],
@@ -39,8 +40,6 @@ export interface MCPToolEntry {
 }
 
 const TOOL_STATE_KEY = "soterai.mcpToolPolicy";
-/** Maximum number of blocked tool entries stored in globalState. */
-const MAX_BLOCKED_TOOLS = 500;
 
 export class MCPFirewall {
     private tools: MCPToolEntry[] = [];
@@ -48,9 +47,7 @@ export class MCPFirewall {
 
     constructor(private readonly context: vscode.ExtensionContext) {
         const blocked = context.globalState.get<string[]>(TOOL_STATE_KEY);
-        if (blocked) {
-            this.blockedTools = new Set(blocked.slice(0, MAX_BLOCKED_TOOLS));
-        }
+        if (blocked) this.blockedTools = new Set(blocked);
     }
 
     async scanConfigs(): Promise<MCPToolEntry[]> {
@@ -73,11 +70,6 @@ export class MCPFirewall {
     }
 
     async blockTool(toolName: string): Promise<void> {
-        if (this.blockedTools.size >= MAX_BLOCKED_TOOLS) {
-            // Evict oldest entry before adding new one
-            const first = this.blockedTools.values().next().value;
-            if (first) this.blockedTools.delete(first);
-        }
         this.blockedTools.add(toolName);
         await this.context.globalState.update(TOOL_STATE_KEY, Array.from(this.blockedTools));
     }
@@ -165,20 +157,29 @@ export class MCPFirewall {
     }
 }
 
-export function registerMCPFirewallCommands(context: vscode.ExtensionContext, firewall: MCPFirewall): void {
+export function registerMCPFirewallCommands(
+    context: vscode.ExtensionContext,
+    firewall: MCPFirewall,
+    broker?: { request: <T>(path: string, init?: RequestInit, timeoutMs?: number) => Promise<T>; start?: () => Promise<unknown> },
+): void {
     const reg = (id: string, handler: (...args: any[]) => any) => context.subscriptions.push(vscode.commands.registerCommand(id, handler));
+
 
     reg("soterai.openMCPToolFirewall", async () => {
         const tools = await firewall.scanConfigs();
         const rows = tools.map((t) => {
             const riskClass = t.level === "critical" || t.level === "high" ? "block" : t.level === "medium" ? "warn" : "allow";
-            return `<tr><td><code>${escapeHtml(t.name)}</code></td><td><code>${escapeHtml(t.configPath)}</code></td><td>${t.permissions.map((p) => `<span class="badge ${escapeHtml(p)}">${escapeHtml(p)}</span>`).join(" ")}</td><td>${escapeHtml(t.envKeys.join(", "))}</td><td><span class="badge ${riskClass}">${escapeHtml(t.level.toUpperCase())} ${t.riskScore}</span></td><td>${t.reasons.map((r) => escapeHtml(r)).join("<br>")}</td></tr>`;
+            const denyCell = t.blocked
+                ? `<span class="badge block">DENY-LISTED — still in config (drift)</span>`
+                : `<span class="badge allow">not deny-listed</span>`;
+            return `<tr><td><code>${escapeHtml(t.name)}</code></td><td><code>${escapeHtml(t.configPath)}</code></td><td>${t.permissions.map((p) => `<span class="badge ${escapeHtml(p)}">${escapeHtml(p)}</span>`).join(" ")}</td><td>${escapeHtml(t.envKeys.join(", "))}</td><td><span class="badge ${riskClass}">${escapeHtml(t.level.toUpperCase())} ${t.riskScore}</span></td><td>${denyCell}</td><td>${t.reasons.map((r) => escapeHtml(r)).join("<br>")}</td></tr>`;
         }).join("");
 
         showInfoWebview("soteraiMCPFirewall", "SoterAI: MCP Tool Firewall",
             `<h1>MCP Tool Firewall</h1><p>${tools.length} tool(s) scanned across MCP configs.</p>
-            <table><tr><th>Tool</th><th>Config</th><th>Permissions</th><th>Secret Env</th><th>Risk</th><th>Reasons</th></tr>
-            ${rows || "<tr><td colspan='6'>No MCP tools found.</td></tr>"}</table>
+            <p class="note"><strong>${escapeHtml(PROTECTION.MONITORED.label)}:</strong> ${escapeHtml(PROTECTION.MONITORED.meaning)} SoterAI analyzes MCP configs and records your deny-list, but a VS Code extension cannot intercept another MCP client's traffic. Deny-listed tools still present in a config are flagged as drift below.</p>
+            <table><tr><th>Tool</th><th>Config</th><th>Permissions</th><th>Secret Env</th><th>Risk</th><th>Deny-list</th><th>Reasons</th></tr>
+            ${rows || "<tr><td colspan='7'>No MCP tools found.</td></tr>"}</table>
             <p class="note">Tool descriptions are treated as untrusted (possible prompt injection). Secret env var names shown; values never read.</p>`
         );
     });
@@ -194,25 +195,147 @@ export function registerMCPFirewallCommands(context: vscode.ExtensionContext, fi
         const tools = await firewall.scanConfigs();
         const pick = await vscode.window.showQuickPick(
             tools.map((t) => ({ label: t.name, detail: `${t.level} - ${t.reasons[0] ?? "No reasons"}`, name: t.name })),
-            { title: "Block MCP Tool", placeHolder: "Select a tool to block" }
+            { title: "Deny-list MCP Tool (advisory)", placeHolder: "Select a tool to deny-list" }
         );
         if (pick) {
             await firewall.blockTool(pick.name);
-            vscode.window.showInformationMessage(`MCP tool "${pick.name}" blocked.`);
+            const action = await vscode.window.showWarningMessage(
+                `MCP tool "${pick.name}" added to SoterAI's deny-list. ` + advisoryNotice("The MCP deny-list") +
+                " To actually stop the tool, remove it from the MCP config.",
+                "Open MCP Config",
+            );
+            if (action === "Open MCP Config") {
+                const tool = tools.find((t) => t.name === pick.name);
+                const folder = firstWorkspaceFolder();
+                if (tool && folder) {
+                    try {
+                        const doc = await vscode.workspace.openTextDocument(vscode.Uri.joinPath(folder.uri, tool.configPath));
+                        await vscode.window.showTextDocument(doc);
+                    } catch { /* config no longer present */ }
+                }
+            }
         }
     });
 
     reg("soterai.approveMCPTool", async () => {
         const tools = await firewall.scanConfigs();
         const blocked = tools.filter((t) => firewall.isToolBlocked(t.name));
-        if (blocked.length === 0) return vscode.window.showInformationMessage("No blocked MCP tools.");
+        if (blocked.length === 0) return vscode.window.showInformationMessage("No deny-listed MCP tools.");
         const pick = await vscode.window.showQuickPick(
             blocked.map((t) => ({ label: t.name, detail: t.level, name: t.name })),
-            { title: "Approve MCP Tool", placeHolder: "Select a blocked tool to approve" }
+            { title: "Remove MCP Tool From Deny-list", placeHolder: "Select a deny-listed tool to approve" }
         );
         if (pick) {
             await firewall.approveTool(pick.name);
-            vscode.window.showInformationMessage(`MCP tool "${pick.name}" approved.`);
+            vscode.window.showInformationMessage(`MCP tool "${pick.name}" removed from SoterAI's deny-list.`);
+        }
+    });
+
+    /**
+     * Phase 8 — optional pre-execution MCP tool preflight via broker
+     * POST /v1/preflight/mcp-tool (MCPGateway). Honest label remains DETECTION_ONLY
+     * for config scan; preflight is STRONG only when the caller respects the decision
+     * before invoke. We do not claim FULL/STRONG universal MCP interception.
+     */
+    reg("soterai.preflightMCPTool", async () => {
+        if (!broker?.request) {
+            return void vscode.window.showWarningMessage(
+                "MCP preflight requires the Local AI Broker. Config scan remains DETECTION_ONLY.",
+            );
+        }
+        const tools = await firewall.scanConfigs();
+        if (tools.length === 0) {
+            return void vscode.window.showInformationMessage("No MCP tools found in workspace configs.");
+        }
+        const pick = await vscode.window.showQuickPick(
+            tools.map((t) => ({
+                label: t.name,
+                description: t.level,
+                detail: t.reasons[0] ?? t.configPath,
+                tool: t,
+            })),
+            { title: "SoterAI: Preflight MCP Tool (broker gateway)", ignoreFocusOut: true },
+        );
+        if (!pick) return;
+
+        const argsText = await vscode.window.showInputBox({
+            title: "MCP tool args (JSON object)",
+            value: "{}",
+            prompt: "Arguments that would be passed to the tool — scanned for secrets/injection before recommend/execute",
+            ignoreFocusOut: true,
+        });
+        if (argsText === undefined) return;
+        let args: Record<string, unknown> = {};
+        try {
+            args = JSON.parse(argsText || "{}") as Record<string, unknown>;
+        } catch {
+            return void vscode.window.showErrorMessage("Args must be a JSON object.");
+        }
+
+        // Load raw config for gateway analysis when available
+        let mcpConfig: unknown;
+        const folder = firstWorkspaceFolder();
+        if (folder) {
+            try {
+                const uri = vscode.Uri.joinPath(folder.uri, pick.tool.configPath);
+                const text = new TextDecoder().decode(await vscode.workspace.fs.readFile(uri));
+                mcpConfig = JSON.parse(text);
+            } catch { /* config optional */ }
+        }
+
+        try {
+            if (broker.start) await broker.start();
+            const decision = await broker.request<{
+                action: string;
+                riskScore: number;
+                reasonCodes: string[];
+                categories: string[];
+                explanation: string;
+                coverageLevel: string;
+                redactedArgsPreview?: string;
+            }>("/v1/preflight/mcp-tool", {
+                method: "POST",
+                body: JSON.stringify({
+                    mcpConfig,
+                    serverName: pick.tool.serverName,
+                    toolName: pick.tool.name,
+                    args,
+                }),
+            });
+
+            const blocked = decision.action === "DENY" || decision.action === "BLOCK";
+            const msg =
+                `MCP preflight: ${decision.action} (risk ${decision.riskScore}). ` +
+                `${decision.reasonCodes?.join(", ") || "no reason codes"}. ` +
+                `Coverage for THIS preflight path: ${decision.coverageLevel || "broker preflight"}. ` +
+                `Config scan remains DETECTION_ONLY; SoterAI cannot intercept other MCP clients.`;
+            if (blocked) vscode.window.showErrorMessage(msg);
+            else if (decision.action === "ASK") vscode.window.showWarningMessage(msg);
+            else vscode.window.showInformationMessage(msg);
+
+            showInfoWebview(
+                "soteraiMCPPreflight",
+                "SoterAI: MCP Tool Preflight",
+                `<h1>MCP Tool Preflight</h1>
+                <p class="note"><strong>Honesty:</strong> This routes through broker <code>/v1/preflight/mcp-tool</code> (MCPGateway).
+                It is NOT a universal MCP gateway — only callers that preflight before execute get this decision.
+                Config-only scanning remains DETECTION_ONLY. Do not claim FULL/STRONG without a pre-execution path.</p>
+                <table>
+                  <tr><th>Tool</th><td><code>${escapeHtml(pick.tool.name)}</code></td></tr>
+                  <tr><th>Action</th><td><span class="badge ${blocked ? "block" : "allow"}">${escapeHtml(decision.action)}</span></td></tr>
+                  <tr><th>Risk</th><td>${escapeHtml(String(decision.riskScore))}</td></tr>
+                  <tr><th>Reasons</th><td>${escapeHtml((decision.reasonCodes ?? []).join(", "))}</td></tr>
+                  <tr><th>Categories</th><td>${escapeHtml((decision.categories ?? []).join(", "))}</td></tr>
+                  <tr><th>Explanation</th><td>${escapeHtml(decision.explanation ?? "")}</td></tr>
+                  <tr><th>Args preview</th><td><code>${escapeHtml(decision.redactedArgsPreview ?? "")}</code></td></tr>
+                </table>`,
+            );
+        } catch (err) {
+            vscode.window.showErrorMessage(
+                `MCP preflight failed: ${err instanceof Error ? err.message : String(err)}. Falling back to config scan (DETECTION_ONLY).`,
+            );
         }
     });
 }
+
+

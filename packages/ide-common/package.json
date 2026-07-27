@@ -15,8 +15,7 @@
         "build": "tsc -p tsconfig.json",
         "test": "tsx --test src/__tests__/**/*.test.ts",
         "typecheck": "tsc --noEmit",
-        "clean": "rimraf dist",
-        "prepublishOnly": "npm run build && npm test"
+        "clean": "rimraf dist"
     },
     "keywords": [
         "soterai",
@@ -24,9 +23,7 @@
         "broker-client",
         "local-first"
     ],
-    "files": ["dist", "README.md", "LICENSE"],
     "license": "BSL-1.1",
-    "publishConfig": { "access": "public" },
     "dependencies": {
         "@soterai/ide-protocol": "file:../ide-protocol"
     },

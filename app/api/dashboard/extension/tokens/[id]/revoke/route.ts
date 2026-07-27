@@ -15,11 +15,8 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     const { id } = await params;
     const body = schema.parse(await readJson(request));
     const { user } = await requirePermission(body.organizationId, "policy:manage");
-    const token = await db.extensionEnrollmentToken.findUnique({ where: { id } });
+    const token = await db.extensionEnrollmentToken.findFirst({ where: { id, organizationId: body.organizationId } });
     if (!token) return jsonResponse({ error: true, message: "Enrollment code not found." }, { status: 404 });
-    if (token.organizationId !== body.organizationId) {
-      return jsonResponse({ error: true, message: "Enrollment code does not belong to this organization." }, { status: 403 });
-    }
     const revoked = await db.extensionEnrollmentToken.update({
       where: { id },
       data: { revokedAt: token.revokedAt ?? new Date() },

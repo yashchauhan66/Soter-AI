@@ -30,6 +30,10 @@ function readAllSrc(): string {
 
 const allSrc = readAllSrc();
 const pkg = JSON.parse(read("package.json"));
+const readmeSrc = read("README.md");
+const vscodeIgnoreSrc = read(".vscodeignore");
+const trustChecklistSrc = fs.readFileSync(path.resolve(root, "..", "..", "docs", "vscode-marketplace-trust-checklist.md"), "utf8");
+const productTrustMatrixSrc = fs.readFileSync(path.resolve(root, "..", "..", "docs", "product-trust-matrix.md"), "utf8");
 const commandsSrc = read("src/commands.ts");
 const extensionSrc = read("src/extension.ts");
 const telemetrySrc = read("src/telemetry.ts");
@@ -40,6 +44,9 @@ const ledgerStoreSrc = read("src/firewall/LedgerStore.ts");
 const vaultManagerSrc = read("src/firewall/VaultManager.ts");
 const brokerManagerSrc = read("src/broker/BrokerManager.ts");
 const brokerCommandsSrc = read("src/broker/commands.ts");
+const launchCommandsSrc = read("src/launchCommands.ts");
+const liveScannerSrc = read("src/diagnostics/LiveScanner.ts");
+const clipboardGuardSrc = read("src/clipboard/ClipboardGuard.ts");
 
 // Commands are registered either directly (registerCommand("id", ...)) or via
 // the firewall `reg("id", ...)` helper.
@@ -103,8 +110,11 @@ describe("Workspace Trust (#5)", () => {
 });
 
 describe("Vault safety — dry-run preview + backup + confirm", () => {
-    it("migration writes a .bak backup before overwriting", () => {
-        assert.match(vaultManagerSrc, /\.bak/, "vault migration must create a .bak backup");
+    it("migration backup is encrypted and OUTSIDE the workspace (no plaintext .bak)", () => {
+        assert.match(vaultManagerSrc, /writeEncryptedBackup/, "vault migration must back up via writeEncryptedBackup");
+        assert.match(vaultManagerSrc, /globalStorageUri,\s*"backups"/, "backups must live in extension global storage");
+        assert.doesNotMatch(vaultManagerSrc, /\$\{fileUri\.path\}\.bak/,
+            "vault must never write a plaintext .bak into the workspace — it would leak raw secrets to anything reading workspace files");
     });
     it("migration requires an explicit modal confirmation after previewing", () => {
         assert.match(firewallCommandsSrc, /modal:\s*true/, "vault migration must confirm via a modal dialog");
@@ -152,6 +162,102 @@ describe("SecretStorage token hygiene (#6)", () => {
     });
 });
 
+describe("Launch readiness command surface", () => {
+    const expected = [
+        "soterai.quickStart",
+        "soterai.checkExtensionHealth",
+        "soterai.openPrivacyGuarantee",
+        "soterai.openSettings",
+        "soterai.runDemoScan",
+        "soterai.scanSelectedText",
+        "soterai.scanGitDiff",
+        "soterai.reviewTerminalCommand",
+        "soterai.scanMCPAgentTools",
+        "soterai.openAIActivityLedger",
+        "soterai.generateCanaryToken",
+        "soterai.choosePolicyPack",
+    ];
+
+    it("declares and registers launch-critical command names", () => {
+        for (const command of expected) {
+            assert.ok(declaredCommands.includes(command), `${command} must be declared`);
+            assert.ok(registeredCommands.has(command), `${command} must be registered`);
+        }
+    });
+
+    it("keeps friendly launch aliases mapped to implemented scanners", () => {
+        assert.match(launchCommandsSrc, /soterai\.scanSelection/);
+        assert.match(launchCommandsSrc, /soterai\.scanGitChanges/);
+        assert.match(launchCommandsSrc, /soterai\.checkTerminalCommand/);
+        assert.match(launchCommandsSrc, /soterai\.scanMCPConfigs/);
+        assert.match(launchCommandsSrc, /soterai\.openAILedger/);
+        assert.match(launchCommandsSrc, /soterai\.generateCanary/);
+        assert.match(launchCommandsSrc, /soterai\.applyPolicyPack/);
+    });
+
+    it("has build and lint scripts required by release automation", () => {
+        assert.strictEqual(pkg.scripts.build, "npm run bundle");
+        assert.strictEqual(pkg.scripts.lint, "npm run typecheck");
+    });
+});
+
+describe("Marketplace README media hygiene", () => {
+    it("does not render screenshots in the VS Code Marketplace README", () => {
+        assert.doesNotMatch(readmeSrc, /!\[[^\]]*]\([^)]*screenshots\//i);
+        assert.doesNotMatch(readmeSrc, /<img[^>]+screenshots\//i);
+        assert.doesNotMatch(readmeSrc, /dashboard-overview\.png|scan-results\.png|command-palette\.png|settings-panel\.png|demo\.gif/i);
+    });
+
+    it("keeps screenshot assets excluded from packaged VSIX output", () => {
+        assert.match(vscodeIgnoreSrc, /media\/screenshots\/\*\*/);
+    });
+});
+
+describe("Local-first privacy mode", () => {
+    it("declares soterai.privacyMode with local default", () => {
+        const setting = pkg.contributes.configuration.properties["soterai.privacyMode"];
+        assert.deepStrictEqual(setting.enum, ["local", "cloud", "hybrid"]);
+        assert.strictEqual(setting.default, "local");
+    });
+
+    it("prevents telemetry flush in local mode and untrusted workspaces", () => {
+        assert.match(telemetrySrc, /privacyMode === "local"/);
+        assert.match(telemetrySrc, /!vscode\.workspace\.isTrusted/);
+    });
+
+    it("health reports never include raw secrets or prompt text", () => {
+        assert.match(launchCommandsSrc, /No API keys, prompts, secrets, or raw file contents/);
+        assert.ok(!/cloudToken|providerApiKey|SOTERAI_PROVIDER_API_KEY/.test(launchCommandsSrc));
+    });
+
+    it("privacy guarantee explains local-only secret handling", () => {
+        assert.ok(declaredCommands.includes("soterai.openPrivacyGuarantee"), "privacy guarantee command must be declared");
+        assert.ok(registeredCommands.has("soterai.openPrivacyGuarantee"), "privacy guarantee command must be registered");
+        assert.match(launchCommandsSrc, /Raw secrets stay on the user's machine/);
+        assert.match(launchCommandsSrc, /What SoterAI does not receive by default/);
+        assert.match(launchCommandsSrc, /Preview What AI Will See/);
+        assert.match(launchCommandsSrc, /No API keys, prompts, secrets, or raw file contents are included in this privacy report/);
+    });
+
+    it("README gives a marketplace-grade local privacy proof", () => {
+        assert.match(readmeSrc, /What Leaves Your Machine\?/);
+        assert.match(readmeSrc, /Raw API keys, tokens, private keys, `\.env` values/);
+        assert.match(readmeSrc, /Never sent by default; secret broker uses scoped references/);
+        assert.match(readmeSrc, /SoterAI: Local Privacy Status/);
+        assert.match(readmeSrc, /no API keys, prompts, secrets, raw files, private keys, database URLs, or PII/);
+    });
+
+    it("trust checklist and product matrix lock the reviewer-facing privacy contract", () => {
+        assert.match(trustChecklistSrc, /VS Code `SecretStorage`/);
+        assert.match(trustChecklistSrc, /capabilities\.untrustedWorkspaces\.supported/);
+        assert.match(trustChecklistSrc, /Raw secrets, raw prompts, raw file contents/);
+        assert.match(productTrustMatrixSrc, /VS Code extension/);
+        assert.match(productTrustMatrixSrc, /Browser extension/);
+        assert.match(productTrustMatrixSrc, /n8n node/);
+        assert.match(productTrustMatrixSrc, /A buyer can understand what leaves their machine in under 30 seconds/);
+    });
+});
+
 describe("Clipboard safety for firewall handlers (#1)", () => {
     it("all firewall clipboard writes go through redactForSharing or a canary token by design", () => {
         const writes = [...firewallCommandsSrc.matchAll(/clipboard\.writeText\(([^)]*)\)/g)].map((m) => m[1].trim());
@@ -179,13 +285,47 @@ describe("Webview hardening (#7)", () => {
     it("firewall info webviews disable scripts", () => {
         assert.match(read("src/firewall/util.ts"), /enableScripts:\s*false/);
     });
+    it("dashboard message handler keeps a strict command allowlist including new actions", () => {
+        assert.match(dashboardSrc, /knownCommands[\s\S]{0,200}scanClipboard/);
+        assert.match(dashboardSrc, /knownCommands[\s\S]{0,200}openWalkthrough/);
+        assert.match(dashboardSrc, /knownCommands[\s\S]{0,300}openLocalPrivacyStatus/);
+        assert.match(dashboardSrc, /knownCommands[\s\S]{0,400}buildSafePromptForAI/);
+        assert.match(dashboardSrc, /knownCommands[\s\S]{0,500}runSecretBrokerDemo/);
+        assert.match(dashboardSrc, /knownCommands[\s\S]{0,700}showCoverageMatrix/);
+        assert.match(dashboardSrc, /knownCommands[\s\S]{0,900}showRuntimeCapabilitySummary/);
+        assert.match(dashboardSrc, /knownCommands[\s\S]{0,1100}scanMCPConfigs/);
+        assert.match(dashboardSrc, /knownCommands[\s\S]{0,1300}exportEnterprisePolicy/);
+        // The allowlist gate must still reject anything not in the set.
+        assert.match(dashboardSrc, /!knownCommands\.has\(cmd\)/);
+    });
+    it("dashboard surfaces the 9+ trust center without overstating enforcement", () => {
+        assert.match(dashboardSrc, /Trust Center: Coverage, MCP, Isolation/);
+        assert.match(dashboardSrc, /No fake green checks/);
+        assert.match(dashboardSrc, /Start the broker to move from advisory scanning to enforced request\/response protection/);
+        assert.match(dashboardSrc, /Only traffic routed through the broker is fully inspected/);
+        assert.match(dashboardSrc, /MCP configs for shell access, secret env keys, broad file access/);
+        assert.match(dashboardSrc, /enterprise policy, local risk report/);
+    });
+});
+
+describe("Enterprise policy export", () => {
+    const policyPackCommandsSrc = read("src/policy-packs/commands.ts");
+
+    it("exports a buyer-ready enterprise policy bundle with honest enforcement scope", () => {
+        assert.match(policyPackCommandsSrc, /schemaVersion:\s*"soterai\.enterprise-policy\.v1"/);
+        assert.match(policyPackCommandsSrc, /brokeredAiTraffic:\s*"enforced"/);
+        assert.match(policyPackCommandsSrc, /rawCopilotOrThirdPartyExtensionTraffic:\s*"monitored_not_enforced"/);
+        assert.match(policyPackCommandsSrc, /mcpRuntimeCalls:\s*"enforced_only_when_routed_through_soterai_mcp_gateway"/);
+        assert.match(policyPackCommandsSrc, /secretEnvValuesNeverDisplayed:\s*true/);
+    });
 });
 
 describe("Local AI Broker, Safe Mode, and Memory Inspector", () => {
     const expected = [
         "soterai.startLocalAIBroker", "soterai.stopLocalAIBroker", "soterai.restartLocalAIBroker",
-        "soterai.showBrokerStatus", "soterai.configureAIBroker", "soterai.copyOpenAIBrokerUrl",
-        "soterai.copyAnthropicBrokerUrl", "soterai.testBrokerProtection", "soterai.rotateBrokerToken",
+        "soterai.showBrokerStatus", "soterai.showRuntimeCapabilitySummary", "soterai.showExtensionIsolationSummary", "soterai.configureAIBroker",
+        "soterai.copyOpenAIBrokerUrl", "soterai.copyAnthropicBrokerUrl", "soterai.testBrokerProtection",
+        "soterai.runControlledTerminalCommand", "soterai.rotateBrokerToken",
         "soterai.clearBrokerToken", "soterai.enableAISafeMode", "soterai.disableAISafeMode",
         "soterai.showAISafeModeRules", "soterai.configureSafeMode", "soterai.openAIMemoryInspector",
         "soterai.startAIMemorySession", "soterai.endAIMemorySession", "soterai.clearAIMemorySession",
@@ -212,5 +352,282 @@ describe("Local AI Broker, Safe Mode, and Memory Inspector", () => {
     it("redacts Memory Inspector exports and trust-gates provider configuration", () => {
         assert.match(brokerCommandsSrc, /redactForSharing\(JSON\.stringify/);
         assert.match(brokerCommandsSrc, /configureAIBroker[\s\S]{0,300}isTrusted/);
+    });
+    it("warns on raw terminals and routes users to controlled broker execution", () => {
+        const setting = pkg.contributes.configuration.properties["soterai.terminal.warnOnRawTerminalOpen"];
+        assert.strictEqual(setting.default, true);
+        assert.match(extensionSrc, /onDidOpenTerminal/);
+        assert.match(extensionSrc, /warnRawTerminalCoverage/);
+        assert.match(extensionSrc, /soterai\.runControlledTerminalCommand/);
+        assert.match(extensionSrc, /soterai\.showRuntimeCapabilitySummary/);
+    });
+    it("surfaces extension isolation through the authenticated broker preflight", () => {
+        assert.match(brokerCommandsSrc, /showExtensionIsolationSummary/);
+        assert.match(brokerCommandsSrc, /\/v1\/preflight\/extension-isolation/);
+        assert.match(brokerCommandsSrc, /workspaceRecommendations/);
+    });
+});
+
+describe("Command-palette hygiene (clutter control)", () => {
+    const core = [
+        "soterai.openControlPanel",
+        "soterai.quickStart", "soterai.checkExtensionHealth", "soterai.openSettings", "soterai.runDemoScan",
+        "soterai.scanSelectedText", "soterai.scanCurrentFile", "soterai.scanGitDiff", "soterai.reviewTerminalCommand",
+        "soterai.scanMCPAgentTools", "soterai.openAIActivityLedger", "soterai.generateCanaryToken", "soterai.choosePolicyPack",
+        "soterai.openPrivacyGuarantee", "soterai.openLocalPrivacyStatus", "soterai.buildSafePromptForAI", "soterai.runSecretBrokerDemo",
+        "soterai.openWalkthrough", "soterai.scanClipboard",
+    ];
+    const palette: Array<{ command: string; when?: string }> = pkg.contributes.menus?.commandPalette ?? [];
+    const gated = new Map(palette.map((e) => [e.command, e.when]));
+
+    it("core commands are always palette-visible (not gated)", () => {
+        for (const c of core) {
+            assert.ok(!gated.has(c), `${c} is a core command and must not be gated in commandPalette`);
+        }
+    });
+
+    it("every non-core declared command is gated behind soterai.advancedCommands (or fully hidden)", () => {
+        // Internal, argument-taking commands (e.g. applyFindingFix) are hidden
+        // outright with `when: "false"`; advanced user commands are gated behind
+        // the context key. Either counts as "not cluttering the default palette".
+        const ungated = declaredCommands.filter((c) => {
+            if (core.includes(c)) return false;
+            const when = gated.get(c);
+            return when !== "soterai.advancedCommands" && when !== "false";
+        });
+        assert.deepStrictEqual(ungated, [], `These commands should be gated: ${ungated.join(", ")}`);
+    });
+
+    it("the context key is driven by stable and experimental command visibility settings", () => {
+        assert.ok(pkg.contributes.configuration.properties["soterai.showAllCommands"], "showAllCommands setting must exist");
+        assert.strictEqual(pkg.contributes.configuration.properties["soterai.showAllCommands"].default, false);
+        assert.ok(pkg.contributes.configuration.properties["soterai.experimentalFeatures.enabled"], "experimentalFeatures.enabled setting must exist");
+        assert.strictEqual(pkg.contributes.configuration.properties["soterai.experimentalFeatures.enabled"].default, false);
+        assert.match(extensionSrc, /setContext",\s*"soterai\.advancedCommands"/);
+        assert.match(extensionSrc, /config\.get<boolean>\("showAllCommands"/);
+        assert.match(extensionSrc, /get<boolean>\("experimentalFeatures\.enabled"/);
+        assert.match(extensionSrc, /affectsConfiguration\("soterai\.experimentalFeatures\.enabled"\)/);
+    });
+});
+
+describe("Onboarding walkthrough (UX)", () => {
+    const walkthroughs = pkg.contributes.walkthroughs ?? [];
+    const wt = walkthroughs[0];
+
+    it("contributes a Getting Started walkthrough with 5 steps", () => {
+        assert.ok(wt, "a walkthrough must be contributed");
+        assert.strictEqual(wt.id, "soterai.gettingStarted");
+        assert.strictEqual(wt.steps.length, 5);
+    });
+
+    it("every walkthrough step points to an existing markdown media file", () => {
+        for (const step of wt.steps) {
+            const rel = step.media?.markdown;
+            assert.ok(rel, `step ${step.id} must have markdown media`);
+            assert.ok(fs.existsSync(path.join(root, rel)), `missing walkthrough media: ${rel}`);
+        }
+    });
+
+    it("every walkthrough command button targets a declared or built-in command", () => {
+        const builtins = new Set(["workbench.view.extension.soterai-explorer"]);
+        for (const step of wt.steps) {
+            const cmd = /command:([\w.-]+)/.exec(step.description)?.[1];
+            assert.ok(cmd, `step ${step.id} must have a command button`);
+            assert.ok(declaredCommands.includes(cmd) || builtins.has(cmd), `walkthrough command not declared: ${cmd}`);
+        }
+    });
+
+    it("declares onWalkthrough activation and a registered openWalkthrough command", () => {
+        assert.ok(pkg.activationEvents.includes("onWalkthrough:soterai.gettingStarted"));
+        assert.ok(declaredCommands.includes("soterai.openWalkthrough"));
+        assert.ok(registeredCommands.has("soterai.openWalkthrough"));
+    });
+
+    it("opens the walkthrough only once via a globalState onboarding flag", () => {
+        assert.match(extensionSrc, /globalState\.get<boolean>\("soterai\.onboarded"\)/);
+        assert.match(extensionSrc, /globalState\.update\("soterai\.onboarded",\s*true\)/);
+        assert.match(extensionSrc, /openWalkthrough/);
+    });
+});
+
+describe("Live inline scanning + Quick Fixes (UX)", () => {
+    it("declares soterai.liveScan.enabled defaulting to on and registers the scanner", () => {
+        const setting = pkg.contributes.configuration.properties["soterai.liveScan.enabled"];
+        assert.ok(setting, "liveScan.enabled setting must exist");
+        assert.strictEqual(setting.default, true);
+        assert.match(extensionSrc, /registerLiveScanner\(context\)/);
+        assert.match(extensionSrc, /onDidSaveTextDocument/);
+        assert.match(extensionSrc, /get<boolean>\("liveScan\.enabled",\s*true\)/);
+    });
+
+    it("uses a debounced, local-only scan mapped to a DiagnosticCollection", () => {
+        assert.match(liveScannerSrc, /createDiagnosticCollection/);
+        assert.match(liveScannerSrc, /setTimeout/, "scans must be debounced");
+        // Live path uses context "file". Prompt-injection/jailbreak parity for
+        // that context is enforced in guard-core pipeline 1.1.0 and proven by
+        // packages/guard-core/src/__tests__/live-scan-parity.test.ts (behavioral).
+        assert.match(liveScannerSrc, /engine\.scan\(doc\.getText\(\),\s*\{\s*context:\s*"file"\s*\}\)/);
+        assert.match(liveScannerSrc, /positionAt\(finding\.start\)/, "findings must map to editor ranges");
+    });
+
+
+    it("skips non-file schemes, oversized files, and excluded globs", () => {
+        assert.match(liveScannerSrc, /scheme !== "file"/);
+        assert.match(liveScannerSrc, /maxFileSizeKb/);
+        assert.match(liveScannerSrc, /excludeGlobs/);
+    });
+
+    it("offers redact + copy-safe Quick Fixes and gates the internal fix command", () => {
+        assert.match(liveScannerSrc, /registerCodeActionsProvider/);
+        assert.match(liveScannerSrc, /CodeActionKind\.QuickFix/);
+        assert.match(liveScannerSrc, /kind:\s*"redact"/);
+        assert.match(liveScannerSrc, /kind:\s*"copySafeLine"/);
+        assert.ok(registeredCommands.has("soterai.applyFindingFix"), "fix command must be registered");
+        const palette = pkg.contributes.menus.commandPalette.find((e: any) => e.command === "soterai.applyFindingFix");
+        assert.strictEqual(palette?.when, "false", "internal fix command must be hidden from the palette");
+    });
+
+    it("redaction never writes raw secrets and disposes its timers", () => {
+        assert.match(liveScannerSrc, /«REDACTED:/);
+        assert.ok(!/console\.(log|info|warn|error)/.test(liveScannerSrc), "live scanner must not log");
+        assert.match(liveScannerSrc, /dispose\(\)/);
+        assert.match(liveScannerSrc, /clearTimeout/);
+    });
+});
+
+describe("Clipboard / paste guard (UX)", () => {
+    it("registers scanClipboard (core) and safePaste (advanced) commands", () => {
+        for (const c of ["soterai.scanClipboard", "soterai.safePaste"]) {
+            assert.ok(declaredCommands.includes(c), `${c} must be declared`);
+            assert.ok(registeredCommands.has(c), `${c} must be registered`);
+        }
+        assert.match(extensionSrc, /registerClipboardGuard\(context\)/);
+    });
+
+    it("scans clipboard locally and offers a redacted safe version", () => {
+        assert.match(clipboardGuardSrc, /clipboard\.readText\(\)/);
+        assert.match(clipboardGuardSrc, /engine\.scan\([^)]*context:\s*"prompt"/);
+        assert.match(clipboardGuardSrc, /redactForSharing/);
+        assert.match(clipboardGuardSrc, /Replace Clipboard with Safe Version/);
+    });
+
+    it("safe paste can insert a redacted version instead of the raw clipboard", () => {
+        assert.match(clipboardGuardSrc, /Paste Redacted/);
+        assert.match(clipboardGuardSrc, /editor\.action\.clipboardPasteAction/);
+    });
+
+    it("never logs the raw clipboard value", () => {
+        assert.ok(!/console\.(log|info|warn|error)/.test(clipboardGuardSrc), "clipboard guard must not log");
+    });
+});
+
+describe("Security search guardrails", () => {
+    it("does not use console.log in extension source", () => {
+        assert.ok(!/console\.log/.test(allSrc), "extension source must not console.log");
+    });
+
+    it("documents every child process boundary as non-shell fixed argv usage", () => {
+        assert.match(commandsSrc, /Safe child process boundary/);
+        assert.match(read("src/firewall/ContextGatherer.ts"), /Safe child process boundary/);
+        assert.match(brokerManagerSrc, /User input never controls the executable or argv/);
+    });
+});
+
+describe("Control Panel (consolidated sidebar toggles)", () => {
+    const controlPanelSrc = read("src/webview/ControlPanelViewProvider.ts");
+    const views: Array<{ id: string; type?: string }> = pkg.contributes.views["soterai-explorer"];
+
+    it("declares the control panel as a webview view in the SoterAI sidebar", () => {
+        const view = views.find((v) => v.id === "soterai-control-panel");
+        assert.ok(view, "soterai-control-panel view must be declared");
+        assert.strictEqual(view?.type, "webview", "control panel must be a webview view");
+    });
+
+    it("registers the webview view provider with the matching viewType", () => {
+        assert.match(controlPanelSrc, /viewType\s*=\s*"soterai-control-panel"/);
+        assert.match(extensionSrc, /registerWebviewViewProvider\(\s*ControlPanelViewProvider\.viewType/);
+    });
+
+    it("every toggle delegates to a command or setting that actually exists", () => {
+        for (const c of [
+            "soterai.enableAISafeMode", "soterai.disableAISafeMode",
+            "soterai.enableProtectedWorkspace", "soterai.disableProtectedWorkspace",
+            "soterai.enableAISentinel", "soterai.disableAISentinel",
+            "soterai.emergencyLockdown", "soterai.showCoverageMatrix",
+        ]) {
+            assert.ok(controlPanelSrc.includes(c), `panel must reference ${c}`);
+            assert.ok(registeredCommands.has(c), `${c} must be registered`);
+        }
+        // Settings-backed toggles must exist as declared configuration.
+        for (const key of ["soterai.liveScan.enabled", "soterai.mcpFirewall.strictMode"]) {
+            assert.ok(pkg.contributes.configuration.properties[key], `${key} must be a declared setting`);
+        }
+    });
+
+    it("Phase 11: five primary workflows are allowlisted and wired to real commands", () => {
+        for (const action of [
+            "action:setupBroker",
+            "action:controlledTerminal",
+            "action:scanClipboard",
+            "action:mcpPreflight",
+            "action:depGuard",
+        ]) {
+            assert.ok(controlPanelSrc.includes(`"${action}"`), `ALLOWED must include ${action}`);
+        }
+        for (const c of [
+            "soterai.setupBrokerIntegration",
+            "soterai.runControlledTerminalCommand",
+            "soterai.scanClipboard",
+            "soterai.preflightMCPTool",
+            "soterai.checkDependencyInstall",
+
+        ]) {
+            assert.ok(controlPanelSrc.includes(c), `panel must reference ${c}`);
+            assert.ok(registeredCommands.has(c), `${c} must be registered`);
+            assert.ok(declaredCommands.includes(c), `${c} must be declared`);
+        }
+        assert.match(controlPanelSrc, /Primary workflows/);
+        assert.strictEqual(pkg.contributes.configuration.properties["soterai.showAllCommands"].default, false);
+    });
+
+
+    it("only marks a control ENFORCED when a real control gate backs it (honest badge)", () => {
+        // The single ENFORCED path in the panel is Safe Mode AND brokerRunning.
+        // If this assertion ever fails, an ENFORCED badge was added without a
+        // proven enforcement gate — which violates ProtectionLevel semantics.
+        assert.match(
+            controlPanelSrc,
+            /state\.brokerRunning\s*\?\s*"ENFORCED"\s*:\s*"MONITORED"/,
+            "Safe Mode may only claim ENFORCED while the broker is running",
+        );
+        // Exactly three ENFORCED mentions are legitimate: the broker-gated
+        // per-control assignment, the `=== "ENFORCED"` roll-up test, and the
+        // roll-up's return. Any more means a new unproven ENFORCED badge crept in.
+        const enforcedLiterals = controlPanelSrc.match(/"ENFORCED"/g) ?? [];
+        assert.strictEqual(enforcedLiterals.length, 3, "only the broker-gated ENFORCED assignment (+ roll-up test/return) should exist");
+        assert.match(controlPanelSrc, /t\.level === "ENFORCED"/, "roll-up must derive ENFORCED from a per-control gate, not assume it");
+    });
+
+    it("resolves live-scan and MCP badges from CAPABILITY_REGISTRY (no stronger claim than registry)", () => {
+        assert.match(controlPanelSrc, /capabilityUiBadge\("live-scan"\)/);
+        assert.match(controlPanelSrc, /capabilityUiBadge\("mcp-config-scan"\)/);
+        assert.match(controlPanelSrc, /VISIBILITY_ONLY|registryLevel/);
+        const protectionSrc = read("src/protection/ProtectionLevel.ts");
+        assert.match(protectionSrc, /toUiLevel/);
+        assert.match(protectionSrc, /CAPABILITY_REGISTRY/);
+        assert.match(protectionSrc, /VISIBILITY_ONLY[\s\S]*MONITORED/);
+        assert.match(protectionSrc, /STRONG_ENFORCEMENT[\s\S]*ENFORCED/);
+    });
+
+
+    it("rejects webview messages outside the allowlist", () => {
+        assert.match(controlPanelSrc, /ALLOWED\s*=\s*new Set/);
+        assert.match(controlPanelSrc, /Rejected message/);
+    });
+
+    it("never sends secrets or raw content to the webview", () => {
+        // The panel gathers only booleans/labels; guard against obvious leaks.
+        assert.ok(!/secrets\.get|getCloudToken|readFileSync|\.content\b/.test(controlPanelSrc),
+            "control panel must not read secrets or file content");
     });
 });

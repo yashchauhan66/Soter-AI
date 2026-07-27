@@ -3,7 +3,7 @@
   
   # SoterAI — Open-Source AI Security Command Layer
   
-  **Protect your chatbots, RAG apps, and AI agents from prompt injection, jailbreaks, data leakage, and agent abuse — defense-in-depth guardrails with an honest, reproducible benchmark (84% recall at a 1% false-positive budget, ROC-AUC 0.92).**
+  **Protect your chatbots, RAG apps, and AI agents from prompt injection, jailbreaks, data leakage, and agent abuse — defense-in-depth guardrails with an public, reproducible Phase 9 benchmark.**
   
   <p align="center">
     <a href="https://github.com/yashchauhan66/Ai-Security-Guard"><img src="https://img.shields.io/github/stars/yashchauhan66/Ai-Security-Guard?style=for-the-badge&logo=github&logoColor=white&label=⭐%20Star%20us" alt="GitHub Stars" /></a>
@@ -14,10 +14,10 @@
   </p>
   
   <p align="center">
-    <img src="https://img.shields.io/badge/Recall%4084%25%20%40%201%25%20FPR-00c8c8?style=flat-square&logo=checkmarx&logoColor=white" alt="84% recall at 1% false-positive rate" />
-    <img src="https://img.shields.io/badge/ROC--AUC%200.92-00dc82?style=flat-square&logo=test&logoColor=white" alt="ROC-AUC 0.92" />
-    <img src="https://img.shields.io/badge/Precision%2093.8%25-00dc82?style=flat-square&logo=shield&logoColor=white" alt="93.8% precision" />
-    <img src="https://img.shields.io/badge/FPR%200.54%25-00dc82?style=flat-square&logo=check&logoColor=white" alt="0.54% false-positive rate" />
+    <img src="https://img.shields.io/badge/Phase%209%20Recall-100%25%20synthetic%20dataset-00c8c8?style=flat-square&logo=checkmarx&logoColor=white" alt="100% recall on the Phase 9 synthetic benchmark dataset" />
+    <img src="https://img.shields.io/badge/Phase%209%20FPR-0.00%25%20synthetic%20controls-00dc82?style=flat-square&logo=test&logoColor=white" alt="0.00% false-positive rate on the Phase 9 synthetic benchmark controls" />
+    <img src="https://img.shields.io/badge/p95%2010.92ms%20analyzer-00dc82?style=flat-square&logo=shield&logoColor=white" alt="10.92ms p95 analyzer CPU latency" />
+    <img src="https://img.shields.io/badge/Phase%209%20Dataset-3200%20rows-00dc82?style=flat-square&logo=check&logoColor=white" alt="3,200-row Phase 9 synthetic benchmark dataset" />
     <img src="https://img.shields.io/badge/p50%20~5ms%20analyzer-00c8c8?style=flat-square&logo=zap&logoColor=white" alt="~5ms p50 analyzer CPU latency" />
     <img src="https://img.shields.io/github/actions/workflow/status/yashchauhan66/Ai-Security-Guard/ci-cd.yml?branch=main&style=flat-square&logo=githubactions&logoColor=white&label=CI%2FCD" alt="CI/CD" />
     <img src="https://img.shields.io/github/license/yashchauhan66/Ai-Security-Guard?style=flat-square" alt="License" />
@@ -66,7 +66,7 @@
 
 With **40+ product services** organized across 6 layers of defense — Monitor, Protect, Detect, Control, Compliance, and Manage — plus two dedicated **core products** (AI Agent Control and AI Usage Governance), SoterAI provides a broad security control surface for AI systems. Some modules are explicitly marked Preview and have open production-integration gaps.
 
-> **🏆 Honest benchmark: 84% recall @ 1% FPR, ROC-AUC 0.92** — measured with the exact production classifier over a disclosed 1,218-case corpus (108 attacks / 1,110 benign): 93.8% precision, 0.54% false-positive rate, F1 0.89, plus a 60% multi-turn (Crescendo) recall at 0% benign escalation. We report recall at a fixed false-positive budget — the metric that actually matters — not a "100%" score. This is not an independent audit or a production-traffic result. Reproduce with `npm run benchmark:honest`. [See the raw results](scripts/guard-benchmark/honest-results.json).
+> **Phase 9 public benchmark:** latest generated run over the self-maintained synthetic public dataset produced 100.00% recall, 0.00% false-positive rate, 0.00% false-negative rate, and 10.92 ms p95 analyzer latency across 3,200 cases (2,200 attacks / 1,000 benign controls). This is not an independent audit or a production-traffic result. Reproduce with `node scripts/phase-9-run-public-benchmark.js`. [See the raw results](benchmarks/results/latest.json).
 >
 > **🔒 Production-oriented** — Includes Docker/EC2 deployment assets, CI/CD, health checks, workers, and operational runbooks. No production customer count or traffic volume is claimed in this repository. Source-available under the Business Source License (open core) — see [LICENSING.md](LICENSING.md).
 >
@@ -206,22 +206,22 @@ These rules are covered by regression tests in `tests/guard.test.ts` and red-tea
 
 ## 🏆 Benchmark Results
 
-The guard is evaluated with the **exact production classifier** (`analyzeText`) over a **disclosed 1,218-case corpus** (108 attacks / 1,110 benign, every case labeled with its source). We report the metric that actually matters for a production guard — **recall at a fixed false-positive budget** — not a "100%" score.
+The guard is evaluated with the **exact production classifier** (`analyzeText`) over a disclosed Phase 9 public JSONL dataset. The public dataset is self-maintained and synthetic; it is regression evidence, not an independent third-party benchmark.
 
 | Metric | Result |
 |--------|--------|
-| 🎯 **Recall @ 1% FPR** | **84%** (attacks caught within a 1-in-100 false-positive budget) |
-| 📈 **ROC-AUC** | **0.92** (threshold-independent separability) |
-| 🎯 **Precision** | **93.8%** (false-positive rate **0.54%** on 1,110 benign inputs) |
-| 📊 **Production F1** | **0.89** |
-| 🧬 **Multi-turn (Crescendo) recall** | **60%** at **0%** benign escalation, ~3.3 turns to catch |
-| ⚡ **Analyzer latency** | **~4.6ms p50 / ~7ms p95 / ~11ms p99** (CPU only, no network) |
+| Recall | **100.00%** on 2,200 synthetic attack cases |
+| Precision | **100.00%** on the Phase 9 dataset |
+| False-positive rate | **0.00%** on 1,000 synthetic benign controls |
+| False-negative rate | **0.00%** on the Phase 9 dataset |
+| F1 | **1.0000** |
+| Analyzer latency | **7.99ms p50 / 10.92ms p95 / 15.92ms p99** (CPU only, no network) |
 
-> **Benchmark limits:** This is a self-authored corpus and can overestimate real-world performance versus adaptive attacks. Recall@0.1%FPR drops to ~30%, which is the ceiling of the deterministic engine (and the case for the planned ML deep-scan tier). No independent audit or production-traffic result is claimed. Drop real PINT / JailbreakBench / HarmBench corpora into `datasets/external/` to benchmark against third-party sets.
+> **Benchmark limits:** This is a self-authored synthetic corpus and can overestimate real-world performance versus adaptive attacks. No independent audit or production-traffic result is claimed. Drop real PINT / JailbreakBench / HarmBench corpora into `datasets/external/` to benchmark against third-party sets.
 
-Reproduce everything with **`npm run benchmark:honest`**. Per-category recall (including the weak spots we're transparent about) is on the [`/benchmarks`](https://soterai.in/benchmarks) page.
+Reproduce the public benchmark with **`node scripts/phase-9-run-public-benchmark.js`**. Per-category recall, methodology, limitations, and downloads are on the [`/benchmark`](https://soterai.in/benchmark) page.
 
-> 📄 [Raw results](scripts/guard-benchmark/honest-results.json) | 🎮 [Try the interactive playground](https://soterai.in/playground) | 🧪 [Honest benchmark harness](lib/benchmarks/honestBenchmark.ts)
+> 📄 [Raw results](benchmarks/results/latest.json) | [Try the interactive playground](https://soterai.in/playground) | [Phase 9 benchmark runner](scripts/phase-9-run-public-benchmark.js)
 
 <br />
 

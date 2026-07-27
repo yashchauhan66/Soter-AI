@@ -18,7 +18,7 @@ export function registerPermissionCommands(context: vscode.ExtensionContext, sto
             <p>${all.length} total approval(s), <strong>${pending.length} active</strong>.</p>
             <table><tr><th>Time</th><th>Type</th><th>Target</th><th>Outcome</th><th>Scope</th><th>Content Hash</th></tr>
             ${rows || "<tr><td colspan='6'>No permissions recorded yet.</td></tr>"}</table>
-            <p class="note">Approval tokens are short-lived, content-hash bound, and session-scoped. They cannot be reused for changed content. No tokens are exposed in this view.</p>`
+            <p class="note"><strong>Coverage (honest):</strong> this center records your allow/deny decisions (content-hash bound, scope-limited, expirable) as an audit trail. Approvals gate SoterAI's own flows only; they cannot technically stop another extension or AI tool from acting on its own. No tokens are exposed in this view.</p>`
         );
     });
 

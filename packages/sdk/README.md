@@ -149,21 +149,6 @@ The SDK is designed for **server-side use only**. Running the SDK in a browser e
 
 Authenticated requests send the API key in the `x-api-key` header. The SDK does not add the key to request bodies or diagnostic logs.
 
-## API contract
-
-The SDK targets the SoterAI `v1` API contract and sends these integration
-headers on every request:
-
-- `X-SoterAI-API-Version: v1`
-- `X-SoterAI-SDK: @soterai/core`
-- `X-SoterAI-SDK-Version: 0.2.0`
-
-Servers respond with `X-SoterAI-API-Version` and
-`X-SoterAI-Contract-Version`. If a server explicitly returns an incompatible API
-version, the SDK fails closed with `api_version_unsupported` instead of silently
-parsing a different contract. The machine-readable OpenAPI document is available
-at `/api/openapi` and in `docs/api/openapi.v1.json`.
-
 ## Package exports
 
 - `@soterai/core` - Soter client and Agent Firewall helpers
@@ -171,6 +156,8 @@ at `/api/openapi` and in `docs/api/openapi.v1.json`.
 - `@soterai/core/express` - Express-compatible middleware
 
 ## Backward compatibility
+
+Migration note: the `CyberRakshak*` names are deprecated aliases of the canonical `Soter*` names and still work. `CyberRakshakClient` → `SoterClient`/`GuardClient`, `CyberRakshakGuard` (interface) → `SoterGuard`, `CyberRakshakConfig` → `SoterConfig`, and the error classes `CyberRakshakError`, `CyberRakshakAuthError`, `CyberRakshakRateLimitError`, `CyberRakshakValidationError`, `CyberRakshakNetworkError` → `SoterError`, `SoterAuthError`, `SoterRateLimitError`, `SoterValidationError`, `SoterNetworkError`. The error aliases point at the same class objects, so `instanceof` works with either name.
 
 `CyberRakshakGuard`, `CyberRakshakClient`, `CybersecurityGuard`, `GuardClient`, existing factories, old middleware names, and existing methods remain exported for compatibility. New integrations should use `Soter`.
 

@@ -2,10 +2,12 @@ import * as vscode from "vscode";
 import { ExtensionState } from "./state";
 import { registerCommands } from "./commands";
 import { registerFirewallCommands, readContextApproval } from "./firewall/commands";
+import { setProtectedFileChecker } from "./firewall/ContextGatherer";
 import { registerScannerCommands } from "./firewall/scanners";
 import { PolicyStore } from "./firewall/PolicyStore";
 import { RiskTreeProvider } from "./views/RiskTreeProvider";
 import { DashboardPanel } from "./webview/DashboardPanel";
+import { ControlPanelViewProvider } from "./webview/ControlPanelViewProvider";
 import { TelemetryManager } from "./telemetry";
 import { BrokerManager, setBrokerManager } from "./broker/BrokerManager";
 import { registerBrokerCommands } from "./broker/commands";
@@ -19,12 +21,15 @@ import { MemoryGuard, registerMemoryGuardCommands } from "./memory-guard/MemoryG
 import { registerDepGuardCommands } from "./dep-guard/DepGuard";
 import { registerPolicyPackCommands } from "./policy-packs/commands";
 import { EnterpriseDashboard, registerDashboardCommands } from "./enterprise/EnterpriseDashboard";
+import { registerLaunchCommands } from "./launchCommands";
+import { registerLiveScanner } from "./diagnostics/LiveScanner";
+import { registerClipboardGuard } from "./clipboard/ClipboardGuard";
+import { registerSecretBrokerCommands } from "./secret-broker/commands";
 
+// Single consolidated status-bar item. It replaces the earlier six separate
+// items (main, firewall, broker, safe mode, memory, runtime) — those states now
+// live in one honest summary tooltip, and clicking opens the Control Panel.
 let statusBarItem: vscode.StatusBarItem;
-let firewallStatusItem: vscode.StatusBarItem;
-let brokerStatusItem: vscode.StatusBarItem;
-let safeModeStatusItem: vscode.StatusBarItem;
-let memoryStatusItem: vscode.StatusBarItem;
 let sentinel: AISentinel;
 let permissionStore: PermissionStore;
 let workspaceGuard: WorkspaceGuard;
@@ -32,10 +37,38 @@ let mcpFirewall: MCPFirewall;
 let memoryGuard: MemoryGuard;
 let extensionContext: vscode.ExtensionContext;
 let brokerManager: BrokerManager;
+let rawTerminalNoticeShown = false;
 
 export function activate(context: vscode.ExtensionContext): void {
-    console.log("SoterAI IDE Guard activated successfully.");
     extensionContext = context;
+
+    // Command-palette hygiene: ~100 advanced commands are gated behind the
+    // `soterai.advancedCommands` context key so the default palette only shows
+    // the 12 core commands. Every command still works from the SoterAI Guard
+    // view, status bar, aliases, and executeCommand — this only controls palette
+    // visibility. Flipped by either the launch-era `soterai.showAllCommands`
+    // setting or the marketplace-facing `soterai.experimentalFeatures.enabled`
+    // setting.
+    const applyAdvancedCommandVisibility = () => {
+        const config = vscode.workspace.getConfiguration("soterai");
+        const showAll = config.get<boolean>("showAllCommands", false);
+        const experimental = config.get<boolean>("experimentalFeatures.enabled", false);
+        void vscode.commands.executeCommand("setContext", "soterai.advancedCommands", showAll || experimental);
+    };
+    applyAdvancedCommandVisibility();
+
+    // First-run onboarding: open the native Getting Started walkthrough exactly
+    // once, so a brand-new user is guided instead of facing a cold palette. The
+    // flag lives in globalState; reinstalls/updates never re-trigger it, and it
+    // stays silent if VS Code is opening with no UI (e.g. CLI-only sessions).
+    if (!context.globalState.get<boolean>("soterai.onboarded")) {
+        void context.globalState.update("soterai.onboarded", true);
+        void vscode.commands.executeCommand(
+            "workbench.action.openWalkthrough",
+            "soterai.soterai-ide-guard#soterai.gettingStarted",
+            false,
+        );
+    }
 
     const state = ExtensionState.getInstance();
     brokerManager = new BrokerManager(context);
@@ -45,6 +78,10 @@ export function activate(context: vscode.ExtensionContext): void {
     sentinel = new AISentinel(context);
     permissionStore = new PermissionStore(context);
     workspaceGuard = new WorkspaceGuard(context);
+    // Enforce the Protected Workspace list on every SoterAI-built context
+    // bundle: protected files never enter gatherContext() output. Direct reads
+    // by other tools remain monitoring-only (see WorkspaceGuard honesty notes).
+    setProtectedFileChecker((relPath) => workspaceGuard.isEnabled && workspaceGuard.isProtected(relPath));
     mcpFirewall = new MCPFirewall(context);
     memoryGuard = new MemoryGuard();
 
@@ -53,6 +90,19 @@ export function activate(context: vscode.ExtensionContext): void {
     const projectRiskProvider = new RiskTreeProvider("soterai-project-risk");
     const latestFindingsProvider = new RiskTreeProvider("soterai-latest-findings");
     const policyStatusProvider = new RiskTreeProvider("soterai-policy-status");
+
+    // Consolidated Control Panel — single sidebar surface for every protection
+    // toggle (Safe Mode, Protected Workspace, Live Scan, Sentinel, MCP Firewall)
+    // plus Emergency Lockdown, with honest per-control coverage badges.
+    const controlPanelProvider = new ControlPanelViewProvider(context, {
+        workspaceGuard,
+        sentinel,
+        brokerManager,
+        refreshViews: () => refreshViews(),
+    });
+    context.subscriptions.push(
+        vscode.window.registerWebviewViewProvider(ControlPanelViewProvider.viewType, controlPanelProvider),
+    );
 
     context.subscriptions.push(
         vscode.window.registerTreeDataProvider("soterai-project-risk", projectRiskProvider),
@@ -66,9 +116,8 @@ export function activate(context: vscode.ExtensionContext): void {
         policyStatusProvider.refresh();
         if (DashboardPanel.currentPanel) DashboardPanel.currentPanel.refresh();
         if (EnterpriseDashboard.currentPanel) EnterpriseDashboard.currentPanel.refresh();
-        updateStatusBar();
-        void updateFirewallStatus();
-        void updateBrokerStatus();
+        controlPanelProvider.refresh();
+        void updateStatusBar();
     };
 
     registerCommands(context, refreshViews);
@@ -78,39 +127,31 @@ export function activate(context: vscode.ExtensionContext): void {
     registerSentinelCommands(context, sentinel);
     registerPermissionCommands(context, permissionStore);
     registerWorkspaceGuardCommands(context, workspaceGuard);
-    registerMCPFirewallCommands(context, mcpFirewall);
+    // Phase 8: pass brokerManager so soterai.preflightMCPTool can hit POST /v1/preflight/mcp-tool.
+    registerMCPFirewallCommands(context, mcpFirewall, brokerManager);
     registerMemoryGuardCommands(context, memoryGuard);
     registerDepGuardCommands(context);
     registerPolicyPackCommands(context, refreshViews);
     registerDashboardCommands(context, refreshViews);
+    registerLaunchCommands(context);
+    registerLiveScanner(context);
+    registerClipboardGuard(context);
+    registerSecretBrokerCommands(context, refreshViews);
 
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
-    statusBarItem.command = "soterai.openSecurityPanel";
+    // One click → the consolidated Control Panel, where every toggle lives.
+    statusBarItem.command = "soterai.openControlPanel";
     context.subscriptions.push(statusBarItem);
     updateStatusBar();
     statusBarItem.show();
-
-    firewallStatusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 99);
-    firewallStatusItem.command = "soterai.inspectAIContext";
-    context.subscriptions.push(firewallStatusItem);
-    firewallStatusItem.show();
-    void updateFirewallStatus();
-
-    brokerStatusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 98);
-    brokerStatusItem.command = "soterai.showBrokerStatus";
-    safeModeStatusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 97);
-    safeModeStatusItem.command = "soterai.showAISafeModeRules";
-    memoryStatusItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 96);
-    memoryStatusItem.command = "soterai.openAIMemoryInspector";
-    context.subscriptions.push(brokerStatusItem, safeModeStatusItem, memoryStatusItem);
-    brokerStatusItem.show();
-    safeModeStatusItem.show();
-    memoryStatusItem.show();
     void updateBrokerStatus();
 
     context.subscriptions.push(
         vscode.workspace.onDidChangeConfiguration((e) => {
             if (e.affectsConfiguration("soterai")) {
+                if (e.affectsConfiguration("soterai.showAllCommands") || e.affectsConfiguration("soterai.experimentalFeatures.enabled")) {
+                    applyAdvancedCommandVisibility();
+                }
                 state.initEngine();
                 TelemetryManager.getInstance().startBatchTimer();
                 refreshViews();
@@ -120,8 +161,11 @@ export function activate(context: vscode.ExtensionContext): void {
 
     context.subscriptions.push(
         vscode.window.onDidChangeActiveTextEditor(() => { updateStatusBar(); }),
+        vscode.window.onDidOpenTerminal(() => { void warnRawTerminalCoverage(); }),
         vscode.workspace.onDidSaveTextDocument(async (doc) => {
-            if (doc.uri.scheme === "file") await vscode.commands.executeCommand("soterai.scanCurrentFile", doc.uri);
+            const config = vscode.workspace.getConfiguration("soterai");
+            const liveScanEnabled = config.get<boolean>("liveScan.enabled", true);
+            if (liveScanEnabled && doc.uri.scheme === "file") await vscode.commands.executeCommand("soterai.scanCurrentFile", doc.uri);
         })
     );
 
@@ -129,63 +173,89 @@ export function activate(context: vscode.ExtensionContext): void {
 }
 
 async function updateBrokerStatus(): Promise<void> {
-    if (!brokerStatusItem || !brokerManager) return;
-    const status = await brokerManager.status();
-    brokerStatusItem.text = status.running ? "$(radio-tower) SoterAI Broker: Running" : "$(circle-slash) SoterAI Broker: Stopped";
-    brokerStatusItem.tooltip = status.running ? `Authenticated local broker at ${status.url}` : "Local AI Broker is stopped";
-    safeModeStatusItem.text = `$(shield) SoterAI Safe Mode: ${status.safeMode?.enabled ? "On" : "Off"}`;
-    safeModeStatusItem.tooltip = status.safeMode?.enabled ? `Safe Mode level: ${status.safeMode.level}` : "AI Safe Mode is disabled";
-    memoryStatusItem.text = `$(history) SoterAI Memory: ${brokerManager.memorySessionId ? "Active" : "Idle"}`;
-    memoryStatusItem.tooltip = brokerManager.memorySessionId ? "AI Memory session is active" : "No active AI Memory session";
+    // Broker/safe-mode/memory/runtime state is now folded into the single
+    // consolidated status-bar tooltip built by updateStatusBar().
+    await updateStatusBar();
 }
 
-function updateStatusBar(): void {
+async function warnRawTerminalCoverage(): Promise<void> {
+    if (rawTerminalNoticeShown) return;
+    const config = vscode.workspace.getConfiguration("soterai");
+    if (!config.get<boolean>("terminal.warnOnRawTerminalOpen", true)) return;
+    rawTerminalNoticeShown = true;
+    const choice = await vscode.window.showWarningMessage(
+        "Raw VS Code terminals are outside SoterAI broker enforcement. Use Controlled Terminal for fixed-argv policy checks and redacted output.",
+        "Use Controlled Terminal",
+        "Runtime Summary",
+        "Don't Show Again",
+    );
+    if (choice === "Use Controlled Terminal") await vscode.commands.executeCommand("soterai.runControlledTerminalCommand");
+    if (choice === "Runtime Summary") await vscode.commands.executeCommand("soterai.showRuntimeCapabilitySummary");
+    if (choice === "Don't Show Again") {
+        await config.update("terminal.warnOnRawTerminalOpen", false, vscode.ConfigurationTarget.Global);
+    }
+}
+
+async function updateStatusBar(): Promise<void> {
+    if (!statusBarItem) return;
     const state = ExtensionState.getInstance();
-    const latestRisk = state.latestDecision ? state.latestDecision.riskScore : 0;
-    if (latestRisk >= 70) {
-        statusBarItem.text = `$(shield) SoterAI: Blocked (${latestRisk})`;
-        statusBarItem.tooltip = `High-Risk Content Blocked. Score: ${latestRisk}/100.`;
-        statusBarItem.backgroundColor = new vscode.ThemeColor("statusBarItem.errorBackground");
-    } else if (latestRisk >= 35) {
-        statusBarItem.text = `$(shield) SoterAI: Warning (${latestRisk})`;
-        statusBarItem.tooltip = `Risky content/patterns detected. Score: ${latestRisk}/100.`;
-        statusBarItem.backgroundColor = new vscode.ThemeColor("statusBarItem.warningBackground");
+    const trusted = vscode.workspace.isTrusted;
+    const latestRisk = state.latestDecision ? state.latestDecision.riskScore : undefined;
+
+    // ── headline text + colour: risk first, then trust, then baseline ────────
+    let text: string;
+    let background: vscode.ThemeColor | undefined;
+    if (latestRisk !== undefined && latestRisk >= 70) {
+        text = `$(shield) SoterAI: Blocked (${latestRisk})`;
+        background = new vscode.ThemeColor("statusBarItem.errorBackground");
+    } else if (latestRisk !== undefined && latestRisk >= 35) {
+        text = `$(shield) SoterAI: Warning (${latestRisk})`;
+        background = new vscode.ThemeColor("statusBarItem.warningBackground");
+    } else if (!trusted) {
+        text = "$(lock) SoterAI: Restricted";
+        background = new vscode.ThemeColor("statusBarItem.warningBackground");
+    } else if (latestRisk !== undefined) {
+        text = "$(shield) SoterAI: No Risk Found";
     } else {
-        statusBarItem.text = `$(shield) SoterAI: Secure`;
-        statusBarItem.tooltip = "Local AI Security Shield Active.";
-        statusBarItem.backgroundColor = undefined;
+        text = "$(shield) SoterAI: Monitoring";
     }
-}
 
-async function updateFirewallStatus(): Promise<void> {
-    if (!firewallStatusItem) return;
-    const state = ExtensionState.getInstance();
-    const latestRisk = state.latestDecision ? state.latestDecision.riskScore : 0;
-    if (!vscode.workspace.isTrusted) {
-        firewallStatusItem.text = "$(lock) SoterAI: Restricted Mode";
-        firewallStatusItem.tooltip = "Untrusted workspace — vault and cloud disabled.";
-        firewallStatusItem.backgroundColor = new vscode.ThemeColor("statusBarItem.warningBackground");
-        return;
-    }
-    if (latestRisk >= 70) {
-        firewallStatusItem.text = "$(alert) SoterAI: High Risk Context";
-        firewallStatusItem.tooltip = "Latest context/scan is high risk.";
-        firewallStatusItem.backgroundColor = new vscode.ThemeColor("statusBarItem.errorBackground");
-        return;
-    }
-    firewallStatusItem.backgroundColor = undefined;
-    const approved = extensionContext ? await readContextApproval(extensionContext) : undefined;
+    // ── gather sub-states for the consolidated tooltip (no secrets) ──────────
+    let brokerRunning = false;
+    let safeMode: { enabled?: boolean; level?: string } | undefined;
+    let memoryActive = false;
+    try {
+        if (brokerManager) {
+            const status = await brokerManager.status();
+            brokerRunning = Boolean(status.running);
+            safeMode = status.safeMode;
+            memoryActive = Boolean(brokerManager.memorySessionId);
+        }
+    } catch { /* broker optional / stopped */ }
     const hasPolicy = await PolicyStore.exists().catch(() => false);
-    if (approved) {
-        firewallStatusItem.text = "$(unlock) SoterAI: Context Approved";
-        firewallStatusItem.tooltip = "A sensitive AI-context approval session is active.";
-    } else if (hasPolicy) {
-        firewallStatusItem.text = "$(shield) SoterAI: Protected Files Active";
-        firewallStatusItem.tooltip = "AI Context Firewall policy is active.";
-    } else {
-        firewallStatusItem.text = "$(shield) SoterAI: Local Protected";
-        firewallStatusItem.tooltip = "AI Context Firewall active (local-only).";
-    }
+    const approved = extensionContext ? await readContextApproval(extensionContext).catch(() => undefined) : undefined;
+
+    const line = (label: string, value: string) => `${label}: ${value}`;
+    const tip = new vscode.MarkdownString(
+        [
+            "**SoterAI IDE Guard**",
+            "",
+            line("Latest scan", latestRisk === undefined ? "none yet — coverage UNKNOWN until content is scanned" : `score ${latestRisk}/100 (scanned content only)`),
+            line("Workspace", trusted ? "Trusted" : "Restricted (vault & cloud disabled)"),
+            line("AI Context Firewall", approved ? "context approval session active" : hasPolicy ? "policy active" : "local-only"),
+            line("Local broker", brokerRunning ? "running — enforced path available for routed traffic" : "stopped — advisory only"),
+            line("AI Safe Mode", safeMode?.enabled ? `on${safeMode.level ? ` (${safeMode.level})` : ""}${brokerRunning ? "" : " — not enforced while broker stopped"}` : "off"),
+            line("AI Memory", memoryActive ? "active" : "idle"),
+            "",
+            "$(list-selection) Click to open the SoterAI Control Panel.",
+        ].join("\n\n"),
+    );
+    tip.isTrusted = true;
+    tip.supportThemeIcons = true;
+
+    statusBarItem.text = text;
+    statusBarItem.tooltip = tip;
+    statusBarItem.backgroundColor = background;
 }
 
 export async function deactivate(): Promise<void> {

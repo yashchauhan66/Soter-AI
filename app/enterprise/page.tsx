@@ -1,22 +1,53 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { SITE_URL } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
-  title: "Enterprise AI Security | SoterAI",
+  title: "Enterprise AI Security Platform | SoterAI for Business",
   description:
-    "Enterprise-grade AI security for high-stakes chatbots, RAG applications, and autonomous agents. SSO, SCIM, SIEM, tenant isolation, audit trails, and self-hosted deployment.",
+    "Enterprise AI security platform for Indian businesses: Aadhaar/PAN PII compliance, SSO, SCIM, SIEM integration, tenant isolation, self-hosted deployment, and real-time AI guardrails for chatbots, RAG apps, and agents.",
+  keywords: ["enterprise ai security", "ai security platform india", "enterprise llm security", "aadhaar compliance ai", "self-hosted ai guardrails", "enterprise ai firewall"],
   alternates: { canonical: "/enterprise" },
   openGraph: {
-    title: "Enterprise AI Security | SoterAI",
-    description: "Operational controls for high-stakes AI applications: SSO, SCIM, SIEM, tenant isolation, and defense-in-depth guardrails.",
+    title: "Enterprise AI Security Platform | SoterAI",
+    description: "Enterprise-grade AI security for Indian businesses: SSO, SCIM, SIEM, Aadhaar PII detection, tenant isolation, and self-hosted guardrails for high-stakes AI applications.",
   },
 };
 
 const capabilities = ["Tenant isolation and RBAC", "SSO, SCIM, and audit trails", "RAG and agent security reviews", "Webhooks, SIEM export, and evidence reports"];
 
+const enterpriseJsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": `${SITE_URL}/enterprise#softwareapplication`,
+      name: "SoterAI Enterprise",
+      applicationCategory: "SecurityApplication",
+      description: "Enterprise AI security platform with SSO, SCIM, SIEM, tenant isolation, self-hosted deployment, and India PII detection for high-stakes AI applications.",
+      url: `${SITE_URL}/enterprise`,
+      offers: {
+        "@type": "Offer",
+        price: "Custom",
+        priceCurrency: "INR",
+      },
+      featureList: "SSO, SCIM, SIEM, Tenant Isolation, Self-Hosted, Audit Trails, India PII Detection, Agent Firewall, RAG Security",
+    },
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+        { "@type": "ListItem", position: 2, name: "Enterprise", item: `${SITE_URL}/enterprise` },
+      ],
+    },
+  ],
+};
+
 export default function EnterpriseMarketingPage() {
   return (
     <main>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(enterpriseJsonLd) }} />
       <section className="container-page py-16">
         <p className="eyebrow">Enterprise</p>
         <h1 className="mt-2 text-4xl font-bold">Operational controls for high-stakes AI applications</h1>

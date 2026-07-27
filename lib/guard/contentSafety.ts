@@ -67,6 +67,9 @@ const SAFETY_PATTERNS: Record<SafetyCategory, { pattern: RegExp; severity: Safet
   DANGEROUS_ACTIVITY: [
     { pattern: /\b(how\s+to\s+(hack|compromise|breach|exploit))\s+(a\s+)?(system|network|server|database)\b/gi, severity: "HIGH" },
     { pattern: /\b(steal|exfiltrate|exfiltrate)\s+(data|credentials|passwords|secrets)\b/gi, severity: "HIGH" },
+    { pattern: /\b(?:phish|phishing|credential\s+harvest|harvest\s+credentials|steal\s+(?:mfa|otp|2fa)\s+codes?)\b/gi, severity: "HIGH" },
+    { pattern: /\b(?:write|create|build|generate)\s+(?:malware|ransomware|keylogger|credential\s+stealer|infostealer)\b/gi, severity: "CRITICAL" },
+    { pattern: /\b(?:bypass|disable)\s+(?:edr|antivirus|endpoint\s+protection|security\s+monitoring)\b/gi, severity: "HIGH" },
   ],
   MISINFORMATION: [
     { pattern: /\b(vaccines?\s+cause|covid\s+is\s+a\s+hoax|5g\s+causes)\b/gi, severity: "MEDIUM" },
@@ -83,40 +86,23 @@ export function analyzeContentSafety(
   options?: { categories?: SafetyCategory[]; threshold?: number }
 ): SafetyResult {
   const categories = options?.categories ?? (Object.keys(SAFETY_PATTERNS) as SafetyCategory[]);
-  const threshold = options?.threshold ?? 0.5;
+  const _threshold = options?.threshold ?? 0.5;
   const findings: SafetyFinding[] = [];
-  const startTime = Date.now();
-  // Security hardening: max 500ms for content safety scanning
-  const CONTENT_SAFETY_TIMEOUT_MS = 500;
-  // Security hardening: max 200 matches per category (runaway guard)
-  const MAX_FINDINGS_PER_CATEGORY = 200;
 
   for (const category of categories) {
-    if (Date.now() - startTime > CONTENT_SAFETY_TIMEOUT_MS) break;
     const patterns = SAFETY_PATTERNS[category];
     if (!patterns) continue;
-    let categoryFindings = 0;
 
     for (const { pattern, severity } of patterns) {
-      if (Date.now() - startTime > CONTENT_SAFETY_TIMEOUT_MS) break;
-      if (categoryFindings >= MAX_FINDINGS_PER_CATEGORY) break;
-
-      try {
-        const matches = text.matchAll(new RegExp(pattern.source, pattern.flags));
-        for (const match of matches) {
-          categoryFindings++;
-          if (categoryFindings > MAX_FINDINGS_PER_CATEGORY) break;
-          findings.push({
-            category,
-            severity,
-            confidence: severity === "CRITICAL" ? 0.95 : severity === "HIGH" ? 0.85 : severity === "MEDIUM" ? 0.7 : 0.6,
-            span: { start: match.index!, end: match.index! + match[0].length },
-            description: `Detected ${category.toLowerCase().replace(/_/g, " ")} pattern: "${match[0]}"`,
-          });
-        }
-      } catch {
-        // Scanner isolation: a crash in one pattern must not cascade
-        continue;
+      const matches = text.matchAll(new RegExp(pattern.source, pattern.flags));
+      for (const match of matches) {
+        findings.push({
+          category,
+          severity,
+          confidence: severity === "CRITICAL" ? 0.95 : severity === "HIGH" ? 0.85 : severity === "MEDIUM" ? 0.7 : 0.6,
+          span: { start: match.index!, end: match.index! + match[0].length },
+          description: `Detected ${category.toLowerCase().replace(/_/g, " ")} pattern: "${match[0]}"`,
+        });
       }
     }
   }

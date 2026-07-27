@@ -6,7 +6,7 @@ Soter Guard, thank you — please report it privately.
 
 ## Report privately
 
-- **Email:** `security@soterai.in` *(placeholder — replace with a monitored
+- **Email:** `support@soterai.in` *(placeholder — replace with a monitored
   inbox before public launch)*
 - **Do not** open a public GitHub issue or post the vulnerability publicly until
   we have had a chance to remediate.

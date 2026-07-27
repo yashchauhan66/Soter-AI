@@ -8,6 +8,17 @@ const execFileAsync = promisify(execFile);
 
 const MAX_ITEM_BYTES = 64 * 1024; // don't stream huge files into a prompt bundle
 
+/**
+ * Optional protected-file checker (wired to WorkspaceGuard at activation).
+ * When set, protected files are EXCLUDED from every SoterAI-built context
+ * bundle — this is the enforced half of Protected Workspace Mode. Paths other
+ * tools read directly remain monitoring-only.
+ */
+let isProtectedPath: ((relPath: string) => boolean) | undefined;
+export function setProtectedFileChecker(checker: (relPath: string) => boolean): void {
+    isProtectedPath = checker;
+}
+
 /** Context source config files an AI assistant commonly reads. */
 const AGENT_CONFIG_FILES = [
     "README.md",
@@ -46,10 +57,12 @@ export async function gatherContext(): Promise<ContextItem[]> {
     const items: ContextItem[] = [];
     const seen = new Set<string>();
     const push = (item?: ContextItem) => {
-        if (item && !seen.has(`${item.kind}:${item.path}`)) {
-            seen.add(`${item.kind}:${item.path}`);
-            items.push(item);
-        }
+        if (!item || seen.has(`${item.kind}:${item.path}`)) return;
+        // Enforced exclusion: files on the Protected Workspace list never enter
+        // a SoterAI-built context bundle.
+        if (isProtectedPath?.(item.path)) return;
+        seen.add(`${item.kind}:${item.path}`);
+        items.push(item);
     };
 
     const editor = vscode.window.activeTextEditor;
@@ -86,6 +99,9 @@ export async function gatherContext(): Promise<ContextItem[]> {
     const folder = firstWorkspaceFolder();
     if (folder) {
         try {
+            // Safe child process boundary: execFile invokes git directly with
+            // fixed arguments. No shell, command interpolation, or persistence
+            // of raw diff content is used here.
             const [{ stdout: unstaged }, { stdout: staged }] = await Promise.all([
                 execFileAsync("git", ["diff"], { cwd: folder.uri.fsPath, maxBuffer: 8 * 1024 * 1024 }),
                 execFileAsync("git", ["diff", "--staged"], { cwd: folder.uri.fsPath, maxBuffer: 8 * 1024 * 1024 }),
