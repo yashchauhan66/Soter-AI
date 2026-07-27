@@ -23,6 +23,7 @@ function hasAny(source: string, patterns: RegExp[]) {
 
 const publicRoutes = new Map<string, RegExp[]>([
   ["/api/health", [/jsonResponse/]],
+  ["/api/openapi", [/jsonResponse/]],
   ["/api/ready", [/SELECT 1/]],
   ["/api/badge", [/force-static/]],
   ["/api/badge/[slug]", [/loadBadgeStatus/]],

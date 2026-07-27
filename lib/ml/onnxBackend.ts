@@ -309,7 +309,7 @@ export class ONNXClassifierBackend implements ModelBackend {
     const logits: number[] = Array.from(logitsOutput.data as Float32Array);
     const probabilities = softmax(logits);
     const predictedIdx = argmax(probabilities);
-    let predictedLabel = labelAtIndex(this.labels, predictedIdx);
+    const predictedLabel = labelAtIndex(this.labels, predictedIdx);
     const confidence = probabilities[predictedIdx] ?? 0;
     const atkProb = attackProbability(probabilities, this.safeIndex);
     const maxProb = Math.max(...probabilities);
