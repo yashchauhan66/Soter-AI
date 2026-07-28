@@ -452,9 +452,12 @@ function isFalsePositive(match: string): boolean {
         /^(?:sk|pk|rk)_(?:live)_[A-Za-z0-9]/i.test(value);
 
     if (providerPrefixed) {
-        // Still suppress pure repeated-char bodies after the prefix.
-        const body = value.replace(/^[A-Za-z0-9_.-]+?[_-]/, "");
-        if (body.length >= 16 && /^(.)\1+$/i.test(body.replace(/[^A-Za-z0-9]/g, ""))) return true;
+        // A real provider prefix plus the provider's exact body shape is a
+        // credential format, not a placeholder. Do NOT suppress it for low body
+        // entropy (e.g. repeated chars): entropy is not a validity signal for a
+        // fixed-format token, and these bodies are assigned by the provider, not
+        // chosen by the user. Placeholder suppression lives in the allowlist /
+        // stub branches below, which target non-provider shapes.
         return false;
     }
     for (const re of FALSE_POSITIVE_ALLOWLIST) {
