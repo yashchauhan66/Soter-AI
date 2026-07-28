@@ -30,11 +30,21 @@ export interface PageMetaInput {
   noindex?: boolean;
   /** Optional keyword hints (marketing/topic pages). */
   keywords?: string[];
+  /**
+   * Set true for blog posts and case studies.
+   * Emits OG type:"article", publishedTime, and twitter:creator so
+   * social shares and rich results treat the page as editorial content.
+   */
+  isArticle?: boolean;
+  /** ISO date string, e.g. "2026-07-06". Used when isArticle is true. */
+  datePublished?: string;
 }
 
 /**
  * Build a complete Next.js `Metadata` object for a page: unique title,
  * description, canonical URL, and matching OpenGraph + Twitter cards.
+ * Pass `isArticle: true` and `datePublished` for blog posts to emit the
+ * correct OG type and publication timestamp.
  */
 export function buildMetadata({
   title,
@@ -43,6 +53,8 @@ export function buildMetadata({
   ogImage = DEFAULT_OG_IMAGE,
   noindex = false,
   keywords,
+  isArticle = false,
+  datePublished,
 }: PageMetaInput): Metadata {
   const url = path.startsWith("http") ? path : `${SITE_URL}${path}`;
   const images = [{ url: ogImage, width: 1200, height: 630, alt: title }];
@@ -54,12 +66,15 @@ export function buildMetadata({
     alternates: { canonical: path },
     ...(noindex ? { robots: { index: false, follow: false } } : {}),
     openGraph: {
-      type: "website",
+      type: isArticle ? "article" : "website",
       url,
       siteName: SITE_NAME,
       title,
       description,
       images,
+      // Emit publication timestamp for article-type pages so social platforms
+      // and search engines recognise the content as editorial with a date.
+      ...(isArticle && datePublished ? { publishedTime: datePublished } : {}),
     },
     twitter: {
       card: "summary_large_image",
@@ -67,6 +82,8 @@ export function buildMetadata({
       description,
       images: [ogImage],
       site: "@soterai",
+      // twitter:creator signals editorial authorship for article-type pages.
+      ...(isArticle ? { creator: "@soterai" } : {}),
     },
   };
 }

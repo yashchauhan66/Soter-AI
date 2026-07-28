@@ -25,6 +25,8 @@ import { registerLaunchCommands } from "./launchCommands";
 import { registerLiveScanner } from "./diagnostics/LiveScanner";
 import { registerClipboardGuard } from "./clipboard/ClipboardGuard";
 import { registerSecretBrokerCommands } from "./secret-broker/commands";
+import { ProtectionStateService } from "./protection/ProtectionStateService";
+import { ProtectionController } from "./protection/ProtectionController";
 
 // Single consolidated status-bar item. It replaces the earlier six separate
 // items (main, firewall, broker, safe mode, memory, runtime) — those states now
@@ -37,6 +39,8 @@ let mcpFirewall: MCPFirewall;
 let memoryGuard: MemoryGuard;
 let extensionContext: vscode.ExtensionContext;
 let brokerManager: BrokerManager;
+let protectionState: ProtectionStateService;
+let protectionController: ProtectionController;
 let rawTerminalNoticeShown = false;
 
 export function activate(context: vscode.ExtensionContext): void {
@@ -84,6 +88,8 @@ export function activate(context: vscode.ExtensionContext): void {
     setProtectedFileChecker((relPath) => workspaceGuard.isEnabled && workspaceGuard.isProtected(relPath));
     mcpFirewall = new MCPFirewall(context);
     memoryGuard = new MemoryGuard();
+    protectionState = new ProtectionStateService(context, { brokerManager, workspaceGuard, sentinel });
+    protectionController = new ProtectionController(context, { brokerManager, workspaceGuard, sentinel, protectionState, refreshViews: () => refreshViews() });
 
     context.subscriptions.push(sentinel, permissionStore, workspaceGuard);
 
@@ -98,6 +104,7 @@ export function activate(context: vscode.ExtensionContext): void {
         workspaceGuard,
         sentinel,
         brokerManager,
+        protectionState,
         refreshViews: () => refreshViews(),
     });
     context.subscriptions.push(
@@ -137,6 +144,25 @@ export function activate(context: vscode.ExtensionContext): void {
     registerLiveScanner(context);
     registerClipboardGuard(context);
     registerSecretBrokerCommands(context, refreshViews);
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand("soterai.enableFullProtection", async () => {
+            try {
+                const result = await protectionController.enableFullProtection();
+                const limitationText = result.limitations.map((item) => `• ${item}`).join("\n");
+                vscode.window.showInformationMessage(`Full Protection configured: ${result.completed.length} steps verified. Coverage remains ${result.snapshot.descriptor.state}.`, "View Coverage").then((choice) => {
+                    if (choice === "View Coverage") void vscode.commands.executeCommand("soterai.showCoverageMatrix");
+                });
+                if (limitationText) void vscode.window.showWarningMessage(`Full Protection limitations (not universal):\n${limitationText}`);
+            } catch (error) {
+                vscode.window.showErrorMessage(`Full Protection was not completed: ${error instanceof Error ? error.message : "unknown error"}`);
+            }
+        }),
+        vscode.commands.registerCommand("soterai.unlockProtection", async () => {
+            const confirm = await vscode.window.showWarningMessage("Unlock SoterAI protection after Emergency Lockdown? Verify the incident is contained first.", { modal: true }, "Unlock");
+            if (confirm === "Unlock") await protectionController.unlock();
+        }),
+    );
 
     statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
     // One click → the consolidated Control Panel, where every toggle lives.
@@ -202,23 +228,14 @@ async function updateStatusBar(): Promise<void> {
     const trusted = vscode.workspace.isTrusted;
     const latestRisk = state.latestDecision ? state.latestDecision.riskScore : undefined;
 
-    // ── headline text + colour: risk first, then trust, then baseline ────────
-    let text: string;
-    let background: vscode.ThemeColor | undefined;
-    if (latestRisk !== undefined && latestRisk >= 70) {
-        text = `$(shield) SoterAI: Blocked (${latestRisk})`;
-        background = new vscode.ThemeColor("statusBarItem.errorBackground");
-    } else if (latestRisk !== undefined && latestRisk >= 35) {
-        text = `$(shield) SoterAI: Warning (${latestRisk})`;
-        background = new vscode.ThemeColor("statusBarItem.warningBackground");
-    } else if (!trusted) {
-        text = "$(lock) SoterAI: Restricted";
-        background = new vscode.ThemeColor("statusBarItem.warningBackground");
-    } else if (latestRisk !== undefined) {
-        text = "$(shield) SoterAI: No Risk Found";
-    } else {
-        text = "$(shield) SoterAI: Monitoring";
-    }
+    const protection = protectionState ? await protectionState.refresh() : undefined;
+    const protectionTitle = protection?.descriptor.title ?? "Protection state unavailable";
+    const text = `$(shield) SoterAI: ${protectionTitle}`;
+    const background = protection?.descriptor.severity === "error" || protection?.descriptor.severity === "critical"
+        ? new vscode.ThemeColor("statusBarItem.errorBackground")
+        : protection?.descriptor.severity === "warning"
+            ? new vscode.ThemeColor("statusBarItem.warningBackground")
+            : undefined;
 
     // ── gather sub-states for the consolidated tooltip (no secrets) ──────────
     let brokerRunning = false;
@@ -240,6 +257,9 @@ async function updateStatusBar(): Promise<void> {
         [
             "**SoterAI IDE Guard**",
             "",
+            line("Protection", protection ? `${protection.descriptor.state} — ${protection.descriptor.explanation}` : "state unavailable"),
+            line("Coverage", protection?.descriptor.coverage ?? "unknown"),
+            line("Recommended action", protection?.descriptor.recommendedAction ?? "Open the Control Panel"),
             line("Latest scan", latestRisk === undefined ? "none yet — coverage UNKNOWN until content is scanned" : `score ${latestRisk}/100 (scanned content only)`),
             line("Workspace", trusted ? "Trusted" : "Restricted (vault & cloud disabled)"),
             line("AI Context Firewall", approved ? "context approval session active" : hasPolicy ? "policy active" : "local-only"),

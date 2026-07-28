@@ -10,6 +10,8 @@ export const metadata: Metadata = buildMetadata({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
+  isArticle: true,
+  datePublished: post.datePublished,
   keywords: ["ai secret leakage", "copilot secrets", "secret scanning", "ai data loss prevention"],
 });
 

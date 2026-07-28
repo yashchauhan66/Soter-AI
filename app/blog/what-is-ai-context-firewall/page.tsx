@@ -10,6 +10,8 @@ export const metadata: Metadata = buildMetadata({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
+  isArticle: true,
+  datePublished: post.datePublished,
   keywords: ["ai context firewall", "ai firewall", "prompt injection", "llm security architecture"],
 });
 

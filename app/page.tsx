@@ -502,11 +502,16 @@ export default function Home() {
           <div className="rounded-lg bg-cyan p-10 text-center text-ink">
             <h2 className="text-3xl font-black">Add observable controls to every AI turn.</h2>
             <p className="mx-auto mt-3 max-w-2xl text-ink/70">
-              Start with the playground, then protect users, models, retrieval, and tools with project-scoped API keys.
+              Free tier available. Create a project, get an API key, and protect your first AI workflow in under 10 minutes.
             </p>
-            <Link href="/docs" className="mt-7 inline-flex items-center gap-2 rounded-md bg-ink px-6 py-3 font-semibold text-white">
-              Read integration docs <ArrowRight size={18} aria-hidden="true" />
-            </Link>
+            <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Link href="/signup" className="inline-flex items-center gap-2 rounded-md bg-ink px-6 py-3 font-semibold text-white">
+                Create free account <ArrowRight size={18} aria-hidden="true" />
+              </Link>
+              <Link href="/docs" className="inline-flex items-center gap-2 rounded-md border border-ink/20 bg-ink/10 px-6 py-3 font-semibold text-ink">
+                Read integration docs
+              </Link>
+            </div>
           </div>
         </div>
       </section>

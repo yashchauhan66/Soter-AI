@@ -112,11 +112,12 @@ export const metadata: Metadata = {
     "mobile-web-app-capable": "yes",
   },
   alternates: {
+    // en and x-default only. Hindi (hi) and en-IN removed — no Hindi content
+    // exists; mismatched hreflang signals harm index quality and confuse
+    // Google's language detection. Re-add when genuine Hindi pages are live.
     canonical: siteUrl,
     languages: {
       "en": siteUrl,
-      "en-IN": siteUrl,
-      "hi": siteUrl,
       "x-default": siteUrl,
     },
   },

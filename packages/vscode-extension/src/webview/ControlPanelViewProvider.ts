@@ -8,6 +8,7 @@ import {
 import type { WorkspaceGuard } from "../workspace-guard/WorkspaceGuard";
 import type { AISentinel } from "../sentinel/AISentinel";
 import type { BrokerManager } from "../broker/BrokerManager";
+import type { ProtectionStateService } from "../protection/ProtectionStateService";
 
 
 /**
@@ -35,6 +36,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
             workspaceGuard: WorkspaceGuard;
             sentinel: AISentinel;
             brokerManager: BrokerManager;
+            protectionState: ProtectionStateService;
             refreshViews: () => void;
         },
     ) {}
@@ -74,6 +76,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
         "action:openCoverage",
         "action:refresh",
         "action:setupBroker",
+        "action:fullProtection",
         "action:controlledTerminal",
         "action:scanClipboard",
         "action:mcpPreflight",
@@ -85,7 +88,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
         const msg = message as { type?: string; value?: boolean } | undefined;
         const type = typeof msg?.type === "string" ? msg.type : undefined;
         if (!type || !ControlPanelViewProvider.ALLOWED.has(type)) {
-            console.warn(`[SoterAI Control Panel] Rejected message: ${String(type)}`);
+            // Rejected message: fail closed without logging untrusted webview data.
             return;
         }
         const on = msg?.value === true;
@@ -121,6 +124,9 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
                     break;
                 case "action:setupBroker":
                     await vscode.commands.executeCommand("soterai.setupBrokerIntegration");
+                    break;
+                case "action:fullProtection":
+                    await vscode.commands.executeCommand("soterai.enableFullProtection");
                     break;
                 case "action:controlledTerminal":
                     await vscode.commands.executeCommand("soterai.runControlledTerminalCommand");
@@ -174,7 +180,8 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     private async render(): Promise<void> {
         if (!this.view) return;
         const state = await this.gatherState();
-        this.view.webview.html = this.html(this.view.webview, state);
+        const protection = await this.deps.protectionState.refresh();
+        this.view.webview.html = this.html(this.view.webview, state, protection.descriptor);
     }
 
     // ── honest badge mapping ─────────────────────────────────────────────────
@@ -236,17 +243,9 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
         ];
     }
 
-    private overallLevel(toggles: ToggleModel[], state: PanelState): ProtectionLevel {
-        if (toggles.some((t) => t.on && t.level === "ENFORCED")) return "ENFORCED";
-        if (toggles.some((t) => t.on)) return "MONITORED";
-        return "UNKNOWN";
-    }
-
-    private html(webview: vscode.Webview, state: PanelState): string {
+    private html(webview: vscode.Webview, state: PanelState, protection: import("../protection/ProtectionState").ProtectionStateDescriptor): string {
         const nonce = getNonce();
         const toggles = this.toggleModel(state);
-        const overall = this.overallLevel(toggles, state);
-        const overallDesc = PROTECTION[overall];
         const activeCount = toggles.filter((t) => t.on).length;
 
         const rows = toggles
@@ -311,8 +310,10 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
   <div class="hero">
     <div class="ico">🛡️</div>
     <div class="txt">
-      <div class="state">${escapeHtml(overallDesc.label)}</div>
-      <div class="sub">${activeCount}/${toggles.length} controls on · ${escapeHtml(overallDesc.meaning)}</div>
+      <div class="state">${escapeHtml(protection.title)}</div>
+      <div class="sub">${escapeHtml(protection.explanation)}</div>
+      <div class="sub">${activeCount}/${toggles.length} controls on · ${escapeHtml(protection.coverage)}</div>
+      <div class="sub"><strong>Next:</strong> ${escapeHtml(protection.recommendedAction)}</div>
     </div>
   </div>
 
@@ -320,6 +321,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
 
   <div class="workflows">
     <div class="wf-title">Primary workflows</div>
+    <button class="btn primary" data-action="fullProtection" aria-label="Enable Full Protection">Enable Full Protection</button>
     <button class="btn secondary" data-action="setupBroker">1. Setup Broker Integration</button>
     <button class="btn secondary" data-action="controlledTerminal">2. Controlled Terminal</button>
     <button class="btn secondary" data-action="scanClipboard">3. Scan Clipboard</button>

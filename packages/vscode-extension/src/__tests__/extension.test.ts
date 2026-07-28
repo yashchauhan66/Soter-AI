@@ -591,21 +591,24 @@ describe("Control Panel (consolidated sidebar toggles)", () => {
     });
 
 
-    it("only marks a control ENFORCED when a real control gate backs it (honest badge)", () => {
-        // The single ENFORCED path in the panel is Safe Mode AND brokerRunning.
-        // If this assertion ever fails, an ENFORCED badge was added without a
-        // proven enforcement gate — which violates ProtectionLevel semantics.
-        assert.match(
-            controlPanelSrc,
-            /state\.brokerRunning\s*\?\s*"ENFORCED"\s*:\s*"MONITORED"/,
-            "Safe Mode may only claim ENFORCED while the broker is running",
-        );
-        // Exactly three ENFORCED mentions are legitimate: the broker-gated
-        // per-control assignment, the `=== "ENFORCED"` roll-up test, and the
-        // roll-up's return. Any more means a new unproven ENFORCED badge crept in.
-        const enforcedLiterals = controlPanelSrc.match(/"ENFORCED"/g) ?? [];
-        assert.strictEqual(enforcedLiterals.length, 3, "only the broker-gated ENFORCED assignment (+ roll-up test/return) should exist");
-        assert.match(controlPanelSrc, /t\.level === "ENFORCED"/, "roll-up must derive ENFORCED from a per-control gate, not assume it");
+    it("uses the central protection state instead of an any-toggle ENFORCED roll-up", () => {
+        assert.match(controlPanelSrc, /protectionState/);
+        assert.match(controlPanelSrc, /this\.deps\.protectionState\.refresh\(\)/);
+        assert.match(controlPanelSrc, /protection\.descriptor/);
+        assert.match(controlPanelSrc, /protection\.title/);
+        assert.match(controlPanelSrc, /protection\.explanation/);
+        assert.doesNotMatch(controlPanelSrc, /overallLevel\s*\(/, "the panel must not derive its headline from one active toggle");
+        assert.doesNotMatch(controlPanelSrc, /some\(\(t\)\s*=>\s*t\.on\s*&&\s*t\.level\s*===\s*"ENFORCED"\)/);
+    });
+
+    it("exposes one primary Full Protection action and persistent lockdown recovery", () => {
+        assert.ok(declaredCommands.includes("soterai.enableFullProtection"));
+        assert.ok(registeredCommands.has("soterai.enableFullProtection"));
+        assert.ok(declaredCommands.includes("soterai.unlockProtection"));
+        assert.ok(registeredCommands.has("soterai.unlockProtection"));
+        assert.match(controlPanelSrc, /Enable Full Protection/);
+        assert.match(allSrc, /globalState\.update\("soterai\.lockdown"/);
+        assert.match(brokerManagerSrc, /Emergency Lockdown is active/);
     });
 
     it("resolves live-scan and MCP badges from CAPABILITY_REGISTRY (no stronger claim than registry)", () => {

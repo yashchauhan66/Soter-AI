@@ -10,6 +10,8 @@ export const metadata: Metadata = buildMetadata({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
+  isArticle: true,
+  datePublished: post.datePublished,
   keywords: ["mcp security", "model context protocol", "mcp tool permissions", "ai agent security"],
 });
 

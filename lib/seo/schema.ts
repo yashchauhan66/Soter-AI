@@ -17,6 +17,10 @@ export const WEBSITE_ID = `${SITE_URL}#website`;
 const ORG_SAME_AS = [
   "https://github.com/yashchauhan66/Ai-Security-Guard",
   "https://twitter.com/soterai",
+  // VS Code Marketplace — entity-confirms the IDE Guard product
+  "https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard",
+  // npm SDK — developer entity signal
+  "https://www.npmjs.com/package/@soterai/sdk",
 ];
 
 /** Canonical Organization node. Referenced by other graphs via ORGANIZATION_ID. */
@@ -58,6 +62,15 @@ export const websiteNode = {
     "AI security guardrail platform protecting against prompt injection, jailbreaks, PII leakage, and unsafe outputs.",
   publisher: { "@id": ORGANIZATION_ID },
   inLanguage: "en",
+  // Sitelinks SearchAction — enables Google sitelinks search box in branded SERPs
+  potentialAction: {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": `${SITE_URL}/docs?q={search_term_string}`,
+    },
+    "query-input": "required name=search_term_string",
+  },
 } as const;
 
 /** LocalBusiness node for India presence - boosts local SEO for Indian searches. */
@@ -68,7 +81,7 @@ export const localBusinessNode = {
   url: SITE_URL,
   description:
     "India-focused AI security platform with Aadhaar, PAN, GSTIN, and UPI PII detection for Indian enterprises and startups.",
-  telephone: "",
+  // telephone omitted intentionally — empty string harms schema validity
   email: "support@soterai.in",
   address: {
     "@type": "PostalAddress",

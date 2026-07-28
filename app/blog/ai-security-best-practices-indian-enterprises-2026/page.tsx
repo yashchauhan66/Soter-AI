@@ -10,6 +10,8 @@ export const metadata: Metadata = buildMetadata({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
+  isArticle: true,
+  datePublished: post.datePublished,
   keywords: ["ai security india", "enterprise ai security", "aadhaar pii compliance", "indian ai regulation", "llm security india", "ai agent security india"],
 });
 

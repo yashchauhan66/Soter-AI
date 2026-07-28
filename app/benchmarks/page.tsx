@@ -6,12 +6,12 @@ import type { Metadata } from "next";
 import { safeJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata: Metadata = {
-  title: "Adversarial Benchmark | SoterAI",
+  title: "SoterAI Adversarial Benchmark — Recall, ROC-AUC and Multi-Turn Detection",
   description:
-    "Honest, reproducible benchmark of the SoterAI guard: Recall@1%FPR, ROC-AUC, multi-turn detection and latency, run with the exact production classifier. Full methodology, corpus provenance and limitations included.",
+    "Reproducible adversarial benchmark of the SoterAI guard: Recall at 1% FPR, ROC-AUC, multi-turn Crescendo detection and latency — measured with the exact production classifier on a disclosed corpus. Full methodology and limitations included.",
   alternates: { canonical: "/benchmarks" },
   openGraph: {
-    title: "SoterAI Adversarial Benchmark",
+    title: "SoterAI Adversarial Benchmark — Recall, ROC-AUC and Multi-Turn Detection",
     description:
       "Recall at a 1% false-positive budget, ROC-AUC, multi-turn (Crescendo) detection and latency — measured with the exact production classifier on a disclosed corpus.",
   },

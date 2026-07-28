@@ -5,9 +5,9 @@ import Link from "next/link";
 import { AlertTriangle, BarChart3, Download, Gauge, ShieldCheck } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "AI Security Benchmark: Prompt Injection, Jailbreak & PII Detection",
+  title: "AI Security Benchmark: Prompt Injection, Jailbreak & PII Detection Results",
   description:
-    "Public SoterAI-maintained AI security benchmark for synthetic prompt injection, jailbreak, MCP, secret, PII, and benign controls. Includes methodology, latency metrics, downloads, and explicit limitations.",
+    "SoterAI public AI security benchmark showing detection rates for prompt injection, jailbreak, MCP attacks, secret leakage, and PII across synthetic test cases. Methodology, confusion matrix, and explicit limitations included.",
   keywords: ["ai security benchmark", "prompt injection benchmark", "jailbreak detection test", "llm guardrail benchmark", "ai guard performance", "pii detection benchmark"],
   alternates: { canonical: "/benchmark" },
 };

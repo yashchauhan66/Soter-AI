@@ -15,7 +15,7 @@ const siteUrl = SITE_URL;
  * content that actually changes often. Bump this when the site is meaningfully
  * updated.
  */
-const SITE_LAST_MODIFIED = "2026-07-22";
+const SITE_LAST_MODIFIED = "2026-07-28";
 
 type ChangeFrequency = NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>;
 
@@ -47,6 +47,9 @@ const marketingPages: Entry[] = [
   { url: "/demo/rag", priority: 0.5, changeFrequency: "monthly" },
   { url: "/demo/red-team", priority: 0.5, changeFrequency: "monthly" },
   { url: "/partners/agency", priority: 0.6, changeFrequency: "monthly" },
+  { url: "/comparison/lakera", priority: 0.7, changeFrequency: "monthly" },
+  { url: "/comparison/prompt-security", priority: 0.7, changeFrequency: "monthly" },
+  { url: "/comparison/hiddenlayer", priority: 0.7, changeFrequency: "monthly" },
 ];
 
 // AI-security feature landing pages (also the marketplace homepage targets).
@@ -56,9 +59,28 @@ const featurePages: Entry[] = [
   { url: "/mcp-security", priority: 0.8, changeFrequency: "monthly" },
   { url: "/ai-data-leakage-prevention", priority: 0.8, changeFrequency: "monthly" },
   { url: "/local-ai-broker", priority: 0.7, changeFrequency: "monthly" },
-  { url: "/ai-safe-mode", priority: 0.7, changeFrequency: "monthly" },
-  { url: "/ai-memory-inspector", priority: 0.7, changeFrequency: "monthly" },
+  { url: "/ai-safe-mode", priority: 0.6, changeFrequency: "monthly" },
+  { url: "/ai-memory-inspector", priority: 0.6, changeFrequency: "monthly" },
   { url: "/limitations", priority: 0.6, changeFrequency: "monthly" },
+  { url: "/ai-agent-security", priority: 0.9, changeFrequency: "monthly" },
+  { url: "/llm-security", priority: 0.8, changeFrequency: "monthly" },
+  { url: "/rag-security", priority: 0.8, changeFrequency: "monthly" },
+  { url: "/jailbreak-detection", priority: 0.8, changeFrequency: "monthly" },
+  { url: "/llm-firewall", priority: 0.7, changeFrequency: "monthly" },
+  { url: "/ai-security-india", priority: 0.8, changeFrequency: "monthly" },
+  { url: "/enterprise-ai-security", priority: 0.8, changeFrequency: "monthly" },
+  { url: "/ai-workflow-security", priority: 0.7, changeFrequency: "monthly" },
+  { url: "/model-supply-chain-security", priority: 0.6, changeFrequency: "monthly" },
+  // New IDE-specific pages
+  { url: "/cursor-ai-security", priority: 0.8, changeFrequency: "monthly" },
+  { url: "/windsurf-ai-security", priority: 0.7, changeFrequency: "monthly" },
+  // Integration pages
+  { url: "/integrations", priority: 0.7, changeFrequency: "monthly" },
+  { url: "/integrations/n8n", priority: 0.7, changeFrequency: "monthly" },
+  { url: "/integrations/zapier", priority: 0.7, changeFrequency: "monthly" },
+  { url: "/integrations/make", priority: 0.7, changeFrequency: "monthly" },
+  // About page
+  { url: "/about", priority: 0.6, changeFrequency: "monthly" },
 ];
 
 const compliancePages: Entry[] = [

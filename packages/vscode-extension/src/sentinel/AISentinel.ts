@@ -34,6 +34,8 @@ const REPO_INSTRUCTION_FILES = [
     ".clinerules",
 ];
 
+const SENTINEL_ENABLED_KEY = "soterai.sentinel.enabledState";
+
 const INJECTION_PATTERNS = [
     /ignore previous instructions/i,
     /ignore all previous/i,
@@ -67,20 +69,26 @@ export class AISentinel implements vscode.Disposable {
 
         const stored = context.globalState.get<SentinelEvent[]>("soterai.sentinelEvents");
         if (stored) this.events = stored;
+        this.enabled = context.globalState.get<boolean>(SENTINEL_ENABLED_KEY) ?? false;
+        this.pruneExpired();
+        if (this.enabled) this.startWatching();
+        this.updateStatusBar();
     }
 
     get isEnabled(): boolean { return this.enabled; }
 
-    enable(): void {
+    async enable(): Promise<void> {
         if (this.enabled) return;
         this.enabled = true;
+        await this.context.globalState.update(SENTINEL_ENABLED_KEY, true);
         this.startWatching();
         this.updateStatusBar();
     }
 
-    disable(): void {
+    async disable(): Promise<void> {
         if (!this.enabled) return;
         this.enabled = false;
+        await this.context.globalState.update(SENTINEL_ENABLED_KEY, false);
         this.stopWatching();
         this.updateStatusBar();
     }
@@ -92,6 +100,7 @@ export class AISentinel implements vscode.Disposable {
     }
 
     recordEvent(event: Omit<SentinelEvent, "id" | "timestamp">): void {
+        this.pruneExpired();
         const full: SentinelEvent = { ...event, id: `sent_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`, timestamp: Date.now() };
         this.events.push(full);
         if (this.events.length > this.maxEvents) this.events.splice(0, this.events.length - this.maxEvents);
@@ -117,7 +126,20 @@ export class AISentinel implements vscode.Disposable {
             decision: e.decision,
             redactedEvidence: e.redactedEvidence,
         }));
-        return JSON.stringify({ exportedAt: new Date().toISOString(), eventCount: safe.length, events: safe }, null, 2);
+        return JSON.stringify({ exportedAt: new Date().toISOString(), privacyMode: "metadata_and_redacted_evidence", retentionDays: this.retentionDays, eventCount: safe.length, events: safe }, null, 2);
+    }
+
+    private get retentionDays(): number {
+        return Math.max(1, Math.min(365, vscode.workspace.getConfiguration("soterai").get<number>("sentinel.retentionDays", 30)));
+    }
+
+    private pruneExpired(): void {
+        const cutoff = Date.now() - this.retentionDays * 86_400_000;
+        const retained = this.events.filter((event) => event.timestamp >= cutoff);
+        if (retained.length !== this.events.length) {
+            this.events = retained;
+            void this.context.globalState.update("soterai.sentinelEvents", this.events);
+        }
     }
 
     private startWatching(): void {

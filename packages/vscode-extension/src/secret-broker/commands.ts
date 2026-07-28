@@ -11,6 +11,7 @@ import { CapabilityBroker } from "./CapabilityBroker";
 import { type BrokerOperation } from "./types";
 import { LedgerStore } from "../firewall/LedgerStore";
 import { escapeHtml, showInfoWebview, workspacePseudoId } from "../firewall/util";
+import { getBrokerManager } from "../broker/BrokerManager";
 
 let lastPreview:
     | {
@@ -444,6 +445,12 @@ ${row("After revocation", afterRevoke.allowed, false)}
             "Lock Down Now",
         );
         if (confirm !== "Lock Down Now") return;
+
+        await context.globalState.update("soterai.lockdown", { active: true, activatedAt: new Date().toISOString(), reason: "emergency lockdown command" });
+        // Stop the authenticated broker after the persistent lock is written.
+        // This keeps a running broker from becoming a stale enforcement path;
+        // BrokerManager also refuses restart/request while the lock is active.
+        await getBrokerManager()?.stop();
 
         const workspace = currentWorkspace();
         const capsRevoked = secretBrokerRuntime.enforcedApi.revokeAll();

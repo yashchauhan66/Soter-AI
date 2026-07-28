@@ -11,6 +11,39 @@ import { breadcrumbList } from "@/lib/seo/schema";
 export const VSCODE_MARKETPLACE_URL =
   "https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard";
 
+/** Pages that are IDE / editor focused — show the VS Code install CTA. */
+const IDE_PAGES = new Set([
+  "/vscode-ai-security",
+  "/cursor-ai-security",
+  "/windsurf-ai-security",
+  "/mcp-security",
+  "/prompt-injection-protection",
+  "/ai-data-leakage-prevention",
+  "/local-ai-broker",
+  "/ai-safe-mode",
+  "/ai-memory-inspector",
+]);
+
+/** Determine the primary CTA for a feature page based on its path. */
+function primaryCta(path: string): { label: string; href: string; external: boolean } {
+  if (IDE_PAGES.has(path)) {
+    return { label: "Install the VS Code extension", href: VSCODE_MARKETPLACE_URL, external: true };
+  }
+  // API / platform pages — drive to signup
+  return { label: "Start for free", href: "/signup", external: false };
+}
+
+/** Determine the secondary CTA based on page path. */
+function secondaryCta(path: string): { label: string; href: string } {
+  if (IDE_PAGES.has(path)) {
+    return { label: "Read the docs", href: "/docs/quickstart" };
+  }
+  if (path.includes("enterprise")) {
+    return { label: "Talk to sales", href: "/contact-sales" };
+  }
+  return { label: "Read the docs", href: "/docs/quickstart" };
+}
+
 export interface FeatureLandingData {
   /** Site-relative path, e.g. "/mcp-security". */
   path: string;
@@ -51,6 +84,8 @@ export function FeatureLanding({ data }: { data: FeatureLandingData }) {
     path: data.path,
   });
   const faqLd = faqPageLd(data.faqs);
+  const cta = primaryCta(data.path);
+  const secondary = secondaryCta(data.path);
 
   return (
     <main className="container-page py-16">
@@ -66,25 +101,36 @@ export function FeatureLanding({ data }: { data: FeatureLandingData }) {
         </h1>
         <p className="mt-5 text-lg leading-8 text-slate-400">{data.intro}</p>
         <div className="mt-8 flex flex-wrap gap-4">
-          <a
-            href={VSCODE_MARKETPLACE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg bg-cyan px-5 py-3 text-sm font-semibold text-ink transition hover:opacity-90"
-          >
-            Install the VS Code extension <ArrowRight className="h-4 w-4" />
-          </a>
+          {cta.external ? (
+            <a
+              href={cta.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-lg bg-cyan px-5 py-3 text-sm font-semibold text-ink transition hover:opacity-90"
+            >
+              {cta.label} <ArrowRight className="h-4 w-4" />
+            </a>
+          ) : (
+            <Link
+              href={cta.href}
+              className="inline-flex items-center gap-2 rounded-lg bg-cyan px-5 py-3 text-sm font-semibold text-ink transition hover:opacity-90"
+            >
+              {cta.label} <ArrowRight className="h-4 w-4" />
+            </Link>
+          )}
           <Link
-            href="/docs/quickstart"
+            href={secondary.href}
             className="inline-flex items-center gap-2 rounded-lg border border-slate-700/60 px-5 py-3 text-sm font-semibold text-slate-200 transition hover:border-slate-500"
           >
-            Read the docs
+            {secondary.label}
           </Link>
         </div>
-        <p className="mt-4 text-xs text-slate-500">
-          Runs locally in your editor. Secret, PII, prompt-injection, and MCP
-          scanning happen on your machine before anything reaches an AI model.
-        </p>
+        {IDE_PAGES.has(data.path) && (
+          <p className="mt-4 text-xs text-slate-500">
+            Runs locally in your editor. Secret, PII, prompt-injection, and MCP
+            scanning happen on your machine before anything reaches an AI model.
+          </p>
+        )}
       </section>
 
       {/* Features */}
@@ -174,19 +220,45 @@ export function FeatureLanding({ data }: { data: FeatureLandingData }) {
 
       {/* Final CTA */}
       <section className="mt-16 rounded-2xl border border-cyan/20 bg-cyan/5 p-8 text-center">
-        <h2 className="text-2xl font-bold">Protect your AI coding context</h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-400">
-          Install SoterAI IDE Guard and scan secrets, prompts, MCP tools, and
-          terminal commands locally before they ever reach an AI model.
-        </p>
-        <a
-          href={VSCODE_MARKETPLACE_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-6 inline-flex items-center gap-2 rounded-lg bg-cyan px-6 py-3 text-sm font-semibold text-ink transition hover:opacity-90"
-        >
-          Install for VS Code <ArrowRight className="h-4 w-4" />
-        </a>
+        {IDE_PAGES.has(data.path) ? (
+          <>
+            <h2 className="text-2xl font-bold">Protect your AI coding context</h2>
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-400">
+              Install SoterAI IDE Guard and scan secrets, prompts, MCP tools, and
+              terminal commands locally before they ever reach an AI model.
+            </p>
+            <a
+              href={VSCODE_MARKETPLACE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-cyan px-6 py-3 text-sm font-semibold text-ink transition hover:opacity-90"
+            >
+              Install for VS Code <ArrowRight className="h-4 w-4" />
+            </a>
+          </>
+        ) : (
+          <>
+            <h2 className="text-2xl font-bold">Add security to your AI application</h2>
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-400">
+              Free tier available. Integrate with a single SDK call and protect your
+              first AI workflow in under 10 minutes.
+            </p>
+            <div className="mt-6 flex flex-wrap justify-center gap-3">
+              <Link
+                href="/signup"
+                className="inline-flex items-center gap-2 rounded-lg bg-cyan px-6 py-3 text-sm font-semibold text-ink transition hover:opacity-90"
+              >
+                Start for free <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/playground"
+                className="inline-flex items-center gap-2 rounded-lg border border-slate-700 px-6 py-3 text-sm font-semibold text-slate-200 transition hover:border-slate-500"
+              >
+                Try the playground
+              </Link>
+            </div>
+          </>
+        )}
       </section>
     </main>
   );

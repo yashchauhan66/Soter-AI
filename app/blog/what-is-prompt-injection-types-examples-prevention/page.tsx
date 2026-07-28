@@ -10,6 +10,8 @@ export const metadata: Metadata = buildMetadata({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
+  isArticle: true,
+  datePublished: post.datePublished,
   keywords: ["what is prompt injection", "prompt injection types", "prompt injection examples", "jailbreak attack", "llm security", "prompt injection prevention"],
 });
 

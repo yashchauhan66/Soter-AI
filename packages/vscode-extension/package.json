@@ -99,6 +99,16 @@
                 "category": "SoterAI"
             },
             {
+                "command": "soterai.enableFullProtection",
+                "title": "SoterAI: Enable Full Protection",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.unlockProtection",
+                "title": "SoterAI: Unlock Protection After Lockdown",
+                "category": "SoterAI"
+            },
+            {
                 "command": "soterai.quickStart",
                 "title": "SoterAI: Quick Start",
                 "category": "SoterAI"
@@ -917,6 +927,18 @@
                     "default": true,
                     "description": "Scan supported files as you type and show secrets, PII, prompt-injection, and jailbreak risks inline (squiggly underlines with lightbulb Quick Fixes). 100% local regex/heuristic detection — nothing is sent anywhere. This is VISIBILITY_ONLY: diagnostics appear after content exists; SoterAI does not block other extensions or prevent you from sending text to AI."
                 },
+                "soterai.protection.enabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable the central SoterAI protection state. This does not imply universal interception; coverage is reported from verified runtime facts."
+                },
+                "soterai.sentinel.retentionDays": {
+                    "type": "number",
+                    "default": 30,
+                    "minimum": 1,
+                    "maximum": 365,
+                    "description": "Local Sentinel metadata/redacted-evidence retention period. Raw prompts and secrets are not retained."
+                },
                 "soterai.dependencyGuard.osvMode": {
                     "type": "string",
                     "enum": [
@@ -962,6 +984,14 @@
                 },
                 {
                     "command": "soterai.emergencyLockdown",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.enableFullProtection",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.unlockProtection",
                     "when": "soterai.advancedCommands"
                 },
                 {

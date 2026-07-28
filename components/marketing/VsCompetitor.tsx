@@ -9,6 +9,8 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { breadcrumbList } from "@/lib/seo/schema";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 export interface VsRow {
   feature: string;
@@ -71,9 +73,16 @@ export function VsCompetitor({ data }: { data: VsContent }) {
     },
   };
 
+  const breadcrumb = breadcrumbList([
+    { name: "Home", path: "/" },
+    { name: "Comparison", path: "/comparison" },
+    { name: `SoterAI vs ${data.competitor}`, path: `/comparison/${data.slug}` },
+  ]);
+
   return (
     <main className="py-16 sm:py-24">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
+      <JsonLd data={breadcrumb} />
       <div className="container-page">
         {/* Hero */}
         <div className="text-center">

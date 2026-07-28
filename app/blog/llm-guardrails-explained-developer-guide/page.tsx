@@ -10,6 +10,8 @@ export const metadata: Metadata = buildMetadata({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
+  isArticle: true,
+  datePublished: post.datePublished,
   keywords: ["llm guardrails", "ai guardrails", "what are llm guardrails", "ai safety controls", "guardrails ai", "llm safety", "input guard output guard"],
 });
 

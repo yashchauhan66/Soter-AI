@@ -10,6 +10,8 @@ export const metadata: Metadata = buildMetadata({
   title: post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
+  isArticle: true,
+  datePublished: post.datePublished,
   keywords: ["ai agent security", "autonomous agent security", "agent firewall", "mcp security", "ai tool abuse", "agentic ai security", "ai agent risks"],
 });
 

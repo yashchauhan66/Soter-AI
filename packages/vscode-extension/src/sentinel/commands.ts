@@ -5,13 +5,13 @@ import { escapeHtml, showInfoWebview, getNonce } from "../firewall/util";
 export function registerSentinelCommands(context: vscode.ExtensionContext, sentinel: AISentinel): void {
     const reg = (id: string, handler: (...args: any[]) => any) => context.subscriptions.push(vscode.commands.registerCommand(id, handler));
 
-    reg("soterai.enableAISentinel", () => {
-        sentinel.enable();
+    reg("soterai.enableAISentinel", async () => {
+        await sentinel.enable();
         vscode.window.showInformationMessage("SoterAI AI Activity Sentinel enabled. Monitoring high-risk files and changes.");
     });
 
-    reg("soterai.disableAISentinel", () => {
-        sentinel.disable();
+    reg("soterai.disableAISentinel", async () => {
+        await sentinel.disable();
         vscode.window.showInformationMessage("SoterAI AI Activity Sentinel disabled.");
     });
 
