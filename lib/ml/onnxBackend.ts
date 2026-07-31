@@ -36,6 +36,12 @@ import {
   shouldAbstain,
   type CalibrationConfig,
 } from "./calibration";
+import {
+  gateRuntimeModel,
+  type ModelTrustStore,
+  type SignedModelManifest,
+  type RuntimeModelGateEvidence,
+} from "../model-scan";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -55,6 +61,9 @@ interface OnnxBackendOptions {
    * are marked abstained rather than silently rewritten as trusted SAFE.
    */
   enableAbstention?: boolean;
+  modelManifestPath?: string;
+  trustStorePath?: string;
+  approvedSources?: string[];
 }
 
 // ── Errors ───────────────────────────────────────────────────────────────────
@@ -157,6 +166,7 @@ export class ONNXClassifierBackend implements ModelBackend {
   private tokenizer: BertTokenizer | null = null;
   private calibration: CalibrationConfig = loadCalibration(null);
   private safeIndex = 0;
+  private gateEvidence: RuntimeModelGateEvidence | null = null;
 
   private initialized = false;
   private initPromise: Promise<void> | null = null;
@@ -181,6 +191,20 @@ export class ONNXClassifierBackend implements ModelBackend {
         options?.confidenceFloor ?? Number(process.env.ML_ONNX_CONFIDENCE_FLOOR ?? "0.5"),
       maxLength,
       enableAbstention: options?.enableAbstention ?? true,
+      modelManifestPath:
+        options?.modelManifestPath ??
+        process.env.ML_ONNX_MANIFEST_PATH ??
+        `${modelPath}.manifest.json`,
+      trustStorePath:
+        options?.trustStorePath ??
+        process.env.SOTERAI_MODEL_TRUST_STORE ??
+        "",
+      approvedSources:
+        options?.approvedSources ??
+        (process.env.SOTERAI_MODEL_APPROVED_SOURCES ?? "")
+          .split(",")
+          .map((value) => value.trim())
+          .filter(Boolean),
     };
   }
 
@@ -196,6 +220,36 @@ export class ONNXClassifierBackend implements ModelBackend {
       throw new OnnxBackendError(
         `ONNX model not found at ${this.options.modelPath}. ` +
           "Run scripts/ml/train-soterllm-v4.py (or train-onnx-model.py) first, or set ML_ONNX_MODEL_PATH.",
+      );
+    }
+
+    // Mandatory pre-deserialization boundary. No runtime library is imported
+    // and no model is loaded until the artifact, signed manifest, provenance,
+    // source policy, and operator trust root all pass.
+    if (!this.options.trustStorePath || !fs.existsSync(this.options.trustStorePath)) {
+      throw new OnnxBackendError("Model loading blocked: SOTERAI_MODEL_TRUST_STORE is not configured or does not exist.");
+    }
+    if (!fs.existsSync(this.options.modelManifestPath)) {
+      throw new OnnxBackendError(`Model loading blocked: signed manifest not found at ${this.options.modelManifestPath}.`);
+    }
+    const stat = fs.statSync(this.options.modelPath);
+    const maximumBytes = Number(process.env.SOTERAI_MODEL_MAX_BYTES ?? 512 * 1024 * 1024);
+    if (!stat.isFile() || stat.size > maximumBytes) {
+      throw new OnnxBackendError(`Model loading blocked: artifact is not a regular file or exceeds ${maximumBytes} bytes.`);
+    }
+    const manifest = JSON.parse(fs.readFileSync(this.options.modelManifestPath, "utf8")) as SignedModelManifest;
+    const trustStore = JSON.parse(fs.readFileSync(this.options.trustStorePath, "utf8")) as ModelTrustStore;
+    const gated = gateRuntimeModel(
+      fs.readFileSync(this.options.modelPath),
+      path.basename(this.options.modelPath),
+      manifest,
+      trustStore,
+      { approvedSources: this.options.approvedSources },
+    );
+    this.gateEvidence = gated.evidence;
+    if (!gated.evidence.executable) {
+      throw new OnnxBackendError(
+        `Model loading blocked by supply-chain gate (${gated.evidence.decision}): ${gated.evidence.reasons.join("; ")}`,
       );
     }
 

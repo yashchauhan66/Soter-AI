@@ -8,7 +8,7 @@
  */
 
 import assert from "node:assert/strict";
-import { closeSync, openSync, readSync, statSync } from "node:fs";
+import { closeSync, existsSync, openSync, readSync, statSync } from "node:fs";
 import test from "node:test";
 import type { GuardResult } from "../../lib/guard/types";
 
@@ -46,8 +46,18 @@ function modelMaterialized(): boolean {
   }
 }
 
-const MODEL_MISSING = !modelMaterialized();
-const requiresModel = { skip: MODEL_MISSING ? "ML weights not materialized (Git-LFS not pulled)" : false };
+function modelRuntimeEligible(): boolean {
+  const manifest = process.env.ML_ONNX_MANIFEST_PATH ?? `${MODEL}.manifest.json`;
+  const trustStore = process.env.SOTERAI_MODEL_TRUST_STORE ?? "";
+  return modelMaterialized() && existsSync(manifest) && Boolean(trustStore) && existsSync(trustStore);
+}
+
+const MODEL_UNAVAILABLE = !modelRuntimeEligible();
+const requiresModel = {
+  skip: MODEL_UNAVAILABLE
+    ? "ML runtime proof unavailable: materialized weights plus signed manifest and operator trust store are required"
+    : false,
+};
 
 function baseAllow(): GuardResult {
   return {

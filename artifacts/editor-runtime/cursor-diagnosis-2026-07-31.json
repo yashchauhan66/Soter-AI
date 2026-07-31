@@ -1,0 +1,20 @@
+{
+  "schema": "editor-runtime-diagnosis/v1",
+  "editor": "Cursor",
+  "detectedPath": "c:/Users/USER/AppData/Local/Programs/cursor/resources/app/bin/cursor.cmd",
+  "detectedVersion": "3.13.25",
+  "checks": {
+    "vsixInstallListUninstall": "PASS — extension installed, listed, and uninstalled cleanly",
+    "packagedRuntimeProbe": "FAIL_TIMEOUT — SOTERAI_PACKAGED_RUNTIME_PROBE evidence file not produced before 120s window",
+    "hostExtensionHostIPC": "TIMEOUT — extHost-level utility pipeline did not reach the probe"
+  },
+  "diagnosis": {
+    "symptom": "Cursor host utility process stalls before producing vscode.payload evidence on this Windows profile",
+    "isolateDifferential": "VS Code and Windsurf complete the identical packaged-runtime probe end-to-end on the same machine, same VSIX, same probe/transport wiring",
+    "rootCauseDirection": "Host-side extHost/utility spawn path in this Cursor profile (Antivirus/Defender child-process delay, profile isolation mismatch, or bridge preflight blocking), not SoterAI activation logic — identical VSIX+probe activates in VS Code and Windsurf within seconds"
+  },
+  "classification": "PACKAGED_VERIFIED_NOT_RUNTIME_VERIFIED",
+  "boundedTimeout": "120000",
+  "retryBudget": "3 tries × 120s each across two independent attempts",
+  "machineFact": "VS Code 7/7 and Windsurf 7/7 runtime probes pass on this host against the same VSIX and probe contract"
+}

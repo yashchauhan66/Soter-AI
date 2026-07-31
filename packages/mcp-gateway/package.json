@@ -1,0 +1,30 @@
+{
+  "name": "@soterai/mcp-gateway",
+  "version": "0.1.0",
+  "description": "SoterAI MCP Gateway — Inline MCP enforcement proxy with policy-based tool call interception",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "soterai-mcp-gateway": "./dist/cli.js"
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test dist/__tests__/mcp-gateway.test.js",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@soterai/guard-core": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT"
+}

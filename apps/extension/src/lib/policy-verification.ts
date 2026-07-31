@@ -1,103 +1,92 @@
 /**
- * Browser-compatible policy signature verification.
- * Uses Web Crypto API instead of Node.js crypto module.
+ * Extension-side policy integrity.
+ *
+ * Thin adapter over `packages/shared/src/policy-integrity`, which is the single
+ * canonicalisation + signing implementation shared with the backend. Keeping the
+ * crypto in one file is deliberate: the previous split implementation drifted and
+ * both halves used `JSON.stringify(policy, Object.keys(policy).sort())`, whose
+ * replacer-allowlist semantics excluded every nested field (rules, thresholds,
+ * destinations) from the hash. See docs/SOTERAI-BROWSER-GUARD-SUPREMACY-REPORT.md SS-1.
  */
 
-export interface SignedPolicyBundle {
-  version: string;
-  organizationId: string;
-  publishedAt: string;
-  policyHash: string;
-  signature: string;
-  algorithm: "hmac-sha256";
-}
+import {
+  computePolicyContentHash,
+  verifyPolicyBundle,
+  type PolicyIntegrityCode,
+  type PolicyIntegrityResult,
+  type PolicyTrustState,
+  type PolicyTrustedKey,
+} from "../../../../packages/shared/src/policy-integrity";
+import type { ExtensionConfig, ExtensionState } from "./types";
 
-export interface PolicyVerificationResult {
-  valid: boolean;
-  reason?: string;
-}
+export type { PolicyIntegrityCode, PolicyIntegrityResult, PolicyTrustedKey };
 
 /**
- * Extension-side policy signature verification using Web Crypto API.
- * Returns { valid: true } if no signing secret is configured (trust mode).
- * Returns { valid: false, reason } if signature verification fails.
+ * Builds the trust state for verification from configuration plus the persisted
+ * ratchet. Precedence: managed/enterprise configuration wins over anything the
+ * policy server said about itself.
  */
-export async function verifyPolicySignature(
-  policy: {
-    version: string;
-    organizationId: string;
-    updatedAt: string;
-    signature?: string;
-    policyHash?: string;
-  },
-  signingSecret?: string
-): Promise<PolicyVerificationResult> {
-  // If no signing secret configured, accept policy (trust-on-first-use mode)
-  if (!signingSecret) {
-    return { valid: true };
+export function policyTrustStateFromState(state: ExtensionState): PolicyTrustState {
+  const config: ExtensionConfig = state.config;
+  const keys: PolicyTrustedKey[] = [...normalizeTrustedKeys(config.policyTrustedKeys)];
+
+  // Legacy symmetric secret, retained only for existing deployments that set it.
+  if (config.policySigningSecret) {
+    keys.push({ keyId: "legacy-hmac", algorithm: "hmac-sha256", publicKey: config.policySigningSecret });
   }
 
-  // If signing is required but policy is not signed, reject
-  if (!policy.signature || !policy.policyHash) {
-    return {
-      valid: false,
-      reason: "Policy signature required but not present. Policy may have been tampered with.",
-    };
-  }
+  return {
+    keys,
+    organizationId: config.organizationId || undefined,
+    requireSigned: config.requirePolicySignature === true,
+    allowLegacyHmac: Boolean(config.policySigningSecret),
+    lastAcceptedIssuedAt: state.policyTrust?.lastAcceptedIssuedAt,
+    signedBundleSeen: state.policyTrust?.signedBundleSeen === true,
+  };
+}
 
-  try {
-    // Construct the same data string the backend signed
-    const data = `${policy.version}|${policy.organizationId}|${policy.updatedAt}|${policy.policyHash}`;
-    const encoder = new TextEncoder();
-    const dataBuffer = encoder.encode(data);
-    const keyBuffer = encoder.encode(signingSecret);
-
-    // Import the HMAC key
-    const cryptoKey = await crypto.subtle.importKey(
-      "raw",
-      keyBuffer,
-      { name: "HMAC", hash: "SHA-256" },
-      false,
-      ["sign"]
-    );
-
-    // Compute HMAC signature
-    const signatureBuffer = await crypto.subtle.sign("HMAC", cryptoKey, dataBuffer);
-    const signatureArray = new Uint8Array(signatureBuffer);
-
-    // Convert to hex string
-    const computedSignature = Array.from(signatureArray)
-      .map((b) => b.toString(16).padStart(2, "0"))
-      .join("");
-
-    // Timing-safe comparison (best effort in JavaScript)
-    if (computedSignature !== policy.signature) {
-      return {
-        valid: false,
-        reason: "Policy signature mismatch. Policy may have been tampered with or corrupted.",
-      };
+/** Accepts the managed-config shape (array of objects) or a JSON string from GPO. */
+export function normalizeTrustedKeys(input: unknown): PolicyTrustedKey[] {
+  if (!input) return [];
+  let raw: unknown = input;
+  if (typeof input === "string") {
+    try {
+      raw = JSON.parse(input);
+    } catch {
+      return [];
     }
-
-    return { valid: true };
-  } catch (error) {
-    return {
-      valid: false,
-      reason: `Policy verification failed: ${error instanceof Error ? error.message : "unknown error"}`,
-    };
   }
+  if (!Array.isArray(raw)) return [];
+  const keys: PolicyTrustedKey[] = [];
+  for (const entry of raw) {
+    if (!entry || typeof entry !== "object") continue;
+    const candidate = entry as Record<string, unknown>;
+    const keyId = typeof candidate.keyId === "string" ? candidate.keyId : "";
+    const publicKey = typeof candidate.publicKey === "string" ? candidate.publicKey : "";
+    const algorithm = candidate.algorithm === "hmac-sha256" ? "hmac-sha256" : "ecdsa-p256-sha256";
+    if (!keyId || !publicKey) continue;
+    keys.push({ keyId, algorithm, publicKey });
+  }
+  return keys;
 }
 
 /**
- * Compute a policy hash for verification (SHA-256 of canonical JSON).
- * Used to verify the policyHash field matches the actual policy content.
+ * Verifies a freshly fetched bundle. Returns the full result so the caller can
+ * distinguish "accepted and cryptographically verified" from "accepted for
+ * availability but NOT verified" — a distinction the UI is required to surface.
  */
-export async function computePolicyHash(policyJson: unknown): Promise<string> {
-  const normalized = JSON.stringify(policyJson, Object.keys(policyJson as object).sort());
-  const encoder = new TextEncoder();
-  const dataBuffer = encoder.encode(normalized);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", dataBuffer);
-  const hashArray = new Uint8Array(hashBuffer);
-  return Array.from(hashArray)
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
+export async function verifyPolicy(policy: unknown, state: ExtensionState): Promise<PolicyIntegrityResult> {
+  return verifyPolicyBundle(policy, policyTrustStateFromState(state));
 }
+
+/**
+ * True when an integrity result must stop the extension from adopting the bundle.
+ * Anything other than `unsigned`/`key_missing` in a non-enforcing deployment is a
+ * positive tamper signal, not merely a missing-configuration signal.
+ */
+export function isTamperSignal(result: PolicyIntegrityResult) {
+  return !result.valid && result.code !== "unsigned" && result.code !== "key_missing";
+}
+
+/** Re-exported so callers do not need a second import path. */
+export { computePolicyContentHash };

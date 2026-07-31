@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-31T15:33:44.224Z",
+  "performance": {
+    "activationMs": null,
+    "rssMiB": 278.46,
+    "heapUsedMiB": 108.91,
+    "heapTotalMiB": 146.73,
+    "externalMiB": 4.95
+  },
+  "editor": {
+    "appName": "Windsurf",
+    "appHost": "desktop",
+    "language": "en",
+    "remoteName": null
+  },
+  "extension": "soterai.soterai-ide-guard",
+  "version": "0.2.2",
+  "packagedExecution": true,
+  "result": "PASS",
+  "checks": [
+    {
+      "name": "packaged extension activation",
+      "passed": true,
+      "detail": "0.2.2 active in Windsurf"
+    },
+    {
+      "name": "broker startup",
+      "passed": true,
+      "detail": "healthy version=0.1.0"
+    },
+    {
+      "name": "policy load",
+      "passed": true,
+      "detail": "broker policy=strict"
+    },
+    {
+      "name": "secret and context protection",
+      "passed": true,
+      "detail": "guard-core redacted; broker decision=block"
+    },
+    {
+      "name": "controlled terminal",
+      "passed": true,
+      "detail": "ALLOW executed with exit=128; coverage=STRONG_ENFORCEMENT"
+    },
+    {
+      "name": "MCP routing",
+      "passed": true,
+      "detail": "broker preflight action=DENY coverage=DETECTION_ONLY"
+    },
+    {
+      "name": "lockdown and recovery",
+      "passed": true,
+      "detail": "lockdown blocked startup; unlock restored healthy broker"
+    }
+  ],
+  "artifact": {
+    "file": "soterai-ide-guard-0.2.2.vsix",
+    "sha256": "17f9efb2bbb6f0a406ec76ee7ad2be6301ca0a07abb8959970c705589ec5bb6c"
+  }
+}

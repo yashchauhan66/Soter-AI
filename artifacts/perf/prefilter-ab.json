@@ -1,0 +1,226 @@
+{
+  "schema": 1,
+  "tool": "prefilter-ab",
+  "generatedAt": "2026-07-31T10:40:05.956Z",
+  "iterations": 300,
+  "env": {
+    "capturedAt": "2026-07-31T10:39:23.970Z",
+    "node": {
+      "version": "v22.16.0",
+      "v8": "12.4.254.21-node.26",
+      "execArgv": [
+        "--require",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\preflight.cjs",
+        "--import",
+        "file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/loader.mjs"
+      ],
+      "gcExposed": false,
+      "jitDefaults": true,
+      "heapSizeLimitMiB": 4144
+    },
+    "os": {
+      "platform": "win32",
+      "release": "10.0.26300",
+      "arch": "x64",
+      "totalMemMiB": 16191.4,
+      "freeMemMiB": 2645.4
+    },
+    "cpu": {
+      "model": "Intel(R) Core(TM) i5-8350U CPU @ 1.70GHz",
+      "logicalCores": 8,
+      "speedMHz": 1896,
+      "governor": {
+        "source": "Win32_Processor (CIM)",
+        "currentClockMHz": 1696,
+        "maxClockMHz": 1896,
+        "note": "Windows exposes no Linux-style cpufreq governor. CurrentClockSpeed vs MaxClockSpeed is the available proxy for whether the CPU is throttled or boosting during the trial."
+      }
+    },
+    "process": {
+      "pid": 15220,
+      "priority": -7,
+      "priorityLabel": "PRIORITY_ABOVE_NORMAL",
+      "priorityRequested": "above_normal",
+      "priorityApplied": true
+    },
+    "load": {
+      "before": {
+        "loadavg": [
+          0,
+          0,
+          0
+        ],
+        "busyFraction": 0.6957,
+        "sampleMs": 250,
+        "cores": 8
+      }
+    },
+    "backgroundProcesses": {
+      "counted": 338,
+      "notable": [
+        {
+          "name": "Code",
+          "cpuSeconds": 66461.61
+        },
+        {
+          "name": "chrome",
+          "cpuSeconds": 6481.35
+        },
+        {
+          "name": "msedgewebview2",
+          "cpuSeconds": 1915.45
+        },
+        {
+          "name": "node",
+          "cpuSeconds": 890.04
+        },
+        {
+          "name": "msedge",
+          "cpuSeconds": 385.71
+        },
+        {
+          "name": "codex",
+          "cpuSeconds": 66.14
+        },
+        {
+          "name": "chrome-native-host",
+          "cpuSeconds": 0.03
+        },
+        {
+          "name": "MpDefenderCoreService",
+          "cpuSeconds": 0
+        },
+        {
+          "name": "MsMpEng",
+          "cpuSeconds": 0
+        },
+        {
+          "name": "SearchIndexer",
+          "cpuSeconds": 0
+        }
+      ],
+      "source": "Get-Process"
+    },
+    "benchmarkMode": {
+      "envApplied": {
+        "SOTERAI_DETECTION_TIER": "hybrid"
+      },
+      "warmupIterations": 20,
+      "gcBetweenPhases": true
+    }
+  },
+  "gc": {
+    "collections": 0,
+    "totalPauseMs": 0,
+    "maxPauseMs": 0,
+    "byKind": {}
+  },
+  "findingsIdenticalEveryIteration": true,
+  "buckets": [
+    {
+      "name": "simple-16b",
+      "bytes": 20,
+      "sha": "327e09780c8ca587",
+      "iterations": 300,
+      "on": {
+        "p50": 3.3537,
+        "p95": 5.08,
+        "p99": 8.0605,
+        "max": 11.7802,
+        "mean": 3.5778
+      },
+      "off": {
+        "p50": 4.6455,
+        "p95": 7.5204,
+        "p99": 9.5453,
+        "max": 13.193,
+        "mean": 4.9126
+      },
+      "savedMs": {
+        "p50": 1.2624,
+        "p95": 4.0721,
+        "p99": 6.2935,
+        "max": 8.4153,
+        "mean": 1.3348
+      },
+      "savedPctOfP50": 27.81,
+      "stats": {
+        "rules": 684,
+        "prefilterable": 619,
+        "scans": 1121,
+        "skipped": 995,
+        "skipPct": 88.76
+      }
+    },
+    {
+      "name": "large-8kb",
+      "bytes": 8115,
+      "sha": "ad193d89b90ca71a",
+      "iterations": 300,
+      "on": {
+        "p50": 19.2885,
+        "p95": 23.595,
+        "p99": 29.4534,
+        "max": 58.6379,
+        "mean": 18.7552
+      },
+      "off": {
+        "p50": 69.0425,
+        "p95": 86.2459,
+        "p99": 94.6833,
+        "max": 112.3362,
+        "mean": 69.2959
+      },
+      "savedMs": {
+        "p50": 50.5118,
+        "p95": 65.0567,
+        "p99": 68.7388,
+        "max": 85.2667,
+        "mean": 50.5407
+      },
+      "savedPctOfP50": 72.06,
+      "stats": {
+        "rules": 684,
+        "prefilterable": 619,
+        "scans": 1121,
+        "skipped": 999,
+        "skipPct": 89.12
+      }
+    },
+    {
+      "name": "attack-injection",
+      "bytes": 106,
+      "sha": "57baba55be976a92",
+      "iterations": 300,
+      "on": {
+        "p50": 4.2998,
+        "p95": 5.3932,
+        "p99": 7.557,
+        "max": 9.6843,
+        "mean": 4.3679
+      },
+      "off": {
+        "p50": 4.7664,
+        "p95": 5.6847,
+        "p99": 7.3533,
+        "max": 9.2646,
+        "mean": 4.774
+      },
+      "savedMs": {
+        "p50": 0.4513,
+        "p95": 1.7669,
+        "p99": 2.9677,
+        "max": 4.2798,
+        "mean": 0.4061
+      },
+      "savedPctOfP50": 9.79,
+      "stats": {
+        "rules": 684,
+        "prefilterable": 619,
+        "scans": 1121,
+        "skipped": 926,
+        "skipPct": 82.6
+      }
+    }
+  ]
+}

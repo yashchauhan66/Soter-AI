@@ -1,4 +1,5 @@
 import { normalizeForDetection } from "./helpers";
+import { haystackMeta, patternCannotMatch } from "./literalPrefilter";
 import type { GuardFinding, RiskType } from "../types";
 
 type CyberRule = {
@@ -129,10 +130,17 @@ export function adversarialCyberDetector(text: string): GuardFinding[] {
   const variants = buildVariants(text);
   const findings: GuardFinding[] = [];
   const seen = new Set<string>();
+  // One metadata record per variant, held across every rule: the lowercase copy
+  // and the 3-gram index are each built at most once per variant instead of once
+  // per (rule, pattern) pair. Every pattern here is a chained alternation with
+  // `.{0,140}` gaps, so a single absent cue literal removes a long scan.
+  const metas = variants.map((variant) => haystackMeta(variant.text, variant));
 
   for (const rule of RULES) {
-    for (const variant of variants) {
+    for (let index = 0; index < variants.length; index += 1) {
+      const variant = variants[index];
       for (const pattern of rule.patterns) {
+        if (patternCannotMatch(variant.text, metas[index], pattern, rule.label)) continue;
         if (!pattern.test(variant.text)) continue;
         const key = `${rule.type}:${rule.label}:${variant.kind}`;
         if (seen.has(key)) continue;

@@ -7,8 +7,9 @@
  */
 
 import { getState, setState } from "./storage";
-import type { ExtensionConfig, ExtensionState } from "./types";
+import type { ExtensionConfig, PolicyTrustedKeyConfig } from "./types";
 import { DEFAULT_EXTENSION_API_BASE_URL } from "../../../../packages/shared/src/constants";
+import { buildTrustedUrl, normalizeEndpoint } from "./trusted-endpoint";
 
 export const ENROLLMENT_STATUS_KEY = "soter.enrollment.status";
 
@@ -25,6 +26,8 @@ export interface EnrollmentInfo {
   deviceToken?: string;
   enrolledAt?: string;
   managedValid: boolean;
+  /** Set when enrollment was refused because the configured endpoint is not trusted. */
+  endpointError?: string;
 }
 
 export interface ManagedConfig {
@@ -46,6 +49,34 @@ export interface ManagedConfig {
    */
   hardEnforcement?: boolean;
   offlineFailClosed?: boolean;
+  /**
+   * Refuse any policy bundle that is not cryptographically verified. Requires
+   * `policyTrustedKeys` to be set, otherwise every sync fails closed.
+   */
+  requirePolicySignature?: boolean;
+  /** Base64 SPKI ECDSA P-256 public keys the fleet trusts to sign policy bundles. */
+  policyTrustedKeys?: PolicyTrustedKeyConfig[];
+}
+
+/**
+ * Validates the trusted-key list pushed by managed policy. A malformed entry is dropped
+ * rather than trusted, and an entry is never accepted without an explicit algorithm —
+ * silently defaulting the algorithm is how signature-confusion bugs start.
+ */
+export function parseManagedTrustedKeys(value: unknown): PolicyTrustedKeyConfig[] | undefined {
+  if (!Array.isArray(value)) return undefined;
+  const keys: PolicyTrustedKeyConfig[] = [];
+  for (const entry of value) {
+    if (!entry || typeof entry !== "object" || Array.isArray(entry)) continue;
+    const record = entry as Record<string, unknown>;
+    const keyId = typeof record.keyId === "string" ? record.keyId.trim() : "";
+    const publicKey = typeof record.publicKey === "string" ? record.publicKey.trim() : "";
+    const algorithm = record.algorithm;
+    if (!keyId || !publicKey) continue;
+    if (algorithm !== "ecdsa-p256-sha256" && algorithm !== "hmac-sha256") continue;
+    keys.push({ keyId, algorithm, publicKey });
+  }
+  return keys.length > 0 ? keys : undefined;
 }
 
 /**
@@ -79,6 +110,13 @@ export function validateManagedConfig(config: ManagedConfig): { valid: boolean; 
 
 /**
  * Try to enroll from managed configuration.
+ *
+ * SS-2: the managed endpoint is validated and *pinned*. Managed config is written by the
+ * browser's enterprise policy layer, which neither a web page nor this extension can
+ * write, so it is a higher authority than any previously stored pin and may re-point the
+ * fleet. An endpoint that fails validation refuses enrollment instead of silently falling
+ * back to the public cloud endpoint — a regulated org that configured a self-hosted
+ * control plane must never have its data quietly redirected somewhere else.
  */
 export async function enrollFromManagedConfig(): Promise<EnrollmentInfo> {
   const managed = await readManagedConfig();
@@ -96,9 +134,21 @@ export async function enrollFromManagedConfig(): Promise<EnrollmentInfo> {
     };
   }
 
+  const endpoint = normalizeEndpoint(managed.apiBaseUrl || DEFAULT_EXTENSION_API_BASE_URL);
+  if (!endpoint.allowed || !endpoint.origin) {
+    return {
+      mode: "managed",
+      status: "unenrolled",
+      managedValid: false,
+      organizationId: managed.organizationId,
+      endpointError: endpoint.reason ?? endpoint.code,
+    };
+  }
+
   // Build config from managed settings
   const config: Partial<ExtensionConfig> = {
-    apiBaseUrl: managed.apiBaseUrl || DEFAULT_EXTENSION_API_BASE_URL,
+    apiBaseUrl: endpoint.origin,
+    pinnedApiOrigin: endpoint.origin,
     organizationId: managed.organizationId!,
     employeeId: managed.employeeId || managed.email || "unknown",
     employeeEmail: managed.email,
@@ -107,6 +157,8 @@ export async function enrollFromManagedConfig(): Promise<EnrollmentInfo> {
     deviceToken: managed.deviceToken,
     hardEnforcement: managed.hardEnforcement === true,
     offlineFailClosed: managed.offlineFailClosed === true,
+    requirePolicySignature: managed.requirePolicySignature === true,
+    policyTrustedKeys: parseManagedTrustedKeys(managed.policyTrustedKeys),
   };
 
   await setState({
@@ -131,14 +183,35 @@ export async function enrollFromManagedConfig(): Promise<EnrollmentInfo> {
 /**
  * Self-service enrollment using an enrollment code.
  * Calls POST /api/extension/enroll with the code.
+ *
+ * SS-2 (endpoint trust). Three rules are enforced here:
+ *  1. The endpoint the user typed must pass `normalizeEndpoint` (https-only, no embedded
+ *     credentials, no remote IP literal, no punycode host).
+ *  2. If this profile is already pinned, the endpoint must match the pin. Re-pointing an
+ *     enrolled device requires an explicit `unenroll()`, which clears the pin.
+ *  3. The origin returned by the *server* (`data.apiBaseUrl`) is never stored. Previously
+ *     it was, which let whichever host answered the first enrollment permanently rebind
+ *     every later policy fetch, audit event and heartbeat — including the device token in
+ *     `x-soter-extension-token`. The origin the operator typed is the only authority.
  */
 export async function enrollWithCode(
   apiBaseUrl: string,
   enrollmentCode: string
 ): Promise<{ ok: true; info: EnrollmentInfo } | { ok: false; error: string }> {
+  const state = await getState();
+  const endpoint = normalizeEndpoint(apiBaseUrl, { pinnedOrigin: state.config.pinnedApiOrigin });
+  if (!endpoint.allowed || !endpoint.origin) {
+    return { ok: false, error: endpoint.reason ?? `Endpoint refused (${endpoint.code}).` };
+  }
+  const origin = endpoint.origin;
+
   try {
-    const response = await fetch(`${apiBaseUrl}/api/extension/enroll`, {
+    const response = await fetch(buildTrustedUrl(origin, "/api/extension/enroll"), {
       method: "POST",
+      // The enrollment code is the only authority; no ambient cookies, and a redirect
+      // (the classic way to move a POST onto another origin) is a hard failure.
+      credentials: "omit",
+      redirect: "error",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ enrollmentCode }),
     });
@@ -152,7 +225,8 @@ export async function enrollWithCode(
 
     // Store only safe credentials locally
     const config: ExtensionConfig = {
-      apiBaseUrl: typeof data.apiBaseUrl === "string" ? data.apiBaseUrl : apiBaseUrl,
+      apiBaseUrl: origin,
+      pinnedApiOrigin: origin,
       organizationId: data.organizationId,
       organizationName: data.organizationName,
       employeeId: data.employeeId,
@@ -160,6 +234,14 @@ export async function enrollWithCode(
       department: data.department,
       role: data.role,
       deviceToken: data.deviceToken,
+      // Enforcement strength is set by enterprise policy, never by an enrollment
+      // response, so it is carried across rather than reset. Without this, a
+      // self-service re-enrollment would silently downgrade a hardened profile.
+      hardEnforcement: state.config.hardEnforcement,
+      offlineFailClosed: state.config.offlineFailClosed,
+      requirePolicySignature: state.config.requirePolicySignature,
+      policyTrustedKeys: state.config.policyTrustedKeys,
+      policySigningSecret: state.config.policySigningSecret,
     };
 
     await setState({
@@ -231,19 +313,33 @@ export async function getEnrollmentStatus(): Promise<EnrollmentInfo> {
 }
 
 /**
- * Unenroll (remove local state).
+ * Unenroll (remove local state). This is the only way to release the endpoint pin, so
+ * re-pointing a device at a different control plane is always an explicit local action.
  */
 export async function unenroll(): Promise<void> {
   await setState({
     enrollmentStatus: "unenrolled",
     enrollmentMode: undefined,
+    // `setState` merges config, so every credential-bearing field must be cleared
+    // explicitly — otherwise the device token and the pin survive an unenrollment.
     config: {
       apiBaseUrl: DEFAULT_EXTENSION_API_BASE_URL,
       organizationId: "",
+      organizationName: undefined,
       employeeId: "",
+      employeeEmail: undefined,
+      department: undefined,
+      role: undefined,
+      deviceToken: undefined,
+      pinnedApiOrigin: undefined,
     },
     policySyncStatus: "never",
     policy: undefined,
+    // `policyTrust` is deliberately NOT cleared. It is the trust ratchet: once this
+    // profile has seen a signed bundle, a local unenroll/re-enroll cycle must not become
+    // a way to get back to accepting unsigned policy. `policyIntegrity` is only a stale
+    // diagnostic, so it is cleared.
+    policyIntegrity: undefined,
   });
   // Clear enrollment-specific storage (chrome.storage available at runtime only)
   try {

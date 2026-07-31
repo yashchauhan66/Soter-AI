@@ -1,0 +1,408 @@
+{
+  "tool": "mcp-stage-profile",
+  "iterations": 300,
+  "warmup": 50,
+  "env": {
+    "capturedAt": "2026-07-31T04:32:36.791Z",
+    "node": {
+      "version": "v22.16.0",
+      "v8": "12.4.254.21-node.26",
+      "execArgv": [
+        "--require",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\preflight.cjs",
+        "--import",
+        "file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/loader.mjs",
+        "--expose-gc"
+      ],
+      "gcExposed": true,
+      "jitDefaults": true,
+      "heapSizeLimitMiB": 4144
+    },
+    "os": {
+      "platform": "win32",
+      "release": "10.0.26300",
+      "arch": "x64",
+      "totalMemMiB": 16191.4,
+      "freeMemMiB": 3527.2
+    },
+    "cpu": {
+      "model": "Intel(R) Core(TM) i5-8350U CPU @ 1.70GHz",
+      "logicalCores": 8,
+      "speedMHz": 1896,
+      "governor": {
+        "source": "Win32_Processor (CIM)",
+        "currentClockMHz": 1696,
+        "maxClockMHz": 1896,
+        "note": "Windows exposes no Linux-style cpufreq governor. CurrentClockSpeed vs MaxClockSpeed is the available proxy for whether the CPU is throttled or boosting during the trial."
+      }
+    },
+    "process": {
+      "pid": 18888,
+      "priority": -7,
+      "priorityLabel": "PRIORITY_ABOVE_NORMAL",
+      "priorityRequested": "above_normal",
+      "priorityApplied": true
+    },
+    "load": {
+      "before": {
+        "loadavg": [
+          0,
+          0,
+          0
+        ],
+        "busyFraction": 0.2268,
+        "sampleMs": 250,
+        "cores": 8
+      }
+    },
+    "backgroundProcesses": {
+      "counted": 308,
+      "notable": [
+        {
+          "name": "Code",
+          "cpuSeconds": 15451.53
+        },
+        {
+          "name": "chrome",
+          "cpuSeconds": 1697.85
+        },
+        {
+          "name": "msedgewebview2",
+          "cpuSeconds": 478.42
+        },
+        {
+          "name": "node",
+          "cpuSeconds": 126.61
+        },
+        {
+          "name": "codex",
+          "cpuSeconds": 5.02
+        },
+        {
+          "name": "chrome-native-host",
+          "cpuSeconds": 0.02
+        },
+        {
+          "name": "MpDefenderCoreService",
+          "cpuSeconds": 0
+        },
+        {
+          "name": "MsMpEng",
+          "cpuSeconds": 0
+        },
+        {
+          "name": "SearchIndexer",
+          "cpuSeconds": 0
+        }
+      ],
+      "source": "Get-Process"
+    },
+    "benchmarkMode": {
+      "envApplied": {
+        "SOTERAI_DETECTION_TIER": "hybrid"
+      },
+      "warmupIterations": 50,
+      "gcBetweenPhases": true
+    }
+  },
+  "gc": {
+    "collections": 0,
+    "totalPauseMs": 0,
+    "maxPauseMs": 0,
+    "byKind": {}
+  },
+  "cases": [
+    {
+      "case": "simple-allow",
+      "payload": {
+        "bytes": 16,
+        "sha256": "cbbbdcd27692344d"
+      },
+      "gate": {
+        "p50Us": 109.5,
+        "p95Us": 172.3,
+        "p99Us": 249.8,
+        "maxUs": 491.4,
+        "n": 300
+      },
+      "cacheState": {
+        "size": 1,
+        "maxEntries": 256
+      },
+      "stages": [
+        {
+          "stage": "01-jsonrpc-parse",
+          "detail": "parseBounded(line, maxBytes, maxDepth)",
+          "p50Us": 4.2,
+          "p95Us": 8.8,
+          "p99Us": 14.6,
+          "meanUs": 4.86,
+          "shareOfGateP50": 3.8
+        },
+        {
+          "stage": "02-session-lookup",
+          "detail": "identity validity + 60s rate window scan",
+          "p50Us": 0.9,
+          "p95Us": 1,
+          "p99Us": 1,
+          "meanUs": 0.96,
+          "shareOfGateP50": 0.8
+        },
+        {
+          "stage": "03-capability-lookup",
+          "detail": "tool inventory hit + capability annotation read",
+          "p50Us": 0.7,
+          "p95Us": 0.8,
+          "p99Us": 0.9,
+          "meanUs": 0.7,
+          "shareOfGateP50": 0.6
+        },
+        {
+          "stage": "04-argument-traversal",
+          "detail": "extractStructuralSignals (walkStrings + path/host/cmd scan)",
+          "p50Us": 5.4,
+          "p95Us": 5.9,
+          "p99Us": 8.2,
+          "meanUs": 5.57,
+          "shareOfGateP50": 4.9
+        },
+        {
+          "stage": "05-normalization",
+          "detail": "normalizeForDetection (NFKD fold, invisible strip, confusables)",
+          "p50Us": 11.4,
+          "p95Us": 17.6,
+          "p99Us": 38,
+          "meanUs": 12.63,
+          "shareOfGateP50": 10.4
+        },
+        {
+          "stage": "06-decoding",
+          "detail": "detection-variant construction (decode + cipher families)",
+          "p50Us": 19.5,
+          "p95Us": 36.4,
+          "p99Us": 86.7,
+          "meanUs": 21.51,
+          "shareOfGateP50": 17.8
+        },
+        {
+          "stage": "07-deterministic-detectors",
+          "detail": "runInputGuard (full rules tier, all input detectors)",
+          "p50Us": 2022.7,
+          "p95Us": 2963.4,
+          "p99Us": 3362,
+          "meanUs": 2115.79,
+          "shareOfGateP50": 1847.2
+        },
+        {
+          "stage": "08-semantic-classifier",
+          "detail": "classifySemantic (embedding + nearest-centroid)",
+          "p50Us": 265.7,
+          "p95Us": 459.1,
+          "p99Us": 665.6,
+          "meanUs": 292.04,
+          "shareOfGateP50": 242.6
+        },
+        {
+          "stage": "09a-policy-applyPolicy",
+          "detail": "applyPolicy(text, baseline, policy, INPUT)",
+          "p50Us": 8.8,
+          "p95Us": 11.7,
+          "p99Us": 23.6,
+          "meanUs": 8.66,
+          "shareOfGateP50": 8
+        },
+        {
+          "stage": "09b-policy-mcp-core",
+          "detail": "evaluateMCPToolInvocation (guard-core MCP verdict)",
+          "p50Us": 25.3,
+          "p95Us": 42.6,
+          "p99Us": 80.4,
+          "meanUs": 27.73,
+          "shareOfGateP50": 23.1
+        },
+        {
+          "stage": "10-evidence-creation",
+          "detail": "buildMcpDecision (canonical envelope)",
+          "p50Us": 5,
+          "p95Us": 7.4,
+          "p99Us": 20,
+          "meanUs": 5.92,
+          "shareOfGateP50": 4.6
+        },
+        {
+          "stage": "11a-cache-hit-inspectArguments",
+          "detail": "inspectArguments with warm clean-input template",
+          "p50Us": 41.4,
+          "p95Us": 78.4,
+          "p99Us": 101.5,
+          "meanUs": 48.09,
+          "shareOfGateP50": 37.8
+        },
+        {
+          "stage": "11b-cache-miss-inspectArguments",
+          "detail": "inspectArguments with cold cache (full scan)",
+          "p50Us": 2509.5,
+          "p95Us": 4030.7,
+          "p99Us": 4239.7,
+          "meanUs": 2805.73,
+          "shareOfGateP50": 2291.8
+        },
+        {
+          "stage": "12-response-serialization",
+          "detail": "JSON.stringify(forwarded frame)",
+          "p50Us": 1.3,
+          "p95Us": 2.5,
+          "p99Us": 3.3,
+          "meanUs": 1.65,
+          "shareOfGateP50": 1.2
+        }
+      ]
+    },
+    {
+      "case": "8kb-allow",
+      "payload": {
+        "bytes": 8211,
+        "sha256": "a5609667d280d458"
+      },
+      "gate": {
+        "p50Us": 490.8,
+        "p95Us": 893.9,
+        "p99Us": 1174.4,
+        "maxUs": 1599.9,
+        "n": 300
+      },
+      "cacheState": {
+        "size": 1,
+        "maxEntries": 256
+      },
+      "stages": [
+        {
+          "stage": "01-jsonrpc-parse",
+          "detail": "parseBounded(line, maxBytes, maxDepth)",
+          "p50Us": 14.6,
+          "p95Us": 30,
+          "p99Us": 46.1,
+          "meanUs": 18.07,
+          "shareOfGateP50": 3
+        },
+        {
+          "stage": "02-session-lookup",
+          "detail": "identity validity + 60s rate window scan",
+          "p50Us": 0.6,
+          "p95Us": 0.8,
+          "p99Us": 0.9,
+          "meanUs": 0.61,
+          "shareOfGateP50": 0.1
+        },
+        {
+          "stage": "03-capability-lookup",
+          "detail": "tool inventory hit + capability annotation read",
+          "p50Us": 0.1,
+          "p95Us": 0.2,
+          "p99Us": 0.2,
+          "meanUs": 0.14,
+          "shareOfGateP50": 0
+        },
+        {
+          "stage": "04-argument-traversal",
+          "detail": "extractStructuralSignals (walkStrings + path/host/cmd scan)",
+          "p50Us": 100.5,
+          "p95Us": 193.7,
+          "p99Us": 206,
+          "meanUs": 117.43,
+          "shareOfGateP50": 20.5
+        },
+        {
+          "stage": "05-normalization",
+          "detail": "normalizeForDetection (NFKD fold, invisible strip, confusables)",
+          "p50Us": 933.3,
+          "p95Us": 2040.9,
+          "p99Us": 2179.9,
+          "meanUs": 1121.35,
+          "shareOfGateP50": 190.2
+        },
+        {
+          "stage": "06-decoding",
+          "detail": "detection-variant construction (decode + cipher families)",
+          "p50Us": 2241.7,
+          "p95Us": 3964.8,
+          "p99Us": 4134.5,
+          "meanUs": 2548.12,
+          "shareOfGateP50": 456.7
+        },
+        {
+          "stage": "07-deterministic-detectors",
+          "detail": "runInputGuard (full rules tier, all input detectors)",
+          "p50Us": 38788.4,
+          "p95Us": 61012.2,
+          "p99Us": 65515.8,
+          "meanUs": 41486.69,
+          "shareOfGateP50": 7903.1
+        },
+        {
+          "stage": "08-semantic-classifier",
+          "detail": "classifySemantic (embedding + nearest-centroid)",
+          "p50Us": 5095.9,
+          "p95Us": 7604.4,
+          "p99Us": 8415.5,
+          "meanUs": 5298.6,
+          "shareOfGateP50": 1038.3
+        },
+        {
+          "stage": "09a-policy-applyPolicy",
+          "detail": "applyPolicy(text, baseline, policy, INPUT)",
+          "p50Us": 12.2,
+          "p95Us": 23.9,
+          "p99Us": 54.4,
+          "meanUs": 13.83,
+          "shareOfGateP50": 2.5
+        },
+        {
+          "stage": "09b-policy-mcp-core",
+          "detail": "evaluateMCPToolInvocation (guard-core MCP verdict)",
+          "p50Us": 188.4,
+          "p95Us": 360.3,
+          "p99Us": 451.5,
+          "meanUs": 222.9,
+          "shareOfGateP50": 38.4
+        },
+        {
+          "stage": "10-evidence-creation",
+          "detail": "buildMcpDecision (canonical envelope)",
+          "p50Us": 9.4,
+          "p95Us": 15.1,
+          "p99Us": 36.6,
+          "meanUs": 9.47,
+          "shareOfGateP50": 1.9
+        },
+        {
+          "stage": "11a-cache-hit-inspectArguments",
+          "detail": "inspectArguments with warm clean-input template",
+          "p50Us": 197.7,
+          "p95Us": 370.7,
+          "p99Us": 414.6,
+          "meanUs": 228.02,
+          "shareOfGateP50": 40.3
+        },
+        {
+          "stage": "11b-cache-miss-inspectArguments",
+          "detail": "inspectArguments with cold cache (full scan)",
+          "p50Us": 41102.9,
+          "p95Us": 58073.5,
+          "p99Us": 65526,
+          "meanUs": 42796.25,
+          "shareOfGateP50": 8374.7
+        },
+        {
+          "stage": "12-response-serialization",
+          "detail": "JSON.stringify(forwarded frame)",
+          "p50Us": 31,
+          "p95Us": 40.5,
+          "p99Us": 46.7,
+          "meanUs": 32.09,
+          "shareOfGateP50": 6.3
+        }
+      ]
+    }
+  ]
+}

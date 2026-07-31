@@ -28,7 +28,9 @@ const CSRF_EXEMPT_PREFIXES = [
   "/api/sso/saml/acs",    // SAML IdP sends form POST without Origin
   "/api/ai-assistant",    // public endpoint (rate limited per IP, no session required)
   "/api/scanner",         // public endpoint for lead generation
+  "/api/extension/",      // browser extension: token-authenticated (x-soter-extension-token / x-api-key), no session cookie; Origin is chrome-extension://<id> which never matches NEXTAUTH_URL
 ];
+
 
 function getCanonicalOrigin(): string {
   return process.env.NEXTAUTH_URL ?? "http://localhost:3000";

@@ -61,10 +61,62 @@ for (const size of ["16", "48", "128"]) {
   else if (!existsSync(resolve(distDir, icon))) errors.push(`Icon file not found in build: ${icon}`);
 }
 
-// --- CSP must not weaken the default MV3 sandbox ----------------------------
+// --- CSP must be explicit and must not weaken the default MV3 sandbox -------
+// SS-5: relying on Chrome's *implicit* default is not an enforced control — a later
+// manifest edit can silently relax it. The hardened policy is declared and required.
 const csp = JSON.stringify(manifest.content_security_policy ?? {});
 if (/unsafe-eval|'unsafe-inline'|\bhttp:|wasm-unsafe-eval/.test(csp)) {
   errors.push(`content_security_policy weakens the MV3 default: ${csp}`);
+}
+const extensionPagesCsp = manifest.content_security_policy?.extension_pages;
+if (typeof extensionPagesCsp !== "string" || !extensionPagesCsp.trim()) {
+  errors.push("content_security_policy.extension_pages must be declared explicitly (SS-5).");
+} else {
+  const directives = new Map(
+    extensionPagesCsp
+      .split(";")
+      .map((part) => part.trim())
+      .filter(Boolean)
+      .map((part) => {
+        const [name, ...values] = part.split(/\s+/);
+        return [name.toLowerCase(), values.join(" ")];
+      }),
+  );
+  const REQUIRED_CSP = [
+    ["script-src", ["'self'"]],
+    ["object-src", ["'self'", "'none'"]],
+    ["base-uri", ["'none'", "'self'"]],
+    ["form-action", ["'none'", "'self'"]],
+  ];
+  for (const [directive, accepted] of REQUIRED_CSP) {
+    const value = directives.get(directive);
+    if (value === undefined) {
+      errors.push(`content_security_policy.extension_pages is missing "${directive}".`);
+    } else if (!accepted.includes(value.trim())) {
+      errors.push(`content_security_policy.extension_pages "${directive} ${value}" must be one of: ${accepted.join(", ")}.`);
+    }
+  }
+}
+if (manifest.sandbox) {
+  errors.push("A sandbox CSP section is not used by this extension and must not be declared.");
+}
+
+// --- No remotely reachable or page-reachable extension surface ---------------
+// The runtime message guard's threat model depends on web pages being unable to reach
+// chrome.runtime.sendMessage at all, which is true only while externally_connectable is
+// absent. Likewise every web-accessible resource is a page-reachable attack surface.
+if (manifest.externally_connectable) {
+  errors.push("externally_connectable must not be declared: it makes the message boundary reachable from web pages.");
+}
+for (const entry of manifest.web_accessible_resources ?? []) {
+  const matches = entry?.matches ?? [];
+  if (matches.length === 0) errors.push("web_accessible_resources entry has no matches (exposed to every site).");
+  for (const m of matches) {
+    if (m === "<all_urls>" || m === "*://*/*") errors.push(`web_accessible_resources exposed to "${m}".`);
+  }
+  if (entry?.use_dynamic_url !== true) {
+    errors.push("web_accessible_resources entries must set use_dynamic_url:true so the extension id is not probeable.");
+  }
 }
 
 // --- Packaged files must not include dev/secret artifacts -------------------

@@ -92,7 +92,7 @@ export default function Image() {
                 fontWeight: 700,
               }}
             >
-              &#x1F6E1;
+              S
             </span>
             <span
               style={{
@@ -287,7 +287,7 @@ export default function Image() {
                 fontWeight: 700,
               }}
             >
-              &#x1F6E1;
+              S
             </span>
             soterai.in/benchmarks
           </div>

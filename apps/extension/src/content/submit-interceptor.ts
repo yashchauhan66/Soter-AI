@@ -1,4 +1,4 @@
-import { shouldPreventSubmit } from "../lib/scanner";
+import { remediationAffordances, shouldPreventSubmit } from "../lib/scanner";
 import type { RuntimeResponse } from "../lib/types";
 import type { AiSiteAdapter, PromptTarget } from "./adapters/generic";
 import { currentPromptTarget } from "./dom-observer";
@@ -41,6 +41,12 @@ export function installSubmitInterceptor(adapter: AiSiteAdapter) {
     showSoterOverlay({
       result,
       onReplace: () => {
+        // SS-11: the kernel decides whether a remediation path exists at all. On a
+        // fail-closed block (policy tamper / unsigned-but-required / offline fail-closed)
+        // nothing may be written back into the page and nothing may be replayed — the
+        // overlay does not render this button, and this guard means an injected click on a
+        // stale overlay cannot reach the submit path either.
+        if (!remediationAffordances(result).canReplace) return;
         const safeText = result.rewrittenSafeText || result.redactedText;
         target.setText(safeText);
         approvedPrompts.add(safeText);

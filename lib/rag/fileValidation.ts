@@ -7,6 +7,17 @@ const allowed = new Map([
   [".txt", ["text/plain"]],
   [".md", ["text/markdown", "text/plain"]],
   [".pdf", ["application/pdf"]],
+  [".docx", ["application/vnd.openxmlformats-officedocument.wordprocessingml.document"]],
+  [".xlsx", ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"]],
+  [".pptx", ["application/vnd.openxmlformats-officedocument.presentationml.presentation"]],
+  [".csv", ["text/csv", "text/plain"]],
+  [".html", ["text/html", "text/plain"]],
+  [".htm", ["text/html", "text/plain"]],
+  [".json", ["application/json", "text/plain"]],
+  [".xml", ["application/xml", "text/xml", "text/plain"]],
+  [".js", ["text/javascript", "application/javascript", "text/plain"]],
+  [".ts", ["text/typescript", "text/plain"]],
+  [".py", ["text/x-python", "text/plain"]],
   [".png", ["image/png"]],
   [".jpg", ["image/jpeg"]],
   [".jpeg", ["image/jpeg"]],
@@ -20,6 +31,7 @@ export interface ValidatedFile {
 
 export function detectMimeType(content: Buffer): string {
   if (content.subarray(0, 5).toString("ascii") === "%PDF-") return "application/pdf";
+  if (content.subarray(0, 4).equals(Buffer.from([0x50, 0x4b, 0x03, 0x04]))) return "application/zip";
   if (content.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]))) return "image/png";
   if (content[0] === 0xff && content[1] === 0xd8 && content[2] === 0xff) return "image/jpeg";
   const sample = content.subarray(0, Math.min(content.length, 4096));
@@ -30,11 +42,26 @@ export function detectMimeType(content: Buffer): string {
 export function validateDocumentFile(input: { fileName: string; declaredMimeType?: string; content: Buffer }): ValidatedFile {
   const extension = extname(input.fileName).toLowerCase();
   const acceptedMimeTypes = allowed.get(extension);
-  if (!acceptedMimeTypes) throw new Error("Unsupported document extension. Use TXT, Markdown, PDF, PNG, JPG, or JPEG.");
+  if (!acceptedMimeTypes) throw new Error("Unsupported document extension.");
   if (!input.content.length) throw new Error("Document is empty.");
   if (input.content.length > MAX_DOCUMENT_BYTES) throw new Error(`Document exceeds the ${MAX_DOCUMENT_BYTES} byte limit.`);
   const detectedMimeType = detectMimeType(input.content);
-  const normalizedDetected = extension === ".md" && detectedMimeType === "text/plain" ? "text/markdown" : detectedMimeType;
+  const officeMime = extension === ".docx"
+    ? "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    : extension === ".xlsx"
+      ? "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      : extension === ".pptx"
+        ? "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+        : null;
+  const normalizedDetected = officeMime && detectedMimeType === "application/zip"
+    ? officeMime
+    : extension === ".md" && detectedMimeType === "text/plain"
+      ? "text/markdown"
+      : extension === ".csv" && detectedMimeType === "text/plain"
+        ? "text/csv"
+        : [".html", ".htm"].includes(extension) && detectedMimeType === "text/plain"
+          ? "text/html"
+          : detectedMimeType;
   if (!acceptedMimeTypes.includes(normalizedDetected) && !acceptedMimeTypes.includes(detectedMimeType)) {
     throw new Error(`File signature ${detectedMimeType} does not match extension ${extension}.`);
   }

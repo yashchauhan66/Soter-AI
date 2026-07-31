@@ -11,12 +11,19 @@ export interface MCPGatewayRequest {
     protectionMode?: ProtectionMode;
     allowedPermissions?: MCPPermission[];
     taintedSources?: TaintedSource[];
+    /**
+     * Honesty declaration by the CALLER: set true only when the caller
+     * mechanically gates tool execution on this decision (a DENY makes the
+     * invocation impossible). Every current caller (broker preflight, VS Code
+     * QuickPick) is advisory, so the default is false → DETECTION_ONLY.
+     */
+    callerEnforcesPreExecution?: boolean;
 }
 
 export interface MCPGatewayDecision {
     action: EnforcementAction;
     riskScore: number;
-    coverageLevel: "STRONG_ENFORCEMENT";
+    coverageLevel: "STRONG_ENFORCEMENT" | "DETECTION_ONLY";
     server?: MCPServerAssessment;
     reasonCodes: string[];
     categories: string[];
@@ -25,7 +32,11 @@ export interface MCPGatewayDecision {
     deterministic: true;
 }
 
+/** Stateless: `RuntimePolicyEngine` holds no per-request state, so one shared instance is safe. */
+const POLICY_ENGINE = new RuntimePolicyEngine();
+
 export function evaluateMCPToolInvocation(request: MCPGatewayRequest): MCPGatewayDecision {
+    const coverageLevel = request.callerEnforcesPreExecution ? "STRONG_ENFORCEMENT" as const : "DETECTION_ONLY" as const;
     const analysis = request.mcpConfig ? analyzeMCPConfig(request.mcpConfig) : undefined;
     const server = analysis?.servers.find((item) => item.name === request.serverName);
     const categories: string[] = [];
@@ -53,7 +64,12 @@ export function evaluateMCPToolInvocation(request: MCPGatewayRequest): MCPGatewa
     }
 
     const serializedArgs = safeStringify(request.args);
-    if (containsRawSecret(serializedArgs)) {
+    // `containsRawSecret` walks ~29 high-risk secret patterns over the whole
+    // serialized argument blob. The patterns are stateless (no /g), so the scan
+    // is evaluated exactly once and the boolean is reused by every consumer
+    // below — previously the identical scan ran three times per invocation.
+    const hasRawSecret = containsRawSecret(serializedArgs);
+    if (hasRawSecret) {
         riskScore = Math.max(riskScore, 95);
         categories.push("secret_egress");
         reasonCodes.push("MCP_ARGS_CONTAIN_SECRET");
@@ -66,30 +82,40 @@ export function evaluateMCPToolInvocation(request: MCPGatewayRequest): MCPGatewa
         reasonCodes.push("TAINTED_MCP_INVOCATION");
     }
 
-    const policy = new RuntimePolicyEngine().evaluate({
+    const policy = POLICY_ENGINE.evaluate({
         actionType: "mcp_tool_call",
         protectionMode: request.protectionMode ?? "standard",
-        coverageLevel: "STRONG_ENFORCEMENT",
+        coverageLevel,
         riskScore,
         categories,
         parserStatus: "parsed",
         reversible: false,
-        rawCredentialExposure: containsRawSecret(serializedArgs),
-        containsSecrets: containsRawSecret(serializedArgs),
+        rawCredentialExposure: hasRawSecret,
+        containsSecrets: hasRawSecret,
         taintedByPromptInjection: taint.labels.includes("prompt_injection") || categories.includes("prompt_injection"),
     });
 
     let action = policy.action;
     if (reasonCodes.includes("UNKNOWN_MCP_SERVER") || reasonCodes.includes("MCP_ARGS_CONTAIN_SECRET") || reasonCodes.includes("MCP_PROMPT_INJECTION")) action = "DENY";
 
+    // The preview is a lazy memoized getter: `redactForSharing` applies ~45
+    // ordered redaction rules plus a surviving-secret sweep over the full
+    // argument blob, which is pure waste on the common ALLOW path where no
+    // consumer ever reads it. Every consumer that DOES read it (approval
+    // records, persisted evidence, the VS Code preview) receives a bit-for-bit
+    // identical string, computed at most once per decision.
+    let previewCache: string | undefined;
     return {
         action,
         riskScore,
-        coverageLevel: "STRONG_ENFORCEMENT",
+        coverageLevel,
         server,
         reasonCodes: [...new Set([...reasonCodes, ...policy.reasonCodes])],
         categories: [...new Set(categories)],
-        redactedArgsPreview: redactForSharing(serializedArgs).slice(0, 500),
+        get redactedArgsPreview(): string {
+            if (previewCache === undefined) previewCache = redactForSharing(serializedArgs).slice(0, 500);
+            return previewCache;
+        },
         explanation: [reasonCodes.length ? `MCP gateway reasons: ${reasonCodes.join(", ")}.` : "", policy.explanation].filter(Boolean).join(" "),
         deterministic: true,
     };

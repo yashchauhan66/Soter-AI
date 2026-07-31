@@ -5,6 +5,7 @@ import { promisify } from "node:util";
 import {
     ApprovalStore,
     analyzeControlledTerminalCommand,
+    classifyRestoration,
     DecisionEngine,
     discoverRuntimeCapabilities,
     evaluateFileOperation,
@@ -26,6 +27,7 @@ import {
     type ApprovalScope,
     type BrokerMessage,
     type Canary,
+    type CheckpointSideEffect,
     type FileOperation,
     type GuardAction,
     type GovernanceRole,
@@ -41,6 +43,11 @@ import {
     type TaintedSource,
 } from "@soterai/guard-core";
 import { tokenMatches } from "./auth";
+import {
+    CheckpointScopeError,
+    FilesystemCheckpointStore,
+    type FilesystemCheckpointStoreOptions,
+} from "./CheckpointStore";
 
 const execFileAsync = promisify(execFile);
 
@@ -80,6 +87,13 @@ export interface BrokerServerOptions {
     terminalExecutor?: (executable: string, args: string[], options: { timeoutMs: number; maxBufferBytes: number }) => Promise<{ stdout: string; stderr: string; exitCode: number }>;
     logger?: (message: string, metadata?: Record<string, unknown>) => void;
     canaries?: Array<Pick<Canary, "id" | "token" | "hash" | "redactedPreview">>;
+    /**
+     * Enables the real reversible checkpoint/rollback resource adapter. Omitted
+     * by default: without an operator-configured isolation root there is no
+     * resource SoterAI is allowed to snapshot or restore, so the endpoints
+     * answer 501 rather than pretending to protect something.
+     */
+    checkpoint?: FilesystemCheckpointStoreOptions;
 }
 
 interface JsonBody { [key: string]: unknown }
@@ -99,9 +113,11 @@ export class BrokerServer {
     private readonly rateBuckets = new Map<string, { minute: number; count: number }>();
     private safeMode = { enabled: false, level: "developer" as SafeModeLevel };
     private startedAt?: string;
+    private readonly checkpoints?: FilesystemCheckpointStore;
 
     constructor(private readonly options: BrokerServerOptions) {
         if (!options.token || options.token.length < 32) throw new Error("A broker auth token of at least 32 characters is required");
+        this.checkpoints = options.checkpoint ? new FilesystemCheckpointStore(options.checkpoint) : undefined;
         this.server = createServer((req, res) => void this.handle(req, res));
         this.server.requestTimeout = options.requestTimeoutMs ?? 30_000;
         this.server.headersTimeout = Math.min(this.server.requestTimeout, 15_000);
@@ -193,6 +209,8 @@ export class BrokerServer {
             if (req.method === "POST" && url.pathname === "/v1/preflight/policy-change") return this.previewPolicyChange(res, body);
             if (req.method === "POST" && url.pathname === "/v1/preflight/process-launch") return this.previewProcessLaunch(res, body);
             if (req.method === "POST" && url.pathname === "/v1/preflight/extension-isolation") return this.previewExtensionIsolation(res, body);
+            if (req.method === "POST" && url.pathname === "/v1/checkpoint/create") return void await this.createCheckpoint(res, body, req);
+            if (req.method === "POST" && url.pathname === "/v1/checkpoint/rollback") return void await this.rollbackCheckpoint(res, body, req);
             if (req.method === "POST" && url.pathname === "/v1/ai/openai-compatible/chat/completions") {
                 return void await this.proxyOpenAI(res, body, req);
             }
@@ -793,6 +811,72 @@ export class BrokerServer {
         } catch { throw new HttpError(400, "invalid_json", "Request body must be a JSON object"); }
     }
 
+    private requireCheckpointStore(): FilesystemCheckpointStore {
+        if (!this.checkpoints) {
+            throw new HttpError(501, "checkpoint_disabled", "Checkpoint rollback is not configured on this broker (no isolation root)");
+        }
+        return this.checkpoints;
+    }
+
+    /**
+     * Tenant + actor are taken from request headers so the checkpoint is bound to
+     * a canonical identity at creation, and any later rollback must present the
+     * SAME pair. The bearer token alone is not identity: one authenticated host
+     * can carry several tenants/actors, so an authenticated caller must still not
+     * be able to roll back another tenant's or actor's checkpoint.
+     */
+    private checkpointOwner(req: IncomingMessage): { tenantId: string; actorId: string } {
+        const tenantId = headerValue(req, "x-soterai-tenant");
+        const actorId = headerValue(req, "x-soterai-actor");
+        if (!tenantId) throw new HttpError(400, "missing_tenant", "x-soterai-tenant is required for checkpoint operations");
+        if (!actorId) throw new HttpError(400, "missing_actor", "x-soterai-actor is required for checkpoint operations");
+        return { tenantId, actorId };
+    }
+
+    private async createCheckpoint(res: ServerResponse, body: JsonBody, req: IncomingMessage): Promise<void> {
+        const store = this.requireCheckpointStore();
+        const owner = this.checkpointOwner(req);
+        const paths = stringArray(body.paths);
+        if (paths.length === 0) throw new HttpError(400, "invalid_request", "paths must be a non-empty array of protected paths");
+        if (paths.length > 200) throw new HttpError(413, "too_many_paths", "A checkpoint may protect at most 200 paths");
+        try {
+            const record = await store.createCheckpoint({ owner, paths, sideEffects: parseSideEffects(body.sideEffects) });
+            this.record({
+                eventType: "checkpoint_created",
+                decision: "allow",
+                riskScore: 0,
+                categories: ["checkpoint"],
+                contentHash: record.integrity.slice(0, 16),
+            });
+            // Only non-content metadata leaves the broker: no path, no bytes.
+            this.json(res, 201, {
+                checkpointId: record.id,
+                createdAt: record.createdAt,
+                expiresAt: record.expiresAt,
+                fileCount: record.files.length,
+                status: record.status,
+                classification: classifyRestoration(record).classification,
+            });
+        } catch (error) {
+            if (error instanceof CheckpointScopeError) throw new HttpError(403, "checkpoint_out_of_scope", error.message);
+            throw error;
+        }
+    }
+
+    private async rollbackCheckpoint(res: ServerResponse, body: JsonBody, req: IncomingMessage): Promise<void> {
+        const store = this.requireCheckpointStore();
+        const owner = this.checkpointOwner(req);
+        const checkpointId = requireString(body.checkpointId, "checkpointId");
+        const result = await store.rollback(checkpointId, owner);
+        this.record({
+            eventType: result.ok ? "checkpoint_rolled_back" : "checkpoint_rollback_denied",
+            decision: result.ok ? "allow" : "block",
+            riskScore: result.ok ? 0 : 60,
+            categories: ["checkpoint", result.evidence.code],
+        });
+        this.json(res, result.ok ? 200 : statusForRollback(result.evidence.code), { evidence: result.evidence });
+    }
+
     private applySecurityHeaders(res: ServerResponse): void {
         res.setHeader("cache-control", "no-store");
         res.setHeader("x-content-type-options", "nosniff");
@@ -1005,6 +1089,30 @@ function minimalTerminalEnv(env: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
 function stringValue(value: unknown): string | undefined {
     if (Array.isArray(value)) value = value[0];
     return typeof value === "string" ? value : undefined;
+}
+function headerValue(req: IncomingMessage, name: string): string | undefined {
+    const raw = stringValue(req.headers[name]);
+    const trimmed = raw?.trim();
+    return trimmed && trimmed.length <= 200 ? trimmed : undefined;
+}
+function parseSideEffects(value: unknown): CheckpointSideEffect[] {
+    if (!Array.isArray(value)) return [];
+    return value.slice(0, 50).map((raw, index) => {
+        const item = objectValue(raw);
+        return {
+            id: stringValue(item.id) ?? `effect_${index}`,
+            kind: stringValue(item.kind) ?? "unknown",
+            reversible: item.reversible === true,
+            compensatingAction: stringValue(item.compensatingAction),
+        };
+    });
+}
+function statusForRollback(code: string): number {
+    if (code === "NOT_FOUND") return 404;
+    if (code === "TENANT_MISMATCH" || code === "ACTOR_MISMATCH" || code === "INTEGRITY_FAILED") return 403;
+    if (code === "ALREADY_ROLLED_BACK") return 200;
+    if (code === "EXPIRED") return 410;
+    return 409;
 }
 function requireString(value: unknown, field: string): string {
     const parsed = stringValue(value);

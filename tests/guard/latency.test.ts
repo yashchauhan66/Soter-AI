@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { performance } from "node:perf_hooks";
 import test from "node:test";
 import { analyzeText } from "../../lib/guard/analyze";
+import { isPrefilterVerify } from "../../lib/guard/detectors/literalPrefilter";
 
 // Guard latency regression guard.
 //
@@ -12,6 +13,14 @@ import { analyzeText } from "../../lib/guard/analyze";
 // so the test is stable across CI hardware while still catching gross
 // regressions such as re-introducing per-rule regex recompilation or removing
 // the decode-variant short-circuit.
+//
+// SOTERAI_PREFILTER_VERIFY=1 arms the prefilter's runtime soundness verifier,
+// which re-runs every regex the prefilter skipped. That is a diagnostic mode,
+// never production: it deliberately does the work twice. Measured on this
+// corpus it costs +37% per call (5.32 -> 7.27 ms), so the production budget is
+// not a meaningful bound there. The budgets are scaled instead of skipped, so
+// the mode still catches a gross regression.
+const BUDGET = isPrefilterVerify() ? 2.5 : 1;
 
 const CORPUS = [
   "What are your public product features?",
@@ -48,8 +57,8 @@ test("guard analyzer stays well under the p50 latency budget", () => {
   const p50 = percentile(durations, 50);
   const p99 = percentile(durations, 99);
 
-  assert.ok(p50 < 15, `analyzer p50 ${p50.toFixed(2)}ms should stay under 15ms`);
-  assert.ok(p99 < 80, `analyzer p99 ${p99.toFixed(2)}ms should stay under 80ms`);
+  assert.ok(p50 < 15 * BUDGET, `analyzer p50 ${p50.toFixed(2)}ms should stay under ${15 * BUDGET}ms`);
+  assert.ok(p99 < 80 * BUDGET, `analyzer p99 ${p99.toFixed(2)}ms should stay under ${80 * BUDGET}ms`);
 });
 
 test("cached patterns keep repeated benign analysis cheap", () => {
@@ -58,5 +67,8 @@ test("cached patterns keep repeated benign analysis cheap", () => {
   const started = performance.now();
   for (let i = 0; i < 500; i += 1) analyzeText(benign, "INPUT");
   const perCall = (performance.now() - started) / 500;
-  assert.ok(perCall < 10, `benign per-call ${perCall.toFixed(2)}ms should stay under 10ms`);
+  assert.ok(
+    perCall < 10 * BUDGET,
+    `benign per-call ${perCall.toFixed(2)}ms should stay under ${10 * BUDGET}ms`,
+  );
 });

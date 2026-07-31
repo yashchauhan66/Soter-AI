@@ -1,0 +1,894 @@
+{
+  "tool": "detector-tier-profile",
+  "iterations": 200,
+  "warmup": 30,
+  "detectorCount": 26,
+  "env": {
+    "capturedAt": "2026-07-31T10:29:41.272Z",
+    "node": {
+      "version": "v22.16.0",
+      "v8": "12.4.254.21-node.26",
+      "execArgv": [
+        "--require",
+        "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\preflight.cjs",
+        "--import",
+        "file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/loader.mjs"
+      ],
+      "gcExposed": false,
+      "jitDefaults": true,
+      "heapSizeLimitMiB": 4144
+    },
+    "os": {
+      "platform": "win32",
+      "release": "10.0.26300",
+      "arch": "x64",
+      "totalMemMiB": 16191.4,
+      "freeMemMiB": 3123.3
+    },
+    "cpu": {
+      "model": "Intel(R) Core(TM) i5-8350U CPU @ 1.70GHz",
+      "logicalCores": 8,
+      "speedMHz": 1896,
+      "governor": {
+        "source": "Win32_Processor (CIM)",
+        "currentClockMHz": 1696,
+        "maxClockMHz": 1896,
+        "note": "Windows exposes no Linux-style cpufreq governor. CurrentClockSpeed vs MaxClockSpeed is the available proxy for whether the CPU is throttled or boosting during the trial."
+      }
+    },
+    "process": {
+      "pid": 19704,
+      "priority": -7,
+      "priorityLabel": "PRIORITY_ABOVE_NORMAL",
+      "priorityRequested": "above_normal",
+      "priorityApplied": true
+    },
+    "load": {
+      "before": {
+        "loadavg": [
+          0,
+          0,
+          0
+        ],
+        "busyFraction": 0.4422,
+        "sampleMs": 250,
+        "cores": 8
+      }
+    },
+    "backgroundProcesses": {
+      "counted": 332,
+      "notable": [
+        {
+          "name": "Code",
+          "cpuSeconds": 65066.81
+        },
+        {
+          "name": "chrome",
+          "cpuSeconds": 6117.53
+        },
+        {
+          "name": "msedgewebview2",
+          "cpuSeconds": 1901.94
+        },
+        {
+          "name": "node",
+          "cpuSeconds": 867.08
+        },
+        {
+          "name": "msedge",
+          "cpuSeconds": 381.62
+        },
+        {
+          "name": "codex",
+          "cpuSeconds": 64.08
+        },
+        {
+          "name": "chrome-native-host",
+          "cpuSeconds": 0.03
+        },
+        {
+          "name": "MpDefenderCoreService",
+          "cpuSeconds": 0
+        },
+        {
+          "name": "MsMpEng",
+          "cpuSeconds": 0
+        },
+        {
+          "name": "SearchIndexer",
+          "cpuSeconds": 0
+        }
+      ],
+      "source": "Get-Process"
+    },
+    "benchmarkMode": {
+      "envApplied": {
+        "SOTERAI_DETECTION_TIER": "hybrid"
+      },
+      "warmupIterations": 30,
+      "gcBetweenPhases": true
+    }
+  },
+  "gc": {
+    "collections": 0,
+    "totalPauseMs": 0,
+    "maxPauseMs": 0,
+    "byKind": {}
+  },
+  "cases": [
+    {
+      "case": "simple-16B",
+      "payload": {
+        "bytes": 16,
+        "sha256": "cbbbdcd27692344d"
+      },
+      "analyzeText": {
+        "p50Us": 2966.2,
+        "p95Us": 4055.8,
+        "meanUs": 3078.58
+      },
+      "detectorSumP50Us": 1672.4,
+      "nonDetectorP50Us": 1293.8,
+      "variantConstructionP50Us": 255.5,
+      "tail": {
+        "coldScopePass": {
+          "p50Us": 1927.9,
+          "p95Us": 3235.7,
+          "meanUs": 2153.79
+        },
+        "analyzeHybrid": {
+          "p50Us": 2966.2,
+          "p95Us": 4055.8,
+          "meanUs": 3078.58
+        },
+        "analyzeRulesOnly": {
+          "p50Us": 1909.3,
+          "p95Us": 2510.7,
+          "meanUs": 1945.99
+        },
+        "semanticContributionP50Us": 1056.9,
+        "semanticStandalone": {
+          "p50Us": 898.2,
+          "p95Us": 1196.9,
+          "meanUs": 914.79
+        },
+        "redactionStandalone": {
+          "p50Us": 2.2,
+          "p95Us": 2.6,
+          "meanUs": 2.11
+        },
+        "scoringAndAdvisoryStandalone": {
+          "p50Us": 11,
+          "p95Us": 20.5,
+          "meanUs": 13.57
+        }
+      },
+      "detectors": [
+        {
+          "detector": "promptInjection",
+          "findings": 0,
+          "p50Us": 246.1,
+          "p95Us": 575.2,
+          "meanUs": 323.87,
+          "shareOfTierP50": 14.7
+        },
+        {
+          "detector": "generalizedIntent",
+          "findings": 0,
+          "p50Us": 239.2,
+          "p95Us": 471.6,
+          "meanUs": 302.87,
+          "shareOfTierP50": 14.3
+        },
+        {
+          "detector": "multilingualAttack",
+          "findings": 0,
+          "p50Us": 219.4,
+          "p95Us": 346.2,
+          "meanUs": 240.43,
+          "shareOfTierP50": 13.1
+        },
+        {
+          "detector": "jailbreak",
+          "findings": 0,
+          "p50Us": 177.6,
+          "p95Us": 312.3,
+          "meanUs": 188.79,
+          "shareOfTierP50": 10.6
+        },
+        {
+          "detector": "systemPromptLeakAttempt",
+          "findings": 0,
+          "p50Us": 90.1,
+          "p95Us": 173.8,
+          "meanUs": 105.11,
+          "shareOfTierP50": 5.4
+        },
+        {
+          "detector": "recursiveInjection",
+          "findings": 0,
+          "p50Us": 74.4,
+          "p95Us": 146.2,
+          "meanUs": 90.46,
+          "shareOfTierP50": 4.4
+        },
+        {
+          "detector": "harmfulContentRequest",
+          "findings": 0,
+          "p50Us": 69.8,
+          "p95Us": 156,
+          "meanUs": 77.34,
+          "shareOfTierP50": 4.2
+        },
+        {
+          "detector": "adversarialCyber",
+          "findings": 0,
+          "p50Us": 68.8,
+          "p95Us": 148.2,
+          "meanUs": 83.67,
+          "shareOfTierP50": 4.1
+        },
+        {
+          "detector": "toxicity",
+          "findings": 0,
+          "p50Us": 59.1,
+          "p95Us": 159.7,
+          "meanUs": 76.24,
+          "shareOfTierP50": 3.5
+        },
+        {
+          "detector": "ssrf",
+          "findings": 0,
+          "p50Us": 58.9,
+          "p95Us": 136.1,
+          "meanUs": 69.75,
+          "shareOfTierP50": 3.5
+        },
+        {
+          "detector": "broadHarmfulContent",
+          "findings": 0,
+          "p50Us": 51.1,
+          "p95Us": 125.3,
+          "meanUs": 85.05,
+          "shareOfTierP50": 3.1
+        },
+        {
+          "detector": "secrets",
+          "findings": 0,
+          "p50Us": 46.4,
+          "p95Us": 108.9,
+          "meanUs": 52.68,
+          "shareOfTierP50": 2.8
+        },
+        {
+          "detector": "embeddingPoisoning",
+          "findings": 0,
+          "p50Us": 46.1,
+          "p95Us": 125.2,
+          "meanUs": 61.99,
+          "shareOfTierP50": 2.8
+        },
+        {
+          "detector": "competitiveIntel",
+          "findings": 0,
+          "p50Us": 38.7,
+          "p95Us": 113.4,
+          "meanUs": 57.53,
+          "shareOfTierP50": 2.3
+        },
+        {
+          "detector": "socialEngineering",
+          "findings": 0,
+          "p50Us": 32.2,
+          "p95Us": 86.3,
+          "meanUs": 48.85,
+          "shareOfTierP50": 1.9
+        },
+        {
+          "detector": "pii",
+          "findings": 0,
+          "p50Us": 27.2,
+          "p95Us": 85.1,
+          "meanUs": 35.42,
+          "shareOfTierP50": 1.6
+        },
+        {
+          "detector": "insecureDeserialization",
+          "findings": 0,
+          "p50Us": 24.3,
+          "p95Us": 33.4,
+          "meanUs": 27.19,
+          "shareOfTierP50": 1.5
+        },
+        {
+          "detector": "indiaPii",
+          "findings": 0,
+          "p50Us": 22.9,
+          "p95Us": 31.7,
+          "meanUs": 25.8,
+          "shareOfTierP50": 1.4
+        },
+        {
+          "detector": "mcpToolPoisoning",
+          "findings": 0,
+          "p50Us": 22.3,
+          "p95Us": 45,
+          "meanUs": 51.94,
+          "shareOfTierP50": 1.3
+        },
+        {
+          "detector": "dataExfiltrationInput",
+          "findings": 0,
+          "p50Us": 12.8,
+          "p95Us": 23.4,
+          "meanUs": 16.42,
+          "shareOfTierP50": 0.8
+        },
+        {
+          "detector": "memoryPoisoning",
+          "findings": 0,
+          "p50Us": 12.7,
+          "p95Us": 16.6,
+          "meanUs": 14.15,
+          "shareOfTierP50": 0.8
+        },
+        {
+          "detector": "replyChannelExfil",
+          "findings": 0,
+          "p50Us": 10.4,
+          "p95Us": 15.6,
+          "meanUs": 11.57,
+          "shareOfTierP50": 0.6
+        },
+        {
+          "detector": "advancedUnicodeSmuggling",
+          "findings": 0,
+          "p50Us": 6.3,
+          "p95Us": 11.3,
+          "meanUs": 9.45,
+          "shareOfTierP50": 0.4
+        },
+        {
+          "detector": "modelSupplyChain",
+          "findings": 0,
+          "p50Us": 5.4,
+          "p95Us": 9,
+          "meanUs": 6.86,
+          "shareOfTierP50": 0.3
+        },
+        {
+          "detector": "multimodalAttack",
+          "findings": 0,
+          "p50Us": 5.1,
+          "p95Us": 8.2,
+          "meanUs": 6,
+          "shareOfTierP50": 0.3
+        },
+        {
+          "detector": "behavioralAnomaly",
+          "findings": 0,
+          "p50Us": 5.1,
+          "p95Us": 9.7,
+          "meanUs": 12.93,
+          "shareOfTierP50": 0.3
+        }
+      ]
+    },
+    {
+      "case": "block-cmd",
+      "payload": {
+        "bytes": 22,
+        "sha256": "2f3b94579f43fb59"
+      },
+      "analyzeText": {
+        "p50Us": 1310,
+        "p95Us": 2729,
+        "meanUs": 1508.37
+      },
+      "detectorSumP50Us": 1289.5,
+      "nonDetectorP50Us": 20.5,
+      "variantConstructionP50Us": 217.2,
+      "tail": {
+        "coldScopePass": {
+          "p50Us": 1506.7,
+          "p95Us": 2280.3,
+          "meanUs": 1504.38
+        },
+        "analyzeHybrid": {
+          "p50Us": 1310,
+          "p95Us": 2729,
+          "meanUs": 1508.37
+        },
+        "analyzeRulesOnly": {
+          "p50Us": 1419.5,
+          "p95Us": 2600.6,
+          "meanUs": 1535.57
+        },
+        "semanticContributionP50Us": -109.5,
+        "semanticStandalone": {
+          "p50Us": 971.2,
+          "p95Us": 1613.3,
+          "meanUs": 1067.31
+        },
+        "redactionStandalone": {
+          "p50Us": 1.6,
+          "p95Us": 2.1,
+          "meanUs": 1.82
+        },
+        "scoringAndAdvisoryStandalone": {
+          "p50Us": 7.9,
+          "p95Us": 13.8,
+          "meanUs": 9.36
+        }
+      },
+      "detectors": [
+        {
+          "detector": "promptInjection",
+          "findings": 0,
+          "p50Us": 259.3,
+          "p95Us": 362.8,
+          "meanUs": 288.04,
+          "shareOfTierP50": 20.1
+        },
+        {
+          "detector": "multilingualAttack",
+          "findings": 0,
+          "p50Us": 207.9,
+          "p95Us": 293.6,
+          "meanUs": 221.45,
+          "shareOfTierP50": 16.1
+        },
+        {
+          "detector": "generalizedIntent",
+          "findings": 1,
+          "p50Us": 200,
+          "p95Us": 311.8,
+          "meanUs": 235.39,
+          "shareOfTierP50": 15.5
+        },
+        {
+          "detector": "jailbreak",
+          "findings": 0,
+          "p50Us": 89.7,
+          "p95Us": 154.5,
+          "meanUs": 97.48,
+          "shareOfTierP50": 7
+        },
+        {
+          "detector": "harmfulContentRequest",
+          "findings": 0,
+          "p50Us": 55.1,
+          "p95Us": 112.6,
+          "meanUs": 64.23,
+          "shareOfTierP50": 4.3
+        },
+        {
+          "detector": "recursiveInjection",
+          "findings": 0,
+          "p50Us": 48.6,
+          "p95Us": 87.2,
+          "meanUs": 50.16,
+          "shareOfTierP50": 3.8
+        },
+        {
+          "detector": "broadHarmfulContent",
+          "findings": 0,
+          "p50Us": 47.5,
+          "p95Us": 102.5,
+          "meanUs": 53.4,
+          "shareOfTierP50": 3.7
+        },
+        {
+          "detector": "systemPromptLeakAttempt",
+          "findings": 0,
+          "p50Us": 46.5,
+          "p95Us": 97.7,
+          "meanUs": 49.74,
+          "shareOfTierP50": 3.6
+        },
+        {
+          "detector": "adversarialCyber",
+          "findings": 0,
+          "p50Us": 43.8,
+          "p95Us": 113,
+          "meanUs": 49.72,
+          "shareOfTierP50": 3.4
+        },
+        {
+          "detector": "toxicity",
+          "findings": 0,
+          "p50Us": 41.1,
+          "p95Us": 64.2,
+          "meanUs": 40.65,
+          "shareOfTierP50": 3.2
+        },
+        {
+          "detector": "socialEngineering",
+          "findings": 0,
+          "p50Us": 30.8,
+          "p95Us": 46.9,
+          "meanUs": 32.23,
+          "shareOfTierP50": 2.4
+        },
+        {
+          "detector": "insecureDeserialization",
+          "findings": 0,
+          "p50Us": 26.4,
+          "p95Us": 40.3,
+          "meanUs": 27.98,
+          "shareOfTierP50": 2
+        },
+        {
+          "detector": "embeddingPoisoning",
+          "findings": 0,
+          "p50Us": 23.8,
+          "p95Us": 32.6,
+          "meanUs": 24.76,
+          "shareOfTierP50": 1.8
+        },
+        {
+          "detector": "ssrf",
+          "findings": 0,
+          "p50Us": 22.7,
+          "p95Us": 28.2,
+          "meanUs": 25.16,
+          "shareOfTierP50": 1.8
+        },
+        {
+          "detector": "dataExfiltrationInput",
+          "findings": 0,
+          "p50Us": 22,
+          "p95Us": 34.2,
+          "meanUs": 25.05,
+          "shareOfTierP50": 1.7
+        },
+        {
+          "detector": "secrets",
+          "findings": 0,
+          "p50Us": 20.6,
+          "p95Us": 28.6,
+          "meanUs": 24.68,
+          "shareOfTierP50": 1.6
+        },
+        {
+          "detector": "competitiveIntel",
+          "findings": 0,
+          "p50Us": 20.2,
+          "p95Us": 30.2,
+          "meanUs": 20.81,
+          "shareOfTierP50": 1.6
+        },
+        {
+          "detector": "replyChannelExfil",
+          "findings": 0,
+          "p50Us": 13.7,
+          "p95Us": 20.5,
+          "meanUs": 15.22,
+          "shareOfTierP50": 1.1
+        },
+        {
+          "detector": "pii",
+          "findings": 0,
+          "p50Us": 13.6,
+          "p95Us": 22.6,
+          "meanUs": 27.84,
+          "shareOfTierP50": 1.1
+        },
+        {
+          "detector": "indiaPii",
+          "findings": 0,
+          "p50Us": 11.6,
+          "p95Us": 19.1,
+          "meanUs": 11.75,
+          "shareOfTierP50": 0.9
+        },
+        {
+          "detector": "memoryPoisoning",
+          "findings": 0,
+          "p50Us": 11.4,
+          "p95Us": 17.5,
+          "meanUs": 11.82,
+          "shareOfTierP50": 0.9
+        },
+        {
+          "detector": "mcpToolPoisoning",
+          "findings": 0,
+          "p50Us": 11.2,
+          "p95Us": 18.3,
+          "meanUs": 12.13,
+          "shareOfTierP50": 0.9
+        },
+        {
+          "detector": "multimodalAttack",
+          "findings": 0,
+          "p50Us": 6,
+          "p95Us": 10.7,
+          "meanUs": 6.81,
+          "shareOfTierP50": 0.5
+        },
+        {
+          "detector": "advancedUnicodeSmuggling",
+          "findings": 0,
+          "p50Us": 5.9,
+          "p95Us": 7.4,
+          "meanUs": 6.54,
+          "shareOfTierP50": 0.5
+        },
+        {
+          "detector": "behavioralAnomaly",
+          "findings": 0,
+          "p50Us": 5.1,
+          "p95Us": 7,
+          "meanUs": 6.07,
+          "shareOfTierP50": 0.4
+        },
+        {
+          "detector": "modelSupplyChain",
+          "findings": 0,
+          "p50Us": 5,
+          "p95Us": 10.3,
+          "meanUs": 6.75,
+          "shareOfTierP50": 0.4
+        }
+      ]
+    },
+    {
+      "case": "large-8KB",
+      "payload": {
+        "bytes": 8211,
+        "sha256": "a5609667d280d458"
+      },
+      "analyzeText": {
+        "p50Us": 12660.5,
+        "p95Us": 16000.1,
+        "meanUs": 12110.8
+      },
+      "detectorSumP50Us": 4218.2,
+      "nonDetectorP50Us": 8442.3,
+      "variantConstructionP50Us": 1267.6,
+      "tail": {
+        "coldScopePass": {
+          "p50Us": 5485.8,
+          "p95Us": 7604.1,
+          "meanUs": 5520.29
+        },
+        "analyzeHybrid": {
+          "p50Us": 12660.5,
+          "p95Us": 16000.1,
+          "meanUs": 12110.8
+        },
+        "analyzeRulesOnly": {
+          "p50Us": 8691.7,
+          "p95Us": 10004.4,
+          "meanUs": 8430.29
+        },
+        "semanticContributionP50Us": 3968.8,
+        "semanticStandalone": {
+          "p50Us": 5235.4,
+          "p95Us": 9012.3,
+          "meanUs": 5397.45
+        },
+        "redactionStandalone": {
+          "p50Us": 1.6,
+          "p95Us": 1.9,
+          "meanUs": 1.91
+        },
+        "scoringAndAdvisoryStandalone": {
+          "p50Us": 150.7,
+          "p95Us": 240.9,
+          "meanUs": 170.87
+        }
+      },
+      "detectors": [
+        {
+          "detector": "generalizedIntent",
+          "findings": 0,
+          "p50Us": 947.4,
+          "p95Us": 1509.9,
+          "meanUs": 1031.74,
+          "shareOfTierP50": 22.5
+        },
+        {
+          "detector": "adversarialCyber",
+          "findings": 0,
+          "p50Us": 846.8,
+          "p95Us": 1313.3,
+          "meanUs": 831.84,
+          "shareOfTierP50": 20.1
+        },
+        {
+          "detector": "indiaPii",
+          "findings": 0,
+          "p50Us": 569.4,
+          "p95Us": 833.7,
+          "meanUs": 582.34,
+          "shareOfTierP50": 13.5
+        },
+        {
+          "detector": "multilingualAttack",
+          "findings": 0,
+          "p50Us": 514.5,
+          "p95Us": 767,
+          "meanUs": 529.91,
+          "shareOfTierP50": 12.2
+        },
+        {
+          "detector": "embeddingPoisoning",
+          "findings": 0,
+          "p50Us": 265.5,
+          "p95Us": 359.8,
+          "meanUs": 269.17,
+          "shareOfTierP50": 6.3
+        },
+        {
+          "detector": "promptInjection",
+          "findings": 0,
+          "p50Us": 220.9,
+          "p95Us": 583.7,
+          "meanUs": 286.83,
+          "shareOfTierP50": 5.2
+        },
+        {
+          "detector": "pii",
+          "findings": 0,
+          "p50Us": 194.2,
+          "p95Us": 303.2,
+          "meanUs": 204.95,
+          "shareOfTierP50": 4.6
+        },
+        {
+          "detector": "jailbreak",
+          "findings": 0,
+          "p50Us": 182.2,
+          "p95Us": 312.4,
+          "meanUs": 205.81,
+          "shareOfTierP50": 4.3
+        },
+        {
+          "detector": "toxicity",
+          "findings": 0,
+          "p50Us": 102.2,
+          "p95Us": 200.1,
+          "meanUs": 120.76,
+          "shareOfTierP50": 2.4
+        },
+        {
+          "detector": "dataExfiltrationInput",
+          "findings": 0,
+          "p50Us": 65.9,
+          "p95Us": 137.3,
+          "meanUs": 73.21,
+          "shareOfTierP50": 1.6
+        },
+        {
+          "detector": "competitiveIntel",
+          "findings": 0,
+          "p50Us": 59.2,
+          "p95Us": 103.3,
+          "meanUs": 60.26,
+          "shareOfTierP50": 1.4
+        },
+        {
+          "detector": "broadHarmfulContent",
+          "findings": 0,
+          "p50Us": 51.7,
+          "p95Us": 123.5,
+          "meanUs": 58.32,
+          "shareOfTierP50": 1.2
+        },
+        {
+          "detector": "recursiveInjection",
+          "findings": 0,
+          "p50Us": 42.7,
+          "p95Us": 114.8,
+          "meanUs": 46.26,
+          "shareOfTierP50": 1
+        },
+        {
+          "detector": "systemPromptLeakAttempt",
+          "findings": 0,
+          "p50Us": 33.1,
+          "p95Us": 57.2,
+          "meanUs": 36.23,
+          "shareOfTierP50": 0.8
+        },
+        {
+          "detector": "insecureDeserialization",
+          "findings": 0,
+          "p50Us": 25.3,
+          "p95Us": 43.2,
+          "meanUs": 31.31,
+          "shareOfTierP50": 0.6
+        },
+        {
+          "detector": "secrets",
+          "findings": 0,
+          "p50Us": 21.7,
+          "p95Us": 44,
+          "meanUs": 24.76,
+          "shareOfTierP50": 0.5
+        },
+        {
+          "detector": "socialEngineering",
+          "findings": 0,
+          "p50Us": 20.9,
+          "p95Us": 24.8,
+          "meanUs": 20.61,
+          "shareOfTierP50": 0.5
+        },
+        {
+          "detector": "harmfulContentRequest",
+          "findings": 0,
+          "p50Us": 12,
+          "p95Us": 15.5,
+          "meanUs": 11.87,
+          "shareOfTierP50": 0.3
+        },
+        {
+          "detector": "ssrf",
+          "findings": 0,
+          "p50Us": 11.7,
+          "p95Us": 23.3,
+          "meanUs": 15.07,
+          "shareOfTierP50": 0.3
+        },
+        {
+          "detector": "mcpToolPoisoning",
+          "findings": 0,
+          "p50Us": 7.9,
+          "p95Us": 9.5,
+          "meanUs": 8.92,
+          "shareOfTierP50": 0.2
+        },
+        {
+          "detector": "replyChannelExfil",
+          "findings": 0,
+          "p50Us": 4.5,
+          "p95Us": 7.4,
+          "meanUs": 4.42,
+          "shareOfTierP50": 0.1
+        },
+        {
+          "detector": "memoryPoisoning",
+          "findings": 0,
+          "p50Us": 4.1,
+          "p95Us": 8.4,
+          "meanUs": 6.05,
+          "shareOfTierP50": 0.1
+        },
+        {
+          "detector": "behavioralAnomaly",
+          "findings": 0,
+          "p50Us": 4.1,
+          "p95Us": 5.4,
+          "meanUs": 4.83,
+          "shareOfTierP50": 0.1
+        },
+        {
+          "detector": "modelSupplyChain",
+          "findings": 0,
+          "p50Us": 4,
+          "p95Us": 5.2,
+          "meanUs": 4.32,
+          "shareOfTierP50": 0.1
+        },
+        {
+          "detector": "multimodalAttack",
+          "findings": 0,
+          "p50Us": 3.4,
+          "p95Us": 5.2,
+          "meanUs": 3.65,
+          "shareOfTierP50": 0.1
+        },
+        {
+          "detector": "advancedUnicodeSmuggling",
+          "findings": 0,
+          "p50Us": 2.9,
+          "p95Us": 7.5,
+          "meanUs": 4.58,
+          "shareOfTierP50": 0.1
+        }
+      ]
+    }
+  ]
+}

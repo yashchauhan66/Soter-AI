@@ -1,0 +1,27 @@
+{
+  "schema": "soterai-accelerator-rollback/v1",
+  "purpose": "Restore point prior to any model promotion; promotion must not proceed unless all gates in ../colab-train-bundle/package-manifest.json are cleared and a release-signed manifest exists",
+  "freeze": "PROVISIONAL_NOT_INDEPENDENT_NOT_SEMANTICALLY_LOCKED",
+  "frozen": "2026-07-30",
+  "frozen_sha256": "842bfc66bb32f4acf2c2f2f1eb8510c698c3919c1507c07299f2fd05ddcfd732",
+  "audit_sha256": "5d8725b88759fd92730e2b631e4e5a91a41de66ff825fab900404593c5592e8b",
+  "restore": {
+    "previous_manifest": "colab-train-bundle/package-manifest.json",
+    "previous_semantic_classifier": "v5 (rolled back from v6)",
+    "note": "Rollback is promotion-only: restores prior trusted artifacts; training datasets are never 'rolled back'"
+  },
+  "promotion": {
+    "requires": [
+      "signed dataset provenance/privacy manifest",
+      "semantic-cluster audit with zero cross-partition cluster overlap",
+      "immutable split hashes (frozen)",
+      "per-label and per-language precision/recall/F1/FPR with confidence intervals",
+      "Hindi, Hinglish, transliteration and mixed-script slice results above baseline",
+      "calibration curve, ECE, temperature, per-label thresholds",
+      "tokenizer parity evidence",
+      "independently witnessed untouched-holdout result",
+      "signed artifact manifest with file hashes, taxonomy and rollback predecessor"
+    ],
+    "status": "BLOCKED_EXTERNAL"
+  }
+}

@@ -39,6 +39,30 @@ export interface EnqueueJobInput {
   maxAttempts?: number;
 }
 
+const MAX_RETRY_DELAY_MS = 60_000;
+const MAX_ERROR_BYTES = 2_000;
+
+export function nextBackgroundJobFailureState(input: {
+  attempts: number;
+  maxAttempts: number;
+  now?: Date;
+}) {
+  const exhausted = input.attempts >= input.maxAttempts;
+  const delayMs = exhausted ? 0 : Math.min(MAX_RETRY_DELAY_MS, 2_000 * 2 ** Math.max(0, input.attempts - 1));
+  return {
+    exhausted,
+    status: exhausted ? "FAILED" as const : "PENDING" as const,
+    event: exhausted ? "DEAD_LETTER" as const : "RETRY_SCHEDULED" as const,
+    runAfter: exhausted ? input.now ?? new Date() : new Date((input.now ?? new Date()).getTime() + delayMs),
+    delayMs,
+  };
+}
+
+function boundedError(error: unknown): string {
+  const message = error instanceof Error ? error.message : "Unknown background job error";
+  return message.replace(/[\r\n\t]+/g, " ").slice(0, MAX_ERROR_BYTES);
+}
+
 export async function enqueueBackgroundJob(input: EnqueueJobInput): Promise<BackgroundJobRow> {
   if (input.dedupeKey) {
     const existing = await db.$queryRaw<BackgroundJobRow[]>`
@@ -90,22 +114,59 @@ export async function markJobComplete(id: string, result?: Prisma.InputJsonValue
 }
 
 export async function markJobFailed(id: string, error: unknown) {
-  const message = error instanceof Error ? error.message : "Unknown background job error";
+  const message = boundedError(error);
   const current = await findBackgroundJob(id);
   if (!current) return null;
-  const exhausted = current.attempts >= current.maxAttempts;
+  const failure = nextBackgroundJobFailureState(current);
   const rows = await db.$queryRaw<BackgroundJobRow[]>`
     UPDATE "BackgroundJob"
-    SET "status" = ${exhausted ? "FAILED" : "PENDING"}::"BackgroundJobStatus",
+    SET "status" = ${failure.status}::"BackgroundJobStatus",
         "error" = ${message},
-        "runAfter" = ${exhausted ? current.runAfter : new Date(Date.now() + Math.min(60_000, 2_000 * Math.max(1, current.attempts)))},
-        "completedAt" = ${exhausted ? new Date() : null},
+        "runAfter" = ${failure.runAfter},
+        "completedAt" = ${failure.exhausted ? new Date() : null},
         "updatedAt" = NOW()
     WHERE "id" = ${id}
     RETURNING *
   `;
-  if (rows[0]) await recordJobEvent(rows[0], exhausted ? "FAILED" : "RETRY_SCHEDULED", message);
+  if (rows[0]) await recordJobEvent(rows[0], failure.event, message);
   return rows[0] ?? null;
+}
+
+/**
+ * Recover jobs abandoned by a crashed worker. Exhausted jobs become the
+ * terminal FAILED/dead-letter state; the rest are safely made claimable again.
+ */
+export async function recoverStaleBackgroundJobs(leaseMs = 5 * 60_000) {
+  const safeLeaseMs = Math.max(30_000, Math.min(60 * 60_000, leaseMs));
+  const staleBefore = new Date(Date.now() - safeLeaseMs);
+  const stale = await db.$queryRaw<BackgroundJobRow[]>`
+    SELECT * FROM "BackgroundJob"
+    WHERE "status" = 'RUNNING'::"BackgroundJobStatus"
+      AND "startedAt" < ${staleBefore}
+    ORDER BY "startedAt" ASC
+    LIMIT 100
+    FOR UPDATE SKIP LOCKED
+  `;
+  const recovered: BackgroundJobRow[] = [];
+  for (const job of stale) {
+    const failure = nextBackgroundJobFailureState(job);
+    const rows = await db.$queryRaw<BackgroundJobRow[]>`
+      UPDATE "BackgroundJob"
+      SET "status" = ${failure.status}::"BackgroundJobStatus",
+          "error" = 'Worker lease expired before completion.',
+          "runAfter" = ${failure.runAfter},
+          "completedAt" = ${failure.exhausted ? new Date() : null},
+          "updatedAt" = NOW()
+      WHERE "id" = ${job.id}
+        AND "status" = 'RUNNING'::"BackgroundJobStatus"
+      RETURNING *
+    `;
+    if (rows[0]) {
+      recovered.push(rows[0]);
+      await recordJobEvent(rows[0], failure.exhausted ? "DEAD_LETTER" : "LEASE_RECOVERED", "Worker lease expired before completion.");
+    }
+  }
+  return recovered;
 }
 
 export async function claimNextBackgroundJob(types?: BackgroundJobType[]) {

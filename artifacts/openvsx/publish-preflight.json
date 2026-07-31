@@ -1,0 +1,252 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-31T16:06:56.906Z",
+  "registry": "https://open-vsx.org",
+  "target": {
+    "namespace": "soterai",
+    "extension": "soterai.soterai-ide-guard",
+    "version": "0.2.2",
+    "vsix": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\soterai-ide-guard-0.2.2.vsix",
+    "sha256": "17f9efb2bbb6f0a406ec76ee7ad2be6301ca0a07abb8959970c705589ec5bb6c"
+  },
+  "reaches": {
+    "open-vsx.org": [
+      "VSCodium",
+      "Kiro",
+      "Antigravity"
+    ],
+    "marketplace.windsurf.com (Open VSX mirror)": [
+      "Windsurf"
+    ],
+    "marketplace.cursorapi.com (Cursor proxy over Open VSX)": [
+      "Cursor"
+    ]
+  },
+  "mode": {
+    "requireToken": true,
+    "offline": false
+  },
+  "result": "READY",
+  "checks": [
+    {
+      "name": "publisher declared",
+      "ok": true,
+      "detail": "publisher=soterai (must own the Open VSX namespace of the same name)",
+      "soft": false
+    },
+    {
+      "name": "license declared",
+      "ok": true,
+      "detail": "license=SEE LICENSE IN LICENSE.md",
+      "soft": false
+    },
+    {
+      "name": "icon declared",
+      "ok": true,
+      "detail": "media/icon.png",
+      "soft": false
+    },
+    {
+      "name": "repository declared",
+      "ok": true,
+      "detail": "https://github.com/yashchauhan66/Ai-Security-Guard.git",
+      "soft": false
+    },
+    {
+      "name": "description declared",
+      "ok": true,
+      "detail": "present",
+      "soft": false
+    },
+    {
+      "name": "no proposed APIs",
+      "ok": true,
+      "detail": "none declared",
+      "soft": false
+    },
+    {
+      "name": "engines.vscode reachable by every target host",
+      "ok": true,
+      "detail": "floor 1.85.0 <= Windsurf 1.110.1, Antigravity 1.107.0",
+      "soft": false
+    },
+    {
+      "name": "VSIX built for this version",
+      "ok": true,
+      "detail": "soterai-ide-guard-0.2.2.vsix (0.30 MiB, sha256 17f9efb2bbb6…)",
+      "soft": false
+    },
+    {
+      "name": "VSIX size is registry-sane",
+      "ok": true,
+      "detail": "0.30 MiB",
+      "soft": true
+    },
+    {
+      "name": "VSIX archive is readable",
+      "ok": true,
+      "detail": "16 entries in the central directory",
+      "soft": false
+    },
+    {
+      "name": "shipped manifest matches source",
+      "ok": true,
+      "detail": "soterai.soterai-ide-guard@0.2.2",
+      "soft": false
+    },
+    {
+      "name": "shipped command surface intact",
+      "ok": true,
+      "detail": "147 contributed commands in the VSIX (source declares 147)",
+      "soft": false
+    },
+    {
+      "name": "required entry: extension/dist/extension.js",
+      "ok": true,
+      "detail": "present",
+      "soft": false
+    },
+    {
+      "name": "required entry: extension.vsixmanifest",
+      "ok": true,
+      "detail": "present",
+      "soft": false
+    },
+    {
+      "name": "required entry: [Content_Types].xml",
+      "ok": true,
+      "detail": "present",
+      "soft": false
+    },
+    {
+      "name": "store asset: license file",
+      "ok": true,
+      "detail": "extension/LICENSE.md",
+      "soft": true
+    },
+    {
+      "name": "store asset: readme (listing body)",
+      "ok": true,
+      "detail": "extension/readme.md",
+      "soft": true
+    },
+    {
+      "name": "store asset: changelog",
+      "ok": true,
+      "detail": "extension/changelog.md",
+      "soft": true
+    },
+    {
+      "name": "store asset: icon (media/icon.png)",
+      "ok": true,
+      "detail": "extension/media/icon.png",
+      "soft": true
+    },
+    {
+      "name": "license pointer resolves inside the VSIX",
+      "ok": true,
+      "detail": "SEE LICENSE IN LICENSE.md → extension/LICENSE.md",
+      "soft": true
+    },
+    {
+      "name": "no dotenv files",
+      "ok": true,
+      "detail": "clean",
+      "soft": false
+    },
+    {
+      "name": "no private keys or certificates",
+      "ok": true,
+      "detail": "clean",
+      "soft": false
+    },
+    {
+      "name": "no node_modules tree",
+      "ok": true,
+      "detail": "clean",
+      "soft": false
+    },
+    {
+      "name": "no TypeScript sources",
+      "ok": true,
+      "detail": "clean",
+      "soft": false
+    },
+    {
+      "name": "no compiled tests",
+      "ok": true,
+      "detail": "clean",
+      "soft": false
+    },
+    {
+      "name": "no nested VSIX",
+      "ok": true,
+      "detail": "clean",
+      "soft": false
+    },
+    {
+      "name": "no source maps",
+      "ok": true,
+      "detail": "clean",
+      "soft": true
+    },
+    {
+      "name": "Open VSX namespace is claimed",
+      "ok": true,
+      "detail": "https://open-vsx.org/api/soterai resolves",
+      "soft": false
+    },
+    {
+      "name": "version is not already published",
+      "ok": true,
+      "detail": "0.2.2 is unpublished (HTTP 404)",
+      "soft": false
+    },
+    {
+      "name": "local version moves the listing forward",
+      "ok": true,
+      "detail": "no prior release on Open VSX; 0.2.2 would be the first",
+      "soft": false
+    },
+    {
+      "name": "runtime evidence: cursor",
+      "ok": true,
+      "detail": "PASS in Cursor — 7 runtime checks on 0.2.2 (sha256 17f9efb2bbb6…)",
+      "soft": false
+    },
+    {
+      "name": "runtime evidence: windsurf",
+      "ok": true,
+      "detail": "PASS in Windsurf — 7 runtime checks on 0.2.2 (sha256 17f9efb2bbb6…)",
+      "soft": false
+    },
+    {
+      "name": "runtime evidence: codium",
+      "ok": false,
+      "detail": "codium is not installed on this machine, so parity there is UNVERIFIED (sideload + probe it before claiming support)",
+      "soft": true
+    },
+    {
+      "name": "runtime evidence: kiro",
+      "ok": true,
+      "detail": "PASS in Kiro — 7 runtime checks on 0.2.2 (sha256 17f9efb2bbb6…)",
+      "soft": false
+    },
+    {
+      "name": "runtime evidence: antigravity",
+      "ok": true,
+      "detail": "PASS in Antigravity — 7 runtime checks on 0.2.2 (sha256 17f9efb2bbb6…)",
+      "soft": false
+    },
+    {
+      "name": "OVSX_PAT available",
+      "ok": true,
+      "detail": "set in the environment (value never read or printed by this script)",
+      "soft": false
+    }
+  ],
+  "failures": [],
+  "warnings": [
+    "runtime evidence: codium: codium is not installed on this machine, so parity there is UNVERIFIED (sideload + probe it before claiming support)"
+  ]
+}

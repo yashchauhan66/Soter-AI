@@ -56,6 +56,50 @@
       "type": "string",
       "enum": ["error", "warn", "info", "debug"],
       "default": "error"
+    },
+    "hardEnforcement": {
+      "title": "Hard Enforcement",
+      "description": "When true, a block decision cannot be dismissed or bypassed by the user.",
+      "type": "boolean",
+      "default": false
+    },
+    "offlineFailClosed": {
+      "title": "Fail Closed When Offline",
+      "description": "When true, sensitive data is blocked while the org policy cannot be refreshed from the control plane.",
+      "type": "boolean",
+      "default": false
+    },
+    "requirePolicySignature": {
+      "title": "Require Signed Policy",
+      "description": "When true, a policy bundle whose signature cannot be cryptographically verified is refused and the extension fails closed. Requires policyTrustedKeys.",
+      "type": "boolean",
+      "default": false
+    },
+    "policyTrustedKeys": {
+      "title": "Trusted Policy Signing Keys",
+      "description": "Public keys trusted to sign org policy bundles. Base64 SPKI for ECDSA P-256. Private keys must never be placed here.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "keyId": {
+            "title": "Key ID",
+            "description": "Identifier that matches the signatureKeyId in signed policy bundles.",
+            "type": "string"
+          },
+          "algorithm": {
+            "title": "Algorithm",
+            "description": "Signature algorithm. ecdsa-p256-sha256 is required for new deployments; hmac-sha256 is legacy only.",
+            "type": "string",
+            "enum": ["ecdsa-p256-sha256", "hmac-sha256"]
+          },
+          "publicKey": {
+            "title": "Public Key",
+            "description": "Base64-encoded SPKI public key (ECDSA), or the shared secret for legacy HMAC deployments.",
+            "type": "string"
+          }
+        }
+      }
     }
   }
 }

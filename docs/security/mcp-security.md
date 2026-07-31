@@ -13,7 +13,7 @@ SoterAI now has two MCP layers:
 Coverage:
 
 - MCP config scanning: `PARTIAL_VISIBILITY`.
-- MCP invocations routed through `evaluateMCPToolInvocation`: `STRONG_ENFORCEMENT`.
+- MCP invocations evaluated by `evaluateMCPToolInvocation`: `DETECTION_ONLY` by default. Every shipping caller today (broker `POST /v1/preflight/mcp-tool`, VS Code `soterai.preflightMCPTool`) is an advisory preflight — nothing mechanically stops the tool from executing after a DENY. A decision is `STRONG_ENFORCEMENT` only when the caller declares `callerEnforcesPreExecution: true`, meaning it gates execution on the verdict; no such caller ships yet.
 - MCP traffic outside the gateway: `UNSUPPORTED` for runtime enforcement.
 
 ## Required deployment model

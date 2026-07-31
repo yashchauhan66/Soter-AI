@@ -36,6 +36,7 @@ import { scoreRisk } from "./riskScoring";
 import { classifySemantic } from "./semanticClassifier";
 import { MAX_TEXT_LENGTH } from "./constants";
 import { deriveAdvisory, withAdvisory } from "./routingAdvisory";
+import { withDetectionVariantScope } from "./detectors/helpers";
 import type { GuardDirection, GuardFinding, GuardResult, RiskType } from "./types";
 
 // Risk types the regex/signature detectors emit for an adversarial input. When
@@ -112,9 +113,31 @@ const COMMON_DETECTORS = [piiDetector, indiaPiiDetector, secretsDetector, toxici
 const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, systemPromptLeakAttemptDetector, multilingualAttackDetector, recursiveInjectionDetector, ssrfDetector, adversarialCyberDetector, competitiveIntelDetector, socialEngineeringDetector, embeddingPoisoningDetector, mcpToolPoisoningDetector, memoryPoisoningDetector, multimodalAttackDetector, modelSupplyChainDetector, behavioralAnomalyDetector, advancedUnicodeSmugglingDetector, insecureDeserializationDetector, dataExfiltrationInputDetector, replyChannelExfilDetector, harmfulContentRequestDetector, broadHarmfulContentDetector, generalizedIntentDetector, ...COMMON_DETECTORS];
 const OUTPUT_DETECTORS = [systemPromptLeakageDetector, unsafeOutputDetector, outputExfiltrationDetector, spamUrlDetector, hallucinationDetector, biasDetector, generalizedIntentDetector, ...COMMON_DETECTORS];
 
+// The ~120-pattern IPS signature set used below lived inside `analyzeText` as an
+// array literal. Per the ES spec every evaluation of a regex literal produces a
+// NEW RegExp object, so each analysis allocated ~120 of them before testing any
+// one of them. The set is now built once, lazily, and reused. Every pattern, its
+// flags and its order are unchanged, and all of them are stateless (no /g or /y,
+// so no shared lastIndex), so match results are bit-for-bit identical to the
+// per-call construction.
+//
+// Honest sizing: this is a small win, not a large one. An interleaved 5-trial
+// micro-benchmark (120 generated stateless patterns, 16-byte input, literal-per-
+// call vs hoisted, measured in one process) put the difference at ~1-6 µs, because
+// V8 caches the compiled regex code and only re-wraps it in a fresh object. An
+// earlier draft of this comment credited the hoist with ~5 ms of a 9.9 ms
+// analyzeText; that was wrong — the ms-scale movement seen at the time tracked
+// background CPU load (78% → 53%), and the untouched detectors moved with it.
+// The real ms-scale cost on a short input was the semantic tier's prototype
+// sweep (see lib/guard/semanticClassifier.ts).
+let ipsBlockSignatures: RegExp[] | null = null;
+
 export function analyzeText(text: string, direction: GuardDirection): GuardResult {
   const detectors = direction === "OUTPUT" ? OUTPUT_DETECTORS : INPUT_DETECTORS;
-  let findings: GuardFinding[] = detectors.flatMap((detector) => detector(text));
+  let findings: GuardFinding[] = withDetectionVariantScope(
+    text,
+    () => detectors.flatMap((detector) => detector(text)),
+  );
 
   // Safe security-education prompts often mention "prompt injection" and
   // "bypass" in a negated, high-level training context. Keep sensitive-data
@@ -179,7 +202,7 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
       });
     }
 
-    const blockRegexes = [
+    const blockRegexes = ipsBlockSignatures ?? (ipsBlockSignatures = [
       /forget.*rules.*follow.*command/i,
       /disable.*guardrails/i,
       /pretend.*DAN/i,
@@ -302,7 +325,7 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
       /القواعد المخفية|التعليمات المخفية/i,
       /وضع المطور|كسر الحماية|بدون قيود/i,
       /وضع المشرف/i
-    ];
+    ]);
 
     if (blockRegexes.some(rx => rx.test(text) || rx.test(normalized))) {
       findings.push({

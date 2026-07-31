@@ -1,6 +1,7 @@
 import { createServer } from "http";
 import { db } from "../lib/db";
 import { processOneBackgroundJob } from "../lib/backgroundJobProcessors";
+import { recoverStaleBackgroundJobs } from "../lib/backgroundJobs";
 
 const intervalMs = Math.max(1_000, Number(process.env.BACKGROUND_WORKER_INTERVAL_MS ?? 5_000));
 const port = Number(process.env.BACKGROUND_WORKER_HEALTH_PORT ?? 3098);
@@ -12,6 +13,7 @@ async function tick() {
   if (running || stopping) return;
   running = true;
   try {
+    await recoverStaleBackgroundJobs(Number(process.env.BACKGROUND_JOB_LEASE_MS ?? 5 * 60_000));
     let processed = 0;
     for (let index = 0; index < 10; index += 1) {
       const result = await processOneBackgroundJob();
@@ -39,8 +41,16 @@ async function shutdown(signal: string) {
   clearInterval(timer);
   console.info(JSON.stringify({ level: "info", event: "background.worker.shutdown", signal }));
   await new Promise<void>((resolve) => server.close(() => resolve()));
+  const deadline = Date.now() + Math.max(1_000, Number(process.env.WORKER_SHUTDOWN_TIMEOUT_MS ?? 30_000));
+  while (running && Date.now() < deadline) {
+    await new Promise((resolve) => setTimeout(resolve, 50));
+  }
+  if (running) {
+    console.error(JSON.stringify({ level: "error", event: "background.worker.shutdown_timeout" }));
+    process.exitCode = 1;
+  }
   await db.$disconnect();
-  process.exit(0);
+  process.exit();
 }
 
 process.on("SIGINT", () => void shutdown("SIGINT"));

@@ -31,45 +31,49 @@ test("every ENFORCING capability is wired into the runtime and names an enforcem
     }
 });
 
-test("the six implemented-but-unwired engines are honestly marked, not claimed as enforcement", () => {
-    // mcp-gateway is now wired as DETECTION_ONLY via broker preflight (Phase 8).
-    const unwiredEngineIds = [
-        "taint-engine",
+test("preflight engines remain detection-only and checkpoint rollback is filesystem-partial", () => {
+    const preflightEngineIds = [
         "file-operation-firewall",
         "network-egress-policy",
         "process-sandbox-policy",
         "governance-policy",
-        "checkpoint-rollback",
     ];
-    for (const id of unwiredEngineIds) {
+    for (const id of preflightEngineIds) {
         const c = CAPABILITY_REGISTRY.find((x) => x.id === id);
         assert.ok(c, `missing capability ${id}`);
-        assert.equal(c!.wiredInRuntime, false, `${id} should be unwired`);
-        assert.equal(c!.level, "UNKNOWN_NOT_TESTED", `${id} must not claim enforcement while unwired`);
-        assert.equal(c!.preExecutionBlock, false, `${id} cannot block pre-execution while unwired`);
+        assert.equal(c!.wiredInRuntime, true, `${id} should expose a runtime preflight`);
+        assert.equal(c!.level, "DETECTION_ONLY", `${id} must not claim enforcement for advisory preflight`);
+        assert.equal(c!.preExecutionBlock, false);
     }
+    const checkpoint = CAPABILITY_REGISTRY.find((x) => x.id === "checkpoint-rollback");
+    assert.equal(checkpoint?.wiredInRuntime, true);
+    assert.equal(checkpoint?.level, "PARTIAL_ENFORCEMENT");
+    assert.equal(checkpoint?.rollbackSupported, true);
+    assert.match(checkpoint?.enforcementPoint ?? "", /CheckpointStore/);
 });
 
-test("mcp-gateway is wired as DETECTION_ONLY (preflight path), not FULL/STRONG", () => {
+test("inline MCP gateway and its taint engine are wired pre-execution", () => {
     const c = CAPABILITY_REGISTRY.find((x) => x.id === "mcp-gateway");
     assert.ok(c, "missing mcp-gateway");
     assert.equal(c!.wiredInRuntime, true);
-    assert.equal(c!.level, "DETECTION_ONLY");
-    assert.equal(c!.preExecutionBlock, false);
-    assert.ok(c!.enforcementPoint?.includes("preflight") || c!.enforcementPoint?.includes("MCPGateway"));
+    assert.equal(c!.level, "STRONG_ENFORCEMENT");
+    assert.equal(c!.preExecutionBlock, true);
+    const taint = CAPABILITY_REGISTRY.find((x) => x.id === "taint-engine");
+    assert.equal(taint?.wiredInRuntime, true);
+    assert.equal(taint?.preExecutionBlock, true);
 });
 
 test("a doctored registry that lies about wiring is caught by the invariant", () => {
     // Prove the guard actually fires — take a real unwired engine and pretend
     // it is STRONG_ENFORCEMENT without wiring it.
     const doctored: ProtectionCapability[] = CAPABILITY_REGISTRY.map((c) =>
-        c.id === "taint-engine"
+        c.id === "child-process-control"
             ? { ...c, level: "STRONG_ENFORCEMENT", preExecutionBlock: true }
             : c,
     );
     const violations = findHonestyViolations(doctored);
     assert.ok(
-        violations.some((v) => v.id === "taint-engine"),
+        violations.some((v) => v.id === "child-process-control"),
         "invariant failed to catch a dishonest STRONG claim on an unwired engine",
     );
     assert.throws(() => assertHonestLevels(doctored));

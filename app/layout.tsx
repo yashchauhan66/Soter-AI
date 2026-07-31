@@ -6,6 +6,8 @@ import { SiteChrome } from "@/components/layout/SiteChrome";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { siteJsonLd } from "@/lib/seo/schema";
 import "./globals.css";
+;
+
 
 const siteUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://soterai.in";
 const siteName = "SoterAI";
@@ -126,6 +128,14 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+      <head>
+        {/* Performance hints: warm up the Google Analytics connection so the
+            tag loads off the critical path (better LCP / INP → better ranking). */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+      </head>
       <body className="font-sans">
         <JsonLd data={siteJsonLd} />
         <a

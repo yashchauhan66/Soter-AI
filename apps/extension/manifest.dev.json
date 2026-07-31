@@ -5,6 +5,9 @@
   "description": "DEVELOPMENT build — includes localhost hosts for local mock-page testing. NEVER submit this manifest to a store.",
   "version": "0.1.2",
   "minimum_chrome_version": "116",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; base-uri 'none'; form-action 'none'"
+  },
   "permissions": [
     "contextMenus",
     "sidePanel",

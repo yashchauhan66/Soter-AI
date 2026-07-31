@@ -1,0 +1,354 @@
+{
+  "platform": "win32",
+  "when": "2026-07-31T11:25:25.073Z",
+  "trees": [
+    {
+      "label": "vscode-extension",
+      "root": "packages/vscode-extension",
+      "fileCount": 106,
+      "totalBytes": 38333001,
+      "totalGzipBytes": 336976,
+      "jsCount": 8,
+      "jsBytes": 2549692,
+      "mapBytes": 0,
+      "docBytes": 23244,
+      "testBytes": 69895,
+      "largestJs": [
+        {
+          "path": "node_modules/.prisma/client/index.js",
+          "bytes": 881211,
+          "gzip": 62621
+        },
+        {
+          "path": "node_modules/.prisma/client/edge.js",
+          "bytes": 880434,
+          "gzip": 62244
+        },
+        {
+          "path": "dist/extension.js",
+          "bytes": 402083,
+          "gzip": 118513
+        },
+        {
+          "path": "dist/local-ai-broker.js",
+          "bytes": 200680,
+          "gzip": 60070
+        },
+        {
+          "path": "node_modules/.prisma/client/index-browser.js",
+          "bytes": 91461,
+          "gzip": 16271
+        },
+        {
+          "path": "node_modules/.prisma/client/wasm.js",
+          "bytes": 91461,
+          "gzip": 16271
+        },
+        {
+          "path": "esbuild.js",
+          "bytes": 2326,
+          "gzip": 930
+        },
+        {
+          "path": "node_modules/.prisma/client/default.js",
+          "bytes": 36,
+          "gzip": 56
+        }
+      ],
+      "duplicates": [
+        {
+          "base": "package.json",
+          "count": 2,
+          "paths": [
+            "node_modules/.prisma/client/package.json",
+            "package.json"
+          ]
+        },
+        {
+          "base": "commands.ts",
+          "count": 7,
+          "paths": [
+            "src/broker/commands.ts",
+            "src/commands.ts",
+            "src/firewall/commands.ts",
+            "src/permissions/commands.ts",
+            "src/policy-packs/commands.ts",
+            "src/secret-broker/commands.ts",
+            "src/sentinel/commands.ts"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "browser-apps-extension",
+      "root": "apps/extension/dist",
+      "fileCount": 97,
+      "totalBytes": 1340208,
+      "totalGzipBytes": 114526,
+      "jsCount": 83,
+      "jsBytes": 354582,
+      "mapBytes": 0,
+      "docBytes": 0,
+      "testBytes": 0,
+      "largestJs": [
+        {
+          "path": "extension/content/index.js",
+          "bytes": 67851,
+          "gzip": 19972
+        },
+        {
+          "path": "extension/background/service-worker.js",
+          "bytes": 50892,
+          "gzip": 15791
+        },
+        {
+          "path": "apps/extension/src/background/service-worker.js",
+          "bytes": 19261,
+          "gzip": 4190
+        },
+        {
+          "path": "apps/extension/src/lib/file-extractors.js",
+          "bytes": 14508,
+          "gzip": 4117
+        },
+        {
+          "path": "extension/content/source-lineage-entry.js",
+          "bytes": 14499,
+          "gzip": 5821
+        },
+        {
+          "path": "apps/extension/src/content/overlay.js",
+          "bytes": 13867,
+          "gzip": 3770
+        },
+        {
+          "path": "packages/policy-engine/src/evaluatePolicy.js",
+          "bytes": 12576,
+          "gzip": 3876
+        },
+        {
+          "path": "apps/extension/src/lib/scanner.js",
+          "bytes": 8190,
+          "gzip": 2443
+        },
+        {
+          "path": "packages/detectors/src/business-sensitive.js",
+          "bytes": 7457,
+          "gzip": 2562
+        },
+        {
+          "path": "apps/extension/src/content/submit-interceptor.js",
+          "bytes": 7196,
+          "gzip": 2061
+        },
+        {
+          "path": "apps/extension/src/lib/enrollment.js",
+          "bytes": 6887,
+          "gzip": 1856
+        },
+        {
+          "path": "apps/extension/src/sidepanel/SidePanelApp.js",
+          "bytes": 6327,
+          "gzip": 2195
+        },
+        {
+          "path": "apps/extension/src/content/file-content-scanner.js",
+          "bytes": 6112,
+          "gzip": 1736
+        },
+        {
+          "path": "apps/extension/src/lib/api-client.js",
+          "bytes": 6106,
+          "gzip": 1198
+        },
+        {
+          "path": "packages/shared/src/privacy.js",
+          "bytes": 5793,
+          "gzip": 2149
+        }
+      ],
+      "duplicates": [
+        {
+          "base": "chatgpt.js",
+          "count": 2,
+          "paths": [
+            "apps/extension/src/adapters/chatgpt.js",
+            "apps/extension/src/content/adapters/chatgpt.js"
+          ]
+        },
+        {
+          "base": "claude.js",
+          "count": 2,
+          "paths": [
+            "apps/extension/src/adapters/claude.js",
+            "apps/extension/src/content/adapters/claude.js"
+          ]
+        },
+        {
+          "base": "gemini.js",
+          "count": 2,
+          "paths": [
+            "apps/extension/src/adapters/gemini.js",
+            "apps/extension/src/content/adapters/gemini.js"
+          ]
+        },
+        {
+          "base": "index.js",
+          "count": 8,
+          "paths": [
+            "apps/extension/src/adapters/index.js",
+            "apps/extension/src/content/index.js",
+            "extension/content/index.js",
+            "extension/popup/index.js",
+            "extension/sidepanel/index.js",
+            "packages/detectors/src/index.js",
+            "packages/policy-engine/src/index.js",
+            "packages/shared/src/index.js"
+          ]
+        },
+        {
+          "base": "service-worker.js",
+          "count": 2,
+          "paths": [
+            "apps/extension/src/background/service-worker.js",
+            "extension/background/service-worker.js"
+          ]
+        },
+        {
+          "base": "source-lineage-entry.js",
+          "count": 2,
+          "paths": [
+            "apps/extension/src/content/source-lineage-entry.js",
+            "extension/content/source-lineage-entry.js"
+          ]
+        },
+        {
+          "base": "types.js",
+          "count": 2,
+          "paths": [
+            "apps/extension/src/lib/types.js",
+            "packages/policy-engine/src/types.js"
+          ]
+        },
+        {
+          "base": "main.js",
+          "count": 2,
+          "paths": [
+            "apps/extension/src/popup/main.js",
+            "apps/extension/src/sidepanel/main.js"
+          ]
+        },
+        {
+          "base": "index.html",
+          "count": 2,
+          "paths": [
+            "extension/popup/index.html",
+            "extension/sidepanel/index.html"
+          ]
+        }
+      ]
+    }
+  ],
+  "repeatedTables": [
+    {
+      "length": 655306,
+      "count": 2,
+      "sample": "{\\\"models\\\":{\\\"User\\\":{\\\"dbName\\\":null,\\\"fields\\\":[{\\\"name\\\":\\\"id\\\",\\\"kind\\\":\\\"s"
+    },
+    {
+      "length": 303,
+      "count": 2,
+      "sample": "),a.has(`production_logs`)&&(r=r.replace(/\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b/g,`[IP_REM"
+    },
+    {
+      "length": 137,
+      "count": 2,
+      "sample": "PrismaClient is unable to run in this browser environment, or has been bundled f"
+    },
+    {
+      "length": 124,
+      "count": 2,
+      "sample": "Zero-width character smuggling\",score:30,confidence:.9,message:\"Zero-width chara"
+    },
+    {
+      "length": 100,
+      "count": 2,
+      "sample": "sourceFilePath\": \"C:\\\\Users\\\\USER\\\\OneDrive\\\\Desktop\\\\Ai-Agent-Security-Guard\\\\p"
+    },
+    {
+      "length": 99,
+      "count": 2,
+      "sample": "value\": \"C:\\\\Users\\\\USER\\\\OneDrive\\\\Desktop\\\\Ai-Agent-Security-Guard\\\\node_modul"
+    },
+    {
+      "length": 84,
+      "count": 2,
+      "sample": "inlineSchemaHash\": \"4c3862da8ba9e88d53b104c01ee4d3623ca6894601dbb45e2a476c9019a3"
+    },
+    {
+      "length": 84,
+      "count": 2,
+      "sample": "text\" id=\"justification\" placeholder=\"Enter reason (e.g. debugging production is"
+    },
+    {
+      "length": 84,
+      "count": 2,
+      "sample": "text\" id=\"justification\" placeholder=\"Provide explanation to bypass security war"
+    },
+    {
+      "length": 64,
+      "count": 2,
+      "sample": "panel\" role=\"dialog\" aria-modal=\"true\" aria-label=\"Soter Warning"
+    },
+    {
+      "length": 57,
+      "count": 2,
+      "sample": "engineVersion\": \"605197351a3c8bdd595af2d2a9bc3025bca48ea2"
+    },
+    {
+      "length": 47,
+      "count": 2,
+      "sample": "../../../../packages/shared/src/ai-destinations"
+    },
+    {
+      "length": 41,
+      "count": 2,
+      "sample": "../../../../packages/shared/src/constants"
+    },
+    {
+      "length": 40,
+      "count": 4,
+      "sample": "605197351a3c8bdd595af2d2a9bc3025bca48ea2"
+    },
+    {
+      "length": 39,
+      "count": 2,
+      "sample": "@prisma/client/runtime/index-browser.js"
+    },
+    {
+      "length": 37,
+      "count": 2,
+      "sample": "relativePath\": \"../../../../../prisma"
+    },
+    {
+      "length": 36,
+      "count": 2,
+      "sample": "schemaEnvPath\": \"../../../../../.env"
+    },
+    {
+      "length": 35,
+      "count": 4,
+      "sample": "AiUsageGovernanceDataClassification"
+    },
+    {
+      "length": 34,
+      "count": 2,
+      "sample": "Segoe UI\", Roboto, \"Helvetica Neue"
+    },
+    {
+      "length": 34,
+      "count": 2,
+      "sample": "spinner-container\" id=\"spinner-box"
+    }
+  ]
+}

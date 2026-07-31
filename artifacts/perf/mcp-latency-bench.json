@@ -1,0 +1,2358 @@
+{
+  "tool": "mcp-latency-bench",
+  "schema": 2,
+  "iterations": 300,
+  "trials": 5,
+  "warmup": 20,
+  "controls": {
+    "pairedSampling": true,
+    "leadPathAlternatesByParity": true,
+    "independentTrials": true,
+    "freshChildProcessPerBucket": true,
+    "sessionsPerTrial": 6,
+    "callsPerSession": 321,
+    "rateLimitPerMinute": 600,
+    "limitsRelaxed": false,
+    "detectorsDisabled": false,
+    "note": "One session per bucket keeps every session inside the production 600/min rate window, so no limit is raised for the benchmark. The rate limiter is armed on every measured call."
+  },
+  "env": {
+    "capturedAt": "2026-07-31T11:18:40.815Z",
+    "node": {
+      "version": "v22.16.0",
+      "v8": "12.4.254.21-node.26",
+      "execArgv": [
+        "--require",
+        "c:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\tsx\\dist\\preflight.cjs",
+        "--import",
+        "file:///c:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/loader.mjs"
+      ],
+      "gcExposed": false,
+      "jitDefaults": true,
+      "heapSizeLimitMiB": 4144
+    },
+    "os": {
+      "platform": "win32",
+      "release": "10.0.26300",
+      "arch": "x64",
+      "totalMemMiB": 16191.4,
+      "freeMemMiB": 2243.8
+    },
+    "cpu": {
+      "model": "Intel(R) Core(TM) i5-8350U CPU @ 1.70GHz",
+      "logicalCores": 8,
+      "speedMHz": 1896,
+      "governor": {
+        "source": "Win32_Processor (CIM)",
+        "currentClockMHz": 1696,
+        "maxClockMHz": 1896,
+        "note": "Windows exposes no Linux-style cpufreq governor. CurrentClockSpeed vs MaxClockSpeed is the available proxy for whether the CPU is throttled or boosting during the trial."
+      }
+    },
+    "process": {
+      "pid": 20520,
+      "priority": -7,
+      "priorityLabel": "PRIORITY_ABOVE_NORMAL",
+      "priorityRequested": "above_normal",
+      "priorityApplied": true
+    },
+    "load": {
+      "before": {
+        "loadavg": [
+          0,
+          0,
+          0
+        ],
+        "busyFraction": 0.9448,
+        "sampleMs": 250,
+        "cores": 8
+      }
+    },
+    "backgroundProcesses": {
+      "counted": 344,
+      "notable": [
+        {
+          "name": "Code",
+          "cpuSeconds": 71905.27
+        },
+        {
+          "name": "chrome",
+          "cpuSeconds": 7692.75
+        },
+        {
+          "name": "msedgewebview2",
+          "cpuSeconds": 1982.63
+        },
+        {
+          "name": "node",
+          "cpuSeconds": 984.32
+        },
+        {
+          "name": "msedge",
+          "cpuSeconds": 400.14
+        },
+        {
+          "name": "codex",
+          "cpuSeconds": 72.64
+        },
+        {
+          "name": "chrome-native-host",
+          "cpuSeconds": 0.03
+        },
+        {
+          "name": "MpDefenderCoreService",
+          "cpuSeconds": 0
+        },
+        {
+          "name": "MsMpEng",
+          "cpuSeconds": 0
+        },
+        {
+          "name": "SearchIndexer",
+          "cpuSeconds": 0
+        }
+      ],
+      "source": "Get-Process"
+    },
+    "benchmarkMode": {
+      "envApplied": {
+        "SOTERAI_DETECTION_TIER": "hybrid"
+      },
+      "warmupIterations": 20,
+      "gcBetweenPhases": true
+    }
+  },
+  "gc": {
+    "collections": 223,
+    "totalPauseMs": 617.8076,
+    "maxPauseMs": 7.6664,
+    "byKind": {
+      "scavenge": 525.9544,
+      "incremental_marking": 17.2981,
+      "mark_sweep_compact": 74.5551
+    }
+  },
+  "gates": {
+    "passed": false,
+    "failedGates": [
+      "allow-simple-warm: gateway p95 (median trial) 8.9877ms > 8ms",
+      "allow-simple-cold: gateway p95 (median trial) 9.8173ms > 8ms",
+      "allow-simple-cold: paired enforcement overhead p95 (median trial) 8.7042ms > 8ms",
+      "allow-large-cold: gateway p95 (median trial) 29.0152ms > 25ms",
+      "allow-large-cold: paired enforcement overhead p95 (median trial) 26.9906ms > 25ms"
+    ],
+    "wrongPaths": []
+  },
+  "buckets": [
+    {
+      "name": "allow-simple-warm",
+      "cacheState": "WARM",
+      "expect": "result",
+      "payload": {
+        "bytes": 16,
+        "sha256": "cbbbdcd27692344d"
+      },
+      "uniquePayloads": 1,
+      "medianTrialIndex": 3,
+      "medianTrial": {
+        "gateway": {
+          "p50": 3.2093,
+          "p95": 8.9877,
+          "p99": 14.001,
+          "mean": 4.0519,
+          "min": 1.6054,
+          "max": 18.2308,
+          "n": 300
+        },
+        "direct": {
+          "p50": 0.7086,
+          "p95": 4.4077,
+          "p99": 9.9998,
+          "mean": 1.3133,
+          "min": 0.3741,
+          "max": 12.3113,
+          "n": 300
+        },
+        "overhead": {
+          "p50": 2.2544,
+          "p95": 7.0944,
+          "p99": 13.2965,
+          "mean": 2.7386,
+          "min": -6.7446,
+          "max": 16.9694,
+          "n": 300
+        }
+      },
+      "acrossTrials": {
+        "gatewayP50": {
+          "min": 2.5666,
+          "median": 3.2093,
+          "max": 3.4528,
+          "mean": 3.0431,
+          "stddev": 0.4243,
+          "spread": 0.8862,
+          "cvPct": 13.9432
+        },
+        "gatewayP95": {
+          "min": 4.5646,
+          "median": 8.9877,
+          "max": 13.7244,
+          "mean": 8.2464,
+          "stddev": 3.7452,
+          "spread": 9.1598,
+          "cvPct": 45.4167
+        },
+        "gatewayP99": {
+          "min": 7.3593,
+          "median": 14.001,
+          "max": 23.4254,
+          "mean": 13.5035,
+          "stddev": 6.6288,
+          "spread": 16.0661,
+          "cvPct": 49.0894
+        },
+        "directP50": {
+          "min": 0.5836,
+          "median": 0.7086,
+          "max": 0.9624,
+          "mean": 0.725,
+          "stddev": 0.1519,
+          "spread": 0.3788,
+          "cvPct": 20.957
+        },
+        "directP95": {
+          "min": 1.5159,
+          "median": 4.4077,
+          "max": 7.4818,
+          "mean": 4.3922,
+          "stddev": 2.4627,
+          "spread": 5.9659,
+          "cvPct": 56.0707
+        },
+        "directP99": {
+          "min": 2.7249,
+          "median": 9.9998,
+          "max": 17.0468,
+          "mean": 9.9576,
+          "stddev": 6.424,
+          "spread": 14.3219,
+          "cvPct": 64.5142
+        },
+        "overheadP50": {
+          "min": 1.827,
+          "median": 2.1635,
+          "max": 2.4309,
+          "mean": 2.1291,
+          "stddev": 0.237,
+          "spread": 0.6039,
+          "cvPct": 11.1315
+        },
+        "overheadP95": {
+          "min": 3.3825,
+          "median": 7.0944,
+          "max": 8.6669,
+          "mean": 6.1073,
+          "stddev": 2.2354,
+          "spread": 5.2844,
+          "cvPct": 36.6021
+        },
+        "overheadP99": {
+          "min": 6.4367,
+          "median": 12.3479,
+          "max": 18.1224,
+          "mean": 11.3853,
+          "stddev": 4.9039,
+          "spread": 11.6857,
+          "cvPct": 43.0723
+        }
+      },
+      "decisionPathVerifiedInAllTrials": true,
+      "decisionPathNote": "ALLOW forwarded upstream and result released",
+      "cleanInputCacheAfter": {
+        "size": 1,
+        "maxEntries": 256
+      },
+      "gates": [
+        {
+          "metric": "gateway p95 (median trial)",
+          "valueMs": 8.9877,
+          "budgetMs": 8,
+          "pass": false
+        },
+        {
+          "metric": "paired enforcement overhead p95 (median trial)",
+          "valueMs": 7.0944,
+          "budgetMs": 8,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "name": "allow-simple-cold",
+      "cacheState": "COLD",
+      "expect": "result",
+      "payload": {
+        "bytes": 24,
+        "sha256": "db68f427f7b62848"
+      },
+      "uniquePayloads": 300,
+      "medianTrialIndex": 4,
+      "medianTrial": {
+        "gateway": {
+          "p50": 5.8645,
+          "p95": 9.8173,
+          "p99": 15.9008,
+          "mean": 6.3789,
+          "min": 3.2989,
+          "max": 26.7252,
+          "n": 300
+        },
+        "direct": {
+          "p50": 0.6214,
+          "p95": 4.5693,
+          "p99": 7.9399,
+          "mean": 1.2183,
+          "min": 0.3087,
+          "max": 13.1712,
+          "n": 300
+        },
+        "overhead": {
+          "p50": 5.0509,
+          "p95": 8.7042,
+          "p99": 11.3687,
+          "mean": 5.1606,
+          "min": -1.8278,
+          "max": 23.0259,
+          "n": 300
+        }
+      },
+      "acrossTrials": {
+        "gatewayP50": {
+          "min": 5.189,
+          "median": 5.8645,
+          "max": 8.5075,
+          "mean": 6.2924,
+          "stddev": 1.3413,
+          "spread": 3.3185,
+          "cvPct": 21.3162
+        },
+        "gatewayP95": {
+          "min": 7.4217,
+          "median": 9.8173,
+          "max": 15.0233,
+          "mean": 10.408,
+          "stddev": 2.7895,
+          "spread": 7.6016,
+          "cvPct": 26.8013
+        },
+        "gatewayP99": {
+          "min": 8.3378,
+          "median": 15.9008,
+          "max": 26.6464,
+          "mean": 16.1971,
+          "stddev": 6.8234,
+          "spread": 18.3086,
+          "cvPct": 42.1275
+        },
+        "directP50": {
+          "min": 0.5126,
+          "median": 0.6214,
+          "max": 0.902,
+          "mean": 0.6434,
+          "stddev": 0.1576,
+          "spread": 0.3894,
+          "cvPct": 24.4926
+        },
+        "directP95": {
+          "min": 1.4918,
+          "median": 3.2237,
+          "max": 7.939,
+          "mean": 3.9039,
+          "stddev": 2.5294,
+          "spread": 6.4472,
+          "cvPct": 64.7916
+        },
+        "directP99": {
+          "min": 3.2228,
+          "median": 6.3594,
+          "max": 17.603,
+          "mean": 8.0586,
+          "stddev": 5.6066,
+          "spread": 14.3802,
+          "cvPct": 69.5735
+        },
+        "overheadP50": {
+          "min": 4.5596,
+          "median": 5.0509,
+          "max": 7.1314,
+          "mean": 5.4375,
+          "stddev": 1.0376,
+          "spread": 2.5718,
+          "cvPct": 19.0828
+        },
+        "overheadP95": {
+          "min": 6.7813,
+          "median": 8.7042,
+          "max": 12.5928,
+          "mean": 9.0933,
+          "stddev": 2.1255,
+          "spread": 5.8115,
+          "cvPct": 23.3744
+        },
+        "overheadP99": {
+          "min": 7.8375,
+          "median": 11.3687,
+          "max": 15.354,
+          "mean": 11.9423,
+          "stddev": 3.1544,
+          "spread": 7.5165,
+          "cvPct": 26.4139
+        }
+      },
+      "decisionPathVerifiedInAllTrials": true,
+      "decisionPathNote": "ALLOW forwarded upstream and result released",
+      "cleanInputCacheAfter": {
+        "size": 256,
+        "maxEntries": 256
+      },
+      "gates": [
+        {
+          "metric": "gateway p95 (median trial)",
+          "valueMs": 9.8173,
+          "budgetMs": 8,
+          "pass": false
+        },
+        {
+          "metric": "paired enforcement overhead p95 (median trial)",
+          "valueMs": 8.7042,
+          "budgetMs": 8,
+          "pass": false
+        }
+      ]
+    },
+    {
+      "name": "allow-large-warm",
+      "cacheState": "WARM",
+      "expect": "result",
+      "payload": {
+        "bytes": 8211,
+        "sha256": "a5609667d280d458"
+      },
+      "uniquePayloads": 1,
+      "medianTrialIndex": 3,
+      "medianTrial": {
+        "gateway": {
+          "p50": 3.7799,
+          "p95": 6.7079,
+          "p99": 9.4385,
+          "mean": 4.1712,
+          "min": 2.103,
+          "max": 16.9155,
+          "n": 300
+        },
+        "direct": {
+          "p50": 0.7082,
+          "p95": 3.8551,
+          "p99": 6.0282,
+          "mean": 1.1291,
+          "min": 0.4092,
+          "max": 10.1803,
+          "n": 300
+        },
+        "overhead": {
+          "p50": 2.7936,
+          "p95": 5.5073,
+          "p99": 6.6168,
+          "mean": 3.0421,
+          "min": -4.7357,
+          "max": 16.1235,
+          "n": 300
+        }
+      },
+      "acrossTrials": {
+        "gatewayP50": {
+          "min": 3.136,
+          "median": 3.7567,
+          "max": 4.5267,
+          "mean": 3.695,
+          "stddev": 0.5457,
+          "spread": 1.3907,
+          "cvPct": 14.7679
+        },
+        "gatewayP95": {
+          "min": 5.2585,
+          "median": 6.7079,
+          "max": 11.9587,
+          "mean": 7.7075,
+          "stddev": 2.6461,
+          "spread": 6.7002,
+          "cvPct": 34.3317
+        },
+        "gatewayP99": {
+          "min": 6.4158,
+          "median": 9.4385,
+          "max": 16.6142,
+          "mean": 10.7405,
+          "stddev": 3.8482,
+          "spread": 10.1984,
+          "cvPct": 35.829
+        },
+        "directP50": {
+          "min": 0.5852,
+          "median": 0.7082,
+          "max": 0.8131,
+          "mean": 0.6833,
+          "stddev": 0.0952,
+          "spread": 0.2279,
+          "cvPct": 13.9296
+        },
+        "directP95": {
+          "min": 1.9652,
+          "median": 3.0424,
+          "max": 6.5885,
+          "mean": 3.6431,
+          "stddev": 1.7797,
+          "spread": 4.6233,
+          "cvPct": 48.8502
+        },
+        "directP99": {
+          "min": 3.6919,
+          "median": 6.0282,
+          "max": 11.0754,
+          "mean": 6.4317,
+          "stddev": 2.8456,
+          "spread": 7.3835,
+          "cvPct": 44.2427
+        },
+        "overheadP50": {
+          "min": 2.3962,
+          "median": 2.7936,
+          "max": 3.3799,
+          "mean": 2.8113,
+          "stddev": 0.3692,
+          "spread": 0.9837,
+          "cvPct": 13.132
+        },
+        "overheadP95": {
+          "min": 4.5134,
+          "median": 5.5073,
+          "max": 10.0571,
+          "mean": 6.5192,
+          "stddev": 2.2881,
+          "spread": 5.5437,
+          "cvPct": 35.0982
+        },
+        "overheadP99": {
+          "min": 5.9563,
+          "median": 6.6373,
+          "max": 13.5599,
+          "mean": 8.6512,
+          "stddev": 3.2756,
+          "spread": 7.6036,
+          "cvPct": 37.8627
+        }
+      },
+      "decisionPathVerifiedInAllTrials": true,
+      "decisionPathNote": "ALLOW forwarded upstream and result released",
+      "cleanInputCacheAfter": {
+        "size": 1,
+        "maxEntries": 256
+      },
+      "gates": [
+        {
+          "metric": "gateway p95 (median trial)",
+          "valueMs": 6.7079,
+          "budgetMs": 25,
+          "pass": true
+        },
+        {
+          "metric": "paired enforcement overhead p95 (median trial)",
+          "valueMs": 5.5073,
+          "budgetMs": 25,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "name": "allow-large-cold",
+      "cacheState": "COLD",
+      "expect": "result",
+      "payload": {
+        "bytes": 8211,
+        "sha256": "d5c0611fda571ef8"
+      },
+      "uniquePayloads": 300,
+      "medianTrialIndex": 4,
+      "medianTrial": {
+        "gateway": {
+          "p50": 20.6037,
+          "p95": 29.0152,
+          "p99": 34.2827,
+          "mean": 21.2678,
+          "min": 10.0467,
+          "max": 44.344,
+          "n": 300
+        },
+        "direct": {
+          "p50": 0.8968,
+          "p95": 6.2016,
+          "p99": 11.4185,
+          "mean": 1.8482,
+          "min": 0.4776,
+          "max": 15.1787,
+          "n": 300
+        },
+        "overhead": {
+          "p50": 18.677,
+          "p95": 26.9906,
+          "p99": 29.953,
+          "mean": 19.4196,
+          "min": 9.5363,
+          "max": 32.9527,
+          "n": 300
+        }
+      },
+      "acrossTrials": {
+        "gatewayP50": {
+          "min": 17.93,
+          "median": 20.2238,
+          "max": 22.1765,
+          "mean": 19.8424,
+          "stddev": 1.752,
+          "spread": 4.2465,
+          "cvPct": 8.8293
+        },
+        "gatewayP95": {
+          "min": 22.6788,
+          "median": 29.0152,
+          "max": 31.3824,
+          "mean": 28.1845,
+          "stddev": 3.2648,
+          "spread": 8.7036,
+          "cvPct": 11.5838
+        },
+        "gatewayP99": {
+          "min": 26.8432,
+          "median": 37.4991,
+          "max": 38.5578,
+          "mean": 35.0894,
+          "stddev": 4.9134,
+          "spread": 11.7146,
+          "cvPct": 14.0025
+        },
+        "directP50": {
+          "min": 0.7584,
+          "median": 0.8968,
+          "max": 1.0624,
+          "mean": 0.8939,
+          "stddev": 0.1252,
+          "spread": 0.304,
+          "cvPct": 14.0087
+        },
+        "directP95": {
+          "min": 3.7943,
+          "median": 6.2016,
+          "max": 7.7178,
+          "mean": 6.1635,
+          "stddev": 1.473,
+          "spread": 3.9235,
+          "cvPct": 23.8995
+        },
+        "directP99": {
+          "min": 6.9408,
+          "median": 11.4185,
+          "max": 15.1282,
+          "mean": 11.5173,
+          "stddev": 2.9854,
+          "spread": 8.1874,
+          "cvPct": 25.9209
+        },
+        "overheadP50": {
+          "min": 16.982,
+          "median": 18.4903,
+          "max": 20.2042,
+          "mean": 18.2716,
+          "stddev": 1.3431,
+          "spread": 3.2222,
+          "cvPct": 7.3506
+        },
+        "overheadP95": {
+          "min": 21.4208,
+          "median": 26.3308,
+          "max": 28.0759,
+          "mean": 25.781,
+          "stddev": 2.5562,
+          "spread": 6.6551,
+          "cvPct": 9.9151
+        },
+        "overheadP99": {
+          "min": 25.9932,
+          "median": 30.8355,
+          "max": 34.4695,
+          "mean": 30.603,
+          "stddev": 3.0832,
+          "spread": 8.4763,
+          "cvPct": 10.0748
+        }
+      },
+      "decisionPathVerifiedInAllTrials": true,
+      "decisionPathNote": "ALLOW forwarded upstream and result released",
+      "cleanInputCacheAfter": {
+        "size": 256,
+        "maxEntries": 256
+      },
+      "gates": [
+        {
+          "metric": "gateway p95 (median trial)",
+          "valueMs": 29.0152,
+          "budgetMs": 25,
+          "pass": false
+        },
+        {
+          "metric": "paired enforcement overhead p95 (median trial)",
+          "valueMs": 26.9906,
+          "budgetMs": 25,
+          "pass": false
+        }
+      ]
+    },
+    {
+      "name": "block",
+      "cacheState": "NOT_CACHEABLE",
+      "expect": "blocked",
+      "payload": {
+        "bytes": 22,
+        "sha256": "2f3b94579f43fb59"
+      },
+      "uniquePayloads": 1,
+      "medianTrialIndex": 4,
+      "medianTrial": {
+        "gateway": {
+          "p50": 2.8315,
+          "p95": 4.3972,
+          "p99": 5.0297,
+          "mean": 2.961,
+          "min": 1.4406,
+          "max": 5.946,
+          "n": 300
+        },
+        "direct": {
+          "p50": 0.8642,
+          "p95": 5.7639,
+          "p99": 10.4282,
+          "mean": 1.6979,
+          "min": 0.381,
+          "max": 12.8309,
+          "n": 300
+        },
+        "overhead": {
+          "p50": 1.809,
+          "p95": 2.9023,
+          "p99": 3.6231,
+          "mean": 1.2631,
+          "min": -9.9019,
+          "max": 4.1377,
+          "n": 300
+        }
+      },
+      "acrossTrials": {
+        "gatewayP50": {
+          "min": 2.4392,
+          "median": 2.8315,
+          "max": 3.0328,
+          "mean": 2.7427,
+          "stddev": 0.2347,
+          "spread": 0.5936,
+          "cvPct": 8.5576
+        },
+        "gatewayP95": {
+          "min": 3.6015,
+          "median": 4.3972,
+          "max": 4.8678,
+          "mean": 4.2133,
+          "stddev": 0.577,
+          "spread": 1.2663,
+          "cvPct": 13.6947
+        },
+        "gatewayP99": {
+          "min": 4.6347,
+          "median": 5.1422,
+          "max": 5.464,
+          "mean": 5.1141,
+          "stddev": 0.3141,
+          "spread": 0.8293,
+          "cvPct": 6.1423
+        },
+        "directP50": {
+          "min": 0.6148,
+          "median": 0.8001,
+          "max": 0.9749,
+          "mean": 0.7758,
+          "stddev": 0.1555,
+          "spread": 0.3601,
+          "cvPct": 20.0497
+        },
+        "directP95": {
+          "min": 2.6921,
+          "median": 5.7639,
+          "max": 8.1475,
+          "mean": 5.446,
+          "stddev": 1.974,
+          "spread": 5.4554,
+          "cvPct": 36.2463
+        },
+        "directP99": {
+          "min": 4.1404,
+          "median": 9.4368,
+          "max": 24.882,
+          "mean": 11.5951,
+          "stddev": 7.817,
+          "spread": 20.7416,
+          "cvPct": 67.416
+        },
+        "overheadP50": {
+          "min": 1.708,
+          "median": 1.8058,
+          "max": 1.809,
+          "mean": 1.7716,
+          "stddev": 0.05,
+          "spread": 0.101,
+          "cvPct": 2.8223
+        },
+        "overheadP95": {
+          "min": 2.5371,
+          "median": 2.9023,
+          "max": 3.1489,
+          "mean": 2.8528,
+          "stddev": 0.2248,
+          "spread": 0.6118,
+          "cvPct": 7.8809
+        },
+        "overheadP99": {
+          "min": 3.4452,
+          "median": 3.7939,
+          "max": 4.012,
+          "mean": 3.7605,
+          "stddev": 0.2296,
+          "spread": 0.5668,
+          "cvPct": 6.1049
+        }
+      },
+      "decisionPathVerifiedInAllTrials": true,
+      "decisionPathNote": "BLOCK answered locally, never forwarded upstream",
+      "cleanInputCacheAfter": {
+        "size": 0,
+        "maxEntries": 256
+      },
+      "gates": [
+        {
+          "metric": "gateway p95 (median trial)",
+          "valueMs": 4.3972,
+          "budgetMs": 8,
+          "pass": true
+        },
+        {
+          "metric": "paired enforcement overhead p95 (median trial)",
+          "valueMs": 2.9023,
+          "budgetMs": 8,
+          "pass": true
+        }
+      ]
+    },
+    {
+      "name": "result-redact",
+      "cacheState": "NOT_CACHEABLE",
+      "expect": "result",
+      "payload": {
+        "bytes": 2,
+        "sha256": "44136fa355b3678a"
+      },
+      "uniquePayloads": 1,
+      "medianTrialIndex": 3,
+      "medianTrial": {
+        "gateway": {
+          "p50": 3.8699,
+          "p95": 7.4356,
+          "p99": 11.9555,
+          "mean": 4.3542,
+          "min": 2.1972,
+          "max": 19.2107,
+          "n": 300
+        },
+        "direct": {
+          "p50": 0.7688,
+          "p95": 5.248,
+          "p99": 8.3779,
+          "mean": 1.45,
+          "min": 0.2893,
+          "max": 9.5114,
+          "n": 300
+        },
+        "overhead": {
+          "p50": 2.7841,
+          "p95": 6.5065,
+          "p99": 10.2103,
+          "mean": 2.9042,
+          "min": -4.8681,
+          "max": 12.6092,
+          "n": 300
+        }
+      },
+      "acrossTrials": {
+        "gatewayP50": {
+          "min": 3.039,
+          "median": 3.8114,
+          "max": 4.4778,
+          "mean": 3.7776,
+          "stddev": 0.5131,
+          "spread": 1.4388,
+          "cvPct": 13.5828
+        },
+        "gatewayP95": {
+          "min": 5.1606,
+          "median": 7.4356,
+          "max": 9.6255,
+          "mean": 7.4335,
+          "stddev": 1.5798,
+          "spread": 4.4649,
+          "cvPct": 21.2518
+        },
+        "gatewayP99": {
+          "min": 6.5485,
+          "median": 10.6255,
+          "max": 14.1309,
+          "mean": 10.6746,
+          "stddev": 2.7807,
+          "spread": 7.5824,
+          "cvPct": 26.05
+        },
+        "directP50": {
+          "min": 0.529,
+          "median": 0.6739,
+          "max": 0.7838,
+          "mean": 0.6825,
+          "stddev": 0.1025,
+          "spread": 0.2548,
+          "cvPct": 15.0104
+        },
+        "directP95": {
+          "min": 2.2666,
+          "median": 4.5022,
+          "max": 5.248,
+          "mean": 4.055,
+          "stddev": 1.2385,
+          "spread": 2.9814,
+          "cvPct": 30.5436
+        },
+        "directP99": {
+          "min": 3.4812,
+          "median": 8.2583,
+          "max": 9.5354,
+          "mean": 7.0105,
+          "stddev": 2.4926,
+          "spread": 6.0542,
+          "cvPct": 35.5551
+        },
+        "overheadP50": {
+          "min": 2.3693,
+          "median": 2.7865,
+          "max": 3.4319,
+          "mean": 2.8547,
+          "stddev": 0.381,
+          "spread": 1.0626,
+          "cvPct": 13.3461
+        },
+        "overheadP95": {
+          "min": 4.2832,
+          "median": 6.4416,
+          "max": 8.5853,
+          "mean": 6.3981,
+          "stddev": 1.5265,
+          "spread": 4.3021,
+          "cvPct": 23.8581
+        },
+        "overheadP99": {
+          "min": 5.9814,
+          "median": 9.4185,
+          "max": 11.1788,
+          "mean": 9.1748,
+          "stddev": 1.9592,
+          "spread": 5.1974,
+          "cvPct": 21.354
+        }
+      },
+      "decisionPathVerifiedInAllTrials": true,
+      "decisionPathNote": "result released with the upstream secret redacted",
+      "cleanInputCacheAfter": {
+        "size": 1,
+        "maxEntries": 256
+      },
+      "gates": [
+        {
+          "metric": "gateway p95 (median trial)",
+          "valueMs": 7.4356,
+          "budgetMs": 12,
+          "pass": true
+        },
+        {
+          "metric": "paired enforcement overhead p95 (median trial)",
+          "valueMs": 6.5065,
+          "budgetMs": 12,
+          "pass": true
+        }
+      ]
+    }
+  ],
+  "trialDetail": [
+    {
+      "index": 1,
+      "startedAt": "2026-07-31T11:18:46.382Z",
+      "durationMs": 24713.2294,
+      "cpu": {
+        "userMs": 16047,
+        "systemMs": 1984
+      },
+      "rssMiB": 152.3945,
+      "buckets": [
+        {
+          "name": "allow-simple-warm",
+          "cacheState": "WARM",
+          "expect": "result",
+          "gateway": {
+            "p50": 3.4528,
+            "p95": 9.0723,
+            "p99": 15.2506,
+            "mean": 4.4278,
+            "min": 1.9416,
+            "max": 30.244,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.7646,
+            "p95": 6.0686,
+            "p99": 15.5982,
+            "mean": 1.7466,
+            "min": 0.4588,
+            "max": 25.8016,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 2.4309,
+            "p95": 7.2293,
+            "p99": 12.3479,
+            "mean": 2.6812,
+            "min": -11.0559,
+            "max": 29.2255,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 16,
+            "sha256": "cbbbdcd27692344d"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 1,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "allow-simple-cold",
+          "cacheState": "COLD",
+          "expect": "result",
+          "gateway": {
+            "p50": 8.5075,
+            "p95": 15.0233,
+            "p99": 26.6464,
+            "mean": 9.7561,
+            "min": 5.4185,
+            "max": 57.3696,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.902,
+            "p95": 7.939,
+            "p99": 17.603,
+            "mean": 2.2348,
+            "min": 0.5292,
+            "max": 32.9356,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 7.1314,
+            "p95": 12.5928,
+            "p99": 15.354,
+            "mean": 7.5213,
+            "min": -15.7073,
+            "max": 54.9954,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 24,
+            "sha256": "db68f427f7b62848"
+          },
+          "uniquePayloads": 300,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 256,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "allow-large-warm",
+          "cacheState": "WARM",
+          "expect": "result",
+          "gateway": {
+            "p50": 4.5267,
+            "p95": 11.9587,
+            "p99": 16.6142,
+            "mean": 5.6735,
+            "min": 2.4223,
+            "max": 20.3047,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.8131,
+            "p95": 6.5885,
+            "p99": 11.0754,
+            "mean": 1.7292,
+            "min": 0.4433,
+            "max": 13.4893,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 3.3799,
+            "p95": 10.0571,
+            "p99": 13.5599,
+            "mean": 3.9443,
+            "min": -6.4839,
+            "max": 19.6235,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 8211,
+            "sha256": "a5609667d280d458"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 1,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "allow-large-cold",
+          "cacheState": "COLD",
+          "expect": "result",
+          "gateway": {
+            "p50": 22.1765,
+            "p95": 31.3824,
+            "p99": 38.264,
+            "mean": 22.8476,
+            "min": 13.469,
+            "max": 49.3889,
+            "n": 300
+          },
+          "direct": {
+            "p50": 1.0624,
+            "p95": 6.1351,
+            "p99": 11.311,
+            "mean": 2.0683,
+            "min": 0.4901,
+            "max": 13.6046,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 20.2042,
+            "p95": 28.0759,
+            "p99": 34.4695,
+            "mean": 20.7793,
+            "min": 8.8751,
+            "max": 44.4818,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 8211,
+            "sha256": "d5c0611fda571ef8"
+          },
+          "uniquePayloads": 300,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 256,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "block",
+          "cacheState": "NOT_CACHEABLE",
+          "expect": "blocked",
+          "gateway": {
+            "p50": 3.0328,
+            "p95": 4.8678,
+            "p99": 5.464,
+            "mean": 3.1297,
+            "min": 1.6076,
+            "max": 6.1522,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.9749,
+            "p95": 8.1475,
+            "p99": 24.882,
+            "mean": 2.5149,
+            "min": 0.3825,
+            "max": 37.3032,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 1.8085,
+            "p95": 2.915,
+            "p99": 3.9283,
+            "mean": 0.6148,
+            "min": -33.968,
+            "max": 4.1737,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 22,
+            "sha256": "2f3b94579f43fb59"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "BLOCK answered locally, never forwarded upstream",
+          "cleanInputCacheAfter": {
+            "size": 0,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "result-redact",
+          "cacheState": "NOT_CACHEABLE",
+          "expect": "result",
+          "gateway": {
+            "p50": 4.4778,
+            "p95": 9.6255,
+            "p99": 14.1309,
+            "mean": 5.1631,
+            "min": 2.5058,
+            "max": 19.8377,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.7838,
+            "p95": 4.5022,
+            "p99": 8.2583,
+            "mean": 1.4028,
+            "min": 0.4105,
+            "max": 12.7518,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 3.4319,
+            "p95": 8.5853,
+            "p99": 11.1788,
+            "mean": 3.7603,
+            "min": -7.5574,
+            "max": 17.0482,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "result released with the upstream secret redacted",
+          "cleanInputCacheAfter": {
+            "size": 1,
+            "maxEntries": 256
+          }
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "startedAt": "2026-07-31T11:19:11.096Z",
+      "durationMs": 15227.6581,
+      "cpu": {
+        "userMs": 10938,
+        "systemMs": 1547
+      },
+      "rssMiB": 164.418,
+      "buckets": [
+        {
+          "name": "allow-simple-warm",
+          "cacheState": "WARM",
+          "expect": "result",
+          "gateway": {
+            "p50": 2.6109,
+            "p95": 4.8831,
+            "p99": 7.4812,
+            "mean": 2.8881,
+            "min": 1.4478,
+            "max": 9.3303,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.5836,
+            "p95": 1.5159,
+            "p99": 2.7249,
+            "mean": 0.7189,
+            "min": 0.3328,
+            "max": 5.3483,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 1.9696,
+            "p95": 4.1634,
+            "p99": 6.723,
+            "mean": 2.1692,
+            "min": -2.7293,
+            "max": 8.6844,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 16,
+            "sha256": "cbbbdcd27692344d"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 1,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "allow-simple-cold",
+          "cacheState": "COLD",
+          "expect": "result",
+          "gateway": {
+            "p50": 5.3781,
+            "p95": 7.4217,
+            "p99": 8.3378,
+            "mean": 5.5122,
+            "min": 3.28,
+            "max": 9.1722,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.5224,
+            "p95": 1.4918,
+            "p99": 3.2228,
+            "mean": 0.6739,
+            "min": 0.3149,
+            "max": 5.223,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 4.7618,
+            "p95": 6.7813,
+            "p99": 7.8375,
+            "mean": 4.8383,
+            "min": 0.1125,
+            "max": 8.746,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 24,
+            "sha256": "db68f427f7b62848"
+          },
+          "uniquePayloads": 300,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 256,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "allow-large-warm",
+          "cacheState": "WARM",
+          "expect": "result",
+          "gateway": {
+            "p50": 3.2757,
+            "p95": 5.2585,
+            "p99": 6.4158,
+            "mean": 3.4937,
+            "min": 2.0819,
+            "max": 8.0636,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.5852,
+            "p95": 1.9652,
+            "p99": 3.6919,
+            "mean": 0.7606,
+            "min": 0.3815,
+            "max": 4.2326,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 2.6019,
+            "p95": 4.5134,
+            "p99": 5.9563,
+            "mean": 2.7331,
+            "min": -0.1494,
+            "max": 7.5179,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 8211,
+            "sha256": "a5609667d280d458"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 1,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "allow-large-cold",
+          "cacheState": "COLD",
+          "expect": "result",
+          "gateway": {
+            "p50": 18.2781,
+            "p95": 22.6788,
+            "p99": 26.8432,
+            "mean": 18.0693,
+            "min": 9.1447,
+            "max": 29.7502,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.7584,
+            "p95": 3.7943,
+            "p99": 6.9408,
+            "mean": 1.2344,
+            "min": 0.4714,
+            "max": 12.1817,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 16.982,
+            "p95": 21.4208,
+            "p99": 25.9932,
+            "mean": 16.8349,
+            "min": 5.0482,
+            "max": 28.5765,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 8211,
+            "sha256": "d5c0611fda571ef8"
+          },
+          "uniquePayloads": 300,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 256,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "block",
+          "cacheState": "NOT_CACHEABLE",
+          "expect": "blocked",
+          "gateway": {
+            "p50": 2.5758,
+            "p95": 3.6015,
+            "p99": 5.1422,
+            "mean": 2.5921,
+            "min": 1.3172,
+            "max": 5.6393,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.6148,
+            "p95": 4.7804,
+            "p99": 9.4368,
+            "mean": 1.2904,
+            "min": 0.3005,
+            "max": 12.3325,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 1.708,
+            "p95": 2.5371,
+            "p99": 3.7939,
+            "mean": 1.3016,
+            "min": -9.0565,
+            "max": 4.5162,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 22,
+            "sha256": "2f3b94579f43fb59"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "BLOCK answered locally, never forwarded upstream",
+          "cleanInputCacheAfter": {
+            "size": 0,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "result-redact",
+          "cacheState": "NOT_CACHEABLE",
+          "expect": "result",
+          "gateway": {
+            "p50": 3.6901,
+            "p95": 7.4077,
+            "p99": 10.1125,
+            "mean": 4.1535,
+            "min": 1.8891,
+            "max": 11.7727,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.6572,
+            "p95": 4.9363,
+            "p99": 9.5354,
+            "mean": 1.3297,
+            "min": 0.3068,
+            "max": 15.694,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 2.7865,
+            "p95": 6.4416,
+            "p99": 9.4185,
+            "mean": 2.8238,
+            "min": -11.8974,
+            "max": 11.0948,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "result released with the upstream secret redacted",
+          "cleanInputCacheAfter": {
+            "size": 1,
+            "maxEntries": 256
+          }
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "startedAt": "2026-07-31T11:19:26.324Z",
+      "durationMs": 18730.52,
+      "cpu": {
+        "userMs": 10890,
+        "systemMs": 1766
+      },
+      "rssMiB": 169.418,
+      "buckets": [
+        {
+          "name": "allow-simple-warm",
+          "cacheState": "WARM",
+          "expect": "result",
+          "gateway": {
+            "p50": 3.2093,
+            "p95": 8.9877,
+            "p99": 14.001,
+            "mean": 4.0519,
+            "min": 1.6054,
+            "max": 18.2308,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.7086,
+            "p95": 4.4077,
+            "p99": 9.9998,
+            "mean": 1.3133,
+            "min": 0.3741,
+            "max": 12.3113,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 2.2544,
+            "p95": 7.0944,
+            "p99": 13.2965,
+            "mean": 2.7386,
+            "min": -6.7446,
+            "max": 16.9694,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 16,
+            "sha256": "cbbbdcd27692344d"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 1,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "allow-simple-cold",
+          "cacheState": "COLD",
+          "expect": "result",
+          "gateway": {
+            "p50": 6.5229,
+            "p95": 9.9826,
+            "p99": 12.5441,
+            "mean": 6.8617,
+            "min": 4.0642,
+            "max": 13.5482,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.6588,
+            "p95": 3.2237,
+            "p99": 5.1679,
+            "mean": 1.0551,
+            "min": 0.3561,
+            "max": 10.217,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 5.6836,
+            "p95": 8.6263,
+            "p99": 10.3194,
+            "mean": 5.8066,
+            "min": -3.3261,
+            "max": 11.2009,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 24,
+            "sha256": "db68f427f7b62848"
+          },
+          "uniquePayloads": 300,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 256,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "allow-large-warm",
+          "cacheState": "WARM",
+          "expect": "result",
+          "gateway": {
+            "p50": 3.7799,
+            "p95": 6.7079,
+            "p99": 9.4385,
+            "mean": 4.1712,
+            "min": 2.103,
+            "max": 16.9155,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.7082,
+            "p95": 3.8551,
+            "p99": 6.0282,
+            "mean": 1.1291,
+            "min": 0.4092,
+            "max": 10.1803,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 2.7936,
+            "p95": 5.5073,
+            "p99": 6.6168,
+            "mean": 3.0421,
+            "min": -4.7357,
+            "max": 16.1235,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 8211,
+            "sha256": "a5609667d280d458"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 1,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "allow-large-cold",
+          "cacheState": "COLD",
+          "expect": "result",
+          "gateway": {
+            "p50": 17.93,
+            "p95": 29.321,
+            "p99": 37.4991,
+            "mean": 19.2808,
+            "min": 9.2528,
+            "max": 64.2205,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.7884,
+            "p95": 6.9686,
+            "p99": 12.7882,
+            "mean": 1.8836,
+            "min": 0.4119,
+            "max": 41.4318,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 17.0046,
+            "p95": 26.3308,
+            "p99": 31.7639,
+            "mean": 17.3973,
+            "min": -1.6535,
+            "max": 39.0867,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 8211,
+            "sha256": "d5c0611fda571ef8"
+          },
+          "uniquePayloads": 300,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 256,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "block",
+          "cacheState": "NOT_CACHEABLE",
+          "expect": "blocked",
+          "gateway": {
+            "p50": 2.834,
+            "p95": 4.5844,
+            "p99": 5.2999,
+            "mean": 2.9845,
+            "min": 1.4524,
+            "max": 5.8354,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.8001,
+            "p95": 5.8459,
+            "p99": 9.0881,
+            "mean": 1.658,
+            "min": 0.3454,
+            "max": 11.0328,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 1.8058,
+            "p95": 3.1489,
+            "p99": 4.012,
+            "mean": 1.3266,
+            "min": -8.1157,
+            "max": 4.3977,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 22,
+            "sha256": "2f3b94579f43fb59"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "BLOCK answered locally, never forwarded upstream",
+          "cleanInputCacheAfter": {
+            "size": 0,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "result-redact",
+          "cacheState": "NOT_CACHEABLE",
+          "expect": "result",
+          "gateway": {
+            "p50": 3.8699,
+            "p95": 7.4356,
+            "p99": 11.9555,
+            "mean": 4.3542,
+            "min": 2.1972,
+            "max": 19.2107,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.7688,
+            "p95": 5.248,
+            "p99": 8.3779,
+            "mean": 1.45,
+            "min": 0.2893,
+            "max": 9.5114,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 2.7841,
+            "p95": 6.5065,
+            "p99": 10.2103,
+            "mean": 2.9042,
+            "min": -4.8681,
+            "max": 12.6092,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "result released with the upstream secret redacted",
+          "cleanInputCacheAfter": {
+            "size": 1,
+            "maxEntries": 256
+          }
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "startedAt": "2026-07-31T11:19:45.054Z",
+      "durationMs": 19158.8197,
+      "cpu": {
+        "userMs": 11735,
+        "systemMs": 1766
+      },
+      "rssMiB": 167.7109,
+      "buckets": [
+        {
+          "name": "allow-simple-warm",
+          "cacheState": "WARM",
+          "expect": "result",
+          "gateway": {
+            "p50": 3.376,
+            "p95": 13.7244,
+            "p99": 23.4254,
+            "mean": 4.8812,
+            "min": 1.9082,
+            "max": 56.1858,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.9624,
+            "p95": 7.4818,
+            "p99": 17.0468,
+            "mean": 2.2174,
+            "min": 0.3916,
+            "max": 59.673,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 2.1635,
+            "p95": 8.6669,
+            "p99": 18.1224,
+            "mean": 2.6638,
+            "min": -41.3006,
+            "max": 55.1601,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 16,
+            "sha256": "cbbbdcd27692344d"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 1,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "allow-simple-cold",
+          "cacheState": "COLD",
+          "expect": "result",
+          "gateway": {
+            "p50": 5.8645,
+            "p95": 9.8173,
+            "p99": 15.9008,
+            "mean": 6.3789,
+            "min": 3.2989,
+            "max": 26.7252,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.6214,
+            "p95": 4.5693,
+            "p99": 7.9399,
+            "mean": 1.2183,
+            "min": 0.3087,
+            "max": 13.1712,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 5.0509,
+            "p95": 8.7042,
+            "p99": 11.3687,
+            "mean": 5.1606,
+            "min": -1.8278,
+            "max": 23.0259,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 24,
+            "sha256": "db68f427f7b62848"
+          },
+          "uniquePayloads": 300,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 256,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "allow-large-warm",
+          "cacheState": "WARM",
+          "expect": "result",
+          "gateway": {
+            "p50": 3.7567,
+            "p95": 8.4499,
+            "p99": 12.0845,
+            "mean": 4.3556,
+            "min": 2.081,
+            "max": 16.1425,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.7165,
+            "p95": 3.0424,
+            "p99": 4.674,
+            "mean": 1.053,
+            "min": 0.4075,
+            "max": 16.0816,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 2.8847,
+            "p95": 7.5326,
+            "p99": 10.4856,
+            "mean": 3.3027,
+            "min": -4.0766,
+            "max": 12.3533,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 8211,
+            "sha256": "a5609667d280d458"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 1,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "allow-large-cold",
+          "cacheState": "COLD",
+          "expect": "result",
+          "gateway": {
+            "p50": 20.6037,
+            "p95": 29.0152,
+            "p99": 34.2827,
+            "mean": 21.2678,
+            "min": 10.0467,
+            "max": 44.344,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.8968,
+            "p95": 6.2016,
+            "p99": 11.4185,
+            "mean": 1.8482,
+            "min": 0.4776,
+            "max": 15.1787,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 18.677,
+            "p95": 26.9906,
+            "p99": 29.953,
+            "mean": 19.4196,
+            "min": 9.5363,
+            "max": 32.9527,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 8211,
+            "sha256": "d5c0611fda571ef8"
+          },
+          "uniquePayloads": 300,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 256,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "block",
+          "cacheState": "NOT_CACHEABLE",
+          "expect": "blocked",
+          "gateway": {
+            "p50": 2.8315,
+            "p95": 4.3972,
+            "p99": 5.0297,
+            "mean": 2.961,
+            "min": 1.4406,
+            "max": 5.946,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.8642,
+            "p95": 5.7639,
+            "p99": 10.4282,
+            "mean": 1.6979,
+            "min": 0.381,
+            "max": 12.8309,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 1.809,
+            "p95": 2.9023,
+            "p99": 3.6231,
+            "mean": 1.2631,
+            "min": -9.9019,
+            "max": 4.1377,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 22,
+            "sha256": "2f3b94579f43fb59"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "BLOCK answered locally, never forwarded upstream",
+          "cleanInputCacheAfter": {
+            "size": 0,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "result-redact",
+          "cacheState": "NOT_CACHEABLE",
+          "expect": "result",
+          "gateway": {
+            "p50": 3.8114,
+            "p95": 7.5382,
+            "p99": 10.6255,
+            "mean": 4.3036,
+            "min": 2.0388,
+            "max": 17.4104,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.6739,
+            "p95": 3.3218,
+            "p99": 5.3998,
+            "mean": 1.0777,
+            "min": 0.2971,
+            "max": 7.9306,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 2.9019,
+            "p95": 6.1741,
+            "p99": 9.0849,
+            "mean": 3.2259,
+            "min": -2.3091,
+            "max": 12.7422,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "result released with the upstream secret redacted",
+          "cleanInputCacheAfter": {
+            "size": 1,
+            "maxEntries": 256
+          }
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "startedAt": "2026-07-31T11:20:04.213Z",
+      "durationMs": 16151.8715,
+      "cpu": {
+        "userMs": 10468,
+        "systemMs": 1453
+      },
+      "rssMiB": 167.9531,
+      "buckets": [
+        {
+          "name": "allow-simple-warm",
+          "cacheState": "WARM",
+          "expect": "result",
+          "gateway": {
+            "p50": 2.5666,
+            "p95": 4.5646,
+            "p99": 7.3593,
+            "mean": 2.8079,
+            "min": 1.412,
+            "max": 8.3302,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.606,
+            "p95": 2.4868,
+            "p99": 4.4181,
+            "mean": 0.8953,
+            "min": 0.307,
+            "max": 10.4392,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 1.827,
+            "p95": 3.3825,
+            "p99": 6.4367,
+            "mean": 1.9126,
+            "min": -6.8142,
+            "max": 7.0064,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 16,
+            "sha256": "cbbbdcd27692344d"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 1,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "allow-simple-cold",
+          "cacheState": "COLD",
+          "expect": "result",
+          "gateway": {
+            "p50": 5.189,
+            "p95": 9.795,
+            "p99": 17.5562,
+            "mean": 5.7811,
+            "min": 3.0668,
+            "max": 20.4929,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.5126,
+            "p95": 2.2958,
+            "p99": 6.3594,
+            "mean": 0.8316,
+            "min": 0.2797,
+            "max": 18.3021,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 4.5596,
+            "p95": 8.762,
+            "p99": 14.8319,
+            "mean": 4.9495,
+            "min": -6.7885,
+            "max": 18.1573,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 24,
+            "sha256": "db68f427f7b62848"
+          },
+          "uniquePayloads": 300,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 256,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "allow-large-warm",
+          "cacheState": "WARM",
+          "expect": "result",
+          "gateway": {
+            "p50": 3.136,
+            "p95": 6.1625,
+            "p99": 9.1497,
+            "mean": 3.4955,
+            "min": 1.7941,
+            "max": 13.1139,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.5936,
+            "p95": 2.7643,
+            "p99": 6.6891,
+            "mean": 0.9652,
+            "min": 0.3221,
+            "max": 17.0885,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 2.3962,
+            "p95": 4.9858,
+            "p99": 6.6373,
+            "mean": 2.5302,
+            "min": -10.1134,
+            "max": 12.4266,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 8211,
+            "sha256": "a5609667d280d458"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 1,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "allow-large-cold",
+          "cacheState": "COLD",
+          "expect": "result",
+          "gateway": {
+            "p50": 20.2238,
+            "p95": 28.5249,
+            "p99": 38.5578,
+            "mean": 20.8273,
+            "min": 9.1583,
+            "max": 57.5934,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.9634,
+            "p95": 7.7178,
+            "p99": 15.1282,
+            "mean": 2.0518,
+            "min": 0.4329,
+            "max": 16.8118,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 18.4903,
+            "p95": 26.0868,
+            "p99": 30.8355,
+            "mean": 18.7755,
+            "min": 4.2664,
+            "max": 43.3144,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 8211,
+            "sha256": "d5c0611fda571ef8"
+          },
+          "uniquePayloads": 300,
+          "decisionPathVerified": true,
+          "decisionPathNote": "ALLOW forwarded upstream and result released",
+          "cleanInputCacheAfter": {
+            "size": 256,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "block",
+          "cacheState": "NOT_CACHEABLE",
+          "expect": "blocked",
+          "gateway": {
+            "p50": 2.4392,
+            "p95": 3.6154,
+            "p99": 4.6347,
+            "mean": 2.4962,
+            "min": 1.2928,
+            "max": 5.2616,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.6248,
+            "p95": 2.6921,
+            "p99": 4.1404,
+            "mean": 0.8978,
+            "min": 0.304,
+            "max": 7.0674,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 1.7266,
+            "p95": 2.7605,
+            "p99": 3.4452,
+            "mean": 1.5984,
+            "min": -4.4594,
+            "max": 4.5986,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 22,
+            "sha256": "2f3b94579f43fb59"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "BLOCK answered locally, never forwarded upstream",
+          "cleanInputCacheAfter": {
+            "size": 0,
+            "maxEntries": 256
+          }
+        },
+        {
+          "name": "result-redact",
+          "cacheState": "NOT_CACHEABLE",
+          "expect": "result",
+          "gateway": {
+            "p50": 3.039,
+            "p95": 5.1606,
+            "p99": 6.5485,
+            "mean": 3.1886,
+            "min": 1.7084,
+            "max": 7.2557,
+            "n": 300
+          },
+          "direct": {
+            "p50": 0.529,
+            "p95": 2.2666,
+            "p99": 3.4812,
+            "mean": 0.7395,
+            "min": 0.3014,
+            "max": 3.5916,
+            "n": 300
+          },
+          "overhead": {
+            "p50": 2.3693,
+            "p95": 4.2832,
+            "p99": 5.9814,
+            "mean": 2.4491,
+            "min": -1.5254,
+            "max": 6.8073,
+            "n": 300
+          },
+          "payload": {
+            "bytes": 2,
+            "sha256": "44136fa355b3678a"
+          },
+          "uniquePayloads": 1,
+          "decisionPathVerified": true,
+          "decisionPathNote": "result released with the upstream secret redacted",
+          "cleanInputCacheAfter": {
+            "size": 1,
+            "maxEntries": 256
+          }
+        }
+      ]
+    }
+  ]
+}

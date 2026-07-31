@@ -59,7 +59,7 @@ export class ProtectionController {
 
         const test = await this.deps.brokerManager.request<{ decision: string; redacted?: boolean }>(
             "/v1/scan",
-            { method: "POST", body: JSON.stringify({ content: "SOTERAI_SELF_TEST_TOKEN=synthetic_test_value_123456789" }) },
+            { method: "POST", body: JSON.stringify({ content: "OPENAI_API_KEY=sk-proj-soterai-self-test-1234567890abcdefghijkl" }) },
         );
         if (test.decision === "allow" && !test.redacted) throw new Error("Broker protection self-test did not redact or block the synthetic test value");
         completed.push(`broker self-test passed (${test.decision})`);

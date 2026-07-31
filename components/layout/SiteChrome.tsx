@@ -58,7 +58,10 @@ export function SiteChrome({ children, currentYear }: SiteChromeProps) {
                   <Link href="/pricing" className="hover:text-slate-300">Pricing</Link>
                   <Link href="/playground" className="hover:text-slate-300">Playground</Link>
                   <Link href="/demo" className="hover:text-slate-300">Demo</Link>
-                  <Link href="/dashboard/integrations" className="hover:text-slate-300">Integrations</Link>
+                  {/* Public catalog — the old /dashboard/integrations target sent
+                      logged-out visitors to a login wall (a dead end). */}
+                  <Link href="/integrations" className="hover:text-slate-300">Integrations</Link>
+                  <Link href="/blog" className="hover:text-slate-300">Blog</Link>
                 </div>
               </div>
               <div>

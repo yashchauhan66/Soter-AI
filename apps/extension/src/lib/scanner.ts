@@ -33,26 +33,34 @@ export function scanPrompt(text: string, url: string, state: ExtensionState, eve
   const policy = state.policy;
   if (!policy) throw new Error("Soter policy cache is not initialized.");
 
-  if (state.policySyncStatus === "offline" && (policy.offlineFailClosed || state.config.offlineFailClosed)) {
+  const failClosed = failClosedDecision(state, policy);
+  if (failClosed) {
     const redactedText = redactSensitiveText(text, detectedDataTypes);
+    // SS-11: `rewrittenSafeText` used to be the *raw* prompt here. Every consumer treats
+    // that field as the safe variant — the overlay renders it as "Redacted/Safe Preview",
+    // "Use safe prompt" writes it back into the page input and replays the submit, and
+    // "Copy safe prompt" puts it on the clipboard. A fail-closed block therefore handed
+    // the unredacted text (secrets included) straight back to the page it had just
+    // refused. In a state where the extension cannot trust its own policy, the only
+    // text it may emit is the redacted one.
     return {
       hasFindings: true,
       riskScore: 100,
-      detectedDataTypes: Array.from(new Set([...detectedDataTypes, "offline_block"])),
+      detectedDataTypes: Array.from(new Set([...detectedDataTypes, failClosed.dataType])),
       findings: localScan.findings.map((finding) => ({ ...finding, match: auditSafePreview(finding.match, [finding.type], 120) })),
       action: "block",
       policy: {
         action: "block",
         severity: "critical",
-        matchedRules: [{ id: "offline-fail-closed", name: "Offline Fail-Closed Policy", action: "block", severity: "critical" }],
-        userMessage: "Blocked by your organization's offline fail-closed policy (Soter is offline).",
-        adminMessage: "Offline fail-closed policy enforced locally by the extension.",
+        matchedRules: [{ id: failClosed.id, name: failClosed.name, action: "block", severity: "critical" }],
+        userMessage: failClosed.userMessage,
+        adminMessage: failClosed.adminMessage,
         redactedText,
-        rewrittenSafeText: text,
+        rewrittenSafeText: redactedText,
         auditMetadata: {},
       },
       redactedText,
-      rewrittenSafeText: text,
+      rewrittenSafeText: redactedText,
       scannedAt: new Date().toISOString(),
     };
   }
@@ -107,8 +115,110 @@ export function scanPrompt(text: string, url: string, state: ExtensionState, eve
   }, hardEnforcementEnabled(state));
 }
 
-/** True when hard enforcement is on via signed org policy OR managed config. */
-export function hardEnforcementEnabled(state: ExtensionState) {
+/**
+ * Positive tamper signals. These mean the policy bundle was modified, replayed or
+ * issued for another tenant — not merely that no key is configured.
+ */
+const POLICY_TAMPER_CODES = new Set(["malformed", "unsupported_algorithm", "organization_mismatch", "hash_mismatch", "signature_mismatch", "rollback"]);
+
+/**
+ * Rule ids the fail-closed gate emits. A block carrying one of these is not a normal
+ * policy decision about the *content* — it means the extension cannot currently trust the
+ * policy it would otherwise evaluate, so no remediation path may put text back into the
+ * page or submit anything (SS-11).
+ */
+export const FAIL_CLOSED_RULE_IDS: readonly string[] = [
+  "policy-integrity-fail-closed",
+  "policy-signature-required-fail-closed",
+  "offline-fail-closed",
+];
+
+/** True when this result came from the fail-closed gate rather than content evaluation. */
+export function isFailClosedBlock(result: ScanResult) {
+  return result.action === "block"
+    && result.policy.matchedRules.some((rule) => FAIL_CLOSED_RULE_IDS.includes(rule.id));
+}
+
+/**
+ * What the enforcement overlay is allowed to offer for a decision. Kept here, next to the
+ * decision itself, so the UI cannot invent an affordance the kernel did not authorise.
+ *
+ *  - `canReplace`          — may write `rewrittenSafeText` into the page input.
+ *  - `canSubmitSafeText`   — may then replay the submit with that transformed text.
+ *  - `canSubmitOriginal`   — may the text as typed reach the destination.
+ *
+ * A fail-closed block allows none of the three: an audited dismiss (which never submits) is
+ * the only way out, and the redacted preview may still be copied for the user's own records.
+ */
+export function remediationAffordances(result: ScanResult): {
+  canReplace: boolean;
+  canSubmitSafeText: boolean;
+  canSubmitOriginal: boolean;
+  canCopyPreview: boolean;
+} {
+  if (isFailClosedBlock(result)) {
+    return { canReplace: false, canSubmitSafeText: false, canSubmitOriginal: false, canCopyPreview: true };
+  }
+  if (result.action === "block") {
+    return { canReplace: true, canSubmitSafeText: true, canSubmitOriginal: false, canCopyPreview: true };
+  }
+  return { canReplace: true, canSubmitSafeText: true, canSubmitOriginal: !shouldPreventSubmit(result.action), canCopyPreview: true };
+}
+
+interface FailClosedDecision {
+  id: string;
+  name: string;
+  dataType: string;
+  userMessage: string;
+  adminMessage: string;
+}
+
+/**
+ * SS-4: a single fail-closed gate covering every state in which the extension cannot
+ * trust the policy it is enforcing.
+ *
+ * Previously only `policySyncStatus === "offline"` was gated, and only when a
+ * fail-closed flag was set — so a *tampered* bundle (which sets `"error"`) fell through
+ * to normal evaluation against a policy the extension had already refused to trust.
+ * A tamper signal now blocks regardless of the availability flag, because it is a
+ * positive attack signal rather than a connectivity problem.
+ */
+function failClosedDecision(state: ExtensionState, policy: NonNullable<ExtensionState["policy"]>): FailClosedDecision | undefined {
+  const integrity = state.policyIntegrity;
+  if (integrity && !integrity.verified && POLICY_TAMPER_CODES.has(integrity.code)) {
+    return {
+      id: "policy-integrity-fail-closed",
+      name: "Policy Integrity Fail-Closed",
+      dataType: "policy_tamper_block",
+      userMessage: "Blocked: Soter could not verify your organization's security policy. Contact your administrator.",
+      adminMessage: `Policy integrity check failed (${integrity.code}); extension is failing closed locally.`,
+    };
+  }
+  if (state.config.requirePolicySignature === true && integrity?.verified !== true) {
+    return {
+      id: "policy-signature-required-fail-closed",
+      name: "Signed Policy Required",
+      dataType: "policy_unverified_block",
+      userMessage: "Blocked: your organization requires a cryptographically signed Soter policy, which is not available.",
+      adminMessage: "requirePolicySignature is enabled but no verified policy bundle is present.",
+    };
+  }
+  if (
+    (state.policySyncStatus === "offline" || state.policySyncStatus === "error") &&
+    (policy.offlineFailClosed || state.config.offlineFailClosed)
+  ) {
+    return {
+      id: "offline-fail-closed",
+      name: "Offline Fail-Closed Policy",
+      dataType: "offline_block",
+      userMessage: "Blocked by your organization's offline fail-closed policy (Soter is offline).",
+      adminMessage: "Offline fail-closed policy enforced locally by the extension.",
+    };
+  }
+  return undefined;
+}
+
+/** True when hard enforcement is on via signed org policy OR managed config. */export function hardEnforcementEnabled(state: ExtensionState) {
   return state.policy?.hardEnforcement === true || state.config.hardEnforcement === true;
 }
 

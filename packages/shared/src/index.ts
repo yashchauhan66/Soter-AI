@@ -4,3 +4,4 @@ export * from "./privacy";
 export * from "./extension-types";
 export * from "./ai-destinations";
 export * from "./policy-types";
+export * from "./policy-integrity";

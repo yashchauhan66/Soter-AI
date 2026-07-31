@@ -5,6 +5,7 @@ import type { SourceAppConfig } from "./source-apps";
 import type { FingerprintRecord, LocalFingerprintMatch } from "./fingerprint-matcher";
 import type { AIDestinationPolicy } from "../../../../packages/shared/src/ai-destinations";
 import { assertNoRawSensitiveData, createPrivacySafePreview, redactSensitiveText, sanitizePrivacyPayload } from "../../../../packages/shared/src/privacy";
+import { assertTrustedEndpoint, buildTrustedUrl } from "./trusted-endpoint";
 import { previewForScan } from "./privacy-preview";
 
 export class SoterExtensionApiClient {
@@ -164,9 +165,70 @@ export class SoterExtensionApiClient {
     return response.json() as Promise<{ approvalId: string; status: string }>;
   }
 
+  /**
+   * Shadow-AI discovery report. Identity is taken from enrolled config, never from the
+   * caller, so a page-injected content script cannot attribute a discovery to another
+   * employee or tenant. Only the destination origin is sent, never the full URL.
+   */
+  async shadowAiDiscovered(payload: { domain: string; destination: string; riskLevel: string; url: string }) {
+    const safePayload = {
+      organizationId: this.config.organizationId,
+      employeeId: this.config.employeeId,
+      domain: payload.domain,
+      destination: payload.destination,
+      riskLevel: payload.riskLevel,
+      url: safeOrigin(payload.url),
+    };
+    assertNoRawSensitiveData(safePayload);
+    await this.request(new URL("/api/extension/shadow-ai-discovered", this.config.apiBaseUrl), {
+      method: "POST",
+      body: JSON.stringify(safePayload),
+    });
+  }
+
+  async approvalStatus(approvalId: string) {
+    const response = await this.request(new URL("/api/extension/approval-status", this.config.apiBaseUrl), {
+      method: "POST",
+      body: JSON.stringify({
+        organizationId: this.config.organizationId,
+        employeeId: this.config.employeeId,
+        approvalId,
+      }),
+    });
+    return response.json() as Promise<{ status: string }>;
+  }
+
+  async claimApproval(payload: { requestId: string; destination: string }) {
+    const response = await this.request(new URL("/api/extension/approval-claim", this.config.apiBaseUrl), {
+      method: "POST",
+      body: JSON.stringify({
+        requestId: payload.requestId,
+        organizationId: this.config.organizationId,
+        employeeId: this.config.employeeId,
+        destination: payload.destination,
+      }),
+    });
+    return response.json() as Promise<{ allowed: boolean; expiresAt?: string; approvalId?: string }>;
+  }
+
+  /**
+   * Every control-plane request funnels through here, and every request is re-anchored
+   * onto the trusted (optionally pinned) origin before it leaves the extension (SS-2).
+   *
+   * This is the single enforcement point that makes endpoint rebinding non-exploitable:
+   * even if `config.apiBaseUrl` has been poisoned in storage, an https-only, no-IP,
+   * no-credentials, pin-matching origin is the only thing `fetch` can be called with —
+   * and the device token in `x-soter-extension-token` therefore cannot be redirected to
+   * an attacker-controlled host.
+   */
   private request(url: URL, init: RequestInit) {
-    return fetch(url, {
+    const trusted = assertTrustedEndpoint(this.config.apiBaseUrl, this.config.pinnedApiOrigin);
+    const target = buildTrustedUrl(trusted, `${url.pathname}${url.search}`, this.config.pinnedApiOrigin);
+    return fetch(target, {
       ...init,
+      // No cookies or other ambient credentials: the device token is the only authority.
+      credentials: "omit",
+      redirect: "error",
       headers: {
         "content-type": "application/json",
         "x-soter-extension-token": this.config.deviceToken ?? "",

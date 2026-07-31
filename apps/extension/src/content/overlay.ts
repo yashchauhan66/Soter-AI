@@ -1,4 +1,5 @@
 import type { ScanResult } from "../lib/types";
+import { remediationAffordances } from "../lib/scanner";
 
 interface OverlayOptions {
   result: ScanResult;
@@ -38,18 +39,32 @@ export function showSoterOverlay(options: OverlayOptions) {
   let justificationInputHtml = "";
 
   if (action === "block") {
-    actionButtonsHtml = `
-      <button data-action="copy">Copy safe prompt</button>
-      <button data-action="replace" class="primary">Use safe prompt</button>
-    `;
-    if (result.policy.matchedRules.some((rule) => rule.id === "hard-enforcement-block")) {
+    const affordances = remediationAffordances(result);
+    if (!affordances.canReplace) {
+      // SS-11: a fail-closed block (policy tamper, unsigned bundle where signing is
+      // required, offline + fail-closed) means the extension does not trust the policy it
+      // would evaluate against. Offering "Use safe prompt" here would write text back into
+      // the page and replay the submit, so it is not rendered at all. Dismiss is audited
+      // and never submits.
+      actionButtonsHtml = `
+        <button data-action="copy">Copy redacted preview</button>
+        <button data-action="dismiss" class="danger">Dismiss (audited)</button>
+      `;
+      statusHtml = `<div class="status-badge error">Submission Blocked — Policy Unverified</div>`;
+    } else {
       actionButtonsHtml = `
         <button data-action="copy">Copy safe prompt</button>
         <button data-action="replace" class="primary">Use safe prompt</button>
-        <button data-action="dismiss" class="danger">Dismiss (audited)</button>
       `;
+      if (result.policy.matchedRules.some((rule) => rule.id === "hard-enforcement-block")) {
+        actionButtonsHtml = `
+          <button data-action="copy">Copy safe prompt</button>
+          <button data-action="replace" class="primary">Use safe prompt</button>
+          <button data-action="dismiss" class="danger">Dismiss (audited)</button>
+        `;
+      }
+      statusHtml = `<div class="status-badge error">Submission Blocked</div>`;
     }
-    statusHtml = `<div class="status-badge error">Submission Blocked</div>`;
   } else if (action === "require_approval") {
     justificationInputHtml = `
       <div class="input-group">

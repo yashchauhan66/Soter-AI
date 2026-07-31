@@ -27,6 +27,7 @@ import { registerClipboardGuard } from "./clipboard/ClipboardGuard";
 import { registerSecretBrokerCommands } from "./secret-broker/commands";
 import { ProtectionStateService } from "./protection/ProtectionStateService";
 import { ProtectionController } from "./protection/ProtectionController";
+import { runPackagedRuntimeProbe } from "./packagedRuntimeProbe";
 
 // Single consolidated status-bar item. It replaces the earlier six separate
 // items (main, firewall, broker, safe mode, memory, runtime) — those states now
@@ -171,6 +172,11 @@ export function activate(context: vscode.ExtensionContext): void {
     updateStatusBar();
     statusBarItem.show();
     void updateBrokerStatus();
+    // Dormant in normal installs; proves the packaged VSIX from inside an
+    // actual VS Code-family extension host when the runtime harness opts in.
+    if (process.env.SOTERAI_PACKAGED_RUNTIME_PROBE) {
+        void runPackagedRuntimeProbe(brokerManager, protectionController);
+    }
 
     context.subscriptions.push(
         vscode.workspace.onDidChangeConfiguration((e) => {

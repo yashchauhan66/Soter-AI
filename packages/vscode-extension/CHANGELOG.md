@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.2] - 2026-07-31
+
+### Fixed
+- Aligned packaged runtime release evidence with the broker Safe Mode policy check so VS Code-family hosts can prove the same VSIX behavior deterministically.
+- Fixed the Marketplace license pointer to resolve to the bundled `LICENSE.md` file.
+
+### Verified
+- Packaged VSIX runtime probes passed in VS Code, Cursor, Windsurf, Kiro, and Antigravity with the same artifact.
+- VSCodium was not installed on this machine, so its local runtime probe remains unverified until `codium` is available on PATH.
+
 ## [0.2.1] - 2026-07-22
 
 ### Added

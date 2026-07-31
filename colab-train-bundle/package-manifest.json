@@ -1,0 +1,46 @@
+{
+  "schema_version": "soterai-external-accelerator-handoff/v1",
+  "created_at": "2026-07-30",
+  "execution_status": "NOT_RUN_EXTERNAL_ACCELERATOR_REQUIRED",
+  "promotion_status": "BLOCKED",
+  "taxonomy_version": "SOTERAI-ML-TAXONOMY-v1",
+  "freeze": {
+    "path": "reports/ml-v1-freeze/split-freeze.json",
+    "status": "PROVISIONAL_NOT_INDEPENDENT_NOT_SEMANTICALLY_LOCKED",
+    "dataset_sha256": "842bfc66bb32f4acf2c2f2f1eb8510c698c3919c1507c07299f2fd05ddcfd732",
+    "audit_sha256": "5d8725b88759fd92730e2b631e4e5a91a41de66ff825fab900404593c5592e8b"
+  },
+  "entrypoints": {
+    "notebook": "notebooks/SOTERAI_ML_TRAINING_COLAB.ipynb",
+    "alternate_notebook": "notebooks/SOTERAI_ML_LAKERA_BEATING_TRAINING_COLAB.ipynb",
+    "accelerator_runner": "scripts/ml/soterai_colab_train_runner.py",
+    "training_pipeline": "scripts/ml/soterai_training_pipeline.py",
+    "data_freeze": "scripts/ml/soterai_data_freeze.py",
+    "dataset_audit": "scripts/ml/soterai_dataset_audit.py",
+    "tokenizer_parity": "scripts/ml/verify-tokenizer-parity.ts",
+    "calibration": "scripts/guard-benchmark/ml-per-label-calibration.ts",
+    "artifact_validator": "scripts/ml/validate_artifact_manifest.py"
+  },
+  "required_outputs": [
+    "signed dataset provenance/privacy manifest",
+    "semantic-cluster audit with zero cross-partition cluster overlap",
+    "immutable split hashes",
+    "per-label and per-language precision, recall, F1, false-positive rate and confidence intervals",
+    "Hindi, Hinglish, transliteration and mixed-script slice results",
+    "calibration curve, ECE, temperature and per-label thresholds",
+    "tokenizer parity evidence",
+    "independently witnessed untouched-holdout result",
+    "signed artifact manifest with file hashes, taxonomy and rollback predecessor"
+  ],
+  "blockers": [
+    "semantic embedding deduplication and human cluster review have not run",
+    "untouched holdout is not independently sourced and has only three source groups",
+    "development validation contains only SAFE English examples",
+    "native Hindi, Hinglish, transliteration and mixed-script holdout coverage is insufficient",
+    "complete per-source license, privacy, annotation and confidence provenance is absent",
+    "accelerator training and independent evaluation have not run",
+    "no release-signed artifact manifest exists"
+  ],
+  "promotion_rule": "Fail closed unless every blocker is cleared, required output is hash-pinned, and an operator-trusted signature validates.",
+  "rollback_rule": "Retain the prior trusted manifest and artifact digest; restore both atomically if promotion health or slice gates regress."
+}

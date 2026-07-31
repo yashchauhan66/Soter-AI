@@ -1,6 +1,7 @@
 # Cross-IDE publishing master plan
 
-Status date: 2026-07-06. This is the single per-channel publishing checklist for SoterAI IDE Guard. Nothing here is published yet; every channel below is either **READY** (artifact builds and the publish path is wired) or **PLANNED** (adapter source or packaging still incomplete). "Ready" means the release path exists and has been rehearsed locally, not that the extension is live in a registry.
+Status date: 2026-07-31. This is the single per-channel publishing checklist for SoterAI IDE Guard. The VS Code Marketplace channel is **PUBLISHED**; every other channel below is either **READY** (artifact builds and the publish path is wired) or **PLANNED** (adapter source or packaging still incomplete). "Ready" means the release path exists and has been rehearsed locally, not that the extension is live in a registry.
+
 
 The [cross-IDE support tiering](cross-ide-support-tiering.md) document governs *when* a channel may be advertised as supported. This document governs *how* to publish once a channel passes its universal release gate.
 

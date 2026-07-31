@@ -10,10 +10,22 @@ import { scanPickle, looksLikePickle, type PickleImport } from "./pickle";
 import { classifyImport, isKnownSafeImport, highestSeverity, type Severity, type ImportFinding } from "./classify";
 import { detectFormat, extractZipEntries, isLikelySafetensors, type ModelFormat } from "./formats";
 import { verifyIntegrity, verifyProvenance, type IntegrityResult, type ProvenanceResult } from "./provenance";
+import { parseGguf, parseOnnx, parseSafetensors, type GgufSummary, type OnnxSummary, type SafetensorsSummary } from "./structured";
 
 export type { Severity } from "./classify";
 export type { ModelFormat } from "./formats";
 export { sha256 } from "./provenance";
+export { evaluateModelDeployment, type ModelDeploymentPolicy, type ModelDeploymentGateResult } from "./gate";
+export { gateRuntimeModel, type RuntimeModelPolicy, type RuntimeModelGateEvidence } from "./runtimeGate";
+export {
+  verifySignedModelManifest,
+  manifestSigningPayload,
+  type ModelTrustStore,
+  type SignedModelManifest,
+  type TrustStoreKey,
+  type SignatureVerification,
+} from "./trust";
+export { fetchHuggingFaceArtifact, type HubFetchPolicy } from "./hub";
 
 export interface ScanFinding {
   id: string;
@@ -41,6 +53,7 @@ export interface ModelScanReport {
   scannedEntries: string[];
   scannedAt: string;
   scannerVersion: string;
+  formatDetails?: GgufSummary | OnnxSummary | SafetensorsSummary;
 }
 
 export interface ScanOptions {
@@ -121,6 +134,7 @@ export function scanModelArtifact(buf: Buffer, options: ScanOptions = {}): Model
   const allImports: PickleImport[] = [];
   const scannedEntries: string[] = [];
   const format = detectFormat(buf, filename ?? undefined);
+  let formatDetails: GgufSummary | OnnxSummary | SafetensorsSummary | undefined;
 
   const integrity = verifyIntegrity(buf, {
     expectedSha256: options.expectedSha256,
@@ -152,6 +166,14 @@ export function scanModelArtifact(buf: Buffer, options: ScanOptions = {}): Model
       const entries = extractZipEntries(buf);
       let scannedAny = false;
       for (const e of entries) {
+        if (e.unsafeReason) {
+          findings.push({
+            id: fid("zip"), severity: "HIGH", category: "STRUCTURE",
+            title: `Unsafe archive entry: ${e.name.slice(0, 200)}`,
+            detail: e.unsafeReason,
+            location: e.name.slice(0, 500),
+          });
+        }
         if (!/\.(pkl|pickle)$/i.test(e.name) && e.name !== "data.pkl" && !/\/data\.pkl$/.test(e.name)) continue;
         scannedEntries.push(e.name);
         scannedAny = true;
@@ -183,13 +205,23 @@ export function scanModelArtifact(buf: Buffer, options: ScanOptions = {}): Model
     }
     case "safetensors": {
       const ok = isLikelySafetensors(buf);
+      formatDetails = parseSafetensors(buf);
+      for (const issue of formatDetails.issues) {
+        findings.push({
+          id: fid("st"),
+          severity: issue.severity,
+          category: "STRUCTURE",
+          title: issue.title,
+          detail: issue.detail,
+        });
+      }
       findings.push({
         id: fid("st"),
-        severity: ok ? "LOW" : "HIGH",
+        severity: ok && formatDetails.issues.length === 0 ? "LOW" : "HIGH",
         category: ok ? "STRUCTURE" : "UNSAFE_FORMAT",
-        title: ok ? "Safetensors format (no executable code)" : "Malformed safetensors header",
-        detail: ok
-          ? "Safetensors stores only tensors and a JSON header — it cannot execute code on load. Lowest supply-chain risk."
+        title: ok && formatDetails.issues.length === 0 ? "Safetensors format (no executable code)" : "Malformed safetensors header",
+        detail: ok && formatDetails.issues.length === 0
+          ? "Safetensors stores only tensors and a validated JSON header; tensor ranges are bounded and non-overlapping."
           : "The 8-byte header length is invalid or exceeds the file size. The file is corrupt or masquerading as safetensors.",
       });
       break;
@@ -210,10 +242,20 @@ export function scanModelArtifact(buf: Buffer, options: ScanOptions = {}): Model
     }
     case "gguf":
     case "onnx": {
+      formatDetails = format === "gguf" ? parseGguf(buf) : parseOnnx(buf);
+      for (const issue of formatDetails.issues) {
+        findings.push({
+          id: fid(format === "gguf" ? "gguf" : "onnx"),
+          severity: issue.severity,
+          category: "STRUCTURE",
+          title: issue.title,
+          detail: issue.detail,
+        });
+      }
       findings.push({
         id: fid("ok"), severity: "LOW", category: "STRUCTURE",
         title: `${format.toUpperCase()} format`,
-        detail: `${format.toUpperCase()} is a data-only format with no Python code execution path on load.`,
+        detail: `${format.toUpperCase()} was parsed statically without loading or executing the artifact.`,
       });
       break;
     }
@@ -284,6 +326,7 @@ export function scanModelArtifact(buf: Buffer, options: ScanOptions = {}): Model
     scannedEntries,
     scannedAt: options.now ?? new Date().toISOString(),
     scannerVersion: SCANNER_VERSION,
+    ...(formatDetails ? { formatDetails } : {}),
   };
 }
 

@@ -18,6 +18,17 @@ if (!process.env.OVSX_PAT) {
   throw new Error("OVSX_PAT is not set. Create a scoped Open VSX token and provide it only through the environment or CI secret store.");
 }
 
+// The publish is the irreversible step: Open VSX does not allow overwriting a
+// version, and one push is simultaneously the Cursor, Windsurf, VSCodium, Kiro
+// and Antigravity release. Gate it on the same preflight a human would run, so
+// the artifact and the registry state are re-checked at the moment of publish
+// rather than whenever someone last looked.
+execFileSync(process.execPath, [join(repoRoot, "scripts", "openvsx-publish-preflight.mjs"), "--require-token"], {
+  cwd: repoRoot,
+  env: process.env,
+  stdio: "inherit",
+});
+
 execFileSync(process.execPath, [ovsxBin, "publish", "--packagePath", vsix], {
   cwd: extensionRoot,
   env: process.env,

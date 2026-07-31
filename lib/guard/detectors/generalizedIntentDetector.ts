@@ -1,5 +1,6 @@
 import type { GuardFinding } from "../types";
 import { normalizeForDetection } from "./helpers";
+import { conjunctionCannotMatch, haystackMeta } from "./literalPrefilter";
 
 /**
  * Generalized adversarial-intent detector.
@@ -1174,18 +1175,33 @@ const rules: IntentRule[] = [
  * Proximity is enforced by requiring the AND-group cues within a sliding window
  * for the multi-cue rules, which prevents a verb in sentence 1 and an unrelated
  * target in sentence 5 from matching.
+ *
+ * Every rule is a conjunction, so the three conditions below commute: the cue
+ * groups, the `not` suppressors and the proximity window are pure predicates
+ * over the haystack (all 173 patterns here are `/i`-only, so `.test` keeps no
+ * state). They are ordered by cost, cheapest first: a mandatory-literal probe
+ * that can rule the whole rule out, then the cue alternations, then the
+ * suppressors — which only matter when the rule would otherwise fire.
  */
 export function generalizedIntentDetector(text: string): GuardFinding[] {
   const findings: GuardFinding[] = [];
   const normalized = normalizeForDetection(text);
   const haystacks = normalized === text ? [text] : [text, normalized];
+  // One metadata record per haystack, held across all rules so the lowercase
+  // copy and the 3-gram index are each built at most once per haystack.
+  const metas = haystacks.map((h) => haystackMeta(h));
 
   for (const rule of rules) {
-    const matched = haystacks.some((h) => {
-      if (rule.not?.some((n) => n.test(h))) return false;
-      if (!rule.all.every((group) => group.test(h))) return false;
-      return withinProximity(h, rule.all);
-    });
+    let matched = false;
+    for (let i = 0; i < haystacks.length; i += 1) {
+      const h = haystacks[i];
+      if (conjunctionCannotMatch(h, metas[i], rule.all, rule.label)) continue;
+      if (!rule.all.every((group) => group.test(h))) continue;
+      if (rule.not?.some((n) => n.test(h))) continue;
+      if (!withinProximity(h, rule.all)) continue;
+      matched = true;
+      break;
+    }
     if (matched) {
       findings.push({
         type: rule.family,

@@ -3,6 +3,7 @@ import { Prisma } from "@prisma/client";
 import { db } from "@/lib/db";
 import { sanitizeLogText } from "@/lib/guard/logSafety";
 import { requireTenantProjectOwnership } from "@/lib/phase11/tenantIsolation";
+import type { ModelScanReport } from "@/lib/model-scan";
 
 export type SupplyChainRiskLevel = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
 
@@ -47,6 +48,7 @@ export function exportAiBomCycloneDx(input: {
 }) {
   const timestamp = input.generatedAt ?? input.snapshot.generatedAt;
   const model = input.snapshot.model;
+  const modelScan = input.snapshot.modelScan;
   const provider = input.snapshot.modelProvider;
   const tools = input.snapshot.toolsEnabled.map((tool) => ({
     type: "application",
@@ -68,6 +70,13 @@ export function exportAiBomCycloneDx(input: {
       properties: [
         { name: "soter:risk-level", value: model.riskLevel },
         { name: "soter:provider-status", value: provider?.status ?? "UNKNOWN" },
+        ...(modelScan ? [
+          { name: "soter:model-scan-verdict", value: modelScan.verdict },
+          { name: "soter:model-scan-sha256", value: modelScan.sha256 },
+          { name: "soter:model-scan-format", value: modelScan.format },
+          { name: "soter:model-scan-scanner-version", value: modelScan.scannerVersion },
+          { name: "soter:model-scan-highest-severity", value: modelScan.highestSeverity },
+        ] : []),
       ],
     }] : []),
     ...tools,
@@ -110,6 +119,7 @@ export interface AiBomInput {
   projectId: string;
   provider?: { name: string; status?: string; riskLevel?: SupplyChainRiskLevel };
   model?: { name: string; version?: string | null; riskLevel?: SupplyChainRiskLevel };
+  modelScanReport?: ModelScanReport;
   systemPrompt?: string | null;
   promptVersion?: string | number | null;
   guardPolicyVersion?: string | number | null;
@@ -154,6 +164,9 @@ export function generateAiBillOfMaterialsSnapshot(input: AiBomInput) {
   const findings = [
     ...(input.provider?.status === "BLOCKED" ? [{ severity: "CRITICAL", title: "Blocked AI provider selected" }] : []),
     ...(input.model?.riskLevel === "HIGH" || input.model?.riskLevel === "CRITICAL" ? [{ severity: input.model.riskLevel, title: "High-risk model selected" }] : []),
+    ...(input.modelScanReport && input.modelScanReport.verdict !== "SAFE"
+      ? [{ severity: input.modelScanReport.verdict === "MALICIOUS" ? "CRITICAL" as const : "HIGH" as const, title: `Model scan verdict: ${input.modelScanReport.verdict}` }]
+      : []),
     ...(unapprovedTools.length ? [{ severity: "HIGH", title: "Enabled tool is not approved" }] : []),
     ...(highRiskTools.length ? [{ severity: "MEDIUM", title: "High-impact tool categories enabled" }] : []),
     ...(!input.secretStoreProvider || input.secretStoreProvider === "local" ? [{ severity: "HIGH", title: "Production-grade secret store not confirmed" }] : []),
@@ -163,6 +176,16 @@ export function generateAiBillOfMaterialsSnapshot(input: AiBomInput) {
     projectId: input.projectId,
     modelProvider: input.provider ? { name: sanitizeLogText(input.provider.name), status: input.provider.status ?? "REVIEW", riskLevel: input.provider.riskLevel ?? "MEDIUM" } : null,
     model: input.model ? { name: sanitizeLogText(input.model.name), version: input.model.version ?? null, riskLevel: input.model.riskLevel ?? "MEDIUM" } : null,
+    modelScan: input.modelScanReport ? {
+      sha256: input.modelScanReport.sha256,
+      format: input.modelScanReport.format,
+      verdict: input.modelScanReport.verdict,
+      riskScore: input.modelScanReport.riskScore,
+      highestSeverity: input.modelScanReport.highestSeverity,
+      scannerVersion: input.modelScanReport.scannerVersion,
+      scannedAt: input.modelScanReport.scannedAt,
+      findingIds: input.modelScanReport.findings.map((finding) => finding.id).slice(0, 1_000),
+    } : null,
     systemPromptVersion: input.promptVersion ?? null,
     systemPromptHash: prompt?.promptHash ?? null,
     systemPromptPreview: prompt?.promptRedacted ?? null,

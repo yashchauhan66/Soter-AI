@@ -12,6 +12,7 @@ import { enrollFromManagedConfig, enrollWithCode } from "../lib/enrollment";
 import { matchLocalFingerprints } from "../lib/fingerprint-matcher";
 import { ACTION_PRECEDENCE } from "../../../../packages/policy-engine/src/actions";
 import { createStorageSafeScanResult, previewForScan } from "../lib/privacy-preview";
+import { validateRuntimeMessage, type MessageSenderLike } from "../lib/message-guard";
 
 void initializeEnrollment();
 
@@ -34,30 +35,35 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   });
 });
 
-chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
-  if (!isObject(message)) return;
-  if (message.type === "SOTER_SCAN_TEXT") {
-    void handleScan(message as RuntimeScanRequest).then(sendResponse);
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  // SS-3: every message crosses a validated boundary (type allowlist, sender identity,
+  // scope, size, schema). Unknown or invalid messages are dropped, not routed.
+  const validation = validateRuntimeMessage(message, sender as MessageSenderLike, chrome.runtime.id);
+  if (!validation.ok) {
+    if (validation.code !== "unknown_type") {
+      console.warn(`[soter] rejected runtime message (${validation.code}): ${validation.reason}`);
+    }
+    return;
+  }
+  const payload = validation.payload;
+  if (validation.type === "SOTER_SCAN_TEXT") {
+    void handleScan(payload as unknown as RuntimeScanRequest).then(sendResponse);
     return true;
   }
-  if (message.type === "SOTER_GET_STATE") {
+  if (validation.type === "SOTER_GET_STATE") {
     void getState().then((state) => sendResponse({ ok: true, state }));
     return true;
   }
-  if (message.type === "SOTER_SET_STATE") {
-    void setState(message.state ?? {}).then((state) => sendResponse({ ok: true, state }));
+  if (validation.type === "SOTER_REQUEST_APPROVAL") {
+    void handleApproval(String(payload.text), String(payload.url), payload.justification as string | undefined).then(sendResponse);
     return true;
   }
-  if (message.type === "SOTER_REQUEST_APPROVAL") {
-    void handleApproval(message.text ?? "", message.url ?? "", message.justification).then(sendResponse);
-    return true;
-  }
-  if (message.type === "SOTER_HEARTBEAT") {
+  if (validation.type === "SOTER_HEARTBEAT") {
     void sendHeartbeat().then(() => sendResponse({ ok: true }));
     return true;
   }
-  if (message.type === "SOTER_ENROLL") {
-    void enrollWithCode(message.apiBaseUrl ?? DEFAULT_EXTENSION_API_BASE_URL, message.enrollmentCode ?? "").then(async (result) => {
+  if (validation.type === "SOTER_ENROLL") {
+    void enrollWithCode(String(payload.apiBaseUrl ?? DEFAULT_EXTENSION_API_BASE_URL), String(payload.enrollmentCode)).then(async (result) => {
       if (result.ok) {
         await syncPolicy();
         await sendHeartbeat();
@@ -66,41 +72,41 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
     });
     return true;
   }
-  if (message.type === "SOTER_SYNC_POLICY") {
+  if (validation.type === "SOTER_SYNC_POLICY") {
     void syncPolicy().then(async () => sendResponse({ ok: true, state: await getState() }));
     return true;
   }
-  if (message.type === "SOTER_GET_DESTINATION_CONTEXT") {
-    void destinationContext(message.url ?? "").then(sendResponse);
+  if (validation.type === "SOTER_GET_DESTINATION_CONTEXT") {
+    void destinationContext(String(payload.url)).then(sendResponse);
     return true;
   }
-  if (message.type === "SOTER_GET_SOURCE_APPS") {
+  if (validation.type === "SOTER_GET_SOURCE_APPS") {
     void getSourceApps().then(sendResponse);
     return true;
   }
-  if (message.type === "SOTER_DISCOVER_SHADOW_AI") {
-    void handleShadowAIDiscovery(message).then(sendResponse);
+  if (validation.type === "SOTER_DISCOVER_SHADOW_AI") {
+    void handleShadowAIDiscovery(payload).then(sendResponse);
     return true;
   }
-  if (message.type === "SOTER_FILE_SCAN_EVENT") {
-    void handleFileScanEvent(message.event).then(sendResponse);
+  if (validation.type === "SOTER_FILE_SCAN_EVENT") {
+    void handleFileScanEvent(payload.event).then(sendResponse);
     return true;
   }
-  if (message.type === "SOTER_CHECK_APPROVAL_STATUS") {
-    void handleCheckApprovalStatus(String(message.approvalId ?? "")).then(sendResponse);
+  if (validation.type === "SOTER_CHECK_APPROVAL_STATUS") {
+    void handleCheckApprovalStatus(String(payload.approvalId)).then(sendResponse);
     return true;
   }
-  if (message.type === "SOTER_CLAIM_APPROVAL") {
-    void handleClaimApproval(String(message.requestId ?? ""), String(message.destination ?? "")).then(sendResponse);
+  if (validation.type === "SOTER_CLAIM_APPROVAL") {
+    void handleClaimApproval(String(payload.requestId), String(payload.destination)).then(sendResponse);
     return true;
   }
-  if (message.type === "SOTER_AUDIT_BYPASS") {
+  if (validation.type === "SOTER_AUDIT_BYPASS") {
     void handleAuditBypass(
-      String(message.text ?? ""),
-      String(message.url ?? ""),
-      String(message.action ?? ""),
-      message.justification ? String(message.justification) : undefined,
-      message.dismissedOnly === true
+      String(payload.text),
+      String(payload.url),
+      String(payload.action),
+      payload.justification ? String(payload.justification) : undefined,
+      payload.dismissedOnly === true
     ).then(sendResponse);
     return true;
   }
@@ -249,22 +255,15 @@ async function handleShadowAIDiscovery(message: Record<string, unknown>) {
   try {
     const state = await getState();
     if (!state.enabled || !state.config.organizationId) return { ok: false, message: "Not enrolled." };
-    const result = await fetch(`${state.config.apiBaseUrl}/api/extension/shadow-ai-discovered`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "x-soter-extension-token": state.config.deviceToken ?? "",
-      },
-      body: JSON.stringify({
-        organizationId: state.config.organizationId,
-        employeeId: String(message.employeeId ?? state.config.employeeId),
-        domain: String(message.domain ?? ""),
-        destination: String(message.destination ?? ""),
-        riskLevel: String(message.riskLevel ?? "medium"),
-        url: safeOrigin(String(message.url ?? "")),
-      }),
+    // SS-2: routed through the API client so the trusted-origin check and the
+    // privacy assertions apply. Identity comes from enrolled state, not the message.
+    await new SoterExtensionApiClient(state.config).shadowAiDiscovered({
+      domain: String(message.domain ?? ""),
+      destination: String(message.destination ?? ""),
+      riskLevel: String(message.riskLevel ?? "medium"),
+      url: String(message.url ?? ""),
     });
-    return { ok: result.ok };
+    return { ok: true };
   } catch {
     return { ok: false, message: "Shadow AI discovery failed." };
   }
@@ -283,7 +282,13 @@ async function handleFileScanEvent(event: unknown) {
     const state = await getState();
     if (!state.enabled) return { ok: false, message: "Soter extension is disabled." };
     const api = new SoterExtensionApiClient(state.config);
-    const fileEvent = event as Parameters<SoterExtensionApiClient["fileScanEvent"]>[0] & { lineageContext?: RuntimeScanRequest["lineageContext"] };
+    const validated = event as Omit<Parameters<SoterExtensionApiClient["fileScanEvent"]>[0], "organizationId" | "employeeId"> & { lineageContext?: RuntimeScanRequest["lineageContext"] };
+    // Identity is always the enrolled identity, never whatever the content script sent.
+    const fileEvent = {
+      ...validated,
+      organizationId: state.config.organizationId,
+      employeeId: state.config.employeeId,
+    };
     await api.fileScanEvent(fileEvent);
     if (fileEvent.lineageContext) {
       await api.lineageEvent({
@@ -311,55 +316,15 @@ async function handleFileScanEvent(event: unknown) {
   }
 }
 
-function isObject(value: unknown): value is {
-  type?: string;
-  text?: string;
-  url?: string;
-  justification?: string;
-  state?: Record<string, unknown>;
-  apiBaseUrl?: string;
-  enrollmentCode?: string;
-  event?: unknown;
-  lineageContext?: RuntimeScanRequest["lineageContext"];
-  approvalId?: string;
-  requestId?: string;
-  destination?: string;
-  action?: string;
-  dismissedOnly?: boolean;
-} {
-  return Boolean(value && typeof value === "object");
-}
-
 async function hashText(text: string) {
   const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
   return Array.from(new Uint8Array(digest)).map((byte) => byte.toString(16).padStart(2, "0")).join("");
 }
 
-function safeOrigin(url: string) {
-  try {
-    return new URL(url).origin;
-  } catch {
-    return "https://unknown.invalid";
-  }
-}
-
 async function handleCheckApprovalStatus(approvalId: string) {
   const state = await getState();
   try {
-    const response = await fetch(`${state.config.apiBaseUrl}/api/extension/approval-status`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "x-soter-extension-token": state.config.deviceToken ?? "",
-      },
-      body: JSON.stringify({
-        organizationId: state.config.organizationId,
-        employeeId: state.config.employeeId,
-        approvalId,
-      }),
-    });
-    if (!response.ok) return { status: "PENDING" };
-    return await response.json();
+    return await new SoterExtensionApiClient(state.config).approvalStatus(approvalId);
   } catch {
     return { status: "PENDING" };
   }
@@ -368,21 +333,7 @@ async function handleCheckApprovalStatus(approvalId: string) {
 async function handleClaimApproval(requestId: string, destination: string) {
   const state = await getState();
   try {
-    const response = await fetch(`${state.config.apiBaseUrl}/api/extension/approval-claim`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "x-soter-extension-token": state.config.deviceToken ?? "",
-      },
-      body: JSON.stringify({
-        requestId,
-        organizationId: state.config.organizationId,
-        employeeId: state.config.employeeId,
-        destination,
-      }),
-    });
-    if (!response.ok) return { allowed: false };
-    return await response.json();
+    return await new SoterExtensionApiClient(state.config).claimApproval({ requestId, destination });
   } catch {
     return { allowed: false };
   }

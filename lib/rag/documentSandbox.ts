@@ -2,11 +2,12 @@ import { scanRagDocument, type RagScanResult } from "./scanner";
 import { validateDocumentFile } from "./fileValidation";
 import { extractTextWithOcr, type OcrProvider } from "./ocr";
 import { inspectPdf, type PdfInspection } from "./pdfInspector";
+import { extractHtmlText, inspectOfficeOpenXml } from "./officeInspector";
 
 export interface DocumentSandboxResult {
   validation: ReturnType<typeof validateDocumentFile>;
   pageCount: number;
-  extractionMethod: "text" | "pdf-text" | "ocr";
+  extractionMethod: "text" | "pdf-text" | "office-xml" | "html-text" | "ocr";
   scan: RagScanResult;
   sandboxFindings: PdfInspection["findings"];
   metadata: Record<string, unknown>;
@@ -38,6 +39,17 @@ export async function sandboxDocument(input: { fileName: string; declaredMimeTyp
     text = ocr.textRedacted;
     extractionMethod = "ocr";
     Object.assign(metadata, { ocrProvider: ocr.provider, ocrConfidence: ocr.confidence, ocrDurationMs: ocr.durationMs });
+  } else if ([".docx", ".xlsx", ".pptx"].includes(validation.extension)) {
+    const inspection = inspectOfficeOpenXml(input.content, validation.extension as ".docx" | ".xlsx" | ".pptx");
+    text = inspection.extractedText;
+    sandboxFindings = inspection.findings;
+    extractionMethod = "office-xml";
+    Object.assign(metadata, { officeEntryCount: inspection.entryCount });
+  } else if ([".html", ".htm"].includes(validation.extension)) {
+    const inspection = extractHtmlText(input.content);
+    text = inspection.text;
+    sandboxFindings = inspection.findings;
+    extractionMethod = "html-text";
   } else {
     text = input.content.toString("utf8");
   }

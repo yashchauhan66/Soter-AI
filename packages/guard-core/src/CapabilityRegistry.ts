@@ -50,11 +50,27 @@ export interface ProtectionCapability {
     lastVerifiedVersion?: string;
     /**
      * HONESTY FLAG (extends the Section 5 baseline type): does a real caller in
-     * the PACKAGED extension/broker runtime route through `enforcementPoint`?
-     * `false` means the engine exists and unit-tests pass, but no shipped code
-     * path invokes it yet — so it cannot claim runtime enforcement.
+     * a SHIPPED runtime (packaged extension/broker, or a deployed web
+     * control-plane route) route through `enforcementPoint`? `false` means the
+     * engine exists and unit-tests pass, but no shipped code path invokes it
+     * yet — so it cannot claim runtime enforcement.
      */
     wiredInRuntime: boolean;
+}
+
+export interface CapabilityEvidenceRecord extends ProtectionCapability {
+    enforcementPoint: string;
+    evidenceLevel: ProtectionLevelName;
+    supportedSurfaces: string[];
+    unsupportedSurfaces: string[];
+    runtimeProof: {
+        wiredInRuntime: boolean;
+        testIds: string[];
+    };
+    latency: {
+        status: "MEASURED" | "NOT_MEASURED_PER_CAPABILITY";
+        evidence: string | null;
+    };
 }
 
 const VERSION = "0.2.1";
@@ -275,21 +291,20 @@ export const CAPABILITY_REGISTRY: ProtectionCapability[] = [
         id: "mcp-gateway",
         name: "MCP gateway policy engine (broker preflight)",
         category: "mcp-security",
-        level: "DETECTION_ONLY",
-        integration: "guard-core MCPGateway + broker /v1/preflight/mcp-tool + extension soterai.preflightMCPTool",
-        enforcementPoint: "packages/guard-core/src/MCPGateway.ts, apps/local-ai-broker/src/BrokerServer.ts#previewMCPTool, packages/vscode-extension/src/mcp-firewall/MCPFirewall.ts",
-        preExecutionBlock: false,
+        level: "STRONG_ENFORCEMENT",
+        integration: "shared MCP policy engine + stdio/Streamable HTTP/SSE inline transports",
+        enforcementPoint: "lib/gateway/mcp/engine.ts, lib/gateway/mcp/{stdio,http,sse}.ts",
+        preExecutionBlock: true,
         rollbackSupported: false,
         conditions: [
-            "Caller uses SoterAI preflight command or broker POST /v1/preflight/mcp-tool before execute",
-            "Broker running and authenticated",
+            "MCP traffic is routed through a SoterAI gateway transport",
+            "Session identity, tenant/project, policy, and approval binding validate",
         ],
         knownBypasses: [
-            "Other MCP clients that never call SoterAI preflight are unenforced",
-            "Config scan alone remains DETECTION_ONLY",
-            "Do not claim FULL/STRONG without a mandatory pre-execution host integration",
+            "Direct-to-server and WebSocket MCP traffic is unenforced",
+            "The separate IDE config scan and broker preflight remain DETECTION_ONLY",
         ],
-        evidenceTestIds: ["phase-controls.test.ts", "broker.test.ts (mcp-tool preflight)"],
+        evidenceTestIds: ["tests/mcp-gateway.test.ts", "tests/mcp-runtime-smoke.test.ts", "tests/mcp-http-security.test.ts"],
         wiredInRuntime: true,
         lastVerifiedVersion: VERSION,
     },
@@ -298,90 +313,144 @@ export const CAPABILITY_REGISTRY: ProtectionCapability[] = [
         id: "taint-engine",
         name: "Taint / source-influence engine",
         category: "provenance",
-        level: "UNKNOWN_NOT_TESTED",
-        integration: "guard-core TaintEngine (engine only)",
-        enforcementPoint: "packages/guard-core/src/TaintEngine.ts",
-        preExecutionBlock: false,
+        level: "STRONG_ENFORCEMENT",
+        integration: "guard-core TaintEngine consumed by the inline MCP enforcement engine",
+        enforcementPoint: "lib/gateway/mcp/engine.ts#evaluateRequest",
+        preExecutionBlock: true,
         rollbackSupported: false,
-        conditions: ["Requires a runtime that supplies provenance and consults the engine (NOT YET WIRED)"],
-        knownBypasses: ["No runtime caller in the packaged extension; enforcement proven only in guard-core unit tests"],
-        evidenceTestIds: ["phase-controls.test.ts"],
-        wiredInRuntime: false,
+        conditions: ["MCP request is routed through the inline gateway and carries or triggers taint signals"],
+        knownBypasses: ["Taint is not universal across arbitrary agent runtimes; only SoterAI-routed paths are protected"],
+        evidenceTestIds: ["tests/mcp-gateway.test.ts", "tests/mcp-runtime-smoke.test.ts"],
+        wiredInRuntime: true,
         lastVerifiedVersion: VERSION,
     },
     {
         id: "file-operation-firewall",
         name: "File / change firewall policy",
         category: "file-enforcement",
-        level: "UNKNOWN_NOT_TESTED",
-        integration: "guard-core FileOperationFirewall (engine only)",
-        enforcementPoint: "packages/guard-core/src/FileOperationFirewall.ts",
+        level: "DETECTION_ONLY",
+        integration: "guard-core FileOperationFirewall + broker /v1/preflight/file-operation",
+        enforcementPoint: "apps/local-ai-broker/src/BrokerServer.ts#previewFileOperation",
         preExecutionBlock: false,
         rollbackSupported: false,
-        conditions: ["Requires a caller to route file operations through the policy before execution (NOT YET WIRED)"],
-        knownBypasses: ["No runtime caller in the packaged extension; does not intercept OS file I/O"],
-        evidenceTestIds: ["phase-controls.test.ts"],
-        wiredInRuntime: false,
+        conditions: ["Caller explicitly invokes the authenticated preflight endpoint"],
+        knownBypasses: ["Preflight is advisory; it does not intercept OS file I/O or another extension's reads/writes"],
+        evidenceTestIds: ["phase-controls.test.ts", "apps/local-ai-broker broker tests"],
+        wiredInRuntime: true,
         lastVerifiedVersion: VERSION,
     },
     {
         id: "network-egress-policy",
         name: "Network egress policy",
         category: "network-egress",
-        level: "UNKNOWN_NOT_TESTED",
-        integration: "guard-core NetworkEgressPolicy (engine only)",
-        enforcementPoint: "packages/guard-core/src/NetworkEgressPolicy.ts",
+        level: "DETECTION_ONLY",
+        integration: "guard-core NetworkEgressPolicy + broker /v1/preflight/network-egress",
+        enforcementPoint: "apps/local-ai-broker/src/BrokerServer.ts#previewNetworkEgress",
         preExecutionBlock: false,
         rollbackSupported: false,
-        conditions: ["Requires a caller to route requests through the policy (NOT YET WIRED)"],
-        knownBypasses: ["No runtime caller in the packaged extension; does not enforce process/terminal egress"],
-        evidenceTestIds: ["phase-controls.test.ts"],
-        wiredInRuntime: false,
+        conditions: ["Caller explicitly invokes the authenticated preflight endpoint"],
+        knownBypasses: ["Preflight is advisory; arbitrary process, terminal, and extension traffic is not intercepted"],
+        evidenceTestIds: ["phase-controls.test.ts", "apps/local-ai-broker broker tests"],
+        wiredInRuntime: true,
         lastVerifiedVersion: VERSION,
     },
     {
         id: "process-sandbox-policy",
         name: "Process sandbox policy",
         category: "process-sandbox",
-        level: "UNKNOWN_NOT_TESTED",
-        integration: "guard-core ProcessSandboxPolicy (engine only)",
-        enforcementPoint: "packages/guard-core/src/ProcessSandboxPolicy.ts",
+        level: "DETECTION_ONLY",
+        integration: "guard-core ProcessSandboxPolicy + broker /v1/preflight/process-launch",
+        enforcementPoint: "apps/local-ai-broker/src/BrokerServer.ts#previewProcessLaunch",
         preExecutionBlock: false,
         rollbackSupported: false,
-        conditions: ["Requires a controlled launcher to consult the policy (NOT YET WIRED)"],
-        knownBypasses: ["No runtime caller in the packaged extension; cannot sandbox arbitrary child processes"],
-        evidenceTestIds: ["phase-controls.test.ts"],
-        wiredInRuntime: false,
+        conditions: ["Caller explicitly invokes the authenticated preflight endpoint"],
+        knownBypasses: ["No OS sandbox or mandatory controlled launcher; arbitrary child processes are not intercepted"],
+        evidenceTestIds: ["phase-controls.test.ts", "apps/local-ai-broker broker tests"],
+        wiredInRuntime: true,
         lastVerifiedVersion: VERSION,
     },
     {
         id: "governance-policy",
         name: "Enterprise policy-change validation",
         category: "governance",
-        level: "UNKNOWN_NOT_TESTED",
-        integration: "guard-core GovernancePolicy (engine only)",
-        enforcementPoint: "packages/guard-core/src/GovernancePolicy.ts",
+        level: "DETECTION_ONLY",
+        integration: "guard-core GovernancePolicy + broker /v1/preflight/policy-change",
+        enforcementPoint: "apps/local-ai-broker/src/BrokerServer.ts#previewPolicyChange",
         preExecutionBlock: false,
         rollbackSupported: false,
-        conditions: ["Requires a managed/signed policy path to route changes through the validator (NOT YET WIRED)"],
-        knownBypasses: ["No runtime caller in the packaged extension; cannot stop policy edits made outside managed paths"],
-        evidenceTestIds: ["phase-controls.test.ts"],
-        wiredInRuntime: false,
+        conditions: ["Caller explicitly invokes the authenticated preflight endpoint"],
+        knownBypasses: ["Preflight is advisory; edits outside managed paths cannot be stopped"],
+        evidenceTestIds: ["phase-controls.test.ts", "apps/local-ai-broker broker tests"],
+        wiredInRuntime: true,
         lastVerifiedVersion: VERSION,
     },
     {
         id: "checkpoint-rollback",
-        name: "Transaction preview / checkpoint metadata",
+        name: "Checkpoint rollback (real filesystem snapshot/restore via broker)",
         category: "rollback",
-        level: "UNKNOWN_NOT_TESTED",
-        integration: "guard-core CheckpointRollback (engine only)",
-        enforcementPoint: "packages/guard-core/src/CheckpointRollback.ts",
-        preExecutionBlock: false,
+        level: "PARTIAL_ENFORCEMENT",
+        integration: "guard-core CheckpointRollback (pure logic) + broker FilesystemCheckpointStore (real resource adapter)",
+        enforcementPoint: "apps/local-ai-broker/src/CheckpointStore.ts, apps/local-ai-broker/src/BrokerServer.ts#createCheckpoint/rollbackCheckpoint",
+        preExecutionBlock: true,
+        rollbackSupported: true,
+        conditions: [
+            "Caller authenticates with broker bearer token + x-soterai-tenant and x-soterai-actor headers",
+            "Protected paths resolve inside the configured isolation root",
+            "Snapshot root is outside the protected root",
+            "Integrity secret is at least 32 characters",
+        ],
+        knownBypasses: [
+            "Checkpoint rollback protects only paths within the configured isolation root, not the entire filesystem",
+            "Side effects are declared by the caller; the adapter does not auto-detect them",
+            "The broker must be running and configured with checkpoint options",
+        ],
+        evidenceTestIds: ["apps/local-ai-broker/src/__tests__/checkpoint-rollback.test.ts (16 runtime tests)"],
+        wiredInRuntime: true,
+        lastVerifiedVersion: VERSION,
+    },
+    {
+        id: "hosted-ai-gateway",
+        name: "Hosted Universal AI Gateway (OpenAI/Anthropic-compatible inline proxy)",
+        category: "inline-enforcement",
+        level: "STRONG_ENFORCEMENT",
+        integration: "Next.js web control plane — customer swaps SDK base_url to /api/gateway/{openai,anthropic}",
+        enforcementPoint: "lib/gateway/core.ts, app/api/gateway/openai/v1/chat/completions/route.ts, app/api/gateway/anthropic/v1/messages/route.ts",
+        preExecutionBlock: true,
         rollbackSupported: false,
-        conditions: ["Requires wiring into an execution flow to capture/restore checkpoints (NOT YET WIRED)"],
-        knownBypasses: ["No runtime caller in the packaged extension; does not roll back external systems or arbitrary file changes"],
-        evidenceTestIds: ["phase-controls.test.ts"],
-        wiredInRuntime: false,
+        conditions: [
+            "Traffic is routed through the gateway routes with a valid x-soterai-api-key",
+            "Request scanned before forwarding; response scanned before returning; SSE streams scanned per accumulated delta",
+            "Canonical decision (ALLOW/REDACT/TRANSFORM/WARN/REQUIRE_APPROVAL/BLOCK/QUARANTINE/ABSTAIN) emitted on every response",
+        ],
+        knownBypasses: [
+            "Traffic sent directly to the provider (base_url not swapped) is unenforced",
+            "Streaming tokens already flushed before a mid-stream BLOCK cannot be recalled",
+            "Internal scan-pipeline crash fails OPEN for availability — evidence is stamped FAIL_OPEN, never overclaimed",
+        ],
+        evidenceTestIds: ["tests/gateway.test.ts (24 tests: block-input, redact in/out, mid-stream block, key hygiene, tenant binding)"],
+        wiredInRuntime: true,
+        lastVerifiedVersion: VERSION,
+    },
+    {
+        id: "model-supply-chain-scan",
+        name: "Model & AI supply-chain artifact scanner",
+        category: "supply-chain",
+        level: "STRONG_ENFORCEMENT",
+        integration: "mandatory ONNX runtime-loader gate + web scan route + bounded offline CLI + CycloneDX AI-BOM evidence",
+        enforcementPoint: "lib/ml/onnxBackend.ts before InferenceSession.create; lib/model-scan/{runtimeGate,trust,hub}.ts",
+        preExecutionBlock: true,
+        rollbackSupported: false,
+        conditions: [
+            "Caller submits the artifact to the scan route; verdicts persist to Prisma",
+            "Untrusted artifacts are never loaded/deserialized — bounded isolated parsers only",
+            "The supported ONNX loader requires a digest-pinned signed manifest, approved source, and operator trust store",
+        ],
+        knownBypasses: [
+            "Training scripts and external runtimes that load models outside lib/ml/onnxBackend.ts are not mediated",
+            "No managed third-party registry promotion/deployment boundary exists in this repository",
+        ],
+        evidenceTestIds: ["tests/model-scan.test.ts (trusted/unknown/revoked/bad-signature/hash/source/Hub/loader tests)", "tests/ai-bom-cyclonedx.test.ts"],
+        wiredInRuntime: true,
         lastVerifiedVersion: VERSION,
     },
     {
@@ -470,14 +539,42 @@ export function capabilitiesSnapshot(): {
     generatedFor: string;
     honest: boolean;
     counts: Record<string, number>;
-    capabilities: ProtectionCapability[];
+    capabilities: CapabilityEvidenceRecord[];
 } {
     const counts: Record<string, number> = {};
     for (const c of CAPABILITY_REGISTRY) counts[c.level] = (counts[c.level] ?? 0) + 1;
+    const capabilities: CapabilityEvidenceRecord[] = CAPABILITY_REGISTRY.map((capability) => {
+        const latencyEvidence =
+            capability.id === "mcp-gateway"
+                ? "Historical 300-iteration all-budget pass; latest 300-iteration simple-ALLOW p95 overhead 14.17 ms vs 8 ms budget; other buckets pass"
+                : capability.id === "universal-ai-gateway"
+                  ? "Local real-HTTP core smoke overhead p50/p95/p99 13.123/19.269/22.545 ms; first-token overhead 12.762 ms"
+                  : null;
+        return {
+            ...capability,
+            enforcementPoint:
+                capability.enforcementPoint ?? "NONE — capability unsupported; no authenticated mediator ships",
+            evidenceLevel: capability.level,
+            supportedSurfaces: [capability.integration],
+            unsupportedSurfaces: [
+                capability.knownBypasses.length > 0
+                    ? "Surfaces described by knownBypasses are outside guaranteed enforcement"
+                    : "Anything outside the named integration and enforcement point",
+            ],
+            runtimeProof: {
+                wiredInRuntime: capability.wiredInRuntime,
+                testIds: [...capability.evidenceTestIds],
+            },
+            latency: {
+                status: latencyEvidence ? "MEASURED" : "NOT_MEASURED_PER_CAPABILITY",
+                evidence: latencyEvidence,
+            },
+        };
+    });
     return {
         generatedFor: VERSION,
         honest: findHonestyViolations().length === 0,
         counts,
-        capabilities: CAPABILITY_REGISTRY,
+        capabilities,
     };
 }

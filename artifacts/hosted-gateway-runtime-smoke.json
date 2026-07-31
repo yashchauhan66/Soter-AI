@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-31T13:37:30.335Z",
+  "isolation": {
+    "productionAccess": false,
+    "upstreams": "loopback-only OpenAI/Anthropic-compatible HTTP servers",
+    "database": "dependency-injected tenant/auth/policy stores; no database connection"
+  },
+  "result": "PASS",
+  "passed": 12,
+  "failed": 0,
+  "checks": [
+    "health and readiness",
+    "authenticated OpenAI request reaches upstream",
+    "authenticated Anthropic request reaches upstream",
+    "blocked request never reaches upstream",
+    "input redaction occurs before forwarding",
+    "output redaction occurs before release",
+    "SoterAI credentials and ambient headers are never forwarded",
+    "cross-tenant policy isolation",
+    "malformed and oversized requests are rejected before upstream",
+    "streaming inspection blocks tail and cancels upstream",
+    "performance, first-token, throughput, CPU, memory, and concurrency captured",
+    "clean shutdown leaves no listening harness handles"
+  ],
+  "failures": [],
+  "metrics": {
+    "iterations": 60,
+    "overheadMs": {
+      "p50": 6.869,
+      "p95": 11.2,
+      "p99": 15.607
+    },
+    "gatewayLatencyMs": {
+      "p50": 9.631,
+      "p95": 14.582,
+      "p99": 18.773
+    },
+    "firstTokenMs": {
+      "direct": 2.918,
+      "gateway": 20.284,
+      "overhead": 17.366
+    },
+    "throughputRequestsPerSecond": 97.38,
+    "concurrency": 20,
+    "loadRequests": 100,
+    "cpuUserMs": 1094,
+    "cpuSystemMs": 203,
+    "rssBeforeMiB": 155.465,
+    "rssAfterMiB": 160.066,
+    "rssDeltaMiB": 4.602
+  },
+  "productionServerVariant": {
+    "status": "EXTERNALLY_BLOCKED",
+    "blocker": "Docker daemon/API unavailable: failed to connect to the docker API at npipe:////./pipe/dockerDesktopLinuxEngine; check if the path is correct and if the daemon is running: open //./pipe/dockerDesktopLinuxEngine: The system cannot find the file specified.",
+    "command": "docker compose -f docker-compose.local.yml up -d postgres && npx prisma db push && npm run build && npm run start"
+  }
+}

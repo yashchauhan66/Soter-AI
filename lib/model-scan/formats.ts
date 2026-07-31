@@ -24,7 +24,11 @@ export interface ZipEntry {
   method: number;
   compressedSize: number;
   uncompressedSize: number;
+  unsafeReason?: string;
 }
+
+const MAX_ENTRY_UNCOMPRESSED_BYTES = 64 * 1024 * 1024;
+const MAX_COMPRESSION_RATIO = 200;
 
 export function detectFormat(buf: Buffer, filename?: string): ModelFormat {
   const ext = (filename?.toLowerCase().split(".").pop()) ?? "";
@@ -88,15 +92,41 @@ export function extractZipEntries(buf: Buffer, maxEntries = 4096): ZipEntry[] {
 
     const streaming = (flags & 0x08) !== 0; // sizes in data descriptor
     let data: Buffer | null = null;
-    if (!streaming && compSize > 0 && dataStart + compSize <= buf.length) {
+    let unsafeReason: string | undefined;
+    const normalizedName = name.replace(/\\/g, "/");
+    if (
+      normalizedName.startsWith("/") ||
+      /^[a-z]:\//i.test(normalizedName) ||
+      normalizedName.split("/").includes("..")
+    ) {
+      unsafeReason = "archive entry path escapes the extraction root";
+    } else if (uncompSize > MAX_ENTRY_UNCOMPRESSED_BYTES) {
+      unsafeReason = "archive entry exceeds the 64 MiB decompression limit";
+    } else if (compSize > 0 && uncompSize / compSize > MAX_COMPRESSION_RATIO) {
+      unsafeReason = "archive entry exceeds the maximum compression ratio";
+    } else if (streaming) {
+      unsafeReason = "streaming ZIP entry has unbounded declared size";
+    } else if (![0, 8].includes(method)) {
+      unsafeReason = `unsupported ZIP compression method ${method}`;
+    }
+    if (!unsafeReason && compSize > 0 && dataStart + compSize <= buf.length) {
       const raw = buf.subarray(dataStart, dataStart + compSize);
       try {
-        data = method === 0 ? Buffer.from(raw) : method === 8 ? inflateRawSync(raw) : null;
+        data = method === 0
+          ? Buffer.from(raw)
+          : inflateRawSync(raw, { maxOutputLength: MAX_ENTRY_UNCOMPRESSED_BYTES });
+        if (uncompSize !== 0 && data.length !== uncompSize) {
+          data = null;
+          unsafeReason = "decompressed size does not match the ZIP header";
+        }
       } catch {
         data = null;
+        unsafeReason = "archive entry decompression failed or exceeded its resource limit";
       }
+    } else if (!unsafeReason && dataStart + compSize > buf.length) {
+      unsafeReason = "archive entry is truncated";
     }
-    entries.push({ name, data, method, compressedSize: compSize, uncompressedSize: uncompSize });
+    entries.push({ name, data, method, compressedSize: compSize, uncompressedSize: uncompSize, ...(unsafeReason ? { unsafeReason } : {}) });
 
     if (streaming || compSize === 0) {
       // Can't know the exact length — bail to avoid misaligned parsing.

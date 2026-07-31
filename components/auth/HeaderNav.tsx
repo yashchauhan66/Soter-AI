@@ -3,6 +3,7 @@
 import { KeyRound, LogIn } from "lucide-react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { MobileNav } from "@/components/layout/MobileNav";
 import { SignOutButton } from "./SignOutButton";
 
 export function HeaderNav() {
@@ -61,6 +62,9 @@ export function HeaderNav() {
             <Link href="/signup" className="button-primary !px-4 !py-2">Sign up</Link>
           </>
         )}
+        {/* Hamburger: without this, a phone/tablet visitor has no way to reach
+            Docs, Pricing, Demo, Playground, etc. (desktop nav is hidden). */}
+        <MobileNav />
       </div>
     </>
   );

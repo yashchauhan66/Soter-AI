@@ -42,6 +42,9 @@ export const PUBLIC_ROUTES = [
 export const PUBLIC_API_PREFIXES = [
   "/api/auth",
   "/api/guard/analyze",
+  // Universal AI gateway — authenticates via x-soterai-api-key in the route
+  // handler; middleware must not session-gate it (SDKs have no cookies).
+  "/api/gateway",
   "/api/badge",
   "/api/billing/webhook",
   "/api/health",
@@ -90,6 +93,15 @@ export const authConfig = {
       // through; they enforce their own auth at the route handler level.
       const isGuardApi = pathname === "/api/guard/input" || pathname === "/api/guard/output" || pathname === "/api/guard/streaming";
       if (isPublicPage || isPublicApi || isGuardApi) return true;
+      // Machine callers on API routes must get a JSON 401, not an HTML sign-in
+      // redirect — a redirect hides the failure in automation and prompts a
+      // follow to an unrelated page.
+      if (!auth?.user && pathname.startsWith("/api/")) {
+        return Response.json(
+          { error: true, message: "Authentication required." },
+          { status: 401 },
+        );
+      }
       return !!auth?.user;
     },
     async jwt({ token, user }) {

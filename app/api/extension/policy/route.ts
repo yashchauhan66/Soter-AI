@@ -4,6 +4,7 @@ import { compileExtensionPolicyBundle } from "@/lib/admin-ai-policies";
 import { listPolicies } from "@/lib/admin-ai-policies/store";
 import { listAIDestinations } from "@/lib/ai-destinations";
 import { applyEmergencyLockdown, getEmergencyLockdown } from "@/lib/extension/emergencyLockdown";
+import { getPolicySigningKey, signPolicyForTransport } from "@/lib/extension/policySigning";
 
 export const dynamic = "force-dynamic";
 
@@ -15,6 +16,9 @@ export async function GET(request: Request) {
     const auth = await authenticateExtensionRequest(request, organizationId);
     if (!auth.ok) return auth.response;
     const fallback = defaultExtensionPolicy(organizationId);
+    // Resolved once so the fallback and the compiled bundle cannot end up signed by
+    // different keys within one response path.
+    const signingKey = getPolicySigningKey();
     try {
       const [policies, destinations, lockdownState] = await Promise.all([
         listPolicies(organizationId),
@@ -24,8 +28,12 @@ export async function GET(request: Request) {
       const fallbackWithLockdown = applyEmergencyLockdown({ ...fallback, destinations }, lockdownState);
       const emergencyLockdown = fallbackWithLockdown.emergencyLockdown!;
       const compiled = compileExtensionPolicyBundle(organizationId, policies);
-      if (!compiled.policies.length) return jsonResponse(fallbackWithLockdown);
-      return jsonResponse({
+      // The signature binds the canonical JSON of the *whole* body, so it has to be applied
+      // to the object that is actually serialised — never to a subset or an earlier draft.
+      if (!compiled.policies.length) {
+        return jsonResponse(await signPolicyForTransport(fallbackWithLockdown, signingKey));
+      }
+      return jsonResponse(await signPolicyForTransport({
         ...fallbackWithLockdown,
         version: `${compiled.version}-emergency-${emergencyLockdown.policyVersion}`,
         publishedAt: compiled.publishedAt,
@@ -45,7 +53,7 @@ export async function GET(request: Request) {
           detectedDataTypes: policy.detectors,
           enabled: policy.enabled,
         })),
-      });
+      }, signingKey));
     } catch (error) {
       console.error("[Soter extension] Falling back to default policy bundle", error);
       // Do not silently erase an active lockdown if persistence is unavailable.

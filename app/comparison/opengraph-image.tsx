@@ -92,7 +92,7 @@ export default function Image() {
                 fontWeight: 700,
               }}
             >
-              {"\u2696\uFE0F"}
+              S
             </span>
             <span
               style={{

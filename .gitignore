@@ -52,7 +52,9 @@ cookies-*.txt
 
 # ML training artifacts (not needed at runtime; regenerable via Colab notebook)
 /datasets/
-/colab-train-bundle/
+/colab-train-bundle/*
+!/colab-train-bundle/README.md
+!/colab-train-bundle/package-manifest.json
 soterai-train-bundle.zip
 # Keep runtime ONNX model under models/ tracked, but never the training-only weights
 models/**/pytorch_model.bin
