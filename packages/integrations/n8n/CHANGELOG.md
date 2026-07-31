@@ -2,6 +2,13 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.3.3] - 2026-07-31
+
+### Fixed
+
+- Replaced the final raw `throw error` re-throw in the per-item `catch` block with `throw new NodeOperationError(node, error as Error, { itemIndex: i })`, satisfying the n8n `@n8n/community-nodes/require-node-api-error` ESLint rule (n8n scan no longer reports `362:9`).
+- Confirmed there are no remaining raw error re-throws; all unexpected errors are now wrapped in `NodeOperationError`/`NodeApiError`.
+
 ## [0.3.2] - 2026-07-26
 
 ### Fixed

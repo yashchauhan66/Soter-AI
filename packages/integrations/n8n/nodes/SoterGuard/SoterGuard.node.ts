@@ -9,7 +9,7 @@ import type {
 } from "n8n-workflow";
 import { NodeApiError, NodeConnectionTypes, NodeOperationError } from "n8n-workflow";
 
-const PACKAGE_VERSION = "0.3.2";
+const PACKAGE_VERSION = "0.3.3";
 const USER_AGENT = `n8n-nodes-soterai/${PACKAGE_VERSION}`;
 const MAX_SANITIZE_DEPTH = 8;
 const MAX_METADATA_STRING_LENGTH = 500;
@@ -356,10 +356,7 @@ export class SoterGuard implements INodeType {
           });
           continue;
         }
-        if (!(error instanceof NodeApiError || error instanceof NodeOperationError)) {
-          throw new NodeOperationError(node, error as Error, { itemIndex: i });
-        }
-        throw error;
+        throw new NodeOperationError(node, error as Error, { itemIndex: i });
       }
     }
 
