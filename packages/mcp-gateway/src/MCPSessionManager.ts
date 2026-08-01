@@ -254,10 +254,18 @@ export class SessionManager {
   }
 
   /**
-   * Get all active sessions.
+   * Get all active, unexpired sessions.
+   *
+   * The TTL must be applied here and not left to the periodic cleanup sweep:
+   * callers (notably the gateway's session lookup) treat this list as the
+   * authoritative set of usable sessions, so filtering on state alone would let
+   * an expired session keep authorizing requests until the next sweep fired.
    */
   getActiveSessions(): MCPSession[] {
-    return Array.from(this.sessions.values()).filter((s) => s.state === "active");
+    const now = Date.now();
+    return Array.from(this.sessions.values()).filter(
+      (s) => s.state === "active" && now <= s.expiresAt,
+    );
   }
 
   /**

@@ -245,6 +245,18 @@ export class MCPJsonRpcGateway {
     if (method === "initialize") {
       return this.handleInitialize(request, clientIdentity);
     }
+    // Every other pass-through method (tools/list, resources/read, prompts/get,
+    // ...) still requires a live session bound to this caller. findSession only
+    // matches active, unexpired sessions whose tenant/project/clientId all match,
+    // so this one gate covers both cross-tenant access and expired sessions.
+    // Pass-through means "no policy enforcement", not "no access control".
+    if (!this.findSession(clientIdentity)) {
+      return createJsonRpcError(
+        id,
+        -32004,
+        "No active session for this client identity",
+      );
+    }
     try {
       const response = await this.forwardToUpstream(request, clientIdentity);
       if (response && "result" in response) {

@@ -1,32 +1,32 @@
 {
-  "generatedAt": "2026-07-31T12:43:56.963Z",
+  "generatedAt": "2026-08-01T08:58:10.034Z",
   "policy": "fail-on-exceed: CI runs this script; budgets act as regression gates for packaging size",
   "rows": [
     {
       "name": "browser-runtime-js-bundle",
       "path": "apps/extension/dist/extension",
       "budgetKB": 1350,
-      "measuredKB": 305.5,
+      "measuredKB": 326,
       "pass": true,
-      "headroomKB": 1044.5,
+      "headroomKB": 1024,
       "rationale": "Measured 2026-07-31 at 1298 KB raw (apps/extension build); budget = measured + 4%."
     },
     {
       "name": "browser-archive-soter-extension-chrome",
       "path": "apps/extension/dist/soter-extension-chrome-v0.1.2.zip",
       "budgetKB": 250,
-      "measuredKB": 199.9,
+      "measuredKB": 211.9,
       "pass": true,
-      "headroomKB": 50.1,
+      "headroomKB": 38.1,
       "rationale": "Budget set from current packaged size with ~15% slack; growth reviewed case-by-case."
     },
     {
       "name": "browser-archive-soter-extension-edge",
       "path": "apps/extension/dist/soter-extension-edge-v0.1.2.zip",
       "budgetKB": 250,
-      "measuredKB": 199.9,
+      "measuredKB": 211.9,
       "pass": true,
-      "headroomKB": 50.1,
+      "headroomKB": 38.1,
       "rationale": "Budget set from current packaged size with ~15% slack; growth reviewed case-by-case."
     },
     {
@@ -42,27 +42,27 @@
       "name": "vscode-vsix-packaged",
       "path": "packages/vscode-extension/soterai-ide-guard-0.2.1.vsix",
       "budgetKB": 320,
-      "measuredKB": 307,
+      "measuredKB": 308.4,
       "pass": true,
-      "headroomKB": 13,
+      "headroomKB": 11.6,
       "rationale": "Measured 2026-07-31 = 307.03 KB; ~4% headroom. Major growth requires justification."
     },
     {
       "name": "vscode-runtime-js-extension",
       "path": "packages/vscode-extension/dist/extension.js",
       "budgetKB": 420,
-      "measuredKB": 392.7,
+      "measuredKB": 394.5,
       "pass": true,
-      "headroomKB": 27.3,
+      "headroomKB": 25.5,
       "rationale": "Measured 402.08 KB; +4% headroom."
     },
     {
       "name": "vscode-runtime-js-broker",
       "path": "packages/vscode-extension/dist/local-ai-broker.js",
       "budgetKB": 210,
-      "measuredKB": 196,
+      "measuredKB": 197.3,
       "pass": true,
-      "headroomKB": 14,
+      "headroomKB": 12.7,
       "rationale": "Measured 200.68 KB; +4% headroom."
     }
   ],
