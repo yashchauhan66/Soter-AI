@@ -113,7 +113,7 @@ test("mode resolver: off/on/shadow/enforce/garbage", async () => {
   process.env.SOTERAI_ML_AUGMENT = "enforce";
   assert.equal(resolveMlAugmentMode(), "enforce");
   process.env.SOTERAI_ML_AUGMENT = "banana";
-  assert.equal(resolveMlAugmentMode(), "off"); // unknown → off
+  assert.equal(resolveMlAugmentMode(), "shadow"); // WS1.1: unknown/unset → shadow (record-only safe default)
 });
 
 test("off mode: returns base result untouched (no ml metadata)", async () => {

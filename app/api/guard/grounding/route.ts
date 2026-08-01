@@ -2,6 +2,8 @@ import { z } from "zod";
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { guardGroundedAnswer } from "@/lib/guard/groundingGuard";
+import { runOutputGuard } from "@/lib/guard/outputGuard";
+import { augmentWithMl } from "@/lib/guard/mlAugment";
 import { loadProjectPolicy } from "@/lib/guard/policy";
 import { createHash } from "crypto";
 import { db } from "@/lib/db";
@@ -30,6 +32,14 @@ export async function POST(request: Request) {
     }) : [];
     const sources = authorizeGroundingChunks(storedChunks, { organizationId: access.org.id, projectId: access.project.id, role: access.role });
     const result = guardGroundedAnswer({ answer: body.answer, sources, policy });
+    // WS1.1: ML recall pass over the model answer (OUTPUT). Shadow mode records
+    // metadata only; enforce escalation flags the answer for review + event.
+    const mlChecked = await augmentWithMl(runOutputGuard(body.answer), body.answer, "OUTPUT");
+    const ml = (mlChecked.metadata as Record<string, unknown> | undefined)?.ml;
+    const mlReview = mlChecked.action === "HUMAN_REVIEW" && result.allowed;
+    if (mlReview) {
+      await emitSecurityEvent({ organizationId: access.org.id, projectId: access.project.id, eventType: "guard.human_review", severity: "MEDIUM", riskTypes: mlChecked.riskTypes, action: "HUMAN_REVIEW", source: "guard.grounding", metadata: { trigger: "ml_augment", ml } });
+    }
     const answerAudit = {
       organizationId: access.org.id,
       projectId: access.project.id,
@@ -54,6 +64,6 @@ export async function POST(request: Request) {
       });
     }
     if (!result.allowed) await emitSecurityEvent({ organizationId: access.org.id, projectId: access.project.id, eventType: "rag.no_source_fallback", severity: result.privateDocumentLeak ? "CRITICAL" : "MEDIUM", riskTypes: result.privateDocumentLeak ? ["PRIVATE_DOCUMENT_LEAK"] : ["INSUFFICIENT_SOURCE_ATTRIBUTION"], action: "SAFE_FALLBACK", source: "guard.grounding", metadata: { sourceCount: result.sourceCount, sourceCoverageScore: result.sourceCoverageScore } });
-    return jsonResponse(result);
+    return jsonResponse({ ...result, ml, ...(mlReview ? { mlReview: true } : {}) });
   } catch (error) { return apiError(error, "Grounding guard failed."); }
 }

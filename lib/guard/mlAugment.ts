@@ -28,6 +28,7 @@
  */
 
 import type { GuardResult, GuardFinding, RiskType, GuardDirection } from "./types";
+import { existsSync } from "node:fs";
 import { createOnnxBackendFromEnv, ONNXClassifierBackend } from "../ml/onnxBackend";
 import { classifySemantic } from "./semanticClassifier";
 import type { MLLabel } from "@prisma/client";
@@ -103,15 +104,28 @@ const LABEL_TO_RISK: Record<Exclude<MLLabel, "SAFE">, RiskType> = {
 const PROTECTIVE_ACTIONS = new Set(["BLOCK", "HUMAN_REVIEW", "REWRITE", "ALLOW_WITH_REDACTION"]);
 
 export function resolveMlAugmentMode(): MlAugmentMode {
-  const raw = (process.env.SOTERAI_ML_AUGMENT ?? "off").toLowerCase();
+  const raw = (process.env.SOTERAI_ML_AUGMENT ?? "").toLowerCase().trim();
+  if (raw === "off") return "off"; // explicit opt-out always wins
   if (raw === "shadow" || raw === "enforce") return raw;
   if (raw === "on") return "shadow"; // "on" is a safe alias for shadow
-  return "off";
+  // WS1.1: unset now defaults to SHADOW (record-only) instead of off. Shadow
+  // never changes an action — it only records what ML would have done — and
+  // augmentWithMl is fail-open when no model is loadable, so this is
+  // behaviour-preserving while producing the evidence needed for enforce.
+  return "shadow";
 }
 
 // A single lazily-created backend instance, reused across requests so the 90MB
 // model is loaded once. Null when ML is not configured.
 let cachedBackend: ONNXClassifierBackend | null | undefined;
+
+/** True when a bundled classifier exists on disk for zero-config deployments. */
+function bundledModelPresent(): boolean {
+  return (
+    existsSync("models/ml-classifier-v4/model.onnx") ||
+    existsSync("models/ml-classifier-v3/model.onnx")
+  );
+}
 
 function getBackend(): ONNXClassifierBackend | null {
   if (cachedBackend !== undefined) return cachedBackend;
@@ -122,6 +136,12 @@ function getBackend(): ONNXClassifierBackend | null {
     cachedBackend = new ONNXClassifierBackend();
   } else {
     cachedBackend = createOnnxBackendFromEnv();
+    // WS1.1: with no explicit configuration, fall back to the bundled model
+    // when present so default deployments get the ML tier (shadow evidence)
+    // without any env setup. The constructor auto-discovers v4 over v3.
+    if (!cachedBackend && bundledModelPresent()) {
+      cachedBackend = new ONNXClassifierBackend();
+    }
   }
   return cachedBackend;
 }

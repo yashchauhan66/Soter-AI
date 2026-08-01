@@ -2,6 +2,7 @@ import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { authenticateApiKeyRequest } from "@/lib/apiKeyMiddleware";
 import { runInputGuard } from "@/lib/guard/inputGuard";
 import { runOutputGuard } from "@/lib/guard/outputGuard";
+import { augmentWithMl } from "@/lib/guard/mlAugment";
 import { applyPolicy, loadProjectPolicy } from "@/lib/guard/policy";
 import type { RiskType } from "@/lib/guard/types";
 import { toPublicGuardResult } from "@/lib/guard/publicResult";
@@ -226,7 +227,12 @@ export async function POST(request: Request) {
       for (let i = 0; i < textChunks.length; i++) {
         cumulativeText += (i > 0 ? " " : "") + textChunks[i];
         const baseline = guardFn(cumulativeText);
-        const result = applyPolicy(cumulativeText, baseline, policy, body.direction);
+        // WS1.1: ML augment on the FINAL chunk only — per-chunk early-abort
+        // stays rules-fast; the fully aggregated text gets the ML recall boost.
+        const augmented = i === textChunks.length - 1
+          ? await augmentWithMl(baseline, cumulativeText, body.direction)
+          : baseline;
+        const result = applyPolicy(cumulativeText, augmented, policy, body.direction);
         finalResult = result;
         chunks.push({
           chunkIndex: i,
@@ -252,7 +258,8 @@ export async function POST(request: Request) {
     } else {
       // Standard mode — single aggregated result
       const baseline = guardFn(body.content);
-      const result = applyPolicy(body.content, baseline, policy, body.direction);
+      const augmented = await augmentWithMl(baseline, body.content, body.direction);
+      const result = applyPolicy(body.content, augmented, policy, body.direction);
       finalResult = result;
       chunks.push({
         chunkIndex: 0,

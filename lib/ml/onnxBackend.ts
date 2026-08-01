@@ -154,6 +154,14 @@ function resolveDefaultCalibrationPath(labelsPath: string, explicit?: string): s
  * ONNXClassifierBackend — SoterLLM inference via onnxruntime-node.
  * Lazy-initialized on first infer().
  */
+// WS1.1: prefer the bundled v4 classifier when it exists on disk so default
+// deployments get the trained ML tier without configuration; fall back to v3.
+function defaultBundledModelPath(): string {
+  const v4 = "models/ml-classifier-v4/model.onnx";
+  if (fs.existsSync(v4)) return v4;
+  return "models/ml-classifier-v3/model.onnx";
+}
+
 export class ONNXClassifierBackend implements ModelBackend {
   id = "onnx" as const;
 
@@ -172,10 +180,12 @@ export class ONNXClassifierBackend implements ModelBackend {
   private initPromise: Promise<void> | null = null;
 
   constructor(options?: OnnxBackendOptions) {
-    const labelsPath =
-      options?.labelsPath ?? process.env.ML_ONNX_LABELS_PATH ?? "models/ml-classifier-v3/labels.json";
+    // WS1.1: with no explicit path, prefer the bundled v4 classifier when it
+    // exists on disk (zero-config default), else keep the legacy v3 default.
     const modelPath =
-      options?.modelPath ?? process.env.ML_ONNX_MODEL_PATH ?? "models/ml-classifier-v3/model.onnx";
+      options?.modelPath ?? process.env.ML_ONNX_MODEL_PATH ?? defaultBundledModelPath();
+    const labelsPath =
+      options?.labelsPath ?? process.env.ML_ONNX_LABELS_PATH ?? modelPath.replace(/model\.onnx$/, "labels.json");
     const maxLength = options?.maxLength
       ?? (process.env.ML_ONNX_MAX_LENGTH ? Number(process.env.ML_ONNX_MAX_LENGTH) : undefined)
       ?? (modelPath.includes("v4") ? 256 : 128);
