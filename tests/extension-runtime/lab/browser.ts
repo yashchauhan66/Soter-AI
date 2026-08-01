@@ -25,8 +25,22 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { chromium, type BrowserContext } from "@playwright/test";
 
-/** Playwright channel names for the two browsers §22 requires to be tested separately. */
-export type LabChannel = "chrome" | "msedge";
+/**
+ * Browser builds the lab can drive.
+ *
+ * `"chromium"` is Playwright's bundled Chromium and `"msedge"` is the installed Microsoft Edge.
+ * `"chrome"` is kept because the switch plumbing is identical, but note the measured limitation
+ * recorded in `playwright.extension.config.ts`: Chrome **stable** 147 ignores `--load-extension`
+ * entirely, so it never registers the extension's service worker and the lab cannot install into
+ * it. Nothing here works around that — a build that refuses the artefact is reported, not faked.
+ */
+export type LabChannel = "chromium" | "chrome" | "msedge";
+
+/** Playwright's `channel` for a lab channel; the bundled Chromium is "no channel". */
+function playwrightChannel(channel: LabChannel): string | undefined {
+  return channel === "chromium" ? undefined : channel;
+}
+
 
 export interface LabBrowserOptions {
   channel: LabChannel;
@@ -49,6 +63,8 @@ export interface LabBrowser {
   manifestSha256: string;
   /** Exactly the switches this run passed, for the evidence record. */
   launchArgs: string[];
+  /** User-agent of the build that actually ran, for the evidence record. */
+  userAgent: string;
   dispose(): Promise<void>;
 }
 
@@ -99,7 +115,7 @@ export async function launchLabBrowser(options: LabBrowserOptions): Promise<LabB
   ];
 
   const context = await chromium.launchPersistentContext(userDataDir, {
-    channel: options.channel,
+    channel: playwrightChannel(options.channel),
     // MV3 service workers and extension pages are exercised most faithfully headed; the
     // env override exists for machines without a display.
     headless: options.headless ?? false,
@@ -107,7 +123,10 @@ export async function launchLabBrowser(options: LabBrowserOptions): Promise<LabB
     viewport: { width: 1280, height: 900 },
   });
 
-  const extensionId = await resolveExtensionId(context);
+  const extensionId = await resolveExtensionId(context, options.channel);
+  const probe = await context.newPage();
+  const userAgent = await probe.evaluate(() => navigator.userAgent);
+  await probe.close();
 
   return {
     context,
@@ -116,6 +135,7 @@ export async function launchLabBrowser(options: LabBrowserOptions): Promise<LabB
     packagePath,
     manifestSha256,
     launchArgs,
+    userAgent,
     async dispose() {
       await context.close().catch(() => undefined);
       rmSync(extensionDir, { recursive: true, force: true });
@@ -127,10 +147,21 @@ export async function launchLabBrowser(options: LabBrowserOptions): Promise<LabB
 /**
  * The MV3 service worker is the only reliable carrier of the runtime id for an unpacked
  * extension: its script URL is `chrome-extension://<id>/background/service-worker.js`.
+ *
+ * If it never appears, the browser silently declined to install the extension. That is a real
+ * outcome for some builds (Chrome stable ignores `--load-extension`), so the error says so
+ * rather than leaving a bare event timeout to be misread as a flaky test.
  */
-async function resolveExtensionId(context: BrowserContext): Promise<string> {
+async function resolveExtensionId(context: BrowserContext, channel: LabChannel): Promise<string> {
   const existing = context.serviceWorkers()[0];
-  const worker = existing ?? (await context.waitForEvent("serviceworker", { timeout: 30_000 }));
+  const worker =
+    existing ??
+    (await context.waitForEvent("serviceworker", { timeout: 30_000 }).catch(() => {
+      throw new Error(
+        `The ${channel} build never registered the extension's MV3 service worker, so it did not install the artefact.\n` +
+          `Chrome stable ignores --load-extension (measured on 147.0.7727.57); use the "chromium" or "edge" project, or a build that still accepts unpacked extensions.`,
+      );
+    }));
   const id = new URL(worker.url()).hostname;
   if (!id) throw new Error(`Could not derive the extension id from ${worker.url()}`);
   return id;

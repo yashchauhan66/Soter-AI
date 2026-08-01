@@ -4,9 +4,10 @@
 already finished is listed with its evidence; everything outstanding is listed with enough
 detail to continue without re-deriving any design. Start at §5.
 
-**Last updated:** 2026-08-01 (end of session 3)
+**Last updated:** 2026-08-01 (end of session 4)
 **Permanent report (source of truth for findings):** `docs/SOTERAI-BROWSER-GUARD-SUPREMACY-REPORT.md`
-**Resume marker in that report:** `<!-- APPEND-MARKER-2 -->`
+**Resume marker in that report:** `<!-- APPEND-MARKER-3 -->` (marker 2 was consumed by §8, the
+runtime-proof section)
 
 ---
 
@@ -15,14 +16,14 @@ detail to continue without re-deriving any design. Start at §5.
 | Item | Value |
 | --- | --- |
 | Branch | `main` |
-| HEAD | `30e89459` (`release: n8n-nodes-soterai v0.3.3`) |
+| HEAD | `fec7be91` (`Improve seo, browser extension, ide extension`) |
 | Extension version | `0.1.2` |
 | Node / npm | `v22.16.0` / `11.15.0` |
 | Playwright | `1.61.1` (browser cache has `chromium-1228`) |
 | OpenSSL | `3.5.5` |
-| Chrome | `C:\Program Files\Google\Chrome\Application\chrome.exe` |
-| Edge | `C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe` |
-| Commit state | **Nothing committed.** All work is uncommitted in the worktree. |
+| Chrome | `C:\Program Files\Google\Chrome\Application\chrome.exe` — **stable 147 refuses `--load-extension`; unusable as a lab host, see §7** |
+| Edge | `C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe` — stable 151, installs the artefact |
+| Commit state | Service 1 and the five `tests/extension-runtime/lab/*` files **are committed** (at `fec7be91`). Uncommitted: `playwright.extension.config.ts` and `tests/extension-runtime/browser-guard-runtime.spec.ts` (new), plus edits to `package.json`, the four lab files, and the two docs. Nothing has been pushed. |
 
 ## 2. Safety constraints still in force
 
@@ -70,7 +71,7 @@ manifest-invariants 10, policy-signing-e2e 11.
 
 ---
 
-## 4. COMPLETE — packaged-extension runtime lab, 5 of 7 files
+## 4. COMPLETE — packaged-extension runtime lab, 7 of 7 files, run green on two engines
 
 `tests/extension-runtime/lab/` (new directory, nothing else in the repo touched):
 
@@ -78,11 +79,11 @@ manifest-invariants 10, policy-signing-e2e 11.
 | --- | --- | --- |
 | `tls.ts` | Ephemeral EC P-256 self-signed cert in `os.tmpdir()`, SAN `chatgpt.com` + `soterai.in` + `localhost` + `IP:127.0.0.1`, 2-day validity, `spkiSha256Base64` for Chrome's per-key allowlist, `dispose()` removes it. Nothing written inside the repo. | DONE |
 | `policy-fixtures.ts` | `labPolicyBundle("block" \| "redact" \| "tampered")`, `LAB_ORGANIZATION_ID = "demo-org"`, `LAB_SECRET = "AKIAIOSFODNN7EXAMPLE"`, `LAB_PROMPT_WITH_SECRET`. Tampered mode = correctly sign with an ephemeral in-memory key, then flip `rules[0].action` to `"allow"`. | DONE |
-| `server.ts` | Bounded loopback HTTPS server: synthetic chat page at `/`, the page's own destination `POST /lab/model-ingest`, control plane under `/api/extension/*` serving the mode-selected bundle, request recorder (`received`, `allBodies()`, `ofPath()`), 512 KiB body cap, 500-entry ring, `reset()` / `stop()`. | DONE |
-| `browser.ts` | Extracts the **store zip** to a temp dir, launches `chromium.launchPersistentContext` on a fresh temp profile with `channel: "chrome" \| "msedge"`, `--disable-extensions-except` / `--load-extension`, the host-resolver + SPKI switches, resolves the extension id from the MV3 service worker URL, exposes `manifestSha256` + `launchArgs` for the evidence record, `dispose()` removes both temp dirs. | DONE |
-| `fixtures.ts` | Worker-scoped `lab` fixture: cert → server → browser → wait for the bootstrap policy fetch → keep the popup open as the privileged (`extension_page`) message sender. Helpers `send()`, `state()`, `applyPolicy(mode)`, `openChat()`, plus an `evidence` record. | DONE |
-| `../browser-guard-runtime.spec.ts` | RT-700…RT-708 battery | **TODO — §5** |
-| `../../playwright.extension.config.ts` | Separate config, one project per browser | **TODO — §5** |
+| `server.ts` | Bounded loopback HTTPS server: synthetic chat page at `/`, the page's own destination `POST /lab/model-ingest`, control plane under `/api/extension/*` serving the mode-selected bundle, request recorder (`received`, `allBodies()`, `ofPath()`), 512 KiB body cap, 500-entry ring, `reset()` / `stop()`. Session 4 added `faults()` — its own handler errors, never cleared by `reset()`, because a lab 500 reaches the extension as a *transport* failure and would be mistaken for a healthy fail-safe. | DONE |
+| `browser.ts` | Extracts the **store zip** to a temp dir, launches `chromium.launchPersistentContext` on a fresh temp profile with `channel: "chromium" \| "chrome" \| "msedge"`, `--disable-extensions-except` / `--load-extension`, the host-resolver + SPKI switches, resolves the extension id from the MV3 service worker URL, exposes `manifestSha256` + `launchArgs` + `userAgent` for the evidence record, `dispose()` removes both temp dirs. A build that never registers the service worker now fails with a diagnostic naming the Chrome-stable limitation instead of a bare event timeout. | DONE |
+| `fixtures.ts` | Worker-scoped `lab` fixture: cert → server → browser → wait for the bootstrap policy fetch → keep the popup open as the privileged (`extension_page`) message sender. Helpers `send()`, `state()`, `applyPolicy(mode)`, `openChat()`, `workerLog()`, plus an `evidence` record. `applyPolicy` asserts the lab committed no faults before any test reads a verdict. | DONE |
+| `../browser-guard-runtime.spec.ts` | RT-700…RT-708 battery (8 tests) | DONE — 8/8 on both engines |
+| `../../playwright.extension.config.ts` | Separate config, one project per engine (`chromium`, `edge`) | DONE |
 
 ### Lab design facts (already derived — do not re-derive)
 
@@ -107,18 +108,35 @@ manifest-invariants 10, policy-signing-e2e 11.
   must be sent from `chrome-extension://<id>/popup/index.html` (a tab showing that URL
   satisfies `isExtensionPageSender`).
 - Playwright transpiles specs with esbuild → **cjs**: no top-level `await`, no
-  `import.meta.url`, in any file under `tests/`.
+  `import.meta.url`, in any file under `tests/`. A **dynamic** `import()` also escapes that
+  transform into Node's ESM loader and dies with `exports is not defined in ES module scope`, so
+  every lab import must be static. This cost session 4 a whole debugging cycle: the failure
+  happened inside the lab's request handler, so the extension saw an HTTP 500 and correctly
+  reported `policySyncStatus: "offline"` — a transport fault, not the `hash_mismatch` the test was
+  looking for. The client was right; the lab was wrong.
 - Root `tsconfig.json` **excludes** `tests/` and `packages/`, so these files are not covered
   by root `npx tsc --noEmit`.
+- Playwright surfaces **no console events for service workers**. `lab.workerLog()` taps the
+  worker's own `console.warn`/`console.error` by evaluating a hook inside it, which is the only way
+  a failed background sync explains itself.
+- MV3 service workers are not registered for unpacked extensions in **headless** Chromium, so the
+  lab must run headed (`SOTER_LAB_HEADLESS=1` exists but produces no install).
 
 ---
 
-## 5. NEXT — start here tomorrow
+## 5. COMPLETE — runtime lab written, run green, and reported
 
-### 5.1 Write `tests/extension-runtime/browser-guard-runtime.spec.ts`
+`npm run test:extension:runtime` → **16 passed / 0 failed, exit 0, 30.1 s**, headed, `retries: 0`
+(8 tests × 2 engines: Playwright Chromium 149 and installed Microsoft Edge stable 151). Full
+evidence — command, duration, exit code, artefact hashes, launch switches, per-test/per-engine
+results, and what is still **not** proven — is §8 of
+`docs/SOTERAI-BROWSER-GUARD-SUPREMACY-REPORT.md`. The subsections below are kept as the
+requirement-to-test map that produced it.
 
-Import `{ test, expect }` from `./lab/fixtures`. RT-700 must run first so the suite cannot
-pass vacuously.
+### 5.1 DONE — `tests/extension-runtime/browser-guard-runtime.spec.ts`
+
+Every row below passes on both engines; RT-700 runs first under `mode: "serial"`, so a broken
+harness cannot let the rest pass vacuously.
 
 | ID | Proves | Assertions |
 | --- | --- | --- |
@@ -134,35 +152,48 @@ pass vacuously.
 Overlay selectors (Playwright pierces the open shadow root): host `[data-soter-overlay]`,
 badge `.status-badge`, buttons `[data-action="copy"|"replace"|"dismiss"]`, preview `textarea`.
 
-### 5.2 Write `playwright.extension.config.ts`
+### 5.2 DONE — `playwright.extension.config.ts`
 
 Separate from the root config, which **must not be reused** (it throws without
 `E2E_DATABASE_URL`/`DATABASE_URL`, has `testDir: ./tests/e2e`, a `globalSetup` and a Next
-`webServer`). Needs: `testDir: "./tests/extension-runtime"`, no `webServer`, no DB,
-`workers: 1`, `fullyParallel: false`, generous `timeout`, and **one project per browser** —
-`{ name: "chrome", use: { channel: "chrome" } }` and `{ name: "edge", use: { channel: "msedge" } }`
-— because §22 requires Chrome and Edge proven separately.
+`webServer`). Shipped with: `testDir: "./tests/extension-runtime"`, no `webServer`, no DB,
+`workers: 1`, `fullyParallel: false`, `timeout: 180_000`, `retries: 0`, and one project per engine.
 
-### 5.3 Add the npm script and run it
+The projects are `{ name: "chromium" }` and `{ name: "edge", use: { channel: "msedge" } }`, **not**
+`chrome` + `edge` as originally planned: Chrome stable 147 ignores `--load-extension` on this
+machine, so it never installs the artefact (§7). The Chromium project loads the same
+`soter-extension-chrome-v0.1.2.zip` the Chrome Web Store receives and is reported as Chromium,
+never as Chrome. `SOTER_LAB_CHROMIUM_CHANNEL` overrides it for a build that does accept unpacked
+extensions.
 
-- `"test:extension:runtime": "playwright test --config playwright.extension.config.ts"`.
-- Prerequisite: `cd apps/extension && npm run package` (the lab loads the store zip, and
-  `browser.ts` throws a clear error if it is missing).
-- Record exact command, duration, exit code and artefact hashes per §27.
-- Set `SOTER_LAB_HEADLESS=1` only if a headed run is impossible; headed is the default
-  because MV3 service workers and extension pages behave most faithfully that way.
+### 5.3 DONE — npm script and run
 
-### 5.4 Then update the permanent report
+- `"test:extension:runtime": "playwright test --config playwright.extension.config.ts"`, plus
+  `"package:extension": "npm --prefix apps/extension run package"`.
+- Prerequisite honoured: `cd apps/extension && npm run package` (the lab throws a clear error if
+  the store zip is missing).
+- Recorded per §27 in report §8.2–§8.3. Both store zips are byte-identical
+  (`acdf6d33…c34a9b64`); the loaded manifest hash equals `dist/extension/manifest.json`
+  (`a25618c0…7fcbae8e`), asserted by RT-700 rather than merely stated.
+- `SOTER_LAB_HEADLESS=1` was **not** used — the run is headed. Headless Chromium does not register
+  the MV3 service worker for an unpacked extension at all.
 
-Append at `<!-- APPEND-MARKER-2 -->` in `docs/SOTERAI-BROWSER-GUARD-SUPREMACY-REPORT.md`:
-the runtime-evidence table (command, duration, exit code, per-browser results, manifest
-hash), and upgrade SS-5 from `ENFORCED_DECLARATIVE` **only if the runtime proof actually
-passes**. §7.9 currently states plainly that everything there is source/unit-level evidence
-and makes no runtime claim — that sentence must be replaced honestly, not padded.
+### 5.4 DONE — permanent report updated
+
+- Report §8 appended at `<!-- APPEND-MARKER-2 -->`; a fresh `<!-- APPEND-MARKER-3 -->` is left for
+  the next stage.
+- SS-5 moved `ENFORCED_DECLARATIVE` → `ENFORCED_TESTED`, on the strength of RT-701 passing on both
+  engines and nothing else. SS-1/SS-3/SS-4/SS-11 gained their runtime test IDs. SS-10 stays
+  `ENFORCED_DECLARATIVE` — managed-policy delivery still needs user action.
+- The §7.9 paragraph that disclaimed all runtime evidence is replaced with a statement that the
+  §7.8 evidence remains source/unit-level and that every runtime claim rests on §8, naming the two
+  boundaries that stay unclaimed (Chrome stable, SS-10 delivery).
 
 ---
 
-## 6. Backlog after the runtime lab (§23 order)
+## 6. NEXT — start here (§23 order)
+
+Service 1 is closed apart from the items below. Nothing here has a runtime claim yet.
 
 ### 6.1 Deferred from Service 1 — carried into Service 2
 
@@ -205,4 +236,20 @@ another extension's private code or traffic; omnibox interception; and the delib
 server-fail-open / client-fail-closed asymmetry. Drag-and-drop, clipboard hijacking, autofill
 and indirect prompt injection currently have **no** enforcement and are listed as known
 bypasses, not as covered threats.
+
+**New in session 4 — Chrome stable will not host the runtime lab.** Chrome stable
+`147.0.7727.57` on this machine ignores `--load-extension`: the browser launches, the artefact is
+never installed, and no MV3 service worker is registered. Both
+`--disable-features=DisableLoadExtensionCommandLineSwitch` and
+`--enable-unsafe-extension-debugging` were tried and neither restores
+it; no Chrome Dev/Beta/Canary is installed. The identical extracted directory installs first time
+in Edge stable and in Playwright's bundled Chromium, so this is Chrome's policy, not an artefact
+defect. Consequences to preserve:
+
+- Say "Chromium 149 and Edge 151". Never write "Chrome" for that project's results.
+- Do not add a flag or hack that appears to work around it — a build that refuses the artefact must
+  keep failing loudly (`browser.ts` already throws with this explanation).
+- Service 13 (cross-browser packaged runtime) inherits this as an open item, not a solved one.
+- `SOTER_LAB_CHROMIUM_CHANNEL` is the seam: point it at Chrome for Testing or a future Chrome that
+  accepts unpacked extensions and the existing proof runs unchanged.
 

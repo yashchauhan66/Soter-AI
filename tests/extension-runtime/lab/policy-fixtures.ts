@@ -15,7 +15,7 @@
  * `demo-org` is the identity the extension carries before enrollment, so the lab can drive a
  * completely unmodified packaged artefact — no storage seeding, no simulated managed config.
  */
-import { signPolicyBundle } from "../../../packages/shared/src/policy-integrity";
+import { generatePolicyKeyPair, signPolicyBundle } from "../../../packages/shared/src/policy-integrity";
 import type { ExtensionOrgPolicy } from "../../../packages/policy-engine/src/types";
 
 export type LabPolicyMode = "block" | "redact" | "tampered";
@@ -84,10 +84,16 @@ let cachedPrivateKey: string | undefined;
  * public half is deliberately not distributed to the extension: with no trusted key
  * configured the verifier still reaches `hash_mismatch`, because the content hash is checked
  * before key selection.
+ *
+ * Statically imported, not `await import(...)`ed: Playwright transpiles this graph to CJS, and
+ * a dynamic import escapes that pipeline into Node's ESM loader, which then fails with
+ * "exports is not defined in ES module scope". Because the failure happens inside the lab's own
+ * request handler it surfaces to the extension as an HTTP 500 — i.e. as a *transport* fault,
+ * which the client correctly reports as `offline` rather than as a tamper verdict. That is the
+ * right client behaviour and a silently useless test, so the import stays static.
  */
 async function labSigningPrivateKey(): Promise<string> {
   if (cachedPrivateKey) return cachedPrivateKey;
-  const { generatePolicyKeyPair } = await import("../../../packages/shared/src/policy-integrity");
   const { signing } = await generatePolicyKeyPair("lab-signing-key");
   cachedPrivateKey = signing.privateKey;
   return cachedPrivateKey;

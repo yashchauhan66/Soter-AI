@@ -5,8 +5,9 @@ programme. Every claim in this document must be traceable to a command, a test I
 path, or an explicitly labelled unverified research note. Absence of competitor information
 is never recorded as a SoterAI advantage.
 
-**Status:** IN PROGRESS — Service 1 (extension self-security) under implementation.
-**Last updated:** 2026-07-31
+**Status:** IN PROGRESS — Service 1 (extension self-security) implemented and runtime-proved (§8);
+Services 2–14 not started.
+**Last updated:** 2026-08-01
 
 ---
 
@@ -23,6 +24,8 @@ is never recorded as a SoterAI advantage.
 | `apps/extension`, `tests/extension` git state | clean at audit start |
 | Worktrees present | `main`, `C:/tmp/soter-n8n-main` (prunable), `.claude/worktrees/agent-a4df8d1fa08aae01a`, `.kilo/worktrees/descriptive-peak` (prunable), `.tmp/n8n-0.3.2-release-worktree` |
 | Runtime-lab tooling | Playwright `1.61.1`, `chromium-1228` + `chromium_headless_shell-1228` installed |
+| HEAD at the runtime-lab run (§8) | `fec7be91` |
+| Runtime-lab hosts | Playwright Chromium `149.0.0.0`; Microsoft Edge stable `151.0.0.0`. Chrome stable `147.0.7727.57` would not install an unpacked extension — see §8.5 |
 
 **Safety constraints honoured for the whole programme:** no `reset`/`clean`/force-checkout, no
 push/publish/deploy, no production credential use, no test weakening, no broad permission
@@ -562,22 +565,207 @@ weakened or skipped to make anything pass.
 
 | Sub-service item | Status |
 |---|---|
-| SS-1 policy integrity | `ENFORCED_TESTED` — server signs, client verifies, both halves tested end to end |
-| SS-2 endpoint pinning | `ENFORCED_TESTED` |
-| SS-3 message boundary | `ENFORCED_TESTED` |
-| SS-4 fail-closed gate | `ENFORCED_TESTED` |
-| SS-5 extension CSP | `ENFORCED_DECLARATIVE` — enforced by the browser, pinned by build gate + tests; **runtime proof in a packaged browser is still outstanding** |
+| SS-1 policy integrity | `ENFORCED_TESTED` — server signs, client verifies, both halves tested end to end; runtime-proved by RT-704 (§8) |
+| SS-2 endpoint pinning | `ENFORCED_TESTED` — runtime-corroborated by RT-703 (§8): with all real DNS blackholed, every request the extension made landed on the pinned host |
+| SS-3 message boundary | `ENFORCED_TESTED` — runtime-proved by RT-706 (§8) |
+| SS-4 fail-closed gate | `ENFORCED_TESTED` — runtime-proved by RT-704 (§8) |
+| SS-5 extension CSP | `ENFORCED_TESTED` — runtime-proved by RT-701 (§8): both extension pages render under the hardened CSP with zero `securitypolicyviolation` events, in Chromium and in Edge |
 | SS-10 managed schema | `ENFORCED_DECLARATIVE` — schema completeness is test-gated; **delivery through a real enterprise browser policy requires user action and is not claimed** |
-| SS-11 remediation authority | `ENFORCED_TESTED` |
+| SS-11 remediation authority | `ENFORCED_TESTED` — runtime-proved by RT-708 (§8) |
 | SS-6, SS-7 | `OPEN` — Service 2 |
 | SS-8 | `OPEN` — honesty re-classification pending in `artifacts/security/capabilities.json` |
 | SS-9 | `DEFER_WITH_REASON` — Service 2 |
 
-**Still outstanding before Service 1 can be called closed:** the packaged-extension runtime lab
-(isolated Chrome and Edge profiles, bounded local test server, proof that blocked data is absent
-from the server's received-body log, and proof that the hardened CSP does not break the popup or
-side panel). Everything above is source- and unit-level evidence; per §3 that is **not** accepted
-as proof of runtime enforcement, so no runtime claim is made here.
+**Runtime status.** The packaged-extension runtime lab now exists and passes: isolated browser
+profiles, a bounded loopback server that is simultaneously the destination and the control plane,
+proof that blocked data is absent from every received body, and proof that the hardened CSP does
+not break the popup or the side panel. Everything in §7.8 above is still only source- and
+unit-level evidence — per §3 that is not accepted as proof of runtime enforcement — so the runtime
+claims in this report rest on §8 and nothing else. Two boundaries remain explicitly unclaimed:
+Chrome **stable** could not be used as a host (§8.5), and SS-10's delivery through a real
+enterprise browser policy still requires user action.
 
-<!-- APPEND-MARKER-2 -->
+## 8. Runtime proof — packaged-extension runtime lab (§5.1–§5.4, §22, §27)
+
+### 8.1 What was actually run, and what it deliberately is not
+
+The artefact under test is the **store zip**, extracted to a throwaway directory and installed
+into a fresh browser profile — not `dist/extension/`, and not a test build. The page under test is
+served on `https://chatgpt.com`, an origin the *shipped* manifest genuinely matches, so no
+manifest was widened to make the content script inject. The extension's own API base
+(`https://soterai.in`) is mapped to the same loopback server, which therefore sees every audit,
+scan and lineage request the extension emits — that is what makes "the secret reached no endpoint"
+a searchable fact rather than an inference. Every other hostname resolves to `~NOTFOUND`, so
+nothing can leave the machine even if the extension tried.
+
+Nothing in this section is derived from a manifest entry, a route, a UI page or a unit test. Each
+row below is an observation of a state change the browser made: a request that is absent from the
+server's received log, a page handler whose counter never incremented, a byte sequence absent from
+every body, a `sendResponse` that never came.
+
+What this lab does **not** prove: that a real Chrome **stable** install enforces the same
+behaviour (§8.5), that an enterprise managed-policy deployment delivers the schema (SS-10), or
+anything about the real chatgpt.com DOM — the page is synthetic, carrying only the two selectors
+the shipped ChatGPT adapter uses.
+
+### 8.2 Command, duration, exit code (§27)
+
+| Item | Value |
+|---|---|
+| Prerequisite | `cd apps/extension && npm run package` (the lab refuses to run without the store zip) |
+| Command | `npm run test:extension:runtime` → `playwright test --config playwright.extension.config.ts` |
+| Result | **16 passed / 0 failed / 0 skipped** (8 tests × 2 engines) |
+| Reported duration | `30.1s` (wall clock including browser launches: 33 s) |
+| Exit code | `0` |
+| Mode | headed, `workers: 1`, `fullyParallel: false`, `retries: 0`, serial within the file |
+| Host | Windows 11 (10.0.26300), repo HEAD `fec7be91` |
+
+`retries: 0` is deliberate: a retry relaunches the browser and would convert a flaky enforcement
+failure into a pass, which is the one kind of evidence this suite must never produce. The run was
+headed because MV3 service workers are not registered for unpacked extensions in headless
+Chromium — the `SOTER_LAB_HEADLESS=1` escape hatch exists but was **not** used, so these results
+are from a real windowed browser.
+
+### 8.3 Artefact provenance (§27)
+
+The suite prints its own provenance record at the start of each engine's run (RT-700), so the
+values below are transcribed from the run rather than from memory.
+
+| Item | Value |
+|---|---|
+| Extension version | `0.1.2` |
+| Chromium project artefact | `apps/extension/dist/soter-extension-chrome-v0.1.2.zip` |
+| Edge project artefact | `apps/extension/dist/soter-extension-edge-v0.1.2.zip` |
+| SHA-256 of both zips | `acdf6d335bfd525a322a5bf66bcb6fde32e4a36bd060eea4d777b4bcc34a9b64` (byte-identical) |
+| Manifest SHA-256 inside the loaded artefact | `a25618c027926baab7603cd1612968164f471fa281078b712b1e63517fcbae8e` |
+| `dist/extension/manifest.json` SHA-256 | `a25618c027926baab7603cd1612968164f471fa281078b712b1e63517fcbae8e` — equal, asserted by RT-700 |
+| Chromium engine user-agent | `…AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36` |
+| Edge engine user-agent | `…Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0` (installed Microsoft Edge stable) |
+
+The two store zips being byte-identical is worth stating plainly: the per-engine difference in this
+run is the **browser**, not the package. Launch switches, identical for both projects apart from
+the generated paths, port and key:
+
+```
+--disable-extensions-except=<extracted store zip>
+--load-extension=<extracted store zip>
+--host-resolver-rules=MAP chatgpt.com 127.0.0.1:<port>,MAP soterai.in 127.0.0.1:<port>,MAP * ~NOTFOUND,EXCLUDE localhost
+--ignore-certificate-errors-spki-list=<base64 SHA-256 of the ephemeral lab SPKI>
+--no-first-run --no-default-browser-check
+```
+
+Two switch choices are themselves part of the evidence. `--ignore-certificate-errors-spki-list`
+trusts exactly one ephemeral public key, so the blanket `--ignore-certificate-errors` is never
+used and TLS validation stays on for everything else. `MAP * ~NOTFOUND` blackholes the rest of the
+internet, and RT-700 proves it by navigating to `https://example.com/` and requiring
+`ERR_NAME_NOT_RESOLVED`. The profile is a fresh temp directory per run, so the install is a genuine
+first install and `chrome.runtime.onInstalled` fires — which is what triggers the first policy
+sync the fixture waits for.
+
+### 8.4 Per-test, per-engine results
+
+Both engines ran the identical suite. Every row passed on both; the durations are from the
+canonical run in §8.2.
+
+| Test | Proves | Chromium 149 | Edge 151 |
+|---|---|---|---|
+| RT-700 lab integrity | The artefact loaded is the packaged one (manifest hash equals the built manifest), the page is on an impersonated `https://chatgpt.com`, the *running* extension reports the packaged `permissions` / `host_permissions` / CSP / `content_scripts[0].matches`, real DNS is blackholed, and the guard claimed the domain | PASS 900ms | PASS 1.2s |
+| RT-701 SS-5 CSP | Popup **and** side panel render (`#root` non-empty, which only happens after their module script runs and a `SOTER_GET_STATE` round-trip returns) with zero `securitypolicyviolation` events and zero CSP console errors, under `script-src 'self'; object-src 'self'; base-uri 'none'; form-action 'none'` | PASS 856ms | PASS 1.1s |
+| RT-702 BLOCK | The **page's own** bubble-phase submit handler never ran: `#sent-count` stayed `0`, `window.__labSent` empty, `#ingest-status` still `idle`, and the typed prompt was left byte-for-byte intact (a block is not a silent rewrite) | PASS 744ms | PASS 879ms |
+| RT-703 BLOCK / no leak | After waiting for a real audit POST to arrive (so the search is not vacuous), the destination received **nothing** and `AKIA…EXAMPLE` appears in **no** body the extension emitted — including its own audit, scan and lineage telemetry | PASS 798ms | PASS 1.3s |
+| RT-705 REDACT | The transformation happened *before* the bytes left: the destination's received body carries `[REDACTED_AWS_KEY]` and the surviving benign text, never the secret | PASS 798ms | PASS 824ms |
+| RT-704 / RT-708 tamper | A bundle signed correctly and then mutated two levels deep is rejected as `hash_mismatch` with **no trusted key configured** (`policySyncStatus: "error"`, `policyIntegrity.verified: false`), the submit fails closed with `Submission Blocked — Policy Unverified`, no write-back affordance is offered at all, the textarea is untouched, and the overlay's own preview is redacted | PASS 871ms | PASS 823ms |
+| RT-706 SS-3 | No `chrome.runtime` channel exists in the page's main world; a SOTER-shaped `postMessage` moved nothing (still enabled, policy-serve count unchanged); and from a **privileged** extension page the deleted `SOTER_SET_STATE` type still returns no payload and closes the port — while the same channel keeps serving `SOTER_GET_STATE`, so the refusal is type-specific, not a dead worker | PASS 1.3s | PASS 1.4s |
+| RT-707 no WAR | `web_accessible_resources` is absent on the running extension, and the page's `fetch` of `manifest.json` and subresource load of an extension asset both fail | PASS 427ms | PASS 532ms |
+
+RT-700 runs first by construction (`test.describe.configure({ mode: "serial" })`), so a broken
+harness fails loudly instead of letting the rest of the suite pass vacuously.
+
+### 8.5 Platform boundary — Chrome stable would not host the lab
+
+§22 asks for the two engines to be proven separately, and they were. But one substitution has to
+be stated rather than glossed: **there is no Chrome-branded project.** Chrome stable
+`147.0.7727.57` on this machine ignores `--load-extension` — the browser launches, the artefact is
+never installed, and no MV3 service worker is ever registered, so `context.serviceWorkers()` stays
+empty and only page targets exist. Two documented workarounds were tried and both failed
+(`--disable-features=DisableLoadExtensionCommandLineSwitch`, `--enable-unsafe-extension-debugging`),
+and no Chrome Dev/Beta/Canary build is installed here.
+
+The same extracted directory installed on the first attempt in both Microsoft Edge stable and
+Playwright's bundled Chromium, so this is Chrome's own policy, not a defect in the artefact or the
+lab. The Chrome-side proof therefore runs on the **Chromium** build — the same engine Chrome ships,
+loading the same `soter-extension-chrome-v0.1.2.zip` the Chrome Web Store receives — and is
+reported as Chromium throughout, never as Chrome. `SOTER_LAB_CHROMIUM_CHANNEL` exists so a build
+that does accept unpacked extensions (a future Chrome, or Chrome for Testing) can carry that proof
+unchanged. Nothing in the lab works around the refusal: a build that will not install the artefact
+now fails with that sentence as its error message instead of a bare event timeout.
+
+**Claim boundary:** "enforced in Chromium 149 and Edge 151" is supported. "Enforced in Chrome
+stable" is **not** claimed by this run.
+
+### 8.6 Anti-vacuity measures, and the one fault they caught
+
+A suite of absence assertions is worthless if the thing that would have produced the presence never
+happened. Four guards exist for that:
+
+1. **RT-700 first, serial.** If the harness is not testing the packaged artefact on a real origin
+   with the guard active, the run stops there.
+2. **RT-701 asserts its own probe installed** (`__soterCspProbe.installed === true`) before
+   accepting "zero violations", and asserts `#root` is non-empty — a CSP that blocked the bundle
+   would leave it empty rather than silently pass.
+3. **RT-703 waits for a real audit POST to arrive** before searching every body for the secret, so
+   "no body contains it" cannot pass merely because no body existed.
+4. **The lab reports its own faults.** During development RT-704 failed with
+   `policySyncStatus: "offline"` instead of `"error"`. That was not an extension defect: a dynamic
+   `import()` inside the lab's policy fixture escaped Playwright's CJS transform, the lab's own
+   request handler threw, and the extension received an HTTP 500 — a *transport* fault, which it
+   correctly reported as `offline` rather than as a tamper verdict. The client behaviour was right
+   and the test was silently measuring the wrong thing. Fixed by making the import static; then
+   hardened so it cannot recur unnoticed: the lab server now records every fault it commits, and
+   `applyPolicy()` asserts that record is empty before any test reads a verdict. The background
+   worker's console is also tapped and folded into the failure message, because Playwright surfaces
+   no console events for service workers and "expected error, got offline" said nothing about the
+   cause.
+
+No assertion was weakened to make anything pass. In particular RT-704 still requires the exact
+`hash_mismatch` code — accepting `"offline"` there would have converted a tamper proof into a
+transport-failure proof.
+
+### 8.7 Lab files
+
+| File | Role |
+|---|---|
+| `playwright.extension.config.ts` | NEW — separate config: no DB, no Next server, no `webServer`; one project per engine, `workers: 1`, `retries: 0` |
+| `tests/extension-runtime/browser-guard-runtime.spec.ts` | NEW — the RT-700…RT-708 battery |
+| `tests/extension-runtime/lab/browser.ts` | Extracts the store zip to a temp dir, launches a fresh profile with the switches in §8.3, resolves the extension id from the MV3 service-worker URL, records provenance |
+| `tests/extension-runtime/lab/server.ts` | Loopback HTTPS server: destination (`/lab/model-ingest`), control plane (`/api/extension/*`), synthetic AI page, bounded body recorder, self-fault record |
+| `tests/extension-runtime/lab/tls.ts` | Ephemeral certificate + the SPKI hash the browser is told to trust |
+| `tests/extension-runtime/lab/policy-fixtures.ts` | The three bundles (`block`, `redact`, `tampered`) and the ephemeral signing key, never written to disk |
+| `tests/extension-runtime/lab/fixtures.ts` | One lab per worker; the popup is kept open as the privileged (`extension_page`) message sender, so the tests drive `SOTER_SYNC_POLICY` / `SOTER_GET_STATE` without relaxing the boundary RT-706 asserts |
+| `package.json` | `test:extension:runtime` + `package:extension` scripts |
+
+The privileged-sender detail matters: `SOTER_SYNC_POLICY` and `SOTER_GET_STATE` are
+`extension_page` scope, so they are only accepted from a `chrome-extension://` document. Driving
+them from the extension's own popup means the suite never has to widen the message boundary it is
+simultaneously proving.
+
+### 8.8 What §8 still does not prove
+
+| Gap | Status |
+|---|---|
+| Chrome **stable** as the host browser | Not proven — §8.5 |
+| The real chatgpt.com / claude.ai DOM | Not proven — the page is synthetic, carrying only the selectors the shipped adapter uses |
+| SS-10 managed-policy delivery | Not proven — needs a real enterprise browser policy, which requires user action |
+| SS-6 (closed shadow root + watchdog), SS-7 (bounded approvals), SS-9 (`declarativeNetRequest`) | `OPEN` / deferred to Service 2 — no runtime claim |
+| Store submission | Not performed. Nothing was pushed, published or deployed by this run |
+
+Reproduction, exactly as run:
+
+```
+cd apps/extension && npm run package     # produces the two store zips
+npm run test:extension:runtime           # 16 passed, exit 0, 30.1s, headed
+```
+
+<!-- APPEND-MARKER-3 -->
+
 

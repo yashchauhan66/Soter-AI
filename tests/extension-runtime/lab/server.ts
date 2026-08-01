@@ -39,6 +39,12 @@ export interface LabServer {
   ofPath(path: string): LabRequest[];
   setPolicyMode(mode: LabPolicyMode): void;
   policyServeCount(): number;
+  /**
+   * Faults in the lab's *own* request handling. Never cleared by `reset()`: a lab that 500s
+   * makes the extension see a transport failure, and a transport failure is indistinguishable
+   * from a healthy fail-safe. Any entry here invalidates the run.
+   */
+  faults(): string[];
   reset(): void;
   stop(): Promise<void>;
 }
@@ -47,13 +53,21 @@ export const LAB_PAGE_MARKER = "soterai-runtime-lab";
 
 export async function startLabServer(tls: { cert: string; key: string }): Promise<LabServer> {
   const received: LabRequest[] = [];
+  const faults: string[] = [];
   let policyMode: LabPolicyMode = "block";
   let policyServed = 0;
 
   const server: Server = createServer({ cert: tls.cert, key: tls.key }, (request, response) => {
-    void handle(request, response).catch(() => {
+    void handle(request, response).catch((error: unknown) => {
+      // A silent 500 here would surface inside the extension as an indistinguishable
+      // "transport failure", which is exactly the signal the integrity tests must not confuse
+      // with a tamper verdict. So the lab reports its own faults loudly and remembers them.
+      const detail = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+      const fault = `${request.method} ${request.url} → ${detail}`;
+      faults.push(fault);
+      console.error(`[lab-server] ${fault}`);
       response.writeHead(500, { "content-type": "application/json" });
-      response.end('{"error":"lab server failure"}');
+      response.end(JSON.stringify({ error: "lab server failure", detail }));
     });
   });
 
@@ -104,6 +118,7 @@ export async function startLabServer(tls: { cert: string; key: string }): Promis
       policyMode = mode;
     },
     policyServeCount: () => policyServed,
+    faults: () => [...faults],
     reset: () => {
       received.length = 0;
       policyServed = 0;

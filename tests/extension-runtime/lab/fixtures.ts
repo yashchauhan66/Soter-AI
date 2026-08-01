@@ -40,14 +40,31 @@ export interface Lab {
   state(): Promise<StateSnapshot>;
   /** Opens the synthetic AI page and waits for the guard to report itself active. */
   openChat(): Promise<Page>;
+  /**
+   * Everything the MV3 service worker logged since the last call.
+   *
+   * The background script is the only place that knows *why* a policy sync ended the way it
+   * did, and Playwright surfaces no console events for service workers. Without this, a failed
+   * enforcement assertion says "expected error, got offline" and nothing about the cause, which
+   * for a fail-closed control is the difference between a tamper signal and a transport fault.
+   */
+  workerLog(): Promise<string[]>;
   /** Evidence record for the report. */
-  evidence: { packagePath: string; manifestSha256: string; builtManifestSha256: string; launchArgs: string[] };
+  evidence: {
+    packagePath: string;
+    manifestSha256: string;
+    builtManifestSha256: string;
+    launchArgs: string[];
+    userAgent: string;
+  };
 }
 
-export const test = base.extend<Record<string, never>, { lab: Lab }>({
+// `Record<never, never>` for the test-scoped args, not `Record<string, never>`: the latter makes
+// every fixture key resolve to `never` and rejects the worker-scoped `lab` value.
+export const test = base.extend<Record<never, never>, { lab: Lab }>({
   lab: [
     async ({}, use, workerInfo) => {
-      const channel = (workerInfo.project.use.channel as LabChannel | undefined) ?? "chrome";
+      const channel = (workerInfo.project.use.channel as LabChannel | undefined) ?? "chromium";
       const certificate = createLabCertificate();
       const server = await startLabServer({ cert: certificate.cert, key: certificate.key });
       const browser = await launchLabBrowser({
@@ -66,6 +83,30 @@ export const test = base.extend<Record<string, never>, { lab: Lab }>({
       const extensionOrigin = `chrome-extension://${browser.extensionId}`;
       const privilegedPage = await browser.context.newPage();
       await privilegedPage.goto(`${extensionOrigin}/popup/index.html`, { waitUntil: "domcontentloaded" });
+
+      // Drain-on-read console tap in the background worker. Installed by evaluating in the
+      // worker itself because Playwright emits no console events for service workers. If the
+      // worker is idle-terminated the tap dies with it, so every read tolerates failure.
+      const worker = browser.context.serviceWorkers()[0];
+      await worker
+        ?.evaluate(() => {
+          const sink: string[] = ((globalThis as any).__soterLabLog ??= []);
+          for (const level of ["warn", "error"] as const) {
+            const original = (console as any)[level].bind(console);
+            (console as any)[level] = (...args: unknown[]) => {
+              sink.push(`${level}: ${args.map((a) => (a instanceof Error ? `${a.name}: ${a.message}` : String(a))).join(" ")}`);
+              original(...args);
+            };
+          }
+        })
+        .catch(() => undefined);
+      const workerLog = async () =>
+        (await worker
+          ?.evaluate(() => {
+            const sink = ((globalThis as any).__soterLabLog ?? []) as string[];
+            return sink.splice(0, sink.length);
+          })
+          .catch(() => ["<worker console tap unavailable — the service worker restarted>"])) ?? [];
 
       const send = (message: Record<string, unknown>) =>
         privilegedPage.evaluate(
@@ -92,11 +133,16 @@ export const test = base.extend<Record<string, never>, { lab: Lab }>({
         privilegedPage,
         send,
         state,
+        workerLog,
         applyPolicy: async (mode) => {
           server.setPolicyMode(mode);
           const before = server.policyServeCount();
           const response = (await send({ type: "SOTER_SYNC_POLICY" })) as { ok?: boolean; state?: StateSnapshot };
           expect(server.policyServeCount(), "re-sync did not reach the lab control plane").toBeGreaterThan(before);
+          // A lab fault reaches the extension as an HTTP 500, i.e. as a transport failure, and a
+          // transport failure looks like a healthy fail-safe. Checked here so the *next*
+          // assertion cannot pass or fail for a reason that has nothing to do with the extension.
+          expect(server.faults(), "the lab control plane faulted while serving the policy").toEqual([]);
           return response?.state ?? (await state());
         },
         openChat: async () => {
@@ -110,6 +156,7 @@ export const test = base.extend<Record<string, never>, { lab: Lab }>({
           manifestSha256: browser.manifestSha256,
           builtManifestSha256: builtManifestSha256(),
           launchArgs: browser.launchArgs,
+          userAgent: browser.userAgent,
         },
       };
 

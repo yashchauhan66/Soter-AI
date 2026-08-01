@@ -36,6 +36,8 @@
     "build:extension": "npm --prefix apps/extension run build",
     "typecheck:extension": "npm --prefix apps/extension run typecheck",
     "test:extension": "tsx --test tests/extension/*.test.ts",
+    "package:extension": "npm --prefix apps/extension run package",
+    "test:extension:runtime": "playwright test --config playwright.extension.config.ts",
     "vscode:package": "npm --prefix packages/vscode-extension run vscode:package",
     "vscode:publish": "npm --prefix packages/vscode-extension run vscode:publish",
     "openvsx:package": "npm --prefix packages/vscode-extension run openvsx:package",
