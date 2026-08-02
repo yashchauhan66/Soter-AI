@@ -11,7 +11,7 @@ import type { ProjectPolicy, PolicyMode, UnsafeOutputMode } from '@prisma/client
 import { db } from '../db';
 import { deleteLocalCache, getLocalCache, setLocalCache } from '../localCache';
 import { getRedis } from '../redis';
-import { decideGuardAction } from './decisionEngine';
+import { decideGuardAction, strongestAction, type DecisionContext } from './decisionEngine';
 import { redactText } from './redactor';
 import { rewriteRiskyText } from './rewrite';
 import { scoreRisk } from './riskScoring';
@@ -253,12 +253,17 @@ function wrapDomainAsUrlPattern(domain: string): string {
 /**
  * Wrap baseline analysis with project policy. Mutates findings/decisions
  * so the resulting GuardResult honours the project's settings.
+ *
+ * `context` carries the caller's claim about where `text` came from. It is forwarded
+ * to the decision engine unchanged: policy filtering decides WHICH findings count,
+ * provenance decides how much authority an instruction among them carries.
  */
 export function applyPolicy(
   text: string,
   baseline: GuardResult,
   policy: ResolvedPolicy,
   direction: GuardDirection,
+  context?: DecisionContext,
 ): GuardResult {
   const filtered: GuardFinding[] = [];
   for (const finding of baseline.findings) {
@@ -361,7 +366,7 @@ export function applyPolicy(
   // - STRICT: promote any HUMAN_REVIEW to BLOCK.
   // - WARN: downgrade BLOCK to ALLOW and replace content with a warning message.
   // - BALANCED: default decision engine.
-  let action = decideGuardAction(riskScore, riskTypes, direction);
+  let action = decideGuardAction(riskScore, riskTypes, direction, context);
   // A lone prompt-injection signal that scores below the hard-block thresholds
   // (e.g. the bare "ignore all previous instructions" phrase with no jailbreak/leak
   // co-signal) historically resolves to REWRITE. Multiple PROMPT_INJECTION findings
@@ -373,9 +378,16 @@ export function applyPolicy(
   // the generalized detector does not silently turn every bare injection into a
   // BLOCK. Note `dataExfiltrationInputDetector` emits DATA_EXFILTRATION (not
   // PROMPT_INJECTION), so its presence here correctly disqualifies bare handling.
+  //
+  // The HUMAN_REVIEW arm is the indirect-injection case: when the caller states the
+  // text is not first-party, the engine already raised this same shape from REWRITE
+  // to HUMAN_REVIEW. The tenant's setting still has to be reachable there, otherwise
+  // declaring a stronger provenance would DISABLE a `bareInjectionHandling: BLOCK`
+  // policy — evidence making the outcome weaker, which is the inversion the engine
+  // rework exists to remove.
   const bareInjectionOnly =
     direction === 'INPUT' &&
-    action === 'REWRITE' &&
+    (action === 'REWRITE' || action === 'HUMAN_REVIEW') &&
     riskTypes.length === 1 &&
     riskTypes[0] === 'PROMPT_INJECTION';
   const isBareInjectionRewrite = bareInjectionOnly;
@@ -393,8 +405,15 @@ export function applyPolicy(
   // A single, sub-threshold injection finding historically resolves to REWRITE.
   // Projects can explicitly hold or block that narrow case without changing the
   // handling of multi-signal attacks, secrets, PII, or output findings.
+  //
+  // Applied as a FLOOR, not an assignment. `bareInjectionHandling` is one of
+  // REWRITE / HUMAN_REVIEW / BLOCK, so raising to the strongest is the tenant's
+  // intent in every case — while a plain assignment could lower the action that the
+  // lines above just raised (STRICT mode promotes a >=50 REWRITE to BLOCK, and an
+  // indirect provenance holds it for review; both were being overwritten by a
+  // HUMAN_REVIEW setting).
   if (isBareInjectionRewrite && policy.bareInjectionHandling !== 'REWRITE') {
-    action = policy.bareInjectionHandling;
+    action = strongestAction(action, policy.bareInjectionHandling);
   }
 
   // Unsafe output mode override.

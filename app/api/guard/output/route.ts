@@ -180,12 +180,16 @@ export async function POST(request: Request) {
       }
     }
 
+    // Same optional provenance claim as /api/guard/input: relevant here when the
+    // "response" being screened is really third-party text (a tool result, a
+    // retrieved passage) that the caller is about to hand back to a model.
+    const decisionContext = body.source ? { provenance: body.source } : undefined;
     const baseline = await augmentWithLlmJudge(
-      await augmentWithMl(runOutputGuard(body.aiResponse), body.aiResponse, "OUTPUT"),
+      await augmentWithMl(runOutputGuard(body.aiResponse, decisionContext), body.aiResponse, "OUTPUT"),
       body.aiResponse,
       "OUTPUT",
     );
-    const result = applyPolicy(body.aiResponse, baseline, policy, "OUTPUT");
+    const result = applyPolicy(body.aiResponse, baseline, policy, "OUTPUT", decisionContext);
     scheduleGuardResultPersistence({
       projectId: project.id,
       apiKeyId: apiKey.id,

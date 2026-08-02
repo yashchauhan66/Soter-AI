@@ -50,6 +50,12 @@ export interface ManagedConfig {
   hardEnforcement?: boolean;
   offlineFailClosed?: boolean;
   /**
+   * SS-9 kill switch for the tab-scoped network-layer deny window. Present for fleets whose
+   * internal AI portal cannot tolerate a third-party extension holding a `block` rule, and
+   * negatively named so that leaving it unset keeps enforcement on.
+   */
+  disableNetworkLayerEnforcement?: boolean;
+  /**
    * Refuse any policy bundle that is not cryptographically verified. Requires
    * `policyTrustedKeys` to be set, otherwise every sync fails closed.
    */
@@ -157,6 +163,7 @@ export async function enrollFromManagedConfig(): Promise<EnrollmentInfo> {
     deviceToken: managed.deviceToken,
     hardEnforcement: managed.hardEnforcement === true,
     offlineFailClosed: managed.offlineFailClosed === true,
+    disableNetworkLayerEnforcement: managed.disableNetworkLayerEnforcement === true,
     requirePolicySignature: managed.requirePolicySignature === true,
     policyTrustedKeys: parseManagedTrustedKeys(managed.policyTrustedKeys),
   };
@@ -239,6 +246,7 @@ export async function enrollWithCode(
       // self-service re-enrollment would silently downgrade a hardened profile.
       hardEnforcement: state.config.hardEnforcement,
       offlineFailClosed: state.config.offlineFailClosed,
+      disableNetworkLayerEnforcement: state.config.disableNetworkLayerEnforcement,
       requirePolicySignature: state.config.requirePolicySignature,
       policyTrustedKeys: state.config.policyTrustedKeys,
       policySigningSecret: state.config.policySigningSecret,

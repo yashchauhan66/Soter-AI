@@ -1,0 +1,25 @@
+{
+  "evalDate": "2026-08-02",
+  "type": "multilingual-detection-verification",
+  "reproCommand": "npx tsx eval-ml.ts && npx tsx eval-ml-benign.ts",
+  "attackRecall": {
+    "dataset": "lib/classifiers/datasets/expanded/multilingualHinglishExpanded.ts",
+    "total": 150,
+    "detected_fullPipeline": 150,
+    "recallPct": 100.0,
+    "misses": 0,
+    "languagesCovered": ["Hinglish(romanized Hindi) x60", "Devanagari Hindi x30", "Spanish x15", "French x15", "German x10", "Chinese x10", "Russian x10", "Arabic x10"]
+  },
+  "falsePositiveRate": {
+    "dataset": "lib/classifiers/datasets/expanded/benignControlExpanded.ts",
+    "benignTotal": 300,
+    "falsePositives": 0,
+    "fpRatePct": 0.0
+  },
+  "honestScopeNote": "100% recall on own 150-case corpus, 0% FP on own 300 benign controls. This is a self-authored corpus (train-corpus overlap with detector design), NOT an independently witnessed external benchmark. Use to claim 'verified 8-language coverage incl. Hinglish' — do NOT claim '98%+ on independent sets' until a same-corpus external eval (Gap G5) exists.",
+  "corpusSize_vs_Competitors": {
+    "soterai": "8 language families verified, weighted India-first (Hinglish+Hindi = 90/150)",
+    "lakeraClaimed": "100+ languages (vendor claim, not witnessed)",
+    "verdict": "SoterAI is verified-strong on India-first languages; breadth (100+ langs) still unverified and NOT claimed"
+  }
+}

@@ -203,7 +203,7 @@ function attributeTail(text: string) {
   });
   const scoring = measure(() => {
     const score = scoreRisk(emptyFindings);
-    decideGuardAction(score, ["LOW_RISK"], "INPUT", text);
+    decideGuardAction(score, ["LOW_RISK"], "INPUT");
     deriveAdvisory(text, emptyFindings, ["LOW_RISK"]);
   });
 

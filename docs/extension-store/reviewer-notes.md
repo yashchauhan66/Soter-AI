@@ -61,6 +61,15 @@ etc.) and applies the organization's policy on supported AI sites.
 - **storage:** stores the local DLP policy, thresholds, and enrollment state.
 - **contextMenus / sidePanel / alarms:** context menu for on-demand scan, the policy
   side panel, and the periodic policy-sync/heartbeat alarm.
+- **declarativeNetRequestWithHostAccess:** a submission that the extension has already
+  decided to block can still be re-sent by the page's own script, because blocking a click
+  or an Enter key does not stop `fetch()`. After a block decision the extension installs one
+  session rule that denies that single tab's `POST`/`PUT`/`PATCH` requests to that single
+  declared host for a few seconds, then removes it. There is no static rule list, no rule
+  without a block decision, no effect on `GET` requests or page loading, and no request
+  content is read (the API cannot read request bodies). The host-scoped variant is requested
+  in place of the broad `declarativeNetRequest` so the extension can only act on hosts it
+  already declares.
 - **Copy/paste handling:** performed by content scripts on declared hosts only; no
   browser clipboard-API permission is requested.
 

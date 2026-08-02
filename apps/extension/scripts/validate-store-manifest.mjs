@@ -25,7 +25,17 @@ if (!existsSync(manifestPath)) {
 const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
 
 // --- Permissions that must never appear unless actually used ---------------
-const ALLOWED_PERMISSIONS = new Set(["contextMenus", "sidePanel", "storage", "alarms"]);
+// SS-9 uses `declarativeNetRequestWithHostAccess`, NOT the broad `declarativeNetRequest`:
+// the narrow variant can only act where a host permission already exists, so it adds no
+// new install-time warning and cannot block traffic on a site this extension never sees.
+// The broad variant stays outside this set, which makes requesting it a build failure.
+const ALLOWED_PERMISSIONS = new Set([
+  "contextMenus",
+  "sidePanel",
+  "storage",
+  "alarms",
+  "declarativeNetRequestWithHostAccess",
+]);
 for (const perm of manifest.permissions ?? []) {
   if (!ALLOWED_PERMISSIONS.has(perm)) {
     errors.push(`Unexpected/unjustified permission "${perm}". Only ${[...ALLOWED_PERMISSIONS].join(", ")} are declared as used.`);
@@ -33,6 +43,12 @@ for (const perm of manifest.permissions ?? []) {
 }
 if (Array.isArray(manifest.optional_permissions) && manifest.optional_permissions.length) {
   errors.push(`optional_permissions must be empty in the store build (found: ${manifest.optional_permissions.join(", ")}).`);
+}
+// SS-9 installs *session* rules at runtime, scoped to one tab for a few seconds. A static
+// ruleset would be a permanent, package-shipped block list that no scan verdict gates, so
+// declaring one is refused rather than reviewed.
+if (manifest.declarative_net_request) {
+  errors.push("declarative_net_request static rulesets must not be declared: SS-9 uses short-lived, tab-scoped session rules only.");
 }
 
 // --- Host permission hygiene ------------------------------------------------

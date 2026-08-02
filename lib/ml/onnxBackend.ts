@@ -21,6 +21,12 @@
  *   ML_ONNX_CALIBRATION_PATH=models/ml-classifier-v4/calibration.json
  *   ML_ONNX_CONFIDENCE_FLOOR=0.50
  *   ML_ONNX_MAX_LENGTH=256
+ *   ML_ONNX_SLIDING_WINDOW=off     (opt-in: score long inputs as overlapping
+ *                                   windows instead of truncating; see the
+ *                                   slidingWindow option for why it is off)
+ *   ML_ONNX_WINDOW_SIZE=94         (content tokens per sliding window)
+ *   ML_ONNX_WINDOW_OVERLAP=32      (shared tokens between adjacent windows)
+ *   ML_ONNX_MAX_WINDOWS=24         (latency cap; the tail is always scored)
  */
 
 import * as fs from "node:fs";
@@ -32,6 +38,7 @@ import { BertTokenizer, parseVocabTxt } from "./bertTokenizer";
 import {
   attackProbability,
   clearsLabelThreshold,
+  labelSpaceUncertain,
   loadCalibration,
   shouldAbstain,
   type CalibrationConfig,
@@ -64,6 +71,37 @@ interface OnnxBackendOptions {
   modelManifestPath?: string;
   trustStorePath?: string;
   approvedSources?: string[];
+  /**
+   * Score inputs longer than one model window as overlapping windows instead of
+   * truncating at maxLength. Off means the classifier is blind to anything past
+   * the first window — the document-buried injection case.
+   *
+   * DEFAULT OFF, deliberately. The mechanism is correct and covered by
+   * tests/ml/sliding-window.test.ts, but on the CURRENT v4 decision layer a sweep
+   * does not yet pay for itself: `npm run ml:evidence:window` measures net zero —
+   * nothing changes on INPUT (every window label is filtered out by
+   * INPUT_RELIABLE_LABELS), and on OUTPUT one buried payload is recovered at the
+   * cost of one new false positive on a benign contract, for ~3x the latency.
+   * v4 abstains on genuine attacks (9-class entropy gate) and assigns arbitrary
+   * attack labels to long prose. Turn this on only after re-running that evidence
+   * script shows a net gain.
+   */
+  slidingWindow?: boolean;
+  /**
+   * Content tokens per sliding window. Deliberately smaller than maxLength:
+   * SoterLLM is trained on short prompts, and measurement (see
+   * tests/ml/sliding-window.test.ts) shows it degrades badly on ~190+ token
+   * windows — long benign prose starts scoring as a confident attack. Small
+   * windows keep each forward pass inside the length range the model actually
+   * saw. Clamped to the tokenizer's window budget. Default 94.
+   */
+  windowSize?: number;
+  /** Content tokens shared between adjacent windows so a payload on a boundary
+   *  is fully present in at least one window. Default 32. */
+  windowOverlap?: number;
+  /** Hard cap on forward passes per input, so latency stays bounded on a huge
+   *  paste. The final window is always the tail. Default 24. */
+  maxWindows?: number;
 }
 
 // ── Errors ───────────────────────────────────────────────────────────────────
@@ -148,6 +186,43 @@ function resolveDefaultCalibrationPath(labelsPath: string, explicit?: string): s
   return fs.existsSync(sibling) ? sibling : undefined;
 }
 
+/** Env flag parsing: "on"/"true"/"1"/"yes" → true, "off"/"false"/"0"/"no" → false. */
+function envFlag(value: string | undefined): boolean | undefined {
+  if (value === undefined) return undefined;
+  const normalized = value.trim().toLowerCase();
+  if (["on", "true", "1", "yes", "enabled"].includes(normalized)) return true;
+  if (["off", "false", "0", "no", "disabled"].includes(normalized)) return false;
+  return undefined;
+}
+
+/** Positive-integer env parsing; anything unusable falls back to the default. */
+function envPositiveInt(value: string | undefined, fallback: number): number {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : fallback;
+}
+
+/**
+ * Number of distinct content tokens actually covered by a window plan.
+ *
+ * When maxWindows caps the sweep on a very long input, the plan can leave a gap
+ * in the middle. Reporting the union size (rather than the total) keeps
+ * raw.truncated honest: it says "some of this input was never scored", which is
+ * exactly what an operator needs to know.
+ */
+function coveredTokenCount(starts: number[], budget: number, contentLength: number): number {
+  let covered = 0;
+  let cursor = 0;
+  for (const start of [...starts].sort((a, b) => a - b)) {
+    const end = Math.min(contentLength, start + budget);
+    const from = Math.max(cursor, start);
+    if (end > from) {
+      covered += end - from;
+      cursor = end;
+    }
+  }
+  return covered;
+}
+
 // ── ONNX Backend ──────────────────────────────────────────────────────────────
 
 /**
@@ -205,6 +280,15 @@ export class ONNXClassifierBackend implements ModelBackend {
           .split(",")
           .map((value) => value.trim())
           .filter(Boolean),
+      slidingWindow:
+        options?.slidingWindow ?? envFlag(process.env.ML_ONNX_SLIDING_WINDOW) ?? false,
+      windowSize: options?.windowSize ?? envPositiveInt(process.env.ML_ONNX_WINDOW_SIZE, 94),
+      windowOverlap: Math.max(
+        0,
+        options?.windowOverlap ?? envPositiveInt(process.env.ML_ONNX_WINDOW_OVERLAP, 32),
+      ),
+      maxWindows:
+        options?.maxWindows ?? envPositiveInt(process.env.ML_ONNX_MAX_WINDOWS, 24),
     };
   }
 
@@ -336,8 +420,103 @@ export class ONNXClassifierBackend implements ModelBackend {
   }
 
   private async inferOnnxRuntime(text: string): Promise<ModelInference> {
+    const tokenizer = this.tokenizer!;
+
+    // ── Long-input coverage ───────────────────────────────────────────────────
+    // A single forward pass sees at most maxLength tokens. Everything after that
+    // is truncated away, so "here is a 4-page document [benign] … [injection]"
+    // scores exactly like the benign opening. That is the document-buried /
+    // slow-build class of attack (EchoLeak-style poisoned context, Crescendo
+    // transcripts pasted in one turn) and truncation is a silent miss, not a
+    // false negative the model got wrong.
+    //
+    // So when the content exceeds one model window we sweep OVERLAPPING windows
+    // and keep the most severe DECIDED one. Three properties matter:
+    //   - Overlap: a payload straddling a boundary would otherwise be split
+    //     across two windows and diluted in both.
+    //   - Small windows (windowSize << maxLength): measured, not guessed. This
+    //     model is trained on short prompts and gets confidently wrong on long
+    //     ones — at 254-token windows it labels ordinary business prose
+    //     DATA_EXFILTRATION_ATTEMPT at 0.92. At 94 it does not.
+    //   - "Decided", not raw: the winner is chosen on the post-calibration
+    //     verdict (abstention + per-label threshold), never on raw
+    //     attackProbability, which saturates near 1.0 even for benign text.
+    //     Requiring each window to clear the same operating point a short input
+    //     must clear stops N windows from becoming N chances to false-positive.
+    //
+    // Inputs that already fit one model window keep the exact previous
+    // single-pass behaviour, so this is additive for everything except the
+    // inputs that were silently truncated before.
+    const contentIds = tokenizer.encodeContentIds(text);
+    const modelWindow = tokenizer.windowBudget;
+    if (!this.options.slidingWindow || contentIds.length <= modelWindow) {
+      const probabilities = await this.forward(tokenizer.tokenize(text));
+      return this.decide(probabilities, {
+        windows: 1,
+        windowIndex: 0,
+        windowSize: Math.min(contentIds.length, modelWindow),
+        tokensSeen: Math.min(contentIds.length, modelWindow),
+        tokensTotal: contentIds.length,
+      });
+    }
+
+    const windowSize = Math.max(1, Math.min(this.options.windowSize, modelWindow));
+    const starts = this.planWindowStarts(contentIds.length, windowSize);
+    const tokensSeen = coveredTokenCount(starts, windowSize, contentIds.length);
+
+    let best: { decision: ModelInference; escalated: boolean; rank: number } | null = null;
+    for (let i = 0; i < starts.length; i += 1) {
+      const probabilities = await this.forward(
+        tokenizer.encodeWindow(contentIds.slice(starts[i], starts[i] + windowSize)),
+      );
+      const decision = this.decide(probabilities, {
+        windows: starts.length,
+        windowIndex: i,
+        windowSize,
+        tokensSeen,
+        tokensTotal: contentIds.length,
+      });
+      const escalated = decision.predictedLabel !== "SAFE";
+      // Escalated windows always outrank non-escalated ones. Within a group,
+      // escalated windows rank by their own confidence; non-escalated ones rank
+      // by attackProbability so raw.* still points at the most suspicious region
+      // for shadow-mode fusion even when nothing cleared the bar.
+      const rank = escalated
+        ? decision.confidence
+        : Number((decision.raw?.attackProbability as number | undefined) ?? 0);
+      if (!best || (escalated && !best.escalated) || (escalated === best.escalated && rank > best.rank)) {
+        best = { decision, escalated, rank };
+      }
+    }
+
+    return best!.decision;
+  }
+
+  /**
+   * Overlapping window starts for one input, capped at maxWindows.
+   *
+   * The tail is always scored: without it, a payload in the final tokens is
+   * dropped whenever the cap ends the sweep early — which is the exact position
+   * an attacker picks when appending to a long benign document.
+   */
+  private planWindowStarts(contentLength: number, windowSize: number): number[] {
+    const overlap = Math.min(this.options.windowOverlap, windowSize - 1);
+    const stride = Math.max(1, windowSize - overlap);
+    const starts: number[] = [];
+    for (let start = 0; start < contentLength && starts.length < this.options.maxWindows; start += stride) {
+      starts.push(start);
+    }
+    const tailStart = Math.max(0, contentLength - windowSize);
+    if (!starts.includes(tailStart)) {
+      if (starts.length >= this.options.maxWindows) starts[starts.length - 1] = tailStart;
+      else starts.push(tailStart);
+    }
+    return starts;
+  }
+
+  /** One forward pass over an already-encoded window. Returns softmax probabilities. */
+  private async forward(tokens: { inputIds: number[]; attentionMask: number[] }): Promise<number[]> {
     const ort = await tryImportOnnxRuntime();
-    const tokens = this.tokenizer!.tokenize(text);
 
     const inputIdsData = new BigInt64Array(tokens.inputIds.length);
     for (let i = 0; i < tokens.inputIds.length; i++) {
@@ -361,18 +540,47 @@ export class ONNXClassifierBackend implements ModelBackend {
 
     // v4 exports temperature-scaled logits already (logits/T baked in export).
     const logits: number[] = Array.from(logitsOutput.data as Float32Array);
-    const probabilities = softmax(logits);
+    return softmax(logits);
+  }
+
+  /** Calibration, abstention, and thresholding over one window's probabilities. */
+  private decide(
+    probabilities: number[],
+    span: {
+      windows: number;
+      windowIndex: number;
+      windowSize: number;
+      tokensSeen: number;
+      tokensTotal: number;
+    },
+  ): ModelInference {
     const predictedIdx = argmax(probabilities);
     const predictedLabel = labelAtIndex(this.labels, predictedIdx);
     const confidence = probabilities[predictedIdx] ?? 0;
     const atkProb = attackProbability(probabilities, this.safeIndex);
-    const maxProb = Math.max(...probabilities);
     const top3 = this.topKLabels(probabilities, 3);
 
+    // Abstention is ASYMMETRIC on purpose, and only ever demotes an attack call.
+    // A SAFE argmax that still carries attack mass is not marked abstained, because
+    // the caller's attack-probability fusion (mlAugment) is what recovers those —
+    // flagging them here would set `abstained` and block that path instead.
+    //
+    // Two different uncertainties, chosen by whether the model saw the whole input:
+    //   complete view  -> attack-vs-safe only (see shouldAbstain: label-space
+    //                     entropy discarded real split-mass attacks);
+    //   truncated view -> ALSO require label-space certainty, because on a fragment
+    //                     of a long document split mass is an out-of-distribution
+    //                     signature, not a statement about the attack class. Without
+    //                     this, a benign 40-clause contract read as
+    //                     DATA_EXFILTRATION_ATTEMPT (P(attack) 0.9971) escalated.
+    // Long inputs are meant to be handled by covering them (ML_ONNX_SLIDING_WINDOW),
+    // not by trusting a confident guess about the first 256 tokens.
+    const truncatedView = span.tokensSeen < span.tokensTotal;
     const abstained =
       this.options.enableAbstention &&
       predictedLabel !== "SAFE" &&
-      shouldAbstain(maxProb, probabilities, this.calibration);
+      (shouldAbstain(probabilities, this.calibration, this.safeIndex) ||
+        (truncatedView && labelSpaceUncertain(probabilities, this.calibration)));
 
     // Per-label calibrated threshold (v4). Fallback: global confidenceFloor.
     const isSafePred = predictedLabel === "SAFE";
@@ -403,7 +611,6 @@ export class ONNXClassifierBackend implements ModelBackend {
       }
     }
 
-
     return {
       predictedLabel: finalLabel,
       confidence: finalConfidence,
@@ -416,6 +623,12 @@ export class ONNXClassifierBackend implements ModelBackend {
         rawConfidence: Number(confidence.toFixed(4)),
         calibrationVersion: this.calibration.version ?? null,
         maxLength: this.options.maxLength,
+        windows: span.windows,
+        windowIndex: span.windowIndex,
+        windowSize: span.windowSize,
+        truncated: truncatedView,
+        contentTokens: span.tokensTotal,
+        tokensScored: span.tokensSeen,
       },
     };
   }

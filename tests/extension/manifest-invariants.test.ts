@@ -17,6 +17,11 @@
  * Also frozen here: the absence of `externally_connectable` and `web_accessible_resources`.
  * The runtime message guard's threat model depends on web pages not being able to reach
  * `chrome.runtime.sendMessage` at all, which is true only while those keys stay absent.
+ *
+ * SS-9 adds one permission (`declarativeNetRequestWithHostAccess`) and MF-507/MF-508 pin the
+ * two things that keep it honest: it must be the host-scoped variant with no static ruleset,
+ * and it must have a wired runtime caller — a declared permission with no caller is an
+ * install-time ask the extension has not earned.
  */
 import test from "node:test";
 import assert from "node:assert/strict";
@@ -40,6 +45,7 @@ interface Manifest {
   externally_connectable?: unknown;
   web_accessible_resources?: unknown;
   sandbox?: unknown;
+  declarative_net_request?: unknown;
   storage?: { managed_schema?: string };
 }
 
@@ -129,7 +135,7 @@ test("MF-505: no manifest exposes the extension to web pages or other extensions
 test("MF-506: permissions stay least-privilege and every host is https", () => {
   // Adding a permission here must be a deliberate act that also updates
   // docs/SOTERAI-BROWSER-GUARD-SUPREMACY-REPORT.md and the store justification doc.
-  const ALLOWED = ["contextMenus", "sidePanel", "storage", "alarms"];
+  const ALLOWED = ["contextMenus", "sidePanel", "storage", "alarms", "declarativeNetRequestWithHostAccess"];
   const FORBIDDEN = ["tabs", "webRequest", "webRequestBlocking", "debugger", "management", "cookies", "history", "downloads", "scripting", "declarativeNetRequest", "proxy", "nativeMessaging", "<all_urls>"];
   for (const [label, path] of MANIFESTS) {
     const parsed = manifest(path);
@@ -155,6 +161,43 @@ test("MF-506: permissions stay least-privilege and every host is https", () => {
     assert.ok(host.startsWith("https://"), `store build: non-https host ${host}`);
     assert.equal(/localhost|127\.0\.0\.1|0\.0\.0\.0/.test(host), false, `store build: dev host ${host}`);
   }
+});
+
+/* ── SS-9: the network-layer control is the narrow variant, and it has a caller ── */
+
+test("MF-507: SS-9 requests only the host-scoped DNR variant and ships no static ruleset", () => {
+  for (const [label, path] of MANIFESTS) {
+    const parsed = manifest(path);
+    const permissions = parsed.permissions ?? [];
+    assert.ok(
+      permissions.includes("declarativeNetRequestWithHostAccess"),
+      `${label}: SS-9 arms declarativeNetRequest session rules, so the narrow permission must be declared`,
+    );
+    assert.equal(
+      permissions.includes("declarativeNetRequest"),
+      false,
+      `${label}: the broad declarativeNetRequest adds a "block content on any site" warning and reach beyond host_permissions`,
+    );
+    // A static ruleset is a permanent, package-shipped block list that no scan verdict gates.
+    // SS-9 is a bounded, tab-scoped session rule installed only after a `block` decision.
+    assert.equal(
+      "declarative_net_request" in parsed,
+      false,
+      `${label}: static DNR rulesets must not be declared; SS-9 uses session rules only`,
+    );
+  }
+});
+
+test("MF-508: the DNR permission is not requested without a wired runtime caller", () => {
+  // The capability-honesty rule from the 2026-07-23 registry pass, applied to a manifest
+  // permission: a declared permission with no caller is an unearned install-time ask.
+  const guard = readFileSync("apps/extension/src/background/network-block.ts", "utf8");
+  assert.match(guard, /updateSessionRules/, "network-block.ts must call updateSessionRules");
+  assert.match(guard, /getSessionRules/, "network-block.ts must be able to reclaim orphaned rules");
+  const worker = readFileSync("apps/extension/src/background/service-worker.ts", "utf8");
+  assert.match(worker, /createNetworkBlockGuard\(/, "the service worker must construct the network-block guard");
+  assert.match(worker, /networkBlock\.arm\(/, "the service worker must arm the guard from a scan verdict");
+  assert.match(worker, /networkBlock\.reclaimOrphans\(\)/, "a worker restart must reclaim rules a dead generation left behind");
 });
 
 /* ── SS-10: every managed field the code reads must be declarable ─────────── */
@@ -215,5 +258,18 @@ test("MF-513: booleans default to the safe (off) value so an unset policy cannot
     const property = schema.properties?.[field];
     assert.equal(property?.type, "boolean", `${field} must be a boolean`);
     assert.equal(property?.default, false, `${field} must default to false — enforcement is opt-in and explicit`);
+  }
+  // Generalized so a *new* boolean cannot arrive with `default: true`. Every managed boolean
+  // reads as "false unless an administrator sets it", which is why a control whose safe state
+  // is ON — like SS-9's network-layer deny window — must be named negatively
+  // (`disableNetworkLayerEnforcement`) rather than declared with a `true` default.
+  const booleans = Object.entries(schema.properties ?? {}).filter(([, property]) => property?.type === "boolean");
+  assert.ok(booleans.length >= 4, `expected the enforcement booleans to be declared, found ${booleans.length}`);
+  for (const [field, property] of booleans) {
+    assert.equal(
+      property.default,
+      false,
+      `${field} declares default ${JSON.stringify(property.default)}; every managed boolean must default to false, so invert the field's meaning instead`,
+    );
   }
 });

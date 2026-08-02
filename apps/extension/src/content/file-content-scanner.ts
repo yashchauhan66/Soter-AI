@@ -65,6 +65,16 @@ export function installFileContentScanner() {
     showSoterOverlay({
       result: strongest.scanResult,
       onCopy: () => void navigator.clipboard?.writeText(strongest.redactedPreview),
+      onTamper: (detail) => {
+        chrome.runtime.sendMessage({
+          type: "SOTER_AUDIT_BYPASS",
+          text: strongest.redactedPreview,
+          url: location.href,
+          action: strongest.action,
+          justification: `overlay tamper detected: ${detail}`,
+          dismissedOnly: true,
+        });
+      },
       onApproval: async (justification) => {
         return new Promise<string | null>((resolve) => {
           chrome.runtime.sendMessage(

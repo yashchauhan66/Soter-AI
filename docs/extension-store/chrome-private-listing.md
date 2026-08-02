@@ -76,12 +76,18 @@ The extension monitors only known AI tool domains (e.g., chatgpt.com, claude.ai,
 
 ## Required Permissions Justification
 
+The manifest is the source of truth for this table. Anything not listed here is not requested.
+
 | Permission | Justification |
 |-----------|---------------|
 | `storage` | Store extension configuration, enrollment state, and cached policies locally |
-| `activeTab` | Read the current tab content on AI tool pages to detect and guard prompts |
-| `scripting` | Inject content scripts on AI tool pages for prompt monitoring |
 | `contextMenus` | Provide right-click menu options for scanning selected text or requesting approval |
 | `sidePanel` | Display the extension side panel for quick access to scan results and policy info |
 | `alarms` | Schedule periodic policy syncs and heartbeat checks with the backend |
-| `identity`, `identity.email` | Optional: enterprise SSO integration |
+| `declarativeNetRequestWithHostAccess` | After a block decision, deny that one tab's own data-sending requests (`POST`/`PUT`/`PATCH`) to that one declared host for a few seconds, so the page cannot re-send a blocked prompt from its own script. No static rule list; no effect on `GET` or page loading; request contents are never read |
+
+Not requested: `activeTab`, `scripting`, `webRequest`, `cookies`, `history`, `downloads`,
+`debugger`, `management`, `identity`, `nativeMessaging`, `<all_urls>`, and any permission that
+would grant browsing-history or cross-site visibility. Content scripts are declared statically
+in the manifest for the listed AI hosts, which is why no scripting or `activeTab` permission is
+needed.

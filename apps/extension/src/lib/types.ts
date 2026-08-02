@@ -23,6 +23,12 @@ export interface ExtensionConfig {
   hardEnforcement?: boolean;
   offlineFailClosed?: boolean;
   /**
+   * SS-9 kill switch. Named negatively on purpose: the network-layer deny window is on by
+   * default, so an unset managed policy leaves enforcement at its code default while every
+   * boolean in `managed-schema.json` still defaults to `false` (MF-513).
+   */
+  disableNetworkLayerEnforcement?: boolean;
+  /**
    * Origin the extension is pinned to. Once set, `apiBaseUrl` may not change to a
    * different origin — not by user entry and not by a server response.
    */

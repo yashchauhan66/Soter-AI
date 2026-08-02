@@ -29,7 +29,7 @@ import { harmfulContentRequestDetector } from "./detectors/harmfulContentRequest
 import { broadHarmfulContentDetector } from "./detectors/broadHarmfulContentDetector";
 import { generalizedIntentDetector } from "./detectors/generalizedIntentDetector";
 import { adversarialCyberDetector } from "./detectors/adversarialCyberDetector";
-import { decideGuardAction } from "./decisionEngine";
+import { decideGuardAction, type DecisionContext } from "./decisionEngine";
 import { redactText } from "./redactor";
 import { rewriteRiskyText } from "./rewrite";
 import { scoreRisk } from "./riskScoring";
@@ -132,7 +132,11 @@ const OUTPUT_DETECTORS = [systemPromptLeakageDetector, unsafeOutputDetector, out
 // sweep (see lib/guard/semanticClassifier.ts).
 let ipsBlockSignatures: RegExp[] | null = null;
 
-export function analyzeText(text: string, direction: GuardDirection): GuardResult {
+export function analyzeText(
+  text: string,
+  direction: GuardDirection,
+  context?: DecisionContext,
+): GuardResult {
   const detectors = direction === "OUTPUT" ? OUTPUT_DETECTORS : INPUT_DETECTORS;
   let findings: GuardFinding[] = withDetectionVariantScope(
     text,
@@ -431,7 +435,7 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
   const riskScore = scoreRisk(findings);
   const riskTypes = ([...new Set(findings.map((finding) => finding.type))] as RiskType[]);
   if (riskTypes.length === 0) riskTypes.push("LOW_RISK");
-  let action = decideGuardAction(riskScore, riskTypes, direction, text);
+  let action = decideGuardAction(riskScore, riskTypes, direction, context);
   if (direction === "INPUT" && hasHighTrustExploitationFinding(findings) && action !== "BLOCK") {
     action = "HUMAN_REVIEW";
   }
@@ -472,6 +476,11 @@ export function analyzeText(text: string, direction: GuardDirection): GuardResul
     metadata: {
       direction,
       findingCount: findings.length,
+      // Recorded only when the caller claimed a non-default source, so the evidence
+      // trail shows why an instruction-bearing finding was held rather than rewritten.
+      ...(context?.provenance && context.provenance !== "USER"
+        ? { provenance: context.provenance }
+        : {}),
       ...(semanticMetadata ? { semantic: semanticMetadata } : {}),
     },
   }, advisory);

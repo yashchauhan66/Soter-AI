@@ -13,6 +13,23 @@ import { matchLocalFingerprints } from "../lib/fingerprint-matcher";
 import { ACTION_PRECEDENCE } from "../../../../packages/policy-engine/src/actions";
 import { createStorageSafeScanResult, previewForScan } from "../lib/privacy-preview";
 import { validateRuntimeMessage, type MessageSenderLike } from "../lib/message-guard";
+import { chromeDnrSessionRules, createNetworkBlockGuard } from "./network-block";
+
+/** SS-9. Created once per service-worker generation; see `network-block.ts` for the scope. */
+const NETWORK_BLOCK_ALARM = "soter-network-block-sweep";
+const networkBlock = createNetworkBlockGuard({
+  dnr: chromeDnrSessionRules(),
+  scheduleSweep: (delayMs) => {
+    // MV3 clamps alarm delays to 30s, so this is a floor on cleanup latency after a worker
+    // death, not the normal path — the in-process timer normally removes the rule on time.
+    chrome.alarms?.create(NETWORK_BLOCK_ALARM, { delayInMinutes: Math.max(delayMs, 30_000) / 60_000 });
+  },
+  onEvent: (message) => console.warn(`[soter] ${message}`),
+});
+
+// A previous generation's rules have no owner left to expire them, so every start reclaims
+// the reserved id range before anything can arm a new one.
+void networkBlock.reclaimOrphans();
 
 void initializeEnrollment();
 
@@ -26,6 +43,9 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.alarms?.onAlarm.addListener((alarm) => {
   if (alarm.name === "soter-policy-sync") void syncPolicy();
   if (alarm.name === "soter-heartbeat") void sendHeartbeat();
+  if (alarm.name === NETWORK_BLOCK_ALARM) {
+    void networkBlock.sweep().then(() => networkBlock.reclaimOrphans());
+  }
 });
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
@@ -38,7 +58,8 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   // SS-3: every message crosses a validated boundary (type allowlist, sender identity,
   // scope, size, schema). Unknown or invalid messages are dropped, not routed.
-  const validation = validateRuntimeMessage(message, sender as MessageSenderLike, chrome.runtime.id);
+  const from = sender as MessageSenderLike | undefined;
+  const validation = validateRuntimeMessage(message, from, chrome.runtime.id);
   if (!validation.ok) {
     if (validation.code !== "unknown_type") {
       console.warn(`[soter] rejected runtime message (${validation.code}): ${validation.reason}`);
@@ -47,7 +68,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
   const payload = validation.payload;
   if (validation.type === "SOTER_SCAN_TEXT") {
-    void handleScan(payload as unknown as RuntimeScanRequest).then(sendResponse);
+    // SS-9 needs the originating tab: a session rule is scoped to it, so the extension's own
+    // worker-initiated telemetry (tab id −1) can never be caught by its own block rule.
+    void handleScan(payload as unknown as RuntimeScanRequest, from?.tab?.id).then(sendResponse);
     return true;
   }
   if (validation.type === "SOTER_GET_STATE") {
@@ -112,7 +135,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
-async function handleScan(request: RuntimeScanRequest): Promise<RuntimeResponse> {
+async function handleScan(request: RuntimeScanRequest, tabId?: number): Promise<RuntimeResponse> {
   try {
     const state = await getState();
     if (!state.enabled) return { ok: false, message: "Soter extension is disabled." };
@@ -152,6 +175,17 @@ async function handleScan(request: RuntimeScanRequest): Promise<RuntimeResponse>
       }).catch(() => undefined);
     }
     await setState({ latestScan: await createStorageSafeScanResult(result, request.text, request.eventType === "response" ? "response" : "prompt") });
+    // SS-9: armed *before* the verdict is handed back, so the page cannot learn it was
+    // blocked and win a race against the rule being installed. Only submit/upload gestures
+    // arm one — a paste or a context-menu scan sends nothing, so there is nothing to deny.
+    const networkBlockOutcome =
+      result.action === "block" && (request.eventType === "submit" || request.eventType === "file_upload")
+        ? await networkBlock.arm({
+            tabId,
+            url: request.url,
+            enabled: state.config.disableNetworkLayerEnforcement !== true,
+          })
+        : undefined;
     const isResponseScan = request.eventType === "response";
     const event: ExtensionAuditEvent = {
       organizationId: state.config.organizationId,
@@ -171,6 +205,13 @@ async function handleScan(request: RuntimeScanRequest): Promise<RuntimeResponse>
       occurredAt: new Date().toISOString(),
       metadata: {
         findings: result.findings.map(({ type, label, severity }) => ({ type, label, severity })),
+        // Recorded so an audit trail can distinguish "blocked at the DOM only" from "blocked
+        // at the DOM and denied at the network layer", instead of assuming the stronger one.
+        networkLayerBlock: networkBlockOutcome
+          ? networkBlockOutcome.applied
+            ? "applied"
+            : `skipped:${networkBlockOutcome.reason ?? "unknown"}`
+          : undefined,
         lineageContext: request.lineageContext ? {
           sourceDomain: request.lineageContext.sourceDomain,
           sourceApp: request.lineageContext.sourceApp,

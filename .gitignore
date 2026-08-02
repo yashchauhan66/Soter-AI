@@ -61,3 +61,11 @@ models/**/pytorch_model.bin
 
 # scratch/runtime test dirs
 /tmp/
+
+# Model-signing PRIVATE keys (scripts/ml/sign-model-artifact.ts). The trust store
+# under artifacts/security/ holds public keys and IS committed on purpose — it is
+# the operator's declaration of which signers may ship models. The private half
+# must never be.
+/.soterai/model-signing/
+*.signing-key.pem
+operator-signing-key.pem*

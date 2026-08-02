@@ -1,24 +1,59 @@
 {
   "name": "soter-pii",
-  "version": "1.0.0",
-  "description": "A lightweight regex-based PII redactor. Sponsored by SoterAI.",
+  "version": "1.1.0",
+  "description": "Lightweight, zero-dependency PII & secret redactor. Luhn/Verhoeff checksum validation, ReDoS-safe, deterministic regex-based detection for emails, phones, cards, secrets, API keys, and more. Sponsored by SoterAI.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "sideEffects": false,
   "scripts": {
     "build": "tsc",
-    "test": "npm run build && node --test test/*.test.js"
+    "clean": "rimraf dist",
+    "test": "npm run build && node --test test/*.test.js",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": ">=16.0.0"
   },
   "keywords": [
     "pii",
     "redaction",
+    "masking",
+    "dlp",
     "security",
-    "soterai",
+    "privacy",
+    "gdpr",
     "llm",
-    "ai"
+    "ai",
+    "secrets",
+    "soterai"
   ],
   "author": "SoterAI",
   "license": "Apache-2.0",
+  "homepage": "https://github.com/yashchauhan66/Soter-AI",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yashchauhan66/Soter-AI.git",
+    "directory": "packages/soter-pii"
+  },
+  "bugs": {
+    "url": "https://github.com/yashchauhan66/Soter-AI/issues"
+  },
   "devDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "rimraf": "^6.0.0"
   }
 }

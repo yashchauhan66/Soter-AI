@@ -231,6 +231,61 @@ export class BertTokenizer {
       attentionMask: attentionMask.slice(0, this.maxLength),
     };
   }
+
+  /**
+   * Content token ids with NO [CLS]/[SEP], NO padding, and NO truncation.
+   *
+   * tokenize() deliberately truncates to maxLength, which is correct for a single
+   * forward pass but means anything past the window is invisible to the model —
+   * an injection buried on page 3 of a pasted document scores as whatever the
+   * first 256 tokens looked like. Sliding-window inference needs the full stream
+   * so it can score every region; this is that stream.
+   *
+   * Uses the identical basicTokenize -> wordpiece path as tokenize(), so windows
+   * are byte-exact with what a truncated pass would have produced for the same
+   * span (the HF-parity guarantee in tests/ml is preserved).
+   */
+  encodeContentIds(text: string): number[] {
+    const ids: number[] = [];
+    for (const token of this.basicTokenize(text)) {
+      for (const id of this.wordpiece(token)) ids.push(id);
+    }
+    return ids;
+  }
+
+  /**
+   * Wrap an already-tokenized content slice as a model-ready window:
+   * [CLS] slice [SEP], trimmed to the window budget so a caller cannot overflow
+   * the tensor shape.
+   *
+   * `padTo` right-pads to a fixed length (what tokenize() does, for callers that
+   * need a static shape). Omitting it returns an exact-length window with an
+   * all-ones attention mask — preferred for sliding-window inference, where the
+   * sequence axis is dynamic and a shorter tensor is simply cheaper.
+   */
+  encodeWindow(contentIds: number[], padTo?: number): BertTokenizeResult {
+    const body = contentIds.slice(0, Math.max(0, this.windowBudget));
+    const inputIds = [this.clsTokenId, ...body, this.sepTokenId];
+    const target = padTo ?? inputIds.length;
+    const attentionMask: number[] = [];
+    for (let i = 0; i < target; i++) {
+      if (i < inputIds.length) {
+        attentionMask.push(1);
+      } else {
+        inputIds.push(this.padTokenId);
+        attentionMask.push(0);
+      }
+    }
+    return {
+      inputIds: inputIds.slice(0, target),
+      attentionMask: attentionMask.slice(0, target),
+    };
+  }
+
+  /** Number of content tokens that fit in one window (excludes [CLS]/[SEP]). */
+  get windowBudget(): number {
+    return Math.max(1, this.maxLength - 2);
+  }
 }
 
 /** Parse a HuggingFace vocab.txt (line index = token id). */

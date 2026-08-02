@@ -9,13 +9,22 @@
             "types": "./dist/index.d.ts",
             "import": "./dist/index.js",
             "require": "./dist/index.js"
-        }
+        },
+        "./package.json": "./package.json"
     },
+    "files": [
+        "dist/"
+    ],
+    "sideEffects": false,
     "scripts": {
         "build": "tsc -p tsconfig.json",
         "test": "tsx --test src/__tests__/**/*.test.ts",
         "typecheck": "tsc --noEmit",
-        "clean": "rimraf dist"
+        "clean": "rimraf dist",
+        "prepublishOnly": "npm run build"
+    },
+    "engines": {
+        "node": ">=18.0.0"
     },
     "keywords": [
         "soterai",
@@ -23,9 +32,22 @@
         "broker-client",
         "local-first"
     ],
+    "author": "SoterAI",
     "license": "BSL-1.1",
+    "homepage": "https://github.com/yashchauhan66/Soter-AI",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/yashchauhan66/Soter-AI.git",
+        "directory": "packages/ide-common"
+    },
+    "bugs": {
+        "url": "https://github.com/yashchauhan66/Soter-AI/issues"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
     "dependencies": {
-        "@soterai/ide-protocol": "file:../ide-protocol"
+        "@soterai/ide-protocol": "^0.1.0"
     },
     "devDependencies": {
         "@types/node": "22.10.2",

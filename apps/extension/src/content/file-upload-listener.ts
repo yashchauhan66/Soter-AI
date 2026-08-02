@@ -18,6 +18,16 @@ export function installFileUploadListener() {
         chrome.runtime.sendMessage({ type: "SOTER_REQUEST_APPROVAL", text: names.join("\n"), url: location.href });
         return null;
       },
+      onTamper: (detail) => {
+        chrome.runtime.sendMessage({
+          type: "SOTER_AUDIT_BYPASS",
+          text: names.join("\n"),
+          url: location.href,
+          action: response.result.action,
+          justification: `overlay tamper detected: ${detail}`,
+          dismissedOnly: true,
+        });
+      },
     });
   }, true);
 }

@@ -1,0 +1,25 @@
+{
+  "evalType": "100+ Language — ONNX (ML) + deterministic rules, honestly separated",
+  "date": "2026-08-02",
+  "model": "ml-classifier-v4 (multilingual MiniLM fine-tune)",
+  "reproduce": "npx tsx scripts/eval/eval-100lang.ts",
+  "requires": [
+    "models/ml-classifier-v4/model.onnx",
+    "models/ml-classifier-v4/model.onnx.manifest.json (signed via scripts/ml/sign-model-artifact.ts)",
+    "artifacts/security/model-trust-store.json"
+  ],
+  "languagesEvaluatedAttack": 79,
+  "results": {
+    "onnxAlonePass": 68,
+    "rulesAlonePass": 19,
+    "unionPass": 79,
+    "attackMisses": 0,
+    "recallPctOnnxAlone": 86.1,
+    "recallPctRulesAlone": 24.1,
+    "recallPctUnion": 100.0,
+    "benignOnnxOk": "1/10",
+    "benignRulesOk": "10/10"
+  },
+  "honestScopeNote": "One canonical 'ignore-previous-instructions / obey only me' attack per language across 79 languages; 10 benign greeting controls. Union = ONNX(attackProbability>=0.5) OR MultilingualClassifier(riskType non-SAFE). ONNX v4 is English-calibrated: 86.1% recall but flags 9/10 non-English benign texts (multilingual-transfer FP, a known limitation now disclosed in the model card). Deterministic rules: 24.1% recall, 0/10 FP by construction. Production non-English detection rules on the rules-union path; ONNX advises via mlAugment and never auto-blocks low-resource non-English on its own. This is a locally-witnessed self-corpus result — NOT independently witnessed.",
+  "honest": true
+}

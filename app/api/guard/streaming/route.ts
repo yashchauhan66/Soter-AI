@@ -13,6 +13,7 @@ import { DEFAULT_RPM } from "@/lib/guard/constants";
 import { evaluateGovernance, logAiUsageEvent } from "@/lib/usage-governance";
 import { dispatchGovernanceEnforcement } from "@/lib/usage-governance/notifications";
 import { scheduleGuardResultPersistence } from "@/lib/guard/scheduledPersistence";
+import { guardSourceSchema } from "@/lib/validations";
 import type { GuardResult } from "@/lib/guard/types";
 
 export const runtime = "nodejs";
@@ -32,6 +33,8 @@ const streamingGuardSchema = z.object({
   sessionId: z.string().max(200).optional(),
   providerName: z.string().trim().max(100).optional(),
   modelName: z.string().trim().max(100).optional(),
+  /** Optional provenance claim — see lib/guard/decisionEngine.ts. Omitting it means USER. */
+  source: guardSourceSchema.optional(),
   metadata: z.record(z.unknown()).optional(),
 });
 
@@ -216,6 +219,7 @@ export async function POST(request: Request) {
     }
 
     const guardFn = body.direction === "INPUT" ? runInputGuard : runOutputGuard;
+    const decisionContext = body.source ? { provenance: body.source } : undefined;
     const chunks: StreamingGuardChunk[] = [];
     let cumulativeText = "";
     let finalResult: GuardResult | null = null;
@@ -225,8 +229,8 @@ export async function POST(request: Request) {
       const textChunks = chunkText(body.content, body.chunkSize);
       for (let i = 0; i < textChunks.length; i++) {
         cumulativeText += (i > 0 ? " " : "") + textChunks[i];
-        const baseline = guardFn(cumulativeText);
-        const result = applyPolicy(cumulativeText, baseline, policy, body.direction);
+        const baseline = guardFn(cumulativeText, decisionContext);
+        const result = applyPolicy(cumulativeText, baseline, policy, body.direction, decisionContext);
         finalResult = result;
         chunks.push({
           chunkIndex: i,
@@ -251,8 +255,8 @@ export async function POST(request: Request) {
       }
     } else {
       // Standard mode — single aggregated result
-      const baseline = guardFn(body.content);
-      const result = applyPolicy(body.content, baseline, policy, body.direction);
+      const baseline = guardFn(body.content, decisionContext);
+      const result = applyPolicy(body.content, baseline, policy, body.direction, decisionContext);
       finalResult = result;
       chunks.push({
         chunkIndex: 0,

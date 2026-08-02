@@ -76,6 +76,9 @@ IT admins can deploy through Chrome/Edge enterprise policy:
 | `sidePanel` | Shows enrollment, latest scan, response scanning, and privacy status. |
 | `storage` | Stores enrollment state, policy cache, hashes, redacted previews, and scan metadata locally. |
 | `alarms` | Schedules policy sync, heartbeat, and lockdown refresh. |
+| `declarativeNetRequestWithHostAccess` | After a `block` decision, denies that one tab's own `POST`/`PUT`/`PATCH` requests to that one already-declared host for a few seconds, so the page cannot re-send a blocked prompt from its own script. No static rule list, no rule without a block decision, no effect on `GET` or page loading, and request bodies are never read (the API cannot read them). Admins can disable the layer with the `disableNetworkLayerEnforcement` managed policy. |
+
+The host-scoped variant is requested deliberately in place of the broad `declarativeNetRequest`, which is refused by `tests/extension/manifest-invariants.test.ts` (MF-506/MF-507) so the extension can never act outside its declared hosts.
 
 Content scripts are declared statically in `manifest.json` and scoped to supported AI hosts. There are no optional permissions in the store build.
 

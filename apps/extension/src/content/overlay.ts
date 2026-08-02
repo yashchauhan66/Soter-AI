@@ -1,5 +1,6 @@
 import type { ScanResult } from "../lib/types";
 import { remediationAffordances } from "../lib/scanner";
+import { createOverlaySentinel, type OverlaySentinel } from "./overlay-sentinel";
 
 interface OverlayOptions {
   result: ScanResult;
@@ -17,18 +18,158 @@ interface OverlayOptions {
   /** Fired for require_justification self-service bypass. Handles its own audit + replay. */
   onBypass?: (justification: string) => void;
   onCheckStatus?: (approvalId: string) => Promise<{ status: string; allowed?: boolean }>;
+  /**
+   * SS-6: fired when the page removed, re-parented or neutralised the enforcement overlay.
+   * Rate-limited by the sentinel. The overlay itself stays free of any `chrome.*` dependency,
+   * so the caller decides how a tamper attempt is recorded.
+   */
+  onTamper?: (detail: string) => void;
 }
 
 export function showSoterOverlay(options: OverlayOptions) {
-  document.querySelector("[data-soter-overlay]")?.remove();
+  renderSoterOverlay(options);
+}
+
+/**
+ * SS-6: the host's inline style, re-applied with `!important` on every integrity check.
+ *
+ * Author *inline* `!important` outranks an author stylesheet's `!important`, so this is what a
+ * page's `[data-soter-overlay] { display: none !important }` loses to. Set through
+ * `setProperty(..., "important")` rather than `host.style.x =`, which cannot express priority.
+ */
+const HOST_STYLE: ReadonlyArray<readonly [string, string]> = [
+  ["position", "fixed"],
+  ["inset", "0"],
+  ["z-index", "2147483647"],
+  ["display", "block"],
+  ["visibility", "visible"],
+  ["opacity", "1"],
+  ["pointer-events", "auto"],
+  ["transform", "none"],
+];
+
+/** Backstop cadence for anything the observers cannot see. Cleared when the overlay closes. */
+const OVERLAY_TICK_MS = 500;
+
+interface WatchdogState {
+  host: HTMLElement;
+  options: OverlayOptions;
+  sentinel: OverlaySentinel;
+  observers: MutationObserver[];
+  ticker: ReturnType<typeof setInterval> | null;
+}
+
+/** One overlay at a time, so a new verdict retires the previous watchdog rather than racing it. */
+let activeWatchdog: WatchdogState | null = null;
+
+/**
+ * Intervals owned by the current overlay (approval polling). Tracked at module scope because a
+ * watchdog re-mount replaces the rendered tree, and a poll left running against a detached
+ * shadow root would keep talking to the broker for its full five-minute timeout.
+ */
+let activeTimers: Array<ReturnType<typeof setInterval>> = [];
+
+function clearActiveTimers() {
+  for (const timer of activeTimers) clearInterval(timer);
+  activeTimers = [];
+}
+
+function createOverlayHost(): HTMLElement {
   const host = document.createElement("div");
+  applyHostIntegrity(host);
+  return host;
+}
+
+function applyHostIntegrity(host: HTMLElement) {
   host.setAttribute("data-soter-overlay", "true");
-  host.style.position = "fixed";
-  host.style.inset = "0";
-  host.style.zIndex = "2147483647";
+  for (const [property, value] of HOST_STYLE) {
+    host.style.setProperty(property, value, "important");
+  }
+  // A `z-index` tie resolves in DOM order, so being last is part of being visible.
+  if (host.parentElement === document.documentElement && document.documentElement.lastElementChild !== host) {
+    document.documentElement.appendChild(host);
+  }
+}
+
+function hostIsIntact(host: HTMLElement): boolean {
+  if (host.getAttribute("data-soter-overlay") !== "true") return false;
+  if (document.documentElement.lastElementChild !== host) return false;
+  return HOST_STYLE.every(
+    ([property, value]) =>
+      host.style.getPropertyValue(property) === value && host.style.getPropertyPriority(property) === "important",
+  );
+}
+
+function teardownWatchdog() {
+  if (!activeWatchdog) return;
+  activeWatchdog.sentinel.stop();
+  for (const observer of activeWatchdog.observers) observer.disconnect();
+  if (activeWatchdog.ticker !== null) clearInterval(activeWatchdog.ticker);
+  activeWatchdog = null;
+}
+
+function observeHost(state: WatchdogState) {
+  for (const observer of state.observers) observer.disconnect();
+  const react = () => void state.sentinel.check();
+  // The host is a direct child of <html>, so no `subtree`: the observer is woken by changes
+  // to that one child list rather than by every mutation the page makes to its own DOM.
+  const structure = new MutationObserver(react);
+  structure.observe(document.documentElement, { childList: true });
+  const attributes = new MutationObserver(react);
+  attributes.observe(state.host, { attributes: true, attributeFilter: ["style", "data-soter-overlay", "class", "hidden"] });
+  state.observers = [structure, attributes];
+  if (state.ticker === null) state.ticker = setInterval(react, OVERLAY_TICK_MS);
+}
+
+function installOverlayWatchdog(host: HTMLElement, options: OverlayOptions, inherited?: OverlaySentinel) {
+  if (inherited && activeWatchdog && activeWatchdog.sentinel === inherited) {
+    // A re-mount keeps the same sentinel, so the repair budget spans the whole attack rather
+    // than resetting itself every time the page removes the overlay again.
+    activeWatchdog.host = host;
+    activeWatchdog.options = options;
+    observeHost(activeWatchdog);
+    return;
+  }
+  const state = { host, options, observers: [], ticker: null } as unknown as WatchdogState;
+  state.sentinel = createOverlaySentinel({
+    isMounted: () => state.host.isConnected && state.host.parentElement === document.documentElement,
+    isIntact: () => hostIsIntact(state.host),
+    restoreIntegrity: () => applyHostIntegrity(state.host),
+    remount: () => renderSoterOverlay(state.options, state.sentinel),
+    now: () => Date.now(),
+    onTamper: (detail) => state.options.onTamper?.(detail),
+  });
+  activeWatchdog = state;
+  observeHost(state);
+}
+
+function renderSoterOverlay(options: OverlayOptions, inherited?: OverlaySentinel) {
+  if (inherited && activeWatchdog?.sentinel === inherited) {
+    // Re-parented rather than removed: drop the old host explicitly, because the attribute it
+    // is found by may have been the thing the page stripped.
+    activeWatchdog.host.remove();
+  } else {
+    teardownWatchdog();
+  }
+  document.querySelector("[data-soter-overlay]")?.remove();
+  clearActiveTimers();
+  const host = createOverlayHost();
   document.documentElement.appendChild(host);
 
-  const shadow = host.attachShadow({ mode: "open" });
+  /** Closes the overlay for a legitimate reason: the watchdog must not fight the user. */
+  const close = () => {
+    clearActiveTimers();
+    teardownWatchdog();
+    host.remove();
+  };
+
+  // SS-6: `closed`, so `host.shadowRoot` is `null` for the page and the verdict, the redacted
+  // preview and the justification field are unreadable from page script. Content scripts run
+  // in an isolated world with their own built-ins, so a page that patches
+  // `Element.prototype.attachShadow` does not intercept this call (proved at runtime by
+  // RT-709). What the page *can* still do is remove or neutralise the host in the shared
+  // light DOM, which is what the watchdog installed at the end of this function answers.
+  const shadow = host.attachShadow({ mode: "closed" });
   const result = options.result;
   const detected = result.detectedDataTypes.length ? result.detectedDataTypes.join(", ") : "None";
   const action = result.action;
@@ -197,7 +338,7 @@ export function showSoterOverlay(options: OverlayOptions) {
     if (action === "block") {
       options.onDismissAudited?.();
     }
-    host.remove();
+    close();
   });
 
   shadow.querySelector("[data-action='copy']")?.addEventListener("click", () => {
@@ -206,7 +347,7 @@ export function showSoterOverlay(options: OverlayOptions) {
 
   shadow.querySelector("[data-action='replace']")?.addEventListener("click", () => {
     options.onReplace?.();
-    host.remove();
+    close();
   });
 
   // Handle request approval polling
@@ -257,10 +398,10 @@ export function showSoterOverlay(options: OverlayOptions) {
             if (proceeded === false) {
               getSpinnerMsg().textContent = "Authorization could not be claimed. Submission blocked.";
               getSpinnerMsg().style.color = "#dc2626";
-              setTimeout(() => host.remove(), 2500);
+              setTimeout(close, 2500);
             } else {
               getSpinnerMsg().textContent = "Authorized. Submitting prompt...";
-              setTimeout(() => host.remove(), 1000);
+              setTimeout(close, 1000);
             }
           } else if (statusResult.status === "DENIED") {
             clearInterval(interval);
@@ -273,6 +414,7 @@ export function showSoterOverlay(options: OverlayOptions) {
             }, 3000);
           }
         }, 3000);
+        activeTimers.push(interval);
 
       } catch (err) {
         alert(err instanceof Error ? err.message : "Approval request failed.");
@@ -293,9 +435,12 @@ export function showSoterOverlay(options: OverlayOptions) {
         return;
       }
       options.onBypass?.(justificationVal);
-      host.remove();
+      close();
     });
   }
+
+  // Last, so the watchdog only ever guards a fully rendered overlay.
+  installOverlayWatchdog(host, options, inherited);
 }
 
 function escapeHtml(value: string) {

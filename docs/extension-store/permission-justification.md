@@ -44,6 +44,26 @@ Exact required extension permissions:
 - `sidePanel`: shows enrollment, latest scan, response scan, and privacy status without injecting extra UI into the page.
 - `storage`: stores policy cache, enrollment status, hashes, scan metadata, and redacted previews.
 - `alarms`: schedules policy sync, heartbeat, and lockdown refresh.
+- `declarativeNetRequestWithHostAccess`: after the extension has already decided to block a
+  submission on a configured AI destination, it installs one short-lived rule that denies that
+  one tab's own `POST`/`PUT`/`PATCH` requests to that same site for a few seconds. Without it, a
+  page can re-issue the submission from its own script after the block is shown. The host-scoped
+  variant is requested deliberately in place of the broad `declarativeNetRequest`, so the
+  extension can only act on sites it already has a host permission for. No static rule list is
+  shipped, no rule is created without a block decision, rules are removed when the short window
+  ends, and `GET` requests are never affected, so page loading is unchanged.
+
+## Network Request Blocking
+
+The extension does not filter, redirect, or inspect general browsing traffic, and it declares no
+static rule list. Rules are created only at the moment a scan on a configured AI destination
+returns a block decision, and each rule is limited in five ways: it applies to the one tab the
+submission came from, only to the site being submitted to, only to requests that send data
+(`POST`, `PUT`, `PATCH`), only for a few seconds, and only up to a small fixed number of rules at
+a time. Requests are denied, never modified or re-routed, and no request content is read — the
+Chrome API cannot read request bodies. An administrator can turn this layer off entirely with the
+`disableNetworkLayerEnforcement` managed policy for internal AI portals that are incompatible
+with it.
 
 ## Storage
 

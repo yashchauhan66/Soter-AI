@@ -165,6 +165,25 @@ export function remediationAffordances(result: ScanResult): {
   return { canReplace: true, canSubmitSafeText: true, canSubmitOriginal: !shouldPreventSubmit(result.action), canCopyPreview: true };
 }
 
+/**
+ * SS-7: whether a previously granted approval may release *this* decision.
+ *
+ * The interceptor now always scans before it looks at its ledger, so this is asked against
+ * the decision that exists at submit time rather than the one that existed when the user was
+ * approved. That ordering is the whole control: an approval is authority over a content
+ * decision, never authority over a state in which the extension does not trust its policy.
+ *
+ * `block` therefore never releases — which covers ordinary content blocks, hard enforcement,
+ * emergency lockdown and every fail-closed reason at once, because they all land on `block`.
+ * `require_approval` / `require_justification` do release, since that is exactly the decision
+ * the user obtained authority for. Actions that were never intercepted are unaffected.
+ */
+export function canApprovalRelease(result: ScanResult): boolean {
+  if (isFailClosedBlock(result)) return false;
+  if (result.action === "block") return false;
+  return shouldPreventSubmit(result.action) || result.hasFindings;
+}
+
 interface FailClosedDecision {
   id: string;
   name: string;

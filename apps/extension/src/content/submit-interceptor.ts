@@ -1,25 +1,24 @@
-import { remediationAffordances, shouldPreventSubmit } from "../lib/scanner";
+import { canApprovalRelease, isFailClosedBlock, remediationAffordances, shouldPreventSubmit } from "../lib/scanner";
 import type { RuntimeResponse } from "../lib/types";
+import { createApprovalLedger, createReplayBypass, type ReplayBypass } from "../lib/approval-ledger";
 import type { AiSiteAdapter, PromptTarget } from "./adapters/generic";
 import { currentPromptTarget } from "./dom-observer";
 import { showSoterOverlay } from "./overlay";
 import { getFreshLineageContext } from "../lib/lineage-context";
 
 export function installSubmitInterceptor(adapter: AiSiteAdapter) {
-  const replayBypass = new WeakSet<HTMLElement>();
-  const approvedPrompts = new Set<string>();
+  const replayBypass = createReplayBypass<HTMLElement>();
+  const approvals = createApprovalLedger();
 
   const handleIntent = async (event: Event, target: PromptTarget | null) => {
     if (!target) return;
     const text = target.getText().trim();
     if (!text) return;
 
-    // Check if this prompt has been approved or bypassed
-    if (approvedPrompts.has(text)) {
-      replay(event, replayBypass, adapter);
-      return;
-    }
-
+    // SS-7: the gesture is stopped and the text is scanned *first*, unconditionally. The
+    // previous `approvedPrompts.has(text)` short-circuit sat above this line, so an approval
+    // granted once kept releasing that exact string with no scan at all — through a policy
+    // change, an emergency lockdown, or a tampered bundle arriving afterwards.
     event.preventDefault();
     event.stopImmediatePropagation();
 
@@ -38,6 +37,17 @@ export function installSubmitInterceptor(adapter: AiSiteAdapter) {
       return;
     }
 
+    // Every outstanding grant was issued against a policy the extension has since stopped
+    // trusting, so none of them may outlive that discovery.
+    if (isFailClosedBlock(result)) approvals.purge();
+
+    // A live grant releases this submission only if the kernel says this decision is
+    // releasable. The order matters: an unreleasable decision must not spend the grant.
+    if (canApprovalRelease(result) && (await approvals.consume({ text, origin: location.origin }))) {
+      replay(event, replayBypass, adapter);
+      return;
+    }
+
     showSoterOverlay({
       result,
       onReplace: () => {
@@ -49,8 +59,9 @@ export function installSubmitInterceptor(adapter: AiSiteAdapter) {
         if (!remediationAffordances(result).canReplace) return;
         const safeText = result.rewrittenSafeText || result.redactedText;
         target.setText(safeText);
-        approvedPrompts.add(safeText);
-        // Automatically replay submit event
+        // No grant is recorded for the safe variant, and none is needed: the redacted text
+        // re-scans clean, so if the synthetic click below is swallowed the user's next
+        // genuine click is released by a fresh scan rather than by a stored token.
         replay(event, replayBypass, adapter);
       },
       onCopy: () => void navigator.clipboard?.writeText(result.rewrittenSafeText || result.redactedText),
@@ -76,27 +87,27 @@ export function installSubmitInterceptor(adapter: AiSiteAdapter) {
           );
         });
       },
-      onApproved: () => {
-        // Claim the one-time approval server-side. Only whitelist + replay the
-        // ORIGINAL prompt if the broker actually honors the claim. This closes
-        // the hole where a client could replay on an unhonored/spoofed claim.
-        return new Promise<boolean>((resolve) => {
+      onApproved: async () => {
+        // Claim the one-time approval server-side. Only grant + replay the ORIGINAL prompt
+        // if the broker actually honors the claim. This closes the hole where a client could
+        // replay on an unhonored/spoofed claim.
+        const allowed = await new Promise<boolean>((resolve) => {
           chrome.runtime.sendMessage(
             {
               type: "SOTER_CLAIM_APPROVAL",
               requestId: result.policy?.auditMetadata?.approvalId || "",
               destination: location.hostname,
             },
-            (res: any) => {
-              const allowed = res?.allowed === true;
-              if (allowed) {
-                approvedPrompts.add(text);
-                replay(event, replayBypass, adapter);
-              }
-              resolve(allowed);
-            }
+            (res: any) => resolve(res?.allowed === true),
           );
         });
+        if (!allowed) return false;
+        // SS-7: bound to the origin the claim named, spent by the first submission that uses
+        // it — the replay below, or one deliberate re-click if the site re-rendered its send
+        // button and swallowed the synthetic one — and expiring either way.
+        await approvals.grant({ text, origin: location.origin, kind: "admin_approval" });
+        replay(event, replayBypass, adapter);
+        return true;
       },
       onDismissAudited: () => {
         // Hard-enforcement block dismissed: audit the override attempt. Do NOT
@@ -110,8 +121,21 @@ export function installSubmitInterceptor(adapter: AiSiteAdapter) {
           dismissedOnly: true,
         });
       },
+      onTamper: (detail) => {
+        // SS-6: a page that removes or neutralises the verdict is attempting an override, so
+        // it is audited on the existing bypass channel with `dismissedOnly` — nothing was
+        // submitted, and no new message type or network surface is introduced for it.
+        chrome.runtime.sendMessage({
+          type: "SOTER_AUDIT_BYPASS",
+          text,
+          url: location.href,
+          action: result.action,
+          justification: `overlay tamper detected: ${detail}`,
+          dismissedOnly: true,
+        });
+      },
       onBypass: (justification) => {
-        // require_justification self-service bypass: audit, whitelist, and replay.
+        // require_justification self-service bypass: audit, grant, and replay.
         chrome.runtime.sendMessage({
           type: "SOTER_AUDIT_BYPASS",
           text,
@@ -119,16 +143,19 @@ export function installSubmitInterceptor(adapter: AiSiteAdapter) {
           action: result.action,
           justification
         });
-        approvedPrompts.add(text);
-        replay(event, replayBypass, adapter);
+        void approvals
+          .grant({ text, origin: location.origin, kind: "self_justification" })
+          .then(() => replay(event, replayBypass, adapter));
       }
     });
   };
 
   document.addEventListener("click", (event) => {
     const element = event.target instanceof Element ? event.target.closest("button, [role='button'], input[type='submit']") : null;
-    if (element instanceof HTMLElement && replayBypass.has(element)) {
-      replayBypass.delete(element);
+    // SS-12: single-use and time-boxed. A token that was armed but never consumed (the site
+    // re-rendered the button, the synthetic click was swallowed) expires instead of leaving
+    // that element permanently unscanned, and falls through to the scan below.
+    if (element instanceof HTMLElement && replayBypass.consume(element)) {
       return;
     }
     if (element && adapter.isSubmitControl(element)) void handleIntent(event, currentPromptTarget(adapter));
@@ -166,7 +193,7 @@ function sendScan(text: string, eventType: "submit" | "paste" | "scan" | "contex
   });
 }
 
-function replay(event: Event, replayBypass: WeakSet<HTMLElement>, adapter?: AiSiteAdapter) {
+function replay(event: Event, replayBypass: ReplayBypass<HTMLElement>, adapter?: AiSiteAdapter) {
   const target = event.target;
   if (!(target instanceof HTMLElement)) return;
 
@@ -175,7 +202,7 @@ function replay(event: Event, replayBypass: WeakSet<HTMLElement>, adapter?: AiSi
       const submitControls = Array.from(document.querySelectorAll("button, [role='button'], input[type='submit']"));
       const submitBtn = submitControls.find((btn) => adapter.isSubmitControl(btn)) as HTMLElement;
       if (submitBtn) {
-        replayBypass.add(submitBtn);
+        replayBypass.arm(submitBtn);
         submitBtn.click();
         return;
       }
@@ -191,6 +218,6 @@ function replay(event: Event, replayBypass: WeakSet<HTMLElement>, adapter?: AiSi
     }
   }
 
-  replayBypass.add(target);
+  replayBypass.arm(target);
   setTimeout(() => target.click(), 0);
 }

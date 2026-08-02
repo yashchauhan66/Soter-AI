@@ -75,6 +75,12 @@
       "type": "boolean",
       "default": false
     },
+    "disableNetworkLayerEnforcement": {
+      "title": "Disable Network-Layer Enforcement",
+      "description": "When true, a block decision is enforced at the page-submit layer only and the short tab-scoped declarativeNetRequest deny window is not installed. Leave false unless an internal AI portal is incompatible with it.",
+      "type": "boolean",
+      "default": false
+    },
     "policyTrustedKeys": {
       "title": "Trusted Policy Signing Keys",
       "description": "Public keys trusted to sign org policy bundles. Base64 SPKI for ECDSA P-256. Private keys must never be placed here.",

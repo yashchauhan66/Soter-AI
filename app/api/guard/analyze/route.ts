@@ -34,7 +34,11 @@ export async function POST(request: Request) {
     // configured, and the precision gate keeps its benign FPR flat. So the public
     // analyzer now gets the same ML-boosted recall as /api/guard/input.
     const result = await augmentWithLlmJudge(
-      await augmentWithMl(analyzeText(body.text, body.direction), body.text, body.direction),
+      await augmentWithMl(
+        analyzeText(body.text, body.direction, body.source ? { provenance: body.source } : undefined),
+        body.text,
+        body.direction,
+      ),
       body.text,
       body.direction,
     );

@@ -207,11 +207,11 @@ export interface GatewayDecision {
 
 // ─── Transport Types ────────────────────────────────────────────────────────
 
-export type MCPTransport = "stdio" | "http" | "sse";
+export type MCPTransport = "stdio" | "http" | "sse" | "ws";
 
 export interface MCPEndpoint {
   transport: MCPTransport;
-  /** For stdio: the command to execute. For http/sse: the URL. */
+  /** For stdio: the command to execute. For http/sse/ws: the URL. */
   address: string;
   /** Args for stdio transport. */
   args?: string[];

@@ -193,12 +193,17 @@ export async function POST(request: Request) {
       }
     }
 
+    // `body.source` is the caller's claim about where this text came from. It only
+    // ever raises the outcome (instruction-bearing signals in non-USER content are
+    // held rather than rewritten), so an integration that omits it keeps exactly the
+    // behaviour it has today.
+    const decisionContext = body.source ? { provenance: body.source } : undefined;
     const baseline = await augmentWithLlmJudge(
-      await augmentWithMl(runInputGuard(body.message), body.message, "INPUT"),
+      await augmentWithMl(runInputGuard(body.message, decisionContext), body.message, "INPUT"),
       body.message,
       "INPUT",
     );
-    let result = applyPolicy(body.message, baseline, policy, "INPUT");
+    let result = applyPolicy(body.message, baseline, policy, "INPUT", decisionContext);
     // Crescendo detection: when the caller provides a sessionId, evaluate the
     // session's rolling escalation pressure and hard-block turns that belong
     // to a gradual multi-turn attack, even if this turn looks benign alone.

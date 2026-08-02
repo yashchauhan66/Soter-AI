@@ -1,34 +1,68 @@
 {
     "name": "@soterai/cli",
     "version": "0.1.0",
-    "description": "soterai-guard CLI: a cross-platform local-first fallback so any editor can scan, redact, and manage the Local AI Broker without a native plugin.",
+    "description": "SoterAI CLI — cross-platform local-first AI security guard. Scan, redact, and manage the Local AI Broker from any editor without a native plugin.",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "bin": {
         "soterai": "dist/cli.js"
     },
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "require": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist/",
+        "README.md",
+        "LICENSE",
+        "CHANGELOG.md"
+    ],
+    "sideEffects": false,
     "scripts": {
         "build": "tsc -p tsconfig.json",
+        "clean": "rimraf dist",
         "test": "tsx --test src/__tests__/**/*.test.ts",
         "typecheck": "tsc --noEmit",
-        "clean": "rimraf dist",
-        "start": "node dist/cli.js"
+        "start": "node dist/cli.js",
+        "prepublishOnly": "npm run build"
+    },
+    "engines": {
+        "node": ">=18.0.0"
     },
     "keywords": [
         "soterai",
         "ai-security",
         "cli",
         "local-first",
-        "redaction"
+        "redaction",
+        "prompt-injection",
+        "llm"
     ],
+    "author": "SoterAI",
     "license": "BSL-1.1",
+    "homepage": "https://github.com/yashchauhan66/Soter-AI",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/yashchauhan66/Soter-AI.git",
+        "directory": "packages/soterai-cli"
+    },
+    "bugs": {
+        "url": "https://github.com/yashchauhan66/Soter-AI/issues"
+    },
     "dependencies": {
-        "@soterai/ide-common": "file:../ide-common"
+        "@soterai/ide-common": "^0.1.0",
+        "soter-pii": "^1.1.0"
     },
     "devDependencies": {
         "@types/node": "22.10.2",
         "typescript": "^5.9.3",
         "tsx": "4.22.4",
         "rimraf": "^6.0.0"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

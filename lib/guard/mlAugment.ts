@@ -22,6 +22,10 @@
  *     cost. A rules-driven BLOCK is always preserved.
  *   - Fail-open: any error (model missing, inference throw) leaves the base
  *     result untouched. The guard never breaks because ML is unavailable.
+ *   - Fail-open is RECORDED, never silent: every attempt reports to
+ *     lib/guard/guardHealth.ts, so "configured as enforce but the model never
+ *     loaded" shows up in /api/health and fails `npm run ml:health` instead of
+ *     masquerading as a protected request.
  *
  * The model + confidence floor are validated offline against a frozen held-out
  * set (scripts/guard-benchmark/ml-ensemble-heldout.ts) before ENFORCE is used.
@@ -30,6 +34,7 @@
 import type { GuardResult, GuardFinding, RiskType, GuardDirection } from "./types";
 import { createOnnxBackendFromEnv, ONNXClassifierBackend } from "../ml/onnxBackend";
 import { classifySemantic } from "./semanticClassifier";
+import { recordMlAugmentOutcome } from "./guardHealth";
 import type { MLLabel } from "@prisma/client";
 
 export type MlAugmentMode = "off" | "shadow" | "enforce";
@@ -64,6 +69,28 @@ const INPUT_RELIABLE_LABELS = new Set<string>([
 // The model may escalate only when the semantic classifier does NOT judge the
 // text closer to a benign prototype than to any attack prototype. Tunable via
 // SOTERAI_ML_SEMANTIC_MARGIN; 0.0 measured 0% validation-benign FPR.
+//
+// WHY THIS VETO IS NOT CONDITIONED ON MODEL CONFIDENCE
+//   It is tempting to let a near-certain model outrank a prototype heuristic: on the
+//   frozen untuned corpus this gate is the only thing still refusing one real
+//   jailbreak, and v4 scores it P(attack) 0.9817. Measured (npm run ml:verify:v4
+//   --explain, 2026-08-01) the scores do not support it — they are in the wrong
+//   order:
+//     v4  jailbreak the gate refuses ...................... P(attack) 0.9817
+//     v4  "Turn these bullet points into a concise
+//          executive summary." (benign, gate refuses it) ... P(attack) 0.9843
+//   Any threshold that admits the attack admits that benign text first, so an
+//   attackProbability override cannot be free — it is not a tuning question, the
+//   axis simply does not separate the two. On v3 the picture is worse: its ML-caused
+//   control false positives are ordinary programming answers at P(attack) 0.87-0.9999
+//   ("To center a div with flexbox..." PROMPT_INJECTION conf 0.998 / 0.9995), i.e.
+//   its confidence carries no information about whether the text is an attack, and
+//   this gate is all that holds them out.
+//   Loosening the margin globally instead (-0.1) does recover the attack on v4
+//   (54/54, control FPR 1.0%->1.3%) but costs v3 real precision (held-out benign
+//   0->1/44, control 2.7%->3.7%), and 2-vs-3 false positives in 300 is noise. The
+//   miss needs better attack-prototype coverage (or a model that separates
+//   metaphorical jailbreaks from summarisation requests), not a looser threshold.
 function resolveSemanticMarginGate(): number {
   const raw = Number(process.env.SOTERAI_ML_SEMANTIC_MARGIN ?? "0");
   return Number.isFinite(raw) ? raw : 0;
@@ -131,11 +158,36 @@ export function __resetMlBackendForTests(): void {
   cachedBackend = undefined;
 }
 
+/**
+ * Which gate stopped a non-SAFE model prediction from escalating. Recorded so a
+ * miss is attributable: "the model saw it and the label filter dropped it" and
+ * "the model abstained" are different bugs with different fixes, and without this
+ * both look identical to an operator (and to the benchmark harness) as a plain
+ * non-detection.
+ */
+export type MlGateReason =
+  /** The decided label was SAFE — nothing to escalate. */
+  | "safe-label"
+  /** Calibration abstained. NOT a safe verdict: the model declined to decide. */
+  | "abstention"
+  /** Below ML_ONNX_CONFIDENCE_FLOOR and below the attack-probability floor. */
+  | "confidence-floor"
+  /** Label class is not trusted to escalate an INPUT (see INPUT_RELIABLE_LABELS). */
+  | "label-family"
+  /** The dependency-free semantic classifier judged the text closer to benign. */
+  | "semantic-benign";
+
 export interface MlAugmentDetail {
   mode: MlAugmentMode;
   ran: boolean;
   predictedLabel?: string;
   confidence?: number;
+  /** 1 - P(SAFE), when the backend surfaces it. The primary security score on v4. */
+  attackProbability?: number;
+  /** Calibration declined to decide. Reported because it must never read as "safe". */
+  abstained?: boolean;
+  /** Set when the model predicted an attack but a gate refused to act on it. */
+  gatedBy?: MlGateReason;
   wouldEscalate?: boolean;
   escalated?: boolean;
   floor?: number;
@@ -155,7 +207,15 @@ export async function augmentWithMl(
   if (mode === "off") return base;
 
   const backend = getBackend();
-  if (!backend) return base;
+  if (!backend) {
+    // Configured to run but there is nothing to run. Record it: this is the
+    // silent-downgrade case, and the request is being served by rules alone.
+    const error = process.env.ML_ONNX_MODEL_PATH
+      ? "ML backend could not be constructed from the environment"
+      : "ML_ONNX_MODEL_PATH is not set, so no model can load";
+    recordMlAugmentOutcome({ ran: false, error });
+    return withMlMetadata(base, { mode, ran: false, error });
+  }
 
   // 0.9 is the measured operating point for v3
   // (scripts/guard-benchmark/ml-ensemble-gate-benchmark.ts): recall 85.7% at
@@ -171,6 +231,7 @@ export async function augmentWithMl(
   let detail: MlAugmentDetail = { mode, ran: false, floor };
   try {
     const inference = await backend.infer(text, direction);
+    recordMlAugmentOutcome({ ran: true });
     const label = inference.predictedLabel;
     const raw = (inference.raw ?? {}) as {
       attackProbability?: number;
@@ -200,11 +261,32 @@ export async function augmentWithMl(
       confident &&
       passesPrecisionGate(effectiveLabel, direction, text);
 
+    // Which gate refused, in the same order the decision above applies them. Pure
+    // re-reads of values already computed — no second classifySemantic call, and no
+    // influence on isAttack. Attribution only: a miss that came from abstention and
+    // a miss that came from the label filter need different fixes.
+    const labelTrusted = direction !== "INPUT" || INPUT_RELIABLE_LABELS.has(effectiveLabel);
+    const gatedBy: MlGateReason | undefined = isAttack
+      ? undefined
+      : effectiveLabel === "SAFE"
+        ? "safe-label"
+        : abstained
+          ? "abstention"
+          : !confident
+            ? "confidence-floor"
+            : !labelTrusted
+              ? "label-family"
+              : "semantic-benign";
+
     detail = {
       mode,
       ran: true,
       predictedLabel: effectiveLabel,
       confidence: Number(inference.confidence.toFixed(4)),
+      attackProbability:
+        typeof attackProb === "number" ? Number(attackProb.toFixed(4)) : undefined,
+      abstained,
+      gatedBy,
       floor,
       wouldEscalate: isAttack && !PROTECTIVE_ACTIONS.has(base.action),
       escalated: false,
@@ -262,6 +344,7 @@ export async function augmentWithMl(
     );
   } catch (error) {
     detail.error = (error as Error).message ?? "ml inference failed";
+    recordMlAugmentOutcome({ ran: false, error: detail.error });
     return withMlMetadata(base, detail); // fail open
   }
 }

@@ -3,6 +3,7 @@
  */
 export { MCPJsonRpcGateway, type GatewayDeps } from "./MCPJsonRpcGateway";
 export { MCPServer, type MCPServerOptions } from "./MCPServer";
+export { MCPWebSocketServer, type MCPWebSocketServerOptions } from "./MCPWebSocketServer";
 export { SessionManager, type SessionManagerOptions } from "./MCPSessionManager";
 export { ApprovalManager, type ApprovalManagerOptions, type ApprovalScope } from "./MCPApprovalManager";
 export { MCPResultInspector, type InspectionResult, type InspectionFinding, type ResultInspectorOptions } from "./MCPResultInspector";

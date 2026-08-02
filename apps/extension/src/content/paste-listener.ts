@@ -20,6 +20,16 @@ export function installPasteListener(adapter: AiSiteAdapter) {
         chrome.runtime.sendMessage({ type: "SOTER_REQUEST_APPROVAL", text: pasted, url: location.href });
         return null;
       },
+      onTamper: (detail) => {
+        chrome.runtime.sendMessage({
+          type: "SOTER_AUDIT_BYPASS",
+          text: pasted,
+          url: location.href,
+          action: response.result.action,
+          justification: `overlay tamper detected: ${detail}`,
+          dismissedOnly: true,
+        });
+      },
     });
   }, true);
 }

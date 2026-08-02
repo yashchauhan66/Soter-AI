@@ -1,0 +1,85 @@
+{
+  "generatedAt": "2026-08-02T08:20:30.573Z",
+  "product": "SoterAI Guard",
+  "regulation": [
+    "EU AI Act (Reg (EU) 2024/1689)",
+    "India DPDP Act 2023"
+  ],
+  "artifacts": {
+    "capabilities": {
+      "path": "artifacts/security/capabilities.json",
+      "sha256": "3f468aa0b93f98c00f764a9a8160c09fc13f55c6ba92fd06c1923b9f589d9d4f"
+    },
+    "soc2ControlReport": {
+      "path": "artifacts/security/soc2-control-report.md",
+      "sha256": "864932f23bb37e77b4ceb1807f4591b0524a7b7023b84e0ac1e45ecfbd8fdc1a"
+    },
+    "multilingualEval": {
+      "path": "artifacts/security/multilingual-eval-2026-08-02.json",
+      "sha256": "13e1a7cf5feee2780af0651826c914acf2d368fc92d08a63ae47100dd774090b"
+    },
+    "multiLang100": {
+      "path": "artifacts/security/multilingual-100lang-eval-2026-08-02.json",
+      "sha256": "87d73ca517ec318dc62e8706e605a8922284ac3b74cffccb7a449e0717e8a82a"
+    },
+    "mcpLatency": {
+      "path": "artifacts/perf/mcp-latency-bench.json",
+      "sha256": "675f805e8b39fa378483f5328390285c82b2d03adf66c93a27b4e3743a31a0b1"
+    },
+    "trustStore": {
+      "path": "artifacts/security/model-trust-store.json",
+      "sha256": "1d6fe388c7602605ff9d78692ebf9d23b43416bc1553d076ebd06be2fe67151e"
+    }
+  },
+  "euArticles": [
+    {
+      "article": "Art 9 — Risk management system",
+      "soterai": "Pre-execution guard + 8 canonical decision verbs + fail-safe ABSTAIN; capability registry honest:true",
+      "evidence": "artifacts/security/capabilities.json"
+    },
+    {
+      "article": "Art 10 — Data & data governance",
+      "soterai": "PII/SECRET detectors, deterministic 0-FP rules, benign control suite",
+      "evidence": "artifacts/security/multilingual-100lang-eval-2026-08-02.json"
+    },
+    {
+      "article": "Art 11 — Technical documentation",
+      "soterai": "Model card + ONNX backend header + reproducible eval scripts",
+      "evidence": "docs/SOTERLLM-MODEL-CARD.md"
+    },
+    {
+      "article": "Art 12 — Record keeping / logging",
+      "soterai": "Evidence vault signed receipts + SOC2 control automation",
+      "evidence": "artifacts/security/soc2-control-report.md"
+    },
+    {
+      "article": "Art 13 — Transparency & provision of information",
+      "soterai": "Public known-bypass list + limitations kept in-repo",
+      "evidence": "artifacts/security/capabilities.json"
+    },
+    {
+      "article": "Art 14 — Human oversight",
+      "soterai": "REQUIRE_APPROVAL verb + escalation path in canonical plane",
+      "evidence": "artifacts/security/capabilities.json"
+    },
+    {
+      "article": "Art 15 — Accuracy, robustness, cybersecurity",
+      "soterai": "Measured recall/FP + 3.1ms p95 BLOCK latency + model supply-chain signing gate",
+      "evidence": [
+        "artifacts/perf/mcp-latency-bench.json",
+        "artifacts/security/model-trust-store.json"
+      ]
+    }
+  ],
+  "dpdp": [
+    {
+      "section": "S.8(4) — security safeguards",
+      "soterai": "Pre-execution BLOCK on PII/SECRET exfil, signed receipts"
+    },
+    {
+      "section": "S.8(5) — breach notification readiness",
+      "soterai": "Evidence vault hash-chained receipts enable time-stamped disclosure"
+    }
+  ],
+  "honesty": "Self-generated compliance-as-code evidence; NOT a substitute for a notified-body certification. Compiled from in-repo artifacts whose SHA-256 is pinned above."
+}

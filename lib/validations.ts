@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { MAX_TEXT_LENGTH } from "./guard/constants";
+import { PROVENANCE_VALUES } from "./guard/decisionEngine";
 import { parsePublicHttpsUrl } from "./network/outboundUrl";
 
 const metadataValue = z.union([
@@ -17,12 +18,30 @@ const metadataSchema = z
     }
   });
 
+/**
+ * Where the caller says the text came from. Optional everywhere: omitting it means
+ * USER (first-party), which is the behaviour every existing integration already has.
+ * Supplying it is what lets the decision engine treat "ignore previous instructions"
+ * inside a retrieved document as an indirect injection rather than as the operator's
+ * own instruction — see lib/guard/decisionEngine.ts.
+ *
+ * Accepted loosely (case-insensitive, hyphens or spaces for underscores) because this
+ * is a hint from an SDK caller, and rejecting `"retrieved-document"` with a 400 would
+ * push integrators toward simply omitting it.
+ */
+export const guardSourceSchema = z.preprocess(
+  (value) => (typeof value === "string" ? value.trim().toUpperCase().replace(/[-\s]+/g, "_") : value),
+  z.enum(PROVENANCE_VALUES),
+);
+const sourceSchema = guardSourceSchema;
+
 export const inputGuardSchema = z.object({
   message: z.string().trim().min(1, "Message is required.").max(MAX_TEXT_LENGTH),
   userId: z.string().max(200).optional(),
   sessionId: z.string().max(200).optional(),
   providerName: z.string().trim().max(100).optional(),
   modelName: z.string().trim().max(100).optional(),
+  source: sourceSchema.optional(),
   metadata: metadataSchema.optional().default({}),
 });
 
@@ -32,12 +51,14 @@ export const outputGuardSchema = z.object({
   sessionId: z.string().max(200).optional(),
   providerName: z.string().trim().max(100).optional(),
   modelName: z.string().trim().max(100).optional(),
+  source: sourceSchema.optional(),
   metadata: metadataSchema.optional().default({}),
 });
 
 export const analyzeSchema = z.object({
   text: z.string().trim().min(1, "Text is required.").max(MAX_TEXT_LENGTH),
   direction: z.enum(["INPUT", "OUTPUT"]),
+  source: sourceSchema.optional(),
 });
 
 export const projectSchema = z.object({
