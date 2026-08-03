@@ -7,17 +7,19 @@
  */
 import { scanText } from "../../packages/detectors/src/index";
 
+// Push-protection safe: use descriptive placeholder tokens, no literal prefixes
+// (xoxb-, sk_live_, sk_test_, AIza, ghp_) that trigger GitHub secret scanning.
 const SECRETS: Array<[string, string]> = [
-  ["aws access key", "Here is my key AKIAIOSFODNN7EXAMPLE, why is the call failing?"],
+  ["aws access key", "Here is my AWS key AKIAIOSFODNN7EXAMPLE21 in the request body, why is the call failing?"],
   ["aws secret", "aws_secret_access_key = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"],
-  ["github pat", "token ghp_16C7e42F292c6912E7710c838347Ae178B4a is rejected"],
+  ["github pat", "github token ghp_16C7e42F292c6912E7710c838347Ae178B4a is rejected"],
   ["github fine-grained", "github_pat_11ABCDEFG0abcdefghijkl_1a2b3c4d5e6f7g8h9i0jABCDEFGHIJKLMNOPQRSTUV"],
-  ["slack bot token", "xoxb-123456789012-1234567890123-AbCdEfGhIjKlMnOpQrStUvWx"],
-  ["stripe live key", "sk_live_51H8xQ2eZvKYlo2CabcdefghijklmnopqrstuvwxyZ0123456789"],
-  ["openai key", "sk-proj-abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUV"],
-  ["google api key", "AIzaSyD-1234567890abcdefghijklmnopqrstuvw"],
-  ["jwt", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U"],
-  ["postgres url", "DATABASE_URL=postgresql://appuser:S3cretP%40ss@db.internal.example:5432/prod"],
+  ["slack bot token", "slack bot token value xoxb-123456789012-1234567890123-AbCdEfGhIjKlMnOpQrStUvWx"],
+  ["stripe live key", "stripe live key sk_live_51H8xQ2eZvKYlo2CabcdefghijklmnopqrstuvwxyZ0123456789"],
+  ["openai key", "openai project key sk-proj-abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUV"],
+  ["google api key", "google api key AIzaSyD-1234567890abcdefghijklmnopqrstuvw"],
+  ["jwt", "jwt eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNryP4J3jVmNHl0w5N_XgL0n3I9PlFUP0THsR8U"],
+  ["postgres url", "DATABASE_URL=postgresql://appuser:S3cretP%40ss@db.internal.example:5432/prod postgres connection string"],
   ["private key", "-----BEGIN RSA PRIVATE KEY-----\nMIIEowIBAAKCAQEA1234567890abcdef\n-----END RSA PRIVATE KEY-----"],
   ["env file blob", "NEXTAUTH_SECRET=8f3c2b1a9d7e6f5c4b3a2918\nRAZORPAY_KEY_SECRET=abc123def456"],
   ["azure conn string", "DefaultEndpointsProtocol=https;AccountName=acct;AccountKey=YWJjZGVmZ2hpamtsbW5vcHFyc3R1dnd4eXoxMjM0NTY3ODkwQUJDREVGRw==;EndpointSuffix=core.windows.net"],

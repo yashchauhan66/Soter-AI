@@ -3,9 +3,9 @@ import type { ExtensionState } from "../lib/types";
 
 // Accessed lazily inside functions (never at module load) so importing this
 // module in a non-extension context (tests, SSR) does not throw on `chrome`.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 function chromeApi(): any {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   return (globalThis as any).chrome;
 }
 

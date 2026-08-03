@@ -110,7 +110,17 @@ const COMMON_DETECTORS = [piiDetector, indiaPiiDetector, secretsDetector, toxici
 // interaction is handled in `applyPolicy` (lib/guard/policy.ts) by keying on risk
 // types rather than finding count, so registering this detector does not break the
 // legacy single-injection REWRITE / HUMAN_REVIEW / BLOCK policy branch.
-const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, systemPromptLeakAttemptDetector, multilingualAttackDetector, recursiveInjectionDetector, ssrfDetector, adversarialCyberDetector, competitiveIntelDetector, socialEngineeringDetector, embeddingPoisoningDetector, mcpToolPoisoningDetector, memoryPoisoningDetector, multimodalAttackDetector, modelSupplyChainDetector, behavioralAnomalyDetector, advancedUnicodeSmugglingDetector, insecureDeserializationDetector, dataExfiltrationInputDetector, replyChannelExfilDetector, harmfulContentRequestDetector, broadHarmfulContentDetector, generalizedIntentDetector, ...COMMON_DETECTORS];
+const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, systemPromptLeakAttemptDetector, multilingualAttackDetector, recursiveInjectionDetector, ssrfDetector, adversarialCyberDetector, competitiveIntelDetector, socialEngineeringDetector, embeddingPoisoningDetector, mcpToolPoisoningDetector, memoryPoisoningDetector, multimodalAttackDetector, modelSupplyChainDetector, behavioralAnomalyDetector, advancedUnicodeSmugglingDetector, insecureDeserializationDetector, dataExfiltrationInputDetector, replyChannelExfilDetector, harmfulContentRequestDetector, broadHarmfulContentDetector, generalizedIntentDetector, (text) => {
+  // Cryptojacking / device-hijack hard-block (2026-08-02): standalone verified regex
+  if (/mine|cryptocurrenc|crypto|monero|bitcoin|coins?/i.test(text) && /evad|without|undetect|silently|stealth|hidden/i.test(text) && /hijack|take over|compromise|infect|enslave|cryptojack/i.test(text)) {
+      return [{ type: "TOXICITY" as const, label: "Cyber abuse production request", message: "Crypto-hijack mining detection", severity: "CRITICAL" as const, score: 50, code: "CRYPTOJACK" }];
+    }
+    // Fallback: any explicit mining + stealth language
+    if (/(?:mine|min(?:ing|es)?)(?:[\s\S]{0,80})(?:cryptocurrenc(?:y|ies)|crypto|monero|bitcoin|coins?)[\s\S]{0,80}(?:evad(?:e|ing)|without (?:knowledge|consent|permission)|undetected|silently|stealth|hidden)/i.test(text)) {
+      return [{ type: "TOXICITY" as const, label: "Cyber abuse production request", message: "Crypto mining evasion", severity: "CRITICAL" as const, score: 50, code: "CRYPTOJACK_STEALTH" }];
+    }
+    return [];
+  }, ...COMMON_DETECTORS];
 const OUTPUT_DETECTORS = [systemPromptLeakageDetector, unsafeOutputDetector, outputExfiltrationDetector, spamUrlDetector, hallucinationDetector, biasDetector, generalizedIntentDetector, ...COMMON_DETECTORS];
 
 // The ~120-pattern IPS signature set used below lived inside `analyzeText` as an

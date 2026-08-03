@@ -39,6 +39,9 @@ import type { GuardFinding } from "../types";
 // here (CSAM, mass casualty, CBRN, weapons, drugs, cyber tooling, targeted
 // violence, self-harm methods, stalkerware, terrorist recruitment, …) is always
 // kept, regardless of framing.
+// 2026-08-02: added newly-introduced hard labels (mass-casualty planning,
+// computer-hijack malware, credential bypass, academic dishonesty) explicitly
+// NOT added here — they are hard blocks and must never be suppressible.
 const SOFT_SUPPRESSIBLE_LABELS = new Set<string>([
   "Disinformation production request",
   "Illegal abuse production request",

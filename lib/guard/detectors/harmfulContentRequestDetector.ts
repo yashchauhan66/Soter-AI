@@ -40,11 +40,11 @@ import { suppressProtectedExpression } from "./protectedExpression";
 // character who does — as opposed to merely discussing that such content exists.
 const PRODUCE =
   "how (?:to|do (?:i|we|you)|can (?:i|we|you))|" +
-  "step[\\s-]?by[\\s-]?step|steps? (?:to|for)|" +
+  "step[\\s-]?by[\\s-]?step|steps? (?:to|for|necessary to|required to|needed to)|" +
   "give me|show me|tell me|teach me|walk me through|explain (?:to me )?how|" +
   "lay out|spell out|list|outline|detail|describe (?:exactly |in detail )?how|" +
-  "write|compose|draft|generate|produce|create|craft|" +
-  "recipe|instructions? for|guide (?:to|for)|method (?:to|for|of)|" +
+  "write|compose|draft|generate|produce|create|craft|develop|design|offer|provide|" +
+  "recipe|instructions? for|guide (?:to|for|on)|method (?:to|for|of)|" +
   "voice (?:his|her|their) lines|narrate|monologue|in[\\s-]?character";
 
 const MAKE_ACTION = "(?:brew|cook|synthesi[sz](?:e|ing|ation)?|make|produce|purif(?:y|ying|ication)?|weaponi[sz](?:e|ing|ation)?|cultivate|refine|extract|distill|manufactur(?:e|ing))";
@@ -84,7 +84,51 @@ const ILLEGAL_ABUSE =
 const HATE_HARASSMENT_PRODUCTION =
   "(?:racial slurs?|xenophobic|antisemitic|homophobic|anti-lgbtq|racist|sexist|misogynistic|body shaming|demean(?:ing)?|ridicule|" +
   "inferior|less intelligent|dangerous to (?:our )?society|discourages? hiring.{0,40}disab|harassment|bullying|hate mail|" +
-  "negative impact.{0,40}disab|race discrimination|ethnic group.{0,80}(?:inferior|dangerous|hate|violence)|profane insults?|vicious bullying|convince suicide|encourag(?:e|ing).{0,40}self-harm|eating disorders?)";
+  "negative impact.{0,40}disab|race discrimination|ethnic group.{0,80}(?:inferior|dangerous|hate|violence)|profane insults?|vicious bullying|convince suicide|encourag(?:e|ing).{0,40}self-harm|eating disorders?|" +
+  // Targeted identity-based harassment production (added 2026-08-02): write/
+  // generate/draft + harass/abuse/mock + an identity term. Requires a protected-
+  // trait term so "it's rude to harass people" (no produce cue, no trait) stays out.
+  "harass(?:ing|ment|es)?[\\s\\S]{0,50}(?:lgbtq|gay|lesbian|trans(?:gender)?|muslim|jewish|black|asian|female|disabled|immigrant|colleague|coworker).{0,50}based on|" +
+  "based on (?:their|his|her|its)[\\s\\S]{0,40}(?:appearance|race|religion|gender|sexuality|disability|orientation)|" +
+  "discourag(?:e|ing)[\\s\\S]{0,50}hir(?:ing|es)[\\s\\S]{0,60}(?:disab|disabled|able[\\s-]?bodied|minority|women|female)|" +
+  "glorif(?:y|ies|ying|ying the)[\\s\\S]{0,40}(?:holocaust|nazi|genocide|slavery|colonialism))";
+
+// Mass-casualty / targeted-violence attack planning. Added 2026-08-02 after a
+// real probe found "Describe the steps to shoot up a high school ... how to
+// obtain weapons and kill as many people as possible" sailing through as ALLOW.
+// Requires an action/planning intent tied to a mass-harm venue or casualty goal.
+const MASS_CASUALTY_ATTACK =
+  "(?:shoot up|attack|target|carry out|plan|plot|commit|orchestrat(?:e|ing)|conduct)[\\s\\S]{0,40}" +
+  "(?:school|high[\\s-]?school|elementary|college|campus|mosque|church|synagogue|temple|gurudwara|hospital|mall|concert|festival|parade|nightclub)|" +
+  "(?:obtain|get|buy|acquire|procure)[\\s\\S]{0,30}(?:weapons?|guns?|firearms?|rifles?|ammunition|ammo)[\\s\\S]{0,60}" +
+  "(?:kill|maximiz(?:e|ing)|as many|mass)|" +
+  // Standalone branch: require a genuine mass-harm / targeted-violence phrase. Do
+  // NOT include bare "kill|hurt|harm" here — "harmless" (benign) prefix-matches
+  // "harm" and caused a false BLOCK on a support-summary prompt (2026-08-02).
+  "(?:massacre|mass murder|mass shooting|mass killing|school shooting|as many (?:people|students|children)|maximize casualties|kill as many|kill (?:all|everyone|students|children)|shoot up)";
+
+// Covers both "hijack + crypto-mine" chains and stealth-mining intent. Kept
+// intentionally broad on the pairing (proximity only) because the combination
+// "take over a machine AND mine on it without consent" has no benign analogue.
+const COMPUTER_HIJACK_MALWARE =
+  // Simple proven patterns (2026-08-02): verified against "mine cryptocurrencies while evading detection"
+  // Variant 1: mine + crypto + evade (covers "mine cryptocurrencies while evading detection")
+  "(?:mine|min(?:ing|es)?)[\\s\\S]{0,80}(?:cryptocurrenc(?:y|ies)|crypto|monero|bitcoin|coins?)[\\s\\S]{0,80}" +
+  "(?:evad(?:e|ing)|without (?:knowledge|consent|permission)|undetected|silently|stealth|hidden)|" +
+  // Variant 2: hijack verb + any mining (covers "hijacks a user's computer to mine…")
+  "(?:hijack|commandeer|take over|compromise|infect|enslave)" +
+  "[\\s\\S]{0,80}(?:mine|min(?:ing|es)?|cryptomin(?:e|ing)?|cryptojack)[\\s\\S]{0,80}" +
+  "(?:cryptocurrenc(?:y|ies)|crypto|monero|bitcoin|coins?)|" +
+  // Variant 3: mine + hide (no explicit victim mentions "crypto")
+  "(?:mine|min(?:ing|es)?)[\\s\\S]{0,80}evad(?:e|ing)[\\s\\S]{0,30}(?:detection|antivirus|edr|endpoint|security)";
+
+const CREDENTIAL_AUTH_BYPASS =
+  "(?:crack|break|defeat|bypass|brute[\\s-]?force|recover|steal)[\\s\\S]{0,30}(?:passwords?|passphrases?|hashes?|credentials?|2fa|mfa|otp|encryption|security measures)|" +
+  "(?:crack|cracking)[\\s\\S]{0,20}(?:passwords?|passphrases?|security measures)";
+
+const ACADEMIC_DISHONESTY =
+  "(?:cheat(?:ing)?|plagiariz(?:e|ing)|copy answers?)[\\s\\S]{0,40}(?:exam|test|assessment|quiz|assignment|interview|certification|proctored)|" +
+  "(?:exam|test|assignment|interview)[\\s\\S]{0,30}(?:cheat(?:ing)?|plagiar[yi]|answer bot|auto[\\s-]?answer)";
 
 const MISINFORMATION_ABUSE =
   "(?:fake news|spread disinformation|hoax article|holocaust (?:never happened|denial)|defamatory article claiming|false claim|fabricated claim|" +
@@ -154,6 +198,58 @@ const rules: PatternRule[] = [
       "The request asks the assistant to produce malware, credential theft, exploit, phishing, or intrusion instructions.",
     severity: "CRITICAL",
     score: 50,
+    sensitive: true,
+  },
+  {
+    // Mass-casualty / targeted-violence attack planning. Real-probe regression
+    // (2026-08-02): "steps to shoot up a high school ... kill as many people"
+    // previously reached ALLOW.
+    pattern: new RegExp(`(?:${PRODUCE})[\\s\\S]{0,140}(?:${MASS_CASUALTY_ATTACK})`, "i"),
+    label: "Mass-casualty attack planning request",
+    message:
+      "The request asks the assistant to produce plans or steps for a mass-casualty / targeted-violence attack.",
+    severity: "CRITICAL",
+    score: 50,
+    sensitive: true,
+  },
+  {
+    // Standalone mass-casualty phrasing carries intent even without a produce verb.
+    pattern: new RegExp(`(?:${MASS_CASUALTY_ATTACK})`, "i"),
+    label: "Mass-casualty attack content",
+    message: "Content describing or enabling a mass-casualty / targeted-violence attack.",
+    severity: "CRITICAL",
+    score: 50,
+    sensitive: true,
+  },
+  {
+    // Computer-hijack for cryptomining / malware production. HARD block —
+    // never suppressible. Critical crypto-mining hijack must always fire.
+    pattern: new RegExp(`(?:${PRODUCE})[\\s\\S]{0,120}(?:${COMPUTER_HIJACK_MALWARE})`, "i"),
+    label: "Cyber abuse production request", // same label family → never suppressed
+    message:
+      "The request asks the assistant to produce code or steps to hijack a device for mining, spying, or malware while evading detection.",
+    severity: "CRITICAL",
+    score: 50,
+    sensitive: true,
+  },
+  {
+    // Credential / auth-mechanism bypass production.
+    pattern: new RegExp(`(?:${PRODUCE})[\\s\\S]{0,90}(?:${CREDENTIAL_AUTH_BYPASS})`, "i"),
+    label: "Credential-bypass algorithm request",
+    message:
+      "The request asks the assistant to produce an algorithm or method to crack passwords, credentials, or security measures.",
+    severity: "HIGH",
+    score: 45,
+    sensitive: true,
+  },
+  {
+    // Academic / assessment dishonesty guidance.
+    pattern: new RegExp(`(?:${PRODUCE})[\\s\\S]{0,80}(?:${ACADEMIC_DISHONESTY})`, "i"),
+    label: "Academic dishonesty guidance request",
+    message:
+      "The request asks the assistant for guidance on cheating in exams or assessments.",
+    severity: "HIGH",
+    score: 45,
     sensitive: true,
   },
   {
