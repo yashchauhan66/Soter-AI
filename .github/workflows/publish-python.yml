@@ -12,6 +12,12 @@
 #        Environment name: pypi
 #   3. GitHub -> Settings -> Environments -> New environment -> name it "pypi"
 #
+# DO NOT use https://pypi.org/manage/account/publishing/ (the account-level page).
+# That page creates a *pending* publisher for a NEW project name, and PyPI then
+# mints an OIDC token scoped to that other name -- the upload of `soter` fails
+# with "403 OIDC scoped token is not valid for project 'soter'". The publisher
+# must be added on the project page in step 1 above.
+#
 # HOW TO PUBLISH AFTER THAT (pure UI, no terminal):
 #   GitHub -> Actions -> "Publish Python SDK (PyPI)" -> "Run workflow" button.
 #
@@ -61,6 +67,27 @@ jobs:
 
       - name: Validate metadata (fails on bad README or missing fields)
         run: python -m twine check dist/*
+
+      # PyPI can never overwrite an existing version. Catch that here with a clear
+      # message instead of an opaque failure after the OIDC/upload step.
+      - name: Fail fast if this version is already on PyPI
+        run: |
+          python - <<'PY'
+          import glob, os, sys, urllib.error, urllib.request
+          whl = os.path.basename(glob.glob('dist/*.whl')[0])
+          name, version = whl.split('-')[:2]
+          try:
+              urllib.request.urlopen(f'https://pypi.org/pypi/{name}/{version}/json', timeout=30).read()
+          except urllib.error.HTTPError as exc:
+              if exc.code == 404:
+                  print(f'OK: {name} {version} is not on PyPI yet.')
+                  sys.exit(0)
+              raise
+          print(f'::error::{name} {version} is ALREADY on PyPI and can never be '
+                'overwritten. Bump `version` in packages/python-sdk/pyproject.toml '
+                'and `__version__` in soter/__init__.py, commit, then re-run.')
+          sys.exit(1)
+          PY
 
       - name: Show what will be published
         run: |

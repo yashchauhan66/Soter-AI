@@ -28,7 +28,7 @@ from .types import (
     SafeRagSource,
 )
 
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 
 def __getattr__(name: str):
     # Lazy import so the async client (and its httpx dependency) is only loaded
