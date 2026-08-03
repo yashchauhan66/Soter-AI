@@ -1,25 +1,31 @@
 # Publish the `soter` Python SDK to PyPI
 #
-# NO API TOKEN NEEDED. This uses PyPI Trusted Publishing (OIDC), so nothing
-# secret is ever stored in GitHub or on your machine.
+# TWO WAYS TO AUTHENTICATE. The workflow picks automatically:
 #
-# ONE-TIME SETUP (pypi.org UI):
-#   1. https://pypi.org/manage/project/soter/settings/publishing/
-#   2. "Add a new publisher" -> GitHub, then fill in EXACTLY:
-#        Owner:            yashchauhan66
-#        Repository:       Soter-AI
-#        Workflow name:    publish-python.yml
-#        Environment name: pypi
-#   3. GitHub -> Settings -> Environments -> New environment -> name it "pypi"
+# A) API TOKEN (simplest, always works). GitHub -> Settings -> Secrets and
+#    variables -> Actions -> New repository secret, name it PYPI_API_TOKEN, and
+#    paste a token from https://pypi.org/manage/account/token/ (scope: project
+#    `soter`). Browser paste works, so this avoids the terminal getpass problem.
 #
-# DO NOT use https://pypi.org/manage/account/publishing/ (the account-level page).
-# That page creates a *pending* publisher for a NEW project name, and PyPI then
-# mints an OIDC token scoped to that other name -- the upload of `soter` fails
-# with "403 OIDC scoped token is not valid for project 'soter'". The publisher
-# must be added on the project page in step 1 above.
+# B) TRUSTED PUBLISHING (OIDC, no stored secret) -- used only when no
+#    PYPI_API_TOKEN secret exists.
+#      1. https://pypi.org/manage/project/soter/settings/publishing/
+#      2. "Add a new publisher" -> GitHub, then fill in EXACTLY:
+#           Owner:            yashchauhan66
+#           Repository:       Soter-AI
+#           Workflow name:    publish-python.yml
+#           Environment name: pypi
+#      3. GitHub -> Settings -> Environments -> New environment -> name it "pypi"
 #
-# HOW TO PUBLISH AFTER THAT (pure UI, no terminal):
-#   GitHub -> Actions -> "Publish Python SDK (PyPI)" -> "Run workflow" button.
+# DO NOT use https://pypi.org/manage/account/publishing/ (the account-level page)
+# for step B. That page creates a *pending* publisher for a NEW project name, and
+# PyPI then mints an OIDC token scoped to that other name -- the upload of `soter`
+# fails with "403 OIDC scoped token is not valid for project 'soter'". The
+# publisher must be added on the project page in B1 above.
+#
+# HOW TO PUBLISH:
+#   GitHub -> Actions -> "Publish Python SDK (PyPI)" -> "Run workflow",
+#   or push a tag matching python-v*
 #
 # NOTE: PyPI never allows overwriting an existing version. Bump
 # `version` in packages/python-sdk/pyproject.toml (and __version__ in
@@ -124,5 +130,31 @@ jobs:
           name: python-dist
           path: dist/
 
-      - name: Publish to PyPI
+      # Two auth paths. Trusted publishing (OIDC) is preferred because nothing
+      # secret is stored, but it needs a publisher registered on the PROJECT page
+      # (see the header). If a PYPI_API_TOKEN secret exists, use that instead --
+      # it works regardless of publisher config. Only the mode name is printed.
+      - name: Detect auth mode
+        id: auth
+        env:
+          TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          if [ -n "$TOKEN" ]; then
+            echo "mode=token" >> "$GITHUB_OUTPUT"
+            echo "Using API token from the PYPI_API_TOKEN secret."
+          else
+            echo "mode=oidc" >> "$GITHUB_OUTPUT"
+            echo "No PYPI_API_TOKEN secret set; using trusted publishing (OIDC)."
+          fi
+
+      - name: Publish to PyPI (trusted publishing)
+        if: steps.auth.outputs.mode == 'oidc'
         uses: pypa/gh-action-pypi-publish@release/v1
+
+      # Attestations are signed via OIDC, so they cannot be produced on this path.
+      - name: Publish to PyPI (API token)
+        if: steps.auth.outputs.mode == 'token'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          attestations: false
