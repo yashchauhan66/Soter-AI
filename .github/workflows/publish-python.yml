@@ -1,0 +1,101 @@
+# Publish the `soter` Python SDK to PyPI
+#
+# NO API TOKEN NEEDED. This uses PyPI Trusted Publishing (OIDC), so nothing
+# secret is ever stored in GitHub or on your machine.
+#
+# ONE-TIME SETUP (pypi.org UI):
+#   1. https://pypi.org/manage/project/soter/settings/publishing/
+#   2. "Add a new publisher" -> GitHub, then fill in EXACTLY:
+#        Owner:            yashchauhan66
+#        Repository:       Soter-AI
+#        Workflow name:    publish-python.yml
+#        Environment name: pypi
+#   3. GitHub -> Settings -> Environments -> New environment -> name it "pypi"
+#
+# HOW TO PUBLISH AFTER THAT (pure UI, no terminal):
+#   GitHub -> Actions -> "Publish Python SDK (PyPI)" -> "Run workflow" button.
+#
+# NOTE: PyPI never allows overwriting an existing version. Bump
+# `version` in packages/python-sdk/pyproject.toml (and __version__ in
+# soter/__init__.py) before every run.
+
+name: Publish Python SDK (PyPI)
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "python-v*"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and verify distributions
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/python-sdk
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build tooling
+        run: python -m pip install --upgrade build twine
+
+      - name: Install package with dev extras
+        run: python -m pip install -e ".[dev]"
+
+      - name: Run tests
+        run: python -m pytest tests/ -q
+
+      - name: Build sdist and wheel
+        run: python -m build
+
+      - name: Validate metadata (fails on bad README or missing fields)
+        run: python -m twine check dist/*
+
+      - name: Show what will be published
+        run: |
+          ls -l dist/
+          python - <<'PY'
+          import glob, zipfile
+          whl = glob.glob('dist/*.whl')[0]
+          z = zipfile.ZipFile(whl)
+          name = [n for n in z.namelist() if n.endswith('METADATA')][0]
+          keep = ('Name', 'Version', 'License-Expression', 'License', 'Project-URL', 'Requires-Python')
+          for line in z.read(name).decode().splitlines():
+              if line.startswith(keep):
+                  print(line)
+          PY
+
+      - name: Upload distributions as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-dist
+          path: packages/python-sdk/dist/
+
+  publish:
+    name: Publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write # required for Trusted Publishing
+
+    steps:
+      - name: Download distributions
+        uses: actions/download-artifact@v4
+        with:
+          name: python-dist
+          path: dist/
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
