@@ -15,7 +15,7 @@ import {
   USAGE_WARNING_THRESHOLD,
 } from "./guard/constants";
 import { db } from "./db";
-import { getRedis, type RedisLike } from "./redis";
+import { getFallbackRedis, getRedis, type RedisLike } from "./redis";
 
 export const PLAN_LIMITS: Record<string, number> = {
   FREE: FREE_PLAN_LIMIT_PER_MONTH,
@@ -47,13 +47,7 @@ export interface RateLimitResult {
   resetAt: number;
 }
 
-export async function checkRedisRateLimit(
-  identifier: string,
-  limit: number,
-  windowMs = 60_000,
-  redis: RedisLike = getRedis(),
-): Promise<RateLimitResult> {
-  const key = minuteBucketKey(identifier);
+async function incrementWindow(redis: RedisLike, key: string, windowMs: number) {
   const [count, ttl] = await Promise.all([redis.incrBy(key, 1), redis.ttl(key)]);
   // CRG-RT-013: incrBy + expire are two commands. If the expire after the first
   // increment was ever lost (process crash / partial failure), the key persists
@@ -62,6 +56,30 @@ export async function checkRedisRateLimit(
   if (count === 1 || ttl < 0) {
     await redis.expire(key, Math.ceil(windowMs / 1000));
   }
+  return { count, ttl };
+}
+
+// AVAILABILITY: a limiter that throws takes its whole route down with it, because
+// every rate-limited route enforces the limit before doing any work — an
+// unreachable Redis would otherwise turn sign-in and /api/guard/analyze into hard
+// failures. Degrade to the process-local counter instead: per-instance rather
+// than global, but still a real limit.
+async function incrementWindowWithFallback(redis: RedisLike, key: string, windowMs: number) {
+  try {
+    return await incrementWindow(redis, key, windowMs);
+  } catch {
+    return incrementWindow(getFallbackRedis(), key, windowMs);
+  }
+}
+
+export async function checkRedisRateLimit(
+  identifier: string,
+  limit: number,
+  windowMs = 60_000,
+  redis: RedisLike = getRedis(),
+): Promise<RateLimitResult> {
+  const key = minuteBucketKey(identifier);
+  const { count, ttl } = await incrementWindowWithFallback(redis, key, windowMs);
   const effectiveTtl = ttl > 0 ? ttl : Math.ceil(windowMs / 1000);
   const resetAt = Date.now() + effectiveTtl * 1000;
   return { allowed: count <= limit, remaining: Math.max(0, limit - count), resetAt };
@@ -77,11 +95,7 @@ export async function checkRedisFixedWindowRateLimit(
   const safeWindowMs = Math.max(1_000, windowMs);
   const bucket = Math.floor(now / safeWindowMs);
   const key = `crg:rl:${identifier}:w${safeWindowMs}:${bucket}`;
-  const [count, ttl] = await Promise.all([redis.incrBy(key, 1), redis.ttl(key)]);
-  // CRG-RT-013: self-heal a missing TTL (see checkRedisRateLimit).
-  if (count === 1 || ttl < 0) {
-    await redis.expire(key, Math.ceil(safeWindowMs / 1000));
-  }
+  const { count } = await incrementWindowWithFallback(redis, key, safeWindowMs);
   const resetAt = (bucket + 1) * safeWindowMs;
   return { allowed: count <= limit, remaining: Math.max(0, limit - count), resetAt };
 }

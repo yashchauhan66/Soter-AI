@@ -1,10 +1,18 @@
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
+import { SOTERAI_API_VERSION, SOTERAI_CONTRACT_VERSION } from "./apiContract";
 import { AuthError } from "./auth/guards";
 import { isDatabaseUnavailableError } from "./databaseErrors";
 import { validateBodyStrings } from "./validateBodyStrings";
 
-const NO_STORE_HEADERS = { "Cache-Control": "no-store, max-age=0" };
+// docs/api/openapi.v1.json advertises these two headers on every documented
+// response (components.responses.GuardResult / AnyObject / Error), so they are
+// emitted centrally here rather than per-route.
+const NO_STORE_HEADERS = {
+  "Cache-Control": "no-store, max-age=0",
+  "X-SoterAI-API-Version": SOTERAI_API_VERSION,
+  "X-SoterAI-Contract-Version": SOTERAI_CONTRACT_VERSION,
+};
 
 // SECURITY: Maximum body size enforced on the actual received bytes,
 // not on the client-supplied content-length header (which is forgeable).

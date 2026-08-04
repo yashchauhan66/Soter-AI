@@ -26,29 +26,52 @@ function mapRiskTypeToLabel(riskType: string): MLLabel {
   return "SAFE";
 }
 
+// Same order as the mapRiskTypeToLabel chain above. analyzeText returns risk
+// types in detector-registration order, which is not a severity order, so a
+// "first non-SAFE match wins" scan reports PII for a leaked connection string
+// that also matched SECRET. Rank explicitly instead.
+const LABEL_PRIORITY: readonly MLLabel[] = [
+  "SYSTEM_PROMPT_LEAK_ATTEMPT",
+  "JAILBREAK",
+  "PROMPT_INJECTION",
+  "DATA_EXFILTRATION_ATTEMPT",
+  "RAG_POISONING",
+  "SECRET",
+  "PII",
+  "UNSAFE_OUTPUT",
+];
+
+function highestPriorityLabel(riskTypes: readonly string[]): MLLabel {
+  let best: MLLabel = "SAFE";
+  let bestRank = Number.POSITIVE_INFINITY;
+  for (const riskType of riskTypes) {
+    const mapped = mapRiskTypeToLabel(riskType);
+    if (mapped === "SAFE") continue;
+    const rank = LABEL_PRIORITY.indexOf(mapped);
+    if (rank >= 0 && rank < bestRank) {
+      best = mapped;
+      bestRank = rank;
+    }
+  }
+  return best;
+}
+
 export class HeuristicMLBackend implements ModelBackend {
   id = "heuristic" as const;
   constructor(private readonly thresholds: Partial<Record<MLLabel, number>> = {}) {}
 
   async infer(text: string, direction: GuardDirection): Promise<ModelInference> {
     const guard = analyzeText(text, direction);
-    const riskTypes = guard.riskTypes;
-    let primary: MLLabel = "SAFE";
+    let primary: MLLabel = highestPriorityLabel(guard.riskTypes);
     let confidence = Math.max(0.5, Math.min(0.98, guard.riskScore / 100));
 
-    for (const riskType of riskTypes) {
-      const mapped = mapRiskTypeToLabel(riskType);
-      if (mapped !== "SAFE") {
-        primary = mapped;
-        break;
-      }
-    }
-
     // Multilingual signal escalates the prediction if a Hindi/Hinglish phrase
-    // matched, even when the rule guard considered it low risk.
+    // matched, even when the rule guard considered it low risk. It must not
+    // *replace* a rule-guard label — the rule guard is the more specific
+    // signal — so only the confidence is raised when one already exists.
     const multilingual = await new MultilingualClassifier().classify(text);
     if (multilingual.riskType && multilingual.riskType !== "LOW_RISK") {
-      primary = mapRiskTypeToLabel(multilingual.riskType);
+      if (primary === "SAFE") primary = mapRiskTypeToLabel(multilingual.riskType);
       confidence = Math.max(confidence, multilingual.confidence);
     }
 

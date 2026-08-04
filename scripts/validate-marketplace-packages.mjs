@@ -98,7 +98,9 @@ function validateN8n() {
   requireFile(["packages", "integrations", "n8n", "LICENSE"]);
   requireFile(["packages", "integrations", "n8n", "CHANGELOG.md"]);
   requireFile(["packages", "integrations", "n8n", "NPM_PUBLISH_CHECKLIST.md"]);
-  requireFile(["packages", "integrations", "n8n", "nodes", "SoterGuard.node.ts"]);
+  // n8n requires the icon to sit next to the node, so the node lives in its own
+  // directory — matching the dist path declared in package.json#n8n.nodes.
+  requireFile(["packages", "integrations", "n8n", "nodes", "SoterGuard", "SoterGuard.node.ts"]);
   requireFile(["packages", "integrations", "n8n", "credentials", "SoterApi.credentials.ts"]);
 }
 

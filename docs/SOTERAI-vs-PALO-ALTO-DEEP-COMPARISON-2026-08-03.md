@@ -91,6 +91,12 @@ Legend: **SoterAI** ✅ **strong** / ⚖ **parity** / ❌ **weaker** vs Palo Alt
 2. **Enterprise org plane**: SSO/SCIM at scale, central control plane, tenant governance workflows.
 3. **Independent evaluation**: same-corpus, third-party witnessed multilingual + harmful-content benchmark (separating rules vs ML vs union), with FPR/Recall and latency budgets.
 4. **Production fleet evidence**: multi-instance failover, DR, sustained load, queue outage simulations.
+5. **Model security ecosystem**: extend registry/CI/MLOps integrations and broaden supported loaders.Immediate next steps to close the gap vs Palo Alto
+
+1. **Discovery & inventory**: add shadow-MCP/agent discovery + endpoint/fleet inventory panels.
+2. **Enterprise org plane**: SSO/SCIM at scale, central control plane, tenant governance workflows.
+3. **Independent evaluation**: same-corpus, third-party witnessed multilingual + harmful-content benchmark (separating rules vs ML vs union), with FPR/Recall and latency budgets.
+4. **Production fleet evidence**: multi-instance failover, DR, sustained load, queue outage simulations.
 5. **Model security ecosystem**: extend registry/CI/MLOps integrations and broaden supported loaders.
 
 > Latest verified evidence in this workspace supports SoterAI as **architecturally competitive and locally reproducible**, while Palo Alto remains stronger on **operational scale, discovery, production fleet and enterprise org enforcement**.

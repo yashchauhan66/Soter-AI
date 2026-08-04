@@ -1,6 +1,6 @@
 # Security 100 Evidence Gates
 
-Generated: 2026-07-23T12:24:54.546Z
+Generated: 2026-08-03T15:09:39.528Z
 
 - Evidence-gated score: **94/100**
 - 100/100 claim allowed: **no**

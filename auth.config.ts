@@ -74,6 +74,10 @@ export const PUBLIC_API_PREFIXES = [
   "/api/ops/contact",
   "/api/ops/pilot",
   "/api/scanner",
+  // Machine-readable API contract. SDKs ship this path as
+  // SOTERAI_OPENAPI_SPEC_PATH and fetch it without a session cookie, and the
+  // same document is already published in docs/api/openapi.v1.json.
+  "/api/openapi",
 ];
 
 export const authConfig = {

@@ -1,0 +1,25 @@
+# GitLab CI — Model Artifact Security Scan (SoterAI)
+# Add to your project's .gitlab-ci.yml or include as a template.
+# Requires a SOTERAI_API_KEY (scoped variable, masked) for remote scan uploads.
+
+stages:
+  - security
+
+soterai-model-scan:
+  stage: security
+  image: node:20-slim
+  script:
+    - npx soterai scan --path . --scan-depth=full --output artifacts/model-scan/
+  artifacts:
+    when: always
+    paths:
+      - artifacts/model-scan/
+    expire_in: 30 days
+  only:
+    changes:
+      - "**/*.gguf"
+      - "**/*.safetensors"
+      - "**/*.onnx"
+      - "**/*.pkl"
+      - "**/pyproject.toml"
+      - "**/requirements*.txt"

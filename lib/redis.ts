@@ -92,40 +92,130 @@ export function createMemoryRedis(): RedisLike {
   return new MemoryRedis();
 }
 
+let fallback: RedisLike | null = null;
+
+/**
+ * Process-local store used when the configured Redis is unreachable. Shared so
+ * every degraded caller lands in the same buckets — per-instance rather than
+ * distributed, but a degraded limit is far better than no limit, and far better
+ * than a request that never returns.
+ */
+export function getFallbackRedis(): RedisLike {
+  if (!fallback) fallback = createMemoryRedis();
+  return fallback;
+}
+
+// A dead Redis must degrade, never hang. Previously `createClient().connect()`
+// retried forever and the pending promise was memoised, so one unreachable Redis
+// wedged every rate-limited route: /api/auth/callback/credentials and
+// /api/guard/analyze returned no response at all, and the process stayed wedged
+// even after Redis came back.
+const CONNECT_TIMEOUT_MS = Math.max(250, Number(process.env.REDIS_CONNECT_TIMEOUT_MS ?? "2000"));
+const COMMAND_TIMEOUT_MS = Math.max(250, Number(process.env.REDIS_COMMAND_TIMEOUT_MS ?? "1500"));
+const MAX_RECONNECT_ATTEMPTS = Math.max(0, Number(process.env.REDIS_MAX_RECONNECT_ATTEMPTS ?? "3"));
+// A refused socket emits an error per retry; unthrottled that is thousands of
+// identical lines per test run, which buries every other server log.
+const ERROR_LOG_INTERVAL_MS = 30_000;
+
+let lastErrorLoggedAt = 0;
+
+function logRedisError(error: unknown) {
+  const now = Date.now();
+  if (now - lastErrorLoggedAt < ERROR_LOG_INTERVAL_MS) return;
+  lastErrorLoggedAt = now;
+  const code = (error as { code?: string } | null)?.code;
+  console.error(
+    `[SoterAI] Redis unavailable${code ? ` (${code})` : ""}. Rate limits fall back to the in-process store until it recovers.`,
+  );
+}
+
+async function withTimeout<T>(operation: Promise<T>, ms: number, label: string): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      operation,
+      new Promise<never>((_resolve, reject) => {
+        timer = setTimeout(() => reject(new Error(`Redis ${label} timed out after ${ms}ms`)), ms);
+      }),
+    ]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
 class NodeRedis implements RedisLike {
   private clientPromise: Promise<import("redis").RedisClientType> | null = null;
+  private generation = 0;
 
   constructor(private readonly url: string) {}
 
+  // Only the generation that is still current may clear the memo, so a late
+  // error from a superseded client cannot discard a healthy one.
+  private forget(generation: number) {
+    if (this.generation === generation) this.clientPromise = null;
+  }
+
   private async client() {
     if (!this.clientPromise) {
-      this.clientPromise = import("redis").then(async ({ createClient }) => {
-        const client = createClient({ url: this.url });
-        client.on("error", (error) => console.error("[SoterAI] Redis client error", error));
-        await client.connect();
-        return client as import("redis").RedisClientType;
-      });
+      const generation = ++this.generation;
+      this.clientPromise = this.connect(generation);
     }
     return this.clientPromise;
   }
 
-  async incrBy(key: string, value: number) { return (await this.client()).incrBy(key, value); }
-  async expire(key: string, seconds: number) { return (await this.client()).expire(key, seconds); }
+  private async connect(generation: number) {
+    const { createClient } = await import("redis");
+    const client = createClient({
+      url: this.url,
+      // Fail commands fast instead of queueing them while the socket is down —
+      // the unbounded offline queue is what turned "Redis is down" into
+      // "requests never return".
+      disableOfflineQueue: true,
+      socket: {
+        connectTimeout: CONNECT_TIMEOUT_MS,
+        reconnectStrategy: (retries) =>
+          retries >= MAX_RECONNECT_ATTEMPTS
+            ? new Error("Redis reconnect attempts exhausted")
+            : Math.min(100 * 2 ** retries, 1_000),
+      },
+    });
+    client.on("error", (error) => {
+      logRedisError(error);
+      // Never keep a closed client memoised, or the process can never reconnect.
+      if (!client.isOpen) this.forget(generation);
+    });
+    try {
+      await withTimeout(client.connect(), CONNECT_TIMEOUT_MS, "connect");
+    } catch (error) {
+      this.forget(generation);
+      try {
+        await client.disconnect();
+      } catch {
+        // Already closed, or never opened — nothing to release.
+      }
+      throw error;
+    }
+    return client as import("redis").RedisClientType;
+  }
+
+  private async command<T>(label: string, run: (client: import("redis").RedisClientType) => Promise<T>) {
+    const client = await this.client();
+    return withTimeout(run(client), COMMAND_TIMEOUT_MS, label);
+  }
+
+  async incrBy(key: string, value: number) { return this.command("incrBy", (c) => c.incrBy(key, value)); }
+  async expire(key: string, seconds: number) { return this.command("expire", (c) => c.expire(key, seconds)); }
   async get<T = unknown>(key: string) {
-    const value = await (await this.client()).get(key);
+    const value = await this.command("get", (c) => c.get(key));
     if (value === null) return null;
     const numeric = Number(value);
     return (Number.isNaN(numeric) ? value : numeric) as T;
   }
-  async ttl(key: string) { return (await this.client()).ttl(key); }
+  async ttl(key: string) { return this.command("ttl", (c) => c.ttl(key)); }
   async set(key: string, value: string | number, opts?: { ex?: number }) {
-    const client = await this.client();
-    if (opts?.ex) {
-      return client.setEx(key, opts.ex, String(value));
-    }
-    return client.set(key, String(value));
+    return this.command("set", (c) => (opts?.ex ? c.setEx(key, opts.ex, String(value)) : c.set(key, String(value))));
   }
-  async del(...keys: string[]) { return keys.length ? (await this.client()).del(keys) : 0; }
+  async del(...keys: string[]) { return keys.length ? this.command("del", (c) => c.del(keys)) : 0; }
 }
 
 export function getRedis(): RedisLike {
