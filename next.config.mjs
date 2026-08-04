@@ -1,3 +1,5 @@
+import path from "node:path";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   outputFileTracingRoot: process.cwd(),
@@ -12,6 +14,17 @@ const nextConfig = {
   // Tree-shake large icon/util barrels so only the icons actually used are bundled.
   experimental: {
     optimizePackageImports: ["lucide-react"],
+  },
+  // Resolve workspace monorepo packages so Next.js bundles them from source.
+  // The guard-core dist is CommonJS — aliasing to src and transpiling avoids
+  // the `module not found` webpack failure in Docker/CI builds.
+  transpilePackages: ["@soterai/guard-core", "@soterai/core"],
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "@soterai/guard-core": path.resolve(process.cwd(), "packages/guard-core/src/index.ts"),
+    };
+    return config;
   },
   images: {
     formats: ["image/avif", "image/webp"],
