@@ -1,5 +1,3 @@
-import path from "node:path";
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   outputFileTracingRoot: process.cwd(),
@@ -15,17 +13,8 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react"],
   },
-  // Resolve workspace monorepo packages so Next.js bundles them from source.
-  // The guard-core dist is CommonJS — aliasing to src and transpiling avoids
-  // the `module not found` webpack failure in Docker/CI builds.
-  transpilePackages: ["@soterai/guard-core", "@soterai/core"],
-  webpack: (config) => {
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "@soterai/guard-core": path.resolve(process.cwd(), "packages/guard-core/src/index.ts"),
-    };
-    return config;
-  },
+  // Workspace packages are linked by npm into node_modules — no webpack alias needed.
+  // tsconfig.paths points guard-core at src/ so type checking resolves.
   images: {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 60 * 60 * 24 * 30,
