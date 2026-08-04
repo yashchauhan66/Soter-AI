@@ -1076,6 +1076,7 @@ function boundedNumber(value: unknown, fallback: number, min: number, max: numbe
 
 function minimalTerminalEnv(env: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
     const clean: NodeJS.ProcessEnv = {
+        NODE_ENV: env.NODE_ENV ?? "production",
         PATH: env.PATH ?? env.Path ?? "",
         Path: env.Path ?? env.PATH ?? "",
         GIT_TERMINAL_PROMPT: "0",
