@@ -10,6 +10,7 @@ Nothing leaves your computer unless you explicitly connect to SoterAI Cloud.
 - **Scan Current File / Selection / Workspace** - detect leaked secrets, PII, prompt injection, unsafe instructions, and risky patterns with a redacted report.
 - **Redact Selection for AI** - copy a safe version of selected text before using it in an AI assistant. Raw secrets are not copied.
 - **Scan Before AI Prompt** - paste a prompt, scan it locally, and get an allow / redact / block verdict plus a safe prompt to copy.
+- **AI Egress Firewall** - one local choke point for anything you are about to send to an AI tool: `ALLOW` / `REDACT` / `ASK` / `BLOCK`, with a redacted copy offered when secrets are present. Re-runs the detectors over **de-obfuscated** variants (zero-width unicode, homoglyphs, leetspeak, letter-spacing, reversal, base64), so smuggled injection that slips past a single-pass regex still scores. Also destination-aware: content heading to a non-allowlisted host escalates.
 - **Scan Git Changes** - scan staged and unstaged diffs for secrets and sensitive files before commit.
 - **Check Terminal Command** - flag destructive, remote-exec, credential-exposing, or suspicious shell commands before you run them.
 - **Review Selected AI Code** - surface likely vulnerabilities in AI-generated code inside a hardened webview.
@@ -65,6 +66,7 @@ Local scanning always works. Cloud, token, and remote features are gated behind 
 | `SoterAI: Open Settings` | Open VS Code settings filtered to SoterAI. |
 | `SoterAI: Run Demo Scan` | Run a safe local demo against fake risky text. |
 | `SoterAI: Scan Selected Text` | Scan selected prompt/text before sending it to an AI assistant. |
+| `SoterAI: Check Before Sending to AI` | Run the egress firewall over the selection (or clipboard) and get an allow / redact / ask / block decision before you paste into any AI chat. |
 | `SoterAI: Scan Current File` | Scan the active file for secrets, PII, prompt injection, unsafe instructions, and insecure patterns. |
 | `SoterAI: Scan Git Diff` | Scan staged and unstaged git changes locally. |
 | `SoterAI: Scan MCP / Agent Tools` | Review MCP and agent tool configuration for broad or dangerous permissions. |

@@ -73,7 +73,65 @@ const SECRET_SPECS = [
     pattern: /\b(?:password|passwd|pwd)\b\s*[:=]\s*["']?[^"'\s]{8,}["']?/gi,
     message: "Password-like value detected.",
   },
+  {
+    type: "openai_key",
+    label: "OpenAI API key",
+    severity: "critical" as const,
+    score: 38,
+    pattern: /\bsk-(?:proj-|svc-)?[A-Za-z0-9_\-]{20,}\b/g,
+    message: "OpenAI (or sk-*) API key detected.",
+  },
+  {
+    type: "anthropic_key",
+    label: "Anthropic API key",
+    severity: "critical" as const,
+    score: 38,
+    pattern: /\bsk-ant-[A-Za-z0-9_\-]{20,}\b/g,
+    message: "Anthropic API key detected.",
+  },
+  {
+    type: "google_api_key",
+    label: "Google API key",
+    severity: "critical" as const,
+    score: 36,
+    pattern: /\bAIza[0-9A-Za-z_\-]{20,40}\b/g,
+
+    message: "Google API key detected.",
+  },
+  {
+    type: "npm_token",
+    label: "npm token",
+    severity: "critical" as const,
+    score: 36,
+    pattern: /\bnpm_[A-Za-z0-9]{36}\b/g,
+    message: "npm access token detected.",
+  },
+  {
+    type: "stripe_key",
+    label: "Stripe key",
+    severity: "critical" as const,
+    score: 38,
+    pattern: /\b(?:sk|pk)_(?:live|test)_[0-9a-zA-Z]{16,}\b/g,
+    message: "Stripe API key detected.",
+  },
+  {
+    type: "openai_key",
+    label: "OpenAI API key",
+    severity: "critical" as const,
+    score: 30,
+    pattern: /\bsk-[A-Za-z0-9_-]{10,}\b/g,
+    message: "OpenAI (or sk-*) API key pattern detected.",
+  },
+  {
+    type: "private_key_header",
+    label: "Private key header",
+    severity: "high" as const,
+    score: 30,
+    pattern: /-----BEGIN (?:RSA |EC |OPENSSH |DSA |ENCRYPTED |)?PRIVATE KEY(?: BLOCK)?-----/g,
+    message: "Private key block detected.",
+  },
 ];
+
 
 export function detectSecrets(text: string): DetectorFinding[] {
   return runRegexDetectors(text, SECRET_SPECS);

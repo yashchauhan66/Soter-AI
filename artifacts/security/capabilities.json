@@ -3,9 +3,9 @@
   "honest": true,
   "counts": {
     "STRONG_ENFORCEMENT": 10,
+    "PARTIAL_ENFORCEMENT": 2,
     "DETECTION_ONLY": 8,
     "VISIBILITY_ONLY": 1,
-    "PARTIAL_ENFORCEMENT": 1,
     "UNSUPPORTED": 2
   },
   "capabilities": [
@@ -163,6 +163,47 @@
         "wiredInRuntime": true,
         "testIds": [
           "clipboard behavioral tests"
+        ]
+      },
+      "latency": {
+        "status": "NOT_MEASURED_PER_CAPABILITY",
+        "evidence": null
+      }
+    },
+    {
+      "id": "egress-firewall",
+      "name": "Outbound AI egress firewall (obfuscation-resistant)",
+      "category": "data-minimization",
+      "level": "PARTIAL_ENFORCEMENT",
+      "integration": "extension egress firewall commands + guard-core detectors",
+      "enforcementPoint": "packages/vscode-extension/src/advanced/{egressFirewall,unicodeFolding,commands}.ts",
+      "preExecutionBlock": true,
+      "rollbackSupported": false,
+      "conditions": [
+        "Text is routed through a SoterAI send/approve/pre-check command or soterai.checkEgressPayload",
+        "Decision is ALLOW / REDACT / ASK / BLOCK before the content leaves"
+      ],
+      "knownBypasses": [
+        "Direct HTTP from other extensions, terminals, or processes — VS Code exposes no network hook",
+        "Detector completeness is not universal; de-obfuscation covers the documented variants only",
+        "A user who chooses 'Send Original Anyway' on a REDACT/ASK decision"
+      ],
+      "evidenceTestIds": [
+        "egress-firewall.test.ts"
+      ],
+      "wiredInRuntime": true,
+      "lastVerifiedVersion": "0.3.0",
+      "evidenceLevel": "PARTIAL_ENFORCEMENT",
+      "supportedSurfaces": [
+        "extension egress firewall commands + guard-core detectors"
+      ],
+      "unsupportedSurfaces": [
+        "Surfaces described by knownBypasses are outside guaranteed enforcement"
+      ],
+      "runtimeProof": {
+        "wiredInRuntime": true,
+        "testIds": [
+          "egress-firewall.test.ts"
         ]
       },
       "latency": {

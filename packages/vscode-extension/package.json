@@ -2,7 +2,7 @@
     "name": "soterai-ide-guard",
     "displayName": "SoterAI IDE Guard — Local AI Security",
     "description": "Protect secrets, prompts, MCP tools, terminal commands, and AI coding context locally before they reach AI.",
-    "version": "0.2.2",
+    "version": "0.3.0",
     "publisher": "soterai",
     "preview": false,
     "pricing": "Free",
@@ -61,6 +61,7 @@
         "onCommand:soterai.openSettings",
         "onCommand:soterai.runDemoScan",
         "onCommand:soterai.scanSelectedText",
+        "onCommand:soterai.checkBeforeSendingToAI",
         "onCommand:soterai.scanCurrentFile",
         "onCommand:soterai.useSensitiveContextSafely",
         "onCommand:soterai.buildSafePromptForAI",
@@ -242,7 +243,6 @@
                 "command": "soterai.scanBeforeAIPrompt",
                 "title": "SoterAI: Scan Before AI Prompt"
             },
-
             {
                 "command": "soterai.redactSelectionForAI",
                 "title": "SoterAI: Redact Selection for AI"
@@ -623,7 +623,6 @@
                 "command": "soterai.scanWorkspaceRisk",
                 "title": "SoterAI: Scan Workspace Risk"
             },
-
             {
                 "command": "soterai.openMCPToolFirewall",
                 "title": "SoterAI: Open MCP Tool Firewall"
@@ -718,9 +717,23 @@
                 "command": "soterai.preflightMCPTool",
                 "title": "SoterAI: Preflight MCP Tool Call",
                 "category": "SoterAI"
+            },
+            {
+                "command": "soterai.checkBeforeSendingToAI",
+                "title": "SoterAI: Check Before Sending to AI",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showEgressFirewallStatus",
+                "title": "SoterAI: Show AI Egress Firewall Status",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.checkEgressPayload",
+                "title": "SoterAI: Check Egress Payload (API)",
+                "category": "SoterAI"
             }
         ],
-
         "viewsContainers": {
             "activitybar": [
                 {
@@ -951,7 +964,6 @@
                 }
             }
         },
-
         "menus": {
             "commandPalette": [
                 {
@@ -1465,10 +1477,17 @@
                 {
                     "command": "soterai.preflightMCPTool",
                     "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showEgressFirewallStatus",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.checkEgressPayload",
+                    "when": "soterai.advancedCommands"
                 }
             ]
         },
-
         "walkthroughs": [
             {
                 "id": "soterai.gettingStarted",

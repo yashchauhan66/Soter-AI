@@ -375,7 +375,7 @@ describe("Command-palette hygiene (clutter control)", () => {
         "soterai.scanSelectedText", "soterai.scanCurrentFile", "soterai.scanGitDiff", "soterai.reviewTerminalCommand",
         "soterai.scanMCPAgentTools", "soterai.openAIActivityLedger", "soterai.generateCanaryToken", "soterai.choosePolicyPack",
         "soterai.openPrivacyGuarantee", "soterai.openLocalPrivacyStatus", "soterai.buildSafePromptForAI", "soterai.runSecretBrokerDemo",
-        "soterai.openWalkthrough", "soterai.scanClipboard",
+        "soterai.openWalkthrough", "soterai.scanClipboard", "soterai.checkBeforeSendingToAI",
     ];
     const palette: Array<{ command: string; when?: string }> = pkg.contributes.menus?.commandPalette ?? [];
     const gated = new Map(palette.map((e) => [e.command, e.when]));

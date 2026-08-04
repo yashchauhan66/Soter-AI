@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.3.0] - 2026-08-04
+
+### Added
+- **AI Egress Firewall** — a single local choke point for text you are about to send to an AI tool. Returns `ALLOW` / `REDACT` / `ASK` / `BLOCK`, offers a redacted copy when secrets are present, and escalates to `BLOCK` when a secret rides along with an injection attempt.
+- **Obfuscation-resistant scanning** — the same guard-core detectors are re-run over de-obfuscated variants of the text, so smuggled attacks that evade a single-pass regex still score: zero-width unicode, homoglyph (Cyrillic lookalike) substitution, leetspeak, letter-spacing, reversal, and base64.
+- **Destination awareness** — `evaluateEgressToHost` combines the content decision with where it is going. Clean content to a non-allowlisted host becomes `ASK`; content carrying secrets becomes `BLOCK`.
+- New commands: `SoterAI: Check Before Sending to AI` (core palette), plus `SoterAI: Show AI Egress Firewall Status` and `SoterAI: Check Egress Payload (API)` (advanced-gated). The payload command is a programmatic entry point for other extensions and future editor wrappers.
+- Every egress decision is appended to the tamper-proof local audit ledger with **redacted evidence only** — raw text and secrets are never stored, logged, or transmitted.
+
+### Security
+- Redaction offsets are computed from the **raw** text only, so a folded/de-obfuscated variant can never produce a mis-aligned edit that leaves a secret in place.
+- Findings carry minimized evidence; a behavioural test asserts the raw secret never reaches `redactedEvidence`.
+
+### Honesty
+- Registered `egress-firewall` in the capability registry as **PARTIAL_ENFORCEMENT**, not STRONG. It is a choke point for content SoterAI is asked to send or approve. VS Code exposes no network-interception API, so a request another extension makes directly to a provider is **not** intercepted. Known bypasses are declared in the registry and shown in the status view.
+
+### Verified
+- Extension: 139/139 tests pass, typecheck clean.
+- guard-core: 466/466 tests pass; capability registry honesty invariant passes (`honest=true`, 23 capabilities).
+
 ## [0.2.2] - 2026-07-31
 
 ### Fixed

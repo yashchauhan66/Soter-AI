@@ -27,6 +27,7 @@ import { registerClipboardGuard } from "./clipboard/ClipboardGuard";
 import { registerSecretBrokerCommands } from "./secret-broker/commands";
 import { ProtectionStateService } from "./protection/ProtectionStateService";
 import { ProtectionController } from "./protection/ProtectionController";
+import { registerEgressFirewallCommands } from "./advanced/commands";
 import { runPackagedRuntimeProbe } from "./packagedRuntimeProbe";
 
 // Single consolidated status-bar item. It replaces the earlier six separate
@@ -145,6 +146,9 @@ export function activate(context: vscode.ExtensionContext): void {
     registerLiveScanner(context);
     registerClipboardGuard(context);
     registerSecretBrokerCommands(context, refreshViews);
+    // Gap A + Gap B: outbound AI egress firewall (obfuscation-resistant), which
+    // also appends every decision to the tamper-proof ledger.
+    registerEgressFirewallCommands(context);
 
     context.subscriptions.push(
         vscode.commands.registerCommand("soterai.enableFullProtection", async () => {

@@ -153,6 +153,31 @@ export const CAPABILITY_REGISTRY: ProtectionCapability[] = [
         lastVerifiedVersion: VERSION,
     },
     {
+        id: "egress-firewall",
+        name: "Outbound AI egress firewall (obfuscation-resistant)",
+        category: "data-minimization",
+        // PARTIAL, not STRONG: it is a choke point for text SoterAI is asked to
+        // send or approve. VS Code exposes no network-interception API, so a
+        // request another extension makes directly is never seen here.
+        level: "PARTIAL_ENFORCEMENT",
+        integration: "extension egress firewall commands + guard-core detectors",
+        enforcementPoint: "packages/vscode-extension/src/advanced/{egressFirewall,unicodeFolding,commands}.ts",
+        preExecutionBlock: true,
+        rollbackSupported: false,
+        conditions: [
+            "Text is routed through a SoterAI send/approve/pre-check command or soterai.checkEgressPayload",
+            "Decision is ALLOW / REDACT / ASK / BLOCK before the content leaves",
+        ],
+        knownBypasses: [
+            "Direct HTTP from other extensions, terminals, or processes — VS Code exposes no network hook",
+            "Detector completeness is not universal; de-obfuscation covers the documented variants only",
+            "A user who chooses 'Send Original Anyway' on a REDACT/ASK decision",
+        ],
+        evidenceTestIds: ["egress-firewall.test.ts"],
+        wiredInRuntime: true,
+        lastVerifiedVersion: "0.3.0",
+    },
+    {
         id: "broker-streaming",
         name: "Local AI Broker SSE/chunked streaming proxy",
         category: "credential-brokering",
