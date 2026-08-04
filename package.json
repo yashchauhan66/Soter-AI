@@ -30,6 +30,7 @@
     "perf:reports": "node scripts/perf/report-generation-test.js",
     "perf:monitor": "node scripts/perf/server-resource-monitor.js",
     "build:sdk:js": "npm --prefix packages/sdk run build",
+    "build:guard-core": "npm --prefix packages/guard-core run build",
     "test:sdk:js": "npm --prefix packages/sdk run test",
     "security:capabilities": "tsx scripts/generate-capabilities-artifact.ts",
     "security:model-scan": "tsx scripts/model-scan.ts",

@@ -37,6 +37,7 @@ RUN npx prisma generate
 # Build local workspace packages first (e.g. @soterai/core SDK)
 # so that TypeScript can resolve their types during the Next.js build
 RUN npm run build:sdk:js
+RUN npm run build:guard-core
 
 # Build Next.js (standalone output mode)
 RUN npm run build

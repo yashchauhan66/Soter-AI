@@ -95,6 +95,11 @@ jobs:
       - name: Apply database migrations
         run: npx prisma migrate deploy
 
+      # packages/guard-core publishes types from dist/, which is gitignored.
+      # It must be compiled before tsc/next can resolve @soterai/guard-core.
+      - name: Build workspace packages
+        run: npm run build:guard-core
+
       - name: Typecheck
         run: npm run typecheck
 
@@ -140,6 +145,10 @@ jobs:
 
       - name: Apply database migrations
         run: npx prisma migrate deploy
+
+      # Separate runner from the build job — dist/ is not carried over.
+      - name: Build workspace packages
+        run: npm run build:guard-core
 
       - name: Run tests
         run: npm test
