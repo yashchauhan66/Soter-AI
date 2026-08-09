@@ -1,20 +1,29 @@
+
 <div align="center">
   <img src="https://raw.githubusercontent.com/yashchauhan66/Ai-Security-Guard/main/public/logo.png" alt="SoterAI Logo" width="280" />
   
-  # SoterAI — Open-Source AI Security Command Layer
+  # SoterAI — The AI Security Guard for the Age of Agents
   
-  **Protect your chatbots, RAG apps, and AI agents from prompt injection, jailbreaks, data leakage, and agent abuse — defense-in-depth guardrails with an public, reproducible Phase 9 benchmark.**
+  **Stop prompt injection, data leakage, rogue agent actions & regulatory drift — before they happen.**
+  *Self-hostable, offline-capable, India-first detection. Honest, reproducible benchmarks. 966/966 tests. 9-class attack classifier. Response-side DLP.*
   
   <p align="center">
     <a href="https://github.com/yashchauhan66/Ai-Security-Guard"><img src="https://img.shields.io/github/stars/yashchauhan66/Ai-Security-Guard?style=for-the-badge&logo=github&logoColor=white&label=⭐%20Star%20us" alt="GitHub Stars" /></a>
-    <a href="https://www.producthunt.com"><img src="https://img.shields.io/badge/Launching%20June%2030-Product%20Hunt-da552f?style=for-the-badge&logo=producthunt&logoColor=white" alt="Launching June 30 on Product Hunt" /></a>
+    <a href="https://www.producthunt.com"><img src="https://img.shields.io/badge/Live%20on%20Product%20Hunt-da552f?style=for-the-badge&logo=producthunt&logoColor=white" alt="Live on Product Hunt" /></a>
     <a href="https://soterai.in"><img src="https://img.shields.io/badge/Live%20Demo-soterai.in-31d7c8?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" /></a>
     <a href="https://soterai.in/playground"><img src="https://img.shields.io/badge/Try%20Playground-00dc82?style=for-the-badge&logo=react&logoColor=white" alt="Playground" /></a>
     <a href="https://soterai.in/docs"><img src="https://img.shields.io/badge/Docs-31d7c8?style=for-the-badge&logo=gitbook&logoColor=white" alt="Documentation" /></a>
+    <a href="https://www.npmjs.com/package/n8n-nodes-soterai"><img src="https://img.shields.io/badge/n8n%20node-0.5.0-blue?style=for-the-badge&logo=n8n" alt="n8n node v0.5.0" /></a>
+    <a href="https://pypi.org/project/soter/"><img src="https://img.shields.io/badge/PyPI%20soter-blue?style=for-the-badge&logo=python" alt="PyPI soter" /></a>
   </p>
   
   <p align="center">
+    <a href="LICENSE">Business Source License (open core)</a> · <a href="docs/SOTERAI-WORLD-MARKET-RANKING-2026-08-02.md">World analysis</a> · <a href="docs/SOTERAI-ML-COMPETITOR-GAP-MATRIX.md">Model gap matrix</a> · <a href="docs/SOTERLLM-MODEL-CARD.md">Model card</a>
+  </p>
+
+  <p align="center">
     <img src="https://img.shields.io/badge/Phase%209%20Recall-100%25%20synthetic%20dataset-00c8c8?style=flat-square&logo=checkmarx&logoColor=white" alt="100% recall on the Phase 9 synthetic benchmark dataset" />
+
     <img src="https://img.shields.io/badge/Phase%209%20FPR-0.00%25%20synthetic%20controls-00dc82?style=flat-square&logo=test&logoColor=white" alt="0.00% false-positive rate on the Phase 9 synthetic benchmark controls" />
     <img src="https://img.shields.io/badge/p95%2010.92ms%20analyzer-00dc82?style=flat-square&logo=shield&logoColor=white" alt="10.92ms p95 analyzer CPU latency" />
     <img src="https://img.shields.io/badge/Phase%209%20Dataset-3200%20rows-00dc82?style=flat-square&logo=check&logoColor=white" alt="3,200-row Phase 9 synthetic benchmark dataset" />
