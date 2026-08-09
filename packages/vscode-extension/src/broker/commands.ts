@@ -16,6 +16,9 @@ import {
     type ProposedChange,
 } from "./IntegrationAdapter";
 
+/** globalState key holding {path, backupPath} pairs written by secureAllAI. */
+const SECURE_BACKUPS_KEY = "soterai.secureAllAI.backups";
+
 interface BrokerEvent {
     eventId: string;
     sessionId?: string;
@@ -89,7 +92,10 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
                 post: async (url: string, body: string, _h?: Record<string, string>) => { const r = await fetch(url, { method: "POST", body, headers: { "content-type": "application/json" } }); return { status: r.status, body: await r.text() }; },
             };
             const { discoverAllAiTools, buildSecurePlan, executeSecurePlan } = await import("./AutoSecureEngine");
-            const discovered = await discoverAllAiTools(nodeFs, home);
+            // Relative candidates (".env", ".claude/settings.json") must be
+            // anchored to the open workspace, never the extension host's cwd.
+            const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath;
+            const discovered = await discoverAllAiTools(nodeFs, home, workspaceRoot);
 
             // Read every existing config's text into memory for planning (no writes yet).
             const ioFiles: Record<string, string> = {};
@@ -97,24 +103,73 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
             const brokerPort = Number(vscode.workspace.getConfiguration("soterai").get("broker.port", 47321));
             const plan = buildSecurePlan(discovered, ioFiles, brokerPort);
 
-            if (plan.proposed.length === 0 && plan.monitorOnly.length === 0) {
+            if (plan.proposed.length === 0 && plan.monitorOnly.length === 0 && plan.unsupported.length === 0) {
                 vscode.window.showInformationMessage("SoterAI: no AI tool configs found to secure on this machine.");
                 return;
             }
+            if (plan.proposed.length === 0) {
+                // Nothing writable: say so plainly instead of opening a
+                // "Secure Everything" prompt that would do nothing.
+                const detail = plan.unsupported.map((u) => `• ${u.reason}`).join("\n");
+                vscode.window.showWarningMessage(
+                    `SoterAI found AI tooling but nothing it can safely re-route automatically.` +
+                    (detail ? `\n${detail}` : "") +
+                    (plan.monitorOnly.length ? `\nMonitor-only: ${plan.monitorOnly.join(", ")}` : ""),
+                );
+                return;
+            }
             const pick = await vscode.window.showInformationMessage(
-                `🛡️ SoterAI found ${plan.proposed.length} tool config(s) to secure${plan.monitorOnly.length ? ` + ${plan.monitorOnly.length} monitor-only` : ""}.\n` +
-                plan.summaryLines.slice(0, 6).join("\n") + (plan.summaryLines.length > 6 ? `\n…and ${plan.summaryLines.length - 6} more` : ""),
+                `🛡️ SoterAI found ${plan.proposed.length} tool config(s) to secure` +
+                `${plan.monitorOnly.length ? ` + ${plan.monitorOnly.length} monitor-only` : ""}` +
+                `${plan.unsupported.length ? ` + ${plan.unsupported.length} left unchanged` : ""}.\n` +
+                plan.summaryLines.slice(0, 6).join("\n") + (plan.summaryLines.length > 6 ? `\n…and ${plan.summaryLines.length - 6} more` : "") +
+                `\n\nEach file is backed up first; use "SoterAI: Restore AI Configs" to undo.`,
                 { modal: true }, "Secure Everything Now", "Cancel",
             );
             if (pick !== "Secure Everything Now") return;
 
             const outcome = await executeSecurePlan(plan, discovered, nodeFs, nodeHttp, true, `${s.url}/health`);
+            // Persist backup pointers so restore works in a later session.
+            const restorable = outcome.applied.filter((a) => a.applied && a.backupPath);
+            if (restorable.length > 0) {
+                await context.globalState.update(SECURE_BACKUPS_KEY, restorable.map((a) => ({ path: a.path, backupPath: a.backupPath })));
+            }
             refresh();
             const verif = outcome.verified.map((v) => `${v.ok ? "✅" : "⚠️"} ${v.toolId}: ${v.detail}`).join("\n");
-            vscode.window.showInformationMessage(outcome.headline + (verif ? `\n${verif}` : ""));
+            const unsup = outcome.unsupported.map((u) => `⚠️ ${u.reason}`).join("\n");
+            const message = [outcome.headline, verif, unsup].filter(Boolean).join("\n");
+            const anyFailed = outcome.verified.some((v) => !v.ok);
+            if (anyFailed) vscode.window.showWarningMessage(message);
+            else vscode.window.showInformationMessage(message);
         } catch (e) {
             vscode.window.showErrorMessage(`Secure My AI failed: ${e instanceof Error ? e.message : String(e)}`);
         }
+    });
+    reg("soterai.restoreAIConfigs", async () => {
+        const saved = context.globalState.get<Array<{ path: string; backupPath: string }>>(SECURE_BACKUPS_KEY, []);
+        if (saved.length === 0) {
+            vscode.window.showInformationMessage("SoterAI: no AI config backups recorded — nothing to restore.");
+            return;
+        }
+        const pick = await vscode.window.showWarningMessage(
+            `Restore ${saved.length} AI config file(s) from SoterAI backups? Current contents will be overwritten:\n` +
+            saved.map((s) => `• ${s.path}`).join("\n"),
+            { modal: true }, "Restore",
+        );
+        if (pick !== "Restore") return;
+        const fsp = require("fs/promises");
+        const nodeFs: FileIO = {
+            readText: async (p: string) => { try { return await fsp.readFile(p, "utf8"); } catch { return null; } },
+            writeText: async (p: string, c: string) => fsp.writeFile(p, c, "utf8"),
+            exists: async (p: string) => { try { await fsp.access(p); return true; } catch { return false; } },
+        };
+        const { restoreAll } = await import("./AutoSecureEngine");
+        const result = await restoreAll(saved.map((s) => ({ path: s.path, backupPath: s.backupPath, applied: true })), nodeFs);
+        if (result.failed.length === 0) await context.globalState.update(SECURE_BACKUPS_KEY, []);
+        vscode.window.showInformationMessage(
+            `SoterAI restored ${result.restored} config(s).` +
+            (result.failed.length ? ` Failed (backup missing): ${result.failed.join(", ")}` : ""),
+        );
     });
     reg("soterai.startLocalAIBroker", async () => { const s = await started(); vscode.window.showInformationMessage(`SoterAI Local AI Broker running at ${s.url} (authenticated, local-only).`); });
     reg("soterai.stopLocalAIBroker", async () => { await manager.stop(); refresh(); vscode.window.showInformationMessage("SoterAI Local AI Broker stopped."); });

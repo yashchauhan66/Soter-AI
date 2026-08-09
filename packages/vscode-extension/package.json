@@ -2,7 +2,7 @@
     "name": "soterai-ide-guard",
     "displayName": "SoterAI IDE Guard — Local AI Security",
     "description": "Protect secrets, prompts, MCP tools, terminal commands, and AI coding context locally before they reach AI.",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "publisher": "soterai",
     "preview": false,
     "pricing": "Free",
@@ -715,6 +715,16 @@
                 "category": "SoterAI"
             },
             {
+                "command": "soterai.copyPreCommitHookScript",
+                "title": "SoterAI: Copy Pre-Commit Hook Script (for husky/lefthook repos)",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.restoreAIConfigs",
+                "title": "SoterAI: Restore AI Configs (undo Secure My AI)",
+                "category": "SoterAI"
+            },
+            {
                 "command": "soterai.openWalkthrough",
                 "title": "SoterAI: Open Getting Started Walkthrough",
                 "category": "SoterAI"
@@ -998,7 +1008,28 @@
         "menus": {
             "commandPalette": [
                 {
-                    "command": "soterai.secureAllAI"
+                    "command": "soterai.scanClipboardAICode",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.installGitSecretHook",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.copyPreCommitHookScript",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.checkScreenShareRisk",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.scanLocalModelLogs",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.reviewDependencyGuardMode",
+                    "when": "soterai.advancedCommands"
                 },
                 {
                     "command": "soterai.useSensitiveContextSafely",
@@ -1602,6 +1633,7 @@
         "openvsx:publish": "node ../../scripts/publish-openvsx.mjs"
     },
     "devDependencies": {
+        "@soterai/detectors": "file:../detectors",
         "@soterai/guard-core": "file:../guard-core",
         "@types/node": "22.10.2",
         "@types/vscode": "^1.85.0",
