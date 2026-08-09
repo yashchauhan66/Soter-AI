@@ -75,6 +75,29 @@ export function isAiEgressHost(url: string): boolean {
     }
 }
 
+/**
+ * Vector / RAG database endpoints. Text sent here is usually embedded and
+ * PERSISTED, so a leak is durable rather than transient — worth calling out
+ * separately from a generic unknown host.
+ *
+ * Lives here (not in continuousGuards) because this module must stay free of
+ * `vscode` imports so it remains testable outside the extension host.
+ */
+export const RAG_EGRESS_HOSTS = [
+    "api.pinecone.io", "pinecone.io", "weaviate.io", "weaviate.network",
+    "qdrant.io", "qdrant.tech", "api.zilliz.com", "zilliz.com",
+    "chroma.streamlit.app", "trychroma.com", "vectorize.workers.dev",
+    "lancedb.com", "api.vectara.io", "turbopuffer.com", "upstash.io",
+];
+
+/** True if the payload targets a vector/RAG DB (durable embedding leak risk). */
+export function isRagEgress(url: string): boolean {
+    try {
+        const host = new URL(url).hostname.toLowerCase();
+        return RAG_EGRESS_HOSTS.some((d) => host === d || host.endsWith(`.${d}`));
+    } catch { return false; }
+}
+
 /** Run every guard-core detector over one text variant. */
 function scanVariant(text: string): { secrets: DetectorMatch[]; attack: DetectorMatch[] } {
     return {
@@ -176,6 +199,25 @@ export function evaluateEgressToHost(text: string, url: string, allowedHosts: st
         return { ...result, decision: result.decision === "ALLOW" ? "ASK" : result.decision, reason: `${result.reason} Destination URL could not be parsed.` };
     }
     const approved = allowedHosts.some((h) => host === h.toLowerCase() || host.endsWith(`.${h.toLowerCase()}`));
+    const rag = isRagEgress(url);
+
+    // A vector DB is never "approved" for secret-bearing text: unlike a chat
+    // completion, what lands there is embedded and kept.
+    if (rag && (result.decision === "REDACT" || result.decision === "BLOCK")) {
+        return {
+            ...result,
+            decision: "BLOCK",
+            reason: `${result.reason} Destination ${host} is a vector/RAG database — embedded content is stored persistently.`,
+        };
+    }
+    if (rag && result.decision === "ALLOW") {
+        return {
+            ...result,
+            decision: "ASK",
+            riskScore: Math.max(result.riskScore, 30),
+            reason: `Destination ${host} is a vector/RAG database — content sent here is embedded and retained. Confirm before indexing it.`,
+        };
+    }
     if (approved) return result;
 
     if (result.decision === "REDACT" || result.decision === "BLOCK") {

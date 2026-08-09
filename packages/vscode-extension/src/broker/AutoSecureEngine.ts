@@ -144,14 +144,33 @@ export interface DiscoveredTool {
     status: "found" | "monitor-only" | "not-installed";
 }
 
-export async function discoverAllAiTools(io: FileIO, homeDir: string): Promise<DiscoveredTool[]> {
+/**
+ * Expand a candidate to an absolute path.
+ *
+ * `${HOME}` candidates resolve against the home dir. Workspace-relative
+ * candidates (".env", ".claude/settings.json") MUST resolve against the open
+ * workspace — leaving them relative makes the extension host resolve them
+ * against its own cwd, which is the VS Code install dir, not the user's
+ * project. That both missed real configs and risked writing into an
+ * unrelated directory.
+ */
+function expandCandidate(candidate: string, homeDir: string, workspaceRoot?: string): string | null {
+    if (candidate.includes("${HOME}")) return candidate.replace("${HOME}", homeDir);
+    if (!workspaceRoot) return null; // no workspace open → skip relative candidates
+    const sep = workspaceRoot.includes("\\") && !workspaceRoot.includes("/") ? "\\" : "/";
+    return `${workspaceRoot.replace(/[\\/]+$/, "")}${sep}${candidate}`;
+}
+
+export async function discoverAllAiTools(io: FileIO, homeDir: string, workspaceRoot?: string): Promise<DiscoveredTool[]> {
     const results: DiscoveredTool[] = [];
     for (const spec of KNOWN_AI_TOOLS) {
         if (spec.mode === "monitor") {
             results.push({ spec, configs: [], status: "monitor-only" });
             continue;
         }
-        const candidates = spec.configCandidates.map((c) => c.replace("${HOME}", homeDir));
+        const candidates = spec.configCandidates
+            .map((c) => expandCandidate(c, homeDir, workspaceRoot))
+            .filter((c): c is string => c !== null);
         let configs: DetectedConfig[] = [];
         try {
             configs = await detectIntegrationConfigs(candidates, io);
@@ -174,6 +193,8 @@ export async function discoverAllAiTools(io: FileIO, homeDir: string): Promise<D
 export interface SecurePlan {
     proposed: ProposedChange[];
     monitorOnly: string[];        // tool ids we can't route
+    /** Configs we found but deliberately refused to rewrite (would corrupt them). */
+    unsupported: Array<{ toolId: string; path: string; reason: string }>;
     brokerNeeded: boolean;
     summaryLines: string[];
 }
@@ -181,6 +202,7 @@ export interface SecurePlan {
 export function buildSecurePlan(discovered: DiscoveredTool[], ioFiles: Record<string, string>, brokerPort: number): SecurePlan {
     const proposed: ProposedChange[] = [];
     const monitorOnly: string[] = [];
+    const unsupported: Array<{ toolId: string; path: string; reason: string }> = [];
     const summaryLines: string[] = [];
 
     for (const d of discovered) {
@@ -194,9 +216,14 @@ export function buildSecurePlan(discovered: DiscoveredTool[], ioFiles: Record<st
         for (const cfg of d.configs) {
             const currentText = ioFiles[cfg.path];
             if (currentText === undefined) continue;
-            const kind = cfg.kind === "generic-json" && d.spec.mode === "env" ? "anthropic-compatible" : cfg.kind;
-            const change = proposeBrokerRewrite(cfg.path, currentText, kind, brokerPort);
-            if (change.after !== change.before) {
+            // Use the kind the file itself reports. Coercing every env-mode
+            // tool to "anthropic-compatible" pointed OpenAI-backed tools at
+            // the Anthropic broker route.
+            const change = proposeBrokerRewrite(cfg.path, currentText, cfg.kind, brokerPort);
+            if (change.unsupportedReason) {
+                unsupported.push({ toolId: d.spec.id, path: cfg.path, reason: change.unsupportedReason });
+                summaryLines.push(`⚠️  ${d.spec.name}: ${cfg.path} left unchanged (not safely rewritable)`);
+            } else if (change.after !== change.before) {
                 proposed.push(change);
                 summaryLines.push(`✅ ${d.spec.name}: will route via ${change.brokerBaseUrl}`);
             } else {
@@ -204,7 +231,7 @@ export function buildSecurePlan(discovered: DiscoveredTool[], ioFiles: Record<st
             }
         }
     }
-    return { proposed, monitorOnly, brokerNeeded: proposed.length > 0, summaryLines };
+    return { proposed, monitorOnly, unsupported, brokerNeeded: proposed.length > 0, summaryLines };
 }
 
 /* ------------------------------------------------------------------ */
@@ -215,6 +242,8 @@ export interface SecureOutcome {
     applied: ApplyResult[];
     verified: Array<{ toolId: string; ok: boolean; detail: string }>;
     monitorOnly: string[];
+    /** Carried through from the plan so the UI never implies these are covered. */
+    unsupported: Array<{ toolId: string; path: string; reason: string }>;
     brokerOnline: boolean;
     headline: string;
 }
@@ -240,6 +269,7 @@ export async function executeSecurePlan(
             applied: [],
             verified: [],
             monitorOnly: plan.monitorOnly,
+            unsupported: plan.unsupported,
             brokerOnline: false,
             headline: "❌ Broker offline — start SoterAI Local AI Broker first, then click Secure again.",
         };
@@ -271,11 +301,24 @@ export async function executeSecurePlan(
     }
 
     const okCount = applied.filter((a) => a.applied).length;
-    const headline =
-        okCount === 0
-            ? "Nothing to change — everything reachable is already secure."
-            : `🛡️ Secured ${okCount} tool config(s). Secrets now redact before they reach any connected LLM.`;
-    return { applied, verified, monitorOnly: plan.monitorOnly, brokerOnline, headline };
+    const failedVerify = verified.filter((v) => !v.ok).length;
+    const skipped = plan.unsupported.length;
+    const tail = skipped > 0 ? ` ${skipped} config(s) left unchanged — see details.` : "";
+
+    let headline: string;
+    if (okCount === 0) {
+        headline = skipped > 0
+            ? `No config was safely rewritable.${tail}`
+            : "Nothing to change — everything reachable is already secure.";
+    } else if (failedVerify > 0) {
+        // Never claim redaction we did not observe end-to-end.
+        headline =
+            `⚠️ Rewrote ${okCount} config(s) but ${failedVerify} did not pass the broker smoke test — ` +
+            `redaction is NOT confirmed. Run "SoterAI: Restore AI Configs" if your tools misbehave.${tail}`;
+    } else {
+        headline = `🛡️ Secured ${okCount} tool config(s). Secrets now redact before they reach any connected LLM.${tail}`;
+    }
+    return { applied, verified, monitorOnly: plan.monitorOnly, unsupported: plan.unsupported, brokerOnline, headline };
 }
 
 /* ------------------------------------------------------------------ */

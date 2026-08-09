@@ -376,6 +376,10 @@ describe("Command-palette hygiene (clutter control)", () => {
         "soterai.scanMCPAgentTools", "soterai.openAIActivityLedger", "soterai.generateCanaryToken", "soterai.choosePolicyPack",
         "soterai.openPrivacyGuarantee", "soterai.openLocalPrivacyStatus", "soterai.buildSafePromptForAI", "soterai.runSecretBrokerDemo",
         "soterai.openWalkthrough", "soterai.scanClipboard", "soterai.checkBeforeSendingToAI",
+        // "Secure My AI" is the flagship one-click entry point, and its undo must
+        // stay findable — a rewrite the user cannot reverse from the palette is
+        // worse than one they never ran.
+        "soterai.secureAllAI", "soterai.restoreAIConfigs",
     ];
     const palette: Array<{ command: string; when?: string }> = pkg.contributes.menus?.commandPalette ?? [];
     const gated = new Map(palette.map((e) => [e.command, e.when]));

@@ -506,6 +506,123 @@ export const CAPABILITY_REGISTRY: ProtectionCapability[] = [
         wiredInRuntime: false,
         lastVerifiedVersion: VERSION,
     },
+    {
+        id: "ai-config-auto-route",
+        name: "\"Secure My AI\" — re-route discovered AI tool configs through the local broker",
+        category: "credential-brokering",
+        // ADVISORY, not enforcement: this edits config files so that traffic
+        // WILL flow through the broker. The enforcement then belongs to the
+        // broker capabilities, not to this one. Nothing is blocked here, and a
+        // tool can be re-pointed away at any time.
+        level: "ADVISORY_ONLY",
+        integration: "extension AutoSecureEngine + IntegrationAdapter + broker",
+        enforcementPoint: "packages/vscode-extension/src/broker/{AutoSecureEngine,IntegrationAdapter}.ts",
+        preExecutionBlock: false,
+        rollbackSupported: true,
+        conditions: [
+            "Broker must be online — the plan refuses to rewrite configs while it is down",
+            "Every write requires explicit approval and makes a timestamped backup first",
+            "Only files with a rewritable base-URL field, or line-oriented formats (.env / shell profile), are changed",
+            "Reverse with \"SoterAI: Restore AI Configs\"",
+        ],
+        knownBypasses: [
+            "JSON/YAML configs with no base-URL field are deliberately left untouched and reported as not secured",
+            "A tool that hard-codes its endpoint (e.g. GitHub Copilot) cannot be re-routed at all — monitor-only",
+            "The user or another tool can re-point the base URL back to the provider afterwards",
+            "Env vars written to a shell profile only apply to shells started afterwards",
+        ],
+        evidenceTestIds: ["auto-secure-engine.test.ts", "integration-adapter.test.ts"],
+        wiredInRuntime: true,
+        lastVerifiedVersion: "0.4.0",
+    },
+    {
+        id: "git-precommit-secret-hook",
+        name: "Git pre-commit secret scan hook",
+        category: "secret-leak-prevention",
+        // The hook itself blocks the commit, but SoterAI only installs it: git
+        // runs it, `--no-verify` skips it, and a managed hooksPath repo is
+        // refused outright rather than given a hook that never fires.
+        level: "ADVISORY_ONLY",
+        integration: "extension installs .git/hooks/pre-commit; git executes it",
+        enforcementPoint: "packages/vscode-extension/src/scanners/continuousGuards.ts#buildPreCommitHook",
+        preExecutionBlock: false,
+        rollbackSupported: true,
+        conditions: [
+            "Repo does not set core.hooksPath (husky/lefthook) — SoterAI refuses to install a hook git would ignore",
+            "Hook is written with mode 0755; the user is warned when that cannot be set",
+            "An existing pre-commit hook is backed up to pre-commit.soterai-backup before replacement",
+        ],
+        knownBypasses: [
+            "git commit --no-verify skips all hooks by design",
+            "Regex secret patterns only; a novel credential format can pass",
+            "Only staged diff content is scanned, not full file history",
+        ],
+        evidenceTestIds: ["continuous-guards.test.ts"],
+        wiredInRuntime: true,
+        lastVerifiedVersion: "0.4.0",
+    },
+    {
+        id: "screen-share-exposure-warning",
+        name: "Screen-share / screenshot exposure warning",
+        category: "visibility",
+        level: "VISIBILITY_ONLY",
+        integration: "extension command over visible editors",
+        enforcementPoint: "packages/vscode-extension/src/scanners/continuousGuards.ts#buildScreenShareWarnings",
+        preExecutionBlock: false,
+        rollbackSupported: false,
+        conditions: ["User runs the check; matches on basename of each visible editor"],
+        knownBypasses: [
+            "Cannot detect that a screen share is actually in progress — VS Code exposes no such API",
+            "Only open editors are considered; terminals, panels, and other windows are not",
+            "Filename-based heuristics; a secret in an ordinarily-named file is not flagged",
+        ],
+        evidenceTestIds: ["continuous-guards.test.ts"],
+        wiredInRuntime: true,
+        lastVerifiedVersion: "0.4.0",
+    },
+    {
+        id: "local-model-log-scan",
+        name: "Local-model log secret scan (Ollama / LM Studio)",
+        category: "secret-leak-prevention",
+        level: "DETECTION_ONLY",
+        integration: "extension command + guard-core secret detectors over known log paths",
+        enforcementPoint: "packages/vscode-extension/src/scanners/continuousGuards.ts#resolveLocalModelLogFiles",
+        preExecutionBlock: false,
+        rollbackSupported: false,
+        conditions: [
+            "Known Ollama / LM Studio log locations only",
+            "Directory candidates are expanded to the files inside them (bounded)",
+        ],
+        knownBypasses: [
+            "Custom or relocated log directories are not discovered",
+            "Cannot prevent the local model from writing prompts to disk — detection after the fact only",
+            "Reports how many files it actually read; unreadable files are counted separately, never assumed clean",
+        ],
+        evidenceTestIds: ["continuous-guards.test.ts"],
+        wiredInRuntime: true,
+        lastVerifiedVersion: "0.4.0",
+    },
+    {
+        id: "rag-egress-detection",
+        name: "RAG / vector-DB egress detection",
+        category: "data-minimization",
+        level: "PARTIAL_ENFORCEMENT",
+        integration: "folded into the egress firewall host decision",
+        enforcementPoint: "packages/vscode-extension/src/advanced/egressFirewall.ts#isRagEgress, evaluateEgressToHost",
+        preExecutionBlock: true,
+        rollbackSupported: false,
+        conditions: [
+            "Payload is routed through evaluateEgressToHost with a destination URL",
+            "Secret-bearing content to a vector DB escalates to BLOCK; clean content escalates to ASK because embeddings persist",
+        ],
+        knownBypasses: [
+            "Direct HTTP from other extensions or processes is never seen — VS Code exposes no network hook",
+            "Host list covers known managed vector DBs; a self-hosted Qdrant/Chroma on an arbitrary host is not recognised",
+        ],
+        evidenceTestIds: ["continuous-guards.test.ts", "egress-firewall.test.ts"],
+        wiredInRuntime: true,
+        lastVerifiedVersion: "0.4.0",
+    },
 ];
 
 /** A violation of the honesty invariant. */

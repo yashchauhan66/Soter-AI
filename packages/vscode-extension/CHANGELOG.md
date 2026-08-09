@@ -1,5 +1,75 @@
 # Changelog
 
+## [0.4.0] - 2026-08-09
+
+A real-user pass over the 0.3.x feature surface. Every entry below is a defect
+that shipped in 0.3.0 and was reproduced before it was fixed. Several of them
+were features that *reported* protection while doing nothing — those are the
+ones worth reading.
+
+### Fixed
+- **Screen-share exposure warning missed almost every secret file.** The check
+  compared the whole path string against `.env`, so only a workspace-root `.env`
+  was ever flagged; `sub/.env`, `backend/.env.production`, `~/.aws/config` and
+  any absolute path outside the workspace were silently ignored. Matching now
+  happens on the basename, with an added path check for files under `.ssh`,
+  `.aws`, `.gnupg`, `.kube` and `.docker`, plus key material (`.pem`, `.key`,
+  `.p12`, `id_rsa`…) and secret-named files.
+- **The git pre-commit hook could be installed dead, and could destroy an
+  existing hook.** Three separate problems: the file was written without the
+  executable bit, so git skips it entirely on macOS/Linux while the UI claimed
+  success; a repo using husky/lefthook (`core.hooksPath`) had its hook written
+  to the directory git ignores; and any pre-existing `pre-commit` hook was
+  overwritten with no backup. Install now refuses when `core.hooksPath` is set
+  and explains why, backs up a foreign hook to `pre-commit.soterai-backup`,
+  sets mode `0755`, and warns honestly when the exec bit cannot be set.
+- **Dependency Guard claimed findings that no scan had produced.** The OSV
+  nudge was called with a hardcoded "risky packages found" flag, so the prompt
+  asserted local findings even when nothing had been scanned. The nudge now
+  takes explicit evidence and says plainly when no scan has run.
+- **Local-model log scan reported "clean" after reading nothing.** LM Studio's
+  `server-logs` is a directory; `readFile` failed with `EISDIR`, the error was
+  swallowed, and the command reported no persisted secrets. Directory
+  candidates are now expanded to the files inside them (bounded per directory),
+  and the result states how many files were actually read and how many could
+  not be read, instead of treating unread as clean.
+- **"Secure My AI" had no palette-reachable undo.** `SoterAI: Restore AI
+  Configs` is now a core palette command. A one-click rewrite the user cannot
+  reverse from the palette is worse than one they never ran.
+- Declared `@soterai/detectors`, which was required at runtime but present only
+  via the workspace symlink and esbuild inlining.
+- Added `SoterAI: Copy Pre-Commit Hook Script` as the escape hatch for
+  husky/lefthook repos, referenced by the refusal message above.
+
+### Security
+- **RAG / vector-database egress is now enforced rather than advertised.** The
+  host list and `isRagEgress` existed with no caller while the module header
+  claimed the detection shipped. They now live in `egressFirewall.ts` and are
+  folded into the live `evaluateEgressToHost` path: secret-bearing content to a
+  vector DB escalates to `BLOCK` (embedded content is persisted, so a leak
+  there is durable, not transient), and clean content becomes `ASK` before it
+  is indexed.
+
+### Honesty
+- Registered the five newly-wired protections in the capability registry at the
+  level each one actually reaches: `ai-config-auto-route` and
+  `git-precommit-secret-hook` as **ADVISORY_ONLY** (they edit configuration so
+  traffic *will* flow through the broker — the enforcement belongs to the
+  broker's own capabilities, not to these), `screen-share-exposure-warning` as
+  **VISIBILITY_ONLY** (VS Code cannot detect an in-progress screen share),
+  `local-model-log-scan` as **DETECTION_ONLY**, and `rag-egress-detection` as
+  **PARTIAL_ENFORCEMENT**. Known bypasses, including `git commit --no-verify`,
+  are declared in the registry rather than omitted.
+
+### Verified
+- Extension: 176/176 tests across 49 suites pass; typecheck clean.
+- guard-core: 466/466 tests pass; capability registry honesty invariant passes
+  (`honest=true`, 28 capabilities).
+- 37 new regression tests cover the modules above, which had **zero** coverage
+  in 0.3.0 — that absence is how a warning matching one filename, a hook with
+  no exec bit, a claim with no scan behind it, and a scanner that read nothing
+  all shipped in the same release.
+
 ## [0.3.0] - 2026-08-04
 
 ### Added

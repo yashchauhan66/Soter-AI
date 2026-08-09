@@ -26,6 +26,11 @@ export interface ProposedChange {
     after: string;
     brokerBaseUrl: string;
     summary: string;
+    /**
+     * Set when the file could not be rewritten without corrupting it.
+     * `after === before` in that case; callers must report "not secured".
+     */
+    unsupportedReason?: string;
 }
 
 export interface ApplyResult {
@@ -116,8 +121,48 @@ function extractBaseUrl(text: string): string | undefined {
 }
 
 /**
+ * File shapes we may be asked to rewrite. The append-a-shell-directive
+ * fallback is only ever legal for line-oriented formats: appending
+ * `KEY=value` after the closing brace of a JSON file produces a file the
+ * owning tool can no longer parse, which breaks the very tool we claim to
+ * be protecting.
+ */
+export type ConfigFormat = "json" | "yaml" | "dotenv" | "shell" | "unknown";
+
+/** Classify by extension/filename first, then by content shape. */
+export function detectConfigFormat(filePath: string, text: string): ConfigFormat {
+    const base = filePath.replace(/\\/g, "/").split("/").pop()?.toLowerCase() ?? "";
+    if (base.endsWith(".json") || base.endsWith(".jsonc")) return "json";
+    if (base.endsWith(".yml") || base.endsWith(".yaml")) return "yaml";
+    if (base === ".env" || base.startsWith(".env.")) return "dotenv";
+    if (/^\.(bashrc|zshrc|profile|bash_profile|zprofile|zshenv|kshrc)$/.test(base)) return "shell";
+    if (base.endsWith(".sh")) return "shell";
+    // Content fallback: a document that parses as JSON is JSON regardless of name.
+    const trimmed = text.trim();
+    if (trimmed.startsWith("{") || trimmed.startsWith("[")) {
+        try { JSON.parse(trimmed); return "json"; } catch { return "json"; }
+    }
+    return "unknown";
+}
+
+/**
+ * Shell profiles need `export` or the variable is set only in the profile's
+ * own shell and never inherited by the AI CLI the user actually runs —
+ * i.e. the "protection" would be inert while the UI claimed success.
+ * `.env` files are read by dotenv loaders and must NOT carry `export`.
+ */
+function directiveFor(format: ConfigFormat, varName: string, url: string): string {
+    const assignment = `${varName}=${url}`;
+    return format === "shell" ? `export ${assignment}` : assignment;
+}
+
+/**
  * Build a proposed rewrite that points the client at the loopback broker.
  * Does not write anything.
+ *
+ * Returns `after === before` (a no-op) when the file cannot be rewritten
+ * safely. Callers MUST treat a no-op as "not secured" and report it
+ * honestly rather than claiming coverage.
  */
 export function proposeBrokerRewrite(
     path: string,
@@ -132,8 +177,10 @@ export function proposeBrokerRewrite(
 
     let after = currentText;
     let summary = `Point integration at ${brokerBaseUrl}`;
+    let unsupportedReason: string | undefined;
 
-    // JSON-style base URL fields
+    // In-place edits of an existing base-URL field are safe in every format:
+    // they replace a value without changing the document's structure.
     if (/"baseURL"\s*:/.test(currentText)) {
         after = currentText.replace(/("baseURL"\s*:\s*")[^"]*(")/i, `$1${brokerBaseUrl}$2`);
     } else if (/"base_url"\s*:/.test(currentText)) {
@@ -145,13 +192,23 @@ export function proposeBrokerRewrite(
     } else if (/ANTHROPIC_BASE_URL\s*=/.test(currentText)) {
         after = currentText.replace(/(ANTHROPIC_BASE_URL\s*=\s*)\S+/i, `$1${brokerBaseUrl}`);
     } else {
-        // Append a clearly marked block rather than inventing structure silently
-        const block =
-            kind === "anthropic-compatible"
-                ? `\n# SoterAI broker (added — review before commit)\nANTHROPIC_BASE_URL=${brokerBaseUrl}\n`
-                : `\n# SoterAI broker (added — review before commit)\nOPENAI_BASE_URL=${brokerBaseUrl}\n`;
-        after = currentText.endsWith("\n") ? currentText + block.trimStart() : currentText + "\n" + block.trimStart();
-        summary = `Append broker base URL directive for ${kind}`;
+        // No field to edit. Appending is only safe in line-oriented formats.
+        const format = detectConfigFormat(path, currentText);
+        if (format === "json" || format === "yaml" || format === "unknown") {
+            unsupportedReason =
+                `${path} is ${format === "unknown" ? "an unrecognised format" : format.toUpperCase()} with no base-URL field; ` +
+                "appending a shell directive would corrupt it. Left untouched — set the base URL manually.";
+            summary = `Cannot auto-route ${path} safely (${format}); left unchanged`;
+        } else {
+            const varName = kind === "anthropic-compatible" ? "ANTHROPIC_BASE_URL" : "OPENAI_BASE_URL";
+            const block =
+                `# SoterAI broker (added — review before commit)\n` +
+                `${directiveFor(format, varName, brokerBaseUrl)}\n`;
+            after = currentText.endsWith("\n") || currentText === ""
+                ? currentText + block
+                : currentText + "\n" + block;
+            summary = `Append broker base URL directive for ${kind}`;
+        }
     }
 
     return {
@@ -161,6 +218,7 @@ export function proposeBrokerRewrite(
         after,
         brokerBaseUrl,
         summary,
+        unsupportedReason,
     };
 }
 
