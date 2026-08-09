@@ -5,7 +5,7 @@ import type {
   IDataObject,
   JsonObject,
 } from "n8n-workflow";
-import { NodeApiError, NodeOperationError } from "n8n-workflow";
+import { NodeApiError, NodeOperationError, sleep } from "n8n-workflow";
 
 export const PACKAGE_VERSION = "0.5.0";
 const USER_AGENT = `n8n-nodes-soterai/${PACKAGE_VERSION}`;
@@ -32,10 +32,6 @@ export const SINGLE_OUTPUT_ACTIONS = ["piiRedactor"];
 
 export function outputCountForAction(action: string): number {
   return SINGLE_OUTPUT_ACTIONS.includes(action) ? 1 : 2;
-}
-
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 /**

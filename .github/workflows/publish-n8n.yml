@@ -38,10 +38,10 @@ jobs:
           node-version: 22
           registry-url: https://registry.npmjs.org
 
-      - name: Install root lint dependencies
-        run: npm install --no-audit --no-fund --ignore-scripts
-        working-directory: .
-
+      # No root `npm install` here on purpose. The root installs
+      # eslint-plugin-react, which crashes under the ESLint 10 that
+      # @n8n/node-cli runs ("contextOrFilename.getFilename is not a function"),
+      # because ESLint resolves plugins from parent directories.
       - name: Install dependencies
         run: npm install --no-audit --no-fund
 

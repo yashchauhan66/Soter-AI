@@ -25,25 +25,25 @@ exports.soterGuardProperties = [
             {
                 name: "Analyze Text (Report Only)",
                 value: "analyzeText",
-                description: "Report risk for any text. Does not block — it sorts items into Safe and Flagged so you can decide",
+                description: "Report risk for any text. Does not block — it sorts items into Safe and Flagged so you can decide.",
                 action: "Analyze text for AI security risks",
             },
             {
                 name: "Audit N8N Workflow Security (Report Only)",
                 value: "workflowAudit",
-                description: "Score an exported n8n workflow for AI, tool, webhook, code, RAG, and data-leak risks. Runs locally and sends nothing",
+                description: "Score an exported n8n workflow for AI, tool, webhook, code, RAG, and data-leak risks. Runs locally and sends nothing.",
                 action: "Audit an n8n workflow for AI security risks",
             },
             {
                 name: "Get RAG Risk Summary (Report Only)",
                 value: "ragScanner",
-                description: "Scan a document or chunk before adding it to a vector database. Untrusted documents leave through Flagged",
+                description: "Scan a document or chunk before adding it to a vector database. Untrusted documents leave through Flagged.",
                 action: "Scan RAG document for threats",
             },
             {
                 name: "Guard Input (Start Here)",
                 value: "inputGuard",
-                description: "Check a user message before it reaches the LLM, and block or redact it. The usual first step",
+                description: "Check a user message before it reaches the LLM, and block or redact it. The usual first step.",
                 action: "Check user input for threats",
             },
             {
@@ -55,13 +55,13 @@ exports.soterGuardProperties = [
             {
                 name: "Redact Secrets or PII (Report Only)",
                 value: "piiRedactor",
-                description: "Return a redacted copy of any text. Always continues — use the redacted output downstream",
+                description: "Return a redacted copy of any text. Always continues — use the redacted output downstream.",
                 action: "Redact PII from text",
             },
             {
                 name: "Universal AI Firewall (Advanced)",
                 value: "universalGuard",
-                description: "One guard covering prompt, RAG, tools, memory, output, and data leakage. Most powerful, most setup",
+                description: "One guard covering prompt, RAG, tools, memory, output, and data leakage. Most powerful, most setup.",
                 action: "Protect an AI workflow end to end",
             },
         ],
@@ -187,7 +187,7 @@ exports.soterGuardProperties = [
         default: "MAXIMUM",
         hint: "Sets HOW MUCH gets flagged. 'On Threat' below sets WHAT HAPPENS once something is flagged",
         displayOptions: { show: { action: ["universalGuard"] } },
-        description: "How sensitive detection should be. This controls how many things are treated as threats, not what the node does about them — that is 'On Threat'",
+        description: "How sensitive detection should be. This controls how many things are treated as threats, not what the node does about them — that is 'On Threat'.",
     },
     // PII Redactor fields
     {
@@ -221,6 +221,8 @@ exports.soterGuardProperties = [
         type: "string",
         default: "",
         required: true,
+        // n8n expressions are case-sensitive: $json.ID would not resolve.
+        // eslint-disable-next-line n8n-nodes-base/node-param-placeholder-miscased-id
         placeholder: "={{ $json.id }}",
         hint: "Any stable ID for this document, so repeat scans can be correlated",
         displayOptions: { show: { action: ["ragScanner"] } },
@@ -285,7 +287,7 @@ exports.soterGuardProperties = [
         placeholder: "billing, shipping, returns",
         hint: "Optional. Leave empty to keep the off-topic guard switched off",
         displayOptions: { show: { action: ["inputGuard", "universalGuard"] } },
-        description: "Comma-separated subjects this assistant is meant to handle. An empty list means no topical scope is defined, not that everything is off-topic",
+        description: "Comma-separated subjects this assistant is meant to handle. An empty list means no topical scope is defined, not that everything is off-topic.",
     },
     {
         displayName: "System Prompt Context",
@@ -309,7 +311,7 @@ exports.soterGuardProperties = [
         placeholder: '{\n  "rag": { "text": "retrieved chunk", "documentId": "doc-1", "source": "upload" },\n  "tool": { "name": "email.send", "action": "send", "destination": "external" },\n  "output": { "destinationType": "FINAL_OUTPUT" }\n}',
         hint: "Optional. Leave empty to check the prompt and response only — every key below is independent",
         displayOptions: { show: { action: ["universalGuard"], "@version": [1] } },
-        description: "Adds the RAG, tool-call, memory, and output-destination layers. Supported keys: rag, tool, memory, output",
+        description: "Adds the RAG, tool-call, memory, and output-destination layers. Supported keys: rag, tool, memory, output.",
     },
     // Version 2 replaces that JSON blob with guided fields. Each layer is an
     // independent section a user adds only if their workflow has that surface, so
@@ -321,7 +323,7 @@ exports.soterGuardProperties = [
         default: {},
         placeholder: "Add Security Layer",
         displayOptions: { show: { action: ["universalGuard"], "@version": [2] } },
-        description: "Optional extra layers to check alongside the prompt and response. Add only the ones your workflow actually has — each is independent",
+        description: "Optional extra layers to check alongside the prompt and response. Add only the ones your workflow actually has — each is independent.",
         options: [
             {
                 displayName: "Retrieved Context (RAG)",
@@ -367,22 +369,13 @@ exports.soterGuardProperties = [
                 name: "tool",
                 values: [
                     {
-                        displayName: "Tool Name",
-                        name: "name",
+                        displayName: "Content",
+                        name: "content",
                         type: "string",
+                        typeOptions: { rows: 2 },
                         default: "",
-                        placeholder: "email.send",
-                        hint: "Required once this layer is added",
-                        description: "The tool or function the AI wants to call",
-                    },
-                    {
-                        displayName: "Tool Action",
-                        name: "action",
-                        type: "string",
-                        default: "",
-                        placeholder: "send",
-                        hint: "Required once this layer is added",
-                        description: "What the call would do, such as send, write, delete, or query",
+                        placeholder: "={{ $json.toolPayload }}",
+                        description: "Optional payload the AI generated for the call. Defaults to Input Text when empty.",
                     },
                     {
                         displayName: "Destination",
@@ -399,23 +392,6 @@ exports.soterGuardProperties = [
                         description: "How far the tool call reaches",
                     },
                     {
-                        displayName: "Target",
-                        name: "target",
-                        type: "string",
-                        default: "",
-                        placeholder: "customer@example.com",
-                        description: "Optional recipient, URL, table, or file the call would act on",
-                    },
-                    {
-                        displayName: "Content",
-                        name: "content",
-                        type: "string",
-                        typeOptions: { rows: 2 },
-                        default: "",
-                        placeholder: "={{ $json.toolPayload }}",
-                        description: "Optional payload the AI generated for the call. Defaults to Input Text when empty",
-                    },
-                    {
                         displayName: "Risk Context (JSON)",
                         name: "riskContext",
                         type: "json",
@@ -424,6 +400,32 @@ exports.soterGuardProperties = [
                         placeholder: '{ "canSendMessage": true, "canModifyData": false, "canRunCode": false }',
                         hint: "Optional capability flags describing what this tool is able to do",
                         description: "JSON object of capability flags used to weigh how dangerous the call is",
+                    },
+                    {
+                        displayName: "Target",
+                        name: "target",
+                        type: "string",
+                        default: "",
+                        placeholder: "customer@example.com",
+                        description: "Optional recipient, URL, table, or file the call would act on",
+                    },
+                    {
+                        displayName: "Tool Action",
+                        name: "action",
+                        type: "string",
+                        default: "",
+                        placeholder: "send",
+                        hint: "Required once this layer is added",
+                        description: "What the call would do, such as send, write, delete, or query",
+                    },
+                    {
+                        displayName: "Tool Name",
+                        name: "name",
+                        type: "string",
+                        default: "",
+                        placeholder: "email.send",
+                        hint: "Required once this layer is added",
+                        description: "The tool or function the AI wants to call",
                     },
                 ],
             },
@@ -452,7 +454,7 @@ exports.soterGuardProperties = [
                         typeOptions: { rows: 2 },
                         default: "",
                         placeholder: "={{ $json.memory }}",
-                        description: "The text being written or read. Defaults to Input Text when empty",
+                        description: "The text being written or read. Defaults to Input Text when empty.",
                     },
                     {
                         displayName: "Memory Type",
@@ -504,6 +506,9 @@ exports.soterGuardProperties = [
                         type: "json",
                         typeOptions: { rows: 3 },
                         default: "",
+                        // Literal request payload: the API schema requires a lowercase
+                        // "id" key, so upper-casing it here would produce an invalid body.
+                        // eslint-disable-next-line n8n-nodes-base/node-param-placeholder-miscased-id
                         placeholder: '[{ "id": "crm", "content": "internal customer record text" }]',
                         hint: "Optional. Private data the response must not leak, as a JSON array",
                         description: "JSON array of confidential source snapshots to compare the output against",
@@ -534,7 +539,7 @@ exports.soterGuardProperties = [
         placeholder: "={{ $json.sessionId }}",
         hint: "Optional but recommended. Links a conversation's messages so attacks spread across several turns can be caught",
         displayOptions: { show: { "@version": [2] }, hide: { action: ["workflowAudit"] } },
-        description: "Stable per-conversation ID. Without it each message is judged alone, so a slow multi-turn attack can pass one message at a time",
+        description: "Stable per-conversation ID. Without it each message is judged alone, so a slow multi-turn attack can pass one message at a time.",
     },
     {
         displayName: "Metadata JSON",
@@ -556,6 +561,6 @@ exports.soterGuardProperties = [
         placeholder: '{ "userId": "{{ $json.userId }}", "tenant": "acme" }',
         hint: "Optional. Extra fields for your own audit logs. Session ID has its own field above",
         displayOptions: { show: { "@version": [2] }, hide: { action: ["workflowAudit"] } },
-        description: "JSON object attached to the request for audit logging. Secrets and long strings are redacted before sending",
+        description: "JSON object attached to the request for audit logging. Secrets and long strings are redacted before sending.",
     },
 ];

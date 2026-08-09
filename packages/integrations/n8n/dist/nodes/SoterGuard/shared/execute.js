@@ -27,9 +27,6 @@ exports.SINGLE_OUTPUT_ACTIONS = ["piiRedactor"];
 function outputCountForAction(action) {
     return exports.SINGLE_OUTPUT_ACTIONS.includes(action) ? 1 : 2;
 }
-function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-}
 /**
  * Reads Retry-After (RFC 7231: delta-seconds or an HTTP-date) and clamps it to
  * a bound we are willing to block the workflow for. Returns null when the value
@@ -302,7 +299,7 @@ async function soterPost(ctx, apiKey, baseUrl, path, body) {
             // Back off exponentially only when the server did not tell us how long to
             // wait; when it did, its number is authoritative.
             const waitMs = retryAfterMs ?? Math.min(DEFAULT_RETRY_WAIT_MS * 2 ** attempt, MAX_RETRY_WAIT_MS);
-            await sleep(waitMs);
+            await (0, n8n_workflow_1.sleep)(waitMs);
             continue;
         }
         if (statusCode < 200 || statusCode >= 300) {
