@@ -117,8 +117,14 @@ export class LiveScanner implements vscode.CodeActionProvider {
             return;
         }
         const diags: vscode.Diagnostic[] = [];
+        // DEDUP FIX: the engine can emit the same logical finding multiple times
+        // (e.g. layered detectors). Key on range+category+title and keep one.
+        const seenKeys = new Set<string>();
         for (const finding of decision.findings) {
             const range = this.rangeFor(doc, finding);
+            const key = `${range.start.line}:${range.start.character}:${range.end.line}:${range.end.character}|${finding.category ?? ""}|${finding.title}`;
+            if (seenKeys.has(key)) continue;
+            seenKeys.add(key);
             const diag = new vscode.Diagnostic(
                 range,
                 `${finding.title}: ${finding.reason}`,

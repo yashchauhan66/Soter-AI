@@ -8,7 +8,7 @@
 const authentication = {
   type: "custom" as const,
   test: {
-    url: "https://soterai.in/api/guard/input",
+    url: "{{bundle.authData.baseUrl}}/api/guard/input",
     method: "POST" as const,
     headers: {
       "Content-Type": "application/json",
@@ -34,6 +34,14 @@ const authentication = {
       type: "string" as const,
       required: false,
       helpText: "Default SoterAI project ID (optional). Find it in your [dashboard](https://soterai.in/dashboard/settings).",
+    },
+    {
+      key: "baseUrl",
+      label: "Base URL",
+      type: "string" as const,
+      required: false,
+      default: "https://soterai.in",
+      helpText: "SoterAI API base URL (optional). Use for self-hosted or regional deployments. Default: https://soterai.in",
     },
   ],
 };

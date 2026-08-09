@@ -1,8 +1,23 @@
 /**
- * Zapier "Create" actions for SoterAI.
+ * Zapier "Create" actions for SoterAI — the four original guard actions.
  *
- * Each action calls the SoterAI REST API and returns a normalized result.
+ * Each action calls the SoterAI REST API and returns a normalized result. The
+ * remaining eight actions live in their own files; everything shared (base-URL
+ * validation, the POST helper, the calibration and topic field sets) is in
+ * ./shared so there is one copy of each.
  */
+
+import {
+  CALIBRATION_OUTPUT_FIELDS,
+  TOPIC_INPUT_FIELDS,
+  calibrationFields,
+  getBaseUrl,
+  resolveProjectId,
+  topicRequestFields,
+  tryParseJson,
+  type ZapierBundle,
+  type ZapierZ,
+} from "./shared";
 
 export const inputGuard = {
   key: "input_guard",
@@ -48,6 +63,7 @@ export const inputGuard = {
         type: "text" as const,
         required: false,
       },
+      ...TOPIC_INPUT_FIELDS,
     ],
     sample: {
       allowed: true,
@@ -57,6 +73,9 @@ export const inputGuard = {
       safeText: "What is the weather today?",
       reason: null,
       incidentId: null,
+      primaryRiskType: null,
+      categoryConfidence: {},
+      latencyMs: 4,
     },
     outputFields: [
       { key: "allowed", label: "Allowed", type: "boolean" as const },
@@ -66,13 +85,14 @@ export const inputGuard = {
       { key: "safeText", label: "Safe Text", type: "string" as const },
       { key: "reason", label: "Reason", type: "string" as const },
       { key: "incidentId", label: "Incident ID", type: "string" as const },
+      ...CALIBRATION_OUTPUT_FIELDS,
     ],
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
       const baseUrl = getBaseUrl(bundle);
       const meta: Record<string, unknown> = tryParseJson(
         bundle.inputData.metadata,
       );
-      const pid = bundle.inputData.project || bundle.authData.project;
+      const pid = resolveProjectId(bundle);
       if (pid) meta.projectId = pid;
       const response = await z.request({
         url: `${baseUrl}/api/guard/input`,
@@ -82,7 +102,11 @@ export const inputGuard = {
           "x-api-key": bundle.authData.apiKey,
           "User-Agent": "soterai-zapier/1.0",
         },
-        body: JSON.stringify({ message: bundle.inputData.text, metadata: meta }),
+        body: JSON.stringify({
+          message: bundle.inputData.text,
+          metadata: meta,
+          ...topicRequestFields(bundle),
+        }),
       });
       response.throwForStatus();
 
@@ -110,6 +134,7 @@ export const inputGuard = {
         safeText: outputText,
         reason: raw.reason,
         incidentId: raw.incidentId ?? null,
+        ...calibrationFields(raw),
       };
     },
   },
@@ -146,6 +171,9 @@ export const outputGuard = {
       categories: [],
       safeText: "The weather today is sunny with a high of 75F.",
       reason: null,
+      primaryRiskType: null,
+      categoryConfidence: {},
+      latencyMs: 3,
     },
     outputFields: [
       { key: "allowed", label: "Allowed", type: "boolean" as const },
@@ -153,11 +181,12 @@ export const outputGuard = {
       { key: "categories", label: "Risk Categories", list: true },
       { key: "safeText", label: "Safe Text", type: "string" as const },
       { key: "reason", label: "Reason", type: "string" as const },
+      ...CALIBRATION_OUTPUT_FIELDS,
     ],
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
       const baseUrl = getBaseUrl(bundle);
       const meta: Record<string, unknown> = {};
-      const pid = bundle.inputData.project || bundle.authData.project;
+      const pid = resolveProjectId(bundle);
       if (pid) meta.projectId = pid;
       const response = await z.request({
         url: `${baseUrl}/api/guard/output`,
@@ -182,6 +211,7 @@ export const outputGuard = {
         safeText:
           raw.safeText ?? raw.redactedText ?? bundle.inputData.text,
         reason: raw.reason,
+        ...calibrationFields(raw),
       };
     },
   },
@@ -223,7 +253,7 @@ export const piiRedactor = {
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
       const baseUrl = getBaseUrl(bundle);
       const meta: Record<string, unknown> = {};
-      const pid = bundle.inputData.project || bundle.authData.project;
+      const pid = resolveProjectId(bundle);
       if (pid) meta.projectId = pid;
 
       const response = await z.request({
@@ -310,7 +340,7 @@ export const ragScanner = {
     ],
     perform: async (z: ZapierZ, bundle: ZapierBundle) => {
       const baseUrl = getBaseUrl(bundle);
-      const pid = bundle.inputData.project || bundle.authData.project;
+      const pid = resolveProjectId(bundle);
 
       const response = await z.request({
         url: `${baseUrl}/api/rag/document/trust-score`,
@@ -341,36 +371,7 @@ export const ragScanner = {
 };
 
 /* ------------------------------------------------------------------ */
-/*  Helpers                                                           */
+/*  Helpers, types, and base-URL validation now live in ./shared.      */
+/*  They were moved there when the app grew from 4 actions to 12 —     */
+/*  a second copy of the SSRF check is a second chance to get it wrong.*/
 /* ------------------------------------------------------------------ */
-
-function tryParseJson(value?: string): Record<string, unknown> {
-  if (!value?.trim()) return {};
-  try {
-    const p = JSON.parse(value);
-    return typeof p === "object" && p && !Array.isArray(p) ? p : {};
-  } catch {
-    return {};
-  }
-}
-
-/* ------------------------------------------------------------------ */
-/*  Minimal Zapier type stubs                                         */
-/* ------------------------------------------------------------------ */
-
-interface ZapierZ {
-  request(
-    opts: Record<string, unknown>,
-  ): Promise<{
-    json: Record<string, unknown>;
-    throwForStatus(): void;
-  }>;
-}
-
-function getBaseUrl(bundle: ZapierBundle): string {
-  return "https://soterai.in";
-}
-interface ZapierBundle {
-  authData: Record<string, string>;
-  inputData: Record<string, string>;
-}

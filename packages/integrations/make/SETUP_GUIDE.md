@@ -58,7 +58,7 @@ Ab app khulega — left me sections dikhenge: **Base, Connections, Webhooks, Mod
 
 ---
 
-## PART 4 — 10 MODULES banao
+## PART 4 — 12 MODULES banao
 
 Har module ke liye yahi pattern repeat karna hai. Left me **"Modules"** → **"Create a new module"**.
 
@@ -83,8 +83,16 @@ Har module banate waqt:
 | 8 | `agentActionCheck` | Check Agent Action | MODULE 8 ke teen blocks |
 | 9 | `agentDataCheck` | Check Agent Data Access | MODULE 9 ke teen blocks |
 | 10 | `agentOutputCheck` | Check Agent Output | MODULE 10 ke teen blocks |
+| 11 | `universalGuard` | Universal Guard (All Layers) | MODULE 11 ke teen blocks |
+| 12 | `workflowAudit` | Audit Workflow for AI Security Risks | MODULE 12 ke teen blocks |
 
 > Tip: ek module pura ho jaye to test kar lo (PART 5), phir agla banao. Ek-ek karke karna safe rehta hai.
+
+> **MODULE 1 aur 2 pehle se bane hue hain?** Blueprint ke section **3b** me teen naye
+> Interface fields (`primaryRiskType`, `categoryConfidence`, `latencyMs`) aur MODULE 1
+> ke do naye optional parameters (`allowedTopics`, `systemPromptContext`) diye gaye hain.
+> Purane modules me wo add kar do — inke bina module chalta rahega, bas naye fields
+> scenario me dikhenge nahi.
 
 **Module banane ka micro-steps (example MODULE 1):**
 1. Modules → Create a new module → type **Action**.
@@ -92,7 +100,7 @@ Har module banate waqt:
 3. **Communication** tab → MODULE 1 ka Communication block paste → Save.
 4. **Mappable parameters** tab → MODULE 1 ka Mappable parameters block paste → Save.
 5. **Interface** tab → MODULE 1 ka Interface block paste → Save.
-6. Ho gaya. Baaki 9 modules bhi exactly aise hi.
+6. Ho gaya. Baaki 11 modules bhi exactly aise hi.
 
 ---
 

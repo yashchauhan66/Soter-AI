@@ -39,7 +39,7 @@
 | Privacy Policy URL | https://soterai.in/privacy | [x] |
 | Terms of Service URL | https://soterai.in/terms | [x] |
 | Support Email | support@soterai.in | [x] |
-| Documentation URL | Link to integration docs | [x] (README.md updated with all 10 modules) |
+| Documentation URL | Link to integration docs | [x] (README.md updated with all 12 modules) |
 | Module Count | 10 action modules | [x] (4 original + 6 new: analyzeText, streamingGuard, startAgentSession, agentActionCheck, agentDataCheck, agentOutputCheck) |
 
 ## Make Partner Program

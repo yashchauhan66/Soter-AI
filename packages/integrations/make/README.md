@@ -18,6 +18,16 @@ This custom app brings SoterAI's security scanning directly into your Make.com s
 | 8 | **Check Agent Action** | `agentActionCheck` | Check if an AI agent action (tool call, API request, file access) is allowed by the Agent Firewall policy. |
 | 9 | **Check Agent Data Access** | `agentDataCheck` | Check if an AI agent accessing data (RAG context, files, clipboard, etc.) is allowed and detect potential data leaks. |
 | 10 | **Check Agent Output** | `agentOutputCheck` | Check AI agent output for sensitive data leakage before delivering to users. |
+| 11 | **Universal Guard (All Layers)** | `universalGuard` | Input and output checked in one request, returning one combined verdict and a protection profile (Balanced / Strict / Maximum). |
+| 12 | **Audit Workflow for AI Security Risks** | `workflowAudit` | Static OWASP-LLM audit of an exported n8n workflow — a security score, findings, quick wins, and where to place SoterAI. |
+
+These are the same 12 operations the n8n node and the Zapier app expose. Pick a
+platform on workflow ergonomics, not on which one carries the guard you need.
+
+> **Module 11 vs. chaining modules 1 and 2.** Make scenarios can chain, so you can
+> also run Input Guard and Output Guard as separate steps. Module 11 exists for the
+> common case where you want one call and one verdict — and because a single
+> declarative module cannot itself perform two requests.
 
 ## Connection Setup
 

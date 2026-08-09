@@ -24,6 +24,7 @@ import { EnterpriseDashboard, registerDashboardCommands } from "./enterprise/Ent
 import { registerLaunchCommands } from "./launchCommands";
 import { registerLiveScanner } from "./diagnostics/LiveScanner";
 import { registerClipboardGuard } from "./clipboard/ClipboardGuard";
+import { registerContinuousGuardCommands } from "./scanners/continuousGuards";
 import { registerSecretBrokerCommands } from "./secret-broker/commands";
 import { ProtectionStateService } from "./protection/ProtectionStateService";
 import { ProtectionController } from "./protection/ProtectionController";
@@ -145,6 +146,9 @@ export function activate(context: vscode.ExtensionContext): void {
     registerLaunchCommands(context);
     registerLiveScanner(context);
     registerClipboardGuard(context);
+    registerContinuousGuardCommands(context, {
+        scanText: async (text) => ExtensionState.getInstance().engine.scan(text, { context: "selection" }),
+    });
     registerSecretBrokerCommands(context, refreshViews);
     // Gap A + Gap B: outbound AI egress firewall (obfuscation-resistant), which
     // also appends every decision to the tamper-proof ledger.
@@ -178,6 +182,7 @@ export function activate(context: vscode.ExtensionContext): void {
     void updateBrokerStatus();
     // Dormant in normal installs; proves the packaged VSIX from inside an
     // actual VS Code-family extension host when the runtime harness opts in.
+    // @ts-ignore — process is available in the VS Code extension host (Node runtime)
     if (process.env.SOTERAI_PACKAGED_RUNTIME_PROBE) {
         void runPackagedRuntimeProbe(brokerManager, protectionController);
     }

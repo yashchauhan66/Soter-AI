@@ -38,6 +38,32 @@ Restart n8n after installation.
 
 Do not paste real production secrets into test workflows. Use fake values such as `sk-test-1234567890abcdef`.
 
+## Two Outputs: Safe and Flagged
+
+Every SoterAI node has two outputs. The node routes items itself — you do not need an IF node to act on a verdict.
+
+```text
+                      ┌─ Safe ────► rest of your workflow
+Webhook ──► SoterAI ──┤
+                      └─ Flagged ─► respond "blocked", log, or leave unconnected
+```
+
+| Output | What lands here |
+| --- | --- |
+| **Safe** | Everything the node let through. Use `{{ $json.outputText }}` as the text to pass on — it holds the cleaned or redacted value. |
+| **Flagged** | Items the node stopped, plus items the report-only actions flagged. Leave it unconnected to drop them, or wire it to a response/logging branch. |
+
+Two things worth knowing:
+
+- Setting **On Threat** to Redact, Warn, or Continue keeps those items on **Safe**, with their cleaned or annotated text. That is what those settings are for. Only genuinely stopped items go to Flagged.
+- With **Continue On Fail** enabled, an item whose check could not complete goes to **Flagged**. Nothing cleared it, so an API outage cannot become a silent bypass.
+
+`Redact Secrets or PII` has a single output. It never rejects anything, so a Flagged branch would always be empty.
+
+### Existing workflows
+
+Workflows built before this release keep the single output they were built with and behave exactly as before — n8n pins each saved node to the version it was created with. To adopt the two outputs, add a new SoterAI node.
+
 ## Supported Operations
 
 | Operation | Purpose |
@@ -58,17 +84,34 @@ Choose **Universal AI Firewall (Best Protection)** when you want the simplest an
 User/Webhook Input -> SoterAI Universal AI Firewall -> LLM -> SoterAI Universal AI Firewall -> Respond/Tool/Memory
 ```
 
-For a single pre-LLM gate, fill **Input Text** and leave optional fields empty. For post-LLM scanning, also fill **AI Output Text**. For full agent workflows, put optional RAG/tool/memory/egress details in **Security Context JSON**.
+For a single pre-LLM gate, fill **Input Text** and leave optional fields empty. For post-LLM scanning, also fill **AI Output Text (Optional)**. For full agent workflows, add the layers you need under **Security Context**.
 
 | Field | Use When |
 | --- | --- |
 | `Input Text` | Always. The incoming user message or agent instruction. |
-| `AI Output Text` | After the model responds and before sending output to a user, tool, webhook, file, or memory. |
-| `Protection Profile` | Keep `Maximum Protection` for public or production AI flows. |
-| `On Threat` | Keep `Block` unless you deliberately want redaction or review branches. |
-| `Security Context JSON` | Optional advanced field for RAG context, tool calls, memory operations, output destination, or protected sources. |
+| `AI Output Text (Optional)` | After the model responds and before sending output to a user, tool, webhook, file, or memory. |
+| `Protection Profile` | How much gets flagged. Keep `Maximum Protection` for public or production AI flows. |
+| `On Threat` | What happens once something is flagged. Keep `Block` unless you deliberately want redaction or review branches. |
+| `Session ID` | Recommended. Links a conversation's messages so an attack spread across several turns can be caught. |
+| `Security Context` | Optional layers for retrieved context, tool calls, memory operations, and output destination. |
 
-Security Context JSON example:
+### Security Context
+
+Add only the layers your workflow actually has — each is independent.
+
+| Layer | Add it when | Key fields |
+| --- | --- | --- |
+| **Retrieved Context (RAG)** | A vector store returns a chunk the model will read | Retrieved Text, Document ID, Source |
+| **Tool Call** | The AI decides to call a tool or function | Tool Name, Tool Action, Destination, Target, Content, Risk Context |
+| **Memory Operation** | The agent reads or writes memory | Operation, Content, Memory Type |
+| **Output Destination** | The response is about to leave for somewhere specific | Destination Type, Destination Name, Protected Sources |
+
+Set **Destination Type** accurately — `EMAIL`, `WEBHOOK`, and `EXTERNAL_API` are where data actually leaves, and they are judged more strictly than `FINAL_OUTPUT`.
+
+<details>
+<summary>Version 1 nodes: Security Context JSON</summary>
+
+Nodes created before v0.5.0 use a single JSON field instead of the guided sections. It still works and is unchanged:
 
 ```json
 {
@@ -100,7 +143,7 @@ Security Context JSON example:
 }
 ```
 
-Copy-paste templates:
+Copy-paste templates for that field:
 
 RAG context scan:
 
@@ -190,6 +233,8 @@ Full agent context:
 }
 ```
 
+</details>
+
 Protection profiles:
 
 | Profile | Best For |
@@ -215,7 +260,7 @@ The Universal AI Firewall returns one clear downstream decision:
 }
 ```
 
-Route on `blocked`, `finalDecision`, or `riskLevel` in an IF node. Use `outputText` for downstream text because it is empty when blocked and contains the safe/redacted value when allowed or redacted.
+Connect **Safe** to the rest of your workflow and **Flagged** to your blocked-response branch. Use `outputText` for downstream text because it is empty when blocked and contains the safe/redacted value when allowed or redacted. On version 1 nodes (single output), route on `blocked`, `finalDecision`, or `riskLevel` in an IF node instead.
 
 ### User-Friendly Blocked Responses
 
@@ -263,15 +308,13 @@ Useful fields:
 | `liveChatAction` | `SAFE_REPHRASE` for approval/review in live chat. |
 | `safeRephrasePrompt` | Short instruction telling the user how to fix the request. |
 
-n8n IF expression for safe continue:
+On version 1 nodes (single output), use IF expressions to route:
 
 ```js
+// Safe to continue
 ={{["ALLOW", "REDACT"].includes($json.finalDecision)}}
-```
 
-n8n IF expression for safe rephrase:
-
-```js
+// Safe rephrase (human review)
 ={{$json.liveChatAction === "SAFE_REPHRASE"}}
 ```
 
@@ -358,7 +401,10 @@ Benign: Please summarize this public article.
 | `operation` | string | The SoterAI node operation that produced the item, such as `universalGuard`, `inputGuard`, or `outputGuard`. |
 | `blocked` | boolean | Whether local node behavior blocked the item. |
 | `riskScore` | number | Risk score returned by the API. |
-| `categories` | string[] | Detected risk types. |
+| `categories` | string[] | Detected risk types. Ordered by which detector ran, not by confidence — read `primaryRiskType` instead when you want the one that mattered. |
+| `primaryRiskType` | string | The risk type that actually drove the verdict, chosen by confidence. This is the field to branch an IF node on. |
+| `categoryConfidence` | object | Per-category confidence behind that choice, so you can tell a weak code-syntax match from a real prompt injection. |
+| `latencyMs` | number | Server-side processing time for the call, excluding network transit. |
 | `safeText` | string | Redacted or safe version when available. |
 | `outputText` | string | Text to use downstream. Empty when blocked. |
 | `reason` | string | Human-readable explanation. |
@@ -375,6 +421,23 @@ Benign: Please summarize this public article.
 | `riskLevel` | string | Universal AI Firewall only: `LOW`, `MEDIUM`, `HIGH`, or `CRITICAL`. |
 | `recommendedAction` | string | Universal AI Firewall only: concise next step for routing. |
 | `checks` | array | Universal AI Firewall only: enabled layer results for input, RAG, tool, memory, output, and semantic egress. |
+| `drivingLayer` | string | Universal AI Firewall only: which layer produced the highest risk score, so `primaryRiskType` can be attributed correctly rather than being read off whichever layer ran first. |
+
+### Off-topic guard (Guard Input, Universal AI Firewall)
+
+Two optional fields scope the assistant to its job:
+
+- **Allowed Topics** — comma-separated subjects, e.g. `billing, shipping, returns`.
+- **System Prompt Context** — your assistant's role description, used when the
+  topic list alone is not specific enough.
+
+Leaving both empty keeps the previous behaviour. An empty topic list means *no
+scope is defined*, not that everything is off-topic — the guard stays off rather
+than blocking every message.
+
+Off-topic is reported as an advisory `OFF_TOPIC` category and does not block on
+its own; it is a product-scope signal, not a security verdict. Branch on it
+yourself if you want to refuse out-of-scope questions.
 
 ### Redact Secrets or PII
 
@@ -427,7 +490,7 @@ API keys, bearer tokens, common provider tokens, AWS access key IDs, database UR
 ## Compatibility
 
 - Package: `n8n-nodes-soterai`
-- Version: `0.3.3`
+- Version: `0.5.0`
 - n8n node API: `1`
 - Peer dependency: `n8n-workflow` `*`
 - Runtime: n8n versions that support community nodes and Node.js 20+ are expected to work; verify in your own n8n host before production use.

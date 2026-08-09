@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-soterai",
-  "version": "0.3.3",
+  "version": "0.5.0",
   "description": "SoterAI helps protect n8n AI workflows by detecting prompt injection, jailbreaks, secrets, PII, and unsafe AI instructions.",
   "license": "MIT",
   "author": {
@@ -46,7 +46,7 @@
   "scripts": {
     "build": "tsc && copyfiles \"nodes/**/*.svg\" \"credentials/**/*.svg\" dist",
     "dev": "tsc --watch",
-    "lint": "npx @n8n/node-cli@latest lint",
+    "lint": "n8n-node lint",
     "typecheck": "tsc --noEmit",
     "validate": "node scripts/validate-package.cjs",
     "test": "node scripts/validate-package.cjs",
@@ -56,6 +56,7 @@
     "n8n-workflow": "*"
   },
   "devDependencies": {
+    "@n8n/node-cli": "^0.23.0",
     "copyfiles": "^2.4.1",
     "n8n-workflow": "^1.0.0",
     "typescript": "^5.0.0"

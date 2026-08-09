@@ -75,6 +75,47 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
     const reg = (id: string, handler: (...args: any[]) => any) => context.subscriptions.push(vscode.commands.registerCommand(id, handler));
     const started = async () => { const status = await manager.start(); refresh(); return status; };
 
+    reg("soterai.secureAllAI", async () => {
+        try {
+            const s = await started(); // start broker first (health gate)
+            const home = require("os").homedir();
+            const nodeFs: FileIO = {
+                readText: async (p: string) => { try { return await require("fs/promises").readFile(p, "utf8"); } catch { return null; } },
+                writeText: async (p: string, c: string) => require("fs/promises").writeFile(p, c, "utf8"),
+                exists: async (p: string) => { try { await require("fs/promises").access(p); return true; } catch { return false; } },
+            };
+            const nodeHttp: HttpIO = {
+                get: async (url: string, _h?: Record<string, string>) => { const r = await fetch(url); return { status: r.status, body: await r.text() }; },
+                post: async (url: string, body: string, _h?: Record<string, string>) => { const r = await fetch(url, { method: "POST", body, headers: { "content-type": "application/json" } }); return { status: r.status, body: await r.text() }; },
+            };
+            const { discoverAllAiTools, buildSecurePlan, executeSecurePlan } = await import("./AutoSecureEngine");
+            const discovered = await discoverAllAiTools(nodeFs, home);
+
+            // Read every existing config's text into memory for planning (no writes yet).
+            const ioFiles: Record<string, string> = {};
+            for (const d of discovered) for (const c of d.configs) { const t = await nodeFs.readText(c.path); if (t !== null) ioFiles[c.path] = t; }
+            const brokerPort = Number(vscode.workspace.getConfiguration("soterai").get("broker.port", 47321));
+            const plan = buildSecurePlan(discovered, ioFiles, brokerPort);
+
+            if (plan.proposed.length === 0 && plan.monitorOnly.length === 0) {
+                vscode.window.showInformationMessage("SoterAI: no AI tool configs found to secure on this machine.");
+                return;
+            }
+            const pick = await vscode.window.showInformationMessage(
+                `🛡️ SoterAI found ${plan.proposed.length} tool config(s) to secure${plan.monitorOnly.length ? ` + ${plan.monitorOnly.length} monitor-only` : ""}.\n` +
+                plan.summaryLines.slice(0, 6).join("\n") + (plan.summaryLines.length > 6 ? `\n…and ${plan.summaryLines.length - 6} more` : ""),
+                { modal: true }, "Secure Everything Now", "Cancel",
+            );
+            if (pick !== "Secure Everything Now") return;
+
+            const outcome = await executeSecurePlan(plan, discovered, nodeFs, nodeHttp, true, `${s.url}/health`);
+            refresh();
+            const verif = outcome.verified.map((v) => `${v.ok ? "✅" : "⚠️"} ${v.toolId}: ${v.detail}`).join("\n");
+            vscode.window.showInformationMessage(outcome.headline + (verif ? `\n${verif}` : ""));
+        } catch (e) {
+            vscode.window.showErrorMessage(`Secure My AI failed: ${e instanceof Error ? e.message : String(e)}`);
+        }
+    });
     reg("soterai.startLocalAIBroker", async () => { const s = await started(); vscode.window.showInformationMessage(`SoterAI Local AI Broker running at ${s.url} (authenticated, local-only).`); });
     reg("soterai.stopLocalAIBroker", async () => { await manager.stop(); refresh(); vscode.window.showInformationMessage("SoterAI Local AI Broker stopped."); });
     reg("soterai.restartLocalAIBroker", async () => { const s = await manager.restart(); refresh(); vscode.window.showInformationMessage(`SoterAI Local AI Broker restarted at ${s.url}.`); });

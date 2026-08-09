@@ -31,7 +31,8 @@ const PROMPT_INJECTION_SPECS = [
     severity: "high" as const,
     score: 26,
     // Korean / Russian / Hindi / Chinese / Arabic / German etc. — "ignore previous instructions" + "system prompt"
-    pattern: /(?:이전|모든)?\s*(?:지시|규칙|명령).*(?:무시|잊어)|시스템\s*프롬프트|(?:предыдущ|инструкц).*(?:игнор|забуд)|системн\w*\s*промпт|(?:पिछल|सभी)\s*(?:निर्देश|नियम).*(?:अनदेखा|भूल)|(?:忽略|无视).*(?:之前|以前|以上).*(?:指令|指示)|系统提示|(?:تجاهل|تجاوز).*(?:التعليمات|السابقة)|موجه\s*النظام|(?:ignorier|vergiss).*(?:anweisung|instruktion)/giu,
+    // Russian FIX: word-order flexible — "игнорируй предыдущие инструкции" OR "инструкции игнорируй" both match.
+    pattern: /(?:이전|모든)?\s*(?:지시|규칙|명령).*(?:무시|잊어)|시스템\s*프롬프트|(?:игнор\w*|забуд\w*)[^\n]{0,40}(?:предыдущ\w*|инструкц\w*)|(?:предыдущ\w*|инструкц\w*)[^\n]{0,40}(?:игнор\w*|забуд\w*)|системн\w*\s*промпт|(?:पिछल|सभी)\s*(?:निर्देश|नियम).*(?:अनदेखा|भूल)|(?:忽略|无视).*(?:之前|以前|以上).*(?:指令|指示)|系统提示|(?:تجاهل|تجاوز).*(?:التعليمات|السابقة)|موجه\s*النظام|(?:ignorier|vergiss).*(?:anweisung|instruktion)/giu,
     message: "Multilingual prompt-injection wording detected.",
   },
   {

@@ -2,6 +2,47 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.5.0] - 2026-08-06
+
+### Added
+
+- **Safe and Flagged outputs.** The node now routes items itself instead of returning a verdict and leaving the wiring to you. Anything the node blocks — or, for the report-only actions, anything it flags — leaves through **Flagged**; everything else leaves through **Safe**. This closes the node's worst failure mode: previously you could configure a guard, watch it correctly detect an attack, and still pass that item straight to the model, because nothing downstream ever read `blocked`. No IF node needed.
+- Choosing Redact, Warn, or Continue under **On Threat** keeps those items on **Safe** with their cleaned or annotated text — that is what those settings are for. Only genuinely stopped items go to Flagged.
+- An item whose check could not complete (with **Continue On Fail** enabled) now leaves through **Flagged**. Nothing cleared it, so an API outage can no longer turn into a silent bypass.
+- **Guided Security Context** for the Universal AI Firewall, replacing the hand-written JSON blob. Retrieved Context (RAG), Tool Call, Memory Operation, and Output Destination are now four optional sections with real fields, dropdowns, and hints. The Output Destination list is generated from the server's own destination types, so a typo can no longer silently downgrade the data-leak check to its default.
+- **Session ID** is now its own field rather than a key you had to know to put inside Metadata JSON. It is what enables multi-turn attack detection, and the node warns when it is empty.
+- Node hints in the editor: a warning when **On Threat** is set to Continue (nothing will ever be stopped), a reminder when Session ID is unset, and guidance on wiring the Flagged output.
+- Canvas subtitles now read `Guard Input (block)` instead of the raw parameter value `inputGuard`, so a workflow's protection posture is legible without opening each node.
+- Node search now matches "guardrail", "firewall", "prompt injection", "jailbreak", "moderation", "OWASP", and other aliases.
+
+### Changed
+
+- The node is now a versioned node type. **Existing workflows are untouched**: they keep loading version 1, with its single output and its Security Context JSON field, and behave exactly as before. Version 2 is used only for nodes you add from now on. To adopt the new outputs in an existing workflow, add a fresh SoterAI node.
+- `Redact Secrets or PII` keeps a single output on version 2. It never rejects anything, so a Flagged branch there would always be empty.
+- Package validation now enforces the versioning contract: version 1 must keep exactly one output, version 2 must expose both, and failed checks must route to Flagged.
+
+### Fixed
+
+- Corrected the `PACKAGE_VERSION` constant, which still read `0.3.3` and was misreporting the node's version in the API User-Agent on every request. Package validation covered this, but the check was failing rather than passing.
+
+
+
+### Added
+
+- Guard Input, Guard Output, and the Universal AI Firewall now return `primaryRiskType`, `categoryConfidence`, and `latencyMs`. Branch on `primaryRiskType` rather than `categories[0]`: that array is in detector-registration order, which is why a SQL payload could previously be labelled `PROMPT_INJECTION`.
+- Universal AI Firewall also returns `drivingLayer`, so `primaryRiskType` is attributed to the layer that produced the highest risk score rather than to whichever layer happened to run first.
+- Guard Input and the Universal AI Firewall gain optional **Allowed Topics** and **System Prompt Context** fields for the off-topic guard. Both are bounded client-side to the server limits (50 topics, 120 chars each) so a long list is trimmed instead of failing the item with a validation error.
+- New node icon: the SoterAI emblem, with light and dark variants, replacing the previous generic shield.
+
+### Changed
+
+- Leaving Allowed Topics empty keeps the previous behaviour exactly. An empty topic list means no scope is defined, not that everything is off-topic, so the guard stays off rather than flagging every message.
+- `OFF_TOPIC` is advisory and does not block on its own — it is a product-scope signal, not a security verdict.
+
+### Parity
+
+- The n8n node, the Make app, and the Zapier app now expose the same 12 operations and the same calibration fields.
+
 ## [0.3.3] - 2026-07-31
 
 ### Fixed

@@ -72,6 +72,7 @@
         "onCommand:soterai.clearSecretBrokerSession",
         "onCommand:soterai.configurePrivacyMode",
         "onCommand:soterai.chooseSecretHandlingPolicy",
+        "onCommand:soterai.secureAllAI",
         "onCommand:soterai.scanGitDiff",
         "onCommand:soterai.reviewTerminalCommand",
         "onCommand:soterai.runControlledTerminalCommand",
@@ -684,6 +685,36 @@
                 "title": "SoterAI: Export Enterprise Risk Report"
             },
             {
+                "command": "soterai.secureAllAI",
+                "title": "SoterAI: 🛡️ Secure My AI — One Click (find & protect Cline, Claude Code, Copilot, all providers)",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanClipboardAICode",
+                "title": "SoterAI: Scan Clipboard as AI-Generated Code (check vulnerabilities before pasting)",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.installGitSecretHook",
+                "title": "SoterAI: Install Git Pre-Commit Secret Hook (block secrets at commit time)",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.checkScreenShareRisk",
+                "title": "SoterAI: Check Screen-Share Risk (warns if sensitive files are visible)",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanLocalModelLogs",
+                "title": "SoterAI: Scan Local AI Model Logs (Ollama/LM Studio) for persisted secrets",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.reviewDependencyGuardMode",
+                "title": "SoterAI: Review Dependency Guard Mode (harden OSV advisory checks)",
+                "category": "SoterAI"
+            },
+            {
                 "command": "soterai.openWalkthrough",
                 "title": "SoterAI: Open Getting Started Walkthrough",
                 "category": "SoterAI"
@@ -966,6 +997,9 @@
         },
         "menus": {
             "commandPalette": [
+                {
+                    "command": "soterai.secureAllAI"
+                },
                 {
                     "command": "soterai.useSensitiveContextSafely",
                     "when": "soterai.advancedCommands"
