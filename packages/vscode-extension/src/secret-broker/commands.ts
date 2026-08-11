@@ -191,9 +191,12 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
             placeHolder: "Default policy for sensitive AI context",
         });
         if (!pick) return;
+        // Global, not Workspace: `sensitiveContext.defaultAction` is machine-scoped
+        // so a repo cannot weaken it, and VS Code throws on a Workspace write to a
+        // machine-scoped key. The sibling privacy-mode command already writes Global.
         await vscode.workspace
             .getConfiguration("soterai")
-            .update("sensitiveContext.defaultAction", pick, vscode.ConfigurationTarget.Workspace);
+            .update("sensitiveContext.defaultAction", pick, vscode.ConfigurationTarget.Global);
         vscode.window.showInformationMessage(`SoterAI sensitive context default set to ${pick}.`);
     }
 

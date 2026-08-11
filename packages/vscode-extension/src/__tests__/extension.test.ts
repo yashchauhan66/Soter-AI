@@ -539,6 +539,11 @@ describe("Security search guardrails", () => {
 
 describe("Control Panel (consolidated sidebar toggles)", () => {
     const controlPanelSrc = read("src/webview/ControlPanelViewProvider.ts");
+    // Wording, ordering and the registry-resolved badge moved into a pure module
+    // so they are unit-testable without a VS Code host. The panel is the two
+    // files together, so the contracts below read both.
+    const panelContentSrc = read("src/webview/panelContent.ts");
+    const panelSrc = controlPanelSrc + "\n" + panelContentSrc;
     const views: Array<{ id: string; type?: string }> = pkg.contributes.views["soterai-explorer"];
 
     it("declares the control panel as a webview view in the SoterAI sidebar", () => {
@@ -590,7 +595,9 @@ describe("Control Panel (consolidated sidebar toggles)", () => {
             assert.ok(registeredCommands.has(c), `${c} must be registered`);
             assert.ok(declaredCommands.includes(c), `${c} must be declared`);
         }
-        assert.match(controlPanelSrc, /Primary workflows/);
+        // The tasks are named after user goals rather than internal modules, so
+        // the section heading is asserted by what it offers, not by a label.
+        assert.match(panelContentSrc, /export function panelTasks/);
         assert.strictEqual(pkg.contributes.configuration.properties["soterai.showAllCommands"].default, false);
     });
 
@@ -610,15 +617,21 @@ describe("Control Panel (consolidated sidebar toggles)", () => {
         assert.ok(registeredCommands.has("soterai.enableFullProtection"));
         assert.ok(declaredCommands.includes("soterai.unlockProtection"));
         assert.ok(registeredCommands.has("soterai.unlockProtection"));
-        assert.match(controlPanelSrc, /Enable Full Protection/);
+        assert.ok(controlPanelSrc.includes("soterai.enableFullProtection"), "panel must wire Full Protection");
+        // Lockdown recovery must be reachable FROM the panel. Previously the
+        // unlock command existed but the panel offered no way to it, so a user
+        // who hit Emergency Lockdown had to find the command palette.
+        assert.ok(controlPanelSrc.includes("soterai.unlockProtection"), "panel must wire lockdown recovery");
+        assert.ok(controlPanelSrc.includes('"action:unlock"'), "ALLOWED must include action:unlock");
+        assert.match(panelContentSrc, /LOCKDOWN[\s\S]{0,400}action:unlock/, "LOCKDOWN state must offer unlock");
         assert.match(allSrc, /globalState\.update\("soterai\.lockdown"/);
         assert.match(brokerManagerSrc, /Emergency Lockdown is active/);
     });
 
     it("resolves live-scan and MCP badges from CAPABILITY_REGISTRY (no stronger claim than registry)", () => {
-        assert.match(controlPanelSrc, /capabilityUiBadge\("live-scan"\)/);
-        assert.match(controlPanelSrc, /capabilityUiBadge\("mcp-config-scan"\)/);
-        assert.match(controlPanelSrc, /VISIBILITY_ONLY|registryLevel/);
+        assert.match(panelSrc, /capabilityUiBadge\("live-scan"\)/);
+        assert.match(panelSrc, /capabilityUiBadge\("mcp-config-scan"\)/);
+        assert.match(panelSrc, /VISIBILITY_ONLY|registryLevel/);
         const protectionSrc = read("src/protection/ProtectionLevel.ts");
         assert.match(protectionSrc, /toUiLevel/);
         assert.match(protectionSrc, /CAPABILITY_REGISTRY/);

@@ -20,6 +20,8 @@ import {
     detectIntegrationConfigs,
     proposeBrokerRewrite,
     applyProposedChange,
+    streamSmokeTest,
+    type BackupSink,
     type DetectedConfig,
     type ProposedChange,
     type ApplyResult,
@@ -255,6 +257,8 @@ export async function executeSecurePlan(
     http: HttpIO,
     approved: boolean,
     brokerHealthUrl: string,
+    backups: BackupSink,
+    brokerAuthToken: string,
 ): Promise<SecureOutcome> {
     // 1) REFUSE if broker is down — never "secure" into a dead proxy.
     let brokerOnline = false;
@@ -275,26 +279,36 @@ export async function executeSecurePlan(
         };
     }
 
-    // 2) Batch-apply every rewrite (each makes its own timestamped backup).
+    // 2) Batch-apply every rewrite (each backed up to the encrypted sink first).
     const applied: ApplyResult[] = [];
     for (const change of plan.proposed) {
-        applied.push(await applyProposedChange(change, io, approved));
+        applied.push(await applyProposedChange(change, io, approved, backups));
     }
 
-    // 3) Verify: for every applied config, POST a single tiny redaction smoke
-    //    message through the broker and confirm a 2xx means the chain works.
+    // 3) Verify: run the real authenticated stream smoke against the broker's
+    //    OpenAI-compatible route. The previous implementation POSTed to
+    //    `/v1/ai/openai-compatible/smoke`, a route the bundled broker does not
+    //    serve, and without the bearer token — so verification could only ever
+    //    fail and the success headline was unreachable. `streamSmokeTest` is
+    //    the checked path that actually exists.
     const verified: Array<{ toolId: string; ok: boolean; detail: string }> = [];
+    const brokerPort = Number(new URL(brokerHealthUrl).port || 47321);
     for (const d of discovered) {
         if (d.status !== "found") continue;
         const routed = d.configs.some((c) => plan.proposed.some((p) => p.path === c.path));
         if (!routed) continue;
+        const appliedOk = applied.some(
+            (a) => a.applied && d.configs.some((c) => c.path === a.path),
+        );
+        if (!appliedOk) {
+            // Nothing was rewritten for this tool, so there is no routing to
+            // verify. Claiming a pass here would assert protection we never applied.
+            verified.push({ toolId: d.spec.id, ok: false, detail: "config was not rewritten" });
+            continue;
+        }
         try {
-            const smoke = await http.post(
-                `${brokerHealthUrl.replace(/\/health.?$/, "")}/v1/ai/openai-compatible/smoke`,
-                JSON.stringify({ ping: true }),
-                { "content-type": "application/json" },
-            );
-            verified.push({ toolId: d.spec.id, ok: smoke.status >= 200 && smoke.status < 300, detail: `HTTP ${smoke.status}` });
+            const smoke = await streamSmokeTest(brokerPort, brokerAuthToken, http);
+            verified.push({ toolId: d.spec.id, ok: smoke.ok, detail: smoke.detail });
         } catch (e) {
             verified.push({ toolId: d.spec.id, ok: false, detail: String(e) });
         }
@@ -325,12 +339,17 @@ export async function executeSecurePlan(
 /* 5. RESTORE — one click puts every original config back               */
 /* ------------------------------------------------------------------ */
 
-export async function restoreAll(applied: ApplyResult[], io: FileIO): Promise<{ restored: number; failed: string[] }> {
+export async function restoreAll(
+    applied: ApplyResult[],
+    io: FileIO,
+    backups: BackupSink,
+): Promise<{ restored: number; failed: string[] }> {
     let restored = 0;
     const failed: string[] = [];
     for (const a of applied) {
         if (!a.applied || !a.backupPath) continue;
-        const backup = await io.readText(a.backupPath);
+        // backupPath is an opaque sink handle, not a filesystem path.
+        const backup = await backups.retrieve(a.backupPath);
         if (backup === null) { failed.push(a.path); continue; }
         await io.writeText(a.path, backup);
         restored++;

@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.4.0] - 2026-08-09
+## [0.4.0] - 2026-08-10
 
 A real-user pass over the 0.3.x feature surface. Every entry below is a defect
 that shipped in 0.3.0 and was reproduced before it was fixed. Several of them
@@ -33,15 +33,58 @@ ones worth reading.
   candidates are now expanded to the files inside them (bounded per directory),
   and the result states how many files were actually read and how many could
   not be read, instead of treating unread as clean.
+- **Every default live-scan exclude was dead.** The glob matcher compiled
+  patterns through a chain of `.replace()` calls in which a later rule rewrote
+  the output of an earlier one, so `**/node_modules/**` became a regex that
+  matched nothing. All nine shipped excludes — `node_modules`, `.git`, `dist`,
+  `build` and the binary extensions — were therefore scanned on every
+  keystroke. Compilation is now a single pass over the pattern, which cannot
+  rewrite its own output, and an uncompilable user pattern fails safe (the file
+  is scanned) instead of throwing.
+- **The "Secure My AI" success headline was unreachable.** Verification POSTed
+  to `/v1/ai/openai-compatible/smoke`, a route the bundled broker does not
+  serve, and sent no bearer token — so it could only ever fail. It now calls
+  the real authenticated `streamSmokeTest` against the route that exists, and a
+  tool whose config was not actually rewritten is reported as unverified rather
+  than counted as a pass.
 - **"Secure My AI" had no palette-reachable undo.** `SoterAI: Restore AI
   Configs` is now a core palette command. A one-click rewrite the user cannot
   reverse from the palette is worse than one they never ran.
+- **Emergency Lockdown trapped the user in the panel.** Entering lockdown
+  replaced the whole panel body, and the replacement offered no way out — the
+  `soterai.unlockProtection` command existed but nothing in the panel reached
+  it, so recovery required knowing the command palette. Lockdown now renders
+  "Unlock protection" as its primary action. A state a one-click control can
+  enter must be one the same control can leave.
 - Declared `@soterai/detectors`, which was required at runtime but present only
   via the workspace symlink and esbuild inlining.
 - Added `SoterAI: Copy Pre-Commit Hook Script` as the escape hatch for
   husky/lefthook repos, referenced by the refusal message above.
 
 ### Security
+- **A pre-rewrite copy of every secret file was written to disk in plaintext.**
+  "Secure My AI" backed each config up to `<path>.soterai-backup-<timestamp>`,
+  a sibling of the original. For a `.env` that produced a second, permanent
+  copy of every key on a path `.gitignore` does not match, created with default
+  `0644` permissions rather than the source file's mode, and — for candidates
+  under `$HOME` — outside the workspace ignore rules entirely. Backups now go
+  to an encrypted `BackupSink`: AES-GCM, key held in VS Code SecretStorage,
+  ciphertext under the extension's global storage, addressed by an opaque
+  handle. The original path is stored inside the ciphertext, so even the
+  filename is not disclosed at rest. If the sink fails, the rewrite is
+  abandoned and the original is left untouched — an un-undoable rewrite of a
+  secret-bearing config is worse than no rewrite at all.
+- **A repository could turn its own protection off.** All 28 `soterai.*`
+  settings were declared with no `scope`, which is VS Code's `window` default:
+  a checked-in `.vscode/settings.json` could set them. Opening a hostile repo
+  was enough to disable `protection.enabled`, `liveScan.enabled` or
+  `mcpFirewall.strictMode`, or to repoint `broker.openAIProviderUrl` at an
+  attacker-controlled endpoint that then received the user's real provider API
+  key. The 23 safety-relevant keys are now `scope: "machine"`, so workspace
+  values are ignored, and the same 23 are declared in
+  `capabilities.untrustedWorkspaces.restrictedConfigurations` so Restricted
+  Mode refuses them too. The 5 keys left workspace-scoped are scan budgets,
+  exclude globs and palette visibility — none can disable a protection.
 - **RAG / vector-database egress is now enforced rather than advertised.** The
   host list and `isRagEgress` existed with no caller while the module header
   claimed the detection shipped. They now live in `egressFirewall.ts` and are
@@ -50,7 +93,47 @@ ones worth reading.
   there is durable, not transient), and clean content becomes `ASK` before it
   is indexed.
 
+### Changed
+- **The Control Panel now reads as instructions rather than as a status page.**
+  Every control carries a one-line plain-language summary, with the honest
+  caveat demoted into an expandable row instead of deleted, and the panel shows
+  a single primary action chosen by protection state rather than an
+  unconditional "Enable Full Protection" — which was the wrong move during
+  lockdown and a no-op when protection was already full. Wording, ordering and
+  badge resolution moved into a pure `panelContent.ts` module, so what a new
+  user reads is unit-testable without a VS Code host. No badge can exceed what
+  the capability registry permits; every level is still resolved through
+  `capabilityUiBadge()`.
+
+### Removed
+- **27 hand-listed `onCommand:` activation events.** VS Code has generated an
+  activation event for every contributed command since 1.74, and the declared
+  floor here is `^1.85.0`, so all 27 were dead weight — and demonstrably drifting
+  already, since the other 131 commands relied on the generated behaviour
+  without anyone noticing. Removal is proven, not assumed: the real-host suite
+  passes 9/9 on **both** 1.104.0 and the 1.85.0 floor, including the case that
+  asserts every command the panel can invoke exists in that host.
+  `activationEvents` is now the three entries that have no generated
+  equivalent — `onStartupFinished`, `workspaceContains:.soterai-policy.json`
+  and `onWalkthrough:soterai.gettingStarted`. A new test rejects any
+  reintroduced `onCommand:` entry and pins those three as required.
+- **Five marketing assets that were not pictures of this extension.**
+  `command-palette.png`, `scan-results.png` (byte-identical to it),
+  `settings-panel.png` and `demo.gif` were screen captures of an unrelated
+  editor session — a coding-assistant transcript with third-party advertising
+  visible in frame — and `dashboard-overview.png` showed the VS Code Welcome tab
+  with no SoterAI surface in it. `.vscodeignore` already kept them out of the
+  VSIX and a test already forbade the README from rendering them, so nothing
+  shipped; they are deleted so they cannot be mistaken for usable collateral.
+  Marketplace screenshots remain **absent, not pending** — no image will be
+  published that does not show this extension doing the thing it claims.
+
 ### Honesty
+- `onStartupFinished` is kept deliberately. Lazy activation would look tidier in
+  a review, but a guard that starts only after the user runs a command does not
+  guard the window before that point: live scanning, the sentinel and the
+  screen-share check all have to be running to be worth anything. The cost is a
+  real one and is stated rather than hidden.
 - Registered the five newly-wired protections in the capability registry at the
   level each one actually reaches: `ai-config-auto-route` and
   `git-precommit-secret-hook` as **ADVISORY_ONLY** (they edit configuration so
@@ -62,13 +145,38 @@ ones worth reading.
   are declared in the registry rather than omitted.
 
 ### Verified
-- Extension: 176/176 tests across 49 suites pass; typecheck clean.
+- Extension: 235/235 tests across 56 suites pass; `tsc --noEmit` clean. (`npm
+  run lint` is an alias for `typecheck` — this package has no ESLint config, so
+  that is one check, not two.)
 - guard-core: 466/466 tests pass; capability registry honesty invariant passes
   (`honest=true`, 28 capabilities).
-- 37 new regression tests cover the modules above, which had **zero** coverage
+- **The `engines.vscode` range is now tested, not assumed.** The manifest
+  promises `^1.85.0` — every VS Code from Nov 2023 onward — while the suite had
+  only ever run on 1.104.0. An extension that uses an API newer than its floor
+  installs happily on an older editor and then fails at runtime for that user.
+  The full host suite now passes 9/9 on **1.85.0** as well, including the check
+  that every command the panel can invoke exists in that host. `npm run
+  test:host:floor` reproduces it, deriving the version from `engines.vscode`
+  itself so the two cannot drift apart.
+- **Verified in a real VS Code host, not only in unit tests.** A new
+  `npm run test:host` harness launches a pinned VS Code 1.104.0, activates the
+  extension and drives the actual panel: 9/9 pass, including that toggling Live
+  Scan from the panel really changes the setting, that a message outside the
+  allowlist changes nothing, and that every command the panel can invoke exists
+  in the host. The suite is mutation-proven — removing `action:unlock` from the
+  provider's allowlist turns it red rather than leaving it green.
+- **The security fixes above are mutation-proven, not merely tested.** Seven
+  deliberate regressions were reintroduced one at a time — restoring the
+  plaintext sibling backup, rewriting the file after a failed backup, dropping
+  `scope: "machine"`, dropping a key from `restrictedConfigurations`, letting
+  `*` cross a path separator, breaking the zero-segment `**/` case, and
+  accepting a 404 stream route as a pass. Every one turned the suite red, and
+  every file was restored byte-exact afterwards.
+- 70 new regression tests cover the modules above, which had **zero** coverage
   in 0.3.0 — that absence is how a warning matching one filename, a hook with
-  no exec bit, a claim with no scan behind it, and a scanner that read nothing
-  all shipped in the same release.
+  no exec bit, a claim with no scan behind it, a scanner that read nothing, a
+  glob that excluded nothing and a backup that leaked every secret all shipped
+  in the same release.
 
 ## [0.3.0] - 2026-08-04
 
@@ -152,79 +260,3 @@ ones worth reading.
 - Extension package typecheck, lint, test, build, and VSIX package completed successfully.
 - Root typecheck and root test completed successfully.
 - Generated VSIX installed through VS Code CLI as `soterai.soterai-ide-guard@0.1.0`.
-
-## [0.2.2] — 2026-06-27
-
-### Fixed
-- SDK env variable resolution now accepts both `SOTERAI_*` and `SOTER_*` prefixes
-- All 31 documented service API references updated from `/api/v1` to real `/api/*` routes
-- Legacy unverified SDK snippets hidden from customer-facing docs until integration-tested
-- False "1M+ production requests" claim removed; now accurately describes deployment assets
-- False "<50ms SDK latency" claim replaced with recorded HTTP p50 (891ms)
-- False "independent benchmark" claim corrected to "internal regression benchmark"
-- Service count updated from 32 to 33 documented services
-- "OWASP LLM Top 10 Compliant" corrected to "OWASP LLM Top 10 Mapped"
-
-### Added
-- `lib/guard/scheduledPersistence.ts` — fire-and-forget guard result persistence with parallelized pre-checks
-- `tests/guard/attack-pack-regression.test.ts` — 74 attack variant regression tests
-- `tests/docs-service-catalog.test.ts` — contract tests verifying API references resolve to implemented routes
-- `docs/APP_AUDIT_AND_COMPETITIVE_REPORT_2026-06-27.md` — comprehensive audit with competitor comparison and roadmap
-- `scripts/validate-env.ts` — production environment validation script (41 checks)
-
-### Changed
-- Parallelized Redis rate-limit and monthly-usage checks in input/output guard routes
-- Policy cache invalidation now uses dedicated `invalidateProjectPolicyCache()` instead of generic `deleteLocalCache()`
-- Benchmark text, homepage, metadata, and badge descriptions now accurately reflect internal benchmark limitations
-
----
-
-## [0.2.1] — 2026-06-21
-
-### Fixed
-- Python SDK: Fixed `pyproject.toml` license deprecation (TOML table → SPDX string)
-- Python SDK: Removed deprecated `License :: OSI Approved :: MIT License` classifier
-
-### Changed
-- All packages synced to version 0.2.0 (npm) / 0.2.1 (PyPI)
-- Updated main README with Package Health table and current test counts
-- Cleaned up old example directories and build artifacts
-
-### Added
-- Middleware READMEs for langchain, llamaindex, vercel-ai-sdk packages
-- New examples: Next.js + `@soterai/core`, FastAPI + `soter`, Flask + `soter`
-- CI/CD pipeline with SDK tests, Docker build, EC2 deploy, npm/PyPI publishing
-- `.gitignore` now includes `dist/` pattern
-
----
-
-## [0.2.0] — 2026-06-21
-
-### Added
-- Python SDK published to PyPI as `soter` v0.2.0
-- Middleware packages published to npm
-  - `@soterai/langchain-middleware`
-  - `@soterai/llamaindex-middleware`
-  - `@soterai/vercel-ai-sdk-middleware`
-
----
-
-## [0.1.0] — 2026-06-21
-
-### Added
-- Initial release of `@soterai/core` to npm
-- Phase 1-6 feature implementation
-- Webhook system with HMAC-SHA256 signatures
-- Razorpay billing integration
-- Policy engine with MONITOR / BALANCED / STRICT modes
-- Next.js app with App Router
-- Prisma ORM with PostgreSQL
-- Docker production setup
-- E2E testing with Playwright
-# 2026-07-02
-
-- Completed same-day launch readiness check for the root app, extension, n8n node, Zapier integration, and Make.com app.
-- Fixed extension store privacy documentation for response scanning controls.
-- Fixed the Phase 4 local secret-store test harness so it does not depend on production `NODE_ENV`.
-- Built extension ZIP and n8n package tarball.
-- Pushed Zapier integration version `0.1.0`; public publication remains pending platform review/account tasks.

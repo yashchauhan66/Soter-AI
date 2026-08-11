@@ -6,6 +6,7 @@
 src/**
 benchmarks/**
 esbuild.js
+esbuild.host-tests.js
 tsconfig.json
 tsconfig.*.json
 .eslintrc*
@@ -21,6 +22,10 @@ node_modules/**
 coverage/**
 .nyc_output/**
 out/**
+# Host-test bundle and the downloaded VS Code it runs against — test-only,
+# and .vscode-test is a ~350MB unpacked editor. Neither belongs in a VSIX.
+dist-test/**
+.vscode-test/**
 
 # Repo / tooling noise
 .vscode/**
