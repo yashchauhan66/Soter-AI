@@ -238,18 +238,57 @@ function deserializeRange(r: SerializedRange): vscode.Range {
     return new vscode.Range(r.sl, r.sc, r.el, r.ec);
 }
 
-/** Minimal glob matcher for the extension's default exclude patterns. */
+/**
+ * Minimal glob matcher for the extension's default exclude patterns.
+ *
+ * Built in ONE pass, not a chain of `.replace()` calls. The chained version was
+ * silently broken: it expanded a leading double-star segment into `(.*` + `/)?`
+ * and then a later single-star rule rewrote the star inside that very output.
+ * So the pattern for "any node_modules directory" compiled to
+ * `^(.[^/]*` + `/).node_modules/.[^/]*$` and matched nothing. Every default
+ * exclude was dead, meaning `node_modules`, `dist` and vendored bundles were
+ * live-scanned on each keystroke.
+ *
+ * A single scan over the pattern cannot rewrite its own output, which is the
+ * property the chain lacked.
+ */
+function globToRegExp(glob: string): RegExp {
+    const normalized = glob.replace(/\\/g, "/");
+    let out = "^";
+    for (let i = 0; i < normalized.length; i++) {
+        const ch = normalized[i];
+        if (ch === "*") {
+            if (normalized[i + 1] === "*") {
+                // `**/` spans zero or more leading segments; a bare `**`
+                // spans anything including separators.
+                if (normalized[i + 2] === "/") {
+                    out += "(?:.*/)?";
+                    i += 2;
+                } else {
+                    out += ".*";
+                    i += 1;
+                }
+            } else {
+                out += "[^/]*"; // single `*` never crosses a separator
+            }
+        } else if (ch === "?") {
+            out += "[^/]";
+        } else {
+            out += ch.replace(/[.+^${}()|[\]\\]/g, "\\$&");
+        }
+    }
+    return new RegExp(out + "$");
+}
+
 function matchesGlob(path: string, glob: string): boolean {
-    const normalized = path.replace(/\\/g, "/");
-    const re = new RegExp(
-        "^" + glob.replace(/\\/g, "/")
-            .replace(/[.+^${}()|[\]]/g, "\\$&")
-            .replace(/\*\*\//g, "(.*/)?")
-            .replace(/\*\*/g, ".*")
-            .replace(/\*/g, "[^/]*")
-            .replace(/\?/g, ".") + "$",
-    );
-    return re.test(normalized);
+    try {
+        return globToRegExp(glob).test(path.replace(/\\/g, "/"));
+    } catch {
+        // A user-supplied pattern must never break scanning. Treat an
+        // uncompilable glob as "does not exclude" — the file still gets
+        // scanned, which fails safe for a security feature.
+        return false;
+    }
 }
 
 export function registerLiveScanner(context: vscode.ExtensionContext): LiveScanner {

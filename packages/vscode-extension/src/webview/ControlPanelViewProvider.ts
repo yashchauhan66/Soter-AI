@@ -1,10 +1,13 @@
 import * as vscode from "vscode";
 import { escapeHtml, getNonce } from "../firewall/util";
+import { PROTECTION } from "../protection/ProtectionLevel";
 import {
-    PROTECTION,
-    capabilityUiBadge,
-    type ProtectionLevel,
-} from "../protection/ProtectionLevel";
+    panelTasks,
+    plainControls,
+    primaryCta,
+    type PanelFacts,
+    type PlainControl,
+} from "./panelContent";
 import type { WorkspaceGuard } from "../workspace-guard/WorkspaceGuard";
 import type { AISentinel } from "../sentinel/AISentinel";
 import type { BrokerManager } from "../broker/BrokerManager";
@@ -81,6 +84,9 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
         "action:scanClipboard",
         "action:mcpPreflight",
         "action:depGuard",
+        // Lockdown recovery. Without this the panel could enter Emergency
+        // Lockdown and offer no way out except the command palette.
+        "action:unlock",
     ]);
 
 
@@ -140,6 +146,9 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
                 case "action:depGuard":
                     await vscode.commands.executeCommand("soterai.checkDependencyInstall");
                     break;
+                case "action:unlock":
+                    await vscode.commands.executeCommand("soterai.unlockProtection");
+                    break;
 
             }
 
@@ -185,86 +194,56 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     }
 
     // ── honest badge mapping ─────────────────────────────────────────────────
-    private toggleModel(state: PanelState): ToggleModel[] {
-        return [
-            {
-                id: "safeMode",
-                label: "AI Safe Mode",
-                on: state.safeMode,
-                // Enforced ONLY for brokered traffic while the broker runs; otherwise the
-                // policy exists but cannot technically block un-brokered paths.
-                level: !state.safeMode ? undefined : state.brokerRunning ? "ENFORCED" : "MONITORED",
-                note: state.safeMode
-                    ? state.brokerRunning
-                        ? `Enforced on brokered AI traffic${state.safeModeLevel ? ` (${state.safeModeLevel})` : ""}. Traffic that bypasses the broker is not covered.`
-                        : "Policy set, but the local broker is stopped — un-brokered AI traffic is not blocked. Start the broker for enforcement."
-                    : "AI Safe Mode rules are not applied.",
-            },
-            {
-                id: "protectedWorkspace",
-                label: "Protected Workspace",
-                on: state.protectedWorkspace,
-                level: state.protectedWorkspace ? "REDACTED" : undefined,
-                note: state.protectedWorkspace
-                    ? "Protected files are excluded from SoterAI-built AI context. Direct reads by other extensions/tools are not intercepted."
-                    : "Listed files are not excluded from AI context bundles.",
-            },
-            {
-                id: "liveScan",
-                label: "Live Scan on Save",
-                on: state.liveScan,
-                // Registry: live-scan = VISIBILITY_ONLY → UI MONITORED (never ENFORCED).
-                level: state.liveScan ? (capabilityUiBadge("live-scan")?.uiLevel ?? "MONITORED") : undefined,
-                note: state.liveScan
-                    ? `Files are scanned as you type/save (pipeline 1.1.0: secrets, PII, prompt-injection, jailbreak). Registry level: ${capabilityUiBadge("live-scan")?.registryLevel ?? "VISIBILITY_ONLY"} — diagnostics only; does not block send-to-AI or other extensions.`
-                    : "Files are not scanned automatically on save.",
-            },
-            {
-                id: "sentinel",
-                label: "AI Sentinel",
-                on: state.sentinel,
-                level: state.sentinel ? "MONITORED" : undefined,
-                note: state.sentinel
-                    ? "Records a redacted timeline of observed AI activity. Observes only — it does not block."
-                    : "AI activity is not being recorded.",
-            },
-            {
-                id: "mcpFirewall",
-                label: "MCP Firewall (strict)",
-                on: state.mcpFirewall,
-                // Registry: mcp-config-scan = DETECTION_ONLY → UI MONITORED.
-                level: state.mcpFirewall ? (capabilityUiBadge("mcp-config-scan")?.uiLevel ?? "MONITORED") : undefined,
-                note: state.mcpFirewall
-                    ? `MCP configs are scanned strictly and risky tools are flagged (${capabilityUiBadge("mcp-config-scan")?.registryLevel ?? "DETECTION_ONLY"}). Optional broker preflight (soterai.preflightMCPTool) is DETECTION_ONLY unless the caller respects the decision; other MCP clients remain unenforced.`
-                    : "MCP configs use standard (non-strict) checks.",
-            },
+    // Wording, ordering and the registry-resolved badge live in panelContent.ts
+    // so they can be unit-tested without a VS Code host. capabilityUiBadge is
+    // called there, which keeps the "no claim stronger than the registry" rule
+    // in one place instead of duplicated per surface.
 
-
-        ];
-    }
-
-    private html(webview: vscode.Webview, state: PanelState, protection: import("../protection/ProtectionState").ProtectionStateDescriptor): string {
+    private html(
+        webview: vscode.Webview,
+        state: PanelState,
+        protection: import("../protection/ProtectionState").ProtectionStateDescriptor,
+    ): string {
         const nonce = getNonce();
-        const toggles = this.toggleModel(state);
-        const activeCount = toggles.filter((t) => t.on).length;
+        const facts: PanelFacts = state;
+        const controls = plainControls(facts);
+        const activeCount = controls.filter((c) => c.on).length;
+        const cta = primaryCta(protection.state, facts);
+        const tasks = panelTasks();
+        const firstRun = activeCount === 0 && !state.brokerRunning;
 
-        const rows = toggles
-            .map((t) => {
-                const badge = t.on && t.level ? `<span class="lvl lvl-${t.level}">${escapeHtml(PROTECTION[t.level].label)}</span>` : "";
-                return `
+        const row = (c: PlainControl): string => {
+            const badge =
+                c.on && c.level
+                    ? `<span class="lvl lvl-${c.level}">${escapeHtml(PROTECTION[c.level].label)}</span>`
+                    : "";
+            return `
       <div class="row">
-        <div class="row-main">
-          <button class="sw ${t.on ? "on" : "off"}" data-id="${t.id}" data-value="${t.on ? "false" : "true"}"
-                  role="switch" aria-checked="${t.on}" aria-label="${escapeHtml(t.label)}">
-            <span class="knob"></span>
-          </button>
-          <div class="row-text">
-            <div class="row-title">${escapeHtml(t.label)} ${badge}</div>
-            <div class="row-note">${escapeHtml(t.note)}</div>
-          </div>
+        <button class="sw ${c.on ? "on" : "off"}" data-id="${c.id}" data-value="${c.on ? "false" : "true"}"
+                data-focus="sw-${c.id}" role="switch" aria-checked="${c.on}"
+                aria-label="${escapeHtml(c.label)}"><span class="knob"></span></button>
+        <div class="row-text">
+          <div class="row-title">${escapeHtml(c.label)} ${badge}</div>
+          <div class="row-note">${escapeHtml(c.summary)}</div>
+          <details class="more">
+            <summary>Exactly what this covers</summary>
+            <p>${escapeHtml(c.detail)}</p>
+          </details>
         </div>
       </div>`;
-            })
+        };
+
+        const taskButtons = tasks
+            .map(
+                (t) => `
+    <button class="task" data-action="${t.action.replace("action:", "")}" data-focus="${t.action}">
+      <span class="task-ico" aria-hidden="true">${t.icon}</span>
+      <span class="task-text">
+        <span class="task-label">${escapeHtml(t.label)}</span>
+        <span class="task-hint">${escapeHtml(t.hint)}</span>
+      </span>
+    </button>`,
+            )
             .join("");
 
         return `<!DOCTYPE html>
@@ -274,103 +253,145 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'nonce-${nonce}';">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: var(--vscode-font-family, sans-serif); color: var(--vscode-foreground); padding: 10px 8px 16px; }
-    .hero { display:flex; align-items:center; gap:10px; padding:12px; border-radius:8px;
-            background: var(--vscode-sideBar-background); border:1px solid var(--vscode-panel-border); margin-bottom:12px; }
-    .hero .ico { font-size:22px; }
-    .hero .txt { line-height:1.3; }
-    .hero .state { font-weight:700; font-size:14px; }
-    .hero .sub { font-size:11px; color: var(--vscode-descriptionForeground); }
-    .row { padding:10px 4px; border-bottom:1px solid var(--vscode-panel-border); }
-    .row-main { display:flex; gap:10px; align-items:flex-start; }
+    body { font-family: var(--vscode-font-family, sans-serif); color: var(--vscode-foreground);
+           padding: 12px 10px 18px; font-size:13px; }
+    h2 { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em;
+         color: var(--vscode-descriptionForeground); margin:18px 0 8px; }
+
+    /* Status: one sentence, one severity colour, no wall of text. */
+    .status { padding:12px; border-radius:8px; border:1px solid var(--vscode-panel-border);
+              background: var(--vscode-sideBar-background); border-left-width:3px; }
+    .status.info { border-left-color:#16a34a; }
+    .status.warning { border-left-color:#d97706; }
+    .status.error, .status.critical { border-left-color:#dc2626; }
+    .status .state { font-weight:700; font-size:14px; }
+    .status .sub { font-size:11px; color: var(--vscode-descriptionForeground); margin-top:4px; line-height:1.45; }
+
+    /* Exactly one primary button, so there is never a choice to agonise over. */
+    .cta { width:100%; margin-top:10px; padding:10px 12px; border:none; border-radius:6px;
+           cursor:pointer; font-size:13px; font-weight:600; text-align:center;
+           background: var(--vscode-button-background); color: var(--vscode-button-foreground); }
+    .cta.calm { background: var(--vscode-button-secondaryBackground); color: var(--vscode-button-secondaryForeground); }
+    .cta-hint { font-size:11px; color: var(--vscode-descriptionForeground); margin-top:6px; line-height:1.45; }
+
+    .task { display:flex; width:100%; gap:10px; align-items:flex-start; text-align:left;
+            padding:9px 10px; margin-bottom:6px; cursor:pointer; border-radius:6px;
+            border:1px solid var(--vscode-panel-border); background:transparent;
+            color: var(--vscode-foreground); font-size:13px; font-family:inherit; }
+    .task:hover { background: var(--vscode-list-hoverBackground); }
+    .task.blocked .task-ico { opacity:.45; }
+    .task-ico { font-size:15px; line-height:1.3; }
+    .task-text { display:flex; flex-direction:column; gap:2px; }
+    .task-label { font-weight:600; }
+    .task-hint { font-size:11px; color: var(--vscode-descriptionForeground); line-height:1.4; }
+
+    .row { display:flex; gap:10px; align-items:flex-start; padding:10px 2px;
+           border-bottom:1px solid var(--vscode-panel-border); }
     .row-text { flex:1; }
-    .row-title { font-size:13px; font-weight:600; display:flex; align-items:center; gap:6px; }
-    .row-note { font-size:11px; color: var(--vscode-descriptionForeground); margin-top:3px; }
+    .row-title { font-weight:600; display:flex; align-items:center; gap:6px; }
+    .row-note { font-size:11px; color: var(--vscode-descriptionForeground); margin-top:3px; line-height:1.45; }
+    .more { margin-top:5px; }
+    .more summary { font-size:11px; color: var(--vscode-textLink-foreground); cursor:pointer; }
+    .more p { font-size:11px; color: var(--vscode-descriptionForeground); margin:5px 0 0; line-height:1.5; }
+
     .lvl { font-size:10px; font-weight:700; padding:1px 6px; border-radius:10px; color:#fff; }
     .lvl-ENFORCED { background:#16a34a; } .lvl-VERIFIED { background:#0891b2; }
     .lvl-REDACTED { background:#7c3aed; } .lvl-MONITORED { background:#d97706; }
     .lvl-UNKNOWN { background:#6b7280; } .lvl-EXPOSED { background:#dc2626; }
+
     .sw { width:38px; height:22px; border-radius:11px; border:none; cursor:pointer; position:relative;
           flex:0 0 auto; margin-top:2px; transition:background .15s; }
-    .sw.on { background:#16a34a; } .sw.off { background: var(--vscode-input-background); border:1px solid var(--vscode-panel-border); }
-    .sw .knob { position:absolute; top:2px; left:2px; width:18px; height:18px; border-radius:50%; background:#fff; transition:left .15s; }
+    .sw.on { background:#16a34a; }
+    .sw.off { background: var(--vscode-input-background); border:1px solid var(--vscode-panel-border); }
+    .sw .knob { position:absolute; top:2px; left:2px; width:18px; height:18px; border-radius:50%;
+                background:#fff; transition:left .15s; }
     .sw.on .knob { left:18px; }
-    .workflows { margin-top:14px; display:flex; flex-direction:column; gap:6px; }
-    .wf-title { font-size:12px; font-weight:700; margin-bottom:2px; }
-    .actions { margin-top:14px; display:flex; flex-direction:column; gap:8px; }
-    .btn { padding:8px 12px; border:none; border-radius:5px; cursor:pointer; font-size:12px; font-weight:600; text-align:center; }
-    .btn.secondary { background: var(--vscode-button-secondaryBackground); color: var(--vscode-button-secondaryForeground); }
-    .btn.danger { background:#dc2626; color:#fff; }
 
-    .foot { margin-top:12px; font-size:10px; color: var(--vscode-descriptionForeground); line-height:1.4; }
-    .trust { font-size:10px; color: var(--vscode-descriptionForeground); margin-top:4px; }
+    [aria-busy="true"] { opacity:.55; cursor:progress; }
+    :focus-visible { outline:2px solid var(--vscode-focusBorder); outline-offset:2px; }
+
+    .escape { margin-top:16px; display:flex; flex-direction:column; gap:6px; }
+    .btn { padding:7px 12px; border:none; border-radius:5px; cursor:pointer; font-size:12px;
+           font-weight:600; text-align:center; font-family:inherit; }
+    .btn.secondary { background: var(--vscode-button-secondaryBackground); color: var(--vscode-button-secondaryForeground); }
+    .btn.danger { background:transparent; color:#dc2626; border:1px solid #dc2626; }
+    .foot { margin-top:14px; font-size:10px; color: var(--vscode-descriptionForeground); line-height:1.5; }
   </style>
 </head>
 <body>
-  <div class="hero">
-    <div class="ico">🛡️</div>
-    <div class="txt">
-      <div class="state">${escapeHtml(protection.title)}</div>
-      <div class="sub">${escapeHtml(protection.explanation)}</div>
-      <div class="sub">${activeCount}/${toggles.length} controls on · ${escapeHtml(protection.coverage)}</div>
-      <div class="sub"><strong>Next:</strong> ${escapeHtml(protection.recommendedAction)}</div>
-    </div>
+  <div class="status ${escapeHtml(protection.severity)}">
+    <div class="state">${escapeHtml(protection.title)}</div>
+    <div class="sub">${escapeHtml(protection.explanation)}</div>
+    <div class="sub">${activeCount} of ${controls.length} controls on · ${escapeHtml(protection.coverage)}</div>
   </div>
 
-  ${rows}
+  <button class="cta ${cta.tone === "calm" ? "calm" : ""}" data-action="${cta.action.replace("action:", "")}"
+          data-focus="${cta.action}">${escapeHtml(cta.label)}</button>
+  <div class="cta-hint">${escapeHtml(cta.hint)}</div>
 
-  <div class="workflows">
-    <div class="wf-title">Primary workflows</div>
-    <button class="btn primary" data-action="fullProtection" aria-label="Enable Full Protection">Enable Full Protection</button>
-    <button class="btn secondary" data-action="setupBroker">1. Setup Broker Integration</button>
-    <button class="btn secondary" data-action="controlledTerminal">2. Controlled Terminal</button>
-    <button class="btn secondary" data-action="scanClipboard">3. Scan Clipboard</button>
-    <button class="btn secondary" data-action="mcpPreflight">4. Preflight MCP Tool</button>
-    <button class="btn secondary" data-action="depGuard">5. Check Dependencies</button>
+  ${firstRun ? `<div class="cta-hint"><strong>New here?</strong> Press the button above once. Nothing is sent anywhere — all checking happens on this machine.</div>` : ""}
+
+  <h2>Do something now</h2>
+  ${taskButtons}
+
+  <h2>Controls</h2>
+  ${controls.map(row).join("")}
+
+  <div class="escape">
+    <button class="btn secondary" data-action="openCoverage" data-focus="action:openCoverage">What is actually covered?</button>
+    <button class="btn danger" data-action="lockdown" data-focus="action:lockdown">Emergency lockdown</button>
   </div>
 
-  <div class="actions">
-    <button class="btn secondary" data-action="openCoverage">View Coverage Matrix</button>
-    <button class="btn danger" data-action="lockdown">🔴 Emergency Lockdown</button>
+  <div class="foot">
+    Workspace: ${state.trusted ? "Trusted" : "Restricted"} · Local checking: ${state.brokerRunning ? "on" : "off"}<br>
+    Badges are honest. <b>Enforced</b> means SoterAI technically controls that path.
+    <b>Monitoring only</b> means it can warn you but cannot stop another extension or process.
   </div>
-
-
-  <div class="trust">Workspace: ${state.trusted ? "Trusted" : "Restricted"} · Broker: ${state.brokerRunning ? "Running (enforced path available)" : "Stopped (advisory only)"}</div>
-  <div class="foot">Badges are honest: <b>Enforced</b> means SoterAI technically controls that path; <b>Monitoring only</b> means advisory detection that cannot intercept other extensions or processes.</div>
 
   <script nonce="${nonce}">
     const vscode = acquireVsCodeApi();
-    document.querySelectorAll('.sw').forEach((el) => {
-      el.addEventListener('click', () => {
-        vscode.postMessage({ type: 'toggle:' + el.getAttribute('data-id'), value: el.getAttribute('data-value') === 'true' });
+
+    // The panel re-renders by replacing the whole document, which drops keyboard
+    // focus and silently punishes anyone not using a mouse. setState survives
+    // that replacement, so the focused control is restored afterwards.
+    const saved = vscode.getState() || {};
+    if (saved.focus) {
+      const el = document.querySelector('[data-focus="' + CSS.escape(saved.focus) + '"]');
+      if (el) el.focus();
+    }
+    for (const el of document.querySelectorAll('[data-focus]')) {
+      el.addEventListener('focus', () => {
+        vscode.setState(Object.assign({}, vscode.getState(), { focus: el.getAttribute('data-focus') }));
       });
-    });
-    document.querySelectorAll('[data-action]').forEach((el) => {
+    }
+
+    // A toggle round-trips through the extension host and back. Without this the
+    // switch looks dead for that whole window and users click it twice.
+    function busy(el) {
+      el.setAttribute('aria-busy', 'true');
+      el.setAttribute('disabled', 'true');
+    }
+
+    for (const el of document.querySelectorAll('.sw')) {
       el.addEventListener('click', () => {
+        busy(el);
+        vscode.postMessage({
+          type: 'toggle:' + el.getAttribute('data-id'),
+          value: el.getAttribute('data-value') === 'true'
+        });
+      });
+    }
+    for (const el of document.querySelectorAll('[data-action]')) {
+      el.addEventListener('click', () => {
+        busy(el);
         vscode.postMessage({ type: 'action:' + el.getAttribute('data-action') });
       });
-    });
+    }
   </script>
 </body>
 </html>`;
     }
 }
 
-interface PanelState {
-    safeMode: boolean;
-    safeModeLevel?: string;
-    protectedWorkspace: boolean;
-    liveScan: boolean;
-    sentinel: boolean;
-    mcpFirewall: boolean;
-    brokerRunning: boolean;
-    trusted: boolean;
-}
-
-interface ToggleModel {
-    id: "safeMode" | "protectedWorkspace" | "liveScan" | "sentinel" | "mcpFirewall";
-    label: string;
-    on: boolean;
-    level?: ProtectionLevel;
-    note: string;
-}
+/** The panel renders only verified booleans and labels — never secrets. */
+type PanelState = PanelFacts;

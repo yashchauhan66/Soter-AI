@@ -64,6 +64,29 @@ export interface FileIO {
     exists(path: string): Promise<boolean>;
 }
 
+/**
+ * Where the pre-rewrite copy of a config is kept.
+ *
+ * The files this adapter rewrites are the highest-value secret files on the
+ * machine (`.env`, `.env.local`, `~/.zshrc`, `~/.bashrc`). Writing their
+ * contents to a sibling path — the original `${path}.soterai-backup-<ts>`
+ * scheme — leaked those secrets three ways at once: `.gitignore` matches
+ * `.env` but not `.env.soterai-backup-*`, so the next `git add -A` commits
+ * them; the copy is created with default permissions, downgrading an 0600
+ * `.env` to 0644; and `${HOME}` candidates put the copy outside any workspace
+ * ignore file entirely.
+ *
+ * A `BackupSink` moves that copy off the plaintext filesystem. The extension
+ * supplies one backed by the same encrypted, out-of-workspace store the vault
+ * migration already uses; tests supply an in-memory one.
+ */
+export interface BackupSink {
+    /** Persist `content` for `originalPath`; returns an opaque restore handle. */
+    store(originalPath: string, content: string): Promise<string>;
+    /** Resolve a handle produced by `store` back to the original content. */
+    retrieve(handle: string): Promise<string | null>;
+}
+
 export interface HttpIO {
     get(url: string, headers?: Record<string, string>): Promise<{ status: number; body: string }>;
     post(url: string, body: string, headers?: Record<string, string>): Promise<{ status: number; body: string }>;
@@ -225,12 +248,17 @@ export function proposeBrokerRewrite(
 /**
  * Apply a proposed change with mandatory backup. Never silent:
  * requires `approved === true`.
+ *
+ * The backup goes to a `BackupSink` rather than a sibling file — see the
+ * `BackupSink` docs for why a plaintext `${path}.soterai-backup-*` copy of a
+ * `.env` was a secret leak. `backupPath` in the result is now the sink's
+ * opaque handle, not a filesystem path a third party can read.
  */
 export async function applyProposedChange(
     change: ProposedChange,
     io: FileIO,
     approved: boolean,
-    backupSuffix = `.soterai-backup-${Date.now()}`,
+    backups: BackupSink,
 ): Promise<ApplyResult> {
     if (!approved) {
         return { path: change.path, backupPath: "", applied: false, reason: "user did not approve write" };
@@ -238,7 +266,6 @@ export async function applyProposedChange(
     if (change.after === change.before) {
         return { path: change.path, backupPath: "", applied: false, reason: "no diff to apply" };
     }
-    const backupPath = `${change.path}${backupSuffix}`;
     const existing = await io.readText(change.path);
     if (existing === null) {
         return { path: change.path, backupPath: "", applied: false, reason: "source file missing" };
@@ -252,22 +279,36 @@ export async function applyProposedChange(
             reason: "file changed since proposal; re-detect and re-approve",
         };
     }
-    await io.writeText(backupPath, existing);
+    // Backup must be durable BEFORE the original is touched. If the sink
+    // fails, the rewrite does not happen — an un-undoable rewrite of a
+    // secret-bearing config is worse than no rewrite at all.
+    let handle: string;
+    try {
+        handle = await backups.store(change.path, existing);
+    } catch (err) {
+        return {
+            path: change.path,
+            backupPath: "",
+            applied: false,
+            reason: `backup failed, file left untouched: ${err instanceof Error ? err.message : String(err)}`,
+        };
+    }
     await io.writeText(change.path, change.after);
-    return { path: change.path, backupPath, applied: true };
+    return { path: change.path, backupPath: handle, applied: true };
 }
 
 /** One-click restore from a backup written by applyProposedChange. */
 export async function restoreFromBackup(
     originalPath: string,
-    backupPath: string,
+    backupHandle: string,
     io: FileIO,
     approved: boolean,
+    backups: BackupSink,
 ): Promise<RestoreResult> {
     if (!approved) {
         return { path: originalPath, restored: false, reason: "user did not approve restore" };
     }
-    const backup = await io.readText(backupPath);
+    const backup = await backups.retrieve(backupHandle);
     if (backup === null) {
         return { path: originalPath, restored: false, reason: "backup missing" };
     }

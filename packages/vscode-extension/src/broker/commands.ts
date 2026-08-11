@@ -15,6 +15,7 @@ import {
     type HttpIO,
     type ProposedChange,
 } from "./IntegrationAdapter";
+import { EncryptedBackupSink } from "./EncryptedBackupSink";
 
 /** globalState key holding {path, backupPath} pairs written by secureAllAI. */
 const SECURE_BACKUPS_KEY = "soterai.secureAllAI.backups";
@@ -128,7 +129,11 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
             );
             if (pick !== "Secure Everything Now") return;
 
-            const outcome = await executeSecurePlan(plan, discovered, nodeFs, nodeHttp, true, `${s.url}/health`);
+            const brokerToken = await context.secrets.get("soterai.localBrokerToken") ?? "";
+            const outcome = await executeSecurePlan(
+                plan, discovered, nodeFs, nodeHttp, true, `${s.url}/health`,
+                new EncryptedBackupSink(context), brokerToken,
+            );
             // Persist backup pointers so restore works in a later session.
             const restorable = outcome.applied.filter((a) => a.applied && a.backupPath);
             if (restorable.length > 0) {
@@ -164,7 +169,11 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
             exists: async (p: string) => { try { await fsp.access(p); return true; } catch { return false; } },
         };
         const { restoreAll } = await import("./AutoSecureEngine");
-        const result = await restoreAll(saved.map((s) => ({ path: s.path, backupPath: s.backupPath, applied: true })), nodeFs);
+        const result = await restoreAll(
+            saved.map((s) => ({ path: s.path, backupPath: s.backupPath, applied: true })),
+            nodeFs,
+            new EncryptedBackupSink(context),
+        );
         if (result.failed.length === 0) await context.globalState.update(SECURE_BACKUPS_KEY, []);
         vscode.window.showInformationMessage(
             `SoterAI restored ${result.restored} config(s).` +
@@ -484,13 +493,13 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
             return;
         }
 
-        const result = await applyProposedChange(change, io, true);
+        const result = await applyProposedChange(change, io, true, new EncryptedBackupSink(context));
         if (!result.applied) {
             vscode.window.showErrorMessage(`Apply failed: ${result.reason ?? "unknown"}`);
             return;
         }
         await context.globalState.update(lastBackupKey, { path: result.path, backupPath: result.backupPath, at: Date.now() });
-        vscode.window.showInformationMessage(`Broker URL applied. Backup: ${path.basename(result.backupPath)}`);
+        vscode.window.showInformationMessage("Broker URL applied. An encrypted backup is stored outside your workspace.");
 
         await started();
         const health = await healthCheckBroker(manager.port, fetchHttpIO());
@@ -501,7 +510,7 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
             "SoterAI: Integration Setup Result",
             `<h1>Broker Integration Setup</h1>
             <p><strong>Applied:</strong> ${escapeHtml(result.path)}</p>
-            <p><strong>Backup:</strong> ${escapeHtml(result.backupPath)}</p>
+            <p><strong>Backup:</strong> encrypted, in extension global storage (not in your workspace)</p>
             <p><strong>Health:</strong> ${escapeHtml(health.detail)}</p>
             <p><strong>Stream smoke:</strong> ${escapeHtml(smoke.detail)}</p>
             <p class="note">STRONG only for traffic that uses the broker after this config. Use <code>SoterAI: Restore Broker Integration</code> for one-click restore.</p>`,
@@ -522,7 +531,7 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
             vscode.window.showInformationMessage("Restore cancelled — no write.");
             return;
         }
-        const result = await restoreFromBackup(last.path, last.backupPath, workspaceFileIO(), true);
+        const result = await restoreFromBackup(last.path, last.backupPath, workspaceFileIO(), true, new EncryptedBackupSink(context));
         if (!result.restored) {
             vscode.window.showErrorMessage(`Restore failed: ${result.reason ?? "unknown"}`);
             return;

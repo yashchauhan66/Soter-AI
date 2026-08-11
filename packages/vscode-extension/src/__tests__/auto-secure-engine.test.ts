@@ -16,7 +16,7 @@ import {
     restoreAll,
     KNOWN_AI_TOOLS,
 } from "../broker/AutoSecureEngine";
-import { detectConfigFormat, proposeBrokerRewrite, type FileIO, type HttpIO } from "../broker/IntegrationAdapter";
+import { detectConfigFormat, proposeBrokerRewrite, type BackupSink, type FileIO, type HttpIO } from "../broker/IntegrationAdapter";
 
 function memoryIO(initial: Record<string, string> = {}): FileIO & { store: Record<string, string> } {
     const store: Record<string, string> = { ...initial };
@@ -29,6 +29,27 @@ function memoryIO(initial: Record<string, string> = {}): FileIO & { store: Recor
         async exists(p: string) { return Object.prototype.hasOwnProperty.call(store, p); },
     };
 }
+
+/**
+ * Backups live outside the FileIO store on purpose — a pre-rewrite copy of a
+ * `.env` must never be reachable as a file beside the secret it copies.
+ */
+function memorySink(): BackupSink & { entries: Map<string, string> } {
+    const entries = new Map<string, string>();
+    return {
+        entries,
+        async store(_originalPath: string, content: string) {
+            const handle = `h${entries.size + 1}`;
+            entries.set(handle, content);
+            return handle;
+        },
+        async retrieve(handle: string) {
+            return entries.has(handle) ? entries.get(handle)! : null;
+        },
+    };
+}
+
+const TOKEN = "test-broker-token";
 
 function okHttp(status = 200): HttpIO {
     return {
@@ -169,7 +190,7 @@ describe("executeSecurePlan", () => {
             async get() { throw new Error("ECONNREFUSED"); },
             async post() { throw new Error("ECONNREFUSED"); },
         };
-        const out = await executeSecurePlan(plan, discovered, io, deadHttp, true, `http://127.0.0.1:${PORT}/health`);
+        const out = await executeSecurePlan(plan, discovered, io, deadHttp, true, `http://127.0.0.1:${PORT}/health`, memorySink(), TOKEN);
 
         assert.equal(out.brokerOnline, false);
         assert.equal(out.applied.length, 0);
@@ -182,11 +203,14 @@ describe("executeSecurePlan", () => {
         const io = memoryIO(files);
         const discovered = await discoverAllAiTools(io, "/home/u", "/ws");
         const plan = buildSecurePlan(discovered, files, PORT);
+        // Broker health is fine but the OpenAI-compatible stream route is not
+        // served — the exact shape of the bug where the engine POSTed to a
+        // route that does not exist and still printed the success headline.
         const flaky: HttpIO = {
             async get() { return { status: 200, body: "ok" }; },
-            async post() { return { status: 500, body: "boom" }; },
+            async post() { return { status: 404, body: "not found" }; },
         };
-        const out = await executeSecurePlan(plan, discovered, io, flaky, true, `http://127.0.0.1:${PORT}/health`);
+        const out = await executeSecurePlan(plan, discovered, io, flaky, true, `http://127.0.0.1:${PORT}/health`, memorySink(), TOKEN);
 
         assert.equal(out.applied.filter((a) => a.applied).length, 1);
         assert.doesNotMatch(out.headline, /Secrets now redact/);
@@ -200,12 +224,18 @@ describe("executeSecurePlan", () => {
         const io = memoryIO(files);
         const discovered = await discoverAllAiTools(io, "/home/u", "/ws");
         const plan = buildSecurePlan(discovered, files, PORT);
-        const out = await executeSecurePlan(plan, discovered, io, okHttp(), true, `http://127.0.0.1:${PORT}/health`);
+        const sink = memorySink();
+        const out = await executeSecurePlan(plan, discovered, io, okHttp(), true, `http://127.0.0.1:${PORT}/health`, sink, TOKEN);
 
         assert.match(out.headline, /Secured 1 tool config/);
         assert.match(io.store["/home/u/.bashrc"], /127\.0\.0\.1:47321/);
+        assert.deepEqual(
+            Object.keys(io.store),
+            ["/home/u/.bashrc"],
+            "the pre-rewrite copy must live in the sink, never as a sibling file",
+        );
 
-        const restored = await restoreAll(out.applied, io);
+        const restored = await restoreAll(out.applied, io, sink);
         assert.equal(restored.restored, 1);
         assert.deepEqual(restored.failed, []);
         assert.equal(io.store["/home/u/.bashrc"], original, "restore must return the byte-exact original");
@@ -216,7 +246,7 @@ describe("executeSecurePlan", () => {
         const io = memoryIO({ "/home/u/.bashrc": original });
         const discovered = await discoverAllAiTools(io, "/home/u", "/ws");
         const plan = buildSecurePlan(discovered, { "/home/u/.bashrc": original }, PORT);
-        const out = await executeSecurePlan(plan, discovered, io, okHttp(), false, `http://127.0.0.1:${PORT}/health`);
+        const out = await executeSecurePlan(plan, discovered, io, okHttp(), false, `http://127.0.0.1:${PORT}/health`, memorySink(), TOKEN);
 
         assert.equal(out.applied.every((a) => !a.applied), true);
         assert.equal(io.store["/home/u/.bashrc"], original);

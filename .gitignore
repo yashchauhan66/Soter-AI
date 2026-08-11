@@ -69,3 +69,8 @@ models/**/pytorch_model.bin
 /.soterai/model-signing/
 *.signing-key.pem
 operator-signing-key.pem*
+
+# Host-test scaffolding: dist-test is a build output, .vscode-test is a ~350MB
+# downloaded VS Code the host suite launches. Both are regenerable.
+packages/vscode-extension/dist-test/
+packages/vscode-extension/.vscode-test/
