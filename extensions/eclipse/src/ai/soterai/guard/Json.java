@@ -24,6 +24,27 @@ public final class Json {
         return "{" + quote(key) + ":" + quote(value) + "}";
     }
 
+    /**
+     * Build a flat string-valued JSON object from alternating key/value pairs.
+     * Every value is quoted and escaped, so callers cannot accidentally inject
+     * raw JSON through a field value.
+     *
+     * @throws IllegalArgumentException when the argument count is odd
+     */
+    public static String object(String... keysAndValues) {
+        if (keysAndValues.length % 2 != 0) {
+            throw new IllegalArgumentException("object() requires alternating key/value arguments");
+        }
+        StringBuilder sb = new StringBuilder("{");
+        for (int i = 0; i < keysAndValues.length; i += 2) {
+            if (i > 0) {
+                sb.append(',');
+            }
+            sb.append(quote(keysAndValues[i])).append(':').append(quote(keysAndValues[i + 1]));
+        }
+        return sb.append('}').toString();
+    }
+
     public static String quote(String raw) {
         StringBuilder sb = new StringBuilder(raw.length() + 2);
         sb.append('"');

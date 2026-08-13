@@ -142,6 +142,43 @@ end
 
 -- Command handlers ----------------------------------------------------------
 
+--- Pre-send egress check for the current selection (or buffer) against a
+--- destination URL. This is the choke point that decides whether the text may
+--- leave the machine at all, so a non-clearing action is reported as a refusal
+--- rather than a note — ASK included, since an unanswered prompt is not consent.
+function M.check_egress(cmd_opts)
+  local url = cmd_opts and cmd_opts.args
+  if not url or vim.trim(url) == "" then
+    return notify_error("Usage: :SoterCheckEgress <destination-url>  (checks the current selection or buffer)")
+  end
+  local content = (cmd_opts and cmd_opts.range and cmd_opts.range > 0)
+    and range_text(cmd_opts)
+    or buffer_text(0)
+  if vim.trim(content) == "" then
+    return notify("Nothing to check; the selection/buffer is empty.")
+  end
+
+  broker.check_egress(url, content, function(err, decision)
+    if err then
+      -- Fail closed in the message: an unreachable broker is not clearance.
+      return notify_error(err .. " — treat this as NOT cleared to send.")
+    end
+    local action = decision and decision.action or "UNKNOWN"
+    local reasons = categories_string(decision and decision.reasonCodes)
+    local host = (decision and decision.host) or url
+    if broker.egress_allows_send(action) then
+      notify(string.format("Egress %s to %s (risk %s).", action, host, tostring(decision.riskScore or 0)))
+    else
+      notify_error(string.format(
+        "Egress %s to %s (risk %s). %s%s",
+        action, host, tostring(decision and decision.riskScore or 0),
+        (decision and decision.explanation) or "Not cleared to send.",
+        reasons ~= "" and (" [" .. reasons .. "]") or ""
+      ))
+    end
+  end)
+end
+
 function M.scan_buffer()
   local content = buffer_text(0)
   if vim.trim(content) == "" then
@@ -374,6 +411,14 @@ function M.register()
   cmd("SoterScanGit", function()
     M.scan_git()
   end, { desc = "SoterAI: scan `git diff` output via the local broker" })
+
+  cmd("SoterCheckEgress", function(cmd_opts)
+    M.check_egress(cmd_opts)
+  end, {
+    nargs = 1,
+    range = true,
+    desc = "SoterAI: check whether the selection/buffer may be sent to a destination URL",
+  })
 end
 
 return M

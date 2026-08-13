@@ -65,3 +65,42 @@ test("canary helper detects a leaked token", () => {
     assert.equal(isCanaryContained("clean report"), true);
     assert.equal(isCanaryContained(`oops ${CANARY_TOKEN}`), false);
 });
+
+test("checkEgress posts to the preflight route with auth and returns the action", async () => {
+    let seenUrl = "";
+    let seenBody: Record<string, unknown> = {};
+    const fetchImpl = (async (url, init) => {
+        seenUrl = String(url);
+        seenBody = JSON.parse(String(init?.body));
+        return jsonResponse({
+            action: "DENY", riskScore: 90, coverageLevel: "STRONG_ENFORCEMENT",
+            destinationTrust: "untrusted", reasonCodes: ["SECRET_IN_PAYLOAD"],
+            categories: ["secret_exfiltration"], explanation: "blocked", deterministic: true,
+        });
+    }) as typeof fetch;
+    const client = new BrokerClient({ token: "x".repeat(40), fetchImpl });
+    const decision = await client.checkEgress({ url: "https://evil.example.com/collect", payloadPreview: "sk-live-abc" });
+
+    assert.equal(seenUrl, "http://127.0.0.1:47321/v1/preflight/network-egress");
+    assert.equal(seenBody.url, "https://evil.example.com/collect");
+    assert.equal(decision.action, "DENY");
+    assert.equal(decision.destinationTrust, "untrusted");
+});
+
+test("checkEgress requires a url rather than sending an empty preflight", async () => {
+    const client = new BrokerClient({ token: "x".repeat(40), fetchImpl: (async () => jsonResponse({})) as typeof fetch });
+    await assert.rejects(async () => client.checkEgress({ url: "" }), /requires a url/);
+});
+
+test("checkEgress surfaces broker unreachability instead of failing open", async () => {
+    // A thrown error is correct here: swallowing it would let a caller treat an
+    // unreachable broker as a cleared send.
+    const fetchImpl = (async () => { throw new Error("ECONNREFUSED"); }) as typeof fetch;
+    const client = new BrokerClient({ token: "x".repeat(40), fetchImpl });
+    await assert.rejects(async () => client.checkEgress({ url: "https://api.openai.com/v1/chat" }), /not reachable/);
+});
+
+test("every broker-backed adapter declares the egress firewall as usable", () => {
+    const profile = brokerBackedProfile("neovim");
+    assert.equal(profile.isUsable(GuardFeature.EgressFirewall), true);
+});

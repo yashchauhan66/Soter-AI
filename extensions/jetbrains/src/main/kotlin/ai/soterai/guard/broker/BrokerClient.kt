@@ -46,6 +46,25 @@ class BrokerClient(
 
     fun recentEvents(): String = request("GET", "/v1/events/recent")
 
+    /**
+     * Pre-send egress check. [payloadPreview] is the text about to be
+     * transmitted, not a path to it — the broker scans it for secrets.
+     */
+    fun checkEgress(url: String, payloadPreview: String): EgressDecision {
+        val body = JsonObject()
+        body.addProperty("url", url)
+        body.addProperty("method", "POST")
+        body.addProperty("payloadPreview", payloadPreview)
+        val result = JsonParser.parseString(request("POST", "/v1/preflight/network-egress", body.toString())).asJsonObject
+        return EgressDecision(
+            action = result.string("action"),
+            riskScore = result.get("riskScore")?.asInt ?: 0,
+            host = result.string("host"),
+            explanation = result.string("explanation"),
+            reasonCodes = result.getAsJsonArray("reasonCodes")?.map { it.asString }.orEmpty(),
+        )
+    }
+
     private fun payload(content: String): String {
         val objectValue = JsonObject()
         objectValue.addProperty("content", content)
@@ -88,4 +107,34 @@ data class ScanSummary(
 }
 
 class BrokerException(message: String) : RuntimeException(message)
+
+/**
+ * Result of the pre-send egress preflight.
+ *
+ * [allowsSend] excludes ASK on purpose: ASK means the user has not answered
+ * yet, so treating it as clearance would turn a confirmation prompt into a
+ * silent send. Mirrors `egressAllowsSend()` in @soterai/ide-protocol.
+ */
+data class EgressDecision(
+    val action: String,
+    val riskScore: Int,
+    val host: String,
+    val explanation: String,
+    val reasonCodes: List<String>,
+) {
+    fun allowsSend(): Boolean = action in SEND_OK
+
+    fun displayText(): String = buildString {
+        append(if (allowsSend()) "Cleared to send" else "NOT cleared to send")
+        append(" — ").append(action.ifBlank { "UNKNOWN" })
+        if (host.isNotBlank()) append(" → ").append(host)
+        append(" | Risk: ").append(riskScore)
+        if (explanation.isNotBlank()) append("\n").append(explanation)
+        if (reasonCodes.isNotEmpty()) append("\nReasons: ").append(reasonCodes.joinToString(", "))
+    }
+
+    companion object {
+        private val SEND_OK = setOf("ALLOW", "ALLOW_ONCE", "ALLOW_WITH_TRANSFORMATION")
+    }
+}
 

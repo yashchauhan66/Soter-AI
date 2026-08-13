@@ -27,6 +27,11 @@
             id="ai.soterai.guard.commands.brokerStatus"
             name="Show SoterAI Broker Status"
             description="Check the Local AI Broker health and Safe Mode state"/>
+      <command
+            categoryId="ai.soterai.guard.commands.category"
+            id="ai.soterai.guard.commands.checkEgress"
+            name="Check Egress with SoterAI"
+            description="Ask the local broker whether this text may be sent to a destination"/>
    </extension>
 
    <!-- Handlers -->
@@ -43,6 +48,9 @@
       <handler
             commandId="ai.soterai.guard.commands.brokerStatus"
             class="ai.soterai.guard.handlers.BrokerStatusHandler"/>
+      <handler
+            commandId="ai.soterai.guard.commands.checkEgress"
+            class="ai.soterai.guard.handlers.CheckEgressHandler"/>
    </extension>
 
    <!-- Editor context menu -->
@@ -56,6 +64,7 @@
             <command commandId="ai.soterai.guard.commands.redactSelection" style="push"/>
             <command commandId="ai.soterai.guard.commands.scanFile" style="push"/>
             <separator name="ai.soterai.guard.sep1" visible="true"/>
+            <command commandId="ai.soterai.guard.commands.checkEgress" style="push"/>
             <command commandId="ai.soterai.guard.commands.brokerStatus" style="push"/>
          </menu>
       </menuContribution>
@@ -66,6 +75,7 @@
             <command commandId="ai.soterai.guard.commands.scanSelection" style="push"/>
             <command commandId="ai.soterai.guard.commands.scanFile" style="push"/>
             <command commandId="ai.soterai.guard.commands.redactSelection" style="push"/>
+            <command commandId="ai.soterai.guard.commands.checkEgress" style="push"/>
             <command commandId="ai.soterai.guard.commands.brokerStatus" style="push"/>
          </menu>
       </menuContribution>

@@ -4,7 +4,7 @@ exports.SINGLE_OUTPUT_ACTIONS = exports.PACKAGE_VERSION = void 0;
 exports.outputCountForAction = outputCountForAction;
 exports.executeSoterGuard = executeSoterGuard;
 const n8n_workflow_1 = require("n8n-workflow");
-exports.PACKAGE_VERSION = "0.5.0";
+exports.PACKAGE_VERSION = "0.5.1";
 const USER_AGENT = `n8n-nodes-soterai/${exports.PACKAGE_VERSION}`;
 const MAX_SANITIZE_DEPTH = 8;
 const MAX_METADATA_STRING_LENGTH = 500;

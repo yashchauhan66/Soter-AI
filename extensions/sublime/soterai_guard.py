@@ -238,6 +238,81 @@ class SoteraiSafePromptCommand(sublime_plugin.TextCommand):
 # broker / safe mode commands
 # --------------------------------------------------------------------------
 
+def _format_egress(url, result):
+    action = (result or {}).get("action", "UNKNOWN")
+    cleared = broker_client.egress_allows_send(action)
+    lines = ["SoterAI IDE Guard - egress check", ""]
+    lines.append("CLEARED TO SEND" if cleared else "NOT CLEARED TO SEND")
+    lines.append("Destination: {}".format((result or {}).get("host") or url))
+    lines.append("Action: {}".format(action))
+    lines.append("Risk score: {}".format((result or {}).get("riskScore", 0)))
+    reasons = (result or {}).get("reasonCodes") or []
+    if reasons:
+        lines.append("Reasons: {}".format(", ".join(str(r) for r in reasons)))
+    explanation = (result or {}).get("explanation")
+    if explanation:
+        lines.append("")
+        lines.append(str(explanation))
+    return "\n".join(lines)
+
+
+class SoteraiCheckEgressCommand(sublime_plugin.TextCommand):
+    """Pre-send check: may this selection (or file) go to this destination?
+
+    Prompts for the destination URL, then asks the broker's egress preflight.
+    Nothing is transmitted to that destination by this command -- it only asks
+    the local broker whether a send would be permitted.
+    """
+
+    def run(self, edit):
+        view = self.view
+        window = view.window()
+        if window is None:
+            return
+        window.show_input_panel(
+            "Destination URL:", "https://", self._on_url, None, None
+        )
+
+    def _on_url(self, url):
+        view = self.view
+        window = view.window()
+        url = (url or "").strip()
+        if not url:
+            _status("SoterAI: no destination URL given.")
+            return
+        regions = [region for region in view.sel() if not region.empty()]
+        if regions:
+            source = "\n".join(view.substr(region) for region in regions)
+        else:
+            source = view.substr(sublime.Region(0, view.size()))
+        if not source.strip():
+            _show_output(window, "Nothing to check: select text or open a non-empty file.")
+            return
+        client = _build_client()
+        _status("SoterAI: checking egress...")
+
+        def on_done(result, error):
+            if error is not None:
+                # An unreachable broker is NOT clearance. Say so explicitly.
+                _show_output(
+                    window,
+                    "Egress check failed - treat this as NOT cleared to send.\n\n{}".format(error),
+                )
+                _status("SoterAI: egress check failed (not cleared).")
+                return
+            _show_output(window, _format_egress(url, result or {}))
+            action = (result or {}).get("action", "UNKNOWN")
+            _status(
+                "SoterAI: {} ({}).".format(
+                    "cleared to send" if broker_client.egress_allows_send(action)
+                    else "NOT cleared to send",
+                    action,
+                )
+            )
+
+        _run_async(lambda: client.check_egress(url, source), on_done)
+
+
 class SoteraiBrokerStatusCommand(sublime_plugin.WindowCommand):
     def run(self):
         window = self.window

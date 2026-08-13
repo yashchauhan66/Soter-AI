@@ -11,6 +11,7 @@ import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
+import com.intellij.openapi.ui.Messages
 
 private fun notify(project: Project?, message: String, type: NotificationType = NotificationType.INFORMATION) {
     NotificationGroupManager.getInstance().getNotificationGroup("SoterAI Guard")
@@ -87,6 +88,56 @@ class ToggleSafeModeAction : AnAction() {
             val enabled = BrokerClient().setSafeMode(!BrokerClient().safeModeStatus())
             settings.safeModeEnabled = enabled
             "SoterAI Safe Mode ${if (enabled) "enabled" else "disabled"}"
+        }
+    }
+}
+
+/**
+ * Pre-send egress check: asks the broker whether the selection (or whole file)
+ * may be sent to a destination at all. It transmits nothing to that destination
+ * itself -- it only asks the local broker.
+ *
+ * A broker failure is reported as an ERROR notification, never as clearance:
+ * "cannot ask" is not "allowed".
+ */
+class CheckEgressAction : AnAction() {
+    override fun update(e: AnActionEvent) {
+        e.presentation.isEnabled = e.getData(CommonDataKeys.EDITOR) != null
+    }
+
+    override fun actionPerformed(e: AnActionEvent) {
+        val editor = e.getData(CommonDataKeys.EDITOR) ?: return
+        val content = editor.selectionModel.selectedText ?: editor.document.text
+        if (content.isBlank()) {
+            notify(e.project, "SoterAI: nothing to check.", NotificationType.WARNING)
+            return
+        }
+        val url = Messages.showInputDialog(
+            e.project,
+            "Destination URL the text would be sent to:",
+            "SoterAI: Check Egress",
+            null,
+            "https://",
+            null,
+        )?.trim()
+        if (url.isNullOrEmpty()) return
+
+        ApplicationManager.getApplication().executeOnPooledThread {
+            try {
+                val decision = BrokerClient().checkEgress(url, content)
+                val type = if (decision.allowsSend()) NotificationType.INFORMATION else NotificationType.WARNING
+                ApplicationManager.getApplication().invokeLater {
+                    notify(e.project, decision.displayText(), type)
+                }
+            } catch (error: Exception) {
+                ApplicationManager.getApplication().invokeLater {
+                    notify(
+                        e.project,
+                        "${error.message ?: "Egress check failed"} — treat this as NOT cleared to send.",
+                        NotificationType.ERROR,
+                    )
+                }
+            }
         }
     }
 }

@@ -47,6 +47,47 @@ export interface BrokerHealth {
 }
 
 /**
+ * Enforcement vocabulary of the egress preflight. Distinct from
+ * `BrokerDecision` (lowercase scan verdicts) on purpose — they are two
+ * different vocabularies and conflating them loses the ASK case.
+ */
+export type EgressAction =
+  | 'ALLOW'
+  | 'ALLOW_ONCE'
+  | 'ALLOW_WITH_TRANSFORMATION'
+  | 'ALLOW_IN_SANDBOX'
+  | 'ASK'
+  | 'DENY'
+  | 'QUARANTINE';
+
+export interface EgressResult {
+  action: EgressAction | string;
+  riskScore: number;
+  host?: string;
+  explanation?: string;
+  reasonCodes?: string[];
+  categories?: string[];
+  destinationTrust?: string;
+}
+
+const EGRESS_SEND_OK = new Set([
+  'ALLOW',
+  'ALLOW_ONCE',
+  'ALLOW_WITH_TRANSFORMATION'
+]);
+
+/**
+ * True only when the preflight cleared the send outright. ASK is excluded on
+ * purpose: it means the user has not answered yet, so treating it as clearance
+ * turns a confirmation prompt into a silent send. ALLOW_IN_SANDBOX is excluded
+ * too — a notebook has no sandbox to honour it with.
+ * Mirrors `egressAllowsSend()` in @soterai/ide-protocol.
+ */
+export function egressAllowsSend(action: string | undefined): boolean {
+  return action !== undefined && EGRESS_SEND_OK.has(action);
+}
+
+/**
  * Resolves transport details for each request. In the local-only variant this
  * returns the loopback URL and a bearer header. In the recommended server-proxy
  * variant it returns the JupyterLab server route and relies on the server
@@ -106,6 +147,22 @@ export class BrokerClient {
   /** POST /v1/redact { content } -> { redacted } */
   async redact(content: string): Promise<RedactResult> {
     return this.json<RedactResult>('POST', '/v1/redact', { content });
+  }
+
+  /**
+   * POST /v1/preflight/network-egress — pre-send check against a destination.
+   * `payloadPreview` is the text about to be transmitted, not a path to it;
+   * the broker scans it for secrets before answering.
+   */
+  async checkEgress(url: string, payloadPreview: string): Promise<EgressResult> {
+    if (!url) {
+      throw new BrokerError('checkEgress() requires a destination url');
+    }
+    return this.json<EgressResult>('POST', '/v1/preflight/network-egress', {
+      url,
+      method: 'POST',
+      payloadPreview
+    });
   }
 
   private async json<T>(

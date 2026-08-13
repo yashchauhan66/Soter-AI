@@ -47,6 +47,7 @@ export const BrokerRoutes = {
     memoryStart: { method: "POST", path: "/v1/memory/session/start", auth: true },
     memoryEvent: { method: "POST", path: "/v1/memory/session/event", auth: true },
     memoryEnd: { method: "POST", path: "/v1/memory/session/end", auth: true },
+    networkEgress: { method: "POST", path: "/v1/preflight/network-egress", auth: true },
 } as const;
 
 // ---- Request bodies -------------------------------------------------------
@@ -63,6 +64,21 @@ export interface RedactRequest {
 
 export interface SafeModeEnableRequest {
     level?: SafeModeLevel;
+}
+
+/**
+ * Body for `POST /v1/preflight/network-egress`. Only `url` is required; the
+ * broker applies its own protection mode when the optional fields are absent.
+ * `payloadPreview` is scanned for secrets, so callers send the text they are
+ * about to transmit — never a file path in place of its contents.
+ */
+export interface NetworkEgressRequest {
+    url: string;
+    method?: string;
+    payloadPreview?: string;
+    allowedHosts?: string[];
+    redirectChain?: string[];
+    sourceClassifications?: string[];
 }
 
 // ---- Response bodies ------------------------------------------------------
@@ -131,6 +147,50 @@ export interface SafeBrokerEventDto {
 
 export interface BrokerErrorBody {
     error: { code: string; message: string; requestId?: string };
+}
+
+/**
+ * Enforcement vocabulary returned by the egress preflight. This is guard-core's
+ * `EnforcementAction`, transcribed here so non-TypeScript adapters have one
+ * written spec to match. Note it is UPPERCASE and distinct from `GuardDecision`
+ * — a caller that lowercases these and compares against "block" will silently
+ * treat a DENY as unrecognised, so keep the two vocabularies apart.
+ */
+export type EgressAction =
+    | "ALLOW"
+    | "ALLOW_ONCE"
+    | "ALLOW_WITH_TRANSFORMATION"
+    | "ALLOW_IN_SANDBOX"
+    | "ASK"
+    | "DENY"
+    | "QUARANTINE";
+
+/** Response body of `POST /v1/preflight/network-egress`. */
+export interface NetworkEgressDecisionDto {
+    action: EgressAction;
+    riskScore: number;
+    coverageLevel: string;
+    destinationTrust: "approved" | "unknown" | "untrusted" | "private_network" | "cloud_metadata";
+    normalizedUrl?: string;
+    host?: string;
+    reasonCodes: string[];
+    categories: string[];
+    /** Already-redacted preview. Never contains the raw payload. */
+    redactedPayloadPreview?: string;
+    explanation: string;
+    deterministic: true;
+}
+
+/**
+ * True when the egress preflight cleared the send outright.
+ *
+ * ASK is deliberately NOT forwardable: it means the user has not answered yet,
+ * and an adapter that treats "ask" as "allow" turns a prompt into a silent
+ * send. Adapters must surface a confirmation and call again with the host
+ * allowlisted, rather than passing an unresolved ASK through.
+ */
+export function egressAllowsSend(action: EgressAction): boolean {
+    return action === "ALLOW" || action === "ALLOW_ONCE" || action === "ALLOW_WITH_TRANSFORMATION";
 }
 
 /** Endpoints that a decision must clear before content may leave the machine. */

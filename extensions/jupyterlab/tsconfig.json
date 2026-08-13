@@ -20,5 +20,7 @@
     "target": "ES2022",
     "types": []
   },
-  "include": ["src/*"]
+  "include": ["src/*"],
+  "//": "src/__tests__ is excluded on purpose: it imports node:test and node:assert, which need @types/node that the labextension build does not (and should not) carry. Run those tests from the repo root with tsx instead: node_modules/.bin/tsx --test extensions/jupyterlab/src/__tests__/broker.test.ts",
+  "exclude": ["src/__tests__"]
 }
