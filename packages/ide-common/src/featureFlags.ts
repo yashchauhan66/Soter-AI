@@ -51,6 +51,7 @@ export function brokerBackedProfile(adapterId: string): AdapterProfile {
         { feature: GuardFeature.ScanGitChanges, support: "needs-broker" },
         { feature: GuardFeature.SafePromptBuilder, support: "needs-broker" },
         { feature: GuardFeature.SafeMode, support: "needs-broker" },
+        { feature: GuardFeature.EgressFirewall, support: "needs-broker" },
         { feature: GuardFeature.BrokerStatus, support: "supported" },
         { feature: GuardFeature.MemoryInspector, support: "needs-broker" },
         { feature: GuardFeature.WhatAiSawLedger, support: "needs-broker" },

@@ -1,5 +1,5 @@
 import type { IExecuteFunctions, INodeExecutionData } from "n8n-workflow";
-export declare const PACKAGE_VERSION = "0.5.0";
+export declare const PACKAGE_VERSION = "0.5.1";
 /**
  * Actions that route their items across the Safe/Flagged outputs on node
  * version 2. "Redact Secrets or PII" is deliberately absent: it never rejects

@@ -43,6 +43,12 @@
           <ButtonText>SoterAI: Broker Status</ButtonText>
         </Strings>
       </Button>
+      <Button guid="guidSoterAICmdSet" id="cmdCheckEgress" priority="0x0104" type="Button">
+        <Parent guid="guidSoterAICmdSet" id="SoterAIMenuGroup" />
+        <Strings>
+          <ButtonText>SoterAI: Check Egress</ButtonText>
+        </Strings>
+      </Button>
     </Buttons>
   </Commands>
 
@@ -57,6 +63,7 @@
       <IDSymbol name="cmdScanDocument" value="0x0101" />
       <IDSymbol name="cmdRedactSelection" value="0x0102" />
       <IDSymbol name="cmdBrokerStatus" value="0x0103" />
+      <IDSymbol name="cmdCheckEgress" value="0x0104" />
     </GuidSymbol>
   </Symbols>
 </CommandTable>

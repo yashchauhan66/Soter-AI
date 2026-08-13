@@ -9,6 +9,7 @@
 // Visual Studio SDK / MSBuild available here). See docs/visual-studio-test-report.md.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -93,6 +94,26 @@ namespace SoterAI.Guard.Broker
             {
                 Content = new StringContent(json, Encoding.UTF8, "application/json"),
             };
+        }
+
+        /// <summary>
+        /// POST /v1/preflight/network-egress — pre-send check against a destination.
+        /// <paramref name="payloadPreview"/> is the text about to be transmitted,
+        /// not a path to it; the broker scans it for secrets before answering.
+        /// </summary>
+        public async Task<EgressResponse> CheckEgressAsync(
+            string url, string payloadPreview, CancellationToken ct = default)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                throw new BrokerException("CheckEgressAsync requires a destination url.");
+            }
+
+            using var request = JsonRequest(
+                HttpMethod.Post,
+                "v1/preflight/network-egress",
+                new EgressRequest { Url = url, Method = "POST", PayloadPreview = payloadPreview ?? string.Empty });
+            return await SendAsync<EgressResponse>(request, authenticated: true, ct).ConfigureAwait(false);
         }
 
         private async Task<T> SendAsync<T>(HttpRequestMessage request, bool authenticated, CancellationToken ct)
@@ -186,6 +207,72 @@ namespace SoterAI.Guard.Broker
     {
         [JsonPropertyName("content")]
         public string Content { get; set; }
+    }
+
+    public sealed class EgressRequest
+    {
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
+
+        [JsonPropertyName("method")]
+        public string Method { get; set; }
+
+        [JsonPropertyName("payloadPreview")]
+        public string PayloadPreview { get; set; }
+    }
+
+    /// <summary>Result of the pre-send egress preflight.</summary>
+    public sealed class EgressResponse
+    {
+        private static readonly HashSet<string> SendOk =
+            new HashSet<string>(StringComparer.Ordinal) { "ALLOW", "ALLOW_ONCE", "ALLOW_WITH_TRANSFORMATION" };
+
+        [JsonPropertyName("action")]
+        public string Action { get; set; }
+
+        [JsonPropertyName("riskScore")]
+        public int RiskScore { get; set; }
+
+        [JsonPropertyName("host")]
+        public string Host { get; set; }
+
+        [JsonPropertyName("explanation")]
+        public string Explanation { get; set; }
+
+        [JsonPropertyName("reasonCodes")]
+        public string[] ReasonCodes { get; set; }
+
+        /// <summary>
+        /// True only when the preflight cleared the send outright. ASK is
+        /// excluded on purpose: it means the user has not answered yet, so
+        /// treating it as clearance turns a confirmation into a silent send.
+        /// Mirrors egressAllowsSend() in @soterai/ide-protocol.
+        /// </summary>
+        public bool AllowsSend() => Action != null && SendOk.Contains(Action);
+
+        public string DisplayText()
+        {
+            var sb = new StringBuilder();
+            sb.Append(AllowsSend() ? "Cleared to send" : "NOT cleared to send");
+            sb.Append(" | Action: ").Append(string.IsNullOrWhiteSpace(Action) ? "UNKNOWN" : Action);
+            if (!string.IsNullOrWhiteSpace(Host))
+            {
+                sb.Append(" | Destination: ").Append(Host);
+            }
+
+            sb.Append(" | Risk: ").Append(RiskScore);
+            if (!string.IsNullOrWhiteSpace(Explanation))
+            {
+                sb.Append(Environment.NewLine).Append(Explanation);
+            }
+
+            if (ReasonCodes != null && ReasonCodes.Length > 0)
+            {
+                sb.Append(Environment.NewLine).Append("Reasons: ").Append(string.Join(", ", ReasonCodes));
+            }
+
+            return sb.ToString();
+        }
     }
 
     public sealed class ScanResponse

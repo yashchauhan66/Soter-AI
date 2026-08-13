@@ -125,6 +125,32 @@ function! s:SafePrompt(first, last) abort
   endtry
 endfunction
 
+" Pre-send egress check: may this range go to this destination at all? Takes
+" the destination URL as its argument and defaults to the whole buffer.
+function! s:CheckEgress(first, last, url) abort
+  if empty(a:url)
+    call soterai#Echo('SoterAI: usage :SoterCheckEgress <destination-url>')
+    return
+  endif
+  let l:content = join(getline(a:first, a:last), "\n")
+  if empty(l:content)
+    call soterai#Echo('SoterAI: nothing to check.')
+    return
+  endif
+  try
+    let l:result = soterai#CheckEgress(a:url, l:content)
+    call soterai#Scratch(soterai#FormatEgress(l:result))
+    if !soterai#EgressAllowsSend(get(l:result, 'action', 'UNKNOWN'))
+      echohl WarningMsg
+      echomsg 'SoterAI: NOT cleared to send to ' . a:url
+      echohl None
+    endif
+  catch /^soterai:/
+    " An unreachable broker is not clearance — report it as a refusal.
+    call soterai#ReportError(v:exception)
+  endtry
+endfunction
+
 " --- Command definitions -----------------------------------------------------
 
 command! -bar SoterScanBuffer call s:ScanBuffer()
@@ -132,3 +158,4 @@ command! -bar -range=% SoterScanSelection call s:ScanSelection(<line1>, <line2>)
 command! -bar -range=% SoterRedactRange call s:RedactRange(<line1>, <line2>)
 command! -bar SoterBrokerStatus call s:BrokerStatus()
 command! -bar -range=% SoterSafePrompt call s:SafePrompt(<line1>, <line2>)
+command! -bar -range=% -nargs=1 SoterCheckEgress call s:CheckEgress(<line1>, <line2>, <q-args>)

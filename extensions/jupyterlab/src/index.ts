@@ -17,7 +17,8 @@ import {
   BrokerError,
   LocalLoopbackTransport,
   ServerProxyTransport,
-  ScanResult
+  ScanResult,
+  egressAllowsSend
 } from './broker';
 import { ReportPanel } from './report';
 
@@ -44,6 +45,7 @@ namespace CommandIDs {
   export const safePrompt = 'soterai:safe-prompt';
   export const toggleOutputMonitor = 'soterai:toggle-output-monitor';
   export const openReport = 'soterai:open-report';
+  export const checkEgress = 'soterai:check-egress';
 }
 
 const CATEGORY = 'SoterAI IDE Guard';
@@ -286,6 +288,68 @@ const plugin: JupyterFrontEndPlugin<void> = {
       }
     });
 
+    // Pre-send egress check. Asks the broker whether the selected cells (or the
+    // active cell) may be sent to a destination at all. It transmits nothing to
+    // that destination itself; a broker failure is reported as a refusal,
+    // because "cannot ask" is not "allowed".
+    commands.addCommand(CommandIDs.checkEgress, {
+      label: 'Check Egress (SoterAI)',
+      execute: async () => {
+        const panel = notebooks.currentWidget;
+        const cells = panel
+          ? panel.content.widgets.filter(c =>
+              panel.content.isSelectedOrActive(c)
+            )
+          : [];
+        const source = cells.length
+          ? cells.map(cellSource).join('\n\n')
+          : (activeCell() ? cellSource(activeCell() as Cell) : '');
+        if (!source.trim()) {
+          ensureReport().reportNotice(
+            'Egress check',
+            'Nothing to check (no cell content selected).'
+          );
+          return;
+        }
+        const input = await InputDialog.getText({
+          title: 'SoterAI egress check',
+          label: 'Destination URL the cell content would be sent to:',
+          text: 'https://'
+        });
+        if (!input.button.accept || !input.value?.trim()) {
+          return;
+        }
+        const url = input.value.trim();
+        try {
+          const decision = await broker.checkEgress(url, source);
+          const cleared = egressAllowsSend(decision.action);
+          ensureReport().reportNotice(
+            `Egress check → ${decision.host ?? url}`,
+            [
+              cleared ? 'CLEARED TO SEND' : 'NOT CLEARED TO SEND',
+              `Action: ${decision.action}`,
+              `Risk score: ${decision.riskScore ?? 0}`,
+              decision.reasonCodes?.length
+                ? `Reasons: ${decision.reasonCodes.join(', ')}`
+                : '',
+              decision.explanation ?? ''
+            ]
+              .filter(Boolean)
+              .join('\n')
+          );
+          Notification.emit(
+            cleared
+              ? `SoterAI: cleared to send (${decision.action})`
+              : `SoterAI: NOT cleared to send (${decision.action})`,
+            cleared ? 'success' : 'warning',
+            { autoClose: 6000 }
+          );
+        } catch (err) {
+          handleError('Egress check (treat as NOT cleared to send)', err);
+        }
+      }
+    });
+
     // --- Output-leak monitor -----------------------------------------------
     // Watches code-cell output areas on the current notebook. When enabled, it
     // sends output TEXT to the broker's /v1/scan and reports ONLY the redacted
@@ -331,6 +395,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
         CommandIDs.redactCell,
         CommandIDs.scanNotebookForSecrets,
         CommandIDs.safePrompt,
+        CommandIDs.checkEgress,
         CommandIDs.toggleOutputMonitor,
         CommandIDs.openReport
       ].forEach(command => palette.addItem({ command, category: CATEGORY }));

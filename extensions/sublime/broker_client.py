@@ -20,6 +20,16 @@ import urllib.request
 DEFAULT_BROKER_URL = "http://127.0.0.1:47321"
 DEFAULT_TOKEN_PATH = os.path.join("~", ".soterai", "broker", "auth-token")
 
+# Egress actions that clear a send. ASK is deliberately absent: it means the
+# user has not answered yet, and treating it as clearance turns a confirmation
+# prompt into a silent send. Mirrors egressAllowsSend() in @soterai/ide-protocol.
+EGRESS_SEND_OK = frozenset(("ALLOW", "ALLOW_ONCE", "ALLOW_WITH_TRANSFORMATION"))
+
+
+def egress_allows_send(action):
+    """True only when the egress preflight cleared the send outright."""
+    return action in EGRESS_SEND_OK
+
 
 class BrokerError(Exception):
     """Raised for any failure talking to the Local AI Broker."""
@@ -109,6 +119,18 @@ class BrokerClient(object):
 
     def recent_events(self):
         return self._request("GET", "/v1/events/recent")
+
+    def check_egress(self, url, payload_preview=""):
+        """Pre-send check: may this text go to this destination at all?
+
+        `payload_preview` is the text about to be transmitted, not a path to
+        it — the broker scans it for secrets before answering.
+        """
+        return self._request(
+            "POST",
+            "/v1/preflight/network-egress",
+            body={"url": url, "method": "POST", "payloadPreview": payload_preview or ""},
+        )
 
     # --- transport -----------------------------------------------------
 

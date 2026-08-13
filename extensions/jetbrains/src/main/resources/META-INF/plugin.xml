@@ -50,6 +50,13 @@
                 description="Enable or disable Local AI Broker Safe Mode">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
         </action>
+        <action id="SoterAI.CheckEgress"
+                class="ai.soterai.guard.actions.CheckEgressAction"
+                text="Check Egress with SoterAI"
+                description="Ask the local broker whether this text may be sent to a destination">
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
     </actions>
 </idea-plugin>
 

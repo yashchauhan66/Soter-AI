@@ -32,6 +32,7 @@ namespace SoterAI.Guard.Commands
         public const int ScanDocumentId = 0x0101;
         public const int RedactSelectionId = 0x0102;
         public const int BrokerStatusId = 0x0103;
+        public const int CheckEgressId = 0x0104;
 
         private readonly SoterAIGuardPackage _package;
 
@@ -56,6 +57,7 @@ namespace SoterAI.Guard.Commands
             handler.Register(commandService, ScanDocumentId, handler.OnScanDocument);
             handler.Register(commandService, RedactSelectionId, handler.OnRedactSelection);
             handler.Register(commandService, BrokerStatusId, handler.OnBrokerStatus);
+            handler.Register(commandService, CheckEgressId, handler.OnCheckEgress);
         }
 
         private void Register(OleMenuCommandService service, int commandId, EventHandler invoke)
@@ -157,6 +159,95 @@ namespace SoterAI.Guard.Commands
                     await ShowAsync("SoterAI: " + ex.Message).ConfigureAwait(true);
                 }
             });
+        }
+
+        /// <summary>
+        /// Pre-send egress check. Asks the broker whether the selection (or the
+        /// active document) may be sent to a destination at all. Nothing is
+        /// transmitted to that destination here.
+        /// </summary>
+        private void OnCheckEgress(object sender, EventArgs e)
+        {
+            _package.JoinableTaskFactory.RunAsync(async () =>
+            {
+                var text = await GetSelectedTextAsync().ConfigureAwait(true);
+                if (string.IsNullOrEmpty(text))
+                {
+                    text = await GetDocumentTextAsync().ConfigureAwait(true);
+                }
+
+                if (string.IsNullOrWhiteSpace(text))
+                {
+                    await ShowAsync("SoterAI: nothing to check.").ConfigureAwait(true);
+                    return;
+                }
+
+                var url = await PromptForUrlAsync().ConfigureAwait(true);
+                if (string.IsNullOrWhiteSpace(url))
+                {
+                    return;
+                }
+
+                try
+                {
+                    using var client = CreateClient();
+                    var decision = await client.CheckEgressAsync(url, text).ConfigureAwait(true);
+                    await ShowAsync(decision.DisplayText()).ConfigureAwait(true);
+                }
+                catch (BrokerException ex)
+                {
+                    // A broker we cannot reach has not cleared anything. Say so.
+                    await ShowAsync(
+                        "SoterAI: " + ex.Message + Environment.NewLine +
+                        "Treat this as NOT cleared to send.").ConfigureAwait(true);
+                }
+            });
+        }
+
+        /// <summary>Modal prompt for the destination URL. Returns null when cancelled.</summary>
+        private async Task<string> PromptForUrlAsync()
+        {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
+            var dialog = new Microsoft.VisualStudio.PlatformUI.DialogWindow
+            {
+                Title = "SoterAI: Check Egress",
+                Width = 520,
+                Height = 170,
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner,
+            };
+            var stack = new System.Windows.Controls.StackPanel
+            {
+                Margin = new System.Windows.Thickness(12),
+            };
+            stack.Children.Add(new System.Windows.Controls.TextBlock
+            {
+                Text = "Destination URL the text would be sent to:",
+                Margin = new System.Windows.Thickness(0, 0, 0, 6),
+            });
+            var box = new System.Windows.Controls.TextBox { Text = "https://" };
+            stack.Children.Add(box);
+            var ok = new System.Windows.Controls.Button
+            {
+                Content = "Check",
+                Width = 90,
+                Margin = new System.Windows.Thickness(0, 12, 0, 0),
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
+                IsDefault = true,
+            };
+
+            var entered = string.Empty;
+            ok.Click += (_, __) =>
+            {
+                entered = box.Text;
+                dialog.DialogResult = true;
+                dialog.Close();
+            };
+            stack.Children.Add(ok);
+            dialog.Content = stack;
+            dialog.ShowModal();
+
+            return string.IsNullOrWhiteSpace(entered) ? null : entered.Trim();
         }
 
         private async Task RunScanAsync(string content)

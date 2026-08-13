@@ -10,6 +10,8 @@ import {
     type SafeModeLevel,
     type RecentEventsResponse,
     type BrokerMessage,
+    type NetworkEgressRequest,
+    type NetworkEgressDecisionDto,
 } from "@soterai/ide-protocol";
 
 export interface BrokerClientOptions {
@@ -101,6 +103,17 @@ export class BrokerClient {
 
     recentEvents(): Promise<RecentEventsResponse> {
         return this.call<RecentEventsResponse>(BrokerRoutes.recentEvents);
+    }
+
+    /**
+     * POST /v1/preflight/network-egress — decide whether text may be sent to a
+     * destination host. This is the pre-send choke point; callers must honour
+     * the returned action rather than treating any response as clearance (see
+     * `egressAllowsSend`, which excludes ASK on purpose).
+     */
+    checkEgress(request: NetworkEgressRequest): Promise<NetworkEgressDecisionDto> {
+        if (!request.url) throw new Error("checkEgress() requires a url");
+        return this.call<NetworkEgressDecisionDto>(BrokerRoutes.networkEgress, request);
     }
 
     exportRedacted(): Promise<unknown> {

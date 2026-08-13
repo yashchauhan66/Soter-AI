@@ -150,6 +150,40 @@ function! soterai#SafeModeStatus() abort
   return soterai#Request('GET', '/v1/safe-mode/status', v:null, 1)
 endfunction
 
+" Pre-send egress check. a:payload is the text about to be transmitted, not a
+" path to it — the broker scans it for secrets before answering.
+function! soterai#CheckEgress(url, payload) abort
+  return soterai#Request('POST', '/v1/preflight/network-egress',
+        \ {'url': a:url, 'method': 'POST', 'payloadPreview': a:payload}, 1)
+endfunction
+
+" Actions that clear a send. ASK is excluded on purpose: it means the user has
+" not answered, and reading it as clearance turns a prompt into a silent send.
+" Mirrors egressAllowsSend() in @soterai/ide-protocol.
+function! soterai#EgressAllowsSend(action) abort
+  return index(['ALLOW', 'ALLOW_ONCE', 'ALLOW_WITH_TRANSFORMATION'], a:action) >= 0
+endfunction
+
+" Human-readable summary of an egress preflight response.
+function! soterai#FormatEgress(result) abort
+  let l:action = get(a:result, 'action', 'UNKNOWN')
+  let l:lines = []
+  call add(l:lines, 'SoterAI egress check')
+  call add(l:lines, soterai#EgressAllowsSend(l:action) ? 'Cleared to send' : 'NOT cleared to send')
+  call add(l:lines, 'Action   : ' . l:action)
+  call add(l:lines, 'Host     : ' . get(a:result, 'host', ''))
+  call add(l:lines, 'Risk     : ' . string(get(a:result, 'riskScore', 0)))
+  let l:reasons = get(a:result, 'reasonCodes', [])
+  if !empty(l:reasons)
+    call add(l:lines, 'Reasons  : ' . join(l:reasons, ', '))
+  endif
+  let l:explanation = get(a:result, 'explanation', '')
+  if !empty(l:explanation)
+    call add(l:lines, l:explanation)
+  endif
+  return l:lines
+endfunction
+
 " --- Rendering ---------------------------------------------------------------
 
 " Human-readable summary of a /v1/scan response.

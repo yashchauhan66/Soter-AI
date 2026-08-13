@@ -223,4 +223,27 @@ function M.memory_session(session_id, cb)
   M.request("GET", "/v1/memory/session/" .. tostring(session_id), nil, true, cb)
 end
 
+--- Pre-send egress check: may this text go to this destination at all?
+--- `payload` is the text about to be transmitted, not a path to it.
+function M.check_egress(url, payload, cb)
+  M.request("POST", "/v1/preflight/network-egress", {
+    url = url,
+    method = "POST",
+    payloadPreview = payload,
+  }, true, cb)
+end
+
+--- Actions that clear a send. ASK is excluded on purpose: it means the user
+--- has not answered, and reading it as clearance turns a prompt into a silent
+--- send. Mirrors egressAllowsSend() in @soterai/ide-protocol.
+local EGRESS_SEND_OK = {
+  ALLOW = true,
+  ALLOW_ONCE = true,
+  ALLOW_WITH_TRANSFORMATION = true,
+}
+
+function M.egress_allows_send(action)
+  return EGRESS_SEND_OK[action or ""] == true
+end
+
 return M

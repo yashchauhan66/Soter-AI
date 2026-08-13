@@ -14,10 +14,7 @@ export const soterGuardBaseDescription: INodeTypeBaseDescription = {
     "Detect prompt injection, jailbreaks, secrets, PII, and unsafe AI instructions in n8n workflows",
   defaultVersion: 2,
   codex: {
-    categories: ["AI", "Utility"],
-    subcategories: {
-      AI: ["Guardrails"],
-    },
+    categories: ["Development", "Utility"],
     alias: [
       "security",
       "guardrail",

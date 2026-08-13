@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Thin HTTP client for the authenticated loopback Local AI Broker.
@@ -78,6 +79,22 @@ public final class BrokerClient {
     public String redact(String content) {
         Map<String, Object> body = postJson("/v1/redact", Json.object("content", content));
         return Json.string(body, "redacted");
+    }
+
+    /**
+     * POST /v1/preflight/network-egress — pre-send check against a destination.
+     * {@code payloadPreview} is the text about to be sent, not a path to it.
+     */
+    public EgressDecision checkEgress(String url, String payloadPreview) {
+        Map<String, Object> body = postJson(
+                "/v1/preflight/network-egress",
+                Json.object("url", url, "method", "POST", "payloadPreview", payloadPreview));
+        return new EgressDecision(
+                Json.string(body, "action"),
+                Json.integer(body, "riskScore"),
+                Json.string(body, "host"),
+                Json.string(body, "explanation"),
+                Json.stringList(body, "reasonCodes"));
     }
 
     private Map<String, Object> getJson(String path) {
@@ -156,6 +173,46 @@ public final class BrokerClient {
             }
             if (!evidencePreview.isBlank()) {
                 sb.append("\nRedacted evidence: ").append(evidencePreview);
+            }
+            return sb.toString();
+        }
+    }
+
+    /**
+     * Result of the pre-send egress preflight.
+     *
+     * <p>{@link #allowsSend()} excludes {@code ASK} on purpose: ASK means the
+     * user has not answered yet, so treating it as clearance would turn a
+     * confirmation prompt into a silent send. Mirrors {@code egressAllowsSend()}
+     * in {@code @soterai/ide-protocol}.
+     */
+    public record EgressDecision(
+            String action,
+            int riskScore,
+            String host,
+            String explanation,
+            List<String> reasonCodes) {
+
+        private static final Set<String> SEND_OK =
+                Set.of("ALLOW", "ALLOW_ONCE", "ALLOW_WITH_TRANSFORMATION");
+
+        public boolean allowsSend() {
+            return SEND_OK.contains(action);
+        }
+
+        public String display() {
+            StringBuilder sb = new StringBuilder();
+            sb.append(allowsSend() ? "Cleared to send" : "NOT cleared to send");
+            sb.append("  |  Action: ").append(action.isBlank() ? "UNKNOWN" : action);
+            if (!host.isBlank()) {
+                sb.append("  |  Destination: ").append(host);
+            }
+            sb.append("  |  Risk: ").append(riskScore);
+            if (!explanation.isBlank()) {
+                sb.append("\n").append(explanation);
+            }
+            if (!reasonCodes.isEmpty()) {
+                sb.append("\nReasons: ").append(String.join(", ", reasonCodes));
             }
             return sb.toString();
         }

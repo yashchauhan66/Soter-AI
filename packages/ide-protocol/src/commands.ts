@@ -18,6 +18,13 @@ export const GuardFeature = {
     SafePromptBuilder: "safePromptBuilder",
     ContextInspector: "contextInspector",
     SafeMode: "safeMode",
+    /**
+     * Pre-send check against a destination host: the choke point that decides
+     * whether text may leave the machine at all. Every adapter can reach it —
+     * it is one authenticated broker call — so it is deliberately part of the
+     * shared surface rather than a VS Code-only feature.
+     */
+    EgressFirewall: "egressFirewall",
     MemoryInspector: "memoryInspector",
     BrokerStatus: "brokerStatus",
     McpScanner: "mcpScanner",
@@ -51,6 +58,7 @@ export const GuardCommand = {
     SafeModeEnable: "soterai.safeMode.enable",
     SafeModeDisable: "soterai.safeMode.disable",
     SafeModeStatus: "soterai.safeMode.status",
+    CheckEgress: "soterai.egress.check",
     OpenMemoryInspector: "soterai.memory.open",
     BrokerStatus: "soterai.broker.status",
     ScanMcpConfig: "soterai.mcp.scan",
@@ -91,6 +99,7 @@ export const BROKER_BACKED_FEATURES: readonly GuardFeatureKey[] = [
     GuardFeature.TerminalCommandChecker,
     GuardFeature.SafePromptBuilder,
     GuardFeature.SafeMode,
+    GuardFeature.EgressFirewall,
     GuardFeature.MemoryInspector,
     GuardFeature.WhatAiSawLedger,
     GuardFeature.CanaryLeakDetection,
