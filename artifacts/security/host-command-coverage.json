@@ -1,0 +1,1203 @@
+{
+  "generatedAt": "2026-08-15T13:07:30.572Z",
+  "extensionVersion": "0.5.0",
+  "totals": {
+    "declared": 162,
+    "driven": 16,
+    "named": 8,
+    "untested": 138,
+    "hiddenFromPalette": 1
+  },
+  "hostTestFiles": [
+    "commandSweep.host.ts",
+    "controlPanel.host.ts",
+    "index.ts",
+    "probe.host.ts",
+    "realUser.host.ts"
+  ],
+  "commands": [
+    {
+      "id": "soterai.openControlPanel",
+      "title": "SoterAI: Open Control Panel",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.enableFullProtection",
+      "title": "SoterAI: Enable Full Protection",
+      "hiddenFromPalette": false,
+      "status": "NAMED",
+      "hostFiles": [
+        "commandSweep.host.ts",
+        "controlPanel.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.unlockProtection",
+      "title": "SoterAI: Unlock Protection After Lockdown",
+      "hiddenFromPalette": false,
+      "status": "DRIVEN",
+      "hostFiles": [
+        "realUser.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.quickStart",
+      "title": "SoterAI: Quick Start",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.checkExtensionHealth",
+      "title": "SoterAI: Check Extension Health",
+      "hiddenFromPalette": false,
+      "status": "NAMED",
+      "hostFiles": [
+        "commandSweep.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.openPrivacyGuarantee",
+      "title": "SoterAI: What Stays Local?",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.openSettings",
+      "title": "SoterAI: Open Settings",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.runDemoScan",
+      "title": "SoterAI: Run Safe Demo Scan",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.scanSelectedText",
+      "title": "SoterAI: Scan Selected Text",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.useSensitiveContextSafely",
+      "title": "SoterAI: Use Sensitive Context Safely",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.buildSafePromptForAI",
+      "title": "SoterAI: Build Safe Prompt for AI",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.runSecretBrokerDemo",
+      "title": "SoterAI: Run Secret Broker Demo",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.openLocalPrivacyStatus",
+      "title": "SoterAI: Local Privacy Status",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.previewWhatAIWillSee",
+      "title": "SoterAI: Preview What AI Will See",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.manageSecretReferences",
+      "title": "SoterAI: Manage Secret References",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.clearSecretBrokerSession",
+      "title": "SoterAI: Clear Secret Broker Session",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.configurePrivacyMode",
+      "title": "SoterAI: Configure Privacy Mode",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.chooseSecretHandlingPolicy",
+      "title": "SoterAI: Choose Secret Handling Policy",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.runSecretBrokerDemoOperation",
+      "title": "SoterAI: Run Secret Broker Demo Operation",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.emergencyLockdown",
+      "title": "SoterAI: Emergency Lockdown (Revoke All Capabilities)",
+      "hiddenFromPalette": false,
+      "status": "DRIVEN",
+      "hostFiles": [
+        "realUser.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.testProtection",
+      "title": "SoterAI: Test Protection (Enforced API Capability)",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.scanGitDiff",
+      "title": "SoterAI: Scan Git Diff",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.reviewTerminalCommand",
+      "title": "SoterAI: Review Terminal Command",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.scanMCPAgentTools",
+      "title": "SoterAI: Scan MCP / Agent Tools",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.openAIActivityLedger",
+      "title": "SoterAI: Open AI Activity Ledger",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.generateCanaryToken",
+      "title": "SoterAI: Generate Canary Token",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.choosePolicyPack",
+      "title": "SoterAI: Choose Policy Pack",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.scanCurrentFile",
+      "title": "SoterAI: Scan Current File",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.scanSelection",
+      "title": "SoterAI: Scan Selection",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.scanBeforeAIPrompt",
+      "title": "SoterAI: Scan Before AI Prompt",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.redactSelectionForAI",
+      "title": "SoterAI: Redact Selection for AI",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.checkTerminalCommand",
+      "title": "SoterAI: Check Terminal Command",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.scanGitChanges",
+      "title": "SoterAI: Scan Git Changes",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.openSecurityPanel",
+      "title": "SoterAI: Open Security Panel",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.configurePolicy",
+      "title": "SoterAI: Configure Policy",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.connectToCloud",
+      "title": "SoterAI: Connect to SoterAI Cloud",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.disconnectCloud",
+      "title": "SoterAI: Disconnect / Clear Token",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.exportLocalRiskReport",
+      "title": "SoterAI: Export Local Risk Report",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.reviewSelectedAICode",
+      "title": "SoterAI: Review Selected AI Code",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.createProjectPolicy",
+      "title": "SoterAI: Create Project AI Security Policy",
+      "hiddenFromPalette": false,
+      "status": "DRIVEN",
+      "hostFiles": [
+        "realUser.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.editProjectPolicy",
+      "title": "SoterAI: Edit Project AI Security Policy",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.showProtectedFiles",
+      "title": "SoterAI: Show Protected Files",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.addToProtectedFiles",
+      "title": "SoterAI: Add Current File to Protected Files",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.removeFromProtectedFiles",
+      "title": "SoterAI: Remove File from Protected Files",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.migrateSecretsToVault",
+      "title": "SoterAI: Migrate Secrets to Protected Vault",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.migrateCurrentFileToVault",
+      "title": "SoterAI: Migrate Current File Secrets to Vault",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.autoMigrateWorkspace",
+      "title": "SoterAI: Protect Workspace Secrets",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.showFileReadLog",
+      "title": "SoterAI: Show AI Agent File-Read Access Log",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.clearFileReadLog",
+      "title": "SoterAI: Clear AI Agent File-Read Access Log",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.restoreSecretPlaceholders",
+      "title": "SoterAI: Restore Secret Placeholders",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.restoreFileFromBackup",
+      "title": "SoterAI: Restore File From Encrypted Backup",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.openVaultStatus",
+      "title": "SoterAI: Open Protected Vault Status",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.generateEnvExample",
+      "title": "SoterAI: Generate .env.example Safely",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.inspectAIContext",
+      "title": "SoterAI: Inspect AI Context",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.buildSafeAIContext",
+      "title": "SoterAI: Build Safe AI Context",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.copySafeAIContext",
+      "title": "SoterAI: Copy Safe AI Context",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.approveContextSession",
+      "title": "SoterAI: Approve Context for Session",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.clearContextApproval",
+      "title": "SoterAI: Clear AI Context Approval Session",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.buildSafeDebugPrompt",
+      "title": "SoterAI: Build Safe Debug Prompt",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.buildSafeCodeReviewPrompt",
+      "title": "SoterAI: Build Safe Code Review Prompt",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.buildSafeDeploymentPrompt",
+      "title": "SoterAI: Build Safe Deployment Prompt",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.buildSafeErrorFixPrompt",
+      "title": "SoterAI: Build Safe Error Fix Prompt",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.buildSafeArchitecturePrompt",
+      "title": "SoterAI: Build Safe Architecture Prompt",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.openAILedger",
+      "title": "SoterAI: Open AI Access Ledger",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.exportAILedger",
+      "title": "SoterAI: Export AI Access Ledger",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.clearAILedger",
+      "title": "SoterAI: Clear Local AI Ledger",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.showWhatAISawLastSession",
+      "title": "SoterAI: Show What AI Saw Last Session",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.scanAIOutput",
+      "title": "SoterAI: Scan AI Output",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.compareOutputAgainstContext",
+      "title": "SoterAI: Compare Output Against Protected Context",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.checkOutputForLeakage",
+      "title": "SoterAI: Check Output for Secret Leakage",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.generateCanary",
+      "title": "SoterAI: Generate Local Canary Secret",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.insertCanaryIntoTestFile",
+      "title": "SoterAI: Insert Canary Into Test File",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.scanWorkspaceForCanary",
+      "title": "SoterAI: Scan Workspace for Canary Exposure",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.verifyNoCanaryInLogs",
+      "title": "SoterAI: Verify No Canary in Logs/Reports",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.rotateCanary",
+      "title": "SoterAI: Rotate Canary",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.scanInstalledExtensionsRisk",
+      "title": "SoterAI: Scan Installed Extensions Risk",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.showAIExtensions",
+      "title": "SoterAI: Show AI Extensions",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.generateExtensionRiskReport",
+      "title": "SoterAI: Generate Extension Risk Report",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.showCoverageMatrix",
+      "title": "SoterAI: Show AI Route Coverage",
+      "hiddenFromPalette": false,
+      "status": "DRIVEN",
+      "hostFiles": [
+        "realUser.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.scanMCPConfigs",
+      "title": "SoterAI: Scan MCP Configs",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.showMCPToolPermissions",
+      "title": "SoterAI: Show MCP Tool Permissions",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.blockRiskyMCPRecommendation",
+      "title": "SoterAI: Block Risky MCP Recommendation",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.generateMCPSafePolicy",
+      "title": "SoterAI: Generate MCP Safe Policy",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.startLocalAIBroker",
+      "title": "SoterAI: Start Local AI Broker",
+      "hiddenFromPalette": false,
+      "status": "DRIVEN",
+      "hostFiles": [
+        "realUser.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.stopLocalAIBroker",
+      "title": "SoterAI: Stop Local AI Broker",
+      "hiddenFromPalette": false,
+      "status": "DRIVEN",
+      "hostFiles": [
+        "realUser.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.restartLocalAIBroker",
+      "title": "SoterAI: Restart Local AI Broker",
+      "hiddenFromPalette": false,
+      "status": "NAMED",
+      "hostFiles": [
+        "commandSweep.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.showBrokerStatus",
+      "title": "SoterAI: Show Broker Status",
+      "hiddenFromPalette": false,
+      "status": "DRIVEN",
+      "hostFiles": [
+        "realUser.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.showRuntimeCapabilitySummary",
+      "title": "SoterAI: Show Runtime Capability Summary",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.showExtensionIsolationSummary",
+      "title": "SoterAI: Show Extension Isolation Summary",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.configureAIBroker",
+      "title": "SoterAI: Configure AI Broker",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.copyOpenAIBrokerUrl",
+      "title": "SoterAI: Copy OpenAI-Compatible Broker URL",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.copyAnthropicBrokerUrl",
+      "title": "SoterAI: Copy Anthropic-Compatible Broker URL",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.testBrokerProtection",
+      "title": "SoterAI: Test Broker Protection",
+      "hiddenFromPalette": false,
+      "status": "DRIVEN",
+      "hostFiles": [
+        "realUser.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.runControlledTerminalCommand",
+      "title": "SoterAI: Run Controlled Terminal Command",
+      "hiddenFromPalette": false,
+      "status": "DRIVEN",
+      "hostFiles": [
+        "realUser.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.rotateBrokerToken",
+      "title": "SoterAI: Rotate Broker Token",
+      "hiddenFromPalette": false,
+      "status": "NAMED",
+      "hostFiles": [
+        "commandSweep.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.clearBrokerToken",
+      "title": "SoterAI: Clear Broker Token",
+      "hiddenFromPalette": false,
+      "status": "NAMED",
+      "hostFiles": [
+        "commandSweep.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.enableAISafeMode",
+      "title": "SoterAI: Enable AI Safe Mode",
+      "hiddenFromPalette": false,
+      "status": "DRIVEN",
+      "hostFiles": [
+        "realUser.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.disableAISafeMode",
+      "title": "SoterAI: Disable AI Safe Mode",
+      "hiddenFromPalette": false,
+      "status": "NAMED",
+      "hostFiles": [
+        "controlPanel.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.showAISafeModeRules",
+      "title": "SoterAI: Show AI Safe Mode Rules",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.configureSafeMode",
+      "title": "SoterAI: Configure Safe Mode",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.openAIMemoryInspector",
+      "title": "SoterAI: Open AI Memory Inspector",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.startAIMemorySession",
+      "title": "SoterAI: Start AI Memory Session",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.endAIMemorySession",
+      "title": "SoterAI: End AI Memory Session",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.clearAIMemorySession",
+      "title": "SoterAI: Clear AI Memory Session",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.exportAIMemoryReport",
+      "title": "SoterAI: Export AI Memory Report",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.showWhatAISaw",
+      "title": "SoterAI: Show What AI Saw",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.showBlockedAIContext",
+      "title": "SoterAI: Show Blocked AI Context",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.compareAIResponseWithContext",
+      "title": "SoterAI: Compare AI Response With Context",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.reviewPendingAIApproval",
+      "title": "SoterAI: Review Pending AI Approval",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.approveAIContextOnce",
+      "title": "SoterAI: Approve AI Context Once",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.denyAIContext",
+      "title": "SoterAI: Deny AI Context",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.showActiveAIApprovals",
+      "title": "SoterAI: Show Active AI Approvals",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.clearAIApprovals",
+      "title": "SoterAI: Clear Broker AI Approvals",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.enableAISentinel",
+      "title": "SoterAI: Enable AI Activity Sentinel",
+      "hiddenFromPalette": false,
+      "status": "DRIVEN",
+      "hostFiles": [
+        "realUser.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.disableAISentinel",
+      "title": "SoterAI: Disable AI Activity Sentinel",
+      "hiddenFromPalette": false,
+      "status": "DRIVEN",
+      "hostFiles": [
+        "realUser.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.showAITimeline",
+      "title": "SoterAI: Show AI Activity Timeline",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.exportAIActivityReport",
+      "title": "SoterAI: Export AI Activity Report",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.clearAIActivityEvents",
+      "title": "SoterAI: Clear AI Activity Events",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.openPermissionCenter",
+      "title": "SoterAI: Open AI Permission Center",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.reviewPendingApprovals",
+      "title": "SoterAI: Review Pending AI Approvals",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.clearApprovals",
+      "title": "SoterAI: Clear Stored Permission Approvals",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.enableProtectedWorkspace",
+      "title": "SoterAI: Enable Protected Workspace Mode",
+      "hiddenFromPalette": false,
+      "status": "NAMED",
+      "hostFiles": [
+        "controlPanel.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.disableProtectedWorkspace",
+      "title": "SoterAI: Disable Protected Workspace Mode",
+      "hiddenFromPalette": false,
+      "status": "NAMED",
+      "hostFiles": [
+        "controlPanel.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.showProtectedFilesList",
+      "title": "SoterAI: Show Protected Files List",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.addFileToProtected",
+      "title": "SoterAI: Add File to Protected List",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.removeFileFromProtected",
+      "title": "SoterAI: Remove File from Protected List",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.generateSafeEnvExample",
+      "title": "SoterAI: Generate Safe .env.example",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.showWorkspaceRiskScore",
+      "title": "SoterAI: Show Workspace Risk Score",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.scanWorkspaceRisk",
+      "title": "SoterAI: Scan Workspace Risk",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.openMCPToolFirewall",
+      "title": "SoterAI: Open MCP Tool Firewall",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.generateSafeMCPPolicyFile",
+      "title": "SoterAI: Generate Safe MCP Policy",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.blockMCPTool",
+      "title": "SoterAI: Block MCP Tool",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.approveMCPTool",
+      "title": "SoterAI: Approve MCP Tool",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.scanMemoryRisk",
+      "title": "SoterAI: Scan AI Memory Risk",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.cleanPoisonedInstructions",
+      "title": "SoterAI: Clean Poisoned AI Instructions",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.showMemoryPoisoningFindings",
+      "title": "SoterAI: Show Memory Poisoning Findings",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.checkDependencyInstall",
+      "title": "SoterAI: Check Dependency Install",
+      "hiddenFromPalette": false,
+      "status": "DRIVEN",
+      "hostFiles": [
+        "realUser.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.scanPackageJsonRisk",
+      "title": "SoterAI: Scan package.json Risk",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.reviewAISuggestedDependency",
+      "title": "SoterAI: Review AI Suggested Dependency",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.applyPolicyPack",
+      "title": "SoterAI: Apply Policy Pack",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.comparePolicyPacks",
+      "title": "SoterAI: Compare Policy Packs",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.exportPolicy",
+      "title": "SoterAI: Export Policy",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.openEnterpriseDashboard",
+      "title": "SoterAI: Open Enterprise Risk Dashboard",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.exportEnterpriseRiskReport",
+      "title": "SoterAI: Export Enterprise Risk Report",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.secureAllAI",
+      "title": "SoterAI: Secure Installed AI Tools (One Click)",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.scanClipboardAICode",
+      "title": "SoterAI: Scan Clipboard as AI-Generated Code (check vulnerabilities before pasting)",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.installGitSecretHook",
+      "title": "SoterAI: Install Git Pre-Commit Secret Hook (block secrets at commit time)",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.checkScreenShareRisk",
+      "title": "SoterAI: Check Screen-Share Risk (warns if sensitive files are visible)",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.scanLocalModelLogs",
+      "title": "SoterAI: Scan Local AI Model Logs (Ollama/LM Studio) for persisted secrets",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.reviewDependencyGuardMode",
+      "title": "SoterAI: Review Dependency Guard Mode (harden OSV advisory checks)",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.copyPreCommitHookScript",
+      "title": "SoterAI: Copy Pre-Commit Hook Script (for husky/lefthook repos)",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.restoreAIConfigs",
+      "title": "SoterAI: Undo AI Tool Security Changes",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.openWalkthrough",
+      "title": "SoterAI: Open Getting Started Walkthrough",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.applyFindingFix",
+      "title": "SoterAI: Apply Finding Fix",
+      "hiddenFromPalette": true,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.scanClipboard",
+      "title": "SoterAI: Scan Clipboard Before AI",
+      "hiddenFromPalette": false,
+      "status": "DRIVEN",
+      "hostFiles": [
+        "realUser.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.safePaste",
+      "title": "SoterAI: Safe Paste (scan clipboard, then paste)",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.setupBrokerIntegration",
+      "title": "SoterAI: Setup Broker Integration",
+      "hiddenFromPalette": false,
+      "status": "DRIVEN",
+      "hostFiles": [
+        "realUser.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.restoreBrokerIntegration",
+      "title": "SoterAI: Restore Broker Integration",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.preflightMCPTool",
+      "title": "SoterAI: Preflight MCP Tool Call",
+      "hiddenFromPalette": false,
+      "status": "DRIVEN",
+      "hostFiles": [
+        "realUser.host.ts"
+      ]
+    },
+    {
+      "id": "soterai.checkBeforeSendingToAI",
+      "title": "SoterAI: Scan Before Sending to AI",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.showEgressFirewallStatus",
+      "title": "SoterAI: Show AI Egress Firewall Status",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.checkEgressPayload",
+      "title": "SoterAI: Check Egress Payload (API)",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    }
+  ]
+}

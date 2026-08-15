@@ -1,0 +1,41 @@
+{
+ "eval_file": "datasets/crossdist-eval-v3-sample-pg2scope.jsonl",
+ "rows": 3061,
+ "attacks": 2143,
+ "benign": 918,
+ "protectai": {
+  "tp": 1783,
+  "fp": 36,
+  "fn": 360,
+  "tn": 882,
+  "recall": 83.2,
+  "precision": 98.02,
+  "fpr": 3.92,
+  "f1": 90.01,
+  "latency_p50_ms": 857.5,
+  "licence": "apache-2.0 (declared on the model card)"
+ },
+ "soterai_v7_shipped_margin_0": {
+  "tp": 1598,
+  "fp": 48,
+  "fn": 545,
+  "tn": 870,
+  "recall": 74.57,
+  "precision": 97.08,
+  "fpr": 5.23,
+  "f1": 84.35
+ },
+ "soterai_v7_margin_minus_0_10": {
+  "tp": 2064,
+  "fp": 50,
+  "fn": 79,
+  "tn": 868,
+  "recall": 96.31,
+  "precision": 97.63,
+  "fpr": 5.45,
+  "f1": 96.97,
+  "latency_p50_ms": 154.9
+ },
+ "lakera_guard": "NOT MEASURED - closed API, no PINT run",
+ "caveat": "margin -0.10 was SELECTED on these rows; ProtectAI threshold 0.5 is untuned here. Held-out confirmation is artifacts/ml/margin-sweep/full-m010.json (96.71%)."
+}

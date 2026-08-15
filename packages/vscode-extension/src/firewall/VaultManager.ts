@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
-import { createHash } from "crypto";
+import { createHash, randomUUID } from "crypto";
 import {
-    extractEnvSecrets,
+    extractVaultCandidates,
     applyPlaceholders,
     restorePlaceholders,
     buildVaultMetadata,
@@ -12,6 +12,7 @@ import {
     type VaultCandidate,
     type VaultEntryMetadata,
 } from "@soterai/guard-core";
+import { assertWorkspaceFileUri, assertWorkspaceOutputUri } from "../security/WorkspacePathGuard";
 
 /**
  * VaultManager — the extension-side orchestration of the Protected Secret Vault.
@@ -60,6 +61,9 @@ export interface MigrationPreview {
 }
 
 export class VaultManager {
+    /** Serialize vault mutations so concurrent watcher/command runs cannot lose entries. */
+    private static mutationQueue: Promise<void> = Promise.resolve();
+
     constructor(private readonly context: vscode.ExtensionContext) {}
 
     private vaultUri(): vscode.Uri {
@@ -77,13 +81,36 @@ export class VaultManager {
 
     private async readVault(): Promise<VaultFile> {
         try {
+            await vscode.workspace.fs.stat(this.vaultUri());
+        } catch (error) {
+            if (isFileNotFound(error)) return { version: 1, entries: [] };
+            throw new Error("Protected vault storage is not accessible; no workspace file was changed.");
+        }
+
+        try {
             const bytes = await vscode.workspace.fs.readFile(this.vaultUri());
-            const key = await this.getOrCreateKey();
+            const key = await this.context.secrets.get(KEY_SECRET_ID);
+            if (!key) {
+                throw new Error("vault key is unavailable");
+            }
             const json = await decryptVault(new TextDecoder().decode(bytes), key);
             const parsed = JSON.parse(json) as VaultFile;
-            return { version: parsed.version ?? 1, entries: parsed.entries ?? [] };
+            if (!parsed || !Array.isArray(parsed.entries)) throw new Error("vault format is invalid");
+            if (parsed.entries.some((entry) =>
+                !entry ||
+                typeof entry.rawValue !== "string" ||
+                typeof entry.placeholder !== "string" ||
+                typeof entry.originalFile !== "string"
+            )) {
+                throw new Error("vault entries are invalid");
+            }
+            return { version: parsed.version ?? 1, entries: parsed.entries };
         } catch {
-            return { version: 1, entries: [] };
+            // Never reinterpret a corrupt/undecryptable existing vault as empty.
+            // Doing so would overwrite the only encrypted copy during migration.
+            throw new Error(
+                "Protected vault could not be decrypted or validated. Migration stopped without changing the workspace file.",
+            );
         }
     }
 
@@ -91,7 +118,17 @@ export class VaultManager {
         await vscode.workspace.fs.createDirectory(this.context.globalStorageUri);
         const key = await this.getOrCreateKey();
         const payload = await encryptVault(JSON.stringify(vault), key);
-        await vscode.workspace.fs.writeFile(this.vaultUri(), new TextEncoder().encode(payload));
+        const tempUri = vscode.Uri.joinPath(
+            this.context.globalStorageUri,
+            `soterai-vault.${randomUUID()}.tmp`,
+        );
+        try {
+            await vscode.workspace.fs.writeFile(tempUri, new TextEncoder().encode(payload));
+            await vscode.workspace.fs.rename(tempUri, this.vaultUri(), { overwrite: true });
+        } catch (error) {
+            try { await vscode.workspace.fs.delete(tempUri); } catch { /* best-effort temp cleanup */ }
+            throw error;
+        }
     }
 
     /** Vault status for display — metadata only, never raw values. */
@@ -115,8 +152,9 @@ export class VaultManager {
 
     /** Preview which secrets WOULD migrate from a file (no changes made). */
     async preview(fileUri: vscode.Uri): Promise<MigrationPreview> {
+        await assertWorkspaceFileUri(fileUri);
         const text = new TextDecoder().decode(await vscode.workspace.fs.readFile(fileUri));
-        const candidates = extractEnvSecrets(text);
+        const candidates = extractVaultCandidates(text);
         const rel = vscode.workspace.asRelativePath(fileUri);
         return {
             file: rel,
@@ -139,31 +177,54 @@ export class VaultManager {
      * Returns the number of secrets migrated.
      */
     async migrate(fileUri: vscode.Uri): Promise<number> {
+        return this.runMutation(() => this.migrateLocked(fileUri));
+    }
+
+    private async migrateLocked(fileUri: vscode.Uri): Promise<number> {
+        await assertWorkspaceFileUri(fileUri);
         const text = new TextDecoder().decode(await vscode.workspace.fs.readFile(fileUri));
-        const candidates = extractEnvSecrets(text);
+        const candidates = extractVaultCandidates(text);
         if (candidates.length === 0) return 0;
 
         const rel = vscode.workspace.asRelativePath(fileUri);
 
-        // 1. Encrypted backup before any destructive change.
-        await this.writeEncryptedBackup(fileUri, text);
-
-        // 2. Replace raw values with placeholders in the workspace file.
-        const masked = applyPlaceholders(text, candidates);
-        await vscode.workspace.fs.writeFile(fileUri, new TextEncoder().encode(masked));
-
-        // 3. Persist encrypted entries (metadata carries hash only; rawValue lives
-        //    only inside the AES-GCM encrypted vault file).
+        // Fail before touching the workspace when an existing vault is corrupt,
+        // missing its key, or unreadable. A corrupt vault must never look empty.
         const vault = await this.readVault();
         for (const c of candidates) {
             const meta = await buildVaultMetadata(c, rel);
-            // De-dupe on placeholder+file so re-migrating updates in place.
             vault.entries = vault.entries.filter(
                 (e) => !(e.placeholder === meta.placeholder && e.originalFile === rel),
             );
             vault.entries.push({ ...meta, rawValue: c.rawValue });
         }
+
+        // 1. Encrypted backup before any destructive change.
+        await this.writeEncryptedBackup(fileUri, text);
+
+        // Abort on file/editor drift instead of overwriting newer user changes.
+        this.assertDocumentReady(fileUri, text);
+        await assertWorkspaceFileUri(fileUri);
+        const latest = new TextDecoder().decode(await vscode.workspace.fs.readFile(fileUri));
+        if (latest !== text) throw new Error("File changed during migration; retry after edits finish.");
+
+        // 2. Commit encrypted entries before removing plaintext. If this write
+        // fails, the workspace file is still byte-for-byte untouched.
         await this.writeVault(vault);
+
+        // 3. Replace raw values with placeholders in the workspace file/editor.
+        const masked = applyPlaceholders(text, candidates);
+        await assertWorkspaceFileUri(fileUri);
+        await this.writeDocumentOrFile(fileUri, text, masked);
+
+        const written = new TextDecoder().decode(await vscode.workspace.fs.readFile(fileUri));
+        for (const c of candidates) {
+            if (written.includes(c.rawValue) || !written.includes(c.placeholder)) {
+                throw new Error(
+                    "Migration verification failed. The encrypted backup is intact; use Restore File From Backup if needed.",
+                );
+            }
+        }
         return candidates.length;
     }
 
@@ -172,6 +233,11 @@ export class VaultManager {
      * Returns the number of placeholders restored.
      */
     async restore(fileUri: vscode.Uri): Promise<number> {
+        return this.runMutation(() => this.restoreLocked(fileUri));
+    }
+
+    private async restoreLocked(fileUri: vscode.Uri): Promise<number> {
+        await assertWorkspaceFileUri(fileUri);
         const text = new TextDecoder().decode(await vscode.workspace.fs.readFile(fileUri));
         const vault = await this.readVault();
         const rel = vscode.workspace.asRelativePath(fileUri);
@@ -190,16 +256,20 @@ export class VaultManager {
         await this.writeEncryptedBackup(fileUri, text);
 
         const restored = restorePlaceholders(text, map);
-        await vscode.workspace.fs.writeFile(fileUri, new TextEncoder().encode(restored));
+        this.assertDocumentReady(fileUri, text);
+        await assertWorkspaceFileUri(fileUri);
+        await this.writeDocumentOrFile(fileUri, text, restored);
         return count;
     }
 
     /** Produce a safe `.env.example` sibling from a file. Never writes secrets. */
     async writeEnvExample(fileUri: vscode.Uri): Promise<vscode.Uri> {
+        await assertWorkspaceFileUri(fileUri);
         const text = new TextDecoder().decode(await vscode.workspace.fs.readFile(fileUri));
         const example = generateEnvExample(text);
         const dir = vscode.Uri.joinPath(fileUri, "..");
         const exampleUri = vscode.Uri.joinPath(dir, ".env.example");
+        await assertWorkspaceOutputUri(exampleUri);
         await vscode.workspace.fs.writeFile(exampleUri, new TextEncoder().encode(example));
         return exampleUri;
     }
@@ -238,17 +308,62 @@ export class VaultManager {
     /** Restore a file from its encrypted backup. Returns false if none exists. */
     async restoreFromBackup(fileUri: vscode.Uri): Promise<boolean> {
         try {
+            await assertWorkspaceFileUri(fileUri);
             const bytes = await vscode.workspace.fs.readFile(this.backupUri(fileUri));
             const key = await this.getOrCreateKey();
             const json = await decryptVault(new TextDecoder().decode(bytes), key);
             const parsed = JSON.parse(json) as { content?: string };
             if (typeof parsed.content !== "string") return false;
-            await vscode.workspace.fs.writeFile(fileUri, new TextEncoder().encode(parsed.content));
+            const current = new TextDecoder().decode(await vscode.workspace.fs.readFile(fileUri));
+            this.assertDocumentReady(fileUri, current);
+            await assertWorkspaceFileUri(fileUri);
+            await this.writeDocumentOrFile(fileUri, current, parsed.content);
             return true;
         } catch {
             return false;
         }
     }
+
+    private async runMutation<T>(operation: () => Promise<T>): Promise<T> {
+        const result = VaultManager.mutationQueue.then(operation, operation);
+        VaultManager.mutationQueue = result.then(() => undefined, () => undefined);
+        return result;
+    }
+
+    private openDocument(fileUri: vscode.Uri): vscode.TextDocument | undefined {
+        const key = fileUri.toString();
+        return vscode.workspace.textDocuments.find((document) => document.uri.toString() === key);
+    }
+
+    private assertDocumentReady(fileUri: vscode.Uri, diskText: string): void {
+        const document = this.openDocument(fileUri);
+        if (!document) return;
+        if (document.isDirty) {
+            throw new Error("Save or discard the file's pending edits before vault migration.");
+        }
+        if (document.getText() !== diskText) {
+            throw new Error("The open editor is out of sync with disk; reload it and retry.");
+        }
+    }
+
+    private async writeDocumentOrFile(fileUri: vscode.Uri, original: string, next: string): Promise<void> {
+        await assertWorkspaceFileUri(fileUri);
+        const document = this.openDocument(fileUri);
+        if (!document) {
+            await vscode.workspace.fs.writeFile(fileUri, new TextEncoder().encode(next));
+            return;
+        }
+        this.assertDocumentReady(fileUri, original);
+        const edit = new vscode.WorkspaceEdit();
+        edit.replace(fileUri, new vscode.Range(document.positionAt(0), document.positionAt(original.length)), next);
+        if (!await vscode.workspace.applyEdit(edit)) throw new Error("VS Code refused the protected file edit.");
+        if (!await document.save()) throw new Error("VS Code could not save the protected file edit.");
+    }
+}
+
+function isFileNotFound(error: unknown): boolean {
+    const code = (error as { code?: unknown } | undefined)?.code;
+    return code === "FileNotFound" || code === "ENOENT";
 }
 
 /** A masked, secret-free preview of a candidate value for display. */

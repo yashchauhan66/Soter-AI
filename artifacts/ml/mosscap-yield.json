@@ -1,0 +1,22 @@
+{
+  "dataset": "Lakera/mosscap_prompt_injection",
+  "licence": "MIT",
+  "scanned": 223533,
+  "kept_unique_outcome_labelled": 33235,
+  "dropped": {
+    "no_raw_answer": 9,
+    "guard_did_not_intervene_UNKNOWN": 181834,
+    "length_out_of_range": 501,
+    "duplicate_group_key": 7954
+  },
+  "by_level": {
+    "level3": 8334,
+    "level4": 6830,
+    "level5": 3338,
+    "level6": 1269,
+    "level7": 7494,
+    "level8": 5970
+  },
+  "current_cap": 14000,
+  "note": "kept_unique_outcome_labelled is the honest ceiling for this source. Rows where the guard did not intervene are UNKNOWN and are never relabelled SAFE (see load_mosscap docstring)."
+}

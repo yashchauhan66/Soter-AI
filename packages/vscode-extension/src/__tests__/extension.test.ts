@@ -42,6 +42,8 @@ const dashboardSrc = read("src/webview/DashboardPanel.ts");
 const firewallCommandsSrc = read("src/firewall/commands.ts") + read("src/firewall/vault-commands.ts") + read("src/firewall/context-commands.ts") + read("src/firewall/canary-commands.ts") + read("src/firewall/output-commands.ts") + read("src/firewall/policy-commands.ts");
 const ledgerStoreSrc = read("src/firewall/LedgerStore.ts");
 const vaultManagerSrc = read("src/firewall/VaultManager.ts");
+const workspacePathGuardSrc = read("src/security/WorkspacePathGuard.ts");
+const filesystemPathPolicySrc = read("src/security/FileSystemPathPolicy.ts");
 const brokerManagerSrc = read("src/broker/BrokerManager.ts");
 const brokerCommandsSrc = read("src/broker/commands.ts");
 const launchCommandsSrc = read("src/launchCommands.ts");
@@ -106,6 +108,18 @@ describe("Workspace Trust (#5)", () => {
     it("gates the secret vault behind workspace trust", () => {
         assert.match(firewallCommandsSrc, /requireTrust/, "vault commands must call requireTrust");
         assert.match(firewallCommandsSrc, /isTrusted/, "firewall must check workspace trust");
+    });
+});
+
+describe("Workspace filesystem containment", () => {
+    it("canonicalizes targets and rejects symlink or junction escapes before vault writes", () => {
+        assert.match(filesystemPathPolicySrc, /realpath\(/);
+        assert.match(filesystemPathPolicySrc, /lstat\(/);
+        assert.match(filesystemPathPolicySrc, /isSymbolicLink\(\)/);
+        assert.match(filesystemPathPolicySrc, /junction or filesystem alias/);
+        assert.match(workspacePathGuardSrc, /verifyExistingPath/);
+        assert.match(vaultManagerSrc, /assertWorkspaceFileUri\(fileUri\)/);
+        assert.match(vaultManagerSrc, /assertWorkspaceOutputUri\(exampleUri\)/);
     });
 });
 
@@ -202,14 +216,17 @@ describe("Launch readiness command surface", () => {
 });
 
 describe("Marketplace README media hygiene", () => {
-    it("does not render screenshots in the VS Code Marketplace README", () => {
-        assert.doesNotMatch(readmeSrc, /!\[[^\]]*]\([^)]*screenshots\//i);
-        assert.doesNotMatch(readmeSrc, /<img[^>]+screenshots\//i);
-        assert.doesNotMatch(readmeSrc, /dashboard-overview\.png|scan-results\.png|command-palette\.png|settings-panel\.png|demo\.gif/i);
-    });
-
-    it("keeps screenshot assets excluded from packaged VSIX output", () => {
-        assert.match(vscodeIgnoreSrc, /media\/screenshots\/\*\*/);
+    it("shows verified VS Code evidence screenshots in the Marketplace README", () => {
+        const screenshots = [
+            "media/marketplace/secret-scan-result.png",
+            "media/marketplace/scan-selection-result.png",
+            "media/marketplace/safe-mode-enabled.png",
+        ];
+        for (const image of screenshots) {
+            assert.ok(readmeSrc.includes(image), `README must render ${image}`);
+            assert.ok(fs.existsSync(path.join(root, image)), `missing Marketplace screenshot ${image}`);
+            assert.ok(!vscodeIgnoreSrc.includes(image), `Marketplace screenshot is excluded from the VSIX: ${image}`);
+        }
     });
 });
 
@@ -371,14 +388,9 @@ describe("Local AI Broker, Safe Mode, and Memory Inspector", () => {
 describe("Command-palette hygiene (clutter control)", () => {
     const core = [
         "soterai.openControlPanel",
-        "soterai.quickStart", "soterai.checkExtensionHealth", "soterai.openSettings", "soterai.runDemoScan",
-        "soterai.scanSelectedText", "soterai.scanCurrentFile", "soterai.scanGitDiff", "soterai.reviewTerminalCommand",
-        "soterai.scanMCPAgentTools", "soterai.openAIActivityLedger", "soterai.generateCanaryToken", "soterai.choosePolicyPack",
-        "soterai.openPrivacyGuarantee", "soterai.openLocalPrivacyStatus", "soterai.buildSafePromptForAI", "soterai.runSecretBrokerDemo",
+        "soterai.runDemoScan", "soterai.scanCurrentFile", "soterai.scanGitDiff",
         "soterai.openWalkthrough", "soterai.scanClipboard", "soterai.checkBeforeSendingToAI",
-        // "Secure My AI" is the flagship one-click entry point, and its undo must
-        // stay findable — a rewrite the user cannot reverse from the palette is
-        // worse than one they never ran.
+        "soterai.autoMigrateWorkspace",
         "soterai.secureAllAI", "soterai.restoreAIConfigs",
     ];
     const palette: Array<{ command: string; when?: string }> = pkg.contributes.menus?.commandPalette ?? [];
@@ -388,6 +400,13 @@ describe("Command-palette hygiene (clutter control)", () => {
         for (const c of core) {
             assert.ok(!gated.has(c), `${c} is a core command and must not be gated in commandPalette`);
         }
+    });
+
+    it("keeps the default palette to ten clear, reversible newcomer workflows", () => {
+        assert.strictEqual(core.length, 10);
+        assert.ok(core.includes("soterai.autoMigrateWorkspace"), "vault migration must be discoverable");
+        assert.ok(core.includes("soterai.secureAllAI"), "AI routing must be discoverable");
+        assert.ok(core.includes("soterai.restoreAIConfigs"), "the reversible route must remain discoverable");
     });
 
     it("every non-core declared command is gated behind soterai.advancedCommands (or fully hidden)", () => {
@@ -418,10 +437,11 @@ describe("Onboarding walkthrough (UX)", () => {
     const walkthroughs = pkg.contributes.walkthroughs ?? [];
     const wt = walkthroughs[0];
 
-    it("contributes a Getting Started walkthrough with 5 steps", () => {
+    it("contributes a Getting Started walkthrough with 3 value-first steps", () => {
         assert.ok(wt, "a walkthrough must be contributed");
         assert.strictEqual(wt.id, "soterai.gettingStarted");
-        assert.strictEqual(wt.steps.length, 5);
+        assert.strictEqual(wt.steps.length, 3);
+        assert.deepStrictEqual(wt.steps.map((step: { id: string }) => step.id), ["demoScan", "protectWorkspace", "secureAiTools"]);
     });
 
     it("every walkthrough step points to an existing markdown media file", () => {
@@ -455,6 +475,14 @@ describe("Onboarding walkthrough (UX)", () => {
 });
 
 describe("Live inline scanning + Quick Fixes (UX)", () => {
+    it("does not pass a ThemeIcon id as a decoration file URI", () => {
+        assert.doesNotMatch(
+            liveScannerSrc,
+            /gutterIconPath\s*:\s*new\s+vscode\.ThemeIcon\([\s\S]*?\.id\s+as\s+unknown\s+as\s+vscode\.Uri/,
+            "ThemeIcon ids are not valid decoration URIs and produce a VS Code resource error",
+        );
+    });
+
     it("declares soterai.liveScan.enabled defaulting to on and registers the scanner", () => {
         const setting = pkg.contributes.configuration.properties["soterai.liveScan.enabled"];
         assert.ok(setting, "liveScan.enabled setting must exist");

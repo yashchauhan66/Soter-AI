@@ -1,6 +1,6 @@
 import type { DetectorMatch, DetectorResult } from "../types";
 
-export const PROMPT_INJECTION_DETECTOR_VERSION = "1.2.0";
+export const PROMPT_INJECTION_DETECTOR_VERSION = "1.3.0";
 
 // ─── Detector resource guards (contract asserted by tests) ─────────────────
 export const PATTERN_TIMEOUT_MS = 100;
@@ -33,6 +33,8 @@ const INJECTION_PATTERNS: InjectionPattern[] = [
     // Context override without a following noun: "Ignore all rules", "forget everything before".
     { id: "pi.context_override_bare", pattern: /\b(?:ignore|disregard|forget)\s+all\s+(?:the\s+)?(?:rules?|restrictions?|guidelines?)\b/gi, label: "Context override", score: 30, confidence: 0.85, message: "Attempt to override rules." },
     { id: "pi.forget_everything", pattern: /\bforget\s+everything\s+(?:before|prior|above)\b/gi, label: "Context wipe", score: 30, confidence: 0.85, message: "Attempt to wipe prior context." },
+    { id: "pi.paraphrased_override", pattern: /\b(?:disregard|set aside|treat as optional|supersede|override|do not follow)\b[^\n]{0,80}\b(?:governing|standing|existing|earlier|prior|original|safety|policy)\b[^\n]{0,40}\b(?:instructions?|rules?|constraints?|guidance|directives?)\b/gi, label: "Paraphrased instruction override", score: 35, confidence: 0.88, message: "Paraphrased instruction-override intent detected." },
+    { id: "pi.split_word_override", pattern: /\bi(?=[a-z]*[\s._-]+[a-z])[\s._-]*g[\s._-]*n[\s._-]*o[\s._-]*r[\s._-]*e\b[^\n]{0,50}\b(?:previous|prior|earlier|above|system)\b[^\n]{0,30}\b(?:instructions?|rules?|prompts?|guidelines?)\b/gi, label: "Split-word instruction override", score: 35, confidence: 0.9, message: "A split-word instruction override was reconstructed." },
 
     // ── Role impersonation ────────────────────────────────────────────────
     { id: "pi.role_impersonation", pattern: /\b(?:you are now|act as|pretend (?:to be|you're)|roleplay as|simulate being|from now on you are)\b/gi, label: "Role impersonation", score: 28, confidence: 0.85, message: "Role impersonation attempt detected." },
@@ -56,6 +58,7 @@ const INJECTION_PATTERNS: InjectionPattern[] = [
     // "reveal system prоmpt" (Latin verb+adj, noun may be homoglyph).
     { id: "pi.system_prompt_extraction", pattern: new RegExp(`\\b(?:reveal|show|display|output|print|repeat|echo|leak|expose|disclose|give|tell)${G}(?:(?:me|us|to me|your|the|all|full|exact|your full|the full)${G}){0,3}(?:system|developer|initial|original|hidden|secret|internal)${G}(?:prompt|instructions?|message|directives?|configuration|rules?)?\\b`, "gi"), label: "System prompt extraction", score: 30, confidence: 0.9, message: "System prompt extraction attempt." },
     { id: "pi.system_prompt_query", pattern: /\bwhat\s+(?:is|are)\s+your\s+(?:system|initial|original|hidden)\s+(?:prompt|instructions?)\b/gi, label: "System prompt query", score: 25, confidence: 0.8, message: "System prompt query detected." },
+    { id: "pi.indirect_instruction_extraction", pattern: /\b(?:hidden|embedded|concealed|internal)\s+(?:system\s+)?(?:instructions?|prompt|directives?|rules?)\b[^\n]{0,120}\b(?:document|file|attachment|content|webpage|tool output)\b[^\n]{0,120}\b(?:extract|recover|read|follow|execute|obey|apply)\b/gi, label: "Indirect instruction extraction", score: 35, confidence: 0.88, message: "Indirect extraction or execution of hidden instructions detected." },
     // Few-shot poisoning: a fake User:/Assistant: turn that issues an override.
     { id: "pi.few_shot_poisoning", pattern: /\b(?:user|assistant|human|system)\s*:\s*[^\n]{0,80}?\b(?:ignore|bypass|disregard|forget|override)\s+(?:all\s+)?(?:previous\s+|prior\s+|the\s+)?(?:rules?|instructions?|guidelines?|restrictions?)\b/gi, label: "Few-shot poisoning", score: 30, confidence: 0.8, message: "Override embedded in a fabricated dialogue turn." },
 
@@ -69,6 +72,8 @@ const INJECTION_PATTERNS: InjectionPattern[] = [
     { id: "pi.hindi_override", pattern: /\b(?:pichle|purane|pehle)\s+(?:nirdesh|instructions?|rules?)\s+(?:bhool|ignore|chod)\b/gi, label: "Hindi instruction override", score: 30, confidence: 0.85, message: "Hindi/Hinglish instruction override detected." },
     { id: "pi.hindi_role", pattern: /\b(?:ab se|aaj se)\s+(?:tum|aap)\s+(?:ek|mera)\b/gi, label: "Hindi role impersonation", score: 25, confidence: 0.75, message: "Hindi/Hinglish role impersonation detected." },
     { id: "pi.hindi_safety", pattern: /\b(?:safety|suraksha)\s+(?:hata|band|off|disable)\s+(?:karo|kar|kijiye)\b/gi, label: "Hindi safety bypass", score: 30, confidence: 0.85, message: "Hindi/Hinglish safety bypass attempt." },
+    { id: "pi.hindi_devanagari_override", pattern: /(?:पिछल(?:े|ा|ी)?|पुरान(?:े|ा|ी)?|सभी|सारे)\s+(?:निर्देश(?:ों)?|नियम(?:ों)?|आदेश(?:ों)?)[^\n]{0,60}(?:अनदेखा|नज़रअंदाज़|भूल|मत\s+मान)/gu, label: "Hindi instruction override", score: 35, confidence: 0.9, message: "Devanagari Hindi instruction override detected." },
+    { id: "pi.hindi_devanagari_extraction", pattern: /(?:सिस्टम|डेवलपर)\s+(?:प्रॉम्प्ट|निर्देश|संदेश)[^\n]{0,40}(?:बताओ|दिखाओ|लिखो|उजागर|निकालो)/gu, label: "Hindi prompt extraction", score: 35, confidence: 0.9, message: "Devanagari Hindi system-prompt extraction detected." },
 
     // ── Delimiter injection ───────────────────────────────────────────────
     { id: "pi.delimiter", pattern: /\[(?:SYSTEM|INST|SYS)\]|\[\/(?:SYSTEM|INST|SYS)\]|<\|(?:system|im_start|im_end)\|>/gi, label: "Delimiter injection", score: 35, confidence: 0.95, message: "Chat template delimiter injection detected." },

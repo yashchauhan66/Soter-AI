@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-15T12:29:15.384Z",
+  "performance": {
+    "activationMs": null,
+    "rssMiB": 225.89,
+    "heapUsedMiB": 45.14,
+    "heapTotalMiB": 73.84,
+    "externalMiB": 6.57
+  },
+  "editor": {
+    "appName": "Visual Studio Code",
+    "appHost": "desktop",
+    "language": "en",
+    "remoteName": null
+  },
+  "extension": "soterai.soterai-ide-guard",
+  "version": "0.5.0",
+  "packagedExecution": true,
+  "result": "PASS",
+  "checks": [
+    {
+      "name": "packaged extension activation",
+      "passed": true,
+      "detail": "0.5.0 active in Visual Studio Code"
+    },
+    {
+      "name": "broker startup",
+      "passed": true,
+      "detail": "healthy version=0.1.0"
+    },
+    {
+      "name": "policy load",
+      "passed": true,
+      "detail": "broker policy=strict"
+    },
+    {
+      "name": "secret and context protection",
+      "passed": true,
+      "detail": "guard-core redacted; broker decision=block"
+    },
+    {
+      "name": "controlled terminal",
+      "passed": true,
+      "detail": "ALLOW executed with exit=128; coverage=STRONG_ENFORCEMENT"
+    },
+    {
+      "name": "MCP routing",
+      "passed": true,
+      "detail": "broker preflight action=DENY coverage=DETECTION_ONLY"
+    },
+    {
+      "name": "lockdown and recovery",
+      "passed": true,
+      "detail": "lockdown blocked startup; unlock restored healthy broker"
+    }
+  ]
+}

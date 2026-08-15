@@ -69,6 +69,13 @@
     },
     {
       "matches": [
+        "https://soterai.in/*"
+      ],
+      "js": ["content/index.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
         "https://chatgpt.com/*",
         "https://chat.openai.com/*",
         "https://claude.ai/*",
@@ -87,12 +94,14 @@
         "https://bolt.new/*",
         "https://v0.dev/*",
         "https://lovable.dev/*",
-        "https://openwebui.com/*"
+        "https://openwebui.com/*",
+        "https://soterai.in/*"
       ],
       "js": ["content/source-lineage-entry.js"],
       "run_at": "document_idle"
     }
   ],
+
   "action": {
     "default_title": "Soter Enterprise AI Control Plane",
     "default_popup": "popup/index.html",

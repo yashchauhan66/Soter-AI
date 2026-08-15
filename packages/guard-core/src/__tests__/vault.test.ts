@@ -2,6 +2,7 @@ import { describe, it } from "node:test";
 import assert from "node:assert";
 import {
     extractEnvSecrets,
+    extractVaultCandidates,
     applyPlaceholders,
     restorePlaceholders,
     buildVaultMetadata,
@@ -36,6 +37,40 @@ describe("Vault.extractEnvSecrets", () => {
             assert.strictEqual(c.placeholder, `[${PLACEHOLDER_PREFIX}${c.key}]`);
             assert.strictEqual(ENV.slice(c.start, c.end), c.rawValue);
         }
+    });
+
+    it("uses unique placeholders when the same key appears more than once", () => {
+        const found = extractEnvSecrets("TOKEN=first-secret-value\nTOKEN=second-secret-value");
+        assert.deepStrictEqual(
+            found.map((candidate) => candidate.placeholder),
+            ["[SOTERAI_PROTECTED_TOKEN]", "[SOTERAI_PROTECTED_TOKEN_2]"],
+        );
+    });
+});
+
+describe("Vault.extractVaultCandidates", () => {
+    it("adds standalone tokens and private-key blocks without duplicating env values", () => {
+        const privateKey = [
+            "-----BEGIN PRIVATE KEY-----",
+            "c290ZXJhaS10ZXN0LWtleS1tYXRlcmlhbA==",
+            "-----END PRIVATE KEY-----",
+        ].join("\n");
+        const token = "ghp_abcdefghijklmnopqrstuvwxyz123456";
+        const text = `${ENV}\nGITHUB=${token}\n${privateKey}`;
+        const found = extractVaultCandidates(text);
+
+        assert.strictEqual(found.filter((candidate) => candidate.rawValue === token).length, 1);
+        assert.ok(found.some((candidate) => candidate.rawValue === privateKey));
+        const placeholders = found.map((candidate) => candidate.placeholder);
+        assert.strictEqual(new Set(placeholders).size, placeholders.length, "every candidate must restore independently");
+    });
+
+    it("gives repeated standalone secrets unique placeholders", () => {
+        const first = "ghp_abcdefghijklmnopqrstuvwxyz123456";
+        const second = "ghp_654321zyxwvutsrqponmlkjihgfedcba";
+        const found = extractVaultCandidates(`${first}\n${second}`);
+        assert.strictEqual(found.length, 2);
+        assert.notStrictEqual(found[0].placeholder, found[1].placeholder);
     });
 });
 

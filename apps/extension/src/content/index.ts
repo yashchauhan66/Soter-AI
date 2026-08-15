@@ -71,9 +71,29 @@ function isObject(value: unknown): value is { type?: string } {
   return Boolean(value && typeof value === "object");
 }
 
+/**
+ * SoterAI's own platform (soterai.in) should always be actively guarded
+ * regardless of backend policy state — it is a first-party destination.
+ * For all other domains, defer to the background policy engine.
+ */
 function getDestinationContext() {
   return new Promise<{ active: boolean; destination?: AIDestinationPolicy; employeeId?: string; legacyMatch?: boolean }>((resolve) => chrome.runtime.sendMessage(
     { type: "SOTER_GET_DESTINATION_CONTEXT", url: location.href },
-    (response) => resolve((response as { active: boolean; destination?: AIDestinationPolicy; employeeId?: string; legacyMatch?: boolean }) ?? { active: false }),
+    (response) => {
+      const ctx = (response as { active: boolean; destination?: AIDestinationPolicy; employeeId?: string; legacyMatch?: boolean }) ?? { active: false };
+      // First-party: soterai.in always activates the guard, even if the backend
+      // policy hasn't been synced yet or the extension hasn't enrolled.
+      const hostname = location.hostname.replace(/^www\./, "").toLowerCase();
+      if (hostname === "soterai.in" || hostname.endsWith(".soterai.in")) {
+        return resolve({
+          ...ctx,
+          active: true,
+          legacyMatch: true,
+        });
+      }
+      resolve(ctx);
+    },
   ));
 }
+
+

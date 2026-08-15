@@ -3,6 +3,7 @@ import { execFile } from "child_process";
 import { promisify } from "util";
 import type { ContextItem, ContextKind } from "@soterai/guard-core";
 import { firstWorkspaceFolder } from "./util";
+import { assertWorkspaceFileUri } from "../security/WorkspacePathGuard";
 
 const execFileAsync = promisify(execFile);
 
@@ -39,6 +40,7 @@ function kindForPath(rel: string): ContextKind {
 
 async function readItem(uri: vscode.Uri, kind: ContextKind): Promise<ContextItem | undefined> {
     try {
+        await assertWorkspaceFileUri(uri);
         const bytes = await vscode.workspace.fs.readFile(uri);
         if (bytes.byteLength > MAX_ITEM_BYTES) return undefined;
         return { path: vscode.workspace.asRelativePath(uri), kind, content: new TextDecoder().decode(bytes) };
@@ -66,9 +68,19 @@ export async function gatherContext(): Promise<ContextItem[]> {
     };
 
     const editor = vscode.window.activeTextEditor;
+    let editorAllowed = false;
+    if (editor && editor.document.uri.scheme === "file") {
+        try {
+            await assertWorkspaceFileUri(editor.document.uri);
+            editorAllowed = true;
+        } catch {
+            // An external/symlinked editor is excluded, but safe open tabs and
+            // workspace config files can still be gathered below.
+        }
+    }
 
     // Selection (highest signal).
-    if (editor && !editor.selection.isEmpty) {
+    if (editor && editorAllowed && !editor.selection.isEmpty) {
         push({
             path: vscode.workspace.asRelativePath(editor.document.uri),
             kind: "selection",
@@ -77,7 +89,7 @@ export async function gatherContext(): Promise<ContextItem[]> {
     }
 
     // Active file.
-    if (editor) {
+    if (editor && editorAllowed) {
         push({
             path: vscode.workspace.asRelativePath(editor.document.uri),
             kind: "active_file",

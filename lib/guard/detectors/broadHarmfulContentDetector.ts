@@ -44,7 +44,10 @@ const BIOWEAPON_DIRECT =
 
 const DRUG_DIRECT =
     // Specific controlled substances + operational terms
-    "(?:methamphetamine|meth|crystal meth|cocaine|crack cocaine|heroin|fentanyl|carfentanil|" +
+    // `meth` needs a boundary: unbounded it matches inside "something", "methods"
+    // and "methodology", which paired with the operational tail ("instructions",
+    // "process") flagged ordinary prose and even carried unrelated attack rows.
+    "(?:methamphetamine|crystal meth|\\bmeth\\b|cocaine|crack cocaine|heroin|fentanyl|carfentanil|" +
     "oxycodone|hydrocodone|psilocybin|lsd|mdma|ecstasy|ghb|ketamine|pcp|dmt|" +
     "xanax|alprazolam|adderall|ritalin)[\\s\\S]{0,80}" +
     "(?:synthesis|synthesize|cook|clandestine lab|precursor|yield|extract|purif(?:y|y)?|" +
@@ -53,8 +56,11 @@ const DRUG_DIRECT =
 
 const EXPLOSIVE_DIRECT =
     // Specific explosive types + operational terms
+    // `ied` needs a boundary for the same reason as `meth`: unbounded it matches
+    // inside "dried", "died", "married", "specified" and "verified", so ordinary
+    // prose reached the operational tail ("instructions", "recipe", "how to").
     "(?:ammonium nitrate|anfo|tatp|hmtd|rdx|petn|c-4|semtex|nitroglycerin|nitric acid|" +
-    "black powder|acetone peroxide|pipe bomb|pressure cooker bomb|ied|car bomb|nail bomb|" +
+    "black powder|acetone peroxide|pipe bomb|pressure cooker bomb|\\bieds?\\b|car bomb|nail bomb|" +
     "suicide vest|explosive device|detonator|initiator|blasting cap|primary explosive|" +
     "improvised explosive)[\\s\\S]{0,80}" +
     "(?:make|build|assemble|construct|prepare|detonate|trigger|yield|mix|proportion|" +
@@ -110,7 +116,10 @@ const CYBER_CRIME_DIRECT =
 
 const HARASSMENT_DOXXING =
     // Personal information + targeted harassment / doxxing
-    "(?:dox|doxx)(?:ing)?\\s*(?:someone|this person|them|him|her|[A-Z])|" +
+    // Leading boundary: bare `dox` matched inside "orthodox", "unorthodox",
+    // "paradoxical" and "pseudodoxia", so discussions of orthodoxy were read as
+    // doxxing requests.
+    "\\b(?:dox|doxx)(?:ing)?\\s*(?:someone|this person|them|him|her|[A-Z])|" +
     "find.*(?:home address|personal address|real name|phone number|location|employer).*(?:of|for)\\s*(?:this person|them|him|her|[A-Z][a-z]+)|" +
     "(?:expose|reveal|leak|post).*(?:personal|private|home|real)\\s*(?:address|info|information|details|data).*(?:online|public|forum|chan|post|share)|" +
     "(?:swat|swatting).*(?:this person|victim|target|address|him|her|them)";

@@ -6,10 +6,9 @@ import { applyPolicy, loadProjectPolicy } from "@/lib/guard/policy";
 import type { RiskType } from "@/lib/guard/types";
 import { toPublicGuardResult } from "@/lib/guard/publicResult";
 import { createRateLimitResult } from "@/lib/guard/rateLimitResult";
-import { checkRedisRateLimit } from "@/lib/rateLimit";
+import { checkRedisRateLimit, planRpm } from "@/lib/rateLimit";
 import { z } from "zod";
 import { recordRequestMetric } from "@/lib/ops/monitoring";
-import { DEFAULT_RPM } from "@/lib/guard/constants";
 import { evaluateGovernance, logAiUsageEvent } from "@/lib/usage-governance";
 import { dispatchGovernanceEnforcement } from "@/lib/usage-governance/notifications";
 import { scheduleGuardResultPersistence } from "@/lib/guard/scheduledPersistence";
@@ -68,14 +67,17 @@ export async function POST(request: Request) {
     if (!authenticated.ok) return authenticated.response;
     const { apiKey, project } = authenticated.auth;
 
-    const rateLimit = await checkRedisRateLimit(`key:${apiKey.id}`, DEFAULT_RPM);
+    // Plan-aware: see lib/guard/constants.ts — a flat 60 RPM made the higher
+    // plans' monthly quotas physically unreachable and broke batch clients.
+    const rpmLimit = planRpm(project.plan);
+    const rateLimit = await checkRedisRateLimit(`key:${apiKey.id}`, rpmLimit);
     if (!rateLimit.allowed) {
       const result = createRateLimitResult("Per-minute API key rate limit was exceeded.");
       return jsonResponse(toPublicGuardResult(result), {
         status: 429,
         headers: {
           "Retry-After": String(Math.max(1, Math.ceil((rateLimit.resetAt - Date.now()) / 1000))),
-          "X-RateLimit-Limit": String(DEFAULT_RPM),
+          "X-RateLimit-Limit": String(rpmLimit),
           "X-RateLimit-Remaining": String(rateLimit.remaining),
         },
       });
@@ -153,7 +155,7 @@ export async function POST(request: Request) {
         }, {
           status: 403,
           headers: {
-            "X-RateLimit-Limit": String(DEFAULT_RPM),
+            "X-RateLimit-Limit": String(rpmLimit),
             "X-RateLimit-Remaining": String(rateLimit.remaining),
             "X-Governance-Action": "BLOCK",
             "X-Governance-Reason": encodeURIComponent(decision.reason.slice(0, 200)),
@@ -209,7 +211,7 @@ export async function POST(request: Request) {
         }, {
           status: 403,
           headers: {
-            "X-RateLimit-Limit": String(DEFAULT_RPM),
+            "X-RateLimit-Limit": String(rpmLimit),
             "X-RateLimit-Remaining": String(rateLimit.remaining),
             "X-Governance-Action": "REQUIRE_APPROVAL",
             "X-Governance-Reason": encodeURIComponent(decision.reason.slice(0, 200)),
@@ -295,7 +297,7 @@ export async function POST(request: Request) {
       },
       {
         headers: {
-          "X-RateLimit-Limit": String(DEFAULT_RPM),
+          "X-RateLimit-Limit": String(rpmLimit),
           "X-RateLimit-Remaining": String(rateLimit.remaining),
         },
       },

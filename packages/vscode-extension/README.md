@@ -5,10 +5,42 @@ selections, terminal commands, git changes, and AI prompts for secrets, PII,
 prompt injection, and insecure AI-generated code - entirely on your machine.
 Nothing leaves your computer unless you explicitly connect to SoterAI Cloud.
 
+[Website](https://soterai.in) ·
+[Docs](https://soterai.in/vscode-ai-security) ·
+[Support](https://soterai.in/support) ·
+[Report an issue](https://github.com/yashchauhan66/Soter-AI/issues) ·
+[Source](https://github.com/yashchauhan66/Soter-AI)
+
+The same links are in the Control Panel footer inside the editor.
+
+## Start in under a minute
+
+1. Run **SoterAI: Run Safe Demo Scan** to see a real verdict using safe built-in test data.
+2. Run **SoterAI: Protect Workspace Secrets** to review sensitive files and replace approved values with safe placeholders on disk.
+3. Run **SoterAI: Secure Installed AI Tools (One Click)** to review supported AI client routing changes. Every approved change has an encrypted backup and can be undone with **SoterAI: Undo AI Tool Security Changes**.
+
+Local scanning is already on after installation. No account, API key, or cloud connection is required for these first steps.
+
+## In VS Code
+
+Real captures from the VS Code extension-host verification flow. They use test data only.
+
+### Secret finding with a safe copy
+
+![SoterAI reports a secret finding and offers a redacted copy](media/marketplace/secret-scan-result.png)
+
+### Scan selected text before it reaches AI
+
+![SoterAI scan-selection result in VS Code](media/marketplace/scan-selection-result.png)
+
+### Local request protection enabled
+
+![SoterAI Safe Mode enabled in VS Code](media/marketplace/safe-mode-enabled.png)
+
 ## Features
 
 - **Control Panel** - one sidebar view with instant-apply toggles for Safe Mode, Protected Workspace, Live Scan, Sentinel, and the MCP firewall, plus Emergency Lockdown. Every control states in plain language what it does, and each coverage badge is resolved from the capability registry — a protection is only labelled `ENFORCED` when it is actually broker-gated, otherwise `MONITORED`.
-- **Secure My AI (one click)** - finds the AI tools already installed (Cline, Claude Code, Copilot, Continue, Aider, and generic `.env` / shell profiles) and routes them through the local broker so prompts are scanned before they leave. Every rewritten file is backed up first, encrypted, outside your workspace — and `SoterAI: Restore AI Configs` puts every original back in one click.
+- **Secure My AI (one click)** - finds the AI tools already installed (Cline, Claude Code, Copilot, Continue, Aider, and generic `.env` / shell profiles) and routes them through the local broker so prompts are scanned before they leave. Every rewritten file is backed up first, encrypted, outside your workspace — and `SoterAI: Undo AI Tool Security Changes` puts every original back in one click.
 - **Scan Current File / Selection / Workspace** - detect leaked secrets, PII, prompt injection, unsafe instructions, and risky patterns with a redacted report.
 - **Live inline scanning + Quick Fixes** - supported files are scanned as you type; findings appear as native diagnostics with lightbulb fixes (redact in place, copy a safe version of the line, move secrets to the vault).
 - **Redact Selection for AI** - copy a safe version of selected text before using it in an AI assistant. Raw secrets are not copied.
@@ -64,16 +96,16 @@ Local scanning always works. Cloud, token, and remote features are gated behind 
 | Command | Purpose |
 | --- | --- |
 | `SoterAI: Open Control Panel` | The single screen: every protection toggle, honest coverage badges, and Emergency Lockdown. |
-| `SoterAI: Quick Start` | Choose privacy mode, policy pack, and first scan flow. |
+| `SoterAI: Quick Start` | Choose a value-first next step: demo scan, workspace secret protection, AI-tool routing, or the local privacy promise. |
 | `SoterAI: Check Extension Health` | Show version, privacy mode, token configured yes/no, workspace trust, policy status, and last scan without secrets. |
 | `SoterAI: Local Privacy Status` | Show the local-only privacy proof without raw secrets, prompts, files, or PII. |
 | `SoterAI: What Stays Local?` | Explain exactly what SoterAI does not receive by default. |
 | `SoterAI: Preview What AI Will See` | Show the redacted AI context before copying or sending it. |
 | `SoterAI: Build Safe Prompt for AI` | Convert sensitive context into a safe prompt with secret references. |
 | `SoterAI: Open Settings` | Open VS Code settings filtered to SoterAI. |
-| `SoterAI: Run Demo Scan` | Run a safe local demo against fake risky text. |
+| `SoterAI: Run Safe Demo Scan` | Run a safe local demo against fake risky text. |
 | `SoterAI: Scan Selected Text` | Scan selected prompt/text before sending it to an AI assistant. |
-| `SoterAI: Check Before Sending to AI` | Run the egress firewall over the selection (or clipboard) and get an allow / redact / ask / block decision before you paste into any AI chat. |
+| `SoterAI: Scan Before Sending to AI` | Run the egress firewall over the selection (or clipboard) and get an allow / redact / ask / block decision before you paste into any AI chat. |
 | `SoterAI: Scan Current File` | Scan the active file for secrets, PII, prompt injection, unsafe instructions, and insecure patterns. |
 | `SoterAI: Scan Git Diff` | Scan staged and unstaged git changes locally. |
 | `SoterAI: Scan MCP / Agent Tools` | Review MCP and agent tool configuration for broad or dangerous permissions. |
@@ -86,7 +118,7 @@ Local scanning always works. Cloud, token, and remote features are gated behind 
 | `SoterAI: Open Security Panel` | Open the local security dashboard. |
 | `SoterAI: Emergency Lockdown (Revoke All Capabilities)` | Revoke everything at once; `SoterAI: Unlock Protection After Lockdown` reverses it, and the panel offers it as the primary action while locked. |
 
-The palette lists the core commands by default. The full surface (158 commands)
+The palette lists 10 core commands by default. The full surface (162 commands)
 is available by enabling `soterai.showAllCommands`.
 
 ## Settings

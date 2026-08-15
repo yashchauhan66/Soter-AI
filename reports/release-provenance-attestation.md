@@ -1,10 +1,10 @@
 # VS Code Release Provenance
 
-Generated: 2026-07-23T12:24:56.650Z
+Generated: 2026-08-15T12:53:55.424Z
 
 - Product: soterai-ide-guard
-- Version: 0.2.1
-- Commit: 6d4f5a1483ec52987a7f56faf488c2d6c55bb3e5
+- Version: 0.5.0
+- Commit: 5c2421eea53bf23e3496bf40194466fb615a3694
 - Dirty worktree: yes
 - SBOM present: yes (artifacts/security/sbom.spdx-lite.json)
 - Signing status: unsigned-local-build
@@ -15,9 +15,9 @@ Generated: 2026-07-23T12:24:56.650Z
 
 | Artifact | Bytes | SHA-256 |
 | --- | ---: | --- |
-| `packages/vscode-extension/soterai-ide-guard-0.2.1.vsix` | 276881 | `sha256:b3fa49707bbefee7010ea24266c999c65e9e5299c44fab8b25a570e4b8225cb6` |
-| `packages/vscode-extension/dist/extension.js` | 326439 | `sha256:bbe8ee8b633a6bd1947a39f0bff79cfa79f87f25d0c489041718fed41dee603a` |
-| `packages/vscode-extension/dist/local-ai-broker.js` | 151801 | `sha256:d948f9b395f877bc3d0e268bdd115ba41506bcb8d4a53a7a3b7379b5a30084b6` |
+| `packages/vscode-extension/soterai-ide-guard-0.5.0.vsix` | 1507523 | `sha256:9d8431eab444a6e77231d0be5ecf34443367414990d5c4f72ef7696188b41c0d` |
+| `packages/vscode-extension/dist/extension.js` | 804875 | `sha256:ba153f7797c7f5223518367fd9de1f539e6197f90c43ccdbe9fc1f42d50865b2` |
+| `packages/vscode-extension/dist/local-ai-broker.js` | 362095 | `sha256:bce1faa68b6322d9930b7d8b4321d46bd91708e37bee3b810c79576227c35bdc` |
 
 ## Claim Boundary
 

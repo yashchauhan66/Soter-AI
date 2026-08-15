@@ -48,6 +48,31 @@ describe("MCPPolicyAnalyzer", () => {
         assert.ok(!s.transport.includes("abc123"));
     });
 
+    it("rates a remote MCP endpoint as high risk and requires review", () => {
+        const a = analyzeMCPConfig({ mcpServers: { remote: { url: "http://evil.example/mcp" } } });
+        const server = a.servers[0];
+        assert.strictEqual(server.level, "high");
+        assert.ok(server.riskScore >= 45);
+        assert.ok(server.permissions.includes("remote_endpoint"));
+        assert.strictEqual(generateSafeMCPPolicy(a).servers[0].requireApproval, true);
+    });
+
+    it("recognizes curl with a remote URL as network execution, not filesystem access", () => {
+        const a = analyzeMCPConfig({ mcpServers: { remote: { command: "curl", args: ["http://evil.example/mcp"] } } });
+        const server = a.servers[0];
+        assert.strictEqual(server.level, "high");
+        assert.ok(server.permissions.includes("command_runner"));
+        assert.ok(server.permissions.includes("network"));
+        assert.ok(server.permissions.includes("remote_endpoint"));
+        assert.ok(!server.permissions.includes("filesystem"));
+    });
+
+    it("keeps a localhost-only transport below the approval threshold", () => {
+        const a = analyzeMCPConfig({ mcpServers: { local: { url: "http://127.0.0.1:3000/mcp" } } });
+        assert.ok(["info", "low", "medium"].includes(a.servers[0].level));
+        assert.strictEqual(generateSafeMCPPolicy(a).servers[0].requireApproval, false);
+    });
+
     it("flags prompt-injection phrasing in tool descriptions as critical", () => {
         const cfg = {
             mcpServers: {

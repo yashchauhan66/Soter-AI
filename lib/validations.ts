@@ -42,6 +42,12 @@ export const inputGuardSchema = z.object({
   providerName: z.string().trim().max(100).optional(),
   modelName: z.string().trim().max(100).optional(),
   source: sourceSchema.optional(),
+  // Topical scope. All three are optional and the guard is a no-op without them,
+  // so adding these cannot change any existing caller's verdict. Bounded so a
+  // caller cannot turn the topic vocabulary into an unbounded work item.
+  allowedTopics: z.array(z.string().trim().min(1).max(120)).max(50).optional(),
+  systemPromptContext: z.string().trim().max(4000).optional(),
+  minTopicRelevance: z.number().min(0).max(1).optional(),
   metadata: metadataSchema.optional().default({}),
 });
 
@@ -59,6 +65,26 @@ export const analyzeSchema = z.object({
   text: z.string().trim().min(1, "Text is required.").max(MAX_TEXT_LENGTH),
   direction: z.enum(["INPUT", "OUTPUT"]),
   source: sourceSchema.optional(),
+});
+
+// One request covering both directions, for callers that cannot chain two.
+// See app/api/guard/universal/route.ts for why that constraint is real.
+export const universalGuardSchema = z.object({
+  message: z.string().trim().min(1, "Message is required.").max(MAX_TEXT_LENGTH),
+  aiResponse: z.string().trim().max(MAX_TEXT_LENGTH).optional(),
+  profile: z.enum(["BALANCED", "STRICT", "MAXIMUM"]).default("BALANCED"),
+  source: sourceSchema.optional(),
+  allowedTopics: z.array(z.string().trim().min(1).max(120)).max(50).optional(),
+  systemPromptContext: z.string().trim().max(4000).optional(),
+  minTopicRelevance: z.number().min(0).max(1).optional(),
+  metadata: metadataSchema.optional().default({}),
+});
+
+// A workflow export is much larger than a guard message — 2 MB is roughly a
+// 200-node workflow with inline parameters, which is well past anything a real
+// n8n canvas holds. It is a bound, not a target.
+export const workflowAuditSchema = z.object({
+  workflowJson: z.string().trim().min(1, "Workflow JSON is required.").max(2_000_000),
 });
 
 export const projectSchema = z.object({

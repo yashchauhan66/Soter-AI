@@ -175,11 +175,37 @@ export function parseLedger(jsonl: string): LedgerEntry[] {
 
 export const LEDGER_GENESIS_HASH = "genesis";
 
+/**
+ * SHA-256 over `text`, from whichever provider the host actually has.
+ *
+ * `globalThis.crypto` is not available unflagged in Node 18 — it became a global
+ * in Node 19 — and VS Code 1.85, the `engines` floor this ledger ships under,
+ * runs Node 18. A bare `crypto.subtle` therefore threw `crypto is not defined`
+ * there, which took Emergency Lockdown down on every older editor while passing
+ * on newer ones. `node:crypto` is imported lazily, so runtimes that do have
+ * WebCrypto never resolve it.
+ *
+ * Both paths hash the same UTF-8 bytes with the same algorithm, so a chain
+ * written under one provider verifies under the other — that matters the moment
+ * a user upgrades their editor. There is deliberately no weak-hash fallback: a
+ * chain that silently degrades its digest is not tamper evidence, so an absent
+ * provider is an error rather than a downgrade.
+ */
 async function sha256Hex(text: string): Promise<string> {
-    // Web Crypto is available in Node ≥18 and the extension host.
-    const bytes = new TextEncoder().encode(text);
-    const digest = await crypto.subtle.digest("SHA-256", bytes);
-    return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
+    const subtle = (globalThis as any).crypto?.subtle;
+    if (typeof subtle?.digest === "function") {
+        const digest = await subtle.digest("SHA-256", new TextEncoder().encode(text));
+        return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
+    }
+    try {
+        const { createHash } = await import("node:crypto");
+        return createHash("sha256").update(text, "utf8").digest("hex");
+    } catch (error) {
+        throw new Error(
+            "Ledger hash chaining requires SHA-256, but neither globalThis.crypto.subtle nor node:crypto is " +
+                `available in this runtime (${error instanceof Error ? error.message : String(error)}).`,
+        );
+    }
 }
 
 function canonicalForHash(entry: LedgerEntry): string {

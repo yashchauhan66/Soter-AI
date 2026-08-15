@@ -1,0 +1,124 @@
+{
+  "generatedBy": "scripts/ml/eval-analytic-head.ts",
+  "trainFile": "datasets/ml-augmented-v7.jsonl",
+  "trainRows": 109054,
+  "trainRowsDroppedAsEvalLeak": 0,
+  "trainMsTotal": 343044,
+  "evalFile": "datasets/crossdist-eval-v3-sample.jsonl",
+  "goldenSetHash": "702738d4183f4df6",
+  "evalRows": 3987,
+  "semanticMargin": 0,
+  "mlTierRan": 3987,
+  "mlErrors": 0,
+  "thresholdSelectedOnEvenRows": 0.908311,
+  "production": {
+    "all": {
+      "attacks": 3069,
+      "caught": 2375,
+      "benign": 918,
+      "fp": 48,
+      "recall": 77.39,
+      "fpr": 5.23
+    },
+    "selection": {
+      "attacks": 1535,
+      "caught": 1201,
+      "benign": 459,
+      "fp": 22,
+      "recall": 78.24,
+      "fpr": 4.79
+    },
+    "holdout": {
+      "attacks": 1534,
+      "caught": 1174,
+      "benign": 459,
+      "fp": 26,
+      "recall": 76.53,
+      "fpr": 5.66
+    }
+  },
+  "candidateUnion": {
+    "all": {
+      "attacks": 3069,
+      "caught": 2497,
+      "benign": 918,
+      "fp": 53,
+      "recall": 81.36,
+      "fpr": 5.77
+    },
+    "holdout": {
+      "attacks": 1534,
+      "caught": 1233,
+      "benign": 459,
+      "fp": 29,
+      "recall": 80.38,
+      "fpr": 6.32
+    }
+  },
+  "headAlone": {
+    "atSelectedThresholdHoldout": {
+      "attacks": 1534,
+      "caught": 226,
+      "benign": 459,
+      "fp": 3,
+      "recall": 14.73,
+      "fpr": 0.65
+    },
+    "atZeroAllRows": {
+      "attacks": 3069,
+      "caught": 2727,
+      "benign": 918,
+      "fp": 267,
+      "recall": 88.86,
+      "fpr": 29.08
+    }
+  },
+  "additive": {
+    "holdout": {
+      "attacksRescuedFromProductionMisses": 59,
+      "newFalsePositives": 3,
+      "rescuedByLabel": {
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 50,
+        "PII": 5,
+        "PROMPT_INJECTION": 4
+      }
+    },
+    "fittedHalf": {
+      "attacksRescuedFromProductionMisses": 63,
+      "newFalsePositives": 2,
+      "rescuedByLabel": {
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 52,
+        "PII": 6,
+        "PROMPT_INJECTION": 4,
+        "JAILBREAK": 1
+      }
+    }
+  },
+  "promotion": {
+    "candidateId": "analytic-head-d512-margin0",
+    "verdict": "REJECT",
+    "promote": false,
+    "deltas": {
+      "recallPts": 3.85,
+      "fprPts": 0.66
+    },
+    "blockers": [
+      {
+        "code": "fpr-regression",
+        "severity": "REJECT",
+        "message": "benign FPR +0.66 pts exceeds the +0.5 pt budget"
+      },
+      {
+        "code": "insufficient-shadow-evidence",
+        "severity": "HOLD",
+        "message": "shadow evidence 0 requests over 0h is below 1000 requests / 24h"
+      }
+    ],
+    "summary": "analytic-head-d512-margin0: REJECT — benign FPR +0.66 pts exceeds the +0.5 pt budget"
+  },
+  "caveats": [
+    "The head is a linear model over 512-dim hashed n-grams (lib/guard/semanticClassifier embed). It is a complement to the v7 transformer, never a replacement.",
+    "Threshold was selected on even-indexed rows and reported on odd-indexed rows. `candidateUnion.all` and `additive.fittedHalf` are FITTED and must not be quoted as held-out; quote `candidateUnion.holdout` and `additive.holdout`.",
+    "shadowRequests/shadowRunMs are 0 because no shadow deployment exists. The gate is expected to HOLD on that alone even if the deltas are good."
+  ]
+}

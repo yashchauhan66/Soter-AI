@@ -18,6 +18,22 @@ const GLOBAL_PII_SPECS = [
     message: "Phone number detected.",
   },
   {
+    type: "phone_number",
+    label: "India phone (5+5)",
+    severity: "medium" as const,
+    score: 14,
+    pattern: /(?:\+91[-.\s]?)?[6-9]\d{4}[-.\s]?\d{5}\b/g,
+    message: "India phone number detected (5+5 split).",
+  },
+  {
+    type: "phone_number",
+    label: "India phone (plain)",
+    severity: "medium" as const,
+    score: 14,
+    pattern: /(?:\+91[-.\s]?)?[6-9]\d{9}\b/g,
+    message: "India 10-digit mobile detected.",
+  },
+  {
     type: "url",
     label: "URL",
     severity: "low" as const,

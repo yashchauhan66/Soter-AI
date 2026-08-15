@@ -1,13 +1,164 @@
 # Changelog
 
-## [0.4.0] - 2026-08-10
+## [0.5.0] - 2026-08-15
 
-A real-user pass over the 0.3.x feature surface. Every entry below is a defect
-that shipped in 0.3.0 and was reproduced before it was fixed. Several of them
-were features that *reported* protection while doing nothing — those are the
-ones worth reading.
+### Changed
+
+- **New-user Control Panel workflow.** The first screen now starts with three high-value outcomes: scan text before sending it to AI, protect raw workspace secrets with on-disk placeholders, and secure supported installed AI tools. Terminal, dependency, and agent-tool checks remain available under a compact disclosure.
+- **Honest protection summary.** Replaced the misleading equal-weight `X / 5 active` indicator with independent `Blocking`, `Editor warnings`, and `Known gaps` states. A warning-only control can no longer look equivalent to an enforced route.
+- **Beginner language and readability.** Increased compact panel text to 11px, moved protection-label explanations behind an optional disclosure, renamed technical status pills and utility actions in task language, and kept advanced agent-tool controls collapsed by default.
+- **Three-step onboarding.** Getting Started now begins with a safe demo result, then workspace secret protection, then optional supported AI-tool routing. Privacy-mode configuration is no longer the first decision because local mode is already the default.
+- **Focused Command Palette.** The default palette now has 10 core, reversible workflows. Advanced and diagnostic commands remain available after enabling `soterai.showAllCommands`.
+- **Marketplace proof.** README now includes three real VS Code verification screenshots for secret scanning, selected-text scanning, and enabled request protection.
+- **Outcome-based feedback.** Clipboard remediation confirms that safe content is ready to paste and offers the next relevant workspace-protection action. Safe Paste confirms when it inserts the redacted version.
 
 ### Fixed
+
+- **Strongest protections were hard to discover.** Workspace vault migration and Secure My AI are now first-class Control Panel actions and value-first walkthrough steps.
+- **Release version drift risk.** The panel version is read from extension metadata rather than duplicated in the webview source.
+
+## [0.4.1] - 2026-08-11
+
+### Fixed
+
+A real-user pass over the installed 0.4.0 build, driven through an actual VS Code
+extension host. Every defect below was reproduced in that host before it was
+fixed, and each fix is pinned by a test that fails without it.
+
+The theme is one bug with four faces: the Control Panel's headline was
+permanently red on a normal machine, and the buttons it offered to fix that did
+not fix it.
+
+- **The AI-tool count was inflated by substring matching, and included SoterAI
+  itself.** Detection tested each installed extension id, display name and
+  description for the letters `ai` anywhere in the string. Run against the 164
+  extensions a real extension host loads (73 installed + 91 built-in), that rule
+  counted 27 AI tools — including `vscode.theme-monokai` and
+  `vscode.theme-monokai-dimmed`, two colour themes, because "Mon-ok-**ai**". Also
+  counted: `bracket-pair-color-dlw` (`p-ai-r`), `auto-rename-tag` (`p-ai-red`),
+  `rainbow-csv` (`r-ai-nbow`), `vscode-containers` and `remote-containers`
+  (`cont-ai-ners`), `gitlab-workflow`, and SoterAI's own extension id. Nine of the
+  27 were not AI tools at all.
+
+  The same rule *missed* nine that are: Roo Code, OpenCode, Qwen Code, IntelliCode
+  (both packages), the AWS Toolkit, GitHub Pull Requests, Spring Boot's AI
+  features, and a database client that ships a chat agent. So the number driving
+  the red banner was wrong in both directions at once.
+
+  Detection now goes through `AiToolRegistry`, which classifies on three
+  defensible signals in order: a curated list of AI extensions and AI publishers,
+  whole id *segments* matching distinctive AI tool names (never substrings), and
+  finally the extension's own manifest — `categories: ["AI"]`, a contributed chat
+  participant, or a contributed language-model provider. On the same 164
+  extensions it reports 4 routable + 23 unmanaged, and flags **0 of the 91
+  built-ins**; a host launched with `--disable-extensions` reports 0 where the old
+  detector reported 3.
+
+  `contributes.languageModelTools` is deliberately not a signal even though it
+  looks like the obvious one: on a real machine it is declared by
+  `ms-python.python`, `vscode-containers`, `vscode-java-debug` and a MySQL client.
+  Those expose tools *to* an AI; they are not AI tools, and counting them would
+  rebuild the same false-positive problem from the other side.
+- **No user could reach a non-error state.** Two causes, one symptom. The count
+  of tools "routed through SoterAI" only ever inspected 6 hardcoded config paths,
+  so `protectedAiTools < detectedAiTools` was permanently true and the state
+  machine reported `BYPASS_DETECTED` forever. Separately, "MCP governance" sat in
+  the list of controls required for a green state while the runtime fact behind it
+  was hardcoded `false` — so even a fully configured machine was held below
+  fully-enforced by a control that could not be switched on.
+- **A tool SoterAI cannot route was reported as a bypass.** Copilot talks to
+  GitHub directly and no setting redirects it through a local broker, so counting
+  it as an unrouted tool turned a permanent architectural limit into a red alert
+  the user could not clear. Real AI tools are now classified as *routable* or
+  *unmanaged*: unmanaged tools are still counted and still disclosed in the
+  coverage line ("N other AI tools cannot be routed by SoterAI (monitoring
+  only)"), but they no longer produce an error, and the headline reads "Enforced,
+  with known gaps" instead of "Bypass detected".
+- **An offline broker was an error even when nothing depended on it.** On a fresh
+  install with blocking switched off, a stopped broker breaks no promise. It is
+  now an error only when Safe Mode is on or something is actually routed through
+  it; otherwise the honest headline is "Monitoring only".
+- **"See what is wrong" did not say what was wrong.** The primary button under an
+  error headline opened a static table of route-coverage levels that never
+  mentioned the live problem. It now leads with the current state, its
+  explanation, a "What to do about it" section naming the fix, and the live
+  coverage/active/inactive control lists, resolved when the button is clicked
+  rather than cached at activation.
+- **"Set up local checking" did nothing when no AI config was present.** The CTA
+  the panel bills as "Needed before SoterAI can block anything" returned early
+  with "No AI client config found" without starting the broker — so on any
+  workspace without a Continue/OpenAI config file, the most important button in
+  the product was a dead end. It now starts the broker first, reports the URL it
+  is listening on, and offers "Copy broker URL" / "Run self-test"; commands like
+  "Run a command safely" and "Check what I copied" are enforced from that point
+  on. If the broker fails to start it says so, with the broker state, instead of
+  claiming success.
+
+- **The activity-bar icon was declared but not shipped.** `contributes.
+  viewsContainers` points at `media/icon.svg`; that file had been deleted from the
+  working tree, and packaging succeeded anyway — `vsce` does not resolve asset
+  paths, so 0.4.1 first packaged an activity-bar entry whose icon did not exist in
+  the archive. Nothing in the pipeline looked: not the unit suites, not typecheck,
+  not the extension-host tests, not the 7-check packaged runtime probe, because
+  none of them inspect the VSIX file list. The icon is restored (the maskable
+  monochrome mark, recovered from the 0.4.0 archive), and
+  `src/__tests__/manifest-assets.test.ts` now walks the whole manifest, asserts
+  every asset it names exists on disk, asserts none is excluded by
+  `.vscodeignore`, and asserts the activity-bar icon is a `currentColor` SVG with
+  no hardcoded fills — VS Code masks that file to its alpha channel, so hardcoded
+  colours are discarded and a filled glyph renders as a blob at 24x24. Removing
+  the icon fails 2 of those 4 tests.
+
+  The saffron mark stays where colour survives: `media/icon.png` (the marketplace
+  and gallery icon) and `galleryBanner`. The activity bar cannot show it in
+  saffron — VS Code repaints that icon in the theme's activity-bar foreground
+  colour — so it carries the same mark's silhouette instead.
+
+### Changed
+- Required controls for a fully-enforced claim are now AI traffic protection,
+  Protected Workspace, and AI activity evidence. MCP governance and Live file
+  diagnostics are disclosed as `(advisory)` in the inactive-controls list: both
+  are real features, neither is a mandatory gateway, so neither can gate an
+  enforcement claim in either direction.
+- Version bumped from 0.4.0 because the 0.4.0 bundle on disk had drifted from the
+  0.4.0 in the repo. With an identical version string VS Code offers no update, so
+  a fix under the same version could never reach an installed copy.
+
+### Notes for release
+- The five in-host publish probes under `artifacts/editor-runtime/` are bound to
+  the previous version and bundle hash and are now stale by construction. They
+  must be re-run against 0.4.1 before publish.
+
+## [0.4.0] - 2026-08-11
+
+### Added
+- **Resource links inside the editor.** The Control Panel footer now links to the
+  website, the docs, and the issue tracker. They are buttons rather than
+  `<a href>` because the webview CSP (`default-src 'none'`) blocks navigation:
+  a click posts an allowlisted action name and the extension host opens a URL
+  from a hardcoded table, so the panel can choose between three fixed
+  destinations but can never supply one of its own.
+- README header links (Website · Docs · Support · Report an issue · Source), and
+  a test that fails if those drift from the manifest's `homepage`, `qna`,
+  `bugs.url`, or `repository.url`.
+
+### Changed
+- Extension icon is now the SoterAI mark, with `galleryBanner` recoloured to
+  `#F96403` so the Marketplace listing matches it. The activity-bar `icon.svg`
+  was redrawn as a 24x24 monochrome `currentColor` outline of the same mark,
+  replacing a filled 100x100 blue glyph: VS Code masks that file to its alpha
+  channel and repaints it in the theme colour, so the old fills were discarded
+  and the solid hexagon rendered as an indistinct blob at 24x24.
+- `repository.url` and `bugs.url` now point at `yashchauhan66/Soter-AI` instead
+  of relying on GitHub's rename redirect from `Ai-Security-Guard`.
+
+### Fixed
+
+A real-user pass over the 0.3.x feature surface. Every fix below is a defect that
+shipped in 0.3.0 and was reproduced before it was fixed. Several of them were
+features that *reported* protection while doing nothing — those are the ones
+worth reading.
+
 - **Screen-share exposure warning missed almost every secret file.** The check
   compared the whole path string against `.env`, so only a workspace-root `.env`
   was ever flagged; `sub/.env`, `backend/.env.production`, `~/.aws/config` and

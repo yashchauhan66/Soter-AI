@@ -35,6 +35,13 @@ const coreFeatures = [
   [FileSearch, "Evidence and reporting", "Track decisions, redactions, blocked requests, usage, webhooks, and monthly security summaries for operations teams."],
 ];
 
+// Browser Guard and IDE Guard cards open a platform chooser page instead of a
+// single install link, because SoterAI ships one guard across many browsers/IDEs.
+const CHOOSER_HREFS: Record<string, string> = {
+  "Browser Guard": "/extensions/browser",
+  "IDE Guard": "/extensions/ide",
+};
+
 export function Features() {
   return (
     <section id="features" className="py-24">
@@ -53,14 +60,26 @@ export function Features() {
                 <span className="rounded-md border border-cyan/30 bg-cyan/10 px-2 py-0.5 text-xs font-semibold text-cyan">{product.status}</span>
               </div>
               <p className="mt-3 flex-1 text-sm leading-6 text-slate-400">{product.copy}</p>
-              <Link href={product.href} className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-cyan">
+              <Link
+                href={CHOOSER_HREFS[product.name] ?? product.href}
+                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-cyan"
+              >
                 {product.cta} <ArrowRight size={14} aria-hidden="true" />
               </Link>
+              {CHOOSER_HREFS[product.name] && (
+                <p className="mt-2 text-xs text-slate-500">
+              {product.name === "Browser Guard"
+                ? "Opens the Chrome / Edge installer chooser."
+                : "Opens the VS Code / Cursor / Windsurf / Kiro / Antigravity / VSCodium installer chooser."}
+                </p>
+              )}
             </article>
           ))}
         </div>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-5">
+        {/* Five roles at md:grid-cols-5 gave each card ~140px at 768px, which is
+            too narrow for a two-line sentence. Widen the steps instead. */}
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {roleMessaging.map((item) => (
             <article key={item.role} className="rounded-lg border border-slate-800 bg-slate-950/50 p-4">
               <h3 className="text-sm font-semibold text-slate-100">{item.role}</h3>
@@ -91,18 +110,35 @@ export function Features() {
           ))}
         </div>
 
-        <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {coreFeatures.map(([Icon, title, copy]) => {
-            const FeatureIcon = Icon as typeof Ban;
-            return (
-              <article key={String(title)} className="card p-6">
-                <span className="inline-flex rounded-md border border-cyan/20 bg-cyan/10 p-3 text-cyan"><FeatureIcon aria-hidden="true" /></span>
-                <h3 className="mt-5 text-xl font-semibold">{String(title)}</h3>
-                <p className="mt-3 leading-7 text-slate-400">{String(copy)}</p>
-              </article>
-            );
-          })}
-        </div>
+        {/* This section previously stacked ~20 cards, so the most technical six
+            arrived after the reader had already scrolled past three other grids.
+            They are the deepest detail, so they now open on demand. Native
+            <details> keeps the copy in the DOM (crawlable, no client JS) while
+            letting a first-time visitor stop at the products above. */}
+        <details className="group mt-10">
+          <summary className="flex cursor-pointer items-center gap-2 text-sm font-semibold text-cyan">
+            How the detection actually works
+            <ArrowRight
+              size={14}
+              aria-hidden="true"
+              className="transition-transform group-open:rotate-90"
+            />
+          </summary>
+          <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {coreFeatures.map(([Icon, title, copy]) => {
+              const FeatureIcon = Icon as typeof Ban;
+              return (
+                <article key={String(title)} className="card p-5">
+                  <span className="inline-flex rounded-md border border-cyan/20 bg-cyan/10 p-2.5 text-cyan">
+                    <FeatureIcon aria-hidden="true" size={20} />
+                  </span>
+                  <h3 className="mt-4 text-lg font-semibold">{String(title)}</h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-400">{String(copy)}</p>
+                </article>
+              );
+            })}
+          </div>
+        </details>
       </div>
     </section>
   );

@@ -1,0 +1,1665 @@
+{
+  "generatedAt": "2026-08-15T13:16:51.610Z",
+  "extensionVersion": "0.5.0",
+  "host": {
+    "vscodeVersion": "1.85.0",
+    "appName": "Visual Studio Code"
+  },
+  "method": "every contributed command executed once via executeCommand with a scripted UI that cancels every prompt; a real fixture file open and fully selected",
+  "totals": {
+    "declared": 162,
+    "ok": 156,
+    "silent": 6,
+    "crashed": 0,
+    "timedOut": 0,
+    "notRun": 0,
+    "argumentOnly": 0
+  },
+  "caveats": {
+    "provesOnly": "that the command runs, shows something, and survives cancellation — not that its result is correct",
+    "unguardedSurfaces": [],
+    "delegationRecorded": true
+  },
+  "commands": [
+    {
+      "id": "soterai.openControlPanel",
+      "title": "SoterAI: Open Control Panel",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 326,
+      "surfaces": [
+        "delegated(soterai-control-panel.focus)"
+      ]
+    },
+    {
+      "id": "soterai.enableFullProtection",
+      "title": "SoterAI: Enable Full Protection",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 7032,
+      "surfaces": [
+        "info",
+        "warn",
+        "settings(soterai.mcpFirewall.strictMode)"
+      ]
+    },
+    {
+      "id": "soterai.quickStart",
+      "title": "SoterAI: Quick Start",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 3,
+      "surfaces": [
+        "quickPicks"
+      ]
+    },
+    {
+      "id": "soterai.checkExtensionHealth",
+      "title": "SoterAI: Check Extension Health",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 85,
+      "surfaces": [
+        "documents"
+      ]
+    },
+    {
+      "id": "soterai.openPrivacyGuarantee",
+      "title": "SoterAI: What Stays Local?",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 501,
+      "surfaces": [
+        "documents"
+      ]
+    },
+    {
+      "id": "soterai.openSettings",
+      "title": "SoterAI: Open Settings",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1029,
+      "surfaces": [
+        "delegated(workbench.action.openSettings)"
+      ]
+    },
+    {
+      "id": "soterai.runDemoScan",
+      "title": "SoterAI: Run Safe Demo Scan",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 3,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.scanSelectedText",
+      "title": "SoterAI: Scan Selected Text",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "error",
+        "delegated(soterai.scanSelection)"
+      ]
+    },
+    {
+      "id": "soterai.useSensitiveContextSafely",
+      "title": "SoterAI: Use Sensitive Context Safely",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "error"
+      ]
+    },
+    {
+      "id": "soterai.buildSafePromptForAI",
+      "title": "SoterAI: Build Safe Prompt for AI",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 2,
+      "surfaces": [
+        "error"
+      ]
+    },
+    {
+      "id": "soterai.runSecretBrokerDemo",
+      "title": "SoterAI: Run Secret Broker Demo",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 193,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.openLocalPrivacyStatus",
+      "title": "SoterAI: Local Privacy Status",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 28,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.previewWhatAIWillSee",
+      "title": "SoterAI: Preview What AI Will See",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.manageSecretReferences",
+      "title": "SoterAI: Manage Secret References",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.clearSecretBrokerSession",
+      "title": "SoterAI: Clear Secret Broker Session",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 93,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.configurePrivacyMode",
+      "title": "SoterAI: Configure Privacy Mode",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "quickPicks"
+      ]
+    },
+    {
+      "id": "soterai.chooseSecretHandlingPolicy",
+      "title": "SoterAI: Choose Secret Handling Policy",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "quickPicks"
+      ]
+    },
+    {
+      "id": "soterai.runSecretBrokerDemoOperation",
+      "title": "SoterAI: Run Secret Broker Demo Operation",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "warn"
+      ]
+    },
+    {
+      "id": "soterai.testProtection",
+      "title": "SoterAI: Test Protection (Enforced API Capability)",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 209,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.scanGitDiff",
+      "title": "SoterAI: Scan Git Diff",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 296,
+      "surfaces": [
+        "error",
+        "delegated(soterai.scanGitChanges)"
+      ]
+    },
+    {
+      "id": "soterai.reviewTerminalCommand",
+      "title": "SoterAI: Review Terminal Command",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "inputBoxes",
+        "delegated(soterai.checkTerminalCommand)"
+      ]
+    },
+    {
+      "id": "soterai.scanMCPAgentTools",
+      "title": "SoterAI: Scan MCP / Agent Tools",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 40,
+      "surfaces": [
+        "info",
+        "delegated(soterai.scanMCPConfigs)"
+      ]
+    },
+    {
+      "id": "soterai.openAIActivityLedger",
+      "title": "SoterAI: Open AI Activity Ledger",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 15,
+      "surfaces": [
+        "webviews",
+        "delegated(soterai.openAILedger)"
+      ]
+    },
+    {
+      "id": "soterai.generateCanaryToken",
+      "title": "SoterAI: Generate Canary Token",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 44,
+      "surfaces": [
+        "warn",
+        "delegated(soterai.generateCanary)"
+      ]
+    },
+    {
+      "id": "soterai.choosePolicyPack",
+      "title": "SoterAI: Choose Policy Pack",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 2,
+      "surfaces": [
+        "quickPicks",
+        "delegated(soterai.applyPolicyPack)"
+      ]
+    },
+    {
+      "id": "soterai.scanCurrentFile",
+      "title": "SoterAI: Scan Current File",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "error"
+      ]
+    },
+    {
+      "id": "soterai.scanSelection",
+      "title": "SoterAI: Scan Selection",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "error"
+      ]
+    },
+    {
+      "id": "soterai.scanBeforeAIPrompt",
+      "title": "SoterAI: Scan Before AI Prompt",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "inputBoxes"
+      ]
+    },
+    {
+      "id": "soterai.redactSelectionForAI",
+      "title": "SoterAI: Redact Selection for AI",
+      "hiddenFromPalette": false,
+      "status": "SILENT",
+      "ms": 1,
+      "surfaces": []
+    },
+    {
+      "id": "soterai.checkTerminalCommand",
+      "title": "SoterAI: Check Terminal Command",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 0,
+      "surfaces": [
+        "inputBoxes"
+      ]
+    },
+    {
+      "id": "soterai.scanGitChanges",
+      "title": "SoterAI: Scan Git Changes",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 307,
+      "surfaces": [
+        "error"
+      ]
+    },
+    {
+      "id": "soterai.openSecurityPanel",
+      "title": "SoterAI: Open Security Panel",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 3,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.configurePolicy",
+      "title": "SoterAI: Configure Policy",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 7,
+      "surfaces": [
+        "quickPicks"
+      ]
+    },
+    {
+      "id": "soterai.connectToCloud",
+      "title": "SoterAI: Connect to SoterAI Cloud",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "inputBoxes"
+      ]
+    },
+    {
+      "id": "soterai.disconnectCloud",
+      "title": "SoterAI: Disconnect / Clear Token",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1154,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.exportLocalRiskReport",
+      "title": "SoterAI: Export Local Risk Report",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 200,
+      "surfaces": [
+        "documents"
+      ]
+    },
+    {
+      "id": "soterai.reviewSelectedAICode",
+      "title": "SoterAI: Review Selected AI Code",
+      "hiddenFromPalette": false,
+      "status": "SILENT",
+      "ms": 1,
+      "surfaces": []
+    },
+    {
+      "id": "soterai.createProjectPolicy",
+      "title": "SoterAI: Create Project AI Security Policy",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 250,
+      "surfaces": [
+        "warn"
+      ]
+    },
+    {
+      "id": "soterai.editProjectPolicy",
+      "title": "SoterAI: Edit Project AI Security Policy",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 91,
+      "surfaces": [
+        "documents"
+      ]
+    },
+    {
+      "id": "soterai.showProtectedFiles",
+      "title": "SoterAI: Show Protected Files",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 314,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.addToProtectedFiles",
+      "title": "SoterAI: Add Current File to Protected Files",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "error"
+      ]
+    },
+    {
+      "id": "soterai.removeFromProtectedFiles",
+      "title": "SoterAI: Remove File from Protected Files",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 12,
+      "surfaces": [
+        "quickPicks"
+      ]
+    },
+    {
+      "id": "soterai.migrateSecretsToVault",
+      "title": "SoterAI: Migrate Secrets to Protected Vault",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "error"
+      ]
+    },
+    {
+      "id": "soterai.migrateCurrentFileToVault",
+      "title": "SoterAI: Migrate Current File Secrets to Vault",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "error"
+      ]
+    },
+    {
+      "id": "soterai.autoMigrateWorkspace",
+      "title": "SoterAI: Protect Workspace Secrets",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 2132,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.showFileReadLog",
+      "title": "SoterAI: Show AI Agent File-Read Access Log",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.clearFileReadLog",
+      "title": "SoterAI: Clear AI Agent File-Read Access Log",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.restoreSecretPlaceholders",
+      "title": "SoterAI: Restore Secret Placeholders",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "error"
+      ]
+    },
+    {
+      "id": "soterai.restoreFileFromBackup",
+      "title": "SoterAI: Restore File From Encrypted Backup",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 0,
+      "surfaces": [
+        "error"
+      ]
+    },
+    {
+      "id": "soterai.openVaultStatus",
+      "title": "SoterAI: Open Protected Vault Status",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 72,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.generateEnvExample",
+      "title": "SoterAI: Generate .env.example Safely",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 0,
+      "surfaces": [
+        "error"
+      ]
+    },
+    {
+      "id": "soterai.inspectAIContext",
+      "title": "SoterAI: Inspect AI Context",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 484,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.buildSafeAIContext",
+      "title": "SoterAI: Build Safe AI Context",
+      "hiddenFromPalette": false,
+      "status": "SILENT",
+      "ms": 193,
+      "surfaces": []
+    },
+    {
+      "id": "soterai.copySafeAIContext",
+      "title": "SoterAI: Copy Safe AI Context",
+      "hiddenFromPalette": false,
+      "status": "SILENT",
+      "ms": 236,
+      "surfaces": []
+    },
+    {
+      "id": "soterai.approveContextSession",
+      "title": "SoterAI: Approve Context for Session",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 31,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.clearContextApproval",
+      "title": "SoterAI: Clear AI Context Approval Session",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 23,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.buildSafeDebugPrompt",
+      "title": "SoterAI: Build Safe Debug Prompt",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 289,
+      "surfaces": [
+        "inputBoxes",
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.buildSafeCodeReviewPrompt",
+      "title": "SoterAI: Build Safe Code Review Prompt",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 221,
+      "surfaces": [
+        "inputBoxes",
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.buildSafeDeploymentPrompt",
+      "title": "SoterAI: Build Safe Deployment Prompt",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 326,
+      "surfaces": [
+        "inputBoxes",
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.buildSafeErrorFixPrompt",
+      "title": "SoterAI: Build Safe Error Fix Prompt",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 226,
+      "surfaces": [
+        "inputBoxes",
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.buildSafeArchitecturePrompt",
+      "title": "SoterAI: Build Safe Architecture Prompt",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 289,
+      "surfaces": [
+        "inputBoxes",
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.openAILedger",
+      "title": "SoterAI: Open AI Access Ledger",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 55,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.exportAILedger",
+      "title": "SoterAI: Export AI Access Ledger",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 18,
+      "surfaces": [
+        "info",
+        "documents"
+      ]
+    },
+    {
+      "id": "soterai.clearAILedger",
+      "title": "SoterAI: Clear Local AI Ledger",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 0,
+      "surfaces": [
+        "warn",
+        "modal"
+      ]
+    },
+    {
+      "id": "soterai.showWhatAISawLastSession",
+      "title": "SoterAI: Show What AI Saw Last Session",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 31,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.scanAIOutput",
+      "title": "SoterAI: Scan AI Output",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "inputBoxes",
+        "warn"
+      ]
+    },
+    {
+      "id": "soterai.compareOutputAgainstContext",
+      "title": "SoterAI: Compare Output Against Protected Context",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 67,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.checkOutputForLeakage",
+      "title": "SoterAI: Check Output for Secret Leakage",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "inputBoxes",
+        "warn"
+      ]
+    },
+    {
+      "id": "soterai.generateCanary",
+      "title": "SoterAI: Generate Local Canary Secret",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 156,
+      "surfaces": [
+        "warn"
+      ]
+    },
+    {
+      "id": "soterai.insertCanaryIntoTestFile",
+      "title": "SoterAI: Insert Canary Into Test File",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "warn",
+        "modal"
+      ]
+    },
+    {
+      "id": "soterai.scanWorkspaceForCanary",
+      "title": "SoterAI: Scan Workspace for Canary Exposure",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 389,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.verifyNoCanaryInLogs",
+      "title": "SoterAI: Verify No Canary in Logs/Reports",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 20,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.rotateCanary",
+      "title": "SoterAI: Rotate Canary",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 40,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.scanInstalledExtensionsRisk",
+      "title": "SoterAI: Scan Installed Extensions Risk",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 12,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.showAIExtensions",
+      "title": "SoterAI: Show AI Extensions",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 9,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.generateExtensionRiskReport",
+      "title": "SoterAI: Generate Extension Risk Report",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 27,
+      "surfaces": [
+        "documents"
+      ]
+    },
+    {
+      "id": "soterai.showCoverageMatrix",
+      "title": "SoterAI: Show AI Route Coverage",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 488,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.scanMCPConfigs",
+      "title": "SoterAI: Scan MCP Configs",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 62,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.showMCPToolPermissions",
+      "title": "SoterAI: Show MCP Tool Permissions",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 26,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.blockRiskyMCPRecommendation",
+      "title": "SoterAI: Block Risky MCP Recommendation",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 42,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.generateMCPSafePolicy",
+      "title": "SoterAI: Generate MCP Safe Policy",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 38,
+      "surfaces": [
+        "info",
+        "documents"
+      ]
+    },
+    {
+      "id": "soterai.startLocalAIBroker",
+      "title": "SoterAI: Start Local AI Broker",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 29,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.restartLocalAIBroker",
+      "title": "SoterAI: Restart Local AI Broker",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 821,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.showBrokerStatus",
+      "title": "SoterAI: Show Broker Status",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 284,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.showRuntimeCapabilitySummary",
+      "title": "SoterAI: Show Runtime Capability Summary",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 88,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.showExtensionIsolationSummary",
+      "title": "SoterAI: Show Extension Isolation Summary",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 88,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.configureAIBroker",
+      "title": "SoterAI: Configure AI Broker",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "inputBoxes"
+      ]
+    },
+    {
+      "id": "soterai.copyOpenAIBrokerUrl",
+      "title": "SoterAI: Copy OpenAI-Compatible Broker URL",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 16,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.copyAnthropicBrokerUrl",
+      "title": "SoterAI: Copy Anthropic-Compatible Broker URL",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 20,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.testBrokerProtection",
+      "title": "SoterAI: Test Broker Protection",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 119,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.runControlledTerminalCommand",
+      "title": "SoterAI: Run Controlled Terminal Command",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 51,
+      "surfaces": [
+        "inputBoxes"
+      ]
+    },
+    {
+      "id": "soterai.enableAISafeMode",
+      "title": "SoterAI: Enable AI Safe Mode",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "quickPicks"
+      ]
+    },
+    {
+      "id": "soterai.disableAISafeMode",
+      "title": "SoterAI: Disable AI Safe Mode",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 164,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.showAISafeModeRules",
+      "title": "SoterAI: Show AI Safe Mode Rules",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 58,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.configureSafeMode",
+      "title": "SoterAI: Configure Safe Mode",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "quickPicks",
+        "delegated(soterai.enableAISafeMode)"
+      ]
+    },
+    {
+      "id": "soterai.openAIMemoryInspector",
+      "title": "SoterAI: Open AI Memory Inspector",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 85,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.startAIMemorySession",
+      "title": "SoterAI: Start AI Memory Session",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 81,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.endAIMemorySession",
+      "title": "SoterAI: End AI Memory Session",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 31,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.clearAIMemorySession",
+      "title": "SoterAI: Clear AI Memory Session",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 55,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.exportAIMemoryReport",
+      "title": "SoterAI: Export AI Memory Report",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 108,
+      "surfaces": [
+        "documents"
+      ]
+    },
+    {
+      "id": "soterai.showWhatAISaw",
+      "title": "SoterAI: Show What AI Saw",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 99,
+      "surfaces": [
+        "webviews",
+        "delegated(soterai.openAIMemoryInspector)"
+      ]
+    },
+    {
+      "id": "soterai.showBlockedAIContext",
+      "title": "SoterAI: Show Blocked AI Context",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 128,
+      "surfaces": [
+        "documents"
+      ]
+    },
+    {
+      "id": "soterai.compareAIResponseWithContext",
+      "title": "SoterAI: Compare AI Response With Context",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 119,
+      "surfaces": [
+        "info",
+        "delegated(soterai.compareOutputAgainstContext)"
+      ]
+    },
+    {
+      "id": "soterai.reviewPendingAIApproval",
+      "title": "SoterAI: Review Pending AI Approval",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 14,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.approveAIContextOnce",
+      "title": "SoterAI: Approve AI Context Once",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 12,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.denyAIContext",
+      "title": "SoterAI: Deny AI Context",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 18,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.showActiveAIApprovals",
+      "title": "SoterAI: Show Active AI Approvals",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 32,
+      "surfaces": [
+        "documents"
+      ]
+    },
+    {
+      "id": "soterai.clearAIApprovals",
+      "title": "SoterAI: Clear Broker AI Approvals",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 23,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.enableAISentinel",
+      "title": "SoterAI: Enable AI Activity Sentinel",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.disableAISentinel",
+      "title": "SoterAI: Disable AI Activity Sentinel",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 8,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.showAITimeline",
+      "title": "SoterAI: Show AI Activity Timeline",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.exportAIActivityReport",
+      "title": "SoterAI: Export AI Activity Report",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.clearAIActivityEvents",
+      "title": "SoterAI: Clear AI Activity Events",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 0,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.openPermissionCenter",
+      "title": "SoterAI: Open AI Permission Center",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.reviewPendingApprovals",
+      "title": "SoterAI: Review Pending AI Approvals",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 0,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.clearApprovals",
+      "title": "SoterAI: Clear Stored Permission Approvals",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "warn",
+        "modal"
+      ]
+    },
+    {
+      "id": "soterai.enableProtectedWorkspace",
+      "title": "SoterAI: Enable Protected Workspace Mode",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 2914,
+      "surfaces": [
+        "info",
+        "documents"
+      ]
+    },
+    {
+      "id": "soterai.disableProtectedWorkspace",
+      "title": "SoterAI: Disable Protected Workspace Mode",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 15,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.showProtectedFilesList",
+      "title": "SoterAI: Show Protected Files List",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 0,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.addFileToProtected",
+      "title": "SoterAI: Add File to Protected List",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 0,
+      "surfaces": [
+        "error"
+      ]
+    },
+    {
+      "id": "soterai.removeFileFromProtected",
+      "title": "SoterAI: Remove File from Protected List",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.generateSafeEnvExample",
+      "title": "SoterAI: Generate Safe .env.example",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "error"
+      ]
+    },
+    {
+      "id": "soterai.showWorkspaceRiskScore",
+      "title": "SoterAI: Show Workspace Risk Score",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.scanWorkspaceRisk",
+      "title": "SoterAI: Scan Workspace Risk",
+      "hiddenFromPalette": false,
+      "status": "SILENT",
+      "ms": 2,
+      "surfaces": []
+    },
+    {
+      "id": "soterai.openMCPToolFirewall",
+      "title": "SoterAI: Open MCP Tool Firewall",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 51,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.generateSafeMCPPolicyFile",
+      "title": "SoterAI: Generate Safe MCP Policy",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.blockMCPTool",
+      "title": "SoterAI: Block MCP Tool",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 18,
+      "surfaces": [
+        "quickPicks",
+        "documents"
+      ]
+    },
+    {
+      "id": "soterai.approveMCPTool",
+      "title": "SoterAI: Approve MCP Tool",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 11,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.scanMemoryRisk",
+      "title": "SoterAI: Scan AI Memory Risk",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1401,
+      "surfaces": [
+        "info",
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.cleanPoisonedInstructions",
+      "title": "SoterAI: Clean Poisoned AI Instructions",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 794,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.showMemoryPoisoningFindings",
+      "title": "SoterAI: Show Memory Poisoning Findings",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 972,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.checkDependencyInstall",
+      "title": "SoterAI: Check Dependency Install",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 2,
+      "surfaces": [
+        "inputBoxes"
+      ]
+    },
+    {
+      "id": "soterai.scanPackageJsonRisk",
+      "title": "SoterAI: Scan package.json Risk",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 7,
+      "surfaces": [
+        "error"
+      ]
+    },
+    {
+      "id": "soterai.reviewAISuggestedDependency",
+      "title": "SoterAI: Review AI Suggested Dependency",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 5,
+      "surfaces": [
+        "inputBoxes"
+      ]
+    },
+    {
+      "id": "soterai.applyPolicyPack",
+      "title": "SoterAI: Apply Policy Pack",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 0,
+      "surfaces": [
+        "quickPicks"
+      ]
+    },
+    {
+      "id": "soterai.comparePolicyPacks",
+      "title": "SoterAI: Compare Policy Packs",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "quickPicks"
+      ]
+    },
+    {
+      "id": "soterai.exportPolicy",
+      "title": "SoterAI: Export Policy",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 28,
+      "surfaces": [
+        "documents"
+      ]
+    },
+    {
+      "id": "soterai.openEnterpriseDashboard",
+      "title": "SoterAI: Open Enterprise Risk Dashboard",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 2,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.exportEnterpriseRiskReport",
+      "title": "SoterAI: Export Enterprise Risk Report",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 33,
+      "surfaces": [
+        "info",
+        "documents"
+      ]
+    },
+    {
+      "id": "soterai.secureAllAI",
+      "title": "SoterAI: Secure Installed AI Tools (One Click)",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 60,
+      "surfaces": [
+        "info",
+        "modal"
+      ]
+    },
+    {
+      "id": "soterai.scanClipboardAICode",
+      "title": "SoterAI: Scan Clipboard as AI-Generated Code (check vulnerabilities before pasting)",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 37,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.installGitSecretHook",
+      "title": "SoterAI: Install Git Pre-Commit Secret Hook (block secrets at commit time)",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 10,
+      "surfaces": [
+        "warn",
+        "modal"
+      ]
+    },
+    {
+      "id": "soterai.checkScreenShareRisk",
+      "title": "SoterAI: Check Screen-Share Risk (warns if sensitive files are visible)",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.scanLocalModelLogs",
+      "title": "SoterAI: Scan Local AI Model Logs (Ollama/LM Studio) for persisted secrets",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 40,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.reviewDependencyGuardMode",
+      "title": "SoterAI: Review Dependency Guard Mode (harden OSV advisory checks)",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.copyPreCommitHookScript",
+      "title": "SoterAI: Copy Pre-Commit Hook Script (for husky/lefthook repos)",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 10,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.restoreAIConfigs",
+      "title": "SoterAI: Undo AI Tool Security Changes",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.openWalkthrough",
+      "title": "SoterAI: Open Getting Started Walkthrough",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 111,
+      "surfaces": [
+        "delegated(workbench.action.openWalkthrough)"
+      ]
+    },
+    {
+      "id": "soterai.applyFindingFix",
+      "title": "SoterAI: Apply Finding Fix",
+      "hiddenFromPalette": true,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "warn"
+      ]
+    },
+    {
+      "id": "soterai.scanClipboard",
+      "title": "SoterAI: Scan Clipboard Before AI",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 257,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.safePaste",
+      "title": "SoterAI: Safe Paste (scan clipboard, then paste)",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 59,
+      "surfaces": [
+        "delegated(editor.action.clipboardPasteAction)"
+      ]
+    },
+    {
+      "id": "soterai.setupBrokerIntegration",
+      "title": "SoterAI: Setup Broker Integration",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 263,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.restoreBrokerIntegration",
+      "title": "SoterAI: Restore Broker Integration",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.preflightMCPTool",
+      "title": "SoterAI: Preflight MCP Tool Call",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 77,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.checkBeforeSendingToAI",
+      "title": "SoterAI: Scan Before Sending to AI",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 663,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.showEgressFirewallStatus",
+      "title": "SoterAI: Show AI Egress Firewall Status",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 31,
+      "surfaces": [
+        "webviews"
+      ]
+    },
+    {
+      "id": "soterai.checkEgressPayload",
+      "title": "SoterAI: Check Egress Payload (API)",
+      "hiddenFromPalette": false,
+      "status": "SILENT",
+      "ms": 32,
+      "surfaces": []
+    },
+    {
+      "id": "soterai.rotateBrokerToken",
+      "title": "SoterAI: Rotate Broker Token",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 142,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.clearBrokerToken",
+      "title": "SoterAI: Clear Broker Token",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 61,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.stopLocalAIBroker",
+      "title": "SoterAI: Stop Local AI Broker",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 2,
+      "surfaces": [
+        "info"
+      ]
+    },
+    {
+      "id": "soterai.emergencyLockdown",
+      "title": "SoterAI: Emergency Lockdown (Revoke All Capabilities)",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "warn",
+        "modal"
+      ]
+    },
+    {
+      "id": "soterai.unlockProtection",
+      "title": "SoterAI: Unlock Protection After Lockdown",
+      "hiddenFromPalette": false,
+      "status": "OK",
+      "ms": 1,
+      "surfaces": [
+        "warn",
+        "modal"
+      ]
+    }
+  ]
+}

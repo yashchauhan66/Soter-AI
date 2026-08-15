@@ -327,6 +327,16 @@ const SPECS: BackendSpec[] = [
     calibrationPath: "models/ml-classifier-v4/calibration.json",
     maxLength: "256",
   },
+  {
+    // v7 is the 2026-08-07 retrain. It is a candidate here, not a default: .env
+    // still points at v4, and it stays that way until this harness says v7 does
+    // not repeat v6's core regression (100% -> 95.8%, which forced the v5 rollback).
+    name: "v7",
+    modelPath: "models/ml-classifier-v7/model.onnx",
+    labelsPath: "models/ml-classifier-v7/labels.json",
+    calibrationPath: "models/ml-classifier-v7/calibration.json",
+    maxLength: "256",
+  },
 ];
 // models/ml-classifier-v4-smoke is a load-smoke artifact with untrained weights.
 // It is not a comparison candidate; running the corpora against it would produce

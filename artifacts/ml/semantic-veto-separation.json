@@ -1,0 +1,31 @@
+{
+  "eval": "datasets/crossdist-eval-v3-sample.jsonl",
+  "attack": {
+    "n": 3069,
+    "p05": -0.0391,
+    "p25": -0.0042,
+    "p50": 0.008,
+    "p75": 0.0199,
+    "p95": 0.0495,
+    "mean": 0.0075
+  },
+  "benign": {
+    "n": 918,
+    "p05": -0.0427,
+    "p25": -0.0072,
+    "p50": 0.0064,
+    "p75": 0.0209,
+    "p95": 0.0485,
+    "mean": 0.0044
+  },
+  "auc": 0.5187,
+  "tiedAtZero": 149,
+  "isAttackRate": {
+    "attacksFlagged": 59,
+    "attacks": 3069,
+    "attackRatePct": 1.92,
+    "benignFlagged": 9,
+    "benign": 918,
+    "benignRatePct": 0.98
+  }
+}

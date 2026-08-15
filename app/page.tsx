@@ -287,6 +287,27 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: safeJsonLd(homepageJsonLd) }}
       />
       <Hero />
+
+      {/* World-class extension cards: clickable surfaces */}
+      <section className="container-page mt-10 mb-16 grid gap-8 md:grid-cols-2">
+        <Link href="/extensions/browser" className="group rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900/80 p-6 shadow-lg transition-transform duration-200 hover:-translate-y-1 hover:border-cyan/60 hover:shadow-cyan/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
+          <h2 className="text-lg font-semibold text-white">SoterAI Browser Guard</h2>
+          <p className="mt-2 text-sm text-slate-400">Prime card again – safe AI browsing for Chrome and Microsoft Edge with one installation surface.</p>
+          <p className="mt-4 inline-flex items-center text-sm font-medium text-cyan group-hover:text-cyan-300">
+            Choose your browser
+            <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </p>
+        </Link>
+
+        <Link href="/extensions/ide" className="group rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900/80 p-6 shadow-lg transition-transform duration-200 hover:-translate-y-1 hover:border-cyan/60 hover:shadow-cyan/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
+          <h2 className="text-lg font-semibold text-white">SoterAI IDE Guard</h2>
+          <p className="mt-2 text-sm text-slate-400">Secure AI pair-programming in VS Code and JetBrains IDEs with the same command-layer, unified policy.</p>
+          <p className="mt-4 inline-flex items-center text-sm font-medium text-cyan group-hover:text-cyan-300">
+            Choose your IDE
+            <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+          </p>
+        </Link>
+      </section>
       <section className="border-b border-slate-800 bg-slate-950/45 py-20">
         <div className="container-page">
           <div className="max-w-3xl">

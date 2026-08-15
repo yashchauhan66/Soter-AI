@@ -1,0 +1,62 @@
+{
+  "file": "datasets/crossdist-eval-v3-sample.jsonl",
+  "limit": 0,
+  "sampled": 3987,
+  "mlTierRan": 3987,
+  "mlErrors": 0,
+  "note": "semantic margin forced to -10 so the veto never fires; rows with no gatedBy are the veto's operating population",
+  "population": {
+    "reachedVetoAttacks": 2912,
+    "reachedVetoBenign": 6,
+    "allAttacks": 3069,
+    "allBenign": 918
+  },
+  "auc": {
+    "onVetoOperatingPopulation": 0.4727,
+    "onAllRows": 0.5187
+  },
+  "sweep": [
+    {
+      "margin": 0.02,
+      "attacksKept": 726,
+      "benignKept": 3,
+      "attacksVetoed": 2186,
+      "benignVetoed": 3
+    },
+    {
+      "margin": 0.01,
+      "attacksKept": 1311,
+      "benignKept": 3,
+      "attacksVetoed": 1601,
+      "benignVetoed": 3
+    },
+    {
+      "margin": 0,
+      "attacksKept": 1967,
+      "benignKept": 4,
+      "attacksVetoed": 945,
+      "benignVetoed": 2
+    },
+    {
+      "margin": -0.02,
+      "attacksKept": 2594,
+      "benignKept": 6,
+      "attacksVetoed": 318,
+      "benignVetoed": 0
+    },
+    {
+      "margin": -0.05,
+      "attacksKept": 2809,
+      "benignKept": 6,
+      "attacksVetoed": 103,
+      "benignVetoed": 0
+    },
+    {
+      "margin": -0.1,
+      "attacksKept": 2901,
+      "benignKept": 6,
+      "attacksVetoed": 11,
+      "benignVetoed": 0
+    }
+  ]
+}

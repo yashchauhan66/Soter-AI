@@ -1,0 +1,7 @@
+SoterAI guard tier health (env: .env)
+  configured mode   enforce
+  actual status     healthy (enforcing)
+  model path        models/ml-classifier-v7/model.onnx
+  canary            PROMPT_INJECTION in 2564ms  <-- benign canary would be ESCALATED: live false positive
+  runtime           1 ran / 0 failed open of 1 calls this process
+  require healthy   on

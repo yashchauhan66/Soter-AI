@@ -1,0 +1,77 @@
+{
+  "product_version": "v4",
+  "split": "group_aware_validation",
+  "accuracy": 0.9844872382699068,
+  "f1_macro": 0.9857618584382981,
+  "f1_weighted": 0.9844691380587471,
+  "attack_precision": 0.995575221238938,
+  "attack_recall": 0.9933182197828422,
+  "attack_f1": 0.9944454398853252,
+  "temperature": 0.81,
+  "ece_calibration": 0.006036086605313767,
+  "per_label": {
+    "SAFE": {
+      "precision": 0.9881456392887383,
+      "recall": 0.9921360255047822,
+      "f1": 0.9901368119630926,
+      "support": 4705.0,
+      "threshold": 0.0
+    },
+    "PROMPT_INJECTION": {
+      "precision": 0.9762036524626453,
+      "recall": 0.9681668496158068,
+      "f1": 0.9721686414990356,
+      "support": 1822.0,
+      "threshold": 0.15
+    },
+    "JAILBREAK": {
+      "precision": 0.9767441860465116,
+      "recall": 0.9622641509433962,
+      "f1": 0.9694501018329938,
+      "support": 742.0,
+      "threshold": 0.15
+    },
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+      "precision": 0.9737310774710597,
+      "recall": 0.9745989304812834,
+      "f1": 0.9741648106904232,
+      "support": 2244.0,
+      "threshold": 0.15
+    },
+    "PII": {
+      "precision": 0.99,
+      "recall": 0.9885877318116976,
+      "f1": 0.9892933618843683,
+      "support": 701.0,
+      "threshold": 0.15
+    },
+    "SECRET": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 522.0,
+      "threshold": 0.15
+    },
+    "UNSAFE_OUTPUT": {
+      "precision": 0.9882226980728052,
+      "recall": 0.9935414424111948,
+      "f1": 0.9908749329039184,
+      "support": 929.0,
+      "threshold": 0.15
+    },
+    "RAG_POISONING": {
+      "precision": 0.991578947368421,
+      "recall": 0.991578947368421,
+      "f1": 0.991578947368421,
+      "support": 475.0,
+      "threshold": 0.15
+    },
+    "DATA_EXFILTRATION_ATTEMPT": {
+      "precision": 0.9936642027455121,
+      "recall": 0.9947145877378436,
+      "f1": 0.99418911780243,
+      "support": 946.0,
+      "threshold": 0.15
+    }
+  }
+}

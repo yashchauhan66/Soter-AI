@@ -1,0 +1,81 @@
+{
+  "file": "datasets/crossdist-eval-v3-sample-pg2scope.jsonl",
+  "sampled": 3061,
+  "mlMode": "enforce",
+  "modelPath": "models/ml-classifier-v7/model.onnx",
+  "mlTierRan": 3061,
+  "mlErrors": 0,
+  "rulesOnly": {
+    "recall": 43.54,
+    "fpr": 4.79,
+    "caught": 933,
+    "attacks": 2143,
+    "fp": 44,
+    "benign": 918
+  },
+  "endToEnd": {
+    "recall": 93.05,
+    "fpr": 5.45,
+    "caught": 1994,
+    "attacks": 2143,
+    "fp": 50,
+    "benign": 918
+  },
+  "mlDelta": {
+    "recallPoints": 49.51,
+    "fprPoints": 0.66,
+    "attacksRescuedByMl": 1061,
+    "newFalsePositivesFromMl": 6
+  },
+  "gateAttributionForMisses": {
+    "semantic-benign": 80,
+    "safe-label": 37,
+    "abstention": 32
+  },
+  "gateAttributionByLabel": {
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+      "semantic-benign": 78,
+      "abstention": 15,
+      "safe-label": 12
+    },
+    "PROMPT_INJECTION": {
+      "safe-label": 19,
+      "abstention": 10,
+      "semantic-benign": 2
+    },
+    "JAILBREAK": {
+      "abstention": 7,
+      "safe-label": 6
+    }
+  },
+  "byLabel": {
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+      "recall": 89.05,
+      "attacks": 959,
+      "caught": 854,
+      "fpr": 0,
+      "benign": 0
+    },
+    "SAFE": {
+      "recall": 0,
+      "attacks": 0,
+      "caught": 0,
+      "fpr": 5.45,
+      "benign": 918
+    },
+    "PROMPT_INJECTION": {
+      "recall": 96.71,
+      "attacks": 943,
+      "caught": 912,
+      "fpr": 0,
+      "benign": 0
+    },
+    "JAILBREAK": {
+      "recall": 94.61,
+      "attacks": 241,
+      "caught": 228,
+      "fpr": 0,
+      "benign": 0
+    }
+  }
+}

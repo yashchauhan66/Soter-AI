@@ -33,7 +33,7 @@ async function scanClipboard(): Promise<GuardDecision | undefined> {
     state.latestDecision = decision;
     const v = verdict(decision);
     if (v === "Allow") {
-        vscode.window.showInformationMessage(`SoterAI: clipboard looks safe to share (${decision.riskScore}/100).`);
+        vscode.window.showInformationMessage(`SoterAI: clipboard is safe to paste into AI. No high-risk content found (${decision.riskScore}/100).`);
         return decision;
     }
     const reasons = decision.findings.slice(0, 3).map((f) => f.title).join("; ") || "sensitive content";
@@ -44,7 +44,13 @@ async function scanClipboard(): Promise<GuardDecision | undefined> {
     );
     if (pick === "Replace Clipboard with Safe Version") {
         await vscode.env.clipboard.writeText(redactForSharing(decision.redactedText ?? text));
-        vscode.window.showInformationMessage("Clipboard replaced with a redacted, safe-to-share version.");
+        const next = await vscode.window.showInformationMessage(
+            `Clipboard is now safe to paste. ${decision.findings.length} risk finding(s) were handled.`,
+            "Protect Workspace Secrets",
+        );
+        if (next === "Protect Workspace Secrets") {
+            await vscode.commands.executeCommand("soterai.autoMigrateWorkspace");
+        }
     }
     return decision;
 }
@@ -84,6 +90,7 @@ async function safePaste(): Promise<void> {
         await editor.edit((builder) => {
             for (const selection of editor.selections) builder.replace(selection, safe);
         });
+        vscode.window.showInformationMessage("Safe version pasted. The risky clipboard content was not inserted.");
     } else if (pick === "Paste Original") {
         await vscode.commands.executeCommand("editor.action.clipboardPasteAction");
     }

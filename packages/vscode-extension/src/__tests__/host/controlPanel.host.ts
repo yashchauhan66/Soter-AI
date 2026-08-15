@@ -137,14 +137,21 @@ export function run(): Promise<void> {
             const context = (await extension.activate()) as unknown as { context?: vscode.ExtensionContext };
 
             // The activate() return value is the extension's public API, not the
-            // context, so build a context-shaped object for the provider. Only
-            // globalState is read by gatherState().
+            // context, so build a context-shaped object for the provider.
+            // globalState is read by gatherState(), and extensionUri is read by
+            // resolveWebviewView to serve Bestlogo.png as a local resource —
+            // omitting it here made the whole host suite throw inside
+            // vscode.Uri.joinPath(undefined, "media") before a single check ran.
             const fakeContext = {
                 globalState: {
                     get: () => undefined,
                     update: async () => undefined,
                 },
                 subscriptions: [],
+                extensionUri: extension.extensionUri,
+                // ExtensionContext.extension is part of the real API (VS Code
+                // 1.76+); buildHtml reads packageJSON.version from it.
+                extension: { packageJSON: extension.packageJSON },
             } as unknown as vscode.ExtensionContext;
             void context;
 
@@ -195,8 +202,78 @@ export function run(): Promise<void> {
                 }
             });
 
-            await check("the focus-restoration code is present in the rendered document", () => {
-                // The a11y fix: the panel replaces its whole document on every
+            await check("the resource links are really rendered as clickable buttons", () => {
+                // The source-level test proves the three surfaces agree. Only
+                // here is it proven that the panel actually PUTS them on screen:
+                // a link defined in RESOURCE_LINKS but never emitted by html()
+                // would pass every other test and be invisible to the user.
+                for (const [action, label] of [
+                    ["openWebsite", "soterai.in"],
+                    ["openDocs", "Docs"],
+                    ["reportIssue", "Report an issue"],
+                ]) {
+                    assert.ok(
+                        panel.html.includes(`data-action="${action}"`),
+                        `resource link "${label}" has no clickable button in the rendered panel`,
+                    );
+                    assert.ok(
+                        panel.html.includes(label),
+                        `resource link "${label}" is not visible in the rendered panel`,
+                    );
+                }
+                // A webview cannot navigate under `default-src 'none'`, so an
+                // <a href> here would look like a link and do nothing.
+                assert.ok(
+                    !/<a\s+[^>]*href="https?:/i.test(panel.html),
+                    "resource links must be buttons; an <a href> in a webview is a dead link",
+                );
+            });
+
+            await check("clicking a resource link opens that exact URL, and nothing else does", async () => {
+                // Proves the handler reaches vscode.env.openExternal with the
+                // hardcoded destination — and that a webview-supplied URL is
+                // ignored rather than opened.
+                const opened: string[] = [];
+                const realOpenExternal = vscode.env.openExternal;
+                const stub = async (uri: vscode.Uri) => {
+                    opened.push(uri.toString());
+                    return true;
+                };
+                (vscode.env as { openExternal: unknown }).openExternal = stub;
+                // VS Code freezes `vscode.env` UNLESS the host was launched with
+                // extensionTests set — which is how this suite runs. Verify the
+                // patch took: without it the assertions below would launch a real
+                // browser and then fail for a confusing reason.
+                assert.strictEqual(
+                    vscode.env.openExternal,
+                    stub,
+                    "could not intercept openExternal — vscode.env is frozen in this host",
+                );
+                try {
+                    await panel.post({ type: "action:openWebsite" });
+                    assert.deepStrictEqual(
+                        opened,
+                        ["https://soterai.in/"],
+                        "the website link did not open its hardcoded URL",
+                    );
+
+                    opened.length = 0;
+                    await panel.post({ type: "action:openWebsite", url: "https://evil.example/steal" });
+                    assert.deepStrictEqual(
+                        opened,
+                        ["https://soterai.in/"],
+                        "a URL supplied by the webview must be ignored, not opened",
+                    );
+
+                    opened.length = 0;
+                    await panel.post({ type: "action:openExternal", url: "https://evil.example" });
+                    assert.deepStrictEqual(opened, [], "a non-allowlisted action must open nothing");
+                } finally {
+                    (vscode.env as { openExternal: unknown }).openExternal = realOpenExternal;
+                }
+            });
+
+            await check("the focus-restoration code is present in the rendered document", () => {                // The a11y fix: the panel replaces its whole document on every
                 // render, so focus must be saved and restored across that.
                 assert.match(panel.html, /acquireVsCodeApi\(\)/);
                 assert.match(panel.html, /getState\(\)/);

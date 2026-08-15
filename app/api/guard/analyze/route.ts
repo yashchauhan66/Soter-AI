@@ -43,8 +43,16 @@ export async function POST(request: Request) {
       body.direction,
     );
     result.metadata = { ...result.metadata, guardDirection: body.direction, requestDirection: "ANALYZE" };
-    return jsonResponse(toPublicGuardResult(result), {
-      headers: { "X-RateLimit-Limit": String(PUBLIC_ANALYZE_RPM), "X-RateLimit-Remaining": String(rateLimit.remaining) },
+    // Same latency contract as the authenticated guard routes: server-side
+    // handling time only, in the body as well as the header, because an
+    // integration platform maps fields and not headers.
+    const latencyMs = Date.now() - startedAt;
+    return jsonResponse({ ...toPublicGuardResult(result), latencyMs }, {
+      headers: {
+        "X-RateLimit-Limit": String(PUBLIC_ANALYZE_RPM),
+        "X-RateLimit-Remaining": String(rateLimit.remaining),
+        "X-Soter-Latency-Ms": String(latencyMs),
+      },
     });
   } catch (error) {
     failed = true;

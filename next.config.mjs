@@ -5,7 +5,13 @@ const nextConfig = {
   // PDFKit's fontkit dependency uses an older, nested @swc/helpers release.
   // Keep it as a native Node dependency so Turbopack does not resolve those
   // imports against Next's incompatible top-level helper package.
-  serverExternalPackages: ["pdfkit"],
+  //
+  // onnxruntime-node is a NATIVE addon (libonnxruntime.so.1 +
+  // onnxruntime_binding.node). Bundling it drops those binaries from the
+  // standalone trace, so the ML tier throws on load in production and the guard
+  // silently degrades to rules-only. Keep it external so the real package —
+  // binaries included — is required at runtime.
+  serverExternalPackages: ["pdfkit", "onnxruntime-node"],
   poweredByHeader: false,
   reactStrictMode: true,
   compress: true,

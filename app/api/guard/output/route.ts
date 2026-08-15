@@ -1,6 +1,5 @@
 import { apiError, jsonResponse, readJson, requireJsonContentType } from "@/lib/apiResponse";
 import { authenticateApiKeyRequest } from "@/lib/apiKeyMiddleware";
-import { DEFAULT_RPM } from "@/lib/guard/constants";
 import { runOutputGuard } from "@/lib/guard/outputGuard";
 import { augmentWithMl } from "@/lib/guard/mlAugment";
 import { augmentWithLlmJudge } from "@/lib/guard/llmJudge";
@@ -10,7 +9,7 @@ import type { RiskType } from "@/lib/guard/types";
 import { toPublicGuardResult } from "@/lib/guard/publicResult";
 import { createRateLimitResult } from "@/lib/guard/rateLimitResult";
 import { scheduleGuardResultPersistence } from "@/lib/guard/scheduledPersistence";
-import { checkRedisRateLimit, peekMonthlyUsage, planLimit } from "@/lib/rateLimit";
+import { checkRedisRateLimit, peekMonthlyUsage, planLimit, planRpm } from "@/lib/rateLimit";
 import { outputGuardSchema } from "@/lib/validations";
 import { recordRequestMetric } from "@/lib/ops/monitoring";
 import { recordTrustEventSafe, trustTraceContextFromHeaders } from "@/lib/trust-events";
@@ -28,8 +27,11 @@ export async function POST(request: Request) {
     const { apiKey, project } = authenticated.auth;
 
     const orgId = project.organizationId;
+    // Plan-aware: see lib/guard/constants.ts — a flat 60 RPM made the higher
+    // plans' monthly quotas physically unreachable and broke batch clients.
+    const rpmLimit = planRpm(project.plan);
     const [rpm, usage] = await Promise.all([
-      checkRedisRateLimit(`key:${apiKey.id}`, DEFAULT_RPM),
+      checkRedisRateLimit(`key:${apiKey.id}`, rpmLimit),
       orgId
         ? peekMonthlyUsage(orgId, project.plan, project.organization?.quotaOverride)
         : Promise.resolve({ allowed: true, exceeded: false, remaining: planLimit(project.plan), limit: planLimit(project.plan), used: 0, ratio: 0, warning: false }),
@@ -58,7 +60,7 @@ export async function POST(request: Request) {
         status: 429,
         headers: {
           "Retry-After": String(retryAfter),
-          "X-RateLimit-Limit": String(DEFAULT_RPM),
+          "X-RateLimit-Limit": String(rpmLimit),
           "X-RateLimit-Remaining": String(rpm.remaining),
         },
       });
@@ -126,7 +128,7 @@ export async function POST(request: Request) {
         return jsonResponse(toPublicGuardResult(governanceResult), {
           status: 403,
           headers: {
-            "X-RateLimit-Limit": String(DEFAULT_RPM),
+            "X-RateLimit-Limit": String(rpmLimit),
             "X-RateLimit-Remaining": String(rpm.remaining),
             "X-Governance-Action": "BLOCK",
             "X-Governance-Reason": encodeURIComponent(decision.reason.slice(0, 200)),
@@ -171,7 +173,7 @@ export async function POST(request: Request) {
         return jsonResponse(toPublicGuardResult(governanceResult), {
           status: 403,
           headers: {
-            "X-RateLimit-Limit": String(DEFAULT_RPM),
+            "X-RateLimit-Limit": String(rpmLimit),
             "X-RateLimit-Remaining": String(rpm.remaining),
             "X-Governance-Action": "REQUIRE_APPROVAL",
             "X-Governance-Reason": encodeURIComponent(decision.reason.slice(0, 200)),
@@ -214,10 +216,14 @@ export async function POST(request: Request) {
       resource: { type: "AI_OUTPUT", classification: result.riskTypes.some((risk) => risk.includes("PII") || risk === "SECRET_DETECTED") ? "SENSITIVE" : "UNCLASSIFIED" },
       metadata: { riskScore: result.riskScore, guardAction: result.action, findingCount: result.findings.length, apiKeyId: apiKey.id },
     }) : null;
-    return jsonResponse(toPublicGuardResult(result), {
+    // Computed once so the header and the body agree — see guard/input/route.ts.
+    const latencyMs = Date.now() - startedAt;
+    return jsonResponse({ ...toPublicGuardResult(result), latencyMs }, {
       headers: {
-        "X-RateLimit-Limit": String(DEFAULT_RPM),
+        "X-RateLimit-Limit": String(rpmLimit),
         "X-RateLimit-Remaining": String(rpm.remaining),
+        // Server-side handling time only — see the note in guard/input/route.ts.
+        "X-Soter-Latency-Ms": String(latencyMs),
         ...(trust ? { "X-Soter-Trace-Id": trust.event.traceId, "X-Soter-Span-Id": trust.event.spanId } : {}),
       },
     });

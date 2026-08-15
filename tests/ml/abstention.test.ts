@@ -126,8 +126,7 @@ test("binaryEntropy is the two-outcome entropy", () => {
   assert.ok(binaryEntropy(0.85) > 0.4067, "P(attack) 0.85 is still undecided");
 });
 
-test("label-space uncertainty is what catches a confident guess about a fragment", () => {
-  // Measured at 256 tokens on the long benign fixtures of
+test("label-space uncertainty is what catches a confident guess about a fragment", () => {  // Measured at 256 tokens on the long benign fixtures of
   // scripts/ml/sliding-window-evidence.ts. Both are near-certain in the binary
   // direction and disagree with themselves about the class, which is the
   // out-of-distribution shape a truncated view produces.
@@ -155,4 +154,87 @@ test("label-space uncertainty is what catches a confident guess about a fragment
     labelSpaceUncertain(contract, v4Calibration({ entropy_p95: undefined, binary_entropy_p95: 0.001 })),
     false,
   );
+});
+
+// ---------------------------------------------------------------------------
+// env overrides on the two operating points
+//
+// These exist so the abstention budget can be SWEPT without editing a shipped
+// model artifact — the same role SOTERAI_ML_SEMANTIC_MARGIN plays for the
+// semantic veto. That knob is why the veto's real cost (21.74 recall points for
+// 2 false positives) was findable at all; abstention is now the largest
+// remaining miss bucket and had no equivalent.
+//
+// The risk an override introduces is that it silently changes production. So the
+// assertions below are mostly about the DEFAULT and the malformed cases, not
+// about the override working.
+// ---------------------------------------------------------------------------
+
+/** Set an env var for one assertion and always restore it. */
+function withEnv(name: string, value: string | undefined, fn: () => void): void {
+  const previous = process.env[name];
+  if (value === undefined) delete process.env[name];
+  else process.env[name] = value;
+  try {
+    fn();
+  } finally {
+    if (previous === undefined) delete process.env[name];
+    else process.env[name] = previous;
+  }
+}
+
+test("an unset or malformed override leaves the fitted calibration in force", () => {
+  // P(attack) 0.90 -> H_b = 0.3251, over v7's fitted 0.2029 budget, so the
+  // production answer is "abstain". Every non-numeric input must reproduce it:
+  // an override that failed OPEN here would quietly disable abstention on a typo.
+  const v7 = v4Calibration({ binary_entropy_p95: 0.20287663453231433 });
+  const p90 = distribution(0.1, [0.9]);
+
+  for (const value of [undefined, "", "  ", "garbage", "NaN"]) {
+    withEnv("SOTERAI_ML_ABSTAIN_ENTROPY", value, () => {
+      assert.equal(
+        shouldAbstain(p90, v7),
+        true,
+        `override ${JSON.stringify(value)} must fall back to the fitted budget`,
+      );
+    });
+  }
+  for (const value of [undefined, "", "garbage"]) {
+    withEnv("SOTERAI_ML_ABSTAIN_FLOOR", value, () => {
+      assert.equal(shouldAbstain(distribution(0.47, [0.53]), v7), true, "floor still 0.55");
+    });
+  }
+});
+
+test("the entropy override moves the operating point in both directions", () => {
+  const v7 = v4Calibration({ binary_entropy_p95: 0.20287663453231433 });
+  const p90 = distribution(0.1, [0.9]);
+
+  // Above ln 2 (0.6931, the maximum possible binary entropy) disables the
+  // entropy test entirely. This is the sweep's ceiling arm: it measures what
+  // abstention costs in total, rather than guessing an intermediate value.
+  withEnv("SOTERAI_ML_ABSTAIN_ENTROPY", "0.6932", () => {
+    assert.equal(shouldAbstain(p90, v7), false);
+    // The floor is a separate gate and must still fire — disabling one budget
+    // must not disable the other.
+    assert.equal(shouldAbstain(distribution(0.47, [0.53]), v7), true, "floor survives");
+  });
+
+  // Tightening must also work, so a sweep can go both ways.
+  withEnv("SOTERAI_ML_ABSTAIN_ENTROPY", "0.001", () => {
+    assert.equal(shouldAbstain(distribution(0.01, [0.99]), v7), true);
+  });
+});
+
+test("the floor override can make the inert floor bite, which is how it gets measured", () => {
+  // The shipped floor cannot fire below 0.5 because decision confidence is
+  // max(p, 1-p). The override is the only way to test the floor's effect
+  // empirically instead of arguing it from arithmetic.
+  const v7 = v4Calibration({ binary_entropy_p95: 0.20287663453231433 });
+  const confidentAttack = distribution(0.01, [0.99]); // H_b = 0.056, clears entropy
+
+  assert.equal(shouldAbstain(confidentAttack, v7), false, "baseline: escalated");
+  withEnv("SOTERAI_ML_ABSTAIN_FLOOR", "0.995", () => {
+    assert.equal(shouldAbstain(confidentAttack, v7), true, "floor at 0.995 now bites");
+  });
 });

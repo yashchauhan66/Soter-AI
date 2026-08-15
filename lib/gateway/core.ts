@@ -20,14 +20,13 @@
  *   (same documented bypass as the local broker's SSE proxy).
  */
 import { randomUUID } from "crypto";
-import { DEFAULT_RPM } from "../guard/constants";
 import { runInputGuard } from "../guard/inputGuard";
 import { runOutputGuard } from "../guard/outputGuard";
 import { augmentWithMl } from "../guard/mlAugment";
 import { augmentWithLlmJudge } from "../guard/llmJudge";
 import { applyPolicy, loadProjectPolicy, DEFAULT_POLICY, type ResolvedPolicy } from "../guard/policy";
 import { scheduleGuardResultPersistence } from "../guard/scheduledPersistence";
-import { checkRedisRateLimit, peekMonthlyUsage, planLimit } from "../rateLimit";
+import { checkRedisRateLimit, peekMonthlyUsage, planLimit, planRpm } from "../rateLimit";
 import { verifyApiKey } from "../apiKey";
 import type { GuardResult } from "../guard/types";
 import {
@@ -76,7 +75,7 @@ async function defaultScanOutput(text: string, policy: ResolvedPolicy): Promise<
 async function defaultCheckLimits(auth: VerifyOk) {
   const orgId = auth.project.organizationId;
   const [rpm, usage] = await Promise.all([
-    checkRedisRateLimit(`key:${auth.apiKey.id}`, DEFAULT_RPM),
+    checkRedisRateLimit(`key:${auth.apiKey.id}`, planRpm(auth.project.plan)),
     orgId
       ? peekMonthlyUsage(orgId, auth.project.plan, auth.project.organization?.quotaOverride)
       : Promise.resolve({ allowed: true, exceeded: false, remaining: planLimit(auth.project.plan) }),

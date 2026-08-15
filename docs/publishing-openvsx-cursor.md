@@ -126,10 +126,12 @@ path itself:
   public repo and a `.cursor-plugin/plugin.json`. That is a different artifact
   format and an optional extra channel; the Open VSX path above is what makes the
   existing VSIX installable in Cursor today.
-- `repository.url` still points at `Ai-Security-Guard`, which only resolves via
-  GitHub's rename redirect to `yashchauhan66/Soter-AI`. Changing it alters
-  published metadata on the live VS Code 0.2.1 listing, so it is deliberately
-  left as a release-owner decision.
+- `repository.url` and `bugs.url` now point at the canonical
+  `yashchauhan66/Soter-AI` (both verified `200`, 0 redirects). They previously
+  named `Ai-Security-Guard`, which only resolved through GitHub's rename
+  redirect. This changes published metadata: the next publish repoints the
+  Repository link on the listing. Reverting is a one-line manifest edit if the
+  release owner prefers the old value.
 
 Primary references: [Open VSX project/CLI](https://github.com/eclipse/openvsx),
 [Open VSX registry API](https://open-vsx.org/swagger-ui/index.html), and

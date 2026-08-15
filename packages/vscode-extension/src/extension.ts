@@ -5,6 +5,7 @@ import { registerFirewallCommands, readContextApproval } from "./firewall/comman
 import { setProtectedFileChecker } from "./firewall/ContextGatherer";
 import { registerScannerCommands } from "./firewall/scanners";
 import { PolicyStore } from "./firewall/PolicyStore";
+import { escapeHtml, showInfoWebview } from "./firewall/util";
 import { RiskTreeProvider } from "./views/RiskTreeProvider";
 import { DashboardPanel } from "./webview/DashboardPanel";
 import { ControlPanelViewProvider } from "./webview/ControlPanelViewProvider";
@@ -30,6 +31,10 @@ import { ProtectionStateService } from "./protection/ProtectionStateService";
 import { ProtectionController } from "./protection/ProtectionController";
 import { registerEgressFirewallCommands } from "./advanced/commands";
 import { runPackagedRuntimeProbe } from "./packagedRuntimeProbe";
+// ── Secret Shield: strongest prevention layer (Task 1–5) ──────────────────────
+import { SecretFileInterceptor } from "./secret-shield/SecretFileInterceptor";
+import { AutoVaultMigration } from "./secret-shield/AutoVaultMigration";
+import { FileReadSentinel } from "./secret-shield/FileReadSentinel";
 
 // Single consolidated status-bar item. It replaces the earlier six separate
 // items (main, firewall, broker, safe mode, memory, runtime) — those states now
@@ -43,15 +48,32 @@ let memoryGuard: MemoryGuard;
 let extensionContext: vscode.ExtensionContext;
 let brokerManager: BrokerManager;
 let protectionState: ProtectionStateService;
+
+// Status-bar updates involve two local HTTP calls to the broker. Throttle them
+// so rapid tab switches (e.g. an AI agent opening many files) don't pile up
+// concurrent HTTP requests. The throttle window is 2 seconds — fast enough
+// for the user to see state changes, slow enough to not compete with agents.
+let _statusBarTimer: ReturnType<typeof setTimeout> | undefined;
+function scheduleStatusBarUpdate(): void {
+    if (_statusBarTimer) return; // already scheduled
+    _statusBarTimer = setTimeout(() => {
+        _statusBarTimer = undefined;
+        void updateStatusBar();
+    }, 2000);
+}
 let protectionController: ProtectionController;
 let rawTerminalNoticeShown = false;
+// Secret Shield instances — must outlive activate() so their disposables stay alive.
+let secretFileInterceptor: SecretFileInterceptor;
+let autoVaultMigration: AutoVaultMigration;
+let fileReadSentinel: FileReadSentinel;
 
 export function activate(context: vscode.ExtensionContext): void {
     extensionContext = context;
 
     // Command-palette hygiene: ~100 advanced commands are gated behind the
     // `soterai.advancedCommands` context key so the default palette only shows
-    // the 12 core commands. Every command still works from the SoterAI Guard
+    // 10 core commands. Every command still works from the SoterAI Guard
     // view, status bar, aliases, and executeCommand — this only controls palette
     // visibility. Flipped by either the launch-era `soterai.showAllCommands`
     // setting or the marketplace-facing `soterai.experimentalFeatures.enabled`
@@ -96,6 +118,12 @@ export function activate(context: vscode.ExtensionContext): void {
 
     context.subscriptions.push(sentinel, permissionStore, workspaceGuard);
 
+    fileReadSentinel = new FileReadSentinel(context);
+    context.subscriptions.push(fileReadSentinel);
+
+    autoVaultMigration = new AutoVaultMigration(context);
+    context.subscriptions.push(autoVaultMigration);
+
     const projectRiskProvider = new RiskTreeProvider("soterai-project-risk");
     const latestFindingsProvider = new RiskTreeProvider("soterai-latest-findings");
     const policyStatusProvider = new RiskTreeProvider("soterai-policy-status");
@@ -132,7 +160,7 @@ export function activate(context: vscode.ExtensionContext): void {
 
     registerCommands(context, refreshViews);
     registerFirewallCommands(context, refreshViews);
-    registerScannerCommands(context);
+    registerScannerCommands(context, async () => (await protectionState?.refresh())?.descriptor);
     registerBrokerCommands(context, brokerManager, refreshViews);
     registerSentinelCommands(context, sentinel);
     registerPermissionCommands(context, permissionStore);
@@ -144,7 +172,8 @@ export function activate(context: vscode.ExtensionContext): void {
     registerPolicyPackCommands(context, refreshViews);
     registerDashboardCommands(context, refreshViews);
     registerLaunchCommands(context);
-    registerLiveScanner(context);
+    const liveScanEnabled = vscode.workspace.getConfiguration("soterai").get<boolean>("liveScan.enabled", true);
+    if (liveScanEnabled) registerLiveScanner(context);
     registerClipboardGuard(context);
     registerContinuousGuardCommands(context, {
         scanText: async (text) => ExtensionState.getInstance().engine.scan(text, { context: "selection" }),
@@ -153,6 +182,101 @@ export function activate(context: vscode.ExtensionContext): void {
     // Gap A + Gap B: outbound AI egress firewall (obfuscation-resistant), which
     // also appends every decision to the tamper-proof ledger.
     registerEgressFirewallCommands(context);
+
+    // ── Secret Shield commands (need refreshViews, wired here) ────────────────
+    // Document-open events are visibility only. VS Code exposes no caller-aware,
+    // awaitable file-read interceptor; enforceable protection comes from explicit
+    // encrypted vault migration or broker-routed egress.
+    secretFileInterceptor = new SecretFileInterceptor(context, (uri, count) => {
+        sentinel.recordEvent({
+            type: "protected_access",
+            risk: "high",
+            source: "sentinel",
+            filePath: vscode.workspace.asRelativePath(uri),
+            decision: "alert",
+            redactedEvidence:
+                `Sensitive document "${vscode.workspace.asRelativePath(uri)}" opened with ` +
+                `${count} plaintext secret(s); direct-read caller is not observable`,
+        });
+        refreshViews();
+    });
+    context.subscriptions.push(secretFileInterceptor);
+
+    // AutoVaultMigration start — delayed scan fires after editor is ready.
+    autoVaultMigration.start();
+
+    context.subscriptions.push(
+        vscode.commands.registerCommand("soterai.autoMigrateWorkspace", async () => {
+            await autoVaultMigration.scanWorkspace({ silent: false });
+            refreshViews();
+        }),
+        vscode.commands.registerCommand(
+            "soterai.migrateCurrentFileToVault",
+            async (uri?: vscode.Uri) => {
+                const target = uri ?? vscode.window.activeTextEditor?.document.uri;
+                if (!target) {
+                    vscode.window.showErrorMessage(
+                        "[SoterAI] No file to migrate — open a sensitive file first.",
+                    );
+                    return;
+                }
+                if (!vscode.workspace.isTrusted) {
+                    vscode.window.showWarningMessage(
+                        "[SoterAI] Vault migration requires a trusted workspace because it changes files and stores encrypted recovery data.",
+                    );
+                    return;
+                }
+                const preview = await autoVaultMigration.previewFile(target);
+                if (preview.candidates.length === 0) {
+                    vscode.window.showInformationMessage("[SoterAI] No migratable plaintext secrets found in this file.");
+                    return;
+                }
+                const confirm = await vscode.window.showWarningMessage(
+                    `Migrate ${preview.candidates.length} secret(s) from ${preview.file}? ` +
+                    "Encrypted recovery data is written outside the workspace before placeholders replace plaintext on disk.",
+                    { modal: true },
+                    "Migrate & Backup",
+                );
+                if (confirm !== "Migrate & Backup") return;
+                const count = await autoVaultMigration.migrateFile(target);
+                if (count > 0) {
+                    secretFileInterceptor.clearCache(target);
+                    vscode.window.showInformationMessage(
+                        `[SoterAI] ${count} secret(s) migrated to encrypted vault. ` +
+                            `"${vscode.workspace.asRelativePath(target)}" now contains placeholders on disk — ` +
+                            "all AI agents (including CLI tools) see only placeholders.",
+                    );
+                    refreshViews();
+                }
+            },
+        ),
+        vscode.commands.registerCommand("soterai.showFileReadLog", () => {
+            const events = fileReadSentinel.getEvents();
+            if (events.length === 0) {
+                vscode.window.showInformationMessage(
+                    "[SoterAI] No sensitive-document-open events recorded yet.",
+                );
+                return;
+            }
+            const rows = [...events]
+                .reverse()
+                .slice(0, 50)
+                .map(
+                    (e) =>
+                        `<tr><td>${new Date(e.timestamp).toLocaleString()}</td>` +
+                        `<td><strong>${escapeHtml(e.agentName)}</strong></td>` +
+                        `<td><code>${escapeHtml(e.filePath)}</code></td>` +
+                        `<td>${e.secretCount} secret(s)</td></tr>`,
+                )
+                .join("");
+            showFileReadLogWebview(rows);
+        }),
+        vscode.commands.registerCommand("soterai.clearFileReadLog", () => {
+            fileReadSentinel.clearEvents();
+            vscode.window.showInformationMessage("[SoterAI] Sensitive-document-open log cleared.");
+        }),
+    );
+    // ── End Secret Shield ──────────────────────────────────────────────────────
 
     context.subscriptions.push(
         vscode.commands.registerCommand("soterai.enableFullProtection", async () => {
@@ -201,12 +325,18 @@ export function activate(context: vscode.ExtensionContext): void {
     );
 
     context.subscriptions.push(
-        vscode.window.onDidChangeActiveTextEditor(() => { updateStatusBar(); }),
+        vscode.window.onDidChangeActiveTextEditor(() => { scheduleStatusBarUpdate(); }),
         vscode.window.onDidOpenTerminal(() => { void warnRawTerminalCoverage(); }),
-        vscode.workspace.onDidSaveTextDocument(async (doc) => {
-            const config = vscode.workspace.getConfiguration("soterai");
-            const liveScanEnabled = config.get<boolean>("liveScan.enabled", true);
-            if (liveScanEnabled && doc.uri.scheme === "file") await vscode.commands.executeCommand("soterai.scanCurrentFile", doc.uri);
+        vscode.workspace.onDidSaveTextDocument((doc) => {
+            // Only scan files the user themselves saved — skip virtual/scheme docs.
+            // The LiveScanner already handles as-you-type scanning with debounce,
+            // so the save hook is intentionally lightweight: it does NOT fire a
+            // second full scan here. That second scan was causing visible latency
+            // for AI agents (Cline, Claude Code, OpenCode) that save files
+            // programmatically in rapid succession.
+            if (doc.uri.scheme !== "file") return;
+            // Refresh views/status only — the live scanner handles diagnostics.
+            void updateStatusBar();
         })
     );
 
@@ -296,4 +426,25 @@ async function updateStatusBar(): Promise<void> {
 export async function deactivate(): Promise<void> {
     TelemetryManager.getInstance().dispose();
     if (brokerManager) await brokerManager.stop();
+}
+
+// ── Secret Shield helpers ─────────────────────────────────────────────────────
+
+function showFileReadLogWebview(rows: string): void {
+    showInfoWebview(
+        "soteraiFileReadLog",
+        "SoterAI: Sensitive Document Open Log",
+        `<h1>Sensitive Document Open Log</h1>
+         <p>VS Code document-open events for sensitive files that still contained detected plaintext secrets.
+            Migrate reviewed files to the vault to remove those values from disk.</p>
+         <table>
+           <tr><th>Time</th><th>Active AI context</th><th>File</th><th>Detected secrets</th></tr>
+           ${rows || "<tr><td colspan='4'>No events recorded.</td></tr>"}
+         </table>
+         <p class="note">
+           VS Code does not identify which extension caused an open. Active AI extensions
+           are context only, never caller attribution. Direct filesystem reads by CLI tools
+           are not visible here; vault migration protects the migrated on-disk content.
+         </p>`,
+    );
 }

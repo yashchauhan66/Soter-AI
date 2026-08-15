@@ -1,0 +1,43 @@
+
+═══════════════════════════════════════════════════════════════
+ SoterAI — Honest Guard Benchmark
+═══════════════════════════════════════════════════════════════
+Corpus: 1218 cases (108 attacks, 1110 benign)
+  · guardRedTeamBenchmark: 70 (68 atk / 2 benign)
+  · phase5Benchmark: 48 (40 atk / 8 benign)
+  · expandedSafeInputs: 1100 (0 atk / 1100 benign)
+
+── Headline (honest) metrics ──
+  ROC-AUC (separability):        0.9884
+  Recall @ 1.00% FPR:          98.15%  (threshold score > 0, achieved FPR 0.81%, budget 11 FPs)
+  Recall @ 0.10% FPR:          54.63%  (threshold score > 60, achieved FPR 0.09%, budget 1 FPs)
+
+── At the live production threshold (positive = any protective action) ──
+  Mitigation recall: 98.15%  (attack neutralized: block/review/rewrite/redact)
+  Hard block/review: 63.89%  (strictest — fully stopped/escalated)
+  Precision:         92.17%
+  F1:                0.9507
+  FPR:               0.81%
+  FNR:               1.85%
+
+── Weakest attack categories (lowest recall first) ──
+     0.00%  ESCALATION_RCE (0/2)
+   100.00%  DIRECT_OVERRIDE (1/1)
+   100.00%  INDIRECT_INJECTION (2/2)
+   100.00%  AGENT_TOOL_MISUSE (4/4)
+   100.00%  RAG_POISONING (4/4)
+   100.00%  MEMORY_POISONING (2/2)
+   100.00%  PROMPT_LEAKAGE (2/2)
+   100.00%  JAILBREAK (11/11)
+
+── Latency (per-input, analyzer only) ──
+  p50 4.57ms · p95 12.08ms · p99 42.30ms · max 2021.56ms
+
+── Multi-turn / adaptive (Crescendo) ──
+  Sessions: 10 (5 attack, 5 benign)
+  Multi-turn recall:  100.00%
+  Multi-turn FPR:     0.00%
+  Mean turns to catch: 3.00
+
+Wrote C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\scripts\guard-benchmark\honest-results.json
+

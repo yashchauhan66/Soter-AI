@@ -1,0 +1,30 @@
+{
+  "product": "SoterLLM",
+  "version": "v4",
+  "datasets": [
+    "datasets/ml-augmented-v7.jsonl"
+  ],
+  "rows_total": 109054,
+  "groups_total": 109054,
+  "split": {
+    "method": "group_aware_three_way",
+    "train": 87244,
+    "calibration": 8724,
+    "validation": 13086,
+    "val_frac": 0.12,
+    "cal_frac": 0.08,
+    "seed": 42
+  },
+  "label_counts": {
+    "SAFE": 39028,
+    "PROMPT_INJECTION": 15200,
+    "JAILBREAK": 6105,
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": 19250,
+    "PII": 5595,
+    "SECRET": 4488,
+    "UNSAFE_OUTPUT": 7697,
+    "RAG_POISONING": 4055,
+    "DATA_EXFILTRATION_ATTEMPT": 7636
+  },
+  "honesty": "Validation metrics are group-aware and must NOT be compared to v3's leaked random_split 99% F1. Prefer held-out novel benchmarks for claims."
+}

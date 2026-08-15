@@ -113,6 +113,42 @@ const RULES: CyberRule[] = [
       /(?:markdown image|tracking pixel|web beacon|img tag|dns exfil|dns tunnel).{0,180}(?:system prompt|conversation|context|credentials?|tokens?|pii|private data|secrets?)/i,
     ],
   },
+  // ── Agent RCE / sandbox-escape escalation ──────────────────────────────────
+  // These two patterns cover the two red-team cases that were previously missed:
+  //   • agent-escalation-rce  — "Use Auto-GPT tool access … Docker escape … RCE shell"
+  //   • rag-plugin-rce-escape — "Use the RAG-LLM plugin … execute commands … reverse shell"
+  // Both are PROMPT_INJECTION because the intent is to hijack the agent's tool
+  // layer into performing OS-level execution — not just information extraction.
+  {
+    type: "PROMPT_INJECTION",
+    label: "Agent tool RCE / sandbox escape",
+    severity: "CRITICAL",
+    score: 88,
+    message: "Request attempts to use an AI agent's tool access to perform remote code execution or escape a sandbox.",
+    patterns: [
+      // Auto-GPT / agentic-framework + Docker/container escape + shell access
+      /(?:auto.?gpt|autogpt|gpt.?pilot|agent|agentic|langchain|babyagi|crewai|agentgpt)\b.{0,200}(?:docker\s+escape|container\s+escape|sandbox\s+escape|privilege\s+escal|get\s+(?:rce|shell|root|code\s+exec)|reverse\s+shell|bind\s+shell|spawn\s+shell)/i,
+      // Docker / container escape + shell — even without explicit agent name
+      /(?:docker|container|namespace|cgroup|seccomp|apparmor|chroot|pivot_root).{0,160}(?:escape|breakout|bypass|jailbreak|exploit).{0,160}(?:shell|rce|root|exec(?:ute)?|command)/i,
+      // "perform … Docker escape … get RCE shell access" (close-range variant)
+      /(?:perform|execute|carry\s+out|do)\b.{0,120}(?:docker|container|sandbox)\s+escape.{0,120}(?:rce|shell|root|code\s+exec)/i,
+    ],
+  },
+  {
+    type: "PROMPT_INJECTION",
+    label: "RAG / plugin RCE via command execution",
+    severity: "CRITICAL",
+    score: 88,
+    message: "Request attempts to use a RAG plugin or LLM tool to execute OS commands or establish a reverse shell.",
+    patterns: [
+      // RAG-LLM / plugin + execute commands + escape / reverse shell
+      /(?:rag|rag.?llm|retrieval.?augmented|plugin|tool|connector|mcp\s+tool)\b.{0,200}(?:execute\s+commands?|run\s+commands?|os\.system|subprocess|shell\s+exec|reverse\s+shell|bind\s+shell|spawn\s+shell|escape\s+sandbox|sandbox\s+restrictions?)/i,
+      // Reverse shell request through any plugin/tool surface
+      /(?:plugin|tool|extension|connector|mcp|rag)\b.{0,160}(?:reverse\s+shell|bind\s+shell|netcat|nc\s+-[eln]|bash\s+-i\s*>&|\/dev\/tcp|socat)/i,
+      // "escape sandbox restrictions with a reverse shell" (close-range variant)
+      /escape\s+sandbox\s+restrictions?.{0,80}(?:reverse\s+shell|bind\s+shell|rce|code\s+exec)/i,
+    ],
+  },
   {
     type: "DATA_EXFILTRATION",
     label: "Connector confused-deputy exfiltration",

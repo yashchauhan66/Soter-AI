@@ -50,7 +50,10 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN apk add --no-cache openssl ca-certificates && \
+# libc6-compat is REQUIRED at runtime, not just at build time: onnxruntime-node
+# ships a glibc-linked libonnxruntime.so.1, and Alpine is musl. Without this the
+# ML tier throws on load and the guard silently falls back to rules-only.
+RUN apk add --no-cache libc6-compat openssl ca-certificates && \
     addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
@@ -61,6 +64,12 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 # Copy Prisma schema + migrations for runtime
 COPY --from=builder /app/prisma ./prisma
+
+# Copy ML models for ONNX runtime inference (90MB+ LFS files)
+COPY --from=builder /app/models ./models
+
+# Copy security artifacts (model trust store, capability registry)
+COPY --from=builder /app/artifacts/security ./artifacts/security
 
 USER nextjs
 

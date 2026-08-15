@@ -22,6 +22,12 @@ const os = require("os");
 const path = require("path");
 
 const extensionRoot = path.resolve(__dirname, "..");
+const extensionUnderTest = process.env.SOTERAI_EXTENSION_UNDER_TEST
+    ? path.resolve(process.env.SOTERAI_EXTENSION_UNDER_TEST)
+    : extensionRoot;
+const extensionTestsPath = process.env.SOTERAI_EXTENSION_TESTS_PATH
+    ? path.resolve(process.env.SOTERAI_EXTENSION_TESTS_PATH)
+    : path.join(extensionRoot, "dist-test", "host", "index.js");
 
 // Pinned so a host result is reproducible. Bump deliberately, not incidentally:
 // raising this is a claim that the panel was verified on the newer host.
@@ -75,7 +81,15 @@ function hostVersion(codeBin) {
 async function main() {
     const { bin: codeBin, source } = await resolveHost();
 
-    console.log(`host: ${codeBin}\nsource: ${source}\nversion: ${hostVersion(codeBin)}\n`);
+    console.log(
+        `host: ${codeBin}\nsource: ${source}\nversion: ${hostVersion(codeBin)}\n` +
+        `extension under test: ${extensionUnderTest}\n` +
+        `extension tests: ${extensionTestsPath}\n`,
+    );
+
+    if (!fs.existsSync(extensionTestsPath)) {
+        throw new Error(`Extension test bundle does not exist: ${extensionTestsPath}`);
+    }
 
     // A throwaway profile so the run never touches the developer's real
     // settings, extensions or window state — and so settings a test writes are
@@ -85,8 +99,8 @@ async function main() {
     const workspaceDir = fs.mkdtempSync(path.join(os.tmpdir(), "soterai-host-ws-"));
 
     const args = [
-        "--extensionDevelopmentPath=" + extensionRoot,
-        "--extensionTestsPath=" + path.join(extensionRoot, "dist-test", "host", "index.js"),
+        "--extensionDevelopmentPath=" + extensionUnderTest,
+        "--extensionTestsPath=" + extensionTestsPath,
         "--user-data-dir=" + userDataDir,
         "--extensions-dir=" + extensionsDir,
         "--disable-extensions",
@@ -99,10 +113,22 @@ async function main() {
         workspaceDir,
     ];
 
+    // ELECTRON_RUN_AS_NODE must not reach the host. When this script is launched
+    // from inside a VS Code integrated terminal or extension host, that variable
+    // is already set in the environment, and it makes Code.exe start as a plain
+    // Node process — which then rejects every VS Code flag
+    // ("bad option: --extensionDevelopmentPath") and exits 9. The failure looks
+    // like a broken runner rather than an inherited variable, so strip it here.
+    const hostEnv = { ...process.env, ELECTRON_ENABLE_LOGGING: "1", SOTERAI_HOST_TEST: "1" };
+    delete hostEnv.ELECTRON_RUN_AS_NODE;
+
     const result = spawnSync(codeBin, args, {
         stdio: "inherit",
-        env: { ...process.env, ELECTRON_ENABLE_LOGGING: "1", SOTERAI_HOST_TEST: "1" },
-        timeout: 240000,
+        env: hostEnv,
+        // The feature suites finish well inside four minutes. The all-commands
+        // sweep needs longer, so it raises this rather than every run paying for
+        // it — a generous default would turn a genuine hang into a long wait.
+        timeout: Number(process.env.SOTERAI_HOST_TIMEOUT_MS) || 240000,
     });
 
     // Best-effort cleanup. On Windows the host's own log files can still be

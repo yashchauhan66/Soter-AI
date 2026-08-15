@@ -60,11 +60,71 @@ export type MlAugmentMode = "off" | "shadow" | "enforce";
 // exactly the over-defense trade this gate exists to avoid. On OUTPUT the
 // exfiltration/unsafe classes ARE meaningful (a leaked secret or unsafe payload
 // in a model reply), so the label restriction does not apply there.
-const INPUT_RELIABLE_LABELS = new Set<string>([
+//
+// MEASURED EXPANSION (2026-08-08): v7 on crossdist-eval-v3 (3,987 rows, stratified
+// sample, 3,069 attacks / 918 benign; artifacts/ml/crossdist-v7-{baseline,newdefault}.json).
+//   3-label allowlist ... rules+ML 63.80% recall / 5.23% FPR (rescued 667, +4 FPs)
+//   6-label allowlist ... rules+ML 77.39% recall / 5.23% FPR (rescued 1,084, +4 FPs)
+// +13.59 pts recall for +0 pts FPR — the SAME 4 ML-caused false positives, 48/918 in
+// both runs. The gate was refusing 417 attacks the model had already caught and buying
+// nothing: `label-family` fell from 544 misses to 0.
+//
+// The gain is entirely PII (38.88% -> 83.91%, +45.03 pts). Every other label is
+// byte-identical across the two runs, benign FPR included, so this is not a
+// precision/recall trade — it is one label the gate was suppressing outright.
+//
+// HONESTY BOUND — what is NOT measured here: this eval set contains no SECRET and no
+// RAG_POISONING rows. Those two are admitted on the FPR half of the evidence only (they
+// caused no new benign false positive on 918 rows); their recall benefit is UNMEASURED,
+// not demonstrated. Narrow this list to PROMPT_INJECTION,JAILBREAK,
+// SYSTEM_PROMPT_LEAK_ATTEMPT,PII via the override if that matters for a deployment.
+// PII on INPUT is also covered by piiDetector/indiaPiiDetector in the rules tier
+// (analyze.ts:110), so this measures what the model ADDS over the ~39% regex baseline,
+// not whether PII is guarded at all.
+//
+// The override (SOTERAI_ML_INPUT_TRUSTED_LABELS) remains so further widening stays a
+// measurement rather than an argument — the per-label margin loosening above was
+// measured the same way and REJECTED.
+// THIS DEFAULT IS COUPLED TO v7 — DO NOT CARRY IT BACK TO AN OLDER MODEL.
+// The same 6-label gate measured on the SAME 3,987 rows
+// (artifacts/ml/crossdist-v4-newdefault.json):
+//   v7 ... 77.39% recall / 5.23% FPR ... ML added   4 false positives
+//   v4 ... 51.29% recall / 8.17% FPR ... ML added  31 false positives
+// So widening is free on v7 and costs +3.38 pts FPR on v4. It is the calibration
+// (ECE 0.0060 vs 0.0170) that makes PII/SECRET/RAG predictions trustworthy enough to
+// escalate, not the label set. If ML_ONNX_MODEL_PATH is ever rolled back to v4 or
+// earlier, set SOTERAI_ML_INPUT_TRUSTED_LABELS back to the three-label list, or the
+// rollback silently converts a measured-safe default into a measured-harmful one.
+const DEFAULT_INPUT_RELIABLE_LABELS = [
   "PROMPT_INJECTION",
   "JAILBREAK",
   "SYSTEM_PROMPT_LEAK_ATTEMPT",
-]);
+  "PII",
+  "SECRET",
+  "RAG_POISONING",
+] as const;
+
+function resolveInputReliableLabels(): Set<string> {
+  const raw = (process.env.SOTERAI_ML_INPUT_TRUSTED_LABELS ?? "").trim();
+  if (!raw) return new Set<string>(DEFAULT_INPUT_RELIABLE_LABELS);
+  const parsed = raw
+    .split(",")
+    .map((s) => s.trim().toUpperCase())
+    .filter(Boolean);
+  // An unparseable or empty override must not silently disable the gate entirely,
+  // which would admit the ~18% over-defense this gate exists to hold out.
+  return parsed.length ? new Set<string>(parsed) : new Set<string>(DEFAULT_INPUT_RELIABLE_LABELS);
+}
+
+// Memoized rather than resolved at module load: a test or benchmark that sets the
+// env var in beforeEach would otherwise silently get the default, and the run would
+// look like a measurement of the override when it measured the baseline. Cleared by
+// __resetMlBackendForTests alongside the backend.
+let cachedInputReliableLabels: Set<string> | undefined;
+
+function inputReliableLabels(): Set<string> {
+  return (cachedInputReliableLabels ??= resolveInputReliableLabels());
+}
 
 // The model may escalate only when the semantic classifier does NOT judge the
 // text closer to a benign prototype than to any attack prototype. Tunable via
@@ -101,7 +161,7 @@ function resolveSemanticMarginGate(): number {
  * prediction should be trusted enough to escalate to human review.
  */
 function passesPrecisionGate(label: string, direction: GuardDirection, text: string): boolean {
-  if (direction === "INPUT" && !INPUT_RELIABLE_LABELS.has(label)) return false;
+  if (direction === "INPUT" && !inputReliableLabels().has(label)) return false;
   let benignBySemantic = false;
   try {
     const s = classifySemantic(text);
@@ -156,6 +216,7 @@ function getBackend(): ONNXClassifierBackend | null {
 /** Test seam: reset the cached backend (used by benchmarks/tests). */
 export function __resetMlBackendForTests(): void {
   cachedBackend = undefined;
+  cachedInputReliableLabels = undefined;
 }
 
 /**
@@ -265,7 +326,7 @@ export async function augmentWithMl(
     // re-reads of values already computed — no second classifySemantic call, and no
     // influence on isAttack. Attribution only: a miss that came from abstention and
     // a miss that came from the label filter need different fixes.
-    const labelTrusted = direction !== "INPUT" || INPUT_RELIABLE_LABELS.has(effectiveLabel);
+    const labelTrusted = direction !== "INPUT" || inputReliableLabels().has(effectiveLabel);
     const gatedBy: MlGateReason | undefined = isAttack
       ? undefined
       : effectiveLabel === "SAFE"

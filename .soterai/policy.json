@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "mode": "standard",
+  "protectedFiles": [
+    ".env",
+    ".env.*",
+    "**/*.pem",
+    "**/*.key",
+    "**/id_rsa",
+    "**/credentials",
+    "**/secrets.*",
+    "**/customer-*.csv",
+    "**/production*.json"
+  ],
+  "sensitivePaths": [
+    "src/auth/**",
+    "src/payments/**",
+    "infra/**",
+    "prisma/schema.prisma"
+  ],
+  "aiContext": {
+    "defaultAction": "warn",
+    "protectedFileAction": "block",
+    "sensitivePathAction": "approval_required",
+    "allowSessionMinutes": 30
+  },
+  "cloud": {
+    "enabled": false,
+    "sendRawContent": false
+  }
+}

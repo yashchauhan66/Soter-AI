@@ -1,9 +1,10 @@
 import { z } from "zod";
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { authenticateApiKeyRequest } from "@/lib/apiKeyMiddleware";
-import { DEFAULT_RPM } from "@/lib/guard/constants";
 import { sanitizeLogText, sanitizeMetadata } from "@/lib/guard/logSafety";
-import { checkRedisRateLimit } from "@/lib/rateLimit";
+import { toPublicGuardResult } from "@/lib/guard/publicResult";
+import { createRateLimitResult } from "@/lib/guard/rateLimitResult";
+import { checkRedisRateLimit, planRpm } from "@/lib/rateLimit";
 import { db } from "@/lib/db";
 import { checkAgentPassportForAction } from "@/lib/agent-passport/server";
 import {
@@ -132,21 +133,40 @@ type AgentManifestInput = {
 export async function authenticateAgentFirewall(request: Request) {
   const authenticated = await authenticateApiKeyRequest(request);
   if (!authenticated.ok) return authenticated;
-  const { apiKey } = authenticated.auth;
-  const rateLimit = await checkRedisRateLimit(`agent-firewall:key:${apiKey.id}`, DEFAULT_RPM);
+  const { apiKey, project } = authenticated.auth;
+  // Plan-aware, matching /api/guard/input. A flat DEFAULT_RPM (60) here was a
+  // 50x cliff for paid plans: every /api/agent/**, /api/lineage/**,
+  // /api/intent/**, /api/tool-chain/**, /api/memory/** and semantic-egress
+  // route authenticates through this function (advanced-security re-exports it
+  // as authenticateAdvancedSecurity), so an ENTERPRISE customer paying for
+  // 3,000 RPM was capped at 60 on all of them while /api/guard/input honoured
+  // the full 3,000. Universal Guard felt it worst: it fans out 6 calls per
+  // item, 4 of which land here, so the flat bucket drained 4x faster and
+  // capped throughput at ~15 items/min on every plan.
+  const rpmLimit = planRpm(project.plan);
+  const rateLimit = await checkRedisRateLimit(`agent-firewall:key:${apiKey.id}`, rpmLimit);
   if (!rateLimit.allowed) {
+    const result = createRateLimitResult(
+      "Agent Firewall per-minute rate limit exceeded. Do not execute the planned action; retry after the rate-limit window resets.",
+    );
     return {
       ok: false as const,
       response: jsonResponse({
+        ...toPublicGuardResult(result),
         error: true,
+        // Retained for backwards compatibility: agent clients fail closed on
+        // `decision`, and a throttle must keep halting the action. What changes
+        // is that `riskTypes: ["RATE_LIMIT"]` now travels with it, so a throttle
+        // is finally distinguishable from a genuine security block. The old
+        // `riskLevel: "HIGH"` is deliberately gone — it made every 429 look like
+        // a high-risk detection in logs and dashboards, which is why these were
+        // being reported as false blocks.
         decision: "BLOCK",
-        riskLevel: "HIGH",
-        reason: "Agent Firewall rate limit exceeded. Do not execute the planned action; retry after the rate-limit window resets.",
       }, {
         status: 429,
         headers: {
           "Retry-After": String(Math.max(1, Math.ceil((rateLimit.resetAt - Date.now()) / 1000))),
-          "X-RateLimit-Limit": String(DEFAULT_RPM),
+          "X-RateLimit-Limit": String(rpmLimit),
           "X-RateLimit-Remaining": String(rateLimit.remaining),
         },
       }),

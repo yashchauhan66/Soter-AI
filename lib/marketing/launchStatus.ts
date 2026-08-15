@@ -27,8 +27,8 @@ export const productStatus: Array<{
   href: string;
 }> = [
   { name: "API Guard", status: "Stable", copy: "Input, output, RAG, and grounding checks for server-side AI apps.", cta: "Try API", href: "/docs/rest-api" },
-  { name: "Browser Guard", status: "Beta", copy: "Extension-based visibility and control for AI use in browser workflows.", cta: "Install browser extension", href: "/dashboard/browser-extension" },
-  { name: "VS Code Guard", status: "Beta", copy: "Developer-side scanning for prompts, files, secrets, and AI assistant context.", cta: "Install VS Code Extension", href: "/vscode-ai-security" },
+  { name: "Browser Guard", status: "Beta", copy: "Extension-based visibility and control for AI use in browser workflows.", cta: "Install browser extension", href: "/extensions/browser" },
+  { name: "IDE Guard", status: "Beta", copy: "Secure AI-assisted development across all major IDEs.", cta: "Install IDE Guard", href: "/extensions/ide" },
   { name: "n8n Guard", status: "Beta", copy: "Guard nodes for workflow builders who need AI checks inside automation.", cta: "Add n8n Node", href: "/docs/n8n" },
   { name: "MCP / Agent Guard", status: "Labs", copy: "Risk review for MCP tools and agent actions before sensitive operations execute.", cta: "Review agent controls", href: "/mcp-security" },
   { name: "Audit Evidence", status: "Stable", copy: "Redacted logs, signed exports, benchmark evidence, and trust-review artifacts.", cta: "View trust center", href: "/trust" },

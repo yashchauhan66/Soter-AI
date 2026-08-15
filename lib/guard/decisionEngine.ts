@@ -83,6 +83,15 @@ export interface DecisionContext {
    * the difference between a user's own instruction and an injected one.
    */
   provenance?: ContentProvenance;
+  /**
+   * Optional topical scope for this tenant/assistant. Supplying either field
+   * turns on the advisory OFF_TOPIC guard in `analyzeText`; omitting both leaves
+   * it a no-op. See lib/guard/detectors/topicalAlignmentDetector.ts.
+   */
+  allowedTopics?: string[];
+  systemPromptContext?: string;
+  /** Coverage below this is reported as OFF_TOPIC. Defaults to 0.25. */
+  minTopicRelevance?: number;
 }
 
 interface SignalRule {
@@ -198,6 +207,19 @@ const SIGNALS: Partial<Record<RiskType, SignalRule>> = {
   BEHAVIORAL_ANOMALY: {
     floor: "HUMAN_REVIEW",
     why: "a deviation from the session's own baseline is evidence, not proof",
+  },
+
+  // ── Held, but never escalated by provenance ──
+  //   SQL/XSS/shell syntax attacks a database, a browser, or an OS — not the
+  //   model. It is held because forwarding a live payload to a downstream tool is
+  //   a real risk, but it is deliberately NOT instructionBearing: a `DROP TABLE`
+  //   in a retrieved document is not an instruction the model might obey, so the
+  //   indirect-provenance escalation that exists for overrides does not apply.
+  //   Before this entry these payloads were typed PROMPT_INJECTION, which both
+  //   mislabelled them and inherited that escalation.
+  CODE_INJECTION: {
+    floor: "HUMAN_REVIEW",
+    why: "an executable payload is held before it reaches a database, browser, or shell",
   },
 
   // ── Deliberately left to the score bands ──

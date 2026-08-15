@@ -340,6 +340,63 @@ describe("OpenAI-compatible proxy", () => {
         });
     });
 
+    it("turns OpenAI sensitive-word rejections into a stable sanitized safety error", async () => {
+        const providerRequestId = "provider-request-id-must-not-leak";
+        const providerPayload = {
+            message: `500 sensitive words detected (request id: ${providerRequestId})`,
+            status: 500,
+            code: "sensitive_words_detected",
+            modelId: "provider-internal-model",
+            providerId: "openai",
+            details: {
+                message: `sensitive words detected (request id: ${providerRequestId})`,
+                type: "new_api_error",
+                code: "sensitive_words_detected",
+            },
+        };
+        const fetchImpl: typeof fetch = async () => new Response(JSON.stringify(providerPayload), {
+            status: 500,
+            headers: { "content-type": "application/json" },
+        });
+        await withBroker({ openAIProviderUrl: "https://provider.invalid", providerApiKey: "local-key", fetchImpl }, async (url) => {
+            const response = await request(url, "/v1/ai/openai-compatible/chat/completions", {
+                method: "POST",
+                body: JSON.stringify({ model: "mock", messages: [{ role: "user", content: "Summarize the policy document." }] }),
+            });
+            const raw = await response.text();
+            const payload = JSON.parse(raw) as { error: { code: string; message: string; details: Record<string, unknown> } };
+            assert.equal(response.status, 422);
+            assert.equal(payload.error.code, "provider_safety_rejected");
+            assert.match(payload.error.message, /provider rejected|content-safety policy/i);
+            assert.equal(payload.error.details.providerCode, "sensitive_words_detected");
+            assert.equal(payload.error.details.retryable, false);
+            assert.equal(raw.includes(providerRequestId), false);
+            assert.equal(raw.includes("provider-internal-model"), false);
+            assert.equal(raw.includes("new_api_error"), false);
+        });
+    });
+
+    it("sanitizes the same provider safety rejection before streaming starts", async () => {
+        const providerRequestId = "stream-provider-id-must-not-leak";
+        const fetchImpl: typeof fetch = async () => new Response(JSON.stringify({
+            error: {
+                code: "sensitive_words_detected",
+                message: `sensitive words detected (${providerRequestId})`,
+            },
+        }), { status: 500, headers: { "content-type": "application/json" } });
+        await withBroker({ openAIProviderUrl: "https://provider.invalid", providerApiKey: "local-key", fetchImpl }, async (url) => {
+            const response = await request(url, "/v1/ai/openai-compatible/chat/completions", {
+                method: "POST",
+                body: JSON.stringify({ stream: true, model: "mock", messages: [{ role: "user", content: "Summarize this document." }] }),
+            });
+            const raw = await response.text();
+            assert.equal(response.status, 422);
+            assert.equal((JSON.parse(raw) as { error: { code: string } }).error.code, "provider_safety_rejected");
+            assert.equal(raw.includes(providerRequestId), false);
+            assert.doesNotMatch(response.headers.get("content-type") ?? "", /text\/event-stream/);
+        });
+    });
+
     it("flags a dangerous mocked provider response", async () => {
         const fetchImpl: typeof fetch = async () => new Response(JSON.stringify({ choices: [{ message: { content: "Run rm -rf / as root" } }] }), { headers: { "content-type": "application/json" } });
         await withBroker({ openAIProviderUrl: "https://provider.invalid", providerApiKey: "local-key", fetchImpl }, async (url) => {
@@ -520,4 +577,96 @@ describe("Phase 6 streaming proxy", () => {
         );
     });
 });
+
+/**
+ * The rate limiter shipped with no tests, and it cost users their protection.
+ *
+ * Every path — including /health, /version and /v1/safe-mode/status — was
+ * charged against one 120/minute per-address budget. The only client that polls
+ * those three is the editor extension that owns this broker: its status check
+ * costs two requests, its idle heartbeat costs 24 a minute, and one start()
+ * costs up to 60. So the extension exhausted the budget on itself, the broker
+ * answered 429, the extension read that as "no broker is running", and spawned a
+ * second one that could not bind the port. The user saw "Local AI Broker did not
+ * become ready". The client was its own attacker.
+ *
+ * These tests pin the shape of the fix, not just the symptom: liveness gets its
+ * own budget, real work keeps the old one, and neither is unmetered. Bursts are
+ * far larger than the limits under test so a minute rollover mid-test cannot
+ * flip a verdict.
+ */
+describe("Local AI Broker rate limiting", () => {
+    const LIVENESS = ["/health", "/version", "/v1/safe-mode/status"];
+
+    it("does not spend the request budget on the editor's own liveness polling", async () => {
+        await withBroker({ rateLimitPerMinute: 5 }, async (url) => {
+            const polled: number[] = [];
+            for (let i = 0; i < 24; i++) {
+                polled.push((await request(url, LIVENESS[i % LIVENESS.length])).status);
+            }
+            assert.deepEqual(
+                polled.filter((status) => status === 429),
+                [],
+                "liveness polling at heartbeat volume must not lock the client out",
+            );
+
+            // The real damage: work the user asked for, refused because the
+            // extension had already spent the budget checking whether the
+            // broker was alive.
+            const scans: number[] = [];
+            for (let i = 0; i < 5; i++) {
+                scans.push(
+                    (await request(url, "/v1/scan", { method: "POST", body: JSON.stringify({ content: `explain snippet ${i}` }) })).status,
+                );
+            }
+            assert.deepEqual(scans, [200, 200, 200, 200, 200]);
+        });
+    });
+
+    it("still rate limits the endpoints that do work", async () => {
+        await withBroker({ rateLimitPerMinute: 3 }, async (url) => {
+            const statuses: number[] = [];
+            for (let i = 0; i < 12; i++) {
+                statuses.push(
+                    (await request(url, "/v1/scan", { method: "POST", body: JSON.stringify({ content: `flood ${i}` }) })).status,
+                );
+            }
+            assert.ok(statuses.includes(429), `expected a 429 in ${statuses.join(",")}`);
+            const refused = await request(url, "/v1/scan", { method: "POST", body: JSON.stringify({ content: "flood" }) });
+            assert.equal(refused.status, 429);
+            assert.equal((await refused.json() as { error: { code: string } }).error.code, "rate_limited");
+        });
+    });
+
+    it("meters liveness on its own budget instead of exempting it", async () => {
+        // Exempting liveness would pass the first test too, and would hand an
+        // unauthenticated caller a free unbounded endpoint: /health needs no
+        // token. The budget is raised, not removed.
+        await withBroker({ livenessRateLimitPerMinute: 3 }, async (url) => {
+            const statuses: number[] = [];
+            for (let i = 0; i < 12; i++) statuses.push((await request(url, "/health", {}, "")).status);
+            assert.ok(statuses.includes(429), `expected a 429 in ${statuses.join(",")}`);
+        });
+    });
+
+    it("keeps the two budgets independent, so exhausting one leaves the other usable", async () => {
+        // Exhausting liveness must not refuse the user's work.
+        await withBroker({ livenessRateLimitPerMinute: 3 }, async (url) => {
+            for (let i = 0; i < 12; i++) await request(url, "/health", {}, "");
+            const scan = await request(url, "/v1/scan", { method: "POST", body: JSON.stringify({ content: "still works" }) });
+            assert.equal(scan.status, 200);
+        });
+
+        // And exhausting work must not blind the extension: reporting a live
+        // broker as dead is the failure this whole block exists to prevent.
+        await withBroker({ rateLimitPerMinute: 3 }, async (url) => {
+            for (let i = 0; i < 12; i++) {
+                await request(url, "/v1/scan", { method: "POST", body: JSON.stringify({ content: `flood ${i}` }) });
+            }
+            assert.equal((await request(url, "/health", {}, "")).status, 200);
+            assert.equal((await request(url, "/version")).status, 200);
+        });
+    });
+});
+
 

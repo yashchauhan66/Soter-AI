@@ -2,14 +2,14 @@
     "name": "soterai-ide-guard",
     "displayName": "SoterAI IDE Guard — Local AI Security",
     "description": "Protect secrets, prompts, MCP tools, terminal commands, and AI coding context locally before they reach AI.",
-    "version": "0.4.0",
+    "version": "0.5.0",
     "publisher": "soterai",
     "preview": false,
     "pricing": "Free",
-    "icon": "media/icon.png",
+    "icon": "media/Bestlogo.png",
     "galleryBanner": {
-        "color": "#0B1020",
-        "theme": "dark"
+        "color": "#F96403",
+        "theme": "light"
     },
     "engines": {
         "vscode": "^1.85.0"
@@ -46,11 +46,11 @@
     "license": "SEE LICENSE IN LICENSE.md",
     "repository": {
         "type": "git",
-        "url": "https://github.com/yashchauhan66/Ai-Security-Guard.git",
+        "url": "https://github.com/yashchauhan66/Soter-AI.git",
         "directory": "packages/vscode-extension"
     },
     "bugs": {
-        "url": "https://github.com/yashchauhan66/Ai-Security-Guard/issues"
+        "url": "https://github.com/yashchauhan66/Soter-AI/issues"
     },
     "homepage": "https://soterai.in/vscode-ai-security",
     "qna": "https://soterai.in/support",
@@ -87,6 +87,7 @@
                 "soterai.mcpFirewall.strictMode",
                 "soterai.liveScan.enabled",
                 "soterai.protection.enabled",
+                "soterai.autoVaultMigration.enabled",
                 "soterai.dependencyGuard.osvMode"
             ]
         }
@@ -130,7 +131,7 @@
             },
             {
                 "command": "soterai.runDemoScan",
-                "title": "Run Demo Scan",
+                "title": "Run Safe Demo Scan",
                 "category": "SoterAI"
             },
             {
@@ -316,6 +317,26 @@
             {
                 "command": "soterai.migrateSecretsToVault",
                 "title": "Migrate Secrets to Protected Vault",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.migrateCurrentFileToVault",
+                "title": "Migrate Current File Secrets to Vault",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.autoMigrateWorkspace",
+                "title": "Protect Workspace Secrets",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showFileReadLog",
+                "title": "Show AI Agent File-Read Access Log",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.clearFileReadLog",
+                "title": "Clear AI Agent File-Read Access Log",
                 "category": "SoterAI"
             },
             {
@@ -795,7 +816,7 @@
             },
             {
                 "command": "soterai.secureAllAI",
-                "title": "🛡️ Secure My AI — One Click (find & protect Cline, Claude Code, Copilot, all providers)",
+                "title": "Secure Installed AI Tools (One Click)",
                 "category": "SoterAI"
             },
             {
@@ -830,7 +851,7 @@
             },
             {
                 "command": "soterai.restoreAIConfigs",
-                "title": "Restore AI Configs (undo Secure My AI)",
+                "title": "Undo AI Tool Security Changes",
                 "category": "SoterAI"
             },
             {
@@ -870,7 +891,7 @@
             },
             {
                 "command": "soterai.checkBeforeSendingToAI",
-                "title": "Check Before Sending to AI",
+                "title": "Scan Before Sending to AI",
                 "category": "SoterAI"
             },
             {
@@ -1076,6 +1097,18 @@
                     "description": "Show a one-time warning when a raw VS Code terminal opens because raw terminal input is outside SoterAI broker enforcement. The warning offers the broker-controlled terminal route.",
                     "scope": "machine"
                 },
+                "soterai.secretInterceptor.enabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Monitor sensitive documents opened in VS Code and offer encrypted vault migration. This is visibility only: VS Code does not expose the caller or an awaitable file-read interception hook. Vault migration removes detected plaintext from disk for editor and CLI agents.",
+                    "scope": "machine"
+                },
+                "soterai.autoVaultMigration.enabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable AutoVaultMigration: scan the workspace on startup for sensitive files (.env*, *.pem, etc.) that contain raw secrets and offer to migrate them to the encrypted vault. This is the only protection that works against CLI-based agents (Claude Code, Codex) that read files directly from disk.",
+                    "scope": "machine"
+                },
                 "soterai.sentinel.enabled": {
                     "type": "boolean",
                     "default": false,
@@ -1139,6 +1172,58 @@
         },
         "menus": {
             "commandPalette": [
+                {
+                    "command": "soterai.quickStart",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.checkExtensionHealth",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.openPrivacyGuarantee",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.openSettings",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.scanSelectedText",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.buildSafePromptForAI",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.runSecretBrokerDemo",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.openLocalPrivacyStatus",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.reviewTerminalCommand",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.scanMCPAgentTools",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.openAIActivityLedger",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.generateCanaryToken",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.choosePolicyPack",
+                    "when": "soterai.advancedCommands"
+                },
                 {
                     "command": "soterai.scanClipboardAICode",
                     "when": "soterai.advancedCommands"
@@ -1277,6 +1362,18 @@
                 },
                 {
                     "command": "soterai.migrateSecretsToVault",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.migrateCurrentFileToVault",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showFileReadLog",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.clearFileReadLog",
                     "when": "soterai.advancedCommands"
                 },
                 {
@@ -1689,23 +1786,12 @@
             {
                 "id": "soterai.gettingStarted",
                 "title": "Get started with SoterAI Guard",
-                "description": "Protect secrets, prompts, and AI context in five quick steps — local-first, no setup required.",
+                "description": "See a real security result, protect project secrets, then connect supported AI tools — all local by default.",
                 "steps": [
                     {
-                        "id": "privacyMode",
-                        "title": "Choose your privacy mode",
-                        "description": "SoterAI is local-first. Pick a mode — you can change it anytime.\n[Choose Privacy Mode](command:soterai.quickStart)",
-                        "media": {
-                            "markdown": "media/walkthrough/privacy.md"
-                        },
-                        "completionEvents": [
-                            "onCommand:soterai.quickStart"
-                        ]
-                    },
-                    {
                         "id": "demoScan",
-                        "title": "Run a safe demo scan",
-                        "description": "See a verdict, risk score, and redacted output on a built-in sample.\n[Run Demo Scan](command:soterai.runDemoScan)",
+                        "title": "See your first safety result",
+                        "description": "Run a safe built-in example. You will see a verdict, a reason, and a redacted copy without sharing any real code.\n[Run Safe Demo](command:soterai.runDemoScan)",
                         "media": {
                             "markdown": "media/walkthrough/demo.md"
                         },
@@ -1714,37 +1800,25 @@
                         ]
                     },
                     {
-                        "id": "scanSelection",
-                        "title": "Scan before you send to AI",
-                        "description": "Highlight code or a prompt, then scan it for secrets, PII, and injection.\n[Scan Selected Text](command:soterai.scanSelectedText)",
+                        "id": "protectWorkspace",
+                        "title": "Protect workspace secrets",
+                        "description": "Find raw secrets in sensitive files, review the list, and replace only approved values with safe placeholders on disk.\n[Protect Workspace Secrets](command:soterai.autoMigrateWorkspace)",
                         "media": {
-                            "markdown": "media/walkthrough/scan.md"
+                            "markdown": "media/walkthrough/vault.md"
                         },
                         "completionEvents": [
-                            "onCommand:soterai.scanSelectedText"
+                            "onCommand:soterai.autoMigrateWorkspace"
                         ]
                     },
                     {
-                        "id": "policyPack",
-                        "title": "Pick a policy pack",
-                        "description": "One-click strictness tuned to how your team works.\n[Choose Policy Pack](command:soterai.choosePolicyPack)",
+                        "id": "secureAiTools",
+                        "title": "Secure supported AI tools",
+                        "description": "Find supported AI client configs, review every proposed routing change, and keep encrypted backups outside your project.\n[Secure Installed AI Tools](command:soterai.secureAllAI)",
                         "media": {
-                            "markdown": "media/walkthrough/policy.md"
+                            "markdown": "media/walkthrough/integrate.md"
                         },
                         "completionEvents": [
-                            "onCommand:soterai.choosePolicyPack"
-                        ]
-                    },
-                    {
-                        "id": "explore",
-                        "title": "Explore the sidebar",
-                        "description": "Live risk score, latest findings, and status — all in one place.\n[Open SoterAI Guard](command:workbench.view.extension.soterai-explorer)",
-                        "media": {
-                            "markdown": "media/walkthrough/explore.md"
-                        },
-                        "completionEvents": [
-                            "onCommand:soterai.checkExtensionHealth",
-                            "onView:soterai-project-risk"
+                            "onCommand:soterai.secureAllAI"
                         ]
                     }
                 ]
@@ -1756,7 +1830,9 @@
         "lint": "npm run typecheck",
         "test": "node --import tsx --test src/__tests__/**/*.test.ts",
         "test:host": "node esbuild.js && node esbuild.host-tests.js && node scripts/run-host-tests.js",
-    "test:host:floor": "node scripts/run-host-floor.js",
+        "test:host:floor": "node scripts/run-host-floor.js",
+        "test:host:sweep": "node scripts/run-host-sweep.js",
+        "test:host:coverage": "node scripts/host-command-coverage.mjs",
         "build": "npm run bundle",
         "bundle": "node esbuild.js --production",
         "vscode:prepublish": "npm run bundle",

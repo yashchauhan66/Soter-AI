@@ -29,10 +29,15 @@ import { harmfulContentRequestDetector } from "./detectors/harmfulContentRequest
 import { broadHarmfulContentDetector } from "./detectors/broadHarmfulContentDetector";
 import { generalizedIntentDetector } from "./detectors/generalizedIntentDetector";
 import { adversarialCyberDetector } from "./detectors/adversarialCyberDetector";
+import { codeInjectionDetector } from "./detectors/codeInjectionDetector";
+import { academicPretextDetector } from "./detectors/academicPretextDetector";
+import { topicalAlignmentDetector } from "./detectors/topicalAlignmentDetector";
 import { decideGuardAction, type DecisionContext } from "./decisionEngine";
+import { fuseEvidence } from "./evidenceFusion";
+import { RULE_PRECISION } from "./generated/rulePrecisionTable";
 import { redactText } from "./redactor";
 import { rewriteRiskyText } from "./rewrite";
-import { scoreRisk } from "./riskScoring";
+import { categoryConfidence, primaryRiskType, scoreRisk } from "./riskScoring";
 import { classifySemantic } from "./semanticClassifier";
 import { MAX_TEXT_LENGTH } from "./constants";
 import { deriveAdvisory, withAdvisory } from "./routingAdvisory";
@@ -110,7 +115,7 @@ const COMMON_DETECTORS = [piiDetector, indiaPiiDetector, secretsDetector, toxici
 // interaction is handled in `applyPolicy` (lib/guard/policy.ts) by keying on risk
 // types rather than finding count, so registering this detector does not break the
 // legacy single-injection REWRITE / HUMAN_REVIEW / BLOCK policy branch.
-const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, systemPromptLeakAttemptDetector, multilingualAttackDetector, recursiveInjectionDetector, ssrfDetector, adversarialCyberDetector, competitiveIntelDetector, socialEngineeringDetector, embeddingPoisoningDetector, mcpToolPoisoningDetector, memoryPoisoningDetector, multimodalAttackDetector, modelSupplyChainDetector, behavioralAnomalyDetector, advancedUnicodeSmugglingDetector, insecureDeserializationDetector, dataExfiltrationInputDetector, replyChannelExfilDetector, harmfulContentRequestDetector, broadHarmfulContentDetector, generalizedIntentDetector, (text: string) => {
+const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, academicPretextDetector, systemPromptLeakAttemptDetector, multilingualAttackDetector, recursiveInjectionDetector, ssrfDetector, adversarialCyberDetector, codeInjectionDetector, competitiveIntelDetector, socialEngineeringDetector, embeddingPoisoningDetector, mcpToolPoisoningDetector, memoryPoisoningDetector, multimodalAttackDetector, modelSupplyChainDetector, behavioralAnomalyDetector, advancedUnicodeSmugglingDetector, insecureDeserializationDetector, dataExfiltrationInputDetector, replyChannelExfilDetector, harmfulContentRequestDetector, broadHarmfulContentDetector, generalizedIntentDetector, (text: string) => {
   // Cryptojacking / device-hijack hard-block (2026-08-02): standalone verified regex
   if (/mine|cryptocurrenc|crypto|monero|bitcoin|coins?/i.test(text) && /evad|without|undetect|silently|stealth|hidden/i.test(text) && /hijack|take over|compromise|infect|enslave|cryptojack/i.test(text)) {
       return [{ type: "TOXICITY" as const, label: "Cyber abuse production request", message: "Crypto-hijack mining detection", severity: "CRITICAL" as const, score: 50, code: "CRYPTOJACK" }];
@@ -152,6 +157,21 @@ export function analyzeText(
     text,
     () => detectors.flatMap((detector) => detector(text)),
   );
+
+  // Topical alignment runs outside the detector array because it needs the
+  // caller's topic set, and the shared `Detector` signature is `(text) =>
+  // findings`. It is a no-op unless the caller supplied topics, so registering
+  // it changes nothing for existing callers. INPUT/ANALYZE only: an off-topic
+  // *model reply* is a quality problem for groundingGuard, not this one.
+  if (direction !== "OUTPUT" && (context?.allowedTopics?.length || context?.systemPromptContext)) {
+    findings = findings.concat(
+      topicalAlignmentDetector(text, {
+        allowedTopics: context.allowedTopics,
+        systemPromptContext: context.systemPromptContext,
+        minTopicRelevance: context.minTopicRelevance,
+      }),
+    );
+  }
 
   // Safe security-education prompts often mention "prompt injection" and
   // "bypass" in a negated, high-level training context. Keep sensitive-data
@@ -306,7 +326,11 @@ export function analyzeText(
       /internal company documents/i,
       /environment variables.*base64/i,
       /exfiltrate.*environment/i,
-      /select \* from.*users/i,
+      // `/select \* from.*users/i` used to sit here. Matching it made the IPS
+      // block below emit PROMPT_INJECTION *and* JAILBREAK at score 85 — a
+      // maximum-severity LLM verdict for what is a database attack. It is now
+      // `codeInjectionDetector` → CODE_INJECTION, which is the honest category.
+      // `ignore.*SQL.*safety` stays: that one IS addressed to the model.
       /ignore.*SQL.*safety/i,
       /Linux terminal.*root/i,
       /cat \/etc\/shadow/i,
@@ -377,7 +401,20 @@ export function analyzeText(
     // jailbreak / leak attempt in a wording the signatures never anticipated. A
     // hit is reported as a MEDIUM finding and (below) routed to human review — it
     // never hard-blocks on its own, bounding the false-positive cost.
-    const hasRuleSecurityFinding = findings.some((finding) => RULE_SECURITY_TYPES.has(finding.type));
+    // Whether a rule finding that SURVIVES fusion already covers this.
+    //
+    // Reading the raw findings here was a real defect: a low-precision rule both
+    // (a) failed to justify an action, because fusion demotes it, and (b) silenced
+    // the only tier that could have justified one. A demoted rule is precisely the
+    // case where the signatures are least trustworthy and a second opinion is worth
+    // most, so it must not suppress the semantic tier. Measured: reading raw
+    // findings here cost 26 detections (recall 73.4% → 67.6%) when fusion landed.
+    //
+    // Fusion is re-run below over the full set; it is deliberately pure and cheap
+    // (a map over a handful of findings) so calling it twice is not worth caching.
+    const hasRuleSecurityFinding = fuseEvidence(findings, RULE_PRECISION).findings.some(
+      (finding) => !finding.advisoryOnly && RULE_SECURITY_TYPES.has(finding.type),
+    );
     // Tier gate: "rules" disables the booster; "hybrid" consults it only when the
     // rules found nothing; "semantic" consults it regardless. Wrapped so a failure
     // in the heuristic degrades to rules-only rather than throwing.
@@ -442,11 +479,27 @@ export function analyzeText(
     findings.push({ type: "TOKEN_ABUSE", label: "Large payload", severity: "MEDIUM", score: 30, message: "The payload is unusually large and may cause avoidable token usage." });
   }
 
-  const riskScore = scoreRisk(findings);
-  const riskTypes = ([...new Set(findings.map((finding) => finding.type))] as RiskType[]);
+  // ── Evidence fusion ───────────────────────────────────────────────────────
+  // Up to here every rule is treated as equally trustworthy: a detector that
+  // fires on 0.3% of encyclopedia questions reaches the same BLOCK floor as one
+  // that has never once accused benign text. Severity is a claim the rule author
+  // made; benign fire rate is a measurement. Where they disagree, the
+  // measurement wins — a rule measured as noisy needs corroboration from an
+  // independent family before it can decide anything.
+  //
+  // The demoted findings are still returned and still reach the ledger. They are
+  // simply withheld from the four things that constitute "acting on" a finding:
+  // the aggregate score, the risk types the decision engine reads, redaction,
+  // and rewriting. See lib/guard/evidenceFusion.ts.
+  const fusion = fuseEvidence(findings, RULE_PRECISION);
+  findings = fusion.findings;
+  const deciding = findings.filter((finding) => !finding.advisoryOnly);
+
+  const riskScore = scoreRisk(deciding);
+  const riskTypes = ([...new Set(deciding.map((finding) => finding.type))] as RiskType[]);
   if (riskTypes.length === 0) riskTypes.push("LOW_RISK");
   let action = decideGuardAction(riskScore, riskTypes, direction, context);
-  if (direction === "INPUT" && hasHighTrustExploitationFinding(findings) && action !== "BLOCK") {
+  if (direction === "INPUT" && hasHighTrustExploitationFinding(deciding) && action !== "BLOCK") {
     action = "HUMAN_REVIEW";
   }
   // A semantic-only detection is held for human review rather than allowed or
@@ -454,10 +507,12 @@ export function analyzeText(
   if (semanticOnly && action !== "BLOCK" && action !== "HUMAN_REVIEW") {
     action = "HUMAN_REVIEW";
   }
-  const redactedText = redactText(text, findings);
+  // Redaction and rewriting mutate the caller's payload, so they are actions in
+  // their own right and take the deciding set, not every finding.
+  const redactedText = redactText(text, deciding);
   const changed = redactedText !== text;
   const allowed = action === "ALLOW" || action === "ALLOW_WITH_REDACTION" || action === "REWRITE";
-  const reason = buildReason(action, findings);
+  const reason = buildReason(action, deciding, fusion.demoted.length);
   // safeText is the text a caller may safely forward. It is only populated when
   // the request actually proceeds (ALLOW / ALLOW_WITH_REDACTION / REWRITE). For
   // BLOCK we surface the reason as a fallback message; for HUMAN_REVIEW the payload
@@ -467,17 +522,23 @@ export function analyzeText(
     : !allowed
       ? undefined
       : action === "REWRITE"
-        ? rewriteRiskyText(text, findings)
+        ? rewriteRiskyText(text, deciding)
         : changed
           ? redactedText
           : text;
 
-  const advisory = deriveAdvisory(text, findings, riskTypes);
+  const advisory = deriveAdvisory(text, deciding, riskTypes);
+  const confidence = categoryConfidence(deciding);
   return withAdvisory({
     allowed,
     action,
     riskScore,
     riskTypes,
+    // Only emitted when something actually fired: a result carrying
+    // `{ LOW_RISK: 0 }` reads as "we scored this category" when we did not.
+    ...(Object.keys(confidence).length > 0
+      ? { categoryConfidence: confidence, primaryRiskType: primaryRiskType(riskTypes, confidence) }
+      : {}),
     originalText: text,
     redactedText: changed ? redactedText : undefined,
     safeText,
@@ -486,6 +547,18 @@ export function analyzeText(
     metadata: {
       direction,
       findingCount: findings.length,
+      // Surfaced so an operator can see that evidence WAS found and deliberately
+      // not acted on. Without this the demotion is invisible and looks like the
+      // detector never fired at all.
+      ...(fusion.demoted.length
+        ? {
+            demotedFindings: fusion.demoted.map((d) => ({
+              label: d.label,
+              benignFireRate: d.benignFireRate,
+              why: d.why,
+            })),
+          }
+        : {}),
       // Recorded only when the caller claimed a non-default source, so the evidence
       // trail shows why an instruction-bearing finding was held rather than rewritten.
       ...(context?.provenance && context.provenance !== "USER"
@@ -541,8 +614,17 @@ function isExplicitlyAdversarialEducationRequest(normalized: string): boolean {
   return /(ignore previous|reveal system prompt|disable guardrails|dump|exfiltrate|list all|admin mode|unrestricted|dan mode|hidden instructions|show me your system prompt|print your system prompt)/i.test(normalized);
 }
 
-function buildReason(action: GuardResult["action"], findings: GuardFinding[]) {
-  if (findings.length === 0) return "No material risk patterns were detected by the Phase 1 rules.";
+function buildReason(action: GuardResult["action"], findings: GuardFinding[], demotedCount = 0) {
+  if (findings.length === 0) {
+    // Saying "nothing was detected" when a low-precision rule did fire would be
+    // false. Report what happened: evidence existed, it was not strong enough
+    // to act on alone.
+    if (demotedCount > 0) {
+      const s = demotedCount === 1 ? "" : "s";
+      return `No material risk was confirmed. ${demotedCount} low-precision signal${s} fired without independent corroboration and ${demotedCount === 1 ? "was" : "were"} recorded as advisory only.`;
+    }
+    return "No material risk patterns were detected by the Phase 1 rules.";
+  }
   const labels = [...new Set(findings.map((finding) => finding.label))].slice(0, 3).join(", ");
   if (action === "BLOCK") return `Blocked because high-risk patterns were detected: ${labels}.`;
   if (action === "HUMAN_REVIEW") return `Held for human review because sensitive or high-risk content was detected: ${labels}.`;

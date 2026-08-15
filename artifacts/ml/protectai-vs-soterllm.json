@@ -1,0 +1,48 @@
+{
+  "model": "protectai/deberta-v3-base-prompt-injection-v2",
+  "model_licence": "apache-2.0 (declared on the model card)",
+  "eval_file": "datasets/crossdist-eval-v3-sample-pg2scope.jsonl",
+  "rows_total": 3061,
+  "rows_scored": 3061,
+  "rows_excluded_out_of_pg2_scope": 0,
+  "threshold": 0.5,
+  "recall": 0.8320111992533831,
+  "fpr": 0.0392156862745098,
+  "precision": 0.9802089059923035,
+  "confusion": {
+    "tp": 1783,
+    "fp": 36,
+    "tn": 882,
+    "fn": 360
+  },
+  "latency_ms": {
+    "p50": 857.4724312500166,
+    "p95": 2475.738099999944,
+    "p99": 2607.9096500000105
+  },
+  "missed_by_source": {
+    "external:mosscap-level4": 40,
+    "external:mosscap-level5": 10,
+    "external:mosscap-level8": 59,
+    "external:mosscap-level7": 76,
+    "external:mosscap-level3": 67,
+    "external:mosscap-level6": 14,
+    "external:deepset": 10,
+    "external:spml": 8,
+    "external:quickium": 6,
+    "external:jbclass": 17,
+    "external:inthewild": 46,
+    "external:neuralchemy-jailbreak": 7
+  },
+  "fp_by_source": {
+    "external:spml": 13,
+    "external:quickium": 22,
+    "external:dolly": 1
+  },
+  "comparability": {
+    "vs_soterllm": "DIRECT \u2014 same rows, same threshold semantics",
+    "vs_lakera_guard": "NOT MEASURED. Lakera Guard is closed/API-only and cannot be run here. A Lakera comparison requires PINT (scripts/ml/soterai-pint-eval-v2.ts) and verification from opensource@lakera.ai. Do not infer one from this file.",
+    "pg2_scope": "PG2 judges instruction-override only, not content harm. UNSAFE_OUTPUT/PII/SECRET rows were excluded, not counted as PG2 misses."
+  },
+  "model_licence_note": "Corrected 2026-08-08: prior value was a hardcoded Llama string applied to every --model."
+}

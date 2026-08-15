@@ -8,6 +8,7 @@ import {
     type MCPAnalysis,
 } from "@soterai/guard-core";
 import { escapeHtml, showInfoWebview, firstWorkspaceFolder } from "./util";
+import type { ProtectionStateDescriptor } from "../protection/ProtectionState";
 
 // ── Phase 8: LLM Extension Risk Scanner ──────────────────────────────────────
 
@@ -272,8 +273,14 @@ export async function generateMCPSafePolicy(): Promise<void> {
  * Scenario B — honest coverage matrix. Shows exactly which AI routes SoterAI can
  * enforce, redact, only monitor, or not observe at all. Never claims prevention
  * for a route it does not control.
+ *
+ * `live` is the current protection state. It matters because this command is the
+ * primary button the Control Panel shows when the headline is an error ("See
+ * what is wrong"). Without it the page was a static route table that never
+ * mentioned the actual problem, so the error's own call to action did not
+ * address the error. When no state is supplied the static table is still shown.
  */
-export function showCoverageMatrix(): void {
+export function showCoverageMatrix(live?: ProtectionStateDescriptor): void {
     const levelClass = (level: string) =>
         level === "ENFORCED" ? "allow" : level === "REDACTED" ? "warn" : level === "MONITORED" ? "warn" : "block";
     const rows = ROUTE_COVERAGE.map(
@@ -283,10 +290,26 @@ export function showCoverageMatrix(): void {
             `<td>${r.observable ? "yes" : "no"}</td><td>${r.transformable ? "yes" : "no"}</td><td>${r.enforceable ? "yes" : "no"}</td>` +
             `<td>${escapeHtml(r.note)}</td></tr>`,
     ).join("");
+
+    const severityBadge = (severity: string) =>
+        severity === "error" || severity === "critical" ? "block" : severity === "warning" ? "warn" : "allow";
+    const stateSection = live
+        ? `<h1>${escapeHtml(live.title)}</h1>
+     <p><span class="badge ${severityBadge(live.severity)}">${escapeHtml(live.state)}</span> ${escapeHtml(live.explanation)}</p>
+     <h2>What to do about it</h2>
+     <p><strong>${escapeHtml(live.recommendedAction)}</strong></p>
+     <table>
+       <tr><th>Coverage right now</th><td>${escapeHtml(live.coverage)}</td></tr>
+       <tr><th>Controls active</th><td>${live.activeControls.length ? escapeHtml(live.activeControls.join(", ")) : "none"}</td></tr>
+       <tr><th>Controls off</th><td>${live.inactiveControls.length ? escapeHtml(live.inactiveControls.join(", ")) : "none"}</td></tr>
+     </table>
+     <h2>Why the routes below matter</h2>`
+        : "";
+
     showInfoWebview(
         "soteraiCoverage",
         "SoterAI: AI Route Coverage",
-        `<h1>🛰️ What SoterAI Can Actually Protect</h1>
+        `${stateSection}<h1>🛰️ What SoterAI Can Actually Protect</h1>
      <p>Honest coverage per route. <strong>ENFORCED</strong> means SoterAI controls the path and can prevent plaintext exposure. <strong>MONITORED</strong>/<strong>UNKNOWN</strong> mean it cannot — no green status is shown for a path SoterAI does not control.</p>
      <table><tr><th>Route</th><th>Coverage</th><th>Observe</th><th>Transform</th><th>Enforce</th><th>What this means</th></tr>${rows}</table>
      <p class="note">Only the SoterAI Local Broker route is enforceable. For a plaintext secret an unknown extension could read directly, SoterAI reports Monitoring only and offers migration to the vault or an enforced broker path.</p>`,
@@ -294,10 +317,15 @@ export function showCoverageMatrix(): void {
 }
 
 /** Register Phase 8 & 9 commands. */
-export function registerScannerCommands(context: vscode.ExtensionContext): void {
+export function registerScannerCommands(
+    context: vscode.ExtensionContext,
+    liveProtectionState?: () => Promise<ProtectionStateDescriptor | undefined>,
+): void {
     const reg = (id: string, handler: (...args: any[]) => any) =>
         context.subscriptions.push(vscode.commands.registerCommand(id, handler));
-    reg("soterai.showCoverageMatrix", showCoverageMatrix);
+    // Resolved at click time, not at registration time: a snapshot cached at
+    // activation would describe a problem the user may have already fixed.
+    reg("soterai.showCoverageMatrix", async () => showCoverageMatrix(await liveProtectionState?.()));
     reg("soterai.scanInstalledExtensionsRisk", scanInstalledExtensionsRisk);
     reg("soterai.showAIExtensions", showAIExtensions);
     reg("soterai.generateExtensionRiskReport", generateExtensionRiskReport);

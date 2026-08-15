@@ -215,11 +215,21 @@ describe("Control Panel primary action", () => {
         }
     });
 
-    it("puts the zero-setup task first and the setup task last", () => {
-        // Ordering by effort, so a new user gets a win before being asked to
-        // install anything. The old panel numbered setup as step 1 of 5.
+    it("puts the highest-value protection flows first and secondary checks behind disclosure", () => {
         const tasks = panelTasks();
-        assert.strictEqual(tasks[0].action, "action:scanClipboard");
-        assert.strictEqual(tasks[tasks.length - 1].action, "action:setupBroker");
+        assert.deepStrictEqual(
+            tasks.filter((task) => task.group === "start").map((task) => task.action),
+            ["action:checkBeforeAI", "action:protectSecrets", "action:secureAI"],
+        );
+        assert.ok(tasks.filter((task) => task.group === "more").length >= 3);
+    });
+
+    it("task icons are real line icons, not emoji", () => {
+        // Emoji render differently per OS and break the crisp line-icon look
+        // of the panel; the icons are inline SVGs that follow the theme color.
+        for (const task of panelTasks()) {
+            assert.match(task.icon, /^<svg /, `${task.action} has no inline SVG icon`);
+            assert.ok(!/[\u{1F300}-\u{1FAFF}\u{2700}-\u{27BF}]/u.test(task.icon), `${task.action} still uses an emoji icon`);
+        }
     });
 });

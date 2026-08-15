@@ -58,7 +58,44 @@ export class BrokerManager implements vscode.Disposable {
         if (this.isLockedDown()) throw new Error("Emergency Lockdown is active; broker start is blocked");
         const existing = await this.status();
         if (existing.running && existing.state === "healthy") return existing;
+        if (existing.state === "incompatible") {
+            this.lifecycle = "incompatible";
+            this.intentionalStop = true;
+            await this.stop();
+            throw this.incompatibleError(existing.version);
+        }
         this.clearRestartTimer();
+
+        // Retire the broker we already own before spawning its replacement.
+        //
+        // `this.child = spawn(...)` below overwrites this reference, so without
+        // this the running process is orphaned: it keeps the port, stops being
+        // stoppable, and becomes invisible to dispose() — so it outlives the
+        // editor. And one slow health check is enough to get here with a
+        // perfectly good broker running, because status() reports a busy broker
+        // as "not healthy". The old code then spawned a duplicate that could not
+        // bind, waited three seconds, and reported failure — after which no
+        // restart could ever recover, because the process holding the port was
+        // no longer referenced by anything.
+        if (this.child) {
+            this.intentionalStop = true;
+            await this.stop();
+        }
+
+        // Whatever still holds the port is not ours, and a second listener
+        // cannot bind it. Saying so beats spawning a process that is guaranteed
+        // to fail and calling that a timeout. Two editors running SoterAI at
+        // once — VS Code and Cursor, say — reach this every time, since each
+        // keeps its own broker token and cannot use the other's broker.
+        if (await this.isPortServed()) {
+            this.lifecycle = "error";
+            this.lastError = `port ${this.port} is already in use`;
+            throw new Error(
+                `${this.url} is already in use, so the local AI broker cannot start there. ` +
+                    'If another editor is already running SoterAI, give this one its own port with the "soterai.broker.port" setting.',
+            );
+        }
+
         this.intentionalStop = false;
         this.lifecycle = "starting";
         this.lastError = undefined;
@@ -78,12 +115,32 @@ export class BrokerManager implements vscode.Disposable {
         };
         // Launches only the bundled local broker entry with Electron's Node
         // runtime. User input never controls the executable or argv.
-        this.child = spawn(process.execPath, [script], { env, windowsHide: true, stdio: "ignore" });
-        this.child.once("error", (error) => {
+        //
+        // stdout and stderr are piped rather than discarded: the bundle prints
+        // its reason for refusing to start ("Broker token must be at least 32
+        // characters", a bind error) and exits, and with that discarded neither
+        // the user nor a developer could ever learn why protection was
+        // unavailable — the only symptom was a timeout. Both streams are drained
+        // so the child can never block on a full pipe.
+        const child = spawn(process.execPath, [script], { env, windowsHide: true, stdio: ["ignore", "pipe", "pipe"] });
+        this.child = child;
+        let exited = false;
+        let output = "";
+        const collect = (chunk: unknown): void => {
+            if (output.length < 2000) output += String(chunk);
+        };
+        child.stdout?.on("data", collect);
+        child.stderr?.on("data", collect);
+        child.once("error", (error) => {
+            collect(error.message);
             this.lastError = error.message;
             this.lifecycle = "error";
         });
-        this.child.once("exit", () => {
+        child.once("exit", () => {
+            // Read by the loop below. `this.child` is cleared here, so a check
+            // through `this.child?.exitCode` could never see this exit — which
+            // is why every failed start used to burn the full deadline.
+            exited = true;
             this.child = undefined;
             this.stopHeartbeat();
             if (!this.intentionalStop) {
@@ -106,15 +163,55 @@ export class BrokerManager implements vscode.Disposable {
                 this.lifecycle = "incompatible";
                 this.intentionalStop = true;
                 await this.stop();
-                throw new Error(`Local AI Broker version ${status.version ?? "unknown"} is incompatible; expected ${EXPECTED_BROKER_VERSION}`);
+                throw this.incompatibleError(status.version);
             }
-            if (this.child?.exitCode !== null && this.child?.exitCode !== undefined) break;
+            if (exited) break;
         }
         this.lifecycle = "error";
-        this.lastError = "Local AI Broker did not become ready before the startup deadline";
+        const reason = BrokerManager.summarizeSpawnOutput(output, token);
+        this.lastError = `Local AI Broker did not become ready before the startup deadline${reason ? `: ${reason}` : ""}`;
         this.intentionalStop = true;
         await this.stop();
-        throw new Error("Local AI Broker did not become ready on 127.0.0.1");
+        throw new Error(`Local AI Broker did not become ready on 127.0.0.1${reason ? `: ${reason}` : ""}`);
+    }
+
+    private incompatibleError(version: string | undefined): Error {
+        return new Error(`Local AI Broker version ${version ?? "unknown"} is incompatible; expected ${EXPECTED_BROKER_VERSION}`);
+    }
+
+    /**
+     * Is anything at all listening on our port?
+     *
+     * status() collapses "nothing is there" and "it answered, but not the way we
+     * wanted" into the same not-healthy verdict, and the difference decides
+     * whether spawning is recovery or self-harm. Any HTTP reply — 200, 401, 429,
+     * even 404 from an unrelated service — means the port is taken. /health is
+     * the broker's unauthenticated endpoint, so a token mismatch cannot make a
+     * live broker look absent.
+     */
+    private async isPortServed(): Promise<boolean> {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 750);
+        try {
+            await fetch(`${this.url}/health`, { signal: controller.signal });
+            return true;
+        } catch {
+            return false;
+        } finally {
+            clearTimeout(timeout);
+        }
+    }
+
+    /**
+     * The child's own explanation, trimmed to one line for a notification.
+     *
+     * The token is redacted by exact match: it is in the child's environment, so
+     * a crash dump that echoes the environment would otherwise carry it into a
+     * notification and the status bar tooltip.
+     */
+    private static summarizeSpawnOutput(output: string, token: string): string {
+        if (!output.trim()) return "";
+        return output.split(token).join("[REDACTED]").replace(/\s+/g, " ").trim().slice(0, 300);
     }
 
     async stop(): Promise<void> {

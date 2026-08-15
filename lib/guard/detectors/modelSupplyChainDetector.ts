@@ -3,7 +3,10 @@ import { detectPatterns, type PatternRule } from "./helpers";
 const rules: PatternRule[] = [
   {
     pattern:
-      /(?:model|checkpoint|weights|adapter|lora|gguf|safetensors|onnx|pickle|pkl)[\s\S]{0,200}(?:backdoor|trojan|poisoned|malicious|untrusted|remote code|postinstall|eval|exec)/i,
+      // `eval` and `exec` are bounded: unbounded they match inside "evaluating",
+      // "evaluation" and "Executive", so ordinary sentences about evaluating a
+      // model were reported as supply-chain compromise.
+      /(?:model|checkpoint|weights|adapter|lora|gguf|safetensors|onnx|pickle|pkl)[\s\S]{0,200}(?:backdoor|trojan|poisoned|malicious|untrusted|remote code|postinstall|\beval\b|\bexec\b)/i,
     label: "Model supply-chain risk",
     message: "Model artifact or dependency text indicates a supply-chain compromise risk.",
     severity: "HIGH",

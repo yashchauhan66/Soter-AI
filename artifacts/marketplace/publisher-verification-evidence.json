@@ -1,0 +1,54 @@
+{
+  "generatedAt": "2026-08-15T12:53:26.209Z",
+  "offline": false,
+  "publisher": "soterai",
+  "displayName": "SoterAI IDE Guard — Local AI Security",
+  "domain": "soterai.in",
+  "verificationTxtHost": "_visual-studio-marketplace-soterai.soterai.in",
+  "gates": [
+    {
+      "name": "manifest publisher id",
+      "pass": true,
+      "detail": "publisher = \"soterai\"",
+      "checkedAt": "2026-08-15T12:53:22.101Z"
+    },
+    {
+      "name": "extension version",
+      "pass": true,
+      "detail": "version = 0.5.0",
+      "checkedAt": "2026-08-15T12:53:22.104Z"
+    },
+    {
+      "name": "domain registration date (RDAP)",
+      "pass": true,
+      "detail": "2026-07-03T12:11:08.887Z",
+      "checkedAt": "2026-08-15T12:53:25.110Z"
+    },
+    {
+      "name": "extension live >= 6 months",
+      "pass": false,
+      "detail": "live since 2026-07-06 (first Marketplace publish); 6 calendar months required; earliest eligible 2027-01-06",
+      "checkedAt": "2026-08-15T12:53:25.111Z"
+    },
+    {
+      "name": "domain registered >= 6 months",
+      "pass": false,
+      "detail": "live since 2026-07-03 (RDAP); 6 calendar months required; earliest eligible 2027-01-03",
+      "checkedAt": "2026-08-15T12:53:25.111Z"
+    },
+    {
+      "name": "apex https reachable (200, no redirect)",
+      "pass": true,
+      "detail": "200 at https://soterai.in/",
+      "checkedAt": "2026-08-15T12:53:25.925Z"
+    },
+    {
+      "name": "TXT record present: _visual-studio-marketplace-soterai.soterai.in",
+      "pass": false,
+      "detail": "NXDOMAIN — DNS is ours (Cloudflare), add via the control panel",
+      "checkedAt": "2026-08-15T12:53:26.208Z"
+    }
+  ],
+  "earliestEligibleSubmission": "2027-01-06",
+  "goNoGo": "NO-GO"
+}

@@ -1,0 +1,49 @@
+{
+  "model": "gravitee-io/Llama-Prompt-Guard-2-86M-onnx",
+  "model_licence": "llama4 (declared on the model card)",
+  "eval_file": "datasets/crossdist-eval-v3-sample-pg2scope.jsonl",
+  "rows_total": 3061,
+  "rows_scored": 3061,
+  "rows_excluded_out_of_pg2_scope": 0,
+  "threshold": 0.5,
+  "recall": 0.4050396640223985,
+  "fpr": 0.002178649237472767,
+  "precision": 0.9977011494252873,
+  "confusion": {
+    "tp": 868,
+    "fp": 2,
+    "tn": 916,
+    "fn": 1275
+  },
+  "latency_ms": {
+    "p50": 903.024943750097,
+    "p95": 1635.5233437500374,
+    "p99": 1855.4405812499226
+  },
+  "missed_by_source": {
+    "external:mosscap-level3": 214,
+    "external:mosscap-level4": 159,
+    "external:mosscap-level5": 66,
+    "external:mosscap-level8": 131,
+    "external:mosscap-level6": 39,
+    "external:mosscap-level7": 199,
+    "external:deepset": 11,
+    "external:multiling": 26,
+    "external:spml": 386,
+    "external:quickium": 15,
+    "external:neuralchemy-encoding_obfuscation": 1,
+    "external:neuralchemy-system_extraction": 1,
+    "external:jbclass": 4,
+    "external:inthewild": 16,
+    "external:neuralchemy-jailbreak": 7
+  },
+  "fp_by_source": {
+    "external:quickium": 2
+  },
+  "comparability": {
+    "vs_soterllm": "DIRECT \u2014 same rows, same threshold semantics",
+    "vs_lakera_guard": "NOT MEASURED. Lakera Guard is closed/API-only and cannot be run here. A Lakera comparison requires PINT (scripts/ml/soterai-pint-eval-v2.ts) and verification from opensource@lakera.ai. Do not infer one from this file.",
+    "pg2_scope": "PG2 judges instruction-override only, not content harm. UNSAFE_OUTPUT/PII/SECRET rows were excluded, not counted as PG2 misses."
+  },
+  "model_licence_note": "Corrected 2026-08-08: prior value was a hardcoded Llama string applied to every --model."
+}

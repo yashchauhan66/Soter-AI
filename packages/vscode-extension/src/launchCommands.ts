@@ -121,25 +121,33 @@ export function registerLaunchCommands(context: vscode.ExtensionContext): void {
     });
 
     reg("soterai.quickStart", async () => {
-        const config = vscode.workspace.getConfiguration("soterai");
-        const privacyMode = await vscode.window.showQuickPick(["local", "hybrid", "cloud"], {
-            title: "SoterAI: Quick Start",
-            placeHolder: "Choose privacy mode",
-        });
-        if (privacyMode) {
-            await config.update("privacyMode", privacyMode, vscode.ConfigurationTarget.Global);
-            await config.update("cloud.enabled", privacyMode === "cloud" || privacyMode === "hybrid", vscode.ConfigurationTarget.Global);
-        }
-
         const next = await vscode.window.showQuickPick(
             [
-                { label: "Choose Policy Pack", command: "soterai.choosePolicyPack" },
-                { label: "What Stays Local?", command: "soterai.openPrivacyGuarantee" },
-                { label: "Run Demo Scan", command: "soterai.runDemoScan" },
-                { label: "Scan Selected Text", command: "soterai.scanSelectedText" },
-                { label: "Open Settings", command: "soterai.openSettings" },
+                {
+                    label: "Run a safe demo scan",
+                    description: "See a real verdict using built-in sample data.",
+                    command: "soterai.runDemoScan",
+                },
+                {
+                    label: "Protect workspace secrets",
+                    description: "Find raw secrets and review secure placeholder migration.",
+                    command: "soterai.autoMigrateWorkspace",
+                },
+                {
+                    label: "Secure installed AI tools",
+                    description: "Review proposed local routing changes and encrypted backups.",
+                    command: "soterai.secureAllAI",
+                },
+                {
+                    label: "Read the local privacy promise",
+                    description: "See exactly what stays on your machine by default.",
+                    command: "soterai.openPrivacyGuarantee",
+                },
             ],
-            { title: "SoterAI: Next Step" },
+            {
+                title: "SoterAI: Choose your first protection step",
+                placeHolder: "Everything runs locally by default. You can change settings later.",
+            },
         );
         if (next) await vscode.commands.executeCommand(next.command);
     });

@@ -26,6 +26,9 @@ out/**
 # and .vscode-test is a ~350MB unpacked editor. Neither belongs in a VSIX.
 dist-test/**
 .vscode-test/**
+# Extracted VSIX copies used only for artifact host verification.
+.marketplace-*-host/**
+.rebuilt-*-host/**
 
 # Repo / tooling noise
 .vscode/**
@@ -38,6 +41,12 @@ test_output*.txt
 
 # Ad-hoc / large assets
 *.vsix
+
+# Stale test/typecheck logs — `*.log` is gitignored, but vsce does not read
+# .gitignore, so these were shipping inside the VSIX (0.4.1 shipped a 160 KB
+# .tmp-test.log to every install).
+*.log
+.tmp-*
 
 # Marketplace screenshots are intentionally not bundled or shown in the README.
 media/screenshots/**

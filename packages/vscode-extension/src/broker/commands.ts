@@ -20,6 +20,9 @@ import { EncryptedBackupSink } from "./EncryptedBackupSink";
 /** globalState key holding {path, backupPath} pairs written by secureAllAI. */
 const SECURE_BACKUPS_KEY = "soterai.secureAllAI.backups";
 
+/** Keywords the broker's extension-isolation policy substring-matches. */
+const CAPABILITY_KEYWORDS = ["workspace", "filesystem", "terminal", "network", "mcp", "debug", "scm"];
+
 interface BrokerEvent {
     eventId: string;
     sessionId?: string;
@@ -216,18 +219,30 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
     });
     reg("soterai.showExtensionIsolationSummary", async () => {
         await started();
-        const extensions = vscode.extensions.all.map((extension) => ({
-            id: extension.id,
-            publisher: typeof extension.packageJSON?.publisher === "string" ? extension.packageJSON.publisher : undefined,
-            displayName: typeof extension.packageJSON?.displayName === "string" ? extension.packageJSON.displayName : undefined,
-            verifiedPublisher: Boolean(extension.packageJSON?.publisher),
-            activationEvents: Array.isArray(extension.packageJSON?.activationEvents) ? extension.packageJSON.activationEvents : [],
-            capabilities: [
-                JSON.stringify(extension.packageJSON?.capabilities ?? {}),
-                JSON.stringify(extension.packageJSON?.contributes ?? {}),
-            ],
-            aiLike: /ai|copilot|claude|cursor|codeium|continue|tabnine|agent/i.test(`${extension.id} ${extension.packageJSON?.displayName ?? ""} ${extension.packageJSON?.description ?? ""}`),
-        }));
+        // The broker's decision only substring-matches these capability keywords
+        // against the joined text, so sending the full stringified
+        // `capabilities`/`contributes` payload is pure bulk. A single
+        // marketplace extension can carry hundreds of KB of contributed
+        // menus/views, and a machine with many extensions blew past the
+        // broker's 1MB request-body limit — the command crashed instead of
+        // reporting. Emitting the keywords that ARE present preserves the exact
+        // decision while keeping the body a few KB.
+        const extensions = vscode.extensions.all.slice(0, 500).map((extension) => {
+            const raw = JSON.stringify([
+                extension.packageJSON?.capabilities ?? {},
+                extension.packageJSON?.contributes ?? {},
+                extension.packageJSON?.activationEvents ?? [],
+            ]).toLowerCase();
+            return {
+                id: extension.id,
+                publisher: typeof extension.packageJSON?.publisher === "string" ? extension.packageJSON.publisher : undefined,
+                displayName: typeof extension.packageJSON?.displayName === "string" ? extension.packageJSON.displayName : undefined,
+                verifiedPublisher: Boolean(extension.packageJSON?.publisher),
+                activationEvents: [],
+                capabilities: CAPABILITY_KEYWORDS.filter((keyword) => raw.includes(keyword)),
+                aiLike: /ai|copilot|claude|cursor|codeium|continue|tabnine|agent/i.test(`${extension.id} ${extension.packageJSON?.displayName ?? ""} ${extension.packageJSON?.description ?? ""}`),
+            };
+        });
         const summary = await manager.request<ExtensionIsolationSummary>("/v1/preflight/extension-isolation", {
             method: "POST",
             body: JSON.stringify({
@@ -437,14 +452,37 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
         const folder = vscode.workspace.workspaceFolders?.[0];
         if (!folder) return void vscode.window.showErrorMessage("Open a workspace first.");
 
+        // Start local checking FIRST. The Control Panel bills this command as
+        // "Needed before SoterAI can block anything", and it used to return
+        // without starting the broker whenever no client config was found — so
+        // the one button the panel points a new user at achieved nothing on a
+        // workspace with no AI config. Everything below is about pointing a
+        // client at the broker; the broker itself must come up either way.
+        const status = await started();
+        const brokerUp = status.running && status.state === "healthy";
+
         const io = workspaceFileIO();
         const candidates = DEFAULT_INTEGRATION_CANDIDATES.map((rel) => path.join(folder.uri.fsPath, rel));
         const detected = await detectIntegrationConfigs(candidates, io);
         if (detected.length === 0) {
-            vscode.window.showInformationMessage(
-                "No AI client config found among known paths (.continue/config.json, .env, config/openai.json). " +
-                "Use Configure AI Broker + copy URL manually. Setup is usability — only brokered traffic is STRONG.",
+            // No config to rewrite, but local checking is now running: say what
+            // was actually achieved, and hand over the URL so the user can point
+            // any client at it manually.
+            const message = brokerUp
+                ? `Local checking is ON at ${manager.url}. No AI client config was found in this workspace to point at it automatically, so nothing was rewritten. Commands like "Run a command safely" and "Check what I copied" are enforced from now on.`
+                : `Local checking could not start (broker state: ${status.state}). SoterAI can still warn, but it cannot block until the broker is healthy.`;
+            const choice = await vscode.window.showInformationMessage(
+                message,
+                ...(brokerUp ? ["Copy broker URL", "Run self-test"] : ["Show broker status"]),
             );
+            if (choice === "Copy broker URL") {
+                await vscode.env.clipboard.writeText(manager.url);
+                vscode.window.showInformationMessage(`Broker URL copied: ${manager.url}`);
+            } else if (choice === "Run self-test") {
+                await vscode.commands.executeCommand("soterai.testBrokerProtection");
+            } else if (choice === "Show broker status") {
+                await vscode.commands.executeCommand("soterai.showBrokerStatus");
+            }
             return;
         }
 

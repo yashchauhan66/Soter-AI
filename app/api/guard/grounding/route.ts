@@ -7,7 +7,9 @@ import { createHash } from "crypto";
 import { db } from "@/lib/db";
 import { emitSecurityEvent } from "@/lib/events/emit";
 import { authorizeGroundingChunks } from "@/lib/rag/groundingSources";
-import { checkRedisRateLimit } from "@/lib/rateLimit";
+import { toPublicGuardResult } from "@/lib/guard/publicResult";
+import { createRateLimitResult } from "@/lib/guard/rateLimitResult";
+import { checkRedisRateLimit, planRpm } from "@/lib/rateLimit";
 import { eventStoreFlags, writeRagSecurityEvent } from "@/lib/events/store";
 
 const schema = z.object({
@@ -20,8 +22,21 @@ export async function POST(request: Request) {
   try {
     const body = schema.parse(await readJson(request));
     const access = await requireProjectPermission(body.projectId, "rag:read");
-    const rate = await checkRedisRateLimit(`guard:grounding:${access.org.id}:${access.project.id}`, 60, 60_000);
-    if (!rate.allowed) return jsonResponse({ error: true, message: "Rate limit exceeded.", resetAt: rate.resetAt }, { status: 429 });
+    // Plan-aware, matching /api/guard/input. A hardcoded 60 capped paid plans at
+    // the FREE rate. The 429 also carried no Retry-After, so the n8n client's
+    // parseRetryAfterMs() backoff fell through to a blind 5s exponential wait.
+    const rpmLimit = planRpm(access.project.plan);
+    const rate = await checkRedisRateLimit(`guard:grounding:${access.org.id}:${access.project.id}`, rpmLimit, 60_000);
+    if (!rate.allowed) {
+      return jsonResponse(toPublicGuardResult(createRateLimitResult("Grounding guard per-minute rate limit exceeded.")), {
+        status: 429,
+        headers: {
+          "Retry-After": String(Math.max(1, Math.ceil((rate.resetAt - Date.now()) / 1000))),
+          "X-RateLimit-Limit": String(rpmLimit),
+          "X-RateLimit-Remaining": String(rate.remaining),
+        },
+      });
+    }
     const policy = await loadProjectPolicy(body.projectId);
     const requestedIds = [...new Set(body.sources.map((source) => source.id))];
     const storedChunks = requestedIds.length ? await db.ragChunk.findMany({

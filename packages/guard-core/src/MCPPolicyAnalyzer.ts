@@ -8,7 +8,7 @@
 
 import { detectMCPConfigRisk, MCP_CONFIG_RISK_DETECTOR_VERSION } from "./detectors";
 
-export const MCP_POLICY_ANALYZER_VERSION = "1.0.0";
+export const MCP_POLICY_ANALYZER_VERSION = "1.1.0";
 
 export type MCPPermission =
     | "filesystem"
@@ -51,6 +51,7 @@ export interface MCPAnalysis {
 
 const SECRET_KEY_RE = /(KEY|SECRET|TOKEN|PASSWORD|PASSWD|CREDENTIAL|PRIVATE|DATABASE_URL|DSN|CONNECTION)/i;
 const COMMAND_RUNNERS = ["npx", "uvx", "uv", "pipx", "bunx", "node", "python", "python3", "deno", "sh", "bash", "cmd", "powershell"];
+const NETWORK_CLIENTS = ["curl", "wget", "Invoke-WebRequest", "iwr"];
 const FS_ARG_HINT = /(filesystem|--root|--dir|--path|\/|[a-z]:\\)/i;
 const SHELL_HINT = /(shell|exec|terminal|command|bash|sh\b|run-?command)/i;
 const DB_HINT = /(postgres|mysql|mongo|sqlite|redis|database|db-|prisma|jdbc|dsn)/i;
@@ -73,6 +74,13 @@ function isBroadRoot(arg: string): boolean {
     );
 }
 
+function isRemoteHttpUrl(value: string): boolean {
+    const match = /^https?:\/\/(?:[^@/\s]+@)?(\[[^\]]+\]|[^:/?#\s]+)(?::\d+)?(?:[/?#]|$)/i.exec(value.trim());
+    if (!match) return false;
+    const host = match[1].replace(/^\[|\]$/g, "").toLowerCase();
+    return host !== "localhost" && host !== "127.0.0.1" && host !== "::1";
+}
+
 interface RawServer {
     command?: unknown;
     args?: unknown;
@@ -93,7 +101,8 @@ function assessServer(name: string, raw: RawServer): MCPServerAssessment {
 
     let score = 0;
     const bump = (perm: MCPPermission, pts: number, why: string) => {
-        if (!permissions.has(perm)) reasons.push(why);
+        if (permissions.has(perm)) return;
+        reasons.push(why);
         permissions.add(perm);
         score += pts;
     };
@@ -102,19 +111,25 @@ function assessServer(name: string, raw: RawServer): MCPServerAssessment {
     if (command) {
         const base = command.split(/[\\/]/).pop()?.toLowerCase() ?? command.toLowerCase();
         if (COMMAND_RUNNERS.includes(base)) bump("command_runner", 20, `Spawns external process via '${base}'`);
+        if (NETWORK_CLIENTS.some((client) => client.toLowerCase() === base)) {
+            bump("command_runner", 20, `Spawns external network client '${base}'`);
+            bump("network", 20, `Network client '${base}' can make outbound requests`);
+            if (args.some(isRemoteHttpUrl)) bump("remote_endpoint", 25, "Command arguments target a remote endpoint");
+        }
         if (SHELL_HINT.test(blob)) bump("shell", 25, "Shell / command execution capability");
     }
 
     // Remote endpoint.
     if (url) {
         const isLocal = /^https?:\/\/(localhost|127\.0\.0\.1)/i.test(url);
-        if (!isLocal) bump("remote_endpoint", 20, "Connects to a remote (non-localhost) endpoint");
+        if (!isLocal) bump("remote_endpoint", 35, "Connects to a remote (non-localhost) endpoint");
         bump("network", 10, "Network transport");
     }
     if (NET_HINT.test(blob)) bump("network", 8, "Network / HTTP capability implied");
 
     // Filesystem.
-    if (FS_ARG_HINT.test(blob) || /filesystem/i.test(name)) {
+    const filesystemBlob = [name, command ?? "", ...args.filter((arg) => !/^https?:\/\//i.test(arg)), typeof raw.description === "string" ? raw.description : ""].join(" ");
+    if (FS_ARG_HINT.test(filesystemBlob) || /filesystem/i.test(name)) {
         bump("filesystem", 12, "Filesystem access");
         for (const a of args) {
             if (isBroadRoot(a)) bump("broad_root", 25, `Broad filesystem root: ${a}`);

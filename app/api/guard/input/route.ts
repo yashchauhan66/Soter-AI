@@ -1,6 +1,5 @@
 import { apiError, jsonResponse, readJson, requireJsonContentType } from "@/lib/apiResponse";
 import { authenticateApiKeyRequest } from "@/lib/apiKeyMiddleware";
-import { DEFAULT_RPM } from "@/lib/guard/constants";
 import { runInputGuard } from "@/lib/guard/inputGuard";
 import { augmentWithMl } from "@/lib/guard/mlAugment";
 import { augmentWithLlmJudge } from "@/lib/guard/llmJudge";
@@ -17,7 +16,7 @@ import type { RiskType } from "@/lib/guard/types";
 import { toPublicGuardResult } from "@/lib/guard/publicResult";
 import { createRateLimitResult } from "@/lib/guard/rateLimitResult";
 import { scheduleGuardResultPersistence } from "@/lib/guard/scheduledPersistence";
-import { checkRedisRateLimit, peekMonthlyUsage, planLimit } from "@/lib/rateLimit";
+import { checkRedisRateLimit, peekMonthlyUsage, planLimit, planRpm } from "@/lib/rateLimit";
 import { inputGuardSchema } from "@/lib/validations";
 import { recordRequestMetric } from "@/lib/ops/monitoring";
 import { recordTrustEventDeferred, trustTraceContextFromHeaders } from "@/lib/trust-events";
@@ -35,8 +34,11 @@ export async function POST(request: Request) {
     const { apiKey, project } = authenticated.auth;
 
     const orgId = project.organizationId;
+    // Plan-aware: a flat 60 RPM made ENTERPRISE's 5M/month quota physically
+    // unreachable and broke batch clients (n8n/Make/Zapier iterate items).
+    const rpmLimit = planRpm(project.plan);
     const [rpm, usage] = await Promise.all([
-      checkRedisRateLimit(`key:${apiKey.id}`, DEFAULT_RPM),
+      checkRedisRateLimit(`key:${apiKey.id}`, rpmLimit),
       orgId
         ? peekMonthlyUsage(orgId, project.plan, project.organization?.quotaOverride)
         : Promise.resolve({ allowed: true, exceeded: false, remaining: planLimit(project.plan), limit: planLimit(project.plan), used: 0, ratio: 0, warning: false }),
@@ -65,7 +67,7 @@ export async function POST(request: Request) {
         status: 429,
         headers: {
           "Retry-After": String(retryAfter),
-          "X-RateLimit-Limit": String(DEFAULT_RPM),
+          "X-RateLimit-Limit": String(rpmLimit),
           "X-RateLimit-Remaining": String(rpm.remaining),
         },
       });
@@ -138,7 +140,7 @@ export async function POST(request: Request) {
         return jsonResponse(toPublicGuardResult(governanceResult), {
           status: 403,
           headers: {
-            "X-RateLimit-Limit": String(DEFAULT_RPM),
+            "X-RateLimit-Limit": String(rpmLimit),
             "X-RateLimit-Remaining": String(rpm.remaining),
             "X-Governance-Action": "BLOCK",
             "X-Governance-Reason": encodeURIComponent(decision.reason.slice(0, 200)),
@@ -184,7 +186,7 @@ export async function POST(request: Request) {
         return jsonResponse(toPublicGuardResult(governanceResult), {
           status: 403,
           headers: {
-            "X-RateLimit-Limit": String(DEFAULT_RPM),
+            "X-RateLimit-Limit": String(rpmLimit),
             "X-RateLimit-Remaining": String(rpm.remaining),
             "X-Governance-Action": "REQUIRE_APPROVAL",
             "X-Governance-Reason": encodeURIComponent(decision.reason.slice(0, 200)),
@@ -197,7 +199,12 @@ export async function POST(request: Request) {
     // ever raises the outcome (instruction-bearing signals in non-USER content are
     // held rather than rewritten), so an integration that omits it keeps exactly the
     // behaviour it has today.
-    const decisionContext = body.source ? { provenance: body.source } : undefined;
+    const decisionContext = {
+      ...(body.source ? { provenance: body.source } : {}),
+      ...(body.allowedTopics ? { allowedTopics: body.allowedTopics } : {}),
+      ...(body.systemPromptContext ? { systemPromptContext: body.systemPromptContext } : {}),
+      ...(typeof body.minTopicRelevance === "number" ? { minTopicRelevance: body.minTopicRelevance } : {}),
+    };
     const baseline = await augmentWithLlmJudge(
       await augmentWithMl(runInputGuard(body.message, decisionContext), body.message, "INPUT"),
       body.message,
@@ -274,10 +281,20 @@ export async function POST(request: Request) {
       resource: { type: "AI_INPUT", classification: result.riskTypes.some((risk) => risk.includes("PII") || risk === "SECRET_DETECTED") ? "SENSITIVE" : "UNCLASSIFIED" },
       metadata: { riskScore: result.riskScore, guardAction: result.action, findingCount: result.findings.length, apiKeyId: apiKey.id },
     }) : null;
-    return jsonResponse(toPublicGuardResult(result), {
+    // Computed once so the header and the body cannot disagree, and exposed in
+    // the body as well because the integration platforms (n8n, Make, Zapier) map
+    // response *fields* into a workflow — a header is not reachable from a Make
+    // module's Interface block at all.
+    const latencyMs = Date.now() - startedAt;
+    return jsonResponse({ ...toPublicGuardResult(result), latencyMs }, {
       headers: {
-        "X-RateLimit-Limit": String(DEFAULT_RPM),
+        "X-RateLimit-Limit": String(rpmLimit),
         "X-RateLimit-Remaining": String(rpm.remaining),
+        // Server-side handling time only. It excludes network transit and TLS, so
+        // a caller's wall-clock will always be larger; the two are reported apart
+        // deliberately, because conflating them is how a fast engine gets
+        // advertised with a slow number (see docs/LATENCY-SLA.md).
+        "X-Soter-Latency-Ms": String(latencyMs),
         ...(trust ? { "X-Soter-Trace-Id": trust.event.traceId, "X-Soter-Span-Id": trust.event.spanId } : {}),
       },
     });

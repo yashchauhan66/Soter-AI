@@ -216,9 +216,18 @@ describe("Integration — Integration Wizard", () => {
 });
 
 describe("Integration — Error Format Consistency", () => {
-  it("Grounding route uses consistent error format", () => {
+  // This used to assert `error: true`, which was the grounding route's own
+  // bespoke shape — the thing that made it *in*consistent. Every other route
+  // under app/api/guard returns a guard-shaped body built by
+  // createRateLimitResult, so a client can read riskTypes: ["RATE_LIMIT"] and
+  // tell throttling apart from a genuine security block. The assertion now
+  // pins that shared format instead.
+  it("Grounding route uses the shared guard rate-limit format", () => {
     const src = file("app/api/guard/grounding/route.ts");
-    assert.ok(src.includes("error: true"), "should use boolean error field");
+    assert.ok(src.includes("createRateLimitResult"), "should build the 429 body with createRateLimitResult");
+    assert.ok(src.includes("toPublicGuardResult"), "should return the public guard result shape");
+    assert.ok(src.includes("Retry-After"), "should send Retry-After so clients can back off precisely");
+    assert.ok(!src.includes("error: true"), "should not reintroduce the bespoke error body");
   });
 });
 

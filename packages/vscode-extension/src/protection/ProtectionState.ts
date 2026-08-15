@@ -33,10 +33,19 @@ export interface ProtectionRuntimeFacts {
     sentinelEnabled: boolean;
     mcpStrictModeEnabled: boolean;
     liveScanEnabled: boolean;
-    /** Number of detected AI integrations with a verified SoterAI route. */
+    /** Number of routable AI integrations with a verified SoterAI route. */
     protectedAiTools: number;
-    /** Number of detected AI integrations, including unsupported/bypassed ones. */
+    /** Number of AI integrations SoterAI can route through its broker. */
     detectedAiTools: number;
+    /**
+     * Real AI tools SoterAI has no routing path for (e.g. Copilot).
+     *
+     * These are a documented limitation, not a bypass: no setting the user can
+     * change would route them, so they must never produce an enforcement
+     * error. They cap the claim at "partially enforced" and are named in the
+     * coverage line instead.
+     */
+    unmanagedAiTools?: number;
     bypassDetected?: boolean;
     lockdown?: boolean;
     errorMessage?: string;
@@ -54,11 +63,38 @@ export interface ProtectionStateDescriptor {
     allowedTransitions: ProtectionStateName[];
 }
 
-const REQUIRED_CONTROLS = ["AI traffic protection", "Protected Workspace", "AI activity evidence", "MCP governance"] as const;
+/**
+ * Controls whose absence blocks a "fully enforced" claim.
+ *
+ * MCP governance is deliberately NOT here. The MCPFirewall is not a mandatory
+ * gateway, so claiming it as enforcement would be false — but it was previously
+ * listed as required AND its fact was hardcoded false, which made
+ * FULLY_ENFORCED unreachable for every user forever. An unenforceable control
+ * belongs in the advisory list, not in the required set.
+ */
+const REQUIRED_CONTROLS = ["AI traffic protection", "Protected Workspace", "AI activity evidence"] as const;
+
+/** Surfaced to the user, but never gates the enforcement claim. */
+const ADVISORY_CONTROLS = ["MCP governance", "Live file diagnostics"] as const;
 
 function coverage(facts: ProtectionRuntimeFacts): string {
-    if (facts.detectedAiTools <= 0) return "AI integration coverage unknown until an integration is detected";
-    return `${facts.protectedAiTools} of ${facts.detectedAiTools} detected AI tool${facts.detectedAiTools === 1 ? "" : "s"} routed through a verified SoterAI path`;
+    const unmanaged = facts.unmanagedAiTools ?? 0;
+    // Unroutable tools are stated plainly rather than folded into the ratio.
+    // Counting them as uncovered denominators is what produced "0 of 32".
+    const limitation = unmanaged > 0
+        ? ` · ${unmanaged} other AI tool${unmanaged === 1 ? "" : "s"} cannot be routed by SoterAI (monitoring only)`
+        : "";
+    if (facts.detectedAiTools <= 0) {
+        return unmanaged > 0
+            ? `No routable AI integration detected${limitation}`
+            : "AI integration coverage unknown until an integration is detected";
+    }
+    return `${facts.protectedAiTools} of ${facts.detectedAiTools} routable AI tool${facts.detectedAiTools === 1 ? "" : "s"} routed through a verified SoterAI path${limitation}`;
+}
+
+/** True when the user has switched on something that needs a live broker. */
+function expectsEnforcement(facts: ProtectionRuntimeFacts): boolean {
+    return facts.safeModeEnabled || facts.protectedAiTools > 0;
 }
 
 function controls(facts: ProtectionRuntimeFacts): Pick<ProtectionStateDescriptor, "activeControls" | "inactiveControls"> {
@@ -73,9 +109,15 @@ function controls(facts: ProtectionRuntimeFacts): Pick<ProtectionStateDescriptor
         facts.protectedWorkspaceEnabled ? "Protected Workspace" : "",
         facts.sentinelEnabled ? "AI activity evidence" : "",
         facts.mcpStrictModeEnabled ? "MCP governance" : "",
+        facts.liveScanEnabled ? "Live file diagnostics" : "",
     ]);
     const inactive = REQUIRED_CONTROLS.filter((control) => !activeControlIds.has(control));
-    return { activeControls: active, inactiveControls: [...inactive] };
+    // Advisory controls are listed so the panel can still offer them, but
+    // marked, because their absence does not hold back the enforcement claim.
+    const advisoryInactive = ADVISORY_CONTROLS
+        .filter((control) => !activeControlIds.has(control))
+        .map((control) => `${control} (advisory)`);
+    return { activeControls: active, inactiveControls: [...inactive, ...advisoryInactive] };
 }
 
 function transitions(state: ProtectionStateName): ProtectionStateName[] {
@@ -105,22 +147,45 @@ export function deriveProtectionState(facts: ProtectionRuntimeFacts): Protection
     if (!facts.workspaceTrusted) {
         return { ...shared, state: "DEGRADED", title: "Restricted workspace", explanation: "Workspace trust is required for provider routing and some protected-workspace controls.", severity: "warning", recommendedAction: "Trust the workspace or continue with the explicitly limited local controls.", allowedTransitions: transitions("DEGRADED") };
     }
-    if (facts.policy === "unavailable" || facts.policy === "invalid" || facts.policy === "expired") {
-        return { ...shared, state: "POLICY_UNAVAILABLE", title: "Policy unavailable", explanation: "A valid policy is not loaded, so required enforcement cannot be asserted.", severity: "error", recommendedAction: "Load or repair the policy before enabling enforcement.", allowedTransitions: transitions("POLICY_UNAVAILABLE") };
+    // Policy is only a blocker when the user has actively turned on enforcement
+    // paths that require it. On a fresh install — or a machine where no
+    // .soterai/policy.json has been created yet — the policy is "unavailable"
+    // but NO enforcement is on, so the honest state is MONITORING_ONLY, not an
+    // error. Showing a red "Policy unavailable" banner to every new user before
+    // they even touched a toggle was the single most-reported confusing UX issue.
+    // A missing policy only becomes an error when the user has switched on Safe
+    // Mode or is routing AI tools and still has no policy file.
+    const policyBlocking = (facts.policy === "unavailable" || facts.policy === "invalid" || facts.policy === "expired")
+        && (facts.safeModeEnabled || facts.protectedAiTools > 0);
+    if (policyBlocking) {
+        return { ...shared, state: "POLICY_UNAVAILABLE", title: "Policy file missing", explanation: "Safe Mode is on but no project policy file was found. SoterAI created a default one — review it before enabling enforcement.", severity: "warning", recommendedAction: "Run 'Create Project Policy' to review and save the default policy, then re-enable Safe Mode.", allowedTransitions: transitions("POLICY_UNAVAILABLE") };
     }
+    // A bypass is a routable integration that is NOT routed — something the
+    // user can actually fix. Tools SoterAI cannot route are handled below as a
+    // stated limitation; treating them as a bypass made this state permanent.
     if (facts.bypassDetected || facts.protectedAiTools < facts.detectedAiTools) {
-        return { ...shared, state: "BYPASS_DETECTED", title: "Bypass detected", explanation: "AI activity exists outside the verified SoterAI enforcement path. SoterAI cannot block another extension or external process from sending it.", severity: "error", recommendedAction: "Route the affected integration through the broker or acknowledge its monitoring-only coverage.", allowedTransitions: transitions("BYPASS_DETECTED") };
+        return { ...shared, state: "BYPASS_DETECTED", title: "Bypass detected", explanation: "A routable AI integration is configured to reach a provider directly instead of through SoterAI, so its traffic is not inspected.", severity: "error", recommendedAction: "Run \"Set up local checking\" to point that integration at the SoterAI broker.", allowedTransitions: transitions("BYPASS_DETECTED") };
     }
-    if (facts.broker === "offline" || facts.broker === "incompatible") {
-        return { ...shared, state: "BROKER_OFFLINE", title: "Broker offline", explanation: "The local broker is not healthy, so brokered AI traffic is not technically controlled.", severity: "error", recommendedAction: "Start or repair the local broker, then run the broker self-test.", allowedTransitions: transitions("BROKER_OFFLINE") };
+    // Broker down is an error only when the user has switched on something that
+    // needs it. On a fresh install nothing is routed and Safe Mode is off, so
+    // the truthful headline is "monitoring only", not a red failure for a
+    // component the user never asked to run.
+    if ((facts.broker === "offline" || facts.broker === "incompatible") && expectsEnforcement(facts)) {
+        return { ...shared, state: "BROKER_OFFLINE", title: "Broker offline", explanation: "Enforcement is switched on but the local broker is not healthy, so brokered AI traffic is not being controlled right now.", severity: "error", recommendedAction: "Start or repair the local broker, then run the broker self-test.", allowedTransitions: transitions("BROKER_OFFLINE") };
     }
 
-    const requiredActive = facts.broker === "healthy" && facts.safeModeEnabled && facts.protectedWorkspaceEnabled && facts.sentinelEnabled && facts.mcpStrictModeEnabled;
-    if (requiredActive && facts.detectedAiTools > 0 && facts.protectedAiTools === facts.detectedAiTools) {
-        return { ...shared, state: "FULLY_ENFORCED", title: "Fully enforced", explanation: "All required supported controls are active, policy is loaded, and detected AI tools are routed through verified SoterAI paths.", severity: "info", recommendedAction: "Continue working; review coverage and evidence when integrations change.", allowedTransitions: transitions("FULLY_ENFORCED") };
+    const unmanaged = facts.unmanagedAiTools ?? 0;
+    const requiredActive = facts.broker === "healthy" && facts.safeModeEnabled && facts.protectedWorkspaceEnabled && facts.sentinelEnabled;
+    if (requiredActive && facts.detectedAiTools > 0 && facts.protectedAiTools === facts.detectedAiTools && unmanaged === 0) {
+        return { ...shared, state: "FULLY_ENFORCED", title: "Fully enforced", explanation: "All required controls are active, policy is loaded, and every AI tool on this machine that SoterAI can route is routed through a verified SoterAI path.", severity: "info", recommendedAction: "Continue working; review coverage and evidence when integrations change.", allowedTransitions: transitions("FULLY_ENFORCED") };
+    }
+    if (requiredActive && unmanaged > 0 && facts.protectedAiTools === facts.detectedAiTools) {
+        // Everything SoterAI can control IS controlled. The remaining gap is a
+        // product limitation, so it is reported as a limit, not as a user error.
+        return { ...shared, state: "PARTIALLY_ENFORCED", title: "Enforced, with known gaps", explanation: `Every routable AI integration is going through SoterAI. ${unmanaged} other AI tool${unmanaged === 1 ? "" : "s"} on this machine cannot be routed by SoterAI at all, so ${unmanaged === 1 ? "its" : "their"} traffic is observed but not controlled.`, severity: "warning", recommendedAction: "Review the uncontrolled tools and disable any you do not need; SoterAI cannot intercept them.", allowedTransitions: transitions("PARTIALLY_ENFORCED") };
     }
     if (facts.broker === "healthy" && (facts.safeModeEnabled || facts.protectedWorkspaceEnabled || facts.mcpStrictModeEnabled)) {
-        return { ...shared, state: "PARTIALLY_ENFORCED", title: "Partially enforced", explanation: "Some SoterAI paths are enforcing, but one or more required controls or AI integrations are not covered.", severity: "warning", recommendedAction: "Enable the missing required controls and route every supported AI integration through SoterAI.", allowedTransitions: transitions("PARTIALLY_ENFORCED") };
+        return { ...shared, state: "PARTIALLY_ENFORCED", title: "Partially enforced", explanation: "Some SoterAI paths are enforcing, but one or more required controls are still off.", severity: "warning", recommendedAction: `Turn on the remaining required control${controlState.inactiveControls.length === 1 ? "" : "s"}: ${controlState.inactiveControls.join(", ") || "none"}.`, allowedTransitions: transitions("PARTIALLY_ENFORCED") };
     }
-    return { ...shared, state: "MONITORING_ONLY", title: "Monitoring only", explanation: "Risks can be observed, but supported AI traffic is not currently being technically controlled.", severity: "warning", recommendedAction: "Enable Full Protection and route AI traffic through the local broker.", allowedTransitions: transitions("MONITORING_ONLY") };
+    return { ...shared, state: "MONITORING_ONLY", title: "Monitoring only", explanation: "SoterAI is watching this workspace and will warn about risks, but it is not technically blocking AI traffic yet.", severity: "warning", recommendedAction: "Run \"Set up local checking\" to turn on the local broker, then enable Safe Mode to start blocking.", allowedTransitions: transitions("MONITORING_ONLY") };
 }

@@ -1,0 +1,3788 @@
+{
+  "generatedFrom": "datasets/external-train-v2.jsonl",
+  "benignRowsScored": 5000,
+  "attackRowsScored": 1861,
+  "attackRiskTypesMeasured": [
+    "JAILBREAK",
+    "PROMPT_INJECTION",
+    "SYSTEM_PROMPT_LEAK_ATTEMPT"
+  ],
+  "note": "benignFireRate/attackFireRate = fraction of KNOWN-BENIGN / KNOWN-ATTACK rows this rule fired on. lift = attackFireRate / smoothed benignFireRate: how much more often the rule accuses an attack than an innocent. A rule may act alone only if it both stays quiet on benign text AND discriminates. Rules absent from this file never fired at all and default to trusted. lift is only meaningful for the risk types in attackRiskTypesMeasured.",
+  "rules": [
+    {
+      "label": "Data dump/export exfiltration (generalized)",
+      "riskType": "DATA_EXFILTRATION",
+      "benignFires": 25,
+      "attackFires": 81,
+      "benignFireRate": 0.005,
+      "attackFireRate": 0.04352,
+      "lift": 8.37,
+      "benignExamples": [
+        "Extract the names of the cities and rank them in alphabetical order? The United Kingdom is",
+        "List the ten episode titles from the sixth season of \"Game of Thrones\" in broadcast order."
+      ]
+    },
+    {
+      "label": "Agent escalation or RCE attempt (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 21,
+      "attackFires": 43,
+      "benignFireRate": 0.0042,
+      "attackFireRate": 0.02311,
+      "lift": 5.25,
+      "benignExamples": [
+        "Extract all words derived from Swahili language in the following paragraph: Shingopana is ",
+        "Extract the most recent owner from the following Wikipedia paragraph. Owners Further infor"
+      ]
+    },
+    {
+      "label": "Educational pretext jailbreak (generalized)",
+      "riskType": "JAILBREAK",
+      "benignFires": 16,
+      "attackFires": 5,
+      "benignFireRate": 0.0032,
+      "attackFireRate": 0.00269,
+      "lift": 0.79,
+      "benignExamples": [
+        "Given this text of Mao Zedong, tell me how many people were killed in Mao's era through st",
+        "What are the seven wonders of the world? The Seven Wonders of the Ancient World, also know"
+      ]
+    },
+    {
+      "label": "High-risk tool misuse (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 15,
+      "attackFires": 59,
+      "benignFireRate": 0.003,
+      "attackFireRate": 0.0317,
+      "lift": 9.91,
+      "benignExamples": [
+        "Who tends to participates in hackathons? A hackathon (also known as a hack day, hackfest, ",
+        "What's the game engine used by Bethesda before Creation Engine? And what's the last game m"
+      ]
+    },
+    {
+      "label": "Excessive agency request (compact)",
+      "riskType": "JAILBREAK",
+      "benignFires": 15,
+      "attackFires": 59,
+      "benignFireRate": 0.003,
+      "attackFireRate": 0.0317,
+      "lift": 9.91,
+      "benignExamples": [
+        "Who tends to participates in hackathons? A hackathon (also known as a hack day, hackfest, ",
+        "What's the game engine used by Bethesda before Creation Engine? And what's the last game m"
+      ]
+    },
+    {
+      "label": "Direct explosive construction inquiry",
+      "riskType": "TOXICITY",
+      "benignFires": 15,
+      "attackFires": 10,
+      "benignFireRate": 0.003,
+      "attackFireRate": 0.00537,
+      "lift": 1.68,
+      "benignExamples": [
+        "What type of cheeses can you use to make a grilled cheese sandwich. A grilled cheese sandw",
+        "Based on this paragraph, during what year was Hearst born? Hearst died at the age of 70 in"
+      ]
+    },
+    {
+      "label": "Obfuscated malware construction (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 15,
+      "attackFires": 69,
+      "benignFireRate": 0.003,
+      "attackFireRate": 0.03708,
+      "lift": 11.59,
+      "benignExamples": [
+        "Which of the 10 largest earthquakes was the deadliest? Largest Earthquakes ever recorded T",
+        "Provide a brief summary of the reaction to the creation of LIV Golf Human rights groups ha"
+      ]
+    },
+    {
+      "label": "Agent escalation or RCE attempt",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 13,
+      "attackFires": 39,
+      "benignFireRate": 0.0026,
+      "attackFireRate": 0.02096,
+      "lift": 7.49,
+      "benignExamples": [
+        "Extract the factors that influence the cost of building a house The cost of building a hou",
+        "Summarize the main components of a Kubernetes cluster control plane from this paragraph Ku"
+      ]
+    },
+    {
+      "label": "Mass-casualty attack content",
+      "riskType": "TOXICITY",
+      "benignFires": 12,
+      "attackFires": 5,
+      "benignFireRate": 0.0024,
+      "attackFireRate": 0.00269,
+      "lift": 1.03,
+      "benignExamples": [
+        "Given this paragraph about WWII, how many fatalities happened? World War II or the Second ",
+        "Based on the reference text, what was the start date and the expected completion date of t"
+      ]
+    },
+    {
+      "label": "Chemistry dual-use evasion",
+      "riskType": "JAILBREAK",
+      "benignFires": 12,
+      "attackFires": 0,
+      "benignFireRate": 0.0024,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "Given these paragraphs about Large language models, when was the first model in OpenAI's G",
+        "Given these paragraphs about Large language models, how many words did the BookCorpus have"
+      ]
+    },
+    {
+      "label": "Chemistry dual-use evasion (compact)",
+      "riskType": "JAILBREAK",
+      "benignFires": 12,
+      "attackFires": 0,
+      "benignFireRate": 0.0024,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "Given these paragraphs about Large language models, when was the first model in OpenAI's G",
+        "Given these paragraphs about Large language models, how many words did the BookCorpus have"
+      ]
+    },
+    {
+      "label": "Authority/policy-update jailbreak (generalized)",
+      "riskType": "JAILBREAK",
+      "benignFires": 11,
+      "attackFires": 128,
+      "benignFireRate": 0.0022,
+      "attackFireRate": 0.06878,
+      "lift": 28.66,
+      "benignExamples": [
+        "What is the old name for The Go Between Bridge? The Go Between Bridge, formerly known as t",
+        "List all the persons in the text in alphabetical order using their surname: At acute tim"
+      ]
+    },
+    {
+      "label": "Chemistry dual-use evasion (leet)",
+      "riskType": "JAILBREAK",
+      "benignFires": 11,
+      "attackFires": 0,
+      "benignFireRate": 0.0022,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "Given these paragraphs about Large language models, when was the first model in OpenAI's G",
+        "Given these paragraphs about Large language models, how many words did the BookCorpus have"
+      ]
+    },
+    {
+      "label": "Direct drug synthesis inquiry",
+      "riskType": "TOXICITY",
+      "benignFires": 9,
+      "attackFires": 18,
+      "benignFireRate": 0.0018,
+      "attackFireRate": 0.00967,
+      "lift": 4.84,
+      "benignExamples": [
+        "What type of cheeses can you use to make a grilled cheese sandwich. A grilled cheese sandw",
+        "From the passage provided, extract the low end in Celsius of the optimal coffee extraction"
+      ]
+    },
+    {
+      "label": "Agent escalation or RCE attempt (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 8,
+      "attackFires": 28,
+      "benignFireRate": 0.0016,
+      "attackFireRate": 0.01505,
+      "lift": 8.36,
+      "benignExamples": [
+        "Extract the factors that influence the cost of building a house The cost of building a hou",
+        "Extract the creator of Amdahl's law from the Wikipedia paragraph. In computer architecture"
+      ]
+    },
+    {
+      "label": "Invisible Unicode smuggling",
+      "riskType": "ADVANCED_SMUGGLING",
+      "benignFires": 7,
+      "attackFires": 9,
+      "benignFireRate": 0.0014,
+      "attackFireRate": 0.00484,
+      "lift": 3.02,
+      "benignExamples": [
+        "I am looking for a new job in the area of ​​IT and would like to know which companies in G",
+        "I am looking for a gift for my girlfriend for my birthday and would like to know which cur"
+      ]
+    },
+    {
+      "label": "System-prompt extraction (generalized)",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 7,
+      "attackFires": 227,
+      "benignFireRate": 0.0014,
+      "attackFireRate": 0.12198,
+      "lift": 76.25,
+      "benignExamples": [
+        "Who tends to participates in hackathons? A hackathon (also known as a hack day, hackfest, ",
+        "Summarize the rulers of the territory of Albania in this time period. The Illyrian Ardiaei"
+      ]
+    },
+    {
+      "label": "Obfuscated malware construction",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 7,
+      "attackFires": 52,
+      "benignFireRate": 0.0014,
+      "attackFireRate": 0.02794,
+      "lift": 17.47,
+      "benignExamples": [
+        "Which of the 10 largest earthquakes was the deadliest? Largest Earthquakes ever recorded T",
+        "Provide a brief summary of the reaction to the creation of LIV Golf Human rights groups ha"
+      ]
+    },
+    {
+      "label": "DAN jailbreak",
+      "riskType": "JAILBREAK",
+      "benignFires": 7,
+      "attackFires": 115,
+      "benignFireRate": 0.0014,
+      "attackFireRate": 0.06179,
+      "lift": 38.63,
+      "benignExamples": [
+        "Extract the most recent upper bound and low bound of the sofa constant and return them in ",
+        "Extract the special guests that Taylor Swift had on her 1989 Tour in 2015. Separate them w"
+      ]
+    },
+    {
+      "label": "Many-shot conditioning jailbreak (generalized)",
+      "riskType": "JAILBREAK",
+      "benignFires": 7,
+      "attackFires": 26,
+      "benignFireRate": 0.0014,
+      "attackFireRate": 0.01397,
+      "lift": 8.73,
+      "benignExamples": [
+        "What were the four groundbreaking papers that Albert Einstein published Albert Einstein (/",
+        "From the passage provided, extract the year Kabaddi was added to Asian Games Kabaddi is a "
+      ]
+    },
+    {
+      "label": "Invisible Unicode control characters",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 6,
+      "attackFires": 9,
+      "benignFireRate": 0.0012,
+      "attackFireRate": 0.00484,
+      "lift": 3.46,
+      "benignExamples": [
+        "I am looking for a new job in the area of ​​IT and would like to know which companies in G",
+        "I am looking for a gift for my girlfriend for my birthday and would like to know which cur"
+      ]
+    },
+    {
+      "label": "DAN jailbreak (leet)",
+      "riskType": "JAILBREAK",
+      "benignFires": 6,
+      "attackFires": 78,
+      "benignFireRate": 0.0012,
+      "attackFireRate": 0.04191,
+      "lift": 29.94,
+      "benignExamples": [
+        "Extract the most recent upper bound and low bound of the sofa constant and return them in ",
+        "Extract the special guests that Taylor Swift had on her 1989 Tour in 2015. Separate them w"
+      ]
+    },
+    {
+      "label": "IPS Signature match",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 6,
+      "attackFires": 326,
+      "benignFireRate": 0.0012,
+      "attackFireRate": 0.17517,
+      "lift": 125.15,
+      "benignExamples": [
+        "Given this article about the NSA's ANT Catalog, which hacking tools can be used to monitor",
+        "Summarize the given text in several sentences. Horizon Zero Dawn is an action role-playing"
+      ]
+    },
+    {
+      "label": "Narrative bypass (compact)",
+      "riskType": "JAILBREAK",
+      "benignFires": 5,
+      "attackFires": 67,
+      "benignFireRate": 0.001,
+      "attackFireRate": 0.036,
+      "lift": 30.01,
+      "benignExamples": [
+        "Based on the reference text about Bitcoin, how many countries have banned Bitcoin? Bitcoin",
+        "Given this article on Donkey Kong Country 2, who is the villain of the plot and where does"
+      ]
+    },
+    {
+      "label": "Semantic anomaly (SYSTEM_PROMPT_LEAK_ATTEMPT)",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 5,
+      "attackFires": 9,
+      "benignFireRate": 0.001,
+      "attackFireRate": 0.00484,
+      "lift": 4.03,
+      "benignExamples": [
+        "If you could not fill a pool with water, what would you fill it with?",
+        "If you were to compete in the Olympics, which sport would you pick?"
+      ]
+    },
+    {
+      "label": "Obfuscated malware construction (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 4,
+      "attackFires": 41,
+      "benignFireRate": 0.0008,
+      "attackFireRate": 0.02203,
+      "lift": 22.04,
+      "benignExamples": [
+        "Which of the 10 largest earthquakes was the deadliest? Largest Earthquakes ever recorded T",
+        "Provide a brief summary of the reaction to the creation of LIV Golf Human rights groups ha"
+      ]
+    },
+    {
+      "label": "Doxxing or targeted harassment request",
+      "riskType": "TOXICITY",
+      "benignFires": 4,
+      "attackFires": 5,
+      "benignFireRate": 0.0008,
+      "attackFireRate": 0.00269,
+      "lift": 2.69,
+      "benignExamples": [
+        "From the passage identify the most common colloquial terms for dismissal in the United Sta",
+        "What is the Zhou Dynasty? Dynasties in Chinese history, or Chinese dynasties, were heredit"
+      ]
+    },
+    {
+      "label": "Send-to-destination exfiltration (generalized)",
+      "riskType": "DATA_EXFILTRATION",
+      "benignFires": 4,
+      "attackFires": 16,
+      "benignFireRate": 0.0008,
+      "attackFireRate": 0.0086,
+      "lift": 8.6,
+      "benignExamples": [
+        "Given this article about Operation Aurora, which companies were targeted in the attacks? O",
+        "Can you write a High Five to a colleague for the partnership at a customer account and the"
+      ]
+    },
+    {
+      "label": "Named cross-tenant access (generalized)",
+      "riskType": "DATA_EXFILTRATION",
+      "benignFires": 4,
+      "attackFires": 1,
+      "benignFireRate": 0.0008,
+      "attackFireRate": 0.00054,
+      "lift": 0.54,
+      "benignExamples": [
+        "Based on the given text, please tell me which region and country a Troll Cross originated ",
+        "According to the text below, what is a block? Block (data storage) In computing (specific"
+      ]
+    },
+    {
+      "label": "Illicit drug synthesis request",
+      "riskType": "TOXICITY",
+      "benignFires": 4,
+      "attackFires": 11,
+      "benignFireRate": 0.0008,
+      "attackFireRate": 0.00591,
+      "lift": 5.91,
+      "benignExamples": [
+        "What is barbecue? Barbecue or barbeque (informally BBQ in the UK, US, and Canada; barbie i",
+        "According to this passage, what percent of the lithography machine market do Ultratech, Ca"
+      ]
+    },
+    {
+      "label": "Financial metrics probing",
+      "riskType": "COMPETITIVE_INTEL_EXTRACTION",
+      "benignFires": 3,
+      "attackFires": 1,
+      "benignFireRate": 0.0006,
+      "attackFireRate": 0.00054,
+      "lift": 0.67,
+      "benignExamples": [
+        "How much money should I save per month?",
+        "Let's imagine I create a fake currency called Yarns with two types of coins: a super-yarn "
+      ]
+    },
+    {
+      "label": "Adaptive jailbreak optimizer",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 3,
+      "attackFires": 8,
+      "benignFireRate": 0.0006,
+      "attackFireRate": 0.0043,
+      "lift": 5.37,
+      "benignExamples": [
+        "Please provide a short biography of The Needle from the passage provided. The Needle is a ",
+        "Extract and list the names of characters a player can control in The Last of Us mentioned "
+      ]
+    },
+    {
+      "label": "Adaptive jailbreak optimizer (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 3,
+      "attackFires": 6,
+      "benignFireRate": 0.0006,
+      "attackFireRate": 0.00322,
+      "lift": 4.03,
+      "benignExamples": [
+        "Please provide a short biography of The Needle from the passage provided. The Needle is a ",
+        "Extract and list the names of characters a player can control in The Last of Us mentioned "
+      ]
+    },
+    {
+      "label": "Secret listing request",
+      "riskType": "SECRET_DETECTED",
+      "benignFires": 3,
+      "attackFires": 17,
+      "benignFireRate": 0.0006,
+      "attackFireRate": 0.00913,
+      "lift": 11.42,
+      "benignExamples": [
+        "What is the standard Gibbs free energy The standard Gibbs free energy of formation (Gf°) o",
+        "From the passage note down the valuation of NFT trade for the year 2020 and 2021. List the"
+      ]
+    },
+    {
+      "label": "Destructive tool-abuse request (generalized)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 3,
+      "attackFires": 23,
+      "benignFireRate": 0.0006,
+      "attackFireRate": 0.01236,
+      "lift": 15.45,
+      "benignExamples": [
+        "Summarize the main components of a Kubernetes cluster control plane from this paragraph Ku",
+        "What is Halt and Catch Fire about? Halt and Catch Fire is an American period drama televis"
+      ]
+    },
+    {
+      "label": "Model supply-chain risk",
+      "riskType": "MODEL_SUPPLY_CHAIN",
+      "benignFires": 3,
+      "attackFires": 2,
+      "benignFireRate": 0.0006,
+      "attackFireRate": 0.00107,
+      "lift": 1.34,
+      "benignExamples": [
+        "From the given text, list me details about parity plot A parity plot is a scatterplot that",
+        "Find the price of Osborne 1 from this passage. The Osborne effect is a social phenomenon o"
+      ]
+    },
+    {
+      "label": "Behavioral constraint override (generalized)",
+      "riskType": "JAILBREAK",
+      "benignFires": 3,
+      "attackFires": 223,
+      "benignFireRate": 0.0006,
+      "attackFireRate": 0.11983,
+      "lift": 149.82,
+      "benignExamples": [
+        "What is the difference between an electric field and gravitational field? The concept of t",
+        "What is electrostatics the study of? The concept of the electric field was introduced by M"
+      ]
+    },
+    {
+      "label": "Bulk financial abuse (generalized)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 3,
+      "attackFires": 6,
+      "benignFireRate": 0.0006,
+      "attackFireRate": 0.00322,
+      "lift": 4.03,
+      "benignExamples": [
+        "What are some highlights of Lionel Messi's career goals? Lionel Messi is an Argentine prof",
+        "Provide a summary of Oliver Cromwell Applegate's career and later years. Captain Oliver Cr"
+      ]
+    },
+    {
+      "label": "Fragmented hazardous-material request (compact)",
+      "riskType": "JAILBREAK",
+      "benignFires": 3,
+      "attackFires": 6,
+      "benignFireRate": 0.0006,
+      "attackFireRate": 0.00322,
+      "lift": 4.03,
+      "benignExamples": [
+        "What are the examples of quantum tunneling processes? Apart from fission induced by a neu",
+        "How was the Iraqi embassy in Beirut destroyed? 1981 Iraqi embassy bombing in Beirut Artic"
+      ]
+    },
+    {
+      "label": "DAN jailbreak (unicode)",
+      "riskType": "JAILBREAK",
+      "benignFires": 3,
+      "attackFires": 7,
+      "benignFireRate": 0.0006,
+      "attackFireRate": 0.00376,
+      "lift": 4.7,
+      "benignExamples": [
+        "Extract the special guests that Taylor Swift had on her 1989 Tour in 2015. Separate them w",
+        "Name the academic institutions which John Cena attended. Cena was born in West Newbury, Ma"
+      ]
+    },
+    {
+      "label": "Semantic anomaly (SOCIAL_ENGINEERING)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 2,
+      "attackFires": 0,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "Data protection social media Europa",
+        "When was the Philippine House Committee elevated into a standing committee"
+      ]
+    },
+    {
+      "label": "High-risk tool misuse",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 2,
+      "attackFires": 7,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.00376,
+      "lift": 6.27,
+      "benignExamples": [
+        "Who tends to participates in hackathons? A hackathon (also known as a hack day, hackfest, ",
+        "What is ECharts Java? ECharts Java is a lightweight but comprehensive library for Java dev"
+      ]
+    },
+    {
+      "label": "High-risk tool misuse (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 2,
+      "attackFires": 5,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.00269,
+      "lift": 4.48,
+      "benignExamples": [
+        "Who tends to participates in hackathons? A hackathon (also known as a hack day, hackfest, ",
+        "What is ECharts Java? ECharts Java is a lightweight but comprehensive library for Java dev"
+      ]
+    },
+    {
+      "label": "Safety bypass",
+      "riskType": "JAILBREAK",
+      "benignFires": 2,
+      "attackFires": 41,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.02203,
+      "lift": 36.73,
+      "benignExamples": [
+        "Who tends to participates in hackathons? A hackathon (also known as a hack day, hackfest, ",
+        "Why did the Prix Lupin not take place from 1915 to 1918? The event was established in 1855"
+      ]
+    },
+    {
+      "label": "Safety bypass (leet)",
+      "riskType": "JAILBREAK",
+      "benignFires": 2,
+      "attackFires": 20,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.01075,
+      "lift": 17.92,
+      "benignExamples": [
+        "Who tends to participates in hackathons? A hackathon (also known as a hack day, hackfest, ",
+        "Why did the Prix Lupin not take place from 1915 to 1918? The event was established in 1855"
+      ]
+    },
+    {
+      "label": "Excessive agency request",
+      "riskType": "JAILBREAK",
+      "benignFires": 2,
+      "attackFires": 7,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.00376,
+      "lift": 6.27,
+      "benignExamples": [
+        "Who tends to participates in hackathons? A hackathon (also known as a hack day, hackfest, ",
+        "What is ECharts Java? ECharts Java is a lightweight but comprehensive library for Java dev"
+      ]
+    },
+    {
+      "label": "Excessive agency request (leet)",
+      "riskType": "JAILBREAK",
+      "benignFires": 2,
+      "attackFires": 5,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.00269,
+      "lift": 4.48,
+      "benignExamples": [
+        "Who tends to participates in hackathons? A hackathon (also known as a hack day, hackfest, ",
+        "What is ECharts Java? ECharts Java is a lightweight but comprehensive library for Java dev"
+      ]
+    },
+    {
+      "label": "Narrative bypass",
+      "riskType": "JAILBREAK",
+      "benignFires": 2,
+      "attackFires": 43,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.02311,
+      "lift": 38.52,
+      "benignExamples": [
+        "Given this article on Donkey Kong Country 2, who is the villain of the plot and where does",
+        "Based on the provided paragraph give a bullet list of the names of the countries (regions)"
+      ]
+    },
+    {
+      "label": "SQL statement syntax",
+      "riskType": "CODE_INJECTION",
+      "benignFires": 2,
+      "attackFires": 1,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.00054,
+      "lift": 0.9,
+      "benignExamples": [
+        "Select the odd word from this list and explain why: Chair Sofa Table Dinosaur Cupboard",
+        "Select the odd word from this list and explain why you chose it. Cow Horse Tiger Chicken P"
+      ]
+    },
+    {
+      "label": "System prompt request",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 2,
+      "attackFires": 22,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.01182,
+      "lift": 19.71,
+      "benignExamples": [
+        "what are the rules of cricket ? Cricket is a bat-and-ball game played between two teams of",
+        "Given these paragraphs about Large language models, what is Instruction tuning? A large la"
+      ]
+    },
+    {
+      "label": "System prompt request (leet)",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 2,
+      "attackFires": 1,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.00054,
+      "lift": 0.9,
+      "benignExamples": [
+        "what are the rules of cricket ? Cricket is a bat-and-ball game played between two teams of",
+        "Given these paragraphs about Large language models, what is Instruction tuning? A large la"
+      ]
+    },
+    {
+      "label": "Mass-casualty attack planning request",
+      "riskType": "TOXICITY",
+      "benignFires": 2,
+      "attackFires": 0,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "What is the solar system? The Solar System is the gravitationally bound system of the Sun ",
+        "Please give me a short bulleted list of what happened in the 2023 Covenant School shooting"
+      ]
+    },
+    {
+      "label": "Sensitive context exfiltration",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 2,
+      "attackFires": 1,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.00054,
+      "lift": 0.9,
+      "benignExamples": [
+        "How many variants of the PrintNightmare existed? PrintNightmare was a critical security vu",
+        "Extract the names of the four Grand Slam tournaments and list them using bullets. Include "
+      ]
+    },
+    {
+      "label": "Sensitive context exfiltration (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 2,
+      "attackFires": 0,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "How many variants of the PrintNightmare existed? PrintNightmare was a critical security vu",
+        "Extract the names of the four Grand Slam tournaments and list them using bullets. Include "
+      ]
+    },
+    {
+      "label": "Sensitive context exfiltration (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 2,
+      "attackFires": 2,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.00107,
+      "lift": 1.79,
+      "benignExamples": [
+        "How many variants of the PrintNightmare existed? PrintNightmare was a critical security vu",
+        "Extract the names of the four Grand Slam tournaments and list them using bullets. Include "
+      ]
+    },
+    {
+      "label": "Multi-turn pressure",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 2,
+      "attackFires": 1,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.00054,
+      "lift": 0.9,
+      "benignExamples": [
+        "How to introduce a new cat to the household if you already have cats?",
+        "Extract one of the franchise introduced in IPL 2022 from the text and who won the title du"
+      ]
+    },
+    {
+      "label": "Fragmented hazardous-material request",
+      "riskType": "JAILBREAK",
+      "benignFires": 2,
+      "attackFires": 5,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.00269,
+      "lift": 4.48,
+      "benignExamples": [
+        "What are the examples of quantum tunneling processes? Apart from fission induced by a neu",
+        "How was the Iraqi embassy in Beirut destroyed? 1981 Iraqi embassy bombing in Beirut Artic"
+      ]
+    },
+    {
+      "label": "Fragmented hazardous-material request (leet)",
+      "riskType": "JAILBREAK",
+      "benignFires": 2,
+      "attackFires": 3,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.00161,
+      "lift": 2.69,
+      "benignExamples": [
+        "What are the examples of quantum tunneling processes? Apart from fission induced by a neu",
+        "How was the Iraqi embassy in Beirut destroyed? 1981 Iraqi embassy bombing in Beirut Artic"
+      ]
+    },
+    {
+      "label": "Extremist ideology",
+      "riskType": "TOXICITY",
+      "benignFires": 2,
+      "attackFires": 0,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "From the passage provided, extract the what were some of the key years and discoveries of ",
+        "From the passage provided, what year did the Covenant attack? Nearly a hundred thousand ye"
+      ]
+    },
+    {
+      "label": "Chemical/biological harm production request",
+      "riskType": "TOXICITY",
+      "benignFires": 2,
+      "attackFires": 3,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.00161,
+      "lift": 2.69,
+      "benignExamples": [
+        "According to this passage, what percent of the lithography machine market do Ultratech, Ca",
+        "From the passage provided, extract the products & services owned by Meta. Separate them wi"
+      ]
+    },
+    {
+      "label": "Semantic anomaly (JAILBREAK)",
+      "riskType": "JAILBREAK",
+      "benignFires": 2,
+      "attackFires": 3,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.00161,
+      "lift": 2.69,
+      "benignExamples": [
+        "Imagine you are an immortal being at the heat death of the universe.",
+        "What do you understand by Boosting in machine learning?"
+      ]
+    },
+    {
+      "label": "Jailbreak persona override",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 2,
+      "attackFires": 60,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.03224,
+      "lift": 53.75,
+      "benignExamples": [
+        "Given a reference text about GDPR, tell me how GDPR helps to secure personal data. The Gen",
+        "Extract the names of the works of Michael Daugherty from the text. Separate them with a co"
+      ]
+    },
+    {
+      "label": "Jailbreak persona override (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 2,
+      "attackFires": 53,
+      "benignFireRate": 0.0004,
+      "attackFireRate": 0.02848,
+      "lift": 47.48,
+      "benignExamples": [
+        "Given a reference text about GDPR, tell me how GDPR helps to secure personal data. The Gen",
+        "Extract the names of the works of Michael Daugherty from the text. Separate them with a co"
+      ]
+    },
+    {
+      "label": "Semantic anomaly (MCP_TOOL_POISONING)",
+      "riskType": "MCP_TOOL_POISONING",
+      "benignFires": 1,
+      "attackFires": 0,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "What's the situation in the US answered in German?"
+      ]
+    },
+    {
+      "label": "Anti-LGBTQ slur",
+      "riskType": "TOXICITY",
+      "benignFires": 1,
+      "attackFires": 0,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "Where are the British Virgin Islands (BVI) and which islands are a part of the BVI? The Br"
+      ]
+    },
+    {
+      "label": "Few-shot behavior poisoning",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 1,
+      "attackFires": 0,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "What is SVM? In machine learning, support vector machines (SVMs, also support vector netwo"
+      ]
+    },
+    {
+      "label": "Few-shot behavior poisoning (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 1,
+      "attackFires": 0,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "What is SVM? In machine learning, support vector machines (SVMs, also support vector netwo"
+      ]
+    },
+    {
+      "label": "Financial crime operational request",
+      "riskType": "TOXICITY",
+      "benignFires": 1,
+      "attackFires": 0,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "Given a reference text about Jen Shah, what is she famous from, when was she criminally ch"
+      ]
+    },
+    {
+      "label": "Obfuscated credential harvesting (compact)",
+      "riskType": "DATA_EXFILTRATION",
+      "benignFires": 1,
+      "attackFires": 3,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00161,
+      "lift": 4.03,
+      "benignExamples": [
+        "What was the Underground Railroad? The Underground Railroad was a network of clandestine r"
+      ]
+    },
+    {
+      "label": "Obfuscated malware construction (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 1,
+      "attackFires": 3,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00161,
+      "lift": 4.03,
+      "benignExamples": [
+        "Provide a brief summary of the reaction to the creation of LIV Golf Human rights groups ha"
+      ]
+    },
+    {
+      "label": "Adaptive jailbreak optimizer (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 1,
+      "attackFires": 6,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00322,
+      "lift": 8.06,
+      "benignExamples": [
+        "Please provide a short biography of The Needle from the passage provided. The Needle is a "
+      ]
+    },
+    {
+      "label": "Sycophancy/priming pressure",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 1,
+      "attackFires": 8,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.0043,
+      "lift": 10.75,
+      "benignExamples": [
+        "Give me a bulleted list of 3 informal fallacies and the meaning each Informal fallacies – "
+      ]
+    },
+    {
+      "label": "Sycophancy/priming pressure (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 1,
+      "attackFires": 6,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00322,
+      "lift": 8.06,
+      "benignExamples": [
+        "Give me a bulleted list of 3 informal fallacies and the meaning each Informal fallacies – "
+      ]
+    },
+    {
+      "label": "Illegal weapon modification inquiry",
+      "riskType": "TOXICITY",
+      "benignFires": 1,
+      "attackFires": 0,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "What kind of protein is used in Biryani? Biryani (/bɜːrˈjɑːni/) is a mixed rice dish origi"
+      ]
+    },
+    {
+      "label": "Tool-schema disclosure (generalized)",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 1,
+      "attackFires": 1,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00054,
+      "lift": 1.34,
+      "benignExamples": [
+        "What functions have political parties served in American politics? Assess the strength of "
+      ]
+    },
+    {
+      "label": "Narrative bypass (leet)",
+      "riskType": "JAILBREAK",
+      "benignFires": 1,
+      "attackFires": 28,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.01505,
+      "lift": 37.62,
+      "benignExamples": [
+        "Based on the provided paragraph give a bullet list of the names of the countries (regions)"
+      ]
+    },
+    {
+      "label": "Hinglish raw data request",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 1,
+      "attackFires": 0,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "Based on the following paragraph, list the Himalayan peaks that were surveyed and identifi"
+      ]
+    },
+    {
+      "label": "Hinglish raw data request (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 1,
+      "attackFires": 0,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "Based on the following paragraph, list the Himalayan peaks that were surveyed and identifi"
+      ]
+    },
+    {
+      "label": "Hinglish raw data request (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 1,
+      "attackFires": 0,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "Based on the following paragraph, list the Himalayan peaks that were surveyed and identifi"
+      ]
+    },
+    {
+      "label": "Role-play bypass",
+      "riskType": "JAILBREAK",
+      "benignFires": 1,
+      "attackFires": 55,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.02955,
+      "lift": 73.9,
+      "benignExamples": [
+        "Summarize the given text in several sentences. Horizon Zero Dawn is an action role-playing"
+      ]
+    },
+    {
+      "label": "Role-play bypass (compact)",
+      "riskType": "JAILBREAK",
+      "benignFires": 1,
+      "attackFires": 70,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.03761,
+      "lift": 94.05,
+      "benignExamples": [
+        "Summarize the given text in several sentences. Horizon Zero Dawn is an action role-playing"
+      ]
+    },
+    {
+      "label": "Denial-of-wallet prompt",
+      "riskType": "TOKEN_ABUSE",
+      "benignFires": 1,
+      "attackFires": 5,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00269,
+      "lift": 6.72,
+      "benignExamples": [
+        "What principles does conversion rate optimization share with direct response marketing? On"
+      ]
+    },
+    {
+      "label": "Mass violence threat",
+      "riskType": "TOXICITY",
+      "benignFires": 1,
+      "attackFires": 0,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "Please give me a short bulleted list of what happened in the 2023 Covenant School shooting"
+      ]
+    },
+    {
+      "label": "Semantic anomaly (DATA_EXFILTRATION)",
+      "riskType": "DATA_EXFILTRATION",
+      "benignFires": 1,
+      "attackFires": 0,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "Who was Severus Snape secretly in love with?"
+      ]
+    },
+    {
+      "label": "Inversion/simulation jailbreak (generalized)",
+      "riskType": "JAILBREAK",
+      "benignFires": 1,
+      "attackFires": 20,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.01075,
+      "lift": 26.87,
+      "benignExamples": [
+        "Extract the year that the Balloon typeface was created from the following Wikipedia articl"
+      ]
+    },
+    {
+      "label": "Covert-channel exfiltration (generalized)",
+      "riskType": "DATA_EXFILTRATION",
+      "benignFires": 1,
+      "attackFires": 9,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00484,
+      "lift": 12.09,
+      "benignExamples": [
+        "Tell me a silly, short poem about sheep where the first letter of each new line when read "
+      ]
+    },
+    {
+      "label": "Config secret disclosure (generalized)",
+      "riskType": "DATA_EXFILTRATION",
+      "benignFires": 1,
+      "attackFires": 65,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.03493,
+      "lift": 87.34,
+      "benignExamples": [
+        "Tell me a silly, short poem about sheep where the first letter of each new line when read "
+      ]
+    },
+    {
+      "label": "Hate or harassment production request",
+      "riskType": "TOXICITY",
+      "benignFires": 1,
+      "attackFires": 9,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00484,
+      "lift": 12.09,
+      "benignExamples": [
+        "Based on the reference text, provide a bulleted list of the benefits workers receive from "
+      ]
+    },
+    {
+      "label": "New high-risk capability use",
+      "riskType": "BEHAVIORAL_ANOMALY",
+      "benignFires": 1,
+      "attackFires": 0,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "What is the New Administrative Capital of Egypt? The New Administrative Capital (NAC) (Ara"
+      ]
+    },
+    {
+      "label": "Academic pretext for operational harm",
+      "riskType": "JAILBREAK",
+      "benignFires": 1,
+      "attackFires": 0,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "Summarize the plot synopsis of the movie Real Genius in 3 sentences. The CIA has covertly "
+      ]
+    },
+    {
+      "label": "Protected data boundary request (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 1,
+      "attackFires": 2,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00107,
+      "lift": 2.69,
+      "benignExamples": [
+        "Decide the sentiment of the following user comments. Classify each of them as \"Positive\", "
+      ]
+    },
+    {
+      "label": "Unauthorized data access request (compact)",
+      "riskType": "JAILBREAK",
+      "benignFires": 1,
+      "attackFires": 2,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00107,
+      "lift": 2.69,
+      "benignExamples": [
+        "Decide the sentiment of the following user comments. Classify each of them as \"Positive\", "
+      ]
+    },
+    {
+      "label": "Fragmented hazardous-material request (unicode)",
+      "riskType": "JAILBREAK",
+      "benignFires": 1,
+      "attackFires": 0,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "How was the Iraqi embassy in Beirut destroyed? 1981 Iraqi embassy bombing in Beirut Artic"
+      ]
+    },
+    {
+      "label": "Multimodal prompt injection",
+      "riskType": "MULTIMODAL_INJECTION",
+      "benignFires": 1,
+      "attackFires": 5,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00269,
+      "lift": 6.72,
+      "benignExamples": [
+        "What are the major innovations and scientific discoveries from UC Berkeley? A number of si"
+      ]
+    },
+    {
+      "label": "Authority impersonation",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 1,
+      "attackFires": 1,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00054,
+      "lift": 1.34,
+      "benignExamples": [
+        "Given the reference text, what is log rotation in information technology? log rotation is "
+      ]
+    },
+    {
+      "label": "Disinformation production request",
+      "riskType": "TOXICITY",
+      "benignFires": 1,
+      "attackFires": 0,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "Given a reference text about Charles Wing Krafft, tell me where he was born and his occupa"
+      ]
+    },
+    {
+      "label": "Semantic anomaly (SSRF)",
+      "riskType": "SSRF_ATTEMPT",
+      "benignFires": 1,
+      "attackFires": 0,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "When was the internet created?"
+      ]
+    },
+    {
+      "label": "Unrestricted-persona jailbreak (generalized)",
+      "riskType": "JAILBREAK",
+      "benignFires": 1,
+      "attackFires": 148,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.07953,
+      "lift": 198.86,
+      "benignExamples": [
+        "Tell me why people like the Skate video game series in one sentence The Skate series disti"
+      ]
+    },
+    {
+      "label": "Pricing logic probing",
+      "riskType": "COMPETITIVE_INTEL_EXTRACTION",
+      "benignFires": 1,
+      "attackFires": 0,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0,
+      "lift": 0,
+      "benignExamples": [
+        "Describe the quantitative easing in 3 bullet points or less. Quantitative easing (QE) is a"
+      ]
+    },
+    {
+      "label": "Protected data boundary request",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 1,
+      "attackFires": 2,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00107,
+      "lift": 2.69,
+      "benignExamples": [
+        "Extract from this article the most common Android security threats and simple descriptions"
+      ]
+    },
+    {
+      "label": "Protected data boundary request (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 1,
+      "attackFires": 1,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00054,
+      "lift": 1.34,
+      "benignExamples": [
+        "Extract from this article the most common Android security threats and simple descriptions"
+      ]
+    },
+    {
+      "label": "Unauthorized data access request",
+      "riskType": "JAILBREAK",
+      "benignFires": 1,
+      "attackFires": 2,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00107,
+      "lift": 2.69,
+      "benignExamples": [
+        "Extract from this article the most common Android security threats and simple descriptions"
+      ]
+    },
+    {
+      "label": "Unauthorized data access request (leet)",
+      "riskType": "JAILBREAK",
+      "benignFires": 1,
+      "attackFires": 1,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00054,
+      "lift": 1.34,
+      "benignExamples": [
+        "Extract from this article the most common Android security threats and simple descriptions"
+      ]
+    },
+    {
+      "label": "Cyber abuse production request",
+      "riskType": "TOXICITY",
+      "benignFires": 1,
+      "attackFires": 15,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00806,
+      "lift": 20.15,
+      "benignExamples": [
+        "Extract from this article the most common Android security threats and simple descriptions"
+      ]
+    },
+    {
+      "label": "Phone number",
+      "riskType": "PII_DETECTED",
+      "benignFires": 1,
+      "attackFires": 1,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00054,
+      "lift": 1.34,
+      "benignExamples": [
+        "Extract the Ferrari automobiles that were introduced from 2020 onwards. List them by year"
+      ]
+    },
+    {
+      "label": "Multi-turn pressure (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 1,
+      "attackFires": 1,
+      "benignFireRate": 0.0002,
+      "attackFireRate": 0.00054,
+      "lift": 1.34,
+      "benignExamples": [
+        "Extract one of the franchise introduced in IPL 2022 from the text and who won the title du"
+      ]
+    },
+    {
+      "label": "Semantic anomaly (PROMPT_INJECTION)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 42,
+      "benignFireRate": 0,
+      "attackFireRate": 0.02257,
+      "lift": 112.87,
+      "benignExamples": []
+    },
+    {
+      "label": "Instruction override (generalized)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 444,
+      "benignFireRate": 0,
+      "attackFireRate": 0.23858,
+      "lift": 1193.15,
+      "benignExamples": []
+    },
+    {
+      "label": "Instruction override",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 129,
+      "benignFireRate": 0,
+      "attackFireRate": 0.06932,
+      "lift": 346.66,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish instruction override",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 54,
+      "benignFireRate": 0,
+      "attackFireRate": 0.02902,
+      "lift": 145.11,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish instruction override (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 8,
+      "benignFireRate": 0,
+      "attackFireRate": 0.0043,
+      "lift": 21.5,
+      "benignExamples": []
+    },
+    {
+      "label": "Prompt export request",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 19,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01021,
+      "lift": 51.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Verbatim prompt disclosure",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 7,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00376,
+      "lift": 18.81,
+      "benignExamples": []
+    },
+    {
+      "label": "Instruction disregard",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 7,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00376,
+      "lift": 18.81,
+      "benignExamples": []
+    },
+    {
+      "label": "Encoded instruction smuggling",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 7,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00376,
+      "lift": 18.81,
+      "benignExamples": []
+    },
+    {
+      "label": "Encoded instruction smuggling (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 7,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00376,
+      "lift": 18.81,
+      "benignExamples": []
+    },
+    {
+      "label": "Context override",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 5,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00269,
+      "lift": 13.44,
+      "benignExamples": []
+    },
+    {
+      "label": "Prompt disclosure command",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "French instruction override",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 7,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00376,
+      "lift": 18.81,
+      "benignExamples": []
+    },
+    {
+      "label": "French instruction override (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 7,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00376,
+      "lift": 18.81,
+      "benignExamples": []
+    },
+    {
+      "label": "Password disclosure",
+      "riskType": "SECRET_DETECTED",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Role or instruction replacement",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 95,
+      "benignFireRate": 0,
+      "attackFireRate": 0.05105,
+      "lift": 255.29,
+      "benignExamples": []
+    },
+    {
+      "label": "Emotional manipulation jailbreak (generalized)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 39,
+      "benignFireRate": 0,
+      "attackFireRate": 0.02096,
+      "lift": 104.8,
+      "benignExamples": []
+    },
+    {
+      "label": "Forged instruction update",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 22,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01182,
+      "lift": 59.12,
+      "benignExamples": []
+    },
+    {
+      "label": "Unverified authority escalation",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 10,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00537,
+      "lift": 26.87,
+      "benignExamples": []
+    },
+    {
+      "label": "Authority bypass pretext",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 10,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00537,
+      "lift": 26.87,
+      "benignExamples": []
+    },
+    {
+      "label": "Prompt disclosure request",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 12,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00645,
+      "lift": 32.25,
+      "benignExamples": []
+    },
+    {
+      "label": "Urgency pressure tactic",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 4,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00215,
+      "lift": 10.75,
+      "benignExamples": []
+    },
+    {
+      "label": "Forced-affirmation jailbreak (generalized)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 80,
+      "benignFireRate": 0,
+      "attackFireRate": 0.04299,
+      "lift": 214.98,
+      "benignExamples": []
+    },
+    {
+      "label": "Instruction reset",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 18,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00967,
+      "lift": 48.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Instruction disclosure request",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 4,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00215,
+      "lift": 10.75,
+      "benignExamples": []
+    },
+    {
+      "label": "Unrestricted persona",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 6,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00322,
+      "lift": 16.12,
+      "benignExamples": []
+    },
+    {
+      "label": "Framed safety-neutralization jailbreak (generalized)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 123,
+      "benignFireRate": 0,
+      "attackFireRate": 0.06609,
+      "lift": 330.53,
+      "benignExamples": []
+    },
+    {
+      "label": "Generic persona-override jailbreak (generalized)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 31,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01666,
+      "lift": 83.31,
+      "benignExamples": []
+    },
+    {
+      "label": "Indirect prompt extraction (generalized)",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 10,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00537,
+      "lift": 26.87,
+      "benignExamples": []
+    },
+    {
+      "label": "Instruction override (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 21,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01128,
+      "lift": 56.43,
+      "benignExamples": []
+    },
+    {
+      "label": "Context extraction",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 5,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00269,
+      "lift": 13.44,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish instruction override (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 34,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01827,
+      "lift": 91.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Positional prompt extraction",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Positional prompt extraction (compact)",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Base64 extraction",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Semantic anomaly (RECURSIVE_INJECTION)",
+      "riskType": "RECURSIVE_INJECTION",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Credential-bypass algorithm request",
+      "riskType": "TOXICITY",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Instruction reset (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Task or instruction cancellation",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Serialized prompt disclosure (generalized)",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "French instruction override (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Hypothetical constraint-removal jailbreak (generalized)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 14,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00752,
+      "lift": 37.62,
+      "benignExamples": []
+    },
+    {
+      "label": "Role or instruction replacement (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 36,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01934,
+      "lift": 96.74,
+      "benignExamples": []
+    },
+    {
+      "label": "Obfuscated extraction",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Obfuscated extraction (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 5,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00269,
+      "lift": 13.44,
+      "benignExamples": []
+    },
+    {
+      "label": "Instruction reversal",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 17,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00913,
+      "lift": 45.68,
+      "benignExamples": []
+    },
+    {
+      "label": "Instruction reversal (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 34,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01827,
+      "lift": 91.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Obfuscated extraction (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Prompt extraction",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Prompt extraction (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Prompt export request (leet)",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 12,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00645,
+      "lift": 32.25,
+      "benignExamples": []
+    },
+    {
+      "label": "Prior-context extraction (generalized)",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 5,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00269,
+      "lift": 13.44,
+      "benignExamples": []
+    },
+    {
+      "label": "Grounding subversion (generalized)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Spanish instruction override",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Spanish instruction override (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Spanish instruction override (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Fake-transcript priming jailbreak (generalized)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Policy-override poisoning (generalized)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 30,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01612,
+      "lift": 80.62,
+      "benignExamples": []
+    },
+    {
+      "label": "French instruction override (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Role or instruction replacement (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 8,
+      "benignFireRate": 0,
+      "attackFireRate": 0.0043,
+      "lift": 21.5,
+      "benignExamples": []
+    },
+    {
+      "label": "Cyrillic (Russian) adversarial intent (generalized)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Context extraction (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Memory safety-bypass poisoning",
+      "riskType": "MEMORY_POISONING",
+      "benignFires": 0,
+      "attackFires": 57,
+      "benignFireRate": 0,
+      "attackFireRate": 0.03063,
+      "lift": 153.17,
+      "benignExamples": []
+    },
+    {
+      "label": "Memory safety-bypass poisoning (agent prompt attack)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 57,
+      "benignFireRate": 0,
+      "attackFireRate": 0.03063,
+      "lift": 153.17,
+      "benignExamples": []
+    },
+    {
+      "label": "Counterfactual harm-extraction jailbreak (generalized)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 33,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01773,
+      "lift": 88.68,
+      "benignExamples": []
+    },
+    {
+      "label": "Instruction reversal (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 15,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00806,
+      "lift": 40.31,
+      "benignExamples": []
+    },
+    {
+      "label": "Memory safety-bypass poisoning (leet)",
+      "riskType": "MEMORY_POISONING",
+      "benignFires": 0,
+      "attackFires": 23,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01236,
+      "lift": 61.81,
+      "benignExamples": []
+    },
+    {
+      "label": "Memory safety-bypass poisoning (leet) (agent prompt attack)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 23,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01236,
+      "lift": 61.81,
+      "benignExamples": []
+    },
+    {
+      "label": "Paraphrased cybercrime tooling request",
+      "riskType": "TOXICITY",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Memory-poisoning attack (generalized)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 111,
+      "benignFireRate": 0,
+      "attackFireRate": 0.05965,
+      "lift": 298.29,
+      "benignExamples": []
+    },
+    {
+      "label": "Model format role injection",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 4,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00215,
+      "lift": 10.75,
+      "benignExamples": []
+    },
+    {
+      "label": "Model format role injection (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "French unrestricted request",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "French unrestricted request (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "French unrestricted request (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Foreign-language jailbreak phrasing (generalized)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "French adversarial intent (generalized)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Hidden-control request",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 99,
+      "benignFireRate": 0,
+      "attackFireRate": 0.0532,
+      "lift": 266.04,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish unrestricted persona",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 99,
+      "benignFireRate": 0,
+      "attackFireRate": 0.0532,
+      "lift": 266.04,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish unrestricted persona (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 99,
+      "benignFireRate": 0,
+      "attackFireRate": 0.0532,
+      "lift": 266.04,
+      "benignExamples": []
+    },
+    {
+      "label": "AIM jailbreak",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 12,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00645,
+      "lift": 32.25,
+      "benignExamples": []
+    },
+    {
+      "label": "Silent exfiltration (generalized)",
+      "riskType": "DATA_EXFILTRATION",
+      "benignFires": 0,
+      "attackFires": 41,
+      "benignFireRate": 0,
+      "attackFireRate": 0.02203,
+      "lift": 110.18,
+      "benignExamples": []
+    },
+    {
+      "label": "Hidden-control request (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish unrestricted persona (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Hidden-control request (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 72,
+      "benignFireRate": 0,
+      "attackFireRate": 0.03869,
+      "lift": 193.48,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish unrestricted persona (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 72,
+      "benignFireRate": 0,
+      "attackFireRate": 0.03869,
+      "lift": 193.48,
+      "benignExamples": []
+    },
+    {
+      "label": "Weapon construction request",
+      "riskType": "TOXICITY",
+      "benignFires": 0,
+      "attackFires": 17,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00913,
+      "lift": 45.68,
+      "benignExamples": []
+    },
+    {
+      "label": "Fiction-pretext operational-harm jailbreak (generalized)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 4,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00215,
+      "lift": 10.75,
+      "benignExamples": []
+    },
+    {
+      "label": "Unverified authority escalation (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 5,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00269,
+      "lift": 13.44,
+      "benignExamples": []
+    },
+    {
+      "label": "Authority bypass pretext (leet)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 5,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00269,
+      "lift": 13.44,
+      "benignExamples": []
+    },
+    {
+      "label": "Hidden multimodal instruction",
+      "riskType": "MULTIMODAL_INJECTION",
+      "benignFires": 0,
+      "attackFires": 4,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00215,
+      "lift": 10.75,
+      "benignExamples": []
+    },
+    {
+      "label": "Environment secret assignment",
+      "riskType": "SECRET_DETECTED",
+      "benignFires": 0,
+      "attackFires": 11,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00591,
+      "lift": 29.56,
+      "benignExamples": []
+    },
+    {
+      "label": "Exfiltration payload in output (generalized)",
+      "riskType": "DATA_EXFILTRATION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Jailbreak action",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 20,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01075,
+      "lift": 53.75,
+      "benignExamples": []
+    },
+    {
+      "label": "Deeply nested JSON injection",
+      "riskType": "RECURSIVE_INJECTION",
+      "benignFires": 0,
+      "attackFires": 44,
+      "benignFireRate": 0,
+      "attackFireRate": 0.02364,
+      "lift": 118.24,
+      "benignExamples": []
+    },
+    {
+      "label": "Deeply nested JSON injection (leet)",
+      "riskType": "RECURSIVE_INJECTION",
+      "benignFires": 0,
+      "attackFires": 26,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01397,
+      "lift": 69.87,
+      "benignExamples": []
+    },
+    {
+      "label": "Approval-bypass tool request (generalized)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 28,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01505,
+      "lift": 75.24,
+      "benignExamples": []
+    },
+    {
+      "label": "Role-play bypass (leet)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 29,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01558,
+      "lift": 77.93,
+      "benignExamples": []
+    },
+    {
+      "label": "Paraphrased drug synthesis request",
+      "riskType": "TOXICITY",
+      "benignFires": 0,
+      "attackFires": 6,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00322,
+      "lift": 16.12,
+      "benignExamples": []
+    },
+    {
+      "label": "Safety-component-off declaration (generalized)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Persistent concealment directive",
+      "riskType": "MEMORY_POISONING",
+      "benignFires": 0,
+      "attackFires": 5,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00269,
+      "lift": 13.44,
+      "benignExamples": []
+    },
+    {
+      "label": "Persistent concealment directive (agent prompt attack)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 5,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00269,
+      "lift": 13.44,
+      "benignExamples": []
+    },
+    {
+      "label": "Persistent concealment directive (leet)",
+      "riskType": "MEMORY_POISONING",
+      "benignFires": 0,
+      "attackFires": 4,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00215,
+      "lift": 10.75,
+      "benignExamples": []
+    },
+    {
+      "label": "Persistent concealment directive (leet) (agent prompt attack)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 4,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00215,
+      "lift": 10.75,
+      "benignExamples": []
+    },
+    {
+      "label": "High-density substance synthesis query",
+      "riskType": "TOXICITY",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Academic dishonesty guidance request",
+      "riskType": "TOXICITY",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Unbounded query extraction (generalized)",
+      "riskType": "DATA_EXFILTRATION",
+      "benignFires": 0,
+      "attackFires": 4,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00215,
+      "lift": 10.75,
+      "benignExamples": []
+    },
+    {
+      "label": "Known jailbreak persona",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 19,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01021,
+      "lift": 51.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Known jailbreak persona (leet)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 17,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00913,
+      "lift": 45.68,
+      "benignExamples": []
+    },
+    {
+      "label": "Triggered backdoor instruction",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Hypothetical bypass",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 6,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00322,
+      "lift": 16.12,
+      "benignExamples": []
+    },
+    {
+      "label": "Hypothetical bypass (compact)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 16,
+      "benignFireRate": 0,
+      "attackFireRate": 0.0086,
+      "lift": 43,
+      "benignExamples": []
+    },
+    {
+      "label": "Violence instruction request",
+      "riskType": "TOXICITY",
+      "benignFires": 0,
+      "attackFires": 14,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00752,
+      "lift": 37.62,
+      "benignExamples": []
+    },
+    {
+      "label": "Self-harm encouragement",
+      "riskType": "TOXICITY",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Jailbreak persona override (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 4,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00215,
+      "lift": 10.75,
+      "benignExamples": []
+    },
+    {
+      "label": "Sycophancy/priming pressure (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 4,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00215,
+      "lift": 10.75,
+      "benignExamples": []
+    },
+    {
+      "label": "Known jailbreak persona (unicode)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 10,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00537,
+      "lift": 26.87,
+      "benignExamples": []
+    },
+    {
+      "label": "Prompt disclosure request (leet)",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Connector permission escalation",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Connector permission escalation (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 5,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00269,
+      "lift": 13.44,
+      "benignExamples": []
+    },
+    {
+      "label": "Encoded instruction smuggling (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 4,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00215,
+      "lift": 10.75,
+      "benignExamples": []
+    },
+    {
+      "label": "Persistent behavioral override",
+      "riskType": "MEMORY_POISONING",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Persistent behavioral override (agent prompt attack)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Persistent behavioral override (leet)",
+      "riskType": "MEMORY_POISONING",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Persistent behavioral override (leet) (agent prompt attack)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Adaptive jailbreak optimizer (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish instruction override (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 6,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00322,
+      "lift": 16.12,
+      "benignExamples": []
+    },
+    {
+      "label": "Credit card-like pattern",
+      "riskType": "PII_DETECTED",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "URL exfiltration (generalized)",
+      "riskType": "DATA_EXFILTRATION",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Role or instruction replacement (decoded)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 8,
+      "benignFireRate": 0,
+      "attackFireRate": 0.0043,
+      "lift": 21.5,
+      "benignExamples": []
+    },
+    {
+      "label": "Hidden-control request (decoded)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 6,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00322,
+      "lift": 16.12,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish unrestricted persona (decoded)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 6,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00322,
+      "lift": 16.12,
+      "benignExamples": []
+    },
+    {
+      "label": "DAN jailbreak (decoded)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 10,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00537,
+      "lift": 26.87,
+      "benignExamples": []
+    },
+    {
+      "label": "Authority impersonation (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Cyber dual-use evasion",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Cyber dual-use evasion (decoded)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Cyber dual-use evasion (leet)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Email address",
+      "riskType": "PII_DETECTED",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Narrative bypass (decoded)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 6,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00322,
+      "lift": 16.12,
+      "benignExamples": []
+    },
+    {
+      "label": "Persona-drop jailbreak (generalized)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 7,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00376,
+      "lift": 18.81,
+      "benignExamples": []
+    },
+    {
+      "label": "Jailbreak persona override (decoded)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "System prompt leak attempt",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 19,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01021,
+      "lift": 51.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Instruction reversal (decoded)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Instruction reversal (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Known jailbreak persona (decoded)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Fragmented risky token smuggling",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 5,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00269,
+      "lift": 13.44,
+      "benignExamples": []
+    },
+    {
+      "label": "Fragmented risky token smuggling (decoded)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Fragmented risky token smuggling (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Fragmented risky token smuggling (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 6,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00322,
+      "lift": 16.12,
+      "benignExamples": []
+    },
+    {
+      "label": "Hypothetical bypass (decoded)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Hypothetical bypass (leet)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish instruction override (decoded)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Safety bypass (decoded)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Evolutionary jailbreak generation",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Evolutionary jailbreak generation (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Evolutionary jailbreak generation (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Fragmented risky token smuggling (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Hypothetical bypass (unicode)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Narrative bypass (unicode)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 5,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00269,
+      "lift": 13.44,
+      "benignExamples": []
+    },
+    {
+      "label": "Fake policy-update jailbreak (generalized)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Context exhaustion attack",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Role-play bypass (decoded)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "SQL statement stacking",
+      "riskType": "CODE_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Unrestricted persona (decoded)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish mode activation (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 17,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00913,
+      "lift": 45.68,
+      "benignExamples": []
+    },
+    {
+      "label": "Game-based smuggling",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 12,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00645,
+      "lift": 32.25,
+      "benignExamples": []
+    },
+    {
+      "label": "Game-based smuggling (unicode)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 6,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00322,
+      "lift": 16.12,
+      "benignExamples": []
+    },
+    {
+      "label": "Game-based smuggling (leet)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 9,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00484,
+      "lift": 24.19,
+      "benignExamples": []
+    },
+    {
+      "label": "Encoded instruction smuggling (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Instruction reset (decoded)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Encoded instruction smuggling (decoded)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Unsafe fine-tuning attack (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Indirect injection: document addresses AI (generalized)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish mode activation",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 16,
+      "benignFireRate": 0,
+      "attackFireRate": 0.0086,
+      "lift": 43,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish mode activation (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 14,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00752,
+      "lift": 37.62,
+      "benignExamples": []
+    },
+    {
+      "label": "Jailbreak action (leet)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 13,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00699,
+      "lift": 34.93,
+      "benignExamples": []
+    },
+    {
+      "label": "AIM jailbreak (leet)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 4,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00215,
+      "lift": 10.75,
+      "benignExamples": []
+    },
+    {
+      "label": "Unverified authority escalation (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Obfuscated instruction smuggling (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Jailbreak action (unicode)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Authority bypass pretext (unicode)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Fake auth-bypass poisoning (generalized)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish mode activation (decoded)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Forged instruction update (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Urgency pressure tactic (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Chat template spoofing",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Chat template spoofing (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish hidden information request",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish hidden information request (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish hidden information request (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Instruction disregard (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Unrestricted persona (leet)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Cybercrime tooling request",
+      "riskType": "TOXICITY",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Illegal abuse production request",
+      "riskType": "TOXICITY",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Excessive-agency tool request (generalized)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Memory safety-bypass poisoning (unicode)",
+      "riskType": "MEMORY_POISONING",
+      "benignFires": 0,
+      "attackFires": 4,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00215,
+      "lift": 10.75,
+      "benignExamples": []
+    },
+    {
+      "label": "Memory safety-bypass poisoning (unicode) (agent prompt attack)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 4,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00215,
+      "lift": 10.75,
+      "benignExamples": []
+    },
+    {
+      "label": "Multi-turn escalation",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Social proof bypass (compact)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Policy inference probe",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Policy inference probe (leet)",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Targeted harassment",
+      "riskType": "TOXICITY",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Paraphrased explosive construction request",
+      "riskType": "TOXICITY",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Invisible Unicode control characters (decoded)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 20,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01075,
+      "lift": 53.75,
+      "benignExamples": []
+    },
+    {
+      "label": "Invisible Unicode control characters (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 6,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00322,
+      "lift": 16.12,
+      "benignExamples": []
+    },
+    {
+      "label": "Agent escalation or RCE attempt (decoded)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Agent escalation or RCE attempt (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 8,
+      "benignFireRate": 0,
+      "attackFireRate": 0.0043,
+      "lift": 21.5,
+      "benignExamples": []
+    },
+    {
+      "label": "Prompt disclosure request (decoded)",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Prompt disclosure request (unicode)",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "UPI ID",
+      "riskType": "INDIA_PII_DETECTED",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish hidden information request (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Hinglish mode activation (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Scope-creep data extraction (generalized)",
+      "riskType": "DATA_EXFILTRATION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Indian mobile number",
+      "riskType": "INDIA_PII_DETECTED",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Game-based smuggling (decoded)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Verbatim prompt disclosure (decoded)",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Verbatim prompt disclosure (unicode)",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Verbatim prompt disclosure (leet)",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Indirect injection: priority spoofing (generalized)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Unbounded autonomous agency (generalized)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 31,
+      "benignFireRate": 0,
+      "attackFireRate": 0.01666,
+      "lift": 83.31,
+      "benignExamples": []
+    },
+    {
+      "label": "Prompt export request (unicode)",
+      "riskType": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Operational intrusion request (compact)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "CSAM reference",
+      "riskType": "TOXICITY",
+      "benignFires": 0,
+      "attackFires": 3,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00161,
+      "lift": 8.06,
+      "benignExamples": []
+    },
+    {
+      "label": "Covert exfiltration channel (compact)",
+      "riskType": "DATA_EXFILTRATION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Deeply nested JSON injection (unicode)",
+      "riskType": "RECURSIVE_INJECTION",
+      "benignFires": 0,
+      "attackFires": 8,
+      "benignFireRate": 0,
+      "attackFireRate": 0.0043,
+      "lift": 21.5,
+      "benignExamples": []
+    },
+    {
+      "label": "Role-play bypass (unicode)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 7,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00376,
+      "lift": 18.81,
+      "benignExamples": []
+    },
+    {
+      "label": "Fiction framing + operational harm request",
+      "riskType": "TOXICITY",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Algorithm extraction",
+      "riskType": "COMPETITIVE_INTEL_EXTRACTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Spanish unrestricted request",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Spanish unrestricted request (unicode)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Spanish unrestricted request (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Spanish unrestricted request (compact)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Spanish adversarial intent (generalized)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "AIM jailbreak (unicode)",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Template injection",
+      "riskType": "RECURSIVE_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Template injection (unicode)",
+      "riskType": "RECURSIVE_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Template injection (leet)",
+      "riskType": "RECURSIVE_INJECTION",
+      "benignFires": 0,
+      "attackFires": 2,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00107,
+      "lift": 5.37,
+      "benignExamples": []
+    },
+    {
+      "label": "Template literal injection",
+      "riskType": "RECURSIVE_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Template literal injection (unicode)",
+      "riskType": "RECURSIVE_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Emergency authority pressure",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Emergency authority pressure (leet)",
+      "riskType": "PROMPT_INJECTION",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Operational intrusion request",
+      "riskType": "JAILBREAK",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Antisemitic dog-whistle",
+      "riskType": "TOXICITY",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    },
+    {
+      "label": "Misogynistic dehumanization",
+      "riskType": "TOXICITY",
+      "benignFires": 0,
+      "attackFires": 1,
+      "benignFireRate": 0,
+      "attackFireRate": 0.00054,
+      "lift": 2.69,
+      "benignExamples": []
+    }
+  ]
+}

@@ -8,10 +8,15 @@
 
 import {
   AGENCY_LIMIT_PER_MONTH,
+  AGENCY_RPM,
   ENTERPRISE_LIMIT_PER_MONTH,
+  ENTERPRISE_RPM,
   FREE_PLAN_LIMIT_PER_MONTH,
+  FREE_PLAN_RPM,
   PRO_LIMIT_PER_MONTH,
+  PRO_RPM,
   STARTER_LIMIT_PER_MONTH,
+  STARTER_RPM,
   USAGE_WARNING_THRESHOLD,
 } from "./guard/constants";
 import { db } from "./db";
@@ -28,6 +33,22 @@ export const PLAN_LIMITS: Record<string, number> = {
 
 export function planLimit(plan: string) {
   return PLAN_LIMITS[plan] ?? FREE_PLAN_LIMIT_PER_MONTH;
+}
+
+// Per-minute burst ceilings. See the rationale block in guard/constants.ts: the
+// monthly meter enforces spend, this only bounds abuse, so it must stay above
+// the sustained rate each plan sells or it becomes the de-facto quota.
+export const PLAN_RPM: Record<string, number> = {
+  FREE: FREE_PLAN_RPM,
+  DEMO: FREE_PLAN_RPM,
+  STARTER: STARTER_RPM,
+  PRO: PRO_RPM,
+  AGENCY: AGENCY_RPM,
+  ENTERPRISE: ENTERPRISE_RPM,
+};
+
+export function planRpm(plan: string | null | undefined) {
+  return (plan && PLAN_RPM[plan]) || FREE_PLAN_RPM;
 }
 
 function minuteBucketKey(identifier: string) {
@@ -48,13 +69,34 @@ export interface RateLimitResult {
 }
 
 async function incrementWindow(redis: RedisLike, key: string, windowMs: number) {
-  const [count, ttl] = await Promise.all([redis.incrBy(key, 1), redis.ttl(key)]);
+  const count = await redis.incrBy(key, 1);
+  // The TTL read is advisory — it only decides whether the expiry still needs
+  // applying. It must never fail the call: the increment above has already been
+  // committed, so a rejection here would send the caller into the fallback
+  // store, which starts empty. A client that had already exhausted its window
+  // would get a fresh allowance, and across pods the limit would stop being
+  // global — the counter has to stay wherever the increment landed.
+  let ttl: number;
+  try {
+    ttl = await redis.ttl(key);
+  } catch {
+    // TTL unknown: only (re-)apply the expiry for a freshly created key, never
+    // for an established one — re-expiring on every request would slide the
+    // window forward indefinitely and the counter would never reset.
+    ttl = count === 1 ? -1 : 0;
+  }
   // CRG-RT-013: incrBy + expire are two commands. If the expire after the first
   // increment was ever lost (process crash / partial failure), the key persists
   // with no TTL (-1) and would never reset — a permanent lockout. Self-heal by
   // re-applying the expiry whenever the key has no TTL.
   if (count === 1 || ttl < 0) {
-    await redis.expire(key, Math.ceil(windowMs / 1000));
+    try {
+      await redis.expire(key, Math.ceil(windowMs / 1000));
+    } catch {
+      // Best effort. A dropped expiry self-heals on the next request, which
+      // observes ttl < 0 and re-applies it — and losing the write is not a
+      // reason to discard the increment we already made.
+    }
   }
   return { count, ttl };
 }

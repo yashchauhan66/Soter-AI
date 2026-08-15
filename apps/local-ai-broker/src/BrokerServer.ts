@@ -17,7 +17,6 @@ import {
     MemoryStore,
     createApprovalGrant,
     generateSafeModePolicy,
-    messagesToForward,
     redactForSharing,
     findSurvivingSecrets,
     scanBrokerRequest,
@@ -79,6 +78,8 @@ export interface BrokerServerOptions {
     bodyLimitBytes?: number;
     requestTimeoutMs?: number;
     rateLimitPerMinute?: number;
+    /** Budget for /health, /version and /v1/safe-mode/status, metered separately. */
+    livenessRateLimitPerMinute?: number;
     allowedOrigins?: string[];
     openAIProviderUrl?: string;
     anthropicProviderUrl?: string;
@@ -99,7 +100,12 @@ export interface BrokerServerOptions {
 interface JsonBody { [key: string]: unknown }
 
 class HttpError extends Error {
-    constructor(readonly status: number, readonly code: string, message: string) {
+    constructor(
+        readonly status: number,
+        readonly code: string,
+        message: string,
+        readonly details?: Record<string, unknown>,
+    ) {
         super(message);
     }
 }
@@ -154,9 +160,23 @@ export class BrokerServer {
         try {
             this.applySecurityHeaders(res);
             this.enforceOrigin(req);
-            this.enforceRateLimit(req);
             const url = new URL(req.url ?? "/", `http://${BROKER_HOST}`);
             if (req.method === "OPTIONS") throw new HttpError(405, "cors_disabled", "Browser cross-origin requests are disabled");
+
+            // Liveness is metered separately, and generously. The shared budget
+            // exists to stop a local process from burning provider quota through
+            // the proxy; charging liveness probes against it made the client its
+            // own attacker. The editor polls these three endpoints on a timer and
+            // again on every start attempt, so a single click could spend most of
+            // a minute's allowance — and once the limit tripped, /version began
+            // answering 429, the editor read that as "the broker is gone", and
+            // every protected feature failed while the broker sat there healthy.
+            //
+            // Still metered, at a ceiling no legitimate client approaches, so a
+            // runaway loop cannot spin the CPU on JSON responses.
+            const liveness = req.method === "GET" &&
+                (url.pathname === "/health" || url.pathname === "/version" || url.pathname === "/v1/safe-mode/status");
+            this.enforceRateLimit(req, liveness);
 
             if (req.method === "GET" && url.pathname === "/health") {
                 return this.json(res, 200, { status: "ok", localOnly: true, host: BROKER_HOST, startedAt: this.startedAt });
@@ -223,7 +243,16 @@ export class BrokerServer {
             const code = error instanceof HttpError ? error.code : "internal_error";
             const message = error instanceof HttpError ? error.message : "The local broker could not complete the request";
             this.safeLog("request_failed", { requestId, status, code });
-            if (!res.headersSent) this.json(res, status, { error: { code, message, requestId } });
+            if (!res.headersSent) {
+                this.json(res, status, {
+                    error: {
+                        code,
+                        message,
+                        requestId,
+                        ...(error instanceof HttpError && error.details ? { details: error.details } : {}),
+                    },
+                });
+            }
             else res.end();
         }
     }
@@ -524,7 +553,7 @@ export class BrokerServer {
             this.record({ sessionId, eventType: "broker_request_blocked", decision: scan.decision, riskScore: scan.riskScore, categories: scan.categories, contentHash: scan.contentHash, model, provider: "openai-compatible", redactedEvidence: scan.evidencePreview });
             throw new HttpError(scan.decision === "approval_required" ? 403 : 422, scan.decision, scan.decision === "approval_required" ? "Local approval is required for this content hash" : "The request was blocked by local policy");
         }
-        const forward = { ...body, messages: messagesToForward(scan.redacted ? "redact" : scan.decision, messages, scan.redactedMessages) };
+        const forward = { ...body, messages: forwardRawMessages(scan.redacted ? "redact" : scan.decision, body.messages) };
         res.setHeader("x-soterai-request-decision", scan.decision);
 
         if (body.stream === true) {
@@ -552,8 +581,14 @@ export class BrokerServer {
         if (!scan.safe || !shouldForward(scan.decision, approved)) {
             throw new HttpError(scan.decision === "approval_required" ? 403 : 422, scan.decision, "The request was blocked by local policy");
         }
-        const forwarded = messagesToForward(scan.redacted ? "redact" : scan.decision, messages, scan.redactedMessages);
-        const forward = { ...body, system: forwarded.find((m) => m.role === "system")?.content, messages: forwarded.filter((m) => m.role !== "system") };
+        const rawForwarded = forwardRawMessages(scan.redacted ? "redact" : scan.decision, body.messages);
+        const rawList = Array.isArray(rawForwarded) ? rawForwarded as Array<Record<string, unknown>> : [];
+        const inlineSystem = rawList.find((m) => m?.role === "system");
+        const forward = {
+            ...body,
+            system: typeof body.system === "string" ? body.system : (inlineSystem?.content as string | undefined),
+            messages: rawList.filter((m) => m?.role !== "system"),
+        };
         res.setHeader("x-soterai-request-decision", scan.decision);
 
         if (body.stream === true) {
@@ -618,6 +653,8 @@ export class BrokerServer {
         if (!upstream.ok || !upstream.body) {
             clearTimeout(timeout);
             const errText = await upstream.text().catch(() => "");
+            const parsed = parseProviderJson(errText);
+            if (parsed) throw providerSafetyError(kind, upstream.status, parsed);
             throw new HttpError(502, "provider_error", `Provider streaming failed (${upstream.status}): ${errText.slice(0, 200)}`);
         }
 
@@ -752,8 +789,10 @@ export class BrokerServer {
         try {
             const response = await (this.options.fetchImpl ?? fetch)(target, { method: "POST", headers, body: JSON.stringify(body), signal: controller.signal });
             const parsed = await response.json() as JsonBody;
+            if (!response.ok) throw providerSafetyError(kind, response.status, parsed);
             return { status: response.status, body: parsed };
-        } catch {
+        } catch (error) {
+            if (error instanceof HttpError) throw error;
             throw new HttpError(502, "provider_error", "The configured provider could not be reached or returned invalid JSON");
         } finally { clearTimeout(timeout); }
     }
@@ -784,13 +823,23 @@ export class BrokerServer {
         if (!(this.options.allowedOrigins ?? []).includes(origin)) throw new HttpError(403, "origin_rejected", "Browser origins are rejected by default");
     }
 
-    private enforceRateLimit(req: IncomingMessage): void {
-        const key = req.socket.remoteAddress ?? "local";
+    /**
+     * Per-address request budget, with liveness probes on their own bucket.
+     *
+     * Two buckets rather than one exemption: an unmetered endpoint is a free
+     * spin loop, and a single shared budget let the editor's own health polling
+     * lock it out of its own broker.
+     */
+    private enforceRateLimit(req: IncomingMessage, liveness = false): void {
+        const key = `${liveness ? "live:" : ""}${req.socket.remoteAddress ?? "local"}`;
         const minute = Math.floor(Date.now() / 60_000);
+        const limit = liveness
+            ? (this.options.livenessRateLimitPerMinute ?? 1200)
+            : (this.options.rateLimitPerMinute ?? 120);
         const bucket = this.rateBuckets.get(key);
         if (!bucket || bucket.minute !== minute) { this.rateBuckets.set(key, { minute, count: 1 }); return; }
         bucket.count++;
-        if (bucket.count > (this.options.rateLimitPerMinute ?? 120)) throw new HttpError(429, "rate_limited", "Local broker rate limit exceeded");
+        if (bucket.count > limit) throw new HttpError(429, "rate_limited", "Local broker rate limit exceeded");
     }
 
     private async readJson(req: IncomingMessage): Promise<JsonBody> {
@@ -901,11 +950,70 @@ function normalizeMessages(value: unknown): BrokerMessage[] {
         if (!raw || typeof raw !== "object") throw new HttpError(400, "invalid_messages", "each message must be an object");
         const item = raw as Record<string, unknown>;
         const role = requireString(item.role, "message.role");
-        let content: string;
-        if (typeof item.content === "string") content = item.content;
-        else if (Array.isArray(item.content)) content = item.content.map((part) => typeof part === "object" && part && typeof (part as Record<string, unknown>).text === "string" ? (part as Record<string, unknown>).text : "").join("\n");
-        else throw new HttpError(400, "invalid_messages", "message.content must be text or text parts");
-        return { role, content, name: stringValue(item.name) };
+        const parts: string[] = [];
+        if (typeof item.content === "string") {
+            parts.push(item.content);
+        } else if (Array.isArray(item.content)) {
+            // Agent messages carry content as BLOCKS: text, tool_use,
+            // tool_result, image. Only the text-bearing ones are scannable;
+            // the rest are ignored here but PRESERVED verbatim on forward.
+            for (const part of item.content) {
+                if (!part || typeof part !== "object") continue;
+                const p = part as Record<string, unknown>;
+                if (typeof p.text === "string") parts.push(p.text);
+                else if (typeof p.content === "string") parts.push(p.content); // tool_result content
+            }
+        } else if (item.content != null) {
+            throw new HttpError(400, "invalid_messages", "message.content must be text, text parts, or null");
+        }
+        // null content is the normal shape for assistant tool_calls (Cline,
+        // opencode) — the args are user-authored payloads, so scan them too.
+        if (Array.isArray(item.tool_calls)) {
+            for (const tc of item.tool_calls) {
+                if (!tc || typeof tc !== "object") continue;
+                const fn = (tc as Record<string, unknown>).function;
+                if (fn && typeof fn === "object" && typeof (fn as Record<string, unknown>).arguments === "string") {
+                    parts.push((fn as Record<string, unknown>).arguments as string);
+                }
+            }
+        }
+        return { role, content: parts.join("\n"), name: stringValue(item.name) };
+    });
+}
+
+/**
+ * Build the message payload the provider receives.
+ *
+ * allow/warn: the ORIGINAL raw messages, byte-for-byte. Agent clients
+ * (Claude Code, Cline, opencode) encode tool state as content BLOCKS
+ * (tool_use / tool_result) or tool_calls fields, not as plain text —
+ * flattening those to { role, content } corrupts the conversation and breaks
+ * the agent. (This shipped as a regression; agent-toolcalls-e2e covers it.)
+ *
+ * redact: the same structure, with only detectable text-bearing parts
+ * replaced, so a redacted request still carries its tool calls intact.
+ */
+function forwardRawMessages(decision: GuardAction, raw: unknown): unknown {
+    if (decision !== "redact" || !Array.isArray(raw)) return raw;
+    return raw.map((rawMsg) => {
+        if (!rawMsg || typeof rawMsg !== "object") return rawMsg;
+        const item = rawMsg as Record<string, unknown>;
+        if (typeof item.content === "string") {
+            return { ...item, content: redactForSharing(item.content) };
+        }
+        if (Array.isArray(item.content)) {
+            return {
+                ...item,
+                content: item.content.map((part) => {
+                    if (!part || typeof part !== "object") return part;
+                    const p = part as Record<string, unknown>;
+                    if (typeof p.text === "string") return { ...p, text: redactForSharing(p.text) };
+                    if (typeof p.content === "string") return { ...p, content: redactForSharing(p.content) };
+                    return part; // tool_use, image, ... structure untouched
+                }),
+            };
+        }
+        return rawMsg; // null content (assistant tool_calls) — untouched
     });
 }
 
@@ -923,6 +1031,54 @@ function extractAnthropicResponse(body: JsonBody): string {
     const content = body.content;
     if (!Array.isArray(content)) return "";
     return content.map((part) => part && typeof part === "object" ? stringValue((part as Record<string, unknown>).text) ?? "" : "").join("\n");
+}
+
+function parseProviderJson(raw: string): JsonBody | undefined {
+    try {
+        const parsed = JSON.parse(raw) as unknown;
+        return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed as JsonBody : undefined;
+    } catch {
+        return undefined;
+    }
+}
+
+function providerSafetyError(kind: "openai" | "anthropic", status: number, body: JsonBody): HttpError {
+    const error = objectValue(body.error);
+    const details = objectValue(body.details);
+    const nestedDetails = objectValue(error.details);
+    const providerCode = [body.code, error.code, details.code, nestedDetails.code]
+        .map(stringValue)
+        .find(Boolean);
+    const providerMessage = [body.message, error.message, details.message, nestedDetails.message]
+        .map(stringValue)
+        .find(Boolean);
+    const sensitiveWords = providerCode?.toLowerCase() === "sensitive_words_detected" ||
+        /\bsensitive[\s_-]+words?\b/i.test(providerMessage ?? "");
+
+    if (sensitiveWords) {
+        return new HttpError(
+            422,
+            "provider_safety_rejected",
+            "The provider rejected this request under its content-safety policy. Revise the request or use a provider/model whose policy fits the task; SoterAI will not bypass provider safety controls.",
+            {
+                provider: `${kind}-compatible`,
+                category: "content_policy",
+                providerCode: "sensitive_words_detected",
+                retryable: false,
+            },
+        );
+    }
+
+    return new HttpError(
+        status >= 400 && status < 500 ? status : 502,
+        "provider_rejected",
+        `The configured ${kind}-compatible provider rejected the request (${status}).`,
+        {
+            provider: `${kind}-compatible`,
+            ...(providerCode ? { providerCode: providerCode.slice(0, 80) } : {}),
+            retryable: status === 408 || status === 429 || status >= 500,
+        },
+    );
 }
 
 /**

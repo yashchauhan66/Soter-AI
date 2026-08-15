@@ -1,5 +1,6 @@
 import { hashContent } from "./HashCache";
 import { containsRawSecret } from "./Redactor";
+import { detectSecrets } from "./detectors/SecretDetector";
 
 /**
  * Vault (pure logic) — extracts secrets from `.env`-style content, replaces them
@@ -90,6 +91,7 @@ function isVaultWorthy(key: string, value: string): boolean {
  */
 export function extractEnvSecrets(text: string): VaultCandidate[] {
     const candidates: VaultCandidate[] = [];
+    const occurrenceByKey = new Map<string, number>();
     let offset = 0;
     for (const line of text.split("\n")) {
         const lineStart = offset;
@@ -107,16 +109,82 @@ export function extractEnvSecrets(text: string): VaultCandidate[] {
         const valueIdxInLine = line.indexOf(rawValue, line.indexOf("=") + 1);
         if (valueIdxInLine < 0) continue;
         const start = lineStart + valueIdxInLine;
+        const occurrence = (occurrenceByKey.get(key) ?? 0) + 1;
+        occurrenceByKey.set(key, occurrence);
+        const placeholderKey = occurrence === 1 ? key : `${key}_${occurrence}`;
         candidates.push({
             key,
             rawValue,
             type: classifySecretType(key, rawValue),
-            placeholder: `[${PLACEHOLDER_PREFIX}${key}]`,
+            placeholder: `[${PLACEHOLDER_PREFIX}${placeholderKey}]`,
             start,
             end: start + rawValue.length,
         });
     }
     return candidates;
+}
+
+/**
+ * Extract every secret shape that can be replaced without breaking its host file.
+ *
+ * Environment assignments keep their stable key-based placeholders. Standalone
+ * credentials (tokens, URLs and private-key blocks) come from SecretDetector and
+ * receive occurrence-qualified placeholders so two values of the same type can
+ * always be restored independently. Assignment-shaped detector matches are
+ * deliberately excluded because replacing `api_key = value` as a whole can make
+ * JSON/YAML/source files invalid; the env parser already handles safe assignment
+ * replacement where it can identify the value boundary precisely.
+ */
+export function extractVaultCandidates(text: string): VaultCandidate[] {
+    const candidates = extractEnvSecrets(text);
+    const occurrenceByType = new Map<string, number>();
+    const placeholders = new Set(candidates.map((candidate) => candidate.placeholder));
+    const unsafeWholeAssignmentTypes = new Set([
+        "aws_secret_key",
+        "generic_api_key",
+        "password_assignment",
+    ]);
+
+    const matches = detectSecrets(text).matches
+        .filter((match) =>
+            !unsafeWholeAssignmentTypes.has(match.type) &&
+            Number.isInteger(match.start) &&
+            Number.isInteger(match.end) &&
+            match.end > match.start,
+        )
+        .sort((a, b) => b.score - a.score || (b.end - b.start) - (a.end - a.start));
+
+    for (const match of matches) {
+        const overlaps = candidates.some((candidate) =>
+            match.start < candidate.end && match.end > candidate.start,
+        );
+        if (overlaps) continue;
+
+        const rawValue = text.slice(match.start, match.end);
+        if (!rawValue || rawValue.includes(PLACEHOLDER_PREFIX)) continue;
+
+        const type = match.type.replace(/[^A-Za-z0-9_]/g, "_").toUpperCase();
+        let occurrence = (occurrenceByType.get(type) ?? 0) + 1;
+        let key = `${type}_${occurrence}`;
+        let placeholder = `[${PLACEHOLDER_PREFIX}${key}]`;
+        while (placeholders.has(placeholder)) {
+            occurrence += 1;
+            key = `${type}_${occurrence}`;
+            placeholder = `[${PLACEHOLDER_PREFIX}${key}]`;
+        }
+        occurrenceByType.set(type, occurrence);
+        placeholders.add(placeholder);
+        candidates.push({
+            key,
+            rawValue,
+            type: match.type,
+            placeholder,
+            start: match.start,
+            end: match.end,
+        });
+    }
+
+    return candidates.sort((a, b) => a.start - b.start);
 }
 
 /**

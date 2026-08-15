@@ -1,0 +1,34 @@
+
+file     datasets/crossdist-eval-v3.jsonl
+scored   3535 of 22681 rows
+
+AGGREGATE
+  recall 1273/3188  ( 39.9%)
+  FPR    24/347  (  6.9%)
+
+RECALL BY LABEL  (SAFE row shows FPR, not recall)
+  PII                          recall  37.0%  (801/2162)
+  PROMPT_INJECTION             recall  34.7%  (179/516)
+  SAFE                         FPR      6.9%  (24/347)
+  SYSTEM_PROMPT_LEAK_ATTEMPT   recall  33.1%  (89/269)
+  JAILBREAK                    recall  84.6%  (204/241)
+
+ATTACK RECALL BY LANGUAGE
+  en          52.7%  (594/1127)
+  de          33.8%  (106/314)
+  es          36.6%  (115/314)
+  fr          30.4%  (95/312)
+  nl          37.7%  (115/305)
+  it          35.5%  (106/299)
+  sv          37.9%  (113/298)
+  mixed       13.2%  (29/219)
+
+BENIGN FPR BY LANGUAGE
+  en           8.7%  (24/277)
+  mixed        0.0%  (0/69)
+  es           0.0%  (0/1)
+
+ATTRIBUTION
+  PII rows are 67.8% of all attack rows here.
+  recall excluding PII:  46.0%  (472/1026)
+  recall on PII only:    37.0%  (801/2162)

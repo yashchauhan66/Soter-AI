@@ -128,6 +128,41 @@ export function labelSpaceUncertain(probs: number[], calibration: CalibrationCon
 }
 
 /**
+ * Resolve the abstention knobs, allowing an env override of the values fitted
+ * into calibration.json.
+ *
+ * WHY AN OVERRIDE EXISTS AT ALL
+ *   These two numbers are operating points, not model weights, and this repo has
+ *   already paid for treating an operating point as immutable: the semantic-benign
+ *   veto sat at margin 0 and cost 21.74 recall points for 2 false positives, and
+ *   nobody could see it because the only way to try another value was to edit a
+ *   shipped model artifact. `SOTERAI_ML_SEMANTIC_MARGIN` is the knob that made that
+ *   measurable; these are the same idea for the gate that is now the largest
+ *   remaining bucket (52 of 101 misses at margin -0.10,
+ *   artifacts/ml/margin-sweep/full-m010.json).
+ *
+ * WHAT THEY DO
+ *   SOTERAI_ML_ABSTAIN_ENTROPY — budget on ATTACK-vs-SAFE entropy. Max possible is
+ *     ln 2 = 0.6931 (at p = 0.5), so any value >= 0.6932 disables entropy-driven
+ *     abstention entirely. v7 ships 0.2029, which requires P(attack) >= 0.9683 (or
+ *     <= 0.0317) to avoid abstaining — much stricter than it looks.
+ *   SOTERAI_ML_ABSTAIN_FLOOR — floor on decision confidence. See shouldAbstain:
+ *     this is >= 0.5 by construction, so values <= 0.5 are inert by arithmetic.
+ *
+ * SAFETY
+ *   Unset or unparseable leaves the calibration.json value untouched, so the
+ *   production default is exactly what the trainer fitted. Read per call rather
+ *   than cached at import, so a sweep harness can set it before it loads the
+ *   backend and a test can restore it.
+ */
+function resolveOverride(name: string): number | undefined {
+  const raw = process.env[name];
+  if (raw === undefined || raw === "") return undefined;
+  const parsed = Number(raw);
+  return Number.isFinite(parsed) ? parsed : undefined;
+}
+
+/**
  * Decide whether to abstain. Abstention means "not confident enough to escalate"
  * — never "SAFE".
  *
@@ -173,9 +208,15 @@ export function shouldAbstain(
   // budget can fire. v4 ships 0.55; the 0.35 default (used when a model has no
   // calibration artifact, e.g. v3) disables the floor rather than loosening it.
   const decisionConfidence = Math.max(pAttack, 1 - pAttack);
-  const floor = calibration.ood.suggested_abstain_max_prob ?? 0.35;
+  const floor =
+    resolveOverride("SOTERAI_ML_ABSTAIN_FLOOR") ??
+    calibration.ood.suggested_abstain_max_prob ??
+    0.35;
   if (decisionConfidence < floor) return true;
-  const budget = calibration.ood.binary_entropy_p95 ?? calibration.ood.entropy_p95;
+  const budget =
+    resolveOverride("SOTERAI_ML_ABSTAIN_ENTROPY") ??
+    calibration.ood.binary_entropy_p95 ??
+    calibration.ood.entropy_p95;
   if (typeof budget === "number" && binaryEntropy(pAttack) > budget) return true;
   return false;
 }

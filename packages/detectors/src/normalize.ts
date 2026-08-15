@@ -63,7 +63,7 @@ const LEET_MAP: Record<string, string> = {
   "5": "s", "6": "g", "7": "t", "8": "b", "9": "g",
   "@": "a", "!": "i", "$": "s", "|": "l", "+": "t",
 };
-const LEET_RE = /[A-Za-z0-9@!$|+]{4,}/g;
+const LEET_RE = /[A-Za-z0-9@!$|+]{3,}/g;
 const LEET_CHAR_RE = /[0-9@!$|+]/g;
 
 /**

@@ -532,14 +532,14 @@ function updateDiagnostics(document: vscode.TextDocument, findings: Finding[]): 
             const endPos = document.positionAt(f.end);
             const range = new vscode.Range(startPos, endPos);
 
-            const severity = f.severity === "critical" || f.severity === "high"
-                ? vscode.DiagnosticSeverity.Error
-                : vscode.DiagnosticSeverity.Warning;
-
+            // Always use Hint severity — this prevents red/yellow squiggly
+            // underlines from making the file look broken. The finding is still
+            // visible in the Problems panel with its full message. A shield
+            // prefix in the message makes it easy to spot among other entries.
             const diagnostic = new vscode.Diagnostic(
                 range,
-                `[SoterAI Guard] ${f.title}: ${f.reason} (Evidence: ${f.redactedEvidence})`,
-                severity
+                `🛡 [SoterAI] ${f.title}: ${f.reason}`,
+                vscode.DiagnosticSeverity.Hint,
             );
             diagnostic.code = f.id;
             diagnostic.source = "SoterAI";

@@ -1,0 +1,99 @@
+{
+  "file": "datasets/crossdist-eval-v3.jsonl",
+  "sampled": 3987,
+  "mlMode": "enforce",
+  "modelPath": "models/ml-classifier-v3/model.onnx",
+  "mlTierRan": 3987,
+  "mlErrors": 0,
+  "rulesOnly": {
+    "recall": 42.07,
+    "fpr": 4.79,
+    "caught": 1291,
+    "attacks": 3069,
+    "fp": 44,
+    "benign": 918
+  },
+  "endToEnd": {
+    "recall": 57.93,
+    "fpr": 7.63,
+    "caught": 1778,
+    "attacks": 3069,
+    "fp": 70,
+    "benign": 918
+  },
+  "mlDelta": {
+    "recallPoints": 15.86,
+    "fprPoints": 2.84,
+    "attacksRescuedByMl": 487,
+    "newFalsePositivesFromMl": 26
+  },
+  "gateAttributionForMisses": {
+    "safe-label": 804,
+    "semantic-benign": 252,
+    "label-family": 138,
+    "confidence-floor": 97
+  },
+  "gateAttributionByLabel": {
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+      "safe-label": 240,
+      "semantic-benign": 160,
+      "label-family": 77,
+      "confidence-floor": 29
+    },
+    "PROMPT_INJECTION": {
+      "safe-label": 370,
+      "confidence-floor": 39,
+      "label-family": 22,
+      "semantic-benign": 13
+    },
+    "JAILBREAK": {
+      "label-family": 9,
+      "safe-label": 9,
+      "semantic-benign": 4,
+      "confidence-floor": 1
+    },
+    "PII": {
+      "safe-label": 185,
+      "semantic-benign": 75,
+      "label-family": 30,
+      "confidence-floor": 28
+    }
+  },
+  "byLabel": {
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+      "recall": 47.24,
+      "attacks": 959,
+      "caught": 453,
+      "fpr": 0,
+      "benign": 0
+    },
+    "SAFE": {
+      "recall": 0,
+      "attacks": 0,
+      "caught": 0,
+      "fpr": 7.63,
+      "benign": 918
+    },
+    "PROMPT_INJECTION": {
+      "recall": 52.92,
+      "attacks": 943,
+      "caught": 499,
+      "fpr": 0,
+      "benign": 0
+    },
+    "JAILBREAK": {
+      "recall": 90.46,
+      "attacks": 241,
+      "caught": 218,
+      "fpr": 0,
+      "benign": 0
+    },
+    "PII": {
+      "recall": 65.66,
+      "attacks": 926,
+      "caught": 608,
+      "fpr": 0,
+      "benign": 0
+    }
+  }
+}

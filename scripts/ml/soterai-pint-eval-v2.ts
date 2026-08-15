@@ -1,16 +1,56 @@
 import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync } from "node:fs";
 import { performance } from "node:perf_hooks";
+import * as nodePath from "node:path";
+import { config as loadEnvFile } from "dotenv";
 import { analyzeText } from "../../lib/guard/analyze";
+import { augmentWithMl, resolveMlAugmentMode } from "../../lib/guard/mlAugment";
+
+// WHY THIS HARNESS RUNS augmentWithMl AND NOT analyzeText ALONE
+//   analyzeText is SYNCHRONOUS and never calls the ONNX tier — that tier is layered
+//   on at the async route boundary (app/api/guard/input/route.ts), so a harness that
+//   only calls analyzeText measures the RULES, not the shipped product. This file
+//   used to do exactly that, which mattered more here than anywhere else: this is
+//   the harness scripts/ml/benchmark-vs-lakera.py names as the ONLY Lakera-comparable
+//   axis. Scored rules-only it would have understated the deployed stack by the full
+//   measured ML delta (+31.03 pts recall on the 3,061 PG2-scope crossdist rows,
+//   artifacts/ml/crossdist-v7-newdefault.json) and a real PINT submission would have
+//   been a number for a system nobody runs.
+//
+//   Both numbers are now reported side by side — `rulesOnly` and `endToEnd` — so the
+//   comparison stays honest whichever one a reader quotes, and `model` names the tiers
+//   that actually ran rather than a fixed string. If the ML tier is off or fails to
+//   load, that is stated in the report instead of silently degrading to the old
+//   behaviour and looking like a full-stack measurement.
+loadEnvFile({ path: nodePath.resolve(process.cwd(), ".env"), quiet: true });
 
 type PintCase = { id: string; text: string; category: string; label: boolean };
 type ScoredCase = PintCase & {
   predicted: boolean;
   correct: boolean;
+  /** Rules tier alone, before augmentWithMl. Kept so the ML delta is attributable. */
+  predictedRules: boolean;
+  correctRules: boolean;
   action: string;
   riskScore: number;
   riskTypes: string[];
+  /** Rules + ML, i.e. what a request to the guard route actually costs. */
   latencyMs: number;
+  rulesLatencyMs: number;
+  mlRan: boolean;
+  mlLabel?: string;
+  /** Which precision gate refused a non-SAFE prediction; see MlGateReason. */
+  mlGatedBy?: string;
+  mlEscalated: boolean;
+  mlError?: string;
+};
+
+type MlMetadata = {
+  ran?: boolean;
+  predictedLabel?: string;
+  gatedBy?: string;
+  escalated?: boolean;
+  error?: string;
 };
 
 const VERSION = "soterai-pint-eval/v2";
@@ -161,14 +201,43 @@ function bootstrap(scored: ScoredCase[], iterations: number, seed: number) {
   };
 }
 
-function evaluate(cases: PintCase[], iterations: number, seed: number) {
-  const scored: ScoredCase[] = cases.map((item) => {
-    const start = performance.now();
-    const result = analyzeText(item.text, "INPUT");
-    const latencyMs = performance.now() - start;
+async function evaluate(cases: PintCase[], iterations: number, seed: number) {
+  const mlMode = resolveMlAugmentMode();
+  const scored: ScoredCase[] = [];
+  for (const item of cases) {
+    const rulesStart = performance.now();
+    const base = analyzeText(item.text, "INPUT");
+    const rulesLatencyMs = performance.now() - rulesStart;
+    const predictedRules = base.riskTypes.some((riskType) => POSITIVE_TYPES.has(riskType));
+
+    const mlStart = performance.now();
+    const result = await augmentWithMl(base, item.text, "INPUT");
+    const latencyMs = rulesLatencyMs + (performance.now() - mlStart);
+
+    // Guard metadata is written under `ml`, NOT `mlAugment` (withMlMetadata in
+    // lib/guard/mlAugment.ts). Reading the wrong key reports a working tier as
+    // "never ran", which is the failure this whole rewrite exists to prevent.
+    const ml = (result.metadata as { ml?: MlMetadata } | undefined)?.ml;
     const predicted = result.riskTypes.some((riskType) => POSITIVE_TYPES.has(riskType));
-    return { ...item, predicted, correct: predicted === item.label, action: result.action, riskScore: result.riskScore, riskTypes: result.riskTypes, latencyMs };
-  });
+
+    scored.push({
+      ...item,
+      predicted,
+      correct: predicted === item.label,
+      predictedRules,
+      correctRules: predictedRules === item.label,
+      action: result.action,
+      riskScore: result.riskScore,
+      riskTypes: result.riskTypes,
+      latencyMs,
+      rulesLatencyMs,
+      mlRan: ml?.ran === true,
+      mlLabel: ml?.predictedLabel,
+      mlGatedBy: ml?.gatedBy,
+      mlEscalated: ml?.escalated === true,
+      mlError: ml?.error,
+    });
+  }
   const categories = [...new Set(scored.map((item) => item.category))].sort();
   const pintSchemaCompatible = categories.every((category) => PINT_CATEGORIES.has(category));
   const tp = scored.filter((item) => item.label && item.predicted).length;
@@ -182,13 +251,58 @@ function evaluate(cases: PintCase[], iterations: number, seed: number) {
     return { category, label: label === "true", total: bucket.length, correct: bucket.filter((item) => item.correct).length, accuracy: bucket.filter((item) => item.correct).length / bucket.length };
   });
   const latencies = scored.map((item) => item.latencyMs);
+  const rulesLatencies = scored.map((item) => item.rulesLatencyMs);
   const slice = (category: string, label: boolean) => scored.filter((item) => item.category === category && item.label === label);
   const documents = slice("documents", true);
   const hardNegatives = slice("hard_negatives", false);
+
+  // Rules-only confusion, from the SAME rows, so the ML delta is a measurement and
+  // not a subtraction across two different runs.
+  const rTp = scored.filter((item) => item.label && item.predictedRules).length;
+  const rTn = scored.filter((item) => !item.label && !item.predictedRules).length;
+  const rFp = scored.filter((item) => !item.label && item.predictedRules).length;
+  const rFn = scored.filter((item) => item.label && !item.predictedRules).length;
+  const rulesScored = scored.map((item) => ({ category: item.category, label: item.label, correct: item.correctRules }));
+
+  const mlRanCount = scored.filter((item) => item.mlRan).length;
+  const mlErrors = scored.filter((item) => item.mlError).length;
+  const rescued = scored.filter((item) => item.label && item.predicted && !item.predictedRules).length;
+  const addedFp = scored.filter((item) => !item.label && item.predicted && !item.predictedRules).length;
+  const gateAttributionForMisses: Record<string, number> = {};
+  for (const item of scored) {
+    if (item.label && !item.predicted && item.mlGatedBy) {
+      gateAttributionForMisses[item.mlGatedBy] = (gateAttributionForMisses[item.mlGatedBy] ?? 0) + 1;
+    }
+  }
+
   return {
     evaluatorVersion: VERSION,
     taxonomyVersion: TAXONOMY,
-    model: "soterai_guard_analyzeText",
+    // Names the tiers that actually ran. A rules-only run must not be readable as a
+    // measurement of the deployed stack, and vice versa.
+    model: mlRanCount > 0 ? "soterai_guard_analyzeText+augmentWithMl" : "soterai_guard_analyzeText",
+    mlTier: {
+      mode: mlMode,
+      modelPath: process.env.ML_ONNX_MODEL_PATH ?? null,
+      ranOnRows: mlRanCount,
+      totalRows: scored.length,
+      inferenceErrors: mlErrors,
+      escalated: scored.filter((item) => item.mlEscalated).length,
+      rescuedAttacks: rescued,
+      addedFalsePositives: addedFp,
+      gateAttributionForMisses,
+      warning:
+        mlMode === "off"
+          ? "ML tier is OFF. These are RULES-ONLY numbers and must not be reported as the deployed stack."
+          : mlRanCount === 0
+            ? "ML tier is configured but ran on 0 rows — it failed to load. Numbers are rules-only; do not report as full stack."
+            : null,
+      scopeNote:
+        "PII/SECRET escalations do not flip `predicted`: POSITIVE_TYPES is the " +
+        "prompt-manipulation set, which is what PINT scores. Such a row can still " +
+        "become HUMAN_REVIEW in production, so the FPR here is the manipulation-axis " +
+        "FPR, not the user-visible hold rate.",
+    },
     task: pintSchemaCompatible ? "prompt_manipulation" : "unknown_or_mixed_task",
     comparability: pintSchemaCompatible ? "SCHEMA_COMPATIBLE_PROVENANCE_STILL_REQUIRES_VERIFICATION" : "NOT_DIRECTLY_COMPARABLE_TO_PINT",
     balancedScoreDefinition: FORMULA,
@@ -199,6 +313,14 @@ function evaluate(cases: PintCase[], iterations: number, seed: number) {
     confusionMatrix: { truePositive: tp, trueNegative: tn, falsePositive: fp, falseNegative: fn },
     promptManipulationRecall: tp / Math.max(1, tp + fn),
     benignFalsePositiveRate: fp / Math.max(1, fp + tn),
+    rulesOnly: {
+      note: "Same rows, ML tier removed. The headline fields above are rules + ML.",
+      balancedScore: score(rulesScored),
+      confusionMatrix: { truePositive: rTp, trueNegative: rTn, falsePositive: rFp, falseNegative: rFn },
+      promptManipulationRecall: rTp / Math.max(1, rTp + rFn),
+      benignFalsePositiveRate: rFp / Math.max(1, rFp + rTn),
+      latencyMs: { p50: percentile(rulesLatencies, 0.5), p95: percentile(rulesLatencies, 0.95) },
+    },
     indirectDocumentRecall: documents.length ? documents.filter((item) => item.correct).length / documents.length : null,
     hardNegativeAccuracy: hardNegatives.length ? hardNegatives.filter((item) => item.correct).length / hardNegatives.length : null,
     bucketMetrics,
@@ -208,7 +330,7 @@ function evaluate(cases: PintCase[], iterations: number, seed: number) {
   };
 }
 
-function main() {
+async function main() {
   const input = arg("--input");
   const output = arg("--out");
   const iterations = Number(arg("--bootstrap-iterations", "2000"));
@@ -219,7 +341,7 @@ function main() {
   const sourcePath = "scripts/ml/soterai-pint-eval-v2.ts";
   const configuration = { version: VERSION, taxonomy: TAXONOMY, positiveTypes: [...POSITIVE_TYPES].sort(), formula: FORMULA, iterations, seed };
   const report = {
-    ...evaluate(loaded.cases, iterations, seed),
+    ...(await evaluate(loaded.cases, iterations, seed)),
     input: input.replace(/\\/g, "/"),
     benchmarkSha256: sha256(loaded.raw),
     evaluatorSourceSha256: sha256(readFileSync(sourcePath)),
@@ -230,4 +352,7 @@ function main() {
   console.log(json);
 }
 
-main();
+main().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});

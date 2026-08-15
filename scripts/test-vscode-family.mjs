@@ -89,6 +89,16 @@ function resolveLauncher(command) {
 }
 
 function packageExtension() {
+  // Consume the audited artifact when it already exists: this script's contract
+  // is that every host runs "the SAME audited VSIX" (see the header comment).
+  // Repackaging on every run embeds fresh zip timestamps, so the bytes — and
+  // therefore every recorded sha256 — drift between runs and invalidate the
+  // provenance and preflight evidence that reference this artifact.
+  // Delete the VSIX or set SOTERAI_REPACKAGE=1 to force a fresh build.
+  if (existsSync(vsix) && process.env.SOTERAI_REPACKAGE !== "1") {
+    console.log(`[test-vscode-family] using existing ${basename(vsix)} (SOTERAI_REPACKAGE=1 to rebuild)`);
+    return;
+  }
   execFileSync("npm", ["run", "vscode:package"], {
     cwd: repoRoot,
     stdio: "inherit",

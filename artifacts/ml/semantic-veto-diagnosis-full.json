@@ -1,0 +1,65 @@
+{
+  "gate": 0,
+  "eval": "datasets/crossdist-eval-v3-sample.jsonl",
+  "byLabel": {
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+      "rows": 959,
+      "vetoed": 430,
+      "reachable_within_0_05": 327,
+      "reachable_0_05_to_0_15": 103,
+      "unreachable_beyond_0_15": 0,
+      "margin_p10": -0.0524,
+      "margin_p50": 0.0027,
+      "margin_p90": 0.0482,
+      "nearest_families": [
+        "(none/benign):922",
+        "SYSTEM_PROMPT_LEAK_ATTEMPT:9",
+        "PROMPT_INJECTION:9"
+      ]
+    },
+    "PROMPT_INJECTION": {
+      "rows": 943,
+      "vetoed": 306,
+      "reachable_within_0_05": 300,
+      "reachable_0_05_to_0_15": 6,
+      "unreachable_beyond_0_15": 0,
+      "margin_p10": -0.0141,
+      "margin_p50": 0.0067,
+      "margin_p90": 0.0267,
+      "nearest_families": [
+        "(none/benign):937",
+        "PROMPT_INJECTION:4",
+        "JAILBREAK:1"
+      ]
+    },
+    "PII": {
+      "rows": 926,
+      "vetoed": 204,
+      "reachable_within_0_05": 204,
+      "reachable_0_05_to_0_15": 0,
+      "unreachable_beyond_0_15": 0,
+      "margin_p10": -0.0073,
+      "margin_p50": 0.0117,
+      "margin_p90": 0.0328,
+      "nearest_families": [
+        "(none/benign):911",
+        "SECRET:13",
+        "PII:2"
+      ]
+    },
+    "JAILBREAK": {
+      "rows": 241,
+      "vetoed": 54,
+      "reachable_within_0_05": 54,
+      "reachable_0_05_to_0_15": 0,
+      "unreachable_beyond_0_15": 0,
+      "margin_p10": -0.0067,
+      "margin_p50": 0.0105,
+      "margin_p90": 0.0357,
+      "nearest_families": [
+        "(none/benign):240",
+        "TOXICITY:1"
+      ]
+    }
+  }
+}

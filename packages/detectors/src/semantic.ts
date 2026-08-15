@@ -45,13 +45,16 @@ const INTENT_TERMS: Array<[RegExp, number, string]> = [
   // Credential / config extraction nouns
   [/\b(api[\s_-]?keys?|access[\s_-]?tokens?|credentials?|passwords?|secrets?|private[\s_-]?keys?)\b/gi, 14, "credential-noun"],
   // Target = the model's own instructions/prompt (a hallmark of injection)
-  [/\b(system[\s_-]?prompt|developer[\s_-]?message|initial[\s_-]?instructions?|hidden[\s_-]?prompt|your[\s_-]?(?:rules|instructions|guidelines|constraints))\b/gi, 18, "prompt-target"],
+  [/\b(system[\s_-]?prompt|developer[\s_-]?message|initial[\s_-]?instructions?|hidden[\s_-]?(?:prompt|instructions?)|(?:governing|standing|existing|prior|original)[\s_-]?(?:rules|instructions|guidelines|constraints|directives)|your[\s_-]?(?:rules|instructions|guidelines|constraints))\b/gi, 18, "prompt-target"],
   // Persona / unconstrained-mode jailbreak phrasing
   [/\b(dan\b|do anything now|jailbreak|no (?:ethics|restrictions|limits|filters)|unfiltered|uncensored|act as (?:an? )?(?:evil|unrestricted|uncensored))\b/gi, 18, "jailbreak-persona"],
   // Exfiltration verbs pointed at the above nouns
   [/\b(reveal|show|print|leak|display|dump|expose|list|output|repeat|echo|extract)\b/gi, 12, "exfil-verb"],
   // Role reassignment: "you are now / pretend to be" outside a quoted code comment
   [/\b(you are now|from now on you|pretend (?:to be|you are)|imagine you are|simulate being|assume the role)\b/gi, 15, "role-reassign"],
+  // Hidden instructions sourced from attacker-controlled files/tool output.
+  [/\b(hidden|embedded|concealed|internal)\s+(?:system\s+)?(?:instructions?|prompt|directives?|rules?)\b/gi, 18, "indirect-instruction-target"],
+  [/\b(extract|recover|follow|execute|obey|apply)\b[^\n]{0,80}\b(?:instructions?|directives?|prompt|rules?)\b/gi, 14, "instruction-execution"],
   // "in this hypothetical/fictional scenario ... provide instructions to make X"
   [/\b(hypothetical|fictional|for (?:a )?(?:story|novel|movie|game)|academic purposes?)\b/gi, 8, "fiction-frame"],
 ];
@@ -62,6 +65,7 @@ const COMBO_BOOSTS: Array<{ need: string[]; boost: number; label: string }> = [
   { need: ["exfil-verb", "credential-noun"], boost: 20, label: "exfiltrate-credentials" },
   { need: ["jailbreak-persona", "override-verb"], boost: 18, label: "persona-plus-override" },
   { need: ["fiction-frame", "credential-noun"], boost: 14, label: "framed-credential-request" },
+  { need: ["indirect-instruction-target", "instruction-execution"], boost: 24, label: "indirect-instruction-execution" },
 ];
 
 /** Score one (already normalized) view. */

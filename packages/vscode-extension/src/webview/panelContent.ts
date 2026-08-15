@@ -53,9 +53,10 @@ export interface PanelTask {
     action: string;
     label: string;
     hint: string;
+    /** Inline SVG line icon (16×16 grid, currentColor) — never an emoji. */
     icon: string;
-    /** True when the task cannot work until the local broker is set up. */
-    needsBroker?: boolean;
+    /** Lower-frequency workflows stay available without crowding first use. */
+    group: "start" | "more";
 }
 
 export interface PrimaryCta {
@@ -105,13 +106,13 @@ export function plainControls(facts: PanelFacts): PlainControl[] {
             summary: facts.safeMode
                 ? facts.brokerRunning
                     ? "On — risky requests through SoterAI are blocked before they leave your machine."
-                    : "Rules are set, but nothing is being blocked yet. Turn on local checking below."
+                    : "On — SoterAI-routed checks warn, but direct AI traffic is not blocked."
                 : "Off — AI requests leave your machine without a safety check.",
             detail: facts.safeMode
                 ? facts.brokerRunning
-                    ? `Enforced on brokered AI traffic${facts.safeModeLevel ? ` (${facts.safeModeLevel})` : ""}. Traffic that bypasses the broker is not covered — SoterAI cannot intercept another extension's own network calls.`
-                    : "The policy is stored, but the local broker is stopped, so un-brokered AI traffic is not blocked. Start the broker for enforcement."
-                : "AI Safe Mode rules are not applied to any path.",
+                    ? `Fully enforced on brokered AI traffic${facts.safeModeLevel ? ` (${facts.safeModeLevel})` : ""}. Traffic that bypasses the broker is scanned and warned — SoterAI cannot intercept another extension's own network calls.`
+                    : "Safe Mode is on. Without the local broker, SoterAI scans every prompt you send through SoterAI commands and warns on secrets/injection. Start the broker for full pre-send blocking on routed traffic."
+                : "AI Safe Mode is off. No scanning or blocking on any AI request path.",
             on: facts.safeMode,
             level: levelFor(facts.safeMode, facts.brokerRunning ? "ENFORCED" : "MONITORED"),
         },
@@ -164,43 +165,52 @@ export function plainControls(facts: PanelFacts): PlainControl[] {
 
 /**
  * Things a user came here to do, named as goals rather than as the modules
- * behind them. Ordered by effort: the zero-setup win is first and the one that
- * needs installation is last. The old panel numbered these 1-5 with setup
- * first, which read as a five-step chore before any value arrived.
+ * behind them. The first three solve the security problems users encounter
+ * immediately; specialised checks are rendered under a disclosure below them.
  */
 export function panelTasks(): PanelTask[] {
     return [
         {
-            action: "action:scanClipboard",
-            label: "Check what I copied",
-            hint: "Nothing to set up. Checks the clipboard for secrets before you paste it into AI.",
-            icon: "📋",
+            action: "action:checkBeforeAI",
+            label: "Scan before sending to AI",
+            hint: "Checks selected text or your clipboard locally and offers a safe copy.",
+            icon: `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="3.25" y="3" width="9.5" height="11.5" rx="1.5" stroke="currentColor" stroke-width="1.25"/><path d="M5.5 1.5h5v2.25h-5z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/><path d="m5.75 9.25 1.75 1.75 2.75-3" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+            group: "start",
+        },
+        {
+            action: "action:protectSecrets",
+            label: "Protect workspace secrets",
+            hint: "Finds raw secrets and, after review, replaces them with safe placeholders on disk.",
+            icon: `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 1.5 13 3.5v3.75c0 3.2-1.9 5.7-5 7.25-3.1-1.55-5-4.05-5-7.25V3.5l5-2Z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/><path d="m5.5 8 1.5 1.5 3.5-3.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+            group: "start",
+        },
+        {
+            action: "action:secureAI",
+            label: "Secure installed AI tools",
+            hint: "Finds supported AI tools, shows every proposed change, and keeps encrypted backups.",
+            icon: `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="2.25" y="5" width="11.5" height="8.5" rx="1.5" stroke="currentColor" stroke-width="1.25"/><path d="M5 5V3.75A3 3 0 0 1 8 1a3 3 0 0 1 3 2.75V5M5.25 9.25h.01M10.75 9.25h.01M6.5 11.25h3" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/></svg>`,
+            group: "start",
         },
         {
             action: "action:controlledTerminal",
             label: "Run a command safely",
             hint: "Reviews a terminal command for damage before it runs.",
-            icon: "⌨️",
+            icon: `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="1.5" y="2.5" width="13" height="11" rx="1.5" stroke="currentColor" stroke-width="1.25"/><path d="m4.5 6.25 2.5 2.5-2.5 2.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.75 11.25H11.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/></svg>`,
+            group: "more",
         },
         {
             action: "action:depGuard",
             label: "Check a package before installing",
             hint: "Looks for typo-squatting and known-bad packages.",
-            icon: "📦",
+            icon: `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 1.5 13.75 4v8L8 14.5 2.25 12V4L8 1.5Z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/><path d="M2.25 4 8 6.75 13.75 4M8 6.75V14.5" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/></svg>`,
+            group: "more",
         },
         {
             action: "action:mcpPreflight",
             label: "Check an agent tool before it runs",
             hint: "Reviews one AI agent tool call and reports what it would do.",
-            icon: "🤖",
-            needsBroker: true,
-        },
-        {
-            action: "action:setupBroker",
-            label: "Set up local checking",
-            hint: "One-time setup. Needed before SoterAI can block anything.",
-            icon: "🔌",
-            needsBroker: false,
+            icon: `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="2.75" y="5.5" width="10.5" height="7.5" rx="1.75" stroke="currentColor" stroke-width="1.25"/><path d="M8 3v2.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/><circle cx="4" cy="3" r="1.25" fill="currentColor"/><circle cx="12" cy="3" r="1.25" fill="currentColor"/><rect x="5.25" y="8.25" width="1.75" height="2" rx=".5" fill="currentColor"/><rect x="9" y="8.25" width="1.75" height="2" rx=".5" fill="currentColor"/></svg>`,
+            group: "more",
         },
     ];
 }

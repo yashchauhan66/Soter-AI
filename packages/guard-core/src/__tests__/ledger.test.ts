@@ -133,4 +133,70 @@ describe("tamper-evident hash chain", () => {
         assert.strictEqual(result.unchainedEntries, 1);
         assert.strictEqual(result.checkedEntries, 1);
     });
+
+    /**
+     * The Node 18 host, which is what VS Code 1.85 — this extension's `engines`
+     * floor — actually runs.
+     *
+     * `globalThis.crypto` became a global in Node 19, not 18, so the chain's bare
+     * `crypto.subtle` call threw `ReferenceError: crypto is not defined` on every
+     * editor at or near the floor. It took Emergency Lockdown down with it, since
+     * lockdown writes a ledger entry. Nothing static could see it: @types/node
+     * declares the `crypto` global unconditionally, so the call type-checked clean
+     * on a machine whose own Node was new enough to run it.
+     *
+     * Deleting the global is the only honest way to reproduce that host here.
+     */
+    describe("without globalThis.crypto (the Node 18 / VS Code 1.85 floor)", () => {
+        /** Runs `body` with `globalThis.crypto` genuinely absent, then restores it. */
+        async function withoutWebCrypto<T>(body: () => Promise<T>): Promise<T> {
+            const descriptor = Object.getOwnPropertyDescriptor(globalThis, "crypto");
+            if (!descriptor) {
+                throw new Error("this Node has no globalThis.crypto to remove — the test cannot simulate the floor");
+            }
+            delete (globalThis as { crypto?: unknown }).crypto;
+            assert.strictEqual(
+                (globalThis as { crypto?: unknown }).crypto,
+                undefined,
+                "failed to remove globalThis.crypto, so this test would pass vacuously on the WebCrypto path",
+            );
+            try {
+                return await body();
+            } finally {
+                Object.defineProperty(globalThis, "crypto", descriptor);
+            }
+        }
+
+        it("still chains, instead of throwing 'crypto is not defined'", async () => {
+            const chained = await withoutWebCrypto(() => chainLedgerEntry(entry("a"), undefined));
+            assert.match(
+                chained.entryHash ?? "",
+                /^[0-9a-f]{64}$/,
+                "expected a full SHA-256 digest — a shorter hash means a weak fallback crept in",
+            );
+        });
+
+        it("produces byte-identical hashes to the WebCrypto path", async () => {
+            // The two providers must agree, or a ledger written on an older editor
+            // would fail verification the moment the user upgrades.
+            //
+            // One entry object, hashed twice: `buildLedgerEntry` stamps the current
+            // time, so two separately-built entries differ in content and would
+            // hash differently no matter which provider ran.
+            const fixed = entry("a");
+            const withWebCrypto = await chainLedgerEntry(fixed, undefined);
+            const withNodeCrypto = await withoutWebCrypto(() => chainLedgerEntry(fixed, undefined));
+            assert.strictEqual(withNodeCrypto.entryHash, withWebCrypto.entryHash);
+        });
+
+        it("writes a chain that verifies again once WebCrypto is back", async () => {
+            const [a, b] = await withoutWebCrypto(async () => {
+                const first = await chainLedgerEntry(entry("a"), undefined);
+                return [first, await chainLedgerEntry(entry("b"), first.entryHash)];
+            });
+            const result = await verifyLedgerChain([a, b]);
+            assert.strictEqual(result.valid, true, `chain written on the floor failed to verify: ${result.reason}`);
+            assert.strictEqual(result.checkedEntries, 2);
+        });
+    });
 });

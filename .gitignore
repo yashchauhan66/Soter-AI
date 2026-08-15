@@ -44,6 +44,13 @@ testout.txt
 /Microsoft/
 /UsersUSERAppDataLocalTempsoter-pip-test/
 
+# scratch/audit/test-run leftovers (regenerable; never commit)
+.tmp-*
+test-output.txt
+test_soter.txt
+tsc-report.txt
+test-screenshot.png
+
 # curl/debug artifacts that can leak live session tokens & headers
 cookies.txt
 headers.txt
@@ -74,3 +81,8 @@ operator-signing-key.pem*
 # downloaded VS Code the host suite launches. Both are regenerable.
 packages/vscode-extension/dist-test/
 packages/vscode-extension/.vscode-test/
+
+SOTERAI-TEST-SECRETS.env
+
+.env.backup-*
+*.backup-pre-*

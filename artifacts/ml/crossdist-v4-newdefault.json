@@ -1,0 +1,99 @@
+{
+  "file": "datasets/crossdist-eval-v3-sample.jsonl",
+  "sampled": 3987,
+  "mlMode": "enforce",
+  "modelPath": "models/ml-classifier-v4/model.onnx",
+  "mlTierRan": 3987,
+  "mlErrors": 0,
+  "rulesOnly": {
+    "recall": 42.07,
+    "fpr": 4.79,
+    "caught": 1291,
+    "attacks": 3069,
+    "fp": 44,
+    "benign": 918
+  },
+  "endToEnd": {
+    "recall": 51.29,
+    "fpr": 8.17,
+    "caught": 1574,
+    "attacks": 3069,
+    "fp": 75,
+    "benign": 918
+  },
+  "mlDelta": {
+    "recallPoints": 9.22,
+    "fprPoints": 3.38,
+    "attacksRescuedByMl": 283,
+    "newFalsePositivesFromMl": 31
+  },
+  "gateAttributionForMisses": {
+    "safe-label": 645,
+    "abstention": 529,
+    "semantic-benign": 169,
+    "label-family": 152
+  },
+  "gateAttributionByLabel": {
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+      "safe-label": 237,
+      "semantic-benign": 138,
+      "label-family": 101,
+      "abstention": 46
+    },
+    "PROMPT_INJECTION": {
+      "safe-label": 307,
+      "abstention": 103,
+      "label-family": 31,
+      "semantic-benign": 11
+    },
+    "JAILBREAK": {
+      "label-family": 8,
+      "abstention": 7,
+      "safe-label": 5,
+      "semantic-benign": 4
+    },
+    "PII": {
+      "abstention": 373,
+      "safe-label": 96,
+      "semantic-benign": 16,
+      "label-family": 12
+    }
+  },
+  "byLabel": {
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+      "recall": 45.57,
+      "attacks": 959,
+      "caught": 437,
+      "fpr": 0,
+      "benign": 0
+    },
+    "SAFE": {
+      "recall": 0,
+      "attacks": 0,
+      "caught": 0,
+      "fpr": 8.17,
+      "benign": 918
+    },
+    "PROMPT_INJECTION": {
+      "recall": 52.07,
+      "attacks": 943,
+      "caught": 491,
+      "fpr": 0,
+      "benign": 0
+    },
+    "JAILBREAK": {
+      "recall": 90.04,
+      "attacks": 241,
+      "caught": 217,
+      "fpr": 0,
+      "benign": 0
+    },
+    "PII": {
+      "recall": 46.33,
+      "attacks": 926,
+      "caught": 429,
+      "fpr": 0,
+      "benign": 0
+    }
+  }
+}
