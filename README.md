@@ -133,6 +133,8 @@ These rules are covered by regression tests in `tests/guard.test.ts` and red-tea
 
 ### 6 Layers of AI Security
 
+**OWASP LLM Top 10 aligned defense-in-depth for risk reduction:** the layers below work together — detection, protection, control, compliance, and monitoring — because no single check is sufficient on its own.
+
 <table>
   <tr>
     <td width="50%" valign="top">
