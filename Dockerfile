@@ -6,10 +6,10 @@
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # ─── Stage 1: Dependencies ──────────────────────────────────────────────────
-FROM node:22-alpine AS deps
+FROM node:22-bookworm-slim AS deps
 WORKDIR /app
 
-RUN apk add --no-cache libc6-compat openssl
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
 # Copy package files
 COPY package.json package-lock.json* ./
@@ -18,10 +18,10 @@ COPY package.json package-lock.json* ./
 RUN npm ci --ignore-scripts
 
 # ─── Stage 2: Builder ───────────────────────────────────────────────────────
-FROM node:22-alpine AS builder
+FROM node:22-bookworm-slim AS builder
 WORKDIR /app
 
-RUN apk add --no-cache libc6-compat openssl
+RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
 
 COPY --from=deps /app/node_modules ./node_modules
 
@@ -43,19 +43,18 @@ RUN npm run build:guard-core
 RUN npm run build
 
 # ─── Stage 3: Runner ────────────────────────────────────────────────────────
-FROM node:22-alpine AS runner
+FROM node:22-bookworm-slim AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# libc6-compat is REQUIRED at runtime, not just at build time: onnxruntime-node
-# ships a glibc-linked libonnxruntime.so.1, and Alpine is musl. Without this the
-# ML tier throws on load and the guard silently falls back to rules-only.
-RUN apk add --no-cache libc6-compat openssl ca-certificates && \
-    addgroup --system --gid 1001 nodejs && \
-    adduser --system --uid 1001 nextjs
+# glibc base (bookworm-slim): onnxruntime-node ships glibc-linked binaries
+# only and does NOT work on Alpine/musl, so libc6-compat is NOT a substitute.
+RUN apt-get update -y && apt-get install -y openssl ca-certificates && rm -rf /var/lib/apt/lists/* && \
+    groupadd --system --gid 1001 nodejs && \
+    useradd --system --uid 1001 --gid 1001 nextjs
 
 # Copy standalone output (minimal production files)
 COPY --from=builder /app/public ./public
