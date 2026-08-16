@@ -53,7 +53,7 @@ if (result.trustLevel === "QUARANTINED") {
       </div>
       <section className="card overflow-x-auto p-5">
         <table className="w-full min-w-[720px] text-left text-sm">
-          <thead className="text-xs uppercase text-slate-500"><tr><th className="py-2">Score</th><th>Trust level</th><th>Document</th><th>Findings</th><th>Updated</th></tr></thead>
+          <thead className="text-xs uppercase text-slate-300"><tr><th className="py-2">Score</th><th>Trust level</th><th>Document</th><th>Findings</th><th>Updated</th></tr></thead>
           <tbody className="divide-y divide-slate-800">
             {rows.map((row) => (
               <tr key={row.id}>
@@ -64,7 +64,7 @@ if (result.trustLevel === "QUARANTINED") {
                 <td>{row.updatedAt.toLocaleString()}</td>
               </tr>
             ))}
-            {rows.length === 0 && <tr><td className="py-5 text-slate-500" colSpan={5}>No scored documents yet.</td></tr>}
+            {rows.length === 0 && <tr><td className="py-5 text-slate-300" colSpan={5}>No scored documents yet.</td></tr>}
           </tbody>
         </table>
       </section>

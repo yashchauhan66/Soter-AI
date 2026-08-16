@@ -17,11 +17,11 @@ export default function CaseStudyPage() {
           <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-6">
             How a Prompt Injection Leaked an Entire Enterprise Database
           </h1>
-          <p className="text-xl text-slate-400 leading-relaxed">
+          <p className="text-xl text-slate-200 leading-relaxed">
             A deep dive into how an innocent-looking RAG chatbot became a data exfiltration vector, and how SoterAI's Agent Firewall could have prevented it with zero configuration.
           </p>
           
-          <div className="flex items-center gap-4 mt-8 pt-8 border-t border-slate-800 text-sm text-slate-500">
+          <div className="flex items-center gap-4 mt-8 pt-8 border-t border-slate-800 text-sm text-slate-300">
             <span>By The SoterAI Security Team</span>
             <span>•</span>
             <span>5 min read</span>
@@ -88,7 +88,7 @@ export default function CaseStudyPage() {
         <div className="mt-16 bg-gradient-to-br from-slate-900 to-cyan-950 border border-cyan-900/50 rounded-3xl p-8 md:p-12 text-center shadow-2xl relative overflow-hidden">
           <Database className="absolute -bottom-10 -right-10 w-64 h-64 text-cyan-500/5" />
           <h2 className="text-3xl font-bold text-white mb-4 relative z-10">Secure your AI Agents today</h2>
-          <p className="text-slate-400 mb-8 max-w-xl mx-auto relative z-10">
+          <p className="text-slate-200 mb-8 max-w-xl mx-auto relative z-10">
             Don't let your RAG application become a data liability. Integrate SoterAI with just two lines of code.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10">

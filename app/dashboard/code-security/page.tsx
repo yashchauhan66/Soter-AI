@@ -45,7 +45,7 @@ if (review.findings.some((f) => f.severity === "HIGH" || f.severity === "CRITICA
       />
       <ProjectSwitcher projects={projects} selectedId={project.id} />
 
-      <div className="flex items-start gap-3 rounded-xl border border-slate-800 bg-slate-950/40 p-4 text-sm text-slate-400"><LockKeyhole className="mt-0.5 shrink-0 text-emerald-300" size={18} /><p><strong className="text-slate-200">Privacy by design:</strong> submitted source is analyzed in-request and is not persisted by this feature. Finding evidence is truncated and credential values are redacted.</p></div>
+      <div className="flex items-start gap-3 rounded-xl border border-slate-800 bg-slate-950/40 p-4 text-sm text-slate-200"><LockKeyhole className="mt-0.5 shrink-0 text-emerald-300" size={18} /><p><strong className="text-slate-200">Privacy by design:</strong> submitted source is analyzed in-request and is not persisted by this feature. Finding evidence is truncated and credential values are redacted.</p></div>
       <CodeSecurityReviewClient projectId={project.id} />
     </div>
   );

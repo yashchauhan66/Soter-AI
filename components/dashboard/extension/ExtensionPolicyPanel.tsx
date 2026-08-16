@@ -83,7 +83,7 @@ export function ExtensionPolicyPanel({
         <SlidersHorizontal size={18} className="text-cyan" />
         <h2 className="text-lg font-semibold">Extension policy</h2>
       </div>
-      <p className="mt-1 text-sm text-slate-400">
+      <p className="mt-1 text-sm text-slate-200">
         High-level guardrails applied to every enrolled browser. Granular rules live in{" "}
         <a href="/dashboard/usage-governance/policy" className="text-cyan hover:underline">
           Usage Governance
@@ -96,7 +96,7 @@ export function ExtensionPolicyPanel({
         <label className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-950/40 p-4">
           <div>
             <p className="text-sm font-semibold">Enforcement enabled</p>
-            <p className="text-xs text-slate-500">Turn the extension&apos;s protection on or off org-wide.</p>
+            <p className="text-xs text-slate-300">Turn the extension&apos;s protection on or off org-wide.</p>
           </div>
           <input
             type="checkbox"
@@ -123,7 +123,7 @@ export function ExtensionPolicyPanel({
                 <p className={`text-sm font-semibold ${settings.action === a.value ? "text-cyan" : "text-slate-200"}`}>
                   {a.label}
                 </p>
-                <p className="mt-0.5 text-[11px] text-slate-500">{a.hint}</p>
+                <p className="mt-0.5 text-[11px] text-slate-300">{a.hint}</p>
               </button>
             ))}
           </div>
@@ -132,7 +132,7 @@ export function ExtensionPolicyPanel({
         {/* Monitored tools */}
         <div>
           <p className="text-sm font-semibold">Monitored AI tools</p>
-          <p className="text-xs text-slate-500">Text sent to these destinations is scanned before it leaves the browser.</p>
+          <p className="text-xs text-slate-300">Text sent to these destinations is scanned before it leaves the browser.</p>
           <div className="mt-2 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
             {AI_TOOL_CATALOG.map((tool) => {
               const on = settings.monitoredDomains.includes(tool.domain);
@@ -145,7 +145,7 @@ export function ExtensionPolicyPanel({
                 >
                   <input type="checkbox" checked={on} onChange={() => toggleDomain(tool.domain)} className="h-4 w-4 accent-cyan" />
                   <span className="flex-1 text-slate-200">{tool.label}</span>
-                  <span className="text-[10px] text-slate-500">{tool.domain}</span>
+                  <span className="text-[10px] text-slate-300">{tool.domain}</span>
                 </label>
               );
             })}
@@ -156,7 +156,7 @@ export function ExtensionPolicyPanel({
         <label className="flex items-center justify-between rounded-lg border border-slate-800 bg-slate-950/40 p-4">
           <div>
             <p className="text-sm font-semibold">Scan AI responses</p>
-            <p className="text-xs text-slate-500">Also inspect what the AI sends back for unsafe or leaked content.</p>
+            <p className="text-xs text-slate-300">Also inspect what the AI sends back for unsafe or leaked content.</p>
           </div>
           <input
             type="checkbox"

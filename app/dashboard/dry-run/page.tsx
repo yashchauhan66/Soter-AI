@@ -88,10 +88,10 @@ if (result.decision === "SAFE_TO_EXECUTE") {
       <section className="card overflow-x-auto p-5">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">Recent simulations</h2>
-          <span className="text-xs font-medium text-slate-500">{dryRuns.length} recent</span>
+          <span className="text-xs font-medium text-slate-300">{dryRuns.length} recent</span>
         </div>
         <table className="mt-4 w-full min-w-[1080px] text-left text-sm">
-          <thead className="text-xs uppercase text-slate-500">
+          <thead className="text-xs uppercase text-slate-300">
             <tr>
               <th className="py-2">Decision</th>
               <th>Risk</th>
@@ -109,14 +109,14 @@ if (result.decision === "SAFE_TO_EXECUTE") {
                 <td className="py-3"><StatusBadge value={run.decision} /></td>
                 <td className="font-semibold"><RiskLevel level={run.riskLevel} /></td>
                 <td>{run.dryRunType}</td>
-                <td className="font-mono text-xs text-slate-400">{run.tool}</td>
+                <td className="font-mono text-xs text-slate-200">{run.tool}</td>
                 <td>{run.action}</td>
-                <td className="max-w-[220px] truncate text-slate-400">{run.target ?? "-"}</td>
-                <td className="font-mono text-xs text-slate-500">{run.sessionId}</td>
+                <td className="max-w-[220px] truncate text-slate-200">{run.target ?? "-"}</td>
+                <td className="font-mono text-xs text-slate-300">{run.sessionId}</td>
                 <td>{run.createdAt.toLocaleString()}</td>
               </tr>
             ))}
-            {dryRuns.length === 0 && <tr><td className="py-5 text-slate-500" colSpan={8}>No dry-run simulations recorded yet.</td></tr>}
+            {dryRuns.length === 0 && <tr><td className="py-5 text-slate-300" colSpan={8}>No dry-run simulations recorded yet.</td></tr>}
           </tbody>
         </table>
       </section>
@@ -124,7 +124,7 @@ if (result.decision === "SAFE_TO_EXECUTE") {
       <section className="card p-5">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">Predicted effects</h2>
-          <span className="text-xs font-medium text-slate-500">Latest 20</span>
+          <span className="text-xs font-medium text-slate-300">Latest 20</span>
         </div>
         <div className="mt-4 grid gap-3">
           {dryRuns.slice(0, 20).map((run) => (
@@ -132,8 +132,8 @@ if (result.decision === "SAFE_TO_EXECUTE") {
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <p className="font-semibold">{run.tool} / {run.action}</p>
-                  <p className="mt-1 max-w-3xl text-slate-400">{run.reason}</p>
-                  <p className="mt-2 text-xs text-slate-500">Session {run.sessionId}</p>
+                  <p className="mt-1 max-w-3xl text-slate-200">{run.reason}</p>
+                  <p className="mt-2 text-xs text-slate-300">Session {run.sessionId}</p>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <StatusBadge value={run.decision} />
@@ -146,7 +146,7 @@ if (result.decision === "SAFE_TO_EXECUTE") {
               </div>
             </div>
           ))}
-          {dryRuns.length === 0 && <p className="text-sm text-slate-500">No predicted effects available yet.</p>}
+          {dryRuns.length === 0 && <p className="text-sm text-slate-300">No predicted effects available yet.</p>}
         </div>
       </section>
     </div>

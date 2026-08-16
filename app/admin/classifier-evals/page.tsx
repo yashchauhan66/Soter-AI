@@ -23,7 +23,7 @@ export default async function ClassifierEvalsPage() {
             <p className="font-semibold">
               {run.detectorVersion} · {run.status}
             </p>
-            <p className="mt-2 text-sm text-slate-400">
+            <p className="mt-2 text-sm text-slate-200">
               F1 {run.f1?.toFixed(3) ?? "-"} · precision{" "}
               {run.precision?.toFixed(3) ?? "-"} · recall{" "}
               {run.recall?.toFixed(3) ?? "-"} · false-positive rate{" "}
@@ -46,7 +46,7 @@ export default async function ClassifierEvalsPage() {
           </section>
         ))}
         {!runs.length && (
-          <p className="text-slate-400">
+          <p className="text-slate-200">
             Run <code>npm run eval:classifiers</code> with persistence enabled
             to populate this dashboard.
           </p>

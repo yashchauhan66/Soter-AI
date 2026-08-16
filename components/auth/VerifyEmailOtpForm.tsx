@@ -96,7 +96,7 @@ export function VerifyEmailOtpForm({
           <Mail className="mx-auto mb-3 text-cyan" size={34} aria-hidden="true" />
         )}
         <h2 className="text-2xl font-bold">Check your email</h2>
-        <p className="mt-2 text-sm leading-6 text-slate-400">
+        <p className="mt-2 text-sm leading-6 text-slate-200">
           Enter the 6-digit code sent to <span className="font-medium text-slate-200">{email}</span>.
           The code expires in 10 minutes.
         </p>

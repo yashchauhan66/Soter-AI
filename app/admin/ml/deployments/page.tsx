@@ -17,15 +17,15 @@ export default async function MLDeploymentsPage() {
     <div>
       <p className="eyebrow">ML registry</p>
       <h1 className="mt-2 text-3xl font-bold">Deployments</h1>
-      <p className="mt-3 max-w-3xl text-slate-400">
+      <p className="mt-3 max-w-3xl text-slate-200">
         Rollout modes: OFF, SHADOW (record only), PARTIAL (sampled), FULL. Switching to FULL automatically demotes any prior FULL deployment for the same project.
       </p>
       <section className="mt-6 card p-6">
         {deployments.length === 0 ? (
-          <p className="text-sm text-slate-400">No deployments yet.</p>
+          <p className="text-sm text-slate-200">No deployments yet.</p>
         ) : (
           <table className="w-full text-sm">
-            <thead className="text-xs uppercase tracking-wider text-slate-500">
+            <thead className="text-xs uppercase tracking-wider text-slate-300">
               <tr>
                 <th className="py-2 text-left">Org</th>
                 <th className="py-2 text-left">Model</th>
@@ -39,11 +39,11 @@ export default async function MLDeploymentsPage() {
               {deployments.map((deployment) => (
                 <tr key={deployment.id} className="border-t border-slate-800">
                   <td className="py-2">{deployment.organization.name}</td>
-                  <td className="py-2">{deployment.modelVersion.name} <span className="text-slate-500">{deployment.modelVersion.version}</span></td>
-                  <td className="py-2">{deployment.projectId ?? <span className="text-slate-500">all</span>}</td>
+                  <td className="py-2">{deployment.modelVersion.name} <span className="text-slate-300">{deployment.modelVersion.version}</span></td>
+                  <td className="py-2">{deployment.projectId ?? <span className="text-slate-300">all</span>}</td>
                   <td className="py-2"><span className={modeClass(deployment.rolloutMode)}>{deployment.rolloutMode}</span></td>
                   <td className="py-2 text-right">{deployment.rolloutPercent}%</td>
-                  <td className="py-2 text-right text-slate-400">{deployment.updatedAt.toISOString().slice(0, 19).replace("T", " ")}</td>
+                  <td className="py-2 text-right text-slate-200">{deployment.updatedAt.toISOString().slice(0, 19).replace("T", " ")}</td>
                 </tr>
               ))}
             </tbody>

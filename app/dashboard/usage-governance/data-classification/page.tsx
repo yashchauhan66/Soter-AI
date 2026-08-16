@@ -16,7 +16,7 @@ const SENSITIVITY_COLORS: Record<string, string> = {
 
 export default async function DataClassificationPage() {
   const active = await getActiveOrganization();
-  if (!active) return <p className="p-6 text-slate-400">No active organization.</p>;
+  if (!active) return <p className="p-6 text-slate-200">No active organization.</p>;
 
   const classifications = await listDataClassifications(active.org.id);
 
@@ -25,7 +25,7 @@ export default async function DataClassificationPage() {
       <div>
         <p className="eyebrow">Governance</p>
         <h1 className="mt-2 text-3xl font-bold">Data Classification Rules</h1>
-        <p className="mt-3 max-w-3xl text-slate-400">
+        <p className="mt-3 max-w-3xl text-slate-200">
           Define what data sensitivity levels can be sent to which AI providers. 
           This helps prevent sensitive data from being shared with unauthorized AI services.
         </p>
@@ -83,7 +83,7 @@ export default async function DataClassificationPage() {
       <section>
         <h2 className="mb-4 text-lg font-semibold">Classification Rules</h2>
         {classifications.length === 0 ? (
-          <p className="text-sm text-slate-500">No data classification rules configured. Add rules above.</p>
+          <p className="text-sm text-slate-300">No data classification rules configured. Add rules above.</p>
         ) : (
           <div className="space-y-2">
             {classifications.map((c) => (
@@ -93,7 +93,7 @@ export default async function DataClassificationPage() {
                     {c.sensitivityLevel}
                   </span>
                   <span className="text-sm font-medium">{c.providerName === "*" ? "All Providers" : c.providerName}</span>
-                  <span className="text-xs text-slate-500">
+                  <span className="text-xs text-slate-300">
                     Actions: {c.allowedActions.join(", ")}
                     {c.requiresApproval && " · Requires Approval"}
                   </span>

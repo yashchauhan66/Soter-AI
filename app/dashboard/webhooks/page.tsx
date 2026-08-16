@@ -36,7 +36,7 @@ export default async function WebhooksPage() {
     <div>
       <p className="eyebrow">Event delivery</p>
       <h1 className="mt-2 text-3xl font-bold">Webhooks</h1>
-      <p className="mb-7 mt-3 text-slate-400">
+      <p className="mb-7 mt-3 text-slate-200">
         Receive signed notifications when the guard blocks risk or hits usage limits. Payloads never include raw secrets.
       </p>
       <WebhookManager projects={projects} endpoints={safeEndpoints} />

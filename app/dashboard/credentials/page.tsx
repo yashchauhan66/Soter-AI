@@ -64,17 +64,17 @@ const res = await fetch("https://soterai.in/api/credentials", {
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="card p-5">
           <KeyRound className="mb-2 text-cyan" size={20} />
-          <p className="text-sm text-slate-400">Active credentials</p>
+          <p className="text-sm text-slate-200">Active credentials</p>
           <p className="mt-1 text-2xl font-bold">{activeCredentials.length}</p>
         </div>
         <div className="card p-5">
           <Globe className="mb-2 text-cyan" size={20} />
-          <p className="text-sm text-slate-400">Total stored</p>
+          <p className="text-sm text-slate-200">Total stored</p>
           <p className="mt-1 text-2xl font-bold">{credentials.length}</p>
         </div>
         <div className="card p-5">
-          <Clock className={`mb-2 ${expiringCredentials.length > 0 ? "text-amber-300" : "text-slate-500"}`} size={20} />
-          <p className="text-sm text-slate-400">Expiring soon</p>
+          <Clock className={`mb-2 ${expiringCredentials.length > 0 ? "text-amber-300" : "text-slate-300"}`} size={20} />
+          <p className="text-sm text-slate-200">Expiring soon</p>
           <p className="mt-1 text-2xl font-bold">{expiringCredentials.length}</p>
         </div>
       </div>
@@ -91,7 +91,7 @@ const res = await fetch("https://soterai.in/api/credentials", {
         <div className="space-y-2">
           {credentials.length === 0 && (
             <div className="card p-6 text-center">
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-slate-300">
                 No credentials stored yet. Add an MCP server credential to get started.
               </p>
             </div>
@@ -105,13 +105,13 @@ const res = await fetch("https://soterai.in/api/credentials", {
                     className={`rounded-full px-2 py-0.5 text-xs font-medium ${
                       cred.status === "ACTIVE"
                         ? "bg-emerald-500/15 text-emerald-300"
-                        : "bg-slate-600/30 text-slate-400"
+                        : "bg-slate-600/30 text-slate-200"
                     }`}
                   >
                     {cred.status}
                   </span>
                 </div>
-                <p className="mt-0.5 text-xs text-slate-500">
+                <p className="mt-0.5 text-xs text-slate-300">
                   {cred.serverUrl} · Preview: {cred.preview}
                 </p>
                 {cred.lastUsedAt && (
@@ -122,7 +122,7 @@ const res = await fetch("https://soterai.in/api/credentials", {
               </div>
               <div className="flex items-center gap-2">
                 {cred.expiresAt && (
-                  <span className="text-xs text-slate-500">
+                  <span className="text-xs text-slate-300">
                     Expires {cred.expiresAt.toLocaleDateString()}
                   </span>
                 )}
@@ -142,7 +142,7 @@ const res = await fetch("https://soterai.in/api/credentials", {
         <h2 className="mb-4 text-lg font-semibold">Access log</h2>
         <div className="space-y-2">
           {accessLogs.length === 0 && (
-            <p className="text-sm text-slate-500">No access recorded yet.</p>
+            <p className="text-sm text-slate-300">No access recorded yet.</p>
           )}
           {accessLogs.map((log) => (
             <div
@@ -153,7 +153,7 @@ const res = await fetch("https://soterai.in/api/credentials", {
                 <p className="font-medium">
                   {log.action} · {log.vault.name}
                 </p>
-                <p className="text-xs text-slate-500">{log.createdAt.toLocaleString()}</p>
+                <p className="text-xs text-slate-300">{log.createdAt.toLocaleString()}</p>
               </div>
               <span
                 className={`rounded-full px-2 py-0.5 text-xs ${
@@ -171,7 +171,7 @@ const res = await fetch("https://soterai.in/api/credentials", {
 
       <div className="card p-5">
         <h2 className="text-lg font-semibold">Add a credential</h2>
-        <p className="mt-1 text-sm text-slate-400">
+        <p className="mt-1 text-sm text-slate-200">
           Store a new MCP server or tool credential. Secrets are encrypted with
           AES-256-GCM and never exposed in plaintext.
         </p>

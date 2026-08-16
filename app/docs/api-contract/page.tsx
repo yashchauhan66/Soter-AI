@@ -52,10 +52,10 @@ export default function ApiContractDocsPage() {
       <DocViewTracker />
       <div className="container-docs">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
-        <Link href="/docs" className="text-sm text-slate-500 hover:text-cyan transition-colors">← Back to docs</Link>
+        <Link href="/docs" className="text-sm text-slate-300 hover:text-cyan transition-colors">← Back to docs</Link>
         <p className="eyebrow mt-6">Reference</p>
         <h1 className="mt-3 text-4xl font-bold">API Contract</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           Complete API reference for all SoterAI endpoints, request/response shapes, error codes, and webhook events.
         </p>
 
@@ -67,28 +67,28 @@ export default function ApiContractDocsPage() {
                 <span className="rounded bg-green-900/50 px-2 py-0.5 text-[10px] font-medium text-green-400">POST</span>
                 <code className="text-cyan">/api/guard/input</code>
               </div>
-              <p className="mt-1 text-sm text-slate-400">Guard user input. Body: <InlineCode>{`{ message, userId?, sessionId?, metadata? }`}</InlineCode></p>
+              <p className="mt-1 text-sm text-slate-200">Guard user input. Body: <InlineCode>{`{ message, userId?, sessionId?, metadata? }`}</InlineCode></p>
             </div>
             <div className="rounded-lg border border-slate-800 p-4">
               <div className="flex items-center gap-2">
                 <span className="rounded bg-green-900/50 px-2 py-0.5 text-[10px] font-medium text-green-400">POST</span>
                 <code className="text-cyan">/api/guard/output</code>
               </div>
-              <p className="mt-1 text-sm text-slate-400">Guard AI output. Body: <InlineCode>{`{ aiResponse, sessionId?, metadata? }`}</InlineCode></p>
+              <p className="mt-1 text-sm text-slate-200">Guard AI output. Body: <InlineCode>{`{ aiResponse, sessionId?, metadata? }`}</InlineCode></p>
             </div>
             <div className="rounded-lg border border-slate-800 p-4">
               <div className="flex items-center gap-2">
                 <span className="rounded bg-green-900/50 px-2 py-0.5 text-[10px] font-medium text-green-400">POST</span>
                 <code className="text-cyan">/api/guard/analyze</code>
               </div>
-              <p className="mt-1 text-sm text-slate-400">Analyze text. Public, rate-limited per IP. Body: <InlineCode>{`{ text, direction }`}</InlineCode></p>
+              <p className="mt-1 text-sm text-slate-200">Analyze text. Public, rate-limited per IP. Body: <InlineCode>{`{ text, direction }`}</InlineCode></p>
             </div>
             <div className="rounded-lg border border-slate-800 p-4">
               <div className="flex items-center gap-2">
                 <span className="rounded bg-blue-900/50 px-2 py-0.5 text-[10px] font-medium text-blue-400">GET</span>
                 <code className="text-cyan">/api/badge/&lt;slug&gt;</code>
               </div>
-              <p className="mt-1 text-sm text-slate-400">Public badge status. Returns monthly counts and last activity only.</p>
+              <p className="mt-1 text-sm text-slate-200">Public badge status. Returns monthly counts and last activity only.</p>
             </div>
           </div>
         </section>
@@ -106,7 +106,7 @@ export default function ApiContractDocsPage() {
   "redactedText": null,
   "findings": []
 }`}</CodeBlock>
-          <p className="mt-3 text-sm text-slate-400">
+          <p className="mt-3 text-sm text-slate-200">
             <InlineCode>decision</InlineCode> is a normalized 4-value field (<InlineCode>ALLOW | REDACT | BLOCK | HUMAN_REVIEW</InlineCode>).
             The raw <InlineCode>action</InlineCode> is also available.
           </p>
@@ -123,7 +123,7 @@ export default function ApiContractDocsPage() {
                   <th className="px-4 py-3 text-left font-medium text-slate-300">Severity</th>
                 </tr>
               </thead>
-              <tbody className="text-slate-400">
+              <tbody className="text-slate-200">
                 {riskTypes.map(([type, desc, severity]) => (
                   <tr key={type} className="border-b border-slate-800/50">
                     <td className="px-4 py-2.5 font-mono text-xs">{type}</td>
@@ -133,7 +133,7 @@ export default function ApiContractDocsPage() {
                         severity === "CRITICAL" ? "bg-red-950/50 text-red-400" :
                         severity === "HIGH" ? "bg-orange-950/50 text-orange-400" :
                         severity === "MEDIUM" ? "bg-yellow-950/50 text-yellow-400" :
-                        "bg-slate-800/50 text-slate-400"
+                        "bg-slate-800/50 text-slate-200"
                       }`}>{severity}</span>
                     </td>
                   </tr>
@@ -165,11 +165,11 @@ export default function ApiContractDocsPage() {
                   <th className="px-4 py-3 text-left font-medium text-slate-300">Description</th>
                 </tr>
               </thead>
-              <tbody className="text-slate-400">
+              <tbody className="text-slate-200">
                 {errors.map(([code, error, desc]) => (
                   <tr key={code} className="border-b border-slate-800/50">
                     <td className="px-4 py-2.5 font-mono text-xs">{code}</td>
-                    <td className="px-4 py-2.5 font-mono text-xs text-slate-500">{error}</td>
+                    <td className="px-4 py-2.5 font-mono text-xs text-slate-300">{error}</td>
                     <td className="px-4 py-2.5">{desc}</td>
                   </tr>
                 ))}
@@ -198,7 +198,7 @@ export default function ApiContractDocsPage() {
           </div>
           <div className="mt-4 rounded-lg border border-slate-800 p-4">
             <p className="text-sm font-semibold text-slate-300">Webhook Headers</p>
-            <ul className="mt-2 space-y-1 text-sm text-slate-400">
+            <ul className="mt-2 space-y-1 text-sm text-slate-200">
               <li><InlineCode>x-soter-event</InlineCode> — event name</li>
               <li><InlineCode>x-soter-timestamp</InlineCode> — unix seconds at signing time</li>
               <li><InlineCode>x-soter-signature</InlineCode> — <InlineCode>t=...,v1=&lt;hmac-sha256&gt;</InlineCode></li>

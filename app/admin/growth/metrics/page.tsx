@@ -109,18 +109,18 @@ export default async function GrowthMetricsPage() {
     <div>
       <p className="eyebrow">Founder-led growth</p>
       <h1 className="mt-2 text-3xl font-bold">Business KPI dashboard</h1>
-      <p className="mt-3 max-w-3xl text-slate-400">
+      <p className="mt-3 max-w-3xl text-slate-200">
         Current-month indicators from existing product and billing records. MRR excludes custom Enterprise contracts until entered in the finance system.
       </p>
       <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {cards.map(([label, value]) => (
           <section className="card p-5" key={String(label)}>
-            <p className="text-sm text-slate-400">{label}</p>
+            <p className="text-sm text-slate-200">{label}</p>
             <p className="mt-2 text-2xl font-bold">{value}</p>
           </section>
         ))}
       </div>
-      <p className="mt-7 text-sm text-slate-500">
+      <p className="mt-7 text-sm text-slate-300">
         Outreach cards require ProductEvent values `outreach.sent` and `outreach.replied`. The lead-to-paid card is a directional current-month indicator, not a cohort conversion calculation. Custom contract revenue remains outside estimated MRR.
       </p>
     </div>

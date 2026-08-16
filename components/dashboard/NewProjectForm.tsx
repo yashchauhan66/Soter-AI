@@ -47,7 +47,7 @@ export function NewProjectForm({ clients = [] }: Props) {
       <div>
         <label htmlFor="publicName" className="mb-2 block text-sm font-medium">Public name (for badge)</label>
         <input id="publicName" name="publicName" maxLength={80} className="input" placeholder="Acme Help Desk" />
-        <p className="mt-1 text-xs text-slate-500">Shown on the public security status page. Defaults to the project name.</p>
+        <p className="mt-1 text-xs text-slate-300">Shown on the public security status page. Defaults to the project name.</p>
       </div>
       {clients.length > 0 && (
         <div>

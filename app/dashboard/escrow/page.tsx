@@ -93,7 +93,7 @@ export default async function EscrowPage({ searchParams }: { searchParams: Promi
       <section className="card p-5">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">Approval inbox</h2>
-          <span className="text-xs font-medium text-slate-500">{pending.length} pending</span>
+          <span className="text-xs font-medium text-slate-300">{pending.length} pending</span>
         </div>
         <div className="mt-4 grid gap-4">
           {pending.map((transaction) => (
@@ -101,8 +101,8 @@ export default async function EscrowPage({ searchParams }: { searchParams: Promi
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <p className="font-semibold text-yellow-200">{transaction.tool} / {transaction.action}</p>
-                  <p className="mt-1 text-slate-400">{transaction.transactionType} to {transaction.target ?? "unknown target"}</p>
-                  <p className="mt-1 text-xs text-slate-500">Session {transaction.sessionId} · expires {transaction.expiresAt.toLocaleString()}</p>
+                  <p className="mt-1 text-slate-200">{transaction.transactionType} to {transaction.target ?? "unknown target"}</p>
+                  <p className="mt-1 text-xs text-slate-300">Session {transaction.sessionId} · expires {transaction.expiresAt.toLocaleString()}</p>
                 </div>
                 <RiskLevel level={transaction.riskLevel} />
               </div>
@@ -126,17 +126,17 @@ export default async function EscrowPage({ searchParams }: { searchParams: Promi
               </ConfirmableForm>
             </div>
           ))}
-          {pending.length === 0 && <p className="text-sm text-slate-500">No pending escrow transactions.</p>}
+          {pending.length === 0 && <p className="text-sm text-slate-300">No pending escrow transactions.</p>}
         </div>
       </section>
 
       <section className="card overflow-x-auto p-5">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">Recent transactions</h2>
-          <span className="text-xs font-medium text-slate-500">{transactions.length} recent</span>
+          <span className="text-xs font-medium text-slate-300">{transactions.length} recent</span>
         </div>
         <table className="mt-4 w-full min-w-[980px] text-left text-sm">
-          <thead className="text-xs uppercase text-slate-500">
+          <thead className="text-xs uppercase text-slate-300">
             <tr>
               <th className="py-2">Status</th>
               <th>Risk</th>
@@ -154,14 +154,14 @@ export default async function EscrowPage({ searchParams }: { searchParams: Promi
                 <td className="py-3"><StatusBadge value={transaction.status} /></td>
                 <td className="font-semibold"><RiskLevel level={transaction.riskLevel} /></td>
                 <td>{transaction.transactionType}</td>
-                <td className="font-mono text-xs text-slate-400">{transaction.tool}</td>
+                <td className="font-mono text-xs text-slate-200">{transaction.tool}</td>
                 <td>{transaction.action}</td>
-                <td className="max-w-[220px] truncate text-slate-400">{transaction.target ?? "-"}</td>
-                <td className="font-mono text-xs text-slate-500">{transaction.sessionId}</td>
+                <td className="max-w-[220px] truncate text-slate-200">{transaction.target ?? "-"}</td>
+                <td className="font-mono text-xs text-slate-300">{transaction.sessionId}</td>
                 <td>{transaction.createdAt.toLocaleString()}</td>
               </tr>
             ))}
-            {transactions.length === 0 && <tr><td className="py-5 text-slate-500" colSpan={8}>No escrow transactions recorded yet.</td></tr>}
+            {transactions.length === 0 && <tr><td className="py-5 text-slate-300" colSpan={8}>No escrow transactions recorded yet.</td></tr>}
           </tbody>
         </table>
       </section>
@@ -169,19 +169,19 @@ export default async function EscrowPage({ searchParams }: { searchParams: Promi
       <section className="card p-5">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">Audit trail</h2>
-          <span className="text-xs font-medium text-slate-500">{audits.length} events</span>
+          <span className="text-xs font-medium text-slate-300">{audits.length} events</span>
         </div>
         <div className="mt-4 grid gap-2">
           {audits.slice(0, 20).map((audit) => (
             <div className="rounded-lg border border-slate-800 p-3 text-sm" key={audit.id}>
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <p className="font-semibold">{audit.action} <span className="text-xs text-slate-500">by {audit.actorType}</span></p>
-                <span className="text-xs text-slate-500">{audit.createdAt.toLocaleString()}</span>
+                <p className="font-semibold">{audit.action} <span className="text-xs text-slate-300">by {audit.actorType}</span></p>
+                <span className="text-xs text-slate-300">{audit.createdAt.toLocaleString()}</span>
               </div>
-              {audit.reason && <p className="mt-1 text-slate-400">{audit.reason}</p>}
+              {audit.reason && <p className="mt-1 text-slate-200">{audit.reason}</p>}
             </div>
           ))}
-          {audits.length === 0 && <p className="text-sm text-slate-500">No escrow audit events yet.</p>}
+          {audits.length === 0 && <p className="text-sm text-slate-300">No escrow audit events yet.</p>}
         </div>
       </section>
     </div>

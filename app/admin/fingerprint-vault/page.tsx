@@ -56,7 +56,7 @@ export default async function FingerprintVaultPage({ searchParams }: { searchPar
       <div>
         <p className="text-xs font-bold uppercase tracking-wider text-cyan">AI data security</p>
         <h1 className="mt-2 text-3xl font-bold">Fingerprint Vault</h1>
-        <p className="mt-2 max-w-3xl text-sm text-slate-400">Register confidential reference data as SHA-256 chunks and hashed shingles. Raw document text is not stored by default.</p>
+        <p className="mt-2 max-w-3xl text-sm text-slate-200">Register confidential reference data as SHA-256 chunks and hashed shingles. Raw document text is not stored by default.</p>
       </div>
       <div className="grid gap-3 md:grid-cols-3">
         <Stat icon={<Fingerprint size={18} />} label="Fingerprint sets" value={filtered.length} />
@@ -91,18 +91,18 @@ export default async function FingerprintVaultPage({ searchParams }: { searchPar
           </select>
         </Field>
         <button type="submit" className="button-primary h-9 px-4 py-0 text-sm">Apply</button>
-        <a href="/admin/fingerprint-vault" className="text-xs text-slate-400 underline">Reset</a>
+        <a href="/admin/fingerprint-vault" className="text-xs text-slate-200 underline">Reset</a>
         <a href={exportHref} className="ml-auto text-xs text-cyan underline">Export CSV (redacted)</a>
       </form>
 
       <div className="card overflow-hidden">
         <div className="border-b border-slate-800 p-4">
           <h2 className="font-semibold">Registered sensitive material</h2>
-          <p className="text-xs text-slate-500">Filters also available via `/api/admin/fingerprint-vault?category=&department=&sensitivity=&q=`.</p>
+          <p className="text-xs text-slate-300">Filters also available via `/api/admin/fingerprint-vault?category=&department=&sensitivity=&q=`.</p>
         </div>
         {loadError ? <ErrorState text={loadError} /> : !organization ? <Empty text="Create an organization before adding fingerprints." /> : filtered.length === 0 ? <Empty text={sets.length === 0 ? "No fingerprint sets registered yet." : "No fingerprint sets match the current filters."} /> : (
           <table className="w-full text-left text-sm">
-            <thead className="bg-slate-950 text-xs uppercase text-slate-500">
+            <thead className="bg-slate-950 text-xs uppercase text-slate-300">
               <tr><th className="p-3">Document</th><th>Category</th><th>Sensitivity</th><th>Dept</th><th>Action</th><th>Status</th><th>Hashes</th><th>Last matched</th></tr>
             </thead>
             <tbody>
@@ -113,7 +113,7 @@ export default async function FingerprintVaultPage({ searchParams }: { searchPar
                   <td>{String(set.sensitivity)}</td>
                   <td>{String(set.ownerDepartment ?? "—")}</td>
                   <td>{String(set.action)}</td>
-                  <td>{set.enabled === true ? <span className="text-emerald-400">enabled</span> : <span className="text-slate-500">disabled</span>}</td>
+                  <td>{set.enabled === true ? <span className="text-emerald-400">enabled</span> : <span className="text-slate-300">disabled</span>}</td>
                   <td>{String(set.fingerprintCount)}</td>
                   <td>{set.lastMatchedAt ? new Date(String(set.lastMatchedAt)).toLocaleString() : "Never"}</td>
                 </tr>
@@ -127,15 +127,15 @@ export default async function FingerprintVaultPage({ searchParams }: { searchPar
 }
 
 function Stat({ icon, label, value }: { icon: React.ReactNode; label: string; value: string | number }) {
-  return <div className="card p-4"><div className="text-cyan">{icon}</div><p className="mt-3 text-xs text-slate-500">{label}</p><p className="text-xl font-semibold">{value}</p></div>;
+  return <div className="card p-4"><div className="text-cyan">{icon}</div><p className="mt-3 text-xs text-slate-300">{label}</p><p className="text-xl font-semibold">{value}</p></div>;
 }
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return <label className="flex flex-col gap-1 text-xs text-slate-400">{label}{children}</label>;
+  return <label className="flex flex-col gap-1 text-xs text-slate-200">{label}{children}</label>;
 }
 
 function Empty({ text }: { text: string }) {
-  return <div className="p-8 text-sm text-slate-400">{text}</div>;
+  return <div className="p-8 text-sm text-slate-200">{text}</div>;
 }
 
 function ErrorState({ text }: { text: string }) {

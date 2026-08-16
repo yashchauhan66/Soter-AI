@@ -22,7 +22,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             <ShieldAlert />
           </span>
           <h1 className="mt-4 text-xl font-bold">Admin only</h1>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-200">
             Your account does not have administrator access. If you need it, contact the workspace owner.
           </p>
         </div>

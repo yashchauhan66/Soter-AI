@@ -14,20 +14,20 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
 
   return (
     <div>
-      <Link href="/dashboard/agency/clients" className="inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white"><ArrowLeft size={14} /> Back to clients</Link>
+      <Link href="/dashboard/agency/clients" className="inline-flex items-center gap-2 text-sm text-slate-200 hover:text-white"><ArrowLeft size={14} /> Back to clients</Link>
       <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="eyebrow">Client</p>
           <h1 className="mt-2 text-3xl font-bold">{client.name}</h1>
-          <p className="mt-2 text-slate-400">{client.contactEmail ?? "No contact email"}</p>
+          <p className="mt-2 text-slate-200">{client.contactEmail ?? "No contact email"}</p>
         </div>
       </div>
 
       <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <div className="card p-5"><p className="text-sm text-slate-500">Requests scanned</p><p className="mt-2 text-3xl font-bold">{totals.requests}</p></div>
-        <div className="card p-5"><p className="text-sm text-slate-500">Blocked</p><p className="mt-2 text-3xl font-bold">{totals.blocked}</p></div>
-        <div className="card p-5"><p className="text-sm text-slate-500">Redacted</p><p className="mt-2 text-3xl font-bold">{totals.redacted}</p></div>
-        <div className="card p-5"><p className="text-sm text-slate-500">Average risk</p><p className="mt-2 text-3xl font-bold">{totals.avgRisk}</p></div>
+        <div className="card p-5"><p className="text-sm text-slate-300">Requests scanned</p><p className="mt-2 text-3xl font-bold">{totals.requests}</p></div>
+        <div className="card p-5"><p className="text-sm text-slate-300">Blocked</p><p className="mt-2 text-3xl font-bold">{totals.blocked}</p></div>
+        <div className="card p-5"><p className="text-sm text-slate-300">Redacted</p><p className="mt-2 text-3xl font-bold">{totals.redacted}</p></div>
+        <div className="card p-5"><p className="text-sm text-slate-300">Average risk</p><p className="mt-2 text-3xl font-bold">{totals.avgRisk}</p></div>
       </div>
 
       <div className="mt-7 flex flex-wrap items-center justify-between gap-3">
@@ -42,9 +42,9 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <h3 className="text-lg font-semibold">{project.name}</h3>
-                  <p className="mt-1 text-sm text-slate-500">{project.plan} plan</p>
+                  <p className="mt-1 text-sm text-slate-300">{project.plan} plan</p>
                 </div>
-                <span className={`rounded-full px-3 py-1 text-xs font-bold ${project.badgeEnabled ? "bg-emerald-500/15 text-emerald-300" : "bg-slate-800 text-slate-400"}`}>
+                <span className={`rounded-full px-3 py-1 text-xs font-bold ${project.badgeEnabled ? "bg-emerald-500/15 text-emerald-300" : "bg-slate-800 text-slate-200"}`}>
                   <ShieldCheck size={12} className="mr-1 inline" /> badge {project.badgeEnabled ? "on" : "off"}
                 </span>
               </div>
@@ -58,7 +58,7 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
           ))}
         </div>
       ) : (
-        <div className="card mt-4 p-10 text-center text-slate-500">
+        <div className="card mt-4 p-10 text-center text-slate-300">
           <p>No projects under this client.</p>
           <Link href={`/dashboard/projects/new?clientId=${client.id}`} className="button-primary mt-5 inline-flex gap-2">Add first project</Link>
         </div>

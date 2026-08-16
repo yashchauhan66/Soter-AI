@@ -136,11 +136,11 @@ export default function JSDocsPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       
       <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-500 transition-colors hover:text-cyan">← Back to docs</Link>
+        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
         
         <p className="eyebrow mt-6">Language guide</p>
         <h1 className="mt-3 text-4xl font-bold">JavaScript / TypeScript SDK</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           The <InlineCode>@soterai/core</InlineCode> package is the primary SDK for Node.js (≥18.18), 
           Deno, Bun, and any JavaScript backend. It provides input/output guarding, 
           conversation protection, and framework-specific helpers.
@@ -148,7 +148,7 @@ export default function JSDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 1: Install the package</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Open your terminal and run:
           </p>
           <CodeBlock language="bash" title="npm install">{installCode}</CodeBlock>
@@ -161,7 +161,7 @@ export default function JSDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 2: Configure environment</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Add these to your <InlineCode>.env</InlineCode> file:
           </p>
           <CodeBlock language="bash" title=".env">{envCode}</CodeBlock>
@@ -174,19 +174,19 @@ export default function JSDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 3: Basic usage (guarding user input)</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Protect a single user message before it reaches your AI model:
           </p>
           <CodeBlock language="typescript" title="basic input guard" showLineNumbers>{basicCode}</CodeBlock>
           
           <h3 className="mt-8 text-xl font-bold">Decision helpers</h3>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             The SDK provides convenient helpers for common decision patterns:
           </p>
           <CodeBlock language="typescript">{decisionHelpers}</CodeBlock>
 
           <h3 className="mt-8 text-xl font-bold">One-call conversation helper</h3>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Runs <strong>input guard → LLM call → output guard</strong> in a single call:
           </p>
           <CodeBlock language="typescript" title="conversation helper">{conversationCode}</CodeBlock>
@@ -194,7 +194,7 @@ export default function JSDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 4: Complete example with error handling</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Here&apos;s a production-ready example that guards both input and output, handles errors,
             and decides whether to fail open or fail closed:
           </p>
@@ -205,7 +205,7 @@ export default function JSDocsPage() {
           <h2 className="text-2xl font-bold">Framework integrations</h2>
           
           <h3 className="mt-8 text-xl font-bold">Next.js</h3>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Use the <InlineCode>createGuardedRoute</InlineCode> helper from <InlineCode>@soterai/core/next</InlineCode>:
           </p>
           <CodeBlock language="typescript" title="app/api/chat/route.ts">{`// One-line route handler
@@ -217,12 +217,12 @@ export const POST = createGuardedRoute({
   apiKey: process.env.SOTER_API_KEY!,
   callLLM: async (safeInput) => myLLMCall(safeInput),
 });`}</CodeBlock>
-          <p className="mt-3 text-sm text-slate-400">
+          <p className="mt-3 text-sm text-slate-200">
             See the <Link href="/docs/nextjs" className="text-cyan underline">Next.js guide</Link> for more details.
           </p>
 
           <h3 className="mt-8 text-xl font-bold">Express.js</h3>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Use <InlineCode>soterInputMiddleware</InlineCode> and <InlineCode>soterOutputMiddleware</InlineCode>:
           </p>
           <CodeBlock language="typescript" title="Express middleware">{`import { soterInputMiddleware, soterOutputMiddleware } from "@soterai/core/express";
@@ -240,7 +240,7 @@ app.post(
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Error handling</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             The SDK exports typed error classes for each failure mode:
           </p>
           <CodeBlock language="typescript" title="error handling">{errorCode}</CodeBlock>
@@ -266,13 +266,13 @@ app.post(
                   <CheckCircle2 className="mt-0.5 shrink-0 text-lime" size={16} aria-hidden="true" />
                   <div>
                     <p className="font-semibold text-sm">{title}</p>
-                    <p className="mt-1 text-sm leading-6 text-slate-400">{copy}</p>
+                    <p className="mt-1 text-sm leading-6 text-slate-200">{copy}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          <p className="mt-4 text-sm italic text-slate-500">
+          <p className="mt-4 text-sm italic text-slate-300">
             This reduces risk; it does not guarantee complete protection.
           </p>
         </section>

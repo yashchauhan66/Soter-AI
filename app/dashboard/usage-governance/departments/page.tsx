@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 export default async function GovernanceDepartmentsPage() {
   const active = await getActiveOrganization();
-  if (!active) return <p className="p-6 text-slate-400">No active organization.</p>;
+  if (!active) return <p className="p-6 text-slate-200">No active organization.</p>;
 
   const departments = await listDepartments(active.org.id);
 
@@ -15,7 +15,7 @@ export default async function GovernanceDepartmentsPage() {
       <div>
         <p className="eyebrow">Governance</p>
         <h1 className="mt-2 text-3xl font-bold">Department Rules</h1>
-        <p className="mt-3 max-w-3xl text-slate-400">
+        <p className="mt-3 max-w-3xl text-slate-200">
           Define AI usage policies for specific departments. Each department can have its own
           default action and provider-specific rules.
         </p>
@@ -50,7 +50,7 @@ export default async function GovernanceDepartmentsPage() {
 
       <div className="space-y-4">
         {departments.length === 0 ? (
-          <p className="text-sm text-slate-500">No departments configured yet. Add your first department above.</p>
+          <p className="text-sm text-slate-300">No departments configured yet. Add your first department above.</p>
         ) : (
           departments.map((dept) => (
             <section className="card p-5" key={dept.id}>
@@ -59,7 +59,7 @@ export default async function GovernanceDepartmentsPage() {
                   <Users className="text-cyan" size={20} />
                   <div>
                     <h3 className="font-semibold">{dept.name}</h3>
-                    {dept.description && <p className="text-sm text-slate-400">{dept.description}</p>}
+                    {dept.description && <p className="text-sm text-slate-200">{dept.description}</p>}
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -81,13 +81,13 @@ export default async function GovernanceDepartmentsPage() {
               {/* Department rules */}
               <div className="space-y-2">
                 {dept.rules.length === 0 ? (
-                  <p className="text-sm text-slate-500">No provider-specific rules for this department.</p>
+                  <p className="text-sm text-slate-300">No provider-specific rules for this department.</p>
                 ) : (
                   dept.rules.map((rule) => (
                     <div className="flex items-center justify-between rounded-xl bg-slate-950/60 p-3 text-sm" key={rule.id}>
                       <div>
                         <span className="font-medium">{rule.providerName}</span>
-                        {rule.modelPattern && <span className="ml-2 text-slate-500">({rule.modelPattern})</span>}
+                        {rule.modelPattern && <span className="ml-2 text-slate-300">({rule.modelPattern})</span>}
                       </div>
                       <div className="flex items-center gap-3">
                         <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${

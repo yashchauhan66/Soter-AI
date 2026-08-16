@@ -49,19 +49,19 @@ export default async function RedTeamLabPage({
       <div className="grid gap-4 sm:grid-cols-4">
         <div className="card p-5">
           <Shield className="mb-2 text-cyan" size={20} />
-          <p className="text-sm text-slate-400">Total runs</p>
+          <p className="text-sm text-slate-200">Total runs</p>
           <p className="mt-1 text-2xl font-bold">{trends.totalRuns}</p>
         </div>
         <div className="card p-5">
           <CheckCircle2 className="mb-2 text-emerald-300" size={20} />
-          <p className="text-sm text-slate-400">Pass rate</p>
+          <p className="text-sm text-slate-200">Pass rate</p>
           <p className="mt-1 text-2xl font-bold">
             {Math.round(trends.averagePassRate * 100)}%
           </p>
         </div>
         <div className="card p-5">
           <AlertTriangle className="mb-2 text-amber-300" size={20} />
-          <p className="text-sm text-slate-400">Scenarios</p>
+          <p className="text-sm text-slate-200">Scenarios</p>
           <p className="mt-1 text-2xl font-bold">{suite?._count?.scenarios ?? 0}</p>
         </div>
         <div className="card p-5">
@@ -71,18 +71,18 @@ export default async function RedTeamLabPage({
                 ? "text-emerald-300"
                 : trends.trend === "declining"
                   ? "text-rose-300"
-                  : "text-slate-500"
+                  : "text-slate-300"
             }`}
             size={20}
           />
-          <p className="text-sm text-slate-400">Trend</p>
+          <p className="text-sm text-slate-200">Trend</p>
           <p className="mt-1 text-2xl font-bold capitalize">{trends.trend}</p>
         </div>
       </div>
 
       {latestRun && (
         <div className="rounded-2xl border border-slate-700 bg-slate-800/50 p-5">
-          <p className="text-sm text-slate-400">Latest run</p>
+          <p className="text-sm text-slate-200">Latest run</p>
           <div className="mt-2 flex items-center gap-4">
             <p className="text-lg font-semibold">
               Passed: {latestRun.passed} · Failed: {latestRun.failed}
@@ -98,7 +98,7 @@ export default async function RedTeamLabPage({
             >
               {passRate}% pass rate
             </span>
-            <span className="text-xs text-slate-500">
+            <span className="text-xs text-slate-300">
               {latestRun.completedAt?.toLocaleString()}
             </span>
           </div>
@@ -116,7 +116,7 @@ export default async function RedTeamLabPage({
               >
                 <div>
                   <p className="font-medium">{cat.category.replace(/_/g, " ")}</p>
-                  <p className="text-xs text-slate-500">{cat.totalTests} tests</p>
+                  <p className="text-xs text-slate-300">{cat.totalTests} tests</p>
                 </div>
                 <span
                   className={`rounded-full px-2 py-0.5 text-xs font-medium ${
@@ -137,7 +137,7 @@ export default async function RedTeamLabPage({
 
       <div className="card p-5">
         <h2 className="text-lg font-semibold">Run a red-team test</h2>
-        <p className="mt-1 text-sm text-slate-400">
+        <p className="mt-1 text-sm text-slate-200">
           Execute all {suite?._count?.scenarios ?? 11} test scenarios against your
           current guard policies. Results are recorded and tracked over time.
         </p>

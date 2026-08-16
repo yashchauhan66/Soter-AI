@@ -14,7 +14,7 @@ const ACTION_LABELS: Record<string, { label: string; color: string }> = {
 
 export default async function GovernanceProvidersPage() {
   const active = await getActiveOrganization();
-  if (!active) return <p className="p-6 text-slate-400">No active organization.</p>;
+  if (!active) return <p className="p-6 text-slate-200">No active organization.</p>;
 
   const rules = await listProviderRules(active.org.id);
   const rulesMap = new Map(rules.map((r) => [r.providerName, r]));
@@ -24,7 +24,7 @@ export default async function GovernanceProvidersPage() {
       <div>
         <p className="eyebrow">Governance</p>
         <h1 className="mt-2 text-3xl font-bold">Provider Allow/Block Lists</h1>
-        <p className="mt-3 max-w-3xl text-slate-400">
+        <p className="mt-3 max-w-3xl text-slate-200">
           Control which AI providers and models are allowed, blocked, or require approval
           for use across your organization. Add rules for specific models using wildcard patterns.
         </p>
@@ -70,7 +70,7 @@ export default async function GovernanceProvidersPage() {
       <section>
         <h2 className="mb-4 text-lg font-semibold">Provider Rules</h2>
         {rules.length === 0 ? (
-          <p className="text-sm text-slate-500">No provider rules configured. Add rules above.</p>
+          <p className="text-sm text-slate-300">No provider rules configured. Add rules above.</p>
         ) : (
           <div className="space-y-2">
             {rules.map((rule) => {
@@ -87,8 +87,8 @@ export default async function GovernanceProvidersPage() {
                     )}
                     <div>
                       <p className="font-medium">{rule.providerName === "*" ? "All Providers" : rule.providerName}</p>
-                      {rule.modelPattern && <p className="text-xs text-slate-500">Model: {rule.modelPattern}</p>}
-                      {rule.reason && <p className="text-xs text-slate-500">{rule.reason}</p>}
+                      {rule.modelPattern && <p className="text-xs text-slate-300">Model: {rule.modelPattern}</p>}
+                      {rule.reason && <p className="text-xs text-slate-300">{rule.reason}</p>}
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -114,13 +114,13 @@ export default async function GovernanceProvidersPage() {
           {KNOWN_AI_PROVIDERS.map((provider) => {
             const rule = rulesMap.get(provider.name);
             const actionStyle = rule
-              ? ACTION_LABELS[rule.action] ?? { label: "Default", color: "text-slate-400 bg-slate-800" }
-              : { label: "Default (Monitor)", color: "text-slate-400 bg-slate-800" };
+              ? ACTION_LABELS[rule.action] ?? { label: "Default", color: "text-slate-200 bg-slate-800" }
+              : { label: "Default (Monitor)", color: "text-slate-200 bg-slate-800" };
             return (
               <div className="flex items-center justify-between rounded-xl bg-slate-950/60 p-3 text-sm" key={provider.name}>
                 <div>
                   <p className="font-medium">{provider.name}</p>
-                  <p className="text-xs text-slate-500">{provider.providerType} · {provider.dataRegion}</p>
+                  <p className="text-xs text-slate-300">{provider.providerType} · {provider.dataRegion}</p>
                 </div>
                 <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${actionStyle.color}`}>
                   {actionStyle.label}

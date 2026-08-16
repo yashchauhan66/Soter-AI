@@ -65,13 +65,13 @@ export function FirstRunGuide({ hasApiKey, hasActivity, apiBaseUrl }: FirstRunGu
             <h2 id="first-run-heading" className="mt-1 text-xl font-bold text-white">
               Get your first guarded request live in 2 minutes
             </h2>
-            <p className="mt-1 text-sm text-slate-400">
+            <p className="mt-1 text-sm text-slate-200">
               Three steps to protect your AI app. This guide disappears once your first request is guarded.
             </p>
           </div>
           <div className="text-right">
             <p className="text-2xl font-bold text-cyan">{completed}/3</p>
-            <p className="text-[11px] uppercase tracking-wider text-slate-500">complete</p>
+            <p className="text-[11px] uppercase tracking-wider text-slate-300">complete</p>
           </div>
         </div>
 
@@ -96,11 +96,11 @@ export function FirstRunGuide({ hasApiKey, hasActivity, apiBaseUrl }: FirstRunGu
                 <div className="min-w-0 flex-1 pb-1">
                   <div className="flex items-center gap-2">
                     <StepIcon size={15} className="text-cyan" />
-                    <h3 className={`text-sm font-semibold ${step.done ? "text-slate-400 line-through decoration-slate-600" : "text-white"}`}>
+                    <h3 className={`text-sm font-semibold ${step.done ? "text-slate-200 line-through decoration-slate-600" : "text-white"}`}>
                       {step.title}
                     </h3>
                   </div>
-                  <p className="mt-1 text-xs leading-5 text-slate-500">{step.body}</p>
+                  <p className="mt-1 text-xs leading-5 text-slate-300">{step.body}</p>
                   {step.code && !step.done && (
                     <div className="mt-3">
                       <CodeBlock language="bash" title="POST /api/guard/analyze">{step.code}</CodeBlock>
@@ -121,7 +121,7 @@ export function FirstRunGuide({ hasApiKey, hasActivity, apiBaseUrl }: FirstRunGu
           })}
         </ol>
 
-        <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-slate-800/60 pt-4 text-xs text-slate-500">
+        <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-slate-800/60 pt-4 text-xs text-slate-300">
           <span>Prefer a guided walkthrough?</span>
           <Link href="/dashboard/onboarding" className="text-cyan hover:underline">Full setup checklist</Link>
           <Link href="/docs" className="text-cyan hover:underline">Read the docs</Link>

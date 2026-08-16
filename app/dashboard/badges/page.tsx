@@ -18,13 +18,13 @@ export default async function BadgesPage() {
     <div>
       <p className="eyebrow">Public trust</p>
       <h1 className="mt-2 text-3xl font-bold">Security badges</h1>
-      <p className="mt-3 text-slate-400">Each project ships a public badge endpoint and embeddable script. The page never exposes raw logs or customer text.</p>
+      <p className="mt-3 text-slate-200">Each project ships a public badge endpoint and embeddable script. The page never exposes raw logs or customer text.</p>
 
       {!projects.length ? (
         <div className="card mt-7 p-10 text-center">
           <ShieldCheck className="mx-auto text-slate-700" size={42} />
           <p className="mt-4 font-semibold">No projects yet</p>
-          <p className="mt-2 text-sm text-slate-500">Create a project to issue its public badge slug.</p>
+          <p className="mt-2 text-sm text-slate-300">Create a project to issue its public badge slug.</p>
           <Link href="/dashboard/projects/new" className="button-primary mt-5 inline-flex">Create project</Link>
         </div>
       ) : (
@@ -36,10 +36,10 @@ export default async function BadgesPage() {
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
                     <p className="font-semibold">{project.publicName ?? project.name}</p>
-                    <p className="mt-1 text-xs text-slate-500">slug: <code>{project.badgeSlug}</code></p>
+                    <p className="mt-1 text-xs text-slate-300">slug: <code>{project.badgeSlug}</code></p>
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className={`rounded-full px-3 py-1 text-xs font-bold ${project.badgeEnabled ? "bg-emerald-500/15 text-emerald-300" : "bg-slate-800 text-slate-400"}`}>
+                    <span className={`rounded-full px-3 py-1 text-xs font-bold ${project.badgeEnabled ? "bg-emerald-500/15 text-emerald-300" : "bg-slate-800 text-slate-200"}`}>
                       {project.badgeEnabled ? "ENABLED" : "DISABLED"}
                     </span>
                     <Link href={`/security-status/${project.badgeSlug}`} target="_blank" className="button-secondary !px-3 !py-2 text-xs gap-1">

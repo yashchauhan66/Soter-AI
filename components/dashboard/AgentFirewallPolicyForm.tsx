@@ -56,7 +56,7 @@ export function AgentFirewallPolicyForm({
     <section className="card p-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Policy editor</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-slate-300">Policy editor</p>
           <h2 className="mt-1 text-lg font-semibold">Agent action rules</h2>
         </div>
         <button type="button" onClick={save} disabled={saving} className="button-primary gap-2">
@@ -85,7 +85,7 @@ export function AgentFirewallPolicyForm({
           Fail closed
         </label>
       </div>
-      {message && <p className="mt-3 text-xs text-slate-400">{message}</p>}
+      {message && <p className="mt-3 text-xs text-slate-200">{message}</p>}
     </section>
   );
 }

@@ -38,8 +38,8 @@ export default async function BillingPage({
   if (!active) {
     return (
       <div className="flex flex-col items-center py-12 text-center">
-        <p className="text-sm text-slate-400 mb-2">No organization configured</p>
-        <p className="text-xs text-slate-500">Set up your organization in Settings to manage billing.</p>
+        <p className="text-sm text-slate-200 mb-2">No organization configured</p>
+        <p className="text-xs text-slate-300">Set up your organization in Settings to manage billing.</p>
         <Link href="/dashboard/settings" className="mt-3 text-xs text-emerald-400 hover:underline">Go to Settings →</Link>
       </div>
     );
@@ -59,7 +59,7 @@ export default async function BillingPage({
         <div>
           <p className="eyebrow">Billing &amp; usage</p>
           <h1 className="mt-2 text-3xl font-bold">Plan and billing</h1>
-          <p className="mt-3 text-slate-400">
+          <p className="mt-3 text-slate-200">
             Razorpay-backed subscriptions. Plan changes update on verified payment events; the server never trusts client-side payment status.
           </p>
         </div>
@@ -69,13 +69,13 @@ export default async function BillingPage({
       <div className="card mt-7 p-6">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <p className="text-xs uppercase tracking-wider text-slate-500">Current plan</p>
+            <p className="text-xs uppercase tracking-wider text-slate-300">Current plan</p>
             <p className="text-3xl font-bold">{active.org.plan}</p>
-            <p className="mt-1 text-xs text-slate-500">Subscription status: {subscription?.status ?? "TRIAL"}</p>
+            <p className="mt-1 text-xs text-slate-300">Subscription status: {subscription?.status ?? "TRIAL"}</p>
           </div>
           <div className="text-right">
-            <p className="text-xs uppercase tracking-wider text-slate-500">Used this month (project)</p>
-            <p className="text-3xl font-bold">{usage.used.toLocaleString("en-IN")}<span className="text-base font-normal text-slate-500"> / {limit.toLocaleString("en-IN")}</span></p>
+            <p className="text-xs uppercase tracking-wider text-slate-300">Used this month (project)</p>
+            <p className="text-3xl font-bold">{usage.used.toLocaleString("en-IN")}<span className="text-base font-normal text-slate-300"> / {limit.toLocaleString("en-IN")}</span></p>
           </div>
         </div>
         <div className="mt-4 h-3 overflow-hidden rounded-full bg-slate-800">
@@ -99,8 +99,8 @@ export default async function BillingPage({
         {subscription && <BillingActions organizationId={active.org.id} status={subscription.status} />}
       </div>
 
-      <div className="mt-9 grid gap-8 lg:grid-cols-2"><section><h2 className="text-lg font-semibold">Invoices</h2><div className="mt-3 divide-y divide-slate-800 border-y border-slate-800">{invoices.length ? invoices.map(invoice => <div className="flex items-center justify-between py-3 text-sm" key={invoice.id}><div><p>{invoice.invoiceNumber ?? invoice.id}</p><p className="text-slate-500">{invoice.status} · {(invoice.amount/100).toLocaleString("en-IN",{style:"currency",currency:invoice.currency})}</p></div>{invoice.hostedUrl ? <a className="text-cyan hover:underline" href={invoice.hostedUrl} rel="noreferrer" target="_blank">Download</a> : <span className="text-slate-600">Unavailable</span>}</div>) : <p className="py-5 text-sm text-slate-500">No invoices yet.</p>}</div></section><section><h2 className="text-lg font-semibold">Plan history</h2><div className="mt-3 divide-y divide-slate-800 border-y border-slate-800">{planChanges.length ? planChanges.map(change => <div className="py-3 text-sm" key={change.id}><p>{change.fromPlan ?? "NEW"} → {change.toPlan}</p><p className="text-slate-500">{change.reason ?? "Plan change"} · {change.createdAt.toLocaleDateString()}</p></div>) : (
-              <p className="py-5 text-sm text-slate-500">No plan changes yet. Your current plan will appear here.</p>
+      <div className="mt-9 grid gap-8 lg:grid-cols-2"><section><h2 className="text-lg font-semibold">Invoices</h2><div className="mt-3 divide-y divide-slate-800 border-y border-slate-800">{invoices.length ? invoices.map(invoice => <div className="flex items-center justify-between py-3 text-sm" key={invoice.id}><div><p>{invoice.invoiceNumber ?? invoice.id}</p><p className="text-slate-300">{invoice.status} · {(invoice.amount/100).toLocaleString("en-IN",{style:"currency",currency:invoice.currency})}</p></div>{invoice.hostedUrl ? <a className="text-cyan hover:underline" href={invoice.hostedUrl} rel="noreferrer" target="_blank">Download</a> : <span className="text-slate-600">Unavailable</span>}</div>) : <p className="py-5 text-sm text-slate-300">No invoices yet.</p>}</div></section><section><h2 className="text-lg font-semibold">Plan history</h2><div className="mt-3 divide-y divide-slate-800 border-y border-slate-800">{planChanges.length ? planChanges.map(change => <div className="py-3 text-sm" key={change.id}><p>{change.fromPlan ?? "NEW"} → {change.toPlan}</p><p className="text-slate-300">{change.reason ?? "Plan change"} · {change.createdAt.toLocaleDateString()}</p></div>) : (
+              <p className="py-5 text-sm text-slate-300">No plan changes yet. Your current plan will appear here.</p>
             )}</div></section></div>
 
       <h2 className="mt-9 text-lg font-semibold">Plans</h2>
@@ -113,7 +113,7 @@ export default async function BillingPage({
         />
       </div>
 
-      <p className="mt-6 text-xs text-slate-500">
+      <p className="mt-6 text-xs text-slate-300">
         Razorpay handles checkout. The server verifies <code>razorpay_signature</code> with the configured key
         secret before activating a plan. The webhook endpoint
         <code className="mx-1">/api/billing/webhook</code>

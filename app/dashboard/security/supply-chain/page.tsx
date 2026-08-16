@@ -38,14 +38,14 @@ export default async function SupplyChainPage() {
       <div className="mt-7 grid gap-4 sm:grid-cols-3">
         {[["Providers", providers], ["Models", models], ["Prompt versions", prompts], ["Tools", tools], ["AI BOMs", boms], ["Open findings", findings]].map(([label, value]) => (
           <section className="card p-5" key={String(label)}>
-            <p className="text-sm text-slate-400">{label}</p>
+            <p className="text-sm text-slate-200">{label}</p>
             <p className="mt-2 text-2xl font-bold">{String(value)}</p>
           </section>
         ))}
       </div>
       <section className="card mt-7 p-5">
         <h2 className="text-lg font-semibold">Preview gaps before production use</h2>
-        <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-slate-400">
+        <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-slate-200">
           {AI_BOM_PREVIEW_GAPS.map((gap) => (
             <li key={gap}>{gap}</li>
           ))}

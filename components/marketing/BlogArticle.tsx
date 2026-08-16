@@ -73,7 +73,7 @@ export function BlogArticle({
           <h1 className="mt-3 text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
             {meta.title}
           </h1>
-          <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-500">
+          <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-300">
             <time dateTime={meta.datePublished}>{published}</time>
             <span aria-hidden>·</span>
             <span>{meta.readingTime}</span>
@@ -89,7 +89,7 @@ export function BlogArticle({
             {faqs.map((f) => (
               <div key={f.q}>
                 <h3 className="font-semibold text-slate-100">{f.q}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-400">{f.a}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-200">{f.a}</p>
               </div>
             ))}
           </div>
@@ -98,7 +98,7 @@ export function BlogArticle({
         {/* CTA */}
         <section className="mt-14 max-w-3xl rounded-2xl border border-cyan/20 bg-cyan/5 p-8">
           <h2 className="text-xl font-bold">Scan your AI context locally</h2>
-          <p className="mt-3 text-sm leading-6 text-slate-400">
+          <p className="mt-3 text-sm leading-6 text-slate-200">
             SoterAI IDE Guard scans secrets, prompts, MCP tools, and terminal
             commands on your machine before they reach an AI model. Free to
             install, local by default.

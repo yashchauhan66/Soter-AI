@@ -35,7 +35,7 @@ export function VideoPlayer({ source, className = "" }: VideoPlayerProps) {
       } ${className}`}
     >
       {/* Source badge */}
-      <div className="pointer-events-none absolute left-3 top-3 z-10 flex items-center gap-1.5 rounded-md bg-black/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 backdrop-blur">
+      <div className="pointer-events-none absolute left-3 top-3 z-10 flex items-center gap-1.5 rounded-md bg-black/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-200 backdrop-blur">
         {source.type === "youtube" ? (
           <>
             <Youtube size={12} className="text-red-400" />
@@ -80,7 +80,7 @@ export function VideoPlayer({ source, className = "" }: VideoPlayerProps) {
         <div className="absolute inset-0 flex items-center justify-center bg-slate-950">
           <div className="flex flex-col items-center gap-3">
             <div className="h-8 w-8 animate-spinner rounded-full border-2 border-cyan border-t-transparent" />
-            <p className="text-sm text-slate-500">Loading video...</p>
+            <p className="text-sm text-slate-300">Loading video...</p>
           </div>
         </div>
       )}

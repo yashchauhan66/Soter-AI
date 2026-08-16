@@ -82,7 +82,7 @@ export default function Page() {
         <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
           AI security built by developers, for developers
         </h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           SoterAI builds AI security infrastructure for teams deploying LLM applications,
           AI agents, and agentic developer tools. Our platform — SoterAI Guard — protects
           against prompt injection, data leakage, jailbreaks, unsafe AI outputs, and
@@ -93,17 +93,17 @@ export default function Page() {
       {/* Mission */}
       <section className="mt-16 max-w-3xl">
         <h2 className="text-2xl font-bold">Our mission</h2>
-        <p className="mt-4 leading-7 text-slate-400">
+        <p className="mt-4 leading-7 text-slate-200">
           AI adoption is outpacing security. Every week, teams ship chatbots, RAG systems,
           and autonomous agents without the controls that production software demands:
           observable security decisions, enforceable policies, honest audit trails.
         </p>
-        <p className="mt-4 leading-7 text-slate-400">
+        <p className="mt-4 leading-7 text-slate-200">
           SoterAI&apos;s mission is to make runtime AI security practical and accessible —
           starting with a free tier for individual developers, scaling to enterprise
           deployments with SSO, RBAC, and full data sovereignty.
         </p>
-        <p className="mt-4 leading-7 text-slate-400">
+        <p className="mt-4 leading-7 text-slate-200">
           We are especially focused on the Indian market because India has unique AI security
           challenges: Aadhaar, PAN, GSTIN detection requirements; DPDP Act compliance;
           a fast-growing developer community building AI products at scale; and limited
@@ -121,7 +121,7 @@ export default function Page() {
                 <ShieldCheck className="h-5 w-5 text-cyan" aria-hidden="true" />
                 <h3 className="font-semibold text-slate-100">{p.title}</h3>
               </div>
-              <p className="mt-2 text-sm leading-6 text-slate-400">{p.body}</p>
+              <p className="mt-2 text-sm leading-6 text-slate-200">{p.body}</p>
             </div>
           ))}
         </div>
@@ -130,10 +130,10 @@ export default function Page() {
       {/* Product */}
       <section className="mt-16 max-w-3xl">
         <h2 className="text-2xl font-bold">The product</h2>
-        <p className="mt-4 leading-7 text-slate-400">
+        <p className="mt-4 leading-7 text-slate-200">
           SoterAI Guard is a runtime AI security platform with two deployment surfaces:
         </p>
-        <ul className="mt-4 space-y-3 text-slate-400">
+        <ul className="mt-4 space-y-3 text-slate-200">
           <li className="flex gap-3 text-sm leading-6">
             <span className="mt-1 text-cyan font-semibold">API / SDK</span>
             <span>
@@ -159,7 +159,7 @@ export default function Page() {
       {/* Transparency */}
       <section className="mt-16 max-w-3xl">
         <h2 className="text-2xl font-bold">Transparency and trust</h2>
-        <p className="mt-4 leading-7 text-slate-400">
+        <p className="mt-4 leading-7 text-slate-200">
           Security vendors have an obligation to be honest about what their products do and
           do not do. We publish our{" "}
           <Link href="/benchmark" className="text-cyan underline underline-offset-2">public benchmark</Link>{" "}
@@ -170,7 +170,7 @@ export default function Page() {
           <Link href="/responsible-disclosure" className="text-cyan underline underline-offset-2">responsible disclosure policy</Link>{" "}
           for security researchers.
         </p>
-        <p className="mt-4 leading-7 text-slate-400">
+        <p className="mt-4 leading-7 text-slate-200">
           We do not claim certifications we do not hold, benchmarks we did not run, or
           customers we do not have. Our{" "}
           <Link href="/security" className="text-cyan underline underline-offset-2">security page</Link>{" "}
@@ -189,7 +189,7 @@ export default function Page() {
             { label: "GitHub", value: "Ai-Security-Guard", href: "https://github.com/yashchauhan66/Ai-Security-Guard" },
           ].map((c) => (
             <div key={c.label} className="rounded-xl border border-slate-800 p-4">
-              <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{c.label}</p>
+              <p className="text-xs font-medium uppercase tracking-wide text-slate-300">{c.label}</p>
               <a
                 href={c.href}
                 className="mt-1 text-sm font-medium text-cyan hover:opacity-80"
@@ -205,7 +205,7 @@ export default function Page() {
       {/* CTA */}
       <section className="mt-16 rounded-2xl border border-cyan/20 bg-cyan/5 p-8 text-center">
         <h2 className="text-2xl font-bold">Start protecting your AI applications</h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-400">
+        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-200">
           Free tier available. No credit card required to get started.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">

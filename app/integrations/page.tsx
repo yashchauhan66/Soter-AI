@@ -24,10 +24,10 @@ export const metadata: Metadata = buildMetadata({
 const integrations = [
   {
     name: "n8n",
-    description: "Add SoterAI prompt injection and PII scanning to any n8n AI workflow node via the HTTP Request module.",
+    description: "Install the SoterAI community node from the n8n marketplace to add prompt injection and PII scanning to any n8n AI workflow.",
     href: "/integrations/n8n",
     category: "Workflow Automation",
-    badge: "Guide available",
+    badge: "Available on n8n",
   },
   {
     name: "Zapier",
@@ -102,7 +102,7 @@ export default function Page() {
         <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
           Connect SoterAI to your AI stack
         </h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           Add runtime prompt injection detection, PII redaction, and AI data leakage prevention
           to any workflow — whether you build with n8n, Zapier, Make, LangChain, or a custom API.
         </p>
@@ -125,12 +125,12 @@ export default function Page() {
           >
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-semibold group-hover:text-cyan">{integration.name}</h2>
-              <span className="rounded-full bg-slate-800 px-2.5 py-0.5 text-xs text-slate-400">
+              <span className="rounded-full bg-slate-800 px-2.5 py-0.5 text-xs text-slate-200">
                 {integration.badge}
               </span>
             </div>
-            <p className="mt-1 text-xs text-slate-500">{integration.category}</p>
-            <p className="mt-3 text-sm leading-6 text-slate-400">{integration.description}</p>
+            <p className="mt-1 text-xs text-slate-300">{integration.category}</p>
+            <p className="mt-3 text-sm leading-6 text-slate-200">{integration.description}</p>
             <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-cyan">
               View integration <ArrowRight size={14} aria-hidden="true" />
             </span>
@@ -140,7 +140,7 @@ export default function Page() {
 
       <section className="mt-20 rounded-2xl border border-cyan/20 bg-cyan/5 p-8 text-center">
         <h2 className="text-2xl font-bold">Don&apos;t see your platform?</h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-400">
+        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-200">
           SoterAI works with any platform via the REST API. If your use case is not covered,
           contact us and we will help you integrate.
         </p>

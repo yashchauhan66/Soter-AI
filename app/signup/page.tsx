@@ -19,9 +19,9 @@ export default async function SignUpPage() {
         <div className="card p-7">
           <p className="eyebrow">Create account</p>
           <h1 className="mt-3 text-2xl font-bold">Secure your first AI workflow</h1>
-          <p className="mt-2 text-sm leading-6 text-slate-400">Create a workspace with input protection, output inspection, risk logs, and security evidence.</p>
+          <p className="mt-2 text-sm leading-6 text-slate-200">Create a workspace with input protection, output inspection, risk logs, and security evidence.</p>
           <SignUpForm />
-          <p className="mt-6 text-sm text-slate-500">
+          <p className="mt-6 text-sm text-slate-300">
             Already have an account? <Link href="/signin" className="text-cyan hover:text-cyan/80">Sign in</Link>
           </p>
         </div>

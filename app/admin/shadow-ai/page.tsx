@@ -85,7 +85,7 @@ export default async function ShadowAIDiscoveryPage() {
     <div>
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Shadow AI Discovery</h1>
-        <p className="mt-1 text-sm text-slate-400">
+        <p className="mt-1 text-sm text-slate-200">
           Discover and manage AI tools being used across the organization. Review unknown destinations, classify risk, and enforce policy.
         </p>
       </div>

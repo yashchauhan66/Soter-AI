@@ -116,7 +116,7 @@ export default async function LogsPage({
       <div className="flex flex-wrap items-end justify-between gap-4">
         <ProjectSwitcher projects={projects} selectedId={project.id} />
       </div>
-      <p className="mb-5 mt-3 text-slate-400">Sensitive values are displayed and stored only in redacted form.</p>
+      <p className="mb-5 mt-3 text-slate-200">Sensitive values are displayed and stored only in redacted form.</p>
       <LogsFilterBar filters={filterState} riskTypeOptions={riskTypeOptions} />
       <LogsTable logs={logs} />
       <nav className="mt-5 flex items-center justify-between gap-3" aria-label="Logs pagination">
@@ -125,7 +125,7 @@ export default async function LogsPage({
             <Link href={firstPageHref} className="button-secondary">First page</Link>
           )}
         </div>
-        <div className="text-xs text-slate-500">
+        <div className="text-xs text-slate-300">
           Showing up to {filters.limit} decisions per page, newest first.
         </div>
         <div>

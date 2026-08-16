@@ -132,10 +132,10 @@ const res = await fetch("https://soterai.in/api/agent/passport/issue", {
       <section className="card overflow-x-auto p-5">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">Session passports</h2>
-          <span className="text-xs font-medium text-slate-500">{passports.length} total</span>
+          <span className="text-xs font-medium text-slate-300">{passports.length} total</span>
         </div>
         <table className="mt-4 w-full min-w-[980px] text-left text-sm">
-          <thead className="text-xs uppercase text-slate-500">
+          <thead className="text-xs uppercase text-slate-300">
             <tr>
               <th className="py-2">Agent</th>
               <th>Status</th>
@@ -155,16 +155,16 @@ const res = await fetch("https://soterai.in/api/agent/passport/issue", {
                 <tr key={passport.id}>
                   <td className="py-3">
                     <p className="font-medium">{passport.agentName}</p>
-                    <p className="text-xs text-slate-500">{passport.agentType}</p>
+                    <p className="text-xs text-slate-300">{passport.agentType}</p>
                   </td>
                   <td><StatusPill value={status} /></td>
                   <td>
                     <p className={`font-semibold ${RISK_TONE[passport.riskLevel] ?? "text-slate-300"}`}>{passport.riskLevel}</p>
-                    <p className="text-xs text-slate-500">{passport.riskScore}/100</p>
+                    <p className="text-xs text-slate-300">{passport.riskScore}/100</p>
                   </td>
-                  <td className="max-w-[180px] text-xs text-slate-400">{formatList(passport.allowedToolsJson)}</td>
-                  <td className="max-w-[180px] text-xs text-slate-400">{formatList(passport.blockedToolsJson)}</td>
-                  <td className="max-w-[180px] text-xs text-slate-400">
+                  <td className="max-w-[180px] text-xs text-slate-200">{formatList(passport.allowedToolsJson)}</td>
+                  <td className="max-w-[180px] text-xs text-slate-200">{formatList(passport.blockedToolsJson)}</td>
+                  <td className="max-w-[180px] text-xs text-slate-200">
                     <span className="text-emerald-300">{formatList(passport.allowedDomainsJson)}</span>
                     <span className="mx-1 text-slate-600">/</span>
                     <span className="text-red-300">{formatList(passport.blockedDomainsJson)}</span>
@@ -188,7 +188,7 @@ const res = await fetch("https://soterai.in/api/agent/passport/issue", {
                 </tr>
               );
             })}
-            {passports.length === 0 && <tr><td className="py-5 text-slate-500" colSpan={9}>No agent session passports issued yet.</td></tr>}
+            {passports.length === 0 && <tr><td className="py-5 text-slate-300" colSpan={9}>No agent session passports issued yet.</td></tr>}
           </tbody>
         </table>
       </section>
@@ -197,7 +197,7 @@ const res = await fetch("https://soterai.in/api/agent/passport/issue", {
         <section className="card p-5">
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-lg font-semibold">Agent identities</h2>
-            <span className="text-xs font-medium text-slate-500">{identities.length} total</span>
+            <span className="text-xs font-medium text-slate-300">{identities.length} total</span>
           </div>
           <div className="mt-4 grid gap-3">
             {identities.map((identity) => (
@@ -205,22 +205,22 @@ const res = await fetch("https://soterai.in/api/agent/passport/issue", {
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="font-semibold">{identity.name}</p>
-                    <p className="text-xs text-slate-500">{identity.agentType}</p>
+                    <p className="text-xs text-slate-300">{identity.agentType}</p>
                   </div>
                   <StatusPill value={identity.status} />
                 </div>
-                {identity.description && <p className="mt-2 line-clamp-2 text-slate-400">{identity.description}</p>}
-                <p className="mt-2 text-xs text-slate-500">Created {identity.createdAt.toLocaleString()}</p>
+                {identity.description && <p className="mt-2 line-clamp-2 text-slate-200">{identity.description}</p>}
+                <p className="mt-2 text-xs text-slate-300">Created {identity.createdAt.toLocaleString()}</p>
               </div>
             ))}
-            {identities.length === 0 && <p className="text-sm text-slate-500">Create an agent identity through the API to begin issuing passports.</p>}
+            {identities.length === 0 && <p className="text-sm text-slate-300">Create an agent identity through the API to begin issuing passports.</p>}
           </div>
         </section>
 
         <section className="card p-5">
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-lg font-semibold">Passport audit events</h2>
-            <span className="text-xs font-medium text-slate-500">{audits.length} recent</span>
+            <span className="text-xs font-medium text-slate-300">{audits.length} recent</span>
           </div>
           <div className="mt-4 space-y-3">
             {audits.map((audit) => (
@@ -228,13 +228,13 @@ const res = await fetch("https://soterai.in/api/agent/passport/issue", {
                 <StatusPill value={audit.decision} />
                 <div>
                   <p className="font-medium">{audit.action} - {audit.agentName}</p>
-                  <p className="text-slate-400">{audit.reason}</p>
+                  <p className="text-slate-200">{audit.reason}</p>
                   <p className="mt-1 font-mono text-xs text-slate-600">{audit.sessionId}</p>
                 </div>
-                <p className="text-xs text-slate-500">{audit.createdAt.toLocaleString()}</p>
+                <p className="text-xs text-slate-300">{audit.createdAt.toLocaleString()}</p>
               </div>
             ))}
-            {audits.length === 0 && <p className="text-sm text-slate-500">No passport audit events recorded yet.</p>}
+            {audits.length === 0 && <p className="text-sm text-slate-300">No passport audit events recorded yet.</p>}
           </div>
         </section>
       </div>
@@ -246,7 +246,7 @@ function Metric({ label, value, tone }: { label: string; value: number; tone: "g
   const tones = { green: "text-emerald-300", red: "text-red-300", gray: "text-slate-300" };
   return (
     <section className="card p-5">
-      <p className="text-sm text-slate-400">{label}</p>
+      <p className="text-sm text-slate-200">{label}</p>
       <p className={`mt-2 text-2xl font-bold ${tones[tone]}`}>{value}</p>
     </section>
   );

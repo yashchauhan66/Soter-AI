@@ -226,7 +226,7 @@ export function PolicyBuilderClient({ organizationId, organizations, initialPoli
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <h1 className="text-3xl font-bold">AI policy builder</h1>
-            <p className="mt-2 text-sm text-slate-400">Create extension policies with checkboxes, selectors, and safe previews.</p>
+            <p className="mt-2 text-sm text-slate-200">Create extension policies with checkboxes, selectors, and safe previews.</p>
           </div>
           <select
             className="input w-full max-w-xs"
@@ -249,7 +249,7 @@ export function PolicyBuilderClient({ organizationId, organizations, initialPoli
         </div>
         <div className="overflow-x-auto rounded-lg border border-slate-800">
           <table className="w-full min-w-[1180px] text-left text-sm">
-            <thead className="bg-slate-950 text-xs uppercase tracking-wider text-slate-500">
+            <thead className="bg-slate-950 text-xs uppercase tracking-wider text-slate-300">
               <tr>
                 <th className="px-3 py-3">Enabled</th>
                 <th className="px-3 py-3">Policy</th>
@@ -274,7 +274,7 @@ export function PolicyBuilderClient({ organizationId, organizations, initialPoli
                   </td>
                   <td className="px-3 py-3">
                     <p className="font-semibold text-slate-100">{template.name}</p>
-                    <p className="mt-1 max-w-xs text-xs text-slate-500">{template.description}</p>
+                    <p className="mt-1 max-w-xs text-xs text-slate-300">{template.description}</p>
                   </td>
                   <td className="px-3 py-3 text-slate-300">{template.category}</td>
                   <td className="px-3 py-3"><Select options={severities} value={templateSetting(template).severity} onChange={(value) => setTemplateSetting(template, { severity: value as PolicySeverity })} /></td>
@@ -334,7 +334,7 @@ export function PolicyBuilderClient({ organizationId, organizations, initialPoli
                 }}
               />
               <textarea className="input min-h-20" value={custom.documentText} onChange={(event) => setCustom({ ...custom, documentText: event.target.value })} placeholder="Paste reference text to generate a privacy-safe fingerprint" />
-              {custom.documentText.trim() && <span className="text-xs text-slate-500">Fingerprint: {privacySafeFingerprint(custom.documentText)}. Raw reference text is not sent by this form.</span>}
+              {custom.documentText.trim() && <span className="text-xs text-slate-300">Fingerprint: {privacySafeFingerprint(custom.documentText)}. Raw reference text is not sent by this form.</span>}
             </Field>
             <Field label="Semantic classifier categories">
               <div className="grid gap-2 sm:grid-cols-2">
@@ -362,7 +362,7 @@ export function PolicyBuilderClient({ organizationId, organizations, initialPoli
           <section className="rounded-lg border border-slate-800 bg-slate-950/60 p-5">
             <h2 className="font-semibold">Test policy</h2>
             <textarea className="input mt-3 min-h-28" value={sampleText} onChange={(event) => setSampleText(event.target.value)} />
-            <p className="mt-2 text-xs text-slate-500">Sample text is not stored unless a request explicitly enables it.</p>
+            <p className="mt-2 text-xs text-slate-300">Sample text is not stored unless a request explicitly enables it.</p>
             <button
               className="button-primary mt-3 inline-flex items-center gap-2"
               onClick={() => {
@@ -382,13 +382,13 @@ export function PolicyBuilderClient({ organizationId, organizations, initialPoli
         <h2 className="text-xl font-semibold">Saved policies</h2>
         <div className="mt-4 overflow-x-auto">
           <table className="w-full min-w-[900px] text-left text-sm">
-            <thead className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-500">
+            <thead className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-300">
               <tr><th className="py-3">Name</th><th>Mode</th><th>Action</th><th>Severity</th><th>Version</th><th>Published</th><th>Actions</th></tr>
             </thead>
             <tbody className="divide-y divide-slate-800">
               {policies.map((policy) => (
                 <tr key={policy.id}>
-                  <td className="py-3 pr-4"><p className="font-semibold">{policy.name}</p><p className="text-xs text-slate-500">{policy.description}</p></td>
+                  <td className="py-3 pr-4"><p className="font-semibold">{policy.name}</p><p className="text-xs text-slate-300">{policy.description}</p></td>
                   <td>{policy.mode}</td>
                   <td>{policy.action}</td>
                   <td>{policy.severity}</td>
@@ -423,7 +423,7 @@ export function PolicyBuilderClient({ organizationId, organizations, initialPoli
             {auditLogs.slice(0, 10).map((log) => (
               <div key={log.id} className="rounded-md bg-slate-900/70 p-3 text-sm">
                 <p className="font-semibold">{log.action} {log.policyId ? `· ${log.policyId}` : ""}</p>
-                <p className="text-xs text-slate-500">{new Date(log.createdAt).toLocaleString()}</p>
+                <p className="text-xs text-slate-300">{new Date(log.createdAt).toLocaleString()}</p>
               </div>
             ))}
           </div>

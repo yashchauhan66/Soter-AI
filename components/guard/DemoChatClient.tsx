@@ -49,7 +49,7 @@ export function DemoChatClient() {
             <p className="text-xs font-bold uppercase tracking-wider text-red-300">Without guard</p>
             <h2 className="mt-3 text-xl font-semibold">Unfiltered simulation</h2>
             <p className="mt-5 rounded-xl bg-slate-950/60 p-4 leading-7 text-slate-300">{unguardedReply}</p>
-            <p className="mt-4 text-sm text-slate-500">Illustrative only. No external model is called.</p>
+            <p className="mt-4 text-sm text-slate-300">Illustrative only. No external model is called.</p>
           </article>
           <article className="card border-cyan/30 p-6">
             <div className="flex justify-between gap-3">

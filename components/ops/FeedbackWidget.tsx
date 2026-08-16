@@ -56,7 +56,7 @@ export function FeedbackWidget() {
               type="button"
               aria-label="Close feedback"
               onClick={() => { setOpen(false); setMessage(""); setOk(false); }}
-              className="rounded-lg p-1 text-slate-400 transition hover:bg-slate-800 hover:text-white"
+              className="rounded-lg p-1 text-slate-200 transition hover:bg-slate-800 hover:text-white"
             >
               <X size={16} />
             </button>

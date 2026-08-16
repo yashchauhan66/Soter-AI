@@ -97,7 +97,7 @@ export function ExtensionEnrollmentsClient({ organizations }: { organizations: P
       <div className="mb-6 flex items-center justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold">Extension Enrollments</h1>
-          <p className="mt-1 text-sm text-slate-400">Create and revoke browser extension enrollment tokens without exposing raw tokens after creation.</p>
+          <p className="mt-1 text-sm text-slate-200">Create and revoke browser extension enrollment tokens without exposing raw tokens after creation.</p>
         </div>
         <button className="rounded-md border border-slate-700 p-2 text-slate-300 hover:border-cyan-500/60" onClick={refreshTokens} title="Refresh">
           <RefreshCw size={16} />
@@ -157,19 +157,19 @@ export function ExtensionEnrollmentsClient({ organizations }: { organizations: P
 
       <div className="overflow-x-auto">
         <table className="w-full min-w-[900px] text-left text-sm">
-          <thead className="border-b border-slate-800 text-xs uppercase text-slate-500">
+          <thead className="border-b border-slate-800 text-xs uppercase text-slate-300">
             <tr><th className="px-3 py-3">Email</th><th className="px-3 py-3">Department</th><th className="px-3 py-3">Role</th><th className="px-3 py-3">Status</th><th className="px-3 py-3">Usage</th><th className="px-3 py-3">Expires</th><th className="px-3 py-3">Created</th><th className="px-3 py-3">Action</th></tr>
           </thead>
           <tbody className="divide-y divide-slate-800">
             {tokens.map((token) => (
               <tr key={token.id}>
                 <td className="px-3 py-3 text-slate-200">{token.employeeEmail ?? "Any employee"}</td>
-                <td className="px-3 py-3 text-slate-400">{token.department ?? "-"}</td>
-                <td className="px-3 py-3 text-slate-400">{token.role ?? "-"}</td>
+                <td className="px-3 py-3 text-slate-200">{token.department ?? "-"}</td>
+                <td className="px-3 py-3 text-slate-200">{token.role ?? "-"}</td>
                 <td className="px-3 py-3 font-semibold">{token.status}</td>
-                <td className="px-3 py-3 text-slate-400">{token.usedCount}/{token.maxUses}</td>
-                <td className="px-3 py-3 text-slate-400">{new Date(token.expiresAt).toLocaleDateString()}</td>
-                <td className="px-3 py-3 text-slate-500">{new Date(token.createdAt).toLocaleDateString()}</td>
+                <td className="px-3 py-3 text-slate-200">{token.usedCount}/{token.maxUses}</td>
+                <td className="px-3 py-3 text-slate-200">{new Date(token.expiresAt).toLocaleDateString()}</td>
+                <td className="px-3 py-3 text-slate-300">{new Date(token.createdAt).toLocaleDateString()}</td>
                 <td className="px-3 py-3">
                   <button className="inline-flex items-center gap-2 rounded border border-red-500/40 px-2 py-1 text-xs font-bold text-red-300 disabled:opacity-40" disabled={token.status === "revoked"} onClick={() => revokeToken(token.id)}>
                     <ShieldOff size={14} /> Revoke

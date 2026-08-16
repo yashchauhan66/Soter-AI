@@ -46,7 +46,7 @@ export function PolicyForm({ projectId, initial }: { projectId: string; initial:
   return (
     <div className="mt-7 grid gap-5">
       <div className="card p-6">
-        <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Policy mode</p>
+        <p className="text-xs font-bold uppercase tracking-wider text-slate-300">Policy mode</p>
         <div className="mt-3 grid gap-3 md:grid-cols-3">
           {(["MONITOR", "BALANCED", "STRICT"] as const).map((mode) => (
             <button
@@ -56,7 +56,7 @@ export function PolicyForm({ projectId, initial }: { projectId: string; initial:
               className={`rounded-xl border p-4 text-left transition ${policy.mode === mode ? "border-cyan/60 bg-cyan/5" : "border-slate-800 bg-slate-950/40 hover:border-slate-600"}`}
             >
               <p className="font-semibold">{mode}</p>
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-slate-300">
                 {mode === "MONITOR"
                   ? "Logs everything, downgrades blocks except for secrets."
                   : mode === "BALANCED"
@@ -69,7 +69,7 @@ export function PolicyForm({ projectId, initial }: { projectId: string; initial:
       </div>
 
       <div className="card p-6">
-        <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Detectors</p>
+        <p className="text-xs font-bold uppercase tracking-wider text-slate-300">Detectors</p>
         <div className="mt-4 grid gap-3 md:grid-cols-2">
           {TOGGLES.map(([key, label, description]) => (
             <label key={String(key)} className="flex cursor-pointer items-start gap-3 rounded-xl border border-slate-800 p-4 hover:border-cyan/40">
@@ -81,7 +81,7 @@ export function PolicyForm({ projectId, initial }: { projectId: string; initial:
               />
               <div>
                 <p className="font-medium">{label}</p>
-                <p className="mt-1 text-xs text-slate-500">{description}</p>
+                <p className="mt-1 text-xs text-slate-300">{description}</p>
               </div>
             </label>
           ))}
@@ -89,7 +89,7 @@ export function PolicyForm({ projectId, initial }: { projectId: string; initial:
       </div>
 
       <div className="card p-6">
-        <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Unsafe output handling</p>
+        <p className="text-xs font-bold uppercase tracking-wider text-slate-300">Unsafe output handling</p>
         <div className="mt-3 grid gap-2 sm:grid-cols-3">
           {(["WARN", "REDACT", "BLOCK"] as const).map((mode) => (
             <button
@@ -106,7 +106,7 @@ export function PolicyForm({ projectId, initial }: { projectId: string; initial:
 
       <div className="card p-6 grid gap-4">
         <div>
-          <p className="text-xs font-bold uppercase tracking-wider text-slate-500">RAG grounding</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-slate-300">RAG grounding</p>
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
             <label className="flex items-center gap-3"><input type="checkbox" checked={policy.citationRequired} onChange={(event) => setPolicy({ ...policy, citationRequired: event.currentTarget.checked })} className="h-4 w-4 accent-cyan" /> Require citations</label>
             <label className="flex items-center gap-3"><input type="checkbox" checked={policy.requireSourceUrls} onChange={(event) => setPolicy({ ...policy, requireSourceUrls: event.currentTarget.checked })} className="h-4 w-4 accent-cyan" /> Require source URLs</label>
@@ -116,7 +116,7 @@ export function PolicyForm({ projectId, initial }: { projectId: string; initial:
           <textarea className="input mt-3 min-h-20" maxLength={500} value={policy.noSourceFallback ?? ""} onChange={(event) => setPolicy({ ...policy, noSourceFallback: event.target.value || null })} placeholder="I don't have verified source information for this answer. Please contact support." />
         </div>
         <div>
-          <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Custom blocked topics (one per line)</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-slate-300">Custom blocked topics (one per line)</p>
           <textarea
             className="input mt-2 min-h-24"
             value={policy.customBlockedTopics.join("\n")}
@@ -125,7 +125,7 @@ export function PolicyForm({ projectId, initial }: { projectId: string; initial:
           />
         </div>
         <div>
-          <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Custom denylist regex (one per line)</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-slate-300">Custom denylist regex (one per line)</p>
           <textarea
             className="input mt-2 min-h-24 font-mono text-xs"
             value={policy.deniedPatterns.join("\n")}
@@ -134,17 +134,17 @@ export function PolicyForm({ projectId, initial }: { projectId: string; initial:
           />
         </div>
         <div>
-          <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Allowlisted domains (one per line)</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-slate-300">Allowlisted domains (one per line)</p>
           <textarea
             className="input mt-2 min-h-20"
             value={policy.allowlistedDomains.join("\n")}
             onChange={(event) => setPolicy({ ...policy, allowlistedDomains: event.target.value.split("\n").map((line) => line.trim()).filter(Boolean) })}
             placeholder="docs.acme.com&#10;status.acme.com"
           />
-          <p className="mt-1 text-xs text-slate-500">Used by the unsafe-output detector to ignore links from approved domains.</p>
+          <p className="mt-1 text-xs text-slate-300">Used by the unsafe-output detector to ignore links from approved domains.</p>
         </div>
         <div>
-          <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Custom block fallback message</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-slate-300">Custom block fallback message</p>
           <textarea
             className="input mt-2 min-h-20"
             maxLength={500}

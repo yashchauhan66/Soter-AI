@@ -60,7 +60,7 @@ if (verdict.decision === "BLOCK") throw new Error(verdict.reason);`}
       <section className="card overflow-x-auto p-5">
         <h2 className="text-lg font-semibold">Recent checks</h2>
         <table className="mt-4 w-full min-w-[860px] text-left text-sm">
-          <thead className="text-xs uppercase text-slate-500"><tr><th className="py-2">Decision</th><th>Risk</th><th>Category</th><th>Domain</th><th>Consent</th><th>Reason</th><th>When</th></tr></thead>
+          <thead className="text-xs uppercase text-slate-300"><tr><th className="py-2">Decision</th><th>Risk</th><th>Category</th><th>Domain</th><th>Consent</th><th>Reason</th><th>When</th></tr></thead>
           <tbody className="divide-y divide-slate-800">
             {checks.map((check) => (
               <tr key={check.id}>
@@ -69,11 +69,11 @@ if (verdict.decision === "BLOCK") throw new Error(verdict.reason);`}
                 <td className="font-mono text-xs">{check.actionCategory}</td>
                 <td>{check.domain ?? "-"}</td>
                 <td>{check.userConsentProvided ? "yes" : "no"}</td>
-                <td className="max-w-[260px] truncate text-slate-400">{check.reason}</td>
+                <td className="max-w-[260px] truncate text-slate-200">{check.reason}</td>
                 <td>{check.createdAt.toLocaleString()}</td>
               </tr>
             ))}
-            {checks.length === 0 && <tr><td className="py-5 text-slate-500" colSpan={7}>No legal-boundary checks yet.</td></tr>}
+            {checks.length === 0 && <tr><td className="py-5 text-slate-300" colSpan={7}>No legal-boundary checks yet.</td></tr>}
           </tbody>
         </table>
       </section>

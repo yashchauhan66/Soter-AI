@@ -88,11 +88,11 @@ export function VsCompetitor({ data }: { data: VsContent }) {
         <div className="text-center">
           <p className="eyebrow">Comparison</p>
           <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
-            SoterAI <span className="text-slate-500">vs</span>{" "}
+            SoterAI <span className="text-slate-300">vs</span>{" "}
             <span className="text-cyan">{data.competitor}</span>
           </h1>
-          {data.competitorNote && <p className="mt-2 text-sm text-slate-500">{data.competitorNote}</p>}
-          <p className="mx-auto mt-4 max-w-3xl text-lg leading-7 text-slate-400">{data.tagline}</p>
+          {data.competitorNote && <p className="mt-2 text-sm text-slate-300">{data.competitorNote}</p>}
+          <p className="mx-auto mt-4 max-w-3xl text-lg leading-7 text-slate-200">{data.tagline}</p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link href="/signup" className="button-primary gap-2">
               Get started free <ArrowRight size={16} aria-hidden="true" />
@@ -100,14 +100,14 @@ export function VsCompetitor({ data }: { data: VsContent }) {
             <Link href="/comparison" className="button-secondary gap-2">
               Full comparison
             </Link>
-            <Link href="/playground" className="text-sm text-slate-400 hover:text-white">
+            <Link href="/playground" className="text-sm text-slate-200 hover:text-white">
               Try the playground
             </Link>
           </div>
         </div>
 
         {/* Intro */}
-        <div className="mx-auto mt-12 max-w-3xl space-y-4 leading-7 text-slate-400">
+        <div className="mx-auto mt-12 max-w-3xl space-y-4 leading-7 text-slate-200">
           <p>{data.intro}</p>
         </div>
 
@@ -132,10 +132,10 @@ export function VsCompetitor({ data }: { data: VsContent }) {
               <AlertTriangle className="text-amber-300" size={20} aria-hidden="true" />
               <h2 className="text-lg font-bold">Where {data.competitor} stays ahead</h2>
             </div>
-            <p className="mt-3 text-sm leading-6 text-slate-400">{data.theirStrength}</p>
+            <p className="mt-3 text-sm leading-6 text-slate-200">{data.theirStrength}</p>
             <ul className="mt-3 space-y-2">
               {data.theirEdge.map((e) => (
-                <li key={e} className="flex gap-2 text-sm leading-6 text-slate-400">
+                <li key={e} className="flex gap-2 text-sm leading-6 text-slate-200">
                   <span className="mt-0.5 shrink-0 text-amber-300">→</span>
                   <span>{e}</span>
                 </li>
@@ -163,7 +163,7 @@ export function VsCompetitor({ data }: { data: VsContent }) {
                   <tr key={r.feature} className={`border-b border-slate-800/50 ${i % 2 === 0 ? "bg-slate-950/30" : ""}`}>
                     <td className="px-4 py-3.5">
                       <span className="font-medium text-slate-200">{r.feature}</span>
-                      {r.desc && <p className="text-xs text-slate-500">{r.desc}</p>}
+                      {r.desc && <p className="text-xs text-slate-300">{r.desc}</p>}
                     </td>
                     <td className="px-3 py-3.5 text-center font-bold">{cell(r.soter)}</td>
                     <td className="px-3 py-3.5 text-center">{cell(r.them)}</td>
@@ -172,7 +172,7 @@ export function VsCompetitor({ data }: { data: VsContent }) {
               </tbody>
             </table>
           </div>
-          <p className="mt-3 text-xs text-slate-500">
+          <p className="mt-3 text-xs text-slate-300">
             ✅ = Supported · ❌ = Not supported. Competitor capabilities are summarized from public documentation and may
             change.
           </p>
@@ -185,8 +185,8 @@ export function VsCompetitor({ data }: { data: VsContent }) {
             <p className="mt-2 text-sm leading-6 text-slate-300">{data.bestFor.soter}</p>
           </div>
           <div className="card p-6">
-            <p className="text-xs font-medium uppercase tracking-wide text-slate-400">Choose {data.competitor} when</p>
-            <p className="mt-2 text-sm leading-6 text-slate-400">{data.bestFor.them}</p>
+            <p className="text-xs font-medium uppercase tracking-wide text-slate-200">Choose {data.competitor} when</p>
+            <p className="mt-2 text-sm leading-6 text-slate-200">{data.bestFor.them}</p>
           </div>
         </section>
 

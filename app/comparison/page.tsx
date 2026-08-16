@@ -465,7 +465,7 @@ export default function ComparisonPage() {
           <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
             The <span className="text-cyan">most comprehensive</span> AI security platform
           </h1>
-          <p className="mx-auto mt-4 max-w-3xl text-lg leading-7 text-slate-400">
+          <p className="mx-auto mt-4 max-w-3xl text-lg leading-7 text-slate-200">
             Only Soter covers Input + Output + RAG Security + Agent Firewall + Policy Engine + Enterprise features
             in a single product. Compare features, benchmarks, and pricing.
           </p>
@@ -477,7 +477,7 @@ export default function ComparisonPage() {
             <Link href="/benchmark" className="button-secondary gap-2">
               <BarChart3 size={16} aria-hidden="true" /> View benchmarks
             </Link>
-            <Link href="/playground" className="text-sm text-slate-400 hover:text-white">
+            <Link href="/playground" className="text-sm text-slate-200 hover:text-white">
               Try the playground
             </Link>
           </div>
@@ -485,7 +485,7 @@ export default function ComparisonPage() {
 
         {/* ── Head-to-head pages ── */}
         <section className="mt-12">
-          <p className="text-center text-sm text-slate-400">Head-to-head breakdowns</p>
+          <p className="text-center text-sm text-slate-200">Head-to-head breakdowns</p>
           <div className="mx-auto mt-4 flex max-w-3xl flex-wrap justify-center gap-3">
             {[
               ["SoterAI vs Lakera", "/comparison/lakera"],
@@ -509,7 +509,7 @@ export default function ComparisonPage() {
             <Award className="text-cyan" size={24} aria-hidden="true" />
             Feature Comparison
           </h2>
-          <p className="mt-2 text-sm text-slate-400">Core feature matrix plus expanded 2026 competitor landscape</p>
+          <p className="mt-2 text-sm text-slate-200">Core feature matrix plus expanded 2026 competitor landscape</p>
 
           {/* Mobile: card layout */}
           <div className="mt-6 space-y-3 sm:hidden">
@@ -518,7 +518,7 @@ export default function ComparisonPage() {
                 <div className="flex items-start justify-between">
                   <div>
                     <p className="font-semibold text-sm">{f.name}</p>
-                    <p className="text-xs text-slate-500">{f.desc}</p>
+                    <p className="text-xs text-slate-300">{f.desc}</p>
                   </div>
                   {f.unique && <span className="rounded-full bg-cyan/10 px-2 py-0.5 text-xs font-medium text-cyan">Unique</span>}
                 </div>
@@ -526,7 +526,7 @@ export default function ComparisonPage() {
                   {competitors.map((c) => (
                     <div key={c.id} className="flex items-center gap-1.5">
                       <span className={c.color}>{f.values[c.id as keyof typeof f.values]}</span>
-                      <span className="text-slate-400">{c.name}</span>
+                      <span className="text-slate-200">{c.name}</span>
                     </div>
                   ))}
                 </div>
@@ -543,7 +543,7 @@ export default function ComparisonPage() {
                   {competitors.map((c) => (
                     <th key={c.id} scope="col" className={`px-3 py-3 text-center font-semibold ${c.color}`}>
                       {c.icon} {c.name}
-                      {c.note && <span className="block text-xs font-normal text-slate-500">{c.note}</span>}
+                      {c.note && <span className="block text-xs font-normal text-slate-300">{c.note}</span>}
                     </th>
                   ))}
                 </tr>
@@ -560,7 +560,7 @@ export default function ComparisonPage() {
                           </span>
                         )}
                       </div>
-                      <p className="text-xs text-slate-500">{f.desc}</p>
+                      <p className="text-xs text-slate-300">{f.desc}</p>
                     </td>
                     {competitors.map((c) => {
                       const val = f.values[c.id as keyof typeof f.values];
@@ -578,7 +578,7 @@ export default function ComparisonPage() {
                               <XCircle size={16} />
                             </span>
                           ) : (
-                            <span className="text-slate-500">{val}</span>
+                            <span className="text-slate-300">{val}</span>
                           )}
                         </td>
                       );
@@ -589,7 +589,7 @@ export default function ComparisonPage() {
             </table>
           </div>
 
-          <p className="mt-4 text-xs text-slate-500">
+          <p className="mt-4 text-xs text-slate-300">
             ✅ = Supported &nbsp; ❌ = Not supported &nbsp; — = Not available
             &nbsp;·&nbsp;
             <Link href="/signup" className="text-cyan underline underline-offset-2 hover:text-cyan/80">
@@ -604,7 +604,7 @@ export default function ComparisonPage() {
             <BarChart3 className="text-cyan" size={24} aria-hidden="true" />
             Benchmark Comparison
           </h2>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-200">
             Soter vs GA Guard vs NVIDIA NeMo (independent + internal benchmarks, Jun 2026)
           </p>
 
@@ -614,23 +614,23 @@ export default function ComparisonPage() {
               <div key={b.category} className="card p-4">
                 <div className="flex items-center justify-between">
                   <p className="font-semibold text-sm">{b.category}</p>
-                  <span className="text-xs text-slate-500">{b.tests} tests</span>
+                  <span className="text-xs text-slate-300">{b.tests} tests</span>
                 </div>
                 <div className="mt-2 grid grid-cols-3 gap-2 text-center text-xs">
                   <div className="rounded-lg bg-cyan/10 p-2">
                     <p className="text-cyan font-bold">{b.soter}</p>
-                    <p className="text-slate-500">Soter</p>
+                    <p className="text-slate-300">Soter</p>
                   </div>
                   <div className="rounded-lg bg-emerald-500/10 p-2">
                     <p className="text-emerald-400 font-bold">{b.gaGuard}</p>
-                    <p className="text-slate-500">GA Guard</p>
+                    <p className="text-slate-300">GA Guard</p>
                   </div>
                   <div className="rounded-lg bg-green-500/10 p-2">
                     <p className="text-green-400 font-bold">{b.nemo}</p>
-                    <p className="text-slate-500">NeMo</p>
+                    <p className="text-slate-300">NeMo</p>
                   </div>
                 </div>
-                <p className="mt-2 text-xs text-slate-500">{b.notes}</p>
+                <p className="mt-2 text-xs text-slate-300">{b.notes}</p>
               </div>
             ))}
           </div>
@@ -652,18 +652,18 @@ export default function ComparisonPage() {
                 {benchmarks.map((b, i) => (
                   <tr key={b.category} className={`border-b border-slate-800/50 ${i % 2 === 0 ? "bg-slate-950/30" : ""}`}>
                     <td className="px-4 py-3 font-medium text-slate-200">{b.category}</td>
-                    <td className="px-3 py-3 text-center text-slate-400">{b.tests}</td>
+                    <td className="px-3 py-3 text-center text-slate-200">{b.tests}</td>
                     <td className="px-3 py-3 text-center font-bold text-cyan">{b.soter}</td>
                     <td className="px-3 py-3 text-center text-emerald-400">{b.gaGuard}</td>
                     <td className="px-3 py-3 text-center text-green-400">{b.nemo}</td>
-                    <td className="px-3 py-3 text-xs text-slate-500">{b.notes}</td>
+                    <td className="px-3 py-3 text-xs text-slate-300">{b.notes}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
 
-          <p className="mt-4 text-xs text-slate-500">
+          <p className="mt-4 text-xs text-slate-300">
             Soter scores from internal Garak-style benchmark (Jun 21, 2026). GA Guard &amp; NeMo per-category scores are interpolated from their published overall F1 scores (0.983 and 0.875 respectively). 
             &quot;—&quot; = not tested in that category.
           </p>
@@ -675,7 +675,7 @@ export default function ComparisonPage() {
             <Star className="text-cyan" size={24} aria-hidden="true" />
             Who Wins Where
           </h2>
-          <p className="mt-2 text-sm text-slate-400">Each platform has a distinct strength quadrant</p>
+          <p className="mt-2 text-sm text-slate-200">Each platform has a distinct strength quadrant</p>
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {whoWins.map((w) => (
@@ -684,7 +684,7 @@ export default function ComparisonPage() {
                   <span className="text-2xl">{w.emoji}</span>
                   <div>
                     <p className="font-bold text-lg">{w.winner}</p>
-                    <p className="text-sm leading-5 text-slate-400">{w.reason}</p>
+                    <p className="text-sm leading-5 text-slate-200">{w.reason}</p>
                   </div>
                 </div>
               </div>
@@ -698,16 +698,16 @@ export default function ComparisonPage() {
             <Award className="text-cyan" size={24} aria-hidden="true" />
             Best Platform by Use Case
           </h2>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-200">
             The honest answer: Soter is best for broad app-layer runtime security, while some competitors win narrow categories.
           </p>
 
           <div className="mt-6 grid gap-4 lg:grid-cols-2">
             {bestByUseCase.map((item) => (
               <div key={item.useCase} className="card p-5">
-                <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{item.useCase}</p>
+                <p className="text-xs font-medium uppercase tracking-wide text-slate-300">{item.useCase}</p>
                 <p className="mt-2 text-lg font-bold text-cyan">{item.winner}</p>
-                <p className="mt-2 text-sm leading-6 text-slate-400">{item.why}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-200">{item.why}</p>
               </div>
             ))}
           </div>
@@ -718,7 +718,7 @@ export default function ComparisonPage() {
             <ShieldCheck className="text-cyan" size={24} aria-hidden="true" />
             Expanded Competitor Landscape
           </h2>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-200">
             Major AI security competitors beyond the core guardrail table, with where Soter wins and where it should stay humble.
           </p>
 
@@ -728,15 +728,15 @@ export default function ComparisonPage() {
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="font-semibold text-slate-100">{competitor.name}</p>
-                    <p className="mt-1 text-xs text-slate-500">{competitor.category}</p>
+                    <p className="mt-1 text-xs text-slate-300">{competitor.category}</p>
                   </div>
-                  <span className="rounded-full bg-slate-900 px-2 py-1 text-[10px] font-medium text-slate-400">
+                  <span className="rounded-full bg-slate-900 px-2 py-1 text-[10px] font-medium text-slate-200">
                     Compared
                   </span>
                 </div>
                 <dl className="mt-4 space-y-3 text-sm">
                   <div>
-                    <dt className="text-xs font-medium uppercase tracking-wide text-slate-500">Best at</dt>
+                    <dt className="text-xs font-medium uppercase tracking-wide text-slate-300">Best at</dt>
                     <dd className="mt-1 text-slate-300">{competitor.bestAt}</dd>
                   </div>
                   <div>
@@ -745,7 +745,7 @@ export default function ComparisonPage() {
                   </div>
                   <div>
                     <dt className="text-xs font-medium uppercase tracking-wide text-amber-300">Caveat</dt>
-                    <dd className="mt-1 text-slate-400">{competitor.caveat}</dd>
+                    <dd className="mt-1 text-slate-200">{competitor.caveat}</dd>
                   </div>
                 </dl>
               </div>
@@ -758,7 +758,7 @@ export default function ComparisonPage() {
             <Users className="text-cyan" size={24} aria-hidden="true" />
             Competitor Profiles
           </h2>
-          <p className="mt-2 text-sm text-slate-400">Detailed breakdown of each competitor</p>
+          <p className="mt-2 text-sm text-slate-200">Detailed breakdown of each competitor</p>
 
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             {profiles.map((p) => (
@@ -767,7 +767,7 @@ export default function ComparisonPage() {
                   <span className="text-2xl">{p.icon}</span>
                   <div>
                     <p className="font-semibold">{p.name}</p>
-                    <p className="text-xs text-slate-500">{p.status}</p>
+                    <p className="text-xs text-slate-300">{p.status}</p>
                   </div>
                 </div>
                 <p className="mt-3 text-sm text-slate-300">
@@ -776,15 +776,15 @@ export default function ComparisonPage() {
                 <div className="mt-3 grid gap-2 text-xs">
                   <div className="flex gap-2">
                     <TrendingUp className="mt-0.5 shrink-0 text-lime" size={14} aria-hidden="true" />
-                    <span className="text-slate-400">{p.strength}</span>
+                    <span className="text-slate-200">{p.strength}</span>
                   </div>
                   <div className="flex gap-2">
                     <XCircle className="mt-0.5 shrink-0 text-red-400" size={14} aria-hidden="true" />
-                    <span className="text-slate-400">{p.weakness}</span>
+                    <span className="text-slate-200">{p.weakness}</span>
                   </div>
                 </div>
                 <div className="mt-4 flex items-center justify-between">
-                  <span className="text-xs text-slate-500">{p.pricing}</span>
+                  <span className="text-xs text-slate-300">{p.pricing}</span>
                   <a
                     href={p.url}
                     target="_blank"
@@ -808,7 +808,7 @@ export default function ComparisonPage() {
 
           <div className="mt-6 card p-6 sm:p-8">
             <div className="overflow-x-auto">
-              <pre className="text-xs leading-5 text-slate-400 sm:text-sm sm:leading-6">
+              <pre className="text-xs leading-5 text-slate-200 sm:text-sm sm:leading-6">
 {`                    COMPREHENSIVENESS
                     (+ RAG + Agent + Policy)
                           |
@@ -827,7 +827,7 @@ export default function ComparisonPage() {
                   LATENCY / PERFORMANCE`}
               </pre>
             </div>
-            <p className="mt-4 text-xs text-slate-500">
+            <p className="mt-4 text-xs text-slate-300">
               Soter is the most comprehensive — the only platform covering Input + Output + RAG + Agent Firewall + Policy + Enterprise in one product.
             </p>
           </div>
@@ -843,7 +843,7 @@ export default function ComparisonPage() {
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <div className="card p-5">
               <h3 className="font-semibold">Major Consolidation</h3>
-              <ul className="mt-3 space-y-2 text-sm text-slate-400">
+              <ul className="mt-3 space-y-2 text-sm text-slate-200">
                 <li className="flex gap-2">
                   <span className="text-red-400">🔴</span>
                   <span><strong className="text-slate-200">Lakera</strong> → Check Point ($300M, Sep 2025)</span>
@@ -853,14 +853,14 @@ export default function ComparisonPage() {
                   <span><strong className="text-slate-200">Protect AI</strong> → Palo Alto Networks (2025)</span>
                 </li>
                 <li className="flex gap-2">
-                  <span className="text-slate-400">⚪</span>
+                  <span className="text-slate-200">⚪</span>
                   <span><strong className="text-slate-200">Prompt Security</strong> → Acquired (2025)</span>
                 </li>
               </ul>
             </div>
             <div className="card p-5">
               <h3 className="font-semibold">Key Market Trends</h3>
-              <ul className="mt-3 space-y-2 text-sm text-slate-400">
+              <ul className="mt-3 space-y-2 text-sm text-slate-200">
                 <li className="flex gap-2"><span className="text-cyan">→</span>Agentic Shift: Tool-call auth = #1 priority for AI security buyers</li>
                 <li className="flex gap-2"><span className="text-cyan">→</span>Shadow AI discovery becomes critical — Arthur AI pioneers Agent Discovery &amp; Governance (ADG)</li>
                 <li className="flex gap-2"><span className="text-cyan">→</span>AWS introduces Cross-Account Safeguards for org-wide immutable AI policies</li>
@@ -881,7 +881,7 @@ export default function ComparisonPage() {
               <ShieldCheck className="text-cyan" size={28} aria-hidden="true" />
               Why Soter?
             </h2>
-            <p className="mt-2 text-sm text-slate-400">
+            <p className="mt-2 text-sm text-slate-200">
               The only platform that delivers all of these capabilities in a single product:
             </p>
 
@@ -954,7 +954,7 @@ export default function ComparisonPage() {
           {" · "}
           <a href="https://mozilla.ai" className="text-cyan underline underline-offset-2" target="_blank" rel="noopener">Mozilla.ai</a>
           {" · "}
-          <a href="/api/benchmark" className="text-cyan underline underline-offset-2">Soter Internal Benchmark</a>
+          <a href="/api/benchmarks" className="text-cyan underline underline-offset-2">Soter Internal Benchmark</a>
         </p>
       </div>
     </main>

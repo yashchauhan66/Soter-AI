@@ -15,7 +15,7 @@ function windowStart(days: number): Date {
 
 export default async function GovernanceMonitoringPage() {
   const active = await getActiveOrganization();
-  if (!active) return <p className="p-6 text-slate-400">No active organization.</p>;
+  if (!active) return <p className="p-6 text-slate-200">No active organization.</p>;
 
   const thirtyDaysAgo = windowStart(30);
   const sevenDaysAgo = windowStart(7);
@@ -132,7 +132,7 @@ export default async function GovernanceMonitoringPage() {
       <div>
         <p className="eyebrow">Governance</p>
         <h1 className="mt-2 text-3xl font-bold">Employee AI Usage Monitoring</h1>
-        <p className="mt-3 max-w-3xl text-slate-400">
+        <p className="mt-3 max-w-3xl text-slate-200">
           Monitor AI tool usage across your organization. Track which providers are being used,
           how often, and whether usage complies with your governance policies.
         </p>
@@ -142,22 +142,22 @@ export default async function GovernanceMonitoringPage() {
       <div className="grid gap-4 sm:grid-cols-4">
         <div className="card p-5">
           <Activity className="mb-2 text-cyan" size={20} />
-          <p className="text-sm text-slate-400">Total usage (30 days)</p>
+          <p className="text-sm text-slate-200">Total usage (30 days)</p>
           <p className="mt-1 text-2xl font-bold">{totalUsage}</p>
         </div>
         <div className="card p-5">
           <Users className="mb-2 text-emerald-400" size={20} />
-          <p className="text-sm text-slate-400">Allowed</p>
+          <p className="text-sm text-slate-200">Allowed</p>
           <p className="mt-1 text-2xl font-bold">{allowedCount}</p>
         </div>
         <div className="card p-5">
           <Globe className="mb-2 text-red-400" size={20} />
-          <p className="text-sm text-slate-400">Blocked</p>
+          <p className="text-sm text-slate-200">Blocked</p>
           <p className="mt-1 text-2xl font-bold">{blockedCount}</p>
         </div>
         <div className="card p-5">
           <ShieldBan className="mb-2 text-rose-400" size={20} />
-          <p className="text-sm text-slate-400">Block rate</p>
+          <p className="text-sm text-slate-200">Block rate</p>
           <p className="mt-1 text-2xl font-bold">{blockRate}%</p>
         </div>
       </div>
@@ -169,7 +169,7 @@ export default async function GovernanceMonitoringPage() {
             <ShieldAlert className="text-rose-400" size={24} />
             <div>
               <h2 className="text-lg font-semibold text-rose-100">Governance Enforcement Alerts</h2>
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-slate-200">
                 AI provider access attempts blocked by governance policy in the last 30 days
               </p>
             </div>
@@ -186,21 +186,21 @@ export default async function GovernanceMonitoringPage() {
         <div className="mt-5 grid gap-4 sm:grid-cols-4">
           <div className="rounded-xl border border-rose-500/20 bg-rose-500/10 p-4">
             <p className="text-2xl font-bold text-rose-200">{enforcementCount}</p>
-            <p className="mt-1 text-xs text-slate-400">Total blocked</p>
+            <p className="mt-1 text-xs text-slate-200">Total blocked</p>
           </div>
           <div className="rounded-xl border border-rose-500/20 bg-rose-500/10 p-4">
             <p className="text-2xl font-bold text-rose-200">{uniqueBlockedProviders.size}</p>
-            <p className="mt-1 text-xs text-slate-400">Providers blocked</p>
+            <p className="mt-1 text-xs text-slate-200">Providers blocked</p>
           </div>
           <div className="rounded-xl border border-amber-500/20 bg-amber-500/10 p-4 sm:col-span-2">
             {topReason ? (
               <>
-                <p className="text-xs text-slate-400">Most common block reason</p>
+                <p className="text-xs text-slate-200">Most common block reason</p>
                 <p className="mt-1 text-sm font-medium text-amber-200">{topReason[0]}</p>
-                <p className="mt-0.5 text-xs text-slate-500">{topReason[1]} occurrence(s)</p>
+                <p className="mt-0.5 text-xs text-slate-300">{topReason[1]} occurrence(s)</p>
               </>
             ) : (
-              <p className="text-sm text-slate-500">No blocks recorded yet</p>
+              <p className="text-sm text-slate-300">No blocks recorded yet</p>
             )}
           </div>
         </div>
@@ -238,7 +238,7 @@ export default async function GovernanceMonitoringPage() {
         {recentEnforcement.length > 0 && (
           <div className="mt-6">
             <div className="mb-3 flex items-center gap-2">
-              <Clock size={14} className="text-slate-500" />
+              <Clock size={14} className="text-slate-300" />
               <h3 className="text-sm font-semibold text-slate-300">Recent blocks (7 days)</h3>
             </div>
             <div className="space-y-2">
@@ -254,14 +254,14 @@ export default async function GovernanceMonitoringPage() {
                         <span className="font-semibold text-rose-200">{event.providerName}</span>
                       )}
                       {event.modelName && (
-                        <span className="text-xs text-slate-500">({event.modelName})</span>
+                        <span className="text-xs text-slate-300">({event.modelName})</span>
                       )}
                       <span className="rounded-full bg-rose-500/15 px-2 py-0.5 text-xs font-medium text-rose-300">
                         {event.decision}
                       </span>
                     </div>
                     {event.reason && (
-                      <p className="mt-0.5 text-xs text-slate-400">
+                      <p className="mt-0.5 text-xs text-slate-200">
                         {event.reason.length > 150 ? event.reason.slice(0, 150) + "…" : event.reason}
                       </p>
                     )}
@@ -274,7 +274,7 @@ export default async function GovernanceMonitoringPage() {
         )}
 
         {enforcementCount === 0 && (
-          <div className="mt-6 text-center text-sm text-slate-500">
+          <div className="mt-6 text-center text-sm text-slate-300">
             <ShieldBan size={32} className="mx-auto mb-2 text-slate-600" />
             <p>No governance enforcement events recorded in the last 30 days.</p>
             <p className="mt-1 text-xs text-slate-600">
@@ -289,7 +289,7 @@ export default async function GovernanceMonitoringPage() {
       <section>
         <h2 className="mb-4 text-lg font-semibold">Top AI Providers (30 days)</h2>
         {providerStats.length === 0 ? (
-          <p className="text-sm text-slate-500">No provider usage tracked in the last 30 days.</p>
+          <p className="text-sm text-slate-300">No provider usage tracked in the last 30 days.</p>
         ) : (
           <div className="space-y-2">
             {providerStats.map((stat) => (
@@ -314,7 +314,7 @@ export default async function GovernanceMonitoringPage() {
       <section>
         <h2 className="mb-4 text-lg font-semibold">Recent Activity</h2>
         {recentLogs.length === 0 ? (
-          <p className="text-sm text-slate-500">No recent activity tracked.</p>
+          <p className="text-sm text-slate-300">No recent activity tracked.</p>
         ) : (
           <div className="space-y-2">
             {recentLogs.map((log) => (
@@ -331,7 +331,7 @@ export default async function GovernanceMonitoringPage() {
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
                     {log.providerName && <span className="font-medium">{log.providerName}</span>}
-                    <span className="text-xs text-slate-500">{log.action.replace(/_/g, " ")}</span>
+                    <span className="text-xs text-slate-300">{log.action.replace(/_/g, " ")}</span>
                     <span
                       className={`text-xs font-medium ${
                         log.decision === "ALLOWED" || log.decision === "ALLOW"

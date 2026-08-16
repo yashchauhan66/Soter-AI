@@ -299,24 +299,24 @@ export default async function DashboardPage({
                 </span>
                 <div>
                   <p className="text-lg font-bold text-white">AI Agent Control</p>
-                  <p className="text-xs text-slate-400">For AI agents using email, CRM, database, payments</p>
+                  <p className="text-xs text-slate-200">For AI agents using email, CRM, database, payments</p>
                 </div>
               </div>
 
-              <p className="mt-3 text-xs leading-4 text-slate-500">Action ledger with reversibility classification, rollback windows, continuous compliance assurance.</p>
+              <p className="mt-3 text-xs leading-4 text-slate-300">Action ledger with reversibility classification, rollback windows, continuous compliance assurance.</p>
 
               <div className="mt-4 grid grid-cols-3 gap-3">
                 <div className="rounded-xl bg-slate-950/60 p-3 text-center">
                   <p className="text-xl font-bold text-orange-300">{agentPending}</p>
-                  <p className="mt-0.5 text-[10px] text-slate-500">Pending</p>
+                  <p className="mt-0.5 text-[10px] text-slate-300">Pending</p>
                 </div>
                 <div className="rounded-xl bg-slate-950/60 p-3 text-center">
                   <p className="text-xl font-bold text-red-300">{agentBlocked}</p>
-                  <p className="mt-0.5 text-[10px] text-slate-500">Blocked</p>
+                  <p className="mt-0.5 text-[10px] text-slate-300">Blocked</p>
                 </div>
                 <div className="rounded-xl bg-slate-950/60 p-3 text-center">
                   <p className="text-xl font-bold text-emerald-300">{agentReversible}</p>
-                  <p className="mt-0.5 text-[10px] text-slate-500">Reversible</p>
+                  <p className="mt-0.5 text-[10px] text-slate-300">Reversible</p>
                 </div>
               </div>
 
@@ -339,24 +339,24 @@ export default async function DashboardPage({
                 </span>
                 <div>
                   <p className="text-lg font-bold text-white">AI Usage Governance</p>
-                  <p className="text-xs text-slate-400">For employees using ChatGPT, Claude, Cursor</p>
+                  <p className="text-xs text-slate-200">For employees using ChatGPT, Claude, Cursor</p>
                 </div>
               </div>
 
-              <p className="mt-3 text-xs leading-4 text-slate-500">5-step governance engine, provider allow/block lists, department rules, employee DLP monitoring.</p>
+              <p className="mt-3 text-xs leading-4 text-slate-300">5-step governance engine, provider allow/block lists, department rules, employee DLP monitoring.</p>
 
               <div className="mt-4 grid grid-cols-3 gap-3">
                 <div className="rounded-xl bg-slate-950/60 p-3 text-center">
                   <p className="text-xl font-bold text-violet-300">{govCompliance}%</p>
-                  <p className="mt-0.5 text-[10px] text-slate-500">Compliance</p>
+                  <p className="mt-0.5 text-[10px] text-slate-300">Compliance</p>
                 </div>
                 <div className="rounded-xl bg-slate-950/60 p-3 text-center">
                   <p className="text-xl font-bold text-red-300">{govBlocked}</p>
-                  <p className="mt-0.5 text-[10px] text-slate-500">Blocked</p>
+                  <p className="mt-0.5 text-[10px] text-slate-300">Blocked</p>
                 </div>
                 <div className="rounded-xl bg-slate-950/60 p-3 text-center">
                   <p className="text-xl font-bold text-amber-300">{govPending}</p>
-                  <p className="mt-0.5 text-[10px] text-slate-500">Pending</p>
+                  <p className="mt-0.5 text-[10px] text-slate-300">Pending</p>
                 </div>
               </div>
 
@@ -374,7 +374,7 @@ export default async function DashboardPage({
           <div className="card p-5 transition hover:border-cyan/30 hover:shadow-lg hover:shadow-cyan/5">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-slate-500">Plan</p>
+                <p className="text-sm text-slate-300">Plan</p>
                 <p className="mt-1 text-2xl font-bold">{project.plan}</p>
               </div>
               <span className={`rounded-full px-3 py-1 text-xs font-semibold ${
@@ -387,7 +387,7 @@ export default async function DashboardPage({
             </div>
             <div className="mt-3">
               <div className="flex items-baseline justify-between text-sm">
-                <span className="text-slate-400">Monthly usage</span>
+                <span className="text-slate-200">Monthly usage</span>
                 <span className="text-slate-300">{usage.used.toLocaleString("en-IN")} / {usage.limit.toLocaleString("en-IN")}</span>
               </div>
               <div className="mt-2 h-2 overflow-hidden rounded-full bg-slate-800">
@@ -444,7 +444,7 @@ export default async function DashboardPage({
           <div className="mb-6 flex items-center justify-between">
             <div>
               <h2 className="text-lg font-semibold">All features</h2>
-              <p className="mt-1 text-sm text-slate-500">
+              <p className="mt-1 text-sm text-slate-300">
                 {FEATURE_CARDS.length} features across {groups.length} areas
               </p>
             </div>
@@ -455,7 +455,7 @@ export default async function DashboardPage({
 
           {groups.map((group) => (
             <div key={group} className="mb-6">
-              <h3 className="mb-3 text-xs font-bold uppercase tracking-wider text-slate-500">
+              <h3 className="mb-3 text-xs font-bold uppercase tracking-wider text-slate-300">
                 {group}
               </h3>
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -477,7 +477,7 @@ export default async function DashboardPage({
                           <p className="text-sm font-medium text-white transition-colors duration-200 group-hover:text-cyan">
                             {card.title}
                           </p>
-                          <p className="mt-1 text-xs leading-5 text-slate-500">
+                          <p className="mt-1 text-xs leading-5 text-slate-300">
                             {card.description}
                           </p>
                         </div>

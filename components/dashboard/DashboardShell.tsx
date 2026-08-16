@@ -56,7 +56,7 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
               <p className="text-sm font-bold uppercase tracking-wider text-cyan">Menu</p>
               <button
                 onClick={() => setSidebarOpen(false)}
-                className="rounded-lg p-1 text-slate-400 hover:text-white"
+                className="rounded-lg p-1 text-slate-200 hover:text-white"
                 aria-label="Close sidebar menu"
               >
                 <X size={20} />

@@ -78,7 +78,7 @@ export default async function WhiteLabelReportPage({
         <div>
           <p className="eyebrow">White-label</p>
           <h1 className="mt-2 text-3xl font-bold">Branded monthly report</h1>
-          <p className="mt-2 text-slate-400">Use the print action for an A4-friendly export. Configure branding under agency settings.</p>
+          <p className="mt-2 text-slate-200">Use the print action for an A4-friendly export. Configure branding under agency settings.</p>
         </div>
         <ProjectSwitcher projects={projects} selectedId={project.id} />
       </div>

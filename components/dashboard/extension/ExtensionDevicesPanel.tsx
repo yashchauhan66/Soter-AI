@@ -81,7 +81,7 @@ export function ExtensionDevicesPanel({
             <MonitorSmartphone size={18} className="text-cyan" />
             <h2 className="text-lg font-semibold">Enrolled devices</h2>
           </div>
-          <p className="mt-1 text-sm text-slate-400">
+          <p className="mt-1 text-sm text-slate-200">
             Every browser connected to this organization. Revoke a device to immediately cut off its extension.
           </p>
         </div>
@@ -94,10 +94,10 @@ export function ExtensionDevicesPanel({
             <AlertTriangle className="text-yellow-500" size={24} />
           )}
           <div>
-            <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Protected Seats</div>
+            <div className="text-xs font-semibold text-slate-300 uppercase tracking-wider">Protected Seats</div>
             <div className="flex items-baseline gap-2">
               <span className="text-2xl font-bold text-slate-200">{complianceRate}%</span>
-              <span className="text-xs text-slate-400">({compliantCount}/{totalActive} compliant)</span>
+              <span className="text-xs text-slate-200">({compliantCount}/{totalActive} compliant)</span>
             </div>
           </div>
         </div>
@@ -108,7 +108,7 @@ export function ExtensionDevicesPanel({
       <div className="mt-6 overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead>
-            <tr className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-500">
+            <tr className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-300">
               <th className="py-2 pr-4">User</th>
               <th className="py-2 pr-4">Department</th>
               <th className="py-2 pr-4">Platform</th>
@@ -131,9 +131,9 @@ export function ExtensionDevicesPanel({
                     <td className="py-2 pr-4">{d.employeeEmail ?? "—"}</td>
                     <td className="py-2 pr-4">{d.department ?? "—"}</td>
                     <td className="py-2 pr-4">{d.platform}</td>
-                    <td className="py-2 pr-4 text-slate-400">{d.version}</td>
-                    <td className="py-2 pr-4 text-slate-400">{d.policyVersion ?? "—"}</td>
-                    <td className="py-2 pr-4 text-slate-400">{relativeTime(d.lastHeartbeatAt)}</td>
+                    <td className="py-2 pr-4 text-slate-200">{d.version}</td>
+                    <td className="py-2 pr-4 text-slate-200">{d.policyVersion ?? "—"}</td>
+                    <td className="py-2 pr-4 text-slate-200">{relativeTime(d.lastHeartbeatAt)}</td>
                     <td className="py-2 pr-4">
                       <StatusBadge value={d.status === "active" ? "ACTIVE" : d.status.toUpperCase()} />
                     </td>
@@ -143,7 +143,7 @@ export function ExtensionDevicesPanel({
                           {comp.label}
                         </span>
                       ) : (
-                        <span className="text-xs text-slate-500">—</span>
+                        <span className="text-xs text-slate-300">—</span>
                       )}
                     </td>
                     <td className="py-2 text-right">

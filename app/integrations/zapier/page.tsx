@@ -96,7 +96,7 @@ export default function Page() {
         <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
           AI security for Zapier workflows
         </h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           Zapier&apos;s AI actions automate tasks across thousands of apps — but prompt injection,
           PII leakage, and unsafe AI outputs can propagate silently through every downstream step.
           SoterAI Guard adds a real-time security layer to your Zapier AI automations.
@@ -125,7 +125,7 @@ export default function Page() {
                 <ShieldCheck className="h-5 w-5 text-cyan" aria-hidden="true" />
                 <h3 className="font-semibold text-slate-100">{f.title}</h3>
               </div>
-              <p className="mt-2 text-sm leading-6 text-slate-400">{f.body}</p>
+              <p className="mt-2 text-sm leading-6 text-slate-200">{f.body}</p>
             </div>
           ))}
         </div>
@@ -141,7 +141,7 @@ export default function Page() {
               </span>
               <div>
                 <p className="font-semibold text-slate-100">{s.step}</p>
-                <p className="mt-1 text-sm leading-6 text-slate-400">{s.body}</p>
+                <p className="mt-1 text-sm leading-6 text-slate-200">{s.body}</p>
               </div>
             </li>
           ))}
@@ -156,7 +156,7 @@ export default function Page() {
             "SoterAI inspects data routed through the webhook steps. Zapier steps that bypass the guard are not covered.",
             "Detection is heuristic. Novel or heavily obfuscated injection attempts may not be flagged.",
           ].map((l) => (
-            <li key={l} className="flex gap-3 text-sm leading-6 text-slate-400">
+            <li key={l} className="flex gap-3 text-sm leading-6 text-slate-200">
               <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-amber-500" />
               {l}
             </li>
@@ -170,7 +170,7 @@ export default function Page() {
           {faqs.map((f) => (
             <div key={f.q}>
               <h3 className="font-semibold text-slate-100">{f.q}</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-400">{f.a}</p>
+              <p className="mt-2 text-sm leading-6 text-slate-200">{f.a}</p>
             </div>
           ))}
         </div>
@@ -192,7 +192,7 @@ export default function Page() {
 
       <section className="mt-16 rounded-2xl border border-cyan/20 bg-cyan/5 p-8 text-center">
         <h2 className="text-2xl font-bold">Secure your Zapier AI automations</h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-400">
+        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-200">
           Create a free SoterAI project, add two webhook steps to your Zap, and every AI action is protected.
         </p>
         <Link href="/signup" className="mt-6 inline-flex items-center gap-2 rounded-lg bg-cyan px-6 py-3 text-sm font-semibold text-ink transition hover:opacity-90">

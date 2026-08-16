@@ -74,7 +74,7 @@ export default function ModelSupplyChainPage() {
           <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
             Catch malicious models <span className="text-cyan">before load()</span>
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg leading-7 text-slate-400">
+          <p className="mx-auto mt-4 max-w-2xl text-lg leading-7 text-slate-200">
             A single <code className="text-cyan">torch.load()</code> on an untrusted file can run arbitrary code. SoterAI
             scans model artifacts for malicious serialization, verifies integrity and provenance, and produces an AI-BOM —
             with pure static analysis that never executes the model.
@@ -86,7 +86,7 @@ export default function ModelSupplyChainPage() {
             <Link href="/dashboard/security/model-scan" className="button-secondary gap-2">
               Open the scanner
             </Link>
-            <Link href="/comparison/hiddenlayer" className="text-sm text-slate-400 hover:text-white">
+            <Link href="/comparison/hiddenlayer" className="text-sm text-slate-200 hover:text-white">
               vs HiddenLayer
             </Link>
           </div>
@@ -98,7 +98,7 @@ export default function ModelSupplyChainPage() {
             <Ban className="text-red-300" size={20} />
             <h2 className="text-lg font-bold">The pickle problem</h2>
           </div>
-          <p className="mt-3 text-sm leading-7 text-slate-400">
+          <p className="mt-3 text-sm leading-7 text-slate-200">
             Most distributed models (Huggingface <code className="text-slate-300">pytorch_model.bin</code>, checkpoints,
             joblib files) are Python pickles. Pickle is a stack VM that can import and call any function on load — the
             classic payload is <code className="text-slate-300">GLOBAL os system</code> + <code className="text-slate-300">REDUCE</code>.
@@ -114,7 +114,7 @@ export default function ModelSupplyChainPage() {
               <div key={c.title} className="card p-5">
                 <c.Icon className="text-cyan" size={22} aria-hidden="true" />
                 <h3 className="mt-3 font-semibold">{c.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-400">{c.desc}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-200">{c.desc}</p>
               </div>
             ))}
           </div>
@@ -130,7 +130,7 @@ export default function ModelSupplyChainPage() {
                   {i + 1}
                 </span>
                 <h3 className="mt-3 text-sm font-semibold">{title}</h3>
-                <p className="mt-1 text-xs leading-5 text-slate-400">{desc}</p>
+                <p className="mt-1 text-xs leading-5 text-slate-200">{desc}</p>
               </div>
             ))}
           </div>
@@ -159,8 +159,8 @@ export default function ModelSupplyChainPage() {
                 ].map(([fmt, exec, scan]) => (
                   <tr key={fmt} className="border-b border-slate-800/50">
                     <td className="px-4 py-3 font-medium text-slate-200">{fmt}</td>
-                    <td className="px-4 py-3 text-slate-400">{exec}</td>
-                    <td className="px-4 py-3 text-slate-400">
+                    <td className="px-4 py-3 text-slate-200">{exec}</td>
+                    <td className="px-4 py-3 text-slate-200">
                       <span className="inline-flex items-center gap-1.5">
                         <CheckCircle2 size={14} className="text-lime" /> {scan}
                       </span>

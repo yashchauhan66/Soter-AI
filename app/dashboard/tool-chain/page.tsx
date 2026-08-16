@@ -123,10 +123,10 @@ if (step.chainRisk === "CRITICAL") {
       <section className="card overflow-x-auto p-5">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">Chain timeline</h2>
-          <span className="text-xs font-medium text-slate-500">{steps.length} recent steps</span>
+          <span className="text-xs font-medium text-slate-300">{steps.length} recent steps</span>
         </div>
         <table className="mt-4 w-full min-w-[1080px] text-left text-sm">
-          <thead className="text-xs uppercase text-slate-500">
+          <thead className="text-xs uppercase text-slate-300">
             <tr>
               <th className="py-2">Decision</th>
               <th>Risk</th>
@@ -149,7 +149,7 @@ if (step.chainRisk === "CRITICAL") {
                 <td>{step.action}</td>
                 <td>{step.destinationType}</td>
                 <td>{step.dataSensitivity}</td>
-                <td className="font-mono text-xs text-slate-400">{step.tool}</td>
+                <td className="font-mono text-xs text-slate-200">{step.tool}</td>
                 <td>{step.createdAt.toLocaleString()}</td>
               </tr>
             ))}
@@ -161,7 +161,7 @@ if (step.chainRisk === "CRITICAL") {
       <section className="card p-5">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">Findings</h2>
-          <span className="text-xs font-medium text-slate-500">{findings.length} recent</span>
+          <span className="text-xs font-medium text-slate-300">{findings.length} recent</span>
         </div>
         <div className="mt-4 grid gap-3">
           {findings.map((finding) => (
@@ -169,16 +169,16 @@ if (step.chainRisk === "CRITICAL") {
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <p className="font-semibold">{finding.findingType}</p>
-                  <p className="mt-1 max-w-3xl text-slate-400">{finding.summary}</p>
-                  <p className="mt-2 max-w-3xl text-xs text-slate-500">{finding.recommendation}</p>
+                  <p className="mt-1 max-w-3xl text-slate-200">{finding.summary}</p>
+                  <p className="mt-2 max-w-3xl text-xs text-slate-300">{finding.recommendation}</p>
                 </div>
                 <RiskLevel level={finding.riskLevel} />
               </div>
-              <p className="mt-2 text-xs text-slate-500">Steps {formatSteps(finding.involvedStepsJson)}</p>
+              <p className="mt-2 text-xs text-slate-300">Steps {formatSteps(finding.involvedStepsJson)}</p>
               <PayloadViewer title="Involved steps" value={safeJson(finding.involvedStepsJson)} />
             </div>
           ))}
-          {findings.length === 0 && <p className="text-sm text-slate-500">No dangerous chain findings recorded yet.</p>}
+          {findings.length === 0 && <p className="text-sm text-slate-300">No dangerous chain findings recorded yet.</p>}
         </div>
       </section>
     </div>

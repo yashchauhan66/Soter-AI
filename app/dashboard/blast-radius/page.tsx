@@ -63,7 +63,7 @@ console.log(result.blastRadiusScore, result.riskLevel);`}
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <p className="font-semibold">{profile.agentName}</p>
-                <p className="text-xs text-slate-500">{profile.agentType ?? "agent"} · updated {profile.updatedAt.toLocaleString()}</p>
+                <p className="text-xs text-slate-300">{profile.agentType ?? "agent"} · updated {profile.updatedAt.toLocaleString()}</p>
               </div>
               <div className="text-right">
                 <p className={`text-3xl font-bold ${profile.riskLevel === "CRITICAL" ? "text-red-300" : profile.riskLevel === "HIGH" ? "text-orange-300" : profile.riskLevel === "MEDIUM" ? "text-amber-300" : "text-emerald-300"}`}>{profile.blastRadiusScore}</p>
@@ -72,17 +72,17 @@ console.log(result.blastRadiusScore, result.riskLevel);`}
             </div>
             <div className="mt-3 grid gap-3 md:grid-cols-2">
               <div>
-                <p className="text-xs font-semibold uppercase text-slate-500">Findings</p>
+                <p className="text-xs font-semibold uppercase text-slate-300">Findings</p>
                 <ul className="mt-1 space-y-1 text-sm text-slate-300">{toList(profile.findingsJson).map((item, i) => <li key={i}>· {item}</li>)}</ul>
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase text-slate-500">Recommendations</p>
+                <p className="text-xs font-semibold uppercase text-slate-300">Recommendations</p>
                 <ul className="mt-1 space-y-1 text-sm text-slate-300">{toList(profile.recommendationsJson).map((item, i) => <li key={i}>· {item}</li>)}</ul>
               </div>
             </div>
           </div>
         ))}
-        {profiles.length === 0 && <section className="card p-5 text-sm text-slate-500">No agent risk profiles yet. Run a simulation via the SDK or API.</section>}
+        {profiles.length === 0 && <section className="card p-5 text-sm text-slate-300">No agent risk profiles yet. Run a simulation via the SDK or API.</section>}
       </section>
     </div>
   );

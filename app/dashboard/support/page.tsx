@@ -69,18 +69,18 @@ export default async function SupportPage({
             <article className="grid gap-2 py-5 sm:grid-cols-[1fr_auto]" key={ticket.id}>
               <div>
                 <p className="font-semibold">{ticket.subject}</p>
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm text-slate-300">
                   {ticket.ticketNumber} - {ticket.category} - {ticket.messages[0]?.body ?? "No public reply yet"}
                 </p>
               </div>
               <div className="text-sm">
                 <span className="text-cyan">{ticket.status}</span>
-                <p className="mt-1 text-slate-500">{ticket.priority}</p>
+                <p className="mt-1 text-slate-300">{ticket.priority}</p>
               </div>
             </article>
           ))
         ) : (
-          <p className="py-8 text-slate-500">No support tickets yet.</p>
+          <p className="py-8 text-slate-300">No support tickets yet.</p>
         )}
       </div>
     </div>

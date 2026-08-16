@@ -182,7 +182,7 @@ export function CommandPalette() {
         <div className="relative border-b border-slate-800">
           <Search
             size={18}
-            className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
+            className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-300"
             aria-hidden="true"
           />
           <input
@@ -195,7 +195,7 @@ export function CommandPalette() {
             }}
             onKeyDown={handleKeyDown}
             placeholder="Jump to a service..."
-            className="h-14 w-full bg-transparent pl-12 pr-4 text-base text-slate-100 outline-none placeholder:text-slate-500"
+            className="h-14 w-full bg-transparent pl-12 pr-4 text-base text-slate-100 outline-none placeholder:text-slate-300"
             maxLength={200}
             role="combobox"
             aria-expanded={results.length > 0}
@@ -235,7 +235,7 @@ export function CommandPalette() {
                 >
                   <span className="min-w-0 flex-1 truncate">
                     <span className="font-medium">{item.label}</span>
-                    <span className="ml-2 text-[11px] text-slate-500">
+                    <span className="ml-2 text-[11px] text-slate-300">
                       {item.group}
                     </span>
                   </span>
@@ -257,13 +257,13 @@ export function CommandPalette() {
             ))}
           </ul>
         ) : (
-          <div className="px-4 py-10 text-center text-sm text-slate-500">
+          <div className="px-4 py-10 text-center text-sm text-slate-300">
             No services match &ldquo;{query}&rdquo;
           </div>
         )}
 
         {/* Footer hint */}
-        <div className="flex items-center justify-between border-t border-slate-800 px-4 py-2.5 text-[11px] text-slate-500">
+        <div className="flex items-center justify-between border-t border-slate-800 px-4 py-2.5 text-[11px] text-slate-300">
           <span className="flex items-center gap-3">
             <span>
               <kbd className="rounded border border-slate-700 bg-slate-800/50 px-1.5 py-0.5">↑</kbd>{" "}

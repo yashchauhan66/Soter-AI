@@ -81,10 +81,10 @@ export default function ExpressDocsPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       
       <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-500 transition-colors hover:text-cyan">← Back to docs</Link>
+        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
         <p className="eyebrow mt-6">Framework guide</p>
         <h1 className="mt-3 text-4xl font-bold">Express.js Integration Guide</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           Protect your Express.js chatbot with Soter middleware or direct API calls.
         </p>
 
@@ -95,7 +95,7 @@ export default function ExpressDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 2: Basic usage</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Guard user input, call your LLM with safe text, then guard the model output:
           </p>
           <CodeBlock language="typescript" title="server.js" showLineNumbers>{basicCode}</CodeBlock>
@@ -103,7 +103,7 @@ export default function ExpressDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 3: Use middleware (recommended)</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Use built-in middleware from <InlineCode>@soterai/core/express</InlineCode> for cleaner code:
           </p>
           <CodeBlock language="typescript" title="middleware">{middlewareCode}</CodeBlock>
@@ -114,7 +114,7 @@ export default function ExpressDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Example project</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             See <InlineCode>examples/express-chatbot</InlineCode> for a complete working example.
           </p>
         </section>

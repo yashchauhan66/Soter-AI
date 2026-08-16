@@ -76,10 +76,10 @@ export default function FastapiDocsPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       
       <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-500 transition-colors hover:text-cyan">← Back to docs</Link>
+        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
         <p className="eyebrow mt-6">Framework guide</p>
         <h1 className="mt-3 text-4xl font-bold">FastAPI Integration Guide</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           Guard your FastAPI chatbot with input/output protection in one route wrapper.
         </p>
 
@@ -90,7 +90,7 @@ export default function FastapiDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 2: Quickstart (one-line route)</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             The fastest way to add AI security to your FastAPI app:
           </p>
           <CodeBlock language="python" title="main.py" showLineNumbers>{quickstartCode}</CodeBlock>
@@ -98,7 +98,7 @@ export default function FastapiDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 3: Manual guarding (more control)</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Use <InlineCode>protect_chat</InlineCode> for manual control:
           </p>
           <CodeBlock language="python" title="manual control" showLineNumbers>{manualCode}</CodeBlock>
@@ -106,7 +106,7 @@ export default function FastapiDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 4: Async support</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Use <InlineCode>AsyncSoter</InlineCode> for async endpoints (requires <InlineCode>httpx</InlineCode>):
           </p>
           <CodeBlock language="python" title="async">{asyncCode}</CodeBlock>

@@ -292,7 +292,7 @@ export default function Home() {
       <section className="container-page mt-10 mb-16 grid gap-8 md:grid-cols-2">
         <Link href="/extensions/browser" className="group rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900/80 p-6 shadow-lg transition-transform duration-200 hover:-translate-y-1 hover:border-cyan/60 hover:shadow-cyan/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
           <h2 className="text-lg font-semibold text-white">SoterAI Browser Guard</h2>
-          <p className="mt-2 text-sm text-slate-400">Prime card again – safe AI browsing for Chrome and Microsoft Edge with one installation surface.</p>
+          <p className="mt-2 text-sm text-slate-200">Scan prompts, redact sensitive data, and apply safer AI usage controls in Chrome and Microsoft Edge.</p>
           <p className="mt-4 inline-flex items-center text-sm font-medium text-cyan group-hover:text-cyan-300">
             Choose your browser
             <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -301,7 +301,7 @@ export default function Home() {
 
         <Link href="/extensions/ide" className="group rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900/80 p-6 shadow-lg transition-transform duration-200 hover:-translate-y-1 hover:border-cyan/60 hover:shadow-cyan/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
           <h2 className="text-lg font-semibold text-white">SoterAI IDE Guard</h2>
-          <p className="mt-2 text-sm text-slate-400">Secure AI pair-programming in VS Code and JetBrains IDEs with the same command-layer, unified policy.</p>
+          <p className="mt-2 text-sm text-slate-200">Secure AI pair-programming in VS Code and JetBrains IDEs with the same command-layer, unified policy.</p>
           <p className="mt-4 inline-flex items-center text-sm font-medium text-cyan group-hover:text-cyan-300">
             Choose your IDE
             <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -315,7 +315,7 @@ export default function Home() {
             <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
               Security controls for LLM apps, RAG pipelines, copilots, and AI agents
             </h2>
-            <p className="mt-4 leading-7 text-slate-400">
+            <p className="mt-4 leading-7 text-slate-200">
               SoterAI helps product, engineering, and security teams protect production AI systems from prompt injection,
               jailbreaks, AI data leakage, unsafe model outputs, and risky agent tool calls. It works as a real-time
               AI security guard between users, models, retrieval, tools, and your application.
@@ -326,7 +326,7 @@ export default function Home() {
             {aiSecurityTopics.map((topic) => (
               <article className="card p-6" key={topic.title}>
                 <h3 className="text-lg font-semibold">{topic.title}</h3>
-                <p className="mt-3 leading-7 text-slate-400">{topic.copy}</p>
+                <p className="mt-3 leading-7 text-slate-200">{topic.copy}</p>
                 <Link href={topic.href} className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan">
                   Learn more <ArrowRight size={15} aria-hidden="true" />
                 </Link>
@@ -352,7 +352,7 @@ export default function Home() {
           <div className="card p-7 md:col-span-2">
             <p className="eyebrow">The problem</p>
             <h2 className="mt-3 text-3xl font-bold">Your AI workflow can become a path to data exposure.</h2>
-            <p className="mt-4 max-w-2xl leading-7 text-slate-400">
+            <p className="mt-4 max-w-2xl leading-7 text-slate-200">
               Untrusted prompts, copied secrets, personal data, and unsafe model responses need controls outside the model itself.
               SoterAI adds an observable security gateway to the flow.
             </p>
@@ -360,7 +360,7 @@ export default function Home() {
           <div className="card p-7">
             <p className="text-5xl font-black text-cyan">2-way</p>
             <p className="mt-4 font-semibold">Input, output, and agent coverage</p>
-            <p className="mt-2 text-sm leading-6 text-slate-400">Risk reduction around users, models, retrieval, and tools.</p>
+            <p className="mt-2 text-sm leading-6 text-slate-200">Risk reduction around users, models, retrieval, and tools.</p>
           </div>
         </div>
       </section>
@@ -376,7 +376,7 @@ export default function Home() {
           <h2 className="mt-3 text-center text-3xl font-bold sm:text-4xl">
             Watch SoterAI <span className="text-cyan">block attacks</span> in real time
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-center text-slate-400">
+          <p className="mx-auto mt-4 max-w-2xl text-center text-slate-200">
             An interactive walkthrough showing prompt injection blocking, India PII redaction,
             secret detection, jailbreak prevention, and the evidence-backed public benchmark in action.
           </p>
@@ -398,7 +398,7 @@ export default function Home() {
           <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
             Public benchmark: <span className="text-cyan">100% recall on synthetic Phase 9 dataset</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-400">
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-200">
             Latest generated run: 2,200 synthetic attack cases and 1,000 benign controls evaluated with the production detector.
             This self-maintained benchmark is useful regression evidence, not an independent audit or production guarantee.
           </p>
@@ -407,26 +407,26 @@ export default function Home() {
             <div className="card p-6">
               <ShieldCheck className="mx-auto text-cyan" size={28} aria-hidden="true" />
               <p className="mt-3 text-3xl font-black text-cyan">100%</p>
-              <p className="mt-1 text-sm text-slate-400">Recall</p>
-              <p className="text-xs text-slate-500">2,200 synthetic attacks</p>
+              <p className="mt-1 text-sm text-slate-200">Recall</p>
+              <p className="text-xs text-slate-300">2,200 synthetic attacks</p>
             </div>
             <div className="card p-6">
               <Zap className="mx-auto text-lime" size={28} aria-hidden="true" />
               <p className="mt-3 text-3xl font-black text-lime">0.00%</p>
-              <p className="mt-1 text-sm text-slate-400">False-Positive Rate</p>
-              <p className="text-xs text-slate-500">1,000 benign controls</p>
+              <p className="mt-1 text-sm text-slate-200">False-Positive Rate</p>
+              <p className="text-xs text-slate-300">1,000 benign controls</p>
             </div>
             <div className="card p-6">
               <Gauge className="mx-auto text-cyan" size={28} aria-hidden="true" />
               <p className="mt-3 text-3xl font-black text-cyan">10.92ms</p>
-              <p className="mt-1 text-sm text-slate-400">Analyzer p95</p>
-              <p className="text-xs text-slate-500">Local benchmark run</p>
+              <p className="mt-1 text-sm text-slate-200">Analyzer p95</p>
+              <p className="text-xs text-slate-300">Local benchmark run</p>
             </div>
             <div className="card p-6">
               <BarChart3 className="mx-auto text-cyan" size={28} aria-hidden="true" />
               <p className="mt-3 text-3xl font-black text-cyan">10</p>
-              <p className="mt-1 text-sm text-slate-400">Attack Categories</p>
-              <p className="text-xs text-slate-500">Synthetic public corpus</p>
+              <p className="mt-1 text-sm text-slate-200">Attack Categories</p>
+              <p className="text-xs text-slate-300">Synthetic public corpus</p>
             </div>
           </div>
 
@@ -475,7 +475,7 @@ export default function Home() {
                   <span className="rounded-md bg-cyan/10 px-2.5 py-1 text-xs font-bold text-cyan">{id}</span>
                   <h3 className="font-semibold">{title}</h3>
                 </div>
-                <p className="mt-3 text-sm leading-6 text-slate-400">{copy}</p>
+                <p className="mt-3 text-sm leading-6 text-slate-200">{copy}</p>
               </article>
             ))}
           </div>
@@ -488,7 +488,7 @@ export default function Home() {
               <div>
                 <p className="eyebrow">Built for India</p>
                 <h2 className="mt-3 text-3xl font-bold">Recognize local personal-data patterns.</h2>
-                <p className="mt-4 leading-7 text-slate-400">
+                <p className="mt-4 leading-7 text-slate-200">
                   Detect and redact Aadhaar-like patterns, PAN, GSTIN, UPI, IFSC, Indian mobile numbers,
                   and contextual student, patient, and bank identifiers.
                 </p>
@@ -510,7 +510,7 @@ export default function Home() {
             <div>
               <p className="eyebrow">Interactive playground</p>
               <h2 className="mt-2 text-2xl font-bold">Test AI security decisions before integration.</h2>
-              <p className="mt-2 text-slate-400">Use safe defensive examples to inspect findings, redaction, action, and risk score.</p>
+              <p className="mt-2 text-slate-200">Use safe defensive examples to inspect findings, redaction, action, and risk score.</p>
             </div>
             <Link href="/playground" className="button-primary gap-2">Try the guard <ArrowRight size={18} aria-hidden="true" /></Link>
           </div>
@@ -540,4 +540,5 @@ export default function Home() {
   );
   
 }
+
 

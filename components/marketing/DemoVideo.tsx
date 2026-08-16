@@ -281,7 +281,7 @@ export function DemoVideo() {
             className={`rounded-full px-3 py-1.5 text-xs font-medium transition-all ${
               idx === activeIndex
                 ? "bg-cyan text-ink shadow-sm"
-                : "bg-slate-800/60 text-slate-400 hover:bg-slate-700/60 hover:text-slate-200"
+                : "bg-slate-800/60 text-slate-200 hover:bg-slate-700/60 hover:text-slate-200"
             }`}
           >
             {step.label}
@@ -301,7 +301,7 @@ export function DemoVideo() {
               <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
               <span className="h-2.5 w-2.5 rounded-full bg-lime-500" />
             </div>
-            <span className="text-xs font-medium text-slate-500">SoterAI Security Console — Live Demo</span>
+            <span className="text-xs font-medium text-slate-300">SoterAI Security Console — Live Demo</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="flex items-center gap-1.5 rounded-md bg-cyan/10 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-cyan">
@@ -318,7 +318,7 @@ export function DemoVideo() {
             {/* Input message bubble */}
             {scene.userMessage && (
               <div className="mb-4 animate-fade-in">
-                <p className="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-500">User message</p>
+                <p className="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-300">User message</p>
                 <div className="rounded-lg border border-slate-700/60 bg-slate-950/80 p-3.5 text-sm leading-6 text-slate-300">
                   &ldquo;{scene.userMessage}&rdquo;
                 </div>
@@ -328,7 +328,7 @@ export function DemoVideo() {
             {/* Detection findings */}
             {scene.riskTypes.length > 0 && (
               <div className="mb-4 animate-slide-up">
-                <p className="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-500">
+                <p className="mb-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-300">
                   Detection signals
                 </p>
                 <div className="flex flex-wrap gap-1.5">
@@ -349,7 +349,7 @@ export function DemoVideo() {
               {scene.detailLines.map((line, i) => (
                 <div
                   key={i}
-                  className="flex items-start gap-2 text-sm text-slate-400"
+                  className="flex items-start gap-2 text-sm text-slate-200"
                   style={{ animation: `fadeIn 0.4s ease-out ${i * 0.15}s forwards`, opacity: 0 }}
                 >
                   <span className="mt-0.5 text-cyan">▸</span>
@@ -363,7 +363,7 @@ export function DemoVideo() {
           <div className="border-t border-slate-700/50 bg-slate-950/70 p-5 md:border-l md:border-t-0">
             {/* Risk Score Gauge */}
             <div className="mb-5 text-center">
-              <p className="mb-1 text-[10px] uppercase tracking-widest text-slate-500">Risk score</p>
+              <p className="mb-1 text-[10px] uppercase tracking-widest text-slate-300">Risk score</p>
               <div className="relative mx-auto flex h-20 w-20 items-center justify-center">
                 {/* Circular progress background */}
                 <svg className="absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 80 80">
@@ -401,7 +401,7 @@ export function DemoVideo() {
             {/* Action badge */}
             {scene.riskTypes.length > 0 && (
               <div className="mb-4 rounded-md bg-slate-900/80 p-3 text-center">
-                <p className="text-[10px] uppercase tracking-widest text-slate-500">Action</p>
+                <p className="text-[10px] uppercase tracking-widest text-slate-300">Action</p>
                 <p className="mt-0.5 text-sm font-bold text-slate-200">
                   {scene.status === "BLOCKED"
                     ? "BLOCK"
@@ -415,7 +415,7 @@ export function DemoVideo() {
             )}
 
             {/* Verdict */}
-            <p className="text-xs leading-5 text-slate-400">{scene.verdict}</p>
+            <p className="text-xs leading-5 text-slate-200">{scene.verdict}</p>
           </div>
         </div>
 
@@ -423,12 +423,12 @@ export function DemoVideo() {
         <div className="flex items-center justify-between border-t border-slate-700/50 px-4 py-2.5">
           <div>
             <p className="text-sm font-semibold text-slate-200">{scene.title}</p>
-            <p className="text-xs text-slate-500">{scene.subtitle}</p>
+            <p className="text-xs text-slate-300">{scene.subtitle}</p>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setIsPlaying((p) => !p)}
-              className="rounded-md p-1.5 text-slate-400 transition hover:bg-slate-800 hover:text-slate-200"
+              className="rounded-md p-1.5 text-slate-200 transition hover:bg-slate-800 hover:text-slate-200"
               title={isPlaying ? "Pause" : "Play"}
             >
               {isPlaying ? (
@@ -437,18 +437,18 @@ export function DemoVideo() {
                 <Play size={16} />
               )}
             </button>
-            <span className="text-xs text-slate-500">
+            <span className="text-xs text-slate-300">
               {activeIndex + 1}/{SCENES.length}
             </span>
             <button
               onClick={handlePrev}
-              className="rounded-md p-1.5 text-slate-400 transition hover:bg-slate-800 hover:text-slate-200"
+              className="rounded-md p-1.5 text-slate-200 transition hover:bg-slate-800 hover:text-slate-200"
             >
               ‹
             </button>
             <button
               onClick={handleNext}
-              className="rounded-md p-1.5 text-slate-400 transition hover:bg-slate-800 hover:text-slate-200"
+              className="rounded-md p-1.5 text-slate-200 transition hover:bg-slate-800 hover:text-slate-200"
             >
               ›
             </button>

@@ -63,7 +63,7 @@ export default async function AdminDetectionQualityPage({
           ["Top noisy detector", metrics.topNoisyDetector],
         ].map(([label, value]) => (
           <section className="card p-5" key={String(label)}>
-            <p className="text-sm text-slate-400">{label}</p>
+            <p className="text-sm text-slate-200">{label}</p>
             <p className="mt-2 text-xl font-bold">{value}</p>
           </section>
         ))}
@@ -75,7 +75,7 @@ export default async function AdminDetectionQualityPage({
               <p className="font-semibold">{row.feedback}</p>
               <span className="text-sm text-cyan">{row.review?.status ?? "PENDING"}</span>
             </div>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-slate-300">
               {row.organization.name} - {row.guardLog.action} - {row.guardLog.riskTypes.join(", ")}
             </p>
             {row.guardLog.redactedText && (

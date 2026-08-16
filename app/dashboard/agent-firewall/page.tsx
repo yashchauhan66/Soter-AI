@@ -131,7 +131,7 @@ await sendEmail(checked.safeContent ?? emailBody);`}
           </div>
           <div className="mt-4 overflow-x-auto">
             <table className="w-full min-w-[760px] text-left text-sm">
-              <thead className="text-xs uppercase text-slate-500">
+              <thead className="text-xs uppercase text-slate-300">
                 <tr><th className="py-2">Decision</th><th>Risk</th><th>Tool</th><th>Action</th><th>Destination</th><th>Reason</th></tr>
               </thead>
               <tbody className="divide-y divide-slate-800">
@@ -142,10 +142,10 @@ await sendEmail(checked.safeContent ?? emailBody);`}
                     <td className="font-mono text-xs">{log.tool}</td>
                     <td>{log.action}</td>
                     <td>{log.destination}</td>
-                    <td className="max-w-[260px] truncate text-slate-400">{log.reason}</td>
+                    <td className="max-w-[260px] truncate text-slate-200">{log.reason}</td>
                   </tr>
                 ))}
-                {logs.length === 0 && <tr><td className="py-5 text-slate-500" colSpan={6}>No agent actions logged yet.</td></tr>}
+                {logs.length === 0 && <tr><td className="py-5 text-slate-300" colSpan={6}>No agent actions logged yet.</td></tr>}
               </tbody>
             </table>
           </div>
@@ -159,8 +159,8 @@ await sendEmail(checked.safeContent ?? emailBody);`}
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
                     <p className="font-medium text-yellow-200">{approval.tool ?? "agent.action"} / {approval.action ?? "approval"}</p>
-                    <p className="mt-1 text-slate-400">{approval.reason}</p>
-                    <p className="mt-2 text-xs text-slate-500">
+                    <p className="mt-1 text-slate-200">{approval.reason}</p>
+                    <p className="mt-2 text-xs text-slate-300">
                       {approval.destination ?? "unknown"} {approval.target ? `- ${approval.target}` : ""} - expires {approval.expiresAt.toLocaleString()}
                     </p>
                   </div>
@@ -168,11 +168,11 @@ await sendEmail(checked.safeContent ?? emailBody);`}
                 </div>
                 <div className="mt-3 grid gap-2 md:grid-cols-2">
                   <div>
-                    <p className="text-xs font-semibold uppercase text-slate-500">Original redacted</p>
+                    <p className="text-xs font-semibold uppercase text-slate-300">Original redacted</p>
                     <pre className="mt-1 max-h-32 overflow-auto rounded bg-slate-950/70 p-2 text-xs text-slate-300">{approval.requestedContentRedacted ?? "No content supplied."}</pre>
                   </div>
                   <div>
-                    <p className="text-xs font-semibold uppercase text-slate-500">Safe content</p>
+                    <p className="text-xs font-semibold uppercase text-slate-300">Safe content</p>
                     <pre className="mt-1 max-h-32 overflow-auto rounded bg-slate-950/70 p-2 text-xs text-slate-300">{approval.safeContent ?? approval.requestedContentRedacted ?? "No content supplied."}</pre>
                   </div>
                 </div>
@@ -192,7 +192,7 @@ await sendEmail(checked.safeContent ?? emailBody);`}
                 </ConfirmableForm>
               </div>
             ))}
-            {approvals.length === 0 && <p className="text-sm text-slate-500">No pending approvals.</p>}
+            {approvals.length === 0 && <p className="text-sm text-slate-300">No pending approvals.</p>}
           </div>
         </section>
       </div>
@@ -205,12 +205,12 @@ await sendEmail(checked.safeContent ?? emailBody);`}
               <div className="grid gap-2 rounded-lg border border-slate-800 p-3 text-sm sm:grid-cols-[1fr_auto] sm:items-center" key={session.id}>
                 <div>
                   <p className="font-semibold">{session.agentName}</p>
-                  <p className="text-xs text-slate-500">{session.agentType} - {session.id}</p>
+                  <p className="text-xs text-slate-300">{session.agentType} - {session.id}</p>
                 </div>
                 <span className="rounded bg-slate-800 px-2 py-1 text-xs text-slate-300">{session.status}</span>
               </div>
             ))}
-            {sessions.length === 0 && <p className="text-sm text-slate-500">Start an agent session from the SDK to see sessions here.</p>}
+            {sessions.length === 0 && <p className="text-sm text-slate-300">Start an agent session from the SDK to see sessions here.</p>}
           </div>
         </section>
 
@@ -220,10 +220,10 @@ await sendEmail(checked.safeContent ?? emailBody);`}
             {exfiltrationBlocks.map((log) => (
               <div className="rounded-lg border border-red-400/20 bg-red-400/5 p-3 text-sm" key={log.id}>
                 <p className="font-mono text-xs text-red-200">{log.tool} / {log.action}</p>
-                <p className="mt-1 text-slate-400">{log.reason}</p>
+                <p className="mt-1 text-slate-200">{log.reason}</p>
               </div>
             ))}
-            {exfiltrationBlocks.length === 0 && <p className="text-sm text-slate-500">No blocked exfiltration attempts logged.</p>}
+            {exfiltrationBlocks.length === 0 && <p className="text-sm text-slate-300">No blocked exfiltration attempts logged.</p>}
           </div>
         </section>
       </div>
@@ -262,7 +262,7 @@ await sendEmail(checked.safeContent ?? emailBody);`}</pre>
 
       <section className="card p-5">
         <h2 className="text-lg font-semibold">Agent firewall preview gap list</h2>
-        <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-slate-400">
+        <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-slate-200">
           {AGENT_FIREWALL_PREVIEW_GAPS.map((gap) => (
             <li key={gap}>{gap}</li>
           ))}
@@ -294,7 +294,7 @@ function Metric({ label, value, tone }: { label: string; value: number; tone: "g
   };
   return (
     <section className="card p-5">
-      <p className="text-sm text-slate-400">{label}</p>
+      <p className="text-sm text-slate-200">{label}</p>
       <p className={`mt-2 text-2xl font-bold ${tones[tone]}`}>{value}</p>
     </section>
   );
@@ -318,6 +318,6 @@ function RiskBadge({ risk }: { risk: string }) {
       ? "text-yellow-300"
       : risk === "MEDIUM"
         ? "text-cyan"
-        : "text-slate-400";
+        : "text-slate-200";
   return <span className={`text-xs font-semibold ${cls}`}>{risk}</span>;
 }

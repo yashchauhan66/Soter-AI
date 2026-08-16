@@ -145,7 +145,7 @@ export default function BenchmarksPage() {
       <main className="container-page py-24 text-center">
         <p className="eyebrow">Benchmark</p>
         <h1 className="mt-4 text-4xl font-bold">Results not available</h1>
-        <p className="mx-auto mt-4 max-w-xl text-slate-400">Generate the honest benchmark artifact first:</p>
+        <p className="mx-auto mt-4 max-w-xl text-slate-200">Generate the honest benchmark artifact first:</p>
         <pre className="mx-auto mt-6 max-w-lg rounded-xl border border-slate-800 bg-slate-950 p-4 text-left text-sm text-slate-300">
           npm run benchmark:honest
         </pre>
@@ -167,13 +167,13 @@ export default function BenchmarksPage() {
           <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
             Recall <span className="text-cyan">{at1 ? pct(at1.recall) : "—"}</span> at a 1% false-positive budget
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg leading-7 text-slate-400">
+          <p className="mx-auto mt-4 max-w-2xl text-lg leading-7 text-slate-200">
             Measured with the <em>exact</em> production classifier over a disclosed corpus of {st.corpus.total.toLocaleString()} cases
             ({st.corpus.attacks} attacks, {st.corpus.benign.toLocaleString()} benign). We publish the metric that actually matters —
             recall at a fixed false-positive rate — not a &ldquo;100%&rdquo; score. Reproduce it with{" "}
             <code className="text-cyan">npm run benchmark:honest</code>.
           </p>
-          <div className="mt-4 text-sm text-slate-500">Run date: {formatDate(st.generatedAtIso)}</div>
+          <div className="mt-4 text-sm text-slate-300">Run date: {formatDate(st.generatedAtIso)}</div>
         </div>
 
         {/* "How to read this" */}
@@ -193,48 +193,48 @@ export default function BenchmarksPage() {
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div className="card p-6 text-center">
             <div className="text-4xl font-black text-cyan">{at1 ? pct(at1.recall) : "—"}</div>
-            <p className="mt-2 text-sm text-slate-400">Recall @ 1% FPR</p>
-            <p className="text-xs text-slate-500">Attacks caught within a 1% false-positive budget</p>
+            <p className="mt-2 text-sm text-slate-200">Recall @ 1% FPR</p>
+            <p className="text-xs text-slate-300">Attacks caught within a 1% false-positive budget</p>
           </div>
           <div className="card p-6 text-center">
             <div className="text-4xl font-black text-lime">{st.rocAuc.toFixed(3)}</div>
-            <p className="mt-2 text-sm text-slate-400">ROC-AUC</p>
-            <p className="text-xs text-slate-500">Threshold-independent separability</p>
+            <p className="mt-2 text-sm text-slate-200">ROC-AUC</p>
+            <p className="text-xs text-slate-300">Threshold-independent separability</p>
           </div>
           <div className="card p-6 text-center">
             <div className="text-4xl font-black text-emerald">{pct(st.production.precision)}</div>
-            <p className="mt-2 text-sm text-slate-400">Precision</p>
-            <p className="text-xs text-slate-500">FPR {pct(st.production.falsePositiveRate)} on {st.corpus.benign.toLocaleString()} benign</p>
+            <p className="mt-2 text-sm text-slate-200">Precision</p>
+            <p className="text-xs text-slate-300">FPR {pct(st.production.falsePositiveRate)} on {st.corpus.benign.toLocaleString()} benign</p>
           </div>
           <div className="card p-6 text-center">
             <div className="text-4xl font-black text-cyan">{st.latencyMs.p50.toFixed(1)}ms</div>
-            <p className="mt-2 text-sm text-slate-400">p50 Latency</p>
-            <p className="text-xs text-slate-500">Analyzer CPU time, no network</p>
+            <p className="mt-2 text-sm text-slate-200">p50 Latency</p>
+            <p className="text-xs text-slate-300">Analyzer CPU time, no network</p>
           </div>
         </div>
 
         {/* Production-threshold detail */}
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           <div className="card p-5">
-            <div className="flex items-center gap-2 text-sm text-slate-400">
+            <div className="flex items-center gap-2 text-sm text-slate-200">
               <Zap size={16} aria-hidden="true" /> Mitigation recall
             </div>
             <p className="mt-2 text-2xl font-bold">{pct(st.production.recall)}</p>
-            <p className="text-xs text-slate-500">Attacks blocked, reviewed, rewritten or redacted</p>
+            <p className="text-xs text-slate-300">Attacks blocked, reviewed, rewritten or redacted</p>
           </div>
           <div className="card p-5">
-            <div className="flex items-center gap-2 text-sm text-slate-400">
+            <div className="flex items-center gap-2 text-sm text-slate-200">
               <ShieldCheck size={16} aria-hidden="true" /> Hard block / review
             </div>
             <p className="mt-2 text-2xl font-bold">{pct(st.production.blockOrReviewRate)}</p>
-            <p className="text-xs text-slate-500">Strictest — fully stopped or escalated</p>
+            <p className="text-xs text-slate-300">Strictest — fully stopped or escalated</p>
           </div>
           <div className="card p-5">
-            <div className="flex items-center gap-2 text-sm text-slate-400">
+            <div className="flex items-center gap-2 text-sm text-slate-200">
               <BarChart3 size={16} aria-hidden="true" /> Production F1
             </div>
             <p className="mt-2 text-2xl font-bold">{st.production.f1.toFixed(3)}</p>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-300">
               Recall@0.1%FPR drops to {at01 ? pct(at01.recall) : "—"} — the deterministic-engine ceiling
             </p>
           </div>
@@ -246,7 +246,7 @@ export default function BenchmarksPage() {
             <Layers className="text-cyan" size={24} aria-hidden="true" />
             <h2 className="text-2xl font-bold">Multi-turn / adaptive (Crescendo)</h2>
           </div>
-          <p className="mt-2 max-w-3xl text-sm text-slate-400">
+          <p className="mt-2 max-w-3xl text-sm text-slate-200">
             Static single-turn benchmarks miss the most realistic attack shape: the slow escalation where each message is
             individually mild but the session as a whole builds toward a bypass. We evaluate the session-level defense
             separately across {mt.total} conversations (including benign sessions that reuse &ldquo;as we discussed / go
@@ -255,18 +255,18 @@ export default function BenchmarksPage() {
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
             <div className="card p-6 text-center">
               <div className="text-4xl font-black text-cyan">{pct(mt.recall)}</div>
-              <p className="mt-2 text-sm text-slate-400">Multi-turn recall</p>
-              <p className="text-xs text-slate-500">Escalating attack sessions caught</p>
+              <p className="mt-2 text-sm text-slate-200">Multi-turn recall</p>
+              <p className="text-xs text-slate-300">Escalating attack sessions caught</p>
             </div>
             <div className="card p-6 text-center">
               <div className="text-4xl font-black text-lime">{pct(mt.falsePositiveRate)}</div>
-              <p className="mt-2 text-sm text-slate-400">Benign escalation rate</p>
-              <p className="text-xs text-slate-500">Benign sessions wrongly escalated</p>
+              <p className="mt-2 text-sm text-slate-200">Benign escalation rate</p>
+              <p className="text-xs text-slate-300">Benign sessions wrongly escalated</p>
             </div>
             <div className="card p-6 text-center">
               <div className="text-4xl font-black text-emerald">{mt.meanTurnsToDetect.toFixed(1)}</div>
-              <p className="mt-2 text-sm text-slate-400">Mean turns to catch</p>
-              <p className="text-xs text-slate-500">How fast the session defense fires</p>
+              <p className="mt-2 text-sm text-slate-200">Mean turns to catch</p>
+              <p className="text-xs text-slate-300">How fast the session defense fires</p>
             </div>
           </div>
         </section>
@@ -277,7 +277,7 @@ export default function BenchmarksPage() {
             <ShieldCheck className="text-cyan" size={24} aria-hidden="true" />
             <h2 className="text-2xl font-bold">Detection by attack category</h2>
           </div>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-200">
             Weakest categories first — we show where the guard is strong <em>and</em> where it has room to improve, because
             an honest benchmark is how detection actually gets better.
           </p>
@@ -289,13 +289,13 @@ export default function BenchmarksPage() {
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
                       <h3 className="font-semibold">{cat.category}</h3>
-                      <p className="text-sm text-slate-500">{cat.total} attack prompt{cat.total === 1 ? "" : "s"}</p>
+                      <p className="text-sm text-slate-300">{cat.total} attack prompt{cat.total === 1 ? "" : "s"}</p>
                     </div>
                     <div className="text-right">
                       <span className={`text-lg font-bold ${cat.recall >= 0.85 ? "text-lime" : cat.recall >= 0.6 ? "text-amber-300" : "text-rose-400"}`}>
                         {cat.detected}/{cat.total}
                       </span>
-                      <span className="ml-2 text-sm text-slate-400">({p.toFixed(0)}%)</span>
+                      <span className="ml-2 text-sm text-slate-200">({p.toFixed(0)}%)</span>
                     </div>
                   </div>
                   <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-800">
@@ -313,7 +313,7 @@ export default function BenchmarksPage() {
             <BarChart3 className="text-cyan" size={24} aria-hidden="true" />
             <h2 className="text-2xl font-bold">Corpus &amp; provenance</h2>
           </div>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-200">
             Every case is labeled with its source so you can audit exactly what these numbers were measured against.
           </p>
           <div className="mt-6 grid gap-3 sm:grid-cols-3">
@@ -321,7 +321,7 @@ export default function BenchmarksPage() {
               <div key={source} className="card p-5">
                 <p className="font-mono text-sm text-cyan">{source}</p>
                 <p className="mt-2 text-2xl font-bold">{s.total.toLocaleString()}</p>
-                <p className="text-xs text-slate-500">{s.attacks} attack · {s.benign.toLocaleString()} benign</p>
+                <p className="text-xs text-slate-300">{s.attacks} attack · {s.benign.toLocaleString()} benign</p>
               </div>
             ))}
           </div>
@@ -333,21 +333,21 @@ export default function BenchmarksPage() {
             <Gauge className="text-cyan" size={24} aria-hidden="true" />
             <h2 className="text-2xl font-bold">Latency</h2>
           </div>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-200">
             Per-input analyzer CPU time (deterministic engine, no model, no network). The one-off cold-start outlier
             (~{st.latencyMs.max.toFixed(0)}ms max) is JIT/module warm-up, not steady-state.
           </p>
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
             <div className="card p-5">
-              <p className="text-sm text-slate-400">p50 (Median)</p>
+              <p className="text-sm text-slate-200">p50 (Median)</p>
               <p className="mt-1 text-3xl font-bold text-cyan">{st.latencyMs.p50.toFixed(1)}ms</p>
             </div>
             <div className="card p-5">
-              <p className="text-sm text-slate-400">p95</p>
+              <p className="text-sm text-slate-200">p95</p>
               <p className="mt-1 text-3xl font-bold text-cyan">{st.latencyMs.p95.toFixed(1)}ms</p>
             </div>
             <div className="card p-5">
-              <p className="text-sm text-slate-400">p99</p>
+              <p className="text-sm text-slate-200">p99</p>
               <p className="mt-1 text-3xl font-bold text-cyan">{st.latencyMs.p99.toFixed(1)}ms</p>
             </div>
           </div>
@@ -359,7 +359,7 @@ export default function BenchmarksPage() {
             <ShieldCheck className="text-cyan" size={24} aria-hidden="true" />
             <h2 className="text-2xl font-bold">Service-hardening battery</h2>
           </div>
-          <p className="mt-2 max-w-3xl text-sm text-slate-400">
+          <p className="mt-2 max-w-3xl text-sm text-slate-200">
             Separate from detection accuracy: an end-to-end regression suite asserting each security service rejects its
             abuse cases — agent firewall bypass, passport forgery, delegation abuse, egress exfiltration, evidence
             tampering. It exits non-zero if any scenario regresses.
@@ -367,21 +367,21 @@ export default function BenchmarksPage() {
           <div className="mt-6 grid gap-4 sm:grid-cols-3">
             <div className="card p-6 text-center">
               <div className="text-4xl font-black text-lime">{BATTERY.passed}/{BATTERY.total}</div>
-              <p className="mt-2 text-sm text-slate-400">Scenarios passing</p>
-              <p className="text-xs text-slate-500">Across {BATTERY.serviceCount} services</p>
+              <p className="mt-2 text-sm text-slate-200">Scenarios passing</p>
+              <p className="text-xs text-slate-300">Across {BATTERY.serviceCount} services</p>
             </div>
             <div className="card p-6 text-center">
               <div className="text-4xl font-black text-cyan">{BATTERY.serviceCount}</div>
-              <p className="mt-2 text-sm text-slate-400">Services covered</p>
-              <p className="text-xs text-slate-500">Guard, agents, identity, evidence, SIEM</p>
+              <p className="mt-2 text-sm text-slate-200">Services covered</p>
+              <p className="text-xs text-slate-300">Guard, agents, identity, evidence, SIEM</p>
             </div>
             <div className="card p-6 text-center">
               <div className="text-4xl font-black text-emerald">0</div>
-              <p className="mt-2 text-sm text-slate-400">Failing scenarios</p>
-              <p className="text-xs text-slate-500">Run {formatDate(BATTERY.date)}</p>
+              <p className="mt-2 text-sm text-slate-200">Failing scenarios</p>
+              <p className="text-xs text-slate-300">Run {formatDate(BATTERY.date)}</p>
             </div>
           </div>
-          <p className="mt-4 text-xs text-slate-500">
+          <p className="mt-4 text-xs text-slate-300">
             Command: <code className="text-cyan">npx tsx tests/comprehensive-adversarial-test-battery.ts</code>. This is a
             service-hardening suite, <strong>not</strong> a detection-accuracy score — those are the honest metrics above.
           </p>
@@ -396,7 +396,7 @@ export default function BenchmarksPage() {
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <div className="card p-5">
               <h3 className="font-semibold">Method</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-400">
+              <p className="mt-2 text-sm leading-6 text-slate-200">
                 The exact production classifier (<code className="text-cyan">analyzeText</code>) scores every case. We sweep
                 its risk score to find the threshold that keeps benign false positives at or below 1%, then report attack
                 recall there (Recall@1%FPR), plus ROC-AUC, per-category recall, a multi-turn Crescendo evaluation, and
@@ -405,7 +405,7 @@ export default function BenchmarksPage() {
             </div>
             <div className="card p-5">
               <h3 className="font-semibold">Limitations we disclose</h3>
-              <ul className="mt-2 space-y-2 text-sm leading-6 text-slate-400">
+              <ul className="mt-2 space-y-2 text-sm leading-6 text-slate-200">
                 {st.limitations.map((lim, i) => (
                   <li key={i} className="flex gap-2">
                     <span className="text-cyan">{i + 1}.</span>

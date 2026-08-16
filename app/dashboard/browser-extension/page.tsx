@@ -21,7 +21,7 @@ export default async function BrowserExtensionPage() {
       <div className="space-y-4">
         <p className="eyebrow">Browser Extension</p>
         <h1 className="text-3xl font-bold">Browser Extension</h1>
-        <section className="card p-6 text-slate-400">
+        <section className="card p-6 text-slate-200">
           Create an organization first to deploy and manage the SoterAI browser extension.
         </section>
       </div>
@@ -82,7 +82,7 @@ export default async function BrowserExtensionPage() {
       <header>
         <p className="eyebrow">AI Usage Governance</p>
         <h1 className="mt-2 text-3xl font-bold">Browser Extension</h1>
-        <p className="mt-3 max-w-3xl text-slate-400">
+        <p className="mt-3 max-w-3xl text-slate-200">
           Deploy the SoterAI browser extension across your team to stop secrets, PII, and source code
           from leaking into ChatGPT, Claude, Gemini, and 20+ other AI tools. Enroll browsers, manage
           devices, tune policy, and watch activity — all from here.

@@ -261,7 +261,7 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
         <div className="card p-10 text-center">
           <Webhook className="mx-auto text-slate-700" size={42} />
           <p className="mt-4 font-semibold">No webhooks yet</p>
-          <p className="mt-2 text-sm text-slate-500">Add an HTTPS endpoint to receive guard event notifications.</p>
+          <p className="mt-2 text-sm text-slate-300">Add an HTTPS endpoint to receive guard event notifications.</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -270,11 +270,11 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="min-w-0">
                   <p className="break-all font-mono text-sm">{endpoint.url}</p>
-                  <p className="mt-1 text-xs text-slate-500">{endpoint.project.name} · created {formatDate(endpoint.createdAt)}</p>
+                  <p className="mt-1 text-xs text-slate-300">{endpoint.project.name} · created {formatDate(endpoint.createdAt)}</p>
                   <p className="mt-1 text-xs text-slate-600">Secret: <code>{endpoint.secretPreview}</code></p>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className={`rounded-full px-3 py-1 text-xs font-bold ${endpoint.isActive ? "bg-emerald-500/15 text-emerald-300" : "bg-slate-800 text-slate-400"}`}>
+                  <span className={`rounded-full px-3 py-1 text-xs font-bold ${endpoint.isActive ? "bg-emerald-500/15 text-emerald-300" : "bg-slate-800 text-slate-200"}`}>
                     {endpoint.isActive ? "ACTIVE" : "PAUSED"}
                   </span>
                   <button onClick={() => sendTest(endpoint.id)} disabled={loadingId === endpoint.id} className="button-secondary !px-3 !py-2 text-xs gap-1">
@@ -311,7 +311,7 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
               {activeId === endpoint.id && (
                 <div className="mt-3 overflow-x-auto rounded-xl border border-slate-800">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-950/60 uppercase tracking-wider text-slate-500">
+                    <thead className="bg-slate-950/60 uppercase tracking-wider text-slate-300">
                       <tr>
                         <th className="px-3 py-2">Time</th>
                         <th className="px-3 py-2">Event</th>
@@ -325,21 +325,21 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
                     <tbody className="divide-y divide-slate-800">
                       {deliveries.length ? deliveries.map((delivery) => (
                         <tr key={delivery.id}>
-                          <td className="whitespace-nowrap px-3 py-2 text-slate-400">{formatDate(delivery.createdAt)}</td>
+                          <td className="whitespace-nowrap px-3 py-2 text-slate-200">{formatDate(delivery.createdAt)}</td>
                           <td className="px-3 py-2">{delivery.event}</td>
                           <td className="px-3 py-2">
                             <span className={
                               delivery.status === "DELIVERED" ? "text-emerald-300" :
                               delivery.status === "DEAD_LETTER" || delivery.status === "FAILED" ? "text-red-300" :
                               delivery.status === "RETRYING" ? "text-yellow-300" :
-                              "text-slate-400"
+                              "text-slate-200"
                             }>
                               {delivery.status}
                             </span>
                           </td>
                           <td className="px-3 py-2">{delivery.responseCode ?? "-"}</td>
                           <td className="px-3 py-2">{delivery.attempts}</td>
-                          <td className="max-w-72 truncate px-3 py-2 text-slate-500">{delivery.errorMessage ?? "-"}</td>
+                          <td className="max-w-72 truncate px-3 py-2 text-slate-300">{delivery.errorMessage ?? "-"}</td>
                           <td className="px-3 py-2">
                             {(delivery.status === "FAILED" || delivery.status === "DEAD_LETTER") && (
                               <button
@@ -354,7 +354,7 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
                           </td>
                         </tr>
                       )) : (
-                        <tr><td colSpan={7} className="px-3 py-6 text-center text-slate-500">No deliveries yet.</td></tr>
+                        <tr><td colSpan={7} className="px-3 py-6 text-center text-slate-300">No deliveries yet.</td></tr>
                       )}
                     </tbody>
                   </table>

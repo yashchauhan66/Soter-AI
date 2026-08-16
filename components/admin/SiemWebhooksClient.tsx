@@ -130,7 +130,7 @@ export function SiemWebhooksClient({ organizations, initialIntegrations, eventTy
             <AlertCircle size={16} /> Save your signing secret now — it will not be shown again.
           </p>
           <code className="mt-2 block break-all rounded bg-slate-950 p-3 text-xs text-slate-200">{signingSecret}</code>
-          <button className="mt-2 text-xs text-slate-400 underline" onClick={() => setSigningSecret(null)}>Dismiss</button>
+          <button className="mt-2 text-xs text-slate-200 underline" onClick={() => setSigningSecret(null)}>Dismiss</button>
         </div>
       )}
 
@@ -153,7 +153,7 @@ export function SiemWebhooksClient({ organizations, initialIntegrations, eventTy
         <button className="button-primary flex items-center gap-2" onClick={() => setShowCreate(!showCreate)}>
           <Plus size={16} /> Add Webhook Endpoint
         </button>
-        <button className="text-sm text-slate-400 underline" onClick={fetchIntegrations}>Refresh</button>
+        <button className="text-sm text-slate-200 underline" onClick={fetchIntegrations}>Refresh</button>
       </div>
 
       {showCreate && (
@@ -161,10 +161,10 @@ export function SiemWebhooksClient({ organizations, initialIntegrations, eventTy
           <h3 className="font-semibold">Create SIEM Webhook</h3>
           <input className="input mt-3" placeholder="Integration name" value={newName} onChange={(e) => setNewName(e.target.value)} />
           <input className="input mt-2" placeholder="https://your-siem.example.com/webhook" value={newUrl} onChange={(e) => setNewUrl(e.target.value)} />
-          <p className="mt-3 text-xs text-slate-500">Event types:</p>
+          <p className="mt-3 text-xs text-slate-300">Event types:</p>
           <div className="mt-1 flex flex-wrap gap-2">
             {eventTypes.map((et) => (
-              <label key={et} className="flex items-center gap-1 text-xs text-slate-400">
+              <label key={et} className="flex items-center gap-1 text-xs text-slate-200">
                 <input
                   type="checkbox"
                   checked={newEvents.includes(et)}
@@ -178,14 +178,14 @@ export function SiemWebhooksClient({ organizations, initialIntegrations, eventTy
             <button className="button-primary" disabled={loading || !newName || !newUrl} onClick={createIntegration}>
               {loading ? "Creating..." : "Create"}
             </button>
-            <button className="text-sm text-slate-400" onClick={() => setShowCreate(false)}>Cancel</button>
+            <button className="text-sm text-slate-200" onClick={() => setShowCreate(false)}>Cancel</button>
           </div>
         </div>
       )}
 
       <div className="space-y-3">
         {integrations.length === 0 && (
-          <div className="card p-6 text-center text-slate-500">No SIEM webhook integrations configured.</div>
+          <div className="card p-6 text-center text-slate-300">No SIEM webhook integrations configured.</div>
         )}
         {integrations.map((int) => (
           <div key={int.id} className="card overflow-hidden">
@@ -194,7 +194,7 @@ export function SiemWebhooksClient({ organizations, initialIntegrations, eventTy
                 <Webhook size={18} className="text-cyan" />
                 <div>
                   <p className="font-medium text-slate-200">{int.name}</p>
-                  <p className="text-xs text-slate-500">{new URL(int.endpointUrl).hostname}</p>
+                  <p className="text-xs text-slate-300">{new URL(int.endpointUrl).hostname}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -203,30 +203,30 @@ export function SiemWebhooksClient({ organizations, initialIntegrations, eventTy
                     {testResult.ok ? <CheckCircle2 size={14} /> : <AlertCircle size={14} />}
                   </span>
                 )}
-                <button className="rounded p-1 text-slate-400 hover:bg-slate-800" title="Test webhook" onClick={() => testWebhook(int.id)}>
+                <button className="rounded p-1 text-slate-200 hover:bg-slate-800" title="Test webhook" onClick={() => testWebhook(int.id)}>
                   <Send size={14} />
                 </button>
-                <button className="rounded p-1 text-slate-400 hover:bg-slate-800" title="Toggle" onClick={() => toggleIntegration(int.id, int.enabled)}>
+                <button className="rounded p-1 text-slate-200 hover:bg-slate-800" title="Toggle" onClick={() => toggleIntegration(int.id, int.enabled)}>
                   {int.enabled ? <ToggleRight size={18} className="text-lime" /> : <ToggleLeft size={18} className="text-slate-600" />}
                 </button>
-                <button className="rounded p-1 text-slate-400 hover:bg-red-900/40" title="Delete" onClick={() => deleteIntegration(int.id)}>
+                <button className="rounded p-1 text-slate-200 hover:bg-red-900/40" title="Delete" onClick={() => deleteIntegration(int.id)}>
                   <Trash2 size={14} />
                 </button>
-                <button className="rounded p-1 text-slate-400 hover:bg-slate-800" title="Deliveries" onClick={() => loadDeliveries(int.id)}>
+                <button className="rounded p-1 text-slate-200 hover:bg-slate-800" title="Deliveries" onClick={() => loadDeliveries(int.id)}>
                   {expandedId === int.id ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                 </button>
               </div>
             </div>
             {expandedId === int.id && (
               <div className="border-t border-slate-800 bg-slate-950/50 p-4">
-                <p className="mb-2 text-xs font-medium text-slate-400">Recent deliveries ({deliveries.length})</p>
+                <p className="mb-2 text-xs font-medium text-slate-200">Recent deliveries ({deliveries.length})</p>
                 {deliveries.length === 0 ? (
                   <p className="text-xs text-slate-600">No deliveries yet.</p>
                 ) : (
                   <div className="space-y-1">
                     {deliveries.map((d) => (
                       <div key={d.id} className="flex items-center justify-between text-xs">
-                        <span className="text-slate-400">{new Date(d.createdAt).toLocaleString()}</span>
+                        <span className="text-slate-200">{new Date(d.createdAt).toLocaleString()}</span>
                         <span className={d.status === "DELIVERED" ? "text-lime" : d.status === "FAILED" ? "text-red-400" : "text-amber-300"}>
                           {d.status} {d.responseCode ? `(${d.responseCode})` : ""}
                         </span>

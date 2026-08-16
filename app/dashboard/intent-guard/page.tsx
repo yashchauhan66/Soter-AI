@@ -107,10 +107,10 @@ if (check.decision !== "ALLOW") {
       <section className="card overflow-x-auto p-5">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">Planned action checks</h2>
-          <span className="text-xs font-medium text-slate-500">{checks.length} recent</span>
+          <span className="text-xs font-medium text-slate-300">{checks.length} recent</span>
         </div>
         <table className="mt-4 w-full min-w-[980px] text-left text-sm">
-          <thead className="text-xs uppercase text-slate-500">
+          <thead className="text-xs uppercase text-slate-300">
             <tr>
               <th className="py-2">Decision</th>
               <th>Risk</th>
@@ -130,12 +130,12 @@ if (check.decision !== "ALLOW") {
                 <td>{Math.round(check.intentMatchScore * 100)}%</td>
                 <td className="font-mono text-xs">{check.tool}</td>
                 <td>{check.action}</td>
-                <td className="max-w-[180px] truncate text-slate-400">{check.target ?? "-"}</td>
-                <td className="max-w-[320px] truncate text-slate-400">{check.reason}</td>
+                <td className="max-w-[180px] truncate text-slate-200">{check.target ?? "-"}</td>
+                <td className="max-w-[320px] truncate text-slate-200">{check.reason}</td>
                 <td>{check.createdAt.toLocaleString()}</td>
               </tr>
             ))}
-            {checks.length === 0 && <tr><td className="py-5 text-slate-500" colSpan={8}>No intent action checks recorded yet.</td></tr>}
+            {checks.length === 0 && <tr><td className="py-5 text-slate-300" colSpan={8}>No intent action checks recorded yet.</td></tr>}
           </tbody>
         </table>
       </section>
@@ -143,7 +143,7 @@ if (check.decision !== "ALLOW") {
       <section className="card p-5">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">Session intent timeline</h2>
-          <span className="text-xs font-medium text-slate-500">{records.length} intents</span>
+          <span className="text-xs font-medium text-slate-300">{records.length} intents</span>
         </div>
         <div className="mt-4 grid gap-3">
           {records.map((record) => {
@@ -154,10 +154,10 @@ if (check.decision !== "ALLOW") {
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
                     <p className="font-semibold">{intent.primaryCategory}</p>
-                    <p className="mt-1 max-w-3xl text-slate-400">{record.userPromptRedacted}</p>
-                    <p className="mt-1 text-xs text-slate-500">{formatList(intent.categories)} . confidence {Math.round(intent.confidence * 100)}%</p>
+                    <p className="mt-1 max-w-3xl text-slate-200">{record.userPromptRedacted}</p>
+                    <p className="mt-1 text-xs text-slate-300">{formatList(intent.categories)} . confidence {Math.round(intent.confidence * 100)}%</p>
                   </div>
-                  <span className="font-mono text-xs text-slate-500">{record.sessionId}</span>
+                  <span className="font-mono text-xs text-slate-300">{record.sessionId}</span>
                 </div>
                 {sessionChecks.length > 0 && (
                   <div className="mt-3 flex flex-wrap gap-2">
@@ -167,7 +167,7 @@ if (check.decision !== "ALLOW") {
               </div>
             );
           })}
-          {records.length === 0 && <p className="text-sm text-slate-500">Extract intent through the API or SDK to populate this timeline.</p>}
+          {records.length === 0 && <p className="text-sm text-slate-300">Extract intent through the API or SDK to populate this timeline.</p>}
         </div>
       </section>
     </div>

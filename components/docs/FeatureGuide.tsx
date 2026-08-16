@@ -43,7 +43,7 @@ export function FeatureGuide({
       <div>
         <p className="eyebrow">{eyebrow}</p>
         <h1 className="mt-2 text-3xl font-bold">{title}</h1>
-        <p className="mt-3 max-w-3xl text-lg leading-7 text-slate-400">
+        <p className="mt-3 max-w-3xl text-lg leading-7 text-slate-200">
           {description}
         </p>
       </div>
@@ -58,7 +58,7 @@ export function FeatureGuide({
 
       {/* How it works */}
       <section className="card p-5">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-400">
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-200">
           How it works
         </h2>
         <div className="mt-4 grid gap-4 md:grid-cols-2">
@@ -73,7 +73,7 @@ export function FeatureGuide({
                 </span>
                 <h3 className="font-semibold text-sm">{step.heading}</h3>
               </div>
-              <p className="mt-3 text-sm leading-6 text-slate-400">
+              <p className="mt-3 text-sm leading-6 text-slate-200">
                 {step.body}
               </p>
             </div>
@@ -84,7 +84,7 @@ export function FeatureGuide({
       {/* Integration code */}
       {integrationCode && (
         <section className="card p-5">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-400">
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-200">
             Copy-paste integration
           </h2>
           <div className="mt-4 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4 text-sm text-amber-100">
@@ -107,7 +107,7 @@ export function FeatureGuide({
       {/* Related docs */}
       {relatedDocs && relatedDocs.length > 0 && (
         <section className="card p-4">
-          <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-slate-300">
             Related docs
           </h2>
           <div className="mt-3 flex flex-wrap gap-2">
@@ -115,7 +115,7 @@ export function FeatureGuide({
               <a
                 key={doc.href}
                 href={doc.href}
-                className="rounded-lg border border-slate-800 px-3 py-2 text-xs text-slate-400 transition hover:border-cyan/50 hover:text-cyan"
+                className="rounded-lg border border-slate-800 px-3 py-2 text-xs text-slate-200 transition hover:border-cyan/50 hover:text-cyan"
               >
                 {doc.label} →
               </a>

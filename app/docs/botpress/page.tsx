@@ -46,10 +46,10 @@ export default function BotpressDocsPage() {
     <main className="py-16">
       <DocViewTracker />
       <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-500 transition-colors hover:text-cyan">← Back to docs</Link>
+        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
         <p className="eyebrow mt-6">Platform guide</p>
         <h1 className="mt-3 text-4xl font-bold">Botpress Integration Guide</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           Add SoterAI as a pre-processing and post-processing HTTP step in your Botpress workflows.
         </p>
 

@@ -150,7 +150,7 @@ export function AdminCommandPalette({ counts }: { counts: AdminBadgeCounts }) {
       <button type="button" aria-label="Close command palette" onClick={close} className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
       <div className="relative w-full max-w-xl overflow-hidden rounded-2xl border border-slate-700 bg-panel shadow-glow" onKeyDown={onListKeyDown}>
         <div className="flex items-center gap-3 border-b border-slate-800 px-4">
-          <Search size={18} className="text-slate-500" />
+          <Search size={18} className="text-slate-300" />
           <input
             ref={inputRef}
             value={query}
@@ -159,10 +159,10 @@ export function AdminCommandPalette({ counts }: { counts: AdminBadgeCounts }) {
               setActiveIndex(0);
             }}
             placeholder="Jump to any admin service..."
-            className="h-14 flex-1 bg-transparent text-sm text-slate-100 outline-none placeholder:text-slate-500"
+            className="h-14 flex-1 bg-transparent text-sm text-slate-100 outline-none placeholder:text-slate-300"
             aria-label="Search admin services"
           />
-          <button type="button" onClick={close} aria-label="Close" className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-slate-700 text-slate-400 hover:text-slate-200">
+          <button type="button" onClick={close} aria-label="Close" className="inline-flex h-7 w-7 items-center justify-center rounded-md border border-slate-700 text-slate-200 hover:text-slate-200">
             <X size={14} />
           </button>
         </div>
@@ -185,7 +185,7 @@ export function AdminCommandPalette({ counts }: { counts: AdminBadgeCounts }) {
                     active ? "bg-cyan/10" : "hover:bg-slate-800/50"
                   }`}
                 >
-                  <span className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md border ${active ? "border-cyan/40 bg-cyan/10 text-cyan" : "border-slate-800 bg-slate-950/60 text-slate-400"}`}>
+                  <span className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-md border ${active ? "border-cyan/40 bg-cyan/10 text-cyan" : "border-slate-800 bg-slate-950/60 text-slate-200"}`}>
                     <Icon size={16} />
                   </span>
                   <span className="min-w-0 flex-1">
@@ -197,18 +197,18 @@ export function AdminCommandPalette({ counts }: { counts: AdminBadgeCounts }) {
                         </span>
                       )}
                     </span>
-                    <span className="mt-0.5 block truncate text-xs text-slate-500">{group} - {item.hint}</span>
+                    <span className="mt-0.5 block truncate text-xs text-slate-300">{group} - {item.hint}</span>
                   </span>
-                  {active && <CornerDownLeft size={14} className="shrink-0 text-slate-500" />}
+                  {active && <CornerDownLeft size={14} className="shrink-0 text-slate-300" />}
                 </button>
               );
             })
           ) : (
-            <p className="px-3 py-8 text-center text-sm text-slate-500">No admin service matches "{query}".</p>
+            <p className="px-3 py-8 text-center text-sm text-slate-300">No admin service matches "{query}".</p>
           )}
         </div>
 
-        <div className="flex items-center justify-between border-t border-slate-800 px-4 py-2.5 text-[11px] text-slate-500">
+        <div className="flex items-center justify-between border-t border-slate-800 px-4 py-2.5 text-[11px] text-slate-300">
           <span className="flex items-center gap-3">
             <span><kbd className="rounded border border-slate-700 bg-slate-950/70 px-1.5 py-0.5 font-mono">up/down</kbd> navigate</span>
             <span><kbd className="rounded border border-slate-700 bg-slate-950/70 px-1.5 py-0.5 font-mono">enter</kbd> open</span>

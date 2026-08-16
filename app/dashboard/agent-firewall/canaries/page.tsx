@@ -46,11 +46,11 @@ await soter.reportCanaryUse({ token: canary.token });`}
       <section className="grid gap-3">
         {rows.map((row) => (
           <div className="card grid gap-2 p-4 text-sm md:grid-cols-[1fr_auto]" key={row.id}>
-            <div><p className="font-semibold">{row.tokenLabel}</p><p className="text-slate-500">{row.scope} - created {row.createdAt.toLocaleString()}</p></div>
+            <div><p className="font-semibold">{row.tokenLabel}</p><p className="text-slate-300">{row.scope} - created {row.createdAt.toLocaleString()}</p></div>
             <span className={row.triggeredAt ? "text-red-300" : "text-emerald-300"}>{row.triggeredAt ? `Triggered ${row.triggeredAt.toLocaleString()}` : row.active ? "Active" : "Inactive"}</span>
           </div>
         ))}
-        {rows.length === 0 && <section className="card p-5 text-sm text-slate-500">No canary tokens yet. Generate a canary to plant a decoy secret — you&apos;ll be alerted the moment an agent or model tries to use it.</section>}
+        {rows.length === 0 && <section className="card p-5 text-sm text-slate-300">No canary tokens yet. Generate a canary to plant a decoy secret — you&apos;ll be alerted the moment an agent or model tries to use it.</section>}
       </section>
     </div>
   );

@@ -21,7 +21,7 @@ export function ProjectSwitcher({
 
   return (
     <label className="flex items-center gap-2 rounded-xl border border-slate-800 bg-slate-950/60 px-3 py-2 text-sm">
-      <span className="text-slate-500">Project</span>
+      <span className="text-slate-300">Project</span>
       <select
         aria-label="Selected project"
         className="bg-transparent font-semibold outline-none"

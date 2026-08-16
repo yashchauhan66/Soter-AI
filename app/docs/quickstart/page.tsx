@@ -116,7 +116,7 @@ export default function QuickstartDocsPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       
       <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-500 transition-colors hover:text-cyan">← Back to all docs</Link>
+        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to all docs</Link>
         
         <p className="eyebrow mt-6">Quickstart</p>
         <h1 className="mt-3 text-4xl font-bold leading-tight">Protect your AI chatbot in 5 minutes</h1>
@@ -129,10 +129,10 @@ export default function QuickstartDocsPage() {
         {/* What you'll build */}
         <div className="docs-section">
           <h2 className="text-2xl font-bold">What you&apos;ll build</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             A secure chat API endpoint that:
           </p>
-          <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-400">
+          <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-200">
             <li><strong>Checks every user message</strong> for prompt injection, jailbreaks, and PII before it reaches the AI</li>
             <li><strong>Blocks dangerous requests</strong> automatically — the AI never sees them</li>
             <li><strong>Checks every AI response</strong> for unsafe content before the user sees it</li>
@@ -150,7 +150,7 @@ export default function QuickstartDocsPage() {
                   {index + 1}
                 </span>
                 <h3 className="mt-3 font-semibold text-sm">{title}</h3>
-                <p className="mt-2 text-xs leading-5 text-slate-400">{copy}</p>
+                <p className="mt-2 text-xs leading-5 text-slate-200">{copy}</p>
               </div>
             ))}
           </div>
@@ -159,7 +159,7 @@ export default function QuickstartDocsPage() {
         {/* Step 1 */}
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 1: Install the SDK</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Open your backend project in a terminal and run:
           </p>
           <CodeBlock language="bash" title="terminal">{installCode}</CodeBlock>
@@ -172,7 +172,7 @@ export default function QuickstartDocsPage() {
         {/* Step 2 */}
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 2: Add environment variables</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Create a <InlineCode>.env</InlineCode> file in your project root and add your API key:
           </p>
           <CodeBlock language="bash" title=".env file">{envCode}</CodeBlock>
@@ -190,7 +190,7 @@ export default function QuickstartDocsPage() {
         {/* Step 3-4-5 */}
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 3-5: Write the integration code</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             The pattern is simple: <strong>guard input → call model → guard output</strong>. 
             Here&apos;s the complete code for a chat route:
           </p>
@@ -198,15 +198,15 @@ export default function QuickstartDocsPage() {
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             <div className="rounded-lg border border-cyan/20 bg-cyan/5 p-4 text-sm">
               <p className="font-semibold text-cyan">① Input Guard</p>
-              <p className="mt-2 text-slate-400">Checks the user&apos;s message for prompt injection, jailbreaks, PII, and secrets.</p>
+              <p className="mt-2 text-slate-200">Checks the user&apos;s message for prompt injection, jailbreaks, PII, and secrets.</p>
             </div>
             <div className="rounded-lg border border-lime/20 bg-lime/5 p-4 text-sm">
               <p className="font-semibold text-lime">② LLM Call</p>
-              <p className="mt-2 text-slate-400">Only called if input is safe. Uses redacted text if PII was found.</p>
+              <p className="mt-2 text-slate-200">Only called if input is safe. Uses redacted text if PII was found.</p>
             </div>
             <div className="rounded-lg border border-cyan/20 bg-cyan/5 p-4 text-sm">
               <p className="font-semibold text-cyan">③ Output Guard</p>
-              <p className="mt-2 text-slate-400">Checks the model&apos;s response for leaked data, unsafe content, or policy violations.</p>
+              <p className="mt-2 text-slate-200">Checks the model&apos;s response for leaked data, unsafe content, or policy violations.</p>
             </div>
           </div>
         </section>
@@ -214,14 +214,14 @@ export default function QuickstartDocsPage() {
         {/* Step 6 */}
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 6: Test your integration</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             First, let&apos;s test with a <strong>dangerous prompt</strong> that should be blocked:
           </p>
           <CodeBlock language="bash" title="test prompt injection">{curlAttack}</CodeBlock>
           <p className="mt-4 font-semibold">✅ Expected result — blocked:</p>
           <CodeBlock language="json">{expectedBlocked}</CodeBlock>
           
-          <p className="mt-8 leading-7 text-slate-400">
+          <p className="mt-8 leading-7 text-slate-200">
             Now test with a <strong>normal safe message</strong>:
           </p>
           <CodeBlock language="bash" title="test normal message">{curlSafe}</CodeBlock>
@@ -251,7 +251,7 @@ export default function QuickstartDocsPage() {
                   <CheckCircle2 className="mt-0.5 shrink-0 text-lime" size={16} aria-hidden="true" />
                   <div>
                     <h3 className="font-semibold text-sm">{title}</h3>
-                    <p className="mt-1 text-sm leading-6 text-slate-400">{copy}</p>
+                    <p className="mt-1 text-sm leading-6 text-slate-200">{copy}</p>
                   </div>
                 </div>
               </div>
@@ -263,7 +263,7 @@ export default function QuickstartDocsPage() {
         <section className="docs-section">
           <div className="rounded-lg border border-cyan/30 bg-gradient-to-r from-cyan/5 to-transparent p-6">
             <h2 className="text-xl font-bold">✅ You&apos;re protected! What&apos;s next?</h2>
-            <p className="mt-3 leading-7 text-slate-400">
+            <p className="mt-3 leading-7 text-slate-200">
               Your chatbot now has basic AI security. Here are some ways to level up:
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -287,7 +287,7 @@ export default function QuickstartDocsPage() {
 
         {/* Navigation */}
         <div className="mt-12 flex items-center justify-between border-t border-slate-800 pt-8">
-          <Link href="/docs" className="text-sm text-slate-500 hover:text-cyan transition-colors">← All docs</Link>
+          <Link href="/docs" className="text-sm text-slate-300 hover:text-cyan transition-colors">← All docs</Link>
           <Link href="/docs/js" className="text-sm text-cyan hover:text-cyan/80 transition-colors">Next: JavaScript SDK →</Link>
         </div>
       </div>

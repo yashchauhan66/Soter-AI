@@ -14,9 +14,9 @@ export const dynamic = "force-dynamic";
 const components = ["API", "Guard API", "Dashboard", "Webhook worker", "Report worker", "Billing"];
 const integrations = [
   { name: "n8n Community Node", status: "npm-ready" },
+  { name: "Zapier App", status: "Published" },
+  { name: "Make.com App", status: "Published" },
   { name: "Dify Plugin", status: "Ready for Marketplace PR" },
-  { name: "Zapier App", status: "Ready for Review" },
-  { name: "Make.com App", status: "Ready for Review" },
   { name: "Botpress Integration", status: "Ready for Hub Submission" },
   { name: "Flowise Nodes", status: "Local Installable" },
   { name: "Langflow Components", status: "Local Installable" },
@@ -66,7 +66,7 @@ export default async function StatusPage() {
               {allOperational ? "OPERATIONAL" : `${active.length} ACTIVE`}
             </span>
           </div>
-          <p className="mt-4 max-w-2xl text-slate-400">
+          <p className="mt-4 max-w-2xl text-slate-200">
             Only public-safe operational information appears here. Customer logs and internal security details are never
             published.
           </p>
@@ -113,7 +113,7 @@ export default async function StatusPage() {
             </span>
             Integration status
           </h2>
-          <p className="mt-2 text-sm text-slate-400">Marketplace readiness for SoterAI platform integrations.</p>
+          <p className="mt-2 text-sm text-slate-200">Marketplace readiness for SoterAI platform integrations.</p>
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
             {integrations.map((i) => (
               <div
@@ -153,10 +153,10 @@ export default async function StatusPage() {
                       {incident.status}
                     </span>
                   </div>
-                  <p className="mt-2 text-sm text-slate-400">{incident.summary}</p>
+                  <p className="mt-2 text-sm text-slate-200">{incident.summary}</p>
                   {incident.updates.map((update) => (
-                    <p className="mt-3 border-t border-slate-800 pt-3 text-sm text-slate-400" key={update.id}>
-                      <span className="font-mono text-xs text-slate-500">
+                    <p className="mt-3 border-t border-slate-800 pt-3 text-sm text-slate-200" key={update.id}>
+                      <span className="font-mono text-xs text-slate-300">
                         {update.createdAt.toLocaleString()}
                       </span>{" "}
                       — {update.message}
@@ -165,7 +165,7 @@ export default async function StatusPage() {
                 </article>
               ))
             ) : (
-              <div className="card flex items-center gap-3 p-6 text-slate-400">
+              <div className="card flex items-center gap-3 p-6 text-slate-200">
                 <CheckCircle2 className="text-lime" size={20} aria-hidden="true" />
                 No public incidents reported.
               </div>

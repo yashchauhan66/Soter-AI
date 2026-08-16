@@ -48,26 +48,26 @@ export default function WordpressDocsPage() {
       <DocViewTracker />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-500 transition-colors hover:text-cyan">← Back to docs</Link>
+        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
         <p className="eyebrow mt-6">Platform guide</p>
         <h1 className="mt-3 text-4xl font-bold">WordPress Plugin Guide</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           Protect your WordPress chatbot by guarding input and output server-side through the SoterAI REST API.
         </p>
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 1: Install the plugin</h2>
-          <ol className="mt-4 list-decimal space-y-2 pl-5 leading-7 text-slate-400">
+          <ol className="mt-4 list-decimal space-y-2 pl-5 leading-7 text-slate-200">
             <li>Copy the plugin folder into <InlineCode>wp-content/plugins/</InlineCode>, or upload via <strong>Plugins → Add New → Upload Plugin</strong>.</li>
             <li>Activate <strong>SoterAI Guard</strong> from the Plugins page.</li>
           </ol>
-          <p className="mt-4 text-sm text-slate-400">Package a zip from the repo root:</p>
+          <p className="mt-4 text-sm text-slate-200">Package a zip from the repo root:</p>
           <CodeBlock language="bash" title="terminal">{`npm run package:wordpress   # produces dist/soter-guard.zip`}</CodeBlock>
         </section>
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 2: Configure settings</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Navigate to <strong>Settings → SoterAI Guard</strong> to configure:
           </p>
           <div className="mt-4 overflow-x-auto rounded-lg border border-slate-800">
@@ -78,7 +78,7 @@ export default function WordpressDocsPage() {
                   <th className="px-4 py-3 text-left font-medium text-slate-300">Notes</th>
                 </tr>
               </thead>
-              <tbody className="text-slate-400">
+              <tbody className="text-slate-200">
                 {[
                   ["API Base URL", "Your SoterAI host URL or self-hosted URL"],
                   ["API Key", "ck_live_… Stored server-side, shown only masked"],
@@ -111,7 +111,7 @@ export default function WordpressDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 5: Frontend via local proxy</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             The frontend JavaScript calls the <strong>local</strong> WordPress REST route, never the SoterAI API directly:
           </p>
           <CodeBlock language="javascript" title="frontend.js" showLineNumbers>{jsCode}</CodeBlock>
@@ -128,7 +128,7 @@ export default function WordpressDocsPage() {
             ].map(([title, copy]) => (
               <div key={title} className="rounded-lg border border-slate-800 bg-slate-950/45 p-4">
                 <p className="font-semibold text-sm">{title}</p>
-                <p className="mt-1 text-sm text-slate-400">{copy}</p>
+                <p className="mt-1 text-sm text-slate-200">{copy}</p>
               </div>
             ))}
           </div>

@@ -53,10 +53,10 @@ export default function IntercomDocsPage() {
       <DocViewTracker />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-500 transition-colors hover:text-cyan">← Back to docs</Link>
+        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
         <p className="eyebrow mt-6">Platform guide</p>
         <h1 className="mt-3 text-4xl font-bold">Intercom Integration Guide</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           Use SoterAI to protect AI support-chat conversations in your Intercom workflows from prompt injection, PII leakage, and unsafe responses.
         </p>
 
@@ -103,7 +103,7 @@ export default function IntercomDocsPage() {
                   <CheckCircle2 className="mt-0.5 shrink-0 text-lime" size={16} aria-hidden="true" />
                   <div>
                     <p className="font-semibold text-sm">{title}</p>
-                    <p className="mt-1 text-sm leading-6 text-slate-400">{copy}</p>
+                    <p className="mt-1 text-sm leading-6 text-slate-200">{copy}</p>
                   </div>
                 </div>
               </div>

@@ -267,9 +267,9 @@ export function IntegrationWizard({
           <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-800" aria-hidden="true">
             <div className="h-full rounded-full bg-cyan transition-all" style={{ width: `${readinessPercent}%` }} />
           </div>
-          <div className="mt-3 grid gap-2 text-xs text-slate-400">
-            <p><span className="text-slate-500">Time to value:</span> {meta.timeToValue}</p>
-            <p><span className="text-slate-500">Success means:</span> {meta.success}</p>
+          <div className="mt-3 grid gap-2 text-xs text-slate-200">
+            <p><span className="text-slate-300">Time to value:</span> {meta.timeToValue}</p>
+            <p><span className="text-slate-300">Success means:</span> {meta.success}</p>
           </div>
         </div>
 
@@ -302,7 +302,7 @@ export function IntegrationWizard({
             <AlertCircle size={16} className="text-amber-300" aria-hidden="true" />
             Common blockers
           </div>
-          <ul className="mt-3 space-y-2 text-sm text-slate-400">
+          <ul className="mt-3 space-y-2 text-sm text-slate-200">
             {meta.blockers.map((item) => (
               <li key={item} className="flex gap-2">
                 <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-300" />
@@ -335,7 +335,7 @@ export function IntegrationWizard({
               <ServerCog size={16} className="text-cyan" aria-hidden="true" />
               Prerequisites
             </div>
-            <ul className="mt-3 space-y-2 text-sm text-slate-400">
+            <ul className="mt-3 space-y-2 text-sm text-slate-200">
               {meta.prerequisites.map((item) => (
                 <li key={item} className="flex gap-2"><CheckCircle2 size={15} className="mt-0.5 shrink-0 text-lime" aria-hidden="true" />{item}</li>
               ))}
@@ -346,7 +346,7 @@ export function IntegrationWizard({
               <ClipboardCheck size={16} className="text-cyan" aria-hidden="true" />
               Verify
             </div>
-            <ul className="mt-3 space-y-2 text-sm text-slate-400">
+            <ul className="mt-3 space-y-2 text-sm text-slate-200">
               {meta.verify.map((item) => (
                 <li key={item} className="flex gap-2"><CheckCircle2 size={15} className="mt-0.5 shrink-0 text-lime" aria-hidden="true" />{item}</li>
               ))}
@@ -357,7 +357,7 @@ export function IntegrationWizard({
               <LifeBuoy size={16} className="text-cyan" aria-hidden="true" />
               Troubleshooting
             </div>
-            <p className="mt-3 text-sm leading-6 text-slate-400">
+            <p className="mt-3 text-sm leading-6 text-slate-200">
               401 means key/secret mismatch. 429 means quota or rate limit. Network errors usually mean the base URL is not reachable.
             </p>
             <a href={meta.docs} className="mt-3 inline-flex items-center gap-2 text-sm text-cyan hover:underline">
@@ -377,7 +377,7 @@ export function IntegrationWizard({
             <KeyRound size={16} className="text-cyan" aria-hidden="true" />
             Production security checklist
           </div>
-          <ul className="mt-3 grid gap-2 text-sm text-slate-400 md:grid-cols-3">
+          <ul className="mt-3 grid gap-2 text-sm text-slate-200 md:grid-cols-3">
             {meta.production.map((item) => (
               <li key={item} className="flex gap-2"><CheckCircle2 size={15} className="mt-0.5 shrink-0 text-lime" aria-hidden="true" />{item}</li>
             ))}

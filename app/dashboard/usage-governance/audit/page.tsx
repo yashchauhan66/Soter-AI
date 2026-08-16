@@ -10,7 +10,7 @@ export default async function GovernanceAuditPage({
   searchParams: Promise<{ action?: string; decision?: string; limit?: string }>;
 }) {
   const active = await getActiveOrganization();
-  if (!active) return <p className="p-6 text-slate-400">No active organization.</p>;
+  if (!active) return <p className="p-6 text-slate-200">No active organization.</p>;
 
   const params = await searchParams;
   const { logs, total } = await queryAuditLogs(active.org.id, {
@@ -24,7 +24,7 @@ export default async function GovernanceAuditPage({
       <div>
         <p className="eyebrow">Governance</p>
         <h1 className="mt-2 text-3xl font-bold">Audit Trail</h1>
-        <p className="mt-3 max-w-3xl text-slate-400">
+        <p className="mt-3 max-w-3xl text-slate-200">
           Complete audit log of AI usage governance events, including policy changes,
           approval decisions, and usage monitoring events across your organization.
         </p>
@@ -34,7 +34,7 @@ export default async function GovernanceAuditPage({
       <div className="card p-4">
         <form className="flex flex-wrap gap-3 items-end">
           <div>
-            <label className="mb-1 block text-xs text-slate-500">Action</label>
+            <label className="mb-1 block text-xs text-slate-300">Action</label>
             <select name="action" className="input text-sm">
               <option value="">All actions</option>
               <option value="USAGE_EVENT">Usage Events</option>
@@ -48,7 +48,7 @@ export default async function GovernanceAuditPage({
             </select>
           </div>
           <div>
-            <label className="mb-1 block text-xs text-slate-500">Decision</label>
+            <label className="mb-1 block text-xs text-slate-300">Decision</label>
             <select name="decision" className="input text-sm">
               <option value="">All decisions</option>
               <option value="ALLOWED">Allowed</option>
@@ -63,10 +63,10 @@ export default async function GovernanceAuditPage({
         </form>
       </div>
 
-      <p className="text-sm text-slate-500">{total} log entries</p>
+      <p className="text-sm text-slate-300">{total} log entries</p>
 
       {logs.length === 0 ? (
-        <p className="text-sm text-slate-500">No audit logs found.</p>
+        <p className="text-sm text-slate-300">No audit logs found.</p>
       ) : (
         <div className="space-y-2">
           {logs.map((log) => (
@@ -87,14 +87,14 @@ export default async function GovernanceAuditPage({
                     {log.decision}
                   </span>
                   {log.providerName && (
-                    <span className="text-xs text-slate-400">{log.providerName}</span>
+                    <span className="text-xs text-slate-200">{log.providerName}</span>
                   )}
                   {log.modelName && (
-                    <span className="text-xs text-slate-500">· {log.modelName}</span>
+                    <span className="text-xs text-slate-300">· {log.modelName}</span>
                   )}
                 </div>
                 {log.reason && (
-                  <p className="mt-1 text-sm text-slate-400">{log.reason}</p>
+                  <p className="mt-1 text-sm text-slate-200">{log.reason}</p>
                 )}
                 <p className="mt-1 text-xs text-slate-600">
                   {new Date(log.createdAt).toLocaleString()}

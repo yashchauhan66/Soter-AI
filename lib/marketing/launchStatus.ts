@@ -29,7 +29,9 @@ export const productStatus: Array<{
   { name: "API Guard", status: "Stable", copy: "Input, output, RAG, and grounding checks for server-side AI apps.", cta: "Try API", href: "/docs/rest-api" },
   { name: "Browser Guard", status: "Beta", copy: "Extension-based visibility and control for AI use in browser workflows.", cta: "Install browser extension", href: "/extensions/browser" },
   { name: "IDE Guard", status: "Beta", copy: "Secure AI-assisted development across all major IDEs.", cta: "Install IDE Guard", href: "/extensions/ide" },
-  { name: "n8n Guard", status: "Beta", copy: "Guard nodes for workflow builders who need AI checks inside automation.", cta: "Add n8n Node", href: "/docs/n8n" },
+  { name: "n8n Guard", status: "Beta", copy: "Guard nodes for workflow builders who need AI checks inside automation.", cta: "Add n8n Node", href: "/integrations/n8n" },
+  { name: "Make Guard", status: "Beta", copy: "SoterAI modules for Make.com scenarios that scan AI inputs and outputs inline.", cta: "Add Make Node", href: "/integrations/make" },
+  { name: "Zapier Guard", status: "Beta", copy: "Zapier actions that check AI prompts and responses before data reaches external apps.", cta: "Add Zapier Node", href: "/integrations/zapier" },
   { name: "MCP / Agent Guard", status: "Labs", copy: "Risk review for MCP tools and agent actions before sensitive operations execute.", cta: "Review agent controls", href: "/mcp-security" },
   { name: "Audit Evidence", status: "Stable", copy: "Redacted logs, signed exports, benchmark evidence, and trust-review artifacts.", cta: "View trust center", href: "/trust" },
 ];

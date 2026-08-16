@@ -150,11 +150,11 @@ export default function NextjsDocsPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       
       <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-500 transition-colors hover:text-cyan">← Back to docs</Link>
+        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
         
         <p className="eyebrow mt-6">Framework guide</p>
         <h1 className="mt-3 text-4xl font-bold">Next.js Integration Guide</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           Protect your Next.js chatbot with route handler helpers, server actions, and the one-line 
           <InlineCode>createGuardedRoute</InlineCode> wrapper. Works with both App Router and Pages Router.
         </p>
@@ -166,7 +166,7 @@ export default function NextjsDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 2: Environment variables</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Add these to your <InlineCode>.env.local</InlineCode> file:
           </p>
           <CodeBlock language="bash" title=".env.local">{envCode}</CodeBlock>
@@ -179,7 +179,7 @@ export default function NextjsDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 3: Route Handler (manual control)</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Full control over the guard flow in your API route:
           </p>
           <CodeBlock language="typescript" title="app/api/chat/route.ts" showLineNumbers>{routeHandler}</CodeBlock>
@@ -187,7 +187,7 @@ export default function NextjsDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 4: One-line helper (recommended)</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Use <InlineCode>createGuardedRoute</InlineCode> from <InlineCode>@soterai/core/next</InlineCode> 
             for a minimal setup:
           </p>
@@ -201,7 +201,7 @@ export default function NextjsDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 5: Server Actions</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Guard inputs directly in server actions without exposing the API key:
           </p>
           <CodeBlock language="typescript" title="server action" showLineNumbers>{serverActionCode}</CodeBlock>
@@ -209,7 +209,7 @@ export default function NextjsDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 6: Client component (safe pattern)</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             The client component only talks to <strong>your</strong> server, never to SoterAI directly:
           </p>
           <CodeBlock language="typescript" title="app/chat/page.tsx" showLineNumbers>{clientComponent}</CodeBlock>
@@ -235,7 +235,7 @@ export default function NextjsDocsPage() {
                   <CheckCircle2 className="mt-0.5 shrink-0 text-lime" size={16} aria-hidden="true" />
                   <div>
                     <p className="font-semibold text-sm">{title}</p>
-                    <p className="mt-1 text-sm leading-6 text-slate-400">{copy}</p>
+                    <p className="mt-1 text-sm leading-6 text-slate-200">{copy}</p>
                   </div>
                 </div>
               </div>

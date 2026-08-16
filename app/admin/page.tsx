@@ -232,12 +232,12 @@ export default async function AdminOverviewPage() {
         <div>
           <p className="eyebrow">Platform command center</p>
           <h1 className="mt-2 text-3xl font-bold">Admin dashboard</h1>
-          <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-400">
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-200">
             Live operational posture across security events, tenant health, billing, workers, approvals, RAG trust, KMS, and integration delivery.
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <div className="rounded-md border border-slate-800 bg-slate-950/60 px-3 py-2 text-xs text-slate-400">
+          <div className="rounded-md border border-slate-800 bg-slate-950/60 px-3 py-2 text-xs text-slate-200">
             Updated <span className="font-mono text-slate-200">{compactDate(now)}</span>
           </div>
           <AdminRealtimeRefresh />
@@ -265,9 +265,9 @@ export default async function AdminOverviewPage() {
             <div className="card p-4" key={label}>
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-xs uppercase tracking-wider text-slate-500">{label}</p>
+                  <p className="text-xs uppercase tracking-wider text-slate-300">{label}</p>
                   <p className="mt-2 text-2xl font-bold">{numberFormat(Number(value))}</p>
-                  <p className="mt-1 text-xs text-slate-500">{detail}</p>
+                  <p className="mt-1 text-xs text-slate-300">{detail}</p>
                 </div>
                 <span className={`rounded-md border p-2 ${toneClasses[tone]}`}><Icon size={17} /></span>
               </div>
@@ -294,7 +294,7 @@ export default async function AdminOverviewPage() {
             )}
           </div>
           <div className="mt-5 border-t border-slate-800 pt-4">
-            <p className="text-xs uppercase tracking-wider text-slate-500">Detection volume, 12h</p>
+            <p className="text-xs uppercase tracking-wider text-slate-300">Detection volume, 12h</p>
             <div className="mt-3 flex h-24 items-end gap-2">
               {hourly.map((hour) => (
                 <div className="flex flex-1 flex-col items-center gap-2" key={hour.label}>
@@ -305,7 +305,7 @@ export default async function AdminOverviewPage() {
                       title={`${hour.label}:00 - ${hour.total} requests, ${hour.blocked} blocked`}
                     />
                   </div>
-                  <span className="font-mono text-[10px] text-slate-500">{hour.label}</span>
+                  <span className="font-mono text-[10px] text-slate-300">{hour.label}</span>
                 </div>
               ))}
             </div>
@@ -323,7 +323,7 @@ export default async function AdminOverviewPage() {
             <Link href="/admin/organizations" className="text-sm font-semibold text-cyan hover:text-cyan/80">View all</Link>
           </div>
           <table className="w-full min-w-[700px] text-left text-sm">
-            <thead className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-500">
+            <thead className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-300">
               <tr>
                 <th className="px-4 py-3">Name</th>
                 <th className="px-4 py-3">Type</th>
@@ -343,7 +343,7 @@ export default async function AdminOverviewPage() {
                   <td className="px-4 py-3">{org.subscription?.status ?? "-"}</td>
                   <td className="px-4 py-3">{org._count.members}</td>
                   <td className="px-4 py-3">{org._count.projects}</td>
-                  <td className="px-4 py-3 text-slate-500">{timeAgo(org.createdAt)}</td>
+                  <td className="px-4 py-3 text-slate-300">{timeAgo(org.createdAt)}</td>
                 </tr>
               ))}
             </tbody>
@@ -365,10 +365,10 @@ export default async function AdminOverviewPage() {
                   <p className="truncate font-mono text-xs text-slate-300">{project.projectId}</p>
                   <span className="rounded-md bg-cyan/10 px-2 py-1 text-xs font-bold text-cyan">{numberFormat(project._count._all)}</span>
                 </div>
-                <p className="mt-2 text-xs text-slate-500">Average risk {Math.round(project._avg.riskScore ?? 0)}</p>
+                <p className="mt-2 text-xs text-slate-300">Average risk {Math.round(project._avg.riskScore ?? 0)}</p>
               </div>
             )) : (
-              <p className="rounded-lg border border-slate-800 bg-slate-950/50 p-4 text-sm text-slate-500">No request traffic in the last 24 hours.</p>
+              <p className="rounded-lg border border-slate-800 bg-slate-950/50 p-4 text-sm text-slate-300">No request traffic in the last 24 hours.</p>
             )}
           </div>
         </div>
@@ -385,7 +385,7 @@ export default async function AdminOverviewPage() {
           </div>
           {recentEvents.length ? (
             <table className="w-full min-w-[700px] text-left text-sm">
-              <thead className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-500">
+              <thead className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-300">
                 <tr>
                   <th className="px-4 py-3">When</th>
                   <th className="px-4 py-3">Org</th>
@@ -396,7 +396,7 @@ export default async function AdminOverviewPage() {
               <tbody className="divide-y divide-slate-800">
                 {recentEvents.map((event) => (
                   <tr key={event.id}>
-                    <td className="px-4 py-3 text-slate-400">{timeAgo(event.receivedAt)}</td>
+                    <td className="px-4 py-3 text-slate-200">{timeAgo(event.receivedAt)}</td>
                     <td className="px-4 py-3">{event.organizationId ?? "-"}</td>
                     <td className="px-4 py-3">{event.eventType}</td>
                     <td className={`px-4 py-3 ${event.signatureValid ? "text-emerald-300" : "text-red-300"}`}>{event.signatureValid ? "valid" : "invalid"}</td>
@@ -405,7 +405,7 @@ export default async function AdminOverviewPage() {
               </tbody>
             </table>
           ) : (
-            <p className="p-5 text-sm text-slate-500">No payment events yet.</p>
+            <p className="p-5 text-sm text-slate-300">No payment events yet.</p>
           )}
         </div>
 
@@ -421,10 +421,10 @@ export default async function AdminOverviewPage() {
             <div className="mt-3 space-y-2 text-sm">
               {recentFeedback.length ? recentFeedback.map((item) => (
                 <div key={item.id} className="rounded-lg border border-slate-800 bg-slate-950/60 p-3">
-                  <p>{item.feedback} <span className="text-slate-500">- {item.project.name}</span></p>
-                  <p className="mt-1 text-xs text-slate-500">{item.note ?? "No note"} - {timeAgo(item.createdAt)}</p>
+                  <p>{item.feedback} <span className="text-slate-300">- {item.project.name}</span></p>
+                  <p className="mt-1 text-xs text-slate-300">{item.note ?? "No note"} - {timeAgo(item.createdAt)}</p>
                 </div>
-              )) : <p className="rounded-lg border border-slate-800 bg-slate-950/50 p-4 text-sm text-slate-500">No feedback submitted yet.</p>}
+              )) : <p className="rounded-lg border border-slate-800 bg-slate-950/50 p-4 text-sm text-slate-300">No feedback submitted yet.</p>}
             </div>
           </section>
           <section className="card p-5">
@@ -438,10 +438,10 @@ export default async function AdminOverviewPage() {
             <div className="mt-3 space-y-2 text-sm">
               {recentAdminAudits.length ? recentAdminAudits.map((item) => (
                 <div key={item.id} className="rounded-lg border border-slate-800 bg-slate-950/60 p-3">
-                  <p>{item.action} <span className="text-slate-500">- {item.targetType}</span></p>
-                  <p className="mt-1 text-xs text-slate-500">{item.adminUser?.email ?? "system"} - {item.reason} - {timeAgo(item.createdAt)}</p>
+                  <p>{item.action} <span className="text-slate-300">- {item.targetType}</span></p>
+                  <p className="mt-1 text-xs text-slate-300">{item.adminUser?.email ?? "system"} - {item.reason} - {timeAgo(item.createdAt)}</p>
                 </div>
-              )) : <p className="rounded-lg border border-slate-800 bg-slate-950/50 p-4 text-sm text-slate-500">No admin actions recorded.</p>}
+              )) : <p className="rounded-lg border border-slate-800 bg-slate-950/50 p-4 text-sm text-slate-300">No admin actions recorded.</p>}
             </div>
           </section>
         </div>
@@ -455,7 +455,7 @@ export default async function AdminOverviewPage() {
           ["Worker backlog", pendingJobs, "/admin/production"],
         ].map(([label, value, href]) => (
           <Link href={String(href)} className="card p-5 transition hover:border-cyan/40" key={String(label)}>
-            <p className="text-xs uppercase tracking-wider text-slate-500">{label}</p>
+            <p className="text-xs uppercase tracking-wider text-slate-300">{label}</p>
             <p className="mt-2 text-3xl font-bold">{numberFormat(Number(value))}</p>
           </Link>
         ))}

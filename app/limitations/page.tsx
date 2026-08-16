@@ -69,7 +69,7 @@ export default function LimitationsPage() {
         <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
           What SoterAI does and does not claim
         </h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           Security marketing tends toward absolutes. We would rather you trust us
           because we are precise about our boundaries. Here is an honest account
           of what SoterAI IDE Guard can do, what it cannot, and how to use it as
@@ -84,7 +84,7 @@ export default function LimitationsPage() {
             className="rounded-xl border border-slate-800 bg-panel/40 p-5"
           >
             <h2 className="text-base font-semibold text-slate-100">{b.title}</h2>
-            <p className="mt-2 text-sm leading-6 text-slate-400">{b.body}</p>
+            <p className="mt-2 text-sm leading-6 text-slate-200">{b.body}</p>
           </div>
         ))}
       </section>
@@ -95,14 +95,14 @@ export default function LimitationsPage() {
           {faqs.map((f) => (
             <div key={f.q}>
               <h3 className="font-semibold text-slate-100">{f.q}</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-400">{f.a}</p>
+              <p className="mt-2 text-sm leading-6 text-slate-200">{f.a}</p>
             </div>
           ))}
         </div>
       </section>
 
       <section className="mt-16 border-t border-slate-800 pt-8">
-        <h2 className="text-sm font-bold uppercase tracking-widest text-slate-400">
+        <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200">
           Explore the features honestly
         </h2>
         <div className="mt-4 flex flex-wrap gap-3">

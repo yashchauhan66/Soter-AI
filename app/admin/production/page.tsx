@@ -76,15 +76,15 @@ export default async function ProductionPage() {
     <div>
       <p className="eyebrow">Production operations</p>
       <h1 className="mt-2 text-3xl font-bold">Monitoring dashboard</h1>
-      <p className="mt-3 text-slate-400">
+      <p className="mt-3 text-slate-200">
         Rolling 24-hour operational view. Configure external alerting and OTLP collection before launch.
       </p>
       <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {cards.map(([label, value, unit]) => (
           <section className="card p-5" key={String(label)}>
-            <p className="text-sm text-slate-400">{label}</p>
+            <p className="text-sm text-slate-200">{label}</p>
             <p className="mt-2 text-xl font-bold">
-              {value} <span className="text-sm font-normal text-slate-500">{unit}</span>
+              {value} <span className="text-sm font-normal text-slate-300">{unit}</span>
             </p>
           </section>
         ))}
@@ -94,7 +94,7 @@ export default async function ProductionPage() {
         <div className="mt-4 grid gap-2 text-sm md:grid-cols-2">
           {Object.entries(PRODUCTION_THRESHOLDS).map(([key, value]) => (
             <p className="border-b border-slate-800 py-2" key={key}>
-              <span className="text-slate-400">{key}</span>
+              <span className="text-slate-200">{key}</span>
               <span className="float-right font-semibold">{value}</span>
             </p>
           ))}

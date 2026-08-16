@@ -42,6 +42,27 @@ const CHOOSER_HREFS: Record<string, string> = {
   "IDE Guard": "/extensions/ide",
 };
 
+// Workflow Guard cards get a direct node link so users can find the node on
+// each platform's marketplace in one step.
+//
+// TODO: Make Guard and Zapier Guard currently point at their integration pages.
+// Replace the href with the published marketplace URL (e.g. the Make app page
+// and the Zapier app page) once they are live.
+const NODE_HREFS: Record<string, { href: string; label: string }> = {
+  "n8n Guard": {
+    href: "https://www.npmjs.com/package/n8n-nodes-soterai",
+    label: "n8n-nodes-soterai",
+  },
+  "Make Guard": {
+    href: "/integrations/make",
+    label: "SoterAI on Make.com",
+  },
+  "Zapier Guard": {
+    href: "/integrations/zapier",
+    label: "SoterAI on Zapier",
+  },
+};
+
 export function Features() {
   return (
     <section id="features" className="py-24">
@@ -59,15 +80,26 @@ export function Features() {
                 <h3 className="font-semibold">{product.name}</h3>
                 <span className="rounded-md border border-cyan/30 bg-cyan/10 px-2 py-0.5 text-xs font-semibold text-cyan">{product.status}</span>
               </div>
-              <p className="mt-3 flex-1 text-sm leading-6 text-slate-400">{product.copy}</p>
+              <p className="mt-3 flex-1 text-sm leading-6 text-slate-200">{product.copy}</p>
               <Link
                 href={CHOOSER_HREFS[product.name] ?? product.href}
                 className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-cyan"
               >
                 {product.cta} <ArrowRight size={14} aria-hidden="true" />
               </Link>
+              {NODE_HREFS[product.name] && (
+                <Link
+                  href={NODE_HREFS[product.name].href}
+                  {...(NODE_HREFS[product.name].href.startsWith("http")
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                  className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-slate-200 transition hover:text-cyan"
+                >
+                  View node ({NODE_HREFS[product.name].label}) <ArrowRight size={12} aria-hidden="true" />
+                </Link>
+              )}
               {CHOOSER_HREFS[product.name] && (
-                <p className="mt-2 text-xs text-slate-500">
+                <p className="mt-2 text-xs text-slate-300">
               {product.name === "Browser Guard"
                 ? "Opens the Chrome / Edge installer chooser."
                 : "Opens the VS Code / Cursor / Windsurf / Kiro / Antigravity / VSCodium installer chooser."}
@@ -83,7 +115,7 @@ export function Features() {
           {roleMessaging.map((item) => (
             <article key={item.role} className="rounded-lg border border-slate-800 bg-slate-950/50 p-4">
               <h3 className="text-sm font-semibold text-slate-100">{item.role}</h3>
-              <p className="mt-2 text-xs leading-5 text-slate-400">{item.copy}</p>
+              <p className="mt-2 text-xs leading-5 text-slate-200">{item.copy}</p>
             </article>
           ))}
         </div>
@@ -91,7 +123,7 @@ export function Features() {
         <div className="mt-12 space-y-6">
           {productFeatures.map((group) => (
             <div key={group.group} className={`rounded-2xl border p-6 ${group.accent}`}>
-              <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-slate-400">{group.group}</h3>
+              <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-slate-200">{group.group}</h3>
               <div className="grid gap-5 md:grid-cols-3">
                 {group.items.map(([Icon, title, copy]) => {
                   const FeatureIcon = Icon as typeof Ban;
@@ -101,7 +133,7 @@ export function Features() {
                         <FeatureIcon aria-hidden="true" size={20} />
                       </span>
                       <h4 className="mt-4 text-lg font-semibold">{String(title)}</h4>
-                      <p className="mt-2 text-sm leading-6 text-slate-400">{String(copy)}</p>
+                      <p className="mt-2 text-sm leading-6 text-slate-200">{String(copy)}</p>
                     </article>
                   );
                 })}
@@ -133,7 +165,7 @@ export function Features() {
                     <FeatureIcon aria-hidden="true" size={20} />
                   </span>
                   <h3 className="mt-4 text-lg font-semibold">{String(title)}</h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-400">{String(copy)}</p>
+                  <p className="mt-2 text-sm leading-6 text-slate-200">{String(copy)}</p>
                 </article>
               );
             })}

@@ -56,7 +56,7 @@ export default function EnterpriseMarketingPage() {
         <div className="mt-12 grid gap-4 md:grid-cols-2">{capabilities.map((item) => <div className="border-b border-slate-800 py-4 font-medium" key={item}>{item}</div>)}</div>
       </section>
       <section className="border-y border-slate-800 py-12">
-        <div className="container-page"><h2 className="text-2xl font-bold">Honest scope</h2><p className="mt-3 max-w-3xl text-slate-400">SoterAI supports OWASP LLM Top 10 aligned risk reduction. It does not replace secure application design, access controls, human review, model governance, or incident response.</p></div>
+        <div className="container-page"><h2 className="text-2xl font-bold">Honest scope</h2><p className="mt-3 max-w-3xl text-slate-200">SoterAI supports OWASP LLM Top 10 aligned risk reduction. It does not replace secure application design, access controls, human review, model governance, or incident response.</p></div>
       </section>
     </main>
   );

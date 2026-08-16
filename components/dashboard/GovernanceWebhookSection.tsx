@@ -165,7 +165,7 @@ export function GovernanceWebhookSection({ projects }: GovernanceWebhookSectionP
             <Webhook size={18} className="text-cyan" />
             Webhook Subscriptions
           </h2>
-          <p className="mt-1 text-sm text-slate-400">
+          <p className="mt-1 text-sm text-slate-200">
             Receive real-time notifications when governance policy blocks or requires approval for
             AI provider access. Configure full webhook management at{" "}
             <a
@@ -188,14 +188,14 @@ export function GovernanceWebhookSection({ projects }: GovernanceWebhookSectionP
               <span className="text-emerald-200">
                 Governance notifications active
               </span>
-              <span className="text-xs text-slate-500">
+              <span className="text-xs text-slate-300">
                 ({endpoints.filter((ep) => ep.isActive).length} endpoint(s))
               </span>
             </>
           ) : (
             <>
-              <BellOff size={16} className="text-slate-500" />
-              <span className="text-slate-400">No governance webhook subscriptions configured</span>
+              <BellOff size={16} className="text-slate-300" />
+              <span className="text-slate-200">No governance webhook subscriptions configured</span>
             </>
           )}
         </div>
@@ -203,14 +203,14 @@ export function GovernanceWebhookSection({ projects }: GovernanceWebhookSectionP
 
       {loading && (
         <div className="flex items-center justify-center py-8">
-          <Loader2 size={24} className="animate-spin text-slate-500" />
+          <Loader2 size={24} className="animate-spin text-slate-300" />
         </div>
       )}
 
       {/* Existing governance webhooks */}
       {!loading && endpoints.length > 0 && (
         <div className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+          <p className="text-xs font-semibold uppercase tracking-wider text-slate-300">
             Active endpoints with governance events
           </p>
           {endpoints.map((ep) => {
@@ -238,7 +238,7 @@ export function GovernanceWebhookSection({ projects }: GovernanceWebhookSectionP
                         .map((ev) => (
                           <span
                             key={ev}
-                            className="rounded-md border border-slate-700 px-2 py-0.5 text-[11px] text-slate-500"
+                            className="rounded-md border border-slate-700 px-2 py-0.5 text-[11px] text-slate-300"
                           >
                             {ev}
                           </span>
@@ -255,7 +255,7 @@ export function GovernanceWebhookSection({ projects }: GovernanceWebhookSectionP
                       className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${
                         ep.isActive
                           ? "bg-emerald-500/15 text-emerald-300"
-                          : "bg-slate-800 text-slate-500"
+                          : "bg-slate-800 text-slate-300"
                       }`}
                     >
                       {ep.isActive ? "ACTIVE" : "PAUSED"}
@@ -266,7 +266,7 @@ export function GovernanceWebhookSection({ projects }: GovernanceWebhookSectionP
                 <div className="mt-2 flex items-center gap-2">
                   <button
                     onClick={() => toggleWebhook(ep.id, ep.isActive)}
-                    className="text-xs text-slate-500 hover:text-slate-300 transition-colors"
+                    className="text-xs text-slate-300 hover:text-slate-300 transition-colors"
                   >
                     {ep.isActive ? "Pause" : "Resume"}
                   </button>
@@ -288,7 +288,7 @@ export function GovernanceWebhookSection({ projects }: GovernanceWebhookSectionP
                 </div>
 
                 {expandedId === ep.id && (
-                  <div className="mt-3 rounded-lg border border-slate-800 bg-slate-950/60 p-3 text-xs text-slate-400">
+                  <div className="mt-3 rounded-lg border border-slate-800 bg-slate-950/60 p-3 text-xs text-slate-200">
                     <p>Project: {ep.project.name}</p>
                     <p className="mt-1">Secret: {ep.secretPreview}</p>
                     {ep.description && <p className="mt-1">{ep.description}</p>}
@@ -309,7 +309,7 @@ export function GovernanceWebhookSection({ projects }: GovernanceWebhookSectionP
       {!loading && endpoints.length === 0 && (
         <div className="rounded-xl border border-dashed border-slate-700 p-8 text-center">
           <Webhook size={32} className="mx-auto text-slate-600" />
-          <p className="mt-3 text-sm font-medium text-slate-400">No governance webhooks yet</p>
+          <p className="mt-3 text-sm font-medium text-slate-200">No governance webhooks yet</p>
           <p className="mt-1 text-xs text-slate-600">
             Add a webhook endpoint below to receive governance enforcement notifications.
           </p>
@@ -325,7 +325,7 @@ export function GovernanceWebhookSection({ projects }: GovernanceWebhookSectionP
         <form onSubmit={createWebhook} className="mt-4 space-y-4">
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1.5 block text-xs font-medium text-slate-400">Endpoint URL</label>
+              <label className="mb-1.5 block text-xs font-medium text-slate-200">Endpoint URL</label>
               <input
                 name="url"
                 type="url"
@@ -336,7 +336,7 @@ export function GovernanceWebhookSection({ projects }: GovernanceWebhookSectionP
               />
             </div>
             <div>
-              <label className="mb-1.5 block text-xs font-medium text-slate-400">Project</label>
+              <label className="mb-1.5 block text-xs font-medium text-slate-200">Project</label>
               <select name="projectId" required className="input w-full">
                 {projects.map((p) => (
                   <option key={p.id} value={p.id}>
@@ -348,7 +348,7 @@ export function GovernanceWebhookSection({ projects }: GovernanceWebhookSectionP
           </div>
 
           <div>
-            <label className="mb-1.5 block text-xs font-medium text-slate-400">
+            <label className="mb-1.5 block text-xs font-medium text-slate-200">
               Description (optional)
             </label>
             <input
@@ -360,7 +360,7 @@ export function GovernanceWebhookSection({ projects }: GovernanceWebhookSectionP
           </div>
 
           <fieldset>
-            <legend className="mb-2 text-xs font-medium text-slate-400">
+            <legend className="mb-2 text-xs font-medium text-slate-200">
               Governance events to subscribe to
             </legend>
             <div className="flex flex-wrap gap-3">
@@ -370,7 +370,7 @@ export function GovernanceWebhookSection({ projects }: GovernanceWebhookSectionP
                   className={`flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2 text-sm transition-colors ${
                     selectedEvents.includes(ev)
                       ? "border-cyan/50 bg-cyan/10 text-cyan-200"
-                      : "border-slate-700 text-slate-400 hover:border-slate-600"
+                      : "border-slate-700 text-slate-200 hover:border-slate-600"
                   }`}
                 >
                   <input

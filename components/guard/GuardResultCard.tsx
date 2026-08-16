@@ -27,7 +27,7 @@ export function GuardResultCard({ result }: { result: GuardResult }) {
         <RiskScore score={result.riskScore} />
         <div className="text-right">
           <RiskBadge action={result.action} />
-          <p className="mt-2 text-sm text-slate-500">
+          <p className="mt-2 text-sm text-slate-300">
             {hasWarnings
               ? "Request allowed with warning"
               : result.allowed
@@ -51,7 +51,7 @@ export function GuardResultCard({ result }: { result: GuardResult }) {
       </div>
       {result.findings.length > 0 && (
         <div className="mt-6">
-          <p className="mb-3 text-xs font-bold uppercase tracking-wider text-slate-500">Findings</p>
+          <p className="mb-3 text-xs font-bold uppercase tracking-wider text-slate-300">Findings</p>
           <div className="space-y-2">
             {result.findings.map((finding, index) => (
               <div
@@ -62,7 +62,7 @@ export function GuardResultCard({ result }: { result: GuardResult }) {
                   <p className="font-medium">{finding.label}</p>
                   <span className="text-xs font-bold text-cyan">{finding.severity}</span>
                 </div>
-                <p className="mt-1 text-sm text-slate-400">{finding.message}</p>
+                <p className="mt-1 text-sm text-slate-200">{finding.message}</p>
               </div>
             ))}
           </div>

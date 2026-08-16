@@ -20,7 +20,7 @@ export function MetricCard({
   };
   return (
     <section className="card p-5">
-      <p className="text-sm text-slate-400">{label}</p>
+      <p className="text-sm text-slate-200">{label}</p>
       <p className={`mt-2 text-2xl font-bold ${tones[tone] ?? "text-slate-300"}`}>{value}</p>
     </section>
   );
@@ -55,8 +55,8 @@ const BADGE_TONES: Record<string, string> = {
   RESOLVED: "bg-blue-400/10 text-blue-300",
   FAIL: "bg-red-400/10 text-red-300",
   WARNING: "bg-yellow-400/10 text-yellow-300",
-  DISABLED: "bg-slate-700 text-slate-400",
-  DELETED: "bg-slate-700 text-slate-400",
+  DISABLED: "bg-slate-700 text-slate-200",
+  DELETED: "bg-slate-700 text-slate-200",
   SAFE_TO_EXECUTE: "bg-emerald-400/10 text-emerald-300",
   REQUIRE_APPROVAL: "bg-yellow-400/10 text-yellow-300",
   EDITED_AND_APPROVED: "bg-cyan/10 text-cyan",
@@ -95,7 +95,7 @@ export function RiskLevel({ level }: { level: string }) {
     HIGH: "text-orange-300",
     CRITICAL: "text-red-300",
   };
-  return <span className={`text-xs font-bold ${tones[level] ?? "text-slate-400"}`}>{level}</span>;
+  return <span className={`text-xs font-bold ${tones[level] ?? "text-slate-200"}`}>{level}</span>;
 }
 
 // ── PayloadViewer ───────────────────────────────────────────────────────
@@ -108,7 +108,7 @@ export function PayloadViewer({
 }) {
   return (
     <div>
-      <p className="text-xs font-semibold uppercase text-slate-500">{title}</p>
+      <p className="text-xs font-semibold uppercase text-slate-300">{title}</p>
       <pre className="mt-1 max-h-36 overflow-auto rounded bg-slate-950/70 p-2 text-xs text-slate-300">
         {value ?? "No data supplied."}
       </pre>
@@ -120,7 +120,7 @@ export function PayloadViewer({
 export function EmptyRow({ colSpan, message }: { colSpan: number; message: string }) {
   return (
     <tr>
-      <td className="py-8 text-center text-sm text-slate-500" colSpan={colSpan}>
+      <td className="py-8 text-center text-sm text-slate-300" colSpan={colSpan}>
         {message}
       </td>
     </tr>

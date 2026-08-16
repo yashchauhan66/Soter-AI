@@ -14,7 +14,7 @@ export const metadata = {
 
 export default async function ModelScanPage() {
   const active = await getActiveOrganization();
-  if (!active) return <p className="p-6 text-slate-400">No active organization.</p>;
+  if (!active) return <p className="p-6 text-slate-200">No active organization.</p>;
 
   const project = await db.project.findFirst({
     where: { organizationId: active.org.id },
@@ -53,7 +53,7 @@ export default async function ModelScanPage() {
       <div className="mt-7 grid gap-4 sm:grid-cols-4">
         {cards.map((c) => (
           <section className="card p-5" key={c.label}>
-            <div className="flex items-center gap-2 text-sm text-slate-400">
+            <div className="flex items-center gap-2 text-sm text-slate-200">
               <c.Icon size={16} className={c.color} /> {c.label}
             </div>
             <p className={`mt-2 text-2xl font-bold ${c.color}`}>{c.value}</p>
@@ -71,7 +71,7 @@ export default async function ModelScanPage() {
           <div className="mt-4 overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-slate-800 text-left text-slate-400">
+                <tr className="border-b border-slate-800 text-left text-slate-200">
                   <th className="py-2 pr-3 font-medium">File</th>
                   <th className="py-2 pr-3 font-medium">Format</th>
                   <th className="py-2 pr-3 font-medium">Verdict</th>
@@ -83,16 +83,16 @@ export default async function ModelScanPage() {
                 {scans.map((s) => (
                   <tr key={s.id} className="border-b border-slate-800/50">
                     <td className="py-2 pr-3 font-medium text-slate-200">{s.filename}</td>
-                    <td className="py-2 pr-3 text-slate-400">{s.format}</td>
+                    <td className="py-2 pr-3 text-slate-200">{s.format}</td>
                     <td className="py-2 pr-3">
                       <span className={
                         s.verdict === "MALICIOUS" ? "text-red-400" :
                         s.verdict === "SUSPICIOUS" ? "text-amber-400" :
-                        s.verdict === "SAFE" ? "text-lime-400" : "text-slate-400"
+                        s.verdict === "SAFE" ? "text-lime-400" : "text-slate-200"
                       }>{s.verdict}</span>
                     </td>
                     <td className="py-2 pr-3 text-slate-300">{s.riskScore}</td>
-                    <td className="py-2 pr-3 text-slate-500">{new Date(s.createdAt).toLocaleString()}</td>
+                    <td className="py-2 pr-3 text-slate-300">{new Date(s.createdAt).toLocaleString()}</td>
                   </tr>
                 ))}
               </tbody>
@@ -101,7 +101,7 @@ export default async function ModelScanPage() {
         </section>
       )}
 
-      <p className="mt-6 text-xs text-slate-500">
+      <p className="mt-6 text-xs text-slate-300">
         Looking for the full AI Bill of Materials?{" "}
         <Link href="/dashboard/security/supply-chain" className="text-cyan underline underline-offset-2">Supply chain inventory →</Link>
       </p>

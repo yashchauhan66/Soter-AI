@@ -76,13 +76,13 @@ const res = await fetch("https://soterai.in/api/agent/passport/delegate", {
       {/* Database-backed recent activity */}
       <div className="grid gap-5 xl:grid-cols-3">
         <section className="card p-5">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-400">Recent delegations</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-200">Recent delegations</h2>
           <div className="mt-3 space-y-2">
-            {recentDelegations.length === 0 && <p className="text-sm text-slate-500">No delegations yet. They appear here when an agent issues a scoped passport to a child agent.</p>}
+            {recentDelegations.length === 0 && <p className="text-sm text-slate-300">No delegations yet. They appear here when an agent issues a scoped passport to a child agent.</p>}
             {recentDelegations.map((d: IdentityFabricDelegation) => (
               <div key={d.id} className="rounded-lg border border-slate-800 p-3 text-xs">
-                <p><span className="text-slate-500">Child:</span> {d.childAgentIdentityId}</p>
-                <p><span className="text-slate-500">Parent JTI:</span> <span className="font-mono">{d.parentPassportJti.slice(0, 24)}...</span></p>
+                <p><span className="text-slate-300">Child:</span> {d.childAgentIdentityId}</p>
+                <p><span className="text-slate-300">Parent JTI:</span> <span className="font-mono">{d.parentPassportJti.slice(0, 24)}...</span></p>
                 <p className="mt-1 text-slate-600">{d.createdAt.toLocaleString()}</p>
               </div>
             ))}
@@ -90,13 +90,13 @@ const res = await fetch("https://soterai.in/api/agent/passport/delegate", {
         </section>
 
         <section className="card p-5">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-400">Recent revocations</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-200">Recent revocations</h2>
           <div className="mt-3 space-y-2">
-            {recentRevocations.length === 0 && <p className="text-sm text-slate-500">No revocations yet. Revoking a passport instantly invalidates an agent identity — revocations are logged here.</p>}
+            {recentRevocations.length === 0 && <p className="text-sm text-slate-300">No revocations yet. Revoking a passport instantly invalidates an agent identity — revocations are logged here.</p>}
             {recentRevocations.map((r: IdentityFabricRevocation) => (
               <div key={r.id} className="rounded-lg border border-red-400/20 bg-red-400/5 p-3 text-xs">
-                <p><span className="text-slate-500">JTI:</span> <span className="font-mono">{r.jti.slice(0, 24)}...</span></p>
-                <p className="mt-1 text-slate-400">{r.reason ?? "No reason"}</p>
+                <p><span className="text-slate-300">JTI:</span> <span className="font-mono">{r.jti.slice(0, 24)}...</span></p>
+                <p className="mt-1 text-slate-200">{r.reason ?? "No reason"}</p>
                 <p className="mt-1 text-slate-600">{r.revokedAt.toLocaleString()}</p>
               </div>
             ))}
@@ -104,13 +104,13 @@ const res = await fetch("https://soterai.in/api/agent/passport/delegate", {
         </section>
 
         <section className="card p-5">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-400">Service principals</h2>
+          <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-200">Service principals</h2>
           <div className="mt-3 space-y-2">
-            {recentPrincipals.length === 0 && <p className="text-sm text-slate-500">No principals registered.</p>}
+            {recentPrincipals.length === 0 && <p className="text-sm text-slate-300">No principals registered.</p>}
             {recentPrincipals.map((p: IdentityFabricServicePrincipal) => (
               <div key={p.id} className="rounded-lg border border-slate-800 p-3 text-xs">
                 <p><span className="text-cyan">{p.provider}</span> — {p.principalId}</p>
-                <p className="mt-1 text-slate-500">Agent: {p.agentIdentityId}</p>
+                <p className="mt-1 text-slate-300">Agent: {p.agentIdentityId}</p>
                 <p className="mt-1 text-slate-600">{p.createdAt.toLocaleString()}</p>
               </div>
             ))}
@@ -132,7 +132,7 @@ const res = await fetch("https://soterai.in/api/agent/passport/delegate", {
 
       {/* How it works */}
       <section className="card p-5">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-400">How it works</h2>
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-200">How it works</h2>
         <div className="mt-4 grid gap-4 md:grid-cols-2">
           {[
             {
@@ -170,7 +170,7 @@ const res = await fetch("https://soterai.in/api/agent/passport/delegate", {
                 </span>
                 <h3 className="text-sm font-semibold">{step.heading}</h3>
               </div>
-              <p className="mt-3 text-sm leading-6 text-slate-400">
+              <p className="mt-3 text-sm leading-6 text-slate-200">
                 {step.body}
               </p>
             </div>

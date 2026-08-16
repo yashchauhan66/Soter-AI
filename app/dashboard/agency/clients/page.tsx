@@ -12,14 +12,14 @@ export default async function AgencyClientsPage() {
         <div>
           <p className="eyebrow">Agency</p>
           <h1 className="mt-2 text-3xl font-bold">Clients</h1>
-          <p className="mt-2 text-slate-400">Each client has their own projects, API keys, badge, and reports.</p>
+          <p className="mt-2 text-slate-200">Each client has their own projects, API keys, badge, and reports.</p>
         </div>
         <Link href="/dashboard/agency/clients/new" className="button-primary gap-2"><Plus size={18} /> Add client</Link>
       </div>
       {clients.length ? (
         <div className="mt-7 overflow-x-auto card">
           <table className="w-full min-w-[700px] text-left text-sm">
-            <thead className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-500">
+            <thead className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-300">
               <tr>
                 <th className="px-4 py-3">Client</th>
                 <th className="px-4 py-3">Contact</th>
@@ -32,9 +32,9 @@ export default async function AgencyClientsPage() {
               {clients.map((client) => (
                 <tr key={client.id} className="hover:bg-slate-900/50">
                   <td className="px-4 py-3 font-semibold">{client.name}</td>
-                  <td className="px-4 py-3 text-slate-400">{client.contactEmail ?? "-"}</td>
+                  <td className="px-4 py-3 text-slate-200">{client.contactEmail ?? "-"}</td>
                   <td className="px-4 py-3">{client._count.projects}</td>
-                  <td className="px-4 py-3 text-slate-500">{new Date(client.createdAt).toLocaleDateString()}</td>
+                  <td className="px-4 py-3 text-slate-300">{new Date(client.createdAt).toLocaleDateString()}</td>
                   <td className="px-4 py-3 text-right"><Link href={`/dashboard/agency/clients/${client.id}`} className="text-cyan">Manage</Link></td>
                 </tr>
               ))}

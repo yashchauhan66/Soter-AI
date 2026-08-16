@@ -91,10 +91,10 @@ export default function GenericChatbotDocsPage() {
       <DocViewTracker />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-500 transition-colors hover:text-cyan">← Back to docs</Link>
+        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
         <p className="eyebrow mt-6">Pattern guide</p>
         <h1 className="mt-3 text-4xl font-bold">Generic Chatbot & Agent Security</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           Use this pattern for any chatbot, RAG bot, browser agent, desktop agent, or custom tool-using AI system.
         </p>
 
@@ -110,7 +110,7 @@ export default function GenericChatbotDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 3: Agent with tool firewall</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             For agents that call tools, APIs, or access data:
           </p>
           <CodeBlock language="typescript" title="agent-firewall.js" showLineNumbers>{agentCode}</CodeBlock>
@@ -130,13 +130,13 @@ export default function GenericChatbotDocsPage() {
                   <CheckCircle2 className="mt-0.5 shrink-0 text-lime" size={16} aria-hidden="true" />
                   <div>
                     <p className="font-semibold text-sm">{title}</p>
-                    <p className="mt-1 text-sm leading-6 text-slate-400">{copy}</p>
+                    <p className="mt-1 text-sm leading-6 text-slate-200">{copy}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          <p className="mt-3 text-sm italic text-slate-500">This reduces risk; it does not guarantee complete protection.</p>
+          <p className="mt-3 text-sm italic text-slate-300">This reduces risk; it does not guarantee complete protection.</p>
         </section>
 
         <section className="docs-section">

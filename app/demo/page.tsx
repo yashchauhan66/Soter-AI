@@ -11,11 +11,11 @@ export default function DemoPage(){
   useEffect(() => {
     document.title = "AI Security Demos | SoterAI";
   }, []);
-  return <main className="container-page py-16"><p className="eyebrow">Product demos</p><h1 className="mt-2 text-4xl font-bold">Explore guarded AI workflows</h1><p className="mt-4 max-w-3xl text-slate-400">These demos illustrate risk reduction and defense-in-depth behavior. They do not demonstrate offensive exploitation or guarantee complete detection.</p><div className="mt-10 grid gap-4 md:grid-cols-2">{demos.map(([title,copy,href])=><Link className="card p-6 hover:border-cyan/50" href={href} key={title}><h2 className="text-xl font-semibold">{title}</h2><p className="mt-2 text-sm text-slate-400">{copy}</p></Link>)}</div>      {/* Demo Video Section */}
+  return <main className="container-page py-16"><p className="eyebrow">Product demos</p><h1 className="mt-2 text-4xl font-bold">Explore guarded AI workflows</h1><p className="mt-4 max-w-3xl text-slate-200">These demos illustrate risk reduction and defense-in-depth behavior. They do not demonstrate offensive exploitation or guarantee complete detection.</p><div className="mt-10 grid gap-4 md:grid-cols-2">{demos.map(([title,copy,href])=><Link className="card p-6 hover:border-cyan/50" href={href} key={title}><h2 className="text-xl font-semibold">{title}</h2><p className="mt-2 text-sm text-slate-200">{copy}</p></Link>)}</div>      {/* Demo Video Section */}
       <section id="video" className="mt-16 scroll-mt-20 border-t border-slate-800 pt-10">
         <p className="eyebrow text-center">Live walkthrough</p>
         <h2 className="mt-2 text-center text-3xl font-bold">See SoterAI in action</h2>
-        <p className="mx-auto mt-3 max-w-2xl text-center text-slate-400">
+        <p className="mx-auto mt-3 max-w-2xl text-center text-slate-200">
           Watch how SoterAI detects and blocks prompt injection, redacts India PII, stops secrets leakage, and more — all in under 50ms.
         </p>
 
@@ -39,7 +39,7 @@ export default function DemoPage(){
         <div id="demo-animated" className="mt-10 max-w-5xl scroll-mt-20">
           <div className="mb-4 flex items-center gap-2">
             <span className="rounded-md bg-cyan/10 px-2.5 py-1 text-xs font-bold text-cyan">01</span>
-            <span className="text-sm font-medium text-slate-400">Interactive walkthrough</span>
+            <span className="text-sm font-medium text-slate-200">Interactive walkthrough</span>
           </div>
           <DemoVideo />
         </div>
@@ -48,7 +48,7 @@ export default function DemoPage(){
         <div id="demo-video" className="mt-16 max-w-4xl scroll-mt-20">
           <div className="mb-4 flex items-center gap-2">
             <span className="rounded-md bg-cyan/10 px-2.5 py-1 text-xs font-bold text-cyan">02</span>
-            <span className="text-sm font-medium text-slate-400">Full walkthrough video</span>
+            <span className="text-sm font-medium text-slate-200">Full walkthrough video</span>
           </div>
           {process.env.NEXT_PUBLIC_DEMO_VIDEO_ID ? (
             <VideoPlayer
@@ -64,7 +64,7 @@ export default function DemoPage(){
                 <Film className="h-8 w-8 text-cyan" />
               </div>
               <p className="text-lg font-semibold text-slate-200">Prefer hands-on?</p>
-              <p className="mt-2 max-w-md text-sm text-slate-400">
+              <p className="mt-2 max-w-md text-sm text-slate-200">
                 Skip the video — try SoterAI yourself. Fire a prompt-injection or PII attack in the live playground and watch it get blocked in under 50ms.
               </p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">

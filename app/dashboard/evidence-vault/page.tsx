@@ -89,34 +89,34 @@ export default async function EvidenceVaultPage({ searchParams }: { searchParams
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <h2 className="text-lg font-semibold">Continuous control assurance</h2>
-            <p className="mt-1 max-w-3xl text-sm text-slate-400">Runtime evidence is checked for freshness, failures, and required control coverage. Missing evidence is not counted as a pass.</p>
+            <p className="mt-1 max-w-3xl text-sm text-slate-200">Runtime evidence is checked for freshness, failures, and required control coverage. Missing evidence is not counted as a pass.</p>
           </div>
           <StatusBadge value={assurance.overallStatus} />
         </div>
         <table className="mt-4 w-full min-w-[980px] text-left text-sm">
-          <thead className="text-xs uppercase text-slate-500"><tr><th className="py-2">Status</th><th>Control</th><th>Fresh evidence</th><th>Latest evidence</th><th>Framework references</th></tr></thead>
+          <thead className="text-xs uppercase text-slate-300"><tr><th className="py-2">Status</th><th>Control</th><th>Fresh evidence</th><th>Latest evidence</th><th>Framework references</th></tr></thead>
           <tbody className="divide-y divide-slate-800">
             {assurance.controls.map((control) => (
               <tr key={control.id}>
                 <td className="py-3"><StatusBadge value={control.status} /></td>
-                <td><p className="font-semibold">{control.name}</p><p className="mt-1 text-xs text-slate-500">{control.id}</p></td>
+                <td><p className="font-semibold">{control.name}</p><p className="mt-1 text-xs text-slate-300">{control.id}</p></td>
                 <td>{control.evidenceIds.length}</td>
                 <td>{control.latestEvidenceAt ? new Date(control.latestEvidenceAt).toLocaleString() : "No evidence"}</td>
-                <td className="max-w-[380px] text-xs text-slate-400">{Object.entries(control.frameworks).map(([framework, references]) => `${framework}: ${references.join(", ")}`).join(" · ")}</td>
+                <td className="max-w-[380px] text-xs text-slate-200">{Object.entries(control.frameworks).map(([framework, references]) => `${framework}: ${references.join(", ")}`).join(" · ")}</td>
               </tr>
             ))}
           </tbody>
         </table>
-        <p className="mt-4 text-xs text-slate-500">{assurance.disclaimer}</p>
+        <p className="mt-4 text-xs text-slate-300">{assurance.disclaimer}</p>
       </section>
 
       <section className="card overflow-x-auto p-5">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">Evidence items</h2>
-          <span className="text-xs font-medium text-slate-500">{items.length} recent</span>
+          <span className="text-xs font-medium text-slate-300">{items.length} recent</span>
         </div>
         <table className="mt-4 w-full min-w-[1080px] text-left text-sm">
-          <thead className="text-xs uppercase text-slate-500">
+          <thead className="text-xs uppercase text-slate-300">
             <tr>
               <th className="py-2">Status</th>
               <th>Type</th>
@@ -135,11 +135,11 @@ export default async function EvidenceVaultPage({ searchParams }: { searchParams
                 <td className="font-semibold"><RiskLevel level={item.riskLevel ?? "LOW"} /></td>
                 <td>{item.controlName}</td>
                 <td className="max-w-[320px] truncate">{item.title}</td>
-                <td className="font-mono text-xs text-slate-500">{item.contentHash?.slice(0, 18) ?? "-"}</td>
+                <td className="font-mono text-xs text-slate-300">{item.contentHash?.slice(0, 18) ?? "-"}</td>
                 <td>{item.createdAt.toLocaleString()}</td>
               </tr>
             ))}
-            {items.length === 0 && <tr><td className="py-5 text-slate-500" colSpan={7}>No compliance evidence collected yet.</td></tr>}
+            {items.length === 0 && <tr><td className="py-5 text-slate-300" colSpan={7}>No compliance evidence collected yet.</td></tr>}
           </tbody>
         </table>
       </section>
@@ -148,7 +148,7 @@ export default async function EvidenceVaultPage({ searchParams }: { searchParams
         <div className="card p-5">
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-lg font-semibold">Reports</h2>
-            <span className="text-xs font-medium text-slate-500">{reports.length} reports</span>
+            <span className="text-xs font-medium text-slate-300">{reports.length} reports</span>
           </div>
           <div className="mt-4 grid gap-3">
             {reports.map((report) => (
@@ -156,21 +156,21 @@ export default async function EvidenceVaultPage({ searchParams }: { searchParams
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
                     <p className="font-semibold">{report.reportName}</p>
-                    <p className="mt-1 text-slate-400">{report.summary}</p>
-                    <p className="mt-2 text-xs text-slate-500">{report.reportType} / {formatEvidenceCount(report.evidenceIdsJson)} items</p>
+                    <p className="mt-1 text-slate-200">{report.summary}</p>
+                    <p className="mt-2 text-xs text-slate-300">{report.reportType} / {formatEvidenceCount(report.evidenceIdsJson)} items</p>
                   </div>
                   <StatusBadge value={report.status} />
                 </div>
               </div>
             ))}
-            {reports.length === 0 && <p className="text-sm text-slate-500">No evidence reports generated yet.</p>}
+            {reports.length === 0 && <p className="text-sm text-slate-300">No evidence reports generated yet.</p>}
           </div>
         </div>
 
         <div className="card p-5">
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-lg font-semibold">Latest evidence detail</h2>
-            <span className="text-xs font-medium text-slate-500">Redacted</span>
+            <span className="text-xs font-medium text-slate-300">Redacted</span>
           </div>
           <div className="mt-4 grid gap-3">
             {items.slice(0, 8).map((item) => (
@@ -178,14 +178,14 @@ export default async function EvidenceVaultPage({ searchParams }: { searchParams
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
                     <p className="font-semibold">{item.title}</p>
-                    <p className="mt-1 text-slate-400">{item.summary}</p>
+                    <p className="mt-1 text-slate-200">{item.summary}</p>
                   </div>
                   <RiskLevel level={item.riskLevel ?? "LOW"} />
                 </div>
                 <PayloadViewer title="Evidence data" value={safeJson(item.evidenceJson)} />
               </div>
             ))}
-            {items.length === 0 && <p className="text-sm text-slate-500">No redacted evidence detail available yet.</p>}
+            {items.length === 0 && <p className="text-sm text-slate-300">No redacted evidence detail available yet.</p>}
           </div>
         </div>
       </section>

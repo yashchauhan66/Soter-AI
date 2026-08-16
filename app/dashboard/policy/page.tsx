@@ -26,7 +26,7 @@ export default async function PolicyPage({
         <div>
           <p className="eyebrow">Project policy</p>
           <h1 className="mt-2 text-3xl font-bold">Guard policy &amp; thresholds</h1>
-          <p className="mt-3 text-slate-400">Choose a mode, toggle individual detectors, add custom topics or patterns, and set the fallback message returned on a block.</p>
+          <p className="mt-3 text-slate-200">Choose a mode, toggle individual detectors, add custom topics or patterns, and set the fallback message returned on a block.</p>
         </div>
         <ProjectSwitcher projects={projects} selectedId={project.id} />
       </div>

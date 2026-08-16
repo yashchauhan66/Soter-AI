@@ -149,8 +149,8 @@ export function PlanGrid({ organizationId, currentPlan, plans, enterpriseEmail }
               </div>
               <p className="mt-4 text-lg font-bold">{plan.name}</p>
               <p className="mt-1 text-2xl font-black">{plan.price}</p>
-              <p className="mt-2 text-xs text-slate-500">{plan.description}</p>
-              <ul className="mt-3 space-y-1.5 text-xs text-slate-400">
+              <p className="mt-2 text-xs text-slate-300">{plan.description}</p>
+              <ul className="mt-3 space-y-1.5 text-xs text-slate-200">
                 {plan.features.map((feature) => <li key={feature}>· {feature}</li>)}
               </ul>
               <div className="mt-auto pt-5">
@@ -175,7 +175,7 @@ export function PlanGrid({ organizationId, currentPlan, plans, enterpriseEmail }
           </div>
           <p className="mt-4 text-lg font-bold">Enterprise</p>
           <p className="mt-1 text-2xl font-black">Talk to us</p>
-          <p className="mt-2 text-xs text-slate-500">Custom volume, SSO, audit log retention, priority support.</p>
+          <p className="mt-2 text-xs text-slate-300">Custom volume, SSO, audit log retention, priority support.</p>
           <div className="mt-auto pt-5">
             <a href={`mailto:${enterpriseEmail}?subject=${encodeURIComponent("Enterprise plan inquiry")}`} className="button-secondary block w-full text-center !py-2 text-xs gap-2">
               Contact sales <ExternalLink size={12} />

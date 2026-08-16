@@ -105,7 +105,7 @@ export default function PricingPage() {
       <section className="container-page py-16">
         <p className="eyebrow">Pricing</p>
         <h1 className="mt-2 text-4xl font-bold">Plans for guarded AI operations</h1>
-        <p className="mt-4 max-w-3xl text-slate-400">
+        <p className="mt-4 max-w-3xl text-slate-200">
           Server-enforced limits, transparent lifecycle states, and OWASP LLM Top 10 aligned defense-in-depth.
           No plan claims complete protection, SOC2 compliance, or unqualified enterprise GA readiness.
         </p>
@@ -114,7 +114,7 @@ export default function PricingPage() {
             <article className="card flex flex-col p-5" key={plan.name}>
               <h2 className="text-xl font-semibold">{plan.name}</h2>
               <p className="mt-2 text-2xl font-bold text-cyan">{plan.price}</p>
-              <p className="mt-3 min-h-20 text-sm text-slate-400">{plan.copy}</p>
+              <p className="mt-3 min-h-20 text-sm text-slate-200">{plan.copy}</p>
               <div className="mt-4 space-y-2 text-sm">{plan.features.map((feature) => <p key={feature}>+ {feature}</p>)}</div>
               <Link className="button-secondary mt-6 !px-3 !py-2" href={plan.href}>{plan.cta}</Link>
             </article>
@@ -124,7 +124,7 @@ export default function PricingPage() {
 
       <section className="container-page pb-16">
         <h2 className="text-2xl font-semibold">Feature comparison</h2>
-        <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-400">
+        <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-200">
           Compare Starter, Pro, and Enterprise before choosing a plan. Free is for evaluation and playground use.
         </p>
         <div className="mt-6 overflow-x-auto rounded-xl border border-slate-800">
@@ -155,13 +155,13 @@ export default function PricingPage() {
         <div className="container-page grid gap-8 md:grid-cols-2">
           <div>
             <h2 className="text-xl font-semibold">Billing behavior</h2>
-            <p className="mt-3 text-sm leading-6 text-slate-400">
+            <p className="mt-3 text-sm leading-6 text-slate-200">
               Trials expire after the configured window. Payment failures enter a limited grace period. Plan activation and changes require server-verified Razorpay signatures.
             </p>
           </div>
           <div>
             <h2 className="text-xl font-semibold">Need deployment review?</h2>
-            <p className="mt-3 text-sm leading-6 text-slate-400">
+            <p className="mt-3 text-sm leading-6 text-slate-200">
               Enterprise pricing depends on message volume, deployment model, support expectations, and integration scope. Enterprise GA remains evidence-gated.
             </p>
             <Link href="/contact-sales" className="mt-4 inline-block text-cyan hover:underline">Book Security Demo</Link>
@@ -171,7 +171,7 @@ export default function PricingPage() {
 
       <section className="container-page py-16">
         <h2 className="text-2xl font-semibold">Product status by surface</h2>
-        <p className="mt-3 text-slate-400">Integrations are sold and supported according to their status label. Stable does not mean complete protection; Beta and Labs require pilot expectations.</p>
+        <p className="mt-3 text-slate-200">Integrations are sold and supported according to their status label. Stable does not mean complete protection; Beta and Labs require pilot expectations.</p>
         <div className="mt-6 grid gap-3 md:grid-cols-3">
           {productStatus.map((product) => (
             <div key={product.name} className="rounded-lg border border-slate-800 bg-slate-950/60 p-4">
@@ -179,7 +179,7 @@ export default function PricingPage() {
                 <h3 className="font-semibold">{product.name}</h3>
                 <span className="rounded-md border border-cyan/30 bg-cyan/10 px-2 py-0.5 text-xs text-cyan">{product.status}</span>
               </div>
-              <p className="mt-2 text-sm text-slate-400">{product.copy}</p>
+              <p className="mt-2 text-sm text-slate-200">{product.copy}</p>
             </div>
           ))}
         </div>
@@ -192,7 +192,7 @@ export default function PricingPage() {
             {faqs.map((faq) => (
               <div key={faq.q} className="card p-5">
                 <h3 className="font-semibold text-white">{faq.q}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-400">{faq.a}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-200">{faq.a}</p>
               </div>
             ))}
           </div>

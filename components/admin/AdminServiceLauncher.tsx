@@ -59,7 +59,7 @@ export function AdminServiceLauncher({ counts }: { counts: AdminBadgeCounts }) {
             <LayoutGrid size={18} className="text-cyan" />
             Service launcher
           </h2>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-sm text-slate-300">
             {totalServices} services in one click
             {attentionCount > 0 && (
               <>
@@ -74,7 +74,7 @@ export function AdminServiceLauncher({ counts }: { counts: AdminBadgeCounts }) {
         <div className="relative sm:w-72">
           <Search
             size={15}
-            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"
+            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-300"
           />
           <input
             type="text"
@@ -82,7 +82,7 @@ export function AdminServiceLauncher({ counts }: { counts: AdminBadgeCounts }) {
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Filter services…"
             aria-label="Filter admin services"
-            className="w-full rounded-lg border border-slate-800 bg-slate-950/70 py-2 pl-9 pr-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan/50"
+            className="w-full rounded-lg border border-slate-800 bg-slate-950/70 py-2 pl-9 pr-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-300 focus:border-cyan/50"
           />
         </div>
       </div>
@@ -118,7 +118,7 @@ export function AdminServiceLauncher({ counts }: { counts: AdminBadgeCounts }) {
                             ? red
                               ? "bg-red-500/10 text-red-300"
                               : "bg-amber-500/10 text-amber-300"
-                            : "bg-slate-900 text-slate-400 group-hover:bg-cyan/10 group-hover:text-cyan"
+                            : "bg-slate-900 text-slate-200 group-hover:bg-cyan/10 group-hover:text-cyan"
                         }`}
                       >
                         <Icon size={17} />
@@ -140,7 +140,7 @@ export function AdminServiceLauncher({ counts }: { counts: AdminBadgeCounts }) {
                             </span>
                           )}
                         </div>
-                        <p className="mt-0.5 line-clamp-2 text-xs leading-5 text-slate-500">
+                        <p className="mt-0.5 line-clamp-2 text-xs leading-5 text-slate-300">
                           {item.hint}
                         </p>
                       </div>
@@ -153,7 +153,7 @@ export function AdminServiceLauncher({ counts }: { counts: AdminBadgeCounts }) {
         </div>
       ) : (
         <div className="mt-5 flex flex-col items-center gap-3 rounded-xl border border-slate-800 bg-slate-950/40 p-8 text-center">
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-slate-200">
             No service matches “{query}”.
           </p>
           <button

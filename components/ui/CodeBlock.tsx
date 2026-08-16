@@ -70,17 +70,17 @@ export function CodeBlock({ children, language, className, title, showLineNumber
         <div className="flex items-center justify-between border-b border-slate-800 bg-slate-900/70 px-4 py-2.5">
           <div className="flex items-center gap-3">
             {displayLang && (
-              <span className="rounded-md border border-slate-700 bg-slate-800/60 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+              <span className="rounded-md border border-slate-700 bg-slate-800/60 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-slate-200">
                 {displayLang}
               </span>
             )}
             {title && !displayLang && (
-              <span className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-400">{title}</span>
+              <span className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-200">{title}</span>
             )}
           </div>
           <button
             onClick={handleCopy}
-            className="flex items-center gap-1.5 rounded-md px-2 py-1 text-[10px] uppercase tracking-wider text-slate-500 transition hover:bg-slate-800 hover:text-slate-300"
+            className="flex items-center gap-1.5 rounded-md px-2 py-1 text-[10px] uppercase tracking-wider text-slate-300 transition hover:bg-slate-800 hover:text-slate-300"
             aria-label={copied ? "Copied" : "Copy code"}
           >
             {copied ? (

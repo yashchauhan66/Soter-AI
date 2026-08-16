@@ -91,20 +91,20 @@ export default function RagDocsPage() {
       <DocViewTracker />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-500 transition-colors hover:text-cyan">← Back to docs</Link>
+        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
         <p className="eyebrow mt-6">Integration guide</p>
         <h1 className="mt-3 text-4xl font-bold">RAG / LangChain / LlamaIndex Security</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           Protect RAG retrieval flows, LangChain chains, and LlamaIndex query engines with SoterAI.
         </p>
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">LangChain chain protection</h2>
-          <p className="mt-3 leading-7 text-slate-400">Wrap any LCEL Runnable or chain using <InlineCode>protect_langchain_chain</InlineCode>:</p>
+          <p className="mt-3 leading-7 text-slate-200">Wrap any LCEL Runnable or chain using <InlineCode>protect_langchain_chain</InlineCode>:</p>
           <CodeBlock language="python" title="langchain.py" showLineNumbers>{langchainCode}</CodeBlock>
           <div className="mt-6 rounded-lg border border-slate-800 bg-slate-950/50 p-4">
             <p className="text-sm font-semibold text-slate-300">How it works</p>
-            <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-slate-400">
+            <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-slate-200">
               <li><strong>Input guard</strong> — Prompt checked for injection, jailbreaks, PII</li>
               <li><strong>Safe input</strong> — Redacted/safe text passed to your chain</li>
               <li><strong>Output guard</strong> — Response checked for leaked secrets, unsafe content</li>
@@ -115,13 +115,13 @@ export default function RagDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Direct RAG protection</h2>
-          <p className="mt-3 leading-7 text-slate-400">Guard every stage with <InlineCode>protect_rag</InlineCode>:</p>
+          <p className="mt-3 leading-7 text-slate-200">Guard every stage with <InlineCode>protect_rag</InlineCode>:</p>
           <CodeBlock language="python" title="rag.py" showLineNumbers>{ragCode}</CodeBlock>
         </section>
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">TypeScript RAG</h2>
-          <p className="mt-3 leading-7 text-slate-400">Use <InlineCode>protectRag</InlineCode> from the JS SDK:</p>
+          <p className="mt-3 leading-7 text-slate-200">Use <InlineCode>protectRag</InlineCode> from the JS SDK:</p>
           <CodeBlock language="typescript" title="rag.ts" showLineNumbers>{tsRagCode}</CodeBlock>
         </section>
 
@@ -139,7 +139,7 @@ export default function RagDocsPage() {
                   <CheckCircle2 className="mt-0.5 shrink-0 text-lime" size={16} aria-hidden="true" />
                   <div>
                     <p className="font-semibold text-sm">{title}</p>
-                    <p className="mt-1 text-sm leading-6 text-slate-400">{copy}</p>
+                    <p className="mt-1 text-sm leading-6 text-slate-200">{copy}</p>
                   </div>
                 </div>
               </div>

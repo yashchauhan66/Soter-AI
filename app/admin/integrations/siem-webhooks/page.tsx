@@ -25,7 +25,7 @@ export default async function SiemWebhooksPage() {
     <div>
       <div className="mb-6">
         <h1 className="text-2xl font-bold">SIEM / Webhook Integrations</h1>
-        <p className="mt-1 text-sm text-slate-400">
+        <p className="mt-1 text-sm text-slate-200">
           Forward security events to your SIEM or custom webhook endpoints. All payloads are HMAC-SHA256 signed and redacted by default.
         </p>
       </div>

@@ -24,7 +24,7 @@ export default async function ExtensionEnrollmentsPage() {
     <div>
       <div className="mb-6">
         <h1 className="text-2xl font-bold">Extension Enrollment Tokens</h1>
-        <p className="mt-1 text-sm text-slate-400">
+        <p className="mt-1 text-sm text-slate-200">
           Create, manage, and revoke enrollment tokens for browser extension deployment. Tokens are only shown once at creation.
         </p>
       </div>

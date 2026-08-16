@@ -69,7 +69,7 @@ export function PHLaunchBanner() {
           </a>
           <button
             onClick={() => setDismissed(true)}
-            className="rounded-md p-1 text-slate-500 transition hover:bg-slate-800 hover:text-slate-300"
+            className="rounded-md p-1 text-slate-300 transition hover:bg-slate-800 hover:text-slate-300"
             aria-label="Dismiss banner"
           >
             <X size={16} />

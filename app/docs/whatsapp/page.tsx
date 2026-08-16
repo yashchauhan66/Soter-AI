@@ -58,10 +58,10 @@ export default function WhatsappDocsPage() {
       <DocViewTracker />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-500 transition-colors hover:text-cyan">← Back to docs</Link>
+        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
         <p className="eyebrow mt-6">Platform guide</p>
         <h1 className="mt-3 text-4xl font-bold">WhatsApp Chatbot Security Guide</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           Protect your WhatsApp chatbot deployments with input/output guarding and India-specific PII redaction.
         </p>
 
@@ -89,7 +89,7 @@ export default function WhatsappDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">India-specific PII detection</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             SoterAI automatically detects and redacts India-specific personally identifiable information:
           </p>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -103,7 +103,7 @@ export default function WhatsappDocsPage() {
             ].map(([title, copy]) => (
               <div key={title} className="rounded-lg border border-slate-800 bg-slate-950/45 p-3">
                 <p className="font-semibold text-sm">{title}</p>
-                <p className="mt-1 text-xs text-slate-400">{copy}</p>
+                <p className="mt-1 text-xs text-slate-200">{copy}</p>
               </div>
             ))}
           </div>

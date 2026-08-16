@@ -118,11 +118,11 @@ if (result.leakDetected) {
       <section className="card overflow-x-auto p-5">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">Canary tokens</h2>
-          <span className="text-xs font-medium text-slate-500">{tokens.length} tokens</span>
+          <span className="text-xs font-medium text-slate-300">{tokens.length} tokens</span>
         </div>
 
         <table className="mt-4 w-full min-w-[1080px] text-left text-sm">
-          <thead className="text-xs uppercase text-slate-500">
+          <thead className="text-xs uppercase text-slate-300">
             <tr>
               <th className="py-2">Status</th>
               <th>Scope</th>
@@ -136,8 +136,8 @@ if (result.leakDetected) {
               <tr key={t.id}>
                 <td className="py-3"><StatusBadge value={t.active ? "ACTIVE" : "DISABLED"} /></td>
                 <td className="text-slate-300">{t.scope}</td>
-                <td className="max-w-[240px] truncate text-slate-400">{t.tokenLabel || "-"}</td>
-                <td className="font-mono text-xs text-slate-500">{t.triggeredAt ? t.triggeredAt.toLocaleString() : "-"}</td>
+                <td className="max-w-[240px] truncate text-slate-200">{t.tokenLabel || "-"}</td>
+                <td className="font-mono text-xs text-slate-300">{t.triggeredAt ? t.triggeredAt.toLocaleString() : "-"}</td>
                 <td className="py-3">
                   <ConfirmableForm action={disableDashboardCanary} getConfirmMessage={() => "Disable this canary? It will stop monitoring for unauthorized access."}>
                     <input type="hidden" name="projectId" value={project.id} />
@@ -156,7 +156,7 @@ if (result.leakDetected) {
             ))}
             {tokens.length === 0 && (
               <tr>
-                <td className="py-5 text-slate-500" colSpan={5}>No canary tokens recorded yet.</td>
+                <td className="py-5 text-slate-300" colSpan={5}>No canary tokens recorded yet.</td>
               </tr>
             )}
           </tbody>
@@ -166,7 +166,7 @@ if (result.leakDetected) {
       <section className="card p-5">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">Leak events</h2>
-          <span className="text-xs font-medium text-slate-500">Latest {Math.min(60, leaks.length)}</span>
+          <span className="text-xs font-medium text-slate-300">Latest {Math.min(60, leaks.length)}</span>
         </div>
 
         <div className="mt-4 grid gap-3">
@@ -175,9 +175,9 @@ if (result.leakDetected) {
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <p className="font-semibold">{l.location}</p>
-                  <p className="mt-1 max-w-3xl text-slate-400">{l.reason}</p>
-                  <p className="mt-2 text-xs text-slate-500">Session {l.sessionId ?? "—"}</p>
-                  <p className="mt-1 text-xs text-slate-500">{l.createdAt.toLocaleString()}</p>
+                  <p className="mt-1 max-w-3xl text-slate-200">{l.reason}</p>
+                  <p className="mt-2 text-xs text-slate-300">Session {l.sessionId ?? "—"}</p>
+                  <p className="mt-1 text-xs text-slate-300">{l.createdAt.toLocaleString()}</p>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <StatusBadge value={l.decision} />
@@ -191,7 +191,7 @@ if (result.leakDetected) {
               </div>
             </div>
           ))}
-          {leaks.length === 0 && <p className="text-sm text-slate-500">No canary leaks recorded yet.</p>}
+          {leaks.length === 0 && <p className="text-sm text-slate-300">No canary leaks recorded yet.</p>}
         </div>
       </section>
     </div>

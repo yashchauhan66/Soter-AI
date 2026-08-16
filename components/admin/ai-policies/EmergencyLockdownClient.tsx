@@ -51,7 +51,7 @@ export function EmergencyLockdownClient({ organizations, initialState }: Props) 
           )}
           Emergency AI Lockdown
         </h1>
-        <p className="mt-1 text-sm text-slate-400">
+        <p className="mt-1 text-sm text-slate-200">
           Immediately restrict AI data sharing across all deployed extensions.
         </p>
       </div>
@@ -74,13 +74,13 @@ export function EmergencyLockdownClient({ organizations, initialState }: Props) 
       <div className={`mb-6 rounded-lg border p-5 ${isLockedDown ? "border-red-500/50 bg-red-500/10" : "border-slate-800 bg-panel/50"}`}>
         <div className="flex items-center gap-4">
           <div className={`rounded-full p-3 ${isLockedDown ? "bg-red-500/20" : "bg-slate-800"}`}>
-            {isLockedDown ? <Ban className="text-red-400" size={28} /> : <Shield className="text-slate-400" size={28} />}
+            {isLockedDown ? <Ban className="text-red-400" size={28} /> : <Shield className="text-slate-200" size={28} />}
           </div>
           <div>
             <h2 className={`text-xl font-bold ${isLockedDown ? "text-red-300" : "text-slate-300"}`}>
               {isLockedDown ? "EMERGENCY LOCKDOWN IS ACTIVE" : "No active lockdown"}
             </h2>
-            <p className="mt-1 text-sm text-slate-400">
+            <p className="mt-1 text-sm text-slate-200">
               {isLockedDown
                 ? "All non-enterprise AI destinations are blocked. File uploads are restricted. Prompt approvals are required for sensitive data."
                 : "All extensions are operating under normal policy."}
@@ -108,8 +108,8 @@ export function EmergencyLockdownClient({ organizations, initialState }: Props) 
             }`}
           >
             <div className="flex items-center gap-3">
-              <item.icon size={18} className={item.active ? "text-red-300" : "text-slate-500"} />
-              <span className={`text-sm ${item.active ? "text-red-200" : "text-slate-400"}`}>{item.label}</span>
+              <item.icon size={18} className={item.active ? "text-red-300" : "text-slate-300"} />
+              <span className={`text-sm ${item.active ? "text-red-200" : "text-slate-200"}`}>{item.label}</span>
             </div>
           </div>
         ))}
@@ -120,7 +120,7 @@ export function EmergencyLockdownClient({ organizations, initialState }: Props) 
         <h3 className="font-semibold text-slate-200">
           {isLockedDown ? "Deactivate Emergency Lockdown" : "Activate Emergency Lockdown"}
         </h3>
-        <p className="mt-2 text-sm text-slate-400">
+        <p className="mt-2 text-sm text-slate-200">
           {isLockedDown
             ? "Return extensions to normal policy operation."
             : "This will immediately restrict AI data sharing across all deployed extensions. Type LOCKDOWN to confirm."}
@@ -128,7 +128,7 @@ export function EmergencyLockdownClient({ organizations, initialState }: Props) 
 
         {!isLockedDown && (
           <input
-            className="mt-3 w-full max-w-xs rounded-md border border-slate-700 bg-slate-950/80 px-4 py-2 text-sm text-slate-200 placeholder:text-slate-500"
+            className="mt-3 w-full max-w-xs rounded-md border border-slate-700 bg-slate-950/80 px-4 py-2 text-sm text-slate-200 placeholder:text-slate-300"
             placeholder='Type "LOCKDOWN" to confirm'
             value={confirmText}
             onChange={(e) => setConfirmText(e.target.value)}
@@ -141,7 +141,7 @@ export function EmergencyLockdownClient({ organizations, initialState }: Props) 
               ? "bg-lime text-slate-900 hover:bg-lime/80"
               : confirmText === "LOCKDOWN"
               ? "bg-red-500 text-white hover:bg-red-600"
-              : "bg-slate-800 text-slate-500 cursor-not-allowed"
+              : "bg-slate-800 text-slate-300 cursor-not-allowed"
           }`}
           disabled={loading || (!isLockedDown && confirmText !== "LOCKDOWN")}
           onClick={toggleLockdown}
@@ -150,7 +150,7 @@ export function EmergencyLockdownClient({ organizations, initialState }: Props) 
         </button>
 
         {initialState.lastEnabledAt && (
-          <p className="mt-4 text-xs text-slate-500">
+          <p className="mt-4 text-xs text-slate-300">
             Last change: {new Date(initialState.lastEnabledAt).toLocaleString()}
             {initialState.lastAdminEmail && ` by ${initialState.lastAdminEmail}`}
           </p>

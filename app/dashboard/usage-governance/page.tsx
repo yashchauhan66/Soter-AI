@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export default async function UsageGovernancePage() {
   const active = await getActiveOrganization();
-  if (!active) return <p className="p-6 text-slate-400">No active organization.</p>;
+  if (!active) return <p className="p-6 text-slate-200">No active organization.</p>;
 
   const summary = await getGovernanceSummary(active.org.id);
 
@@ -26,7 +26,7 @@ export default async function UsageGovernancePage() {
             </span>
             <div>
               <h1 className="text-3xl font-bold sm:text-4xl">AI Usage Governance</h1>
-              <p className="mt-1 text-sm text-slate-400">For 50-500 employee companies</p>
+              <p className="mt-1 text-sm text-slate-200">For 50-500 employee companies</p>
             </div>
           </div>
           <p className="mt-4 max-w-3xl text-slate-300">
@@ -45,22 +45,22 @@ export default async function UsageGovernancePage() {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <div className="card p-5 transition hover:border-violet-500/30">
           <Shield className="mb-2 text-violet-300" size={20} />
-          <p className="text-sm text-slate-400">Compliance score</p>
+          <p className="text-sm text-slate-200">Compliance score</p>
           <p className="mt-1 text-2xl font-bold text-violet-300">{summary.complianceScore}%</p>
         </div>
         <div className="card p-5">
           <ClipboardCheck className="mb-2 text-cyan" size={20} />
-          <p className="text-sm text-slate-400">Policy rules</p>
+          <p className="text-sm text-slate-200">Policy rules</p>
           <p className="mt-1 text-2xl font-bold">{summary.totalRules}</p>
         </div>
         <div className="card p-5">
           <Users className="mb-2 text-cyan" size={20} />
-          <p className="text-sm text-slate-400">Departments</p>
+          <p className="text-sm text-slate-200">Departments</p>
           <p className="mt-1 text-2xl font-bold">{summary.totalDepartments}</p>
         </div>
         <div className="card p-5">
           <Clock className="mb-2 text-amber-300" size={20} />
-          <p className="text-sm text-slate-400">Pending approvals</p>
+          <p className="text-sm text-slate-200">Pending approvals</p>
           <p className="mt-1 text-2xl font-bold">{summary.pendingApprovals}</p>
         </div>
       </div>
@@ -70,21 +70,21 @@ export default async function UsageGovernancePage() {
         <div className="card flex items-center gap-4 p-5">
           <CheckCircle className="text-emerald-400" size={24} />
           <div>
-            <p className="text-sm text-slate-400">Allowed events</p>
+            <p className="text-sm text-slate-200">Allowed events</p>
             <p className="text-xl font-bold">{summary.allowedEvents}</p>
           </div>
         </div>
         <div className="card flex items-center gap-4 p-5">
           <Ban className="text-red-400" size={24} />
           <div>
-            <p className="text-sm text-slate-400">Blocked events</p>
+            <p className="text-sm text-slate-200">Blocked events</p>
             <p className="text-xl font-bold">{summary.blockedEvents}</p>
           </div>
         </div>
         <div className="card flex items-center gap-4 p-5">
           <Activity className="text-cyan" size={24} />
           <div>
-            <p className="text-sm text-slate-400">Active policy</p>
+            <p className="text-sm text-slate-200">Active policy</p>
             <p className="text-xl font-bold">{summary.hasEnabledPolicy ? "Enabled" : "Not configured"}</p>
           </div>
         </div>
@@ -99,7 +99,7 @@ export default async function UsageGovernancePage() {
           <div className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-cyan to-blue-400 transition-transform duration-300 group-hover:scale-x-100" />
           <Shield className="mb-3 text-cyan" size={24} />
           <h3 className="font-semibold">Policy Configuration</h3>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-200">
             Set default actions, data handling rules, and approval requirements for AI tool usage.
           </p>
         </Link>
@@ -111,7 +111,7 @@ export default async function UsageGovernancePage() {
           <div className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-cyan to-blue-400 transition-transform duration-300 group-hover:scale-x-100" />
           <Ban className="mb-3 text-orange-300" size={24} />
           <h3 className="font-semibold">Provider Allow/Block Lists</h3>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-200">
             Allow or block specific AI providers and models. Set rules for OpenAI, Anthropic, and more.
           </p>
         </Link>
@@ -123,7 +123,7 @@ export default async function UsageGovernancePage() {
           <div className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-cyan to-blue-400 transition-transform duration-300 group-hover:scale-x-100" />
           <Users className="mb-3 text-purple-300" size={24} />
           <h3 className="font-semibold">Department Rules</h3>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-200">
             Define per-department AI usage policies. Different rules for engineering, marketing, finance.
           </p>
         </Link>
@@ -135,7 +135,7 @@ export default async function UsageGovernancePage() {
           <div className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-cyan to-blue-400 transition-transform duration-300 group-hover:scale-x-100" />
           <ClipboardCheck className="mb-3 text-yellow-300" size={24} />
           <h3 className="font-semibold">Data Classification</h3>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-200">
             Define what data sensitivity levels can be sent to which AI providers.
           </p>
         </Link>
@@ -147,7 +147,7 @@ export default async function UsageGovernancePage() {
           <div className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-cyan to-blue-400 transition-transform duration-300 group-hover:scale-x-100" />
           <Clock className="mb-3 text-amber-300" size={24} />
           <h3 className="font-semibold">Approval Requests</h3>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-200">
             Review and manage requests to use AI providers that require approval.
           </p>
         </Link>
@@ -159,7 +159,7 @@ export default async function UsageGovernancePage() {
           <div className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-cyan to-blue-400 transition-transform duration-300 group-hover:scale-x-100" />
           <Activity className="mb-3 text-emerald-300" size={24} />
           <h3 className="font-semibold">Audit Trail</h3>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-200">
             Complete audit log of AI usage events, policy changes, and approval decisions.
           </p>
         </Link>
@@ -171,7 +171,7 @@ export default async function UsageGovernancePage() {
           <div className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-cyan to-blue-400 transition-transform duration-300 group-hover:scale-x-100" />
           <FileBarChart className="mb-3 text-blue-300" size={24} />
           <h3 className="font-semibold">Compliance Reports</h3>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-200">
             Generate and view governance compliance reports with trends and recommendations.
           </p>
         </Link>
@@ -183,7 +183,7 @@ export default async function UsageGovernancePage() {
           <div className="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gradient-to-r from-cyan to-blue-400 transition-transform duration-300 group-hover:scale-x-100" />
           <Activity className="mb-3 text-cyan" size={24} />
           <h3 className="font-semibold">Employee Monitoring</h3>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-200">
             Monitor AI tool usage across your organization. See top users and providers.
           </p>
         </Link>
@@ -194,7 +194,7 @@ export default async function UsageGovernancePage() {
         <section className="card p-5">
           <h2 className="mb-4 text-lg font-semibold">Top AI Providers</h2>
           {summary.topProviders.length === 0 ? (
-            <p className="text-sm text-slate-500">No provider usage tracked yet.</p>
+            <p className="text-sm text-slate-300">No provider usage tracked yet.</p>
           ) : (
             <div className="space-y-3">
               {summary.topProviders.map((provider) => (
@@ -213,7 +213,7 @@ export default async function UsageGovernancePage() {
         <section className="card p-5">
           <h2 className="mb-4 text-lg font-semibold">Top Users</h2>
           {summary.topUsers.length === 0 ? (
-            <p className="text-sm text-slate-500">No user activity tracked yet.</p>
+            <p className="text-sm text-slate-300">No user activity tracked yet.</p>
           ) : (
             <div className="space-y-3">
               {summary.topUsers.map((user) => (
@@ -221,7 +221,7 @@ export default async function UsageGovernancePage() {
                   className="flex items-center justify-between rounded-xl bg-slate-950/60 p-3 text-sm"
                   key={user.userId}
                 >
-                  <span className="text-slate-400">User {user.userId.slice(0, 8)}</span>
+                  <span className="text-slate-200">User {user.userId.slice(0, 8)}</span>
                   <span className="text-cyan">{user.count} events</span>
                 </div>
               ))}
@@ -240,7 +240,7 @@ function HeroFeature({ icon, title, text }: { icon: React.ReactNode; title: stri
         {icon}
         <h2 className="text-sm font-semibold text-white">{title}</h2>
       </div>
-      <p className="mt-2 text-xs leading-5 text-slate-400">{text}</p>
+      <p className="mt-2 text-xs leading-5 text-slate-200">{text}</p>
     </div>
   );
 }

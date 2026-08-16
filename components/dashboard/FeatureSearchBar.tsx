@@ -165,7 +165,7 @@ export function FeatureSearchBar() {
       <div className="relative">
         <Search
           size={16}
-          className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500"
+          className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-300"
         />
         <input
           ref={inputRef}
@@ -184,7 +184,7 @@ export function FeatureSearchBar() {
           aria-controls="feature-search-results"
           aria-autocomplete="list"
         />
-        <kbd className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg border border-slate-700 bg-slate-800/50 px-2 py-0.5 text-[10px] font-medium text-slate-500">
+        <kbd className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg border border-slate-700 bg-slate-800/50 px-2 py-0.5 text-[10px] font-medium text-slate-300">
           Ctrl K
         </kbd>
       </div>
@@ -212,11 +212,11 @@ export function FeatureSearchBar() {
             >
               <div className="min-w-0 flex-1">
                 <span className="font-medium">{item.label}</span>
-                <span className="ml-2 text-[11px] text-slate-500">
+                <span className="ml-2 text-[11px] text-slate-300">
                   {item.group}
                 </span>
               </div>
-              <ArrowRight size={14} className="shrink-0 text-slate-500" />
+              <ArrowRight size={14} className="shrink-0 text-slate-300" />
             </button>
           ))}
         </div>

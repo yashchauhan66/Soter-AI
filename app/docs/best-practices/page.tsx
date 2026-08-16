@@ -43,10 +43,10 @@ export default function BestPracticesDocsPage() {
       <DocViewTracker />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-500 transition-colors hover:text-cyan">← Back to docs</Link>
+        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
         <p className="eyebrow mt-6">Security guide</p>
         <h1 className="mt-3 text-4xl font-bold">Security Best Practices</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           SoterAI is OWASP LLM Top 10 aligned and built for defense-in-depth: <strong>detect, block, redact, monitor, and report</strong>.
           It reduces risk. It does <strong>not</strong> guarantee complete protection.
         </p>
@@ -63,7 +63,7 @@ export default function BestPracticesDocsPage() {
               <div key={title} className="rounded-lg border border-slate-800 bg-slate-950/45 p-4">
                 <div className="flex items-start gap-2">
                   <CheckCircle2 className="mt-0.5 shrink-0 text-lime" size={16} aria-hidden="true" />
-                  <div><p className="font-semibold text-sm">{title}</p><p className="mt-1 text-sm leading-6 text-slate-400">{copy}</p></div>
+                  <div><p className="font-semibold text-sm">{title}</p><p className="mt-1 text-sm leading-6 text-slate-200">{copy}</p></div>
                 </div>
               </div>
             ))}
@@ -72,7 +72,7 @@ export default function BestPracticesDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Rotate keys regularly</h2>
-          <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-400">
+          <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-200">
             <li>Rotate API keys on a schedule and immediately if one may have leaked.</li>
             <li>Use separate <InlineCode>ck_test_…</InlineCode> and <InlineCode>ck_live_…</InlineCode> keys per environment.</li>
             <li>Use distinct keys per project so a single leak has a limited blast radius.</li>
@@ -81,7 +81,7 @@ export default function BestPracticesDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Always run the output guard</h2>
-          <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-400">
+          <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-200">
             <li>Guarding input is not enough. Run <InlineCode>guardOutput</InlineCode> on every LLM response to catch leaked secrets, PII, system-prompt leakage, and unsafe output.</li>
             <li>For RAG, also verify grounding so answers stay attributable to authorized sources.</li>
           </ul>
@@ -89,7 +89,7 @@ export default function BestPracticesDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Redact logs</h2>
-          <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-400">
+          <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-200">
             <li>Do not log raw prompts or completions in your application.</li>
             <li>The SDKs never log the API key or raw text, even in debug mode; keep that property in your own code.</li>
             <li>When you must persist examples for debugging, store the <InlineCode>redactedText</InlineCode> / <InlineCode>safe_text</InlineCode>, not the original.</li>
@@ -98,14 +98,14 @@ export default function BestPracticesDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Sign and verify webhooks</h2>
-          <p className="mt-3 leading-7 text-slate-400">If you consume SoterAI webhooks, verify the HMAC signature before trusting the payload:</p>
+          <p className="mt-3 leading-7 text-slate-200">If you consume SoterAI webhooks, verify the HMAC signature before trusting the payload:</p>
           <CodeBlock language="typescript" title="webhook verification" showLineNumbers>{webhookVerifyCode}</CodeBlock>
           <TipBox>Reject stale timestamps to prevent replay attacks. Check that the timestamp is within 5 minutes of the current time.</TipBox>
         </section>
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Timeout and fail behavior</h2>
-          <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-400">
+          <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-200">
             <li>Set a sensible <InlineCode>timeoutMs</InlineCode> (5s is a good default).</li>
             <li>Decide your failure mode deliberately:
               <ul className="ml-5 mt-1 list-circle space-y-1">
@@ -120,7 +120,7 @@ export default function BestPracticesDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Rate limiting and abuse prevention</h2>
-          <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-400">
+          <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-200">
             <li>Respect <InlineCode>429</InlineCode> and the <InlineCode>Retry-After</InlineCode> header; back off rather than hammering.</li>
             <li>Add your own per-IP/per-user limits in front of public chat endpoints.</li>
           </ul>
@@ -129,7 +129,7 @@ export default function BestPracticesDocsPage() {
         <section className="docs-section">
           <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-6">
             <h2 className="font-semibold text-amber-200">Known limitations</h2>
-            <ul className="mt-3 list-disc space-y-2 pl-5 leading-7 text-slate-400">
+            <ul className="mt-3 list-disc space-y-2 pl-5 leading-7 text-slate-200">
               <li>Pattern detection produces false positives and negatives — no detector is perfect.</li>
               <li>Rate limits are per-process; use a shared Redis bucket in multi-instance deployments.</li>
               <li>Do not market or describe SoterAI as guaranteeing complete protection.</li>

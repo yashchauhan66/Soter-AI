@@ -70,7 +70,7 @@ export function TwoProducts() {
                   </div>
                 </div>
 
-                <p className="mt-5 leading-7 text-slate-400">{product.description}</p>
+                <p className="mt-5 leading-7 text-slate-200">{product.description}</p>
 
                 <div className="mt-6 grid grid-cols-2 gap-3">
                   {product.features.map((f) => {

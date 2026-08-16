@@ -53,7 +53,7 @@ export default async function PublicSecurityStatusPage({ params }: { params: Pro
     PROTECTED: { bg: "bg-emerald-500/15 text-emerald-300", label: "Protected", Icon: ShieldCheck },
     MONITORING_ACTIVE: { bg: "bg-cyan/15 text-cyan", label: "Monitoring active", Icon: ShieldCheck },
     ISSUES_FOUND: { bg: "bg-amber-500/15 text-amber-300", label: "Risks blocked", Icon: ShieldAlert },
-    INACTIVE: { bg: "bg-slate-800 text-slate-400", label: "Inactive", Icon: ShieldOff },
+    INACTIVE: { bg: "bg-slate-800 text-slate-200", label: "Inactive", Icon: ShieldOff },
   };
   const visual = styles[status.status];
   const Icon = visual.Icon;
@@ -71,7 +71,7 @@ export default async function PublicSecurityStatusPage({ params }: { params: Pro
                 <Icon size={24} />
               </span>
               <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Status</p>
+                <p className="text-xs font-bold uppercase tracking-wider text-slate-300">Status</p>
                 <p className="text-2xl font-bold">{visual.label}</p>
               </div>
             </div>
@@ -87,13 +87,13 @@ export default async function PublicSecurityStatusPage({ params }: { params: Pro
           </div>
         </div>
 
-        <p className="mt-7 text-xs leading-6 text-slate-500">
+        <p className="mt-7 text-xs leading-6 text-slate-300">
           This page does not display the contents of any chatbot conversation, prompt, response, or detected secret.
           Numbers are aggregate counts over the calendar month. Pattern detection can produce false positives or false
           negatives; the badge represents defensive activity, not a promise of complete protection.
         </p>
 
-        <Link href="/" className="mt-7 inline-block text-sm text-slate-400 hover:text-white">Powered by SoterAI →</Link>
+        <Link href="/" className="mt-7 inline-block text-sm text-slate-200 hover:text-white">Powered by SoterAI →</Link>
       </div>
     </main>
   );
@@ -102,7 +102,7 @@ export default async function PublicSecurityStatusPage({ params }: { params: Pro
 function Stat({ label, value }: { label: string; value: number | string }) {
   return (
     <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-4">
-      <p className="text-xs uppercase tracking-wider text-slate-500">{label}</p>
+      <p className="text-xs uppercase tracking-wider text-slate-300">{label}</p>
       <p className="mt-2 text-2xl font-bold">{value}</p>
     </div>
   );

@@ -44,7 +44,7 @@ export function AdminQueryReplyForm({
 
   return (
     <form action={submit} className="mt-3 rounded-lg border border-slate-800 bg-slate-950/50 p-3">
-      <div className="mb-2 flex items-center gap-2 text-xs text-slate-500">
+      <div className="mb-2 flex items-center gap-2 text-xs text-slate-300">
         <Mail size={14} />
         <span className="truncate">{to}</span>
       </div>

@@ -18,12 +18,12 @@ export function EmptyState({
 }: EmptyStateProps) {
   return (
     <section className="card flex flex-col items-center justify-center gap-4 p-12 text-center">
-      <span className="rounded-full bg-slate-800/50 p-4 text-slate-500">
+      <span className="rounded-full bg-slate-800/50 p-4 text-slate-300">
         <Icon size={32} />
       </span>
       <div>
         <p className="font-semibold text-slate-300">{title}</p>
-        <p className="mt-1 max-w-md text-sm text-slate-500">{message}</p>
+        <p className="mt-1 max-w-md text-sm text-slate-300">{message}</p>
       </div>
       {actionLabel && actionHref && (
         <a

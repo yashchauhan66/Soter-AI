@@ -54,7 +54,7 @@ export default function ScannerPage() {
           <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500 mb-4">
             Free AI Prompt Scanner
           </h1>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+          <p className="text-lg text-slate-200 max-w-2xl mx-auto">
             Test your prompts against SoterAI's enterprise-grade security engine. We detect prompt injections, jailbreaks, PII leaks, and secret exfiltration.
           </p>
         </div>
@@ -62,7 +62,7 @@ export default function ScannerPage() {
         <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-500 opacity-50" />
           
-          <label className="block text-sm font-medium text-slate-400 mb-2">
+          <label className="block text-sm font-medium text-slate-200 mb-2">
             Paste your prompt or AI input here:
           </label>
           <textarea
@@ -73,7 +73,7 @@ export default function ScannerPage() {
           />
           
           <div className="mt-4 flex justify-between items-center">
-            <div className="text-sm text-slate-500">
+            <div className="text-sm text-slate-300">
               Powered by <span className="font-semibold text-cyan-400">SoterAI Guard</span>
             </div>
             <button
@@ -134,9 +134,9 @@ export default function ScannerPage() {
                 {/* Lead Capture Overlay */}
                 {!leadCaptured && (
                   <div className="absolute inset-0 z-20 bg-slate-950/80 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center border-t border-slate-800 mt-20">
-                    <Lock className="w-10 h-10 text-slate-400 mb-4" />
+                    <Lock className="w-10 h-10 text-slate-200 mb-4" />
                     <h4 className="text-xl font-bold text-white mb-2">View Full Threat Analysis</h4>
-                    <p className="text-slate-400 mb-6 max-w-md">
+                    <p className="text-slate-200 mb-6 max-w-md">
                       Enter your email to unlock the detailed vulnerability report and learn how SoterAI can block this automatically.
                     </p>
                     <form onSubmit={handleLeadSubmit} className="flex gap-2 w-full max-w-md">
@@ -165,7 +165,7 @@ export default function ScannerPage() {
                       <CheckCircle2 className="w-5 h-5" />
                       <span className="font-semibold">Analysis Unlocked</span>
                     </div>
-                    <p className="text-slate-400 text-sm">
+                    <p className="text-slate-200 text-sm">
                       We've sent the detailed report to {email}. Want to prevent this in production?
                     </p>
                     <Link href="/signup" className="inline-block mt-4 px-4 py-2 bg-cyan-950 text-cyan-400 border border-cyan-800 hover:bg-cyan-900 rounded-lg text-sm font-medium transition-colors">

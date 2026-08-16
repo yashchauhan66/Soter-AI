@@ -36,7 +36,7 @@ const STATUS_STYLES: Record<string, string> = {
   active: "border-lime/30 bg-lime/10 text-lime",
   revoked: "border-red-500/30 bg-red-500/10 text-red-400",
   expired: "border-amber-400/30 bg-amber-400/10 text-amber-300",
-  used_up: "border-slate-600/30 bg-slate-600/10 text-slate-400",
+  used_up: "border-slate-600/30 bg-slate-600/10 text-slate-200",
 };
 
 export function EnrollmentTokensClient({ organizations, initialTokens }: Props) {
@@ -146,7 +146,7 @@ export function EnrollmentTokensClient({ organizations, initialTokens }: Props) 
               {copiedId === "new" ? <Check size={14} className="text-lime" /> : <Copy size={14} />}
             </button>
           </div>
-          <button className="mt-2 text-xs text-slate-400 underline" onClick={() => setCreatedToken(null)}>Dismiss</button>
+          <button className="mt-2 text-xs text-slate-200 underline" onClick={() => setCreatedToken(null)}>Dismiss</button>
         </div>
       )}
 
@@ -163,7 +163,7 @@ export function EnrollmentTokensClient({ organizations, initialTokens }: Props) 
 
       {/* Filters */}
       <div className="mb-4 flex flex-wrap items-center gap-3">
-        <Filter size={14} className="text-slate-500" />
+        <Filter size={14} className="text-slate-300" />
         <select className="rounded border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-slate-300" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
           <option value="">All statuses</option>
           <option value="active">Active</option>
@@ -195,7 +195,7 @@ export function EnrollmentTokensClient({ organizations, initialTokens }: Props) 
         <button className="button-primary flex items-center gap-2" onClick={() => setShowCreate(!showCreate)}>
           <KeyRound size={14} /> Create Enrollment Token
         </button>
-        <button className="text-sm text-slate-400 underline" onClick={fetchTokens}>Refresh</button>
+        <button className="text-sm text-slate-200 underline" onClick={fetchTokens}>Refresh</button>
       </div>
 
       {showCreate && (
@@ -205,18 +205,18 @@ export function EnrollmentTokensClient({ organizations, initialTokens }: Props) 
           <input className="input mt-2" placeholder="Department (optional)" value={newDept} onChange={(e) => setNewDept(e.target.value)} />
           <input className="input mt-2" placeholder="Role (optional)" value={newRole} onChange={(e) => setNewRole(e.target.value)} />
           <div className="mt-2 flex gap-4">
-            <label className="text-sm text-slate-400">
+            <label className="text-sm text-slate-200">
               Max uses
               <input type="number" className="input mt-1 w-24" min={1} max={100} value={newMaxUses} onChange={(e) => setNewMaxUses(parseInt(e.target.value, 10) || 1)} />
             </label>
-            <label className="text-sm text-slate-400">
+            <label className="text-sm text-slate-200">
               Expires in hours
               <input type="number" className="input mt-1 w-32" min={1} max={8760} value={newExpiresHours} onChange={(e) => setNewExpiresHours(parseInt(e.target.value, 10) || 720)} />
             </label>
           </div>
           <div className="mt-4 flex gap-2">
             <button className="button-primary" disabled={loading} onClick={createToken}>{loading ? "Creating..." : "Create Token"}</button>
-            <button className="text-sm text-slate-400" onClick={() => setShowCreate(false)}>Cancel</button>
+            <button className="text-sm text-slate-200" onClick={() => setShowCreate(false)}>Cancel</button>
           </div>
         </div>
       )}
@@ -224,20 +224,20 @@ export function EnrollmentTokensClient({ organizations, initialTokens }: Props) 
       {/* Token list */}
       <div className="space-y-2">
         {filteredTokens.length === 0 && (
-          <div className="card p-6 text-center text-slate-500">No enrollment tokens found.</div>
+          <div className="card p-6 text-center text-slate-300">No enrollment tokens found.</div>
         )}
         {filteredTokens.map((token) => {
           const status = tokenStatus(token);
           return (
             <div key={token.id} className="card flex items-center justify-between p-4">
               <div className="flex items-center gap-4">
-                <Shield size={18} className={status === "active" ? "text-lime" : "text-slate-500"} />
+                <Shield size={18} className={status === "active" ? "text-lime" : "text-slate-300"} />
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="font-medium text-slate-200">{token.employeeEmail ?? "No email"}</span>
                     <span className={`rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase ${STATUS_STYLES[status]}`}>{status}</span>
                   </div>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-300">
                     <span>Created by: {token.createdBy ?? token.createdByAdminId ?? "unknown"}</span>
                     <span> | Created: {new Date(token.createdAt).toLocaleDateString()}</span>
                     {token.department && <span> | Dept: {token.department}</span>}

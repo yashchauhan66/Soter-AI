@@ -32,7 +32,7 @@ export function LogsFilterBar({ filters, riskTypeOptions }: { filters: LogFilter
   return (
     <form method="GET" className="card mb-5 grid gap-3 p-4 sm:grid-cols-2 lg:grid-cols-6">
       <input type="hidden" name="project" value={filters.project} />
-      <label className="flex flex-col gap-1 text-xs text-slate-400">
+      <label className="flex flex-col gap-1 text-xs text-slate-200">
         Decision
         <select name="action" defaultValue={filters.action ?? ""} className="input">
           <option value="">All decisions</option>
@@ -41,7 +41,7 @@ export function LogsFilterBar({ filters, riskTypeOptions }: { filters: LogFilter
           ))}
         </select>
       </label>
-      <label className="flex flex-col gap-1 text-xs text-slate-400">
+      <label className="flex flex-col gap-1 text-xs text-slate-200">
         Direction
         <select name="direction" defaultValue={filters.direction ?? ""} className="input">
           <option value="">All directions</option>
@@ -50,7 +50,7 @@ export function LogsFilterBar({ filters, riskTypeOptions }: { filters: LogFilter
           ))}
         </select>
       </label>
-      <label className="flex flex-col gap-1 text-xs text-slate-400">
+      <label className="flex flex-col gap-1 text-xs text-slate-200">
         Risk type
         <input
           name="riskType"
@@ -64,11 +64,11 @@ export function LogsFilterBar({ filters, riskTypeOptions }: { filters: LogFilter
           {riskTypeOptions.map((value) => <option key={value} value={value} />)}
         </datalist>
       </label>
-      <label className="flex flex-col gap-1 text-xs text-slate-400">
+      <label className="flex flex-col gap-1 text-xs text-slate-200">
         From
         <input type="date" name="from" defaultValue={filters.from ?? ""} className="input" />
       </label>
-      <label className="flex flex-col gap-1 text-xs text-slate-400">
+      <label className="flex flex-col gap-1 text-xs text-slate-200">
         To
         <input type="date" name="to" defaultValue={filters.to ?? ""} className="input" />
       </label>

@@ -66,19 +66,19 @@ if (snapshot.drifts.some((d) => d.riskAfter === "CRITICAL")) {
             <div className="grid gap-1 rounded-lg border border-slate-800 p-3 text-sm sm:grid-cols-[1fr_auto] sm:items-center" key={server.id}>
               <div>
                 <p className="font-semibold">{server.serverName}</p>
-                <p className="text-xs text-slate-500">trust {server.trustLevel} · updated {server.updatedAt.toLocaleString()}</p>
+                <p className="text-xs text-slate-300">trust {server.trustLevel} · updated {server.updatedAt.toLocaleString()}</p>
               </div>
               <StatusBadge value={server.status} />
             </div>
           ))}
-          {servers.length === 0 && <p className="text-sm text-slate-500">No MCP servers registered yet.</p>}
+          {servers.length === 0 && <p className="text-sm text-slate-300">No MCP servers registered yet.</p>}
         </div>
       </section>
 
       <section className="card overflow-x-auto p-5">
         <h2 className="text-lg font-semibold">Drift history</h2>
         <table className="mt-4 w-full min-w-[860px] text-left text-sm">
-          <thead className="text-xs uppercase text-slate-500"><tr><th className="py-2">Drift</th><th>Tool</th><th>Server</th><th>Before → After</th><th>Recommendation</th><th>When</th></tr></thead>
+          <thead className="text-xs uppercase text-slate-300"><tr><th className="py-2">Drift</th><th>Tool</th><th>Server</th><th>Before → After</th><th>Recommendation</th><th>When</th></tr></thead>
           <tbody className="divide-y divide-slate-800">
             {drifts.map((drift) => (
               <tr key={drift.id}>
@@ -86,11 +86,11 @@ if (snapshot.drifts.some((d) => d.riskAfter === "CRITICAL")) {
                 <td className="font-mono text-xs">{drift.toolName}</td>
                 <td>{serverName.get(drift.serverId) ?? drift.serverId.slice(0, 8)}</td>
                 <td><RiskLevel level={drift.riskBefore} /> → <RiskLevel level={drift.riskAfter} /></td>
-                <td className="max-w-[280px] truncate text-slate-400">{drift.recommendation}</td>
+                <td className="max-w-[280px] truncate text-slate-200">{drift.recommendation}</td>
                 <td>{drift.createdAt.toLocaleString()}</td>
               </tr>
             ))}
-            {drifts.length === 0 && <tr><td className="py-5 text-slate-500" colSpan={6}>No drift detected yet. Snapshot tools repeatedly to track drift.</td></tr>}
+            {drifts.length === 0 && <tr><td className="py-5 text-slate-300" colSpan={6}>No drift detected yet. Snapshot tools repeatedly to track drift.</td></tr>}
           </tbody>
         </table>
       </section>

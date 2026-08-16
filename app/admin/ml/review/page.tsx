@@ -15,13 +15,13 @@ export default async function MLReviewPage() {
     <div>
       <p className="eyebrow">ML registry</p>
       <h1 className="mt-2 text-3xl font-bold">False positive / negative review queue</h1>
-      <p className="mt-3 max-w-3xl text-slate-400">Reviewers can resolve, dismiss, or push misclassified examples back into the dataset via <code>POST /api/admin/ml/review/:id</code>.</p>
+      <p className="mt-3 max-w-3xl text-slate-200">Reviewers can resolve, dismiss, or push misclassified examples back into the dataset via <code>POST /api/admin/ml/review/:id</code>.</p>
       <section className="mt-6 card p-6">
         {items.length === 0 ? (
-          <p className="text-sm text-slate-400">No items awaiting review.</p>
+          <p className="text-sm text-slate-200">No items awaiting review.</p>
         ) : (
           <table className="w-full text-sm">
-            <thead className="text-xs uppercase tracking-wider text-slate-500">
+            <thead className="text-xs uppercase tracking-wider text-slate-300">
               <tr>
                 <th className="py-2 text-left">Kind</th>
                 <th className="py-2 text-left">Org</th>

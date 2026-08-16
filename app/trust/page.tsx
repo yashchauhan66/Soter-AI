@@ -89,7 +89,7 @@ export default function TrustPage() {
               <span className="bg-gradient-to-r from-cyan to-lime bg-clip-text text-transparent">verify</span>,
               not just trust.
             </h1>
-            <div className="mt-6 max-w-2xl space-y-4 leading-7 text-slate-400">
+            <div className="mt-6 max-w-2xl space-y-4 leading-7 text-slate-200">
               <p>
                 SoterAI protects company data and AI-agent actions before sensitive context reaches external AI systems.
                 This page documents what we test, how we handle data, the controls we run, how you can deploy us,
@@ -113,7 +113,7 @@ export default function TrustPage() {
           {/* Posture status board */}
           <div className="card animate-pulse-glow overflow-hidden p-0">
             <div className="flex items-center justify-between border-b border-slate-800 bg-slate-950/80 px-5 py-3.5">
-              <p className="font-mono text-xs text-slate-400">soterai · security posture</p>
+              <p className="font-mono text-xs text-slate-200">soterai · security posture</p>
               <span className="flex items-center gap-2 rounded-md border border-lime/30 bg-lime/10 px-2.5 py-1 text-[11px] font-bold text-lime">
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-lime opacity-60" />
@@ -127,7 +127,7 @@ export default function TrustPage() {
               {posture.map((p) => (
                 <div key={p.label}>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-400">{p.label}</span>
+                    <span className="text-slate-200">{p.label}</span>
                     <span className={`font-mono font-semibold ${p.tone === "lime" ? "text-lime" : "text-cyan"}`}>
                       {p.value}
                     </span>
@@ -151,7 +151,7 @@ export default function TrustPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-2 border-t border-slate-800 bg-slate-950/60 px-5 py-3 font-mono text-[11px] text-slate-500">
+            <div className="flex items-center gap-2 border-t border-slate-800 bg-slate-950/60 px-5 py-3 font-mono text-[11px] text-slate-300">
               <Activity size={12} className="text-cyan" aria-hidden="true" />
               Honest scope · self-authored evidence · independent audit welcomed
             </div>
@@ -168,7 +168,7 @@ export default function TrustPage() {
             </span>
             Test status
           </h2>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-200">
             Self-authored regression and adversarial coverage. Independent third-party auditing is recommended and welcomed.
           </p>
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -176,11 +176,11 @@ export default function TrustPage() {
               <div key={t.label} className="card p-5 transition hover:border-cyan/40">
                 <div className="text-3xl font-black text-cyan">{t.value}</div>
                 <p className="mt-2 text-sm font-medium text-slate-200">{t.label}</p>
-                <p className="mt-1 text-xs text-slate-500">{t.note}</p>
+                <p className="mt-1 text-xs text-slate-300">{t.note}</p>
               </div>
             ))}
           </div>
-          <p className="mt-4 text-xs text-slate-500">
+          <p className="mt-4 text-xs text-slate-300">
             Full benchmark data:{" "}
             <Link href="/benchmark" className="text-cyan underline underline-offset-2 hover:text-cyan/80">
               /benchmark
@@ -204,11 +204,11 @@ export default function TrustPage() {
               <article key={item.label} className="card p-5">
                 <p className="text-sm font-semibold text-slate-200">{item.label}</p>
                 <p className="mt-2 text-lg font-bold text-cyan">{item.value}</p>
-                <p className="mt-2 text-sm leading-6 text-slate-400">{item.note}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-200">{item.note}</p>
               </article>
             ))}
           </div>
-          <p className="mt-4 text-sm text-slate-500">
+          <p className="mt-4 text-sm text-slate-300">
             SOC2: readiness in progress. Pentest: EVIDENCE REQUIRED unless a signed external report is added. Security contact: support@soterai.in.
           </p>
         </section>
@@ -229,7 +229,7 @@ export default function TrustPage() {
               </li>
             ))}
           </ul>
-          <p className="mt-4 text-xs text-slate-500">
+          <p className="mt-4 text-xs text-slate-300">
             See also our{" "}
             <Link href="/privacy" className="text-cyan underline underline-offset-2 hover:text-cyan/80">privacy policy</Link>,{" "}
             <Link href="/subprocessors" className="text-cyan underline underline-offset-2 hover:text-cyan/80">subprocessors</Link>, and{" "}
@@ -252,15 +252,15 @@ export default function TrustPage() {
                   <ShieldCheck className="shrink-0 text-cyan" size={18} aria-hidden="true" />
                   <h3 className="font-semibold">{c.title}</h3>
                 </div>
-                <p className="mt-2 text-sm leading-6 text-slate-400">{c.desc}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-200">{c.desc}</p>
               </div>
             ))}
           </div>
-          <p className="mt-4 text-xs text-slate-500">
+          <p className="mt-4 text-xs text-slate-300">
             Control details and posture:{" "}
             <Link href="/security" className="text-cyan underline underline-offset-2 hover:text-cyan/80">/security</Link>{" "}
             ·{" "}
-            <Link href="/compliance" className="text-cyan underline underline-offset-2 hover:text-cyan/80">/compliance</Link>
+            <Link href="/compliance/owasp-llm-top-10" className="text-cyan underline underline-offset-2 hover:text-cyan/80">/compliance/owasp-llm-top-10</Link>
           </p>
         </section>
 
@@ -276,7 +276,7 @@ export default function TrustPage() {
             {deploymentModel.map((d) => (
               <div key={d.mode} className="card p-5 transition hover:border-cyan/40">
                 <h3 className="font-semibold text-slate-100">{d.mode}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-400">{d.detail}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-200">{d.detail}</p>
               </div>
             ))}
           </div>
@@ -291,7 +291,7 @@ export default function TrustPage() {
             Responsible disclosure
           </h2>
           <div className="card mt-6 border-amber-400/20 p-6">
-            <p className="text-sm leading-7 text-slate-400">
+            <p className="text-sm leading-7 text-slate-200">
               Report suspected vulnerabilities to the security contact listed in your enterprise agreement or deployment
               runbook. Include affected URLs, impact, reproduction steps, and whether any data was accessed. Only test
               systems you own or are authorized to assess — do not access, modify, delete, or exfiltrate data that is not

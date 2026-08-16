@@ -54,7 +54,7 @@ export function ExtensionEventsClient({ organizations, initialEvents }: Props) {
       case "HIGH": return "text-red-300 bg-red-500/10";
       case "MEDIUM": return "text-amber-300 bg-amber-500/10";
       case "LOW": return "text-cyan bg-cyan/10";
-      default: return "text-slate-400 bg-slate-500/10";
+      default: return "text-slate-200 bg-slate-500/10";
     }
   };
 
@@ -65,13 +65,13 @@ export function ExtensionEventsClient({ organizations, initialEvents }: Props) {
           <History className="text-cyan" size={24} />
           Extension Events
         </h1>
-        <p className="mt-1 text-sm text-slate-400">{initialEvents.length} total events</p>
+        <p className="mt-1 text-sm text-slate-200">{initialEvents.length} total events</p>
       </div>
 
       {/* Filters */}
       <div className="mb-6 flex flex-wrap gap-3 rounded-lg border border-slate-800 bg-panel/50 p-4">
         <div className="flex items-center gap-2">
-          <Filter size={16} className="text-slate-500" />
+          <Filter size={16} className="text-slate-300" />
           <select
             className="rounded-md border border-slate-700 bg-slate-950/80 px-3 py-2 text-sm text-slate-200"
             value={selectedEventType}
@@ -107,9 +107,9 @@ export function ExtensionEventsClient({ organizations, initialEvents }: Props) {
         </select>
 
         <div className="flex items-center gap-2">
-          <Search size={16} className="text-slate-500" />
+          <Search size={16} className="text-slate-300" />
           <input
-            className="rounded-md border border-slate-700 bg-slate-950/80 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-500"
+            className="rounded-md border border-slate-700 bg-slate-950/80 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-300"
             placeholder="Search employee, domain, type..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -120,7 +120,7 @@ export function ExtensionEventsClient({ organizations, initialEvents }: Props) {
       {/* Event list */}
       <div className="space-y-2">
         {filtered.length === 0 ? (
-          <div className="card flex items-center gap-3 p-6 text-slate-400">
+          <div className="card flex items-center gap-3 p-6 text-slate-200">
             <Shield size={20} />
             No events match the current filters.
           </div>
@@ -132,11 +132,11 @@ export function ExtensionEventsClient({ organizations, initialEvents }: Props) {
                   {event.severity}
                 </span>
                 <span className="text-sm font-medium text-slate-200">{event.eventType}</span>
-                <span className="text-xs text-slate-500">{event.employeeId}</span>
-                <span className="text-xs text-slate-500">at {event.domain}</span>
+                <span className="text-xs text-slate-300">{event.employeeId}</span>
+                <span className="text-xs text-slate-300">at {event.domain}</span>
                 <span className="ml-auto text-xs text-slate-600">{new Date(event.createdAt).toLocaleString()}</span>
               </div>
-              <div className="flex flex-wrap items-center gap-4 px-4 py-2 text-xs text-slate-500">
+              <div className="flex flex-wrap items-center gap-4 px-4 py-2 text-xs text-slate-300">
                 <span>Action: {event.action}</span>
                 <span>Browser: {event.browser}</span>
                 <span>Extension: v{event.extensionVersion}</span>
@@ -154,7 +154,7 @@ export function ExtensionEventsClient({ organizations, initialEvents }: Props) {
                 )}
               </div>
               {showPreview === event.id && event.redactedPreview && (
-                <pre className="border-t border-slate-800 bg-slate-950 p-4 text-xs text-slate-400">{event.redactedPreview}</pre>
+                <pre className="border-t border-slate-800 bg-slate-950 p-4 text-xs text-slate-200">{event.redactedPreview}</pre>
               )}
             </div>
           ))

@@ -14,7 +14,7 @@ export default function NotFound() {
       </span>
       <p className="eyebrow">Error 404</p>
       <h1 className="mt-2 text-3xl font-bold">This page doesn&apos;t exist</h1>
-      <p className="mx-auto mt-3 max-w-md text-slate-400">
+      <p className="mx-auto mt-3 max-w-md text-slate-200">
         The link may be outdated or the page may have moved. Here are a few places that do exist.
       </p>
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">

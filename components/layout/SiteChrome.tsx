@@ -38,56 +38,72 @@ export function SiteChrome({ children, currentYear }: SiteChromeProps) {
       <div id="main-content" tabIndex={-1}>
         {children}
       </div>
-      <footer className="border-t border-slate-800 bg-slate-950/45 py-12 text-sm text-slate-500">
+      <footer className="border-t border-slate-800 bg-slate-950/45 py-12 text-sm text-slate-300">
         <div className="container-page">
           <div className="flex flex-col justify-between gap-8 sm:flex-row">
             <div className="max-w-xs">
               <Link href="/" className="flex items-center font-semibold tracking-wide">
                 <Image src="/logo.png" alt="SoterAI" width={97} height={34} className="h-8 w-auto" />
               </Link>
-              <p className="mt-3 leading-6 text-slate-500">
+              <p className="mt-3 leading-6 text-slate-300">
                 AI security command layer for chatbots, RAG apps, and autonomous agents.
               </p>
             </div>
             <div className="flex flex-wrap gap-10">
               <div>
-                <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-400">Product</p>
+                <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-200">Product</p>
                 <div className="flex flex-col gap-2">
-                  <Link href="/#features" className="hover:text-slate-300">Features</Link>
-                  <Link href="/docs" className="hover:text-slate-300">Documentation</Link>
-                  <Link href="/pricing" className="hover:text-slate-300">Pricing</Link>
-                  <Link href="/playground" className="hover:text-slate-300">Playground</Link>
-                  <Link href="/demo" className="hover:text-slate-300">Demo</Link>
+                  <Link href="/#features" className="hover:text-white">Features</Link>
+                  <Link href="/docs" className="hover:text-white">Documentation</Link>
+                  <Link href="/pricing" className="hover:text-white">Pricing</Link>
+                  <Link href="/playground" className="hover:text-white">Playground</Link>
+                  <Link href="/demo" className="hover:text-white">Demo</Link>
                   {/* Public catalog — the old /dashboard/integrations target sent
                       logged-out visitors to a login wall (a dead end). */}
-                  <Link href="/integrations" className="hover:text-slate-300">Integrations</Link>
-                  <Link href="/blog" className="hover:text-slate-300">Blog</Link>
+                  <Link href="/integrations" className="hover:text-white">Integrations</Link>
+                  <Link href="/blog" className="hover:text-white">Blog</Link>
                 </div>
               </div>
               <div>
-                <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-400">Company</p>
+                <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-200">Company</p>
                 <div className="flex flex-col gap-2">
-                  <Link href="/trust" className="hover:text-slate-300">Trust</Link>
-                  <Link href="/status" className="hover:text-slate-300">Status</Link>
-                  <Link href="/terms" className="hover:text-slate-300">Terms</Link>
-                  <Link href="/privacy" className="hover:text-slate-300">Privacy</Link>
-                  <Link href="/security" className="hover:text-slate-300">Security</Link>
-                  <Link href="/support" className="hover:text-slate-300">Support</Link>
+                  <Link href="/trust" className="hover:text-white">Trust</Link>
+                  <Link href="/status" className="hover:text-white">Status</Link>
+                  <Link href="/terms" className="hover:text-white">Terms</Link>
+                  <Link href="/privacy" className="hover:text-white">Privacy</Link>
+                  <Link href="/security" className="hover:text-white">Security</Link>
+                  <Link href="/support" className="hover:text-white">Support</Link>
                 </div>
               </div>
               <div>
-                <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-400">Compare</p>
+                <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-200">Compare</p>
                 <div className="flex flex-col gap-2">
-                  <Link href="/comparison" className="hover:text-slate-300">vs Competitors</Link>
-                  <Link href="/benchmarks" className="hover:text-slate-300">Benchmarks</Link>
-                  <Link href="/case-studies" className="hover:text-slate-300">Case Studies</Link>
+                  <Link href="/comparison" className="hover:text-white">vs Competitors</Link>
+                  <Link href="/benchmarks" className="hover:text-white">Benchmarks</Link>
+                  <Link href="/case-studies" className="hover:text-white">Case Studies</Link>
+                </div>
+              </div>
+              <div>
+                <p className="mb-3 text-xs font-bold uppercase tracking-widest text-slate-200">Contact</p>
+                <div className="flex flex-col gap-2">
+                  <a href="mailto:support@soterai.in" className="hover:text-white">support@soterai.in</a>
+                  <Link href="/support" className="hover:text-white">Support</Link>
+                  <a
+                    href="https://github.com/yashchauhan66/Soter-AI"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white"
+                  >
+                    GitHub
+                  </a>
+                  <Link href="/status" className="hover:text-white">Status</Link>
                 </div>
               </div>
             </div>
           </div>
           <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-6 sm:flex-row">
-            <p className="text-xs">&copy; {currentYear} SoterAI. All rights reserved.</p>
-            <p className="text-xs">Security intelligence for AI systems in production.</p>
+            <p className="text-xs text-slate-300">&copy; {currentYear} SoterAI. All rights reserved.</p>
+            <p className="text-xs text-slate-300">Security intelligence for AI systems in production.</p>
           </div>
         </div>
       </footer>

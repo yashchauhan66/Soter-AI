@@ -38,7 +38,7 @@ export function MobileCardView<T>({
 }) {
   if (items.length === 0) {
     return (
-      <div className="card p-8 text-center text-sm text-slate-500">
+      <div className="card p-8 text-center text-sm text-slate-300">
         {emptyMessage}
       </div>
     );

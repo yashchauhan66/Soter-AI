@@ -18,7 +18,7 @@ export default function UsageGovernanceError({
     <div className="flex flex-col items-center justify-center py-20 text-center">
       <div className="mb-4 text-4xl">⚠️</div>
       <h2 className="mb-2 text-xl font-semibold text-white">Something went wrong</h2>
-      <p className="mb-6 max-w-md text-sm text-slate-400">
+      <p className="mb-6 max-w-md text-sm text-slate-200">
         An unexpected error occurred. Please try again or contact support if the issue persists.
       </p>
       <div className="flex gap-3">

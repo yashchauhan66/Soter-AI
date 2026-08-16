@@ -23,7 +23,7 @@ export default function BlogIndexPage() {
         <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
           Technical AI security for developers
         </h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           Practical, honest writing on securing AI coding tools — how secrets
           leak, what an AI context firewall actually does, and why MCP tool
           permissions matter. No hype, no absolute claims.
@@ -37,7 +37,7 @@ export default function BlogIndexPage() {
             href={`/blog/${post.slug}`}
             className="group rounded-2xl border border-slate-800 bg-panel/40 p-6 transition hover:border-cyan/40"
           >
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-300">
               <time dateTime={post.datePublished}>
                 {new Date(post.datePublished).toLocaleDateString("en-US", {
                   year: "numeric",
@@ -52,7 +52,7 @@ export default function BlogIndexPage() {
             <h2 className="mt-3 text-xl font-bold text-slate-100 group-hover:text-cyan">
               {post.title}
             </h2>
-            <p className="mt-2 text-sm leading-6 text-slate-400">
+            <p className="mt-2 text-sm leading-6 text-slate-200">
               {post.excerpt}
             </p>
             <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan">

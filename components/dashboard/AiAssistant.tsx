@@ -844,13 +844,13 @@ export function AiAssistant() {
               </span>
               <div>
                 <p className="text-sm font-semibold text-white">SoterAI Assistant</p>
-                <p className="text-[10px] text-slate-500">AI Security Help</p>
+                <p className="text-[10px] text-slate-300">AI Security Help</p>
               </div>
             </div>
             <div className="flex items-center gap-1">
               <button
                 onClick={resetConversation}
-                className="rounded-lg p-1.5 text-slate-500 transition hover:bg-slate-800 hover:text-red-400"
+                className="rounded-lg p-1.5 text-slate-300 transition hover:bg-slate-800 hover:text-red-400"
                 aria-label="Clear conversation"
                 title="Clear conversation"
               >
@@ -858,7 +858,7 @@ export function AiAssistant() {
               </button>
               <button
                 onClick={() => setIsOpen(false)}
-                className="rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-800 hover:text-white"
+                className="rounded-lg p-1.5 text-slate-200 transition hover:bg-slate-800 hover:text-white"
                 aria-label="Close AI assistant"
               >
                 <X size={18} />
@@ -913,7 +913,7 @@ export function AiAssistant() {
               {/* Loading indicator — only until the first streamed token arrives */}
               {loading && messages[messages.length - 1]?.role === "user" && (
                 <div className="flex justify-start">
-                  <div className="flex items-center gap-2 rounded-2xl border border-slate-700 bg-slate-900/60 px-4 py-3 text-sm text-slate-400">
+                  <div className="flex items-center gap-2 rounded-2xl border border-slate-700 bg-slate-900/60 px-4 py-3 text-sm text-slate-200">
                     <Loader2 size={14} className="animate-spinner" />
                     Thinking...
                   </div>
@@ -927,7 +927,7 @@ export function AiAssistant() {
           {/* Quick actions (shown only at start) */}
           {messages.length === 1 && !loading && (
             <div className="border-t border-slate-800 px-4 py-3">
-              <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+              <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-slate-300">
                 Quick actions for this page
               </p>
               <div className="flex flex-wrap gap-1.5">

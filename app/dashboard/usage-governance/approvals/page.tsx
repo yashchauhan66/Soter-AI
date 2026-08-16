@@ -8,12 +8,12 @@ const STATUS_STYLES: Record<string, { label: string; icon: any; color: string }>
   PENDING: { label: "Pending", icon: Clock, color: "text-amber-300 bg-amber-500/10" },
   APPROVED: { label: "Approved", icon: CheckCircle, color: "text-emerald-300 bg-emerald-500/10" },
   DENIED: { label: "Denied", icon: XCircle, color: "text-red-300 bg-red-500/10" },
-  CANCELLED: { label: "Cancelled", icon: HelpCircle, color: "text-slate-400 bg-slate-800" },
+  CANCELLED: { label: "Cancelled", icon: HelpCircle, color: "text-slate-200 bg-slate-800" },
 };
 
 export default async function GovernanceApprovalsPage() {
   const active = await getActiveOrganization();
-  if (!active) return <p className="p-6 text-slate-400">No active organization.</p>;
+  if (!active) return <p className="p-6 text-slate-200">No active organization.</p>;
 
   const approvals = await listApprovalRequests(active.org.id);
   const pendingRequests = approvals.filter((a) => a.status === "PENDING");
@@ -23,7 +23,7 @@ export default async function GovernanceApprovalsPage() {
       <div>
         <p className="eyebrow">Governance</p>
         <h1 className="mt-2 text-3xl font-bold">Approval Requests</h1>
-        <p className="mt-3 max-w-3xl text-slate-400">
+        <p className="mt-3 max-w-3xl text-slate-200">
           Review and manage requests from employees to use AI providers that require approval.
         </p>
       </div>
@@ -35,7 +35,7 @@ export default async function GovernanceApprovalsPage() {
       )}
 
       {approvals.length === 0 ? (
-        <p className="text-sm text-slate-500">No approval requests yet.</p>
+        <p className="text-sm text-slate-300">No approval requests yet.</p>
       ) : (
         <div className="space-y-3">
           {approvals.map((request) => {
@@ -48,14 +48,14 @@ export default async function GovernanceApprovalsPage() {
                     <Icon size={20} className={style.color.replace("bg-*", "")} />
                     <div>
                       <h3 className="font-semibold">{request.providerName}{request.modelName ? ` - ${request.modelName}` : ""}</h3>
-                      <p className="mt-1 text-sm text-slate-400">
+                      <p className="mt-1 text-sm text-slate-200">
                         Requested by {request.requestedBy?.name ?? request.requestedBy?.email ?? "Unknown user"}
                       </p>
                       <p className="mt-2 text-sm text-slate-300">{request.useCase}</p>
                       {request.justification && (
-                        <p className="mt-1 text-sm text-slate-500 italic">{request.justification}</p>
+                        <p className="mt-1 text-sm text-slate-300 italic">{request.justification}</p>
                       )}
-                      <p className="mt-2 text-xs text-slate-500">
+                      <p className="mt-2 text-xs text-slate-300">
                         {new Date(request.createdAt).toLocaleDateString()} 
                         {request.dataSensitivity && ` · Data: ${request.dataSensitivity}`}
                       </p>
@@ -84,7 +84,7 @@ export default async function GovernanceApprovalsPage() {
                 )}
 
                 {request.status !== "PENDING" && request.decisionReason && (
-                  <p className="mt-3 text-sm text-slate-400 border-t border-slate-800 pt-3">
+                  <p className="mt-3 text-sm text-slate-200 border-t border-slate-800 pt-3">
                     Review note: {request.decisionReason}
                   </p>
                 )}

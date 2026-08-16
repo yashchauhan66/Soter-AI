@@ -213,7 +213,7 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
   return (
     <aside className="card h-fit p-3">
       <div className="mb-3 px-3 py-3">
-        <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Workspace</p>
+        <p className="text-xs font-bold uppercase tracking-wider text-slate-300">Workspace</p>
         <p className="mt-1 font-semibold">Security team</p>
       </div>
 
@@ -252,11 +252,11 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
                   <p className={`text-sm font-semibold ${isProductActive ? product.accent : "text-white"}`}>
                     {product.label}
                   </p>
-                  <p className="text-[10px] text-slate-500">{product.description}</p>
+                  <p className="text-[10px] text-slate-300">{product.description}</p>
                 </div>
                 <ChevronDown
                   size={14}
-                  className={`shrink-0 text-slate-500 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
+                  className={`shrink-0 text-slate-300 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
                 />
               </button>
 
@@ -267,7 +267,7 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
                 className={`mx-1 flex items-center gap-3 rounded-lg px-3 py-1.5 text-sm transition ${
                   isActive(product.href) && !product.items.some((i) => isActive(i.href))
                     ? `${product.accent} bg-white/5`
-                    : "text-slate-400 hover:bg-white/5 hover:text-white"
+                    : "text-slate-200 hover:bg-white/5 hover:text-white"
                 }`}
               >
                 <product.Icon size={14} />
@@ -289,7 +289,7 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
                         className={`flex items-center gap-3 rounded-lg px-3 py-1.5 text-xs transition ${
                           isActive(item.href)
                             ? `${product.accent} bg-white/5`
-                            : "text-slate-500 hover:bg-white/5 hover:text-slate-300"
+                            : "text-slate-300 hover:bg-white/5 hover:text-slate-300"
                         }`}
                       >
                         <item.Icon size={13} />
@@ -346,7 +346,7 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
                           className={`flex items-center gap-3 rounded-xl px-3 py-2 text-sm transition ${
                             isActive(href)
                               ? "bg-cyan/10 text-cyan"
-                              : "text-slate-400 hover:bg-slate-800 hover:text-white"
+                              : "text-slate-200 hover:bg-slate-800 hover:text-white"
                           }`}
                         >
                           <Icon size={16} />

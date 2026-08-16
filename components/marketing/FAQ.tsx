@@ -23,7 +23,7 @@ export function FAQ() {
           {faqs.map(([q, a]) => (
             <article className="card p-6" key={q}>
               <h3 className="font-semibold">{q}</h3>
-              <p className="mt-3 leading-7 text-slate-400">{a}</p>
+              <p className="mt-3 leading-7 text-slate-200">{a}</p>
             </article>
           ))}
         </div>

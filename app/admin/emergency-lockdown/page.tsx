@@ -118,7 +118,7 @@ export default function EmergencyLockdownPage() {
               <Activity className="h-5 w-5" />
               Current Status
             </h2>
-            <p className="text-sm text-slate-400">Emergency lockdown protection status</p>
+            <p className="text-sm text-slate-200">Emergency lockdown protection status</p>
           </div>
           <div className="p-4">
             <div className="flex items-center justify-between">
@@ -139,7 +139,7 @@ export default function EmergencyLockdownPage() {
         <div className="card">
           <div className="border-b border-slate-800 p-4">
             <h2 className="font-semibold">Lockdown Controls</h2>
-            <p className="text-sm text-slate-400">Enable or disable emergency lockdown for all enrolled extensions</p>
+            <p className="text-sm text-slate-200">Enable or disable emergency lockdown for all enrolled extensions</p>
           </div>
           <div className="space-y-4 p-4">
             <div>

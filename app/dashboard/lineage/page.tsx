@@ -73,7 +73,7 @@ if (flow.decision === "BLOCK") throw new Error(flow.reason);`}
       <section className="card overflow-x-auto p-5">
         <h2 className="text-lg font-semibold">Context flows</h2>
         <table className="mt-4 w-full min-w-[820px] text-left text-sm">
-          <thead className="text-xs uppercase text-slate-500"><tr><th className="py-2">Decision</th><th>Risk</th><th>Destination</th><th>Trust</th><th>Reason</th><th>When</th></tr></thead>
+          <thead className="text-xs uppercase text-slate-300"><tr><th className="py-2">Decision</th><th>Risk</th><th>Destination</th><th>Trust</th><th>Reason</th><th>When</th></tr></thead>
           <tbody className="divide-y divide-slate-800">
             {flows.map((flow) => (
               <tr key={flow.id}>
@@ -81,7 +81,7 @@ if (flow.decision === "BLOCK") throw new Error(flow.reason);`}
                 <td className="font-semibold"><RiskLevel level={flow.riskLevel} /></td>
                 <td className="font-mono text-xs">{flow.destinationType}{flow.destinationName ? ` · ${flow.destinationName}` : ""}</td>
                 <td>{flow.destinationTrustLevel}</td>
-                <td className="max-w-[280px] truncate text-slate-400">{flow.reason}</td>
+                <td className="max-w-[280px] truncate text-slate-200">{flow.reason}</td>
                 <td>{flow.createdAt.toLocaleString()}</td>
               </tr>
             ))}
@@ -98,11 +98,11 @@ if (flow.decision === "BLOCK") throw new Error(flow.reason);`}
               <div className="grid gap-1 rounded-lg border border-slate-800 p-3 text-sm sm:grid-cols-[1fr_auto] sm:items-center" key={src.id}>
                 <div>
                   <p className="font-semibold">{src.sourceName ?? src.sourceType}</p>
-                  <p className="text-xs text-slate-500">{src.sourceType} · trust {src.sourceTrustLevel}</p>
+                  <p className="text-xs text-slate-300">{src.sourceType} · trust {src.sourceTrustLevel}</p>
                 </div>                  <RiskLevel level={src.sensitivityLevel} />
               </div>
             ))}
-            {sources.length === 0 && <p className="text-sm text-slate-500">Register sources via the SDK to populate lineage.</p>}
+            {sources.length === 0 && <p className="text-sm text-slate-300">Register sources via the SDK to populate lineage.</p>}
           </div>
         </section>
 
@@ -115,11 +115,11 @@ if (flow.decision === "BLOCK") throw new Error(flow.reason);`}
                   <p className="font-medium text-red-200">{incident.incidentType}</p>
                   <RiskLevel level={incident.riskLevel} />
                 </div>
-                <p className="mt-1 text-slate-400">{incident.summary}</p>
-                <p className="mt-1 text-xs text-slate-500">{incident.status} · {incident.createdAt.toLocaleString()}</p>
+                <p className="mt-1 text-slate-200">{incident.summary}</p>
+                <p className="mt-1 text-xs text-slate-300">{incident.status} · {incident.createdAt.toLocaleString()}</p>
               </div>
             ))}
-            {incidents.length === 0 && <p className="text-sm text-slate-500">No lineage incidents recorded.</p>}
+            {incidents.length === 0 && <p className="text-sm text-slate-300">No lineage incidents recorded.</p>}
           </div>
         </section>
       </div>

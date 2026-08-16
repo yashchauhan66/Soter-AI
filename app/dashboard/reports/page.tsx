@@ -61,7 +61,7 @@ export default async function ReportsPage({
           ["Average risk", metrics.avgRiskScore],
         ].map(([label, value]) => (
           <div className="card p-5" key={label}>
-            <p className="text-sm text-slate-500">{label}</p>
+            <p className="text-sm text-slate-300">{label}</p>
             <p className="mt-2 text-3xl font-bold">{value}</p>
           </div>
         ))}
@@ -69,7 +69,7 @@ export default async function ReportsPage({
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         <section className="card p-6">
           <h2 className="text-lg font-semibold">Risk summary</h2>
-          <p className="mt-3 text-sm text-slate-500">
+          <p className="mt-3 text-sm text-slate-300">
             Most common: <span className="text-slate-200">{mostCommonRisk.replaceAll("_", " ")}</span>
           </p>
           <div className="mt-5 space-y-3">
@@ -78,12 +78,12 @@ export default async function ReportsPage({
                 <span>{item.type.replaceAll("_", " ")}</span>
                 <span className="text-cyan">{item.count}</span>
               </div>
-            )) : <p className="text-sm text-slate-500">No material risks recorded this month.</p>}
+            )) : <p className="text-sm text-slate-300">No material risks recorded this month.</p>}
           </div>
         </section>
         <section className="card p-6">
           <h2 className="text-lg font-semibold">Recommendations</h2>
-          <ul className="mt-4 space-y-3 text-sm leading-6 text-slate-400">
+          <ul className="mt-4 space-y-3 text-sm leading-6 text-slate-200">
             {(recommendations.length ? recommendations : ["Report generation is queued. Refresh after the background worker completes it."]).map((recommendation) => (
               <li key={recommendation} className="rounded-xl bg-slate-950/60 p-3">{recommendation}</li>
             ))}
@@ -92,7 +92,7 @@ export default async function ReportsPage({
       </div>
       <section className="card mt-6 p-6">
         <h2 className="font-semibold">OWASP LLM Top 10 alignment</h2>
-        <p className="mt-3 leading-7 text-slate-400">
+        <p className="mt-3 leading-7 text-slate-200">
           Phase 1 supports risk reduction for prompt injection, sensitive information disclosure,
           improper output handling, and unbounded consumption in chatbot input/output flows.
           Alignment does not represent certification or complete coverage.

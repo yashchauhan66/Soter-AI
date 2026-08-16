@@ -70,17 +70,17 @@ const { scan } = await res.json();`}
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="card p-5">
           <Globe className="mb-2 text-cyan" size={20} />
-          <p className="text-sm text-slate-400">AI providers</p>
+          <p className="text-sm text-slate-200">AI providers</p>
           <p className="mt-1 text-2xl font-bold">{providers.length}</p>
         </div>
         <div className="card p-5">
           <ScanLine className="mb-2 text-cyan" size={20} />
-          <p className="text-sm text-slate-400">AI models</p>
+          <p className="text-sm text-slate-200">AI models</p>
           <p className="mt-1 text-2xl font-bold">{models.length}</p>
         </div>
         <div className="card p-5">
           <ShieldAlert className="mb-2 text-rose-300" size={20} />
-          <p className="text-sm text-slate-400">Risk findings</p>
+          <p className="text-sm text-slate-200">Risk findings</p>
           <p className="mt-1 text-2xl font-bold">
             {scans.reduce((sum, s) => sum + s.riskFindings, 0)}
           </p>
@@ -106,7 +106,7 @@ const { scan } = await res.json();`}
           <h2 className="mb-4 text-lg font-semibold">Discovered providers</h2>
           <div className="space-y-2">
             {providers.length === 0 && (
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-slate-300">
                 No providers discovered yet. Run a scan to detect AI usage.
               </p>
             )}
@@ -114,7 +114,7 @@ const { scan } = await res.json();`}
               <div className="card flex items-center justify-between p-4" key={p.id}>
                 <div>
                   <p className="font-medium">{p.name}</p>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-300">
                     {p.providerType} · {p.dataRegion ?? "Unknown region"} · {p.status}
                   </p>
                 </div>
@@ -138,7 +138,7 @@ const { scan } = await res.json();`}
           <h2 className="mb-4 text-lg font-semibold">Discovered models</h2>
           <div className="space-y-2">
             {models.length === 0 && (
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-slate-300">
                 No models discovered yet. Run a scan to detect model usage.
               </p>
             )}
@@ -146,7 +146,7 @@ const { scan } = await res.json();`}
               <div className="card flex items-center justify-between p-4" key={m.id}>
                 <div>
                   <p className="font-medium">{m.name}</p>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-300">
                     {m.modality} · {m.approved ? "Approved" : "Pending review"}
                   </p>
                 </div>
@@ -163,7 +163,7 @@ const { scan } = await res.json();`}
         <h2 className="mb-4 text-lg font-semibold">Recent scans</h2>
         <div className="space-y-2">
           {recentScans.length === 0 && (
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-slate-300">
               No scans yet. Scan your project dependencies to discover shadow AI usage.
             </p>
           )}
@@ -173,12 +173,12 @@ const { scan } = await res.json();`}
                 <p className="text-sm font-medium">
                   {scan.scanType} scan · {scan.status}
                 </p>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-300">
                   {scan.providerCount} providers · {scan.modelCount} models ·{" "}
                   {scan._count.findings} findings
                 </p>
               </div>
-              <p className="text-xs text-slate-500">{scan.createdAt.toLocaleDateString()}</p>
+              <p className="text-xs text-slate-300">{scan.createdAt.toLocaleDateString()}</p>
             </div>
           ))}
         </div>
@@ -186,7 +186,7 @@ const { scan } = await res.json();`}
 
       <div className="card p-5">
         <h2 className="text-lg font-semibold">Run a scan</h2>
-        <p className="mt-1 text-sm text-slate-400">
+        <p className="mt-1 text-sm text-slate-200">
           Scan your project&apos;s <code>package.json</code>, code snippets, and environment
           variables to detect shadow AI usage across your organization.
         </p>

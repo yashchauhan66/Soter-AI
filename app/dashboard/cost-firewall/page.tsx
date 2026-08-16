@@ -73,32 +73,32 @@ const res = await fetch("https://soterai.in/api/cost-firewall/budget", {
       <div className="grid gap-4 sm:grid-cols-4">
         <div className="card p-5">
           <Banknote className="mb-2 text-cyan" size={20} />
-          <p className="text-sm text-slate-400">Month-to-date cost</p>
+          <p className="text-sm text-slate-200">Month-to-date cost</p>
           <p className="mt-1 text-2xl font-bold">₹{totalInRupees}</p>
-          <p className="text-xs text-slate-500">{summary.totalTransactions} transactions</p>
+          <p className="text-xs text-slate-300">{summary.totalTransactions} transactions</p>
         </div>
         <div className="card p-5">
           <TrendingUp className="mb-2 text-cyan" size={20} />
-          <p className="text-sm text-slate-400">Budget status</p>
+          <p className="text-sm text-slate-200">Budget status</p>
           <p className="mt-1 text-2xl font-bold">
             {projectBudget
               ? `${Math.round(projectBudget.usagePercent)}%`
               : "No budget set"}
           </p>
           {projectBudget && (
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-300">
               ₹{((projectBudget.monthlyLimitPaise ?? 0) / 100).toFixed(2)} limit
             </p>
           )}
         </div>
         <div className="card p-5">
           <AlertTriangle className="mb-2 text-amber-300" size={20} />
-          <p className="text-sm text-slate-400">Anomalies</p>
+          <p className="text-sm text-slate-200">Anomalies</p>
           <p className="mt-1 text-2xl font-bold">{anomalies.length}</p>
         </div>
         <div className="card p-5">
-          <Ban className={`mb-2 ${activeThrottles.length > 0 ? "text-rose-300" : "text-slate-500"}`} size={20} />
-          <p className="text-sm text-slate-400">Active throttles</p>
+          <Ban className={`mb-2 ${activeThrottles.length > 0 ? "text-rose-300" : "text-slate-300"}`} size={20} />
+          <p className="text-sm text-slate-200">Active throttles</p>
           <p className="mt-1 text-2xl font-bold">{activeThrottles.length}</p>
         </div>
       </div>
@@ -129,13 +129,13 @@ const res = await fetch("https://soterai.in/api/cost-firewall/budget", {
               <div className="card flex items-center justify-between p-4" key={p.name}>
                 <div>
                   <p className="font-medium">{p.name}</p>
-                  <p className="text-xs text-slate-500">{p.count} transactions</p>
+                  <p className="text-xs text-slate-300">{p.count} transactions</p>
                 </div>
                 <p className="font-semibold">₹{(p.totalPaise / 100).toFixed(2)}</p>
               </div>
             ))}
             {summary.byProvider.length === 0 && (
-              <p className="text-sm text-slate-500">No spending recorded this month.</p>
+              <p className="text-sm text-slate-300">No spending recorded this month.</p>
             )}
           </div>
         </section>
@@ -147,13 +147,13 @@ const res = await fetch("https://soterai.in/api/cost-firewall/budget", {
               <div className="card flex items-center justify-between p-4" key={m.name}>
                 <div>
                   <p className="font-medium">{m.name}</p>
-                  <p className="text-xs text-slate-500">{m.count} calls</p>
+                  <p className="text-xs text-slate-300">{m.count} calls</p>
                 </div>
                 <p className="font-semibold">₹{(m.totalPaise / 100).toFixed(2)}</p>
               </div>
             ))}
             {summary.byModel.length === 0 && (
-              <p className="text-sm text-slate-500">No model spending recorded this month.</p>
+              <p className="text-sm text-slate-300">No model spending recorded this month.</p>
             )}
           </div>
         </section>
@@ -163,7 +163,7 @@ const res = await fetch("https://soterai.in/api/cost-firewall/budget", {
         <h2 className="text-lg font-semibold">Budgets</h2>
         <div className="mt-4 space-y-3">
           {budgets.length === 0 && (
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-slate-300">
               No budgets configured. Set a budget to control AI API spending.
             </p>
           )}
@@ -173,7 +173,7 @@ const res = await fetch("https://soterai.in/api/cost-firewall/budget", {
                 <p className="text-sm font-medium">
                   {b.projectId ? `Project: ${b.projectId.slice(0, 8)}...` : "Organization-wide"}
                 </p>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-300">
                   ₹{((b.monthlyLimitPaise ?? 0) / 100).toFixed(2)} limit ·{" "}
                   {b.hardStop ? "Hard stop" : "Soft limit"} · Alert at{" "}
                   {Math.round((b.alertThreshold ?? 0.8) * 100)}%
@@ -213,7 +213,7 @@ const res = await fetch("https://soterai.in/api/cost-firewall/budget", {
                   <p className="text-sm font-medium">
                     {a.metric} · baseline: {a.baseline}, observed: {a.observed}
                   </p>
-                  <p className="text-xs text-slate-500">{a.createdAt.toLocaleString()}</p>
+                  <p className="text-xs text-slate-300">{a.createdAt.toLocaleString()}</p>
                 </div>
                 <span
                   className={`rounded-full px-2 py-0.5 text-xs font-medium ${

@@ -29,17 +29,17 @@ export default async function SignInPage({
         <div className="card p-7">
           <p className="eyebrow">Sign in</p>
           <h1 className="mt-3 text-2xl font-bold">Welcome back</h1>
-          <p className="mt-2 text-sm leading-6 text-slate-400">Access your AI security dashboard, guard decisions, and workspace controls.</p>
+          <p className="mt-2 text-sm leading-6 text-slate-200">Access your AI security dashboard, guard decisions, and workspace controls.</p>
           <SignInForm
             callbackUrl={safeCallbackUrl(params.callbackUrl)}
             initialError={params.error}
             initialNotice={params.verified === "1" ? "Email verified successfully. You can sign in now." : undefined}
           />
-          <p className="mt-6 text-sm text-slate-500">
+          <p className="mt-6 text-sm text-slate-300">
             New to SoterAI? <Link href="/signup" className="text-cyan hover:text-cyan/80">Create an account</Link>
           </p>
         </div>
-        <p className="mt-6 text-xs leading-5 text-slate-500">
+        <p className="mt-6 text-xs leading-5 text-slate-300">
           Sessions are JWT-encoded and last 24 hours. Sign out from the dashboard menu when finished on shared devices.
         </p>
       </div>

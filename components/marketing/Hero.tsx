@@ -53,7 +53,7 @@ export function Hero() {
             </Link>
           </div>
 
-          <div className="mt-8 grid gap-3 text-sm text-slate-400 sm:grid-cols-3">
+          <div className="mt-8 grid gap-3 text-sm text-slate-200 sm:grid-cols-3">
             {assurances.map((item) => (
               <span className="flex items-center gap-2" key={item}>
                 <CheckCircle2 className="text-lime" size={16} aria-hidden="true" />
@@ -66,7 +66,7 @@ export function Hero() {
             {trustStats.map(([value, label]) => (
               <div key={label}>
                 <dt className="text-2xl font-black text-cyan sm:text-3xl">{value}</dt>
-                <dd className="mt-1 text-xs leading-5 text-slate-500">{label}</dd>
+                <dd className="mt-1 text-xs leading-5 text-slate-300">{label}</dd>
               </div>
             ))}
           </dl>

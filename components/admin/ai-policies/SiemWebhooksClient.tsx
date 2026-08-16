@@ -128,7 +128,7 @@ export function SiemWebhooksClient({ organizations }: { organizations: Pick<Orga
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="flex items-center gap-3 text-2xl font-bold"><Plug className="text-cyan" size={24} /> SIEM Webhooks</h1>
-          <p className="mt-1 text-sm text-slate-400">Tenant-scoped signed webhook export with redacted payloads and delivery logs.</p>
+          <p className="mt-1 text-sm text-slate-200">Tenant-scoped signed webhook export with redacted payloads and delivery logs.</p>
         </div>
         <button className="rounded-md border border-slate-700 p-2 text-slate-300" onClick={load} title="Refresh"><RefreshCw size={16} /></button>
       </div>
@@ -165,10 +165,10 @@ export function SiemWebhooksClient({ organizations }: { organizations: Pick<Orga
                 <button className="block w-full text-left" onClick={() => setSelectedId(integration.id)}>
                   <div className="flex items-center justify-between gap-3">
                     <span className="font-semibold text-slate-200">{integration.name}</span>
-                    <span className={integration.enabled ? "text-lime" : "text-slate-500"}>{integration.enabled ? "enabled" : "disabled"}</span>
+                    <span className={integration.enabled ? "text-lime" : "text-slate-300"}>{integration.enabled ? "enabled" : "disabled"}</span>
                   </div>
-                  <p className="mt-1 truncate text-xs text-slate-500">{integration.endpointUrl}</p>
-                  <p className="mt-1 text-xs text-slate-500">{integration.eventTypes.length} event types · secret {integration.secretPreview ? "set" : "not set"}</p>
+                  <p className="mt-1 truncate text-xs text-slate-300">{integration.endpointUrl}</p>
+                  <p className="mt-1 text-xs text-slate-300">{integration.eventTypes.length} event types · secret {integration.secretPreview ? "set" : "not set"}</p>
                 </button>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <button className="inline-flex items-center gap-1 rounded border border-slate-700 px-2 py-1 text-xs" onClick={() => patch(integration.id, { enabled: !integration.enabled })}>{integration.enabled ? "Disable" : "Enable"}</button>
@@ -186,7 +186,7 @@ export function SiemWebhooksClient({ organizations }: { organizations: Pick<Orga
         <h2 className="mb-3 text-sm font-semibold text-slate-200">Delivery Logs</h2>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[780px] text-left text-sm">
-            <thead className="border-b border-slate-800 text-xs uppercase text-slate-500">
+            <thead className="border-b border-slate-800 text-xs uppercase text-slate-300">
               <tr><th className="px-3 py-3">Event</th><th className="px-3 py-3">Status</th><th className="px-3 py-3">Attempts</th><th className="px-3 py-3">HTTP</th><th className="px-3 py-3">Error</th><th className="px-3 py-3">Created</th></tr>
             </thead>
             <tbody className="divide-y divide-slate-800">
@@ -194,10 +194,10 @@ export function SiemWebhooksClient({ organizations }: { organizations: Pick<Orga
                 <tr key={delivery.id}>
                   <td className="px-3 py-3 text-slate-200">{delivery.event.eventType}</td>
                   <td className="px-3 py-3">{delivery.status}</td>
-                  <td className="px-3 py-3 text-slate-400">{delivery.attempts}</td>
-                  <td className="px-3 py-3 text-slate-400">{delivery.responseCode ?? "-"}</td>
-                  <td className="px-3 py-3 text-slate-500">{delivery.errorMessage ?? "-"}</td>
-                  <td className="px-3 py-3 text-slate-500">{new Date(delivery.createdAt).toLocaleString()}</td>
+                  <td className="px-3 py-3 text-slate-200">{delivery.attempts}</td>
+                  <td className="px-3 py-3 text-slate-200">{delivery.responseCode ?? "-"}</td>
+                  <td className="px-3 py-3 text-slate-300">{delivery.errorMessage ?? "-"}</td>
+                  <td className="px-3 py-3 text-slate-300">{new Date(delivery.createdAt).toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>

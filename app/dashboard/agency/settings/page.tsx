@@ -11,7 +11,7 @@ export default async function AgencySettingsPage() {
     <div>
       <p className="eyebrow">Agency</p>
       <h1 className="mt-2 text-3xl font-bold">Settings &amp; branding</h1>
-      <p className="mt-3 text-slate-400">Configure the brand used on white-label reports and the public security status pages.</p>
+      <p className="mt-3 text-slate-200">Configure the brand used on white-label reports and the public security status pages.</p>
       <BrandingForm
         agency={{ id: agency.id, name: agency.name, contactEmail: agency.contactEmail ?? "" }}
         branding={branding ? {

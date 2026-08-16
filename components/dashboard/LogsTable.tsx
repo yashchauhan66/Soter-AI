@@ -28,7 +28,7 @@ export function LogsTable({ logs }: { logs: LogRow[] }) {
     return (
       <div className="card p-10 text-center">
         <h3 className="font-semibold">No guard decisions yet</h3>
-        <p className="mt-2 text-sm text-slate-500">Requests sent through input or output guard will appear here.</p>
+        <p className="mt-2 text-sm text-slate-300">Requests sent through input or output guard will appear here.</p>
       </div>
     );
   }
@@ -36,7 +36,7 @@ export function LogsTable({ logs }: { logs: LogRow[] }) {
   return (
     <div className="card overflow-x-auto">
       <table className="w-full min-w-[800px] text-left text-sm" role="table" aria-label="Guard decision logs">
-        <thead className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-500">
+        <thead className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-300">
           <tr>
             {['Date', 'Direction', 'Action', 'Risk', 'Risk types', 'Reason', 'Details'].map((label) => (
               <th className="px-4 py-3" key={label} scope="col">{label}</th>
@@ -49,30 +49,30 @@ export function LogsTable({ logs }: { logs: LogRow[] }) {
             const displayText = log.redactedText ?? log.safeText;
             return (
               <tr key={log.id} className="align-top hover:bg-slate-900/50">
-                <td className="whitespace-nowrap px-4 py-4 text-slate-400">{formatDate(log.createdAt)}</td>
+                <td className="whitespace-nowrap px-4 py-4 text-slate-200">{formatDate(log.createdAt)}</td>
                 <td className="px-4 py-4">{log.direction}</td>
                 <td className="px-4 py-4"><RiskBadge action={log.action} /></td>
                 <td className="px-4 py-4 font-bold">{log.riskScore}</td>
-                <td className="max-w-48 px-4 py-4 text-xs text-slate-400">{log.riskTypes.join(", ")}</td>
-                <td className="max-w-72 px-4 py-4 text-slate-400">{log.reason}</td>
+                <td className="max-w-48 px-4 py-4 text-xs text-slate-200">{log.riskTypes.join(", ")}</td>
+                <td className="max-w-72 px-4 py-4 text-slate-200">{log.reason}</td>
                 <td className="px-4 py-4">
                   <details className="min-w-64">
                     <summary className="cursor-pointer font-medium text-cyan">View details</summary>
                     <div className="mt-3 space-y-3 rounded-xl border border-slate-800 bg-slate-950/80 p-4">
                       <div>
-                        <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Redacted / safe text</p>
+                        <p className="text-xs font-bold uppercase tracking-wider text-slate-300">Redacted / safe text</p>
                         <p className="mt-1 whitespace-pre-wrap break-words text-xs text-slate-300">
                           {displayText ?? "No text retained for this decision."}
                         </p>
                       </div>
                       <div>
-                        <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Findings</p>
+                        <p className="text-xs font-bold uppercase tracking-wider text-slate-300">Findings</p>
                         {findings.length ? findings.map((finding, index) => (
                           <div className="mt-2 border-t border-slate-800 pt-2" key={`${finding.label}-${index}`}>
                             <p className="text-xs font-semibold">{finding.label} · {finding.severity}</p>
-                            <p className="mt-1 text-xs text-slate-500">{finding.message}</p>
+                            <p className="mt-1 text-xs text-slate-300">{finding.message}</p>
                           </div>
-                        )) : <p className="mt-1 text-xs text-slate-500">No material findings.</p>}
+                        )) : <p className="mt-1 text-xs text-slate-300">No material findings.</p>}
                       </div>
                       <FeedbackButtons guardLogId={log.id} />
                     </div>

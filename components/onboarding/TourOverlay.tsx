@@ -204,7 +204,7 @@ export function TourOverlay() {
           {/* Close button */}
           <button
             onClick={endTour}
-            className="absolute right-3 top-3 rounded-lg p-1 text-slate-500 transition hover:bg-slate-800 hover:text-white"
+            className="absolute right-3 top-3 rounded-lg p-1 text-slate-300 transition hover:bg-slate-800 hover:text-white"
             aria-label="Close tour"
           >
             <X size={16} />
@@ -218,7 +218,7 @@ export function TourOverlay() {
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <span className="whitespace-nowrap text-xs font-medium text-slate-400">
+            <span className="whitespace-nowrap text-xs font-medium text-slate-200">
               {currentStep + 1} / {totalSteps}
             </span>
           </div>
@@ -271,7 +271,7 @@ export function TourOverlay() {
 
               <button
                 onClick={endTour}
-                className="inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-sm font-medium text-slate-500 transition hover:text-slate-300"
+                className="inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-sm font-medium text-slate-300 transition hover:text-slate-300"
               >
                 <SkipForward size={15} />
                 Skip
@@ -314,7 +314,7 @@ export function TourOverlay() {
                 )
               )}
               {totalSteps > 30 && (
-                <span className="text-[10px] text-slate-500">
+                <span className="text-[10px] text-slate-300">
                   +{totalSteps - 30}
                 </span>
               )}

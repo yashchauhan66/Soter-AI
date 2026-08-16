@@ -169,7 +169,7 @@ const pastReports = await fetch("https://api.soterai.in/v1/reports?limit=10", {
     relatedDocs: [
       { label: "Guard Logs", href: "/docs/services/guard-logs" },
       { label: "Audit Exports", href: "/docs/services/audit-exports" },
-      { label: "Compliance", href: "/docs/compliance/security-whitepaper" },
+      { label: "Trust Center", href: "/trust" },
     ],
   },
   {
@@ -540,7 +540,7 @@ await fetch("https://api.soterai.in/v1/shadow-ai/block", {
     apiEndpoint: "GET /api/shadow/scan",
     relatedDocs: [
       { label: "Agent Firewall", href: "/docs/services/agent-firewall" },
-      { label: "Compliance", href: "/docs/compliance/security-whitepaper" },
+      { label: "OWASP LLM Top 10", href: "/compliance/owasp-llm-top-10" },
     ],
   },
   {
@@ -604,7 +604,7 @@ console.log(batchResult.passed + "/" + batchResult.total + " tests passed");`,
     codeLanguage: "typescript",
     apiEndpoint: "POST /api/redteam/run",
     relatedDocs: [
-      { label: "OWASP LLM Top 10", href: "/docs/compliance/owasp-llm-top-10-mapping" },
+      { label: "OWASP LLM Top 10", href: "/compliance/owasp-llm-top-10" },
       { label: "Guard API", href: "/docs/rest-api" },
     ],
   },
@@ -666,7 +666,7 @@ const rootCause = await fetch(
     relatedDocs: [
       { label: "Guard Logs", href: "/docs/services/guard-logs" },
       { label: "Evidence Vault", href: "/docs/services/evidence-vault" },
-      { label: "Compliance", href: "/docs/compliance/incident-response" },
+      { label: "Security", href: "/security" },
     ],
   },
   {
@@ -837,7 +837,7 @@ const signedAction = passport.sign({
     apiEndpoint: "POST /api/agent/passport/issue",
     relatedDocs: [
       { label: "Agent Firewall", href: "/docs/services/agent-firewall" },
-      { label: "Identity & Access", href: "/docs/compliance/access-control" },
+      { label: "Trust Center", href: "/trust" },
     ],
   },
   {
@@ -1256,8 +1256,8 @@ console.log("Action is legally compliant");`,
     codeLanguage: "typescript",
     apiEndpoint: "POST /api/legal-boundary/check",
     relatedDocs: [
-      { label: "Compliance", href: "/docs/compliance/security-whitepaper" },
-      { label: "Access Control", href: "/docs/compliance/access-control" },
+      { label: "Trust Center", href: "/trust" },
+      { label: "Security", href: "/security" },
     ],
   },
 
@@ -1320,7 +1320,7 @@ const packages = await fetch(
     codeLanguage: "typescript",
     apiEndpoint: "GET /api/evidence/items",
     relatedDocs: [
-      { label: "Compliance Overview", href: "/docs/compliance/security-whitepaper" },
+      { label: "Trust Center", href: "/trust" },
       { label: "Audit Exports", href: "/docs/services/audit-exports" },
     ],
   },
@@ -1382,7 +1382,7 @@ const incidents = await soter.listLineageIncidents("OPEN");`,
     apiEndpoint: "POST /api/lineage/flow/check",
     relatedDocs: [
       { label: "RAG Security", href: "/docs/services/rag-security" },
-      { label: "Compliance", href: "/docs/compliance/access-control" },
+      { label: "Trust Center", href: "/trust" },
     ],
   },
   {
@@ -1451,7 +1451,7 @@ console.log(scenario.narrative);`,
     apiEndpoint: "POST /api/blast-radius/simulate",
     relatedDocs: [
       { label: "Agent Firewall", href: "/docs/services/agent-firewall" },
-      { label: "Risk Assessment", href: "/docs/compliance/security-controls-matrix" },
+      { label: "Known Limitations", href: "/limitations" },
     ],
   },
   {
@@ -1725,7 +1725,7 @@ console.log("Avg cost per request: $" + costPerRequest2);`,
     codeLanguage: "html",
     apiEndpoint: "GET /api/badge",
     relatedDocs: [
-      { label: "Public Status", href: "/security-status" },
+      { label: "Public Status", href: "/status" },
       { label: "API Reference", href: "/docs/api-contract" },
     ],
   },
@@ -1933,7 +1933,7 @@ await fetch("https://api.soterai.in/v1/exports/schedule", {
     relatedDocs: [
       { label: "Guard Logs", href: "/docs/services/guard-logs" },
       { label: "Evidence Vault", href: "/docs/services/evidence-vault" },
-      { label: "SIEM Integration", href: "/docs/siem-worker" },
+      { label: "Security Best Practices", href: "/docs/best-practices" },
     ],
   },
   {
@@ -2008,8 +2008,8 @@ return { reply: safeOutput };`,
     apiEndpoint: "POST /api/guard/input",
     relatedDocs: [
       { label: "Quickstart", href: "/docs/quickstart" },
-      { label: "Getting Started", href: "/docs/GETTING_STARTED" },
-      { label: "Dashboard Tour", href: "/onboarding" },
+      { label: "Getting Started", href: "/docs/quickstart" },
+      { label: "Dashboard Tour", href: "/dashboard/onboarding" },
     ],
   },
 ];

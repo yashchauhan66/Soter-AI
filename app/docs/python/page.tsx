@@ -108,18 +108,18 @@ export default function PythonDocsPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       
       <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-500 transition-colors hover:text-cyan">← Back to docs</Link>
+        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
         
         <p className="eyebrow mt-6">Language guide</p>
         <h1 className="mt-3 text-4xl font-bold">Python SDK Guide</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           SoterAI provides a Python client for protecting AI chatbots, agents, RAG systems, and LLM applications.
           The core client uses only the Python standard library (<InlineCode>urllib</InlineCode>) — no third-party HTTP dependency required.
         </p>
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 1: Install the package</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Install from PyPI:
           </p>
           <CodeBlock language="bash" title="pip install">{installCode}</CodeBlock>
@@ -131,25 +131,25 @@ export default function PythonDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 2: Configure environment</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Set these environment variables on your server:
           </p>
           <CodeBlock language="bash" title=".env">{`SOTER_API_KEY=ck_live_your_key_here
 SOTER_PROJECT_ID=                        # optional`}</CodeBlock>
-          <p className="mt-3 text-sm text-slate-400">
+          <p className="mt-3 text-sm text-slate-200">
 
           </p>
         </section>
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 3: Basic usage</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Guard user input and model output in a simple chat flow:
           </p>
           <CodeBlock language="python" title="basic input/output guard" showLineNumbers>{basicCode}</CodeBlock>
           
           <h3 className="mt-8 text-xl font-bold">One-call chat helper</h3>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Runs <strong>input guard → LLM call → output guard</strong> automatically:
           </p>
           <CodeBlock language="python" title="protect_chat">{protectChatCode}</CodeBlock>
@@ -157,7 +157,7 @@ SOTER_PROJECT_ID=                        # optional`}</CodeBlock>
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 4: Production-ready example</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Here&apos;s a complete example with error handling and proper response formatting:
           </p>
           <CodeBlock language="python" title="production handler" showLineNumbers>{fullExampleCode}</CodeBlock>
@@ -167,7 +167,7 @@ SOTER_PROJECT_ID=                        # optional`}</CodeBlock>
           <h2 className="text-2xl font-bold">Framework integrations</h2>
           
           <h3 className="mt-8 text-xl font-bold">FastAPI</h3>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Use the <InlineCode>create_chat_route</InlineCode> helper for a one-line guarded route:
           </p>
           <CodeBlock language="python" title="FastAPI example">{`from fastapi import FastAPI
@@ -186,7 +186,7 @@ app.add_api_route(
     create_chat_route(guard, call_llm=my_llm_call),
     methods=["POST"],
 )`}</CodeBlock>
-          <p className="mt-3 text-sm text-slate-400">
+          <p className="mt-3 text-sm text-slate-200">
             See the <Link href="/docs/fastapi" className="text-cyan underline">FastAPI guide</Link> for full details.
           </p>
 
@@ -197,14 +197,14 @@ from soter.langchain import protect_langchain_chain
 guard = Soter()
 safe_chain = protect_langchain_chain(my_chain, guard)
 result = safe_chain.invoke({"input": prompt})`}</CodeBlock>
-          <p className="mt-3 text-sm text-slate-400">
+          <p className="mt-3 text-sm text-slate-200">
             See the <Link href="/docs/rag" className="text-cyan underline">RAG/LangChain guide</Link> for full details.
           </p>
         </section>
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Error handling</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             The SDK exports typed exception classes:
           </p>
           <CodeBlock language="python" title="error handling">{errorCode}</CodeBlock>
@@ -230,13 +230,13 @@ result = safe_chain.invoke({"input": prompt})`}</CodeBlock>
                   <CheckCircle2 className="mt-0.5 shrink-0 text-lime" size={16} aria-hidden="true" />
                   <div>
                     <p className="font-semibold text-sm">{title}</p>
-                    <p className="mt-1 text-sm leading-6 text-slate-400">{copy}</p>
+                    <p className="mt-1 text-sm leading-6 text-slate-200">{copy}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          <p className="mt-4 text-sm italic text-slate-500">
+          <p className="mt-4 text-sm italic text-slate-300">
             This reduces risk; it does not guarantee complete protection.
           </p>
         </section>

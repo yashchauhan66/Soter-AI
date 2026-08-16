@@ -9,14 +9,14 @@ export default function BrowserExtensionPage() {
   return (
     <main className="container-page py-16">
       <h1 className="text-3xl font-bold text-white">SoterAI Browser Guard</h1>
-      <p className="mt-4 max-w-2xl text-slate-400">
+      <p className="mt-4 max-w-2xl text-slate-200">
         Install SoterAI in your favorite browser to get real-time AI protection while you use web-based chatbots and copilots.
       </p>
 
       <div className="mt-8 grid gap-6 md:grid-cols-2">
         <section className="rounded-2xl border border-slate-800 bg-slate-950/60 p-6">
           <h2 className="text-xl font-semibold text-white">Chrome and Microsoft Edge</h2>
-          <p className="mt-2 text-sm text-slate-400">One command to install the same guarded experience across browsers that share the WebExtensions API.</p>
+          <p className="mt-2 text-sm text-slate-200">One command to install the same guarded experience across browsers that share the WebExtensions API.</p>
           <Link
             href="https://soterai.in/extensions/browser/chrome"
             className="mt-4 inline-flex items-center text-sm font-medium text-cyan hover:text-cyan-300"
@@ -31,7 +31,7 @@ export default function BrowserExtensionPage() {
           </Link>
         </section>
 
-        <aside className="text-sm text-slate-500">
+        <aside className="text-sm text-slate-300">
           <p>This page is intentionally lightweight so it can be embedded as a card in your main marketing flows.</p>
         </aside>
       </div>

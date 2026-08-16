@@ -137,7 +137,7 @@ export function ApiKeyManager({ projects, keys }: { projects: Project[]; keys: K
               <span className="rounded-xl bg-cyan/10 p-3 text-cyan"><KeyRound size={20} /></span>
               <div>
                 <p className="font-semibold">{key.name}</p>
-                <p className="mt-1 font-mono text-xs text-slate-500">{key.prefix}******** · {key.project.name}</p>
+                <p className="mt-1 font-mono text-xs text-slate-300">{key.prefix}******** · {key.project.name}</p>
                 <p className="mt-1 text-xs text-slate-600">
                   Last used: {key.lastUsedAt ? formatDate(key.lastUsedAt) : "Never"}
                 </p>
@@ -152,7 +152,7 @@ export function ApiKeyManager({ projects, keys }: { projects: Project[]; keys: K
               {updatingId === key.id ? "Updating..." : key.isActive ? "Deactivate" : "Activate"}
             </button>
           </div>
-        )) : <div className="card p-10 text-center text-slate-500">No API keys yet — use the form above to generate your first key, then send a guarded request to see decisions in your logs.</div>}
+        )) : <div className="card p-10 text-center text-slate-300">No API keys yet — use the form above to generate your first key, then send a guarded request to see decisions in your logs.</div>}
       </div>
     </div>
   );

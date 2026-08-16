@@ -20,7 +20,7 @@ export default async function IntegrationsPage() {
     <div>
       <p className="eyebrow">Developer experience</p>
       <h1 className="mt-2 text-3xl font-bold">Integration wizard</h1>
-      <p className="mb-7 mt-3 max-w-3xl text-slate-400">
+      <p className="mb-7 mt-3 max-w-3xl text-slate-200">
         Pick your platform, copy the server-side snippet, and verify that the Guard API is reachable. Raw API keys are never retrieved from storage after creation.
       </p>
       <IntegrationWizard projects={projects} apiKeys={apiKeys} defaultBaseUrl={baseUrl} />

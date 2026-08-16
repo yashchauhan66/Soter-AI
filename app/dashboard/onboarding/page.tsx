@@ -16,7 +16,7 @@ export default async function OnboardingPage() {
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="mt-2 text-3xl font-bold">Get to first protected value</h1>
-          <p className="mt-3 max-w-2xl text-slate-400">
+          <p className="mt-3 max-w-2xl text-slate-200">
             Pick the path closest to your job, then follow the checklist. Every step has a clear outcome and a place to continue.
           </p>
         </div>
@@ -41,7 +41,7 @@ export default async function OnboardingPage() {
                 </span>
                 <div>
                   <p className="font-semibold text-white">{path.label}</p>
-                  <p className="mt-1 text-xs leading-5 text-slate-500">{path.who}</p>
+                  <p className="mt-1 text-xs leading-5 text-slate-300">{path.who}</p>
                 </div>
               </div>
               <p className="mt-3 text-xs font-medium text-emerald-300">{path.outcome}</p>
@@ -54,7 +54,7 @@ export default async function OnboardingPage() {
         <div className="card p-6">
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div>
-              <p className="text-sm text-slate-500">Progress</p>
+              <p className="text-sm text-slate-300">Progress</p>
               <p className="text-3xl font-bold">{done} / {total}</p>
             </div>
             <p className="text-3xl font-black text-cyan">{percent}%</p>
@@ -70,7 +70,7 @@ export default async function OnboardingPage() {
             Next best action
           </div>
           <p className="mt-3 text-sm leading-6 text-slate-300">{nextAction?.title ?? "Review your guarded activity"}</p>
-          <p className="mt-2 flex items-center gap-2 text-xs text-slate-500">
+          <p className="mt-2 flex items-center gap-2 text-xs text-slate-300">
             <Clock3 size={14} aria-hidden="true" /> Usually 2-5 minutes
           </p>
           {nextAction && (
@@ -90,11 +90,11 @@ export default async function OnboardingPage() {
                 <div>
                   <div className="flex flex-wrap items-center gap-2">
                     <p className="font-semibold">{index + 1}. {item.title}</p>
-                    <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${item.done ? "bg-emerald-400/10 text-emerald-300" : "bg-slate-800 text-slate-400"}`}>
+                    <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${item.done ? "bg-emerald-400/10 text-emerald-300" : "bg-slate-800 text-slate-200"}`}>
                       {item.done ? "Done" : "Open"}
                     </span>
                   </div>
-                  <p className="mt-1 text-sm text-slate-500">{item.description}</p>
+                  <p className="mt-1 text-sm text-slate-300">{item.description}</p>
                 </div>
               </div>
               {item.key === "sdk" ? (

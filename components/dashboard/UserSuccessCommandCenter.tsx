@@ -21,13 +21,13 @@ export function UserSuccessCommandCenter({
           <h2 id="success-center-heading" className="mt-2 text-2xl font-bold text-white">
             Choose your path. Reach first value without guessing.
           </h2>
-          <p className="mt-2 text-sm leading-6 text-slate-400">
+          <p className="mt-2 text-sm leading-6 text-slate-200">
             SoterAI has many security tools, so this panel keeps the first session focused on one clear outcome.
           </p>
         </div>
         <div className="min-w-[180px] rounded-xl border border-slate-800 bg-slate-900/60 p-4">
           <div className="flex items-center justify-between gap-3">
-            <span className="text-sm text-slate-400">Setup progress</span>
+            <span className="text-sm text-slate-200">Setup progress</span>
             <span className="text-lg font-bold text-cyan">{percent}%</span>
           </div>
           <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-800" role="progressbar" aria-label="Workspace setup progress" aria-valuenow={completed} aria-valuemin={0} aria-valuemax={total}>
@@ -48,7 +48,7 @@ export function UserSuccessCommandCenter({
                   </span>
                   <div className="min-w-0">
                     <p className="font-semibold text-white">{path.label}</p>
-                    <p className="mt-1 text-xs leading-5 text-slate-500">{path.who}</p>
+                    <p className="mt-1 text-xs leading-5 text-slate-300">{path.who}</p>
                     <p className="mt-2 text-xs font-medium text-emerald-300">{path.outcome}</p>
                   </div>
                   <ArrowRight size={16} className="ml-auto shrink-0 text-slate-600 transition group-hover:translate-x-0.5 group-hover:text-cyan" aria-hidden="true" />
@@ -65,13 +65,13 @@ export function UserSuccessCommandCenter({
           </div>
           {nextAction ? (
             <>
-              <p className="mt-3 text-sm leading-6 text-slate-400">{nextAction.title}</p>
+              <p className="mt-3 text-sm leading-6 text-slate-200">{nextAction.title}</p>
               <Link href={nextAction.href} className="button-primary mt-4 w-full justify-center !py-2 text-sm">
                 Continue <ArrowRight size={15} aria-hidden="true" />
               </Link>
             </>
           ) : (
-            <p className="mt-3 text-sm leading-6 text-slate-400">Your setup checklist is complete. Review logs or run a red-team test next.</p>
+            <p className="mt-3 text-sm leading-6 text-slate-200">Your setup checklist is complete. Review logs or run a red-team test next.</p>
           )}
           <div className="mt-4 grid gap-2 border-t border-slate-800 pt-4 text-sm">
             <Link href="/dashboard/onboarding" className="flex items-center gap-2 text-slate-300 hover:text-cyan">
@@ -84,9 +84,9 @@ export function UserSuccessCommandCenter({
         </aside>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-3 text-xs text-slate-500">
+      <div className="mt-4 flex flex-wrap gap-3 text-xs text-slate-300">
         <span className="inline-flex items-center gap-1"><CheckCircle2 size={14} className="text-emerald-300" aria-hidden="true" /> Clear outcome</span>
-        <span className="inline-flex items-center gap-1"><Circle size={14} className="text-slate-500" aria-hidden="true" /> No setup dead ends</span>
+        <span className="inline-flex items-center gap-1"><Circle size={14} className="text-slate-300" aria-hidden="true" /> No setup dead ends</span>
       </div>
     </section>
   );

@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 export default async function ExportsPage() {
   const active = await getActiveOrganization();
   if (!active) {
-    return <div className="card p-10 text-center text-slate-400">No organization available.</div>;
+    return <div className="card p-10 text-center text-slate-200">No organization available.</div>;
   }
   await requirePermission(active.org.id, "reports:export");
   const recent = await db.auditExport.findMany({
@@ -28,7 +28,7 @@ export default async function ExportsPage() {
     <div>
       <p className="eyebrow">Audit</p>
       <h1 className="mt-2 text-3xl font-bold">Exports</h1>
-      <p className="mt-3 text-slate-400">
+      <p className="mt-3 text-slate-200">
         Each row carries an HMAC-SHA256 signature. The X-Manifest-Signature response header signs the row count + generation timestamp so downstream SIEMs can verify provenance.
       </p>
 
@@ -42,10 +42,10 @@ export default async function ExportsPage() {
                 <span className="rounded-xl bg-cyan/10 p-3 text-cyan"><Icon size={20} /></span>
                 <div>
                   <p className="font-semibold">{download.label}</p>
-                  <p className="mt-1 text-xs text-slate-500">Last 25,000 rows · redacted only · expires in 7 days</p>
+                  <p className="mt-1 text-xs text-slate-300">Last 25,000 rows · redacted only · expires in 7 days</p>
                 </div>
               </div>
-              <Download size={18} className="text-slate-400" />
+              <Download size={18} className="text-slate-200" />
             </Link>
           );
         })}
@@ -55,7 +55,7 @@ export default async function ExportsPage() {
       {recent.length ? (
         <div className="card mt-4 overflow-x-auto">
           <table className="w-full min-w-[700px] text-left text-sm">
-            <thead className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-500">
+            <thead className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-300">
               <tr>
                 <th className="px-4 py-3">When</th>
                 <th className="px-4 py-3">Kind</th>
@@ -67,18 +67,18 @@ export default async function ExportsPage() {
             <tbody className="divide-y divide-slate-800">
               {recent.map((item) => (
                 <tr key={item.id}>
-                  <td className="whitespace-nowrap px-4 py-3 text-slate-400">{new Date(item.createdAt).toLocaleString()}</td>
+                  <td className="whitespace-nowrap px-4 py-3 text-slate-200">{new Date(item.createdAt).toLocaleString()}</td>
                   <td className="px-4 py-3">{item.kind}</td>
                   <td className="px-4 py-3">{item.format}</td>
                   <td className="px-4 py-3">{item.rowCount}</td>
-                  <td className="px-4 py-3 font-mono text-xs text-slate-500">{item.signature?.slice(0, 16)}…</td>
+                  <td className="px-4 py-3 font-mono text-xs text-slate-300">{item.signature?.slice(0, 16)}…</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       ) : (
-        <div className="card mt-4 p-10 text-center text-slate-500">No exports yet.</div>
+        <div className="card mt-4 p-10 text-center text-slate-300">No exports yet.</div>
       )}
     </div>
   );

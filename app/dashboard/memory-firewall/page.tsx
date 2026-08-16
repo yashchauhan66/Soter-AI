@@ -69,8 +69,8 @@ if (check.decision === "QUARANTINE" || check.decision === "BLOCK") {
           <div className="card p-4 text-sm" key={row.id}>
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
-                <p className="font-semibold">{row.agentName} · <span className="text-slate-400">{row.memoryScope}/{row.memoryType}</span></p>
-                <p className="mt-1 max-w-2xl truncate text-slate-400">{row.contentRedacted ?? "(no content)"}</p>
+                <p className="font-semibold">{row.agentName} · <span className="text-slate-200">{row.memoryScope}/{row.memoryType}</span></p>
+                <p className="mt-1 max-w-2xl truncate text-slate-200">{row.contentRedacted ?? "(no content)"}</p>
               </div>
               <div className="flex items-center gap-2">
                 <RiskLevel level={row.riskLevel} />
@@ -84,7 +84,7 @@ if (check.decision === "QUARANTINE" || check.decision === "BLOCK") {
             )}
           </div>
         ))}
-        {records.length === 0 && <section className="card p-5 text-sm text-slate-500">No memory records yet. Check or store memory via the API/SDK.</section>}
+        {records.length === 0 && <section className="card p-5 text-sm text-slate-300">No memory records yet. Check or store memory via the API/SDK.</section>}
       </section>
     </div>
   );

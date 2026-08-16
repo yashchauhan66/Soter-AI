@@ -16,7 +16,7 @@ export default function OwaspLlmTop10Page() {
         {owaspMappings.map(([risk, control]) => (
           <div className="rounded-lg border border-slate-800 p-4" key={risk}>
             <h2 className="font-semibold">{risk}</h2>
-            <p className="mt-2 text-sm text-slate-400">{control}</p>
+            <p className="mt-2 text-sm text-slate-200">{control}</p>
           </div>
         ))}
       </div>

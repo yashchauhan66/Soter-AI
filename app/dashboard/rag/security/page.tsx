@@ -21,9 +21,9 @@ export default function RagSecurityPage() {
         callout="Preview and simulation only. This page runs a benchmark against detection logic; it is defensive regression coverage, not real-time enforcement and not proof of complete RAG protection. It does not block, redact, or intercept live retrieval traffic."
       />
       <div className="mt-7 grid gap-4 sm:grid-cols-3">
-        <section className="card p-5"><p className="text-sm text-slate-400">Benchmark cases</p><p className="mt-2 text-2xl font-bold">{benchmark.total}</p></section>
-        <section className="card p-5"><p className="text-sm text-slate-400">Detected</p><p className="mt-2 text-2xl font-bold">{benchmark.detected}</p></section>
-        <section className="card p-5"><p className="text-sm text-slate-400">Mode</p><p className="mt-2 text-2xl font-bold">Simulation</p></section>
+        <section className="card p-5"><p className="text-sm text-slate-200">Benchmark cases</p><p className="mt-2 text-2xl font-bold">{benchmark.total}</p></section>
+        <section className="card p-5"><p className="text-sm text-slate-200">Detected</p><p className="mt-2 text-2xl font-bold">{benchmark.detected}</p></section>
+        <section className="card p-5"><p className="text-sm text-slate-200">Mode</p><p className="mt-2 text-2xl font-bold">Simulation</p></section>
       </div>
     </div>
   );

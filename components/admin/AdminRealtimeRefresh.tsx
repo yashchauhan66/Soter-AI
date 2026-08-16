@@ -34,7 +34,7 @@ export function AdminRealtimeRefresh({ intervalMs = 15000 }: { intervalMs?: numb
   }, [intervalMs, router, startTransition]);
 
   return (
-    <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400">
+    <div className="flex flex-wrap items-center gap-2 text-xs text-slate-200">
       <span className="inline-flex h-9 items-center gap-2 rounded-md border border-emerald-500/20 bg-emerald-500/10 px-3 text-emerald-200">
         <Radio size={14} className="text-emerald-300" />
         Live

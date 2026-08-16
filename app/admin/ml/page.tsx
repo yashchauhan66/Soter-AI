@@ -22,7 +22,7 @@ export default async function MLOverviewPage() {
     <div>
       <p className="eyebrow">ML registry</p>
       <h1 className="mt-2 text-3xl font-bold">Classifier quality, datasets, and rollouts</h1>
-      <p className="mt-3 max-w-3xl text-slate-400">
+      <p className="mt-3 max-w-3xl text-slate-200">
         Track ML classifier precision, recall, F1, and false positive/negative rates. Models can run in SHADOW, PARTIAL, or FULL rollout. Rule-based detectors always remain authoritative; an ML failure falls back automatically.
       </p>
       <div className="mt-6 grid gap-4 md:grid-cols-5">
@@ -34,7 +34,7 @@ export default async function MLOverviewPage() {
           ["Active deployments", deployments, "/admin/ml/deployments"],
         ].map(([label, value, href]) => (
           <Link key={String(label)} href={String(href)} className="card p-5 hover:border-cyan-500/40">
-            <p className="text-xs font-bold uppercase tracking-wider text-slate-500">{label}</p>
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-300">{label}</p>
             <p className="mt-2 text-3xl font-black text-cyan">{String(value)}</p>
           </Link>
         ))}
@@ -42,12 +42,12 @@ export default async function MLOverviewPage() {
       <section className="mt-10 card p-6">
         <h2 className="font-semibold">Latest evaluations</h2>
         {recent.length === 0 ? (
-          <p className="mt-4 text-sm text-slate-400">
+          <p className="mt-4 text-sm text-slate-200">
             No evaluations yet. Start one with <code>POST /api/admin/ml/evaluations</code> after creating a dataset and a model version.
           </p>
         ) : (
           <table className="mt-4 w-full text-sm">
-            <thead className="text-xs uppercase tracking-wider text-slate-500">
+            <thead className="text-xs uppercase tracking-wider text-slate-300">
               <tr>
                 <th className="py-2 text-left">Model</th>
                 <th className="py-2 text-left">Dataset</th>
@@ -63,7 +63,7 @@ export default async function MLOverviewPage() {
             <tbody>
               {recent.map((evaluation) => (
                 <tr key={evaluation.id} className="border-t border-slate-800">
-                  <td className="py-2">{evaluation.modelVersion.name} <span className="text-slate-500">{evaluation.modelVersion.version}</span></td>
+                  <td className="py-2">{evaluation.modelVersion.name} <span className="text-slate-300">{evaluation.modelVersion.version}</span></td>
                   <td className="py-2">{evaluation.dataset.name} v{evaluation.dataset.version}</td>
                   <td className="py-2 text-right">{evaluation.precision.toFixed(3)}</td>
                   <td className="py-2 text-right">{evaluation.recall.toFixed(3)}</td>
@@ -71,7 +71,7 @@ export default async function MLOverviewPage() {
                   <td className="py-2 text-right">{evaluation.falsePositiveRate.toFixed(3)}</td>
                   <td className="py-2 text-right">{evaluation.falseNegativeRate.toFixed(3)}</td>
                   <td className="py-2 text-right">{evaluation.totalExamples}</td>
-                  <td className="py-2 text-right text-slate-400">{evaluation.createdAt.toISOString().slice(0, 19).replace("T", " ")}</td>
+                  <td className="py-2 text-right text-slate-200">{evaluation.createdAt.toISOString().slice(0, 19).replace("T", " ")}</td>
                 </tr>
               ))}
             </tbody>

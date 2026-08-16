@@ -48,7 +48,7 @@ export function IdentityFabricPlayground({
     <section className="card p-5">
       <div className="flex items-center justify-between gap-3">
         <h2 className="text-lg font-semibold">Playground</h2>
-        <span className="text-xs text-slate-500">Test the identity fabric APIs</span>
+        <span className="text-xs text-slate-300">Test the identity fabric APIs</span>
       </div>
 
       {/* Tabs */}
@@ -60,7 +60,7 @@ export function IdentityFabricPlayground({
             className={`rounded-lg px-3 py-1.5 text-xs font-medium transition ${
               activeTab === tab.id
                 ? "bg-cyan/10 text-cyan"
-                : "text-slate-400 hover:text-white"
+                : "text-slate-200 hover:text-white"
             }`}
           >
             {tab.label}
@@ -88,14 +88,14 @@ function IssuePassportForm({ action }: { action: typeof issueIdentityPassport })
 
   return (
     <form action={formAction} className="space-y-4">
-      <p className="text-sm text-slate-400">
+      <p className="text-sm text-slate-200">
         Issue a new cryptographic passport for an agent. The passport is signed with HMAC-SHA256
         and carries capabilities in <code className="text-cyan">action:resource</code> format.
       </p>
 
       <div className="grid gap-4 md:grid-cols-2">
         <div>
-          <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="agentId">
+          <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="agentId">
             Agent identity ID
           </label>
           <input
@@ -108,7 +108,7 @@ function IssuePassportForm({ action }: { action: typeof issueIdentityPassport })
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="audience">
+          <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="audience">
             Audience (optional)
           </label>
           <input
@@ -121,8 +121,8 @@ function IssuePassportForm({ action }: { action: typeof issueIdentityPassport })
       </div>
 
       <div>
-        <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="capabilities">
-          Capabilities <span className="text-slate-500">(one per line)</span>
+        <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="capabilities">
+          Capabilities <span className="text-slate-300">(one per line)</span>
         </label>
         <textarea
           id="capabilities"
@@ -131,13 +131,13 @@ function IssuePassportForm({ action }: { action: typeof issueIdentityPassport })
           defaultValue={`read:workspace/docs/*\nexecute:tool/rag.search\nread:workspace/projects/*\nwrite:rag/collection/reports`}
           required
         />
-        <p className="mt-1 text-xs text-slate-500">
+        <p className="mt-1 text-xs text-slate-300">
           Format: <code>&lt;action&gt;:&lt;resource&gt;[/&lt;subresource&gt;]</code>
         </p>
       </div>
 
       <div>
-        <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="scope">
+        <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="scope">
           Scope label (optional)
         </label>
         <input
@@ -158,17 +158,17 @@ function IssuePassportForm({ action }: { action: typeof issueIdentityPassport })
         <ResultBlock success={state.success} error={state.error}>
           {state.success && state.raw && (
             <>
-              <p className="mb-2 text-xs font-semibold text-slate-400">Token:</p>
+              <p className="mb-2 text-xs font-semibold text-slate-200">Token:</p>
               <pre className="max-h-[120px] overflow-auto rounded bg-slate-950 p-3 text-xs text-emerald-300 break-all">
                 {state.raw}
               </pre>
               {state.claims && (
                 <div className="mt-3 grid gap-1 text-xs">
-                  <p><span className="text-slate-500">Subject:</span> {state.claims.sub}</p>
-                  <p><span className="text-slate-500">Capabilities:</span> {state.claims.cap.join(", ")}</p>
-                  <p><span className="text-slate-500">JTI:</span> {state.claims.jti}</p>
+                  <p><span className="text-slate-300">Subject:</span> {state.claims.sub}</p>
+                  <p><span className="text-slate-300">Capabilities:</span> {state.claims.cap.join(", ")}</p>
+                  <p><span className="text-slate-300">JTI:</span> {state.claims.jti}</p>
                   <p>
-                    <span className="text-slate-500">Expires:</span>{" "}
+                    <span className="text-slate-300">Expires:</span>{" "}
                     {new Date(state.claims.exp * 1000).toLocaleString()}
                   </p>
                 </div>
@@ -188,13 +188,13 @@ function VerifyPassportForm({ action }: { action: typeof verifyIdentityPassport 
 
   return (
     <form action={formAction} className="space-y-4">
-      <p className="text-sm text-slate-400">
+      <p className="text-sm text-slate-200">
         Verify a passport token&apos;s signature, check expiration, and optionally test
         whether it authorizes a specific capability.
       </p>
 
       <div>
-        <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="token">
+        <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="token">
           Passport token
         </label>
         <textarea
@@ -207,7 +207,7 @@ function VerifyPassportForm({ action }: { action: typeof verifyIdentityPassport 
       </div>
 
       <div>
-        <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="requiredCapability">
+        <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="requiredCapability">
           Required capability (optional)
         </label>
         <input
@@ -227,22 +227,22 @@ function VerifyPassportForm({ action }: { action: typeof verifyIdentityPassport 
           {state.success && (
             <div className="grid gap-2 text-xs">
               <p>
-                <span className="text-slate-500">Status:</span>{" "}
+                <span className="text-slate-300">Status:</span>{" "}
                 <span className={state.status === "valid" ? "text-emerald-300" : "text-red-300"}>
                   {state.status}
                 </span>
               </p>
-              <p><span className="text-slate-500">Valid signature:</span> {String(state.valid)}</p>
-              <p><span className="text-slate-500">Active (not expired):</span> {String(state.active)}</p>
+              <p><span className="text-slate-300">Valid signature:</span> {String(state.valid)}</p>
+              <p><span className="text-slate-300">Active (not expired):</span> {String(state.active)}</p>
               {state.remainingTtl !== undefined && (
-                <p><span className="text-slate-500">Remaining TTL:</span> {state.remainingTtl}s</p>
+                <p><span className="text-slate-300">Remaining TTL:</span> {state.remainingTtl}s</p>
               )}
               {state.claims && (
                 <>
-                  <p><span className="text-slate-500">Subject:</span> {state.claims.sub}</p>
-                  <p><span className="text-slate-500">Capabilities:</span> {state.claims.cap.join(", ")}</p>
-                  {state.claims.aud && <p><span className="text-slate-500">Audience:</span> {state.claims.aud}</p>}
-                  {state.claims.scope && <p><span className="text-slate-500">Scope:</span> {state.claims.scope}</p>}
+                  <p><span className="text-slate-300">Subject:</span> {state.claims.sub}</p>
+                  <p><span className="text-slate-300">Capabilities:</span> {state.claims.cap.join(", ")}</p>
+                  {state.claims.aud && <p><span className="text-slate-300">Audience:</span> {state.claims.aud}</p>}
+                  {state.claims.scope && <p><span className="text-slate-300">Scope:</span> {state.claims.scope}</p>}
                 </>
               )}
             </div>
@@ -260,14 +260,14 @@ function DelegateForm({ action }: { action: typeof delegateIdentityCredentials }
 
   return (
     <form action={formAction} className="space-y-4">
-      <p className="text-sm text-slate-400">
+      <p className="text-sm text-slate-200">
         Delegate capabilities from a parent passport to a child agent. The child can only
         receive capabilities that the parent already possesses (capability intersection).
       </p>
 
       <div className="grid gap-4 md:grid-cols-2">
         <div>
-          <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="parentToken">
+          <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="parentToken">
             Parent passport token
           </label>
           <textarea
@@ -279,7 +279,7 @@ function DelegateForm({ action }: { action: typeof delegateIdentityCredentials }
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="childAgentId">
+          <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="childAgentId">
             Child agent identity ID
           </label>
           <input
@@ -294,8 +294,8 @@ function DelegateForm({ action }: { action: typeof delegateIdentityCredentials }
       </div>
 
       <div>
-        <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="delegateCapabilities">
-          Capabilities to delegate <span className="text-slate-500">(one per line)</span>
+        <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="delegateCapabilities">
+          Capabilities to delegate <span className="text-slate-300">(one per line)</span>
         </label>
         <textarea
           id="delegateCapabilities"
@@ -315,14 +315,14 @@ function DelegateForm({ action }: { action: typeof delegateIdentityCredentials }
           {state.allowed !== undefined && (
             <div className="grid gap-2 text-xs">
               <p>
-                <span className="text-slate-500">Allowed:</span>{" "}
+                <span className="text-slate-300">Allowed:</span>{" "}
                 <span className={state.allowed ? "text-emerald-300" : "text-red-300"}>
                   {String(state.allowed)}
                 </span>
               </p>
               {state.resultingCapabilities && state.resultingCapabilities.length > 0 && (
                 <>
-                  <p className="text-slate-500">Resulting capabilities:</p>
+                  <p className="text-slate-300">Resulting capabilities:</p>
                   <ul className="ml-4 list-disc space-y-1 text-emerald-300">
                     {state.resultingCapabilities.map((cap, i) => (
                       <li key={i}>{cap}</li>
@@ -332,7 +332,7 @@ function DelegateForm({ action }: { action: typeof delegateIdentityCredentials }
               )}
               {state.proofHash && (
                 <p>
-                  <span className="text-slate-500">Proof hash:</span>{" "}
+                  <span className="text-slate-300">Proof hash:</span>{" "}
                   <span className="font-mono text-xs">{state.proofHash}</span>
                 </p>
               )}
@@ -361,13 +361,13 @@ function ExchangeForm({ action }: { action: typeof exchangeForTaskToken }) {
 
   return (
     <form action={formAction} className="space-y-4">
-      <p className="text-sm text-slate-400">
+      <p className="text-sm text-slate-200">
         Exchange a parent passport for an ultra-short-lived (5 minute) task token. The task token
         carries a single capability and is bound to a specific service audience.
       </p>
 
       <div>
-        <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="parentToken">
+        <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="parentToken">
           Parent passport token
         </label>
         <textarea
@@ -381,7 +381,7 @@ function ExchangeForm({ action }: { action: typeof exchangeForTaskToken }) {
 
       <div className="grid gap-4 md:grid-cols-3">
         <div>
-          <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="requiredCap">
+          <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="requiredCap">
             Required capability
           </label>
           <input
@@ -393,7 +393,7 @@ function ExchangeForm({ action }: { action: typeof exchangeForTaskToken }) {
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="audience">
+          <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="audience">
             Target audience
           </label>
           <input
@@ -405,7 +405,7 @@ function ExchangeForm({ action }: { action: typeof exchangeForTaskToken }) {
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="context">
+          <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="context">
             Context (optional)
           </label>
           <input
@@ -425,17 +425,17 @@ function ExchangeForm({ action }: { action: typeof exchangeForTaskToken }) {
         <ResultBlock success={state.success} error={state.error}>
           {state.success && state.raw && (
             <>
-              <p className="mb-2 text-xs font-semibold text-slate-400">Task token:</p>
+              <p className="mb-2 text-xs font-semibold text-slate-200">Task token:</p>
               <pre className="max-h-[100px] overflow-auto rounded bg-slate-950 p-3 text-xs text-yellow-300 break-all">
                 {state.raw}
               </pre>
               <div className="mt-3 grid gap-1 text-xs">
                 <p>
-                  <span className="text-slate-500">Expires at:</span>{" "}
+                  <span className="text-slate-300">Expires at:</span>{" "}
                   {new Date(state.expiresAt!).toLocaleString()}
                 </p>
                 <p>
-                  <span className="text-slate-500">Parent JTI:</span>{" "}
+                  <span className="text-slate-300">Parent JTI:</span>{" "}
                   <span className="font-mono">{state.parentJti}</span>
                 </p>
               </div>
@@ -454,14 +454,14 @@ function CrossAuthForm({ action }: { action: typeof crossAgentVerify }) {
 
   return (
     <form action={formAction} className="space-y-4">
-      <p className="text-sm text-slate-400">
+      <p className="text-sm text-slate-200">
         Demonstrate agent-to-agent authentication. Agent A challenges Agent B to prove its identity
         by signing a random nonce with the shared signing secret.
       </p>
 
       <div className="grid gap-4 md:grid-cols-3">
         <div>
-          <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="sourceAgentId">
+          <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="sourceAgentId">
             Source agent (challenger)
           </label>
           <input
@@ -474,7 +474,7 @@ function CrossAuthForm({ action }: { action: typeof crossAgentVerify }) {
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="targetAgentId">
+          <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="targetAgentId">
             Target agent (responder)
           </label>
           <input
@@ -487,7 +487,7 @@ function CrossAuthForm({ action }: { action: typeof crossAgentVerify }) {
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="targetPassport">
+          <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="targetPassport">
             Target agent&apos;s passport
           </label>
           <input
@@ -509,25 +509,25 @@ function CrossAuthForm({ action }: { action: typeof crossAgentVerify }) {
           {state.step && (
             <div className="grid gap-2 text-xs">
               <p>
-                <span className="text-slate-500">Verified:</span>{" "}
+                <span className="text-slate-300">Verified:</span>{" "}
                 <span className={state.verified ? "text-emerald-300" : "text-red-300"}>
                   {String(state.verified)}
                 </span>
               </p>
               {state.agentIdentityId && (
                 <p>
-                  <span className="text-slate-500">Agent identity:</span> {state.agentIdentityId}
+                  <span className="text-slate-300">Agent identity:</span> {state.agentIdentityId}
                 </p>
               )}
               {state.challengeToken && (
                 <p>
-                  <span className="text-slate-500">Challenge nonce:</span>{" "}
+                  <span className="text-slate-300">Challenge nonce:</span>{" "}
                   <span className="font-mono text-xs">{state.challengeToken}</span>
                 </p>
               )}
               {state.responseSignature && (
                 <p>
-                  <span className="text-slate-500">Response signature:</span>{" "}
+                  <span className="text-slate-300">Response signature:</span>{" "}
                   <span className="font-mono text-xs">{state.responseSignature}</span>
                 </p>
               )}
@@ -546,14 +546,14 @@ function IdpForm({ action }: { action: typeof registerIdpPrincipal }) {
 
   return (
     <form action={formAction} className="space-y-4">
-      <p className="text-sm text-slate-400">
+      <p className="text-sm text-slate-200">
         Register an agent as a service principal in an identity provider (Okta, Azure AD).
         The agent will appear as a managed principal in your enterprise directory.
       </p>
 
       <div className="grid gap-4 md:grid-cols-3">
         <div>
-          <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="provider">
+          <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="provider">
             IdP provider
           </label>
           <select
@@ -569,7 +569,7 @@ function IdpForm({ action }: { action: typeof registerIdpPrincipal }) {
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="principalId">
+          <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="principalId">
             Service principal ID
           </label>
           <input
@@ -582,7 +582,7 @@ function IdpForm({ action }: { action: typeof registerIdpPrincipal }) {
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="agentId">
+          <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="agentId">
             Agent identity ID
           </label>
           <input
@@ -597,8 +597,8 @@ function IdpForm({ action }: { action: typeof registerIdpPrincipal }) {
       </div>
 
       <div>
-        <label className="block text-xs font-semibold uppercase text-slate-400" htmlFor="scopes">
-          OAuth scopes <span className="text-slate-500">(one per line)</span>
+        <label className="block text-xs font-semibold uppercase text-slate-200" htmlFor="scopes">
+          OAuth scopes <span className="text-slate-300">(one per line)</span>
         </label>
         <textarea
           id="scopes"
@@ -616,10 +616,10 @@ function IdpForm({ action }: { action: typeof registerIdpPrincipal }) {
         <ResultBlock success={state.success} error={state.error}>
           {state.success && (
             <div className="grid gap-1 text-xs">
-              <p><span className="text-slate-500">Principal ID:</span> {state.principalId}</p>
-              <p><span className="text-slate-500">Provider:</span> {state.provider}</p>
-              <p><span className="text-slate-500">Mapped agent:</span> {state.mappedAgentId}</p>
-              <p><span className="text-slate-500">SCIM external ID:</span> <span className="font-mono">{state.scimExternalId}</span></p>
+              <p><span className="text-slate-300">Principal ID:</span> {state.principalId}</p>
+              <p><span className="text-slate-300">Provider:</span> {state.provider}</p>
+              <p><span className="text-slate-300">Mapped agent:</span> {state.mappedAgentId}</p>
+              <p><span className="text-slate-300">SCIM external ID:</span> <span className="font-mono">{state.scimExternalId}</span></p>
             </div>
           )}
         </ResultBlock>

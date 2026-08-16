@@ -95,14 +95,14 @@ export function ExtensionEnrollPanel({
         <ShieldCheck size={18} className="text-cyan" />
         <h2 className="text-lg font-semibold">Install &amp; enroll</h2>
       </div>
-      <p className="mt-1 text-sm text-slate-400">
+      <p className="mt-1 text-sm text-slate-200">
         Install the extension, then connect each browser to your organization with a one-time enrollment code.
       </p>
 
       <div className="mt-5 grid gap-5 lg:grid-cols-2">
         {/* Install */}
         <div className="rounded-lg border border-slate-800 bg-slate-950/40 p-4">
-          <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Step 1 · Install</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-slate-300">Step 1 · Install</p>
           <div className="mt-3 flex flex-wrap gap-2">
             <a
               href="https://chromewebstore.google.com/"
@@ -116,7 +116,7 @@ export function ExtensionEnrollPanel({
               <Download size={15} className="mr-2" /> Download .zip
             </a>
           </div>
-          <ol className="mt-4 list-decimal space-y-1 pl-4 text-xs text-slate-400">
+          <ol className="mt-4 list-decimal space-y-1 pl-4 text-xs text-slate-200">
             <li>Download and unzip the extension package.</li>
             <li>
               Open <code className="text-slate-300">chrome://extensions</code> and enable{" "}
@@ -129,9 +129,9 @@ export function ExtensionEnrollPanel({
 
         {/* Enroll */}
         <div className="rounded-lg border border-slate-800 bg-slate-950/40 p-4">
-          <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Step 2 · Generate enrollment code</p>
+          <p className="text-xs font-bold uppercase tracking-wider text-slate-300">Step 2 · Generate enrollment code</p>
           <div className="mt-3 grid grid-cols-2 gap-3">
-            <label className="text-xs text-slate-400">
+            <label className="text-xs text-slate-200">
               Max uses
               <input
                 type="number"
@@ -142,7 +142,7 @@ export function ExtensionEnrollPanel({
                 className="input mt-1 !px-3 !py-2 text-sm"
               />
             </label>
-            <label className="text-xs text-slate-400">
+            <label className="text-xs text-slate-200">
               Expires (days)
               <input
                 type="number"
@@ -153,7 +153,7 @@ export function ExtensionEnrollPanel({
                 className="input mt-1 !px-3 !py-2 text-sm"
               />
             </label>
-            <label className="col-span-2 text-xs text-slate-400">
+            <label className="col-span-2 text-xs text-slate-200">
               Department (optional)
               <input
                 value={department}
@@ -192,7 +192,7 @@ export function ExtensionEnrollPanel({
         <div className="mt-5 overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-500">
+              <tr className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-300">
                 <th className="py-2 pr-4">Code</th>
                 <th className="py-2 pr-4">Department</th>
                 <th className="py-2 pr-4">Uses</th>
@@ -206,7 +206,7 @@ export function ExtensionEnrollPanel({
                 const status = tokenStatus(t);
                 return (
                   <tr key={t.id} className="border-b border-slate-900 text-slate-300">
-                    <td className="py-2 pr-4 font-mono text-xs text-slate-500">{t.id.slice(0, 10)}…</td>
+                    <td className="py-2 pr-4 font-mono text-xs text-slate-300">{t.id.slice(0, 10)}…</td>
                     <td className="py-2 pr-4">{t.department ?? "—"}</td>
                     <td className="py-2 pr-4">{t.usedCount}/{t.maxUses}</td>
                     <td className="py-2 pr-4">{new Date(t.expiresAt).toLocaleDateString()}</td>

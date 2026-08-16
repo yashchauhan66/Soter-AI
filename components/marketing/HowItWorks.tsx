@@ -17,7 +17,7 @@ export function HowItWorks() {
             <div className="border-l border-slate-800 pl-5" key={n}>
               <span className="text-sm font-bold text-cyan">{n}</span>
               <h3 className="mt-4 text-lg font-semibold">{t}</h3>
-              <p className="mt-2 leading-7 text-slate-400">{c}</p>
+              <p className="mt-2 leading-7 text-slate-200">{c}</p>
             </div>
           ))}
         </div>

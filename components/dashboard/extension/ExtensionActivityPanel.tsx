@@ -60,14 +60,14 @@ export function ExtensionActivityPanel({ events }: { events: EventRow[] }) {
           </select>
         </div>
       </div>
-      <p className="mt-1 text-sm text-slate-400">
+      <p className="mt-1 text-sm text-slate-200">
         Recent scans and blocked leaks reported by enrolled browsers. No raw sensitive text is ever stored.
       </p>
 
       <div className="mt-4 overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead>
-            <tr className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-500">
+            <tr className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-300">
               <th className="py-2 pr-4">Time</th>
               <th className="py-2 pr-4">Event</th>
               <th className="py-2 pr-4">AI tool</th>
@@ -82,10 +82,10 @@ export function ExtensionActivityPanel({ events }: { events: EventRow[] }) {
             ) : (
               filtered.map((e) => (
                 <tr key={e.id} className="border-b border-slate-900 text-slate-300">
-                  <td className="py-2 pr-4 text-slate-400">{new Date(e.createdAt).toLocaleString()}</td>
+                  <td className="py-2 pr-4 text-slate-200">{new Date(e.createdAt).toLocaleString()}</td>
                   <td className="py-2 pr-4 text-xs text-slate-300">{e.eventType.replace(/^EXTENSION_/, "").replace(/_/g, " ")}</td>
-                  <td className="py-2 pr-4 text-slate-400">{e.domain ?? "—"}</td>
-                  <td className="py-2 pr-4 text-xs text-slate-400">{e.riskTypes.slice(0, 3).join(", ") || "—"}</td>
+                  <td className="py-2 pr-4 text-slate-200">{e.domain ?? "—"}</td>
+                  <td className="py-2 pr-4 text-xs text-slate-200">{e.riskTypes.slice(0, 3).join(", ") || "—"}</td>
                   <td className="py-2 pr-4"><StatusBadge value={e.severity.toUpperCase()} /></td>
                   <td className="py-2 pr-4"><StatusBadge value={e.action.toUpperCase()} /></td>
                 </tr>

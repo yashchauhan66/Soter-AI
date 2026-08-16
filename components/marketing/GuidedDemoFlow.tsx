@@ -168,12 +168,12 @@ export function GuidedDemoFlow() {
                 <div className="flex items-center gap-1.5">
                   <span
                     className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${
-                      current ? "bg-cyan text-ink" : done ? "bg-lime-500/20 text-lime-300" : "bg-slate-800 text-slate-400"
+                      current ? "bg-cyan text-ink" : done ? "bg-lime-500/20 text-lime-300" : "bg-slate-800 text-slate-200"
                     }`}
                   >
                     {done ? "✓" : s.step}
                   </span>
-                  <span className={`hidden text-xs font-medium sm:block ${current ? "text-cyan" : "text-slate-400"}`}>
+                  <span className={`hidden text-xs font-medium sm:block ${current ? "text-cyan" : "text-slate-200"}`}>
                     {s.label}
                   </span>
                 </div>
@@ -198,7 +198,7 @@ export function GuidedDemoFlow() {
               <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
               <span className="h-2.5 w-2.5 rounded-full bg-lime-500" />
             </div>
-            <span className="text-xs font-medium text-slate-500">SoterAI Agent Firewall — Guided Demo</span>
+            <span className="text-xs font-medium text-slate-300">SoterAI Agent Firewall — Guided Demo</span>
           </div>
           <span className="flex items-center gap-1.5 rounded-md bg-cyan/10 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-cyan">
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-cyan" />
@@ -213,7 +213,7 @@ export function GuidedDemoFlow() {
           </span>
           <div>
             <h3 className="text-lg font-bold text-slate-100">{stage.title}</h3>
-            <p className="text-sm text-slate-400">{stage.subtitle}</p>
+            <p className="text-sm text-slate-200">{stage.subtitle}</p>
           </div>
         </div>
 
@@ -227,14 +227,14 @@ export function GuidedDemoFlow() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setPlaying((p) => !p)}
-              className="rounded-md p-1.5 text-slate-400 transition hover:bg-slate-800 hover:text-slate-200"
+              className="rounded-md p-1.5 text-slate-200 transition hover:bg-slate-800 hover:text-slate-200"
               title={playing ? "Pause" : "Play"}
             >
               {playing ? <Pause size={16} /> : <Play size={16} />}
             </button>
             <button
               onClick={restart}
-              className="rounded-md p-1.5 text-slate-400 transition hover:bg-slate-800 hover:text-slate-200"
+              className="rounded-md p-1.5 text-slate-200 transition hover:bg-slate-800 hover:text-slate-200"
               title="Restart"
             >
               <RotateCcw size={15} />
@@ -244,13 +244,13 @@ export function GuidedDemoFlow() {
             <button
               onClick={() => select(Math.max(0, active - 1))}
               disabled={active === 0}
-              className="rounded-md px-2 py-1 text-slate-400 transition hover:bg-slate-800 hover:text-slate-200 disabled:opacity-30"
+              className="rounded-md px-2 py-1 text-slate-200 transition hover:bg-slate-800 hover:text-slate-200 disabled:opacity-30"
             >
               ‹ Prev
             </button>
             <button
               onClick={() => (active + 1 < STAGES.length ? select(active + 1) : restart())}
-              className="rounded-md px-2 py-1 text-slate-400 transition hover:bg-slate-800 hover:text-slate-200"
+              className="rounded-md px-2 py-1 text-slate-200 transition hover:bg-slate-800 hover:text-slate-200"
             >
               {active + 1 < STAGES.length ? "Next ›" : "Replay ↺"}
             </button>
@@ -275,7 +275,7 @@ function StageBody({ id }: { id: StageId }) {
   if (id === "injection") {
     return (
       <div className="space-y-3">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-300">
           Untrusted content (support ticket #4821)
         </p>
         <div className="rounded-lg border border-slate-700/60 bg-slate-950/80 p-3.5 text-sm leading-6 text-slate-300">
@@ -291,7 +291,7 @@ function StageBody({ id }: { id: StageId }) {
             </span>
           ))}
         </div>
-        <p className="flex items-center gap-2 text-sm text-slate-400">
+        <p className="flex items-center gap-2 text-sm text-slate-200">
           <AlertTriangle size={15} className="text-red-300" /> Risk score <span className="font-bold text-red-300">94</span> — injection isolated from the agent&apos;s instructions.
         </p>
       </div>
@@ -301,7 +301,7 @@ function StageBody({ id }: { id: StageId }) {
   if (id === "blocked") {
     return (
       <div className="space-y-3">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Agent tool call intercepted</p>
+        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-300">Agent tool call intercepted</p>
         <Mono>{`POST /agent/tool-call
 {
   "tool": "issue_refund",
@@ -325,28 +325,28 @@ function StageBody({ id }: { id: StageId }) {
   if (id === "approval") {
     return (
       <div className="space-y-3">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Escalated to human reviewer</p>
+        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-300">Escalated to human reviewer</p>
         <div className="rounded-lg border border-amber-400/30 bg-amber-400/5 p-4">
           <div className="flex items-center justify-between">
             <span className="text-sm font-semibold text-slate-200">Approval request #AP-7731</span>
             <span className="rounded-full bg-amber-400/15 px-2 py-0.5 text-[11px] font-medium text-amber-300">PENDING</span>
           </div>
           <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1.5 text-xs">
-            <dt className="text-slate-500">Requested action</dt><dd className="text-slate-300">issue_refund · $5,000</dd>
-            <dt className="text-slate-500">Origin</dt><dd className="text-slate-300">ticket#4821 (untrusted)</dd>
-            <dt className="text-slate-500">Detections</dt><dd className="text-slate-300">injection + exfil intent</dd>
-            <dt className="text-slate-500">Reviewer</dt><dd className="text-slate-300">security@acme.example</dd>
+            <dt className="text-slate-300">Requested action</dt><dd className="text-slate-300">issue_refund · $5,000</dd>
+            <dt className="text-slate-300">Origin</dt><dd className="text-slate-300">ticket#4821 (untrusted)</dd>
+            <dt className="text-slate-300">Detections</dt><dd className="text-slate-300">injection + exfil intent</dd>
+            <dt className="text-slate-300">Reviewer</dt><dd className="text-slate-300">security@acme.example</dd>
           </dl>
           <div className="mt-4 flex gap-2">
             <span className="inline-flex items-center gap-1.5 rounded-md border border-red-500/40 bg-red-500/10 px-3 py-1.5 text-xs font-semibold text-red-300">
               <Ban size={14} /> Reject (recommended)
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-md border border-slate-700 px-3 py-1.5 text-xs font-medium text-slate-400">
+            <span className="inline-flex items-center gap-1.5 rounded-md border border-slate-700 px-3 py-1.5 text-xs font-medium text-slate-200">
               <CheckCircle2 size={14} /> Approve with justification
             </span>
           </div>
         </div>
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-slate-200">
           Reviewer rejected the action. The decision, identity, and timestamp are recorded as part of the case.
         </p>
       </div>
@@ -356,7 +356,7 @@ function StageBody({ id }: { id: StageId }) {
   if (id === "evidence") {
     return (
       <div className="space-y-3">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Evidence report · INC-2026-0421</p>
+        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-300">Evidence report · INC-2026-0421</p>
         <Mono>{`Incident:   INC-2026-0421
 Severity:   HIGH (blocked before impact)
 Timeline:
@@ -370,7 +370,7 @@ Integrity:  sha256=9f3c…a1  ·  hmac-signed ✓`}</Mono>
           <span className="inline-flex items-center gap-1.5 rounded-md border border-cyan/30 bg-cyan/10 px-3 py-1.5 text-xs font-semibold text-cyan">
             <FileText size={14} /> Export PDF
           </span>
-          <span className="inline-flex items-center gap-1.5 rounded-md border border-slate-700 px-3 py-1.5 text-xs font-medium text-slate-400">
+          <span className="inline-flex items-center gap-1.5 rounded-md border border-slate-700 px-3 py-1.5 text-xs font-medium text-slate-200">
             Export signed JSONL
           </span>
         </div>
@@ -381,7 +381,7 @@ Integrity:  sha256=9f3c…a1  ·  hmac-signed ✓`}</Mono>
   // siem
   return (
     <div className="space-y-3">
-      <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Streamed to SIEM + immutable audit log</p>
+      <p className="text-[10px] font-bold uppercase tracking-widest text-slate-300">Streamed to SIEM + immutable audit log</p>
       <Mono>{`{
   "ts": "2026-04-21T18:02:11Z",
   "source": "soterai.agent-firewall",

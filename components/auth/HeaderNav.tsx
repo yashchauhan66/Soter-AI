@@ -23,7 +23,7 @@ export function HeaderNav() {
 
   return (
     <>
-      <nav className="hidden items-center gap-5 text-sm text-slate-300 md:flex">
+      <nav className="hidden items-center gap-5 text-sm text-slate-300 xl:flex">
         {signedIn ? (
           <>
             <Link href={isAdmin ? "/admin" : "/dashboard"} className="font-semibold text-cyan hover:text-white">{isAdmin ? "Admin" : "Dashboard"}</Link>
@@ -32,7 +32,7 @@ export function HeaderNav() {
             <Link href="/playground" className="hover:text-white">Playground</Link>
             <span className="mx-1 h-5 w-px bg-slate-700" />
             {apiKeyLink()}
-            <span className="max-w-36 truncate text-xs text-slate-500">{session.user?.email}</span>
+            <span className="max-w-36 truncate text-xs text-slate-300">{session.user?.email}</span>
             <SignOutButton />
           </>
         ) : (
@@ -50,7 +50,7 @@ export function HeaderNav() {
           </>
         )}
       </nav>
-      <div className="flex items-center gap-3 md:hidden">
+      <div className="flex items-center gap-3 xl:hidden">
         {signedIn ? (
           <>
             {apiKeyLink(true)}

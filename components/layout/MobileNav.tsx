@@ -37,7 +37,7 @@ const NAV_ITEMS: NavItem[] = [
 ];
 
 /**
- * Mobile navigation drawer. On viewports below `md` the desktop header nav is
+ * Mobile navigation drawer. On viewports below `xl` the full desktop header nav is
  * hidden, so without this a phone/tablet visitor has no way to reach Docs,
  * Pricing, Demo, Playground, etc. This restores that critical capability.
  */
@@ -101,7 +101,7 @@ export function MobileNav() {
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-[90] md:hidden" role="dialog" aria-modal="true" aria-label="Site navigation">
+        <div className="fixed inset-0 z-[90] xl:hidden" role="dialog" aria-modal="true" aria-label="Site navigation">
           {/* Backdrop */}
           <button
             type="button"
@@ -117,7 +117,7 @@ export function MobileNav() {
             className="absolute right-0 top-0 flex h-full w-[86%] max-w-sm flex-col border-l border-slate-800 bg-slate-950 shadow-2xl"
           >
             <div className="flex items-center justify-between border-b border-slate-800 px-5 py-4">
-              <span className="text-sm font-bold uppercase tracking-widest text-slate-400">Menu</span>
+              <span className="text-sm font-bold uppercase tracking-widest text-slate-200">Menu</span>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
@@ -143,10 +143,10 @@ export function MobileNav() {
                           active ? "bg-cyan/10 text-white" : "text-slate-200 hover:bg-slate-900"
                         }`}
                       >
-                        <Icon size={18} className={`mt-0.5 shrink-0 ${active ? "text-cyan" : "text-slate-500"}`} />
+                        <Icon size={18} className={`mt-0.5 shrink-0 ${active ? "text-cyan" : "text-slate-300"}`} />
                         <span>
                           <span className="block text-sm font-semibold">{item.label}</span>
-                          <span className="mt-0.5 block text-xs leading-5 text-slate-500">{item.desc}</span>
+                          <span className="mt-0.5 block text-xs leading-5 text-slate-300">{item.desc}</span>
                         </span>
                       </Link>
                     </li>
@@ -166,7 +166,7 @@ export function MobileNav() {
                     <LayoutDashboard size={16} aria-hidden="true" /> {dashboardLabel}
                   </Link>
                   {session?.user?.email && (
-                    <p className="truncate text-center text-xs text-slate-500">{session.user.email}</p>
+                    <p className="truncate text-center text-xs text-slate-300">{session.user.email}</p>
                   )}
                   <div className="flex justify-center">
                     <SignOutButton />

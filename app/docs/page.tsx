@@ -156,7 +156,7 @@ export default function DocsHubPage() {
                   <CheckCircle2 className="mt-0.5 shrink-0 text-lime" size={16} aria-hidden="true" />
                   <div>
                     <p className="font-medium">{step}</p>
-                    <p className="mt-1 text-sm leading-6 text-slate-400">{copy}</p>
+                    <p className="mt-1 text-sm leading-6 text-slate-200">{copy}</p>
                   </div>
                 </Link>
               ))}
@@ -170,7 +170,7 @@ export default function DocsHubPage() {
             <Code2 className="text-cyan" aria-hidden="true" />
             <h2 className="text-2xl font-bold">Quick start - copy and paste</h2>
           </div>
-          <p className="mt-3 max-w-3xl text-slate-400">
+          <p className="mt-3 max-w-3xl text-slate-200">
             This is the smallest useful integration. Put this code in a <strong>server route only</strong> — 
             never expose the API key to the browser.
           </p>
@@ -185,7 +185,7 @@ export default function DocsHubPage() {
 
         <section className="mt-16">
           <h2 className="text-2xl font-bold">Product status</h2>
-          <p className="mt-3 text-slate-400">Use these labels for launch planning, pilot expectations, and integration risk review.</p>
+          <p className="mt-3 text-slate-200">Use these labels for launch planning, pilot expectations, and integration risk review.</p>
           <div className="mt-6 grid gap-4 md:grid-cols-3">
             {productStatus.map((product) => (
               <Link key={product.name} href={product.href} className="card p-4 transition hover:border-cyan/50">
@@ -193,7 +193,7 @@ export default function DocsHubPage() {
                   <h3 className="font-semibold">{product.name}</h3>
                   <span className="rounded-md border border-cyan/30 bg-cyan/10 px-2 py-0.5 text-xs text-cyan">{product.status}</span>
                 </div>
-                <p className="mt-2 text-sm leading-6 text-slate-400">{product.copy}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-200">{product.copy}</p>
               </Link>
             ))}
           </div>
@@ -205,16 +205,16 @@ export default function DocsHubPage() {
             <Search className="text-cyan" aria-hidden="true" />
             <h2 className="text-2xl font-bold">Choose your language</h2>
           </div>
-          <p className="mt-3 text-slate-400">Each guide includes installation, environment setup, code examples, expected output, and common mistakes.</p>
+          <p className="mt-3 text-slate-200">Each guide includes installation, environment setup, code examples, expected output, and common mistakes.</p>
           <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {languageGuides.map((guide) => (
               <Link key={guide.href} href={guide.href} className="card group p-5 transition-all hover:border-cyan/50 hover:shadow-lg hover:shadow-cyan/5">
                 <span className="text-2xl">{guide.icon}</span>
                 <h3 className="mt-3 font-semibold group-hover:text-cyan">{guide.title}</h3>
-                <p className="mt-2 min-h-12 text-sm leading-6 text-slate-400">{guide.description}</p>
+                <p className="mt-2 min-h-12 text-sm leading-6 text-slate-200">{guide.description}</p>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {guide.tags.map((tag) => (
-                    <span key={tag} className="rounded-md border border-slate-800 bg-slate-950/70 px-2 py-1 text-xs text-slate-400">{tag}</span>
+                    <span key={tag} className="rounded-md border border-slate-800 bg-slate-950/70 px-2 py-1 text-xs text-slate-200">{tag}</span>
                   ))}
                 </div>
               </Link>
@@ -232,7 +232,7 @@ export default function DocsHubPage() {
             {platformGuides.map(({ label, href, desc }) => (
               <Link key={href} href={href} className="card group p-4 transition hover:border-cyan/50">
                 <h3 className="font-semibold group-hover:text-cyan">{label}</h3>
-                <p className="mt-1.5 text-sm leading-6 text-slate-400">{desc}</p>
+                <p className="mt-1.5 text-sm leading-6 text-slate-200">{desc}</p>
               </Link>
             ))}
           </div>
@@ -243,7 +243,7 @@ export default function DocsHubPage() {
           <div className="card p-6">
             <BookOpen className="text-cyan" size={24} aria-hidden="true" />
             <h3 className="mt-4 font-semibold">For beginners</h3>
-            <p className="mt-2 text-sm leading-6 text-slate-400">
+            <p className="mt-2 text-sm leading-6 text-slate-200">
               Every guide starts with install, env vars, a working request, expected result, and common mistakes. 
               No prior AI security knowledge needed.
             </p>
@@ -251,7 +251,7 @@ export default function DocsHubPage() {
           <div className="card p-6">
             <ShieldCheck className="text-cyan" size={24} aria-hidden="true" />
             <h3 className="mt-4 font-semibold">Security first</h3>
-            <p className="mt-2 text-sm leading-6 text-slate-400">
+            <p className="mt-2 text-sm leading-6 text-slate-200">
               Every example shows proper API key handling, fail-closed behavior, input + output guarding, 
               and security best practices.
             </p>
@@ -259,7 +259,7 @@ export default function DocsHubPage() {
           <div className="card p-6">
             <Globe2 className="text-cyan" size={24} aria-hidden="true" />
             <h3 className="mt-4 font-semibold">Any language, any stack</h3>
-            <p className="mt-2 text-sm leading-6 text-slate-400">
+            <p className="mt-2 text-sm leading-6 text-slate-200">
               Whether you use JavaScript, Python, Java, Go, PHP, C#, or any other language, 
               the REST API works everywhere.
             </p>

@@ -79,7 +79,7 @@ export default function RestApiDocsPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       
       <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-500 transition-colors hover:text-cyan">← Back to docs</Link>
+        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
         
         <p className="eyebrow mt-6">Any language</p>
         <h1 className="mt-3 text-4xl font-bold leading-tight">REST API integration guide</h1>
@@ -91,7 +91,7 @@ export default function RestApiDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Prerequisites</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             You need two things: your SoterAI server URL and an API key.
           </p>
           <CodeBlock language="bash" title="environment variables">{envCode}</CodeBlock>
@@ -111,10 +111,10 @@ export default function RestApiDocsPage() {
                     method === "POST" ? "bg-green-900/50 text-green-400" : "bg-blue-900/50 text-blue-400"
                   }`}>{method}</span>
                   <code className="text-sm text-cyan">{path}</code>
-                  {isPublic && <span className="rounded-full bg-slate-800 px-2 py-0.5 text-[10px] text-slate-400">Public</span>}
+                  {isPublic && <span className="rounded-full bg-slate-800 px-2 py-0.5 text-[10px] text-slate-200">Public</span>}
                 </div>
-                <p className="mt-2 text-sm leading-6 text-slate-400">{desc}</p>
-                <p className="mt-1 text-xs text-slate-500">Auth: {auth}</p>
+                <p className="mt-2 text-sm leading-6 text-slate-200">{desc}</p>
+                <p className="mt-1 text-xs text-slate-300">Auth: {auth}</p>
               </div>
             ))}
           </div>
@@ -122,7 +122,7 @@ export default function RestApiDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">1. Guard user input (before LLM)</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Call this endpoint <strong>before</strong> your message reaches the AI model. 
             If <InlineCode>allowed</InlineCode> is <InlineCode>false</InlineCode>, do not call the model.
           </p>
@@ -139,10 +139,10 @@ export default function RestApiDocsPage() {
                   <th className="px-4 py-3 text-left font-medium text-slate-300">Description</th>
                 </tr>
               </thead>
-              <tbody className="text-slate-400">
+              <tbody className="text-slate-200">
                 <tr className="border-b border-slate-800/50"><td className="px-4 py-2.5 font-mono text-xs">message</td><td className="px-4 py-2.5">string</td><td className="px-4 py-2.5 text-lime">Yes</td><td className="px-4 py-2.5">The user&apos;s message text</td></tr>
-                <tr className="border-b border-slate-800/50"><td className="px-4 py-2.5 font-mono text-xs">userId</td><td className="px-4 py-2.5">string</td><td className="px-4 py-2.5 text-slate-500">No</td><td className="px-4 py-2.5">Identifier for the user sending the message</td></tr>
-                <tr className="border-b border-slate-800/50"><td className="px-4 py-2.5 font-mono text-xs">sessionId</td><td className="px-4 py-2.5">string</td><td className="px-4 py-2.5 text-slate-500">No</td><td className="px-4 py-2.5">Session identifier for conversation context</td></tr>
+                <tr className="border-b border-slate-800/50"><td className="px-4 py-2.5 font-mono text-xs">userId</td><td className="px-4 py-2.5">string</td><td className="px-4 py-2.5 text-slate-300">No</td><td className="px-4 py-2.5">Identifier for the user sending the message</td></tr>
+                <tr className="border-b border-slate-800/50"><td className="px-4 py-2.5 font-mono text-xs">sessionId</td><td className="px-4 py-2.5">string</td><td className="px-4 py-2.5 text-slate-300">No</td><td className="px-4 py-2.5">Session identifier for conversation context</td></tr>
               </tbody>
             </table>
           </div>
@@ -150,7 +150,7 @@ export default function RestApiDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">2. Guard model output (after LLM)</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Call this endpoint <strong>after</strong> the LLM responds and <strong>before</strong> 
             returning the response to the user or tool.
           </p>
@@ -159,7 +159,7 @@ export default function RestApiDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Response shape (for both endpoints)</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Both <InlineCode>/api/guard/input</InlineCode> and <InlineCode>/api/guard/output</InlineCode> 
             return the same response format:
           </p>
@@ -179,7 +179,7 @@ export default function RestApiDocsPage() {
                   <th className="px-4 py-3 text-left font-medium text-slate-300">Description</th>
                 </tr>
               </thead>
-              <tbody className="text-slate-400">
+              <tbody className="text-slate-200">
                 <tr className="border-b border-slate-800/50"><td className="px-4 py-2.5 font-mono text-xs">allowed</td><td className="px-4 py-2.5">boolean</td><td className="px-4 py-2.5">True if safe to proceed</td></tr>
                 <tr className="border-b border-slate-800/50"><td className="px-4 py-2.5 font-mono text-xs">decision</td><td className="px-4 py-2.5">string</td><td className="px-4 py-2.5">ALLOW | REDACT | BLOCK | HUMAN_REVIEW</td></tr>
                 <tr className="border-b border-slate-800/50"><td className="px-4 py-2.5 font-mono text-xs">riskScore</td><td className="px-4 py-2.5">number</td><td className="px-4 py-2.5">0-100 risk severity score</td></tr>
@@ -194,7 +194,7 @@ export default function RestApiDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Code examples in every language</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             Here&apos;s how to call the input guard endpoint from different backend languages:
           </p>
           <div className="mt-5 space-y-8">
@@ -403,7 +403,7 @@ async fn guard_input(message: &str) -> Result<serde_json::Value, Box<dyn std::er
                   <th className="px-4 py-3 text-left font-medium text-slate-300">What to do</th>
                 </tr>
               </thead>
-              <tbody className="text-slate-400">
+              <tbody className="text-slate-200">
                 <tr className="border-b border-slate-800/50"><td className="px-4 py-2.5 font-mono text-xs">400</td><td className="px-4 py-2.5 font-mono text-xs">validation_error</td><td className="px-4 py-2.5">Check that your JSON payload has the correct fields</td></tr>
                 <tr className="border-b border-slate-800/50"><td className="px-4 py-2.5 font-mono text-xs">401</td><td className="px-4 py-2.5 font-mono text-xs">auth_error</td><td className="px-4 py-2.5">Missing or invalid <InlineCode>x-api-key</InlineCode> header</td></tr>
                 <tr className="border-b border-slate-800/50"><td className="px-4 py-2.5 font-mono text-xs">429</td><td className="px-4 py-2.5 font-mono text-xs">rate_limited</td><td className="px-4 py-2.5">Too many requests. Check the <InlineCode>Retry-After</InlineCode> header</td></tr>
@@ -427,7 +427,7 @@ async fn guard_input(message: &str) -> Result<serde_json::Value, Box<dyn std::er
                   <CheckCircle2 className="mt-0.5 shrink-0 text-lime" size={16} aria-hidden="true" />
                   <div>
                     <p className="font-semibold text-sm">{title}</p>
-                    <p className="mt-1 text-sm leading-6 text-slate-400">{copy}</p>
+                    <p className="mt-1 text-sm leading-6 text-slate-200">{copy}</p>
                   </div>
                 </div>
               </div>

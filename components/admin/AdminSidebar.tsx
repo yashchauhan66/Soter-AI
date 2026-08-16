@@ -38,7 +38,7 @@ function NavLink({
       className={`group relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition ${
         active
           ? "bg-cyan/10 font-semibold text-cyan"
-          : "text-slate-400 hover:bg-slate-800/50 hover:text-slate-100"
+          : "text-slate-200 hover:bg-slate-800/50 hover:text-slate-100"
       }`}
     >
       <span
@@ -47,7 +47,7 @@ function NavLink({
         }`}
         aria-hidden
       />
-      <Icon size={16} className={active ? "text-cyan" : "text-slate-500 group-hover:text-slate-300"} />
+      <Icon size={16} className={active ? "text-cyan" : "text-slate-300 group-hover:text-slate-300"} />
       <span className="flex-1 truncate">{item.label}</span>
       {showBadge && (
         <span
@@ -111,7 +111,7 @@ export function AdminSidebar({ counts, adminEmail }: { counts: AdminBadgeCounts;
       </span>
       <div className="min-w-0">
         <p className="truncate text-sm font-bold text-slate-100">SoterAI Admin</p>
-        <p className="truncate text-[11px] text-slate-500">Command center</p>
+        <p className="truncate text-[11px] text-slate-300">Command center</p>
       </div>
     </div>
   );
@@ -158,17 +158,17 @@ export function AdminSidebar({ counts, adminEmail }: { counts: AdminBadgeCounts;
           <button
             type="button"
             onClick={openAdminCommandPalette}
-            className="group flex w-full items-center gap-2 rounded-lg border border-slate-800 bg-slate-950/60 px-3 py-2 text-left text-sm text-slate-400 transition hover:border-cyan/40 hover:text-slate-200"
+            className="group flex w-full items-center gap-2 rounded-lg border border-slate-800 bg-slate-950/60 px-3 py-2 text-left text-sm text-slate-200 transition hover:border-cyan/40 hover:text-slate-200"
           >
-            <Search size={15} className="text-slate-500 group-hover:text-cyan" />
+            <Search size={15} className="text-slate-300 group-hover:text-cyan" />
             <span className="flex-1 truncate">Search services...</span>
-            <kbd className="rounded border border-slate-700 bg-slate-900 px-1.5 py-0.5 font-mono text-[10px] text-slate-500">Ctrl K</kbd>
+            <kbd className="rounded border border-slate-700 bg-slate-900 px-1.5 py-0.5 font-mono text-[10px] text-slate-300">Ctrl K</kbd>
           </button>
         </div>
         <div className="flex-1 overflow-y-auto px-3 py-5">{nav}</div>
         <div className="border-t border-slate-800 px-4 py-4">
           <p className="text-[10px] font-bold uppercase tracking-wider text-amber-300">Internal - use carefully</p>
-          <p className="mt-1 truncate text-xs text-slate-500" title={adminEmail}>
+          <p className="mt-1 truncate text-xs text-slate-300" title={adminEmail}>
             {adminEmail}
           </p>
         </div>
@@ -197,7 +197,7 @@ export function AdminSidebar({ counts, adminEmail }: { counts: AdminBadgeCounts;
             </div>
             <div className="flex-1 overflow-y-auto px-3 py-5">{nav}</div>
             <div className="border-t border-slate-800 px-4 py-4">
-              <p className="truncate text-xs text-slate-500" title={adminEmail}>
+              <p className="truncate text-xs text-slate-300" title={adminEmail}>
                 {adminEmail}
               </p>
             </div>

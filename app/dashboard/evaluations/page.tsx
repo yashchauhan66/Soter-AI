@@ -76,12 +76,12 @@ export default async function EvaluationsPage({ searchParams }: { searchParams: 
           <section className="card overflow-x-auto p-5">
             <div className="flex items-center justify-between gap-3">
               <h2 className="text-lg font-semibold">Recent evaluations</h2>
-              <span className="text-xs font-medium text-slate-500">
+              <span className="text-xs font-medium text-slate-300">
                 Model: {evaluations[0]?.modelUsed ?? "\u2014"}
               </span>
             </div>
             <table className="mt-4 w-full min-w-[900px] text-left text-sm">
-              <thead className="text-xs uppercase text-slate-500">
+              <thead className="text-xs uppercase text-slate-300">
                 <tr>
                   <th className="py-2">Status</th>
                   <th>Score</th>
@@ -101,8 +101,8 @@ export default async function EvaluationsPage({ searchParams }: { searchParams: 
                       <RiskLevel level={ev.overallScore >= 70 ? "LOW" : ev.overallScore >= 40 ? "MEDIUM" : "HIGH"} />
                     </td>
                     <td className="max-w-[300px] truncate text-slate-300">{ev.promptText}</td>
-                    <td className="max-w-[300px] truncate text-slate-400">{ev.responseText}</td>
-                    <td className="text-xs text-slate-500">{(ev.latencyMs / 1000).toFixed(1)}s</td>
+                    <td className="max-w-[300px] truncate text-slate-200">{ev.responseText}</td>
+                    <td className="text-xs text-slate-300">{(ev.latencyMs / 1000).toFixed(1)}s</td>
                     <td>{ev.createdAt.toLocaleString()}</td>
                   </tr>
                 ))}
@@ -114,7 +114,7 @@ export default async function EvaluationsPage({ searchParams }: { searchParams: 
             <div className="card p-5">
               <div className="flex items-center justify-between gap-3">
                 <h2 className="text-lg font-semibold">Criterion breakdown</h2>
-                <span className="text-xs font-medium text-slate-500">Latest 12</span>
+                <span className="text-xs font-medium text-slate-300">Latest 12</span>
               </div>
               <div className="mt-4 grid gap-3">
                 {evaluations.slice(0, 12).map((ev) => {
@@ -124,7 +124,7 @@ export default async function EvaluationsPage({ searchParams }: { searchParams: 
                       <div className="flex flex-wrap items-start justify-between gap-3">
                         <div className="max-w-[70%]">
                           <p className="truncate font-semibold">{ev.promptText}</p>
-                          <p className="mt-1 truncate text-slate-400">{ev.responseText}</p>
+                          <p className="mt-1 truncate text-slate-200">{ev.responseText}</p>
                         </div>
                         <div className="flex flex-wrap gap-1">
                           <StatusBadge value={ev.overallPassed ? "PASS" : "FAIL"} />
@@ -145,17 +145,17 @@ export default async function EvaluationsPage({ searchParams }: { searchParams: 
               <div className="mt-4 space-y-4">
                 <div className="rounded-lg border border-slate-800 p-4 text-sm">
                   <p className="mb-2 font-semibold text-slate-300">Model</p>
-                  <p className="text-slate-400">{evaluations[0]?.modelUsed ?? "\u2014"}</p>
+                  <p className="text-slate-200">{evaluations[0]?.modelUsed ?? "\u2014"}</p>
                 </div>
                 <div className="rounded-lg border border-slate-800 p-4 text-sm">
                   <p className="mb-2 font-semibold text-slate-300">Configuration</p>
-                  <p className="text-slate-400">
+                  <p className="text-slate-200">
                     Evaluations use the configured SLM provider. Set <code className="text-cyan">SLM_API_URL</code> and <code className="text-cyan">SLM_MODEL</code> in your environment.
                   </p>
                 </div>
                 <div className="rounded-lg border border-slate-800 p-4 text-sm">
                   <p className="mb-2 font-semibold text-slate-300">Typical latency</p>
-                  <p className="text-slate-400">
+                  <p className="text-slate-200">
                     {evaluations.length > 0
                       ? `${(evaluations.reduce((s, e) => s + e.latencyMs, 0) / evaluations.length / 1000).toFixed(1)}s average`
                       : "\u2014"}
@@ -166,14 +166,14 @@ export default async function EvaluationsPage({ searchParams }: { searchParams: 
           </section>
         </>
       ) : (
-        <div className="card p-8 text-center text-slate-500">
+        <div className="card p-8 text-center text-slate-300">
           <p className="text-lg font-medium">No evaluations yet</p>
           <p className="mt-2 text-sm">
             Run an evaluation via the API at <code className="text-cyan">POST /api/evaluate/slm</code>
             {" "}with your project ID, prompt text, and response text.
           </p>
           <div className="mt-6 rounded-lg border border-slate-800 bg-slate-900/50 p-4 text-left font-mono text-xs">
-            <p className="text-slate-400"># Example curl command:</p>
+            <p className="text-slate-200"># Example curl command:</p>
             <pre className="mt-1 text-slate-300 whitespace-pre-wrap">
 {`curl -X POST https://yourdomain.com/api/evaluate/slm \\
   -H "x-api-key: $SOTER_API_KEY" \\

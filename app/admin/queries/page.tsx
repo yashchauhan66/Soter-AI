@@ -35,9 +35,9 @@ function QueryCard({
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <h3 className="font-semibold">{title}</h3>
-            <span className="rounded-md border border-slate-800 bg-slate-950/60 px-2 py-1 text-xs text-slate-400">{meta}</span>
+            <span className="rounded-md border border-slate-800 bg-slate-950/60 px-2 py-1 text-xs text-slate-200">{meta}</span>
           </div>
-          <p className="mt-1 text-xs text-slate-500">{subtitle}</p>
+          <p className="mt-1 text-xs text-slate-300">{subtitle}</p>
           <p className="mt-3 line-clamp-4 text-sm leading-6 text-slate-300">{body}</p>
           {children}
         </div>
@@ -71,14 +71,14 @@ export default async function AdminQueriesPage() {
       <div className="mt-2 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <h1 className="text-3xl font-bold">Queries and replies</h1>
-          <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-400">
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-200">
             Review inbound contact requests, pilot enquiries, and support tickets. Send replies directly from admin; every send is logged in the admin audit trail.
           </p>
         </div>
         <div className="grid grid-cols-3 gap-2 text-center text-xs">
-          <div className="rounded-lg border border-slate-800 bg-slate-950/60 p-3"><p className="text-2xl font-bold">{openContacts}</p><p className="text-slate-500">new leads</p></div>
-          <div className="rounded-lg border border-slate-800 bg-slate-950/60 p-3"><p className="text-2xl font-bold">{openPilots}</p><p className="text-slate-500">pilot requests</p></div>
-          <div className="rounded-lg border border-slate-800 bg-slate-950/60 p-3"><p className="text-2xl font-bold">{openTickets}</p><p className="text-slate-500">open tickets</p></div>
+          <div className="rounded-lg border border-slate-800 bg-slate-950/60 p-3"><p className="text-2xl font-bold">{openContacts}</p><p className="text-slate-300">new leads</p></div>
+          <div className="rounded-lg border border-slate-800 bg-slate-950/60 p-3"><p className="text-2xl font-bold">{openPilots}</p><p className="text-slate-300">pilot requests</p></div>
+          <div className="rounded-lg border border-slate-800 bg-slate-950/60 p-3"><p className="text-2xl font-bold">{openTickets}</p><p className="text-slate-300">open tickets</p></div>
         </div>
       </div>
 
@@ -99,7 +99,7 @@ export default async function AdminQueriesPage() {
             >
               <AdminQueryReplyForm kind="contact" id={lead.id} to={lead.email} defaultSubject={`Re: Your SoterAI enquiry`} />
             </QueryCard>
-          )) : <p className="text-sm text-slate-500">No contact queries yet.</p>}
+          )) : <p className="text-sm text-slate-300">No contact queries yet.</p>}
         </div>
       </section>
 
@@ -120,7 +120,7 @@ export default async function AdminQueriesPage() {
             >
               <AdminQueryReplyForm kind="pilot" id={pilot.id} to={pilot.contactEmail} defaultSubject={`Re: SoterAI enterprise pilot for ${pilot.companyName}`} />
             </QueryCard>
-          )) : <p className="text-sm text-slate-500">No pilot requests yet.</p>}
+          )) : <p className="text-sm text-slate-300">No pilot requests yet.</p>}
         </div>
       </section>
 
@@ -141,7 +141,7 @@ export default async function AdminQueriesPage() {
             >
               <AdminQueryReplyForm kind="support" id={ticket.id} to={ticket.createdBy.email} defaultSubject={`Re: ${ticket.ticketNumber} - ${ticket.subject}`} />
             </QueryCard>
-          )) : <p className="text-sm text-slate-500">No support tickets yet.</p>}
+          )) : <p className="text-sm text-slate-300">No support tickets yet.</p>}
         </div>
       </section>
     </div>

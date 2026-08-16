@@ -44,26 +44,26 @@ export default async function AgentReplayPage({ searchParams }: { searchParams: 
       <div className="flex flex-wrap items-end justify-between gap-4">
         <ProjectSwitcher projects={projects} selectedId={project.id} />
       </div>
-      <p className="text-sm text-slate-500">Open a session to replay its full timeline: input guard, planned actions, firewall decisions, approvals, memory events, and canary leaks. Fetch the JSON timeline from <span className="font-mono text-xs">GET /api/agent/replay/:sessionId</span>.</p>
+      <p className="text-sm text-slate-300">Open a session to replay its full timeline: input guard, planned actions, firewall decisions, approvals, memory events, and canary leaks. Fetch the JSON timeline from <span className="font-mono text-xs">GET /api/agent/replay/:sessionId</span>.</p>
       <section className="card overflow-x-auto p-5">
         <table className="w-full min-w-[820px] text-left text-sm">
-          <thead className="text-xs uppercase text-slate-500"><tr><th className="py-2">Risk</th><th>Agent</th><th>Type</th><th>Summary</th><th>Started</th><th>Session</th><th>Export</th></tr></thead>
+          <thead className="text-xs uppercase text-slate-300"><tr><th className="py-2">Risk</th><th>Agent</th><th>Type</th><th>Summary</th><th>Started</th><th>Session</th><th>Export</th></tr></thead>
           <tbody className="divide-y divide-slate-800">
             {sessions.map((row) => {
               const replay = replayBySession.get(row.id);
               return (
                 <tr key={row.id}>
-                  <td className={`py-3 font-semibold ${RISK_TONE[replay?.riskLevel ?? ""] ?? "text-slate-400"}`}>{replay?.riskLevel ?? "-"}</td>
+                  <td className={`py-3 font-semibold ${RISK_TONE[replay?.riskLevel ?? ""] ?? "text-slate-200"}`}>{replay?.riskLevel ?? "-"}</td>
                   <td className="font-medium">{row.agentName}</td>
                   <td>{row.agentType}</td>
                   <td className="max-w-[320px] text-slate-300">{replay?.summary ?? "No replay generated yet."}</td>
                   <td>{row.createdAt.toLocaleString()}</td>
                   <td><Link className="font-mono text-xs text-blue-300 hover:underline" href={`/api/agent/replay/${row.id}`}>{row.id.slice(0, 12)}…</Link></td>
-                  <td><Link className="text-xs text-slate-400 hover:text-white hover:underline" href={`/api/agent/replay/${row.id}?format=pdf`}>PDF</Link></td>
+                  <td><Link className="text-xs text-slate-200 hover:text-white hover:underline" href={`/api/agent/replay/${row.id}?format=pdf`}>PDF</Link></td>
                 </tr>
               );
             })}
-            {sessions.length === 0 && <tr><td className="py-5 text-slate-500" colSpan={7}>No sessions to replay yet.</td></tr>}
+            {sessions.length === 0 && <tr><td className="py-5 text-slate-300" colSpan={7}>No sessions to replay yet.</td></tr>}
           </tbody>
         </table>
       </section>

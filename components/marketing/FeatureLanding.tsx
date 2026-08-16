@@ -99,7 +99,7 @@ export function FeatureLanding({ data }: { data: FeatureLandingData }) {
         <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
           {data.h1}
         </h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">{data.intro}</p>
+        <p className="mt-5 text-lg leading-8 text-slate-200">{data.intro}</p>
         <div className="mt-8 flex flex-wrap gap-4">
           {cta.external ? (
             <a
@@ -126,7 +126,7 @@ export function FeatureLanding({ data }: { data: FeatureLandingData }) {
           </Link>
         </div>
         {IDE_PAGES.has(data.path) && (
-          <p className="mt-4 text-xs text-slate-500">
+          <p className="mt-4 text-xs text-slate-300">
             Runs locally in your editor. Secret, PII, prompt-injection, and MCP
             scanning happen on your machine before anything reaches an AI model.
           </p>
@@ -146,7 +146,7 @@ export function FeatureLanding({ data }: { data: FeatureLandingData }) {
                 <ShieldCheck className="h-5 w-5 text-cyan" />
                 <h3 className="font-semibold text-slate-100">{f.title}</h3>
               </div>
-              <p className="mt-2 text-sm leading-6 text-slate-400">{f.body}</p>
+              <p className="mt-2 text-sm leading-6 text-slate-200">{f.body}</p>
             </div>
           ))}
         </div>
@@ -163,7 +163,7 @@ export function FeatureLanding({ data }: { data: FeatureLandingData }) {
               </span>
               <div>
                 <p className="font-semibold text-slate-100">{s.step}</p>
-                <p className="mt-1 text-sm leading-6 text-slate-400">{s.body}</p>
+                <p className="mt-1 text-sm leading-6 text-slate-200">{s.body}</p>
               </div>
             </li>
           ))}
@@ -173,13 +173,13 @@ export function FeatureLanding({ data }: { data: FeatureLandingData }) {
       {/* Honest limitations */}
       <section className="mt-16">
         <h2 className="text-2xl font-bold">Honest limitations</h2>
-        <p className="mt-2 max-w-2xl text-sm text-slate-500">
+        <p className="mt-2 max-w-2xl text-sm text-slate-300">
           No security tool is perfect. Here is what this feature does not claim
           to do, so you can layer defenses appropriately.
         </p>
         <ul className="mt-5 space-y-3">
           {data.limitations.map((l) => (
-            <li key={l} className="flex gap-3 text-sm leading-6 text-slate-400">
+            <li key={l} className="flex gap-3 text-sm leading-6 text-slate-200">
               <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-amber-500" />
               {l}
             </li>
@@ -194,7 +194,7 @@ export function FeatureLanding({ data }: { data: FeatureLandingData }) {
           {data.faqs.map((f) => (
             <div key={f.q}>
               <h3 className="font-semibold text-slate-100">{f.q}</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-400">{f.a}</p>
+              <p className="mt-2 text-sm leading-6 text-slate-200">{f.a}</p>
             </div>
           ))}
         </div>
@@ -202,7 +202,7 @@ export function FeatureLanding({ data }: { data: FeatureLandingData }) {
 
       {/* Related internal links */}
       <section className="mt-16 border-t border-slate-800 pt-8">
-        <h2 className="text-sm font-bold uppercase tracking-widest text-slate-400">
+        <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200">
           Related
         </h2>
         <div className="mt-4 flex flex-wrap gap-3">
@@ -223,7 +223,7 @@ export function FeatureLanding({ data }: { data: FeatureLandingData }) {
         {IDE_PAGES.has(data.path) ? (
           <>
             <h2 className="text-2xl font-bold">Protect your AI coding context</h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-400">
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-200">
               Install SoterAI IDE Guard and scan secrets, prompts, MCP tools, and
               terminal commands locally before they ever reach an AI model.
             </p>
@@ -239,7 +239,7 @@ export function FeatureLanding({ data }: { data: FeatureLandingData }) {
         ) : (
           <>
             <h2 className="text-2xl font-bold">Add security to your AI application</h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-400">
+            <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-200">
               Free tier available. Integrate with a single SDK call and protect your
               first AI workflow in under 10 minutes.
             </p>

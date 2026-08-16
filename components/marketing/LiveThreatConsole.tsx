@@ -219,7 +219,7 @@ export function LiveThreatConsole() {
             <span className="h-2.5 w-2.5 rounded-full bg-amber-400/70" />
             <span className="h-2.5 w-2.5 rounded-full bg-lime/70" />
           </div>
-          <p className="font-mono text-xs text-slate-400">soterai · live inspection</p>
+          <p className="font-mono text-xs text-slate-200">soterai · live inspection</p>
         </div>
         <span className="flex items-center gap-2 rounded-md border border-cyan/30 bg-cyan/10 px-2.5 py-1 text-[11px] font-bold tracking-wide text-cyan">
           <span className="relative flex h-2 w-2">
@@ -233,10 +233,10 @@ export function LiveThreatConsole() {
       <div className="p-5 sm:p-6">
         {/* Incoming request with scan sweep overlay */}
         <div className="flex items-center justify-between">
-          <span className="font-mono text-[11px] uppercase tracking-widest text-slate-500">
+          <span className="font-mono text-[11px] uppercase tracking-widest text-slate-300">
             Incoming · {sample.source}
           </span>
-          <span className="flex items-center gap-1.5 font-mono text-[11px] text-slate-500">
+          <span className="flex items-center gap-1.5 font-mono text-[11px] text-slate-300">
             <Activity size={12} className="text-cyan" /> guard@edge
           </span>
         </div>
@@ -254,7 +254,7 @@ export function LiveThreatConsole() {
         </div>
 
         {/* Status line */}
-        <div className="mt-3 flex items-center gap-2 font-mono text-xs text-slate-400">
+        <div className="mt-3 flex items-center gap-2 font-mono text-xs text-slate-200">
           {showScan ? (
             <>
               <ScanLine size={14} className="text-cyan" />
@@ -267,7 +267,7 @@ export function LiveThreatConsole() {
             </>
           ) : (
             <>
-              <Radar size={14} className="text-slate-500" />
+              <Radar size={14} className="text-slate-300" />
               <span>receiving input…</span>
             </>
           )}
@@ -302,7 +302,7 @@ export function LiveThreatConsole() {
                   </span>
                 </div>
                 <div className="text-right">
-                  <p className="font-mono text-[10px] uppercase tracking-widest text-slate-500">
+                  <p className="font-mono text-[10px] uppercase tracking-widest text-slate-300">
                     Risk score
                   </p>
                   <p className={`font-mono text-lg font-bold ${action.text}`}>
@@ -330,15 +330,15 @@ export function LiveThreatConsole() {
       <div className="grid grid-cols-3 divide-x divide-slate-800 border-t border-slate-800 bg-slate-950/60 font-mono">
         <div className="px-4 py-3 text-center">
           <p className="text-lg font-bold text-cyan">{neutralized}</p>
-          <p className="text-[10px] uppercase tracking-wider text-slate-500">Neutralized</p>
+          <p className="text-[10px] uppercase tracking-wider text-slate-300">Neutralized</p>
         </div>
         <div className="px-4 py-3 text-center">
           <p className="text-lg font-bold text-slate-100">&lt;50ms</p>
-          <p className="text-[10px] uppercase tracking-wider text-slate-500">Per decision</p>
+          <p className="text-[10px] uppercase tracking-wider text-slate-300">Per decision</p>
         </div>
         <div className="px-4 py-3 text-center">
           <p className="text-lg font-bold text-lime">0</p>
-          <p className="text-[10px] uppercase tracking-wider text-slate-500">Data stored raw</p>
+          <p className="text-[10px] uppercase tracking-wider text-slate-300">Data stored raw</p>
         </div>
       </div>
     </div>

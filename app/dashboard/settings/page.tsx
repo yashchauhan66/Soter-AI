@@ -19,7 +19,7 @@ function CopyButton({ value }: { value: string }) {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       }}
-      className="ml-2 text-slate-500 hover:text-slate-300"
+      className="ml-2 text-slate-300 hover:text-slate-300"
       aria-label={`Copy ${value}`}
     >
       {copied ? <Check size={14} /> : <Copy size={14} />}
@@ -48,13 +48,13 @@ export default function SettingsPage() {
     <div>
       <p className="eyebrow">Configuration</p>
       <h1 className="mt-2 text-3xl font-bold">Guard Configuration</h1>
-      <p className="mt-2 text-sm text-slate-500">These are system-wide defaults. Per-project settings coming soon.</p>
+      <p className="mt-2 text-sm text-slate-300">These are system-wide defaults. Per-project settings coming soon.</p>
       <div className="card mt-7 max-w-2xl p-6">
         <h2 className="font-semibold">Guard defaults</h2>
         <dl className="mt-5 divide-y divide-slate-800 text-sm">
           {settings.map(([label, value]) => (
             <div className="flex justify-between gap-5 py-4" key={label}>
-              <dt className="text-slate-500">{label}</dt>
+              <dt className="text-slate-300">{label}</dt>
               <dd className="flex items-center text-right">
                 {value}
                 {copyableValues.has(value) && <CopyButton value={value} />}

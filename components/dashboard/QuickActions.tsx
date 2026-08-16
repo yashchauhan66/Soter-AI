@@ -39,7 +39,7 @@ const actions = [
   {
     label: "Take the tour",
     description: "Explore all 40+ features",
-    href: "/docs/quickstart-first-5-minutes",
+    href: "/docs/quickstart",
     icon: Compass,
     color: "text-blue-300",
     bg: "bg-blue-400/10",
@@ -58,7 +58,7 @@ const actions = [
 export function QuickActions() {
   return (
     <section className="card p-5">
-      <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-400">
+      <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-slate-200">
         Quick actions
       </h2>
       <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -71,7 +71,7 @@ export function QuickActions() {
               </span>
               <div className="min-w-0">
                 <p className="text-sm font-medium text-white">{action.label}</p>
-                <p className="mt-0.5 text-xs text-slate-500">{action.description}</p>
+                <p className="mt-0.5 text-xs text-slate-300">{action.description}</p>
               </div>
             </div>
           );

@@ -54,9 +54,9 @@ export default async function AdminProjectsPage({
             <div className="rounded-lg border border-slate-800 p-3" key={project.id}>
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <p className="font-medium">{project.publicName ?? project.name}</p>
-                <p className="text-slate-500">{project.disabledAt ? "disabled" : "active"}</p>
+                <p className="text-slate-300">{project.disabledAt ? "disabled" : "active"}</p>
               </div>
-              <p className="mt-2 text-slate-400">
+              <p className="mt-2 text-slate-200">
                 {project.organization?.name ?? "Legacy project"} - {project._count.apiKeys} keys - {project._count.guardLogs} logs - {project._count.webhooks} webhooks
               </p>
             </div>

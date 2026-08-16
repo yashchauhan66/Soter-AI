@@ -107,7 +107,7 @@ export function ShadowAIClient({ organizations, initialProviders, initialModels,
       case "HIGH": return "text-red-300 bg-red-500/10";
       case "MEDIUM": return "text-amber-300 bg-amber-500/10";
       case "LOW": return "text-lime bg-lime/10";
-      default: return "text-slate-400 bg-slate-500/10";
+      default: return "text-slate-200 bg-slate-500/10";
     }
   };
 
@@ -116,7 +116,7 @@ export function ShadowAIClient({ organizations, initialProviders, initialModels,
       case "APPROVED": return "text-lime bg-lime/10";
       case "BLOCKED": return "text-red-300 bg-red-500/10";
       case "REVIEW": return "text-amber-300 bg-amber-500/10";
-      default: return "text-slate-400 bg-slate-500/10";
+      default: return "text-slate-200 bg-slate-500/10";
     }
   };
 
@@ -134,7 +134,7 @@ export function ShadowAIClient({ organizations, initialProviders, initialModels,
           <Shield className="text-cyan" size={24} />
           Shadow AI Discovery
         </h1>
-        <p className="mt-1 text-sm text-slate-400">
+        <p className="mt-1 text-sm text-slate-200">
           Discover and manage AI tools being used across your organization.
           {initialProviders.length > 0 && ` ${initialProviders.length} providers detected.`}
         </p>
@@ -148,7 +148,7 @@ export function ShadowAIClient({ organizations, initialProviders, initialModels,
             className={`flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition ${
               tab === t.key
                 ? "border-cyan bg-cyan/10 text-cyan"
-                : "border-slate-800 text-slate-400 hover:border-slate-700"
+                : "border-slate-800 text-slate-200 hover:border-slate-700"
             }`}
             onClick={() => setTab(t.key)}
           >
@@ -186,9 +186,9 @@ export function ShadowAIClient({ organizations, initialProviders, initialModels,
         )}
 
         <div className="flex items-center gap-2">
-          <Search size={16} className="text-slate-500" />
+          <Search size={16} className="text-slate-300" />
           <input
-            className="rounded-md border border-slate-700 bg-slate-950/80 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-500"
+            className="rounded-md border border-slate-700 bg-slate-950/80 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-300"
             placeholder={tab === "providers" ? "Search providers..." : "Search domains..."}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -200,7 +200,7 @@ export function ShadowAIClient({ organizations, initialProviders, initialModels,
       {tab === "providers" && (
         <div className="space-y-3">
           {filteredProviders.length === 0 ? (
-            <div className="card flex items-center gap-3 p-6 text-slate-400">
+            <div className="card flex items-center gap-3 p-6 text-slate-200">
               <Shield size={20} />
               No AI providers discovered. Connect the Soter extension to detect shadow AI usage.
             </div>
@@ -220,11 +220,11 @@ export function ShadowAIClient({ organizations, initialProviders, initialModels,
                     <div>
                       <p className="font-semibold text-slate-200">{provider.name}</p>
                       <div className="mt-1 flex flex-wrap gap-2 text-xs">
-                        <span className="text-slate-500">{provider.providerType}</span>
-                        <span className="text-slate-500">·</span>
-                        <span className="text-slate-500">{provider.dataRegion}</span>
-                        <span className="text-slate-500">·</span>
-                        <span className="text-slate-500">{provider.organizationName}</span>
+                        <span className="text-slate-300">{provider.providerType}</span>
+                        <span className="text-slate-300">·</span>
+                        <span className="text-slate-300">{provider.dataRegion}</span>
+                        <span className="text-slate-300">·</span>
+                        <span className="text-slate-300">{provider.organizationName}</span>
                       </div>
                     </div>
                   </div>
@@ -273,7 +273,7 @@ export function ShadowAIClient({ organizations, initialProviders, initialModels,
       {tab === "events" && (
         <div className="space-y-2">
           {initialShadowEvents.length === 0 ? (
-            <div className="card flex items-center gap-3 p-6 text-slate-400">
+            <div className="card flex items-center gap-3 p-6 text-slate-200">
               <AlertTriangle size={20} />
               No shadow AI events detected. When an employee visits an unknown AI tool, the extension logs a SHADOW_AI_DISCOVERED event.
             </div>
@@ -284,14 +284,14 @@ export function ShadowAIClient({ organizations, initialProviders, initialModels,
                   <AlertTriangle size={16} className="text-amber-400" />
                   <div>
                     <p className="font-medium text-slate-200">{event.destination}</p>
-                    <p className="text-xs text-slate-500">{event.domain} · {event.employeeId} · {event.organizationName}</p>
+                    <p className="text-xs text-slate-300">{event.domain} · {event.employeeId} · {event.organizationName}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${riskColor(event.riskLevel)}`}>
                     {event.riskLevel}
                   </span>
-                  <span className="text-xs text-slate-500">{new Date(event.createdAt).toLocaleString()}</span>
+                  <span className="text-xs text-slate-300">{new Date(event.createdAt).toLocaleString()}</span>
                 </div>
               </div>
             ))
@@ -302,7 +302,7 @@ export function ShadowAIClient({ organizations, initialProviders, initialModels,
       {tab === "models" && (
         <div className="overflow-x-auto">
           <table className="w-full min-w-[600px] text-left text-sm">
-            <thead className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-500">
+            <thead className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-300">
               <tr>
                 <th className="px-4 py-3">Model</th>
                 <th className="px-4 py-3">Provider</th>
@@ -316,8 +316,8 @@ export function ShadowAIClient({ organizations, initialProviders, initialModels,
               {initialModels.map((model) => (
                 <tr key={model.id}>
                   <td className="px-4 py-3 font-medium text-slate-200">{model.name}</td>
-                  <td className="px-4 py-3 text-slate-400">{model.providerName}</td>
-                  <td className="px-4 py-3 text-slate-400">{model.modality}</td>
+                  <td className="px-4 py-3 text-slate-200">{model.providerName}</td>
+                  <td className="px-4 py-3 text-slate-200">{model.modality}</td>
                   <td className="px-4 py-3">
                     <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${riskColor(model.riskLevel)}`}>
                       {model.riskLevel}
@@ -328,7 +328,7 @@ export function ShadowAIClient({ organizations, initialProviders, initialModels,
                       {model.approved ? "Approved" : "Review"}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-xs text-slate-500">{new Date(model.createdAt).toLocaleDateString()}</td>
+                  <td className="px-4 py-3 text-xs text-slate-300">{new Date(model.createdAt).toLocaleDateString()}</td>
                 </tr>
               ))}
             </tbody>
@@ -339,7 +339,7 @@ export function ShadowAIClient({ organizations, initialProviders, initialModels,
       {tab === "scans" && (
         <div className="space-y-3">
           {initialScans.length === 0 ? (
-            <div className="card flex items-center gap-3 p-6 text-slate-400">
+            <div className="card flex items-center gap-3 p-6 text-slate-200">
               <Search size={20} />
               No shadow scans have been run yet.
             </div>
@@ -350,15 +350,15 @@ export function ShadowAIClient({ organizations, initialProviders, initialModels,
                   <Search size={16} className="text-cyan" />
                   <div>
                     <p className="font-medium text-slate-200">{scan.scanType} Scan</p>
-                    <p className="text-xs text-slate-500">{scan.organizationName}</p>
+                    <p className="text-xs text-slate-300">{scan.organizationName}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4 text-sm text-slate-400">
+                <div className="flex items-center gap-4 text-sm text-slate-200">
                   <span>{scan.providerCount} providers</span>
                   <span>{scan.modelCount} models</span>
                   <span>{scan.findingCount} findings</span>
                   <span>{scan.status}</span>
-                  <span className="text-xs text-slate-500">{new Date(scan.createdAt).toLocaleString()}</span>
+                  <span className="text-xs text-slate-300">{new Date(scan.createdAt).toLocaleString()}</span>
                 </div>
               </div>
             ))

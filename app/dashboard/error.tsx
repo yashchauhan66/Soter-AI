@@ -26,7 +26,7 @@ export default function DashboardError({ error, reset }: { error: Error; reset: 
           <span className="rounded-xl bg-red-500/15 p-3 text-red-300"><AlertTriangle /></span>
           <div className="min-w-0">
             <h1 className="text-xl font-bold">This dashboard view ran into an error.</h1>
-            <p className="mt-2 break-words text-sm text-slate-400">{text}</p>
+            <p className="mt-2 break-words text-sm text-slate-200">{text}</p>
             <div className="mt-5 flex flex-wrap gap-3">
               {isAuthError ? (
                 <button autoFocus onClick={() => signOut({ callbackUrl: "/signin" })} className="button-primary">Sign in again</button>

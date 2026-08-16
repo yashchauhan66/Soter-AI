@@ -15,7 +15,7 @@ export default async function GovernancePolicyPage() {
     getActiveOrganization(),
     requireUser(),
   ]);
-  if (!active) return <p className="p-6 text-slate-400">No active organization.</p>;
+  if (!active) return <p className="p-6 text-slate-200">No active organization.</p>;
 
   const [policy, userProjects] = await Promise.all([
     getOrCreatePolicy(active.org.id),
@@ -31,7 +31,7 @@ export default async function GovernancePolicyPage() {
       <div>
         <p className="eyebrow">Governance</p>
         <h1 className="mt-2 text-3xl font-bold">Policy Configuration</h1>
-        <p className="mt-3 max-w-3xl text-slate-400">
+        <p className="mt-3 max-w-3xl text-slate-200">
           Configure the default AI usage governance policy. This controls how your organization
           handles AI provider usage, data sensitivity, and employee monitoring.
         </p>

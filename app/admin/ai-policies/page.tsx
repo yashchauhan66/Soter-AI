@@ -18,7 +18,7 @@ export default async function AdminAiPoliciesPage() {
     return (
       <div className="rounded-lg border border-slate-800 bg-slate-950/60 p-6">
         <h1 className="text-2xl font-bold">AI policy builder</h1>
-        <p className="mt-2 text-sm text-slate-400">Create an organization before configuring extension AI policies.</p>
+        <p className="mt-2 text-sm text-slate-200">Create an organization before configuring extension AI policies.</p>
       </div>
     );
   }

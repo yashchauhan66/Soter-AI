@@ -13,15 +13,15 @@ export default async function MLDatasetsPage() {
     <div>
       <p className="eyebrow">ML registry</p>
       <h1 className="mt-2 text-3xl font-bold">Datasets</h1>
-      <p className="mt-3 max-w-3xl text-slate-400">
+      <p className="mt-3 max-w-3xl text-slate-200">
         Each dataset is versioned and tenant-scoped. Examples are redacted before storage. Import via <code>POST /api/admin/ml/datasets</code>.
       </p>
       <section className="mt-6 card p-6">
         {datasets.length === 0 ? (
-          <p className="text-sm text-slate-400">No datasets yet.</p>
+          <p className="text-sm text-slate-200">No datasets yet.</p>
         ) : (
           <table className="w-full text-sm">
-            <thead className="text-xs uppercase tracking-wider text-slate-500">
+            <thead className="text-xs uppercase tracking-wider text-slate-300">
               <tr>
                 <th className="py-2 text-left">Organization</th>
                 <th className="py-2 text-left">Name</th>
@@ -39,7 +39,7 @@ export default async function MLDatasetsPage() {
                   <td className="py-2 text-right">v{dataset.version}</td>
                   <td className="py-2 text-right">{dataset._count.examples}</td>
                   <td className="py-2 text-right">{dataset.isActive ? "yes" : "no"}</td>
-                  <td className="py-2 text-right text-slate-400">{dataset.createdAt.toISOString().slice(0, 10)}</td>
+                  <td className="py-2 text-right text-slate-200">{dataset.createdAt.toISOString().slice(0, 10)}</td>
                 </tr>
               ))}
             </tbody>

@@ -43,7 +43,7 @@ export function ReadinessPage({ title, children }: { title: string; children: Re
 
       <div className="container-page py-14">
         <div className="card max-w-4xl space-y-5 p-7 leading-7 text-slate-300 sm:p-9">{children}</div>
-        <div className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-500">
+        <div className="mt-8 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-slate-300">
           <span>Part of the SoterAI Trust Center.</span>
           <Link
             href="/trust"

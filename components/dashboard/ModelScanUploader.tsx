@@ -103,12 +103,12 @@ export function ModelScanUploader({ projectId }: { projectId: string | null }) {
         {scanning ? (
           <Loader2 className="h-8 w-8 animate-spin text-cyan" />
         ) : (
-          <Upload className="h-8 w-8 text-slate-400" />
+          <Upload className="h-8 w-8 text-slate-200" />
         )}
         <p className="mt-3 font-semibold text-slate-200">
           {scanning ? "Scanning artifact…" : "Drop a model file or click to scan"}
         </p>
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-slate-300">
           .safetensors · .bin · .pt · .pth · .pkl · .ckpt · .h5 · .gguf · .onnx — up to 50MB
         </p>
       </div>
@@ -124,11 +124,11 @@ export function ModelScanUploader({ projectId }: { projectId: string | null }) {
               <vs.Icon className={vs.text} size={28} />
               <div>
                 <p className={`text-xl font-black ${vs.text}`}>{vs.label}</p>
-                <p className="text-sm text-slate-400">{report.filename} · {report.format} · {fmtBytes(report.sizeBytes)}</p>
+                <p className="text-sm text-slate-200">{report.filename} · {report.format} · {fmtBytes(report.sizeBytes)}</p>
               </div>
             </div>
             <div className="text-right">
-              <p className="text-xs uppercase tracking-widest text-slate-500">Risk score</p>
+              <p className="text-xs uppercase tracking-widest text-slate-300">Risk score</p>
               <p className={`text-3xl font-black ${report.riskScore >= 75 ? "text-red-400" : report.riskScore >= 40 ? "text-amber-400" : "text-lime-400"}`}>
                 {report.riskScore}
               </p>
@@ -136,13 +136,13 @@ export function ModelScanUploader({ projectId }: { projectId: string | null }) {
           </div>
 
           <div className="space-y-3 p-5">
-            <p className="font-mono text-xs text-slate-500">sha256: {report.sha256}</p>
+            <p className="font-mono text-xs text-slate-300">sha256: {report.sha256}</p>
             {report.scannedEntries.length > 0 && (
-              <p className="text-xs text-slate-500">Scanned entries: {report.scannedEntries.join(", ")}</p>
+              <p className="text-xs text-slate-300">Scanned entries: {report.scannedEntries.join(", ")}</p>
             )}
 
             {report.findings.length === 0 ? (
-              <p className="text-sm text-slate-400">No findings.</p>
+              <p className="text-sm text-slate-200">No findings.</p>
             ) : (
               <ul className="space-y-2">
                 {report.findings.map((f) => (
@@ -151,7 +151,7 @@ export function ModelScanUploader({ projectId }: { projectId: string | null }) {
                       <span className={`rounded px-2 py-0.5 text-[10px] font-bold ${SEV_COLOR[f.severity]}`}>{f.severity}</span>
                       <span className="text-sm font-semibold text-slate-200">{f.title}</span>
                     </div>
-                    <p className="mt-1 text-xs leading-5 text-slate-400">{f.detail}</p>
+                    <p className="mt-1 text-xs leading-5 text-slate-200">{f.detail}</p>
                     {f.location && <p className="mt-0.5 font-mono text-[10px] text-slate-600">@ {f.location}</p>}
                   </li>
                 ))}
@@ -159,7 +159,7 @@ export function ModelScanUploader({ projectId }: { projectId: string | null }) {
             )}
 
             {report.imports.length > 0 && (
-              <details className="text-xs text-slate-500">
+              <details className="text-xs text-slate-300">
                 <summary className="cursor-pointer">Imported globals ({report.imports.length})</summary>
                 <ul className="mt-2 space-y-0.5 font-mono">
                   {report.imports.map((im, i) => <li key={i}>{im.module}.{im.name}</li>)}

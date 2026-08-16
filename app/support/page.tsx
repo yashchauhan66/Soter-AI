@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 };
 
 const integrations = [
-  { name: "n8n", note: "Community node: n8n-nodes-soterai", href: "/docs" },
+  { name: "n8n", note: "Community node: n8n-nodes-soterai", href: "/integrations/n8n" },
   { name: "Dify", note: "Marketplace plugin", href: "/docs" },
   { name: "Zapier", note: "Public app (review pending)", href: "/docs" },
   { name: "Make.com", note: "Custom app (review pending)", href: "/docs" },
@@ -49,7 +49,7 @@ export default function SupportPage() {
       {/* Header */}
       <p className="eyebrow">Support</p>
       <h1 className="mt-2 text-4xl font-bold">How can we help?</h1>
-      <p className="mt-4 max-w-3xl text-slate-400">
+      <p className="mt-4 max-w-3xl text-slate-200">
         Contact us for API issues, integration support, billing questions, or
         security concerns.
       </p>
@@ -58,7 +58,7 @@ export default function SupportPage() {
       <div className="mt-10 grid gap-6 md:grid-cols-2">
         <article className="card p-6">
           <h2 className="text-xl font-semibold">General Support</h2>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-200">
             API issues, account questions, integration help
           </p>
           <a
@@ -70,7 +70,7 @@ export default function SupportPage() {
         </article>
         <article className="card p-6">
           <h2 className="text-xl font-semibold">Security</h2>
-          <p className="mt-2 text-sm text-slate-400">
+          <p className="mt-2 text-sm text-slate-200">
             Vulnerability reports, security concerns, responsible disclosure
           </p>
           <a
@@ -85,14 +85,14 @@ export default function SupportPage() {
       {/* Integration Support */}
       <section className="mt-16">
         <h2 className="text-2xl font-bold">Integration Support</h2>
-        <p className="mt-2 text-slate-400">
+        <p className="mt-2 text-slate-200">
           Need help with a specific platform? Find your integration below.
         </p>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {integrations.map((i) => (
             <Link key={i.name} href={i.href} className="card block p-5 hover:border-slate-600">
               <h3 className="font-semibold">{i.name}</h3>
-              <p className="mt-1 text-sm text-slate-400">{i.note}</p>
+              <p className="mt-1 text-sm text-slate-200">{i.note}</p>
               <span className="mt-3 inline-block text-sm text-cyan">
                 View docs &rarr;
               </span>
@@ -108,7 +108,7 @@ export default function SupportPage() {
           {faqs.map((faq) => (
             <article key={faq.q} className="card p-5">
               <h3 className="font-semibold">{faq.q}</h3>
-              <p className="mt-2 text-sm text-slate-400">{faq.a}</p>
+              <p className="mt-2 text-sm text-slate-200">{faq.a}</p>
             </article>
           ))}
         </div>
@@ -118,7 +118,7 @@ export default function SupportPage() {
       <section className="mt-16">
         <h2 className="text-2xl font-bold">Security Vulnerability Reporting</h2>
         <div className="card mt-6 p-6">
-          <p className="text-slate-400">
+          <p className="text-slate-200">
             To report a security vulnerability, email{" "}
             <a
               href="mailto:support@soterai.in"
@@ -128,12 +128,12 @@ export default function SupportPage() {
             </a>{" "}
             with the following details:
           </p>
-          <ul className="mt-4 list-inside list-disc space-y-2 text-sm text-slate-400">
+          <ul className="mt-4 list-inside list-disc space-y-2 text-sm text-slate-200">
             <li>Description of the vulnerability</li>
             <li>Steps to reproduce</li>
             <li>Impact assessment</li>
           </ul>
-          <p className="mt-4 text-sm text-slate-400">
+          <p className="mt-4 text-sm text-slate-200">
             We follow coordinated disclosure practices.
           </p>
         </div>
@@ -141,10 +141,10 @@ export default function SupportPage() {
 
       {/* Footer note */}
       <section className="mt-16 border-t border-slate-800 pt-8">
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-slate-200">
           Response times: General support 24-48h, Security issues 24h.
         </p>
-        <p className="mt-2 text-sm text-slate-400">
+        <p className="mt-2 text-sm text-slate-200">
           For urgent production issues, include &ldquo;URGENT&rdquo; in the
           subject line.
         </p>

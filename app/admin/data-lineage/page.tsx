@@ -60,7 +60,7 @@ export default async function DataLineagePage({ searchParams }: { searchParams: 
       <div>
         <p className="text-xs font-bold uppercase tracking-wider text-cyan">AI data security</p>
         <h1 className="mt-2 flex items-center gap-3 text-3xl font-bold"><Network /> Data Lineage</h1>
-        <p className="mt-2 max-w-3xl text-sm text-slate-400">Source-to-destination AI movement timeline. URLs are stored as hashes/redacted values and raw clipboard text is not stored.</p>
+        <p className="mt-2 max-w-3xl text-sm text-slate-200">Source-to-destination AI movement timeline. URLs are stored as hashes/redacted values and raw clipboard text is not stored.</p>
       </div>
 
       <form className="card flex flex-wrap items-end gap-3 p-4" method="get">
@@ -71,25 +71,25 @@ export default async function DataLineagePage({ searchParams }: { searchParams: 
         <Field label="From"><input type="date" name="from" defaultValue={from} className={dateClass} /></Field>
         <Field label="To"><input type="date" name="to" defaultValue={to} className={dateClass} /></Field>
         <button type="submit" className="button-primary h-9 px-4 py-0 text-sm">Apply</button>
-        <a href="/admin/data-lineage" className="text-xs text-slate-400 underline">Reset</a>
+        <a href="/admin/data-lineage" className="text-xs text-slate-200 underline">Reset</a>
         <a href={exportHref} className="ml-auto text-xs text-cyan underline">Export CSV (redacted)</a>
       </form>
 
       <div className="card overflow-hidden">
         <div className="border-b border-slate-800 p-4">
           <h2 className="font-semibold">Incident timeline</h2>
-          <p className="text-xs text-slate-500">{filtered.length} of {events.length} events shown.</p>
+          <p className="text-xs text-slate-300">{filtered.length} of {events.length} events shown.</p>
         </div>
         {loadError ? <div className="p-8 text-sm text-rose-400">Could not load lineage events: {loadError}</div>
-          : filtered.length === 0 ? <div className="p-8 text-sm text-slate-400">{events.length === 0 ? "No lineage events recorded yet." : "No events match the current filters."}</div> : (
+          : filtered.length === 0 ? <div className="p-8 text-sm text-slate-200">{events.length === 0 ? "No lineage events recorded yet." : "No events match the current filters."}</div> : (
           <ol className="divide-y divide-slate-800">
             {filtered.map((event) => (
               <li className="flex flex-wrap items-center gap-x-4 gap-y-1 p-4 text-sm" key={String(event.id)}>
-                <span className="w-40 shrink-0 text-xs text-slate-500">{new Date(String(event.createdAt)).toLocaleString()}</span>
+                <span className="w-40 shrink-0 text-xs text-slate-300">{new Date(String(event.createdAt)).toLocaleString()}</span>
                 <span className="font-medium text-cyan">{String(event.sourceApp)}</span>
-                <span className="text-slate-500">→</span>
+                <span className="text-slate-300">→</span>
                 <span className="font-medium">{String(event.destinationApp)}</span>
-                <span className="text-slate-400">{Array.isArray(event.dataTypes) ? event.dataTypes.join(", ") : ""}</span>
+                <span className="text-slate-200">{Array.isArray(event.dataTypes) ? event.dataTypes.join(", ") : ""}</span>
                 <span className="ml-auto text-xs">{String(event.severity)} / {String(event.riskScore)}</span>
                 <span className={`rounded px-2 py-0.5 text-xs ${badge(String(event.actionTaken))}`}>{String(event.actionTaken)}</span>
               </li>
@@ -102,7 +102,7 @@ export default async function DataLineagePage({ searchParams }: { searchParams: 
 }
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return <label className="flex flex-col gap-1 text-xs text-slate-400">{label}{children}</label>;
+  return <label className="flex flex-col gap-1 text-xs text-slate-200">{label}{children}</label>;
 }
 
 function badge(action: string) {

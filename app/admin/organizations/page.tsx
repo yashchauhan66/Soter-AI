@@ -54,11 +54,11 @@ export default async function AdminOrganizationsPage({
             <div className="rounded-lg border border-slate-800 p-3" key={org.id}>
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <p className="font-medium">{org.name}</p>
-                <p className="text-slate-500">
+                <p className="text-slate-300">
                   {org.plan} - {org.disabled ? "disabled" : "active"}
                 </p>
               </div>
-              <p className="mt-2 text-slate-400">
+              <p className="mt-2 text-slate-200">
                 {org.slug} - {org._count.members} members - {org._count.projects} projects - {org._count.securityEvents} security events
               </p>
             </div>

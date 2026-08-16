@@ -44,10 +44,10 @@ const risky = scan.results.filter((t) => t.riskLevel === "HIGH" || t.riskLevel =
       </div>
       <section className="card overflow-x-auto p-5">
         <table className="w-full min-w-[780px] text-left text-sm">
-          <thead className="text-xs uppercase text-slate-500"><tr><th className="py-2">Risk</th><th>Server</th><th>Tool</th><th>Capabilities</th><th>Reasons</th><th>Scanned</th></tr></thead>
+          <thead className="text-xs uppercase text-slate-300"><tr><th className="py-2">Risk</th><th>Server</th><th>Tool</th><th>Capabilities</th><th>Reasons</th><th>Scanned</th></tr></thead>
           <tbody className="divide-y divide-slate-800">
             {rows.map((row) => <tr key={row.id}><td className="py-3 font-semibold">{row.riskLevel}</td><td>{row.serverName}</td><td className="font-mono text-xs">{row.toolName}</td><td>{jsonList(row.detectedCapabilitiesJson)}</td><td>{jsonList(row.riskReasonsJson)}</td><td>{row.createdAt.toLocaleString()}</td></tr>)}
-            {rows.length === 0 && <tr><td className="py-5 text-slate-500" colSpan={6}>No MCP scans yet.</td></tr>}
+            {rows.length === 0 && <tr><td className="py-5 text-slate-300" colSpan={6}>No MCP scans yet.</td></tr>}
           </tbody>
         </table>
       </section>

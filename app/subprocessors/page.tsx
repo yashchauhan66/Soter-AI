@@ -22,14 +22,14 @@ export default function SubprocessorsPage() {
 
   return (
     <ReadinessPage title="Subprocessors">
-      <p className="mb-6 max-w-2xl text-slate-400">
+      <p className="mb-6 max-w-2xl text-slate-200">
         Self-hosted deployments can run without SoterAI-operated subprocessors.
         Managed deployments use the following subprocessors to deliver the service.
       </p>
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead>
-            <tr className="border-b border-slate-700 text-xs uppercase tracking-wider text-slate-500">
+            <tr className="border-b border-slate-700 text-xs uppercase tracking-wider text-slate-300">
               <th className="pb-3 pr-4 font-medium">Provider</th>
               <th className="pb-3 pr-4 font-medium">Purpose</th>
               <th className="pb-3 pr-4 font-medium">Region</th>
@@ -41,8 +41,8 @@ export default function SubprocessorsPage() {
               <tr key={sp.name} className="border-b border-slate-800">
                 <td className="py-3 pr-4 font-medium text-cyan">{sp.name}</td>
                 <td className="py-3 pr-4 text-slate-300">{sp.purpose}</td>
-                <td className="py-3 pr-4 text-slate-400">{sp.region}</td>
-                <td className="py-3 text-slate-400">{sp.data}</td>
+                <td className="py-3 pr-4 text-slate-200">{sp.region}</td>
+                <td className="py-3 text-slate-200">{sp.data}</td>
               </tr>
             ))}
           </tbody>

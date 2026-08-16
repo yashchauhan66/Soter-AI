@@ -14,13 +14,13 @@ export default async function MLEvaluationsPage() {
     <div>
       <p className="eyebrow">ML registry</p>
       <h1 className="mt-2 text-3xl font-bold">Evaluations</h1>
-      <p className="mt-3 max-w-3xl text-slate-400">Precision, recall, F1, and calibration error for each evaluation. Review queue items are seeded for false positives and false negatives.</p>
+      <p className="mt-3 max-w-3xl text-slate-200">Precision, recall, F1, and calibration error for each evaluation. Review queue items are seeded for false positives and false negatives.</p>
       <section className="mt-6 card p-6">
         {evaluations.length === 0 ? (
-          <p className="text-sm text-slate-400">No evaluations yet.</p>
+          <p className="text-sm text-slate-200">No evaluations yet.</p>
         ) : (
           <table className="w-full text-sm">
-            <thead className="text-xs uppercase tracking-wider text-slate-500">
+            <thead className="text-xs uppercase tracking-wider text-slate-300">
               <tr>
                 <th className="py-2 text-left">Org</th>
                 <th className="py-2 text-left">Model</th>
@@ -39,7 +39,7 @@ export default async function MLEvaluationsPage() {
               {evaluations.map((evaluation) => (
                 <tr key={evaluation.id} className="border-t border-slate-800">
                   <td className="py-2">{evaluation.organization.name}</td>
-                  <td className="py-2">{evaluation.modelVersion.name} <span className="text-slate-500">{evaluation.modelVersion.version}</span></td>
+                  <td className="py-2">{evaluation.modelVersion.name} <span className="text-slate-300">{evaluation.modelVersion.version}</span></td>
                   <td className="py-2">{evaluation.dataset.name} v{evaluation.dataset.version}</td>
                   <td className="py-2 text-right">{evaluation.precision.toFixed(3)}</td>
                   <td className="py-2 text-right">{evaluation.recall.toFixed(3)}</td>
@@ -48,7 +48,7 @@ export default async function MLEvaluationsPage() {
                   <td className="py-2 text-right">{evaluation.falseNegativeRate.toFixed(3)}</td>
                   <td className="py-2 text-right">{evaluation.calibrationError.toFixed(3)}</td>
                   <td className="py-2 text-right">{evaluation.totalExamples}</td>
-                  <td className="py-2 text-right text-slate-400">{evaluation.createdAt.toISOString().slice(0, 10)}</td>
+                  <td className="py-2 text-right text-slate-200">{evaluation.createdAt.toISOString().slice(0, 10)}</td>
                 </tr>
               ))}
             </tbody>

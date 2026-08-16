@@ -85,7 +85,7 @@ export default async function AdminSupportPage({
                   </p>
                   <span className="text-sm text-cyan">{ticket.status}</span>
                 </div>
-                <p className="mt-1 text-sm text-slate-500">
+                <p className="mt-1 text-sm text-slate-300">
                   {ticket.organization.name} - {ticket.createdBy.email} - {ticket.category} - {ticket.priority}
                 </p>
                 <p className="mt-2 text-sm text-slate-300">{ticket.messages[0]?.body}</p>
@@ -110,7 +110,7 @@ export default async function AdminSupportPage({
                   <p className="font-semibold">{incident.title}</p>
                   <span className="text-sm">{incident.status}</span>
                 </div>
-                <p className="mt-2 text-sm text-slate-400">{incident.summary}</p>
+                <p className="mt-2 text-sm text-slate-200">{incident.summary}</p>
               </section>
             ))}
           </div>

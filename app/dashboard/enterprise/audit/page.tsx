@@ -27,7 +27,7 @@ export default async function EnterpriseAuditPage({
   searchParams: Promise<{ auditCursor?: string; eventCursor?: string }>;
 }) {
   const active = await getActiveOrganization();
-  if (!active) return <p className="p-6 text-slate-400">No active organization.</p>;
+  if (!active) return <p className="p-6 text-slate-200">No active organization.</p>;
   const params = await searchParams;
   const auditCursor = parseCursorDate(params.auditCursor);
   const eventCursor = parseCursorDate(params.eventCursor);
@@ -69,12 +69,12 @@ export default async function EnterpriseAuditPage({
           </div>
           <div className="mt-4 space-y-2 text-sm">
             {auditLogs.length === 0 ? (
-              <p className="text-slate-400">No audit events.</p>
+              <p className="text-slate-200">No audit events.</p>
             ) : (
               auditLogs.map((event) => (
                 <div className="border-t border-slate-800 py-2" key={event.id}>
                   <p>{event.action}</p>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-300">
                     {event.category} - {event.createdAt.toISOString()}
                   </p>
                 </div>
@@ -96,14 +96,14 @@ export default async function EnterpriseAuditPage({
           </div>
           <div className="mt-4 space-y-2 text-sm">
             {securityEvents.length === 0 ? (
-              <p className="text-slate-400">No security events.</p>
+              <p className="text-slate-200">No security events.</p>
             ) : (
               securityEvents.map((event) => (
                 <div className="border-t border-slate-800 py-2" key={event.id}>
                   <p>
                     {event.eventType} - {event.severity}
                   </p>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-300">
                     {event.action} - {event.createdAt.toISOString()}
                   </p>
                 </div>

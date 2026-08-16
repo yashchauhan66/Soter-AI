@@ -102,7 +102,7 @@ export function ShadowAIDashboardClient({ organizations, initialDestinations, in
       </label>
 
       <div className="mb-6 flex flex-wrap items-center gap-3">
-        <Filter size={14} className="text-slate-500" />
+        <Filter size={14} className="text-slate-300" />
         <select className="rounded border border-slate-700 bg-slate-950 px-2 py-1 text-xs text-slate-300" value={filterRisk} onChange={(e) => setFilterRisk(e.target.value)}>
           <option value="">All risk levels</option>
           <option value="low">Low</option>
@@ -119,19 +119,19 @@ export function ShadowAIDashboardClient({ organizations, initialDestinations, in
       <div className="mb-6 grid gap-3 sm:grid-cols-4">
         <div className="card p-4 text-center">
           <p className="text-3xl font-black text-cyan">{filteredDestinations.length}</p>
-          <p className="mt-1 text-xs text-slate-400">Total discovered</p>
+          <p className="mt-1 text-xs text-slate-200">Total discovered</p>
         </div>
         <div className="card p-4 text-center">
           <p className="text-3xl font-black text-amber-300">{unknownDestinations.length}</p>
-          <p className="mt-1 text-xs text-slate-400">Unknown AI tools</p>
+          <p className="mt-1 text-xs text-slate-200">Unknown AI tools</p>
         </div>
         <div className="card p-4 text-center">
           <p className="text-3xl font-black text-lime">{knownDestinations.length}</p>
-          <p className="mt-1 text-xs text-slate-400">Known AI services</p>
+          <p className="mt-1 text-xs text-slate-200">Known AI services</p>
         </div>
         <div className="card p-4 text-center">
           <p className="text-3xl font-black text-slate-200">{events.length}</p>
-          <p className="mt-1 text-xs text-slate-400">Discovery events</p>
+          <p className="mt-1 text-xs text-slate-200">Discovery events</p>
         </div>
       </div>
 
@@ -141,7 +141,7 @@ export function ShadowAIDashboardClient({ organizations, initialDestinations, in
           <h2 className="flex items-center gap-2 text-lg font-bold text-amber-300">
             <AlertTriangle size={18} /> Unknown AI Destinations ({unknownDestinations.length})
           </h2>
-          <p className="mt-1 text-xs text-slate-400">These domains were discovered by the extension but are not in the known AI provider list.</p>
+          <p className="mt-1 text-xs text-slate-200">These domains were discovered by the extension but are not in the known AI provider list.</p>
           <div className="mt-3 space-y-2">
             {unknownDestinations.map((d) => (
               <div key={d.domain} className="card flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
@@ -151,8 +151,8 @@ export function ShadowAIDashboardClient({ organizations, initialDestinations, in
                     <span className="font-medium text-slate-200">{d.destination}</span>
                     <span className={`rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase ${RISK_STYLES[d.riskLevel] ?? RISK_STYLES.medium}`}>{d.riskLevel}</span>
                   </div>
-                  <p className="mt-1 text-xs text-slate-500">{d.domain}</p>
-                  <div className="mt-1 flex flex-wrap gap-2 text-[10px] text-slate-500">
+                  <p className="mt-1 text-xs text-slate-300">{d.domain}</p>
+                  <div className="mt-1 flex flex-wrap gap-2 text-[10px] text-slate-300">
                     {d.departments.length > 0 && <span className="flex items-center gap-1"><Users size={10} /> {d.departments.join(", ")}</span>}
                     <span className="flex items-center gap-1"><Clock size={10} /> First: {new Date(d.firstSeen).toLocaleDateString()}</span>
                     <span className="flex items-center gap-1"><Clock size={10} /> Last: {new Date(d.lastSeen).toLocaleDateString()}</span>
@@ -165,7 +165,7 @@ export function ShadowAIDashboardClient({ organizations, initialDestinations, in
                   <button className="rounded bg-cyan/10 px-2 py-1 text-[10px] font-bold text-cyan hover:bg-cyan/20" onClick={() => takeAction(d.domain, "classify_public_ai")}>Public AI</button>
                   <button className="rounded bg-cyan/10 px-2 py-1 text-[10px] font-bold text-cyan hover:bg-cyan/20" onClick={() => takeAction(d.domain, "classify_enterprise_ai")}>Enterprise</button>
                   <button className="rounded bg-cyan/10 px-2 py-1 text-[10px] font-bold text-cyan hover:bg-cyan/20" onClick={() => takeAction(d.domain, "classify_browser_coding")}>Browser Coding</button>
-                  <button className="rounded bg-slate-700/50 px-2 py-1 text-[10px] text-slate-400 hover:bg-slate-700" onClick={() => takeAction(d.domain, "ignore")}>Ignore</button>
+                  <button className="rounded bg-slate-700/50 px-2 py-1 text-[10px] text-slate-200 hover:bg-slate-700" onClick={() => takeAction(d.domain, "ignore")}>Ignore</button>
                 </div>
               </div>
             ))}
@@ -184,7 +184,7 @@ export function ShadowAIDashboardClient({ organizations, initialDestinations, in
               <div>
                 <span className="font-medium text-slate-200">{d.destination}</span>
                 <span className={`ml-2 rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase ${RISK_STYLES[d.riskLevel] ?? RISK_STYLES.medium}`}>{d.riskLevel}</span>
-                <p className="mt-1 text-xs text-slate-500">{d.domain} · {d.eventCount} events</p>
+                <p className="mt-1 text-xs text-slate-300">{d.domain} · {d.eventCount} events</p>
               </div>
               <div className="flex gap-1">
                 <button className="rounded bg-red-500/10 px-2 py-1 text-[10px] font-bold text-red-400 hover:bg-red-500/20" onClick={() => takeAction(d.domain, "block")}>Block</button>
@@ -192,7 +192,7 @@ export function ShadowAIDashboardClient({ organizations, initialDestinations, in
             </div>
           ))}
           {knownDestinations.length === 0 && (
-            <div className="card p-6 text-center text-slate-500">No known AI destinations in discovery data.</div>
+            <div className="card p-6 text-center text-slate-300">No known AI destinations in discovery data.</div>
           )}
         </div>
       </section>
@@ -208,12 +208,12 @@ export function ShadowAIDashboardClient({ organizations, initialDestinations, in
               <div key={e.id} className="flex items-center justify-between rounded-lg border border-slate-800 bg-panel/50 px-4 py-2.5 text-sm">
                 <div>
                   <span className="text-slate-200">{e.destination}</span>
-                  <span className="ml-2 text-xs text-slate-500">{e.domain}</span>
+                  <span className="ml-2 text-xs text-slate-300">{e.domain}</span>
                   {e.employeeId !== "—" && <span className="ml-2 text-xs text-slate-600">by {e.employeeId}</span>}
                 </div>
                 <div className="flex items-center gap-3">
                   <span className={`rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase ${RISK_STYLES[e.riskLevel] ?? RISK_STYLES.medium}`}>{e.riskLevel}</span>
-                  <span className="text-xs text-slate-500">{new Date(e.createdAt).toLocaleString()}</span>
+                  <span className="text-xs text-slate-300">{new Date(e.createdAt).toLocaleString()}</span>
                 </div>
               </div>
             ))}

@@ -79,7 +79,7 @@ export function ApprovalQueueClient({ organizations, initialApprovals, initialAc
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold">Approval Queue</h1>
-          <p className="mt-1 text-sm text-slate-400">
+          <p className="mt-1 text-sm text-slate-200">
             {pendingCount} pending {pendingCount === 1 ? "request" : "requests"} requiring admin review
           </p>
         </div>
@@ -88,7 +88,7 @@ export function ApprovalQueueClient({ organizations, initialApprovals, initialAc
       {/* Filters */}
       <div className="mb-6 flex flex-wrap gap-3 rounded-lg border border-slate-800 bg-panel/50 p-4">
         <div className="flex items-center gap-2">
-          <Filter size={16} className="text-slate-500" />
+          <Filter size={16} className="text-slate-300" />
           <select
             className="rounded-md border border-slate-700 bg-slate-950/80 px-3 py-2 text-sm text-slate-200"
             value={filter}
@@ -102,9 +102,9 @@ export function ApprovalQueueClient({ organizations, initialApprovals, initialAc
         </div>
 
         <div className="flex items-center gap-2">
-          <Search size={16} className="text-slate-500" />
+          <Search size={16} className="text-slate-300" />
           <input
-            className="rounded-md border border-slate-700 bg-slate-950/80 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-500"
+            className="rounded-md border border-slate-700 bg-slate-950/80 px-3 py-2 text-sm text-slate-200 placeholder:text-slate-300"
             placeholder="Search employee or domain..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -126,7 +126,7 @@ export function ApprovalQueueClient({ organizations, initialApprovals, initialAc
       {/* Approval cards */}
       <div className="space-y-4">
         {filteredApprovals.length === 0 ? (
-          <div className="card flex items-center gap-3 p-6 text-slate-400">
+          <div className="card flex items-center gap-3 p-6 text-slate-200">
             <Shield size={20} className="text-cyan" />
             No approval requests match the current filter.
           </div>
@@ -146,7 +146,7 @@ export function ApprovalQueueClient({ organizations, initialApprovals, initialAc
                 <div className="space-y-2">
                   <div className="flex items-center gap-3">
                     <span className="font-semibold text-slate-200">{approval.employeeId}</span>
-                    <span className="text-sm text-slate-500">at</span>
+                    <span className="text-sm text-slate-300">at</span>
                     <span className="rounded-full border border-slate-700 px-2.5 py-0.5 text-xs text-slate-300">{approval.destination}</span>
                   </div>
                   <div className="flex flex-wrap gap-2">
@@ -156,7 +156,7 @@ export function ApprovalQueueClient({ organizations, initialApprovals, initialAc
                       </span>
                     ))}
                   </div>
-                  <div className="flex items-center gap-4 text-sm text-slate-400">
+                  <div className="flex items-center gap-4 text-sm text-slate-200">
                     <span>Risk: {approval.riskScore}</span>
                     <span>Severity: {approval.severity}</span>
                     <span>Domain: {approval.domain}</span>
@@ -166,12 +166,12 @@ export function ApprovalQueueClient({ organizations, initialApprovals, initialAc
                     </span>
                   </div>
                   {approval.justification && (
-                    <p className="text-sm italic text-slate-500">Justification: {approval.justification}</p>
+                    <p className="text-sm italic text-slate-300">Justification: {approval.justification}</p>
                   )}
                   {approval.redactedPreview && (
-                    <details className="text-xs text-slate-500">
+                    <details className="text-xs text-slate-300">
                       <summary className="cursor-pointer text-cyan">Show redacted preview</summary>
-                      <pre className="mt-2 rounded border border-slate-800 bg-slate-950 p-3 text-slate-400">{approval.redactedPreview}</pre>
+                      <pre className="mt-2 rounded border border-slate-800 bg-slate-950 p-3 text-slate-200">{approval.redactedPreview}</pre>
                     </details>
                   )}
                 </div>
@@ -238,10 +238,10 @@ export function ApprovalQueueClient({ organizations, initialApprovals, initialAc
             {actions.map((action) => (
               <div key={action.id} className="flex items-center justify-between rounded-lg border border-slate-800 bg-panel/30 px-4 py-2.5 text-sm">
                 <div className="flex items-center gap-3">
-                  <span className="text-slate-400">{action.adminEmail}</span>
-                  <span className="text-slate-500">-</span>
+                  <span className="text-slate-200">{action.adminEmail}</span>
+                  <span className="text-slate-300">-</span>
                   <span className="text-slate-300">{action.action.replace(/_/g, " ")}</span>
-                  {action.reason && <span className="text-slate-500">({action.reason})</span>}
+                  {action.reason && <span className="text-slate-300">({action.reason})</span>}
                 </div>
                 <span className="text-xs text-slate-600">{new Date(action.createdAt).toLocaleString()}</span>
               </div>

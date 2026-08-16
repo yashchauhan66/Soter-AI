@@ -17,8 +17,8 @@ export function Pricing() {
           {plans.map(([name, price, detail], i) => (
             <article key={name} className={`card p-6 ${i === 1 ? "border-cyan/60" : ""}`}>
               <p className="font-semibold text-cyan">{name}</p>
-              <p className="mt-5 text-3xl font-bold">{price}<span className="text-sm font-normal text-slate-500">/mo</span></p>
-              <p className="mt-3 text-sm text-slate-400">{detail}</p>
+              <p className="mt-5 text-3xl font-bold">{price}<span className="text-sm font-normal text-slate-300">/mo</span></p>
+              <p className="mt-3 text-sm text-slate-200">{detail}</p>
               <div className="mt-6 space-y-3 text-sm text-slate-300">
                 {["Input and output guard", "Risk logs", "Redaction engine"].map((x) => <p key={x} className="flex gap-2"><Check size={16} className="text-lime" aria-hidden="true" />{x}</p>)}
               </div>

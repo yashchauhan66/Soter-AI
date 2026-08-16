@@ -28,16 +28,16 @@ export default function CliDocsPage() {
       <DocViewTracker />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
       <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-500 transition-colors hover:text-cyan">← Back to docs</Link>
+        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
         <p className="eyebrow mt-6">Tool guide</p>
         <h1 className="mt-3 text-4xl font-bold">SoterAI CLI</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           <InlineCode>npx soter init</InlineCode> — a convenience tool for framework detection and project scaffolding.
         </p>
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Status: Planned</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             The CLI init command is planned but not yet implemented. The SDK, examples, and documentation
             provide clear integration paths — manual setup takes less than 2 minutes for most developers.
           </p>
@@ -45,7 +45,7 @@ export default function CliDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Planned behavior</h2>
-          <p className="mt-3 leading-7 text-slate-400">When implemented, <InlineCode>npx soter init</InlineCode> would:</p>
+          <p className="mt-3 leading-7 text-slate-200">When implemented, <InlineCode>npx soter init</InlineCode> would:</p>
           <div className="mt-4 space-y-3">
             <div className="rounded-lg border border-slate-800 p-4">1. <strong>Detect framework</strong> — Next.js, Express, Node.js, Python/FastAPI, or unknown</div>
             <div className="rounded-lg border border-slate-800 p-4">2. <strong>Prompt for config</strong> — Base URL and API key stored in <InlineCode>.env</InlineCode></div>
@@ -56,7 +56,7 @@ export default function CliDocsPage() {
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Alternative: Dashboard wizard</h2>
-          <p className="mt-3 leading-7 text-slate-400">
+          <p className="mt-3 leading-7 text-slate-200">
             While the CLI is not yet available, the <Link href="/dashboard/integrations" className="text-cyan underline">integration wizard</Link> in the dashboard
             already provides copy-paste snippets for all supported languages and frameworks.
           </p>

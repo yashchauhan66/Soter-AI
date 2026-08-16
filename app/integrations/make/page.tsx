@@ -96,7 +96,7 @@ export default function Page() {
         <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
           AI security for Make.com scenarios
         </h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
+        <p className="mt-5 text-lg leading-8 text-slate-200">
           Make.com connects AI modules to your business data and workflows at scale.
           SoterAI Guard integrates via Make&apos;s HTTP module to inspect every AI input and
           output — blocking prompt injection, detecting PII, and preventing unsafe AI
@@ -126,7 +126,7 @@ export default function Page() {
                 <ShieldCheck className="h-5 w-5 text-cyan" aria-hidden="true" />
                 <h3 className="font-semibold text-slate-100">{f.title}</h3>
               </div>
-              <p className="mt-2 text-sm leading-6 text-slate-400">{f.body}</p>
+              <p className="mt-2 text-sm leading-6 text-slate-200">{f.body}</p>
             </div>
           ))}
         </div>
@@ -142,7 +142,7 @@ export default function Page() {
               </span>
               <div>
                 <p className="font-semibold text-slate-100">{s.step}</p>
-                <p className="mt-1 text-sm leading-6 text-slate-400">{s.body}</p>
+                <p className="mt-1 text-sm leading-6 text-slate-200">{s.body}</p>
               </div>
             </li>
           ))}
@@ -157,7 +157,7 @@ export default function Page() {
             "The HTTP module approach requires a Make plan that supports HTTP requests. Check Make's plan restrictions.",
             "Detection is heuristic and reduces risk significantly but cannot guarantee detection of every novel attack pattern.",
           ].map((l) => (
-            <li key={l} className="flex gap-3 text-sm leading-6 text-slate-400">
+            <li key={l} className="flex gap-3 text-sm leading-6 text-slate-200">
               <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-amber-500" />
               {l}
             </li>
@@ -171,7 +171,7 @@ export default function Page() {
           {faqs.map((f) => (
             <div key={f.q}>
               <h3 className="font-semibold text-slate-100">{f.q}</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-400">{f.a}</p>
+              <p className="mt-2 text-sm leading-6 text-slate-200">{f.a}</p>
             </div>
           ))}
         </div>
@@ -193,7 +193,7 @@ export default function Page() {
 
       <section className="mt-16 rounded-2xl border border-cyan/20 bg-cyan/5 p-8 text-center">
         <h2 className="text-2xl font-bold">Secure your Make AI scenarios</h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-400">
+        <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-200">
           Add two HTTP modules to any Make scenario and every AI step is guarded. Free tier available.
         </p>
         <Link href="/signup" className="mt-6 inline-flex items-center gap-2 rounded-lg bg-cyan px-6 py-3 text-sm font-semibold text-ink transition hover:opacity-90">

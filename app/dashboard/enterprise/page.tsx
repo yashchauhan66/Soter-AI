@@ -8,8 +8,8 @@ export default async function EnterprisePage() {
   const active = await getActiveOrganization();
   if (!active) return (
     <div className="flex flex-col items-center py-12 text-center">
-      <p className="text-sm text-slate-400 mb-2">No organization configured</p>
-      <p className="text-xs text-slate-500">Set up your organization in Settings to enable SSO and SCIM.</p>
+      <p className="text-sm text-slate-200 mb-2">No organization configured</p>
+      <p className="text-xs text-slate-300">Set up your organization in Settings to enable SSO and SCIM.</p>
     </div>
   );
   const [providers, tokens] = await Promise.all([
@@ -23,7 +23,7 @@ export default async function EnterprisePage() {
     <div>
       <p className="eyebrow">Enterprise controls</p>
       <h1 className="mt-2 text-3xl font-bold">Enterprise readiness</h1>
-      <p className="mt-3 text-slate-400">SAML SSO, SCIM v2 provisioning, data retention, security controls, and audit review for enterprise tenants.</p>
+      <p className="mt-3 text-slate-200">SAML SSO, SCIM v2 provisioning, data retention, security controls, and audit review for enterprise tenants.</p>
       <nav className="mt-5 flex flex-wrap gap-2 text-sm">
         {[
           ["SAML SSO", "/dashboard/enterprise/sso"],
@@ -38,15 +38,15 @@ export default async function EnterprisePage() {
       <div className="mt-6 grid gap-5 md:grid-cols-2">
         <section className="card p-5">
           <h2 className="font-semibold">SAML providers</h2>
-          <p className="mt-2 text-sm text-slate-400">Configure via <code>POST /api/enterprise/saml</code>.</p>
+          <p className="mt-2 text-sm text-slate-200">Configure via <code>POST /api/enterprise/saml</code>.</p>
           {providers.length ? providers.map((provider) => <p className="mt-3 text-sm" key={provider.id}>{provider.entityId} - {provider.enabled ? "enabled" : "disabled"}</p>) : (
-            <p className="mt-3 text-sm text-slate-500">No SSO providers configured. Set up SAML to enable single sign-on.</p>
+            <p className="mt-3 text-sm text-slate-300">No SSO providers configured. Set up SAML to enable single sign-on.</p>
           )}
         </section>
         <section className="card p-5">
           <h2 className="font-semibold">SCIM tokens</h2>
-          <p className="mt-2 text-sm text-slate-400">Generate via <code>POST /api/enterprise/scim-tokens</code>. Raw tokens are returned once.</p>
-          {tokens.length ? tokens.map((token) => <p className="mt-3 text-sm" key={token.id}>{token.name} - {token.tokenPreview}</p>) : <p className="mt-3 text-sm text-slate-500">No SCIM tokens generated yet.</p>}
+          <p className="mt-2 text-sm text-slate-200">Generate via <code>POST /api/enterprise/scim-tokens</code>. Raw tokens are returned once.</p>
+          {tokens.length ? tokens.map((token) => <p className="mt-3 text-sm" key={token.id}>{token.name} - {token.tokenPreview}</p>) : <p className="mt-3 text-sm text-slate-300">No SCIM tokens generated yet.</p>}
         </section>
       </div>
     </div>

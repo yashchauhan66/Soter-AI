@@ -19,8 +19,8 @@ export function Timestamp({ value }: { value: Date | string }) {
   }, [value]);
 
   if (!display) {
-    return <span className="text-xs text-slate-500">—</span>;
+    return <span className="text-xs text-slate-300">—</span>;
   }
 
-  return <span className="text-xs text-slate-500">{display}</span>;
+  return <span className="text-xs text-slate-300">{display}</span>;
 }

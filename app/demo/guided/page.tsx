@@ -28,7 +28,7 @@ export default function GuidedDemoPage() {
           <Clock size={15} className="text-cyan" /> ~2 minutes
         </span>
       </div>
-      <p className="mt-4 max-w-3xl text-slate-400">
+      <p className="mt-4 max-w-3xl text-slate-200">
         This walkthrough follows a single prompt-injection attempt through every stage SoterAI runs in production — from
         detection to a signed audit trace. It autoplays; pause or step through at your own pace. The scenario is
         illustrative and uses synthetic data.
@@ -49,7 +49,7 @@ export default function GuidedDemoPage() {
           ].map(([title, copy, href]) => (
             <Link key={title} href={href} className="card p-5 transition hover:border-cyan/50">
               <h3 className="font-semibold text-slate-100">{title}</h3>
-              <p className="mt-2 text-sm text-slate-400">{copy}</p>
+              <p className="mt-2 text-sm text-slate-200">{copy}</p>
               <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-cyan">
                 Open <ArrowRight size={14} />
               </span>
