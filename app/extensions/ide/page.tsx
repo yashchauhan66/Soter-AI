@@ -183,15 +183,20 @@ export default function IdeExtensionPage() {
                   v{EXTENSION_VERSION}
                 </span>
                 <span className="border border-slate-700 bg-slate-900 px-2 py-1 text-slate-300">
-                  Free
+                  Free to use
                 </span>
               </div>
               <h1 className="mt-4 max-w-4xl text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
                 SoterAI IDE Guard
               </h1>
+              <p className="mt-4 inline-block rounded-md border border-emerald-400/30 bg-emerald-400/10 px-3 py-2 text-sm font-bold text-emerald-200 shadow-[0_0_24px_rgba(52,211,153,0.15)]">
+                ✦ Risk-free vibe coding
+              </p>
               <p className="mt-4 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
-                Inspect sensitive context before it reaches AI. Scan secrets, PII, prompt injection,
-                MCP configuration, and terminal commands from the editor where your team works.
+                Stop your API keys, tokens, and customer secrets from reaching AI. SoterAI IDE Guard
+                inspects every prompt, selection, and file before it leaves your editor — scanning
+                secrets, PII, prompt injection, MCP configuration, and terminal commands where your
+                team works.
               </p>
               <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <a
@@ -271,15 +276,20 @@ export default function IdeExtensionPage() {
                     <h3 className="text-base font-semibold text-white">{editor.name}</h3>
                     <p className="mt-1 text-xs text-slate-300">{editor.summary}</p>
                   </div>
-                  <span
-                    className={
-                      verified
-                        ? 'shrink-0 border border-lime/25 bg-lime/10 px-2 py-1 text-[10px] font-bold uppercase text-lime'
-                        : 'shrink-0 border border-amber-400/25 bg-amber-400/10 px-2 py-1 text-[10px] font-bold uppercase text-amber-300'
-                    }
-                  >
-                    {verified ? 'Verified' : 'Published'}
-                  </span>
+                  <div className="flex shrink-0 items-center gap-1.5">
+                    <span className="border border-emerald-400/25 bg-emerald-400/10 px-2 py-1 text-[10px] font-bold uppercase text-emerald-300">
+                      Free to use
+                    </span>
+                    <span
+                      className={
+                        verified
+                          ? 'shrink-0 border border-lime/25 bg-lime/10 px-2 py-1 text-[10px] font-bold uppercase text-lime'
+                          : 'shrink-0 border border-amber-400/25 bg-amber-400/10 px-2 py-1 text-[10px] font-bold uppercase text-amber-300'
+                      }
+                    >
+                      {verified ? 'Verified' : 'Published'}
+                    </span>
+                  </div>
                 </div>
 
                 <p className="mt-4 flex min-h-10 items-start gap-2 text-xs leading-5 text-slate-200">

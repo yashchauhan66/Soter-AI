@@ -1,3 +1,5 @@
+import { ChevronDown } from "lucide-react";
+
 const faqs = [
   ["What is SoterAI?", "SoterAI is an AI security command layer that protects chatbots, RAG apps, and autonomous agents from prompt injection, jailbreaks, data leakage, unsafe outputs, and agent abuse. It sits between users, models, and tools to inspect every AI interaction in real time."],
   ["Does SoterAI guarantee complete security?", "No. SoterAI is a defense-in-depth risk reduction layer. It should be combined with secure application design, identity controls, monitoring, and human review."],
@@ -19,12 +21,19 @@ export function FAQ() {
       <div className="container-page">
         <p className="eyebrow">Questions</p>
         <h2 className="mt-3 text-3xl font-bold">Built for serious AI security work</h2>
-        <div className="mt-10 grid gap-5 md:grid-cols-2">
+        <div className="mt-10 max-w-3xl space-y-3">
           {faqs.map(([q, a]) => (
-            <article className="card p-6" key={q}>
-              <h3 className="font-semibold">{q}</h3>
-              <p className="mt-3 leading-7 text-slate-200">{a}</p>
-            </article>
+            <details key={q} className="group overflow-hidden rounded-lg border border-slate-800 bg-slate-950/50 transition-colors open:border-cyan/40">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 text-sm font-semibold text-slate-100 transition hover:text-cyan sm:text-base">
+                <span>{q}</span>
+                <ChevronDown
+                  size={16}
+                  aria-hidden="true"
+                  className="shrink-0 text-cyan transition-transform duration-200 group-open:rotate-180"
+                />
+              </summary>
+              <p className="border-t border-slate-800/70 p-5 leading-7 text-slate-200">{a}</p>
+            </details>
           ))}
         </div>
       </div>

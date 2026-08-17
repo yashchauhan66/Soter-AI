@@ -14,7 +14,6 @@ import {
   Scale,
   ShieldCheck,
   Sparkles,
-  Tag,
   X,
 } from "lucide-react";
 import { SignOutButton } from "@/components/auth/SignOutButton";
@@ -31,7 +30,6 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/docs", label: "Documentation", desc: "Quickstart, SDKs & API reference", icon: BookOpen },
   { href: "/demo", label: "Live Demo", desc: "See attacks blocked in real time", icon: PlayCircle },
   { href: "/playground", label: "Playground", desc: "Test the guard, no signup needed", icon: FlaskConical },
-  { href: "/pricing", label: "Pricing", desc: "Free tier available", icon: Tag },
   { href: "/comparison", label: "Compare", desc: "SoterAI vs other AI security tools", icon: Scale },
   { href: "/benchmarks", label: "Benchmarks", desc: "Public evidence & methodology", icon: ShieldCheck },
 ];

@@ -97,7 +97,6 @@ const data: FeatureLandingData = {
     { label: "AI Security Platform", href: "/llm-security" },
     { label: "AI Agent Security", href: "/ai-agent-security" },
     { label: "AI Security India", href: "/ai-security-india" },
-    { label: "Pricing", href: "/pricing" },
     { label: "Contact Sales", href: "/contact-sales" },
   ],
 };

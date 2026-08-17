@@ -173,7 +173,7 @@ export const navGroups: NavGroup[] = [
       { Icon: Webhook, label: "Webhooks", href: "/dashboard/webhooks" },
       { Icon: ListChecks, label: "Onboarding", href: "/dashboard/onboarding" },
       { Icon: LifeBuoy, label: "Support", href: "/dashboard/support" },
-      { Icon: CreditCard, label: "Billing & usage", href: "/dashboard/billing", status: "Beta" },
+      { Icon: CreditCard, label: "Pricing & billing", href: "/dashboard/billing", status: "Beta" },
       { Icon: Settings, label: "Settings", href: "/dashboard/settings" },
       { Icon: Puzzle, label: "Integrations", href: "/dashboard/integrations", status: "Beta" },
       { Icon: Fingerprint, label: "SSO & SCIM", href: "/dashboard/enterprise/sso", status: "Beta" },

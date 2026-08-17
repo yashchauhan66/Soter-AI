@@ -5,7 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HeaderNav } from "@/components/auth/HeaderNav";
 import { AiAssistantLoader } from "@/components/dashboard/AiAssistantLoader";
+import { IdeExtensionBanner } from "@/components/marketing/IdeExtensionBanner";
 import { PHLaunchBanner } from "@/components/marketing/PHLaunchBanner";
+import Antigravity from "@/components/ui/Antigravity";
 
 type SiteChromeProps = {
   children: React.ReactNode;
@@ -18,14 +20,19 @@ export function SiteChrome({ children, currentYear }: SiteChromeProps) {
 
   if (adminRoute) {
     return (
-      <div id="main-content" tabIndex={-1}>
-        {children}
-      </div>
+      <>
+        <Antigravity fixed color="#ffffff" count={400} magnetRadius={8} ringRadius={7} waveSpeed={0.45} waveAmplitude={0.9} particleSize={1.7} lerpSpeed={0.08} autoAnimate particleVariance={0.8} rotationSpeed={0.08} depthFactor={0.75} pulseSpeed={2.4} fieldStrength={14} particleShape="star" />
+        <div id="main-content" tabIndex={-1}>
+          {children}
+        </div>
+      </>
     );
   }
 
   return (
     <>
+      <Antigravity fixed color="#ffffff" count={400} magnetRadius={8} ringRadius={7} waveSpeed={0.45} waveAmplitude={0.9} particleSize={1.7} lerpSpeed={0.08} autoAnimate particleVariance={0.8} rotationSpeed={0.08} depthFactor={0.75} pulseSpeed={2.4} fieldStrength={14} particleShape="star" />
+      <IdeExtensionBanner />
       <PHLaunchBanner />
       <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-ink/90 backdrop-blur-xl">
         <div className="container-page flex h-16 items-center justify-between">
@@ -55,12 +62,13 @@ export function SiteChrome({ children, currentYear }: SiteChromeProps) {
                 <div className="flex flex-col gap-2">
                   <Link href="/#features" className="hover:text-white">Features</Link>
                   <Link href="/docs" className="hover:text-white">Documentation</Link>
-                  <Link href="/pricing" className="hover:text-white">Pricing</Link>
                   <Link href="/playground" className="hover:text-white">Playground</Link>
                   <Link href="/demo" className="hover:text-white">Demo</Link>
                   {/* Public catalog — the old /dashboard/integrations target sent
                       logged-out visitors to a login wall (a dead end). */}
                   <Link href="/integrations" className="hover:text-white">Integrations</Link>
+                  <Link href="/extensions/ide" className="hover:text-white">IDE Guard</Link>
+                  <Link href="/student-discount" className="hover:text-white">Student Offer</Link>
                   <Link href="/blog" className="hover:text-white">Blog</Link>
                 </div>
               </div>

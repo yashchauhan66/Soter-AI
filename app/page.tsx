@@ -6,7 +6,6 @@ import { Features } from "@/components/marketing/Features";
 import { DemoVideo } from "@/components/marketing/DemoVideo";
 import { Hero } from "@/components/marketing/Hero";
 import { HowItWorks } from "@/components/marketing/HowItWorks";
-import { Pricing } from "@/components/marketing/Pricing";
 import { TwoProducts } from "@/components/marketing/TwoProducts";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { safeJsonLd } from "@/lib/seo/jsonLd";
@@ -67,7 +66,6 @@ const seoInternalLinks = [
   ["OWASP LLM Top 10 alignment", "/compliance/owasp-llm-top-10"],
   ["Public benchmark", "/benchmark"],
   ["VS Code AI security", "/vscode-ai-security"],
-  ["Pricing", "/pricing"],
   ["Trust center", "/trust"],
 ];
 
@@ -516,20 +514,19 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <Pricing />
       <FAQ />
       <section className="pb-24">
         <div className="container-page">
-          <div className="rounded-lg bg-cyan p-10 text-center text-ink">
-            <h2 className="text-3xl font-black">Add observable controls to every AI turn.</h2>
-            <p className="mx-auto mt-3 max-w-2xl text-ink/70">
+          <div className="rounded-lg bg-ink p-10 text-center">
+            <h2 className="text-3xl font-black text-cyan">Add observable controls to every AI turn.</h2>
+            <p className="mx-auto mt-3 max-w-2xl text-white">
               Free tier available. Create a project, get an API key, and protect your first AI workflow in under 10 minutes.
             </p>
             <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link href="/signup" className="inline-flex items-center gap-2 rounded-md bg-ink px-6 py-3 font-semibold text-white">
+              <Link href="/signup" className="inline-flex items-center gap-2 rounded-md bg-emerald-500 px-6 py-3 font-bold text-[#04070c] shadow-[0_8px_24px_rgba(0,0,0,0.2)] transition hover:bg-emerald-400">
                 Create free account <ArrowRight size={18} aria-hidden="true" />
               </Link>
-              <Link href="/docs" className="inline-flex items-center gap-2 rounded-md border border-ink/20 bg-ink/10 px-6 py-3 font-semibold text-ink">
+              <Link href="/docs" className="inline-flex items-center gap-2 rounded-md border-2 border-cyan/30 bg-cyan/10 px-6 py-3 font-bold text-cyan backdrop-blur-sm transition hover:bg-cyan/20">
                 Read integration docs
               </Link>
             </div>

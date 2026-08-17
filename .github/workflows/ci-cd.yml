@@ -290,6 +290,16 @@ jobs:
             echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
             echo "  ✅ Docker Hub logged in"
 
+            # ── Step 3.5: Free disk space before pull ──────────────
+            echo ""
+            echo "[3.5/5] Checking disk space..."
+            df -h /var/lib/docker /var/lib/containerd 2>/dev/null || true
+            echo "  Freeing disk before pull..."
+            docker image prune -a --filter "until=24h" --force 2>/dev/null || true
+            docker builder prune -f 2>/dev/null || true
+            docker system prune -f --volumes 2>/dev/null || true
+            df -h /var/lib/docker /var/lib/containerd 2>/dev/null || true
+
             # ── Step 4: Pull latest Docker image ───────────────────
             echo ""
             echo "[4/5] Pulling latest Docker image..."

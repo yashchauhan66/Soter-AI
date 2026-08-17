@@ -18,15 +18,11 @@ const assurances = [
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-slate-800 bg-[radial-gradient(ellipse_at_top,rgba(49,215,200,0.12),transparent_45%),linear-gradient(180deg,rgba(15,23,42,0.6),rgba(2,6,23,0))] py-20 sm:py-24">
-      <div className="pointer-events-none absolute inset-0 -z-10 grid-fade-anim opacity-60" />
-      <div className="pointer-events-none absolute -right-40 -top-40 -z-10 h-[480px] w-[480px] rounded-full bg-cyan/10 blur-[120px]" />
-      <div className="pointer-events-none absolute -bottom-48 -left-32 -z-10 h-[420px] w-[420px] rounded-full bg-lime/5 blur-[120px]" />
-      <div className="pointer-events-none absolute left-1/2 top-1/2 -z-10 hidden h-[620px] w-[620px] -translate-x-1/2 -translate-y-1/2 lg:block">
-        <div className="animate-radar h-full w-full rounded-full bg-[conic-gradient(from_0deg,transparent_0deg,rgba(49,215,200,0.07)_40deg,transparent_80deg)]" />
-      </div>
+    <section className="relative isolate overflow-hidden border-b border-slate-800 py-20 sm:py-24">
+      <div className="pointer-events-none absolute inset-0 z-[1] grid-fade opacity-35" />
+      <div className="pointer-events-none absolute inset-0 z-[2] bg-[linear-gradient(90deg,rgba(8,17,31,0.86)_0%,rgba(8,17,31,0.58)_48%,rgba(8,17,31,0.28)_100%),linear-gradient(180deg,rgba(8,17,31,0.28)_0%,transparent_35%,rgba(8,17,31,0.72)_100%)]" />
 
-      <div className="container-page grid items-center gap-12 lg:grid-cols-[1.02fr_.98fr]">
+      <div className="container-page relative z-10 grid items-center gap-12 lg:grid-cols-[1.02fr_.98fr]">
         <div>
           <span className="inline-flex items-center gap-2 rounded-full border border-cyan/30 bg-cyan/10 px-3 py-1 text-xs font-semibold text-cyan">
             <Sparkles size={14} aria-hidden="true" />

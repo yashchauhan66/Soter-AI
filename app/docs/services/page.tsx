@@ -113,7 +113,6 @@ export default function ServicesHubPage() {
             <Link href="/docs/api-contract" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">API Contract</Link>
             <Link href="/docs/best-practices" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">Best Practices</Link>
             <Link href="/trust" className="rounded-md border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">Trust Center</Link>
-            <Link href="/pricing" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">Pricing</Link>
           </div>
         </section>
       </div>
