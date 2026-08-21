@@ -284,6 +284,17 @@ jobs:
               -e 's|^NEXT_PUBLIC_APP_URL=.*$|NEXT_PUBLIC_APP_URL=https://soterai.in|' \
               "$REPO_DIR/.env.production"
 
+            # Same class of problem, worse failure mode. The ENV_PRODUCTION secret
+            # pins ML_ONNX_*_PATH at models/ml-classifier-v12/, but v12 was never
+            # committed to this repo -- so that path does not exist inside the image.
+            # A model that cannot be loaded makes augmentWithMl fail OPEN: the ML
+            # detection tier goes dark with no error, no failed health check and no
+            # log line saying so. Point the paths at the model this commit ships.
+            sed -i -E \
+              's#^(ML_ONNX_(MODEL_PATH|LABELS_PATH|CALIBRATION_PATH)=")models/ml-classifier-[^/]+/#\1models/ml-classifier-v14/#' \
+              "$REPO_DIR/.env.production"
+            echo "  ML model: $(grep -m1 '^ML_ONNX_MODEL_PATH' "$REPO_DIR/.env.production")"
+
             # ── Step 3: Login to Docker Hub ────────────────────────
             echo ""
             echo "[3/5] Logging in to Docker Hub..."
@@ -400,6 +411,34 @@ jobs:
               else
                 docker logs --tail=30 soter-app
               fi
+            fi
+
+            # HTTP 200 does NOT mean the ML detection tier is alive. If model.onnx
+            # is missing from the image, or was checked out as a git-lfs pointer
+            # (~133 bytes) instead of real weights (~92 MB), the backend refuses to
+            # load it and augmentWithMl fails OPEN -- /api/health still returns 200
+            # while ML detection is silently gone. Probe the file the env actually
+            # points at, inside the container that will serve traffic.
+            MODEL_PATH=$(grep -m1 '^ML_ONNX_MODEL_PATH' "$REPO_DIR/.env.production" | cut -d'"' -f2)
+            if [ -n "$COMPOSE" ]; then
+              MODEL_BYTES=$($COMPOSE --env-file .env.production exec -T app \
+                sh -c "wc -c < '$MODEL_PATH'" 2>/dev/null | tr -dc '0-9')
+            else
+              MODEL_BYTES=$(docker exec soter-app \
+                sh -c "wc -c < '$MODEL_PATH'" 2>/dev/null | tr -dc '0-9')
+            fi
+            if [ -z "$MODEL_BYTES" ]; then
+              # The probe itself did not run (no shell, exec refused). Inconclusive
+              # is not the same as broken, so warn rather than fail the deploy.
+              echo "  ⚠️  Could not probe $MODEL_PATH in the container; ML tier UNVERIFIED"
+            elif [ "$MODEL_BYTES" -lt 1000000 ]; then
+              echo "  ❌ ML tier will fail OPEN: $MODEL_PATH is only $MODEL_BYTES bytes"
+              echo "     ~133 bytes means git-lfs pointers were shipped instead of weights"
+              echo "     (the build needs 'lfs: true' on checkout). Rules still protect"
+              echo "     traffic, but ML detection is DARK. Failing loudly on purpose."
+              exit 1
+            else
+              echo "  ✅ ML model loadable: $MODEL_PATH ($MODEL_BYTES bytes)"
             fi
 
             # Reload nginx if present
