@@ -284,16 +284,42 @@ jobs:
               -e 's|^NEXT_PUBLIC_APP_URL=.*$|NEXT_PUBLIC_APP_URL=https://soterai.in|' \
               "$REPO_DIR/.env.production"
 
-            # Same class of problem, worse failure mode. The ENV_PRODUCTION secret
-            # pins ML_ONNX_*_PATH at models/ml-classifier-v12/, but v12 was never
-            # committed to this repo -- so that path does not exist inside the image.
-            # A model that cannot be loaded makes augmentWithMl fail OPEN: the ML
-            # detection tier goes dark with no error, no failed health check and no
-            # log line saying so. Point the paths at the model this commit ships.
-            sed -i -E \
-              's#^(ML_ONNX_(MODEL_PATH|LABELS_PATH|CALIBRATION_PATH)=")models/ml-classifier-[^/]+/#\1models/ml-classifier-v14/#' \
-              "$REPO_DIR/.env.production"
-            echo "  ML model: $(grep -m1 '^ML_ONNX_MODEL_PATH' "$REPO_DIR/.env.production")"
+            # Same class of problem, worse failure mode: a model the runtime cannot
+            # load makes augmentWithMl fail OPEN, so the ML detection tier goes dark
+            # while rules keep running. Pin the paths at the model this commit ships.
+            #
+            # Written as a whole-value replacement rather than a pattern patch on the
+            # existing path. The previous attempt required a literal =" and rewrote
+            # only the directory component, so an unquoted or absolutely-prefixed
+            # value in the secret silently did not match -- and the echo below could
+            # not reveal that, because a line that still equals a line of the secret
+            # gets masked to *** in the log. Assigning the full value removes every
+            # dependence on how the secret happens to be spelled.
+            ML_DIR="models/ml-classifier-v14"
+            for pair in MODEL_PATH:model.onnx LABELS_PATH:labels.json CALIBRATION_PATH:calibration.json; do
+              var="ML_ONNX_${pair%%:*}"
+              file="${pair##*:}"
+              if grep -qE "^${var}=" "$REPO_DIR/.env.production"; then
+                sed -i -E "s#^${var}=.*#${var}=\"${ML_DIR}/${file}\"#" "$REPO_DIR/.env.production"
+              else
+                printf '%s="%s"\n' "$var" "${ML_DIR}/${file}" >> "$REPO_DIR/.env.production"
+              fi
+            done
+            # v14 trained at max_length 256 (models/ml-classifier-v14/training_stats.json
+            # -> architecture.max_length). A secret that disagrees does not fail to load,
+            # it silently tokenizes differently than training did, so pin it alongside
+            # the paths rather than trusting the two to stay in step.
+            if grep -qE '^ML_ONNX_MAX_LENGTH=' "$REPO_DIR/.env.production"; then
+              sed -i -E 's#^ML_ONNX_MAX_LENGTH=.*#ML_ONNX_MAX_LENGTH="256"#' "$REPO_DIR/.env.production"
+            else
+              echo 'ML_ONNX_MAX_LENGTH="256"' >> "$REPO_DIR/.env.production"
+            fi
+            # Print only the directory name. The full line is a secret line and would
+            # be masked; a bare "ml-classifier-v14" is not, so this is the one form of
+            # the check that is actually readable in the log.
+            MODEL_PATH=$(sed -nE 's#^ML_ONNX_MODEL_PATH="?([^"]*)"?[[:space:]]*$#\1#p' \
+              "$REPO_DIR/.env.production" | head -1)
+            echo "  ML model dir: $(basename "$(dirname "$MODEL_PATH")")  max_length: 256"
 
             # ── Step 3: Login to Docker Hub ────────────────────────
             echo ""
@@ -317,6 +343,32 @@ jobs:
             docker pull "${DOCKER_TAG}:${COMMIT_SHA}"
             docker tag "${DOCKER_TAG}:${COMMIT_SHA}" "${DOCKER_TAG}:latest"
             echo "  ✅ Image pulled: ${DOCKER_TAG}:${COMMIT_SHA}"
+
+            # ── Step 4.5: check the model BEFORE recreating the live container ──
+            # A throwaway container off the image just pulled, so a bad artifact is
+            # caught while the previous version is still serving. Every command here
+            # redirects stdin from /dev/null: this whole script arrives on ssh's stdin
+            # via `bash -s`, and any command that reads stdin eats the rest of it.
+            # `docker ... exec`/`run` does exactly that -- it is what silently ate the
+            # earlier version of this check, along with the nginx reload and the final
+            # summary, and left bash to hit EOF and exit 0 with the tier dark.
+            echo ""
+            echo "[4.5/5] Verifying ML model inside the image..."
+            MODEL_BYTES=$(docker run --rm --entrypoint sh "${DOCKER_TAG}:${COMMIT_SHA}" \
+              -c "wc -c < '$MODEL_PATH' 2>/dev/null || echo 0" </dev/null | tr -dc '0-9')
+            if [ -z "$MODEL_BYTES" ] || [ "$MODEL_BYTES" = "0" ]; then
+              echo "  ❌ $MODEL_PATH is absent from the image — the ML tier would fail OPEN."
+              echo "     Rules still protect traffic, but ML detection would be gone."
+              echo "     Refusing to recreate the container; the running version is untouched."
+              exit 1
+            elif [ "$MODEL_BYTES" -lt 1000000 ]; then
+              echo "  ❌ $MODEL_PATH is only $MODEL_BYTES bytes — git-lfs pointers were"
+              echo "     shipped instead of weights (a pointer is ~133 bytes). Checkout"
+              echo "     needs 'lfs: true'. Refusing to deploy a dark ML tier."
+              exit 1
+            else
+              echo "  ✅ model present in image: $MODEL_BYTES bytes"
+            fi
 
             # ── Step 5: Deploy containers ──────────────────────────
             echo ""
@@ -396,7 +448,8 @@ jobs:
             HTTP_CODE="000"
             for i in $(seq 1 12); do
               sleep 5
-              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:3000/api/health 2>/dev/null || echo "000")
+              HTTP_CODE=$(curl -s -o /tmp/soter-health.json -w "%{http_code}" \
+                http://127.0.0.1:3000/api/health 2>/dev/null || echo "000")
               if [ "$HTTP_CODE" = "200" ]; then
                 echo "  ✅ Health check PASSED (attempt $i)"
                 break
@@ -407,38 +460,38 @@ jobs:
             if [ "$HTTP_CODE" != "200" ]; then
               echo "  ⚠️  Health check got HTTP $HTTP_CODE (app may still be starting)"
               if [ -n "$COMPOSE" ]; then
-                $COMPOSE --env-file .env.production logs --tail=30 app
+                $COMPOSE --env-file .env.production logs --tail=30 app </dev/null
               else
-                docker logs --tail=30 soter-app
+                docker logs --tail=30 soter-app </dev/null
               fi
             fi
 
-            # HTTP 200 does NOT mean the ML detection tier is alive. If model.onnx
-            # is missing from the image, or was checked out as a git-lfs pointer
-            # (~133 bytes) instead of real weights (~92 MB), the backend refuses to
-            # load it and augmentWithMl fails OPEN -- /api/health still returns 200
-            # while ML detection is silently gone. Probe the file the env actually
-            # points at, inside the container that will serve traffic.
-            MODEL_PATH=$(grep -m1 '^ML_ONNX_MODEL_PATH' "$REPO_DIR/.env.production" | cut -d'"' -f2)
-            if [ -n "$COMPOSE" ]; then
-              MODEL_BYTES=$($COMPOSE --env-file .env.production exec -T app \
-                sh -c "wc -c < '$MODEL_PATH'" 2>/dev/null | tr -dc '0-9')
-            else
-              MODEL_BYTES=$(docker exec soter-app \
-                sh -c "wc -c < '$MODEL_PATH'" 2>/dev/null | tr -dc '0-9')
-            fi
-            if [ -z "$MODEL_BYTES" ]; then
-              # The probe itself did not run (no shell, exec refused). Inconclusive
-              # is not the same as broken, so warn rather than fail the deploy.
-              echo "  ⚠️  Could not probe $MODEL_PATH in the container; ML tier UNVERIFIED"
-            elif [ "$MODEL_BYTES" -lt 1000000 ]; then
-              echo "  ❌ ML tier will fail OPEN: $MODEL_PATH is only $MODEL_BYTES bytes"
-              echo "     ~133 bytes means git-lfs pointers were shipped instead of weights"
-              echo "     (the build needs 'lfs: true' on checkout). Rules still protect"
-              echo "     traffic, but ML detection is DARK. Failing loudly on purpose."
+            # The file existing in the image does not prove the runtime loaded it: a
+            # rejected signature, an unreadable path or a failed-open request all leave
+            # rules-only traffic behind an app that looks fine. /api/health publishes
+            # the tier's real state, so assert on that rather than on the file.
+            HEALTH_BODY=$(cat /tmp/soter-health.json 2>/dev/null || echo "{}")
+            echo "  guard: $(printf '%s' "$HEALTH_BODY" | tr -d ' \n' | sed -nE 's/.*"guard":(\{.*\}),"timestamp".*/\1/p')"
+            ML_MODE=$(printf '%s' "$HEALTH_BODY" | tr -d ' \n' | sed -nE 's/.*"ml":\{"mode":"([a-z]+)".*/\1/p')
+            ML_STATUS=$(printf '%s' "$HEALTH_BODY" | tr -d ' \n' | sed -nE 's/.*"ml":\{[^}]*"status":"([a-z]+)".*/\1/p')
+            if [ -z "$ML_MODE" ]; then
+              # No guard block at all — getGuardHealth() threw, or this build predates
+              # the field. Inconclusive is not the same as broken, so warn only.
+              echo "  ⚠️  health response carries no guard block; ML tier UNVERIFIED"
+            elif [ "$ML_MODE" = "off" ]; then
+              echo "  ℹ️  ML tier is configured off; running on deterministic rules only."
+            elif [ "$ML_STATUS" = "degraded" ]; then
+              echo "  ❌ ML tier is DEGRADED while configured as \"$ML_MODE\": detection is"
+              echo "     running on rules only. The model file IS present in the image"
+              echo "     ($MODEL_BYTES bytes), so this is a load or verification failure,"
+              echo "     not a missing artifact. Run 'npm run ml:health' on the host for"
+              echo "     the reason (it names paths, so it is not exposed publicly)."
+              echo "     Rollback: point ML_ONNX_*_PATH at models/ml-classifier-v7 and redeploy."
+              echo "     The container is already live — this fails the run to make it"
+              echo "     visible, it does not restore the previous version."
               exit 1
             else
-              echo "  ✅ ML model loadable: $MODEL_PATH ($MODEL_BYTES bytes)"
+              echo "  ✅ ML tier healthy and enforcing ($ML_MODE, model $MODEL_BYTES bytes)"
             fi
 
             # Reload nginx if present

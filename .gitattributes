@@ -5,6 +5,19 @@ models/ml-classifier-*/model.onnx.data filter=lfs diff=lfs merge=lfs -text
 # model.onnx IS the 92 MB weight file. Without this line a future >100 MB export
 # would be hard-rejected by GitHub at push time, after the run that produced it.
 models/ml-classifier-*/model.onnx filter=lfs diff=lfs merge=lfs -text
+# ...but v2..v7's graphs are already committed as plain blobs, and re-declaring them
+# as LFS makes every checkout print "Encountered 7 files that should have been
+# pointers, but weren't". That warning is the signal that a real weight file got
+# committed outside LFS -- the exact failure the line above prevents -- so leaving 7
+# permanent false hits would make it unreadable. Exempt the legacy blobs by name;
+# their stored form is unchanged either way.
+models/ml-classifier-smoke/model.onnx !filter !diff !merge -text
+models/ml-classifier-v2/model.onnx !filter !diff !merge -text
+models/ml-classifier-v3/model.onnx !filter !diff !merge -text
+models/ml-classifier-v4/model.onnx !filter !diff !merge -text
+models/ml-classifier-v4-smoke/model.onnx !filter !diff !merge -text
+models/ml-classifier-v7/model.onnx !filter !diff !merge -text
+models/ml-classifier-v7-smoke/model.onnx !filter !diff !merge -text
 datasets/ml-adversarial-*.jsonl filter=lfs diff=lfs merge=lfs -text
 final/*.mp4 filter=lfs diff=lfs merge=lfs -text
 final/*.mp3 filter=lfs diff=lfs merge=lfs -text
