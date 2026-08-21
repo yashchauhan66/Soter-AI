@@ -1,0 +1,297 @@
+{
+  "product_name": "SoterLLM",
+  "product_version": "v14",
+  "base_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "encoder_key": "minilm",
+  "method": "full_end_to_end_finetune",
+  "num_labels": 14,
+  "labels": [
+    "SAFE",
+    "PROMPT_INJECTION",
+    "JAILBREAK",
+    "SYSTEM_PROMPT_LEAK_ATTEMPT",
+    "PII",
+    "SECRET",
+    "UNSAFE_OUTPUT",
+    "RAG_POISONING",
+    "DATA_EXFILTRATION_ATTEMPT",
+    "TOOL_CALL_ABUSE",
+    "ENCODING_OBFUSCATION",
+    "MULTI_TURN_ESCALATION",
+    "MODEL_EXTRACTION",
+    "TOXICITY_HARASSMENT"
+  ],
+  "architecture": {
+    "hidden_size": 384,
+    "head_layers": [
+      384,
+      512,
+      256,
+      14
+    ],
+    "dropout": 0.15,
+    "max_length": 256,
+    "aux_attack_head": true
+  },
+  "optimization": {
+    "n_encoder_layers": 6,
+    "layer_decay": 0.9,
+    "encoder_lr": 4e-05,
+    "head_lr": 0.001,
+    "param_groups": 16,
+    "trainable_params": 23096975,
+    "lr_by_block": {
+      "embeddings": 1.91319e-05,
+      "layer.0": 2.36196e-05,
+      "layer.1": 2.6244e-05,
+      "layer.2": 2.916e-05,
+      "layer.3": 3.24e-05,
+      "layer.4": 3.6e-05,
+      "layer.5": 4e-05,
+      "encoder.other": 4e-05,
+      "head": 0.001
+    },
+    "epochs": 3,
+    "batch_size": 128,
+    "grad_accum": 1,
+    "effective_batch": 128,
+    "warmup_frac": 0.06,
+    "max_grad_norm": 1.0,
+    "amp": "bf16",
+    "grad_checkpoint": false,
+    "length_grouped": true,
+    "length_mega_factor": 50,
+    "attack_loss_weight": 0.3,
+    "label_smoothing": 0.05,
+    "focal_gamma": 1.5
+  },
+  "epoch_selection": {
+    "rule": "max_f1_under_fpr_ceiling<=0.0300",
+    "fpr_ceiling": 0.03,
+    "selected_epoch": 3
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.25499493263845074,
+      "batches": 1159,
+      "f1_macro": 0.9347408568368121,
+      "accuracy": 0.9658495350803044,
+      "attack_recall": 0.9924418604651163,
+      "attack_precision": 0.9959989997499374,
+      "benign_fpr": 0.008413672217353198,
+      "exact_label_accuracy": 0.9536544850498339,
+      "seconds": 225.7
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.04620530190025846,
+      "batches": 1159,
+      "f1_macro": 0.9248067653378177,
+      "accuracy": 0.967483798253029,
+      "attack_recall": 0.9904485049833887,
+      "attack_precision": 0.9969902182091799,
+      "benign_fpr": 0.006310254163014899,
+      "exact_label_accuracy": 0.9550664451827242,
+      "seconds": 225.1
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.02160970515465465,
+      "batches": 1159,
+      "f1_macro": 0.9421129404663076,
+      "accuracy": 0.9732882502113271,
+      "attack_recall": 0.9916943521594684,
+      "attack_precision": 0.9970772442588727,
+      "benign_fpr": 0.006134969325153374,
+      "exact_label_accuracy": 0.9635382059800665,
+      "seconds": 223.0
+    }
+  ],
+  "augmentation": {
+    "enabled": true,
+    "attack_rate": 0.35,
+    "benign_rate": 0.12,
+    "seed": 20260823,
+    "max_stack": 2,
+    "generated": 30874,
+    "skipped_label": 1711,
+    "skipped_noop": 583,
+    "by_transform": {
+      "invisible": 4964,
+      "whitespace": 4912,
+      "spaced": 4037,
+      "homoglyph": 4906,
+      "case": 4354,
+      "combining": 5035,
+      "leet": 5030,
+      "punct": 4872,
+      "typo": 5113
+    },
+    "by_label": {
+      "PROMPT_INJECTION": 4866,
+      "DATA_EXFILTRATION_ATTEMPT": 2128,
+      "SYSTEM_PROMPT_LEAK_ATTEMPT": 6118,
+      "JAILBREAK": 1897,
+      "RAG_POISONING": 1202,
+      "SAFE": 4739,
+      "PII": 2348,
+      "UNSAFE_OUTPUT": 2979,
+      "SECRET": 1662,
+      "TOOL_CALL_ABUSE": 553,
+      "MULTI_TURN_ESCALATION": 323,
+      "MODEL_EXTRACTION": 1074,
+      "TOXICITY_HARASSMENT": 985
+    },
+    "parent_groups_verified": 30874
+  },
+  "tokenizer": {
+    "vocab_size": 30522,
+    "subword_tokens": 5828,
+    "contiguous_ids": true,
+    "specials_present": [
+      "[CLS]",
+      "[SEP]",
+      "[PAD]",
+      "[UNK]",
+      "[MASK]"
+    ],
+    "do_lower_case": true,
+    "strip_accents": null,
+    "tokenize_chinese_chars": true,
+    "tokenizer_class": "BertTokenizer",
+    "vocab_txt_tokens": 30522
+  },
+  "onnx_parity": {
+    "verified": true,
+    "tolerance": 0.001,
+    "worst_max_abs_logit_diff": 3.814697265625e-06,
+    "cases": [
+      {
+        "case": "batch1_padded",
+        "shape": [
+          1,
+          14
+        ],
+        "seq_len": 256,
+        "max_abs_logit_diff": 1.9073486328125e-06
+      },
+      {
+        "case": "batch3_padded",
+        "shape": [
+          3,
+          14
+        ],
+        "seq_len": 256,
+        "max_abs_logit_diff": 2.86102294921875e-06
+      },
+      {
+        "case": "batch2_dynamic_len",
+        "shape": [
+          2,
+          14
+        ],
+        "seq_len": 11,
+        "max_abs_logit_diff": 3.814697265625e-06
+      }
+    ],
+    "passed": true
+  },
+  "final_metrics": {
+    "accuracy": 0.9732882502113271,
+    "f1_macro": 0.9421129404663076,
+    "f1_weighted": 0.9724141807250783,
+    "attack_recall": 0.9916943521594684,
+    "attack_precision": 0.9970772442588727,
+    "benign_fpr": 0.006134969325153374,
+    "exact_label_accuracy": 0.9635382059800665
+  },
+  "per_label_metrics": {
+    "SAFE": {
+      "precision": 0.9826689774696707,
+      "recall": 0.9938650306748467,
+      "f1-score": 0.9882352941176471,
+      "support": 5705.0
+    },
+    "PROMPT_INJECTION": {
+      "precision": 0.952562473528166,
+      "recall": 0.9664804469273743,
+      "f1-score": 0.9594709897610921,
+      "support": 2327.0
+    },
+    "JAILBREAK": {
+      "precision": 0.972568578553616,
+      "recall": 0.9762202753441802,
+      "f1-score": 0.9743910056214866,
+      "support": 799.0
+    },
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+      "precision": 0.942557803468208,
+      "recall": 0.9808270676691729,
+      "f1-score": 0.9613117170228445,
+      "support": 2660.0
+    },
+    "PII": {
+      "precision": 0.9952290076335878,
+      "recall": 0.9952290076335878,
+      "f1-score": 0.9952290076335878,
+      "support": 1048.0
+    },
+    "SECRET": {
+      "precision": 0.9974293059125964,
+      "recall": 0.9974293059125964,
+      "f1-score": 0.9974293059125964,
+      "support": 778.0
+    },
+    "UNSAFE_OUTPUT": {
+      "precision": 0.9970652971386648,
+      "recall": 0.9956043956043956,
+      "f1-score": 0.9963343108504399,
+      "support": 1365.0
+    },
+    "RAG_POISONING": {
+      "precision": 0.994392523364486,
+      "recall": 0.994392523364486,
+      "f1-score": 0.994392523364486,
+      "support": 535.0
+    },
+    "DATA_EXFILTRATION_ATTEMPT": {
+      "precision": 0.9939698492462311,
+      "recall": 0.9860418743768694,
+      "f1-score": 0.98998998998999,
+      "support": 1003.0
+    },
+    "TOOL_CALL_ABUSE": {
+      "precision": 0.9775280898876404,
+      "recall": 0.9321428571428572,
+      "f1-score": 0.9542961608775137,
+      "support": 280.0
+    },
+    "ENCODING_OBFUSCATION": {
+      "precision": 0.9920318725099602,
+      "recall": 0.6821917808219178,
+      "f1-score": 0.8084415584415584,
+      "support": 365.0
+    },
+    "MULTI_TURN_ESCALATION": {
+      "precision": 0.9919354838709677,
+      "recall": 0.7192982456140351,
+      "f1-score": 0.8338983050847457,
+      "support": 171.0
+    },
+    "MODEL_EXTRACTION": {
+      "precision": 0.7801724137931034,
+      "recall": 0.6988416988416989,
+      "f1-score": 0.7372708757637475,
+      "support": 259.0
+    },
+    "TOXICITY_HARASSMENT": {
+      "precision": 0.9977827050997783,
+      "recall": 1.0,
+      "f1-score": 0.9988901220865705,
+      "support": 450.0
+    }
+  },
+  "wall_clock_seconds": 729.8,
+  "device": "cuda"
+}

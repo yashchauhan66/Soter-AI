@@ -1,0 +1,130 @@
+{
+  "harness": "headtohead-v12-vs-market/v1",
+  "eval_set": "datasets/crossdist-eval-v3.jsonl",
+  "scope_labels": [
+    "JAILBREAK",
+    "PROMPT_INJECTION",
+    "SAFE",
+    "SYSTEM_PROMPT_LEAK_ATTEMPT"
+  ],
+  "rows_scored": 1200,
+  "label_mix": {
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": 488,
+    "SAFE": 457,
+    "PROMPT_INJECTION": 243,
+    "JAILBREAK": 12
+  },
+  "v12_contamination_removed": true,
+  "baseline_contamination": "UNKNOWN \u2014 baselines' training sets are not ours to audit; their numbers here may be flattered by train-on-test.",
+  "lakera": {
+    "measured": false,
+    "reason": "closed API-only product, no key in .env, no downloadable weights"
+  },
+  "models": {
+    "soterllm-v12": {
+      "rows": 1200,
+      "attacks": 743,
+      "benign": 457,
+      "tp": 732,
+      "fp": 8,
+      "fn": 11,
+      "tn": 449,
+      "recall_pct": 98.52,
+      "fpr_pct": 1.75,
+      "precision_pct": 98.92,
+      "f1_pct": 98.72,
+      "per_label_recall": {
+        "JAILBREAK": {
+          "detected": 12,
+          "total": 12,
+          "recall_pct": 100.0
+        },
+        "PROMPT_INJECTION": {
+          "detected": 239,
+          "total": 243,
+          "recall_pct": 98.35
+        },
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+          "detected": 481,
+          "total": 488,
+          "recall_pct": 98.57
+        }
+      },
+      "ms_per_row_inference_only": 91.46
+    },
+    "protectai-v2": {
+      "rows": 1200,
+      "attacks": 743,
+      "benign": 457,
+      "tp": 593,
+      "fp": 16,
+      "fn": 150,
+      "tn": 441,
+      "recall_pct": 79.81,
+      "fpr_pct": 3.5,
+      "precision_pct": 97.37,
+      "f1_pct": 87.72,
+      "per_label_recall": {
+        "JAILBREAK": {
+          "detected": 12,
+          "total": 12,
+          "recall_pct": 100.0
+        },
+        "PROMPT_INJECTION": {
+          "detected": 237,
+          "total": 243,
+          "recall_pct": 97.53
+        },
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+          "detected": 344,
+          "total": 488,
+          "recall_pct": 70.49
+        }
+      },
+      "ms_per_row_inference_only": 516.0,
+      "model_id": "protectai/deberta-v3-base-prompt-injection-v2",
+      "id2label": {
+        "0": "SAFE",
+        "1": "INJECTION"
+      },
+      "attack_column": 1
+    },
+    "pg2-86m-mirror": {
+      "rows": 1200,
+      "attacks": 743,
+      "benign": 457,
+      "tp": 186,
+      "fp": 2,
+      "fn": 557,
+      "tn": 455,
+      "recall_pct": 25.03,
+      "fpr_pct": 0.44,
+      "precision_pct": 98.94,
+      "f1_pct": 39.96,
+      "per_label_recall": {
+        "JAILBREAK": {
+          "detected": 12,
+          "total": 12,
+          "recall_pct": 100.0
+        },
+        "PROMPT_INJECTION": {
+          "detected": 98,
+          "total": 243,
+          "recall_pct": 40.33
+        },
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+          "detected": 76,
+          "total": 488,
+          "recall_pct": 15.57
+        }
+      },
+      "ms_per_row_inference_only": 528.65,
+      "model_id": "gravitee-io/Llama-Prompt-Guard-2-86M-onnx",
+      "id2label": {
+        "0": "BENIGN",
+        "1": "MALICIOUS"
+      },
+      "attack_column": 1
+    }
+  }
+}
