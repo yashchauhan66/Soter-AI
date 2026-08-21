@@ -67,6 +67,21 @@ export const RISK_WEIGHTS: Record<Exclude<RiskType, "LOW_RISK">, number> = {
   MODEL_SUPPLY_CHAIN: 55,
   BEHAVIORAL_ANOMALY: 45,
   ADVANCED_SMUGGLING: 40,
+  // ── v12 classifier-only classes (see RISK_TYPES in ./types.ts) ────────────
+  // Deliberately the LOWEST weights of any attack type, and deliberately below
+  // the 45 that mlAugment declares on its own finding. Consequences, in order:
+  //   * On its own an ML finding scores max(weight, 45) = 45 -> REWRITE band
+  //     (31-60), never the 86 BLOCK band. Identical to how a PROMPT_INJECTION
+  //     prediction already behaves, so this adds no new blocking power.
+  //   * In combination the 30 contributes less than any MEASURED type would,
+  //     so an unvalidated label cannot be the deciding half of a HUMAN_REVIEW.
+  // These stay at 30 until per-label precision is measured on real rows; there
+  // is currently ZERO external test data for these five v12 classes, so any
+  // higher number would be a guess presented as a calibration.
+  TOOL_CALL_ABUSE: 30,
+  MULTI_TURN_ESCALATION: 30,
+  MODEL_EXTRACTION: 30,
+  TOXICITY_HARASSMENT: 30,
   // Off-topic is a *product* signal, not a security one: a message that has
   // nothing to do with the tenant's declared subject matter is usually a user
   // wandering, occasionally a probe. At 15 it can never on its own reach the
