@@ -35,7 +35,7 @@ import type { GuardResult, GuardFinding, RiskType, GuardDirection } from "./type
 import { createOnnxBackendFromEnv, ONNXClassifierBackend } from "../ml/onnxBackend";
 import { classifySemantic } from "./semanticClassifier";
 import { recordMlAugmentOutcome } from "./guardHealth";
-import type { MLLabel } from "@prisma/client";
+import type { ModelLabel } from "../ml/types";
 
 export type MlAugmentMode = "off" | "shadow" | "enforce";
 
@@ -95,6 +95,30 @@ export type MlAugmentMode = "off" | "shadow" | "enforce";
 // escalate, not the label set. If ML_ONNX_MODEL_PATH is ever rolled back to v4 or
 // earlier, set SOTERAI_ML_INPUT_TRUSTED_LABELS back to the three-label list, or the
 // rollback silently converts a measured-safe default into a measured-harmful one.
+//
+// MEASURED EXPANSION (2026-08-20, v12): v12 predicts five classes v7 cannot emit, so
+// every one of those predictions was being discarded here. Measured on 22,680 clean
+// crossdist rows (16,256 attacks / 6,424 benign,
+// artifacts/ml/v12-deploy-blockers.json), per new label, benign FPs vs attack rows
+// the model names with that label instead of an allowlisted one:
+//   ENCODING_OBFUSCATION   0 benign (0.000%)   15 attacks   -> ADMITTED
+//   MODEL_EXTRACTION       0 benign (0.000%)    5 attacks   -> ADMITTED
+//   TOOL_CALL_ABUSE        1 benign (0.016%)    4 attacks   -> HELD OUT
+//   TOXICITY_HARASSMENT    2 benign (0.031%)    4 attacks   -> HELD OUT
+//   MULTI_TURN_ESCALATION  2 benign (0.031%)    0 attacks   -> REJECTED
+// Only the two zero-cost labels are admitted, which is the same standard that
+// admitted PII/SECRET/RAG_POISONING: +0 measured benign false positives. The other
+// three are a real trade (5 benign for 8 attacks) and a trade needs more than one
+// corpus — MULTI_TURN_ESCALATION is strictly a cost here and is rejected outright.
+//
+// HONESTY BOUND: this measures the FP half only. These five classes have ZERO gold
+// rows in any external corpus we hold, so their recall is UNMEASURED — the 15 and 5
+// above are rows whose gold label is a DIFFERENT attack class that v12 renames, not
+// evidence that v12 detects obfuscation or model-extraction attacks as such. The
+// numbers are also an upper bound: the semantic veto and labelSpaceUncertain are not
+// modelled and both only remove escalations.
+// These two are no-ops on v7/v4 (those models cannot emit them), so this widening is
+// safe to leave in place across a rollback.
 const DEFAULT_INPUT_RELIABLE_LABELS = [
   "PROMPT_INJECTION",
   "JAILBREAK",
@@ -102,6 +126,8 @@ const DEFAULT_INPUT_RELIABLE_LABELS = [
   "PII",
   "SECRET",
   "RAG_POISONING",
+  "ENCODING_OBFUSCATION",
+  "MODEL_EXTRACTION",
 ] as const;
 
 function resolveInputReliableLabels(): Set<string> {
@@ -176,7 +202,21 @@ function passesPrecisionGate(label: string, direction: GuardDirection, text: str
 
 // Map the classifier's label space onto the guard RiskType space. SAFE is not
 // present here — a SAFE prediction is a no-op.
-const LABEL_TO_RISK: Record<Exclude<MLLabel, "SAFE">, RiskType> = {
+//
+// COMPLETENESS MATTERS MORE THAN IT LOOKS. The lookup at the call site falls back to
+// "PROMPT_INJECTION" for an unmapped label, so a missing entry does not throw — it
+// silently reports a tool-call abuse or a toxicity call as a prompt injection, and the
+// mislabel reaches the dashboard, the ledger and the customer's SIEM. Every label in
+// ALL_LABELS (lib/ml/onnxBackend.ts) must therefore appear below.
+//
+// The five v12 classes deliberately do NOT reuse the closest existing risk type where
+// that type carries a BLOCK floor in decisionEngine.ts (MCP_TOOL_POISONING,
+// TOXICITY, COMPETITIVE_INTEL_EXTRACTION all do, and the finding score here is
+// exactly the 45 their hardAtScore triggers on). Trusting an unvalidated model label
+// with an automatic refusal is the one thing this gate exists to prevent, so they map
+// to floor-free types instead. ENCODING_OBFUSCATION is the exception: it means the
+// same thing as ADVANCED_SMUGGLING, which floors at HUMAN_REVIEW, so it reuses it.
+const LABEL_TO_RISK: Record<Exclude<ModelLabel, "SAFE">, RiskType> = {
   PROMPT_INJECTION: "PROMPT_INJECTION",
   JAILBREAK: "JAILBREAK",
   SYSTEM_PROMPT_LEAK_ATTEMPT: "SYSTEM_PROMPT_LEAK_ATTEMPT",
@@ -185,6 +225,11 @@ const LABEL_TO_RISK: Record<Exclude<MLLabel, "SAFE">, RiskType> = {
   UNSAFE_OUTPUT: "UNSAFE_OUTPUT",
   RAG_POISONING: "RECURSIVE_INJECTION",
   DATA_EXFILTRATION_ATTEMPT: "DATA_EXFILTRATION",
+  TOOL_CALL_ABUSE: "TOOL_CALL_ABUSE",
+  ENCODING_OBFUSCATION: "ADVANCED_SMUGGLING",
+  MULTI_TURN_ESCALATION: "MULTI_TURN_ESCALATION",
+  MODEL_EXTRACTION: "MODEL_EXTRACTION",
+  TOXICITY_HARASSMENT: "TOXICITY_HARASSMENT",
 };
 
 const PROTECTIVE_ACTIONS = new Set(["BLOCK", "HUMAN_REVIEW", "REWRITE", "ALLOW_WITH_REDACTION"]);
@@ -371,7 +416,7 @@ export async function augmentWithMl(
     }
 
     const riskType =
-      LABEL_TO_RISK[effectiveLabel as Exclude<MLLabel, "SAFE">] ?? "PROMPT_INJECTION";
+      LABEL_TO_RISK[effectiveLabel as Exclude<ModelLabel, "SAFE">] ?? "PROMPT_INJECTION";
     const finding: GuardFinding = {
       type: riskType,
       label: `ML anomaly (${effectiveLabel})`,

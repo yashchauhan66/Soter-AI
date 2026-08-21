@@ -23,6 +23,24 @@ export const RISK_TYPES = [
   "MODEL_SUPPLY_CHAIN",
   "BEHAVIORAL_ANOMALY",
   "ADVANCED_SMUGGLING",
+  // ── Attack classes the v12 classifier can name that the rules tier cannot ──
+  // Added when SoterLLM grew from 9 to 14 labels. They are deliberately NEW types
+  // rather than aliases of the closest existing ones, because the closest ones all
+  // carry a BLOCK floor in decisionEngine.ts and would have converted an
+  // unvalidated model label into an automatic refusal:
+  //   TOOL_CALL_ABUSE     -> MCP_TOOL_POISONING          floor BLOCK
+  //   TOXICITY_HARASSMENT -> TOXICITY                    hardAtScore 45 -> BLOCK
+  //   MODEL_EXTRACTION    -> COMPETITIVE_INTEL_EXTRACTION hardAtScore 45 -> BLOCK
+  // mlAugment scores its finding at exactly 45, so those two hard floors would have
+  // fired on the first prediction. These four have NO SIGNALS entry on purpose: they
+  // inherit the caller's HUMAN_REVIEW and cannot block until per-label precision is
+  // measured on real rows. ENCODING_OBFUSCATION is NOT here — it maps onto the
+  // existing ADVANCED_SMUGGLING, which means the same thing and floors at
+  // HUMAN_REVIEW, so a new type would only fragment the taxonomy.
+  "TOOL_CALL_ABUSE",
+  "MULTI_TURN_ESCALATION",
+  "MODEL_EXTRACTION",
+  "TOXICITY_HARASSMENT",
   "OFF_TOPIC",
   "LOW_RISK",
 ] as const;

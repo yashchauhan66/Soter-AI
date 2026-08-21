@@ -3,6 +3,7 @@
 
 import { getActiveDeployment } from "./registry";
 import { getDefaultBackend, HeuristicMLBackend } from "./training";
+import { toDbLabel } from "./types";
 import type { GuardDirection } from "../guard/types";
 import type { MLLabel } from "@prisma/client";
 import type { ModelBackend, ModelPrediction } from "./types";
@@ -70,7 +71,9 @@ export async function runWithFallback(
   try {
     const inference = await backend.infer(text, direction);
     const prediction: ModelPrediction = {
-      label: inference.predictedLabel,
+      // ModelPrediction.label is the MLLabel enum (it lands in DB columns), so a
+      // 14-class model's extra classes are projected to their nearest ancestor.
+      label: toDbLabel(inference.predictedLabel),
       confidence: inference.confidence,
       modelVersionId: decision.modelVersionId ?? "unknown",
       backend: backend.id,
@@ -94,7 +97,7 @@ export async function runWithFallback(
         ranModel: true,
         shadowOnly: decision.shouldRecordOnly,
         prediction: {
-          label: inference.predictedLabel,
+          label: toDbLabel(inference.predictedLabel),
           confidence: inference.confidence,
           modelVersionId: decision.modelVersionId ?? "fallback",
           backend: "heuristic",

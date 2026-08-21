@@ -32,8 +32,8 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import type { GuardDirection } from "../guard/types";
-import type { MLLabel } from "@prisma/client";
-import type { ModelBackend, ModelInference } from "./types";
+import { EXTENDED_MODEL_LABELS } from "./types";
+import type { ModelBackend, ModelInference, ModelLabel } from "./types";
 import { BertTokenizer, parseVocabTxt } from "./bertTokenizer";
 import {
   attackProbability,
@@ -125,7 +125,7 @@ class OnnxNotAvailableError extends OnnxBackendError {
 
 // ── Label utilities ───────────────────────────────────────────────────────────
 
-const ALL_LABELS: MLLabel[] = [
+const ALL_LABELS: ModelLabel[] = [
   "SAFE",
   "PROMPT_INJECTION",
   "JAILBREAK",
@@ -135,13 +135,23 @@ const ALL_LABELS: MLLabel[] = [
   "UNSAFE_OUTPUT",
   "RAG_POISONING",
   "DATA_EXFILTRATION_ATTEMPT",
+  // v12 (14 classes) predicts these five as well. They MUST be listed here even
+  // though the Prisma MLLabel enum does not have them: loadLabelMap throws on an
+  // unlisted label, which meant a v12 labels.json killed backend init, augmentWithMl
+  // failed open, and the ML tier went dark with the only trace in metadata.ml.error.
+  // See EXTENDED_MODEL_LABELS in ./types for why the DB enum is not widened instead.
+  ...EXTENDED_MODEL_LABELS,
 ];
 
+/**
+ * Index order in labels.json is the model's own output order and is NOT assumed to
+ * match ALL_LABELS. Only membership is checked.
+ */
 function loadLabelMap(labelsPath: string): LabelMap {
   const raw = fs.readFileSync(labelsPath, "utf-8");
   const parsed = JSON.parse(raw) as LabelMap;
   for (const [key, value] of Object.entries(parsed)) {
-    if (!ALL_LABELS.includes(value as MLLabel)) {
+    if (!ALL_LABELS.includes(value as ModelLabel)) {
       throw new Error(
         `Unknown label "${value}" at index ${key} in ${labelsPath}. ` +
           `Expected one of: ${ALL_LABELS.join(", ")}`,
@@ -151,10 +161,10 @@ function loadLabelMap(labelsPath: string): LabelMap {
   return parsed;
 }
 
-function labelAtIndex(labels: LabelMap, index: number): MLLabel {
+function labelAtIndex(labels: LabelMap, index: number): ModelLabel {
   const label = labels[String(index)];
-  if (label && ALL_LABELS.includes(label as MLLabel)) {
-    return label as MLLabel;
+  if (label && ALL_LABELS.includes(label as ModelLabel)) {
+    return label as ModelLabel;
   }
   return "SAFE";
 }
@@ -596,7 +606,7 @@ export class ONNXClassifierBackend implements ModelBackend {
     // Legacy v3 behaviour: below global floor → SAFE.
     // v4 improvement: if abstaining, still surface attackProbability in raw so
     // the ensemble can fuse, but do not claim a high-confidence attack label.
-    let finalLabel: MLLabel = predictedLabel;
+    let finalLabel: ModelLabel = predictedLabel;
     const finalConfidence = Number(confidence.toFixed(4));
 
     if (abstained) {
@@ -606,6 +616,30 @@ export class ONNXClassifierBackend implements ModelBackend {
       finalLabel = "SAFE";
     } else if (!isSafePred && confidence < this.options.confidenceFloor) {
       // Global floor still applies when no per-label thr exists.
+      //
+      // CONSEQUENCE WORTH KNOWING BEFORE YOU TRUST ML_ONNX_CONFIDENCE_FLOOR: a
+      // label that HAS a per-label threshold is strictly weaker than one with
+      // none, because defining the threshold is what suppresses this floor. Both
+      // shipped artifacts define one for every label, so the 0.5 in .env is inert
+      // for all of them — it is not the backstop its name suggests.
+      //
+      // It matters most for v12. fit_per_label_thresholds clamps with
+      // max(0.05, min(0.5, ...)), and the argmax of a K-class softmax is >= 1/K:
+      // 1/14 = 0.0714 > 0.05, so the 11 v12 labels parked at the clamp can never
+      // fail this check for arithmetic reasons (v7's clamp landed at 0.15 against
+      // 1/9 = 0.1111, so v7's does bite). Six of those 11 are on
+      // DEFAULT_INPUT_RELIABLE_LABELS.
+      //
+      // MEASURED, so nobody re-litigates it from first principles: raising only
+      // the clamped labels changes nothing worth having on 22,680 held-out rows
+      // (artifacts/ml/v12-threshold-clamp-sweep.json) — verify-half FPR is flat at
+      // 0.72% for every floor from 0.05 to 0.50, and detection only starts to fall
+      // at 0.40 (-0.05 pts) and 0.50 (-0.12 pts). When one of these labels is
+      // argmax on real rows its confidence is already high, so the inert gate
+      // costs nothing today. Left alone deliberately: tightening a shipped
+      // operating point for no measured gain is how this repo got a semantic veto
+      // that quietly cost 21.74 recall points. Re-measure with
+      // scripts/ml/sweep-threshold-clamp.py before changing it.
       if (this.calibration.per_label_thresholds[predictedLabel] === undefined) {
         finalLabel = "SAFE";
       }
@@ -636,7 +670,7 @@ export class ONNXClassifierBackend implements ModelBackend {
   private topKLabels(
     probabilities: number[],
     k: number,
-  ): Array<{ label: MLLabel; score: number }> {
+  ): Array<{ label: ModelLabel; score: number }> {
     const indices = probabilities
       .map((p, i) => ({ p, i }))
       .sort((a, b) => b.p - a.p)

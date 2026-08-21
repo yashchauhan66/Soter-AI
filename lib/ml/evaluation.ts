@@ -12,7 +12,8 @@ import type {
   MLModelVersion,
 } from "@prisma/client";
 import { ALL_ML_LABELS } from "./registry";
-import type { ModelBackend } from "./types";
+import { toDbLabel } from "./types";
+import type { ModelBackend, ModelLabel } from "./types";
 
 export interface EvaluationOptions {
   seedReviewQueue?: boolean;
@@ -42,7 +43,17 @@ export interface EvaluationOutcome {
   predictions: Array<{
     exampleId: string;
     expected: MLLabel;
+    /**
+     * The prediction PROJECTED into the dataset's 9-label space (see toDbLabel).
+     * `correct` is computed on this, because `expected` only exists in that space.
+     */
     predicted: MLLabel;
+    /**
+     * What the model actually said. Differs from `predicted` only for a >9-class
+     * model (v12+). Kept so a caller can see that a projection happened rather
+     * than reading an inflated per-label recall as native 14-class accuracy.
+     */
+    predictedRaw: ModelLabel;
     confidence: number;
     correct: boolean;
   }>;
@@ -76,14 +87,19 @@ export async function evaluateModel(
 
   for (const example of examples) {
     let predicted: MLLabel = "SAFE";
+    let predictedRaw: ModelLabel = "SAFE";
     let confidence = 0.5;
     try {
       const inference = await backend.infer(example.redactedText, example.label === "UNSAFE_OUTPUT" ? "OUTPUT" : "INPUT");
-      predicted = inference.predictedLabel;
+      predictedRaw = inference.predictedLabel;
+      // A 14-class model can name attacks this dataset's label enum cannot, and
+      // `predicted` feeds MLReviewQueue.predictedLabel — a Postgres enum column.
+      predicted = toDbLabel(predictedRaw);
       confidence = inference.confidence;
     } catch {
       // Backend failed — treat as SAFE; this is the safety fallback signal.
       predicted = "SAFE";
+      predictedRaw = "SAFE";
       confidence = 0.4;
     }
     const correct = predicted === example.label;
@@ -91,6 +107,7 @@ export async function evaluateModel(
       exampleId: example.id,
       expected: example.label,
       predicted,
+      predictedRaw,
       confidence,
       correct,
     });
