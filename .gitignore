@@ -82,8 +82,25 @@ operator-signing-key.pem*
 packages/vscode-extension/dist-test/
 packages/vscode-extension/.vscode-test/
 
+# Compiled output of the n8n node's in-package test suite. `node --test` only
+# discovers tests when cwd is inside the directory, so the suite is compiled
+# here first; the TypeScript sources under test/ are what get reviewed.
+packages/integrations/n8n/test-build/
+
 SOTERAI-TEST-SECRETS.env
 .env
 .env.backup-*
 *.backup-pre-*
 .env.backup-pre-margin-deploy
+# The rules above only match backups named .env.backup-*, but a rotated env gets
+# whatever name the person rotating it typed -- .env.pre-v14.bak and
+# .env.production.pre-v14.bak both slipped through as untracked-but-addable while
+# holding the same live secrets as .env itself. Match the shapes, not one spelling.
+.env*.bak
+.env*.backup*
+.env.production.*
+# ...but .env.example and .env.production.example are deliberately tracked
+# templates carrying no real values, and the broad rule above swallows the second
+# one. Re-admit them explicitly so a delete-and-re-add cannot lose them.
+!.env.example
+!.env.production.example
