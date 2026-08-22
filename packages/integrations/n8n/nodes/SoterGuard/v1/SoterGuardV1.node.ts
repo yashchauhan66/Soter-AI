@@ -34,8 +34,12 @@ export class SoterGuardV1 implements INodeType {
       outputs: [NodeConnectionTypes.Main],
       credentials: [
         {
+          // Optional so Local mode and the workflow audit can run without an
+          // account. Existing v1 workflows already have a credential selected,
+          // so relaxing this cannot change how any of them behave — and Cloud
+          // mode still fails with a named error when the credential is missing.
           name: "soterApi",
-          required: true,
+          required: false,
         },
       ],
       properties: soterGuardProperties,

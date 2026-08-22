@@ -73,6 +73,57 @@ exports.soterGuardProperties = [
         default: "inputGuard",
     },
     // ---------------------------------------------------------------------
+    // Engine choice. Second field on purpose: after "what should this check",
+    // "where does the checking happen" is the next thing a reviewer needs to
+    // know, and it decides whether the node needs a credential at all.
+    //
+    // `noDataExpression` because the engine and the performance options are read
+    // once per execution, from the first item. An expression here would look
+    // per-item and silently not be — worse than not offering it.
+    // ---------------------------------------------------------------------
+    {
+        displayName: "Detection Engine",
+        name: "detectionEngine",
+        type: "options",
+        noDataExpression: true,
+        options: [
+            {
+                name: "Auto (Cloud, Local Fallback)",
+                value: "AUTO",
+                description: "Use the cloud, and fall back to the local engine only when the cloud cannot be reached. No item is left unchecked.",
+            },
+            {
+                name: "Cloud (Recommended)",
+                value: "CLOUD",
+                description: "Full detection through the SoterAI API: ML tier, cross-turn tracking, reputation, and incident history",
+            },
+            {
+                name: "Local (No API Key, No Network)",
+                value: "LOCAL",
+                description: "Run the bundled rule engine inside n8n. Nothing leaves your instance and no credential is needed.",
+            },
+        ],
+        default: "CLOUD",
+        // The audit action is local in every mode, so offering the choice there
+        // would imply a difference that does not exist.
+        displayOptions: { hide: { action: ["workflowAudit"] } },
+        description: "Where detection runs. Cloud is strongest; Local trades accuracy for working with no API key and no network egress.",
+    },
+    {
+        displayName: "Local mode runs the bundled rule engine in-process: <b>no API key, no network call, nothing leaves this n8n instance</b>. It is pattern-based, so it is weaker than Cloud — no ML tier, no cross-turn tracking, no reputation, and no incident history. Every item reports <code>{{ $json.engineDetail.limitations }}</code> so you can see exactly what was not checked.",
+        name: "localEngineNotice",
+        type: "notice",
+        default: "",
+        displayOptions: { show: { detectionEngine: ["LOCAL"] }, hide: { action: ["workflowAudit"] } },
+    },
+    {
+        displayName: "Auto uses the cloud and only falls back when the cloud could not be <i>asked</i> — a network failure, a timeout, a 5xx, or a missing credential. A rejected key or a refused request is never silently downgraded. Items answered locally are marked <code>engineDegraded: true</code>, so a fallback is visible in the run data instead of looking like a clean pass.",
+        name: "autoEngineNotice",
+        type: "notice",
+        default: "",
+        displayOptions: { show: { detectionEngine: ["AUTO"] }, hide: { action: ["workflowAudit"] } },
+    },
+    // ---------------------------------------------------------------------
     // Per-action notices. These are the honesty layer of the UI: four of the
     // seven actions never block anything, and a user who assumes otherwise is
     // unprotected while believing they are protected.
@@ -562,5 +613,60 @@ exports.soterGuardProperties = [
         hint: "Optional. Extra fields for your own audit logs. Session ID has its own field above",
         displayOptions: { show: { "@version": [2] }, hide: { action: ["workflowAudit"] } },
         description: "JSON object attached to the request for audit logging. Secrets and long strings are redacted before sending.",
+    },
+    // ---------------------------------------------------------------------
+    // Performance and transport. A collection, because every option in it is
+    // new in this version — nothing here was ever a top-level field, so nothing
+    // saved in an existing workflow can be orphaned by grouping them.
+    //
+    // Every default reproduces the previous version's behaviour exactly, so
+    // upgrading changes nothing until the user opens this and asks for more.
+    // ---------------------------------------------------------------------
+    {
+        displayName: "Options",
+        name: "advancedOptions",
+        type: "collection",
+        placeholder: "Add Option",
+        default: {},
+        displayOptions: { hide: { action: ["workflowAudit"] } },
+        options: [
+            {
+                displayName: "Include Raw API Response",
+                name: "includeRawResponse",
+                type: "boolean",
+                default: true,
+                description: "Whether to attach the full API response as rawResponse. It is recursively sanitized first, but turning it off keeps run data smaller on high-volume workflows.",
+            },
+            {
+                displayName: "Items in Parallel",
+                name: "batchConcurrency",
+                type: "number",
+                typeOptions: { minValue: 1, maxValue: 20 },
+                default: 1,
+                description: "How many input items to check at the same time. 1 is sequential and safest for rate limits; raising it is the single biggest speed win on large batches. Order of the output items never changes.",
+            },
+            {
+                displayName: "Layers in Parallel",
+                name: "parallelLayers",
+                type: "boolean",
+                default: true,
+                description: "Whether the Universal AI Firewall runs its optional layers at the same time instead of one after another. Turn it off if your plan's per-minute rate limit is tight.",
+            },
+            {
+                displayName: "Request Timeout (Ms)",
+                name: "requestTimeoutMs",
+                type: "number",
+                typeOptions: { minValue: 1000, maxValue: 120000 },
+                default: 20000,
+                description: "How long to wait for each API call before giving up. In Auto mode a timeout is what triggers the local fallback.",
+            },
+            {
+                displayName: "Reuse Identical Items",
+                name: "reuseIdenticalItems",
+                type: "boolean",
+                default: true,
+                description: "Whether two identical items in the same execution reuse one API call. The reused item is marked reusedResult so it is never mistaken for a second independent check.",
+            },
+        ],
     },
 ];

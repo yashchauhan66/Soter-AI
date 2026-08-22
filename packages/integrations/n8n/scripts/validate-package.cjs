@@ -9,6 +9,7 @@ const readiness = fs.readFileSync(path.resolve(root, "..", "..", "..", "docs", "
 const nodeDir = path.join(root, "nodes", "SoterGuard");
 const entrySource = fs.readFileSync(path.join(nodeDir, "SoterGuard.node.ts"), "utf8");
 const runtimeSource = fs.readFileSync(path.join(nodeDir, "shared", "execute.ts"), "utf8");
+const localEngineSource = fs.readFileSync(path.join(nodeDir, "shared", "localEngine.ts"), "utf8");
 const propertiesSource = fs.readFileSync(path.join(nodeDir, "shared", "properties.ts"), "utf8");
 const baseSource = fs.readFileSync(path.join(nodeDir, "shared", "description.ts"), "utf8");
 const v1Source = fs.readFileSync(path.join(nodeDir, "v1", "SoterGuardV1.node.ts"), "utf8");
@@ -35,6 +36,7 @@ const requiredWorkflows = [
   "soterai-universal-ai-firewall.workflow.json",
   "soterai-security-context-templates.workflow.json",
   "soterai-workflow-security-audit.workflow.json",
+  "soterai-local-offline-engine.workflow.json",
 ];
 
 assert(packageJson.name === "n8n-nodes-soterai", "Package name must be n8n-nodes-soterai.");
@@ -72,7 +74,7 @@ assert(v2Source.includes('displayName: "Safe"'), "Version 2 must expose the Safe
 // Fail-closed routing. An item whose check never completed has not been cleared
 // by anything, so continueOnFail must send it to Flagged, not Safe.
 assert(
-  /continueOnFail\(\)[\s\S]{0,600}?message: sanitizeErrorMessage[\s\S]{0,200}?\n\s*true,/.test(runtimeSource),
+  /continueOnFail\(\)[\s\S]{0,600}?message: sanitizeErrorMessage[\s\S]{0,200}?\n\s*flagged: true,/.test(runtimeSource),
   "continueOnFail errors must be routed to the Flagged output, not Safe.",
 );
 assert(
@@ -95,6 +97,37 @@ assert(readiness.includes("n8n Marketplace Readiness Checklist"), "n8n marketpla
 assert(readiness.includes("API key | Stored in n8n credentials"), "n8n readiness doc must document credential handling.");
 assert(readiness.includes("`rawResponse` | Recursively sanitized"), "n8n readiness doc must document sanitized rawResponse.");
 
+// Local-engine honesty. The offline engine is deliberately weaker than the cloud
+// engine, so every promise the package makes about that has to be checkable here
+// and not only in the README.
+assert(propertiesSource.includes('name: "detectionEngine"'), "The engine selector must be a first-class field.");
+assert(/LOCAL_ENGINE_LIMITATIONS = \[/.test(localEngineSource), "The local engine must publish what it cannot do.");
+assert(
+  runtimeSource.includes("limitations: LOCAL_ENGINE_LIMITATIONS"),
+  "Every local result must carry the limitation list, so the run output says what protection actually ran.",
+);
+assert(
+  runtimeSource.includes("result.engineDegraded = fallbackReason !== null"),
+  "A local answer produced by fallback must be marked degraded, so it cannot read as a clean cloud pass.",
+);
+assert(
+  runtimeSource.includes(
+    'if (options.engine !== "AUTO" || !isTransientApiError(error)) throw asNodeError(node, error)',
+  ),
+  "Auto may only fall back when the cloud could not be asked — an authoritative refusal must surface.",
+);
+assert(
+  localEngineSource.includes("unresolvedSourceIds"),
+  "A protected source the local engine cannot resolve must be reported as unresolved, never as compared and clean.",
+);
+assert(
+  /riskTypes|primaryRiskType/.test(localEngineSource) && localEngineSource.includes("matches: number"),
+  "Local findings must be type/label/severity/count only — never the matched text.",
+);
+assert(readme.includes("Local mode"), "README must document the offline engine.");
+assert(readme.includes("Items in Parallel"), "README must document the batch concurrency option.");
+assert(changelog.includes("engine: \"local\"") || changelog.includes("`engine`"), "CHANGELOG must document the engine field.");
+
 for (const keyword of requiredKeywords) {
   assert(packageJson.keywords.includes(keyword), `Missing keyword: ${keyword}`);
 }
@@ -106,6 +139,20 @@ for (const fileName of requiredWorkflows) {
   assert(Array.isArray(workflow.nodes), `${fileName} must contain nodes.`);
   assert(workflow.nodes.some((node) => node.type === "n8n-nodes-soterai.soterGuard"), `${fileName} must use SoterAI.`);
   assert(!/sk_(live|prod)|sk-(live|prod)|admin token|customer data/i.test(raw), `${fileName} contains unsafe secret text.`);
+}
+
+// The offline example is the one place a reader can check the central local-mode
+// claim for themselves: a working guard with no credential attached. If someone
+// "fixes" the example by adding a credential, the claim stops being verifiable.
+{
+  const offlineExample = readJson(path.join(root, "examples", "soterai-local-offline-engine.workflow.json"));
+  const localNode = offlineExample.nodes.find((node) => node.parameters?.detectionEngine === "LOCAL");
+  assert(localNode, "The offline example must configure a node with Detection Engine set to Local.");
+  assert(!localNode.credentials, "The offline example must run Local mode with no credential attached.");
+  assert(
+    offlineExample.nodes.some((node) => node.parameters?.detectionEngine === "AUTO"),
+    "The offline example must also show Auto, so the fallback rules have a runnable reference.",
+  );
 }
 
 console.log("n8n package validation OK");

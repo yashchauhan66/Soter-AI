@@ -7,7 +7,6 @@ import { HeaderNav } from "@/components/auth/HeaderNav";
 import { AiAssistantLoader } from "@/components/dashboard/AiAssistantLoader";
 import { IdeExtensionBanner } from "@/components/marketing/IdeExtensionBanner";
 import { PHLaunchBanner } from "@/components/marketing/PHLaunchBanner";
-import Antigravity from "@/components/ui/Antigravity";
 
 type SiteChromeProps = {
   children: React.ReactNode;
@@ -21,7 +20,6 @@ export function SiteChrome({ children, currentYear }: SiteChromeProps) {
   if (adminRoute) {
     return (
       <>
-        <Antigravity fixed color="#ffffff" count={400} magnetRadius={8} ringRadius={7} waveSpeed={0.45} waveAmplitude={0.9} particleSize={1.7} lerpSpeed={0.08} autoAnimate particleVariance={0.8} rotationSpeed={0.08} depthFactor={0.75} pulseSpeed={2.4} fieldStrength={14} particleShape="star" />
         <div id="main-content" tabIndex={-1}>
           {children}
         </div>
@@ -31,13 +29,12 @@ export function SiteChrome({ children, currentYear }: SiteChromeProps) {
 
   return (
     <>
-      <Antigravity fixed color="#ffffff" count={400} magnetRadius={8} ringRadius={7} waveSpeed={0.45} waveAmplitude={0.9} particleSize={1.7} lerpSpeed={0.08} autoAnimate particleVariance={0.8} rotationSpeed={0.08} depthFactor={0.75} pulseSpeed={2.4} fieldStrength={14} particleShape="star" />
       <IdeExtensionBanner />
       <PHLaunchBanner />
-      <header className="sticky top-0 z-50 border-b border-slate-800/80 bg-ink/90 backdrop-blur-xl">
+      <header className="sticky top-0 z-50 border-b border-slate-800/60 bg-ink/85 backdrop-blur-2xl">
         <div className="container-page flex h-16 items-center justify-between">
-          <Link href="/" className="flex min-w-0 items-center font-semibold tracking-wide">
-            <Image src="/logo.png" alt="SoterAI" width={114} height={40} priority className="h-9 w-auto" />
+          <Link href="/" className="group flex min-w-0 items-center gap-2 font-semibold tracking-wide">
+            <Image src="/logo.png" alt="SoterAI" width={114} height={40} priority className="h-9 w-auto transition-transform duration-200 group-hover:scale-[1.02]" />
           </Link>
           <HeaderNav />
         </div>
@@ -45,16 +42,31 @@ export function SiteChrome({ children, currentYear }: SiteChromeProps) {
       <div id="main-content" tabIndex={-1}>
         {children}
       </div>
-      <footer className="border-t border-slate-800 bg-slate-950/45 py-12 text-sm text-slate-300">
+      <footer className="border-t border-slate-800/60 bg-slate-950/60 py-14 text-sm text-slate-300 backdrop-blur">
         <div className="container-page">
-          <div className="flex flex-col justify-between gap-8 sm:flex-row">
+          <div className="flex flex-col justify-between gap-10 sm:flex-row">
             <div className="max-w-xs">
               <Link href="/" className="flex items-center font-semibold tracking-wide">
                 <Image src="/logo.png" alt="SoterAI" width={97} height={34} className="h-8 w-auto" />
               </Link>
-              <p className="mt-3 leading-6 text-slate-300">
+              <p className="mt-4 leading-6 text-slate-400">
                 AI security command layer for chatbots, RAG apps, and autonomous agents.
               </p>
+              {/* Links to the real status page rather than asserting a state. A
+                  hardcoded "All systems operational" badge would have kept saying
+                  "operational" through the 2026-08-21 outage, since nothing here is
+                  wired to /api/health -- and a per-request health fetch in the footer
+                  would cost every page a round trip. Same rule as the capability
+                  registry: no claim without a runtime caller behind it. */}
+              <div className="mt-4 flex items-center gap-2">
+                <Link
+                  href="/status"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-slate-700/70 bg-slate-900/60 px-2.5 py-1 text-[11px] font-semibold text-slate-300 transition hover:border-cyan/40 hover:text-white"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-cyan" />
+                  System status
+                </Link>
+              </div>
             </div>
             <div className="flex flex-wrap gap-10">
               <div>

@@ -38,6 +38,69 @@ Restart n8n after installation.
 
 Do not paste real production secrets into test workflows. Use fake values such as `sk-test-1234567890abcdef`.
 
+The credential is optional. **Local mode** (below) runs without one, so a node on an air-gapped instance is not permanently marked as misconfigured.
+
+## Detection Engine: Cloud, Local, or Auto
+
+**Detection Engine** decides where the check runs. It is per node, so one workflow can keep a cloud check on its public webhook and a local check on an internal batch job.
+
+| Engine | Network | Credential | What runs |
+| --- | --- | --- | --- |
+| **Cloud** (default) | Yes | Required | The full SoterAI engine: pattern rules, ONNX classifier, multi-turn correlation, attacker reputation, semantic egress comparison, agent-passport enforcement. |
+| **Local** | None | Not needed | The bundled pattern-and-heuristic engine, inside the n8n process. No request leaves your instance. |
+| **Auto** | When reachable | Used if present | Cloud, falling back to Local when the cloud could not be asked. |
+
+### Local mode
+
+Local mode exists for the case where sending prompts to any external service is not an option: air-gapped hosts, data-residency rules, or an evaluation you do not want to sign up for. It covers prompt injection, jailbreaks, exfiltration phrasing, code and SQL payloads, secrets, PII including Indian identifiers (Aadhaar, PAN, UPI, IFSC, Indian mobile numbers), RAG document trust scoring, tool-call risk, and egress comparison against Protected Sources whose text you supply inline.
+
+It is the pattern tier and only the pattern tier, and every item says so. Each local result carries:
+
+- `engine: "local"`
+- `engineDegraded` — whether this was a deliberate local run (`false`) or a fallback from an unreachable cloud (`true`)
+- `engineDetail.limitations` — the explicit list of what did **not** run:
+
+| Not available locally | Consequence |
+| --- | --- |
+| ML classifier | Novel phrasings that the cloud engine catches can pass. |
+| Multi-turn correlation | Each item is judged alone; an attack split across turns is not assembled. |
+| Attacker reputation | A caller that has been probing the workflow is treated like a first-time caller. |
+| Agent passport / tool identity | The tool check weighs the payload and the reach of the call, never whether this agent is authorised to make it. |
+| Fingerprint store | A Protected Source given as a bare ID cannot be resolved, and is reported as `unavailable` rather than as compared and clean. |
+| Languages | Rules cover English and Hinglish; other languages are covered only where the payload itself is machine-shaped (code, keys, identifiers). |
+
+Local mode still enforces. **On Threat** works exactly as it does in Cloud mode: Block empties `outputText` and routes the item to **Flagged**, Redact returns the cleaned text on **Safe**.
+
+### Auto mode
+
+Auto falls back to the local engine only when the cloud **could not be asked**:
+
+| Situation | Auto behaviour |
+| --- | --- |
+| Connection dropped, DNS failure, timeout | Local answer, `engineDegraded: true`, reason in `engineDetail.fellBackFromCloud` |
+| 5xx from the API | Local answer, marked degraded |
+| 429 rate limit | Local answer, marked degraded |
+| No credential selected | Local answer, marked degraded |
+| **401 / 403 / 400** | **The item fails.** The cloud answered about your request — a wrong key, a plan that does not include the endpoint, an invalid payload. Answering that with a weaker engine would hide a misconfiguration behind something that reads like protection. |
+
+In the Universal AI Firewall, fallback is per layer: one dead optional layer is answered locally and listed in `locallyCheckedLayers` instead of leaving that layer unchecked. In Auto mode this also covers a missing **Session ID** and an agent with no passport enrolled — both of which used to leave the tool payload uninspected.
+
+A degraded item is never silently equivalent to a clean cloud pass. If you want fallback to be visible downstream, branch on `engineDegraded`.
+
+## Advanced Options
+
+All optional. Only **Layers in Parallel** changes the node's previous behaviour, and it changes timing rather than verdicts — the layers, their order in `checks`, and the decision are identical either way.
+
+| Option | Default | What it does |
+| --- | --- | --- |
+| **Items in Parallel** | `1` | How many input items are checked at once (1–20). Output order and `pairedItem` are preserved regardless of which item finishes first. |
+| **Layers in Parallel** | on | Runs the Universal AI Firewall's optional layers concurrently instead of one after another. Turn it off if your plan's per-minute rate limit is tight. |
+| **Reuse Identical Items** | on | A batch containing the same text more than once costs one API call. Reused items are marked `reusedResult` and `reusedFromItemIndex` rather than being silently identical. |
+| **Request Timeout (Ms)** | `20000` | Per-request timeout, 1000–120000. |
+| **Include Raw API Response** | on | Turn off to drop `rawResponse` from the output when you do not want the full payload in your execution data. |
+
+Items in Parallel and Reuse Identical Items are the two that matter for large batches: 100 items at concurrency 10 finish in roughly a tenth of the wall-clock time, and a deduplicated batch skips the calls entirely.
+
 ## Two Outputs: Safe and Flagged
 
 Every SoterAI node has two outputs. The node routes items itself — you do not need an IF node to act on a verdict.
@@ -381,6 +444,7 @@ The package includes importable workflows in `examples/`:
 | `soterai-universal-ai-firewall.workflow.json` | Webhook -> SoterAI Universal AI Firewall -> blocked/allowed response branches. |
 | `soterai-security-context-templates.workflow.json` | Manual Trigger -> Set Security Context JSON -> SoterAI Universal AI Firewall. |
 | `soterai-workflow-security-audit.workflow.json` | Manual Trigger -> SoterAI Audit n8n Workflow Security -> posture report. |
+| `soterai-local-offline-engine.workflow.json` | Runs with **no credential**: Local guard -> Safe/Flagged branches, plus an Auto guard that reports which engine answered. Import this first if you want to try the node before signing up. |
 | `protected-chatbot-workflow.json` | Legacy protected-chatbot pattern retained for existing users. |
 
 Safe demo data:
@@ -422,6 +486,12 @@ Benign: Please summarize this public article.
 | `recommendedAction` | string | Universal AI Firewall only: concise next step for routing. |
 | `checks` | array | Universal AI Firewall only: enabled layer results for input, RAG, tool, memory, output, and semantic egress. |
 | `drivingLayer` | string | Universal AI Firewall only: which layer produced the highest risk score, so `primaryRiskType` can be attributed correctly rather than being read off whichever layer ran first. |
+| `engine` | string | `cloud` or `local` — which engine produced this item. |
+| `engineDegraded` | boolean | True when a local answer was a fallback rather than a choice. Always present, so an expression can tell "not degraded" from an older node version. |
+| `engineDetail` | object | Local items only: `version`, `ruleCount`, `limitations`, and `fellBackFromCloud` when the cloud could not be reached. |
+| `degraded` / `degradedLayers` / `fullyChecked` | boolean / string[] / boolean | Universal AI Firewall only: whether any layer went unanswered, and which. |
+| `locallyCheckedLayers` | string[] | Universal AI Firewall only: layers a cloud run had to answer with the local engine. |
+| `reusedResult` / `reusedFromItemIndex` | boolean / number | Present when this item reused an identical item's answer instead of making its own call. |
 
 ### Off-topic guard (Guard Input, Universal AI Firewall)
 
@@ -479,7 +549,7 @@ API keys, bearer tokens, common provider tokens, AWS access key IDs, database UR
 ## Privacy and Security Notes
 
 - API keys are handled through n8n credentials and should not be stored in workflow JSON.
-- The node sends configured text fields to the SoterAI API endpoint you choose.
+- The node sends configured text fields to the SoterAI API endpoint you choose. In **Local mode** it sends nothing at all: no request, no credential, no telemetry.
 - The node does not write local files or collect telemetry.
 - Advanced `rawResponse` output is recursively sanitized before it is returned to downstream n8n nodes.
 - Metadata JSON is sanitized before it is sent: sensitive keys are redacted, secret-like strings are redacted, and long strings are truncated.
@@ -490,15 +560,16 @@ API keys, bearer tokens, common provider tokens, AWS access key IDs, database UR
 ## Compatibility
 
 - Package: `n8n-nodes-soterai`
-- Version: `0.5.1`
+- Version: `0.6.0`
 - n8n node API: `1`
 - Peer dependency: `n8n-workflow` `*`
 - Runtime: n8n versions that support community nodes and Node.js 20+ are expected to work; verify in your own n8n host before production use.
 
 ## Known Limitations
 
-- Live workflow execution requires a reachable SoterAI API and a valid API key.
-- RAG/document risk summaries depend on the `/api/rag/document/trust-score` endpoint being enabled for your SoterAI deployment.
+- Cloud mode requires a reachable SoterAI API and a valid API key. Local mode requires neither, at the cost of the detection tiers listed under [Local mode](#local-mode).
+- Local mode is pattern-based: no ML classifier, no cross-turn correlation, no attacker reputation, no passport enforcement, and egress comparison only against Protected Sources supplied inline. Treat it as the best answer available offline, not as an equivalent of Cloud mode.
+- RAG/document risk summaries in Cloud mode depend on the `/api/rag/document/trust-score` endpoint being enabled for your SoterAI deployment. In Local mode the document is scored in-process instead.
 - Very large payloads should be chunked before analysis.
 
 ## Links
