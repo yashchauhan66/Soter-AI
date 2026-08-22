@@ -20,10 +20,25 @@
 #
 # Rollback is a tag move too, so this is reversible. The run prints the exact
 # command, naming the version `latest` pointed at before.
+#
+# TRIGGERS, and why a tag push is allowed to reach `latest` here when
+# publish-n8n.yml refuses to:
+#   That refusal is about `n8n-v<version>`, the tag you push as part of every
+#   normal release — easy to push without thinking about dist-tags at all.
+#   `n8n-promote-v<version>` is a namespace with exactly one meaning, and
+#   pushing it is not a step in any other process, so the deliberateness that
+#   the choice input provides is already in the tag name.
+#
+#   The dispatch path additionally requires this file to sit on the default
+#   branch; GitHub will not offer workflow_dispatch for a workflow that lives
+#   only on a release branch. That is why the tag path exists at all.
 
 name: Promote n8n Community Node
 
 on:
+  push:
+    tags:
+      - "n8n-promote-v*"
   workflow_dispatch:
     inputs:
       version:
@@ -60,10 +75,27 @@ jobs:
         id: preflight
         env:
           NAME: n8n-nodes-soterai
-          VERSION: ${{ inputs.version }}
-          DIST_TAG: ${{ inputs.dist_tag }}
+          INPUT_VERSION: ${{ inputs.version }}
+          INPUT_DIST_TAG: ${{ inputs.dist_tag }}
         run: |
           set -euo pipefail
+
+          # One resolution point for both triggers, so no later step has to know
+          # which one fired.
+          if [ "${GITHUB_REF_TYPE}" = "tag" ]; then
+            VERSION="${GITHUB_REF_NAME#n8n-promote-v}"
+            DIST_TAG="latest"
+            if [ "$VERSION" = "$GITHUB_REF_NAME" ] || [ -z "$VERSION" ]; then
+              echo "::error::Tag ${GITHUB_REF_NAME} does not name a version (expected n8n-promote-v<version>)."
+              exit 1
+            fi
+          else
+            VERSION="${INPUT_VERSION}"
+            DIST_TAG="${INPUT_DIST_TAG}"
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "dist_tag=$DIST_TAG" >> "$GITHUB_OUTPUT"
+          echo "Resolved: promote ${NAME}@${VERSION} to ${DIST_TAG}"
 
           # The inverse of the publish gate: promoting a version that was never
           # published would answer with a confusing npm error about the tag.
@@ -94,8 +126,8 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NAME: n8n-nodes-soterai
-          VERSION: ${{ inputs.version }}
-          DIST_TAG: ${{ inputs.dist_tag }}
+          VERSION: ${{ steps.preflight.outputs.version }}
+          DIST_TAG: ${{ steps.preflight.outputs.dist_tag }}
         run: npm dist-tag add "${NAME}@${VERSION}" "${DIST_TAG}"
 
       # `npm dist-tag add` exiting 0 is not the same fact as the registry serving
@@ -103,8 +135,8 @@ jobs:
       - name: Confirm what the registry actually serves
         env:
           NAME: n8n-nodes-soterai
-          VERSION: ${{ inputs.version }}
-          DIST_TAG: ${{ inputs.dist_tag }}
+          VERSION: ${{ steps.preflight.outputs.version }}
+          DIST_TAG: ${{ steps.preflight.outputs.dist_tag }}
           PREVIOUS: ${{ steps.preflight.outputs.previous }}
           SHASUM: ${{ steps.preflight.outputs.shasum }}
           FILES: ${{ steps.preflight.outputs.files }}
