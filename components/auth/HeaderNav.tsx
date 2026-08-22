@@ -23,29 +23,30 @@ export function HeaderNav() {
 
   return (
     <>
-      <nav className="hidden items-center gap-5 text-sm text-slate-300 xl:flex">
+      <nav className="hidden items-center gap-1 text-sm text-slate-300 xl:flex">
         {signedIn ? (
           <>
-            <Link href={isAdmin ? "/admin" : "/dashboard"} className="font-semibold text-cyan hover:text-white">{isAdmin ? "Admin" : "Dashboard"}</Link>
-            <Link href="/docs" className="hover:text-white">Docs</Link>
-            <Link href="/benchmarks" className="hover:text-white">Benchmarks</Link>
-            <Link href="/playground" className="hover:text-white">Playground</Link>
-            <span className="mx-1 h-5 w-px bg-slate-700" />
+            <Link href={isAdmin ? "/admin" : "/dashboard"} className="rounded-lg px-3 py-2 font-semibold text-cyan transition hover:bg-cyan/10 hover:text-white">{isAdmin ? "Admin" : "Dashboard"}</Link>
+            <Link href="/docs" className="rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white">Docs</Link>
+            <Link href="/benchmarks" className="rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white">Benchmarks</Link>
+            <Link href="/playground" className="rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white">Playground</Link>
+            <span className="mx-2 h-5 w-px bg-slate-700/60" />
             {apiKeyLink()}
-            <span className="max-w-36 truncate text-xs text-slate-300">{session.user?.email}</span>
+            <span className="ml-2 max-w-36 truncate text-xs text-slate-400">{session.user?.email}</span>
             <SignOutButton />
           </>
         ) : (
           <>
-            <Link href="/#features" className="hover:text-white">Features</Link>
-            <Link href="/docs" className="hover:text-white">Docs</Link>
-            <Link href="/demo" className="hover:text-white">Demo</Link>
-            <Link href="/comparison" className="hover:text-white">Compare</Link>
-            <Link href="/benchmarks" className="hover:text-white">Benchmarks</Link>
-            <Link href="/playground" className="hover:text-white">Playground</Link>
+            <Link href="/#features" className="rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white">Features</Link>
+            <Link href="/docs" className="rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white">Docs</Link>
+            <Link href="/demo" className="rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white">Demo</Link>
+            <Link href="/comparison" className="rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white">Compare</Link>
+            <Link href="/benchmarks" className="rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white">Benchmarks</Link>
+            <Link href="/playground" className="rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white">Playground</Link>
+            <span className="mx-2 h-5 w-px bg-slate-700/60" />
             {apiKeyLink()}
-            <Link href="/signin" className="inline-flex items-center gap-1.5 hover:text-white"><LogIn size={14} aria-hidden="true" /> Sign in</Link>
-            <Link href="/signup" className="button-primary !px-4 !py-2">Get started</Link>
+            <Link href="/signin" className="ml-1 inline-flex items-center gap-1.5 rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white"><LogIn size={14} aria-hidden="true" /> Sign in</Link>
+            <Link href="/signup" className="button-primary ml-1 !px-4 !py-2">Get started</Link>
           </>
         )}
       </nav>

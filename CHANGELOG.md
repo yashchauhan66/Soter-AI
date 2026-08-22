@@ -1,5 +1,18 @@
 # Changelog
 
+## [Extension 0.2.1] — 2026-08-22
+
+### Fixed
+- Removed the ugly ASCII "Safe Context Capsule" box that was injected into sanitized prompts; replaced with a clean one-line footer (`🛡️ Soter sanitized this prompt before sending. <summary>.`)
+- Removed annoying persistent response banner; response warnings now auto-dismiss
+- Premium overlay UI redesign (glassmorphism, gradient accents, refined typography)
+
+### Changed
+- `packages/policy-engine/src/evaluatePolicy.ts` — `rewriteSafePrompt()` now appends a minimal natural-language footer instead of an ASCII box
+- Extension packages rebuilt: `soter-extension-chrome-v0.2.1.zip`, `soter-extension-edge-v0.2.1.zip`
+
+---
+
 ## [0.2.2] — 2026-06-27
 
 ### Fixed
