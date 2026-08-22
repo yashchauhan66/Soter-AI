@@ -88,19 +88,30 @@ packages/vscode-extension/.vscode-test/
 packages/integrations/n8n/test-build/
 
 SOTERAI-TEST-SECRETS.env
-.env
-.env.backup-*
 *.backup-pre-*
-.env.backup-pre-margin-deploy
-# The rules above only match backups named .env.backup-*, but a rotated env gets
-# whatever name the person rotating it typed -- .env.pre-v14.bak and
-# .env.production.pre-v14.bak both slipped through as untracked-but-addable while
-# holding the same live secrets as .env itself. Match the shapes, not one spelling.
-.env*.bak
-.env*.backup*
-.env.production.*
-# ...but .env.example and .env.production.example are deliberately tracked
-# templates carrying no real values, and the broad rule above swallows the second
-# one. Re-admit them explicitly so a delete-and-re-add cannot lose them.
-!.env.example
-!.env.production.example
+# Enumerating backup spellings has now lost this race three times. `.env.backup-*`
+# missed `.env.pre-v14.bak`; the `.env*.bak` written to fix that missed
+# `.env.bak.pre-v12`, because there the suffix lands AFTER `.bak` so `.bak` is not
+# the final extension -- and that file sat untracked-but-addable on a public repo
+# holding the same live DATABASE_URL, NEXTAUTH_SECRET and pepper values as .env.
+# A rotated env gets whatever name the person rotating it typed, so match the
+# shape instead: everything .env* is secret by default, and the tracked templates
+# are re-admitted by name. A new backup is then ignored without anyone thinking
+# about it, and a new template has to be added deliberately.
+.env*
+!.env*.example
+
+# Generated ML artifacts, ignored by shape for the same reason as the envs above:
+# `git add -A` should not be able to do something irreversible. No .npy or .npz has
+# ever been tracked, and the embedding dumps under artifacts/ml-v2/ run 176-211 MB
+# each -- 1.2 GB in total, every one of them past GitHub's 100 MB hard limit, and
+# all of them regenerable by the training scripts. Output, not source.
+*.npy
+*.npz
+artifacts/ml-v2/train-index-*.json
+*-train-bundle.zip
+# soterai-train-bundle.zip (11.8 MB) was committed deliberately, and the glob above
+# swallows it. Re-admit it by name so a delete-and-re-add cannot lose it, the same
+# way the .env templates are re-admitted.
+!soterai-train-bundle.zip
+soter-edge-test-out/
