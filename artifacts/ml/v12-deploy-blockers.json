@@ -1,0 +1,186 @@
+{
+  "npz": "artifacts/ml/probs-v12-crossdist-v3.npz",
+  "model_dir": "models/ml-classifier-v12",
+  "rows_clean": 22680,
+  "attacks": 16256,
+  "benign": 6424,
+  "gold_labels_present": [
+    "JAILBREAK",
+    "PII",
+    "PROMPT_INJECTION",
+    "SAFE",
+    "SYSTEM_PROMPT_LEAK_ATTEMPT"
+  ],
+  "operating_point_measured": {
+    "conf_floor": 0.5,
+    "abstain_floor": 0.55,
+    "entropy_budget": 0.4
+  },
+  "blocker1_new_label_costs": {
+    "TOOL_CALL_ABUSE": {
+      "benign_rows": 1,
+      "benign_fpr_pct": 0.015566625155666251,
+      "attack_rows": 4
+    },
+    "ENCODING_OBFUSCATION": {
+      "benign_rows": 0,
+      "benign_fpr_pct": 0.0,
+      "attack_rows": 15
+    },
+    "MULTI_TURN_ESCALATION": {
+      "benign_rows": 2,
+      "benign_fpr_pct": 0.031133250311332503,
+      "attack_rows": 0
+    },
+    "MODEL_EXTRACTION": {
+      "benign_rows": 0,
+      "benign_fpr_pct": 0.0,
+      "attack_rows": 5
+    },
+    "TOXICITY_HARASSMENT": {
+      "benign_rows": 2,
+      "benign_fpr_pct": 0.031133250311332503,
+      "attack_rows": 4
+    }
+  },
+  "blocker1_all_five": {
+    "benign_rows": 5,
+    "benign_fpr_pct": 0.07783312577833126,
+    "attack_rows": 28
+  },
+  "blocker2_sweep": [
+    {
+      "abstain_floor": 0.55,
+      "entropy_budget": 0.05,
+      "select_detection_pct": 88.20684523809524,
+      "select_fpr_pct": 0.3423591658885777,
+      "verify_detection_pct": 87.939453125,
+      "verify_fpr_pct": 0.06228589224540641
+    },
+    {
+      "abstain_floor": 0.55,
+      "entropy_budget": 0.1201,
+      "select_detection_pct": 94.7172619047619,
+      "select_fpr_pct": 0.5291005291005291,
+      "verify_detection_pct": 94.56787109375,
+      "verify_fpr_pct": 0.2802865151043289
+    },
+    {
+      "abstain_floor": 0.55,
+      "entropy_budget": 0.2,
+      "select_detection_pct": 96.24255952380952,
+      "select_fpr_pct": 0.6535947712418301,
+      "verify_detection_pct": 96.30126953125,
+      "verify_fpr_pct": 0.4671441918405481
+    },
+    {
+      "abstain_floor": 0.55,
+      "entropy_budget": 0.2029,
+      "select_detection_pct": 96.2797619047619,
+      "select_fpr_pct": 0.6535947712418301,
+      "verify_detection_pct": 96.3134765625,
+      "verify_fpr_pct": 0.4671441918405481
+    },
+    {
+      "abstain_floor": 0.55,
+      "entropy_budget": 0.3,
+      "select_detection_pct": 97.03621031746032,
+      "select_fpr_pct": 0.902583255524432,
+      "verify_detection_pct": 97.0947265625,
+      "verify_fpr_pct": 0.6228589224540642
+    },
+    {
+      "abstain_floor": 0.55,
+      "entropy_budget": 0.4,
+      "select_detection_pct": 97.58184523809524,
+      "select_fpr_pct": 1.0582010582010581,
+      "verify_detection_pct": 97.61962890625,
+      "verify_fpr_pct": 0.7162877608221738
+    },
+    {
+      "abstain_floor": 0.55,
+      "entropy_budget": 0.5,
+      "select_detection_pct": 97.97867063492063,
+      "select_fpr_pct": 1.2760659819483349,
+      "verify_detection_pct": 97.86376953125,
+      "verify_fpr_pct": 0.8408595453129866
+    },
+    {
+      "abstain_floor": 0.55,
+      "entropy_budget": 0.6932,
+      "select_detection_pct": 98.37549603174604,
+      "select_fpr_pct": 1.7429193899782136,
+      "verify_detection_pct": 98.4619140625,
+      "verify_fpr_pct": 1.4014325755216444
+    },
+    {
+      "abstain_floor": 0.5,
+      "entropy_budget": 0.05,
+      "select_detection_pct": 88.20684523809524,
+      "select_fpr_pct": 0.3423591658885777,
+      "verify_detection_pct": 87.939453125,
+      "verify_fpr_pct": 0.06228589224540641
+    },
+    {
+      "abstain_floor": 0.5,
+      "entropy_budget": 0.1201,
+      "select_detection_pct": 94.7172619047619,
+      "select_fpr_pct": 0.5291005291005291,
+      "verify_detection_pct": 94.56787109375,
+      "verify_fpr_pct": 0.2802865151043289
+    },
+    {
+      "abstain_floor": 0.5,
+      "entropy_budget": 0.2,
+      "select_detection_pct": 96.24255952380952,
+      "select_fpr_pct": 0.6535947712418301,
+      "verify_detection_pct": 96.30126953125,
+      "verify_fpr_pct": 0.4671441918405481
+    },
+    {
+      "abstain_floor": 0.5,
+      "entropy_budget": 0.2029,
+      "select_detection_pct": 96.2797619047619,
+      "select_fpr_pct": 0.6535947712418301,
+      "verify_detection_pct": 96.3134765625,
+      "verify_fpr_pct": 0.4671441918405481
+    },
+    {
+      "abstain_floor": 0.5,
+      "entropy_budget": 0.3,
+      "select_detection_pct": 97.03621031746032,
+      "select_fpr_pct": 0.902583255524432,
+      "verify_detection_pct": 97.0947265625,
+      "verify_fpr_pct": 0.6228589224540642
+    },
+    {
+      "abstain_floor": 0.5,
+      "entropy_budget": 0.4,
+      "select_detection_pct": 97.58184523809524,
+      "select_fpr_pct": 1.0582010582010581,
+      "verify_detection_pct": 97.61962890625,
+      "verify_fpr_pct": 0.7162877608221738
+    },
+    {
+      "abstain_floor": 0.5,
+      "entropy_budget": 0.5,
+      "select_detection_pct": 97.97867063492063,
+      "select_fpr_pct": 1.2760659819483349,
+      "verify_detection_pct": 97.86376953125,
+      "verify_fpr_pct": 0.8408595453129866
+    },
+    {
+      "abstain_floor": 0.5,
+      "entropy_budget": 0.6932,
+      "select_detection_pct": 98.40029761904762,
+      "select_fpr_pct": 1.7740429505135387,
+      "verify_detection_pct": 98.4619140625,
+      "verify_fpr_pct": 1.4637184677670507
+    }
+  ],
+  "bounds": [
+    "labelSpaceUncertain not modelled (no token counts in the dump) \u2014 can only add abstention",
+    "semantic-benign veto not modelled (needs text) \u2014 can only remove escalations",
+    "recall for the five new v12 labels is unmeasurable: no gold rows exist for them"
+  ]
+}
