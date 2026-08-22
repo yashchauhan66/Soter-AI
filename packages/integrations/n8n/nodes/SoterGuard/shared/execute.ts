@@ -7,7 +7,20 @@ import type {
 } from "n8n-workflow";
 import { NodeApiError, NodeOperationError, sleep } from "n8n-workflow";
 
-export const PACKAGE_VERSION = "0.5.1";
+import {
+  analyzeLocal,
+  checkToolCallLocal,
+  compareEgressLocal,
+  LOCAL_ENGINE_LIMITATIONS,
+  LOCAL_ENGINE_VERSION,
+  LOCAL_RULE_COUNT,
+  redactLocal,
+  redactUsSsn,
+  scoreRagDocumentLocal,
+} from "./localEngine";
+import type { LocalAnalysis, LocalEgressSource } from "./localEngine";
+
+export const PACKAGE_VERSION = "0.6.0";
 const USER_AGENT = `n8n-nodes-soterai/${PACKAGE_VERSION}`;
 const MAX_SANITIZE_DEPTH = 8;
 const MAX_METADATA_STRING_LENGTH = 500;
@@ -32,6 +45,132 @@ export const SINGLE_OUTPUT_ACTIONS = ["piiRedactor"];
 
 export function outputCountForAction(action: string): number {
   return SINGLE_OUTPUT_ACTIONS.includes(action) ? 1 : 2;
+}
+
+// ---------------------------------------------------------------------------
+// Engine selection
+//
+// The node used to require an API key before it would do anything at all, which
+// meant the first thing a new user met was a signup form, and a self-hosted n8n
+// with no outbound internet could not use it even to look. Local mode runs the
+// bundled rule engine in-process instead: no key, no network, no data leaving the
+// instance. It is genuinely weaker than the cloud engine, so every local result
+// says so in its own output rather than in a footnote.
+// ---------------------------------------------------------------------------
+
+export type EngineMode = "CLOUD" | "LOCAL" | "AUTO";
+
+const ENGINE_LOCAL_HINT =
+  "Set Detection Engine to Local to run the bundled rule engine in-process instead — no API key and no " +
+  "network egress. Local mode is pattern-based and reports its own limitations on every item.";
+
+interface SoterClient {
+  apiKey: string;
+  baseUrl: string;
+  projectId?: string;
+  timeoutMs: number;
+  includeRaw: boolean;
+}
+
+interface NodeOptions {
+  engine: EngineMode;
+  batchConcurrency: number;
+  reuseIdenticalItems: boolean;
+  parallelLayers: boolean;
+  requestTimeoutMs: number;
+  includeRawResponse: boolean;
+}
+
+const DEFAULT_REQUEST_TIMEOUT_MS = 20000;
+const MAX_BATCH_CONCURRENCY = 20;
+
+function readNodeOptions(ctx: IExecuteFunctions, itemIndex: number): NodeOptions {
+  const engineRaw = ctx.getNodeParameter("detectionEngine", itemIndex, "CLOUD") as string;
+  const advanced = ctx.getNodeParameter("advancedOptions", itemIndex, {}) as IDataObject;
+  const concurrency = Number(advanced.batchConcurrency ?? 1);
+  const timeout = Number(advanced.requestTimeoutMs ?? DEFAULT_REQUEST_TIMEOUT_MS);
+
+  return {
+    engine: engineRaw === "LOCAL" || engineRaw === "AUTO" ? engineRaw : "CLOUD",
+    batchConcurrency: Number.isFinite(concurrency) ? Math.max(1, Math.min(MAX_BATCH_CONCURRENCY, Math.trunc(concurrency))) : 1,
+    reuseIdenticalItems: advanced.reuseIdenticalItems !== false,
+    parallelLayers: advanced.parallelLayers !== false,
+    requestTimeoutMs: Number.isFinite(timeout) ? Math.max(1000, Math.min(120000, Math.trunc(timeout))) : DEFAULT_REQUEST_TIMEOUT_MS,
+    includeRawResponse: advanced.includeRawResponse !== false,
+  };
+}
+
+/**
+ * Marks an API failure as "the endpoint might work if we asked again" so Auto
+ * mode knows when falling back to the local engine is the right answer.
+ *
+ * The distinction matters more than it looks. A 5xx, a dropped connection or an
+ * exhausted rate-limit window says nothing about the request, so re-running it
+ * locally is a strictly better outcome than failing the item. A 401, 403 or 400
+ * *is* about the request — the key is wrong, the plan does not include the
+ * endpoint, the payload is invalid — and silently answering it with a weaker
+ * engine would hide a misconfiguration the user needs to see.
+ */
+function tagTransient(error: NodeApiError): NodeApiError {
+  (error as unknown as Record<string, unknown>).soterTransient = true;
+  return error;
+}
+
+function isTransientApiError(error: unknown): boolean {
+  return Boolean(error && typeof error === "object" && (error as Record<string, unknown>).soterTransient === true);
+}
+
+/**
+ * Guarantees an n8n error type on the way out of the engine selector.
+ *
+ * Everything thrown below it is already a `NodeApiError` or a
+ * `NodeOperationError`, so this is a backstop and not a conversion: re-wrapping
+ * an n8n error would bury the message, the path, and the status code that make it
+ * actionable, while an unexpected raw error still must not reach n8n bare.
+ */
+function asNodeError(node: INode, error: unknown): Error {
+  if (error instanceof NodeApiError || error instanceof NodeOperationError) return error;
+  return new NodeOperationError(node, error as Error);
+}
+
+/**
+ * Runs the input items with a bounded number in flight, preserving item order in
+ * the output regardless of the order they finish in.
+ *
+ * Concurrency defaults to 1, so the node keeps behaving exactly as it always has
+ * unless a user asks for more: at 1 an item that throws stops the batch before
+ * the next item is sent, which is what "stop on first error" has to mean. Above
+ * 1, items already in flight when one fails still complete — that is inherent to
+ * running them at once — and the earliest failure by item index is the one
+ * reported, so the error a user sees does not depend on network timing.
+ */
+async function runWithConcurrency(count: number, limit: number, work: (index: number) => Promise<void>): Promise<void> {
+  if (limit <= 1) {
+    for (let index = 0; index < count; index++) {
+      await work(index);
+    }
+    return;
+  }
+
+  let next = 0;
+  const failures: Array<{ index: number; error: unknown }> = [];
+  const workers = Array.from({ length: Math.min(limit, count) }, async () => {
+    for (;;) {
+      const index = next++;
+      if (index >= count) return;
+      try {
+        await work(index);
+      } catch (error) {
+        failures.push({ index, error });
+      }
+    }
+  });
+
+  await Promise.all(workers);
+  if (failures.length > 0) {
+    failures.sort((a, b) => a.index - b.index);
+    throw failures[0].error;
+  }
 }
 
 /**
@@ -67,10 +206,13 @@ function parseRetryAfterMs(headers: unknown): number | null {
  *
  * The rule is one sentence per action family so it stays predictable:
  *
- * - Guard Input / Guard Output / Universal AI Firewall: Flagged means the node
- *   actually stopped the item. That follows `blocked`, which follows On Threat,
- *   so choosing Redact/Warn/Continue keeps the item on Safe with its cleaned or
- *   annotated text — exactly what those settings were chosen for.
+ * - Guard Input / Guard Output: Flagged means the node actually stopped the
+ *   item. That follows `blocked`, which follows On Threat, so choosing
+ *   Redact/Warn/Continue keeps the item on Safe with its cleaned or annotated
+ *   text — exactly what those settings were chosen for.
+ * - Universal AI Firewall: the same, plus Flagged when any layer failed to
+ *   answer. A layer that never ran has cleared nothing, so an item carrying an
+ *   unchecked layer must not land on Safe as if six checks had passed.
  * - Analyze Text / RAG Risk Summary: these cannot stop anything, so Flagged
  *   means the item failed the check. Without this a report-only action would
  *   silently pass a detected threat straight into the model.
@@ -88,6 +230,8 @@ function isFlagged(action: string, result: IDataObject): boolean {
       return !isAllowishRecommendation(result.recommendedAction);
     case "analyzeText":
       return result.allowed === false;
+    case "universalGuard":
+      return result.blocked === true || result.degraded === true;
     default:
       return result.blocked === true;
   }
@@ -104,6 +248,154 @@ function isAllowishRecommendation(value: unknown): boolean {
   return ["ALLOW", "ACCEPT", "INDEX", "CONTINUE", "TRUSTED"].includes(value.trim().toUpperCase());
 }
 
+/**
+ * Everything one item needs, read from the node parameters in one place.
+ *
+ * Gathering the parameters before dispatching is what lets the same item be
+ * answered by either engine, retried against the local engine after a transient
+ * cloud failure, or served from an identical earlier item in the same batch —
+ * none of which is expressible when each action reads its own fields mid-switch.
+ */
+interface ActionRequest {
+  action: string;
+  itemIndex: number;
+  projectId?: string;
+  metadata?: Record<string, unknown>;
+  text: string;
+  onThreat: string;
+  allowedTopics?: string[];
+  systemPromptContext?: string;
+  profile: ProtectionProfile;
+  aiOutputText?: string;
+  documentId?: string;
+  documentSource?: string;
+  securityContext?: SecurityContext;
+  workflowJson?: string;
+}
+
+/**
+ * Reads a text parameter, which is not the same thing as casting one.
+ *
+ * `getNodeParameter` returns whatever the user's expression evaluated to, so a
+ * field declared `type: "string"` arrives as a number for `{{ $json.ticketId }}`,
+ * as `null` for a missing key, and as an object for `{{ $json }}`. Every text
+ * parameter in this file was read with `as string`, which is a compile-time
+ * assertion the runtime never checks: the object case reached `text.trim()` and
+ * failed with "text.trim is not a function", a message that names nothing the
+ * user can act on and points at no field.
+ *
+ * Scalars are coerced, because a numeric ticket id is a real thing to scan and
+ * `String(12345)` is exactly what the user meant. Objects and arrays are
+ * refused instead of stringified: scanning `{"message":"..."}` would inspect
+ * JSON punctuation and key names, then report a clean pass over text that was
+ * never really examined — and a guard that reports protection it did not
+ * perform is the one failure this package is built to avoid.
+ */
+function readText(ctx: IExecuteFunctions, node: INode, name: string, itemIndex: number, fieldName: string): string {
+  const raw = ctx.getNodeParameter(name, itemIndex, "") as unknown;
+  if (typeof raw === "string") return raw;
+  if (raw === null || raw === undefined) return "";
+  if (typeof raw === "number" || typeof raw === "boolean" || typeof raw === "bigint") return String(raw);
+  throw new NodeOperationError(
+    node,
+    `${fieldName} received ${Array.isArray(raw) ? "an array" : `a ${typeof raw}`} instead of text.`,
+    {
+      itemIndex,
+      description:
+        `Point the expression at the field that holds the text — for example ` +
+        `{{ $json.message }} rather than {{ $json }}. The node will not scan a JSON dump and ` +
+        `call the result checked.`,
+    },
+  );
+}
+
+function readActionRequest(
+  ctx: IExecuteFunctions,
+  node: INode,
+  itemIndex: number,
+  nodeVersion: number,
+  action: string,
+): ActionRequest {
+  const request: ActionRequest = {
+    action,
+    itemIndex,
+    projectId: (ctx.getNodeParameter("projectId", itemIndex, "") as string) || undefined,
+    metadata: buildMetadata(
+      node,
+      ctx.getNodeParameter("metadata", itemIndex, "") as string,
+      nodeVersion >= 2 ? (ctx.getNodeParameter("sessionId", itemIndex, "") as string) : "",
+    ),
+    text: "",
+    onThreat: "BLOCK",
+    profile: "MAXIMUM",
+  };
+
+  switch (action) {
+    case "analyzeText":
+      request.text = readText(ctx, node, "inputText", itemIndex, "Input Text");
+      request.onThreat = "WARN";
+      break;
+    case "inputGuard":
+      request.text = readText(ctx, node, "inputText", itemIndex, "Input Text");
+      request.onThreat = ctx.getNodeParameter("onThreat", itemIndex) as string;
+      request.allowedTopics = splitList(ctx.getNodeParameter("allowedTopics", itemIndex, "") as string);
+      request.systemPromptContext = readText(ctx, node, "systemPromptContext", itemIndex, "System Prompt Context");
+      break;
+    case "universalGuard":
+      request.text = readText(ctx, node, "inputText", itemIndex, "Input Text");
+      request.onThreat = ctx.getNodeParameter("onThreat", itemIndex) as string;
+      request.profile = ctx.getNodeParameter("protectionProfile", itemIndex) as ProtectionProfile;
+      request.aiOutputText = readText(ctx, node, "universalOutputText", itemIndex, "AI Output Text");
+      request.allowedTopics = splitList(ctx.getNodeParameter("allowedTopics", itemIndex, "") as string);
+      request.systemPromptContext = readText(ctx, node, "systemPromptContext", itemIndex, "System Prompt Context");
+      request.securityContext = readSecurityContext(ctx, node, itemIndex, nodeVersion);
+      break;
+    case "outputGuard":
+      request.text = readText(ctx, node, "outputText", itemIndex, "AI Output Text");
+      request.onThreat = ctx.getNodeParameter("onThreat", itemIndex) as string;
+      break;
+    case "piiRedactor":
+      request.text = readText(ctx, node, "piiText", itemIndex, "Text");
+      break;
+    case "ragScanner":
+      request.text = readText(ctx, node, "ragText", itemIndex, "Document Text");
+      request.documentId = readText(ctx, node, "documentId", itemIndex, "Document ID");
+      request.documentSource = readText(ctx, node, "documentSource", itemIndex, "Document Source");
+      break;
+    case "workflowAudit":
+      request.workflowJson = readText(ctx, node, "workflowJson", itemIndex, "Workflow JSON");
+      break;
+    default:
+      throw new NodeOperationError(node, `Unknown action: ${action}`, { itemIndex });
+  }
+
+  return request;
+}
+
+/**
+ * Identity of an item for within-execution reuse. Two items that would send a
+ * byte-identical request get one answer, which is the difference between paying
+ * for 500 calls and paying for the 12 distinct messages a deduplicated batch
+ * actually contains. Every field that can change a verdict is in the key.
+ */
+function reuseKey(request: ActionRequest): string {
+  return JSON.stringify([
+    request.action,
+    request.text,
+    request.aiOutputText ?? "",
+    request.onThreat,
+    request.profile,
+    request.projectId ?? "",
+    request.documentId ?? "",
+    request.documentSource ?? "",
+    request.allowedTopics ?? [],
+    request.systemPromptContext ?? "",
+    request.workflowJson ?? "",
+    request.securityContext ?? null,
+    request.metadata ?? null,
+  ]);
+}
+
 export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
   const items = this.getInputData();
   const node = this.getNode();
@@ -112,150 +404,295 @@ export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeE
   // receiving every item on output 0, including the ones it chose to let
   // through with Warn or Continue.
   const branchOutputs = (node.typeVersion ?? 1) >= 2;
-
-  const safeItems: INodeExecutionData[] = [];
-  const flaggedItems: INodeExecutionData[] = [];
-
-  const emit = (json: IDataObject, itemIndex: number, flagged: boolean) => {
-    const entry: INodeExecutionData = { json, pairedItem: { item: itemIndex } };
-    if (branchOutputs && flagged) flaggedItems.push(entry);
-    else safeItems.push(entry);
-  };
-
-  const credentials = await this.getCredentials("soterApi");
-  const apiKey = credentials.apiKey as string;
-  const baseUrl = validateBaseUrl(node, (credentials.baseUrl as string) || "https://soterai.in");
-  const credentialProjectId = (credentials.projectId as string) || undefined;
+  const nodeVersion = node.typeVersion ?? 1;
 
   // "Action" is noDataExpression, so it is one fixed value for the whole node.
-  // Read it once up front so the number of returned branches always matches the
-  // number of outputs the canvas is drawing, even for an empty input batch.
+  // Read it from the saved parameters when there is no item to read it against,
+  // so the number of returned branches always matches the number of outputs the
+  // canvas is drawing, even for an empty input batch.
   const nodeAction =
     items.length > 0
       ? (this.getNodeParameter("action", 0) as string)
       : ((node.parameters?.action as string) ?? "inputGuard");
-  const nodeVersion = node.typeVersion ?? 1;
 
-  for (let i = 0; i < items.length; i++) {
+  const shapeOutputs = (safe: INodeExecutionData[], flagged: INodeExecutionData[]) =>
+    !branchOutputs || outputCountForAction(nodeAction) === 1 ? [safe] : [safe, flagged];
+
+  if (items.length === 0) return shapeOutputs([], []);
+
+  const options = readNodeOptions(this, 0);
+
+  // Credentials are resolved lazily and exactly once. Audit n8n Workflow Security
+  // never calls the API, and Local mode never calls it either, so demanding a key
+  // before the first item is what made the node impossible to evaluate without an
+  // account — and made a credential-less workflow fail on an action that needs no
+  // credential.
+  let clientPromise: Promise<SoterClient> | undefined;
+  const resolveClient = (): Promise<SoterClient> => {
+    if (!clientPromise) {
+      clientPromise = (async () => {
+        // The credential is optional on the node so Local mode and the audit can
+        // run without one. That makes this the place where a Cloud-mode user with
+        // no credential finds out, so the error has to name the fix rather than
+        // surface n8n's generic "credentials not found".
+        let credentials: IDataObject;
+        try {
+          credentials = await this.getCredentials("soterApi");
+        } catch {
+          throw new NodeOperationError(node, "This action needs a SoterAI credential, and none is selected.", {
+            description: ENGINE_LOCAL_HINT,
+          });
+        }
+        const apiKey = typeof credentials.apiKey === "string" ? credentials.apiKey.trim() : "";
+        if (!apiKey) {
+          throw new NodeOperationError(node, "The selected SoterAI credential has no API key.", {
+            description: ENGINE_LOCAL_HINT,
+          });
+        }
+        return {
+          apiKey,
+          baseUrl: validateBaseUrl(node, (credentials.baseUrl as string) || "https://soterai.in"),
+          projectId: (credentials.projectId as string) || undefined,
+          timeoutMs: options.requestTimeoutMs,
+          includeRaw: options.includeRawResponse,
+        };
+      })();
+    }
+    return clientPromise;
+  };
+
+  const outcomes: Array<{ json: IDataObject; flagged: boolean }> = new Array(items.length);
+  const reuseCache = new Map<string, { promise: Promise<IDataObject>; itemIndex: number }>();
+
+  const runItem = async (i: number): Promise<void> => {
     try {
       const action = this.getNodeParameter("action", i) as string;
-      const projectId = (this.getNodeParameter("projectId", i, "") as string) || credentialProjectId;
-      const metadata = buildMetadata(
-        node,
-        this.getNodeParameter("metadata", i, "") as string,
-        nodeVersion >= 2 ? (this.getNodeParameter("sessionId", i, "") as string) : "",
-      );
+      const request = readActionRequest(this, node, i, nodeVersion, action);
+      const key = options.reuseIdenticalItems ? reuseKey(request) : undefined;
 
-      let result: IDataObject;
-
-      switch (action) {
-        case "analyzeText": {
-          const text = this.getNodeParameter("inputText", i) as string;
-          result = await executeInputGuard(this, apiKey, baseUrl, {
-            text, projectId, onThreat: "WARN", metadata,
-          });
-          result.operation = "analyzeText";
-          result.outputText = result.safeText;
-          break;
-        }
-        case "inputGuard": {
-          const text = this.getNodeParameter("inputText", i) as string;
-          const onThreat = this.getNodeParameter("onThreat", i) as string;
-          result = await executeInputGuard(this, apiKey, baseUrl, {
-            text, projectId, onThreat, metadata,
-            allowedTopics: splitList(this.getNodeParameter("allowedTopics", i, "") as string),
-            systemPromptContext: this.getNodeParameter("systemPromptContext", i, "") as string,
-          });
-          result.operation = "inputGuard";
-          break;
-        }
-        case "universalGuard": {
-          const text = this.getNodeParameter("inputText", i) as string;
-          const onThreat = this.getNodeParameter("onThreat", i) as string;
-          const profile = this.getNodeParameter("protectionProfile", i) as ProtectionProfile;
-          const aiOutputText = this.getNodeParameter("universalOutputText", i, "") as string;
-          const securityContext = readSecurityContext(this, node, i, nodeVersion);
-          result = await executeUniversalGuard(this, apiKey, baseUrl, {
-            text,
-            projectId,
-            onThreat,
-            metadata,
-            allowedTopics: splitList(this.getNodeParameter("allowedTopics", i, "") as string),
-            systemPromptContext: this.getNodeParameter("systemPromptContext", i, "") as string,
-            profile,
-            aiOutputText,
-            ragText: securityContext.rag?.text,
-            ragDocumentId: securityContext.rag?.documentId,
-            ragSource: securityContext.rag?.source,
-            tool: securityContext.tool,
-            memory: securityContext.memory,
-            outputDestinationType: securityContext.output?.destinationType,
-            outputDestinationName: securityContext.output?.destinationName,
-            protectedSources: securityContext.output?.protectedSources,
-          });
-          result.operation = "universalGuard";
-          break;
-        }
-        case "outputGuard": {
-          const text = this.getNodeParameter("outputText", i) as string;
-          const onThreat = this.getNodeParameter("onThreat", i) as string;
-          result = await executeOutputGuard(this, apiKey, baseUrl, {
-            text, projectId, onThreat, metadata,
-          });
-          result.operation = "outputGuard";
-          break;
-        }
-        case "piiRedactor": {
-          const text = this.getNodeParameter("piiText", i) as string;
-          result = await executePiiRedactor(this, apiKey, baseUrl, {
-            text, projectId, metadata,
-          });
-          result.operation = "piiRedactor";
-          break;
-        }
-        case "ragScanner": {
-          const text = this.getNodeParameter("ragText", i) as string;
-          const documentId = this.getNodeParameter("documentId", i) as string;
-          const source = this.getNodeParameter("documentSource", i) as string;
-          result = await executeRagScanner(this, apiKey, baseUrl, {
-            text, projectId, documentId, source, metadata,
-          });
-          result.operation = "ragScanner";
-          break;
-        }
-        case "workflowAudit": {
-          const workflowJson = this.getNodeParameter("workflowJson", i) as string;
-          result = executeWorkflowAudit(node, workflowJson);
-          break;
-        }
-        default:
-          throw new NodeOperationError(node, `Unknown action: ${action}`, { itemIndex: i });
+      let hit = key ? reuseCache.get(key) : undefined;
+      if (!hit) {
+        // The promise is cached *before* it is awaited, so duplicates that are
+        // already in flight wait for this call instead of starting their own.
+        // Caching the settled result only ever caught duplicates that arrived
+        // after the first answer came back, which at any concurrency above 1 is
+        // the minority of them.
+        const started = { promise: runAction(this, node, options, resolveClient, request), itemIndex: i };
+        if (key) reuseCache.set(key, started);
+        hit = started;
       }
 
-      emit(result, i, isFlagged(action, result));
+      const result = await hit.promise;
+      if (hit.itemIndex === i) {
+        outcomes[i] = { json: result, flagged: isFlagged(action, result) };
+        return;
+      }
+      // Marked, not hidden. A reader comparing two items with one incident id
+      // between them needs to know why, and a reused answer is still an answer
+      // about this item's text — it is the same text.
+      const reused: IDataObject = { ...result, reusedResult: true, reusedFromItemIndex: hit.itemIndex };
+      outcomes[i] = { json: reused, flagged: isFlagged(action, reused) };
     } catch (error) {
       if (this.continueOnFail()) {
         // An item whose check never completed has not been cleared by anything,
         // so it leaves through Flagged rather than Safe. Sending it down the
         // Safe branch would turn an API outage into a silent bypass.
-        emit(
-          {
+        outcomes[i] = {
+          json: {
             error: true,
             message: sanitizeErrorMessage(error instanceof Error ? error.message : "SoterAI request failed."),
           },
-          i,
-          true,
-        );
-        continue;
+          flagged: true,
+        };
+        return;
       }
       throw new NodeOperationError(node, error as Error, { itemIndex: i });
     }
+  };
+
+  await runWithConcurrency(items.length, options.batchConcurrency, runItem);
+
+  const safeItems: INodeExecutionData[] = [];
+  const flaggedItems: INodeExecutionData[] = [];
+  for (let i = 0; i < items.length; i++) {
+    const outcome = outcomes[i];
+    if (!outcome) continue;
+    const entry: INodeExecutionData = { json: outcome.json, pairedItem: { item: i } };
+    if (branchOutputs && outcome.flagged) flaggedItems.push(entry);
+    else safeItems.push(entry);
   }
 
-  if (!branchOutputs || outputCountForAction(nodeAction) === 1) {
-    return [safeItems];
+  return shapeOutputs(safeItems, flaggedItems);
+}
+
+/**
+ * Chooses the engine for one item and runs it.
+ *
+ * Auto is the only mode that switches, and it switches on one rule: the local
+ * engine answers when the cloud engine could not be *asked*. A transient network
+ * or server failure, an exhausted rate-limit window, or a missing credential all
+ * mean the question never reached the API, and a weaker answer beats no answer.
+ * A refused question — bad key, disabled endpoint, invalid payload — is reported,
+ * because quietly downgrading it would hide the configuration error that caused it.
+ */
+async function runAction(
+  ctx: IExecuteFunctions,
+  node: INode,
+  options: NodeOptions,
+  resolveClient: () => Promise<SoterClient>,
+  request: ActionRequest,
+): Promise<IDataObject> {
+  // The workflow audit is static analysis of JSON the user pasted in. It has
+  // never needed the API, and it must not be gated behind a credential.
+  if (request.action === "workflowAudit") {
+    const audit = executeWorkflowAudit(node, request.workflowJson ?? "");
+    audit.engine = "local";
+    audit.engineDegraded = false;
+    return audit;
   }
-  return [safeItems, flaggedItems];
+
+  if (options.engine === "LOCAL") {
+    return stampLocalEngine(runLocalAction(node, options, request), null);
+  }
+
+  let client: SoterClient;
+  try {
+    client = await resolveClient();
+  } catch (error) {
+    if (options.engine !== "AUTO") throw asNodeError(node, error);
+    return stampLocalEngine(
+      runLocalAction(node, options, request),
+      `No usable SoterAI credential: ${sanitizeErrorMessage(error instanceof Error ? error.message : "credential unavailable")}`,
+    );
+  }
+
+  try {
+    const result = await runCloudAction(ctx, node, options, client, request);
+    result.engine = "cloud";
+    result.engineDegraded = false;
+    return result;
+  } catch (error) {
+    if (options.engine !== "AUTO" || !isTransientApiError(error)) throw asNodeError(node, error);
+    return stampLocalEngine(
+      runLocalAction(node, options, request),
+      `The SoterAI API could not be reached, so this item was checked locally instead: ${sanitizeErrorMessage(
+        error instanceof Error ? error.message : "request failed",
+      )}`,
+    );
+  }
+}
+
+/**
+ * Attaches what the local engine is and what it cannot do to the result itself.
+ *
+ * A weaker check that does not say it is weaker is the failure mode this whole
+ * mode has to avoid: a workflow author reading `blocked: false` has no way to
+ * know whether an ML classifier cleared the item or a regex did.
+ */
+function stampLocalEngine(result: IDataObject, fallbackReason: string | null): IDataObject {
+  result.engine = "local";
+  result.engineDegraded = fallbackReason !== null;
+  result.engineDetail = {
+    version: LOCAL_ENGINE_VERSION,
+    ruleCount: LOCAL_RULE_COUNT,
+    limitations: LOCAL_ENGINE_LIMITATIONS,
+    ...(fallbackReason ? { fellBackFromCloud: fallbackReason } : {}),
+  };
+  return result;
+}
+
+async function runCloudAction(
+  ctx: IExecuteFunctions,
+  node: INode,
+  options: NodeOptions,
+  client: SoterClient,
+  request: ActionRequest,
+): Promise<IDataObject> {
+  const projectId = request.projectId || client.projectId;
+  let result: IDataObject;
+
+  switch (request.action) {
+    case "analyzeText": {
+      result = await executeInputGuard(ctx, client, {
+        text: request.text,
+        projectId,
+        onThreat: "WARN",
+        metadata: request.metadata,
+      });
+      result.operation = "analyzeText";
+      result.outputText = result.safeText;
+      break;
+    }
+    case "inputGuard": {
+      result = await executeInputGuard(ctx, client, {
+        text: request.text,
+        projectId,
+        onThreat: request.onThreat,
+        metadata: request.metadata,
+        allowedTopics: request.allowedTopics,
+        systemPromptContext: request.systemPromptContext,
+      });
+      result.operation = "inputGuard";
+      break;
+    }
+    case "universalGuard": {
+      const context = request.securityContext ?? {};
+      result = await executeUniversalGuard(ctx, options, client, {
+        text: request.text,
+        projectId,
+        onThreat: request.onThreat,
+        metadata: request.metadata,
+        allowedTopics: request.allowedTopics,
+        systemPromptContext: request.systemPromptContext,
+        profile: request.profile,
+        aiOutputText: request.aiOutputText,
+        ragText: context.rag?.text,
+        ragDocumentId: context.rag?.documentId,
+        ragSource: context.rag?.source,
+        tool: context.tool,
+        memory: context.memory,
+        outputDestinationType: context.output?.destinationType,
+        outputDestinationName: context.output?.destinationName,
+        protectedSources: context.output?.protectedSources,
+      });
+      result.operation = "universalGuard";
+      break;
+    }
+    case "outputGuard": {
+      result = await executeOutputGuard(ctx, client, {
+        text: request.text,
+        projectId,
+        onThreat: request.onThreat,
+        metadata: request.metadata,
+      });
+      result.operation = "outputGuard";
+      break;
+    }
+    case "piiRedactor": {
+      result = await executePiiRedactor(ctx, client, {
+        text: request.text,
+        projectId,
+        metadata: request.metadata,
+      });
+      result.operation = "piiRedactor";
+      break;
+    }
+    case "ragScanner": {
+      result = await executeRagScanner(ctx, client, {
+        text: request.text,
+        projectId,
+        documentId: request.documentId ?? "",
+        source: request.documentSource ?? "api",
+        metadata: request.metadata,
+      });
+      result.operation = "ragScanner";
+      break;
+    }
+    default:
+      throw new NodeOperationError(node, `Unknown action: ${request.action}`, { itemIndex: request.itemIndex });
+  }
+
+  return result;
 }
 
 // Helpers
@@ -286,6 +723,19 @@ function calibrationFields(raw: Record<string, unknown>): IDataObject {
     categoryConfidence: (raw.categoryConfidence as IDataObject) ?? {},
     latencyMs: typeof raw.latencyMs === "number" ? raw.latencyMs : null,
   };
+}
+
+/**
+ * The full upstream payload, sanitized, unless the user turned it off.
+ *
+ * It stays on by default because it is the only way to see a field the node does
+ * not surface yet, but it can double or triple the size of an item, and a
+ * thousand-item batch pinned in an execution log is a real cost. Turning it off
+ * removes the key entirely rather than emitting an empty object, so an
+ * expression can tell "not requested" from "the server returned nothing".
+ */
+function rawResponseFields(client: SoterClient, raw: Record<string, unknown>): IDataObject {
+  return client.includeRaw ? { rawResponse: sanitizeOutputObject(raw) } : {};
 }
 
 /**
@@ -376,12 +826,11 @@ interface RagParams {
 
 async function soterPost(
   ctx: IExecuteFunctions,
-  apiKey: string,
-  baseUrl: string,
+  client: SoterClient,
   path: string,
   body: Record<string, unknown>,
 ): Promise<Record<string, unknown>> {
-  const url = `${baseUrl.replace(/\/$/, "")}${path}`;
+  const url = `${client.baseUrl.replace(/\/$/, "")}${path}`;
 
   for (let attempt = 0; ; attempt++) {
     let response: { statusCode?: number; body?: unknown; headers?: unknown };
@@ -392,19 +841,24 @@ async function soterPost(
         url,
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": apiKey,
+          "x-api-key": client.apiKey,
           "User-Agent": USER_AGENT,
         },
         body: body as IDataObject,
         json: true,
-        timeout: 20000,
+        timeout: client.timeoutMs,
         returnFullResponse: true,
         ignoreHttpStatusErrors: true,
       });
     } catch (error) {
-      throw new NodeApiError(ctx.getNode(), error as JsonObject, {
-        message: "SoterAI API request failed. Check the Base URL and network access.",
-      });
+      // The request never got an answer: DNS, TLS, a refused connection, a
+      // timeout. Nothing here says the request was wrong, so Auto mode may
+      // answer it with the local engine.
+      throw tagTransient(
+        new NodeApiError(ctx.getNode(), error as JsonObject, {
+          message: `SoterAI API request to ${path} failed. Check the Base URL and network access.`,
+        }),
+      );
     }
 
     const statusCode = typeof response.statusCode === "number" ? response.statusCode : 0;
@@ -422,10 +876,16 @@ async function soterPost(
     }
 
     if (statusCode < 200 || statusCode >= 300) {
-      throw new NodeApiError(ctx.getNode(), data as JsonObject, {
-        message: formatApiError(statusCode, data),
+      const error = new NodeApiError(ctx.getNode(), data as JsonObject, {
+        message: formatApiError(statusCode, data, path),
         httpCode: String(statusCode),
       });
+      // A server fault or an exhausted rate-limit window is about capacity, not
+      // about this request. A 4xx other than 429 is about this request — the key,
+      // the plan, or the payload — and must surface instead of being answered by
+      // a weaker engine.
+      if (statusCode >= 500 || statusCode === 429 || statusCode === 408 || statusCode === 0) tagTransient(error);
+      throw error;
     }
 
     return data;
@@ -434,15 +894,14 @@ async function soterPost(
 
 async function executeInputGuard(
   ctx: IExecuteFunctions,
-  apiKey: string,
-  baseUrl: string,
+  client: SoterClient,
   params: GuardParams,
 ): Promise<IDataObject> {
   validateText(ctx.getNode(), params.text, "Input Text");
   const meta: Record<string, unknown> = { ...params.metadata };
   if (params.projectId) meta.projectId = params.projectId;
 
-  const raw = await soterPost(ctx, apiKey, baseUrl, "/api/guard/input", {
+  const raw = await soterPost(ctx, client, "/api/guard/input", {
     message: params.text,
     metadata: meta,
     ...(params.allowedTopics?.length ? { allowedTopics: params.allowedTopics } : {}),
@@ -476,8 +935,9 @@ async function executeInputGuard(
     }),
     ...calibrationFields(raw),
     incidentId: (raw.incidentId as string) ?? null,
-    rawResponse: sanitizeOutputObject(raw),
+    ...rawResponseFields(client, raw),
   };
+  annotateThrottle(result, raw);
 
   if (!allowed && params.onThreat) {
     switch (params.onThreat) {
@@ -509,15 +969,14 @@ async function executeInputGuard(
 
 async function executeOutputGuard(
   ctx: IExecuteFunctions,
-  apiKey: string,
-  baseUrl: string,
+  client: SoterClient,
   params: GuardParams,
 ): Promise<IDataObject> {
   validateText(ctx.getNode(), params.text, "AI Output Text");
   const meta: Record<string, unknown> = { ...params.metadata };
   if (params.projectId) meta.projectId = params.projectId;
 
-  const raw = await soterPost(ctx, apiKey, baseUrl, "/api/guard/output", {
+  const raw = await soterPost(ctx, client, "/api/guard/output", {
     aiResponse: params.text,
     metadata: meta,
   });
@@ -547,8 +1006,9 @@ async function executeOutputGuard(
     }),
     ...calibrationFields(raw),
     incidentId: (raw.incidentId as string) ?? null,
-    rawResponse: sanitizeOutputObject(raw),
+    ...rawResponseFields(client, raw),
   };
+  annotateThrottle(result, raw);
 
   if (!allowed && params.onThreat) {
     switch (params.onThreat) {
@@ -578,10 +1038,191 @@ async function executeOutputGuard(
   return result;
 }
 
+// The check endpoint accepts at most 50 source ids per request, so the node
+// stops at the same number rather than letting the API reject the whole call.
+const MAX_PROTECTED_SOURCES = 50;
+const SEMANTIC_SENSITIVITY_LEVELS = ["PUBLIC", "INTERNAL", "PRIVATE", "CONFIDENTIAL", "SECRET", "REGULATED", "SYSTEM_PROMPT"];
+
+/**
+ * "Protected Sources" is confidential data by definition, so an unspecified or
+ * unrecognised level is treated as CONFIDENTIAL rather than passed through — an
+ * unrecognised value fails the request schema and would take the whole egress
+ * check down with it.
+ */
+function normalizeSensitivity(value: unknown): string {
+  const level = typeof value === "string" ? value.trim().toUpperCase() : "";
+  return SEMANTIC_SENSITIVITY_LEVELS.includes(level) ? level : "CONFIDENTIAL";
+}
+
+/**
+ * Turns the Protected Sources field into the `sourceIds` the egress check
+ * actually accepts, registering any source that was supplied with its content.
+ *
+ * The node used to send the array as `sources`, a key the request schema does
+ * not define. Zod strips unknown keys, so the field silently became
+ * `sourceIds: []` and the egress check compared the AI output against nothing at
+ * all — the layer reported a clean result while doing no comparison. Sources
+ * also have to exist before they can be referenced (the check loads them by id
+ * from the project's fingerprint table), so an inline snapshot is fingerprinted
+ * first and only its id travels with the check.
+ */
+async function registerProtectedSources(
+  ctx: IExecuteFunctions,
+  client: SoterClient,
+  sources: unknown[],
+  meta: Record<string, unknown>,
+): Promise<{ sourceIds: string[]; registeredSources: string[]; skippedSources: string[] }> {
+  const sourceIds: string[] = [];
+  const registeredSources: string[] = [];
+  const skippedSources: string[] = [];
+
+  for (const entry of sources.slice(0, MAX_PROTECTED_SOURCES)) {
+    // A bare string is a source already registered against the project.
+    if (typeof entry === "string") {
+      const id = entry.trim();
+      if (id) sourceIds.push(id);
+      else skippedSources.push("(empty string)");
+      continue;
+    }
+    if (!isRecord(entry)) {
+      skippedSources.push(`(${typeof entry})`);
+      continue;
+    }
+    const id = stringValue(entry.sourceId) ?? stringValue(entry.id) ?? stringValue(entry.name);
+    if (!id) {
+      skippedSources.push("(entry with no id)");
+      continue;
+    }
+    const content = stringValue(entry.content) ?? stringValue(entry.text);
+    if (!content) {
+      // No snapshot to fingerprint: assume the caller registered it already.
+      sourceIds.push(id);
+      continue;
+    }
+    await soterPost(ctx, client, "/api/semantic-egress/source/fingerprint", {
+      sourceId: id,
+      sourceType: stringValue(entry.sourceType) ?? "n8n-workflow",
+      sensitivityLevel: normalizeSensitivity(entry.sensitivityLevel),
+      content,
+      metadata: meta,
+    });
+    sourceIds.push(id);
+    registeredSources.push(id);
+  }
+
+  // Named rather than dropped. A silently truncated source list is the same
+  // failure as the silently ignored one this function exists to fix.
+  if (sources.length > MAX_PROTECTED_SOURCES) {
+    skippedSources.push(`${sources.length - MAX_PROTECTED_SOURCES} source(s) beyond the ${MAX_PROTECTED_SOURCES}-source API limit`);
+  }
+  return { sourceIds, registeredSources, skippedSources };
+}
+
+/**
+ * Runs one optional Universal AI Firewall layer without letting its failure end
+ * the item.
+ *
+ * The layers are independent checks of different things, and only the input
+ * guard is mandatory. When an optional endpoint is missing from a deployment,
+ * disabled for the key's plan, or gated by middleware, the honest outcome is
+ * "this layer was not checked" — not the loss of the five layers that did run.
+ * A failed layer never becomes a decision: `decideUniversal` is given only the
+ * layers that answered, and the item is routed to Flagged because something in
+ * it went unverified.
+ *
+ * In Auto mode a `localFallback` turns that unchecked layer into a locally
+ * checked one. The result is tagged with the engine that produced it and keeps
+ * the cloud error, so "this layer was answered by the rule engine because the
+ * endpoint 401'd" stays readable — but the layer does count as evaluated, because
+ * something did actually inspect it.
+ */
+async function optionalLayer(
+  layer: string,
+  hint: string,
+  run: () => Promise<Record<string, unknown>>,
+  localFallback?: () => Record<string, unknown>,
+): Promise<IDataObject> {
+  try {
+    return { layer, ...(await run()) } as IDataObject;
+  } catch (error) {
+    const message = sanitizeErrorMessage(
+      error instanceof Error ? error.message : `The ${layer} layer could not be checked.`,
+    );
+    if (localFallback) {
+      return {
+        layer,
+        ...localFallback(),
+        engine: "local",
+        engineDegraded: true,
+        cloudError: message,
+        hint,
+      } as IDataObject;
+    }
+    return {
+      layer,
+      unavailable: true,
+      error: message,
+      hint,
+    };
+  }
+}
+
+// Passport verdicts that are about enrollment, not about the item's content.
+const PASSPORT_CONFIG_POLICY_IDS = ["passport.session_missing", "passport.unknown"];
+const PASSPORT_ENROLLMENT_HINT =
+  "The tool check enforces zero-trust agent identity before it looks at the tool call, so it needs an " +
+  "enrolled agent session: POST /api/agent/identity/create, then POST /api/agent/passport/issue with " +
+  "that identity and this node's Session ID. Until that exists the layer reports an enrollment gap " +
+  "instead of a verdict — remove the Tool Call layer from Security Context if you do not use passports.";
+
+/**
+ * `/api/agent/tool/check` answers HTTP 200 with decision BLOCK / riskLevel
+ * CRITICAL when the session has no passport. That is a correct answer to the
+ * question the endpoint was asked — it fails closed — but it is an answer about
+ * enrollment, and reporting it as a content verdict makes every item in the
+ * workflow look like a critical attack no matter what it says. The layer stays
+ * non-allowing (it is excluded from the verdict, and its presence flags the
+ * item) and is relabelled for what it is.
+ */
+function annotatePassportGap(check: IDataObject): IDataObject {
+  const matches = Array.isArray(check.policyMatches) ? check.policyMatches : [];
+  const gap = matches.some(
+    (match) => isRecord(match) && typeof match.id === "string" && PASSPORT_CONFIG_POLICY_IDS.includes(match.id),
+  );
+  if (!gap) return check;
+  return {
+    ...check,
+    unavailable: true,
+    configurationRequired: true,
+    error: `The Tool Call layer was not evaluated: ${stringValue(check.reason) ?? "the agent session has no passport"}`,
+    hint: PASSPORT_ENROLLMENT_HINT,
+  };
+}
+
+/**
+ * Runs the optional layers, either all at once or one after another.
+ *
+ * They are independent checks of different things — a document, a tool call, a
+ * memory write, the model's answer — so nothing about them requires an order.
+ * Running them together turns up to five sequential round trips into one, which
+ * on a real deployment is the difference between roughly three seconds an item
+ * and roughly six hundred milliseconds. The sequential path stays available for
+ * deployments on a tight per-minute rate limit, where five simultaneous calls
+ * per item is the thing that trips it.
+ */
+async function runLayers(runs: Array<() => Promise<IDataObject>>, parallel: boolean): Promise<IDataObject[]> {
+  if (parallel) return Promise.all(runs.map((run) => run()));
+  const results: IDataObject[] = [];
+  for (const run of runs) {
+    results.push(await run());
+  }
+  return results;
+}
+
 async function executeUniversalGuard(
   ctx: IExecuteFunctions,
-  apiKey: string,
-  baseUrl: string,
+  options: NodeOptions,
+  client: SoterClient,
   params: UniversalGuardParams,
 ): Promise<IDataObject> {
   validateText(ctx.getNode(), params.text, "Input Text");
@@ -592,8 +1233,16 @@ async function executeUniversalGuard(
   };
   if (params.projectId) meta.projectId = params.projectId;
 
+  // Auto mode is the only mode allowed to answer a layer with the local engine.
+  // In Cloud mode an unavailable layer stays unavailable, because the user asked
+  // for the cloud engine and needs to see that part of it did not run.
+  const auto = options.engine === "AUTO";
+
   const checks: IDataObject[] = [];
-  const input = await executeInputGuard(ctx, apiKey, baseUrl, {
+  // The input guard is the one mandatory layer, so it is deliberately not
+  // wrapped: if it cannot run, nothing has inspected the item and the node must
+  // fail loudly rather than emit a partial verdict.
+  const input = await executeInputGuard(ctx, client, {
     text: params.text,
     projectId: params.projectId,
     onThreat: "WARN",
@@ -603,131 +1252,650 @@ async function executeUniversalGuard(
   });
   checks.push({ layer: "input", ...input });
 
+  const layerRuns: Array<() => Promise<IDataObject>> = [];
+
   if (params.ragText?.trim()) {
     const documentId = params.ragDocumentId?.trim() || `n8n-${Date.now()}`;
-    const rag = await executeRagScanner(ctx, apiKey, baseUrl, {
-      text: params.ragText,
-      projectId: params.projectId,
-      documentId,
-      source: params.ragSource || "api",
-      metadata: meta,
-    });
-    checks.push({ layer: "rag", ...rag });
+    const source = params.ragSource || "api";
+    layerRuns.push(() =>
+      optionalLayer(
+        "rag",
+        "Check that /api/rag/document/trust-score is available on the deployment at your Base URL and enabled for this key's plan.",
+        () =>
+          executeRagScanner(ctx, client, {
+            text: params.ragText as string,
+            projectId: params.projectId,
+            documentId,
+            source,
+            metadata: meta,
+          }),
+        auto ? () => scoreRagDocumentLocal(params.ragText as string, documentId, source) as unknown as Record<string, unknown> : undefined,
+      ),
+    );
   }
 
   if (params.tool) {
+    // Name and action are configuration, not content: an incomplete Tool Call
+    // layer is a mistake in the node, and no engine can guess what was meant.
     if (!params.tool.name.trim()) throw new NodeOperationError(ctx.getNode(), "Tool Name is required when a Tool Call layer is added to Security Context.");
     if (!params.tool.action.trim()) throw new NodeOperationError(ctx.getNode(), "Tool Action is required when a Tool Call layer is added to Security Context.");
-    const tool = await soterPost(ctx, apiKey, baseUrl, "/api/agent/tool/check", {
-      sessionId: typeof meta.sessionId === "string" ? meta.sessionId : undefined,
-      agentName: typeof meta.agentName === "string" ? meta.agentName : "n8n-agent",
-      tool: params.tool.name,
-      action: params.tool.action,
-      target: params.tool.target || undefined,
-      content: params.tool.content || params.text,
-      destination: params.tool.destination,
-      riskContext: params.tool.riskContext,
-      metadata: meta,
-    });
-    checks.push({ layer: "tool", ...tool });
+
+    const tool = params.tool;
+    const localToolCheck = () =>
+      checkToolCallLocal({
+        name: tool.name,
+        action: tool.action,
+        destination: tool.destination,
+        target: tool.target,
+        content: tool.content || params.text,
+        riskContext: tool.riskContext,
+      }) as unknown as Record<string, unknown>;
+
+    const sessionId = typeof meta.sessionId === "string" ? meta.sessionId.trim() : "";
+    if (!sessionId) {
+      // Caught here rather than at the API, which would answer BLOCK / CRITICAL
+      // for a missing sessionId and leave the author reading it as a threat. In
+      // Auto mode there is a better answer than an error: check the payload with
+      // the local engine and say plainly that the identity half did not run.
+      if (!auto) {
+        throw new NodeOperationError(ctx.getNode(), "A Tool Call layer needs a Session ID.", {
+          description: PASSPORT_ENROLLMENT_HINT,
+        });
+      }
+      layerRuns.push(async () => ({
+        layer: "tool",
+        ...localToolCheck(),
+        engine: "local",
+        engineDegraded: true,
+        cloudError: "No Session ID is set, so the passport-enforcing cloud tool check could not be called.",
+        hint: PASSPORT_ENROLLMENT_HINT,
+      }));
+    } else {
+      layerRuns.push(async () => {
+        const cloudTool = annotatePassportGap(
+          await optionalLayer(
+            "tool",
+            "Check that /api/agent/tool/check is available on the deployment at your Base URL and enabled for this key's plan.",
+            () =>
+              soterPost(ctx, client, "/api/agent/tool/check", {
+                sessionId,
+                agentName: typeof meta.agentName === "string" ? meta.agentName : "n8n-agent",
+                tool: tool.name,
+                action: tool.action,
+                target: tool.target || undefined,
+                content: tool.content || params.text,
+                destination: tool.destination,
+                riskContext: tool.riskContext,
+                metadata: meta,
+              }),
+            auto ? localToolCheck : undefined,
+          ),
+        );
+        // An enrollment gap is a 200 response, not a thrown error, so
+        // optionalLayer's fallback never fires for it. Auto mode still has a
+        // useful answer available, so it uses it.
+        if (auto && cloudTool.unavailable === true) {
+          return {
+            layer: "tool",
+            ...localToolCheck(),
+            engine: "local",
+            engineDegraded: true,
+            cloudError: stringValue(cloudTool.error) ?? "The cloud tool check reported an enrollment gap instead of a verdict.",
+            hint: PASSPORT_ENROLLMENT_HINT,
+          };
+        }
+        return cloudTool;
+      });
+    }
   }
 
   if (params.memory) {
-    const memory = await soterPost(ctx, apiKey, baseUrl, "/api/agent/memory/check", {
-      sessionId: typeof meta.sessionId === "string" ? meta.sessionId : undefined,
-      memoryAction: params.memory.action,
-      content: params.memory.content || params.text,
-      memoryType: params.memory.memoryType || "custom",
-    });
-    checks.push({ layer: "memory", ...memory });
+    const memory = params.memory;
+    layerRuns.push(() =>
+      optionalLayer(
+        "memory",
+        "Check that /api/agent/memory/check is available on the deployment at your Base URL and enabled for this key's plan.",
+        () =>
+          soterPost(ctx, client, "/api/agent/memory/check", {
+            sessionId: typeof meta.sessionId === "string" ? meta.sessionId : undefined,
+            memoryAction: memory.action,
+            content: memory.content || params.text,
+            memoryType: memory.memoryType || "custom",
+          }),
+        auto
+          ? () =>
+              localLayerFromAnalysis(
+                analyzeLocal(memory.content || params.text, "INPUT"),
+                "Checked by the local rule engine for poisoning, secrets and personal data in the memory write.",
+              ) as unknown as Record<string, unknown>
+          : undefined,
+      ),
+    );
   }
+
+  if (params.aiOutputText?.trim()) {
+    const aiOutputText = params.aiOutputText;
+    layerRuns.push(() =>
+      optionalLayer(
+        "output",
+        "Check that /api/guard/output is available on the deployment at your Base URL.",
+        () =>
+          executeOutputGuard(ctx, client, {
+            text: aiOutputText,
+            projectId: params.projectId,
+            onThreat: "WARN",
+            metadata: meta,
+          }),
+        auto
+          ? () =>
+              localGuardResult({
+                analysis: analyzeLocal(aiOutputText, "OUTPUT"),
+                direction: "output",
+                originalText: aiOutputText,
+                onThreat: "WARN",
+                includeRaw: client.includeRaw,
+              }) as unknown as Record<string, unknown>
+          : undefined,
+      ),
+    );
+
+    // Only offered when at least one source arrived with its text. Comparing an
+    // output against zero sources and reporting ALLOW is the exact false-clean
+    // shape the sourceIds fix existed to remove, so the layer stays unavailable
+    // instead of pretending to have compared something.
+    const inlineSources = toLocalEgressSources(params.protectedSources ?? []);
+    const canCompareLocally = auto && inlineSources.some((source) => Boolean(source.content));
+
+    layerRuns.push(() =>
+      optionalLayer(
+        "semanticEgress",
+        "Check that /api/semantic-egress/check is available on the deployment at your Base URL and enabled for this key's plan. " +
+          "A 401 here while the other layers succeed points at the endpoint, not at the API key.",
+        async () => {
+          // Registration happens inside the layer so a failure to fingerprint a
+          // source degrades this one layer instead of the whole item.
+          const sources = await registerProtectedSources(ctx, client, params.protectedSources ?? [], meta);
+          const egress = await soterPost(ctx, client, "/api/semantic-egress/check", {
+            sessionId: typeof meta.sessionId === "string" ? meta.sessionId : undefined,
+            content: aiOutputText,
+            destinationType: params.outputDestinationType || "FINAL_OUTPUT",
+            destinationName: params.outputDestinationName || undefined,
+            sourceIds: sources.sourceIds,
+            metadata: meta,
+          });
+          return {
+            ...egress,
+            comparedSourceIds: sources.sourceIds,
+            ...(sources.registeredSources.length ? { registeredSources: sources.registeredSources } : {}),
+            ...(sources.skippedSources.length ? { skippedSources: sources.skippedSources } : {}),
+          };
+        },
+        canCompareLocally ? () => compareEgressLocal(aiOutputText, inlineSources) as unknown as Record<string, unknown> : undefined,
+      ),
+    );
+  }
+
+  checks.push(...(await runLayers(layerRuns, options.parallelLayers)));
 
   let outputText = params.aiOutputText?.trim() ? params.aiOutputText : (input.outputText as string) || params.text;
-  if (params.aiOutputText?.trim()) {
-    const output = await executeOutputGuard(ctx, apiKey, baseUrl, {
-      text: params.aiOutputText,
-      projectId: params.projectId,
-      onThreat: "WARN",
-      metadata: meta,
-    });
-    outputText = (output.outputText as string) || params.aiOutputText;
-    checks.push({ layer: "output", ...output });
-
-    const egress = await soterPost(ctx, apiKey, baseUrl, "/api/semantic-egress/check", {
-      sessionId: typeof meta.sessionId === "string" ? meta.sessionId : undefined,
-      content: params.aiOutputText,
-      destinationType: params.outputDestinationType || "FINAL_OUTPUT",
-      destinationName: params.outputDestinationName || undefined,
-      sources: params.protectedSources ?? [],
-      metadata: meta,
-    });
-    checks.push({ layer: "semanticEgress", ...egress });
+  const outputLayer = checks.find((check) => check.layer === "output");
+  if (outputLayer && outputLayer.unavailable !== true) {
+    outputText = (outputLayer.outputText as string) || (params.aiOutputText as string) || outputText;
   }
 
-  const final = decideUniversal(checks, params.profile);
-  const safeText = firstString(checks, ["safeText", "safeContent", "contentRedacted"]) || outputText;
+  return finalizeUniversalGuard({
+    checks,
+    profile: params.profile,
+    onThreat: params.onThreat || "BLOCK",
+    text: params.text,
+    aiOutputText: params.aiOutputText,
+    outputText,
+  });
+}
+
+/**
+ * Turns the layer results into the single verdict the node emits.
+ *
+ * Shared by both engines on purpose: the cloud and local firewalls disagree about
+ * how good their answers are, but they must not disagree about the *shape* of the
+ * answer, or a workflow that branches on `finalDecision` would break the moment
+ * it fell back.
+ */
+function finalizeUniversalGuard(input: {
+  checks: IDataObject[];
+  profile: ProtectionProfile;
+  onThreat: string;
+  text: string;
+  aiOutputText?: string;
+  outputText: string;
+}): IDataObject {
+  const { checks } = input;
+  // A layer that never answered is not a layer that passed. Only the layers that
+  // returned a verdict feed the decision, the attribution, and the categories;
+  // the ones that failed are reported separately and flag the item instead.
+  const evaluated = checks.filter((check) => check.unavailable !== true);
+  const degradedLayers = checks.filter((check) => check.unavailable === true).map((check) => String(check.layer));
+  // Layers a weaker engine answered. Not degraded — something did inspect them —
+  // but a reader deciding how much to trust an ALLOW needs to know which engine
+  // produced each part of it.
+  const locallyCheckedLayers = evaluated
+    .filter((check) => check.engine === "local" && check.engineDegraded === true)
+    .map((check) => String(check.layer));
+  const final = decideUniversal(evaluated, input.profile);
+  const safeText = firstString(evaluated, ["safeText", "safeContent", "contentRedacted"]) || input.outputText;
   // Attribution comes from whichever layer actually drove the verdict, not from
   // the first layer that happened to run — otherwise `primaryRiskType` would say
-  // "input" on a run that was decided by the egress check.
-  const drivingLayer = checks.reduce(
-    (worst, check) =>
-      ((check.riskScore as number) ?? 0) > ((worst?.riskScore as number) ?? 0) ? check : worst,
-    checks[0],
+  // "input" on a run that was decided by the egress check. Scored through
+  // `scoreFromCheck` rather than off a raw `riskScore` field, because the RAG
+  // layer reports a *trust* score, where higher is better: read literally it
+  // scored 0 and could never be named as the driving layer, however poisoned the
+  // document was.
+  const drivingLayer = evaluated.reduce(
+    (worst, check) => (scoreFromCheck(check) > scoreFromCheck(worst) ? check : worst),
+    evaluated[0],
   );
   const enforced = enforceUniversalDecision({
     decision: final.decision,
-    onThreat: params.onThreat || "BLOCK",
-    originalText: params.aiOutputText?.trim() ? params.aiOutputText : params.text,
+    onThreat: input.onThreat,
+    originalText: input.aiOutputText?.trim() ? input.aiOutputText : input.text,
     safeText,
   });
+  const categories = collectCategories(evaluated);
 
   return {
     operation: "universalGuard",
-    protectionProfile: params.profile,
+    protectionProfile: input.profile,
     allowed: final.decision === "ALLOW" || final.decision === "REDACT" || final.decision === "REVIEW",
     blocked: enforced.blocked,
+    // Reported apart from `blocked` on purpose: the item was not stopped by a
+    // verdict, but part of it was never inspected, and those are different facts
+    // for anyone reading the run afterwards.
+    degraded: degradedLayers.length > 0,
+    degradedLayers,
+    fullyChecked: degradedLayers.length === 0,
+    ...(locallyCheckedLayers.length ? { locallyCheckedLayers } : {}),
+    throttled: checks.some((check) => check.throttled === true),
     needsHumanReview: final.decision === "ASK_APPROVAL",
     liveChatAction: final.decision === "ASK_APPROVAL" ? "SAFE_REPHRASE" : final.decision,
     finalDecision: final.decision,
     riskLevel: final.riskLevel,
     riskScore: final.riskScore,
-    categories: collectCategories(checks),
+    categories,
     primaryRiskType: (drivingLayer?.primaryRiskType as string) ?? null,
     categoryConfidence: (drivingLayer?.categoryConfidence as IDataObject) ?? {},
     drivingLayer: (drivingLayer?.layer as string) ?? null,
-    reason: final.reason,
+    reason: degradedLayers.length
+      ? `${final.reason} Not checked: ${degradedLayers.join(", ")}.`
+      : final.reason,
     userMessage: buildUserFacingMessage({
       allowed: final.decision === "ALLOW" || final.decision === "REVIEW",
-      direction: params.aiOutputText?.trim() ? "output" : "input",
+      direction: input.aiOutputText?.trim() ? "output" : "input",
       action: final.decision,
-      categories: collectCategories(checks),
+      categories,
     }),
     developerMessage: buildDeveloperMessage({
       allowed: final.decision === "ALLOW" || final.decision === "REVIEW",
       direction: "workflow",
       reason: final.reason,
       riskScore: final.riskScore,
-      categories: collectCategories(checks),
+      categories,
     }),
     outputText: enforced.outputText,
     safeText,
     recommendedAction: final.recommendedAction,
-    safeRephrasePrompt: final.decision === "ASK_APPROVAL" ? buildSafeRephrasePrompt(collectCategories(checks)) : "",
+    safeRephrasePrompt: final.decision === "ASK_APPROVAL" ? buildSafeRephrasePrompt(categories) : "",
     checks,
   };
 }
 
+// ---------------------------------------------------------------------------
+// Local engine runners
+//
+// These produce the same result shape as the cloud runners above. That is the
+// whole contract: a workflow written against Cloud mode keeps working when it
+// runs on the local engine, and the only difference visible downstream is the
+// `engine` field and the limitations attached to it.
+// ---------------------------------------------------------------------------
+
+const LOCAL_SEVERITY_SCORE: Record<string, number> = { CRITICAL: 92, HIGH: 72, MEDIUM: 42, LOW: 15 };
+
+function runLocalAction(node: INode, options: NodeOptions, request: ActionRequest): IDataObject {
+  switch (request.action) {
+    case "analyzeText": {
+      validateText(node, request.text, "Input Text");
+      const result = localGuardResult({
+        analysis: analyzeLocal(request.text, "INPUT"),
+        direction: "input",
+        originalText: request.text,
+        onThreat: "WARN",
+        includeRaw: options.includeRawResponse,
+      });
+      result.operation = "analyzeText";
+      result.outputText = result.safeText;
+      return result;
+    }
+    case "inputGuard": {
+      validateText(node, request.text, "Input Text");
+      const result = localGuardResult({
+        analysis: analyzeLocal(request.text, "INPUT"),
+        direction: "input",
+        originalText: request.text,
+        onThreat: request.onThreat,
+        includeRaw: options.includeRawResponse,
+      });
+      result.operation = "inputGuard";
+      return result;
+    }
+    case "outputGuard": {
+      validateText(node, request.text, "AI Output Text");
+      const result = localGuardResult({
+        analysis: analyzeLocal(request.text, "OUTPUT"),
+        direction: "output",
+        originalText: request.text,
+        onThreat: request.onThreat,
+        includeRaw: options.includeRawResponse,
+      });
+      result.operation = "outputGuard";
+      return result;
+    }
+    case "piiRedactor": {
+      validateText(node, request.text, "Text");
+      const redaction = redactLocal(request.text);
+      const worst = redaction.entities.reduce(
+        (score, entity) => Math.max(score, LOCAL_SEVERITY_SCORE[entity.severity] ?? 0),
+        0,
+      );
+      const result: IDataObject = {
+        operation: "piiRedactor",
+        safeText: redaction.safeText,
+        outputText: redaction.safeText,
+        detectedEntities: redaction.entities as unknown as IDataObject[],
+        riskScore: worst,
+        // Every redaction in this mode is the node's own work, by definition.
+        clientSideRedaction: redaction.count > 0,
+        throttled: false,
+      };
+      if (redaction.count > 0) {
+        result.clientSideRedactedTypes = [...new Set(redaction.entities.map((entity) => entity.type))];
+        result.clientSideRedactionCount = redaction.count;
+      }
+      return result;
+    }
+    case "ragScanner": {
+      validateText(node, request.text, "Document Text");
+      const documentId = (request.documentId ?? "").trim();
+      if (!documentId) {
+        throw new NodeOperationError(node, "Document ID is required for RAG risk summary.");
+      }
+      const scored = scoreRagDocumentLocal(request.text, documentId, request.documentSource || "api");
+      return { operation: "ragScanner", ...(scored as unknown as IDataObject) };
+    }
+    case "universalGuard":
+      return runLocalUniversalGuard(node, options, request);
+    default:
+      throw new NodeOperationError(node, `Unknown action: ${request.action}`, { itemIndex: request.itemIndex });
+  }
+}
+
+/**
+ * Builds a guard result from a local analysis, field for field with the cloud
+ * builder — including the On Threat enforcement, which is node behaviour rather
+ * than engine behaviour and must not change with the engine.
+ */
+function localGuardResult(input: {
+  analysis: LocalAnalysis;
+  direction: "input" | "output";
+  originalText: string;
+  onThreat: string;
+  includeRaw: boolean;
+}): IDataObject {
+  const { analysis } = input;
+  const action = normalizeDecision(analysis.action) ?? (analysis.allowed ? "ALLOW" : "BLOCK");
+  const result: IDataObject = {
+    allowed: analysis.allowed,
+    action,
+    rawAction: analysis.action,
+    riskScore: analysis.riskScore,
+    categories: analysis.riskTypes,
+    safeText: analysis.safeText,
+    reason: analysis.reason,
+    userMessage: buildUserFacingMessage({
+      allowed: analysis.allowed,
+      direction: input.direction,
+      action,
+      categories: analysis.riskTypes,
+    }),
+    developerMessage: buildDeveloperMessage({
+      allowed: analysis.allowed,
+      direction: input.direction,
+      reason: analysis.reason,
+      riskScore: analysis.riskScore,
+      categories: analysis.riskTypes,
+    }),
+    primaryRiskType: analysis.primaryRiskType,
+    categoryConfidence: analysis.categoryConfidence as unknown as IDataObject,
+    latencyMs: analysis.latencyMs,
+    findings: analysis.findings as unknown as IDataObject[],
+    // No incident is recorded anywhere: nothing left the instance. Present and
+    // null rather than absent, so an expression can tell that apart from an old
+    // node version that never had the field.
+    incidentId: null,
+    // Reputation gating is a server-side facility, so a local verdict is always
+    // a statement about this item's text.
+    throttled: false,
+    ...(input.includeRaw ? { rawResponse: sanitizeOutputObject(analysis as unknown as Record<string, unknown>) } : {}),
+  };
+
+  if (!analysis.allowed && input.onThreat) {
+    switch (input.onThreat) {
+      case "BLOCK":
+        result.blocked = true;
+        result.outputText = "";
+        break;
+      case "REDACT":
+        result.blocked = false;
+        result.outputText = analysis.redactedText || "[REDACTED]";
+        break;
+      case "WARN":
+        result.blocked = false;
+        result.outputText = input.originalText;
+        result.warning = analysis.reason;
+        break;
+      case "CONTINUE":
+        result.blocked = false;
+        result.outputText = input.originalText;
+        break;
+    }
+  } else {
+    result.blocked = false;
+    result.outputText = analysis.safeText || input.originalText;
+  }
+
+  return result;
+}
+
+/** A local analysis in the shape `toLayerDecision` reads for a firewall layer. */
+function localLayerFromAnalysis(analysis: LocalAnalysis, note: string): IDataObject {
+  return {
+    decision: normalizeDecision(analysis.action) ?? (analysis.allowed ? "ALLOW" : "BLOCK"),
+    allowed: analysis.allowed,
+    riskScore: analysis.riskScore,
+    riskLevel: riskLevelFromScore(analysis.riskScore),
+    reason: analysis.reason,
+    findings: analysis.findings as unknown as IDataObject[],
+    safeText: analysis.safeText,
+    engineNote: note,
+  };
+}
+
+/** Protected Sources entries that carry their own text, for the local comparison. */
+function toLocalEgressSources(sources: unknown[]): LocalEgressSource[] {
+  const mapped: LocalEgressSource[] = [];
+  for (const entry of sources.slice(0, MAX_PROTECTED_SOURCES)) {
+    if (typeof entry === "string") {
+      const id = entry.trim();
+      if (id) mapped.push({ id });
+      continue;
+    }
+    if (!isRecord(entry)) continue;
+    const id = stringValue(entry.sourceId) ?? stringValue(entry.id) ?? stringValue(entry.name);
+    if (!id) continue;
+    mapped.push({
+      id,
+      content: stringValue(entry.content) ?? stringValue(entry.text),
+      sensitivity: normalizeSensitivity(entry.sensitivityLevel),
+    });
+  }
+  return mapped;
+}
+
+function runLocalUniversalGuard(node: INode, options: NodeOptions, request: ActionRequest): IDataObject {
+  validateText(node, request.text, "Input Text");
+  const context = request.securityContext ?? {};
+  const checks: IDataObject[] = [];
+
+  const input = localGuardResult({
+    analysis: analyzeLocal(request.text, "INPUT"),
+    direction: "input",
+    originalText: request.text,
+    onThreat: "WARN",
+    includeRaw: options.includeRawResponse,
+  });
+  checks.push({ layer: "input", ...input });
+
+  if (context.rag?.text?.trim()) {
+    const scored = scoreRagDocumentLocal(
+      context.rag.text,
+      context.rag.documentId?.trim() || `n8n-${Date.now()}`,
+      context.rag.source || "api",
+    );
+    checks.push({ layer: "rag", ...(scored as unknown as IDataObject) });
+  }
+
+  if (context.tool) {
+    if (!context.tool.name.trim()) throw new NodeOperationError(node, "Tool Name is required when a Tool Call layer is added to Security Context.");
+    if (!context.tool.action.trim()) throw new NodeOperationError(node, "Tool Action is required when a Tool Call layer is added to Security Context.");
+    checks.push({
+      layer: "tool",
+      ...(checkToolCallLocal({
+        name: context.tool.name,
+        action: context.tool.action,
+        destination: context.tool.destination,
+        target: context.tool.target,
+        content: context.tool.content || request.text,
+        riskContext: context.tool.riskContext,
+      }) as unknown as IDataObject),
+    });
+  }
+
+  if (context.memory) {
+    checks.push({
+      layer: "memory",
+      ...localLayerFromAnalysis(
+        analyzeLocal(context.memory.content || request.text, "INPUT"),
+        "Checked by the local rule engine for poisoning, secrets and personal data in the memory write.",
+      ),
+    });
+  }
+
+  let outputText = request.aiOutputText?.trim() ? request.aiOutputText : (input.outputText as string) || request.text;
+  if (request.aiOutputText?.trim()) {
+    const output = localGuardResult({
+      analysis: analyzeLocal(request.aiOutputText, "OUTPUT"),
+      direction: "output",
+      originalText: request.aiOutputText,
+      onThreat: "WARN",
+      includeRaw: options.includeRawResponse,
+    });
+    checks.push({ layer: "output", ...output });
+    outputText = (output.outputText as string) || request.aiOutputText;
+
+    const sources = toLocalEgressSources(context.output?.protectedSources ?? []);
+    if (sources.some((source) => Boolean(source.content))) {
+      checks.push({
+        layer: "semanticEgress",
+        ...(compareEgressLocal(request.aiOutputText, sources) as unknown as IDataObject),
+      });
+    } else if (sources.length > 0) {
+      // Sources were configured but none of them can be compared here. Saying so
+      // is the only honest option: a clean egress verdict that compared nothing
+      // is worse than no egress verdict.
+      checks.push({
+        layer: "semanticEgress",
+        unavailable: true,
+        error: "Protected Sources were listed by id only, and resolving a source id needs the cloud fingerprint store.",
+        hint: "Supply each source's text inline (`[{ \"sourceId\": \"handbook\", \"content\": \"...\" }]`) to compare it locally, or use Cloud or Auto mode.",
+      });
+    }
+  }
+
+  return finalizeUniversalGuard({
+    checks,
+    profile: request.profile,
+    onThreat: request.onThreat || "BLOCK",
+    text: request.text,
+    aiOutputText: request.aiOutputText,
+    outputText,
+  });
+}
+
+/**
+ * Tells reputation / rate-limit gating apart from a verdict about the item.
+ *
+ * Adaptive abuse escalation is fingerprint-wide, so a few blocked probes
+ * anywhere on the API key can turn the *next* call — a different feature,
+ * carrying no attack signal — into a block whose only finding is "Adaptive
+ * abuse escalation". Reported as a content threat, that sends a workflow author
+ * hunting for a problem that is not in their data, so the node names it for
+ * what it is instead.
+ */
+function detectThrottle(raw: Record<string, unknown>): { throttled: boolean; level?: string; reason?: string } {
+  const riskTypes = Array.isArray(raw.riskTypes) ? raw.riskTypes.map((type) => String(type)) : [];
+  const findings = Array.isArray(raw.findings) ? (raw.findings as Array<Record<string, unknown>>) : [];
+  const escalation = findings.find(
+    (finding) => typeof finding?.label === "string" && /adaptive abuse escalation|rate limit/i.test(finding.label),
+  );
+  const metadata = isRecord(raw.metadata) ? raw.metadata : undefined;
+  const attacker = metadata && isRecord(metadata.attacker) ? metadata.attacker : undefined;
+  const level = typeof attacker?.level === "string" ? attacker.level : undefined;
+  if (!riskTypes.includes("RATE_LIMIT") && !escalation) return { throttled: false, level };
+  return {
+    throttled: true,
+    level,
+    reason:
+      "SoterAI gated this call on caller reputation rather than on the content of this item" +
+      `${level ? ` (reputation level ${level})` : ""}. ` +
+      "Reputation is tracked per API key and client IP across every endpoint, so earlier blocked " +
+      "requests from the same credential — including ones from other workflows — raise it. The " +
+      "verdict on this item is therefore not a statement about this item's text.",
+  };
+}
+
+/**
+ * Stamps every guard result with whether the verdict came from the content or
+ * from the caller's reputation, so a workflow can branch on the difference —
+ * `throttled` is always present, not only when it is true, because an expression
+ * reading an absent field cannot tell "not throttled" from "old node version".
+ */
+function annotateThrottle(result: IDataObject, raw: Record<string, unknown>): void {
+  const throttle = detectThrottle(raw);
+  result.throttled = throttle.throttled;
+  if (!throttle.throttled) return;
+  result.throttleLevel = throttle.level ?? null;
+  result.throttleReason = throttle.reason ?? null;
+  result.developerMessage = `${String(result.developerMessage ?? "")} ${throttle.reason ?? ""}`.trim();
+}
+
 async function executePiiRedactor(
   ctx: IExecuteFunctions,
-  apiKey: string,
-  baseUrl: string,
+  client: SoterClient,
   params: PiiParams,
 ): Promise<IDataObject> {
   validateText(ctx.getNode(), params.text, "Text");
   const meta: Record<string, unknown> = { ...params.metadata };
   if (params.projectId) meta.projectId = params.projectId;
 
-  const raw = await soterPost(ctx, apiKey, baseUrl, "/api/guard/input", {
+  const raw = await soterPost(ctx, client, "/api/guard/input", {
     message: params.text,
     metadata: meta,
   });
@@ -741,26 +1909,123 @@ async function executePiiRedactor(
       severity: f.severity,
     }));
 
-  return {
-    safeText: (raw.safeText as string) ?? (raw.redactedText as string) ?? params.text,
-    outputText: (raw.safeText as string) ?? (raw.redactedText as string) ?? params.text,
-    detectedEntities: piiEntities as unknown as IDataObject[],
+  const throttle = detectThrottle(raw);
+  const serverRedacted =
+    typeof raw.safeText === "string" ? raw.safeText : typeof raw.redactedText === "string" ? raw.redactedText : undefined;
+
+  // Fail closed. This action's whole contract is "the text you get back has the
+  // identifiers removed", so the one thing it must never do is hand the original
+  // text back under the name `safeText` — a downstream node cannot tell the
+  // difference, and the workflow then ships unredacted data believing it is
+  // clean. That is what happened whenever the server reported personal data but
+  // returned no redacted copy, including when the call was gated on reputation
+  // instead of analysed.
+  if (serverRedacted === undefined && (piiEntities.length > 0 || throttle.throttled)) {
+    throw new NodeOperationError(
+      ctx.getNode(),
+      throttle.throttled
+        ? "SoterAI gated this redaction request instead of answering it, so no redacted text came back."
+        : "SoterAI reported personal data in this item but returned no redacted copy of the text.",
+      {
+        description: throttle.throttled
+          ? `${throttle.reason} The node will not present the original, unredacted text as safe. Retry once the ` +
+            "reputation window has decayed, or use a separate API key for high-volume redaction traffic."
+          : "The node will not present the original, unredacted text as safe. Check that the redaction " +
+            "policy is enabled for this project on the SoterAI deployment at your Base URL.",
+      },
+    );
+  }
+
+  const baseText = serverRedacted ?? params.text;
+  const net = redactUsSsn(baseText);
+  const detectedEntities = [...piiEntities];
+  if (net.count > 0) {
+    detectedEntities.push({
+      type: "PII_DETECTED",
+      label: `US SSN-like identifier (redacted by the node, ${net.count === 1 ? "1 match" : `${net.count} matches`})`,
+      severity: "HIGH",
+    });
+  }
+
+  const result: IDataObject = {
+    safeText: net.text,
+    outputText: net.text,
+    detectedEntities: detectedEntities as unknown as IDataObject[],
     riskScore: (raw.riskScore as number) ?? 0,
-    rawResponse: sanitizeOutputObject(raw),
+    // Named for what it is: the node's own regex, not something the API found.
+    // A deployment carrying the server-side SSN rule leaves this false because
+    // the text arrives already redacted and the net finds nothing to do.
+    clientSideRedaction: net.count > 0,
+    ...rawResponseFields(client, raw),
   };
+  if (net.count > 0) {
+    result.clientSideRedactedTypes = ["US_SSN"];
+    result.clientSideRedactionCount = net.count;
+  }
+  if (throttle.throttled) {
+    result.throttled = true;
+    result.throttleLevel = throttle.level ?? null;
+    result.throttleReason = throttle.reason ?? null;
+  }
+  return result;
+}
+
+/**
+ * Risk categories that describe an attack carried *by the document* against the
+ * pipeline or the agent that will read it. A document like this cannot be made
+ * safe by redaction, so no trust verdict may recommend indexing it.
+ *
+ * Mirrors RAG_DOCUMENT_THREAT_TYPES in lib/agent-firewall/mvp3.ts. Kept local
+ * because the node is deliberately zero-dependency, the same way the workflow
+ * audit is duplicated here.
+ */
+const RAG_DOCUMENT_THREAT_TYPES = [
+  "PROMPT_INJECTION",
+  "JAILBREAK",
+  "SYSTEM_PROMPT_LEAK_ATTEMPT",
+  "SYSTEM_PROMPT_LEAKAGE",
+  "DATA_EXFILTRATION",
+  "RECURSIVE_INJECTION",
+  "MEMORY_POISONING",
+  "MCP_TOOL_POISONING",
+  "ADVANCED_SMUGGLING",
+  "MULTIMODAL_INJECTION",
+  "RAG_POISONING",
+];
+
+/**
+ * Finds document-borne attack findings that are severe enough that "index this"
+ * cannot be a correct answer, whatever the server's own verdict field says.
+ */
+function severeDocumentThreats(findings: unknown): Array<{ type: string; label: string; severity: string }> {
+  if (!Array.isArray(findings)) return [];
+  const severe: Array<{ type: string; label: string; severity: string }> = [];
+  for (const finding of findings) {
+    if (!finding || typeof finding !== "object") continue;
+    const entry = finding as Record<string, unknown>;
+    const type = typeof entry.type === "string" ? entry.type.toUpperCase() : "";
+    const severity = typeof entry.severity === "string" ? entry.severity.toUpperCase() : "";
+    if (severity !== "HIGH" && severity !== "CRITICAL") continue;
+    if (!RAG_DOCUMENT_THREAT_TYPES.includes(type)) continue;
+    severe.push({
+      type,
+      label: typeof entry.label === "string" ? entry.label : type,
+      severity,
+    });
+  }
+  return severe;
 }
 
 async function executeRagScanner(
   ctx: IExecuteFunctions,
-  apiKey: string,
-  baseUrl: string,
+  client: SoterClient,
   params: RagParams,
 ): Promise<IDataObject> {
   validateText(ctx.getNode(), params.text, "Document Text");
   if (!params.documentId.trim()) {
     throw new NodeOperationError(ctx.getNode(), "Document ID is required for RAG risk summary.");
   }
-  const raw = await soterPost(ctx, apiKey, baseUrl, "/api/rag/document/trust-score", {
+  const raw = await soterPost(ctx, client, "/api/rag/document/trust-score", {
     projectId: params.projectId,
     documentId: params.documentId,
     content: params.text,
@@ -768,13 +2033,40 @@ async function executeRagScanner(
     metadata: params.metadata,
   });
 
-  return {
-    trustScore: (raw.trustScore as number) ?? 0,
-    trustLevel: (raw.trustLevel as string) ?? "NEEDS_REVIEW",
-    findings: (raw.findings as IDataObject[]) ?? [],
-    recommendedAction: (raw.recommendedAction as string) ?? "REVIEW",
-    rawResponse: sanitizeOutputObject(raw),
+  const findings = (raw.findings as IDataObject[]) ?? [];
+  const serverTrustLevel = (raw.trustLevel as string) ?? "NEEDS_REVIEW";
+  const serverRecommendedAction = (raw.recommendedAction as string) ?? "REVIEW";
+
+  // A verdict that reports a HIGH-severity injection and recommends INDEX in the
+  // same response is self-contradictory, and the node is the last place that can
+  // catch it: whatever lands in `recommendedAction` is what the workflow author
+  // branches on, and `isFlagged` treats INDEX as safe. Older or unpatched
+  // deployments can still answer that way, so the node refuses it rather than
+  // trusting the field. Both original values are kept so the override is
+  // auditable instead of silently rewriting the server's answer.
+  const severe = severeDocumentThreats(findings);
+  const contradictory = severe.length > 0 && isAllowishRecommendation(serverRecommendedAction);
+
+  const result: IDataObject = {
+    trustScore: contradictory ? Math.min((raw.trustScore as number) ?? 0, 20) : (raw.trustScore as number) ?? 0,
+    trustLevel: contradictory ? "QUARANTINED" : serverTrustLevel,
+    findings,
+    recommendedAction: contradictory ? "QUARANTINE" : serverRecommendedAction,
+    ...rawResponseFields(client, raw),
   };
+
+  if (contradictory) {
+    result.verdictOverridden = true;
+    result.serverTrustLevel = serverTrustLevel;
+    result.serverRecommendedAction = serverRecommendedAction;
+    result.overrideReason =
+      `The document trust verdict said ${serverRecommendedAction} while reporting ` +
+      `${severe.length} ${severe.length === 1 ? "finding" : "findings"} of severity HIGH or above ` +
+      `(${severe.map((f) => `${f.type}: ${f.label}`).join("; ")}). ` +
+      "The node quarantined it instead so a poisoned document cannot reach the vector store.";
+  }
+
+  return result;
 }
 
 /**
@@ -1483,6 +2775,12 @@ function recommendedSoterAIPlacement(nodes: WorkflowNode[], connections: Record<
 }
 
 function validateText(node: INode, text: string, fieldName: string): void {
+  // `readText` normalizes every parameter this node reads, so a non-string here
+  // means a caller reached the layer some other way. Saying so beats the
+  // "text.trim is not a function" this used to raise.
+  if (typeof text !== "string") {
+    throw new NodeOperationError(node, `${fieldName} must be text, not ${text === null ? "null" : typeof text}.`);
+  }
   if (!text || !text.trim()) {
     throw new NodeOperationError(node, `${fieldName} is required.`);
   }
@@ -1491,9 +2789,21 @@ function validateText(node: INode, text: string, fieldName: string): void {
   }
 }
 
-function formatApiError(status: number, data: Record<string, unknown>): string {
+function formatApiError(status: number, data: Record<string, unknown>, path?: string): string {
   if (status === 401 || status === 403) {
-    return "SoterAI API authentication failed. Check the API key and Base URL.";
+    // Naming the endpoint is the whole point of this branch. The Universal AI
+    // Firewall calls up to six paths per item, and when one of them 401s while
+    // the rest succeed, "check the API key" sends the reader to the one thing
+    // that is demonstrably fine — the key works everywhere else. A middleware
+    // that session-gates an API-key-only route produces exactly this shape, and
+    // it is invisible without the path.
+    const where = path ? ` on ${path}` : "";
+    const upstream = typeof data.message === "string" ? ` Server said: ${sanitizeErrorMessage(data.message)}` : "";
+    return (
+      `SoterAI API returned HTTP ${status}${where}. If other SoterAI calls in this workflow ` +
+      "succeed with the same credential, the key itself is valid — check that this endpoint " +
+      `exists on the deployment at your Base URL and is enabled for the key's plan.${upstream}`
+    );
   }
   if (status === 408 || status === 504) {
     return "SoterAI API request timed out upstream. Retry the workflow or reduce payload size.";

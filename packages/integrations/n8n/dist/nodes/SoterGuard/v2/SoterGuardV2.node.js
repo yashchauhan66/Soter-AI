@@ -38,6 +38,10 @@ const soterGuardOutputs = `={{
  * "inputGuard" on the canvas. Showing the human label plus the enforcement
  * setting means a reviewer can see what a workflow's guards actually do without
  * opening any of them.
+ *
+ * The engine is appended whenever it is not the default, because "this guard is
+ * running on the weaker local engine" is exactly the kind of fact that should
+ * not require opening the node to discover.
  */
 const soterGuardSubtitle = `={{
   ((parameters) => {
@@ -52,7 +56,10 @@ const soterGuardSubtitle = `={{
     };
     const label = labels[parameters.action] || parameters.action;
     const enforcing = ["inputGuard", "outputGuard", "universalGuard"].includes(parameters.action);
-    return enforcing ? label + " (" + String(parameters.onThreat || "BLOCK").toLowerCase() + ")" : label;
+    const base = enforcing ? label + " (" + String(parameters.onThreat || "BLOCK").toLowerCase() + ")" : label;
+    if (parameters.action === "workflowAudit") return base;
+    const engine = String(parameters.detectionEngine || "CLOUD");
+    return engine === "CLOUD" ? base : base + " · " + engine.toLowerCase();
   })($parameter)
 }}`;
 const soterGuardHints = [
@@ -77,6 +84,25 @@ const soterGuardHints = [
         location: "ndv",
         displayCondition: '={{ ["inputGuard", "outputGuard", "universalGuard"].includes($parameter["action"]) && !$parameter["sessionId"] }}',
     },
+    {
+        // The one local-mode gap a user cannot see from the output alone: the egress
+        // layer stays unavailable rather than reporting a clean comparison it never
+        // made, and without this they would read the missing layer as a pass.
+        message: "Local mode can only compare the output against <b>Protected Sources</b> whose text is supplied inline, because resolving a bare source ID needs the cloud fingerprint store. Sources given by ID alone are reported as unresolved, never as clean.",
+        type: "warning",
+        location: "ndv",
+        displayCondition: '={{ $parameter["action"] === "universalGuard" && $parameter["detectionEngine"] === "LOCAL" }}',
+    },
+    {
+        // Cross-turn detection, reputation, and the ML tier are all server-side, so
+        // a fully local guard is meaningfully weaker. Said once, on the canvas, where
+        // someone reviewing the workflow rather than editing the node will see it.
+        message: "This guard runs on the bundled local rule engine, so no ML tier, cross-turn tracking, or reputation is applied. Read <code>{{ $json.engineDetail.limitations }}</code> on the output for the full list.",
+        type: "info",
+        location: "outputPane",
+        displayCondition: '={{ $parameter["detectionEngine"] === "LOCAL" && $parameter["action"] !== "workflowAudit" }}',
+        whenToDisplay: "beforeExecution",
+    },
 ];
 class SoterGuardV2 {
     constructor(baseDescription) {
@@ -92,8 +118,12 @@ class SoterGuardV2 {
             outputs: soterGuardOutputs,
             credentials: [
                 {
+                    // Not required: Local mode and the workflow audit run entirely inside
+                    // n8n, and a security node that cannot be tried without signing up is
+                    // a security node that does not get tried. Cloud and Auto still fail
+                    // with a specific, actionable error when no credential is selected.
                     name: "soterApi",
-                    required: true,
+                    required: false,
                 },
             ],
             hints: soterGuardHints,

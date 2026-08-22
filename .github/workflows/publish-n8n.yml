@@ -4,11 +4,16 @@
 #   - Set the NPM_TOKEN repository secret in GitHub Settings > Secrets > Actions.
 #     Generate the token at https://www.npmjs.com with Automation type for CI usage.
 #
-# TRIGGER:
-#   Push a tag matching "n8n-v*" (e.g. "n8n-v0.2.6") to trigger this workflow.
-#   Example:
-#     git tag n8n-v0.2.6
-#     git push origin n8n-v0.2.6
+# TRIGGER, and why there are two:
+#   - Push a tag "n8n-v<version>" (e.g. "n8n-v0.6.0"). A tag push always publishes
+#     under the `next` dist-tag, because a tag push is the easy thing to do by
+#     accident and `latest` is the one that reaches installers.
+#   - Or run it from the Actions tab, where the dist-tag is a deliberate choice.
+#
+#   npm allows unpublishing for 72 hours and never again, and n8n's community-node
+#   installer pulls `latest`. So `latest` is opt-in, and promoting a version that
+#   has already been proven in a live n8n needs no build at all:
+#     npm dist-tag add n8n-nodes-soterai@0.6.0 latest
 
 name: Publish n8n Community Node
 
@@ -16,10 +21,29 @@ on:
   push:
     tags:
       - "n8n-v*"
+  workflow_dispatch:
+    inputs:
+      dist_tag:
+        description: "Dist-tag to publish under. `next` leaves `latest` serving the current release."
+        type: choice
+        options:
+          - next
+          - latest
+        default: next
+      dry_run:
+        description: "Run the full gate and pack the tarball, but do not publish."
+        type: boolean
+        default: false
 
 permissions:
   contents: read
   id-token: write
+
+# Two publishes of the same ref racing each other would have one of them fail on
+# npm's own duplicate-version check, after a full green gate. Queue instead.
+concurrency:
+  group: publish-n8n
+  cancel-in-progress: false
 
 jobs:
   publish:
@@ -38,15 +62,63 @@ jobs:
           node-version: 22
           registry-url: https://registry.npmjs.org
 
+      # Everything that can contradict itself is checked before anything is built,
+      # so a mismatch costs seconds instead of surfacing as an npm 4xx at the end
+      # of a green run — where it reads like an infrastructure problem.
+      - name: Preflight — the release must agree with itself
+        id: preflight
+        run: |
+          set -euo pipefail
+          NAME="$(node -p "require('./package.json').name")"
+          VERSION="$(node -p "require('./package.json').version")"
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Publishing $NAME@$VERSION"
+
+          # A tag that names a different version than it ships is how the wrong
+          # thing gets released while every log line still looks correct.
+          if [ "${GITHUB_REF_TYPE}" = "tag" ]; then
+            if [ "${GITHUB_REF_NAME}" != "n8n-v${VERSION}" ]; then
+              echo "::error::Tag ${GITHUB_REF_NAME} does not match package.json ${VERSION} (expected n8n-v${VERSION})."
+              exit 1
+            fi
+          fi
+
+          # A published version can never be replaced, only deprecated. Say that
+          # here rather than letting npm answer with a bare 403 conflict.
+          if npm view "${NAME}@${VERSION}" version > /dev/null 2>&1; then
+            echo "::error::${NAME}@${VERSION} is already on npm. Bump the version — a published version cannot be replaced."
+            exit 1
+          fi
+
+          # An undocumented release is one users cannot evaluate before installing.
+          if ! grep -q "^## \[${VERSION}\]" CHANGELOG.md; then
+            echo "::error::CHANGELOG.md has no '## [${VERSION}]' section."
+            exit 1
+          fi
+
       # No root `npm install` here on purpose. The root installs
       # eslint-plugin-react, which crashes under the ESLint 10 that
       # @n8n/node-cli runs ("contextOrFilename.getFilename is not a function"),
       # because ESLint resolves plugins from parent directories.
+      #
+      # `npm ci` rather than `npm install`: the package has a lockfile, and a
+      # publish should ship the dependency tree that was tested, not whatever
+      # resolved on the morning of the release.
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
 
       - name: Lint
         run: npm run lint
+
+      # The full gate, named explicitly instead of left to `prepublishOnly`:
+      # validate + typecheck + 58 unit tests + the ReDoS sweep + the stress
+      # budgets. Three denial-of-service defects and one honesty defect once sat
+      # under a suite that passed, so the timing gates are load-bearing, not
+      # decoration — and a gate that only runs as a side effect of publishing is
+      # a gate nobody sees fail.
+      - name: Test — unit, ReDoS sweep, stress budgets
+        run: npm test
 
       - name: Build
         run: npm run build
@@ -55,6 +127,51 @@ jobs:
         run: npm pack --dry-run
 
       - name: Publish to npm
-        run: npm publish --access public --provenance
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: npm publish --access public --provenance --tag "${DIST_TAG}"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          DIST_TAG: ${{ github.event.inputs.dist_tag || 'next' }}
+
+      # What the registry serves is the only fact that matters, and it is not the
+      # same fact as "npm publish exited 0". This asserts the new version is on
+      # the tag that was asked for and — when that tag is not `latest` — that
+      # `latest` did not move, so nobody can report a staged release as shipped.
+      - name: Confirm what the registry actually serves
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        env:
+          NAME: ${{ steps.preflight.outputs.name }}
+          VERSION: ${{ steps.preflight.outputs.version }}
+          DIST_TAG: ${{ github.event.inputs.dist_tag || 'next' }}
+        run: |
+          set -euo pipefail
+          # Registry reads lag a publish by a few seconds; retry rather than
+          # either sleeping blind or reporting a propagation delay as a failure.
+          for attempt in 1 2 3 4 5 6; do
+            TAGS="$(npm view "$NAME" dist-tags --json 2>/dev/null || echo '{}')"
+            ON_TAG="$(echo "$TAGS" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{try{console.log(JSON.parse(s)[process.argv[1]]||'')}catch{console.log('')}})" "$DIST_TAG")"
+            [ "$ON_TAG" = "$VERSION" ] && break
+            echo "attempt $attempt: $DIST_TAG is '$ON_TAG', waiting for $VERSION"
+            sleep 10
+          done
+
+          LATEST="$(echo "$TAGS" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{try{console.log(JSON.parse(s).latest||'')}catch{console.log('')}})")"
+          if [ "$ON_TAG" != "$VERSION" ]; then
+            echo "::error::$NAME dist-tag $DIST_TAG is '$ON_TAG', not $VERSION."
+            exit 1
+          fi
+          if [ "$DIST_TAG" != "latest" ] && [ "$LATEST" = "$VERSION" ]; then
+            echo "::error::$VERSION reached the latest tag, which a $DIST_TAG publish must not do."
+            exit 1
+          fi
+
+          echo "### Published \`$NAME@$VERSION\` under \`$DIST_TAG\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- \`$DIST_TAG\` → \`$ON_TAG\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- \`latest\` → \`$LATEST\` (what n8n's community-node installer serves)" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$DIST_TAG" != "latest" ]; then
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "Install this build for testing: \`npm i $NAME@$DIST_TAG\`" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "Promote once proven in a live n8n: \`npm dist-tag add $NAME@$VERSION latest\`" >> "$GITHUB_STEP_SUMMARY"
+          fi

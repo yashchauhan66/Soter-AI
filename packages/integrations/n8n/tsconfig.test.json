@@ -1,0 +1,18 @@
+{
+  // Tests are compiled with the same strictness as the node, but into a separate
+  // directory that `files` in package.json does not publish. Compiling rather
+  // than running through a loader keeps the suite dependency-free: `typescript`
+  // is already here for the build, and `node --test` ships with Node.
+  //
+  // Not a dot-directory: Node's test runner skips hidden paths, so `.test-build`
+  // silently matched nothing.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "declaration": false,
+    "outDir": "./test-build",
+    "rootDir": ".",
+    "types": ["node"]
+  },
+  "include": ["nodes/**/*.ts", "credentials/**/*.ts", "test/**/*.ts"],
+  "exclude": ["node_modules", "dist", "test-build"]
+}
