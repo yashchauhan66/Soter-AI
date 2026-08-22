@@ -332,10 +332,29 @@ jobs:
             echo "[3.5/5] Checking disk space..."
             df -h /var/lib/docker /var/lib/containerd 2>/dev/null || true
             echo "  Freeing disk before pull..."
-            docker image prune -a --filter "until=24h" --force 2>/dev/null || true
-            docker builder prune -f 2>/dev/null || true
-            docker system prune -f --volumes 2>/dev/null || true
+            # NO --filter "until=24h" here. That filter reclaimed exactly 0B and let the
+            # disk fill up: every superseded image is tagged with its own commit SHA, so
+            # on a day with several deploys they are all YOUNGER than 24h and the filter
+            # excluded precisely the images that were worth deleting. Run 32519571933
+            # then died mid-pull with "no space left on device" at 90% full.
+            # Unfiltered `image prune -a` never removes an image that a container is
+            # using, so the currently-serving container is safe; rollback stays available
+            # by re-pulling the older SHA tag from Docker Hub.
+            docker image prune -a --force </dev/null 2>/dev/null || true
+            docker builder prune -f </dev/null 2>/dev/null || true
+            docker system prune -f --volumes </dev/null 2>/dev/null || true
             df -h /var/lib/docker /var/lib/containerd 2>/dev/null || true
+            # Assert the headroom instead of letting the pull fail inside containerd,
+            # where it surfaces as a layer-extract error naming a model file and reads
+            # like a model bug rather than a full disk.
+            AVAIL_MB=$(df -Pm / | awk 'NR==2{print $4}')
+            echo "  Free on / after cleanup: ${AVAIL_MB} MB"
+            if [ "${AVAIL_MB:-0}" -lt 4096 ]; then
+              echo "  ❌ Only ${AVAIL_MB} MB free on / — unpacking this image needs ~3 GB."
+              echo "     Cleanup could not reclaim enough space. Inspect on the host with:"
+              echo "       docker system df && sudo du -xhd1 / | sort -h | tail -20"
+              exit 1
+            fi
 
             # ── Step 4: Pull latest Docker image ───────────────────
             echo ""
