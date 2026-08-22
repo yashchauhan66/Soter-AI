@@ -36,7 +36,9 @@ test("policy can require approval and build safe text", () => {
   const result = evaluatePolicy(baseInput(["pan"], 45, "PAN ABCDE1234F"));
   assert.equal(result.action, "require_approval");
   assert.match(result.redactedText, /\[REDACTED_PAN\]/);
-  assert.match(result.rewrittenSafeText, /Soter Safe Context Capsule/);
+  // v0.2.1: the ASCII "Safe Context Capsule" box was replaced with a clean
+  // one-line footer so sanitized prompts read naturally in chat.
+  assert.match(result.rewrittenSafeText, /Soter sanitized this prompt before sending/);
 });
 
 test("redaction removes raw audit secrets", () => {

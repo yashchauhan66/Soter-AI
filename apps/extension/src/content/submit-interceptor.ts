@@ -87,15 +87,18 @@ export function installSubmitInterceptor(adapter: AiSiteAdapter) {
           );
         });
       },
-      onApproved: async () => {
+      onApproved: async (approvalId: string) => {
         // Claim the one-time approval server-side. Only grant + replay the ORIGINAL prompt
         // if the broker actually honors the claim. This closes the hole where a client could
         // replay on an unhonored/spoofed claim.
+        // v0.2.1 FIX: use the approvalId passed from the polling loop instead of
+        // relying on auditMetadata which may not have it set yet.
+        const claimId = approvalId || result.policy?.auditMetadata?.approvalId || "";
         const allowed = await new Promise<boolean>((resolve) => {
           chrome.runtime.sendMessage(
             {
               type: "SOTER_CLAIM_APPROVAL",
-              requestId: result.policy?.auditMetadata?.approvalId || "",
+              requestId: claimId,
               destination: location.hostname,
             },
             (res: any) => resolve(res?.allowed === true),
@@ -150,7 +153,10 @@ export function installSubmitInterceptor(adapter: AiSiteAdapter) {
     });
   };
 
-  document.addEventListener("click", (event) => {
+  // v0.2.1 FIX: Register on WINDOW (not document) in CAPTURE phase.
+  // Window capture fires before document capture regardless of registration order,
+  // closing the bypass where a page registers capture listeners at document_start.
+  window.addEventListener("click", (event) => {
     const element = event.target instanceof Element ? event.target.closest("button, [role='button'], input[type='submit']") : null;
     // SS-12: single-use and time-boxed. A token that was armed but never consumed (the site
     // re-rendered the button, the synthetic click was swallowed) expires instead of leaving
@@ -161,11 +167,44 @@ export function installSubmitInterceptor(adapter: AiSiteAdapter) {
     if (element && adapter.isSubmitControl(element)) void handleIntent(event, currentPromptTarget(adapter));
   }, true);
 
-  document.addEventListener("keydown", (event) => {
+  // v0.2.1 FIX: Also intercept mousedown and pointerdown in capture phase.
+  // Some pages trigger submit on mousedown/pointerdown instead of click.
+  window.addEventListener("mousedown", (event) => {
+    const element = event.target instanceof Element ? event.target.closest("button, [role='button'], input[type='submit']") : null;
+    if (element instanceof HTMLElement && replayBypass.consume(element)) return;
+    if (element && adapter.isSubmitControl(element)) void handleIntent(event, currentPromptTarget(adapter));
+  }, true);
+
+  window.addEventListener("pointerdown", (event) => {
+    const element = event.target instanceof Element ? event.target.closest("button, [role='button'], input[type='submit']") : null;
+    if (element instanceof HTMLElement && replayBypass.consume(element)) return;
+    if (element && adapter.isSubmitControl(element)) void handleIntent(event, currentPromptTarget(adapter));
+  }, true);
+
+  // v0.2.1 FIX: Register keydown on WINDOW capture to beat page document_start listeners.
+  window.addEventListener("keydown", (event) => {
     if (event.key !== "Enter" || event.shiftKey || event.altKey || event.ctrlKey || event.metaKey) return;
     const target = currentPromptTarget(adapter);
     if (target?.element.contains(event.target as Node)) {
-      // Avoid processing twice if the event propagates
+      void handleIntent(event, target);
+    }
+  }, true);
+
+  // v0.2.1 FIX: Also hook keyup — some pages send on keyup instead of keydown.
+  window.addEventListener("keyup", (event) => {
+    if (event.key !== "Enter" || event.shiftKey || event.altKey || event.ctrlKey || event.metaKey) return;
+    const target = currentPromptTarget(adapter);
+    if (target?.element.contains(event.target as Node)) {
+      void handleIntent(event, target);
+    }
+  }, true);
+
+  // v0.2.1 FIX: Hook beforeinput as a last-resort catch for form submissions
+  // triggered by input events (e.g. some frameworks submit on input change).
+  window.addEventListener("beforeinput", (event) => {
+    if (event.inputType !== "insertLineBreak") return;
+    const target = currentPromptTarget(adapter);
+    if (target?.element.contains(event.target as Node)) {
       void handleIntent(event, target);
     }
   }, true);

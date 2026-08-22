@@ -141,6 +141,10 @@ When sensitive data is found, the extension can produce a safer rewritten prompt
 - Financial figures
 - Internal IPs and paths from production logs
 
+> **v0.2.1 update:** The rewritten prompt now ends with a clean one-line footer instead of the previous ASCII box:
+> `🛡️ Soter sanitized this prompt before sending. <summary of changes>.`
+> This reads naturally in chat and avoids the broken box-drawing characters that appeared in earlier versions.
+
 ### 6.7 Redaction
 
 The scanner creates redacted previews using local replacement patterns. Examples include:

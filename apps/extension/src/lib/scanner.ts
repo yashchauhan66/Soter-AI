@@ -5,6 +5,7 @@ import { auditSafePreview, redactSensitiveText } from "./redaction";
 import { rewritePromptSafely } from "./rewrite";
 import type { ExtensionState, ScanEventType, ScanResult } from "./types";
 import { matchAIDestination } from "../../../../packages/shared/src/ai-destinations";
+import { classifyLocal, mergeMlIntoScan } from "./ml-classifier";
 
 export function destinationTypeForUrl(url: string, state?: ExtensionState): DestinationType {
   const configured = state ? matchAIDestination(url, state.policy?.destinations ?? [], state.config.department, state.config.role) : undefined;
@@ -27,8 +28,14 @@ export function domainFromUrl(url: string) {
 export function scanPrompt(text: string, url: string, state: ExtensionState, eventType: ScanEventType = "scan"): ScanResult {
   const localScan = scanText(text.slice(0, state.policy?.maxPromptChars ?? 20000));
   const customDetectedDataTypes = detectCustomPolicyMatches(text, state.policy);
-  const detectedDataTypes = Array.from(new Set([...localScan.detectedDataTypes, ...customDetectedDataTypes])).sort();
-  const riskScore = Math.min(100, localScan.riskScore + customDetectedDataTypes.length * 20);
+  // v0.2.0: local ML heuristic classifier (entropy + injection n-grams). Runs
+  // synchronously and can only RAISE the risk score / add findings, never downgrade.
+  const mlLocal = classifyLocal(text);
+  const baseDetectedDataTypes = Array.from(new Set([...localScan.detectedDataTypes, ...customDetectedDataTypes])).sort();
+  const baseRiskScore = Math.min(100, localScan.riskScore + customDetectedDataTypes.length * 20);
+  const mlMerged = mergeMlIntoScan(baseRiskScore, baseDetectedDataTypes, mlLocal);
+  const detectedDataTypes = mlMerged.detectedDataTypes;
+  const riskScore = mlMerged.riskScore;
   const domain = domainFromUrl(url);
   const policy = state.policy;
   if (!policy) throw new Error("Soter policy cache is not initialized.");
@@ -103,7 +110,7 @@ export function scanPrompt(text: string, url: string, state: ExtensionState, eve
   }
   const redactedText = redactSensitiveText(text, detectedDataTypes);
   return withHardEnforcement({
-    hasFindings: localScan.findings.length > 0 || customDetectedDataTypes.length > 0,
+    hasFindings: localScan.findings.length > 0 || customDetectedDataTypes.length > 0 || mlLocal.detectedDataTypes.length > 0,
     riskScore,
     detectedDataTypes,
     findings: localScan.findings.map((finding) => ({ ...finding, match: auditSafePreview(finding.match, [finding.type], 120) })),
