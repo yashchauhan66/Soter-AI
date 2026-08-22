@@ -1,0 +1,145 @@
+# Move a dist-tag on an already-published n8n-nodes-soterai version.
+#
+# WHY THIS IS SEPARATE FROM publish-n8n.yml:
+#   That workflow builds and publishes a NEW version, and its preflight refuses
+#   to run when the version is already on npm — correctly, because a published
+#   version can never be replaced. So it cannot promote. Promotion moves a
+#   pointer; the artifact is already immutable on the registry.
+#
+# WHY IT DOES NOT RE-RUN THE TEST GATE:
+#   The gate would run against whatever this repo's HEAD is now, which is not
+#   necessarily the tree that produced the published tarball. Green tests here
+#   would say nothing about the bytes being promoted, and a check that cannot
+#   fail for the right reason is worse than no check. What IS verifiable is
+#   which artifact becomes `latest`, so the run records the published tarball's
+#   shasum and file count instead of pretending to re-test it.
+#
+# WHY IT MATTERS WHICH TAG:
+#   n8n's community-node installer and npmjs.com's package page both read
+#   `latest`. Until `latest` moves, a published version reaches nobody.
+#
+# Rollback is a tag move too, so this is reversible. The run prints the exact
+# command, naming the version `latest` pointed at before.
+
+name: Promote n8n Community Node
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to promote, e.g. 0.6.0. Must already be published."
+        type: string
+        required: true
+      dist_tag:
+        description: "Tag to move onto that version. `latest` is what installers read."
+        type: choice
+        options:
+          - latest
+          - next
+        default: latest
+
+permissions:
+  contents: read
+
+# Never race a publish: both mutate the same package's tags.
+concurrency:
+  group: publish-n8n
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Preflight — the version must exist, and say what is being replaced
+        id: preflight
+        env:
+          NAME: n8n-nodes-soterai
+          VERSION: ${{ inputs.version }}
+          DIST_TAG: ${{ inputs.dist_tag }}
+        run: |
+          set -euo pipefail
+
+          # The inverse of the publish gate: promoting a version that was never
+          # published would answer with a confusing npm error about the tag.
+          if ! npm view "${NAME}@${VERSION}" version > /dev/null 2>&1; then
+            echo "::error::${NAME}@${VERSION} is not on npm. Publish it before promoting it."
+            exit 1
+          fi
+
+          PREVIOUS="$(npm view "$NAME" dist-tags --json | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{try{console.log(JSON.parse(s)[process.argv[1]]||'')}catch{console.log('')}})" "$DIST_TAG")"
+          echo "previous=$PREVIOUS" >> "$GITHUB_OUTPUT"
+
+          if [ "$PREVIOUS" = "$VERSION" ]; then
+            echo "::notice::${DIST_TAG} already points at ${VERSION}. Nothing to do."
+            echo "noop=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "noop=false" >> "$GITHUB_OUTPUT"
+
+          # Record the artifact, since that is the part of this that is checkable.
+          SHASUM="$(npm view "${NAME}@${VERSION}" dist.shasum)"
+          FILES="$(npm view "${NAME}@${VERSION}" dist.fileCount)"
+          echo "shasum=$SHASUM" >> "$GITHUB_OUTPUT"
+          echo "files=$FILES" >> "$GITHUB_OUTPUT"
+          echo "Moving ${DIST_TAG}: ${PREVIOUS:-<unset>} -> ${VERSION} (tarball ${SHASUM}, ${FILES} files)"
+
+      - name: Move the dist-tag
+        if: ${{ steps.preflight.outputs.noop != 'true' }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NAME: n8n-nodes-soterai
+          VERSION: ${{ inputs.version }}
+          DIST_TAG: ${{ inputs.dist_tag }}
+        run: npm dist-tag add "${NAME}@${VERSION}" "${DIST_TAG}"
+
+      # `npm dist-tag add` exiting 0 is not the same fact as the registry serving
+      # the new pointer, and it is the second fact that users experience.
+      - name: Confirm what the registry actually serves
+        env:
+          NAME: n8n-nodes-soterai
+          VERSION: ${{ inputs.version }}
+          DIST_TAG: ${{ inputs.dist_tag }}
+          PREVIOUS: ${{ steps.preflight.outputs.previous }}
+          SHASUM: ${{ steps.preflight.outputs.shasum }}
+          FILES: ${{ steps.preflight.outputs.files }}
+        run: |
+          set -euo pipefail
+
+          # Registry reads lag a tag move by a few seconds. Retry rather than
+          # reporting propagation delay as a failure.
+          for attempt in 1 2 3 4 5 6; do
+            TAGS="$(npm view "$NAME" dist-tags --json 2>/dev/null || echo '{}')"
+            ON_TAG="$(echo "$TAGS" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{try{console.log(JSON.parse(s)[process.argv[1]]||'')}catch{console.log('')}})" "$DIST_TAG")"
+            [ "$ON_TAG" = "$VERSION" ] && break
+            echo "attempt $attempt: $DIST_TAG is '$ON_TAG', waiting for $VERSION"
+            sleep 10
+          done
+
+          if [ "$ON_TAG" != "$VERSION" ]; then
+            echo "::error::$NAME dist-tag $DIST_TAG is '$ON_TAG', not $VERSION."
+            exit 1
+          fi
+
+          LATEST="$(echo "$TAGS" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{try{console.log(JSON.parse(s).latest||'')}catch{console.log('')}})")"
+
+          {
+            echo "### \`$NAME\` — \`$DIST_TAG\` now serves \`$VERSION\`"
+            echo ""
+            echo "- \`$DIST_TAG\` → \`$ON_TAG\` (was \`${PREVIOUS:-<unset>}\`)"
+            echo "- \`latest\` → \`$LATEST\` — this is what n8n's community-node installer resolves"
+            if [ -n "${SHASUM:-}" ]; then
+              echo "- promoted tarball: \`$SHASUM\`, $FILES files"
+            fi
+            echo ""
+            echo "Install path users now get: \`npm i $NAME\` → \`$LATEST\`"
+            if [ -n "${PREVIOUS:-}" ]; then
+              echo ""
+              echo "Roll back with: \`npm dist-tag add $NAME@$PREVIOUS $DIST_TAG\`"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
