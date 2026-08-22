@@ -61,6 +61,28 @@ export const PUBLIC_API_PREFIXES = [
   "/api/legal-boundary",
   "/api/rag",
   "/api/shadow",
+  // Advanced-security control plane. Every route below authenticates with
+  // authenticateAdvancedSecurity / authenticateApiKeyRequest (x-api-key) and has
+  // no cookie path at all, so session-gating them here produced a middleware
+  // 401 "Authentication required." for valid API keys before the handler ever
+  // ran — the failure the n8n node's universalGuard action hit on
+  // /api/semantic-egress/check while its other layers worked.
+  "/api/semantic-egress",
+  "/api/intent",
+  "/api/tool-chain",
+  "/api/escrow",
+  "/api/dry-run",
+  "/api/evidence",
+  "/api/a2a",
+  // Exact paths, not the whole /api/guard or /api/v1 tree: /api/guard/grounding
+  // is session-authenticated via requireProjectPermission and must stay gated.
+  "/api/guard/universal",
+  "/api/workflow/audit",
+  "/api/v1/fleet",
+  // Browser-extension control plane — authenticates via x-soter-extension-token
+  // (device token) or x-api-key in the route handler; the extension has no
+  // session cookie, so the middleware must not session-gate these routes.
+  "/api/extension",
   // Bearer-token-authenticated SCIM v2 routes.
   "/api/scim/v2",
   // SAML SSO — IdP redirect (acs), SP metadata, SP-initiated login
@@ -78,6 +100,14 @@ export const PUBLIC_API_PREFIXES = [
   // SOTERAI_OPENAPI_SPEC_PATH and fetch it without a session cookie, and the
   // same document is already published in docs/api/openapi.v1.json.
   "/api/openapi",
+  // Cron-driven worker endpoints. They authenticate on an
+  // `Authorization: Bearer $WEBHOOK_WORKER_TOKEN` / `$REPORT_WORKER_TOKEN`
+  // header and return 403 without it (503 when the token is unset), so they have
+  // no cookie path either — session-gating them meant an external cron driver
+  // got 401 and the webhook / scheduled-report queues never drained. Exact paths
+  // only: the rest of /api/admin stays session- and requireAdmin-gated.
+  "/api/admin/webhooks/process",
+  "/api/admin/reports/process",
 ];
 
 export const authConfig = {

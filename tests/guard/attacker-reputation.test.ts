@@ -119,6 +119,61 @@ test("ABUSIVE does NOT punish a fully benign interleaved request", () => {
   assert.equal(applied.allowed, true);
 });
 
+// Reputation is fingerprint-wide, not per-feature. Three blocked injection
+// probes reach ABUSIVE (blocks 3x15 = 45 + securityHits 3x8 = 24 = 69), and the
+// next PII-redaction call on a different feature used to come back as a hard
+// BLOCK carrying a RATE_LIMIT finding — the caller lost their redacted text
+// while the identifiers had already been stripped either way.
+test("ABUSIVE does NOT block a redaction-only privacy turn", () => {
+  const rep = assessAttackerReputation(history({ attempts: 4, blocks: 3, securityHits: 3 }));
+  assert.equal(rep.level, "ABUSIVE");
+  for (const riskTypes of [["PII_DETECTED"], ["INDIA_PII_DETECTED"], ["PII_DETECTED", "INDIA_PII_DETECTED"]] as RiskType[][]) {
+    for (const action of ["ALLOW_WITH_REDACTION", "REWRITE"] as const) {
+      // riskScore is above ESCALATION_MIN_RISK: a real Aadhaar + email payload
+      // scores well past 25, which is precisely why it used to be escalated.
+      const applied = applyAttackerReputation(result({ action, allowed: true, riskScore: 55, riskTypes }), rep);
+      assert.equal(applied.action, action, action + " " + riskTypes.join("+"));
+      assert.equal(applied.allowed, true);
+      assert.ok(!applied.riskTypes.includes("RATE_LIMIT"));
+      assert.ok(!applied.findings.some((f) => f.label === "Adaptive abuse escalation"));
+      // The reputation is still reported, so the caller can see the state they
+      // are in; it simply does not overturn the verdict.
+      assert.equal((applied.metadata as { attacker?: { level?: string } }).attacker?.level, "ABUSIVE");
+    }
+  }
+});
+
+test("the redaction carve-out does not extend to attack or credential signals", () => {
+  // The carve-out is about turns the guard has already remediated, not about
+  // the action name. A redaction verdict that also carries an injection or a
+  // secret is still a probe and still escalates.
+  const rep = assessAttackerReputation(history({ attempts: 4, blocks: 3, securityHits: 3 }));
+  for (const riskTypes of [
+    ["PII_DETECTED", "PROMPT_INJECTION"],
+    ["PII_DETECTED", "SECRET_DETECTED"],
+    ["SECRET_DETECTED"],
+  ] as RiskType[][]) {
+    const applied = applyAttackerReputation(
+      result({ action: "ALLOW_WITH_REDACTION", allowed: true, riskScore: 55, riskTypes }),
+      rep,
+    );
+    assert.equal(applied.action, "BLOCK", riskTypes.join("+"));
+    assert.equal(applied.allowed, false);
+  }
+});
+
+test("BANNED still blocks a redaction-only privacy turn", () => {
+  // Past 85 the documented contract is to block regardless of this turn's
+  // content. The carve-out above is scoped to ABUSIVE only.
+  const rep = assessAttackerReputation(history({ attempts: 8, blocks: 6, securityHits: 5, crescendo: 1 }));
+  assert.equal(rep.level, "BANNED");
+  const applied = applyAttackerReputation(
+    result({ action: "ALLOW_WITH_REDACTION", allowed: true, riskScore: 55, riskTypes: ["PII_DETECTED"] }),
+    rep,
+  );
+  assert.equal(applied.action, "BLOCK");
+});
+
 test("BANNED hard-blocks even a benign request", () => {
   const rep = assessAttackerReputation(
     history({ attempts: 8, blocks: 6, securityHits: 5, crescendo: 1 }),

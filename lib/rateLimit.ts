@@ -178,9 +178,16 @@ export async function recordMonthlyUsage(organizationId: string, projectId: stri
 }
 
 export async function peekMonthlyUsage(organizationId: string, plan: string, limitOverride?: number | null): Promise<MonthlyUsage> {
-  const redis = getRedis();
   const orgKey = monthBucketKey(`org:${organizationId}`);
-  const used = (await redis.get<number>(orgKey)) ?? 0;
+  // AVAILABILITY: degrade to the fallback store when Redis is unreachable,
+  // matching checkRedisRateLimit. A dead Redis must not turn authenticated
+  // guard routes into hard 500s.
+  let used: number;
+  try {
+    used = (await getRedis().get<number>(orgKey)) ?? 0;
+  } catch {
+    used = (await getFallbackRedis().get<number>(orgKey)) ?? 0;
+  }
   const limit = limitOverride && limitOverride > 0 ? limitOverride : planLimit(plan);
   const ratio = limit > 0 ? used / limit : 0;
   return {

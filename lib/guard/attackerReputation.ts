@@ -43,6 +43,16 @@ const SECURITY_RISK_TYPES = new Set<RiskType>([
   "SYSTEM_PROMPT_LEAKAGE",
 ]);
 
+// Categories the guard has *already finished remediating* by the time
+// escalation runs. A REWRITE / ALLOW_WITH_REDACTION verdict on personal data
+// means the identifiers are gone from the text that flows onward, so there is
+// no bypass left for a block to deny — only the caller's own redacted result.
+//
+// SECRET_DETECTED is deliberately NOT here. Repeatedly coaxing credential
+// material out of a model is probing, and each redacted response still leaks
+// positional signal ("a secret was here"), so those turns stay escalatable.
+const REMEDIATED_PRIVACY_RISK_TYPES = new Set<RiskType>(["PII_DETECTED", "INDIA_PII_DETECTED"]);
+
 export type AttackerLevel = "NONE" | "SUSPECT" | "ABUSIVE" | "BANNED";
 
 export interface AttackerHistory {
@@ -186,7 +196,9 @@ export function assessAttackerReputation(history: AttackerHistory): AttackerRepu
  *  - ABUSIVE  → tightens *risky* turns: HUMAN_REVIEW is promoted to BLOCK, and a
  *               risky ALLOW/REWRITE/REDACTION turn (risk ≥ threshold or carrying
  *               a security risk type) is blocked. A fully benign turn still
- *               passes so legitimate interleaved traffic is not punished.
+ *               passes so legitimate interleaved traffic is not punished, and so
+ *               does a redaction-only privacy turn, whose sensitive data the
+ *               guard has already stripped (see REMEDIATED_PRIVACY_RISK_TYPES).
  *  - BANNED   → hard BLOCK regardless of this turn's content: the fingerprint
  *               has established itself as an active attacker for the window.
  */
@@ -207,6 +219,25 @@ export function applyAttackerReputation(result: GuardResult, reputation: Attacke
   const carriesSecurityRisk = result.riskTypes.some((type) => SECURITY_RISK_TYPES.has(type));
 
   if (reputation.level === "ABUSIVE") {
+    // A redaction-only privacy turn is not a probe, and escalating it breaks
+    // this module's own first design constraint ("no collateral damage on
+    // legitimate traffic"). Reputation is fingerprint-wide, not per-feature, so
+    // three blocked injection probes on /api/guard/input reach ABUSIVE (blocks
+    // 3x15 = 45, securityHits 3x8 = 24, total 69) and the *next* PII-redaction
+    // call — a different feature, carrying no attack signal, whose sensitive
+    // data the guard has already stripped — came back as a hard BLOCK with a
+    // RATE_LIMIT finding. The caller loses their redacted text and gains
+    // nothing in security: the identifiers were removed either way.
+    //
+    // BANNED is untouched on purpose. Past 85 the fingerprint is an
+    // established attacker and the documented contract there is to block
+    // regardless of this turn's content.
+    const remediatedPrivacyOnly =
+      (result.action === "REWRITE" || result.action === "ALLOW_WITH_REDACTION") &&
+      result.riskTypes.length > 0 &&
+      result.riskTypes.every((type) => type === "LOW_RISK" || REMEDIATED_PRIVACY_RISK_TYPES.has(type));
+    if (remediatedPrivacyOnly) return { ...result, metadata };
+
     const risky =
       result.action === "HUMAN_REVIEW" ||
       ((result.action === "REWRITE" || result.action === "ALLOW_WITH_REDACTION") &&

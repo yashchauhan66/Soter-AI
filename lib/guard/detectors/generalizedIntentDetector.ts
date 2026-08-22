@@ -492,6 +492,24 @@ const rules: IntentRule[] = [
     ],
     not: [
       /\b(?:how\s+(?:do|can|to)\b|best\s+(?:way|practice)|recommended\s+way|explain\b|store\s+(?:them|api\s+keys?)\s+safely|in\s+environment\s+variables)/i,
+      // Self-service credential *management* is not credential *disclosure*.
+      // The target group above accepts the bare English words "password",
+      // "secret", and "token" — in w*_?password both w* and _? are optional,
+      // so it matches "password" standing alone — and the intent group accepts
+      // "open" and "read". Inside the 240-character proximity window that made
+      // ordinary help-desk prose a HIGH finding: "To reset a password, open
+      // Settings, choose Security, then Reset password." scored 60 and returned
+      // HUMAN_REVIEW. That is the single most common support article a RAG
+      // corpus contains, and under adaptive reputation a HUMAN_REVIEW turn is
+      // exactly what gets escalated to a hard block for a repeat caller.
+      //
+      // A "not" entry suppresses the whole rule, so a compound payload that also
+      // asks to reset a password loses this one signal. That is the accepted
+      // cost: the secret detector, the exfiltration signature rules, and the
+      // other generalized families all still see such a payload, whereas
+      // nothing at all was rescuing the benign article.
+      /\b(?:reset|resetting|change|changing|update|updating|rotate|rotating|forgot|forgotten|recover|recovering|expired?|set\s+up|setup|create|creating|choose|choosing|configure|configuring|enter|entering|confirm|re-?enter)\s+(?:(?:your|my|our|their|his|her|a|an|the|this)\s+)?(?:new\s+|old\s+|current\s+|temporary\s+|one-?time\s+)?passwords?\b/i,
+      /\bpasswords?\s+(?:reset|change|recovery|expiry|expiration|polic(?:y|ies)|manager|field|box|prompt|strength|requirements?|rules?|guidelines?)\b/i,
     ],
   },
   // ── Data exfiltration: assistant OUTPUT already carries the payload ──────

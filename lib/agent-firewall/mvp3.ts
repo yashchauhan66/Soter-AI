@@ -137,6 +137,39 @@ export function checkMemory(input: { memoryAction: string; content?: string; mem
   return memoryDecision("ALLOW", "LOW", "Memory operation allowed.", content, []);
 }
 
+// Categories that describe an attack *carried by the document against the
+// retrieval pipeline or the agent that will read it*: instructions aimed at the
+// model, exfiltration, poisoning, smuggling. Redaction cannot make such a
+// document safe to index, so these drive the trust score directly.
+//
+// PII_DETECTED / SECRET_DETECTED are deliberately absent — those are remediable
+// (REDACT_AND_INDEX) and are scored separately below.
+const RAG_DOCUMENT_THREAT_TYPES = new Set<string>([
+  "PROMPT_INJECTION",
+  "JAILBREAK",
+  "SYSTEM_PROMPT_LEAK_ATTEMPT",
+  "SYSTEM_PROMPT_LEAKAGE",
+  "DATA_EXFILTRATION",
+  "RECURSIVE_INJECTION",
+  "MEMORY_POISONING",
+  "MCP_TOOL_POISONING",
+  "ADVANCED_SMUGGLING",
+  "MULTIMODAL_INJECTION",
+]);
+
+// A second, softer tier. Both categories fire legitimately on technical corpora
+// — an engineering knowledge base is full of SQL snippets, and a cloud-security
+// runbook names the instance-metadata address — so they warrant a review rather
+// than a quarantine.
+const RAG_DOCUMENT_REVIEW_TYPES = new Set<string>(["CODE_INJECTION", "SSRF_ATTEMPT"]);
+
+// Keyed on the detector's own severity so the penalty tracks the strength of the
+// signal. Every value is large enough to push the best possible base score (75,
+// an uploaded or API-supplied document) below the TRUSTED floor of 75 and out of
+// the INDEX branch: HIGH and CRITICAL land in QUARANTINED, MEDIUM in
+// NEEDS_REVIEW, LOW in SUSPICIOUS.
+const RAG_THREAT_PENALTY: Record<string, number> = { CRITICAL: 75, HIGH: 60, MEDIUM: 35, LOW: 15 };
+
 export function scoreRagDocument(input: { content: string; source?: string }) {
   const content = input.content ?? "";
   const guard = analyzeText(content, "INPUT");
@@ -145,16 +178,54 @@ export function scoreRagDocument(input: { content: string; source?: string }) {
   ];
   let score = input.source && ["upload", "api"].includes(input.source) ? 75 : 60;
   if (input.source === "url" || input.source === "email" || input.source === "unknown") score -= 15;
+
+  // The detector verdict has to move the score, not merely decorate the
+  // response. `analyzeText` recognises far more phrasings than the literal
+  // regex below ("ignore the above instructions", "disregard prior
+  // instructions", the Hinglish variants), so a poisoned document used to come
+  // back carrying HIGH PROMPT_INJECTION findings and still be scored
+  // 75 / TRUSTED / INDEX — reporting the attack and recommending it for
+  // indexing in the same response.
+  //
+  // `advisoryOnly` findings are excluded: evidenceFusion demotes a rule to
+  // advisory when its measured fire rate on benign text is too high to carry an
+  // action alone, and it is already excluded from `guard.riskScore`. Letting one
+  // quarantine a document here would reintroduce exactly those false positives.
+  const threatSeverities = guard.findings
+    .filter((finding) => !finding.advisoryOnly && RAG_DOCUMENT_THREAT_TYPES.has(String(finding.type)))
+    .map((finding) => String(finding.severity));
+
   if (/ignore (all )?(previous|prior)|reveal system prompt|exfiltrate|send secrets|developer message/i.test(content)) {
-    score -= 60;
     findings.push({ type: "PROMPT_INJECTION", label: "Document instruction injection", severity: "CRITICAL" });
+    threatSeverities.push("CRITICAL");
   }
+
+  // The worst signal, not the sum of them. Several rules firing on one payload
+  // is the normal case (an override phrase trips three), and stacking their
+  // penalties would say nothing extra once the document is already quarantined.
+  const worstThreatPenalty = threatSeverities.reduce((worst, severity) => Math.max(worst, RAG_THREAT_PENALTY[severity] ?? 0), 0);
+  score -= worstThreatPenalty;
+
+  const needsCodeReview = guard.findings.some(
+    (finding) => !finding.advisoryOnly && RAG_DOCUMENT_REVIEW_TYPES.has(String(finding.type)),
+  );
+  if (needsCodeReview) score -= 20;
+
   if (/base64|atob\(|eval\(|display:\s*none|font-size:\s*0|white-on-white/i.test(content)) {
     score -= 20;
     findings.push({ type: "SUSPICIOUS_ENCODING", label: "Hidden or encoded content", severity: "HIGH" });
   }
   if (guard.riskTypes.includes("SECRET_DETECTED")) score -= 35;
   if (guard.riskTypes.includes("PII_DETECTED") || guard.riskTypes.includes("INDIA_PII_DETECTED")) score -= 20;
+
+  // A floor, not another weight. Whatever the arithmetic above produces, a
+  // document that tripped a HIGH-or-worse document-threat detector is never
+  // reported as TRUSTED and never recommended for indexing — so no future
+  // change to a base value or a penalty can resurrect the contradiction. The
+  // score is clamped alongside the level to keep the two consistent.
+  const hasSevereThreat = threatSeverities.some((severity) => severity === "HIGH" || severity === "CRITICAL");
+  if (hasSevereThreat) score = Math.min(score, 20);
+
   score = Math.max(0, Math.min(100, score));
   const trustLevel = score < 25 ? "QUARANTINED" : score < 55 ? "NEEDS_REVIEW" : score < 75 ? "SUSPICIOUS" : "TRUSTED";
   const recommendedAction = trustLevel === "QUARANTINED"
