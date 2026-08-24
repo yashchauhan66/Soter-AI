@@ -1,9 +1,9 @@
 import type { INodeTypeBaseDescription, IVersionedNodeType } from "n8n-workflow";
 import { VersionedNodeType } from "n8n-workflow";
 
-import { soterGuardBaseDescription } from "./shared/description";
-import { SoterGuardV1 } from "./v1/SoterGuardV1.node";
-import { SoterGuardV2 } from "./v2/SoterGuardV2.node";
+import { soterGuardBaseDescription } from "../../shared/description";
+import { SoterGuardV1 } from "./v1/SoterGuardV1";
+import { SoterGuardV2 } from "./v2/SoterGuardV2";
 
 /**
  * SoterAI community node.

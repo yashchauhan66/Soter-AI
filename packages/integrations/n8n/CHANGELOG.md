@@ -2,6 +2,16 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.6.1] - 2026-08-24
+
+Packaging-only release to pass the n8n community-node review. No behaviour change: detection, verdicts, outputs, and every parameter are identical to 0.6.0.
+
+### Changed
+
+- **Version classes renamed** `SoterGuardV1.node.ts` → `SoterGuardV1.ts` and `SoterGuardV2.node.ts` → `SoterGuardV2.ts`. The review scanner treats every `*.node.ts` as a standalone node, so it reported the two version implementations as missing an icon and as unregistered in `n8n.nodes`. They are not standalone nodes — only the `SoterGuard` entry file is registered, and the version classes receive the base description (which carries the icon) by constructor. Dropping the `.node.ts` suffix keeps the VersionedNodeType pattern while removing both findings.
+- **Base description moved** from `nodes/SoterGuard/shared/description.ts` to `shared/description.ts` (outside `nodes/`), resolving the `node-filename-against-convention` finding on a file that exports a description object rather than a node class.
+- **Two placeholders reworded** to satisfy the `node-param-placeholder-miscased-id` rule, which rejects a bare lowercase "id" token and does not honour eslint-disable comments: the Document ID placeholder now suggests `={{ $json.documentId }}` (the field name used by the bundled example workflows), and the Protected Sources example now uses the canonical `sourceId` key, which the node reads first (`id` and `name` remain accepted).
+
 ## [0.6.0] - 2026-08-22
 
 Offline operation, fallback when the API cannot be reached, batch performance, and the defects a new in-package test suite found on the way there.

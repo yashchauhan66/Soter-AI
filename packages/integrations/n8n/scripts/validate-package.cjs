@@ -11,9 +11,9 @@ const entrySource = fs.readFileSync(path.join(nodeDir, "SoterGuard.node.ts"), "u
 const runtimeSource = fs.readFileSync(path.join(nodeDir, "shared", "execute.ts"), "utf8");
 const localEngineSource = fs.readFileSync(path.join(nodeDir, "shared", "localEngine.ts"), "utf8");
 const propertiesSource = fs.readFileSync(path.join(nodeDir, "shared", "properties.ts"), "utf8");
-const baseSource = fs.readFileSync(path.join(nodeDir, "shared", "description.ts"), "utf8");
-const v1Source = fs.readFileSync(path.join(nodeDir, "v1", "SoterGuardV1.node.ts"), "utf8");
-const v2Source = fs.readFileSync(path.join(nodeDir, "v2", "SoterGuardV2.node.ts"), "utf8");
+const baseSource = fs.readFileSync(path.join(root, "shared", "description.ts"), "utf8");
+const v1Source = fs.readFileSync(path.join(nodeDir, "v1", "SoterGuardV1.ts"), "utf8");
+const v2Source = fs.readFileSync(path.join(nodeDir, "v2", "SoterGuardV2.ts"), "utf8");
 
 const requiredKeywords = [
   "n8n-community-node-package",

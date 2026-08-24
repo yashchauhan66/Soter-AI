@@ -285,9 +285,11 @@ export const soterGuardProperties: INodeProperties[] = [
     type: "string",
     default: "",
     required: true,
-    // n8n expressions are case-sensitive: $json.ID would not resolve.
-    // eslint-disable-next-line n8n-nodes-base/node-param-placeholder-miscased-id
-    placeholder: "={{ $json.id }}",
+    // Placeholder suggests `documentId`, the field name the bundled example
+    // workflows use. A bare lowercase "id" token is rejected by n8n's
+    // placeholder lint, and `$json.id` cannot be written here for the same
+    // reason — users whose items carry `id` can still type it themselves.
+    placeholder: "={{ $json.documentId }}",
     hint: "Any stable ID for this document, so repeat scans can be correlated",
     displayOptions: { show: { action: ["ragScanner"] } },
     description: "Stable identifier used to track the document scan",
@@ -579,10 +581,11 @@ export const soterGuardProperties: INodeProperties[] = [
             type: "json",
             typeOptions: { rows: 3 },
             default: "",
-            // Literal request payload: the API schema requires a lowercase
-            // "id" key, so upper-casing it here would produce an invalid body.
-            // eslint-disable-next-line n8n-nodes-base/node-param-placeholder-miscased-id
-            placeholder: '[{ "id": "crm", "content": "internal customer record text" }]',
+            // Literal request payload. `sourceId` is the canonical identifier
+            // key the node reads first (`id` and `name` are also accepted);
+            // a bare lowercase "id" token is rejected by n8n's placeholder
+            // lint, so the example uses the canonical key.
+            placeholder: '[{ "sourceId": "crm", "content": "internal customer record text" }]',
             hint: "Optional. Private data the response must not leak, as a JSON array",
             description: "JSON array of confidential source snapshots to compare the output against",
           },
