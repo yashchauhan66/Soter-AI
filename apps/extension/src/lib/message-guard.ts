@@ -248,6 +248,8 @@ export const MESSAGE_CONTRACTS: Record<string, MessageContract> = {
   SOTER_GET_STATE: { scope: "extension_page", maxChars: 2048, parse: () => ({}) },
   SOTER_SYNC_POLICY: { scope: "extension_page", maxChars: 2048, parse: () => ({}) },
   SOTER_HEARTBEAT: { scope: "extension_page", maxChars: 2048, parse: () => ({}) },
+  // v0.2.0: self-service trial mode. Extension-page only — a web page can never start a trial.
+  SOTER_START_TRIAL: { scope: "extension_page", maxChars: 2048, parse: () => ({}) },
   SOTER_GET_SOURCE_APPS: { scope: "any_internal", maxChars: 2048, parse: () => ({}) },
   SOTER_REQUEST_APPROVAL: {
     scope: "any_internal",

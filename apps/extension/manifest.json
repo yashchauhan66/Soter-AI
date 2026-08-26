@@ -3,7 +3,7 @@
   "name": "Soter Enterprise AI Control Plane",
   "short_name": "Soter",
   "description": "Scans prompts and AI responses for prompt injection, jailbreaks, secrets, PII, and unsafe instructions on supported AI tools.",
-  "version": "0.1.2",
+  "version": "0.2.1",
   "minimum_chrome_version": "116",
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; base-uri 'none'; form-action 'none'"
@@ -65,14 +65,16 @@
         "https://openwebui.com/*"
       ],
       "js": ["content/index.js"],
-      "run_at": "document_idle"
+      "run_at": "document_idle",
+      "all_frames": true
     },
     {
       "matches": [
         "https://soterai.in/*"
       ],
       "js": ["content/index.js"],
-      "run_at": "document_idle"
+      "run_at": "document_idle",
+      "all_frames": true
     },
     {
       "matches": [
@@ -98,7 +100,36 @@
         "https://soterai.in/*"
       ],
       "js": ["content/source-lineage-entry.js"],
-      "run_at": "document_idle"
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*",
+        "https://claude.ai/*",
+        "https://gemini.google.com/*",
+        "https://www.perplexity.ai/*",
+        "https://poe.com/*",
+        "https://openrouter.ai/*",
+        "https://replit.com/*",
+        "https://*.replit.dev/*",
+        "https://stackblitz.com/*",
+        "https://*.stackblitz.io/*",
+        "https://codesandbox.io/*",
+        "https://*.csb.app/*",
+        "https://github.dev/*",
+        "https://*.github.dev/*",
+        "https://bolt.new/*",
+        "https://v0.dev/*",
+        "https://lovable.dev/*",
+        "https://openwebui.com/*",
+        "https://soterai.in/*"
+      ],
+      "js": ["content/ws-page-hook.js"],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "all_frames": true
     }
   ],
 

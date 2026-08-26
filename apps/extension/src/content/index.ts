@@ -4,6 +4,7 @@ import { installPasteListener } from "./paste-listener";
 import { installResponseObserver } from "./response-observer";
 import { installSubmitInterceptor } from "./submit-interceptor";
 import { installFileContentScanner } from "./file-content-scanner";
+import { installWebSocketObserver } from "./websocket-observer";
 import type { AIDestinationPolicy } from "../../../../packages/shared/src/ai-destinations";
 
 const SHADOW_AI_KNOWN_PLATFORMS = [
@@ -55,6 +56,9 @@ void getDestinationContext().then((context) => {
   installPasteListener(adapter);
   installFileContentScanner();
   installResponseObserver(adapter, context.destination?.responseScanningEnabled !== false);
+  // v0.2.0: scan WebSocket-streamed AI responses (frames forwarded by the
+  // MAIN-world ws-page-hook). Enabled alongside DOM response scanning.
+  installWebSocketObserver(context.destination?.responseScanningEnabled !== false);
   observePromptDom(() => currentPromptTarget(adapter!));
   document.documentElement.setAttribute("data-soter-active-domain", "true");
 });

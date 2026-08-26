@@ -1,0 +1,715 @@
+{
+  "timestamp": "2026-08-22T07:25:58.203Z",
+  "total": 101,
+  "passed": 94,
+  "failed": 7,
+  "results": [
+    {
+      "name": "GET /api/health",
+      "status": 200,
+      "ok": true,
+      "detail": "161 bytes",
+      "ms": 3902
+    },
+    {
+      "name": "GET /api/ready",
+      "status": 200,
+      "ok": true,
+      "detail": "41 bytes",
+      "ms": 1228
+    },
+    {
+      "name": "POST /api/guard/analyze — prompt injection attack",
+      "status": 200,
+      "ok": true,
+      "detail": "action=BLOCK allowed=false risk=100",
+      "ms": 942
+    },
+    {
+      "name": "POST /api/guard/analyze — safe prompt",
+      "status": 200,
+      "ok": true,
+      "detail": "action=ALLOW allowed=true risk=0",
+      "ms": 1383
+    },
+    {
+      "name": "POST /api/guard/analyze — API key leak",
+      "status": 200,
+      "ok": true,
+      "detail": "action=HUMAN_REVIEW allowed=false risk=70",
+      "ms": 787
+    },
+    {
+      "name": "POST /api/guard/analyze — PAN (India PII)",
+      "status": 200,
+      "ok": true,
+      "detail": "action=ALLOW_WITH_REDACTION allowed=true risk=30",
+      "ms": 456
+    },
+    {
+      "name": "POST /api/guard/analyze — Aadhaar number",
+      "status": 200,
+      "ok": true,
+      "detail": "action=ALLOW_WITH_REDACTION allowed=true risk=30",
+      "ms": 337
+    },
+    {
+      "name": "POST /api/guard/analyze — jailbreak DAN",
+      "status": 200,
+      "ok": true,
+      "detail": "action=BLOCK allowed=false risk=100",
+      "ms": 557
+    },
+    {
+      "name": "POST /api/guard/analyze — output direction (response scan)",
+      "status": 200,
+      "ok": true,
+      "detail": "action=BLOCK allowed=false risk=70",
+      "ms": 355
+    },
+    {
+      "name": "POST /api/guard/input — input guard",
+      "status": 401,
+      "ok": true,
+      "detail": "Missing x-api-key header.",
+      "ms": 1334
+    },
+    {
+      "name": "POST /api/guard/output — output guard",
+      "status": 401,
+      "ok": true,
+      "detail": "Missing x-api-key header.",
+      "ms": 2450
+    },
+    {
+      "name": "POST /api/guard/universal — universal guard",
+      "status": 401,
+      "ok": true,
+      "detail": "Authentication required.",
+      "ms": 961
+    },
+    {
+      "name": "POST /api/guard/grounding — grounding check",
+      "status": 401,
+      "ok": true,
+      "detail": "Authentication required.",
+      "ms": 1366
+    },
+    {
+      "name": "POST /api/scan/media — text-only media scan",
+      "status": 401,
+      "ok": true,
+      "detail": "Authentication required.",
+      "ms": 749
+    },
+    {
+      "name": "POST /api/scanner — public scanner",
+      "status": 400,
+      "ok": true,
+      "detail": "error: Invalid prompt",
+      "ms": 939
+    },
+    {
+      "name": "POST /api/scanner/lead — scanner lead capture",
+      "status": 200,
+      "ok": true,
+      "detail": "16 bytes",
+      "ms": 1587
+    },
+    {
+      "name": "POST /api/auth/signup — validation (no real signup)",
+      "status": 400,
+      "ok": true,
+      "detail": "Invalid email",
+      "ms": 895
+    },
+    {
+      "name": "POST /api/auth/send-otp — validation",
+      "status": 400,
+      "ok": true,
+      "detail": "Invalid email",
+      "ms": 904
+    },
+    {
+      "name": "GET /api/auth/[...nextauth] — NextAuth provider check",
+      "status": 200,
+      "ok": true,
+      "detail": "419 bytes",
+      "ms": 615
+    },
+    {
+      "name": "POST /api/extension/scan — extension scan (no token)",
+      "status": 401,
+      "ok": true,
+      "detail": "Authentication required.",
+      "ms": 919
+    },
+    {
+      "name": "POST /api/extension/enroll — enrollment (no token)",
+      "status": 401,
+      "ok": true,
+      "detail": "Authentication required.",
+      "ms": 1080
+    },
+    {
+      "name": "POST /api/extension/heartbeat — heartbeat (no token)",
+      "status": 401,
+      "ok": true,
+      "detail": "Authentication required.",
+      "ms": 764
+    },
+    {
+      "name": "GET /api/extension/policy — policy fetch (no token)",
+      "status": 401,
+      "ok": false,
+      "detail": "51 bytes",
+      "ms": 1286
+    },
+    {
+      "name": "POST /api/agent/scan — agent scan",
+      "status": 400,
+      "ok": true,
+      "detail": "Required",
+      "ms": 899
+    },
+    {
+      "name": "POST /api/agent/tool/check — tool check",
+      "status": 401,
+      "ok": true,
+      "detail": "Missing x-api-key header.",
+      "ms": 2636
+    },
+    {
+      "name": "POST /api/agent/data/check — data check",
+      "status": 401,
+      "ok": true,
+      "detail": "Missing x-api-key header.",
+      "ms": 843
+    },
+    {
+      "name": "POST /api/agent/output/check — output check",
+      "status": 401,
+      "ok": true,
+      "detail": "Missing x-api-key header.",
+      "ms": 1014
+    },
+    {
+      "name": "POST /api/agent/memory/check — memory check",
+      "status": 401,
+      "ok": true,
+      "detail": "Missing x-api-key header.",
+      "ms": 1123
+    },
+    {
+      "name": "POST /api/agent/behavior — behavior analysis",
+      "status": 405,
+      "ok": true,
+      "detail": "0 bytes",
+      "ms": 10344
+    },
+    {
+      "name": "POST /api/agent-firewall/inspect — firewall inspect",
+      "status": 400,
+      "ok": true,
+      "detail": "Required",
+      "ms": 2174
+    },
+    {
+      "name": "POST /api/mcp/risk/scan — MCP risk scan",
+      "status": 400,
+      "ok": true,
+      "detail": "Expected object, received string",
+      "ms": 729
+    },
+    {
+      "name": "GET /api/mcp/risk/badge — MCP risk badge",
+      "status": 200,
+      "ok": true,
+      "detail": "590 bytes",
+      "ms": 1098
+    },
+    {
+      "name": "POST /api/gateway/mcp — MCP gateway",
+      "status": 401,
+      "ok": true,
+      "detail": "Missing x-api-key header.",
+      "ms": 715
+    },
+    {
+      "name": "POST /api/compliance/owasp-llm-2025 — OWASP LLM check",
+      "status": 401,
+      "ok": true,
+      "detail": "Authentication required.",
+      "ms": 719
+    },
+    {
+      "name": "POST /api/compliance/owasp-agentic-2026 — OWASP Agentic check",
+      "status": 401,
+      "ok": true,
+      "detail": "Authentication required.",
+      "ms": 851
+    },
+    {
+      "name": "POST /api/compliance/gaps — compliance gaps",
+      "status": 401,
+      "ok": true,
+      "detail": "Authentication required.",
+      "ms": 614
+    },
+    {
+      "name": "POST /api/rag/query — RAG query check",
+      "status": 400,
+      "ok": true,
+      "detail": "Required",
+      "ms": 540
+    },
+    {
+      "name": "POST /api/rag/document/trust-score — doc trust score",
+      "status": 401,
+      "ok": true,
+      "detail": "Missing x-api-key header.",
+      "ms": 556
+    },
+    {
+      "name": "POST /api/semantic-egress/check — egress check",
+      "status": 401,
+      "ok": true,
+      "detail": "Authentication required.",
+      "ms": 954
+    },
+    {
+      "name": "POST /api/shadow/scan — shadow AI scan",
+      "status": 401,
+      "ok": true,
+      "detail": "Sign in required.",
+      "ms": 759
+    },
+    {
+      "name": "POST /api/blast-radius/simulate — blast radius sim",
+      "status": 401,
+      "ok": true,
+      "detail": "Missing x-api-key header.",
+      "ms": 872
+    },
+    {
+      "name": "POST /api/code-security/review — code review",
+      "status": 401,
+      "ok": true,
+      "detail": "Authentication required.",
+      "ms": 462
+    },
+    {
+      "name": "POST /api/ai-assistant — AI assistant",
+      "status": 200,
+      "ok": true,
+      "detail": "746 bytes",
+      "ms": 791
+    },
+    {
+      "name": "GET /api/benchmarks — public benchmarks",
+      "status": 401,
+      "ok": false,
+      "detail": "51 bytes",
+      "ms": 945
+    },
+    {
+      "name": "GET /api/openapi — OpenAPI spec",
+      "status": 200,
+      "ok": true,
+      "detail": "12859 bytes",
+      "ms": 958
+    },
+    {
+      "name": "POST /api/feedback — feedback submission",
+      "status": 401,
+      "ok": true,
+      "detail": "Authentication required.",
+      "ms": 2359
+    },
+    {
+      "name": "POST /api/ops/contact — contact form",
+      "status": 400,
+      "ok": true,
+      "detail": "Required",
+      "ms": 2486
+    },
+    {
+      "name": "GET /",
+      "status": 200,
+      "ok": true,
+      "detail": "234621 bytes",
+      "ms": 1011
+    },
+    {
+      "name": "GET /pricing",
+      "status": 200,
+      "ok": true,
+      "detail": "64672 bytes",
+      "ms": 958
+    },
+    {
+      "name": "GET /docs",
+      "status": 200,
+      "ok": true,
+      "detail": "71257 bytes",
+      "ms": 866
+    },
+    {
+      "name": "GET /docs/services",
+      "status": 200,
+      "ok": true,
+      "detail": "44569 bytes",
+      "ms": 1554
+    },
+    {
+      "name": "GET /blog",
+      "status": 200,
+      "ok": true,
+      "detail": "57255 bytes",
+      "ms": 719
+    },
+    {
+      "name": "GET /about",
+      "status": 200,
+      "ok": true,
+      "detail": "59973 bytes",
+      "ms": 2678
+    },
+    {
+      "name": "GET /contact",
+      "status": 200,
+      "ok": true,
+      "detail": "36282 bytes",
+      "ms": 2630
+    },
+    {
+      "name": "GET /demo",
+      "status": 200,
+      "ok": true,
+      "detail": "45265 bytes",
+      "ms": 1495
+    },
+    {
+      "name": "GET /demo-chatbot",
+      "status": 200,
+      "ok": true,
+      "detail": "34919 bytes",
+      "ms": 2585
+    },
+    {
+      "name": "GET /playground",
+      "status": 200,
+      "ok": true,
+      "detail": "42774 bytes",
+      "ms": 945
+    },
+    {
+      "name": "GET /benchmark",
+      "status": 200,
+      "ok": true,
+      "detail": "65990 bytes",
+      "ms": 821
+    },
+    {
+      "name": "GET /benchmarks",
+      "status": 200,
+      "ok": true,
+      "detail": "142436 bytes",
+      "ms": 730
+    },
+    {
+      "name": "GET /extensions/browser",
+      "status": 200,
+      "ok": true,
+      "detail": "36584 bytes",
+      "ms": 848
+    },
+    {
+      "name": "GET /extensions/browser/chrome",
+      "status": 404,
+      "ok": false,
+      "detail": "40987 bytes",
+      "ms": 965
+    },
+    {
+      "name": "GET /extensions/browser/edge",
+      "status": 404,
+      "ok": false,
+      "detail": "40987 bytes",
+      "ms": 438
+    },
+    {
+      "name": "GET /extensions/ide",
+      "status": 200,
+      "ok": true,
+      "detail": "140264 bytes",
+      "ms": 497
+    },
+    {
+      "name": "GET /llm-security",
+      "status": 200,
+      "ok": true,
+      "detail": "74003 bytes",
+      "ms": 1399
+    },
+    {
+      "name": "GET /prompt-injection-protection",
+      "status": 200,
+      "ok": true,
+      "detail": "69334 bytes",
+      "ms": 574
+    },
+    {
+      "name": "GET /jailbreak-detection",
+      "status": 200,
+      "ok": true,
+      "detail": "68201 bytes",
+      "ms": 270
+    },
+    {
+      "name": "GET /ai-agent-security",
+      "status": 200,
+      "ok": true,
+      "detail": "75589 bytes",
+      "ms": 1163
+    },
+    {
+      "name": "GET /ai-data-leakage-prevention",
+      "status": 200,
+      "ok": true,
+      "detail": "70504 bytes",
+      "ms": 394
+    },
+    {
+      "name": "GET /mcp-security",
+      "status": 200,
+      "ok": true,
+      "detail": "68822 bytes",
+      "ms": 355
+    },
+    {
+      "name": "GET /rag-security",
+      "status": 200,
+      "ok": true,
+      "detail": "70574 bytes",
+      "ms": 304
+    },
+    {
+      "name": "GET /llm-firewall",
+      "status": 200,
+      "ok": true,
+      "detail": "68767 bytes",
+      "ms": 311
+    },
+    {
+      "name": "GET /ai-safe-mode",
+      "status": 200,
+      "ok": true,
+      "detail": "67306 bytes",
+      "ms": 314
+    },
+    {
+      "name": "GET /ai-memory-inspector",
+      "status": 200,
+      "ok": true,
+      "detail": "67553 bytes",
+      "ms": 324
+    },
+    {
+      "name": "GET /enterprise",
+      "status": 200,
+      "ok": true,
+      "detail": "37885 bytes",
+      "ms": 275
+    },
+    {
+      "name": "GET /enterprise-ai-security",
+      "status": 200,
+      "ok": true,
+      "detail": "72608 bytes",
+      "ms": 322
+    },
+    {
+      "name": "GET /compliance",
+      "status": 404,
+      "ok": false,
+      "detail": "40987 bytes",
+      "ms": 279
+    },
+    {
+      "name": "GET /security",
+      "status": 200,
+      "ok": true,
+      "detail": "39572 bytes",
+      "ms": 750
+    },
+    {
+      "name": "GET /privacy",
+      "status": 200,
+      "ok": true,
+      "detail": "69303 bytes",
+      "ms": 2986
+    },
+    {
+      "name": "GET /terms",
+      "status": 200,
+      "ok": true,
+      "detail": "74632 bytes",
+      "ms": 1784
+    },
+    {
+      "name": "GET /trust",
+      "status": 200,
+      "ok": true,
+      "detail": "96294 bytes",
+      "ms": 1410
+    },
+    {
+      "name": "GET /status",
+      "status": 200,
+      "ok": true,
+      "detail": "59433 bytes",
+      "ms": 1870
+    },
+    {
+      "name": "GET /security-status",
+      "status": 404,
+      "ok": false,
+      "detail": "40987 bytes",
+      "ms": 802
+    },
+    {
+      "name": "GET /signin",
+      "status": 200,
+      "ok": true,
+      "detail": "40366 bytes",
+      "ms": 907
+    },
+    {
+      "name": "GET /signup",
+      "status": 200,
+      "ok": true,
+      "detail": "40629 bytes",
+      "ms": 950
+    },
+    {
+      "name": "GET /comparison",
+      "status": 200,
+      "ok": true,
+      "detail": "463924 bytes",
+      "ms": 1330
+    },
+    {
+      "name": "GET /integrations",
+      "status": 200,
+      "ok": true,
+      "detail": "60483 bytes",
+      "ms": 688
+    },
+    {
+      "name": "GET /changelog",
+      "status": 200,
+      "ok": true,
+      "detail": "36294 bytes",
+      "ms": 1262
+    },
+    {
+      "name": "GET /cursor-ai-security",
+      "status": 200,
+      "ok": true,
+      "detail": "79043 bytes",
+      "ms": 1027
+    },
+    {
+      "name": "GET /vscode-ai-security",
+      "status": 200,
+      "ok": true,
+      "detail": "74491 bytes",
+      "ms": 840
+    },
+    {
+      "name": "GET /windsurf-ai-security",
+      "status": 200,
+      "ok": true,
+      "detail": "78927 bytes",
+      "ms": 670
+    },
+    {
+      "name": "GET /ai-security-india",
+      "status": 200,
+      "ok": true,
+      "detail": "72457 bytes",
+      "ms": 585
+    },
+    {
+      "name": "GET /ai-workflow-security",
+      "status": 200,
+      "ok": true,
+      "detail": "70820 bytes",
+      "ms": 542
+    },
+    {
+      "name": "GET /model-supply-chain-security",
+      "status": 200,
+      "ok": true,
+      "detail": "70971 bytes",
+      "ms": 601
+    },
+    {
+      "name": "GET /local-ai-broker",
+      "status": 200,
+      "ok": true,
+      "detail": "70075 bytes",
+      "ms": 520
+    },
+    {
+      "name": "GET /student-discount",
+      "status": 200,
+      "ok": true,
+      "detail": "120315 bytes",
+      "ms": 732
+    },
+    {
+      "name": "GET /partners",
+      "status": 404,
+      "ok": false,
+      "detail": "40987 bytes",
+      "ms": 437
+    },
+    {
+      "name": "GET /case-studies",
+      "status": 200,
+      "ok": true,
+      "detail": "34242 bytes",
+      "ms": 411
+    },
+    {
+      "name": "GET /limitations",
+      "status": 200,
+      "ok": true,
+      "detail": "50476 bytes",
+      "ms": 470
+    },
+    {
+      "name": "GET /data-retention",
+      "status": 200,
+      "ok": true,
+      "detail": "40075 bytes",
+      "ms": 515
+    },
+    {
+      "name": "GET /subprocessors",
+      "status": 200,
+      "ok": true,
+      "detail": "47612 bytes",
+      "ms": 455
+    },
+    {
+      "name": "GET /responsible-disclosure",
+      "status": 200,
+      "ok": true,
+      "detail": "40013 bytes",
+      "ms": 480
+    }
+  ]
+}

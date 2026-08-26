@@ -282,6 +282,89 @@ export async function enrollWithCode(
 }
 
 /**
+ * v0.2.0 — Self-service trial mode for small teams.
+ *
+ * Allows users to try the extension with a built-in sample policy without
+ * requiring an enterprise enrollment code. The trial:
+ *  - Uses the public SoterAI cloud endpoint (validated + pinned like any enrollment)
+ *  - Applies a local sample policy with sensible defaults (warn on secrets, block on critical)
+ *  - Does NOT send audit events to any backend (local-only mode)
+ *  - Can be upgraded to full enrollment at any time via enrollment code
+ *
+ * This removes the "enterprise code required" friction for individual users
+ * and small teams evaluating the product.
+ */
+export async function startTrialMode(): Promise<{ ok: true; info: EnrollmentInfo } | { ok: false; error: string }> {
+  const state = await getState();
+  const endpoint = normalizeEndpoint(DEFAULT_EXTENSION_API_BASE_URL, { pinnedOrigin: state.config.pinnedApiOrigin });
+  if (!endpoint.allowed || !endpoint.origin) {
+    return { ok: false, error: endpoint.reason ?? `Endpoint refused (${endpoint.code}).` };
+  }
+  const origin = endpoint.origin;
+
+  // Trial config: local-only identity, no device token, no backend audit
+  const config: ExtensionConfig = {
+    apiBaseUrl: origin,
+    pinnedApiOrigin: origin,
+    organizationId: "trial-local",
+    organizationName: "Soter Trial (Local)",
+    employeeId: "trial-user",
+    employeeEmail: undefined,
+    department: undefined,
+    role: undefined,
+    deviceToken: undefined,
+    // Preserve any enterprise enforcement flags if they were set via managed policy
+    hardEnforcement: state.config.hardEnforcement,
+    offlineFailClosed: state.config.offlineFailClosed,
+    disableNetworkLayerEnforcement: state.config.disableNetworkLayerEnforcement,
+    requirePolicySignature: false, // Trial uses local sample policy, no signature required
+    policyTrustedKeys: state.config.policyTrustedKeys,
+    policySigningSecret: undefined,
+  };
+
+  // Built-in sample policy for trial mode
+  const samplePolicy = {
+    version: "trial-1.0.0",
+    defaultAction: "warn" as const,
+    maxPromptChars: 20000,
+    monitoredDomains: [
+      "chatgpt.com", "chat.openai.com", "claude.ai", "gemini.google.com",
+      "perplexity.ai", "poe.com", "openrouter.ai", "replit.com",
+      "stackblitz.com", "codesandbox.io", "bolt.new", "v0.dev", "lovable.dev",
+    ],
+    destinations: [],
+    rules: [
+      { id: "trial-secrets-block", name: "Block secrets", action: "block" as const, severity: "critical" as const, detectedDataTypes: ["api_key", "aws_access_key", "github_token", "private_key", "database_url", "env_file"] },
+      { id: "trial-pii-warn", name: "Warn on PII", action: "warn" as const, severity: "high" as const, detectedDataTypes: ["pii", "india_pii"] },
+      { id: "trial-injection-warn", name: "Warn on injection", action: "warn" as const, severity: "high" as const, detectedDataTypes: ["prompt_injection"] },
+    ],
+    emergencyLockdown: { enabled: false, blockedDataTypes: [], requireApprovalDataTypes: [], blockAllFileUploads: false, allowOnlyEnterpriseDestinations: false },
+    offlineFailClosed: false,
+    hardEnforcement: false,
+  };
+
+  await setState({
+    config,
+    enrollmentStatus: "enrolled",
+    enrollmentMode: "self_service",
+    policySyncStatus: "fresh",
+    policy: samplePolicy as any,
+  });
+
+  return {
+    ok: true,
+    info: {
+      mode: "self_service",
+      status: "enrolled",
+      organizationId: "trial-local",
+      employeeId: "trial-user",
+      enrolledAt: new Date().toISOString(),
+      managedValid: false,
+    },
+  };
+}
+
+/**
  * Get the current enrollment status from state.
  */
 export async function getEnrollmentStatus(): Promise<EnrollmentInfo> {

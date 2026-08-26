@@ -1,0 +1,81 @@
+{
+  "model_version": "v12",
+  "timestamp": "2026-08-20 13:42:06",
+  "total_tests": 7250,
+  "accuracy": 0.9310344827586207,
+  "attack_recall": 0.9942148760330578,
+  "attack_precision": 1.0,
+  "attack_f1": 0.9970990468296725,
+  "safe_recall": 1.0,
+  "inference_time_s": 75.75889301300049,
+  "throughput_sps": 95.69833601919018,
+  "per_category": {
+    "PROMPT_INJECTION": {
+      "detected": 700,
+      "total": 700,
+      "rate": 1.0
+    },
+    "JAILBREAK": {
+      "detected": 600,
+      "total": 600,
+      "rate": 1.0
+    },
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+      "detected": 491,
+      "total": 500,
+      "rate": 0.982
+    },
+    "PII": {
+      "detected": 500,
+      "total": 500,
+      "rate": 1.0
+    },
+    "SECRET": {
+      "detected": 450,
+      "total": 450,
+      "rate": 1.0
+    },
+    "UNSAFE_OUTPUT": {
+      "detected": 450,
+      "total": 450,
+      "rate": 1.0
+    },
+    "RAG_POISONING": {
+      "detected": 400,
+      "total": 400,
+      "rate": 1.0
+    },
+    "DATA_EXFILTRATION_ATTEMPT": {
+      "detected": 450,
+      "total": 450,
+      "rate": 1.0
+    },
+    "TOOL_CALL_ABUSE": {
+      "detected": 396,
+      "total": 400,
+      "rate": 0.99
+    },
+    "ENCODING_OBFUSCATION": {
+      "detected": 497,
+      "total": 500,
+      "rate": 0.994
+    },
+    "MULTI_TURN_ESCALATION": {
+      "detected": 295,
+      "total": 300,
+      "rate": 0.9833333333333333
+    },
+    "MODEL_EXTRACTION": {
+      "detected": 446,
+      "total": 450,
+      "rate": 0.9911111111111112
+    },
+    "TOXICITY_HARASSMENT": {
+      "detected": 340,
+      "total": 350,
+      "rate": 0.9714285714285714
+    }
+  },
+  "missed_attacks": 35,
+  "false_positives": 0
+}

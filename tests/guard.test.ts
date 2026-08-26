@@ -97,8 +97,37 @@ test("EU and Latin America identifiers are independently detected and redacted",
   }
 });
 
-test("secrets are detected without returning matched secret values in findings", () => {
-  const secret = "sk-proj-AbCdEfGhIjKlMnOpQrStUvWxYz123456";
+// The dashed form used to survive redaction in cleartext: the card rule wants
+// 13+ digits and the phone rule wants three groups of a different shape, so both
+// missed it. The negative cases are the point of the SSA's never-issued ranges —
+// without them the rule would start redacting invoice and order numbers.
+test("US SSNs are detected and redacted, and ordinary dashed numbers are not", () => {
+  const detected = [
+    "Applicant SSN 123-45-6789",
+    "social security number 123 45 6789",
+    "SSN: 123456789",
+  ];
+  for (const text of detected) {
+    const result = analyzeText(text, "INPUT");
+    assert.ok(
+      result.findings.some((finding) => finding.label === "US SSN-like identifier"),
+      text,
+    );
+    assert.match(result.safeText ?? result.redactedText ?? "", /\[REDACTED_US_SSN\]/, text);
+  }
+
+  const notDetected = ["Delivery window 2023-01-15", "Reference 000-45-6789", "Batch 900-12-3456"];
+  for (const text of notDetected) {
+    const result = analyzeText(text, "INPUT");
+    assert.equal(
+      result.findings.some((finding) => finding.label === "US SSN-like identifier"),
+      false,
+      text,
+    );
+  }
+});
+
+test("secrets are detected without returning matched secret values in findings", () => {  const secret = "sk-proj-AbCdEfGhIjKlMnOpQrStUvWxYz123456";
   const result = analyzeText(`Credential: ${secret}`, "INPUT");
   assert.equal(result.action, "HUMAN_REVIEW");
   assert.ok(result.riskTypes.includes("SECRET_DETECTED"));

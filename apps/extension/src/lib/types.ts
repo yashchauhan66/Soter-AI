@@ -29,6 +29,13 @@ export interface ExtensionConfig {
    */
   disableNetworkLayerEnforcement?: boolean;
   /**
+   * Configurable network block TTL in milliseconds. Default 3000ms.
+   * Admins can increase to 10000-30000ms for stricter enforcement against patient scripts.
+   */
+  networkBlockTtlMs?: number;
+  /** UI language preference. Defaults to "en". */
+  uiLanguage?: "en" | "hi";
+  /**
    * Origin the extension is pinned to. Once set, `apiBaseUrl` may not change to a
    * different origin — not by user entry and not by a server response.
    */

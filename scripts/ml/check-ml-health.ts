@@ -55,7 +55,9 @@ async function main(): Promise<number> {
       console.log(
         `  canary            ${ml.canaryLabel ?? "-"} in ${ml.probeLatencyMs}ms` +
           (ml.canaryWouldEscalate
-            ? "  <-- benign canary would be ESCALATED: live false positive"
+            ? "  <-- benign canary would be ESCALATED: live false positive\n" +
+              "                    (expected on both shipped artifacts — read the CANARY_TEXT\n" +
+              "                     comment in lib/guard/guardHealth.ts before changing anything)"
             : "  (not escalated)"),
       );
     }

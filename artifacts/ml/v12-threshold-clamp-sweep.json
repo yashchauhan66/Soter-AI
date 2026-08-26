@@ -1,0 +1,129 @@
+{
+  "npz": "artifacts/ml/probs-v12-crossdist-v3.npz",
+  "model_dir": "models/ml-classifier-v12",
+  "rows_clean": 22680,
+  "labels": 14,
+  "min_possible_argmax": 0.07142857142857142,
+  "clamped_labels": [
+    "DATA_EXFILTRATION_ATTEMPT",
+    "ENCODING_OBFUSCATION",
+    "JAILBREAK",
+    "MODEL_EXTRACTION",
+    "MULTI_TURN_ESCALATION",
+    "PII",
+    "RAG_POISONING",
+    "SECRET",
+    "TOOL_CALL_ABUSE",
+    "TOXICITY_HARASSMENT",
+    "UNSAFE_OUTPUT"
+  ],
+  "fitted_labels": {
+    "PROMPT_INJECTION": 0.3243640065193176,
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": 0.5
+  },
+  "inert_and_allowlisted": [
+    "ENCODING_OBFUSCATION",
+    "JAILBREAK",
+    "MODEL_EXTRACTION",
+    "PII",
+    "RAG_POISONING",
+    "SECRET"
+  ],
+  "operating_point": {
+    "conf_floor": 0.5,
+    "abstain_floor": 0.55,
+    "entropy_budget": 0.4
+  },
+  "baseline_verify": {
+    "det_pct": 97.7294921875,
+    "fpr_pct": 0.7162877608221738
+  },
+  "sweep": [
+    {
+      "T": 0.05,
+      "select_det_pct": 97.71825396825396,
+      "select_fpr_pct": 1.0582010582010581,
+      "verify_det_pct": 97.7294921875,
+      "verify_fpr_pct": 0.7162877608221738,
+      "verify_det_delta": 0.0,
+      "verify_fpr_delta": 0.0
+    },
+    {
+      "T": 0.0714,
+      "select_det_pct": 97.71825396825396,
+      "select_fpr_pct": 1.0582010582010581,
+      "verify_det_pct": 97.7294921875,
+      "verify_fpr_pct": 0.7162877608221738,
+      "verify_det_delta": 0.0,
+      "verify_fpr_delta": 0.0
+    },
+    {
+      "T": 0.1,
+      "select_det_pct": 97.71825396825396,
+      "select_fpr_pct": 1.0582010582010581,
+      "verify_det_pct": 97.7294921875,
+      "verify_fpr_pct": 0.7162877608221738,
+      "verify_det_delta": 0.0,
+      "verify_fpr_delta": 0.0
+    },
+    {
+      "T": 0.15,
+      "select_det_pct": 97.71825396825396,
+      "select_fpr_pct": 1.0582010582010581,
+      "verify_det_pct": 97.7294921875,
+      "verify_fpr_pct": 0.7162877608221738,
+      "verify_det_delta": 0.0,
+      "verify_fpr_delta": 0.0
+    },
+    {
+      "T": 0.2,
+      "select_det_pct": 97.71825396825396,
+      "select_fpr_pct": 1.0582010582010581,
+      "verify_det_pct": 97.7294921875,
+      "verify_fpr_pct": 0.7162877608221738,
+      "verify_det_delta": 0.0,
+      "verify_fpr_delta": 0.0
+    },
+    {
+      "T": 0.25,
+      "select_det_pct": 97.71825396825396,
+      "select_fpr_pct": 1.0582010582010581,
+      "verify_det_pct": 97.7294921875,
+      "verify_fpr_pct": 0.7162877608221738,
+      "verify_det_delta": 0.0,
+      "verify_fpr_delta": 0.0
+    },
+    {
+      "T": 0.3,
+      "select_det_pct": 97.71825396825396,
+      "select_fpr_pct": 1.0270774976657329,
+      "verify_det_pct": 97.7294921875,
+      "verify_fpr_pct": 0.7162877608221738,
+      "verify_det_delta": 0.0,
+      "verify_fpr_delta": 0.0
+    },
+    {
+      "T": 0.4,
+      "select_det_pct": 97.69345238095238,
+      "select_fpr_pct": 1.0270774976657329,
+      "verify_det_pct": 97.6806640625,
+      "verify_fpr_pct": 0.7162877608221738,
+      "verify_det_delta": -0.048828125,
+      "verify_fpr_delta": 0.0
+    },
+    {
+      "T": 0.5,
+      "select_det_pct": 97.56944444444444,
+      "select_fpr_pct": 1.0270774976657329,
+      "verify_det_pct": 97.607421875,
+      "verify_fpr_pct": 0.7162877608221738,
+      "verify_det_delta": -0.1220703125,
+      "verify_fpr_delta": 0.0
+    }
+  ],
+  "bounds": [
+    "only 4 of 14 classes have gold rows here; escalation counts label membership, not gold agreement, so raising a clamped threshold can lose real detection",
+    "labelSpaceUncertain and the semantic veto are not modelled \u2014 both can only remove escalations, so every rate is an upper bound",
+    "an FPR win here is NOT transferred to the meta-instructional benign slice in scripts/guard-benchmark/_audit-mlbias-2026-08-02.ts"
+  ]
+}

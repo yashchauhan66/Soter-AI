@@ -205,18 +205,10 @@ export function rewriteSafePrompt(redactedText: string, detectedDataTypes: strin
     changes.push("IP addresses, internal paths, and hostnames removed from logs");
   }
 
-  // Add explanation header
-  const categories = categorySet.size > 0 ? Array.from(categorySet).join(", ") : "unknown";
-  const note = [
-    "",
-    `┌─ Soter Safe Context Capsule ──────────────────────────────`,
-    `│`,
-    ...changes.map(c => `│ ✓ ${c}`),
-    `│`,
-    `│ Data categories: ${categories}`,
-    `│`,
-    `└──────────────────────────────────────────────────────────`,
-  ].join("\n");
+  // v0.2.1: clean, minimal footer instead of a broken ASCII box.
+  // Reads naturally in chat and keeps the sanitized prompt clean.
+  const summary = changes.length > 0 ? changes.join("; ") : "Sensitive details removed";
+  const note = `\n\n—\n🛡️ Soter sanitized this prompt before sending. ${summary}.`;
 
   return (text + note).trim();
 }

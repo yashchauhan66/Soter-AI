@@ -12,6 +12,16 @@ const rules: PatternRule[] = [
   { pattern: /\b(?:Codice\s+Fiscale|CF)\s*[:=-]?\s*[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]\b/i, label: "EU IT codice fiscale-like identifier", message: "An Italy codice fiscale-like personal identifier was detected.", severity: "HIGH", score: 35, redactionToken: "[REDACTED_EU_TAX_ID]", sensitive: true },
   { pattern: /\b(?:CPF)\s*[:=-]?\s*\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b/i, label: "BR CPF-like identifier", message: "A Brazil CPF-like personal identifier was detected.", severity: "HIGH", score: 35, redactionToken: "[REDACTED_BR_CPF]", sensitive: true },
   { pattern: /\b(?:IBAN)\s*[:=-]?\s*[A-Z]{2}\d{2}(?:[ ]?[A-Z0-9]){11,30}\b/i, label: "IBAN-like bank identifier", message: "An IBAN-like financial identifier was detected.", severity: "HIGH", score: 35, redactionToken: "[REDACTED_IBAN]", sensitive: true },
+  // US SSN. Two rules on purpose. The dashed form is distinctive enough to match
+  // unqualified — it is also the only form the credit-card rule (13+ digits) and
+  // the phone rule (three groups) both miss, which is how `123-45-6789` used to
+  // survive redaction in cleartext. The structural exclusions are the SSA's own
+  // never-issued ranges (area 000/666/900-999, group 00, serial 0000), and they
+  // are what keeps ordinary dashed serial numbers out of the match.
+  { pattern: /\b(?!000|666|9\d\d)\d{3}-(?!00)\d{2}-(?!0000)\d{4}\b/, label: "US SSN-like identifier", message: "A US Social Security number-like identifier was detected.", severity: "HIGH", score: 35, redactionToken: "[REDACTED_US_SSN]", sensitive: true },
+  // Unseparated or space-separated digits are far too common to claim on shape
+  // alone, so that form is only an SSN when the text says so.
+  { pattern: /\b(?:SSNs?|social[\s-]?security(?:[\s-]?(?:number|no\.?|#))?)\s*[:=#-]?\s*(?!000|666|9\d\d)\d{3}[-\s]?(?!00)\d{2}[-\s]?(?!0000)\d{4}\b/i, label: "US SSN-like identifier", message: "A US Social Security number-like identifier was detected.", severity: "HIGH", score: 35, redactionToken: "[REDACTED_US_SSN]", sensitive: true },
 ];
 
 export function piiDetector(text: string) {

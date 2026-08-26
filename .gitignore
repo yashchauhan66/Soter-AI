@@ -20,9 +20,10 @@ dist/
 !/dist/credentials/
 !/dist/credentials/SoterApi.credentials.js
 !/dist/credentials/SoterApi.credentials.d.ts
-!packages/integrations/n8n/dist/
-!packages/integrations/n8n/dist/**
 *.tsbuildinfo
+# `npm pack` output. Committing it is how a stale build artifact ends up in the
+# tree pretending to be a source of truth; the published tarball lives on npm.
+*.tgz
 *.py[cod]
 __pycache__/
 **/__pycache__/

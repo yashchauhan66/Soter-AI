@@ -1178,4 +1178,78 @@ export const SEMANTIC_BENIGN_SEEDS: string[] = [
   "remember that our company name is acme and use it in the drafts",
   "the tool annotation should explain the rate limit for callers",
   "help me version my mcp server tools without breaking existing clients",
+  // ── Meta-instructional benign directives (added 2026-08-21) ────────────────
+  // WHY: the ML tier escalated ~40-48% of neutral instruction-shaped English
+  // ("keep it under 200 words", "answer in json", "give me the short version")
+  // as PROMPT_INJECTION / SYSTEM_PROMPT_LEAK_ATTEMPT. Measured on 30 audit rows
+  // (scripts/guard-benchmark/_audit-mlbias-2026-08-02.ts) and 82 held-out rows
+  // (datasets/meta-instructional-benign-heldout.jsonl). These are the benign
+  // prototypes that class of text was missing, so classifySemantic now assigns it
+  // a higher benignSimilarity and the mlAugment veto suppresses the escalation.
+  //
+  // AUTHORING RULE so this stays a fix and not a benchmark overfit: canonical
+  // forms only, phrased DIFFERENTLY from every audit and held-out string (no
+  // "keep your answer under N words"), and NONE may reference overriding the
+  // system prompt, prior instructions, or the assistant's identity — those are
+  // the real injection shapes and must still escalate. Attack-recall cost of this
+  // block is measured in artifacts/ml/veto-fix-*.json (scripts/ml/measure-veto-fix.ts).
+  // length / brevity
+  "keep the response short and to the point",
+  "please be brief in your answer",
+  "give me a concise reply",
+  "make the summary as short as you can",
+  "answer in just a sentence or two",
+  // output format
+  "format your answer as a bulleted list",
+  "give the output in json format",
+  "put the results in a table for me",
+  "respond using markdown headings",
+  "return the data as a list of key value pairs",
+  "reply with a numbered list of steps",
+  // output shaping
+  "just give me the answer without the extra explanation",
+  "show only the code and nothing else",
+  "give me only the final result",
+  "i only want the summary not the full details",
+  "please get straight to the point",
+  // preamble / structure
+  "skip the introduction and start with the main points",
+  "no need for a preamble, just answer directly",
+  "go directly to the recommendations",
+  "leave out the background section this time",
+  // tone / reading level
+  "keep the tone professional throughout",
+  "write it in plain simple language",
+  "explain it in a way a beginner can follow",
+  "use a formal tone suitable for a report",
+  "keep it casual and friendly",
+  // audience
+  "assume the reader has no technical background",
+  "write this for a business audience",
+  "explain it as if to a brand new team member",
+  // exclusion / negation of content (not of instructions)
+  "do not include any extra commentary",
+  "please leave the disclaimer out",
+  "omit the inline code comments in your answer",
+  "exclude any marketing language from the copy",
+  "there is no need to add a conclusion",
+  // ordering / sorting
+  "list the items in alphabetical order",
+  "sort the results by date for me",
+  "order them from most to least important",
+  "group the output by category",
+  // local task / config state (development, not the guard's own controls)
+  "increase the request timeout for this local test",
+  "turn off caching while i debug this",
+  "use the staging environment for now",
+  "set the logging to verbose for this run",
+  "run it in dry run mode first",
+  // confirmation / echo
+  "confirm that you received the file",
+  "repeat the key details back to me",
+  "let me know if anything is missing",
+  // consistency with prior agreed style (benign personalization)
+  "follow the same format we agreed on earlier",
+  "keep it consistent with the previous document",
+  "match the style of the earlier report",
 ];

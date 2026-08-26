@@ -37,6 +37,7 @@
     "build:extension": "npm --prefix apps/extension run build",
     "typecheck:extension": "npm --prefix apps/extension run typecheck",
     "test:extension": "tsx --test tests/extension/*.test.ts",
+    "test:multimodal": "tsx --test tests/multimodal-scanner.test.ts",
     "package:extension": "npm --prefix apps/extension run package",
     "test:extension:runtime": "playwright test --config playwright.extension.config.ts",
     "vscode:package": "npm --prefix packages/vscode-extension run vscode:package",

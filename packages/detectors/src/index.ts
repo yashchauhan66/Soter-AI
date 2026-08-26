@@ -62,6 +62,7 @@ function dedupeFindings(findings: DetectorFinding[]) {
 export * from "./business-sensitive";
 export * from "./code";
 export * from "./core";
+export * from "./multimodal";
 export * from "./normalize";
 export * from "./pii-global";
 export * from "./pii-india";

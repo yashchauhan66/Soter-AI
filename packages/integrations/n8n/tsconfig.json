@@ -1,4 +1,13 @@
 {
+  // `typeRoots` is pinned because TypeScript otherwise walks every parent
+  // directory up to the filesystem root collecting implicit `@types` packages.
+  // A stray `node_modules/@types` anywhere above the checkout — a home directory
+  // is enough — then joins the build: an entry-point-less directory there fails
+  // the build with TS2688, and a real one would silently change what compiles.
+  // The published artifact has to be a function of the source commit its
+  // provenance attests to, not of the machine that ran `tsc`.
+  //
+  // The sibling `tsconfig.test.json` gets the same property from `types`.
   "compilerOptions": {
     "target": "ES2020",
     "module": "commonjs",
@@ -10,8 +19,9 @@
     "resolveJsonModule": true,
     "outDir": "./dist",
     "rootDir": ".",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "typeRoots": ["./node_modules/@types"]
   },
-  "include": ["nodes/**/*.ts", "credentials/**/*.ts"],
+  "include": ["nodes/**/*.ts", "credentials/**/*.ts", "shared/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

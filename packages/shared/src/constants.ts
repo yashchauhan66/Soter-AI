@@ -1,4 +1,4 @@
-export const SOTER_EXTENSION_VERSION = "0.1.2";
+export const SOTER_EXTENSION_VERSION = "0.2.1";
 export const DEFAULT_EXTENSION_API_BASE_URL = "https://soterai.in";
 
 export const AI_DESTINATION_DOMAINS = [

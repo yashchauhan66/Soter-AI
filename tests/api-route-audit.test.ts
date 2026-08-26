@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
+import { PUBLIC_API_PREFIXES } from "../auth.config";
 
 const API_ROOT = path.join("app", "api");
 
@@ -107,6 +108,134 @@ test("API route audit inventory classifies every route", () => {
       assert.ok(hasAny(source, validationPatterns), id + " mutation has no recognized validation/body parser");
     }
   }
+});
+
+// ── Middleware reachability ──────────────────────────────────────────────────
+//
+// The NextAuth middleware in auth.config.ts runs before any route handler. A
+// route that authenticates with x-api-key has no session cookie to present, so
+// if its prefix is missing from PUBLIC_API_PREFIXES the middleware answers
+// 401 {"message":"Authentication required."} and the handler is never reached.
+// That is not a theoretical gap: /api/semantic-egress was missing, which broke
+// the n8n node's universalGuard action for every valid API key while its other
+// layers worked. The two tests below pin both directions of the invariant.
+
+const machineAuthPatterns = [
+  /authenticateApiKeyRequest\(/,
+  /authenticateAgentFirewall\(/,
+  /authenticateAdvancedSecurity\(/,
+  /authenticateAgentPassport\(/,
+  /authenticateAgentJson\(/,
+  /authenticateExtensionRequest\(/,
+  /authorizeScimRequest\(/,
+  /WEBHOOK_WORKER_TOKEN|REPORT_WORKER_TOKEN/,
+];
+
+const sessionAuthPatterns = [
+  /requireUser\(/,
+  /getActiveOrganization\(/,
+  /requireOrganizationAccess\(/,
+  /requirePermission\(/,
+  /requireProjectAccess\(/,
+  /requireProjectPermission\(/,
+  /requireAdmin\(/,
+  /getCurrentUser\(/,
+];
+
+// Transcribed from authConfig.callbacks.authorized. If the middleware's matching
+// rule changes, change it here too — that divergence is the bug this catches.
+function middlewareAllows(pathname: string) {
+  const isPublicApi = PUBLIC_API_PREFIXES.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
+  const isGuardApi = pathname === "/api/guard/input" || pathname === "/api/guard/output" || pathname === "/api/guard/streaming";
+  return isPublicApi || isGuardApi;
+}
+
+test("every machine-authenticated route is reachable through the middleware", () => {
+  const unreachable: string[] = [];
+  for (const file of routeFiles()) {
+    const id = routeId(file);
+    const source = readFileSync(file, "utf8");
+    // Only routes with no session path at all: those literally cannot satisfy
+    // the middleware, so gating them is an outage rather than a policy.
+    if (!hasAny(source, machineAuthPatterns)) continue;
+    if (hasAny(source, sessionAuthPatterns)) continue;
+    if (!middlewareAllows(id)) unreachable.push(id);
+  }
+  assert.deepEqual(
+    unreachable,
+    [],
+    `these routes authenticate by API key only but are session-gated by the middleware, so callers get 401 "Authentication required." before the handler runs — add their prefix to PUBLIC_API_PREFIXES`,
+  );
+});
+
+test("no allowlisted prefix un-gates a session-authenticated route", () => {
+  // The other direction: widening a prefix (e.g. "/api/guard" instead of
+  // "/api/guard/universal") would drop the session requirement from dashboard
+  // routes that rely on the middleware as their outer gate.
+  //
+  // These prefixes were already broad before this invariant existed, and every
+  // route below still enforces its own session guard at the handler (the audit
+  // above proves it), so they lose the middleware as defence-in-depth rather
+  // than losing authentication. They are enumerated instead of tolerated by
+  // pattern so that a *new* one fails this test.
+  const knownBroadPrefixExceptions = new Set([
+    "/api/agent/behavior",
+    "/api/agent-firewall/inspect",
+    "/api/cost-firewall/budget",
+    "/api/rag/chunks/acl",
+    "/api/rag/collections",
+    "/api/rag/documents",
+    "/api/rag/documents/[id]/rescan",
+    "/api/rag/documents/review",
+    "/api/rag/query",
+    "/api/shadow/scan",
+    "/api/sso/saml/test",
+  ]);
+  const unGated: string[] = [];
+  for (const file of routeFiles()) {
+    const id = routeId(file);
+    const source = readFileSync(file, "utf8");
+    if (!hasAny(source, sessionAuthPatterns)) continue;
+    if (hasAny(source, machineAuthPatterns)) continue;
+    if (middlewareAllows(id) && !knownBroadPrefixExceptions.has(id)) unGated.push(id);
+  }
+  assert.deepEqual(unGated, [], "these session-authenticated routes are covered by a PUBLIC_API_PREFIXES entry that is too broad");
+});
+
+// The two invariants above only inspect routes that already authenticate
+// somehow: one checks machine-auth routes are reachable, the other that
+// session-auth routes stay gated. A route with *neither* passes both, which is
+// how /api/extension/approval-status/[requestId] reached this point taking a
+// caller-supplied id into findUnique with no auth, no rate limit and no
+// ownership check. It was invisible because the middleware 401'd the whole
+// prefix, so the route was broken rather than exposed -- and allowlisting the
+// prefix is exactly what converts the one into the other.
+//
+// Scoped to /api/extension rather than to every public prefix: 25 routes across
+// the API are deliberately unauthenticated (health, signup, badges,
+// signature-verified webhooks), so enumerating all of them would be noise
+// nobody maintains. The extension control plane is a closed set that speaks only
+// device tokens and API keys, so "all of them authenticate" is a real rule there.
+test("every /api/extension route authenticates, since the prefix is public", () => {
+  // Enrollment is the bootstrap: the extension has no token yet, and the
+  // enrollmentCode it presents IS the credential (redeemEnrollmentToken answers
+  // 401 when it does not verify). It is IP-rate-limited. Anything else added
+  // here needs the same kind of justification, in writing.
+  const intentionallyUnauthenticated = new Set(["/api/extension/enroll"]);
+
+  const missing: string[] = [];
+  for (const file of routeFiles()) {
+    const id = routeId(file);
+    if (!id.startsWith("/api/extension")) continue;
+    if (intentionallyUnauthenticated.has(id)) continue;
+    const source = readFileSync(file, "utf8");
+    if (!hasAny(source, machineAuthPatterns)) missing.push(id);
+  }
+  assert.deepEqual(
+    missing,
+    [],
+    "these routes sit under the public /api/extension prefix without authenticating, so anyone on the internet can call them",
+  );
 });
 
 test("guard API routes combine API-key auth, validation, and rate limiting", () => {

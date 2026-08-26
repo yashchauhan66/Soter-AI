@@ -8,12 +8,14 @@ import { destinationTypeForUrl, domainFromUrl, scanPrompt } from "../lib/scanner
 import { getState, setState } from "../lib/storage";
 import type { RuntimeScanRequest, RuntimeResponse } from "../lib/types";
 import { matchAIDestination } from "../../../../packages/shared/src/ai-destinations";
-import { enrollFromManagedConfig, enrollWithCode } from "../lib/enrollment";
+import { enrollFromManagedConfig, enrollWithCode, startTrialMode } from "../lib/enrollment";
+import { classifyRemote, mergeMlIntoScan } from "../lib/ml-classifier";
 import { matchLocalFingerprints } from "../lib/fingerprint-matcher";
 import { ACTION_PRECEDENCE } from "../../../../packages/policy-engine/src/actions";
 import { createStorageSafeScanResult, previewForScan } from "../lib/privacy-preview";
 import { validateRuntimeMessage, type MessageSenderLike } from "../lib/message-guard";
 import { chromeDnrSessionRules, createNetworkBlockGuard } from "./network-block";
+import { redactSensitiveText } from "../lib/redaction";
 
 /** SS-9. Created once per service-worker generation; see `network-block.ts` for the scope. */
 const NETWORK_BLOCK_ALARM = "soter-network-block-sweep";
@@ -99,6 +101,14 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     void syncPolicy().then(async () => sendResponse({ ok: true, state: await getState() }));
     return true;
   }
+  if (validation.type === "SOTER_START_TRIAL") {
+    // v0.2.0: self-service trial with a local sample policy. Extension-page only
+    // (enforced by the message contract), so a web page can never start a trial.
+    void startTrialMode().then(async (result) => {
+      sendResponse({ ...result, state: await getState() });
+    });
+    return true;
+  }
   if (validation.type === "SOTER_GET_DESTINATION_CONTEXT") {
     void destinationContext(String(payload.url)).then(sendResponse);
     return true;
@@ -174,16 +184,32 @@ async function handleScan(request: RuntimeScanRequest, tabId?: number): Promise<
         actionTaken: result.action,
       }).catch(() => undefined);
     }
+    // v0.2.0: remote ML classifier (best-effort, async). Runs after the local scan;
+    // a network failure or timeout never blocks the scan, it only means the ML signal
+    // is absent. The remote model can only RAISE the risk score / add findings.
+    // v0.2.1 FIX: send REDACTED text to the remote ML endpoint, never raw text.
+    // The local scan already detected sensitive patterns; we redact those before
+    // sending to the backend so raw secrets/PII never leave the browser.
+    const redactedForMl = redactSensitiveText(request.text, result.detectedDataTypes);
+    const mlRemote = await classifyRemote(redactedForMl, state.config.apiBaseUrl, state.config.deviceToken).catch(() => null);
+    if (mlRemote) {
+      const merged = mergeMlIntoScan(result.riskScore, result.detectedDataTypes, mlRemote);
+      result.riskScore = merged.riskScore;
+      result.detectedDataTypes = merged.detectedDataTypes;
+      if (mlRemote.detectedDataTypes.length > 0) result.hasFindings = true;
+    }
     await setState({ latestScan: await createStorageSafeScanResult(result, request.text, request.eventType === "response" ? "response" : "prompt") });
     // SS-9: armed *before* the verdict is handed back, so the page cannot learn it was
     // blocked and win a race against the rule being installed. Only submit/upload gestures
     // arm one — a paste or a context-menu scan sends nothing, so there is nothing to deny.
+    // v0.2.0: TTL is now policy-configurable via `networkBlockTtlMs` (default 3000ms).
     const networkBlockOutcome =
       result.action === "block" && (request.eventType === "submit" || request.eventType === "file_upload")
         ? await networkBlock.arm({
             tabId,
             url: request.url,
             enabled: state.config.disableNetworkLayerEnforcement !== true,
+            ttlMs: resolveNetworkBlockTtl(state.config.networkBlockTtlMs),
           })
         : undefined;
     const isResponseScan = request.eventType === "response";
@@ -428,4 +454,15 @@ function messageActionToPolicyAction(action: string): any {
     return action;
   }
   return "allow";
+}
+
+/**
+ * v0.2.0: resolves the network block TTL from managed/org config.
+ * Clamped to [1000, 60000]ms so a misconfigured policy cannot disable the window
+ * (too short) or hold a tab's mutating requests hostage for minutes (too long).
+ * Defaults to 3000ms when unset or invalid.
+ */
+function resolveNetworkBlockTtl(configured: number | undefined): number {
+  if (typeof configured !== "number" || !Number.isFinite(configured)) return 3_000;
+  return Math.min(60_000, Math.max(1_000, Math.round(configured)));
 }

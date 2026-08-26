@@ -15,7 +15,7 @@
 | 3 | `n8n.nodes` array points to valid node file | ✅ | `dist/nodes/SoterGuard.node.js` |
 | 4 | License file present (MIT) | ✅ | `LICENSE` |
 | 5 | README.md with installation + usage docs | ✅ | 167 lines, covers all 4 actions |
-| 6 | `.npmignore` or `files` field excludes source | ⚠️ | `dist/` committed intentionally for n8n Creator Portal |
+| 6 | `.npmignore` or `files` field excludes source | ✅ | `files` publishes `dist` + examples + docs only |
 | 7 | No hardcoded secrets or API keys | ✅ | Verified |
 | 8 | TypeScript compiles without errors | ✅ | `npm run lint` (tsc --noEmit) passes |
 
@@ -76,8 +76,9 @@
 1. **Build:** `npm run build` in `packages/integrations/n8n/`
 2. **Test:** `node scripts/perf/n8n-workflow-test.js` from repo root
 3. **Publish:** Follow `NPM_PUBLISH_CHECKLIST.md`
-4. **Submit to n8n Creator Portal:**
-   - Go to https://n8n.io/creator-portal/
+4. **Submit to the n8n Creator Portal:**
+   - Go to https://creators.n8n.io/nodes (the old `n8n.io/creator-portal/` path is dead)
+   - **This step is what starts the review.** Publishing to npm does not: npm is only where n8n fetches the code from, so a published version sits there as an *unverified* community node until it is submitted here.
    - Submit package URL: `https://www.npmjs.com/package/n8n-nodes-soterai`
    - Provide README content and example workflow JSON
    - Wait for n8n team review
@@ -88,7 +89,7 @@
 |---|---|---|---|
 | 1 | No unit tests | Cannot catch regressions automatically | E2E test covers all workflows |
 | 2 | PII Redactor reuses input guard endpoint | Tight coupling | Works correctly; dedicated endpoint optional |
-| 3 | `dist/` committed to git | Larger repo | Required for n8n Creator Portal source checks |
+| 3 | `dist/` was committed to git | Fixed in 0.6.2 | It made the build publish pre-rename filenames alongside their replacements. `dist/` is now gitignored and `npm run build` cleans first. The scanner lints `{nodes,credentials}/**` from the provenance-attested checkout and excludes `dist/`, so nothing required it to be committed. |
 
 ## Post-Submission
 
