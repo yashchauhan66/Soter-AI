@@ -14,6 +14,10 @@ Packaging-only release. No behaviour change: detection, verdicts, outputs, and e
 
 - **The build no longer depends on what is installed outside the checkout.** `tsconfig.json` now pins `typeRoots` to `./node_modules/@types`. Without it TypeScript walks every parent directory to the filesystem root collecting implicit `@types` packages, so a `node_modules` in a developer's home directory joins the compilation — an entry-point-less directory there fails the build with TS2688, and a real one would change what compiles without anything in the repository saying so. Same guarantee as the `dist/` fix, one layer down: the output has to follow from the source commit, not from the machine. Verified to emit byte-identical JavaScript and declarations.
 
+### Docs
+
+- **Manual npm install instructions now cover the n8n 2.x layout.** A real Docker test against n8n 2.27.4 found that n8n 2.x scans `<userDir>/nodes/node_modules` for community packages, not its own install directory, so the old `cd ~/.n8n && npm install` instructions no longer register the node on 2.x. The README now shows the `~/.n8n/nodes` install path first and keeps the 1.x path as a note. Found in the live test, fixed before 0.6.2 shipped — detection behaviour is untouched.
+
 ## [0.6.1] - 2026-08-24
 
 Packaging-only release to pass the n8n community-node review. No behaviour change: detection, verdicts, outputs, and every parameter are identical to 0.6.0.
