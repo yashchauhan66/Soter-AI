@@ -46,7 +46,8 @@ for (let i = 0; i < lines.length; i++) {
   if (!m) continue;
   let re;
   try {
-    // eslint-disable-next-line no-eval
+    // eval is the point of this script: it materialises the regex literals it
+    // extracts from the node source so they can be timed, not executed.
     re = eval(m[1]);
   } catch {
     continue;

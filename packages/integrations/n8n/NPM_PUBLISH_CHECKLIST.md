@@ -12,9 +12,10 @@ Follow these steps to publish the SoterAI n8n community node to npm.
 - [ ] `npm run build` succeeds without errors.
 - [ ] `npm run lint` passes with no type errors.
 - [ ] The `dist/` directory contains the compiled `.js` and `.d.ts` files:
-  - `dist/nodes/SoterGuard.node.js`
+  - `dist/nodes/SoterGuard/SoterGuard.node.js`
   - `dist/credentials/SoterApi.credentials.js`
-- [ ] Tested locally in n8n by copying `dist/` to `~/.n8n/custom/` (or equivalent) and verifying all 5 actions work.
+- [ ] Tested locally in n8n by installing the packed tarball into `~/.n8n/nodes/node_modules/`
+      (n8n 2.x scans that directory; older n8n scans its own install dir) and verifying the actions work.
 
 ## Publish via CI (Recommended)
 

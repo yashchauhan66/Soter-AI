@@ -20,10 +20,16 @@ Use this community node to add one drop-in AI security gate to an n8n workflow, 
 
 ### From npm
 
+n8n 2.x scans `~/.n8n/nodes/node_modules` for community packages, not its own install
+directory — so install into the `nodes` folder (the GUI installer does this for you):
+
 ```bash
-cd ~/.n8n
+mkdir -p ~/.n8n/nodes
+cd ~/.n8n/nodes
 npm install n8n-nodes-soterai
 ```
+
+On n8n 1.x the equivalent is `cd ~/.n8n && npm install n8n-nodes-soterai`.
 
 Restart n8n after installation.
 
