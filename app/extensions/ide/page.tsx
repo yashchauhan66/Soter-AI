@@ -31,6 +31,7 @@ import {
   DIRECT_VSIX_URL,
   EDITOR_OPTIONS,
   EXTENSION_ID,
+  EXTENSION_SEARCH_NAME,
   EXTENSION_VERSION,
   ISSUE_URL,
   OPEN_VSX_URL,
@@ -39,6 +40,7 @@ import {
   VSIX_SHA256_URL,
   type EditorIconName,
 } from './extensionData';
+import { OpenIdeButton } from './OpenIdeButton';
 
 export const metadata: Metadata = {
   title: 'SoterAI IDE Guard Extension',
@@ -199,12 +201,15 @@ export default function IdeExtensionPage() {
                 team works.
               </p>
               <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <a
-                  href={`vscode:extension/${EXTENSION_ID}`}
+                <OpenIdeButton
+                  ideName="Visual Studio Code"
+                  deepLink={`vscode:extension/${EXTENSION_ID}`}
+                  fallbackUrl={VSCODE_MARKETPLACE_URL}
+                  fallbackLabel="VS Marketplace"
+                  searchName={EXTENSION_SEARCH_NAME}
+                  extensionId={EXTENSION_ID}
                   className="button-primary gap-2 text-sm"
-                >
-                  Open in VS Code <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </a>
+                />
                 <a
                   href={OPEN_VSX_URL}
                   target="_blank"
@@ -260,6 +265,14 @@ export default function IdeExtensionPage() {
             registry fallback if the browser blocks the editor prompt or the IDE is not installed on
             this device.
           </p>
+          <p className="mt-3 text-sm leading-6 text-slate-200 sm:text-base">
+            Prefer to search manually? Open your editor&apos;s Extensions view and search for the
+            extension name <strong className="text-white">{EXTENSION_SEARCH_NAME}</strong>{' '}
+            <span className="font-mono text-xs text-slate-300">
+              (publisher: soterai · {EXTENSION_ID})
+            </span>
+            .
+          </p>
         </div>
 
         <div className="mt-8 grid gap-px overflow-hidden border border-slate-800 bg-slate-800 md:grid-cols-2">
@@ -304,13 +317,14 @@ export default function IdeExtensionPage() {
                   {editor.statusDetail}
                 </p>
 
-                <a
-                  href={editor.deepLink}
-                  className="mt-4 inline-flex min-h-10 items-center justify-center gap-2 bg-cyan px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-cyan/90"
-                >
-                  Open in {editor.name}
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </a>
+                <OpenIdeButton
+                  ideName={editor.name}
+                  deepLink={editor.deepLink}
+                  fallbackUrl={editor.listingUrl}
+                  fallbackLabel={editor.listingLabel}
+                  searchName={EXTENSION_SEARCH_NAME}
+                  extensionId={EXTENSION_ID}
+                />
                 <a
                   href={editor.listingUrl}
                   target="_blank"
