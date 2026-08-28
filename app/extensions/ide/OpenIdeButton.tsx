@@ -20,10 +20,14 @@ const SLOW_AT = 12;
 type OpenIdeButtonProps = {
   ideName: string;
   deepLink: string;
+  /** Secondary protocol to fire (e.g. Windsurf's rebranded `devin:` handler). */
+  altDeepLink?: string;
   fallbackUrl: string;
   fallbackLabel: string;
   searchName: string;
   extensionId: string;
+  /** CLI install command offered as a reliable copy-and-paste fallback. */
+  command?: string;
   vsixUrl?: string;
   className?: string;
 };
@@ -40,28 +44,46 @@ type OpenIdeButtonProps = {
 export function OpenIdeButton({
   ideName,
   deepLink,
+  altDeepLink,
   fallbackUrl,
   fallbackLabel,
   searchName,
   extensionId,
+  command,
   vsixUrl,
   className,
 }: OpenIdeButtonProps) {
   const [open, setOpen] = useState(false);
   const [elapsed, setElapsed] = useState(0);
   const [copied, setCopied] = useState(false);
+  const [copiedCmd, setCopiedCmd] = useState(false);
 
   // Derived, not stored: a single source of truth, nothing to synchronize.
   const slow = elapsed >= SLOW_AT;
 
   const launch = useCallback(() => {
+    // Fire the primary protocol via navigation.
     window.location.href = deepLink;
-  }, [deepLink]);
+    // Fire the alternate protocol (if any) through a hidden iframe so both are
+    // dispatched without a second top-level navigation. Only the protocol that
+    // is actually registered on the user's machine will open the editor; the
+    // unregistered one fails silently.
+    if (altDeepLink) {
+      window.setTimeout(() => {
+        const frame = document.createElement('iframe');
+        frame.style.display = 'none';
+        frame.src = altDeepLink;
+        document.body.appendChild(frame);
+        window.setTimeout(() => frame.remove(), 4000);
+      }, 300);
+    }
+  }, [deepLink, altDeepLink]);
 
   const close = useCallback(() => {
     setOpen(false);
     setElapsed(0);
     setCopied(false);
+    setCopiedCmd(false);
   }, []);
 
   // Click = fire the deep link immediately + open the install console.
@@ -69,38 +91,47 @@ export function OpenIdeButton({
     setOpen(true);
     setElapsed(0);
     setCopied(false);
+    setCopiedCmd(false);
     launch();
   }, [launch]);
 
-  const copyId = useCallback(() => {
-    const done = () => {
-      setCopied(true);
-      window.setTimeout(() => setCopied(false), 2000);
-    };
-    // Legacy fallback for browsers/contexts where the async clipboard API is
-    // unavailable or rejected (e.g. missing permission, non-secure context).
-    const legacyCopy = () => {
-      const ta = document.createElement('textarea');
-      ta.value = extensionId;
-      ta.setAttribute('readonly', '');
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
-      try {
-        document.execCommand('copy');
-        done();
-      } catch {
-        /* no-op */
+  const copyText = useCallback(
+    (value: string, which: 'id' | 'cmd') => {
+      const done = () => {
+        if (which === 'id') {
+          setCopied(true);
+          window.setTimeout(() => setCopied(false), 2000);
+        } else {
+          setCopiedCmd(true);
+          window.setTimeout(() => setCopiedCmd(false), 2000);
+        }
+      };
+      // Legacy fallback for browsers/contexts where the async clipboard API is
+      // unavailable or rejected (e.g. missing permission, non-secure context).
+      const legacyCopy = () => {
+        const ta = document.createElement('textarea');
+        ta.value = value;
+        ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand('copy');
+          done();
+        } catch {
+          /* no-op */
+        }
+        document.body.removeChild(ta);
+      };
+      if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(value).then(done).catch(legacyCopy);
+      } else {
+        legacyCopy();
       }
-      document.body.removeChild(ta);
-    };
-    if (navigator.clipboard?.writeText) {
-      navigator.clipboard.writeText(extensionId).then(done).catch(legacyCopy);
-    } else {
-      legacyCopy();
-    }
-  }, [extensionId]);
+    },
+    []
+  );
 
   // Elapsed-time ticker: setState lives inside the timer callback only.
   useEffect(() => {
@@ -258,7 +289,7 @@ export function OpenIdeButton({
                   </p>
                   <button
                     type="button"
-                    onClick={copyId}
+                    onClick={() => copyText(extensionId, 'id')}
                     className="mt-2.5 inline-flex min-h-9 items-center gap-2 border border-slate-700 bg-slate-900 px-3 py-1.5 font-mono text-xs text-cyan transition hover:bg-slate-800"
                   >
                     {copied ? (
@@ -268,6 +299,23 @@ export function OpenIdeButton({
                     )}
                     {copied ? 'Copied!' : extensionId}
                   </button>
+                  {command ? (
+                    <button
+                      type="button"
+                      onClick={() => copyText(command, 'cmd')}
+                      className="mt-2 inline-flex min-h-9 w-full items-center gap-2 border border-slate-700 bg-slate-900 px-3 py-1.5 text-left font-mono text-xs text-slate-200 transition hover:bg-slate-800"
+                      title="Copy terminal install command"
+                    >
+                      {copiedCmd ? (
+                        <Check className="h-3.5 w-3.5 shrink-0 text-lime" aria-hidden="true" />
+                      ) : (
+                        <Copy className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                      )}
+                      <span className="truncate">
+                        {copiedCmd ? 'Command copied!' : command}
+                      </span>
+                    </button>
+                  ) : null}
                 </div>
               </div>
 

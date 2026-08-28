@@ -18,6 +18,12 @@ export type EditorOption = {
   summary: string;
   icon: EditorIconName;
   deepLink: string;
+  /**
+   * Optional secondary protocol to try. Some editors rebrand their URL
+   * protocol across versions (Windsurf -> Devin), and which one is registered
+   * depends on the user's install/update history — so we fire both.
+   */
+  altDeepLink?: string;
   command: string;
   listingUrl: string;
   listingLabel: string;
@@ -53,9 +59,10 @@ export const EDITOR_OPTIONS: EditorOption[] = [
   },
   {
     name: 'Windsurf',
-    summary: 'Agentic development environment',
+    summary: 'Agentic development environment (now Devin)',
     icon: 'windsurf',
     deepLink: `windsurf:extension/${EXTENSION_ID}`,
+    altDeepLink: `devin:extension/${EXTENSION_ID}`,
     command: `windsurf --install-extension ${EXTENSION_ID}`,
     listingUrl: OPEN_VSX_URL,
     listingLabel: 'Open VSX',
