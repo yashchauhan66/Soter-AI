@@ -13,6 +13,20 @@ Nothing leaves your computer unless you explicitly connect to SoterAI Cloud.
 
 The same links are in the Control Panel footer inside the editor.
 
+## Install
+
+**Fastest way — one-click for any IDE:** open the [SoterAI install page](https://soterai.in/extensions/ide), pick your editor (VS Code, Cursor, Windsurf, Kiro, Antigravity, VSCodium), and it opens directly in the editor with a guided redirect and fallbacks.
+
+> **Search in your IDE** — open the Extensions view (`Ctrl+Shift+X`) and search for the extension name: **"SoterAI IDE Guard"** (shown in VS Code as **SoterAI IDE Guard — Local AI Security**, publisher `soterai`, extension ID `soterai.soterai-ide-guard`), then press **Install**.
+
+Or install without leaving your editor:
+
+- **VS Code** — [Install in VS Code](vscode:extension/soterai.soterai-ide-guard) · press `Ctrl+P` and paste `ext install soterai.soterai-ide-guard` · [Marketplace page](https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard)
+- **VSCodium / Eclipse Theia / OpenVSCode Server** — search `soterai` in Extensions (these editors read the [Open VSX registry](https://open-vsx.org/extension/soterai/soterai-ide-guard) directly)
+- **Any editor (offline/manual)** — download the `.vsix` from [Open VSX](https://open-vsx.org/extension/soterai/soterai-ide-guard) and run **Extensions → Install from VSIX...**
+
+> **Not showing up in IDE search yet?** Marketplace mirrors and IDE search caches can lag a few hours after a new release, and brand-new extensions rank below established ones for generic keywords. Search by the exact publisher name `soterai`, or use the direct routes above — they work immediately.
+
 ## Start in under a minute
 
 1. Run **SoterAI: Run Safe Demo Scan** to see a real verdict using safe built-in test data.
@@ -65,7 +79,7 @@ Real captures from the VS Code extension-host verification flow. They use test d
 - **Redacted, opt-in telemetry only.** Telemetry is off by default. When enabled, it uses minimized event metadata, not raw content or tokens.
 - **Cloud tokens stay in VS Code SecretStorage.** Provider and cloud credentials are stored locally through VS Code's secret APIs and are never logged.
 - **Config backups are encrypted and kept out of your workspace.** When "Secure My AI" rewrites a config, the pre-rewrite copy is encrypted (AES-GCM, key in VS Code SecretStorage) and stored in the extension's global storage — never as a plaintext sibling file that `.gitignore` would miss. If the backup cannot be written, the rewrite does not happen.
-- **A repository cannot turn its own protection off.** The 23 safety-relevant settings are `machine`-scoped and declared as restricted in untrusted workspaces, so a checked-in `.vscode/settings.json` cannot disable a guard or repoint the broker at another endpoint.
+- **A repository cannot turn its own protection off.** The 25 safety-relevant settings are `machine`-scoped and declared as restricted in untrusted workspaces, so a checked-in `.vscode/settings.json` cannot disable a guard or repoint the broker at another endpoint.
 
 ### What Leaves Your Machine?
 
@@ -104,22 +118,68 @@ Local scanning always works. Cloud, token, and remote features are gated behind 
 | `SoterAI: Build Safe Prompt for AI` | Convert sensitive context into a safe prompt with secret references. |
 | `SoterAI: Open Settings` | Open VS Code settings filtered to SoterAI. |
 | `SoterAI: Run Safe Demo Scan` | Run a safe local demo against fake risky text. |
-| `SoterAI: Scan Selected Text` | Scan selected prompt/text before sending it to an AI assistant. |
+| `SoterAI: Scan Selection` | Scan selected prompt/text before sending it to an AI assistant. |
 | `SoterAI: Scan Before Sending to AI` | Run the egress firewall over the selection (or clipboard) and get an allow / redact / ask / block decision before you paste into any AI chat. |
 | `SoterAI: Scan Current File` | Scan the active file for secrets, PII, prompt injection, unsafe instructions, and insecure patterns. |
-| `SoterAI: Scan Git Diff` | Scan staged and unstaged git changes locally. |
-| `SoterAI: Scan MCP / Agent Tools` | Review MCP and agent tool configuration for broad or dangerous permissions. |
-| `SoterAI: Review Terminal Command` | Review a command before running it; SoterAI never executes it. |
+| `SoterAI: Scan Git Changes` | Scan staged and unstaged git changes locally. |
+| `SoterAI: Scan MCP Configs` | Review MCP and agent tool configuration for broad or dangerous permissions. |
+| `SoterAI: Check Terminal Command` | Review a command before running it; SoterAI never executes it. |
 | `SoterAI: Install Git Pre-Commit Secret Hook` | Block commits containing secrets. Refuses (and explains) when husky/lefthook owns `core.hooksPath`. |
 | `SoterAI: Check Screen-Share Risk` | Warn about open files that would expose secrets on a shared screen. |
-| `SoterAI: Open AI Activity Ledger` | View privacy-preserving local scan/share metadata. |
-| `SoterAI: Generate Canary Token` | Create a fake canary token for leak detection tests. |
-| `SoterAI: Choose Policy Pack` | Apply a built-in policy profile. |
-| `SoterAI: Open Security Panel` | Open the local security dashboard. |
+| `SoterAI: Open Report` | One list of every local report — coverage, what AI saw, agent tool permissions, risk score — with a one-line description each. |
+| `SoterAI: Open AI Access Ledger` | View privacy-preserving local scan/share metadata. |
+| `SoterAI: Generate Local Canary Secret` | Create a fake canary token for leak detection tests. |
+| `SoterAI: Apply Policy Pack` | Apply a built-in policy profile. |
 | `SoterAI: Emergency Lockdown (Revoke All Capabilities)` | Revoke everything at once; `SoterAI: Unlock Protection After Lockdown` reverses it, and the panel offers it as the primary action while locked. |
 
-The palette lists 10 core commands by default. The full surface (162 commands)
-is available by enabling `soterai.showAllCommands`.
+The palette shows the core workflows by default. Older command names still work —
+they stay registered for keybindings, tasks and other extensions — but they no
+longer occupy a second palette row next to the command they forward to, and the
+individual report commands are now listed inside `SoterAI: Open Report`. Enable
+`soterai.showAllCommands` to see the full advanced surface.
+
+## Where SoterAI appears while you work
+
+You do not have to remember to open the Command Palette. The checks are on the
+surfaces where the risk actually happens:
+
+| Where | What you get |
+| --- | --- |
+| Right-click a selection in the editor → **SoterAI** | Scan Selection, Scan Before Sending to AI, Redact Selection for AI, Review Selected AI Code |
+| Right-click a file in the Explorer → **SoterAI** | Scan File, Add File to Protected List |
+| Source Control view toolbar | Scan Git Changes before you commit |
+| SoterAI Guard sidebar toolbars | Scan Workspace Risk, Open Settings, Getting Started |
+| `Ctrl+Alt+V` / `Cmd+Alt+V` | Safe Paste — scans the clipboard, then pastes the safe version |
+| `Ctrl+Alt+S` / `Cmd+Alt+S` | Scan Before Sending to AI — checks the selection, or the clipboard if nothing is selected |
+
+Both keybindings only apply while an editor has focus, so they never shadow a
+shortcut you use elsewhere in VS Code.
+
+## Your AI agent can ask SoterAI before it acts
+
+SoterAI contributes three tools an AI agent can call, so the check happens inside
+the agent's own loop instead of in a sidebar the agent cannot see:
+
+| Tool | What it answers |
+| --- | --- |
+| `soterai_scan_text` | Does this text contain secrets, prompt injection or a jailbreak attempt? Returns a redacted copy when it holds a secret. |
+| `soterai_check_command` | Is this shell command destructive or credential-stealing? |
+| `soterai_check_dependency` | Is this package a typosquat, unpinned, or installed by piping a download into a shell? |
+
+In VS Code chat and Copilot agent mode they appear as tools automatically. Other
+MCP clients get the same three from a bundled MCP server, which VS Code offers to
+agent mode without you editing any config.
+
+**These tools are advisory.** They answer questions an agent chooses to ask.
+SoterAI cannot force an agent to ask, and no extension API lets it intercept what
+an agent does on its own — so every result states that limit in full rather than
+implying the action was blocked.
+
+They need a recent editor. SoterAI keeps its VS Code `^1.85.0` floor so Cursor,
+Windsurf, Kiro and Antigravity stay supported, and on a host without the language
+model tool API it registers nothing instead of pretending.
+`SoterAI: Show Runtime Capability Summary` reports which surfaces are live on the
+editor you are actually using.
 
 ## Settings
 

@@ -1,13 +1,13 @@
 export const EXTENSION_ID = 'soterai.soterai-ide-guard';
-export const EXTENSION_VERSION = '0.5.0';
+export const EXTENSION_VERSION = '0.6.0';
+export const EXTENSION_DISPLAY_NAME = 'SoterAI IDE Guard — Local AI Security';
+export const EXTENSION_SEARCH_NAME = 'SoterAI IDE Guard';
 
 export const VSCODE_MARKETPLACE_URL =
   'https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard';
 export const OPEN_VSX_URL = 'https://open-vsx.org/extension/soterai/soterai-ide-guard';
-export const DIRECT_VSIX_URL =
-  'https://open-vsx.org/api/soterai/soterai-ide-guard/0.5.0/file/soterai.soterai-ide-guard-0.5.0.vsix';
-export const VSIX_SHA256_URL =
-  'https://open-vsx.org/api/soterai/soterai-ide-guard/0.5.0/file/soterai.soterai-ide-guard-0.5.0.sha256';
+export const DIRECT_VSIX_URL = `https://open-vsx.org/api/soterai/soterai-ide-guard/${EXTENSION_VERSION}/file/soterai.soterai-ide-guard-${EXTENSION_VERSION}.vsix`;
+export const VSIX_SHA256_URL = `https://open-vsx.org/api/soterai/soterai-ide-guard/${EXTENSION_VERSION}/file/soterai.soterai-ide-guard-${EXTENSION_VERSION}.sha256`;
 export const SOURCE_URL = 'https://github.com/yashchauhan66/Soter-AI';
 export const ISSUE_URL = 'https://github.com/yashchauhan66/Soter-AI/issues';
 
