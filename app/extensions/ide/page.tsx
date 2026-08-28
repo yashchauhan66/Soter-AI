@@ -204,12 +204,6 @@ export default function IdeExtensionPage() {
                 <OpenIdeButton
                   ideName="Visual Studio Code"
                   deepLink={`vscode:extension/${EXTENSION_ID}`}
-                  fallbackUrl={VSCODE_MARKETPLACE_URL}
-                  fallbackLabel="VS Marketplace"
-                  searchName={EXTENSION_SEARCH_NAME}
-                  extensionId={EXTENSION_ID}
-                  command={`code --install-extension ${EXTENSION_ID}`}
-                  vsixUrl={DIRECT_VSIX_URL}
                   className="button-primary gap-2 text-sm"
                 />
                 <a
@@ -263,17 +257,17 @@ export default function IdeExtensionPage() {
             Install from a verified distribution
           </h2>
           <p className="mt-3 text-sm leading-6 text-slate-200 sm:text-base">
-            Click the primary action to open SoterAI directly in your installed editor. Use the
-            registry fallback if the browser blocks the editor prompt or the IDE is not installed on
-            this device.
+            Click “Open in …” to redirect straight to your editor, where{' '}
+            <strong className="text-white">{EXTENSION_SEARCH_NAME}</strong> is ready to install. If
+            your browser asks for permission, allow it to open the editor.
           </p>
           <p className="mt-3 text-sm leading-6 text-slate-200 sm:text-base">
-            Prefer to search manually? Open your editor&apos;s Extensions view and search for the
+            Prefer to install manually? Open your editor&apos;s Extensions view and search for the
             extension name <strong className="text-white">{EXTENSION_SEARCH_NAME}</strong>{' '}
             <span className="font-mono text-xs text-slate-300">
               (publisher: soterai · {EXTENSION_ID})
             </span>
-            .
+            , or use the manual download link on each card below.
           </p>
         </div>
 
@@ -323,12 +317,6 @@ export default function IdeExtensionPage() {
                   ideName={editor.name}
                   deepLink={editor.deepLink}
                   altDeepLink={editor.altDeepLink}
-                  fallbackUrl={editor.listingUrl}
-                  fallbackLabel={editor.listingLabel}
-                  searchName={EXTENSION_SEARCH_NAME}
-                  extensionId={EXTENSION_ID}
-                  command={editor.command}
-                  vsixUrl={DIRECT_VSIX_URL}
                 />
                 <a
                   href={editor.listingUrl}
@@ -336,7 +324,7 @@ export default function IdeExtensionPage() {
                   rel="noopener noreferrer"
                   className="mt-3 inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-slate-200 transition hover:text-cyan"
                 >
-                  {editor.listingLabel} fallback
+                  Install manually from {editor.listingLabel}
                   <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </a>
                 <div className="mt-3">
