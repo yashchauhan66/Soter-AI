@@ -208,6 +208,7 @@ export default function IdeExtensionPage() {
                   fallbackLabel="VS Marketplace"
                   searchName={EXTENSION_SEARCH_NAME}
                   extensionId={EXTENSION_ID}
+                  vsixUrl={DIRECT_VSIX_URL}
                   className="button-primary gap-2 text-sm"
                 />
                 <a
@@ -324,6 +325,7 @@ export default function IdeExtensionPage() {
                   fallbackLabel={editor.listingLabel}
                   searchName={EXTENSION_SEARCH_NAME}
                   extensionId={EXTENSION_ID}
+                  vsixUrl={DIRECT_VSIX_URL}
                 />
                 <a
                   href={editor.listingUrl}
