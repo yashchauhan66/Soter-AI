@@ -208,6 +208,7 @@ export default function IdeExtensionPage() {
                   fallbackLabel="VS Marketplace"
                   searchName={EXTENSION_SEARCH_NAME}
                   extensionId={EXTENSION_ID}
+                  command={`code --install-extension ${EXTENSION_ID}`}
                   vsixUrl={DIRECT_VSIX_URL}
                   className="button-primary gap-2 text-sm"
                 />
@@ -321,10 +322,12 @@ export default function IdeExtensionPage() {
                 <OpenIdeButton
                   ideName={editor.name}
                   deepLink={editor.deepLink}
+                  altDeepLink={editor.altDeepLink}
                   fallbackUrl={editor.listingUrl}
                   fallbackLabel={editor.listingLabel}
                   searchName={EXTENSION_SEARCH_NAME}
                   extensionId={EXTENSION_ID}
+                  command={editor.command}
                   vsixUrl={DIRECT_VSIX_URL}
                 />
                 <a
