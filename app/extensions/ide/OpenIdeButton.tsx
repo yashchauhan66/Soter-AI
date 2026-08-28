@@ -42,8 +42,12 @@ export function OpenIdeButton({
   className,
 }: OpenIdeButtonProps) {
   const [open, setOpen] = useState(false);
-  const [phase, setPhase] = useState<Phase>('waiting');
   const [secondsLeft, setSecondsLeft] = useState(WAIT_SECONDS);
+
+  // Derived, not stored: while the countdown runs we are "waiting"; once it
+  // reaches zero the check-in screen takes over. One source of truth means
+  // there is nothing to synchronize — and no setState in an effect body.
+  const phase: Phase = secondsLeft <= 0 ? 'check' : 'waiting';
 
   const launch = useCallback(() => {
     window.location.href = deepLink;
@@ -51,28 +55,23 @@ export function OpenIdeButton({
 
   const close = useCallback(() => {
     setOpen(false);
-    setPhase('waiting');
     setSecondsLeft(WAIT_SECONDS);
   }, []);
 
   // Click = fire the deep link right away + show the "please wait" popup.
   const openAndLaunch = useCallback(() => {
     setOpen(true);
-    setPhase('waiting');
     setSecondsLeft(WAIT_SECONDS);
     launch();
   }, [launch]);
 
-  // Friendly wait screen: tick once per second, then move to the check-in.
+  // Friendly wait screen: tick once per second inside the timer callback.
+  // The derived phase flips to the check-in when the countdown reaches zero.
   useEffect(() => {
-    if (!open || phase !== 'waiting') return;
-    if (secondsLeft <= 0) {
-      setPhase('check');
-      return;
-    }
+    if (!open || secondsLeft <= 0) return;
     const timer = setTimeout(() => setSecondsLeft((s) => s - 1), 1000);
     return () => clearTimeout(timer);
-  }, [open, phase, secondsLeft]);
+  }, [open, secondsLeft]);
 
   // Escape closes the dialog.
   useEffect(() => {
