@@ -37,6 +37,7 @@ const requiredWorkflows = [
   "soterai-security-context-templates.workflow.json",
   "soterai-workflow-security-audit.workflow.json",
   "soterai-local-offline-engine.workflow.json",
+  "soterai-agent-passport-lifecycle.workflow.json",
 ];
 
 assert(packageJson.name === "n8n-nodes-soterai", "Package name must be n8n-nodes-soterai.");
@@ -112,10 +113,22 @@ assert(
 );
 assert(
   runtimeSource.includes(
-    'if (options.engine !== "AUTO" || !isTransientApiError(error)) throw asNodeError(node, error)',
+    'if (options.engine !== "AUTO" || cloudOnly || !isTransientApiError(error)) throw asNodeError(node, error)',
   ),
-  "Auto may only fall back when the cloud could not be asked — an authoritative refusal must surface.",
+  "Auto may only fall back when analysis cloud could not be asked — authoritative refusals and credential mutations must surface.",
 );
+assert(propertiesSource.includes('name: "passportToken"'), "Tool Call must expose a passportToken input.");
+assert(propertiesSource.includes('value: "enrollIdentity"'), "Identity enrollment must be available in-node.");
+assert(propertiesSource.includes('value: "issuePassport"'), "Passport issuance must be available in-node.");
+assert(propertiesSource.includes('value: "validatePassport"'), "Passport validation must be available in-node.");
+assert(propertiesSource.includes('value: "revokePassport"'), "Passport revocation must be available in-node.");
+assert(propertiesSource.includes('name: "passportPolicyPreset"'), "Passport actions must offer least-privilege policy presets.");
+assert(propertiesSource.includes('default: "AUTO"'), "New nodes must default to cloud-first Auto mode.");
+assert(runtimeSource.includes('"REPUTATION_THROTTLED"'), "Reputation throttling needs a distinct stable verdict code.");
+assert(runtimeSource.includes('"TOKEN_MISSING"'), "Missing passport tokens need a distinct stable verdict code.");
+assert(runtimeSource.includes('"CONTENT_BLOCKED"'), "Content blocks need a distinct stable verdict code.");
+assert(runtimeSource.includes('"PASSPORT_VALID"'), "Passport validation needs a stable success code.");
+assert(runtimeSource.includes('"PASSPORT_REVOKED"'), "Passport revocation needs a stable lifecycle code.");
 assert(
   localEngineSource.includes("unresolvedSourceIds"),
   "A protected source the local engine cannot resolve must be reported as unresolved, never as compared and clean.",

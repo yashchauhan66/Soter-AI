@@ -20,7 +20,7 @@ import {
 } from "./localEngine";
 import type { LocalAnalysis, LocalEgressSource } from "./localEngine";
 
-export const PACKAGE_VERSION = "0.6.2";
+export const PACKAGE_VERSION = "0.7.0";
 const USER_AGENT = `n8n-nodes-soterai/${PACKAGE_VERSION}`;
 const MAX_SANITIZE_DEPTH = 8;
 const MAX_METADATA_STRING_LENGTH = 500;
@@ -271,6 +271,17 @@ interface ActionRequest {
   documentSource?: string;
   securityContext?: SecurityContext;
   workflowJson?: string;
+  passportToken?: string;
+  agentName?: string;
+  agentType?: string;
+  agentDescription?: string;
+  agentIdentityId?: string;
+  passportTtlSeconds?: number;
+  passportPolicyPreset?: string;
+  passportPolicy?: Record<string, unknown>;
+  passportId?: string;
+  revokeReason?: string;
+  tool?: SecurityContext["tool"];
 }
 
 /**
@@ -328,6 +339,7 @@ function readActionRequest(
     text: "",
     onThreat: "BLOCK",
     profile: "MAXIMUM",
+    passportToken: readText(ctx, node, "passportToken", itemIndex, "Passport Token").trim() || undefined,
   };
 
   switch (action) {
@@ -349,6 +361,49 @@ function readActionRequest(
       request.allowedTopics = splitList(ctx.getNodeParameter("allowedTopics", itemIndex, "") as string);
       request.systemPromptContext = readText(ctx, node, "systemPromptContext", itemIndex, "System Prompt Context");
       request.securityContext = readSecurityContext(ctx, node, itemIndex, nodeVersion);
+      break;
+    case "toolCall":
+      request.tool = {
+        name: readText(ctx, node, "toolName", itemIndex, "Tool Name"),
+        action: readText(ctx, node, "toolAction", itemIndex, "Tool Action"),
+        content: readText(ctx, node, "toolContent", itemIndex, "Tool Content") || undefined,
+        target: readText(ctx, node, "toolTarget", itemIndex, "Tool Target") || undefined,
+        destination: toolDestinationValue(ctx.getNodeParameter("toolDestination", itemIndex, "unknown")),
+      };
+      break;
+    case "enrollIdentity":
+      request.agentName = readText(ctx, node, "agentName", itemIndex, "Agent Name");
+      request.agentType = ctx.getNodeParameter("agentType", itemIndex, "CUSTOM") as string;
+      request.agentDescription = readText(ctx, node, "agentDescription", itemIndex, "Agent Description") || undefined;
+      request.passportPolicyPreset = ctx.getNodeParameter("passportPolicyPreset", itemIndex, "READ_ONLY") as string;
+      request.passportPolicy = parseOptionalJsonObject(
+        node,
+        readText(ctx, node, "passportPolicy", itemIndex, "Passport Policy"),
+        "Passport Policy",
+      );
+      break;
+    case "issuePassport":
+      request.agentIdentityId = readText(ctx, node, "agentIdentityId", itemIndex, "Agent Identity ID");
+      request.passportTtlSeconds = Number(ctx.getNodeParameter("passportTtlSeconds", itemIndex, 3600));
+      request.passportPolicyPreset = ctx.getNodeParameter("passportPolicyPreset", itemIndex, "READ_ONLY") as string;
+      request.passportPolicy = parseOptionalJsonObject(
+        node,
+        readText(ctx, node, "passportPolicy", itemIndex, "Passport Policy"),
+        "Passport Policy",
+      );
+      break;
+    case "validatePassport":
+      request.tool = {
+        name: readText(ctx, node, "toolName", itemIndex, "Tool Name"),
+        action: readText(ctx, node, "toolAction", itemIndex, "Tool Action"),
+        content: readText(ctx, node, "toolContent", itemIndex, "Tool Content") || undefined,
+        target: readText(ctx, node, "toolTarget", itemIndex, "Tool Target") || undefined,
+        destination: toolDestinationValue(ctx.getNodeParameter("toolDestination", itemIndex, "unknown")),
+      };
+      break;
+    case "revokePassport":
+      request.passportId = readText(ctx, node, "passportId", itemIndex, "Passport ID").trim() || undefined;
+      request.revokeReason = readText(ctx, node, "revokeReason", itemIndex, "Revocation Reason").trim() || undefined;
       break;
     case "outputGuard":
       request.text = readText(ctx, node, "outputText", itemIndex, "AI Output Text");
@@ -393,6 +448,17 @@ function reuseKey(request: ActionRequest): string {
     request.workflowJson ?? "",
     request.securityContext ?? null,
     request.metadata ?? null,
+    request.passportToken ?? "",
+    request.agentName ?? "",
+    request.agentType ?? "",
+    request.agentDescription ?? "",
+    request.agentIdentityId ?? "",
+    request.passportTtlSeconds ?? null,
+    request.passportPolicyPreset ?? "",
+    request.passportPolicy ?? null,
+    request.passportId ?? "",
+    request.revokeReason ?? "",
+    request.tool ?? null,
   ]);
 }
 
@@ -468,7 +534,15 @@ export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeE
     try {
       const action = this.getNodeParameter("action", i) as string;
       const request = readActionRequest(this, node, i, nodeVersion, action);
-      const key = options.reuseIdenticalItems ? reuseKey(request) : undefined;
+      const blank = blankInputResult(request);
+      if (blank) {
+        outcomes[i] = { json: canonicalizeResult(action, blank), flagged: false };
+        return;
+      }
+      // Analysis is safe to reuse. Lifecycle mutations and audited tool checks
+      // are not: each input item must create its own server-side event/resource.
+      const nonReusableAction = ["enrollIdentity", "issuePassport", "revokePassport", "toolCall"].includes(action);
+      const key = options.reuseIdenticalItems && !nonReusableAction ? reuseKey(request) : undefined;
 
       let hit = key ? reuseCache.get(key) : undefined;
       if (!hit) {
@@ -482,7 +556,7 @@ export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeE
         hit = started;
       }
 
-      const result = await hit.promise;
+      const result = canonicalizeResult(action, await hit.promise);
       if (hit.itemIndex === i) {
         outcomes[i] = { json: result, flagged: isFlagged(action, result) };
         return;
@@ -551,6 +625,13 @@ async function runAction(
     return audit;
   }
 
+  const cloudOnly = ["enrollIdentity", "issuePassport", "validatePassport", "revokePassport"].includes(request.action);
+  if (cloudOnly && options.engine === "LOCAL") {
+    throw new NodeOperationError(node, "Agent passport lifecycle actions require Cloud or Auto mode.", {
+      description: "Identity/passport state lives on the SoterAI server and cannot be simulated by the Local pattern engine.",
+    });
+  }
+
   if (options.engine === "LOCAL") {
     return stampLocalEngine(runLocalAction(node, options, request), null);
   }
@@ -559,7 +640,7 @@ async function runAction(
   try {
     client = await resolveClient();
   } catch (error) {
-    if (options.engine !== "AUTO") throw asNodeError(node, error);
+    if (options.engine !== "AUTO" || cloudOnly) throw asNodeError(node, error);
     return stampLocalEngine(
       runLocalAction(node, options, request),
       `No usable SoterAI credential: ${sanitizeErrorMessage(error instanceof Error ? error.message : "credential unavailable")}`,
@@ -572,7 +653,7 @@ async function runAction(
     result.engineDegraded = false;
     return result;
   } catch (error) {
-    if (options.engine !== "AUTO" || !isTransientApiError(error)) throw asNodeError(node, error);
+    if (options.engine !== "AUTO" || cloudOnly || !isTransientApiError(error)) throw asNodeError(node, error);
     return stampLocalEngine(
       runLocalAction(node, options, request),
       `The SoterAI API could not be reached, so this item was checked locally instead: ${sanitizeErrorMessage(
@@ -654,8 +735,133 @@ async function runCloudAction(
         outputDestinationType: context.output?.destinationType,
         outputDestinationName: context.output?.destinationName,
         protectedSources: context.output?.protectedSources,
+        passportToken: request.passportToken,
       });
       result.operation = "universalGuard";
+      break;
+    }
+    case "toolCall": {
+      const tool = request.tool;
+      if (!tool?.name.trim() || !tool.action.trim()) {
+        throw new NodeOperationError(node, "Tool Name and Tool Action are required.", { itemIndex: request.itemIndex });
+      }
+      const sessionId = metadataSessionId(request.metadata);
+      const raw = await soterPost(ctx, client, "/api/agent/tool/check", {
+        ...(sessionId ? { sessionId } : {}),
+        ...(request.passportToken ? { passportToken: request.passportToken } : {}),
+        tool: tool.name,
+        action: tool.action,
+        target: tool.target,
+        content: tool.content,
+        destination: tool.destination,
+        metadata: request.metadata,
+      });
+      result = toolCallResult(raw, client);
+      result.operation = "toolCall";
+      break;
+    }
+    case "enrollIdentity": {
+      const name = request.agentName?.trim() ?? "";
+      if (!name) throw new NodeOperationError(node, "Agent Name is required.", { itemIndex: request.itemIndex });
+      const policy = resolvePassportPolicy(request.passportPolicyPreset, request.passportPolicy);
+      const raw = await soterPost(ctx, client, "/api/agent/identity/create", {
+        name,
+        agentType: request.agentType || "CUSTOM",
+        ...(request.agentDescription ? { description: request.agentDescription } : {}),
+        ...(Object.keys(policy).length ? { defaultPolicy: policy } : {}),
+      });
+      result = {
+        operation: "enrollIdentity",
+        verdictCode: "IDENTITY_ENROLLED",
+        allowed: true,
+        blocked: false,
+        identity: sanitizeOutputObject(raw),
+        agentIdentityId: (raw.id as string) ?? null,
+        nextStep: "Use agentIdentityId with Issue Agent Passport, then pass its passportToken to Check Agent Tool Call.",
+      };
+      break;
+    }
+    case "issuePassport": {
+      const agentIdentityId = request.agentIdentityId?.trim() ?? "";
+      if (!agentIdentityId) throw new NodeOperationError(node, "Agent Identity ID is required.", { itemIndex: request.itemIndex });
+      const sessionId = metadataSessionId(request.metadata);
+      const policy = resolvePassportPolicy(request.passportPolicyPreset, request.passportPolicy);
+      const raw = await soterPost(ctx, client, "/api/agent/passport/issue", {
+        agentIdentityId,
+        ...(sessionId ? { sessionId } : {}),
+        ttlSeconds: request.passportTtlSeconds ?? 3600,
+        ...policy,
+        metadata: request.metadata,
+      });
+      result = {
+        operation: "issuePassport",
+        verdictCode: "PASSPORT_ISSUED",
+        allowed: true,
+        blocked: false,
+        passportId: (raw.passportId as string) ?? null,
+        agentIdentityId: (raw.agentIdentityId as string) ?? agentIdentityId,
+        sessionId: (raw.sessionId as string) ?? sessionId ?? null,
+        passportToken: (raw.passportToken as string) ?? null,
+        status: (raw.status as string) ?? "ACTIVE",
+        expiresAt: raw.expiresAt as string,
+        tokenSafety: "Treat passportToken as a secret. Store it in n8n credentials or pass it only by expression; it is shown once.",
+      };
+      break;
+    }
+    case "validatePassport": {
+      const sessionId = metadataSessionId(request.metadata);
+      if (!sessionId) {
+        throw new NodeOperationError(node, "Session ID is required to validate a passport.", { itemIndex: request.itemIndex });
+      }
+      const raw = await soterPost(ctx, client, "/api/agent/passport/validate", {
+        sessionId,
+        ...(request.passportToken ? { passportToken: request.passportToken } : {}),
+        ...(request.tool?.name.trim() ? { tool: request.tool.name.trim() } : {}),
+        ...(request.tool?.action.trim() ? { action: request.tool.action.trim() } : {}),
+        ...(request.tool?.target ? { target: request.tool.target } : {}),
+        metadata: request.metadata,
+      });
+      const decision = normalizeDecision(raw.decision) ?? "BLOCK";
+      const matches = Array.isArray(raw.policyMatches) ? raw.policyMatches as Array<Record<string, unknown>> : [];
+      const tokenMissing = matches.some((match) => match.id === "passport.token_missing");
+      result = {
+        operation: "validatePassport",
+        verdictCode: tokenMissing ? "TOKEN_MISSING" : decision === "ALLOW" ? "PASSPORT_VALID" : decision === "ASK_APPROVAL" ? "APPROVAL_REQUIRED" : "PASSPORT_INVALID",
+        decision,
+        allowed: decision === "ALLOW",
+        blocked: decision === "BLOCK",
+        riskLevel: (raw.riskLevel as string) ?? "CRITICAL",
+        reason: (raw.reason as string) ?? "Passport validation completed.",
+        policyMatches: matches as unknown as IDataObject[],
+        passportId: (raw.passportId as string) ?? null,
+        agentIdentityId: (raw.agentIdentityId as string) ?? null,
+        sessionId: (raw.sessionId as string) ?? sessionId,
+        expiresAt: raw.expiresAt as string,
+        ...rawResponseFields(client, raw),
+      };
+      break;
+    }
+    case "revokePassport": {
+      const sessionId = metadataSessionId(request.metadata);
+      if (!sessionId && !request.passportId) {
+        throw new NodeOperationError(node, "Session ID or Passport ID is required to revoke a passport.", { itemIndex: request.itemIndex });
+      }
+      const raw = await soterPost(ctx, client, "/api/agent/passport/revoke", {
+        ...(sessionId ? { sessionId } : {}),
+        ...(request.passportId ? { passportId: request.passportId } : {}),
+        ...(request.revokeReason ? { reason: request.revokeReason } : {}),
+        metadata: request.metadata,
+      });
+      result = {
+        operation: "revokePassport",
+        verdictCode: "PASSPORT_REVOKED",
+        allowed: true,
+        blocked: false,
+        passportId: (raw.passportId as string) ?? request.passportId ?? null,
+        sessionId: (raw.sessionId as string) ?? sessionId ?? null,
+        status: (raw.status as string) ?? "REVOKED",
+        reason: (raw.reason as string) ?? "Agent passport revoked.",
+      };
       break;
     }
     case "outputGuard": {
@@ -709,6 +915,61 @@ interface GuardParams {
    */
   allowedTopics?: string[];
   systemPromptContext?: string;
+}
+
+function metadataSessionId(metadata?: Record<string, unknown>): string | undefined {
+  const value = metadata?.sessionId;
+  return typeof value === "string" && value.trim() ? value.trim() : undefined;
+}
+
+const PASSPORT_POLICY_PRESETS: Record<string, Record<string, string[]>> = {
+  READ_ONLY: {
+    allowedTools: ["browser.read", "browser.open", "rag.search", "calendar.read", "filesystem.read"],
+    blockedTools: ["terminal.run", "filesystem.delete", "payments.charge", "secrets.read"],
+    approvalRequiredTools: ["browser.submit_form", "gmail.send", "filesystem.write", "api.call", "mcp.tool.call"],
+    dataScopes: ["project:read"],
+    memoryScopes: ["session"],
+  },
+  SUPPORT: {
+    allowedTools: ["rag.search", "crm.read", "orders.read", "tickets.read"],
+    blockedTools: ["terminal.run", "filesystem.delete", "secrets.read", "payments.charge"],
+    approvalRequiredTools: ["gmail.send", "crm.update", "tickets.update", "payments.refund"],
+    dataScopes: ["customer-support:read"],
+    memoryScopes: ["session"],
+  },
+  CODING: {
+    allowedTools: ["filesystem.read", "repository.search", "tests.run"],
+    blockedTools: ["secrets.read", "filesystem.delete", "payments.charge"],
+    approvalRequiredTools: ["filesystem.write", "terminal.run", "git.push", "package.publish"],
+    dataScopes: ["repository:read"],
+    memoryScopes: ["session"],
+  },
+};
+
+function resolvePassportPolicy(preset: string | undefined, custom: Record<string, unknown> | undefined): Record<string, unknown> {
+  const base = preset && preset !== "CUSTOM" ? PASSPORT_POLICY_PRESETS[preset] : undefined;
+  return { ...(base ?? {}), ...(custom ?? {}) };
+}
+
+function toolCallResult(raw: Record<string, unknown>, client: SoterClient): IDataObject {
+  const decision = normalizeDecision(raw.decision) ?? "BLOCK";
+  const matches = Array.isArray(raw.policyMatches) ? raw.policyMatches as Array<Record<string, unknown>> : [];
+  const tokenMissing = matches.some((match) => match.id === "passport.token_missing") ||
+    (typeof raw.reason === "string" && /passport token is required/i.test(raw.reason));
+  const blocked = decision === "BLOCK";
+  return {
+    decision,
+    allowed: decision === "ALLOW",
+    blocked,
+    verdictCode: tokenMissing ? "TOKEN_MISSING" : blocked ? "CONTENT_BLOCKED" : decision === "ASK_APPROVAL" ? "APPROVAL_REQUIRED" : "ALLOW",
+    riskLevel: (raw.riskLevel as string) ?? "LOW",
+    riskScore: typeof raw.riskScore === "number" ? raw.riskScore : riskScoreForLevel(normalizeRisk(raw.riskLevel)),
+    reason: (raw.reason as string) ?? "Tool call checked.",
+    policyMatches: matches as unknown as IDataObject[],
+    passportId: (raw.passportId as string) ?? null,
+    sessionId: (raw.sessionId as string) ?? null,
+    ...rawResponseFields(client, raw),
+  };
 }
 
 /**
@@ -782,6 +1043,7 @@ interface UniversalGuardParams extends GuardParams {
   outputDestinationType?: string;
   outputDestinationName?: string;
   protectedSources?: unknown[];
+  passportToken?: string;
 }
 
 interface SecurityContext {
@@ -903,6 +1165,7 @@ async function executeInputGuard(
 
   const raw = await soterPost(ctx, client, "/api/guard/input", {
     message: params.text,
+    ...(metadataSessionId(meta) ? { sessionId: metadataSessionId(meta) } : {}),
     metadata: meta,
     ...(params.allowedTopics?.length ? { allowedTopics: params.allowedTopics } : {}),
     ...(params.systemPromptContext?.trim()
@@ -978,6 +1241,7 @@ async function executeOutputGuard(
 
   const raw = await soterPost(ctx, client, "/api/guard/output", {
     aiResponse: params.text,
+    ...(metadataSessionId(meta) ? { sessionId: metadataSessionId(meta) } : {}),
     metadata: meta,
   });
 
@@ -1319,6 +1583,7 @@ async function executeUniversalGuard(
             () =>
               soterPost(ctx, client, "/api/agent/tool/check", {
                 sessionId,
+                ...(params.passportToken ? { passportToken: params.passportToken } : {}),
                 agentName: typeof meta.agentName === "string" ? meta.agentName : "n8n-agent",
                 tool: tool.name,
                 action: tool.action,
@@ -1573,6 +1838,29 @@ function runLocalAction(node: INode, options: NodeOptions, request: ActionReques
       result.operation = "analyzeText";
       result.outputText = result.safeText;
       return result;
+    }
+    case "toolCall": {
+      const tool = request.tool;
+      if (!tool?.name.trim() || !tool.action.trim()) {
+        throw new NodeOperationError(node, "Tool Name and Tool Action are required.", { itemIndex: request.itemIndex });
+      }
+      const local = checkToolCallLocal({
+        name: tool.name,
+        action: tool.action,
+        destination: tool.destination,
+        target: tool.target,
+        content: tool.content,
+        riskContext: tool.riskContext,
+      }) as unknown as IDataObject;
+      return {
+        operation: "toolCall",
+        ...local,
+        allowed: local.decision === "ALLOW",
+        blocked: local.decision === "BLOCK",
+        passportEnforced: false,
+        identityChecked: false,
+        verdictCode: local.decision === "BLOCK" ? "CONTENT_BLOCKED" : local.decision === "ASK_APPROVAL" ? "APPROVAL_REQUIRED" : "ALLOW",
+      };
     }
     case "inputGuard": {
       validateText(node, request.text, "Input Text");
@@ -1879,11 +2167,69 @@ function detectThrottle(raw: Record<string, unknown>): { throttled: boolean; lev
  */
 function annotateThrottle(result: IDataObject, raw: Record<string, unknown>): void {
   const throttle = detectThrottle(raw);
+  const metadata = isRecord(raw.metadata) ? raw.metadata : undefined;
+  const upstreamContent = metadata && isRecord(metadata.contentVerdict) ? metadata.contentVerdict : undefined;
+  const upstreamReputation = metadata && isRecord(metadata.reputationVerdict) ? metadata.reputationVerdict : undefined;
   result.throttled = throttle.throttled;
+  result.contentVerdict = {
+    decision: upstreamContent?.action ?? (throttle.throttled ? "UNKNOWN" : result.action),
+    allowed: upstreamContent?.allowed ?? (throttle.throttled ? null : result.allowed),
+    riskScore: upstreamContent?.riskScore ?? result.riskScore,
+    riskTypes: upstreamContent?.riskTypes ?? result.categories,
+    evaluated: !throttle.throttled || Boolean(upstreamContent),
+  };
+  result.reputationVerdict = {
+    decision: throttle.throttled ? "THROTTLE" : "PASS",
+    level: upstreamReputation?.level ?? throttle.level ?? "NONE",
+    score: upstreamReputation?.score ?? null,
+    enforced: upstreamReputation?.enforced ?? throttle.throttled,
+  };
   if (!throttle.throttled) return;
+  result.verdictCode = "REPUTATION_THROTTLED";
   result.throttleLevel = throttle.level ?? null;
   result.throttleReason = throttle.reason ?? null;
   result.developerMessage = `${String(result.developerMessage ?? "")} ${throttle.reason ?? ""}`.trim();
+}
+
+/** Stable integration envelope. Legacy fields remain for saved expressions. */
+function canonicalizeResult(action: string, result: IDataObject): IDataObject {
+  if (result.verdictCode === undefined) {
+    if (result.skipped === true) result.verdictCode = "EMPTY_INPUT";
+    else if (result.throttled === true) result.verdictCode = "REPUTATION_THROTTLED";
+    else if (result.blocked === true || result.allowed === false || result.decision === "BLOCK") result.verdictCode = "CONTENT_BLOCKED";
+    else if (result.decision === "ASK_APPROVAL" || result.finalDecision === "ASK_APPROVAL") result.verdictCode = "APPROVAL_REQUIRED";
+    else result.verdictCode = "ALLOW";
+  }
+  result.enforcement = {
+    outcome: result.blocked === true ? "BLOCKED" : result.skipped === true ? "SKIPPED" : "CONTINUED",
+    routedTo: isFlagged(action, result) ? "Flagged" : "Safe",
+  };
+  result.schemaVersion = "1.0";
+  result.operation = result.operation ?? action;
+  return result;
+}
+
+function blankInputResult(request: ActionRequest): IDataObject | null {
+  if (!["analyzeText", "inputGuard", "outputGuard", "piiRedactor", "ragScanner", "universalGuard"].includes(request.action)) return null;
+  if (request.text.trim()) return null;
+  return {
+    operation: request.action,
+    skipped: true,
+    allowed: true,
+    blocked: false,
+    action: "ALLOW",
+    rawAction: null,
+    riskScore: 0,
+    categories: ["LOW_RISK"],
+    safeText: "",
+    outputText: "",
+    reason: "Input was empty or whitespace-only, so no security analysis was needed.",
+    userMessage: "Nothing to check.",
+    developerMessage: "Skipped an empty input without calling an engine.",
+    throttled: false,
+    engine: "none",
+    engineDegraded: false,
+  };
 }
 
 async function executePiiRedactor(
@@ -1897,6 +2243,7 @@ async function executePiiRedactor(
 
   const raw = await soterPost(ctx, client, "/api/guard/input", {
     message: params.text,
+    ...(metadataSessionId(meta) ? { sessionId: metadataSessionId(meta) } : {}),
     metadata: meta,
   });
 

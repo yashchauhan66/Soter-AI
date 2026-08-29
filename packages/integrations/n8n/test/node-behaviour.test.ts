@@ -470,3 +470,151 @@ test("continueOnFail still routes a dead mandatory layer to Flagged", async () =
   assert.equal(flagged.length, 1);
   assert.equal(flagged[0].json.error, true);
 });
+
+test("tool call forwards session and passport token and reaches the allow path", async () => {
+  const { safe, flagged, calls } = await run({
+    action: "toolCall",
+    params: {
+      sessionId: "sess-tool-1",
+      passportToken: "passport_secret_12345",
+      toolName: "rag.search",
+      toolAction: "query",
+      toolDestination: "internal",
+      toolContent: "refund policy",
+    },
+    respond: (_path, body) => ({
+      body: { decision: "ALLOW", riskLevel: "LOW", reason: "Passport and policy checks passed.", sessionId: body.sessionId },
+    }),
+  });
+
+  assert.equal(flagged.length, 0);
+  assert.equal(safe[0].json.verdictCode, "ALLOW");
+  assert.equal(calls[0].path, "/api/agent/tool/check");
+  assert.equal(calls[0].body.sessionId, "sess-tool-1");
+  assert.equal(calls[0].body.passportToken, "passport_secret_12345");
+});
+
+test("tool call gives token-missing a distinct verdict", async () => {
+  const { flagged } = await run({
+    action: "toolCall",
+    params: { sessionId: "sess-tool-2", toolName: "rag.search", toolAction: "query" },
+    respond: () => ({
+      body: {
+        decision: "BLOCK",
+        riskLevel: "CRITICAL",
+        reason: "Passport token is required and only a hash is stored.",
+        policyMatches: [{ id: "passport.token_missing", label: "Passport token required", severity: "CRITICAL" }],
+      },
+    }),
+  });
+  assert.equal(flagged[0].json.verdictCode, "TOKEN_MISSING");
+  assert.equal(flagged[0].json.blocked, true);
+});
+
+test("identity enrollment and passport issuance are first-class actions", async () => {
+  const enrolled = await run({
+    action: "enrollIdentity",
+    params: { agentName: "Support Agent", agentType: "CHATBOT", passportPolicyPreset: "SUPPORT", passportPolicy: '{"allowedTools":["rag.search"]}' },
+    respond: () => ({ body: { id: "agent_123", name: "Support Agent", status: "ACTIVE" } }),
+  });
+  assert.equal(enrolled.calls[0].path, "/api/agent/identity/create");
+  const enrolledPolicy = enrolled.calls[0].body.defaultPolicy as Record<string, unknown>;
+  assert.deepEqual(enrolledPolicy.allowedTools, ["rag.search"], "custom keys override the matching preset key");
+  assert.ok((enrolledPolicy.blockedTools as string[]).includes("secrets.read"), "unoverridden preset controls remain active");
+  assert.equal(enrolled.safe[0].json.agentIdentityId, "agent_123");
+
+  const issued = await run({
+    action: "issuePassport",
+    params: { agentIdentityId: "agent_123", sessionId: "sess-123", passportTtlSeconds: 900 },
+    respond: () => ({ body: { passportId: "pass_123", agentIdentityId: "agent_123", sessionId: "sess-123", passportToken: "one_time_secret", status: "ACTIVE" } }),
+  });
+  assert.equal(issued.calls[0].path, "/api/agent/passport/issue");
+  assert.equal(issued.calls[0].body.ttlSeconds, 900);
+  assert.equal(issued.safe[0].json.passportToken, "one_time_secret");
+});
+
+test("passport policy presets produce least-privilege defaults", async () => {
+  const { calls } = await run({
+    action: "issuePassport",
+    params: { agentIdentityId: "agent_code", sessionId: "sess-code", passportPolicyPreset: "CODING" },
+    respond: () => ({ body: { passportId: "pass_code", passportToken: "secret_code_token", status: "ACTIVE" } }),
+  });
+  assert.deepEqual(calls[0].body.allowedTools, ["filesystem.read", "repository.search", "tests.run"]);
+  assert.ok((calls[0].body.approvalRequiredTools as string[]).includes("terminal.run"));
+  assert.ok((calls[0].body.blockedTools as string[]).includes("secrets.read"));
+});
+
+test("passport validation distinguishes valid, missing-token, and invalid results", async () => {
+  const valid = await run({
+    action: "validatePassport",
+    params: { sessionId: "sess-valid", passportToken: "passport_token_valid" },
+    respond: () => ({ body: { decision: "ALLOW", riskLevel: "LOW", reason: "Passport is active.", passportId: "pass-valid" } }),
+  });
+  assert.equal(valid.calls[0].path, "/api/agent/passport/validate");
+  assert.equal(valid.safe[0].json.verdictCode, "PASSPORT_VALID");
+
+  const missing = await run({
+    action: "validatePassport",
+    params: { sessionId: "sess-valid" },
+    respond: () => ({ body: { decision: "BLOCK", riskLevel: "CRITICAL", policyMatches: [{ id: "passport.token_missing" }] } }),
+  });
+  assert.equal(missing.flagged[0].json.verdictCode, "TOKEN_MISSING");
+});
+
+test("passport revocation succeeds by session or passport ID", async () => {
+  const { safe, calls } = await run({
+    action: "revokePassport",
+    params: { passportId: "pass-revoke", revokeReason: "Task completed" },
+    respond: () => ({ body: { passportId: "pass-revoke", sessionId: "sess-revoke", status: "REVOKED", decision: "BLOCK" } }),
+  });
+  assert.equal(calls[0].path, "/api/agent/passport/revoke");
+  assert.equal(calls[0].body.reason, "Task completed");
+  assert.equal(safe[0].json.verdictCode, "PASSPORT_REVOKED");
+  assert.equal(safe[0].json.blocked, false, "successful lifecycle mutation is not a content block");
+});
+
+test("passport mutations and audited tool calls are never deduplicated", async () => {
+  for (const action of ["enrollIdentity", "issuePassport", "revokePassport", "toolCall"]) {
+    const paramsByAction: Record<string, Record<string, unknown>> = {
+      enrollIdentity: { agentName: "Batch Agent", agentType: "CUSTOM", passportPolicyPreset: "READ_ONLY" },
+      issuePassport: { agentIdentityId: "agent_batch", sessionId: "sess-batch", passportPolicyPreset: "READ_ONLY" },
+      revokePassport: { passportId: "pass-batch" },
+      toolCall: { sessionId: "sess-batch", passportToken: "passport_batch_token", toolName: "rag.search", toolAction: "query" },
+    };
+    const result = await run({
+      action,
+      params: paramsByAction[action],
+      items: 2,
+      respond: () => ({
+        body: action === "toolCall"
+          ? { decision: "ALLOW", riskLevel: "LOW" }
+          : action === "enrollIdentity"
+            ? { id: "agent_batch", status: "ACTIVE" }
+            : action === "issuePassport"
+              ? { passportId: "pass-batch", passportToken: "passport_batch_token", status: "ACTIVE" }
+              : { passportId: "pass-batch", status: "REVOKED" },
+      }),
+    });
+    assert.equal(result.calls.length, 2, `${action} must execute once per input item`);
+  }
+});
+
+test("whitespace-only guard input skips gracefully without network", async () => {
+  const { safe, flagged, calls } = await run({
+    action: "inputGuard",
+    params: { inputText: "  \n\t ", onThreat: "BLOCK" },
+  });
+  assert.equal(calls.length, 0);
+  assert.equal(flagged.length, 0);
+  assert.equal(safe[0].json.verdictCode, "EMPTY_INPUT");
+  assert.equal(safe[0].json.skipped, true);
+});
+
+test("session ID is sent at top level for cloud correlation and reputation isolation", async () => {
+  const { calls } = await run({
+    action: "inputGuard",
+    params: { inputText: "What is the refund window?", onThreat: "BLOCK", sessionId: "customer-session-7" },
+    respond: () => ({ body: cleanInputGuard }),
+  });
+  assert.equal(calls[0].body.sessionId, "customer-session-7");
+});
