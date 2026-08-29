@@ -86,6 +86,18 @@ test("redaction leaves a 16-digit number that is not a card alone", () => {
   assert.equal(order.safeText.includes("1234 5678 9012 3456"), true, "a non-Luhn number is not a card");
 });
 
+test("Indian identity formats are independently redacted", () => {
+  const result = redactLocal(
+    "Aadhaar 2345 6789 0123, PAN ABCDE1234F, GSTIN 27ABCDE1234F1Z5, voter ABC1234567, DL MH14 2011 0062821.",
+  );
+  assert.match(result.safeText, /\[REDACTED_AADHAAR\]/);
+  assert.match(result.safeText, /\[REDACTED_PAN\]/);
+  assert.match(result.safeText, /\[REDACTED_GSTIN\]/);
+  assert.match(result.safeText, /\[REDACTED_VOTER_ID\]/);
+  assert.match(result.safeText, /\[REDACTED_DRIVING_LICENCE\]/);
+  assert.equal(result.safeText.includes("2345 6789 0123"), false, "Aadhaar must never remain cleartext when PAN is also present");
+});
+
 test("a US SSN is redacted and a never-issued area number is not", () => {
   const ssn = redactLocal("Applicant SSN 123-45-6789.");
   assert.match(ssn.safeText, /\[REDACTED_US_SSN\]/);

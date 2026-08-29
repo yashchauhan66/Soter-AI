@@ -238,9 +238,13 @@ export async function POST(request: Request) {
       const crescendoEscalated =
         (result.metadata as { crescendo?: { level?: string } } | undefined)?.crescendo?.level ===
         "ESCALATED";
+      const contentAction = result.action;
+      const contentAllowed = result.allowed;
+      const contentRiskScore = result.riskScore;
+      const contentRiskTypes = [...result.riskTypes];
       const reputation = await recordAndAssessAttacker({
         projectId: project.id,
-        fingerprint: attackerFingerprint({ apiKeyId: apiKey.id, clientIp: trustedClientIp(request) }),
+        fingerprint: attackerFingerprint({ apiKeyId: apiKey.id, clientIp: trustedClientIp(request), sessionId: body.sessionId }),
         observation: {
           action: result.action,
           riskScore: result.riskScore,
@@ -249,6 +253,11 @@ export async function POST(request: Request) {
         },
       });
       result = applyAttackerReputation(result, reputation);
+      result.metadata = {
+        ...result.metadata,
+        contentVerdict: { action: contentAction, allowed: contentAllowed, riskScore: contentRiskScore, riskTypes: contentRiskTypes },
+        reputationVerdict: { level: reputation.level, score: reputation.score, enforced: result.action !== contentAction },
+      };
     } catch (reputationError) {
       console.error("[SoterAI] Attacker reputation failed (failing open)", reputationError);
     }

@@ -37,7 +37,7 @@ export class SoterApi implements ICredentialType {
       typeOptions: { password: true },
       default: "",
       required: true,
-      description: "Your SoterAI API key (sk_...)",
+      description: "Sent only in the x-api-key header. This credential never uses or reuses an Authorization: Bearer token.",
     },
     {
       displayName: "Base URL",
