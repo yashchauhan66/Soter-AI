@@ -254,6 +254,32 @@ export const CAPABILITY_REGISTRY: ProtectionCapability[] = [
         lastVerifiedVersion: VERSION,
     },
     {
+        id: "terminal-shell-execution-watch",
+        name: "Integrated-terminal command detection (after start)",
+        category: "terminal-enforcement",
+        level: "DETECTION_ONLY",
+        integration: "extension ShellExecutionWatcher + TerminalCommandRiskDetector",
+        enforcementPoint: "packages/vscode-extension/src/terminal/shellExecutionPolicy.ts, src/terminal/ShellExecutionWatcher.ts",
+        // VS Code reports a shell execution once the shell has already begun the
+        // command. There is no veto and no awaitable hook, so this can name what
+        // matched but cannot stop it. DETECTION_ONLY is the ceiling, permanently.
+        preExecutionBlock: false,
+        rollbackSupported: false,
+        conditions: [
+            "Host implements window.onDidStartTerminalShellExecution (absent on the ^1.85.0 floor)",
+            "VS Code shell integration is active for that shell",
+            "Command text is readable from execution.commandLine",
+        ],
+        knownBypasses: [
+            "The command is already running when the event fires; SoterAI cannot stop or recall it",
+            "Shells without VS Code shell integration produce no event at all",
+            "External terminals, subprocess trees spawned by a running command, and non-shell child processes are never seen",
+        ],
+        evidenceTestIds: ["terminal-shell-execution.test.ts"],
+        wiredInRuntime: true,
+        lastVerifiedVersion: VERSION,
+    },
+    {
         id: "live-scan",
         name: "VS Code live file diagnostics",
         category: "detection",

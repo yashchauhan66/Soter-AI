@@ -3,7 +3,7 @@
   "name": "Soter Enterprise AI Control Plane",
   "short_name": "Soter",
   "description": "Scans prompts and AI responses for prompt injection, jailbreaks, secrets, PII, and unsafe instructions on supported AI tools.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "minimum_chrome_version": "116",
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'; base-uri 'none'; form-action 'none'"
@@ -35,7 +35,23 @@
     "https://v0.dev/*",
     "https://lovable.dev/*",
     "https://openwebui.com/*",
-    "https://soterai.in/*"
+    "https://soterai.in/*",
+    "https://perplexity.ai/*",
+    "https://copilot.microsoft.com/*",
+    "https://grok.com/*",
+    "https://chat.deepseek.com/*",
+    "https://chat.mistral.ai/*",
+    "https://chat.qwen.ai/*",
+    "https://kimi.com/*",
+    "https://www.kimi.com/*",
+    "https://notebooklm.google.com/*",
+    "https://aistudio.google.com/*",
+    "https://meta.ai/*",
+    "https://www.meta.ai/*",
+    "https://you.com/*",
+    "https://phind.com/*",
+    "https://www.phind.com/*",
+    "https://huggingface.co/chat/*"
   ],
   "background": {
     "service_worker": "background/service-worker.js",
@@ -62,9 +78,27 @@
         "https://bolt.new/*",
         "https://v0.dev/*",
         "https://lovable.dev/*",
-        "https://openwebui.com/*"
+        "https://openwebui.com/*",
+        "https://perplexity.ai/*",
+        "https://copilot.microsoft.com/*",
+        "https://grok.com/*",
+        "https://chat.deepseek.com/*",
+        "https://chat.mistral.ai/*",
+        "https://chat.qwen.ai/*",
+        "https://kimi.com/*",
+        "https://www.kimi.com/*",
+        "https://notebooklm.google.com/*",
+        "https://aistudio.google.com/*",
+        "https://meta.ai/*",
+        "https://www.meta.ai/*",
+        "https://you.com/*",
+        "https://phind.com/*",
+        "https://www.phind.com/*",
+        "https://huggingface.co/chat/*"
       ],
-      "js": ["content/index.js"],
+      "js": [
+        "content/index.js"
+      ],
       "run_at": "document_idle",
       "all_frames": true
     },
@@ -72,7 +106,9 @@
       "matches": [
         "https://soterai.in/*"
       ],
-      "js": ["content/index.js"],
+      "js": [
+        "content/index.js"
+      ],
       "run_at": "document_idle",
       "all_frames": true
     },
@@ -97,9 +133,27 @@
         "https://v0.dev/*",
         "https://lovable.dev/*",
         "https://openwebui.com/*",
-        "https://soterai.in/*"
+        "https://soterai.in/*",
+        "https://perplexity.ai/*",
+        "https://copilot.microsoft.com/*",
+        "https://grok.com/*",
+        "https://chat.deepseek.com/*",
+        "https://chat.mistral.ai/*",
+        "https://chat.qwen.ai/*",
+        "https://kimi.com/*",
+        "https://www.kimi.com/*",
+        "https://notebooklm.google.com/*",
+        "https://aistudio.google.com/*",
+        "https://meta.ai/*",
+        "https://www.meta.ai/*",
+        "https://you.com/*",
+        "https://phind.com/*",
+        "https://www.phind.com/*",
+        "https://huggingface.co/chat/*"
       ],
-      "js": ["content/source-lineage-entry.js"],
+      "js": [
+        "content/source-lineage-entry.js"
+      ],
       "run_at": "document_idle",
       "all_frames": true
     },
@@ -124,15 +178,32 @@
         "https://v0.dev/*",
         "https://lovable.dev/*",
         "https://openwebui.com/*",
-        "https://soterai.in/*"
+        "https://soterai.in/*",
+        "https://perplexity.ai/*",
+        "https://copilot.microsoft.com/*",
+        "https://grok.com/*",
+        "https://chat.deepseek.com/*",
+        "https://chat.mistral.ai/*",
+        "https://chat.qwen.ai/*",
+        "https://kimi.com/*",
+        "https://www.kimi.com/*",
+        "https://notebooklm.google.com/*",
+        "https://aistudio.google.com/*",
+        "https://meta.ai/*",
+        "https://www.meta.ai/*",
+        "https://you.com/*",
+        "https://phind.com/*",
+        "https://www.phind.com/*",
+        "https://huggingface.co/chat/*"
       ],
-      "js": ["content/ws-page-hook.js"],
+      "js": [
+        "content/ws-page-hook.js"
+      ],
       "run_at": "document_start",
       "world": "MAIN",
       "all_frames": true
     }
   ],
-
   "action": {
     "default_title": "Soter Enterprise AI Control Plane",
     "default_popup": "popup/index.html",

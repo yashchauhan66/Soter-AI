@@ -54,27 +54,30 @@ const editors = {
   code: { command: "code", label: "VS Code", gallery: "Visual Studio Marketplace" },
   cursor: { command: "cursor", label: "Cursor", gallery: "marketplace.cursorapi.com (Cursor proxy)" },
   codium: { command: "codium", label: "VSCodium", gallery: "open-vsx.org" },
-  windsurf: { command: "windsurf", label: "Windsurf", gallery: "marketplace.windsurf.com (Open VSX mirror)" },
+  windsurf: {
+    command: "windsurf",
+    // Windsurf was rebranded to Devin (Cognition). Older installs expose a
+    // `windsurf` CLI; current installs expose `devin-desktop`/`devin`, and some
+    // installs leave the launcher off PATH entirely, so we also probe the known
+    // install directories for the VS Code-family .cmd launcher directly.
+    aliasCommands: ["devin-desktop", "devin"],
+    launcherPaths: [
+      join(process.env.LOCALAPPDATA ?? "", "Programs", "windsurf", "bin", "devin-desktop.cmd"),
+      join(process.env.LOCALAPPDATA ?? "", "Programs", "Windsurf", "bin", "devin-desktop.cmd"),
+      join(process.env.LOCALAPPDATA ?? "", "Programs", "windsurf", "bin", "windsurf.cmd"),
+      join(process.env.LOCALAPPDATA ?? "", "Programs", "Windsurf", "bin", "windsurf.cmd"),
+    ],
+    label: "Windsurf",
+    gallery: "marketplace.windsurf.com (Open VSX mirror)",
+  },
   kiro: { command: "kiro", label: "Kiro", gallery: "open-vsx.org" },
   antigravity: { command: "antigravity", label: "Antigravity", gallery: "open-vsx.org" },
 };
 
-function resolveLauncher(command) {
-  const locator = process.platform === "win32" ? "where.exe" : "which";
-  const located = spawnSync(locator, [command], { encoding: "utf8" });
-  if (located.status !== 0) return undefined;
-  const candidates = located.stdout.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
-  const commandPath = process.platform === "win32"
-    ? candidates.find((path) => path.toLowerCase().endsWith(".cmd"))
-    : candidates[0];
-  if (!commandPath) return undefined;
-  if (process.platform !== "win32" || !commandPath.toLowerCase().endsWith(".cmd")) {
-    return { executable: commandPath, prefixArgs: [], env: process.env };
-  }
-
-  // VS Code-family .cmd launchers set Electron's Node mode and invoke a CLI JS
-  // file. Calling that executable directly avoids cmd.exe keeping GUI children
-  // attached and hanging a deterministic test run.
+// VS Code-family .cmd launchers set Electron's Node mode and invoke a CLI JS
+// file. Calling that executable directly avoids cmd.exe keeping GUI children
+// attached and hanging a deterministic test run.
+function parseCmdLauncher(commandPath) {
   const invocation = readFileSync(commandPath, "utf8")
     .split(/\r?\n/)
     .map((line) => line.match(/^"([^"]+)"\s+"([^"]+)"\s+%\*\s*$/i))
@@ -86,6 +89,33 @@ function resolveLauncher(command) {
     prefixArgs: [expand(invocation[2])],
     env: { ...process.env, ELECTRON_RUN_AS_NODE: "1", VSCODE_DEV: "" },
   };
+}
+
+function resolveLauncher(editor) {
+  const locator = process.platform === "win32" ? "where.exe" : "which";
+  // Try the primary CLI name, then any rebrand aliases (e.g. Windsurf -> Devin).
+  const commandNames = [editor.command, ...(editor.aliasCommands ?? [])];
+  for (const command of commandNames) {
+    const located = spawnSync(locator, [command], { encoding: "utf8" });
+    if (located.status !== 0) continue;
+    const candidates = located.stdout.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+    const commandPath = process.platform === "win32"
+      ? candidates.find((path) => path.toLowerCase().endsWith(".cmd"))
+      : candidates[0];
+    if (!commandPath) continue;
+    if (process.platform !== "win32" || !commandPath.toLowerCase().endsWith(".cmd")) {
+      return { executable: commandPath, prefixArgs: [], env: process.env };
+    }
+    return parseCmdLauncher(commandPath);
+  }
+  // Some installs (notably the Windsurf -> Devin rebrand) leave the launcher off
+  // PATH entirely. Fall back to probing known install locations directly.
+  for (const launcherPath of editor.launcherPaths ?? []) {
+    if (!existsSync(launcherPath)) continue;
+    if (launcherPath.toLowerCase().endsWith(".cmd")) return parseCmdLauncher(launcherPath);
+    return { executable: launcherPath, prefixArgs: [], env: process.env };
+  }
+  return undefined;
 }
 
 function packageExtension() {
@@ -109,7 +139,7 @@ function packageExtension() {
 }
 
 function testEditor(key, editor) {
-  const launcher = resolveLauncher(editor.command);
+  const launcher = resolveLauncher(editor);
   if (!launcher) {
     const message = `SKIP ${editor.label}: '${editor.command}' is not installed or not on PATH.`;
     if (requireEditor) throw new Error(message);

@@ -23,6 +23,7 @@ import { registerDepGuardCommands } from "./dep-guard/DepGuard";
 import { registerPolicyPackCommands } from "./policy-packs/commands";
 import { EnterpriseDashboard, registerDashboardCommands } from "./enterprise/EnterpriseDashboard";
 import { registerLaunchCommands } from "./launchCommands";
+import { registerReportCommands } from "./reports/commands";
 import { registerLiveScanner } from "./diagnostics/LiveScanner";
 import { registerClipboardGuard } from "./clipboard/ClipboardGuard";
 import { registerContinuousGuardCommands } from "./scanners/continuousGuards";
@@ -30,6 +31,10 @@ import { registerSecretBrokerCommands } from "./secret-broker/commands";
 import { ProtectionStateService } from "./protection/ProtectionStateService";
 import { ProtectionController } from "./protection/ProtectionController";
 import { registerEgressFirewallCommands } from "./advanced/commands";
+import { registerAgentTools, supportsLanguageModelTools } from "./agent/languageModelTools";
+import { registerShellExecutionWatcher } from "./terminal/ShellExecutionWatcher";
+import { registerMcpServerProvider } from "./agent/mcpProvider";
+import { setAgentSurfaceStatus } from "./agent/status";
 import { runPackagedRuntimeProbe } from "./packagedRuntimeProbe";
 // ── Secret Shield: strongest prevention layer (Task 1–5) ──────────────────────
 import { SecretFileInterceptor } from "./secret-shield/SecretFileInterceptor";
@@ -70,6 +75,18 @@ let fileReadSentinel: FileReadSentinel;
 
 export function activate(context: vscode.ExtensionContext): void {
     extensionContext = context;
+    const telemetry = TelemetryManager.getInstance();
+    telemetry.syncPrivacyBoundary();
+    context.subscriptions.push(vscode.workspace.onDidChangeConfiguration((event) => {
+        if (
+            event.affectsConfiguration("soterai.telemetry.redactedEvents")
+            || event.affectsConfiguration("soterai.privacyMode")
+            || event.affectsConfiguration("soterai.cloud.enabled")
+        ) {
+            telemetry.syncPrivacyBoundary();
+            refreshViews();
+        }
+    }));
 
     // Command-palette hygiene: ~100 advanced commands are gated behind the
     // `soterai.advancedCommands` context key so the default palette only shows
@@ -172,6 +189,9 @@ export function activate(context: vscode.ExtensionContext): void {
     registerPolicyPackCommands(context, refreshViews);
     registerDashboardCommands(context, refreshViews);
     registerLaunchCommands(context);
+    // Gap 5: one palette row that lists every report, so the eighteen individual
+    // show* commands can stay registered without each occupying a palette row.
+    registerReportCommands(context);
     const liveScanEnabled = vscode.workspace.getConfiguration("soterai").get<boolean>("liveScan.enabled", true);
     if (liveScanEnabled) registerLiveScanner(context);
     registerClipboardGuard(context);
@@ -182,6 +202,25 @@ export function activate(context: vscode.ExtensionContext): void {
     // Gap A + Gap B: outbound AI egress firewall (obfuscation-resistant), which
     // also appends every decision to the tamper-proof ledger.
     registerEgressFirewallCommands(context);
+
+    // Gap 2: put SoterAI inside the agent loop instead of beside it.
+    //
+    // Two surfaces, one decision module (src/agent/toolLogic.ts): VS Code
+    // language model tools reach Copilot agent mode and chat, and the MCP server
+    // definition provider reaches every other MCP client. Both are far newer than
+    // the `^1.85.0` engine floor, so both feature-detect and register nothing at
+    // all on an older host — the floor stays where the Open VSX plan needs it.
+    //
+    // Nothing here is enforcement. An agent that never calls these tools is
+    // unaffected, and every result says so.
+    const agentToolCount = registerAgentTools(context);
+    const mcpProviderRegistered = registerMcpServerProvider(context);
+    setAgentSurfaceStatus({
+        languageModelTools: agentToolCount,
+        mcpProviderRegistered,
+        hostSupportsTools: supportsLanguageModelTools(),
+    });
+    void vscode.commands.executeCommand("setContext", "soterai.agentToolsAvailable", agentToolCount > 0);
 
     // ── Secret Shield commands (need refreshViews, wired here) ────────────────
     // Document-open events are visibility only. VS Code exposes no caller-aware,
@@ -341,6 +380,31 @@ export function activate(context: vscode.ExtensionContext): void {
     );
 
     if (workspaceGuard.isEnabled) workspaceGuard.enable();
+
+    // GAP 4. Watch what actually runs in the integrated terminal. Feature-detected:
+    // `onDidStartTerminalShellExecution` does not exist on the `^1.85.0` floor, so
+    // on Cursor/Windsurf/Kiro builds below it this registers nothing rather than
+    // throwing during activation. Detection only — the event fires after the shell
+    // has begun the command, so the claim stays MONITORED.
+    registerShellExecutionWatcher(context, {
+        record: (verdict) => {
+            sentinel.recordEvent(
+                {
+                    type: "terminal_command",
+                    risk: verdict.severity === "none" ? "low" : verdict.severity,
+                    source: "terminal-shell-execution",
+                    decision: "detected_after_start",
+                    redactedEvidence: `${verdict.matchedPattern}: ${verdict.findings.map((f) => f.evidence).join("; ")}`,
+                },
+                // The watcher already showed the user a message naming the
+                // pattern; a second generic Sentinel toast would read as two
+                // separate findings for one command.
+                { notify: false },
+            );
+        },
+        advisoryNoticeSuppressed: () =>
+            !vscode.workspace.getConfiguration("soterai").get<boolean>("terminal.warnOnRawTerminalOpen", true),
+    });
 }
 
 async function updateBrokerStatus(): Promise<void> {

@@ -4,17 +4,18 @@ import type { DestinationType } from "../../../../packages/policy-engine/src/typ
 import { auditSafePreview, redactSensitiveText } from "./redaction";
 import { rewritePromptSafely } from "./rewrite";
 import type { ExtensionState, ScanEventType, ScanResult } from "./types";
-import { matchAIDestination } from "../../../../packages/shared/src/ai-destinations";
+import { BUILT_IN_AI_DESTINATIONS, matchAIDestination } from "../../../../packages/shared/src/ai-destinations";
 import { classifyLocal, mergeMlIntoScan } from "./ml-classifier";
 
 export function destinationTypeForUrl(url: string, state?: ExtensionState): DestinationType {
   const configured = state ? matchAIDestination(url, state.policy?.destinations ?? [], state.config.department, state.config.role) : undefined;
   if (configured) return configured.category;
-  const domain = domainFromUrl(url);
-  if (/chatgpt\.com|openai\.com|claude\.ai|gemini\.google\.com|bard\.google\.com|perplexity\.ai|poe\.com$/i.test(domain)) {
-    return "public_ai";
-  }
-  return "unknown";
+  // v0.2.2: this used to be a seven-domain regex maintained by hand, and it drifted — every host
+  // added to the manifest after it was written resolved to "unknown", which silently unmatched
+  // every rule scoped to a destination type. Falling back to the same built-in table the default
+  // policy is built from means one list, and adding a host in one place cannot weaken the other.
+  const builtIn = matchAIDestination(url, BUILT_IN_AI_DESTINATIONS.map((destination) => ({ ...destination, organizationId: "built-in" })));
+  return builtIn?.category ?? "unknown";
 }
 
 export function domainFromUrl(url: string) {
@@ -271,6 +272,25 @@ export function withHardEnforcement(result: ScanResult, enabled: boolean): ScanR
   };
 }
 
+/**
+ * Emergency lockdown, read defensively so a partial policy still enforces what the UI claims.
+ *
+ * Two real defects lived here. `blockedDataTypes.includes(...)` and
+ * `requireApprovalDataTypes.includes(...)` were called unguarded, so an admin policy of
+ * `{ enabled: true }` — which is what a hand-written lockdown looks like, and what the
+ * lockdown test harness sent — threw a TypeError mid-scan. And the three switches typed as
+ * literal `true` in `ExtensionOrgPolicy` were read as optional booleans, so when they were
+ * absent the whole function fell through to `null`: the popup, the side panel and
+ * `enrollmentStatusLabel()` all announced "Emergency lockdown active" while nothing was
+ * being enforced at all — the worst possible failure for a control whose only job is to be
+ * believed in an incident.
+ *
+ * The fix follows the declared contract: in that type the three switches were literally
+ * `true`, so a lockdown that omits one *means* it, and `!== false` is the honest reading.
+ * An admin who wants a narrower lockdown sets the field to `false` explicitly. The two
+ * arrays default to empty, which is safe: destination gating already stops every
+ * non-enterprise destination, so an omitted data-type list narrows nothing.
+ */
 export function emergencyLockdownAction(input: {
   state: ExtensionState;
   destinationType: DestinationType;
@@ -279,15 +299,152 @@ export function emergencyLockdownAction(input: {
 }): "block" | "require_approval" | null {
   const lockdown = input.state.policy?.emergencyLockdown;
   if (!lockdown?.enabled) return null;
-  if (input.eventType === "file_upload" && lockdown.blockAllFileUploads) return "block";
-  if (lockdown.allowOnlyEnterpriseDestinations && !["enterprise_ai", "internal"].includes(input.destinationType)) return "block";
-  if (input.detectedDataTypes.some((type) => lockdown.blockedDataTypes.includes(type))) return "block";
-  if (input.detectedDataTypes.some((type) => lockdown.requireApprovalDataTypes.includes(type))) return "require_approval";
+  const blockedDataTypes = Array.isArray(lockdown.blockedDataTypes) ? lockdown.blockedDataTypes : [];
+  const requireApprovalDataTypes = Array.isArray(lockdown.requireApprovalDataTypes) ? lockdown.requireApprovalDataTypes : [];
+  if (input.eventType === "file_upload" && lockdown.blockAllFileUploads !== false) return "block";
+  if (lockdown.allowOnlyEnterpriseDestinations !== false && !["enterprise_ai", "internal"].includes(input.destinationType)) return "block";
+  if (input.detectedDataTypes.some((type) => blockedDataTypes.includes(type))) return "block";
+  if (input.detectedDataTypes.some((type) => requireApprovalDataTypes.includes(type))) return "require_approval";
   return null;
 }
 
 export function shouldPreventSubmit(action: ScanResult["action"]) {
   return action === "block" || action === "require_approval" || action === "require_justification";
+}
+
+/**
+ * v0.2.2 — how much of the user's attention a verdict is allowed to take.
+ *
+ * Until 0.2.2 both enforcement paths asked `hasFindings` and, if it was true, raised the same
+ * full-screen modal with a backdrop over the entire page. A `redact`-severity match on a React
+ * component therefore interrupted the user exactly as hard as a leaked AWS key. Measured in real
+ * Edge on a fresh install with the shipped default policy: 9 of 16 ordinary work pastes — a React
+ * component, a stack trace, a JSON blob, a SQL query, a tsconfig, an app log, a git diff, a curl
+ * command and an email about an invoice — each raised a modal from `local-business-redact`, and in
+ * all 9 the text was handed back byte for byte unchanged. Nine interruptions, nothing protected.
+ *
+ * The distinction that matters is not severity but whether there is anything for the user to do:
+ *
+ *  - `decision` — the gesture stops and the overlay is shown. Either the kernel is withholding the
+ *    submission (`block` / `require_approval` / `require_justification`, which covers hard
+ *    enforcement, lockdown and every fail-closed reason), or the safe variant differs from what the
+ *    user wrote, and no one may have their words altered without being told.
+ *  - `notice`   — something matched, nothing was withheld and nothing was changed: a corner notice
+ *    states it and the user keeps working. Staying silent here would be its own dishonesty, the
+ *    same under-claiming the response-scanning badge was guilty of.
+ *  - `none`     — nothing matched; the extension has nothing to say.
+ *
+ * `textAltered` is the caller's own comparison because the two paths hold different safe variants,
+ * and it answers a slightly different question on each:
+ *
+ *  - paste — "were their words changed?" The fragment has already been written into the composer, so
+ *    the comparison is against what actually landed there (see `shouldSanitizeFragment`: under a
+ *    `warn` verdict that is the user's own text, and reporting an alteration then would be a lie).
+ *  - submit — "are there two different candidate messages?" Nothing has been changed yet; the
+ *    sanitized variant merely differs from what is in the field. That is still a `decision`, because
+ *    there is a real choice to make — send mine, or send the scrubbed one — and only the user can
+ *    make it. Where the two variants are identical there is no choice, and no interruption.
+ *
+ * Both must compare against the text *without* the footer (`safeFragmentText`), or the appended
+ * "Soter sanitized this prompt" note makes every redact-level verdict look altered and the fix
+ * evaporates.
+ */
+export function interruptionLevel(result: ScanResult, textAltered: boolean): "decision" | "notice" | "none" {
+  if (shouldPreventSubmit(result.action) || textAltered) return "decision";
+  return result.hasFindings ? "notice" : "none";
+}
+
+/**
+ * The actions that authorise changing the user's text. Read straight from the policy vocabulary in
+ * `packages/policy-engine/src/types.ts`, which deliberately separates them from the ones that only
+ * *say* something: `allow`, `log_only` and `warn`.
+ */
+const TEXT_ALTERING_ACTIONS = new Set<ScanResult["action"]>([
+  "redact",
+  "rewrite",
+  "block",
+  "require_approval",
+  "require_justification",
+]);
+
+/**
+ * v0.2.2 — may the sanitized variant be written into the composer in place of what the user pasted?
+ *
+ * The paste path substituted `safeFragmentText(result)` for *any* result with a finding, whatever
+ * the action was. Measured against the shipped default policy, that turned two ordinary developer
+ * pastes into altered text plus a full-screen modal:
+ *
+ *   - `curl http://10.4.12.9:8080/health returns nothing` → action `warn`, risk 15, and the composer
+ *     received `curl http://[REDACTED_INTERNAL_IP]:8080/health`.
+ *   - `git@github.com:acme-internal/billing-service.git` → action `warn`, risk 12, and the composer
+ *     received `[REDACTED_EMAIL]:acme-internal/...` (the SSH remote matches the email detector).
+ *
+ * In both cases the policy's own verdict was "warn" — tell them — and the extension instead rewrote
+ * their words, which then also tripped `interruptionLevel`'s alteration rule and took over the page.
+ * Redacting is what `redact` and `rewrite` mean; `warn` and `log_only` mean the text goes through and
+ * the user is told. Enforcing *more* than the policy says is as dishonest as enforcing less, and it
+ * is the version the user feels as their work being damaged.
+ *
+ * Nothing is given up by this. Every action that withholds a submission still substitutes, so a
+ * secret is never written back into the page, and the submit path re-scans the whole composer before
+ * anything leaves the browser — so a fragment kept here is still judged, in full context, by the
+ * same kernel, at the moment it would actually be sent.
+ */
+export function shouldSanitizeFragment(result: ScanResult): boolean {
+  return TEXT_ALTERING_ACTIONS.has(result.action);
+}
+
+/**
+ * What an emergency lockdown *actually* restricts, in the same words the UI shows.
+ *
+ * Every surface used to key its badge off `emergencyLockdown.enabled` alone, so a lockdown
+ * with every switch explicitly `false` and both lists empty still displayed "Emergency
+ * lockdown active" while `emergencyLockdownAction()` returned `null` on every scan. That is
+ * the one claim this product cannot afford to get wrong, so the badge is now derived from the
+ * same fields the gate reads: an empty list here means nothing is being enforced, and the UI
+ * says exactly that instead of reassuring the user.
+ */
+export function lockdownRestrictions(state: ExtensionState): string[] {
+  const lockdown = state.policy?.emergencyLockdown;
+  if (!lockdown?.enabled) return [];
+  const restrictions: string[] = [];
+  if (lockdown.allowOnlyEnterpriseDestinations !== false) restrictions.push("Non-enterprise AI destinations blocked");
+  if (lockdown.blockAllFileUploads !== false) restrictions.push("All file uploads blocked");
+  const blocked = Array.isArray(lockdown.blockedDataTypes) ? lockdown.blockedDataTypes : [];
+  if (blocked.length) restrictions.push(`Blocked data types: ${blocked.join(", ")}`);
+  const approval = Array.isArray(lockdown.requireApprovalDataTypes) ? lockdown.requireApprovalDataTypes : [];
+  if (approval.length) restrictions.push(`Approval required for: ${approval.join(", ")}`);
+  return restrictions;
+}
+
+/** `true` only when the lockdown flag is set *and* at least one restriction is in force. */
+export function isLockdownEnforcing(state: ExtensionState): boolean {
+  return lockdownRestrictions(state).length > 0;
+}
+
+/**
+ * Response scanning as the *content script* actually decides it — the single source of truth
+ * the popup and the side panel both read, so the two surfaces cannot disagree with the runtime.
+ *
+ * `content/index.ts` installs both observers on `responseScanningEnabled !== false`, i.e. it is
+ * ON unless a matched destination explicitly turns it off, and ON when no destination entry
+ * matched at all. Both UIs instead asked `destinations.some(d => d.enabled && d.responseScanningEnabled)`,
+ * which is `false` for an empty destination list — exactly what the trial policy ships. So a
+ * trial user was told "Response Scanning: Disabled" while every AI reply on the page was in
+ * fact being scanned. Under-claiming is still a false claim: it teaches the user to distrust
+ * the panel, and it hides a feature they are paying for.
+ */
+export function responseScanningStatus(state: ExtensionState): { enabled: boolean; label: string } {
+  const destinations = state.policy?.destinations ?? [];
+  const live = destinations.filter((destination) => destination.enabled !== false);
+  if (live.length === 0) {
+    // No per-destination override exists, so the runtime default stands.
+    return { enabled: true, label: "On (default for guarded sites)" };
+  }
+  const on = live.filter((destination) => destination.responseScanningEnabled !== false);
+  if (on.length === live.length) return { enabled: true, label: "On for all configured destinations" };
+  if (on.length === 0) return { enabled: false, label: "Off — disabled for every configured destination" };
+  return { enabled: true, label: `On for ${on.length} of ${live.length} configured destinations` };
 }
 
 export function eventName(eventType: ScanEventType) {

@@ -1,4 +1,5 @@
-import { readFileSync, writeFileSync, existsSync } from "node:fs";
+import { createHash } from "node:crypto";
+import { readFileSync, writeFileSync, existsSync, statSync } from "node:fs";
 import { join, relative } from "node:path";
 
 // Finalizes reports/release-provenance-attestation.json using ONLY the real
@@ -23,15 +24,29 @@ if (!existsSync(jsonPath)) {
 }
 
 const flag = (name) => process.env[name] === "true";
-const signatureVerified = flag("SIGNATURE_VERIFIED");
+const signaturePath = process.env.SIGNATURE_PATH ? join(root, process.env.SIGNATURE_PATH) : undefined;
+const signatureManifestPath = process.env.SIGNATURE_MANIFEST_PATH ? join(root, process.env.SIGNATURE_MANIFEST_PATH) : undefined;
+const signatureEvidencePresent = Boolean(
+  signaturePath && signatureManifestPath && existsSync(signaturePath) && existsSync(signatureManifestPath),
+);
+const signatureVerified = flag("SIGNATURE_VERIFIED") && signatureEvidencePresent;
 const reproducibleBuildVerified = flag("REPRODUCIBLE");
 const canSign = flag("CAN_SIGN");
 
 const attestation = JSON.parse(readFileSync(jsonPath, "utf8"));
 
+const evidenceArtifact = (file) => ({
+  path: relative(root, file).replaceAll("\\", "/"),
+  bytes: statSync(file).size,
+  sha256: `sha256:${createHash("sha256").update(readFileSync(file)).digest("hex")}`,
+});
+
 attestation.signatureVerified = signatureVerified;
 attestation.reproducibleBuildVerified = reproducibleBuildVerified;
 attestation.verifiedAt = new Date().toISOString();
+attestation.signatureArtifacts = signatureEvidencePresent
+  ? [evidenceArtifact(signatureManifestPath), evidenceArtifact(signaturePath)]
+  : [];
 
 attestation.signingStatus = signatureVerified
   ? "signed-verified-ci"
@@ -56,6 +71,7 @@ const gateReady =
   Boolean(attestation.commitSha) &&
   /^[a-f0-9]{40}$/i.test(attestation.commitSha ?? "") &&
   Boolean(attestation.artifactHash) &&
+  attestation.dirtyWorktree === false &&
   signatureVerified &&
   reproducibleBuildVerified &&
   Boolean(attestation.sbomPresent);
@@ -74,6 +90,34 @@ attestation.claimBoundary = gateReady
     ".";
 
 writeFileSync(jsonPath, `${JSON.stringify(attestation, null, 2)}\n`, "utf8");
+const markdownPath = join(root, "reports", "release-provenance-attestation.md");
+const markdown = `# VS Code Release Provenance
+
+- Product: ${attestation.product ?? "soterai-ide-guard"}
+- Version: ${attestation.version ?? "unknown"}
+- Commit: ${attestation.commitSha ?? "unknown"}
+- Dirty worktree: ${attestation.dirtyWorktree ? "yes" : "no"}
+- SBOM present: ${attestation.sbomPresent ? "yes" : "no"} (${attestation.sbomPath ?? "not recorded"})
+- Signing status: ${attestation.signingStatus}
+- Signature verified: ${attestation.signatureVerified ? "yes" : "no"}
+- Reproducible build verified: ${attestation.reproducibleBuildVerified ? "yes" : "no"}
+
+## Signature Evidence
+
+${attestation.signatureArtifacts.length
+  ? attestation.signatureArtifacts.map((item) => `- \`${item.path}\` — ${item.bytes} bytes — \`${item.sha256}\``).join("\n")
+  : "No detached signature evidence is present."}
+
+## Claim Boundary
+
+${attestation.claimBoundary}
+
+## Next Steps
+
+- ${attestation.signingNextStep}
+- ${attestation.reproducibilityNextStep}
+`;
+writeFileSync(markdownPath, markdown, "utf8");
 console.log(
   `Finalized provenance: signatureVerified=${signatureVerified} ` +
     `reproducibleBuildVerified=${reproducibleBuildVerified} gateReady=${gateReady}`,

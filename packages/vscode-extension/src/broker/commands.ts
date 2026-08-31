@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import * as path from "path";
 import { generateSafeModePolicy, redactForSharing } from "@soterai/guard-core";
 import { BrokerManager } from "./BrokerManager";
+import { describeAgentSurfaces } from "../agent/status";
 import { escapeHtml, showInfoWebview } from "../firewall/util";
 import {
     DEFAULT_INTEGRATION_CANDIDATES,
@@ -214,7 +215,7 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
         showInfoWebview(
             "soteraiRuntimeCapabilities",
             "SoterAI: Runtime Capability Summary",
-            `<h1>Runtime Capability Summary</h1><p>Effective risk: <strong>${escapeHtml(summary.effectiveRisk.toUpperCase())}</strong> (${escapeHtml(String(summary.effectiveRiskScore))}).</p><ul>${rows}</ul><h2>Unsupported or detection-only routes</h2><ul>${warnings || "<li>No unsupported warnings reported by this preflight.</li>"}</ul><p class="note">This is a broker-authenticated preflight summary. It does not claim OS-wide interception.</p>`,
+            `<h1>Runtime Capability Summary</h1><p>Effective risk: <strong>${escapeHtml(summary.effectiveRisk.toUpperCase())}</strong> (${escapeHtml(String(summary.effectiveRiskScore))}).</p><ul>${rows}</ul><h2>Agent-callable tools</h2><p>${escapeHtml(describeAgentSurfaces())}</p><h2>Unsupported or detection-only routes</h2><ul>${warnings || "<li>No unsupported warnings reported by this preflight.</li>"}</ul><p class="note">This is a broker-authenticated preflight summary. It does not claim OS-wide interception.</p>`,
         );
     });
     reg("soterai.showExtensionIsolationSummary", async () => {

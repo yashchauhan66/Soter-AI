@@ -1,9 +1,46 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { generateCanary } from "@soterai/guard-core";
-import { BrokerServer } from "../BrokerServer";
+import { BrokerServer, HttpError, validateRequestBodyHeaders } from "../BrokerServer";
 
 const TOKEN = "test_local_broker_token_0123456789abcdef";
+
+function expectHeaderError(run: () => void, status: number, code: string): void {
+    assert.throws(run, (error: unknown) => error instanceof HttpError && error.status === status && error.code === code);
+}
+
+describe("broker request framing policy", () => {
+    it("rejects duplicate length and encoding headers before stream consumption", () => {
+        expectHeaderError(
+            () => validateRequestBodyHeaders({ "content-length": "2" }, ["Content-Length", "2", "Content-Length", "2"], 100),
+            400,
+            "ambiguous_framing",
+        );
+        expectHeaderError(
+            () => validateRequestBodyHeaders({ "content-encoding": "identity" }, ["Content-Encoding", "identity", "Content-Encoding", "identity"], 100),
+            415,
+            "content_encoding_unsupported",
+        );
+    });
+
+    it("rejects ambiguous transfer framing and unsafe declared lengths", () => {
+        expectHeaderError(
+            () => validateRequestBodyHeaders({ "content-length": "2", "transfer-encoding": "chunked" }, [], 100),
+            400,
+            "ambiguous_framing",
+        );
+        expectHeaderError(() => validateRequestBodyHeaders({ "content-length": "1e2" }, [], 100), 400, "invalid_content_length");
+        expectHeaderError(() => validateRequestBodyHeaders({ "content-length": "101" }, [], 100), 413, "body_too_large");
+    });
+
+    it("accepts an identity-encoded body within the declared limit", () => {
+        assert.doesNotThrow(() => validateRequestBodyHeaders(
+            { "content-length": "2", "content-encoding": "identity" },
+            ["Content-Length", "2", "Content-Encoding", "identity"],
+            100,
+        ));
+    });
+});
 
 async function withBroker(
     options: Partial<ConstructorParameters<typeof BrokerServer>[0]>,
@@ -63,6 +100,69 @@ describe("Local AI Broker server", () => {
             const cors = await request(url, "/v1/scan", { method: "POST", headers: { origin: "https://evil.example" }, body: "{}" });
             assert.equal(cors.status, 403);
             assert.equal(cors.headers.get("access-control-allow-origin"), null);
+        });
+    });
+
+    it("rejects compressed and declared-oversized bodies before JSON parsing", async () => {
+        await withBroker({ bodyLimitBytes: 100 }, async (url) => {
+            const compressed = await request(url, "/v1/scan", {
+                method: "POST",
+                headers: { "content-encoding": "gzip" },
+                body: "not-actually-compressed",
+            });
+            assert.equal(compressed.status, 415);
+            assert.equal((await compressed.json() as { error: { code: string } }).error.code, "content_encoding_unsupported");
+
+            const { request: rawRequest } = await import("node:http");
+            const oversized = await new Promise<{ status: number; body: string }>((resolve, reject) => {
+                const target = new URL("/v1/scan", url);
+                const req = rawRequest({
+                    hostname: target.hostname,
+                    port: target.port,
+                    path: target.pathname,
+                    method: "POST",
+                    headers: {
+                        authorization: `Bearer ${TOKEN}`,
+                        "content-type": "application/json",
+                        "content-length": "1000",
+                    },
+                }, (res) => {
+                    const chunks: Buffer[] = [];
+                    res.on("data", (chunk) => chunks.push(Buffer.from(chunk)));
+                    res.on("end", () => resolve({ status: res.statusCode ?? 0, body: Buffer.concat(chunks).toString("utf8") }));
+                });
+                req.once("error", reject);
+                req.end("{}");
+            });
+            assert.equal(oversized.status, 413);
+            assert.equal((JSON.parse(oversized.body) as { error: { code: string } }).error.code, "body_too_large");
+        });
+    });
+
+    it("rejects invalid UTF-8 rather than replacing bytes before JSON parsing", async () => {
+        await withBroker({}, async (url) => {
+            const response = await request(url, "/v1/scan", {
+                method: "POST",
+                body: new Uint8Array([0x7b, 0x22, 0x78, 0x22, 0x3a, 0x22, 0xc3, 0x28, 0x22, 0x7d]),
+            });
+            assert.equal(response.status, 400);
+            assert.equal((await response.json() as { error: { code: string } }).error.code, "invalid_utf8");
+        });
+    });
+
+    it("survives a deterministic malformed-JSON fuzz corpus with bounded errors", async () => {
+        let state = 0x5eed1234;
+        const next = () => (state = (Math.imul(state, 1664525) + 1013904223) >>> 0);
+        await withBroker({ rateLimitPerMinute: 1000, bodyLimitBytes: 4096 }, async (url) => {
+            for (let i = 0; i < 100; i++) {
+                const length = 1 + (next() % 256);
+                const bytes = Buffer.alloc(length);
+                for (let j = 0; j < length; j++) bytes[j] = next() & 0xff;
+                const response = await request(url, "/v1/scan", { method: "POST", body: bytes });
+                assert.ok([400, 200].includes(response.status), `unexpected status ${response.status} at case ${i}`);
+                assert.ok((await response.text()).length < 4096, `unbounded response at case ${i}`);
+            }
+            assert.equal((await request(url, "/health", {}, "")).status, 200, "fuzz input made the broker unavailable");
         });
     });
 

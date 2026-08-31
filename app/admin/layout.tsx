@@ -1,4 +1,5 @@
-import { ShieldAlert } from "lucide-react";
+import { ArrowLeft, ShieldAlert } from "lucide-react";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { db } from "@/lib/db";
@@ -25,6 +26,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <p className="mt-2 text-sm text-slate-200">
             Your account does not have administrator access. If you need it, contact the workspace owner.
           </p>
+          <Link href="/" className="button-secondary mt-6 inline-flex items-center gap-2">
+            <ArrowLeft size={16} aria-hidden="true" /> Back to Home
+          </Link>
         </div>
       </main>
     );

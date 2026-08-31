@@ -4,6 +4,11 @@ import { genericEditorAdapter, getElementText, hostMatches, isVisible, setElemen
 /**
  * Microsoft Copilot-specific adapter with hardened selectors.
  * Supports copilot.microsoft.com, copilot.live.com and Office/M365 chat variants.
+ *
+ * Reachable in Chrome only. Until v0.2.2 there was no host permission for any Copilot domain at all,
+ * so this whole file was unreachable code; the permission now exists, and Edge still refuses to run
+ * extension content scripts on copilot.microsoft.com (measured — see the note on the `copilot` preset
+ * in packages/shared/src/ai-destinations.ts). Do not read "adapter exists" as "guarded in Edge".
  */
 export function copilotAdapter(): AiSiteAdapter {
     const generic = genericEditorAdapter();

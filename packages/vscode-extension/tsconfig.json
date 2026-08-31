@@ -10,7 +10,20 @@
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,
-        "rootDir": "src"
+        // Pin the ambient type libraries. Without this, tsc implicitly loads
+        // every folder in the monorepo root `node_modules/@types`, which
+        // includes packages whose own @types dependencies are not installed
+        // here (babel__core, react-transition-group, …). That made
+        // `npm run typecheck` — the gate CI runs for this package — fail with
+        // TS2688 on files this extension does not compile.
+        "types": [
+            "node",
+            "vscode"
+        ]
+        // No "rootDir": this config is typecheck-only (`tsc --noEmit`; esbuild
+        // owns emit layout). A rootDir would forbid the benchmark evidence test
+        // from importing benchmarks/ and guard-core sources, which are exactly
+        // the files the security benchmark gate must typecheck.
     },
     "include": [
         "src/**/*.ts"

@@ -1,0 +1,174 @@
+{
+  "runAt": "2026-08-29T07:06:29.145Z",
+  "project": "edge",
+  "screenshots": [
+    "lv-01-install-chat-claimed.png",
+    "lv-02-benign-passed.png",
+    "lv-03-secret-block-overlay.png",
+    "lv-04-after-dnr-window.png",
+    "lv-05-redact-overlay.png",
+    "lv-06-after-replace.png",
+    "lv-07-paste-intercepted.png",
+    "lv-08-file-env-blocked.png",
+    "lv-09-response-guard-banner.png",
+    "lv-10-response-redacted.png",
+    "lv-11-overlay-before-tamper.png",
+    "lv-12-after-style-tamper.png",
+    "lv-13-after-remove-tamper.png",
+    "lv-14-popup-ui.png",
+    "lv-15-sidepanel-ui.png",
+    "lv-16-popup-context-menu-probe.png",
+    "lv-17-fail-closed-overlay.png"
+  ],
+  "checks": [
+    {
+      "id": "LV-700",
+      "name": "browser identity",
+      "outcome": "pass",
+      "detail": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36 Edg/153.0.0.0"
+    },
+    {
+      "id": "LV-700",
+      "name": "artefact provenance",
+      "outcome": "pass",
+      "detail": "package=C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\apps\\extension\\dist\\soter-extension-edge-v0.2.2.zip; manifestSha256=9c3919f03631d73ccb9e7b693b8cb18ebb5540d5c5c56dd7f9f9c05cb4ea82eb"
+    },
+    {
+      "id": "LV-700",
+      "name": "policy sync after install",
+      "outcome": "pass",
+      "detail": "syncStatus=fresh; integrity.verified=false; policyVersion=lab-policy-block-1"
+    },
+    {
+      "id": "LV-701",
+      "name": "benign prompt delivered, zero interruptions",
+      "outcome": "pass",
+      "detail": "sent=1; overlay=0"
+    },
+    {
+      "id": "LV-702",
+      "name": "hard block at the submit gesture",
+      "outcome": "pass",
+      "detail": "modal visible (closed shadow root — text verified on film); sent=0; page handler never ran; textarea intact; secret absent from every emitted body; audit POSTs=1"
+    },
+    {
+      "id": "LV-702",
+      "name": "network-layer deny window (DNR)",
+      "outcome": "pass",
+      "detail": "postAttempts=blocked; secret never received"
+    },
+    {
+      "id": "LV-702",
+      "name": "deny window bounded (TTL expiry)",
+      "outcome": "pass",
+      "detail": "postAfterTtl=allowed"
+    },
+    {
+      "id": "LV-703",
+      "name": "'Use safe prompt' rewrote the composer",
+      "outcome": "pass",
+      "detail": "textarea now carries [REDACTED_AWS_KEY], raw secret gone"
+    },
+    {
+      "id": "LV-703",
+      "name": "redact + replace flow delivered a clean prompt",
+      "outcome": "pass",
+      "detail": "delivered without the secret; benign text preserved"
+    },
+    {
+      "id": "LV-704",
+      "name": "paste interception",
+      "outcome": "pass",
+      "detail": "modal shown; raw secret never entered the textarea"
+    },
+    {
+      "id": "LV-705",
+      "name": ".env upload held at the picker",
+      "outcome": "pass",
+      "detail": "modal visible (film verifies the file verdict); pickerCleared=true; fileScanEvents=1"
+    },
+    {
+      "id": "LV-706",
+      "name": "response-side scan flagged the leak",
+      "outcome": "pass",
+      "detail": "severityAttr=critical; banner=\"Sensitive data detected in this response — Lab rule: redact credential material Hide sensitive text ×\""
+    },
+    {
+      "id": "LV-706",
+      "name": "one-click redaction removed the secret from the page",
+      "outcome": "pass",
+      "detail": "text now carries [REDACTED_AWS_KEY]"
+    },
+    {
+      "id": "LV-707",
+      "name": "style tamper repaired",
+      "outcome": "pass",
+      "detail": "display:none !important reverted by the watchdog"
+    },
+    {
+      "id": "LV-707",
+      "name": "removal tamper repaired",
+      "outcome": "pass",
+      "detail": "modal remounted with the original verdict (film)"
+    },
+    {
+      "id": "LV-708",
+      "name": "popup renders in the real browser",
+      "outcome": "pass",
+      "detail": "version=0.2.2; pageErrors=0; text=\"S Soter Enterprise AI CONTROL PLANE Not enrolled CONNECT TO YOUR ORGANIZATION Enter the enrollment code supplied by your administrator to activate enterprise pr\""
+    },
+    {
+      "id": "LV-708",
+      "name": "side panel renders in the real browser",
+      "outcome": "pass",
+      "detail": "version=0.2.2; pageErrors=0; text=\"S Soter Control Plane ENTERPRISE AI SECURITY Not enrolled CONNECT TO YOUR ORGANIZATION Enter the enrollment code supplied by your administrator to activate ente\""
+    },
+    {
+      "id": "LV-709",
+      "name": "context menu registered at runtime",
+      "outcome": "pass",
+      "detail": "chrome.contextMenus knows 'soter-scan-selection' (a native right-click itself cannot be automated); popupRendered=false"
+    },
+    {
+      "id": "LV-709",
+      "name": "popup render resilience on a cold worker",
+      "outcome": "informational",
+      "detail": "popup opened blank on this load — extension-page → suspended-worker messaging did not wake it (measured on this Edge build)"
+    },
+    {
+      "id": "LV-710",
+      "name": "message boundary holds from the live page",
+      "outcome": "pass",
+      "detail": "no chrome.runtime in page world; SOTER_SET_STATE postMessage ignored — a secret submit right after is still blocked, delivered nothing"
+    },
+    {
+      "id": "LV-711",
+      "name": "tampered bundle rejected",
+      "outcome": "pass",
+      "detail": "syncStatus=error; code=hash_mismatch; policyVersionHeld=lab-policy-block-1"
+    },
+    {
+      "id": "LV-711",
+      "name": "fail-closed verdict shown to the user",
+      "outcome": "pass",
+      "detail": "modal visible (film carries the 'Policy Unverified' wording); delivered nothing; no write-back path exists inside the closed root"
+    },
+    {
+      "id": "LV-712",
+      "name": "control-plane telemetry observed",
+      "outcome": "pass",
+      "detail": "/api/extension/fingerprint-bundle ×1, /api/extension/audit-log ×1, /api/extension/scan ×1"
+    },
+    {
+      "id": "LV-712",
+      "name": "heartbeat",
+      "outcome": "informational",
+      "detail": "no heartbeat within this run's window (alarm cadence is minutes; honesty note, not a fake pass) — cadence itself is unit-tested"
+    }
+  ],
+  "summary": {
+    "pass": 22,
+    "fail": 0,
+    "informational": 2
+  }
+}

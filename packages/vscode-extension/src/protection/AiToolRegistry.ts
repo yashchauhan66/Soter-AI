@@ -169,8 +169,19 @@ export interface AiToolCandidate {
  * problem this module was written to remove. Same for
  * `mcpServerDefinitionProviders` (declared by Pylance).
  *
+ * As of Gap 2, SoterAI declares BOTH of those itself. That makes the exclusion
+ * load-bearing rather than merely defensible: were either promoted to a signal,
+ * the guard would classify itself as an unprotected AI tool and report its own
+ * presence as a bypass. `NOT_AI_IDS` and the `selfId` check already cover the
+ * running extension, so this is the third independent reason the same wrong
+ * answer cannot appear — see the self-classification test.
+ *
  * Nor is the `Machine Learning` category, which data-science extensions such as
  * `ms-python.python` declare.
+ *
+ * SoterAI's own `categories` DOES include `"AI"` (it is how the Marketplace files
+ * a security tool for AI), which is exactly why self-exclusion happens before any
+ * manifest inspection.
  */
 function manifestDeclaresAi(packageJSON: AiToolCandidate["packageJSON"]): string | undefined {
     if (!packageJSON || typeof packageJSON !== "object") return undefined;

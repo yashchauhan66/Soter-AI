@@ -18,11 +18,48 @@ export function configurePolicySyncAlarm(seconds: number) {
  *     one, recording the failure so `scanPrompt` can fail closed.
  *  3. Only then enrich (destinations) and cache, and ratchet trust forward.
  */
+/**
+ * Is this object actually a policy bundle?
+ *
+ * v0.2.2. Verification answers "was this bundle tampered with", which an *unsigned* trial or
+ * self-hosted deployment answers with `valid: true, verified: false` — correctly, since no key is
+ * configured. Nothing then asked whether the object was a policy at all, so any 200 with a JSON
+ * body was cached and written into state verbatim. Measured in Edge (probe A0): a body of
+ * `{ ok: true, destinations: [] }` — the shape a partial handler, a proxy error page or a captive
+ * portal returns — replaced the working default policy, and the extension went dark on every
+ * guarded site while continuing to display "Protection: Active".
+ *
+ * The two fields checked are the ones the runtime cannot work without: `monitoredDomains` decides
+ * whether a page is guarded at all, `riskThresholds` decides every verdict. A bundle missing either
+ * cannot enforce anything, so it is refused and the last known good policy stays in force.
+ */
+export function looksLikePolicyBundle(policy: unknown): boolean {
+  if (!policy || typeof policy !== "object") return false;
+  const candidate = policy as { monitoredDomains?: unknown; riskThresholds?: unknown };
+  if (!Array.isArray(candidate.monitoredDomains)) return false;
+  if (!candidate.riskThresholds || typeof candidate.riskThresholds !== "object") return false;
+  return true;
+}
+
 export async function syncPolicy() {
   const state = await getState();
   try {
     const api = new SoterExtensionApiClient(state.config);
     const policy = await api.fetchPolicy();
+
+    if (!looksLikePolicyBundle(policy)) {
+      const cached = await getCachedPolicy();
+      // `policyIntegrity` is deliberately left as it was. Its codes drive the fail-closed gate, and
+      // `"malformed"` is a *tamper* code there — writing one here would turn a broken endpoint, a
+      // proxy error page or a captive portal into a hard block on every message the user tries to
+      // send. This is an availability failure, so it is recorded the way the other one is, with
+      // `policySyncStatus: "error"`: the UI shows the sync failure, the last known good policy keeps
+      // enforcing, and an org that genuinely wants "no policy, no sending" gets it from
+      // `offlineFailClosed`, which is its own explicit decision.
+      await setState({ policySyncStatus: "error", policy: cached });
+      console.error("[Soter] Policy response is not a policy bundle. Keeping last known good policy.");
+      return cached;
+    }
 
     const verification = await verifyPolicy(policy, state);
     const integrity: PolicyIntegrityRecord = {

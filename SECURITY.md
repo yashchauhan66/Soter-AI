@@ -16,20 +16,22 @@ return.
 
 | Version | Supported |
 |---|---|
-| `0.2.x` (current) | ✅ Security fixes |
-| `< 0.2.0` | ❌ No longer maintained |
+| VS Code extension `0.6.x` (current) | ✅ Security fixes |
+| Web platform `0.2.x` (current) | ✅ Security fixes |
+| Older lines | ❌ No longer maintained |
 
-We ship security fixes on the latest `0.2.x` line. Because the product is
-pre-1.0, there is no long-term-support branch yet; upgrade to the latest
-`0.2.x` to receive fixes.
+We ship security fixes on the latest release in each current pre-1.0 product
+line. There is no long-term-support branch yet; upgrade to the latest available
+version for the affected product to receive fixes.
 
 ## Reporting a Vulnerability
 
 **Please report privately. Do not open a public GitHub issue for a security
 vulnerability.**
 
-- **Email:** `support@soterai.in` *(placeholder — replace with the monitored
-  security inbox before public launch)*
+- **Email:** `support@soterai.in` — the public private-reporting route currently
+  linked by the Marketplace listing. The project must not claim a dedicated
+  security operations mailbox until one is independently confirmed as monitored.
 - **PGP:** A public key will be published at `/.well-known/security.txt`
   (`Encryption:` field) before public launch.
 - **Subject:** `[SECURITY] <short summary>`

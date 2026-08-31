@@ -19,18 +19,33 @@
 const STRIP_CLASSES: string[] = [
   "\\u200B-\\u200F", // zero-width space, ZWNJ, ZWJ, LRM, RLM
   "\\u202A-\\u202E", // bidi embedding / override controls
+  "\\u2060-\\u2064", // word joiner, function application, invisible times/separator/plus
   "\\u2066-\\u2069", // bidi isolates
+  "\\u061C",        // arabic letter mark (bidi)
   "\\uFEFF",        // BOM / zero-width no-break space
   "\\u180E",        // mongolian vowel separator
   "\\u034F",        // combining grapheme joiner
+  "\\u115F\\u1160", // hangul choseong / jungseong fillers (render blank, used as spacers)
+  "\\u17B4\\u17B5", // khmer inherent vowels (invisible)
+  "\\u3164",        // hangul filler
+  "\\uFFA0",        // halfwidth hangul filler
+  "\\uFFF9-\\uFFFB", // interlinear annotation anchors
   "\\u20D0-\\u20FF", // combining marks (enclosing, strike-through etc.)
   "\\uFE00-\\uFE0F", // variation selectors
+  "\\u{E0100}-\\u{E01EF}", // variation selectors supplement
+  "\\u{E0000}-\\u{E007F}", // TAGS block — "ASCII smuggling": a full instruction hidden as
+                           // codepoints that render as nothing at all. This was the whole gap.
   "\\u00AD",        // soft hyphen
   "\\u2000-\\u200A", // en/em spaces and friends
   "\\u202F\\u205F\\u3000", // narrow no-break, medium math, ideographic space
 ];
 
-const STRIP_RE = new RegExp("[" + STRIP_CLASSES.join("") + "]", "g");
+// `u` flag: required for the astral Tags/variation-selector ranges above, and it makes the class
+// behave predictably over surrogate pairs. `g` is for `stripInvisible`'s `.replace()`; membership
+// tests use the non-global twin below, because a `g` regex's `.test()` advances `lastIndex` and
+// would then miss a match near the start of the *next* string it is handed.
+const STRIP_RE = new RegExp("[" + STRIP_CLASSES.join("") + "]", "gu");
+const STRIP_TEST_RE = new RegExp("[" + STRIP_CLASSES.join("") + "]", "u");
 
 /** Strip invisible unicode + bidi overrides. Safe to call on any string. */
 export function stripInvisible(input: string): string {
@@ -56,6 +71,85 @@ const HOMOGLYPH_MAP: Record<string, string> = {
 
 const HOMOGLYPH_KEYS = Object.keys(HOMOGLYPH_MAP);
 const HOMOGLYPH_RE = new RegExp("[" + HOMOGLYPH_KEYS.join("") + "]", "g");
+const HOMOGLYPH_TEST_RE = new RegExp("[" + HOMOGLYPH_KEYS.join("") + "]");
+
+// The printable TAGS block (U+E0020..U+E007E) is a byte-for-byte mirror of ASCII 0x20..0x7E, which
+// is what makes "ASCII smuggling" work: an attacker writes a whole instruction in tag codepoints,
+// it renders as absolutely nothing, and the model reads it as plain text. `stripInvisible` removes
+// these (so the *clean* view is benign), but detection also has to SEE the payload — so this maps
+// them back to the ASCII they mirror, and the decoded view is scanned like any other.
+const TAG_DECODE_RE = /[\u{E0020}-\u{E007E}]/gu;
+const TAG_TEST_RE = /[\u{E0020}-\u{E007E}]/u;
+function decodeTags(input: string): string {
+  if (!TAG_TEST_RE.test(input)) return input;
+  return input.replace(TAG_DECODE_RE, (ch) => String.fromCharCode((ch.codePointAt(0) as number) - 0xe0000));
+}
+
+// Cheap gate: does the text contain ANY tag codepoint or variation selector at all?
+const SMUGGLE_TEST_RE = new RegExp("[\u{E0000}-\u{E007F}\uFE00-\uFE0F\u{E0100}-\u{E01EF}]", "u");
+const isTagCp = (cp: number) => cp >= 0xe0000 && cp <= 0xe007f;
+const isVariationSelectorCp = (cp: number) =>
+  (cp >= 0xfe00 && cp <= 0xfe0f) || (cp >= 0xe0100 && cp <= 0xe01ef);
+
+/**
+ * Remove an *invisible smuggled payload* from text that is about to leave the user's machine (a
+ * paste being inserted, a message being sent) while leaving every VISIBLE character byte-identical.
+ * Detection (above) SEES the payload so the user is told; this NEUTRALIZES it so an attack the user
+ * could never see is never delivered — and because it only ever touches invisible carriers, the
+ * caller can apply it unconditionally: with nothing smuggled, `clean === text` and `removed === 0`.
+ *
+ * Two carriers are stripped; two legitimate look-alikes are deliberately preserved:
+ *   - TAG codepoints (U+E0000..U+E007F) that are NOT part of a subdivision-flag emoji. A real flag
+ *     is BLACK FLAG (U+1F3F4) + 2..6 tag letters + the CANCEL TAG terminator (U+E007F); the England
+ *     and Scotland flags are exactly this. Anything else built from tag codepoints is "ASCII
+ *     smuggling" — a whole instruction that renders as nothing — and is removed.
+ *   - Runs of two or more consecutive variation selectors (U+FE00..FE0F, U+E0100..E01EF), which is
+ *     byte smuggling. A SINGLE selector is a legitimate emoji presentation (one U+FE0F riding on an emoji) and is kept.
+ */
+export function stripSmuggledPayload(text: string): { clean: string; removed: number } {
+  if (!text || !SMUGGLE_TEST_RE.test(text)) return { clean: text, removed: 0 };
+  const cps = Array.from(text); // iterate by codepoint so astral tag/VS chars are one unit each
+  const out: string[] = [];
+  let removed = 0;
+  for (let i = 0; i < cps.length; i++) {
+    const ch = cps[i];
+    const cp = ch.codePointAt(0) as number;
+
+    // Legitimate subdivision-flag emoji: keep BLACK FLAG + its terminated tag-letter sequence.
+    if (cp === 0x1f3f4) {
+      let j = i + 1;
+      const seq: string[] = [];
+      let terminated = false;
+      while (j < cps.length) {
+        const p = cps[j].codePointAt(0) as number;
+        if (p === 0xe007f) { seq.push(cps[j]); j++; terminated = true; break; } // CANCEL TAG ends it
+        if (p >= 0xe0020 && p <= 0xe007e) { seq.push(cps[j]); j++; continue; }
+        break;
+      }
+      out.push(ch);
+      if (terminated && seq.length <= 7) out.push(...seq); // real flag (longest code is 5 letters)
+      else removed += seq.length;                          // 🏴 + tag junk → strip the tag chars only
+      i = j - 1;
+      continue;
+    }
+
+    // Tag codepoints not attached to a flag base → smuggled ASCII.
+    if (isTagCp(cp)) { removed++; continue; }
+
+    // Variation selectors: keep an isolated one, strip a run of two or more (byte smuggling).
+    if (isVariationSelectorCp(cp)) {
+      let j = i;
+      while (j < cps.length && isVariationSelectorCp(cps[j].codePointAt(0) as number)) j++;
+      const runLen = j - i;
+      if (runLen >= 2) { removed += runLen; i = j - 1; continue; }
+      out.push(ch);
+      continue;
+    }
+
+    out.push(ch);
+  }
+  return removed > 0 ? { clean: out.join(""), removed } : { clean: text, removed: 0 };
+}
 
 /** Leetspeak substitution seen in jailbreak / credential-leak prompts. */
 const LEET_MAP: Record<string, string> = {
@@ -75,6 +169,15 @@ const LEET_CHAR_RE = /[0-9@!$|+]/g;
 export function normalizeForDetection(text: string): string[] {
   const views = new Set<string>();
   if (!text) return [];
+
+  // ASCII smuggling: decode the TAGS mirror of ASCII back to readable text FIRST, before
+  // `stripInvisible` (correctly) erases those codepoints — otherwise the smuggled instruction is
+  // removed from every view and no detector ever sees it. This view carries the revealed payload.
+  const detagged = decodeTags(text);
+  if (detagged !== text) {
+    const revealed = stripInvisible(detagged.normalize("NFKC"));
+    if (revealed.trim()) views.add(revealed);
+  }
 
   // Structural normalization: NFKC folds compatibility + full-width forms.
   const nfkc = stripInvisible(text.normalize("NFKC"));
@@ -158,10 +261,16 @@ function rot13(input: string): string {
 /**
  * Cheap pre-check so the (relatively expensive) multi-view normalization only runs
  * when there is a realistic chance of obfuscation. Keeps the hot path fast.
+ *
+ * Uses the NON-global twins on purpose: `STRIP_RE`/`HOMOGLYPH_RE` carry the `g` flag for
+ * `.replace()`, and `.test()` on a `g` regex advances `lastIndex`, so two calls in a row against
+ * different strings would leave the second one starting its search partway in — and miss an
+ * invisible character sitting before that offset. Measured: an obfuscated prompt was scanned
+ * clean on every other call, purely from the length of the prompt scanned just before it.
  */
 export function looksObfuscated(text: string): boolean {
-  return STRIP_RE.test(text)
-    || HOMOGLYPH_RE.test(text)
+  return STRIP_TEST_RE.test(text)
+    || HOMOGLYPH_TEST_RE.test(text)
     || /[！-～]/.test(text)
     || /\b[A-Za-z]*[0-9@!$|+]+[A-Za-z][A-Za-z0-9@!$|+]*\b/.test(text);
 }

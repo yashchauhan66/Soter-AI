@@ -13,6 +13,7 @@ import { detectSecrets } from "../detectors/SecretDetector";
 import { detectPromptInjection } from "../detectors/PromptInjectionLiteDetector";
 import { detectJailbreak } from "../detectors/JailbreakLiteDetector";
 import { detectTerminalCommandRisk } from "../detectors/TerminalCommandRiskDetector";
+import { detectMCPConfigRisk } from "../detectors/MCPConfigRiskDetector";
 import { findSurvivingSecrets, redactForSharing } from "../Redactor";
 
 // ── Attack fixtures ──────────────────────────────────────────────────────────
@@ -223,5 +224,19 @@ describe("Phase 2 attack harness — redaction invariant", () => {
         assert.ok(!redacted.includes("ghp_abcdefghijklmnopqrstuvwxyz"));
         assert.ok(!redacted.includes("sk_live_"));
         assert.ok(!redacted.includes("BEGIN RSA PRIVATE KEY"));
+    });
+});
+
+describe("Phase 2 attack harness — MCP configuration", () => {
+    it("detects quoted JSON keys and broad shell execution", () => {
+        const config = '{"mcpServers":{"shell":{"command":"bash","args":["-c","$USER_INPUT"]}}}';
+        const result = detectMCPConfigRisk(config);
+        assert.ok(result.matches.some((match) => match.type === "mcp_config"));
+        assert.ok(result.matches.some((match) => match.type === "mcp_command_exec"));
+    });
+
+    it("does not treat a documented placeholder as a live credential", () => {
+        const result = detectMCPConfigRisk("OPENAI_API_KEY=your-key-here");
+        assert.ok(!result.matches.some((match) => match.type === "mcp_api_key"));
     });
 });

@@ -64,16 +64,25 @@ export interface ExtensionOrgPolicy {
   hardEnforcement?: boolean;
 }
 
+/**
+ * A lockdown bundle as it arrives from the control plane — or as an admin hand-writes it.
+ *
+ * The three switches below were declared as the literal `true`, which read as a guarantee the
+ * type system never actually made: this shape is parsed from JSON, and `enrollment.ts` itself
+ * stores `false` in two of them. Declaring them `boolean` states the truth, and the consumer
+ * (`emergencyLockdownAction` in the extension) treats an *absent* switch as on, so a partial
+ * lockdown enforces rather than silently doing nothing while the UI says it is active.
+ */
 export interface EmergencyLockdownPolicy {
   enabled: boolean;
   policyVersion: number;
   reason?: string | null;
   enabledAt?: string | null;
-  blockUnknownDestinations: true;
-  blockAllFileUploads: true;
-  blockedDataTypes: string[];
-  requireApprovalDataTypes: string[];
-  allowOnlyEnterpriseDestinations: true;
+  blockUnknownDestinations?: boolean;
+  blockAllFileUploads?: boolean;
+  blockedDataTypes?: string[];
+  requireApprovalDataTypes?: string[];
+  allowOnlyEnterpriseDestinations?: boolean;
 }
 
 export interface PolicyEvaluationInput {

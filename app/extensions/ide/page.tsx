@@ -11,10 +11,12 @@ import {
   CheckCircle2,
   Code2,
   Download,
+  Eye,
   FileCheck2,
   Fingerprint,
   Github,
   KeyRound,
+  Laptop,
   LockKeyhole,
   MousePointer2,
   Network,
@@ -24,6 +26,7 @@ import {
   Sparkles,
   TerminalSquare,
   Waves,
+  Zap,
 } from 'lucide-react';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { CopyInstallCommand } from './CopyInstallCommand';
@@ -48,9 +51,8 @@ export const metadata: Metadata = {
     'Install SoterAI IDE Guard for VS Code, Cursor, Windsurf, Kiro, Antigravity, and VSCodium. Scan AI coding context locally for secrets, PII, prompt injection, and risky tools.',
   alternates: { canonical: '/extensions/ide' },
   openGraph: {
-    title: 'SoterAI IDE Guard - Local AI Security for Developers',
-    description:
-      'Install the verified SoterAI IDE Guard release from the VS Marketplace or Open VSX.',
+    title: 'SoterAI IDE Guard — Local AI Security for Developers',
+    description: 'Free, local-first protection around your AI coding workflow.',
     url: '/extensions/ide',
     type: 'website',
   },
@@ -68,64 +70,50 @@ const ICONS: Record<EditorIconName, LucideIcon> = {
 const PROTECTION_LAYERS = [
   {
     icon: KeyRound,
+    number: '01',
     title: 'Secrets and PII',
-    copy: 'Scan files, selections, git changes, and prompts locally. Create a redacted copy before content reaches an AI workflow.',
+    copy: 'Scan prompts, files, selections, and git changes locally. Create a redacted copy before sharing context with AI.',
   },
   {
     icon: Fingerprint,
+    number: '02',
     title: 'Prompt integrity',
-    copy: 'Detect prompt injection, hidden instruction patterns, and obfuscated content with explicit allow, redact, ask, or block decisions.',
+    copy: 'Flag prompt injection, hidden instructions, and obfuscated content with clear allow, redact, ask, or block decisions.',
   },
   {
     icon: Blocks,
-    title: 'MCP and tools',
-    copy: 'Review MCP configuration and tool permissions before connection, with honest detection-only coverage labels where mediation is unavailable.',
+    number: '03',
+    title: 'MCP and tool review',
+    copy: 'Inspect MCP configuration and tool permissions before connection, with detection-only labels where mediation is unavailable.',
   },
   {
     icon: TerminalSquare,
-    title: 'Command review',
-    copy: 'Preflight risky terminal commands and use the controlled terminal route for fixed-argument, allowlisted operations.',
-  },
-];
-
-const SCREENSHOTS = [
-  {
-    src: '/marketplace/screenshots/secret-scan-result.png',
-    title: 'Redacted secret finding',
-    copy: 'A local scan reports the risk without exposing the detected value in the result.',
-  },
-  {
-    src: '/marketplace/screenshots/scan-selection-result.png',
-    title: 'Pre-send selection scan',
-    copy: 'Review selected context and produce a safer copy before sharing it with an AI assistant.',
-  },
-  {
-    src: '/marketplace/screenshots/safe-mode-enabled.png',
-    title: 'Safe Mode control',
-    copy: 'Apply a local protection profile and keep the active posture visible inside the editor.',
+    number: '04',
+    title: 'Command preflight',
+    copy: 'Review risky terminal commands before execution and route fixed-argument, allowlisted operations through a controlled terminal.',
   },
 ];
 
 const DEPLOYMENT_CONTROLS = [
   {
     icon: ServerCog,
-    title: 'Machine-scoped controls',
-    copy: 'Safety settings that can weaken protection or change data routing cannot be overridden by a repository setting.',
+    title: 'Policy that travels',
+    copy: 'Distribute workspace policy and keep developer decisions consistent across supported editors.',
   },
   {
     icon: LockKeyhole,
     title: 'Workspace Trust aware',
-    copy: 'Local scanning remains available in restricted workspaces while cloud connection, token storage, and remote escalation stay disabled.',
+    copy: 'Local scans remain available while cloud connection and remote escalation stay disabled in restricted workspaces.',
   },
   {
     icon: FileCheck2,
     title: 'Privacy-preserving evidence',
-    copy: 'Review redacted decisions, hashes, file metadata, and policy state without retaining raw secrets in exported views.',
+    copy: 'Export redacted decisions, hashes, metadata, and policy state without retaining raw secrets in evidence views.',
   },
   {
     icon: Network,
-    title: 'Brokered enforcement',
-    copy: 'Route supported OpenAI- and Anthropic-compatible traffic through the authenticated loopback broker for request and response checks.',
+    title: 'Optional brokered checks',
+    copy: 'Route supported OpenAI- and Anthropic-compatible traffic through an authenticated loopback broker for request and response checks.',
   },
 ];
 
@@ -137,11 +125,7 @@ const applicationSchema = {
   applicationSubCategory: 'SecurityApplication',
   operatingSystem: 'Windows, macOS, Linux',
   softwareVersion: EXTENSION_VERSION,
-  offers: {
-    '@type': 'Offer',
-    price: '0',
-    priceCurrency: 'USD',
-  },
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
   downloadUrl: VSCODE_MARKETPLACE_URL,
   installUrl: [VSCODE_MARKETPLACE_URL, OPEN_VSX_URL],
   softwareRequirements: 'Visual Studio Code 1.85.0 or a compatible desktop editor',
@@ -151,159 +135,159 @@ const applicationSchema = {
 
 export default function IdeExtensionPage() {
   return (
-    <main className="bg-[#080f19]">
+    <main className="overflow-hidden bg-[#070d16] text-slate-100">
       <JsonLd data={applicationSchema} />
 
-      <section className="border-b border-slate-800 bg-[#0b1420]">
-        <div className="container-page py-12 sm:py-16 lg:py-20">
+      <section className="relative border-b border-slate-800/80 bg-[#09121d]">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_78%_18%,rgba(34,211,238,0.1),transparent_32%),radial-gradient(circle_at_18%_0%,rgba(163,230,53,0.06),transparent_25%)]" />
+        <div className="container-page relative py-10 sm:py-14 lg:py-20">
           <nav
-            className="flex items-center gap-2 text-xs font-medium text-slate-300"
+            className="flex items-center gap-2 text-xs font-medium text-slate-400"
             aria-label="Breadcrumb"
           >
-            <Link href="/" className="transition hover:text-slate-300">
+            <Link
+              href="/"
+              className="rounded-sm transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
+            >
               SoterAI
             </Link>
             <span aria-hidden="true">/</span>
-            <span className="text-slate-300">IDE Guard</span>
+            <span className="text-slate-200">IDE Guard</span>
           </nav>
 
-          <div className="mt-8 flex max-w-5xl flex-col gap-6 sm:flex-row sm:items-start">
-            <Image
-              src="/marketplace/soterai-icon-192.png"
-              alt="SoterAI IDE Guard extension icon"
-              width={96}
-              height={96}
-              priority
-              className="h-20 w-20 border border-slate-700 object-cover shadow-[0_12px_36px_rgba(0,0,0,0.28)] sm:h-24 sm:w-24"
-            />
-            <div className="min-w-0 flex-1">
-              <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
-                <span className="border border-cyan/30 bg-cyan/10 px-2 py-1 text-cyan">
-                  Local-first security
+          <div className="mt-8 grid gap-10 lg:grid-cols-[0.86fr_1.14fr] lg:items-center lg:gap-14">
+            <div>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 border border-lime/30 bg-lime/10 px-2.5 py-1 text-xs font-bold text-lime">
+                  <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" /> Free to use
                 </span>
-                <span className="border border-slate-700 bg-slate-900 px-2 py-1 text-slate-300">
+                <span className="border border-slate-700 bg-slate-900/70 px-2.5 py-1 text-xs font-semibold text-slate-300">
+                  Local-first
+                </span>
+                <span className="border border-slate-700 bg-slate-900/70 px-2.5 py-1 text-xs font-semibold text-slate-300">
                   v{EXTENSION_VERSION}
                 </span>
-                <span className="border border-slate-700 bg-slate-900 px-2 py-1 text-slate-300">
-                  Free to use
-                </span>
               </div>
-              <h1 className="mt-4 max-w-4xl text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
-                SoterAI IDE Guard
+
+              <h1 className="mt-6 max-w-2xl text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
+                Build with AI Without Exposing Your Private Data.
               </h1>
-              <p className="mt-4 inline-block rounded-md border border-emerald-400/30 bg-emerald-400/10 px-3 py-2 text-sm font-bold text-emerald-200 shadow-[0_0_24px_rgba(52,211,153,0.15)]">
-                ✦ Risk-free vibe coding
+              <p className="mt-6 max-w-xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
+                SoterAI IDE Guard helps stop secrets, personal information, and sensitive files from
+                being accidentally shared with AI—so you can vibe code with greater confidence.
               </p>
-              <p className="mt-4 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
-                Stop your API keys, tokens, and customer secrets from reaching AI. SoterAI IDE Guard
-                inspects every prompt, selection, and file before it leaves your editor — scanning
-                secrets, PII, prompt injection, MCP configuration, and terminal commands where your
-                team works.
-              </p>
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+
+              <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <OpenIdeButton
                   ideName="Visual Studio Code"
                   deepLink={`vscode:extension/${EXTENSION_ID}`}
-                  className="button-primary gap-2 text-sm"
-                />
-                <a
-                  href={OPEN_VSX_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="button-secondary gap-2 text-sm"
+                  className="button-primary min-h-12 gap-2 px-5 text-sm"
                 >
-                  Install from Open VSX <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  Install free for VS Code <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </OpenIdeButton>
+                <a href="#editors" className="button-secondary min-h-12 gap-2 px-5 text-sm">
+                  Choose another editor
                 </a>
               </div>
-            </div>
-          </div>
 
-          <div className="mt-10 grid border border-slate-800 bg-[#08101a] sm:grid-cols-3">
-            <div className="flex items-start gap-3 border-b border-slate-800 p-4 sm:border-b-0 sm:border-r">
-              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-lime" aria-hidden="true" />
-              <div>
-                <p className="text-sm font-semibold text-white">Live on both registries</p>
-                <p className="mt-1 text-xs leading-5 text-slate-300">
-                  Version {EXTENSION_VERSION} API-verified
-                </p>
-              </div>
+              <ul
+                className="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-xs text-slate-300"
+                aria-label="Product assurances"
+              >
+                {['No account for local scans', 'No credit card', 'Open source'].map((item) => (
+                  <li key={item} className="flex items-center gap-1.5">
+                    <Check className="h-3.5 w-3.5 text-lime" aria-hidden="true" /> {item}
+                  </li>
+                ))}
+              </ul>
             </div>
-            <div className="flex items-start gap-3 border-b border-slate-800 p-4 sm:border-b-0 sm:border-r">
-              <Activity className="mt-0.5 h-4 w-4 shrink-0 text-cyan" aria-hidden="true" />
-              <div>
-                <p className="text-sm font-semibold text-white">5 editor runtimes verified</p>
-                <p className="mt-1 text-xs leading-5 text-slate-300">
-                  Same packaged VSIX, seven host checks
-                </p>
+
+            <figure className="relative lg:pl-4">
+              <div className="absolute -inset-5 bg-cyan/5 blur-3xl" aria-hidden="true" />
+              <div className="relative overflow-hidden border border-slate-700/90 bg-[#0d1724] p-2 shadow-[0_28px_80px_rgba(0,0,0,0.5)] sm:p-3">
+                <div
+                  className="flex items-center gap-1.5 border-b border-slate-800 px-2 pb-2.5"
+                  aria-hidden="true"
+                >
+                  <span className="h-2 w-2 rounded-full bg-slate-600" />
+                  <span className="h-2 w-2 rounded-full bg-slate-600" />
+                  <span className="h-2 w-2 rounded-full bg-cyan/70" />
+                  <span className="ml-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+                    SoterAI control panel
+                  </span>
+                </div>
+                <Image
+                  src="/marketplace/screenshots/control-panel-protection.png"
+                  alt="SoterAI IDE Guard control panel showing active request checks, editor warnings, local data boundaries, and detected coverage gaps"
+                  width={1440}
+                  height={816}
+                  priority
+                  sizes="(min-width: 1024px) 55vw, 100vw"
+                  className="mt-2 h-auto w-full"
+                />
               </div>
-            </div>
-            <div className="flex items-start gap-3 p-4">
-              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-cyan" aria-hidden="true" />
-              <div>
-                <p className="text-sm font-semibold text-white">No account for local scans</p>
-                <p className="mt-1 text-xs leading-5 text-slate-300">
-                  Cloud connection is explicit and optional
-                </p>
-              </div>
-            </div>
+              <figcaption className="mt-3 flex items-center gap-2 text-xs leading-5 text-slate-400">
+                <Eye className="h-3.5 w-3.5 shrink-0 text-cyan" aria-hidden="true" />
+                Real extension UI. See active checks and known gaps in one view.
+              </figcaption>
+            </figure>
           </div>
         </div>
       </section>
 
-      <section id="install" className="container-page scroll-mt-24 py-14 sm:py-20">
-        <div className="max-w-3xl">
-          <p className="eyebrow">Choose your editor</p>
-          <h2 className="mt-3 text-2xl font-bold text-white sm:text-3xl">
-            Install from a verified distribution
-          </h2>
-          <p className="mt-3 text-sm leading-6 text-slate-200 sm:text-base">
-            Click “Open in …” to redirect straight to your editor, where{' '}
-            <strong className="text-white">{EXTENSION_SEARCH_NAME}</strong> is ready to install. If
-            your browser asks for permission, allow it to open the editor.
-          </p>
-          <p className="mt-3 text-sm leading-6 text-slate-200 sm:text-base">
-            Prefer to install manually? Open your editor&apos;s Extensions view and search for the
-            extension name <strong className="text-white">{EXTENSION_SEARCH_NAME}</strong>{' '}
-            <span className="font-mono text-xs text-slate-300">
-              (publisher: soterai · {EXTENSION_ID})
-            </span>
-            , or use the manual download link on each card below.
+      <section id="editors" className="container-page scroll-mt-24 py-16 sm:py-20">
+        <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
+          <div className="max-w-2xl">
+            <p className="eyebrow">Pick your editor</p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              One guard. Six familiar editors.
+            </h2>
+            <p className="mt-4 text-sm leading-6 text-slate-300 sm:text-base">
+              Open the verified listing directly in your editor. If your browser asks, allow it to
+              open the desktop app.
+            </p>
+          </div>
+          <p className="max-w-sm border-l-2 border-cyan pl-4 text-xs leading-5 text-slate-400">
+            Manual fallback: search for{' '}
+            <strong className="text-slate-200">{EXTENSION_SEARCH_NAME}</strong> by publisher{' '}
+            <strong className="text-slate-200">soterai</strong>.
           </p>
         </div>
 
-        <div className="mt-8 grid gap-px overflow-hidden border border-slate-800 bg-slate-800 md:grid-cols-2">
+        <div className="mt-9 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {EDITOR_OPTIONS.map((editor) => {
             const Icon = ICONS[editor.icon];
             const verified = editor.status === 'runtime-verified';
             return (
-              <article key={editor.name} className="flex min-w-0 flex-col bg-[#0d1724] p-5 sm:p-6">
+              <article
+                key={editor.name}
+                className="group flex min-w-0 flex-col border border-slate-800 bg-[#0b1420] p-5 transition hover:border-slate-700 hover:bg-[#0d1825] sm:p-6"
+              >
                 <div className="flex items-start gap-3">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-slate-700 bg-slate-900 text-cyan">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-slate-700 bg-slate-900 text-cyan transition group-hover:border-cyan/40">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-base font-semibold text-white">{editor.name}</h3>
-                    <p className="mt-1 text-xs text-slate-300">{editor.summary}</p>
+                    <h3 className="font-semibold text-white">{editor.name}</h3>
+                    <p className="mt-1 text-xs text-slate-400">{editor.summary}</p>
                   </div>
-                  <div className="flex shrink-0 items-center gap-1.5">
-                    <span className="border border-emerald-400/25 bg-emerald-400/10 px-2 py-1 text-[10px] font-bold uppercase text-emerald-300">
-                      Free to use
-                    </span>
-                    <span
-                      className={
-                        verified
-                          ? 'shrink-0 border border-lime/25 bg-lime/10 px-2 py-1 text-[10px] font-bold uppercase text-lime'
-                          : 'shrink-0 border border-amber-400/25 bg-amber-400/10 px-2 py-1 text-[10px] font-bold uppercase text-amber-300'
-                      }
-                    >
-                      {verified ? 'Verified' : 'Published'}
-                    </span>
-                  </div>
+                  <span
+                    className={
+                      verified
+                        ? 'border border-lime/25 bg-lime/10 px-2 py-1 text-[10px] font-bold uppercase text-lime'
+                        : 'border border-amber-400/25 bg-amber-400/10 px-2 py-1 text-[10px] font-bold uppercase text-amber-300'
+                    }
+                  >
+                    {verified ? 'Verified' : 'Published'}
+                  </span>
                 </div>
 
-                <p className="mt-4 flex min-h-10 items-start gap-2 text-xs leading-5 text-slate-200">
+                <p className="mt-4 flex min-h-10 items-start gap-2 text-xs leading-5 text-slate-300">
                   {verified ? (
-                    <Check className="mt-0.5 h-3.5 w-3.5 shrink-0 text-lime" aria-hidden="true" />
+                    <CheckCircle2
+                      className="mt-0.5 h-3.5 w-3.5 shrink-0 text-lime"
+                      aria-hidden="true"
+                    />
                   ) : (
                     <Activity
                       className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-300"
@@ -313,18 +297,19 @@ export default function IdeExtensionPage() {
                   {editor.statusDetail}
                 </p>
 
-                <OpenIdeButton
-                  ideName={editor.name}
-                  deepLink={editor.deepLink}
-                  altDeepLink={editor.altDeepLink}
-                />
+                <a
+                  href={editor.deepLink}
+                  className="mt-4 inline-flex min-h-11 items-center justify-center gap-2 bg-cyan px-4 py-2.5 text-sm font-bold text-ink transition hover:bg-cyan/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1420]"
+                >
+                  Open in {editor.name} <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </a>
                 <a
                   href={editor.listingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 inline-flex items-center justify-center gap-1.5 text-xs font-semibold text-slate-200 transition hover:text-cyan"
+                  className="mt-3 inline-flex items-center justify-center gap-1.5 rounded-sm text-xs font-semibold text-slate-300 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
                 >
-                  Install manually from {editor.listingLabel}
+                  {editor.listingLabel} fallback{' '}
                   <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
                 </a>
                 <div className="mt-3">
@@ -337,125 +322,132 @@ export default function IdeExtensionPage() {
 
         <div className="mt-5 flex flex-col justify-between gap-4 border border-slate-800 bg-[#0b1420] p-5 sm:flex-row sm:items-center">
           <div>
-            <p className="text-sm font-semibold text-white">
-              Need an offline or controlled deployment?
-            </p>
-            <p className="mt-1 text-xs leading-5 text-slate-300">
-              Download the exact Open VSX package, then verify its registry-provided SHA-256
-              checksum.
+            <p className="text-sm font-semibold text-white">Offline or controlled deployment</p>
+            <p className="mt-1 text-xs leading-5 text-slate-400">
+              Download the exact Open VSX package and verify its registry-provided SHA-256 checksum.
             </p>
           </div>
-          <div className="flex flex-col gap-2 sm:flex-row">
-            <a
-              href={DIRECT_VSIX_URL}
-              className="inline-flex min-h-10 items-center justify-center gap-2 border border-slate-700 bg-slate-900 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:border-slate-500"
-            >
+          <div className="flex flex-wrap gap-3">
+            <a href={DIRECT_VSIX_URL} className="button-secondary gap-2 text-xs">
               <Download className="h-4 w-4" aria-hidden="true" /> Download VSIX
             </a>
-            <a
-              href={VSIX_SHA256_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-10 items-center justify-center gap-2 border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-300 transition hover:border-slate-500 hover:text-white"
-            >
+            <a href={VSIX_SHA256_URL} className="button-secondary gap-2 text-xs">
               SHA-256 <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
             </a>
           </div>
         </div>
       </section>
 
-      <section className="border-y border-slate-800 bg-[#0b1420]">
-        <div className="container-page py-14 sm:py-20">
-          <div className="max-w-3xl">
-            <p className="eyebrow">Protection surface</p>
-            <h2 className="mt-3 text-2xl font-bold text-white sm:text-3xl">
-              Security controls inside the developer workflow
+      <section className="border-y border-slate-800 bg-[#09121d]">
+        <div className="container-page py-16 sm:py-20">
+          <div className="max-w-2xl">
+            <p className="eyebrow">Three-step setup</p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              From install to useful protection in minutes.
             </h2>
-            <p className="mt-3 text-sm leading-6 text-slate-200 sm:text-base">
-              Local checks are available immediately after installation. Strong enforcement applies
-              to workflows routed through SoterAI's guarded commands or local broker.
+          </div>
+          <ol className="mt-10 grid border border-slate-800 bg-slate-800 md:grid-cols-3 md:gap-px">
+            {[
+              {
+                icon: Download,
+                step: '01',
+                title: 'Install',
+                copy: 'Choose your editor above and install from its verified registry listing.',
+              },
+              {
+                icon: Laptop,
+                step: '02',
+                title: 'Scan locally',
+                copy: 'Open the SoterAI panel, then scan a selection, file, prompt, or git changes.',
+              },
+              {
+                icon: Zap,
+                step: '03',
+                title: 'Act with context',
+                copy: 'Review the finding, redact sensitive content, or continue with a recorded decision.',
+              },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <li key={item.step} className="relative bg-[#0b1420] p-6 sm:p-8">
+                  <span className="font-mono text-xs font-bold text-cyan">{item.step}</span>
+                  <Icon className="mt-8 h-6 w-6 text-lime" aria-hidden="true" />
+                  <h3 className="mt-4 text-lg font-semibold text-white">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-300">{item.copy}</p>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      </section>
+
+      <section className="container-page py-16 sm:py-24">
+        <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
+          <div>
+            <p className="eyebrow">Protection you can inspect</p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              Less blind trust. More informed decisions.
+            </h2>
+            <p className="mt-5 text-sm leading-7 text-slate-300 sm:text-base">
+              SoterAI puts checks next to the work instead of promising invisible, universal
+              interception. You see what was examined and how to respond.
             </p>
           </div>
-          <div className="mt-8 grid gap-px border border-slate-800 bg-slate-800 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-px border border-slate-800 bg-slate-800 sm:grid-cols-2">
             {PROTECTION_LAYERS.map((item) => {
               const Icon = item.icon;
               return (
-                <article key={item.title} className="bg-[#0d1724] p-5">
-                  <Icon className="h-5 w-5 text-cyan" aria-hidden="true" />
-                  <h3 className="mt-4 text-sm font-semibold text-white">{item.title}</h3>
-                  <p className="mt-2 text-xs leading-5 text-slate-200">{item.copy}</p>
+                <article key={item.title} className="bg-[#0b1420] p-6">
+                  <div className="flex items-center justify-between">
+                    <Icon className="h-5 w-5 text-cyan" aria-hidden="true" />
+                    <span className="font-mono text-[10px] text-slate-500">{item.number}</span>
+                  </div>
+                  <h3 className="mt-7 font-semibold text-white">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-slate-300">{item.copy}</p>
                 </article>
               );
             })}
           </div>
-          <div className="mt-5 border-l-2 border-amber-400 bg-amber-400/5 px-4 py-3 text-xs leading-5 text-amber-100/80">
-            SoterAI cannot transparently intercept a proprietary editor's private AI prompt pipeline
-            or every command typed into an unrestricted terminal. Route supported AI traffic through
-            the local broker when you need request-level enforcement.
-          </div>
-        </div>
-      </section>
-
-      <section className="container-page py-14 sm:py-20">
-        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-          <div className="max-w-3xl">
-            <p className="eyebrow">Product evidence</p>
-            <h2 className="mt-3 text-2xl font-bold text-white sm:text-3xl">
-              See the extension in VS Code
-            </h2>
-            <p className="mt-3 text-sm leading-6 text-slate-200 sm:text-base">
-              These captures come from the extension-host verification flow and use synthetic test
-              data only.
-            </p>
-          </div>
-          <a
-            href={VSCODE_MARKETPLACE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-cyan transition hover:text-cyan/80"
-          >
-            View marketplace listing <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-          </a>
         </div>
 
-        <div className="mt-8 grid gap-5 lg:grid-cols-3">
-          {SCREENSHOTS.map((shot) => (
-            <figure key={shot.src} className="overflow-hidden border border-slate-800 bg-[#0d1724]">
-              <div className="relative aspect-video overflow-hidden border-b border-slate-800 bg-slate-950">
-                <Image
-                  src={shot.src}
-                  alt={`${shot.title} in SoterAI IDE Guard`}
-                  fill
-                  sizes="(min-width: 1024px) 33vw, 100vw"
-                  className="object-cover"
-                />
-              </div>
-              <figcaption className="p-4">
-                <h3 className="text-sm font-semibold text-white">{shot.title}</h3>
-                <p className="mt-2 text-xs leading-5 text-slate-300">{shot.copy}</p>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
-
-      <section className="border-y border-slate-800 bg-[#0b1420]">
-        <div className="container-page py-14 sm:py-20">
-          <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+        <aside
+          className="mt-10 border border-amber-400/20 bg-amber-400/[0.04] p-6 sm:p-8"
+          aria-labelledby="coverage-heading"
+        >
+          <div className="grid gap-5 md:grid-cols-[auto_1fr] md:gap-6">
+            <ShieldCheck className="h-7 w-7 text-amber-300" aria-hidden="true" />
             <div>
-              <p className="eyebrow">Enterprise deployment</p>
-              <h2 className="mt-3 text-2xl font-bold text-white sm:text-3xl">
-                Controls built for managed workstations
+              <h2 id="coverage-heading" className="text-lg font-semibold text-white">
+                Clear coverage, including the boundaries
               </h2>
-              <p className="mt-4 text-sm leading-6 text-slate-200">
-                Start local, then add team policy and brokered traffic controls where your threat
-                model requires consistent enforcement and reviewable evidence.
+              <p className="mt-3 max-w-4xl text-sm leading-6 text-slate-300">
+                The extension can scan content you explicitly send through its commands and
+                supported broker routes. It cannot transparently intercept every prompt sent by
+                every editor or third-party AI extension. Detection-only surfaces are labeled in the
+                control panel so your team can distinguish guidance from enforced blocking.
               </p>
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section className="border-y border-slate-800 bg-[#09121d]">
+        <div className="container-page py-16 sm:py-20">
+          <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:gap-16">
+            <div>
+              <p className="eyebrow">For security-minded teams</p>
+              <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Local by default. Governed when you need it.
+              </h2>
+              <p className="mt-5 text-sm leading-7 text-slate-300 sm:text-base">
+                Start with free local protection, then add consistent policy, evidence, and
+                supported network controls for managed environments.
+              </p>
+              <div className="mt-7 flex flex-wrap gap-3">
                 <Link href="/contact-sales" className="button-primary gap-2 text-sm">
                   Talk to security engineering <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </Link>
-                <Link href="/docs" className="button-secondary gap-2 text-sm">
+                <Link href="/docs" className="button-secondary text-sm">
                   Deployment documentation
                 </Link>
               </div>
@@ -464,10 +456,10 @@ export default function IdeExtensionPage() {
               {DEPLOYMENT_CONTROLS.map((item) => {
                 const Icon = item.icon;
                 return (
-                  <article key={item.title} className="bg-[#0d1724] p-5">
+                  <article key={item.title} className="bg-[#0b1420] p-5 sm:p-6">
                     <Icon className="h-5 w-5 text-cyan" aria-hidden="true" />
-                    <h3 className="mt-4 text-sm font-semibold text-white">{item.title}</h3>
-                    <p className="mt-2 text-xs leading-5 text-slate-200">{item.copy}</p>
+                    <h3 className="mt-5 text-sm font-semibold text-white">{item.title}</h3>
+                    <p className="mt-2 text-xs leading-5 text-slate-300">{item.copy}</p>
                   </article>
                 );
               })}
@@ -479,18 +471,20 @@ export default function IdeExtensionPage() {
       <section className="container-page py-12 sm:py-16">
         <div className="grid gap-8 border-b border-slate-800 pb-10 lg:grid-cols-[1fr_auto] lg:items-end">
           <div>
-            <p className="text-xs font-bold uppercase text-slate-300">Release details</p>
-            <dl className="mt-4 grid gap-4 text-sm sm:grid-cols-3">
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
+              Verified release details
+            </p>
+            <dl className="mt-5 grid gap-5 text-sm sm:grid-cols-3">
               <div>
-                <dt className="text-xs text-slate-300">Extension ID</dt>
+                <dt className="text-xs text-slate-500">Extension ID</dt>
                 <dd className="mt-1 break-all font-mono text-xs text-slate-200">{EXTENSION_ID}</dd>
               </div>
               <div>
-                <dt className="text-xs text-slate-300">Current version</dt>
+                <dt className="text-xs text-slate-500">Current version</dt>
                 <dd className="mt-1 font-mono text-xs text-slate-200">{EXTENSION_VERSION}</dd>
               </div>
               <div>
-                <dt className="text-xs text-slate-300">Minimum VS Code API</dt>
+                <dt className="text-xs text-slate-500">Minimum VS Code API</dt>
                 <dd className="mt-1 font-mono text-xs text-slate-200">^1.85.0</dd>
               </div>
             </dl>
@@ -500,7 +494,7 @@ export default function IdeExtensionPage() {
               href={SOURCE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-slate-200 transition hover:text-white"
+              className="inline-flex items-center gap-2 text-slate-300 transition hover:text-white"
             >
               <Github className="h-4 w-4" aria-hidden="true" /> Source
             </a>
@@ -508,24 +502,21 @@ export default function IdeExtensionPage() {
               href={ISSUE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-slate-200 transition hover:text-white"
+              className="inline-flex items-center gap-2 text-slate-300 transition hover:text-white"
             >
               Report an issue <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
             </a>
-            <Link href="/support" className="text-slate-200 transition hover:text-white">
+            <Link href="/support" className="text-slate-300 transition hover:text-white">
               Support
             </Link>
           </div>
         </div>
-
-        <div className="pt-8 text-xs leading-5 text-slate-300">
-          <p>
-            Registry availability and release identity were verified against the Visual Studio
-            Marketplace extension query API and the Open VSX Registry API. Runtime status reflects
-            packaged execution evidence stored for version {EXTENSION_VERSION}; VSCodium is marked
-            separately because a local host verification artifact is not present.
-          </p>
-        </div>
+        <p className="pt-8 text-xs leading-5 text-slate-500">
+          Registry availability and release identity were verified against the Visual Studio
+          Marketplace and Open VSX APIs. Runtime status reflects packaged execution evidence for
+          version {EXTENSION_VERSION}; VSCodium is labeled separately because a local host
+          verification artifact is not present.
+        </p>
       </section>
     </main>
   );

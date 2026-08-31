@@ -39,10 +39,13 @@ function artifact(path) {
 const vsix = join(extensionRoot, `soterai-ide-guard-${pkg.version}.vsix`);
 const extensionJs = join(extensionRoot, "dist", "extension.js");
 const brokerJs = join(extensionRoot, "dist", "local-ai-broker.js");
-const artifacts = [artifact(vsix), artifact(extensionJs), artifact(brokerJs)].filter(Boolean);
+const mcpJs = join(extensionRoot, "dist", "soterai-mcp-server.js");
+const integrityJson = join(securityDir, "vsix-integrity.json");
+const cyclonedxJson = join(securityDir, "vscode-extension.cdx.json");
+const artifacts = [artifact(vsix), artifact(extensionJs), artifact(brokerJs), artifact(mcpJs), artifact(integrityJson), artifact(cyclonedxJson)].filter(Boolean);
 const commitSha = optionalExec("git", ["rev-parse", "HEAD"]);
 const status = optionalExec("git", ["status", "--short"]) ?? "";
-const sbomPath = "artifacts/security/sbom.spdx-lite.json";
+const sbomPath = "artifacts/security/vscode-extension.cdx.json";
 
 const attestation = {
   generatedAt: new Date().toISOString(),

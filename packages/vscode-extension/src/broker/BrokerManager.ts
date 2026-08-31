@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { spawn, type ChildProcess } from "node:child_process";
 import { randomBytes, randomUUID } from "node:crypto";
 import { LOCKDOWN_STATE_KEY, type LockdownRecord } from "../protection/LockdownState";
+import { readBoundedResponseBody } from "../security/boundedResponse";
 
 const TOKEN_KEY = "soterai.localBrokerToken";
 const SESSION_KEY = "soterai.memorySessionId";
@@ -258,7 +259,7 @@ export class BrokerManager implements vscode.Disposable {
         const timeout = setTimeout(() => controller.abort(), timeoutMs);
         try {
             const response = await fetch(`${this.url}${path}`, { ...init, headers, signal: controller.signal });
-            const raw = await response.text();
+            const raw = await readBoundedResponseBody(response);
             let body: (T & { error?: { message?: string } }) | undefined;
             try { body = raw ? JSON.parse(raw) as T & { error?: { message?: string } } : undefined; } catch { throw new Error(`Broker returned malformed JSON (${response.status})`); }
             if (!response.ok) throw new Error(body?.error?.message ?? `Broker request failed (${response.status})`);

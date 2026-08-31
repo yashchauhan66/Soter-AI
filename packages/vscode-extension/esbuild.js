@@ -46,16 +46,50 @@ const brokerOptions = {
     logLevel: "info",
 };
 
+/**
+ * The MCP server (Gap 2), a third bundle rather than part of extension.js.
+ *
+ * VS Code spawns it as a plain Node child process with no extension host, so it
+ * needs its own entry point: `require("vscode")` would throw before the first
+ * JSON-RPC line is read. `src/agent/toolLogic.ts` is imported by both bundles and
+ * stays free of `vscode` for exactly this reason, so the verdicts an MCP agent
+ * gets are byte-for-byte the ones a Copilot agent gets.
+ *
+ * No `external` here: unlike the extension, nothing at runtime provides its
+ * imports, so guard-core must be inlined.
+ */
+const mcpServerOptions = {
+    absWorkingDir: extensionRoot,
+    entryPoints: [path.join(extensionRoot, "src", "agent", "mcpServer.ts")],
+    bundle: true,
+    outfile: path.join(extensionRoot, "dist", "soterai-mcp-server.js"),
+    platform: "node",
+    format: "cjs",
+    target: "node18",
+    tsconfig: path.join(extensionRoot, "tsconfig.json"),
+    minify: production,
+    sourcemap: !production,
+    logLevel: "info",
+};
+
 async function main() {
     if (watch) {
         const ctx = await esbuild.context(options);
         const brokerCtx = await esbuild.context(brokerOptions);
+        const mcpCtx = await esbuild.context(mcpServerOptions);
         await ctx.watch();
         await brokerCtx.watch();
+        await mcpCtx.watch();
         console.log("[esbuild] watching...");
     } else {
-        await Promise.all([esbuild.build(options), esbuild.build(brokerOptions)]);
-        console.log(`[esbuild] built extension + local broker (${production ? "production" : "development"})`);
+        await Promise.all([
+            esbuild.build(options),
+            esbuild.build(brokerOptions),
+            esbuild.build(mcpServerOptions),
+        ]);
+        console.log(
+            `[esbuild] built extension + local broker + MCP server (${production ? "production" : "development"})`,
+        );
     }
 }
 

@@ -169,15 +169,22 @@ export class WorkspaceGuard {
     }
 
     private updateStatusBar(): void {
-        if (this.enabled) {
-            this.statusBarItem.text = `$(lock) Protected list (${this.protectedFiles.length})`;
-            this.statusBarItem.tooltip =
-                `Protected Workspace Mode: ${this.protectedFiles.length} file(s) excluded from SoterAI-built AI context bundles. ` +
-                `Direct reads by other extensions/tools are not intercepted (monitoring-only).`;
-        } else {
-            this.statusBarItem.text = "$(unlock) Protected Off";
-            this.statusBarItem.tooltip = "Protected Workspace Mode is disabled.";
+        // Only occupy the status bar while the feature is actually on.
+        //
+        // extension.ts consolidated six status-bar items into one summary item,
+        // but this one still called show() in every branch — so a fresh install
+        // showed three SoterAI entries, two of which read "Off". An off control
+        // is already reported in the consolidated tooltip; repeating it here as
+        // permanent status-bar furniture costs the user real estate and says
+        // nothing new.
+        if (!this.enabled) {
+            this.statusBarItem.hide();
+            return;
         }
+        this.statusBarItem.text = `$(lock) Protected list (${this.protectedFiles.length})`;
+        this.statusBarItem.tooltip =
+            `Protected Workspace Mode: ${this.protectedFiles.length} file(s) excluded from SoterAI-built AI context bundles. ` +
+            `Direct reads by other extensions/tools are not intercepted (monitoring-only).`;
         this.statusBarItem.show();
     }
 
@@ -210,9 +217,15 @@ export function registerWorkspaceGuardCommands(context: vscode.ExtensionContext,
         );
     });
 
-    reg("soterai.addFileToProtected", async () => {
-        const uri = vscode.window.activeTextEditor?.document.uri;
-        if (!uri) return vscode.window.showErrorMessage("Open a file to protect.");
+    reg("soterai.addFileToProtected", async (resource?: vscode.Uri) => {
+        // `resource` arrives when the command is invoked from the Explorer
+        // context menu. Falling straight through to the active editor was
+        // correct while the palette was the only entry point, but it made
+        // right-clicking a file that is not open report "Open a file to
+        // protect" — the exact case the Explorer entry exists for, since a
+        // .env is usually protected without ever being opened.
+        const uri = resource ?? vscode.window.activeTextEditor?.document.uri;
+        if (!uri) return vscode.window.showErrorMessage("Select a file in the Explorer, or open one, to protect it.");
         const rel = vscode.workspace.asRelativePath(uri);
         await guard.addFile(rel);
         vscode.window.showInformationMessage(`Added ${rel} to protected files.`);

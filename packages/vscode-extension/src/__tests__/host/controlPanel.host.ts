@@ -139,7 +139,7 @@ export function run(): Promise<void> {
             // The activate() return value is the extension's public API, not the
             // context, so build a context-shaped object for the provider.
             // globalState is read by gatherState(), and extensionUri is read by
-            // resolveWebviewView to serve Bestlogo.png as a local resource —
+            // resolveWebviewView to serve logo_circle_whiter.png as a local resource —
             // omitting it here made the whole host suite throw inside
             // vscode.Uri.joinPath(undefined, "media") before a single check ran.
             const fakeContext = {
@@ -169,6 +169,77 @@ export function run(): Promise<void> {
                     !/script-src[^;]*'unsafe-inline'/.test(panel.html),
                     "scripts must never be unsafe-inline",
                 );
+            });
+
+            await check("the rendered Data Boundary reflects real privacy settings", async () => {
+                const config = vscode.workspace.getConfiguration("soterai");
+                const original = {
+                    privacyMode: config.get<string>("privacyMode", "local"),
+                    cloudEnabled: config.get<boolean>("cloud.enabled", false),
+                    telemetryLevel: config.get<string>("telemetry.redactedEvents", "off"),
+                };
+                const set = async (privacyMode: string, cloudEnabled: boolean, telemetryLevel: string) => {
+                    await config.update("privacyMode", privacyMode, vscode.ConfigurationTarget.Global);
+                    await config.update("cloud.enabled", cloudEnabled, vscode.ConfigurationTarget.Global);
+                    await config.update("telemetry.redactedEvents", telemetryLevel, vscode.ConfigurationTarget.Global);
+                    return (await renderPanel(fakeContext)).html;
+                };
+                try {
+                    const local = await set("local", false, "off");
+                    assert.match(local, /Data stays on this device/);
+                    assert.match(local, /No scan content or telemetry is sent/);
+
+                    const connected = await set("hybrid", true, "off");
+                    assert.match(connected, /Cloud is available on request/);
+                    assert.match(connected, /Automatic telemetry is off/);
+
+                    const metadata = await set("cloud", true, "batched");
+                    assert.match(metadata, /Optional metadata is enabled/);
+                    assert.match(metadata, /not raw prompts and not raw secrets/);
+                } finally {
+                    await config.update("privacyMode", original.privacyMode, vscode.ConfigurationTarget.Global);
+                    await config.update("cloud.enabled", original.cloudEnabled, vscode.ConfigurationTarget.Global);
+                    await config.update("telemetry.redactedEvents", original.telemetryLevel, vscode.ConfigurationTarget.Global);
+                }
+            });
+
+            await check("the Data Boundary is semantic, theme-aware, and motion-safe", () => {
+                assert.match(panel.html, /<section class="privacy-receipt [^"]+" aria-labelledby="data-boundary-title" aria-live="polite">/);
+                assert.match(panel.html, /var\(--vscode-(?:panel-border|testing-iconPassed|textLink-foreground|editorWarning-foreground)/);
+                assert.match(panel.html, /@media \(prefers-reduced-motion: reduce\)/);
+                assert.match(panel.html, /@media \(forced-colors: active\)/);
+                assert.match(panel.html, /@media \(max-width: 260px\)/);
+                assert.match(panel.html, /overflow-wrap: anywhere/);
+            });
+
+            await check("the panel has an accessible enterprise information hierarchy", () => {
+                assert.match(panel.html, /<main aria-labelledby="panel-title">/);
+                assert.match(panel.html, /<h1 class="brand-name" id="panel-title">SoterAI Guard<\/h1>/);
+                assert.match(panel.html, /<section class="status-card" aria-labelledby="protection-status-title">/);
+                assert.match(panel.html, /\d of 5 controls active/);
+                assert.match(panel.html, /<dl class="outcome-grid" aria-label="Protection outcomes">/);
+                assert.match(panel.html, /<nav class="footer-links" aria-label="SoterAI resources">/);
+            });
+
+            await check("actions expose progress feedback to assistive technology", () => {
+                assert.match(panel.html, /id="operation-status"[^>]+role="status"[^>]+aria-live="polite"/);
+                assert.match(panel.html, /data-announcement=/);
+                assert.match(panel.html, /status\.textContent = el\.getAttribute\('data-announcement'\)/);
+            });
+
+            await check("incomplete setup offers the real three-step walkthrough", () => {
+                assert.match(panel.html, /Get protected in three guided steps/);
+                assert.match(panel.html, /See a real safety result/);
+                assert.match(panel.html, /Protect workspace secrets/);
+                assert.match(panel.html, /Secure supported AI tools/);
+                assert.match(panel.html, /data-action="openWalkthrough"/);
+            });
+
+            await check("the panel links directly to risk, findings, and policy views", () => {
+                assert.match(panel.html, /<nav class="surface-grid" aria-label="Security views">/);
+                for (const action of ["openRisk", "openFindings", "openPolicy"]) {
+                    assert.ok(panel.html.includes(`data-action="${action}"`), `${action} is not rendered`);
+                }
             });
 
             await check("every rendered control comes from the content model", () => {
@@ -314,6 +385,19 @@ export function run(): Promise<void> {
                 );
             });
 
+            await check("a deterministic malformed-message corpus cannot mutate panel state", async () => {
+                const config = () => vscode.workspace.getConfiguration("soterai");
+                const before = config().get<boolean>("liveScan.enabled", true);
+                let state = 0xc0ffee;
+                const next = () => (state = (Math.imul(state, 1664525) + 1013904223) >>> 0);
+                const corpus: unknown[] = [null, undefined, true, 42, "toggle:liveScan", [], {}, { type: null }, { type: "toggle:liveScan", value: "true" }];
+                for (let i = 0; i < 250; i++) {
+                    corpus.push({ type: `unknown:${next().toString(36)}`, value: Boolean(next() & 1), extra: "x".repeat(next() % 128) });
+                }
+                for (const message of corpus) await panel.post(message);
+                assert.strictEqual(config().get<boolean>("liveScan.enabled", true), before);
+            });
+
             await check("every command the panel can invoke exists in this host", async () => {
                 const registered = new Set(await vscode.commands.getCommands(true));
                 const invoked = [
@@ -324,7 +408,9 @@ export function run(): Promise<void> {
                     "soterai.setupBrokerIntegration", "soterai.runControlledTerminalCommand",
                     "soterai.scanClipboard", "soterai.preflightMCPTool",
                     "soterai.checkDependencyInstall", "soterai.enableFullProtection",
-                    "soterai.unlockProtection",
+                    "soterai.unlockProtection", "soterai.openWalkthrough",
+                    "soterai-project-risk.focus", "soterai-latest-findings.focus",
+                    "soterai-policy-status.focus",
                 ];
                 for (const command of invoked) {
                     assert.ok(registered.has(command), `${command} is not registered in the host`);

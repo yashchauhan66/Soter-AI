@@ -68,6 +68,8 @@ jobs:
 
       - name: Package VSIX
         run: npm run vscode:package
+      - name: Verify VSIX contents and hash
+        run: npm --prefix packages/vscode-extension run verify:vsix
 
       - name: Read version
         id: meta
@@ -94,7 +96,8 @@ jobs:
             reports/release-provenance-attestation.json
             reports/release-provenance-attestation.md
             reports/vscode-release-checksums.sha256
-            artifacts/security/sbom.spdx-lite.json
+            artifacts/security/vscode-extension.cdx.json
+            artifacts/security/vsix-integrity.json
           if-no-files-found: error
 
   # ───────────────────────────────────────────────────────────────────────────
@@ -116,6 +119,8 @@ jobs:
       - run: npm ci
       - name: Package VSIX (second build)
         run: npm run vscode:package
+      - name: Verify second VSIX contents and hash
+        run: npm --prefix packages/vscode-extension run verify:vsix
       - name: Compare hash to primary
         id: compare
         run: |
@@ -152,6 +157,24 @@ jobs:
           name: signed-release-primary
           path: incoming
 
+      - name: Stage primary release evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p reports artifacts/security signing-evidence
+          copy_one() {
+            local pattern="$1" destination="$2"
+            local source
+            source=$(find incoming -type f -path "$pattern" -print -quit)
+            test -n "$source" || { echo "Missing downloaded artifact matching $pattern" >&2; exit 1; }
+            cp "$source" "$destination"
+          }
+          copy_one '*/reports/release-provenance-attestation.json' reports/release-provenance-attestation.json
+          copy_one '*/reports/release-provenance-attestation.md' reports/release-provenance-attestation.md
+          copy_one '*/reports/vscode-release-checksums.sha256' reports/vscode-release-checksums.sha256
+          copy_one '*/artifacts/security/vscode-extension.cdx.json' artifacts/security/vscode-extension.cdx.json
+          copy_one '*/artifacts/security/vsix-integrity.json' artifacts/security/vsix-integrity.json
+
       - name: Detect signing capability
         id: cap
         env:
@@ -169,21 +192,23 @@ jobs:
           CERT_PW: ${{ secrets.VSIX_SIGNING_CERT_PASSWORD }}
         run: |
           set -euo pipefail
-          VSIX=$(ls incoming/*.vsix | head -n1)
+          VSIX=$(find incoming -type f -name '*.vsix' -print -quit)
+          test -n "$VSIX" || { echo "Downloaded primary VSIX not found" >&2; exit 1; }
           echo "$CERT_B64" | base64 -d > /tmp/signing-cert.pfx
-          npx @vscode/vsce generate-manifest -i "$VSIX" -o /tmp/manifest.json
-          npx @vscode/vsce sign /tmp/manifest.json /tmp/signing-cert.pfx --pfxPassword "$CERT_PW" -o /tmp/signature.p7s
+          npx @vscode/vsce generate-manifest -i "$VSIX" -o signing-evidence/manifest.json
+          npx @vscode/vsce sign signing-evidence/manifest.json /tmp/signing-cert.pfx --pfxPassword "$CERT_PW" -o signing-evidence/signature.p7s
           # Verify the produced signature against the artifact. Non-zero exits fail the job.
-          npx @vscode/vsce verify-signature -i "$VSIX" -m /tmp/manifest.json -s /tmp/signature.p7s
+          npx @vscode/vsce verify-signature -i "$VSIX" -m signing-evidence/manifest.json -s signing-evidence/signature.p7s
           rm -f /tmp/signing-cert.pfx
           echo "verified=true" >> "$GITHUB_OUTPUT"
-          echo "signature_path=/tmp/signature.p7s" >> "$GITHUB_OUTPUT"
 
       - name: Finalize provenance (honest flags)
         env:
           SIGNATURE_VERIFIED: ${{ steps.sign.outputs.verified == 'true' }}
           REPRODUCIBLE: ${{ needs.build-repro.outputs.matches == 'true' }}
           CAN_SIGN: ${{ steps.cap.outputs.can_sign }}
+          SIGNATURE_PATH: signing-evidence/signature.p7s
+          SIGNATURE_MANIFEST_PATH: signing-evidence/manifest.json
         run: |
           node scripts/finalize-signed-provenance.mjs
 
@@ -195,6 +220,18 @@ jobs:
             reports/release-provenance-attestation.json
             reports/release-provenance-attestation.md
             reports/vscode-release-checksums.sha256
+            artifacts/security/vscode-extension.cdx.json
+            artifacts/security/vsix-integrity.json
+          if-no-files-found: error
+
+      - name: Upload verified detached signature
+        if: steps.sign.outputs.verified == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: signed-release-signature
+          path: |
+            signing-evidence/manifest.json
+            signing-evidence/signature.p7s
           if-no-files-found: error
 
       - name: Summary

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, Search, ShieldAlert, X } from "lucide-react";
+import { ArrowLeft, Menu, Search, ShieldAlert, X } from "lucide-react";
 import {
   ADMIN_NAV,
   type AdminBadgeCounts,
@@ -127,6 +127,14 @@ export function AdminSidebar({ counts, adminEmail }: { counts: AdminBadgeCounts;
           <span className="text-sm font-bold">SoterAI Admin</span>
         </div>
         <div className="flex items-center gap-2">
+          <Link
+            href="/"
+            aria-label="Back to Home"
+            title="Back to Home"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-slate-700 bg-slate-900/70 text-slate-200 transition hover:border-cyan/60 hover:text-cyan"
+          >
+            <ArrowLeft size={17} aria-hidden="true" />
+          </Link>
           <button
             type="button"
             onClick={openAdminCommandPalette}
@@ -155,6 +163,12 @@ export function AdminSidebar({ counts, adminEmail }: { counts: AdminBadgeCounts;
           {brand}
         </div>
         <div className="px-3 pt-4">
+          <Link
+            href="/"
+            className="mb-3 flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition hover:bg-slate-800/50 hover:text-white"
+          >
+            <ArrowLeft size={15} aria-hidden="true" /> Back to Home
+          </Link>
           <button
             type="button"
             onClick={openAdminCommandPalette}

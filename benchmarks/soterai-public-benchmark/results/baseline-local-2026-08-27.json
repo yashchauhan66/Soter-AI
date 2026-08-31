@@ -1,0 +1,152 @@
+{
+  "benchmark": "soterai-public-benchmark",
+  "version": "2.0.0",
+  "runnerNote": "Self-authored synthetic corpus, run by the vendor unless --witness names someone else. Not independent validation. Read recallPct next to fpRatePct — the bundled flag-everything control scores 100% recall.",
+  "witness": null,
+  "environment": {
+    "node": "v22.16.0",
+    "platform": "win32 x64"
+  },
+  "startedAt": "2026-08-27T16:14:42.434Z",
+  "adapter": "./adapters/soterai-n8n-local.mjs",
+  "adapterInfo": {
+    "name": "soterai-n8n-local",
+    "engine": "local-rule-tier",
+    "version": "1.0.0",
+    "note": "Pattern/heuristic tier only. No ML classifier, no multi-turn state, no reputation."
+  },
+  "corpusHash": "bdeada6b9973be6cf5c41aa1af3cb7fc877ac070b09501dae76ddf19fa107ca6",
+  "attackCategories": [
+    {
+      "category": "data-exfiltration",
+      "cases": 300,
+      "detected": 0,
+      "recallPct": 0
+    },
+    {
+      "category": "hinglish-multilingual",
+      "cases": 200,
+      "detected": 0,
+      "recallPct": 0
+    },
+    {
+      "category": "jailbreak",
+      "cases": 250,
+      "detected": 150,
+      "recallPct": 60
+    },
+    {
+      "category": "mcp-risk",
+      "cases": 100,
+      "detected": 20,
+      "recallPct": 20
+    },
+    {
+      "category": "prompt-injection",
+      "cases": 250,
+      "detected": 150,
+      "recallPct": 60
+    },
+    {
+      "category": "rag-poisoning",
+      "cases": 200,
+      "detected": 160,
+      "recallPct": 80
+    },
+    {
+      "category": "secret-pii",
+      "cases": 300,
+      "detected": 300,
+      "recallPct": 100
+    },
+    {
+      "category": "system-prompt-leak",
+      "cases": 300,
+      "detected": 60,
+      "recallPct": 20
+    },
+    {
+      "category": "tool-abuse",
+      "cases": 100,
+      "detected": 0,
+      "recallPct": 0
+    },
+    {
+      "category": "unicode-obfuscation",
+      "cases": 200,
+      "detected": 120,
+      "recallPct": 60
+    }
+  ],
+  "benignCategories": [
+    {
+      "category": "business-writing",
+      "cases": 200,
+      "falsePositives": 0,
+      "fpRatePct": 0
+    },
+    {
+      "category": "coding-help",
+      "cases": 200,
+      "falsePositives": 0,
+      "fpRatePct": 0
+    },
+    {
+      "category": "normal-developer-prompts",
+      "cases": 200,
+      "falsePositives": 0,
+      "fpRatePct": 0
+    },
+    {
+      "category": "public-info",
+      "cases": 200,
+      "falsePositives": 0,
+      "fpRatePct": 0
+    },
+    {
+      "category": "security-education",
+      "cases": 200,
+      "falsePositives": 0,
+      "fpRatePct": 0
+    }
+  ],
+  "perLanguage": {
+    "attacks": [
+      {
+        "language": "en",
+        "cases": 2000,
+        "detected": 960,
+        "recallPct": 48
+      },
+      {
+        "language": "hinglish",
+        "cases": 200,
+        "detected": 0,
+        "recallPct": 0
+      }
+    ],
+    "benign": [
+      {
+        "language": "en",
+        "cases": 1000,
+        "falsePositives": 0,
+        "fpRatePct": 0
+      }
+    ]
+  },
+  "totals": {
+    "attackCases": 2200,
+    "attackDetected": 960,
+    "recallPct": 43.64,
+    "benignCases": 1000,
+    "falsePositives": 0,
+    "fpRatePct": 0,
+    "precisionPct": 100,
+    "f1Pct": 60.76,
+    "latencyMs": {
+      "p50": 0.106,
+      "p95": 0.208
+    }
+  },
+  "finishedAt": "2026-08-27T16:14:42.436Z"
+}

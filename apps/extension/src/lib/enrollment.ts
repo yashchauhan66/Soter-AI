@@ -9,6 +9,7 @@
 import { getState, setState } from "./storage";
 import type { ExtensionConfig, PolicyTrustedKeyConfig } from "./types";
 import { DEFAULT_EXTENSION_API_BASE_URL } from "../../../../packages/shared/src/constants";
+import { BUILT_IN_AI_DESTINATIONS } from "../../../../packages/shared/src/ai-destinations";
 import { buildTrustedUrl, normalizeEndpoint } from "./trusted-endpoint";
 
 export const ENROLLMENT_STATUS_KEY = "soter.enrollment.status";
@@ -327,12 +328,12 @@ export async function startTrialMode(): Promise<{ ok: true; info: EnrollmentInfo
     version: "trial-1.0.0",
     defaultAction: "warn" as const,
     maxPromptChars: 20000,
-    monitoredDomains: [
-      "chatgpt.com", "chat.openai.com", "claude.ai", "gemini.google.com",
-      "perplexity.ai", "poe.com", "openrouter.ai", "replit.com",
-      "stackblitz.com", "codesandbox.io", "bolt.new", "v0.dev", "lovable.dev",
-    ],
-    destinations: [],
+    // v0.2.2: this was a fourth hand-copied list of AI hostnames, and trial mode is the first-run
+    // path for a real user — so on trial the guard went inactive on every destination added after
+    // the copy was made, and `destinations: []` meant no destination could be resolved at all.
+    // Both now come from the one shared table.
+    monitoredDomains: BUILT_IN_AI_DESTINATIONS.flatMap((destination) => destination.domains),
+    destinations: BUILT_IN_AI_DESTINATIONS.map((destination) => ({ ...destination, organizationId: state.config.organizationId ?? "trial-org" })),
     rules: [
       { id: "trial-secrets-block", name: "Block secrets", action: "block" as const, severity: "critical" as const, detectedDataTypes: ["api_key", "aws_access_key", "github_token", "private_key", "database_url", "env_file"] },
       { id: "trial-pii-warn", name: "Warn on PII", action: "warn" as const, severity: "high" as const, detectedDataTypes: ["pii", "india_pii"] },

@@ -208,7 +208,30 @@ export function rewriteSafePrompt(redactedText: string, detectedDataTypes: strin
   // v0.2.1: clean, minimal footer instead of a broken ASCII box.
   // Reads naturally in chat and keeps the sanitized prompt clean.
   const summary = changes.length > 0 ? changes.join("; ") : "Sensitive details removed";
-  const note = `\n\n—\n🛡️ Soter sanitized this prompt before sending. ${summary}.`;
+  const note = `${SAFE_REWRITE_NOTE_MARKER} Soter sanitized this prompt before sending. ${summary}.`;
 
   return (text + note).trim();
+}
+
+/**
+ * The exact separator that opens the footer `rewriteSafePrompt` appends. Exported so the one
+ * caller that must remove it does not have to guess at the format.
+ */
+export const SAFE_REWRITE_NOTE_MARKER = "\n\n—\n🛡️";
+
+/**
+ * The sanitized text *without* the trailing footer.
+ *
+ * The footer says "sanitized this prompt", which is true when the whole field is being replaced
+ * — the submit path — and false when the sanitized text is one pasted fragment inside a prompt
+ * the user is still writing. Pasting a customer record mid-sentence spliced
+ * "— 🛡️ Soter sanitized this prompt before sending. Sensitive details removed." into the middle
+ * of the sentence, and that text then went to the model as part of the question. The scrubbing
+ * (internal URLs, repo references, amounts, IPs, paths) is what makes the fragment safe and is
+ * kept; only the sentence about it is dropped, because the overlay already tells the user.
+ */
+export function stripSafeRewriteNote(rewrittenSafeText: string): string {
+  const index = rewrittenSafeText.lastIndexOf(SAFE_REWRITE_NOTE_MARKER);
+  if (index === -1) return rewrittenSafeText;
+  return rewrittenSafeText.slice(0, index).trimEnd();
 }

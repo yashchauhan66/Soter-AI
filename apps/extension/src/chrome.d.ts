@@ -6,6 +6,13 @@ interface ChromeRuntime {
   onMessage: { addListener(listener: (message: unknown, sender: unknown, sendResponse: (response?: unknown) => void) => boolean | void): void };
   sendMessage<T = unknown>(message: unknown, callback?: ChromeCallback<T>): void;
   openOptionsPage?(): void;
+  /** Source of truth for the version string every surface displays. */
+  getManifest(): {
+    version: string;
+    version_name?: string;
+    content_scripts?: Array<{ matches?: string[] }>;
+    [key: string]: unknown;
+  };
   lastError?: { message: string };
 }
 

@@ -99,7 +99,7 @@ export interface BrokerServerOptions {
 
 interface JsonBody { [key: string]: unknown }
 
-class HttpError extends Error {
+export class HttpError extends Error {
     constructor(
         readonly status: number,
         readonly code: string,
@@ -107,6 +107,40 @@ class HttpError extends Error {
         readonly details?: Record<string, unknown>,
     ) {
         super(message);
+    }
+}
+
+/** Validate framing before consuming a request body. Pure enough for parser fuzz tests. */
+export function validateRequestBodyHeaders(
+    headers: IncomingMessage["headers"],
+    rawHeaders: readonly string[],
+    limit: number,
+): void {
+    const encodings: string[] = [];
+    for (let index = 0; index < rawHeaders.length - 1; index += 2) {
+        if (rawHeaders[index].toLowerCase() === "content-encoding") encodings.push(rawHeaders[index + 1]);
+    }
+    const encoding = stringValue(headers["content-encoding"])?.trim().toLowerCase();
+    if (encodings.length > 1 || (encoding && encoding !== "identity")) {
+        throw new HttpError(415, "content_encoding_unsupported", "Compressed request bodies are not accepted by the local broker");
+    }
+
+    const rawLengths: string[] = [];
+    for (let index = 0; index < rawHeaders.length - 1; index += 2) {
+        if (rawHeaders[index].toLowerCase() === "content-length") rawLengths.push(rawHeaders[index + 1]);
+    }
+    if (rawLengths.length > 1) {
+        throw new HttpError(400, "ambiguous_framing", "Duplicate Content-Length headers are not accepted");
+    }
+    if (headers["transfer-encoding"] !== undefined && headers["content-length"] !== undefined) {
+        throw new HttpError(400, "ambiguous_framing", "Content-Length and Transfer-Encoding cannot be combined");
+    }
+    const declared = stringValue(headers["content-length"]);
+    if (declared !== undefined) {
+        if (!/^\d+$/.test(declared)) throw new HttpError(400, "invalid_content_length", "Content-Length must be a non-negative integer");
+        const bytes = Number(declared);
+        if (!Number.isSafeInteger(bytes)) throw new HttpError(400, "invalid_content_length", "Content-Length is not safely representable");
+        if (bytes > limit) throw new HttpError(413, "body_too_large", "Request body exceeds the local broker limit");
     }
 }
 
@@ -844,6 +878,7 @@ export class BrokerServer {
 
     private async readJson(req: IncomingMessage): Promise<JsonBody> {
         const limit = this.options.bodyLimitBytes ?? 1_048_576;
+        validateRequestBodyHeaders(req.headers, req.rawHeaders, limit);
         const chunks: Buffer[] = [];
         let size = 0;
         for await (const chunk of req) {
@@ -853,8 +888,14 @@ export class BrokerServer {
             chunks.push(buffer);
         }
         if (chunks.length === 0) return {};
+        let decoded: string;
         try {
-            const parsed = JSON.parse(Buffer.concat(chunks).toString("utf8"));
+            decoded = new TextDecoder("utf-8", { fatal: true }).decode(Buffer.concat(chunks));
+        } catch {
+            throw new HttpError(400, "invalid_utf8", "Request body must be valid UTF-8");
+        }
+        try {
+            const parsed = JSON.parse(decoded);
             if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error();
             return parsed as JsonBody;
         } catch { throw new HttpError(400, "invalid_json", "Request body must be a JSON object"); }

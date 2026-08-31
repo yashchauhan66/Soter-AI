@@ -155,6 +155,8 @@ jobs:
         run: npm --prefix packages/vscode-extension run typecheck
       - name: Package VSIX
         run: npm run vscode:package
+      - name: Verify VSIX contents and hash
+        run: npm --prefix packages/vscode-extension run verify:vsix
       - name: Validate marketplace packages
         run: npm run validate:marketplaces
       - name: Collect VSIX
@@ -165,7 +167,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: vscode-vsix
-          path: dist/cross-ide/*.vsix
+          path: |
+            dist/cross-ide/*.vsix
+            artifacts/security/vsix-integrity.json
+            artifacts/security/vscode-extension.cdx.json
           if-no-files-found: error
 
   # ───────────────────────────────────────────────────────────────────────────
