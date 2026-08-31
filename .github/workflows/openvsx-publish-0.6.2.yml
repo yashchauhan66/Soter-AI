@@ -1,0 +1,89 @@
+name: Publish IDE Guard 0.6.2 to Open VSX
+
+on:
+  push:
+    branches:
+      - release/openvsx-0.6.2
+    paths:
+      - '.github/workflows/openvsx-publish-0.6.2.yml'
+      - 'packages/vscode-extension/soterai-ide-guard-0.6.2.vsix'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: openvsx-soterai-ide-guard-0.6.2
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Verify and publish audited VSIX
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      VSIX: packages/vscode-extension/soterai-ide-guard-0.6.2.vsix
+      EXPECTED_SHA256: a74ef2597d7b07b019bc58e0f1d591aa37dd7986acba78b07dd6ff03fa042454
+      EXTENSION_API: https://open-vsx.org/api/soterai/soterai-ide-guard/0.6.2
+      OVSX_PAT: ${{ secrets.OVSX_PAT }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Require publish credential
+        shell: bash
+        run: |
+          test -n "$OVSX_PAT" || {
+            echo "OVSX_PAT repository secret is not configured." >&2
+            exit 1
+          }
+
+      - name: Verify exact audited package
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "$EXPECTED_SHA256  $VSIX" | sha256sum --check --strict
+          unzip -t "$VSIX" >/dev/null
+          unzip -Z1 "$VSIX" | grep -Fxq "extension.vsixmanifest"
+          unzip -Z1 "$VSIX" | grep -Fxq "extension/package.json"
+          unzip -Z1 "$VSIX" | grep -Fxq "extension/dist/extension.js"
+          unzip -Z1 "$VSIX" | grep -Fxq "extension/dist/local-ai-broker.js"
+          unzip -Z1 "$VSIX" | grep -Fxq "extension/dist/soterai-mcp-server.js"
+          test "$(unzip -p "$VSIX" extension/package.json | jq -r .publisher)" = "soterai"
+          test "$(unzip -p "$VSIX" extension/package.json | jq -r .name)" = "soterai-ide-guard"
+          test "$(unzip -p "$VSIX" extension/package.json | jq -r .version)" = "0.6.2"
+
+      - name: Refuse to overwrite an existing release
+        shell: bash
+        run: |
+          status=$(curl --silent --output /dev/null --write-out '%{http_code}' "$EXTENSION_API")
+          test "$status" = "404" || {
+            echo "Open VSX version 0.6.2 already exists or registry returned HTTP $status; refusing publish." >&2
+            exit 1
+          }
+
+      - name: Publish to Open VSX
+        run: npx --yes ovsx@0.10.12 publish "$VSIX"
+
+      - name: Verify published release
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in {1..20}; do
+            if metadata=$(curl --fail --silent "$EXTENSION_API"); then
+              break
+            fi
+            sleep 6
+          done
+          test -n "${metadata:-}" || {
+            echo "Published version did not become available through the registry API." >&2
+            exit 1
+          }
+          test "$(jq -r .version <<<"$metadata")" = "0.6.2"
+          download=$(jq -r .files.download <<<"$metadata")
+          checksum=$(jq -r .files.sha256 <<<"$metadata")
+          test -n "$download" && test "$download" != "null"
+          test -n "$checksum" && test "$checksum" != "null"
+          curl --fail --silent --show-error --location "$download" --output published.vsix
+          echo "$EXPECTED_SHA256  published.vsix" | sha256sum --check --strict
+          published_checksum=$(curl --fail --silent --show-error --location "$checksum" | tr -d '\r\n ')
+          test "$published_checksum" = "$EXPECTED_SHA256"
+          echo "Verified soterai.soterai-ide-guard@0.6.2 ($EXPECTED_SHA256) on Open VSX."
