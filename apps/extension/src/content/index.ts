@@ -5,14 +5,19 @@ import { installResponseObserver } from "./response-observer";
 import { installSubmitInterceptor } from "./submit-interceptor";
 import { installFileContentScanner } from "./file-content-scanner";
 import { installWebSocketObserver } from "./websocket-observer";
-import type { AIDestinationPolicy } from "../../../../packages/shared/src/ai-destinations";
+import { BUILT_IN_AI_DESTINATIONS, type AIDestinationPolicy } from "../../../../packages/shared/src/ai-destinations";
 
-const SHADOW_AI_KNOWN_PLATFORMS = [
-  "chatgpt.com", "chat.openai.com", "claude.ai", "gemini.google.com", "bard.google.com",
-  "perplexity.ai", "poe.com", "replit.com", "stackblitz.com", "codesandbox.io",
-  "bolt.new", "v0.dev", "lovable.dev", "openrouter.ai", "openwebui.com",
-  "copilot.microsoft.com", "copilot.live.com"
-];
+/** Known AI platforms, derived from the one destination table the policy is also built from.
+ *  v0.2.2: this was a third hand-maintained hostname list and it had drifted out of step with both
+ *  the manifest and the destination presets, so shadow-AI discovery rated newly guarded sites by the
+ *  generic "does the hostname contain 'ai'" heuristic instead of knowing them.
+ */
+const SHADOW_AI_KNOWN_PLATFORMS = Array.from(new Set([
+  ...BUILT_IN_AI_DESTINATIONS.flatMap((destination) => destination.domains),
+  // Self-hosted front ends whose presets are localhost URL patterns, so they contribute no
+  // hostname above but are still worth recognising by name when discovered.
+  "openwebui.com", "anythingllm.com", "lmstudio.ai",
+]));
 
 /** Heuristically guess if the hostname belongs to an AI-like tool. */
 function isAiLikelyHostname(hostname: string): boolean {
@@ -52,7 +57,7 @@ void getDestinationContext().then((context) => {
   const adapters = destinationAdapters();
   adapter = adapters.find((candidate) => candidate.matches(location.href)) ?? adapters[adapters.length - 1];
   if (!adapter) return;
-  installSubmitInterceptor(adapter);
+  installSubmitInterceptor(adapter, context.failClosedOnScanError === true);
   installPasteListener(adapter);
   installFileContentScanner();
   installResponseObserver(adapter, context.destination?.responseScanningEnabled !== false);
@@ -80,21 +85,36 @@ function isObject(value: unknown): value is { type?: string } {
  * regardless of backend policy state — it is a first-party destination.
  * For all other domains, defer to the background policy engine.
  */
+interface DestinationContext {
+  active: boolean;
+  destination?: AIDestinationPolicy;
+  employeeId?: string;
+  legacyMatch?: boolean;
+  /** "If Soter cannot check it, do not send it." Answered by the worker; see submit-interceptor. */
+  failClosedOnScanError?: boolean;
+  /** v0.2.2: the worker answered but could not determine the context, or did not answer at all. */
+  unavailable?: boolean;
+}
+
 function getDestinationContext() {
-  return new Promise<{ active: boolean; destination?: AIDestinationPolicy; employeeId?: string; legacyMatch?: boolean }>((resolve) => chrome.runtime.sendMessage(
+  return new Promise<DestinationContext>((resolve) => chrome.runtime.sendMessage(
     { type: "SOTER_GET_DESTINATION_CONTEXT", url: location.href },
     (response) => {
-      const ctx = (response as { active: boolean; destination?: AIDestinationPolicy; employeeId?: string; legacyMatch?: boolean }) ?? { active: false };
+      // v0.2.2: a missing reply used to resolve to `{ active: false }`, i.e. "not a guarded site" —
+      // and the content script then installed nothing at all, silently, on a site the manifest
+      // injected it into precisely *because* it is a guarded AI destination. A worker that is
+      // asleep, restarting or throwing is not evidence that this page is unmonitored. The manifest
+      // match is the evidence, so a transport failure activates the guard instead of disabling it;
+      // scans then fail open per-gesture with a visible notice rather than protecting nothing in
+      // silence.
+      const ctx = (response as DestinationContext | undefined) ?? { active: true, unavailable: true, legacyMatch: true };
+      const hostname = location.hostname.replace(/^www\./, "").toLowerCase();
       // First-party: soterai.in always activates the guard, even if the backend
       // policy hasn't been synced yet or the extension hasn't enrolled.
-      const hostname = location.hostname.replace(/^www\./, "").toLowerCase();
       if (hostname === "soterai.in" || hostname.endsWith(".soterai.in")) {
-        return resolve({
-          ...ctx,
-          active: true,
-          legacyMatch: true,
-        });
+        return resolve({ ...ctx, active: true, legacyMatch: true });
       }
+      if (ctx.unavailable) return resolve({ ...ctx, active: true, legacyMatch: true });
       resolve(ctx);
     },
   ));

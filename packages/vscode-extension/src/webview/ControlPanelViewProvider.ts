@@ -4,6 +4,7 @@ import { PROTECTION } from "../protection/ProtectionLevel";
 import {
     panelTasks,
     plainControls,
+    privacyBoundary,
     primaryCta,
     type PanelFacts,
     type PlainControl,
@@ -12,6 +13,7 @@ import type { WorkspaceGuard } from "../workspace-guard/WorkspaceGuard";
 import type { AISentinel } from "../sentinel/AISentinel";
 import type { BrokerManager } from "../broker/BrokerManager";
 import type { ProtectionStateService } from "../protection/ProtectionStateService";
+import { managedControlReasons } from "../enterprise/managedSettingsProbe";
 
 /**
  * SoterAI Control Panel — enterprise-grade sidebar surface.
@@ -21,12 +23,13 @@ import type { ProtectionStateService } from "../protection/ProtectionStateServic
  *   - Badges are registry-resolved: only ENFORCED when SoterAI technically
  *     controls that path.
  *   - The webview never receives secrets, tokens, or raw file content.
- *   - Logo (Bestlogo.png) is served as a local webview resource.
+ *   - Logo (logo_circle_whiter.png) is served as a local webview resource.
  */
 export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     public static readonly viewType = "soterai-control-panel";
 
     private view?: vscode.WebviewView;
+    private feedback?: { tone: "success" | "error"; message: string };
 
     constructor(
         private readonly context: vscode.ExtensionContext,
@@ -84,6 +87,10 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
         "action:mcpPreflight",
         "action:depGuard",
         "action:unlock",
+        "action:openWalkthrough",
+        "action:openRisk",
+        "action:openFindings",
+        "action:openPolicy",
         "action:openWebsite",
         "action:openDocs",
         "action:reportIssue",
@@ -97,14 +104,39 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
 
     // ── message handling ─────────────────────────────────────────────────────
     private async handleMessage(message: unknown): Promise<void> {
-        const msg = message as { type?: string; value?: boolean } | undefined;
-        const type = typeof msg?.type === "string" ? msg.type : undefined;
+        if (!message || typeof message !== "object" || Array.isArray(message)) return;
+        const msg = message as Record<string, unknown>;
+        const type = typeof msg.type === "string" ? msg.type : undefined;
         if (!type || !ControlPanelViewProvider.ALLOWED.has(type)) {
             // Rejected message: silently ignore untrusted webview input. Do not
             // log attacker-controlled content or show a notification.
             return;
         }
-        const on = msg?.value === true;
+        const isToggle = type.startsWith("toggle:");
+        // Toggle payloads mutate state, so require their exact schema. Actions
+        // intentionally ignore every field except the allowlisted type: this keeps
+        // destinations and command arguments host-owned even if a compromised
+        // webview supplies a `url`, `command`, or other attacker-controlled field.
+        if (isToggle && (
+            typeof msg.value !== "boolean"
+            || Object.keys(msg).some((key) => key !== "type" && key !== "value")
+        )) return;
+        const on = msg.value === true;
+
+        // GAP 3: refuse a toggle an administrator pinned. VS Code keeps the
+        // policy value regardless, so writing it would look like it worked and
+        // change nothing — the worst outcome for a security control.
+        const managed = managedControlReasons();
+        const controlForToggle: Record<string, keyof typeof managed> = {
+            "toggle:protectedWorkspace": "protectedWorkspace",
+            "toggle:sentinel": "sentinel",
+        };
+        const pinnedControl = controlForToggle[type];
+        if (pinnedControl && managed[pinnedControl]) {
+            vscode.window.showWarningMessage(`SoterAI: ${managed[pinnedControl]}`);
+            await this.render();
+            return;
+        }
 
         try {
             switch (type) {
@@ -161,6 +193,18 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
                 case "action:unlock":
                     await vscode.commands.executeCommand("soterai.unlockProtection");
                     break;
+                case "action:openWalkthrough":
+                    await vscode.commands.executeCommand("soterai.openWalkthrough");
+                    break;
+                case "action:openRisk":
+                    await vscode.commands.executeCommand("soterai-project-risk.focus");
+                    break;
+                case "action:openFindings":
+                    await vscode.commands.executeCommand("soterai-latest-findings.focus");
+                    break;
+                case "action:openPolicy":
+                    await vscode.commands.executeCommand("soterai-policy-status.focus");
+                    break;
                 case "action:openWebsite":
                 case "action:openDocs":
                 case "action:reportIssue": {
@@ -169,7 +213,17 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
                     break;
                 }
             }
+            this.feedback = {
+                tone: "success",
+                message: isToggle
+                    ? "Protection setting updated. The current status is shown above."
+                    : "Action finished. Review any result or confirmation shown by VS Code.",
+            };
         } catch (error) {
+            this.feedback = {
+                tone: "error",
+                message: "That action could not be completed. Review the VS Code notification and try again.",
+            };
             vscode.window.showErrorMessage(
                 `SoterAI: could not apply that change — ${error instanceof Error ? error.message : String(error)}`,
             );
@@ -199,6 +253,12 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
             mcpFirewall:        config.get<boolean>("mcpFirewall.strictMode", false),
             brokerRunning,
             trusted:            vscode.workspace.isTrusted,
+            privacyMode:        config.get<string>("privacyMode", "local"),
+            cloudEnabled:       config.get<boolean>("cloud.enabled", false),
+            telemetryLevel:     config.get<string>("telemetry.redactedEvents", "off"),
+            // Empty on an unmanaged machine, so nothing about the panel changes
+            // for a developer who is not under central management.
+            managedReasons:     managedControlReasons(),
         };
     }
 
@@ -208,7 +268,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
         const protection = await this.deps.protectionState.refresh();
         // Resolve logo URI — served as a local webview resource so CSP is respected.
         const logoUri = this.view.webview.asWebviewUri(
-            vscode.Uri.joinPath(this.context.extensionUri, "media", "Bestlogo.png"),
+            vscode.Uri.joinPath(this.context.extensionUri, "media", "logo_circle_whiter.png"),
         );
         this.view.webview.html = this.buildHtml(
             this.view.webview,
@@ -230,10 +290,18 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
         const controls    = plainControls(facts);
         const coreControls = controls.filter((control) => control.id !== "mcpFirewall");
         const advancedControls = controls.filter((control) => control.id === "mcpFirewall");
+        const activeControlCount = controls.filter((control) => control.on).length;
         const cta         = primaryCta(protection.state, facts);
+        const privacy     = privacyBoundary({
+            privacyMode: state.privacyMode ?? "local",
+            cloudEnabled: state.cloudEnabled ?? false,
+            telemetryLevel: state.telemetryLevel ?? "off",
+            trusted: state.trusted,
+        });
         const tasks       = panelTasks();
         const startTasks  = tasks.filter((task) => task.group === "start");
         const moreTasks   = tasks.filter((task) => task.group === "more");
+        const showSetupGuide = !state.brokerRunning || !state.protectedWorkspace;
         const blockingActive = state.safeMode && state.brokerRunning;
         const monitoringActive = state.liveScan;
         const knownGapCount = [
@@ -260,20 +328,26 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
 
         // ── control rows ─────────────────────────────────────────────────────
         const row = (c: PlainControl): string => {
-            const badgeHtml = c.on && c.level
-                ? `<span class="badge badge-${c.level}">${escapeHtml(PROTECTION[c.level].label)}</span>`
-                : `<span class="badge badge-off">Off</span>`;
+            const badgeHtml = c.managed
+                // GAP 3: state and manageability are separate facts. The level
+                // badge still shows what protection is actually in effect; the
+                // managed pill says only that the user cannot change it here.
+                ? `<span class="badge badge-managed">Set by your organisation</span>`
+                : c.on && c.level
+                    ? `<span class="badge badge-${c.level}">${escapeHtml(PROTECTION[c.level].label)}</span>`
+                    : `<span class="badge badge-off">Off</span>`;
             return `
             <div class="control-row" id="row-${c.id}">
               <div class="control-left">
                 <button
-                  class="toggle ${c.on ? "toggle-on" : "toggle-off"}"
+                  class="toggle ${c.on ? "toggle-on" : "toggle-off"}${c.managed ? " toggle-managed" : ""}"
                   data-id="${c.id}"
                   data-value="${c.on ? "false" : "true"}"
                   data-focus="sw-${c.id}"
                   role="switch"
                   aria-checked="${c.on}"
                   aria-label="${escapeHtml(c.label)}"
+                  ${c.managed ? `disabled aria-disabled="true" title="${escapeHtml(c.managedReason ?? "")}"` : ""}
                 ><span class="toggle-thumb"></span></button>
               </div>
               <div class="control-body">
@@ -282,6 +356,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
                   ${badgeHtml}
                 </div>
                 <div class="control-note">${escapeHtml(c.summary)}</div>
+                ${c.managed ? `<div class="control-managed">${escapeHtml(c.managedReason ?? "")}</div>` : ""}
                 <details class="control-detail">
                   <summary>Coverage details</summary>
                   <p>${escapeHtml(c.detail)}</p>
@@ -292,7 +367,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
 
         // ── task cards ───────────────────────────────────────────────────────
         const taskCards = (items: typeof tasks) => items.map((t) => `
-            <button class="task-card" data-action="${t.action.replace("action:", "")}" data-focus="${t.action}">
+            <button class="task-card" data-action="${t.action.replace("action:", "")}" data-focus="${t.action}" data-announcement="${escapeHtml(`Opening ${t.label}`)}">
               <span class="task-icon" aria-hidden="true">${t.icon}</span>
               <span class="task-content">
                 <span class="task-label">${escapeHtml(t.label)}</span>
@@ -304,7 +379,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
         // ── footer links ─────────────────────────────────────────────────────
         const footerLinks = Object.entries(ControlPanelViewProvider.RESOURCE_LINKS)
             .map(([action, link]) => `
-            <button class="footer-link" data-action="${action.replace("action:", "")}" data-focus="${action}">${escapeHtml(link.label)}</button>`)
+            <button class="footer-link" data-action="${action.replace("action:", "")}" data-focus="${action}" data-announcement="Opening ${escapeHtml(link.label)}">${escapeHtml(link.label)}</button>`)
             .join(`<span class="footer-sep">·</span>`);
 
         return `<!DOCTYPE html>
@@ -326,6 +401,18 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
       padding: 0 0 24px;
       overflow-x: hidden;
     }
+    main { display: block; }
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
 
     /* ── Brand header ────────────────────────────────────────────────────── */
     .brand-header {
@@ -339,8 +426,10 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     .brand-logo {
       width: 32px;
       height: 32px;
+      aspect-ratio: 1;
       object-fit: contain;
-      border-radius: 6px;
+      border-radius: 50%;
+      overflow: hidden;
       flex-shrink: 0;
     }
     .brand-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
@@ -414,6 +503,16 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
       margin-top: 2px;
       line-height: 1.5;
     }
+    .status-meta {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: var(--vscode-badge-background, rgba(255,255,255,0.1));
+      color: var(--vscode-badge-foreground, var(--vscode-foreground));
+      font-size: 10px;
+      font-weight: 600;
+    }
     .outcome-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--vscode-panel-border, rgba(255,255,255,0.08)); }
     .outcome { min-width: 0; padding: 8px 6px 9px; text-align: center; border-right: 1px solid var(--vscode-panel-border, rgba(255,255,255,0.08)); }
     .outcome:last-child { border-right: 0; }
@@ -421,6 +520,20 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     .outcome-value { display: block; margin-top: 2px; font-size: 11px; font-weight: 700; color: var(--vscode-foreground); line-height: 1.25; }
     .outcome-value.on { color: #22c55e; }
     .outcome-value.attention { color: #fbbf24; }
+
+    /* ── Data boundary receipt ──────────────────────────────────────────── */
+    .privacy-receipt {
+      margin: 8px 12px 0;
+      padding: 9px 10px;
+      border: 1px solid var(--vscode-panel-border, rgba(255,255,255,0.1));
+      border-left: 3px solid var(--vscode-testing-iconPassed, #22c55e);
+      border-radius: 7px;
+      background: var(--vscode-sideBarSectionHeader-background, transparent);
+    }
+    .privacy-receipt.connected { border-left-color: var(--vscode-textLink-foreground, #38bdf8); }
+    .privacy-receipt.attention { border-left-color: var(--vscode-editorWarning-foreground, #fbbf24); }
+    .privacy-title { font-size: 11px; font-weight: 700; color: var(--vscode-foreground); }
+    .privacy-detail { margin-top: 3px; font-size: 11px; line-height: 1.45; color: var(--vscode-descriptionForeground); }
 
     /* ── Broker pill ─────────────────────────────────────────────────────── */
     .broker-row {
@@ -467,6 +580,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     .cta-wrap { padding: 0 12px; }
     .cta {
       width: 100%;
+      min-height: 36px;
       padding: 9px 14px;
       border: none;
       border-radius: 6px;
@@ -498,6 +612,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
       display: flex;
       align-items: center;
       gap: 10px;
+      min-height: 44px;
       padding: 9px 10px;
       border-radius: 7px;
       border: 1px solid var(--vscode-panel-border, rgba(255,255,255,0.08));
@@ -519,6 +634,45 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     .task-label { font-size: 12px; font-weight: 600; line-height: 1.35; overflow-wrap: anywhere; }
     .task-desc { font-size: 11px; color: var(--vscode-descriptionForeground); line-height: 1.45; }
     .task-arrow { color: var(--vscode-descriptionForeground); font-size: 15px; flex-shrink: 0; }
+
+    /* ── Guided setup + connected surfaces ──────────────────────────────── */
+    .guide-card, .surface-grid { margin: 0 12px; }
+    .guide-card {
+      padding: 10px;
+      border: 1px solid var(--vscode-panel-border, rgba(255,255,255,0.1));
+      border-radius: 7px;
+      background: var(--vscode-sideBarSectionHeader-background, transparent);
+    }
+    .guide-title { font-size: 12px; font-weight: 700; }
+    .guide-copy { margin-top: 3px; color: var(--vscode-descriptionForeground); font-size: 11px; line-height: 1.5; }
+    .guide-steps { margin: 8px 0 9px 18px; color: var(--vscode-foreground); font-size: 11px; line-height: 1.65; }
+    .guide-button { width: 100%; min-height: 34px; }
+    .surface-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; }
+    .surface-button {
+      min-width: 0;
+      min-height: 42px;
+      padding: 6px 4px;
+      border: 1px solid var(--vscode-panel-border);
+      border-radius: 6px;
+      background: transparent;
+      color: var(--vscode-foreground);
+      cursor: pointer;
+      font: inherit;
+      font-size: 10px;
+      line-height: 1.25;
+    }
+    .surface-button:hover { background: var(--vscode-list-hoverBackground); }
+    .feedback {
+      margin: 8px 12px 0;
+      padding: 7px 9px;
+      border-radius: 6px;
+      border-left: 3px solid var(--vscode-testing-iconPassed, #22c55e);
+      background: var(--vscode-sideBarSectionHeader-background, transparent);
+      color: var(--vscode-descriptionForeground);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+    .feedback.error { border-left-color: var(--vscode-errorForeground, #f87171); color: var(--vscode-errorForeground, #f87171); }
 
     /* ── Control rows ────────────────────────────────────────────────────── */
     .controls-list { padding: 0 12px; display: flex; flex-direction: column; gap: 2px; }
@@ -574,6 +728,17 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     .badge-UNKNOWN   { background: rgba(107,114,128,0.15);color: #9ca3af;  border: 1px solid rgba(107,114,128,0.3); }
     .badge-EXPOSED   { background: rgba(220,38,38,0.15);  color: #f87171;  border: 1px solid rgba(220,38,38,0.3); }
     .badge-off       { background: transparent; color: var(--vscode-descriptionForeground); border: 1px solid var(--vscode-panel-border); }
+    /* GAP 3: a pinned control. Deliberately neutral — it says who decided, not
+       how strong the protection is; the coverage detail still carries that. */
+    .badge-managed   { background: rgba(8,145,178,0.15); color: #22d3ee; border: 1px solid rgba(8,145,178,0.3); }
+    .control-managed {
+      font-size: 11px;
+      color: var(--vscode-descriptionForeground);
+      margin-top: 3px;
+      line-height: 1.5;
+      padding-left: 4px;
+      border-left: 2px solid rgba(8,145,178,0.4);
+    }
 
     /* ── Toggle switch ───────────────────────────────────────────────────── */
     .toggle {
@@ -601,6 +766,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     }
     .toggle-on  .toggle-thumb { left: 18px; }
     .toggle-off .toggle-thumb { left: 2px; }
+    .toggle-managed { cursor: not-allowed; opacity: 0.55; }
 
     /* ── Utility buttons ─────────────────────────────────────────────────── */
     .actions-row {
@@ -610,6 +776,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     }
     .btn-secondary {
       flex: 1;
+      min-height: 34px;
       padding: 7px 10px;
       border: 1px solid var(--vscode-panel-border);
       border-radius: 6px;
@@ -624,6 +791,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     .btn-secondary:hover { background: var(--vscode-list-hoverBackground); }
     .btn-danger {
       flex: 1;
+      min-height: 34px;
       padding: 7px 10px;
       border: 1px solid rgba(220,38,38,0.5);
       border-radius: 6px;
@@ -668,7 +836,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     }
     .footer-meta strong { color: var(--vscode-foreground); font-weight: 600; }
     .more-tools { margin: 6px 12px 0; }
-    .more-tools > summary, .label-help > summary { color: var(--vscode-textLink-foreground); cursor: pointer; font-size: 11px; user-select: none; }
+    .more-tools > summary, .label-help > summary { color: var(--vscode-textLink-foreground); cursor: pointer; font-size: 11px; line-height: 1.5; padding-block: 3px; user-select: none; }
     .more-tools .task-grid { padding: 7px 0 0; }
     .label-help { margin-top: 8px; }
     .label-help p { margin-top: 5px; font-size: 11px; line-height: 1.55; color: var(--vscode-descriptionForeground); }
@@ -676,38 +844,66 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     /* ── Accessibility ───────────────────────────────────────────────────── */
     :focus-visible { outline: 2px solid var(--vscode-focusBorder); outline-offset: 2px; }
     [aria-busy="true"] { opacity: 0.5; cursor: progress; pointer-events: none; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+    }
+    @media (forced-colors: active) {
+      .status-card, .privacy-receipt, .task, .control-row, .cta, button { border: 1px solid CanvasText; }
+      .privacy-receipt { border-left-width: 4px; }
+    }
+    @media (max-width: 260px) {
+      .brand-header { padding-inline: 10px; gap: 7px; }
+      .brand-logo { width: 28px; height: 28px; }
+      .brand-version { display: none; }
+      .status-card, .privacy-receipt, .broker-row, .more-tools, .footer { margin-inline: 8px; }
+      .task-grid, .controls-list, .cta-wrap, .actions-row { padding-inline: 8px; }
+      .guide-card, .surface-grid, .feedback { margin-inline: 8px; }
+      .surface-grid { grid-template-columns: 1fr; }
+      .outcome-grid { grid-template-columns: 1fr; }
+      .outcome { text-align: left; border-right: 0; border-bottom: 1px solid var(--vscode-panel-border); }
+      .outcome:last-child { border-bottom: 0; }
+      .actions-row { flex-direction: column; }
+      .status-sub, .privacy-detail, .control-note, .control-detail, .task-desc, .cta-hint { overflow-wrap: anywhere; }
+    }
   </style>
 </head>
 <body>
+<main aria-labelledby="panel-title">
 
   <!-- ① Brand Header with logo -->
-  <div class="brand-header">
+  <header class="brand-header">
     <img class="brand-logo" src="${logoUri}" alt="SoterAI logo" />
     <div class="brand-text">
-      <span class="brand-name">SoterAI Guard</span>
+      <h1 class="brand-name" id="panel-title">SoterAI Guard</h1>
       <span class="brand-tagline">Local AI Security · Zero cloud dependency</span>
     </div>
     <span class="brand-version">v${escapeHtml(String(this.context.extension.packageJSON.version ?? "unknown"))}</span>
-  </div>
+  </header>
 
   <!-- ② Status card -->
-  <div class="status-card" style="margin-top:12px; margin-left:12px; margin-right:12px;">
+  <section class="status-card" aria-labelledby="protection-status-title">
     <div class="status-top">
-      <div class="status-icon ${sev.cls}">${sev.icon}</div>
+      <div class="status-icon ${sev.cls}" aria-hidden="true">${sev.icon}</div>
       <div class="status-info">
-        <div class="status-title">${escapeHtml(protection.title)}</div>
+        <h2 class="status-title" id="protection-status-title">${escapeHtml(protection.title)}</h2>
         <div class="status-sub">${escapeHtml(protection.explanation)}</div>
+        <div class="status-meta">${activeControlCount} of ${controls.length} controls active</div>
       </div>
     </div>
-    <div class="outcome-grid" aria-label="Protection outcomes">
-      <div class="outcome"><span class="outcome-label">Blocking</span><span class="outcome-value ${blockingActive ? "on" : "attention"}">${blockingActive ? "Active" : "Needs setup"}</span></div>
-      <div class="outcome"><span class="outcome-label">Editor warnings</span><span class="outcome-value ${monitoringActive ? "on" : "attention"}">${monitoringActive ? "Active" : "Off"}</span></div>
-      <div class="outcome"><span class="outcome-label">Known gaps</span><span class="outcome-value ${knownGapCount === 0 ? "on" : "attention"}">${knownGapCount}</span></div>
-    </div>
-  </div>
+    <dl class="outcome-grid" aria-label="Protection outcomes">
+      <div class="outcome"><dt class="outcome-label">Blocking</dt><dd class="outcome-value ${blockingActive ? "on" : "attention"}">${blockingActive ? "Active" : "Needs setup"}</dd></div>
+      <div class="outcome"><dt class="outcome-label">Editor warnings</dt><dd class="outcome-value ${monitoringActive ? "on" : "attention"}">${monitoringActive ? "Active" : "Off"}</dd></div>
+      <div class="outcome"><dt class="outcome-label">Known gaps</dt><dd class="outcome-value ${knownGapCount === 0 ? "on" : "attention"}">${knownGapCount}</dd></div>
+    </dl>
+  </section>
+
+  <section class="privacy-receipt ${privacy.tone}" aria-labelledby="data-boundary-title" aria-live="polite">
+    <h2 class="privacy-title" id="data-boundary-title">${escapeHtml(privacy.title)}</h2>
+    <div class="privacy-detail">${escapeHtml(privacy.detail)}</div>
+  </section>
 
   <!-- ③ Broker + workspace pills -->
-  <div class="broker-row">
+  <div class="broker-row" role="status" aria-label="Runtime and workspace status">
     ${brokerPill}
     ${state.trusted
         ? `<span class="pill pill-trusted">Project access allowed</span>`
@@ -715,17 +911,37 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     }
   </div>
 
+  ${this.feedback ? `<div class="feedback ${this.feedback.tone}" role="status" aria-live="polite">${escapeHtml(this.feedback.message)}</div>` : ""}
+
+  ${showSetupGuide ? `
+  <section aria-labelledby="setup-guide-title">
+    <h2 class="section-label" id="setup-guide-title">New here?</h2>
+    <div class="guide-card">
+      <div class="guide-title">Get protected in three guided steps</div>
+      <div class="guide-copy">Use safe test data first, then protect secrets and connect supported AI tools.</div>
+      <ol class="guide-steps">
+        <li>See a real safety result</li>
+        <li>Protect workspace secrets</li>
+        <li>Secure supported AI tools</li>
+      </ol>
+      <button class="btn-secondary guide-button" data-action="openWalkthrough" data-focus="action:openWalkthrough" data-announcement="Opening guided setup">Open guided setup</button>
+    </div>
+  </section>` : ""}
+
   <!-- ④ Primary CTA -->
-  <div class="section-label">Next Step</div>
+  <section aria-labelledby="next-step-title">
+  <h2 class="section-label" id="next-step-title">Next Step</h2>
   <div class="cta-wrap">
     <button class="cta ${cta.tone === "calm" ? "calm" : ""}"
             data-action="${cta.action.replace("action:", "")}"
-            data-focus="${cta.action}">${escapeHtml(cta.label)}</button>
+            data-focus="${cta.action}" data-announcement="${escapeHtml(cta.label)}">${escapeHtml(cta.label)}</button>
     <div class="cta-hint">${escapeHtml(cta.hint)}</div>
   </div>
+  </section>
 
   <!-- ⑤ Quick actions -->
-  <div class="section-label">Start Here</div>
+  <section aria-labelledby="start-here-title">
+  <h2 class="section-label" id="start-here-title">Start Here</h2>
   <div class="task-grid">
     ${taskCards(startTasks)}
   </div>
@@ -733,9 +949,11 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     <summary>More security checks</summary>
     <div class="task-grid">${taskCards(moreTasks)}</div>
   </details>
+  </section>
 
   <!-- ⑥ Controls -->
-  <div class="section-label">Protection Controls</div>
+  <section aria-labelledby="controls-title">
+  <h2 class="section-label" id="controls-title">Protection Controls</h2>
   <div class="controls-list">
     ${coreControls.map(row).join("")}
   </div>
@@ -743,29 +961,43 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     <summary>Advanced agent-tool controls</summary>
     <div class="controls-list">${advancedControls.map(row).join("")}</div>
   </details>
+  </section>
 
   <!-- ⑦ Utility buttons -->
-  <div class="section-label">Tools</div>
+  <section aria-labelledby="tools-title">
+  <h2 class="section-label" id="tools-title">Tools</h2>
   <div class="actions-row">
-    <button class="btn-secondary" data-action="openCoverage" data-focus="action:openCoverage">
+    <button class="btn-secondary" data-action="openCoverage" data-focus="action:openCoverage" data-announcement="Opening protection coverage">
       What is protected
     </button>
-    <button class="btn-danger" data-action="lockdown" data-focus="action:lockdown">
+    <button class="btn-danger" data-action="lockdown" data-focus="action:lockdown" data-announcement="Opening emergency lockdown confirmation">
       Stop all AI access
     </button>
   </div>
+  </section>
+
+  <section aria-labelledby="explore-title">
+    <h2 class="section-label" id="explore-title">Explore</h2>
+    <nav class="surface-grid" aria-label="Security views">
+      <button class="surface-button" data-action="openRisk" data-focus="action:openRisk" data-announcement="Opening project risk">Project<br>Risk</button>
+      <button class="surface-button" data-action="openFindings" data-focus="action:openFindings" data-announcement="Opening latest findings">Latest<br>Findings</button>
+      <button class="surface-button" data-action="openPolicy" data-focus="action:openPolicy" data-announcement="Opening policy status">Policy &amp;<br>Cloud</button>
+    </nav>
+  </section>
 
   <!-- ⑧ Footer -->
-  <div class="footer">
-    <div class="footer-links">
+  <footer class="footer">
+    <nav class="footer-links" aria-label="SoterAI resources">
       ${footerLinks}
-    </div>
+    </nav>
     <div class="footer-meta">Detection runs locally by default. Raw secrets are not sent to SoterAI.</div>
     <details class="label-help">
       <summary>How protection labels work</summary>
       <p><strong>Blocks</strong> means SoterAI controls that routed path. <strong>Warns</strong> means SoterAI reports risk but cannot stop another extension's direct calls.</p>
     </details>
-  </div>
+  </footer>
+  <div id="operation-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+</main>
 
   <script nonce="${nonce}">
     const vscode = acquireVsCodeApi();
@@ -784,6 +1016,8 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
 
     function markBusy(el) {
       el.setAttribute('aria-busy', 'true');
+      const status = document.getElementById('operation-status');
+      if (status) status.textContent = el.getAttribute('data-announcement') || 'Applying change';
     }
 
     // Toggle switches

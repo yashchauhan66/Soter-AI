@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 import { HeaderNav } from "@/components/auth/HeaderNav";
 import { AiAssistantLoader } from "@/components/dashboard/AiAssistantLoader";
 import { IdeExtensionBanner } from "@/components/marketing/IdeExtensionBanner";
@@ -16,6 +17,7 @@ type SiteChromeProps = {
 export function SiteChrome({ children, currentYear }: SiteChromeProps) {
   const pathname = usePathname();
   const adminRoute = pathname === "/admin" || pathname?.startsWith("/admin/");
+  const homeRoute = pathname === "/";
 
   if (adminRoute) {
     return (
@@ -39,6 +41,18 @@ export function SiteChrome({ children, currentYear }: SiteChromeProps) {
           <HeaderNav />
         </div>
       </header>
+      {!homeRoute && (
+        <div className="border-b border-slate-800/60 bg-slate-950/70">
+          <div className="container-page py-2">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 rounded-md px-1 py-1 text-sm font-medium text-slate-300 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
+            >
+              <ArrowLeft size={15} aria-hidden="true" /> Back to Home
+            </Link>
+          </div>
+        </div>
+      )}
       <div id="main-content" tabIndex={-1}>
         {children}
       </div>

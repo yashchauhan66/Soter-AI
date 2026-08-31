@@ -110,7 +110,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     return true;
   }
   if (validation.type === "SOTER_GET_DESTINATION_CONTEXT") {
-    void destinationContext(String(payload.url)).then(sendResponse);
+    // v0.2.2: an unanswered port is how the guard went dark silently, so this one answers even
+    // when it fails. `unavailable` lets the content script tell "you are not on a guarded site"
+    // apart from "the worker could not tell me", which are opposite situations.
+    void destinationContext(String(payload.url))
+      .then(sendResponse)
+      .catch((error) => {
+        console.error("[soter] destination context failed", error);
+        sendResponse({ active: false, unavailable: true, message: error instanceof Error ? error.message : "unknown error" });
+      });
     return true;
   }
   if (validation.type === "SOTER_GET_SOURCE_APPS") {
@@ -139,7 +147,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       String(payload.url),
       String(payload.action),
       payload.justification ? String(payload.justification) : undefined,
-      payload.dismissedOnly === true
+      payload.dismissedOnly === true,
+      payload.eventType as ExtensionAuditEvent["eventType"],
     ).then(sendResponse);
     return true;
   }
@@ -294,13 +303,29 @@ async function initializeEnrollment() {
   }
 }
 
+/**
+ * What the content script needs to know before it installs anything.
+ *
+ * v0.2.2: nothing in here may throw. `state.policy.monitoredDomains.some(...)` was called
+ * unguarded, and a policy object without that array — a partial or proxied 200 from the policy
+ * endpoint is adopted and cached verbatim — made this reject. The message handler had no `.catch`,
+ * so `sendResponse` was never called, and `content/index.ts` resolves a missing reply to
+ * `{ active: false }`: the entire guard went dark on every guarded site, with no badge, no console
+ * error and no difference the user could see. Measured in Edge (probe A0) — 12 secrets pasted, 0
+ * detections, an extension that looked installed and enforced nothing.
+ */
 async function destinationContext(url: string) {
   const state = await getState();
-  const destination = matchAIDestination(url, state.policy?.destinations ?? [], state.config.department, state.config.role);
-  if (destination) return { active: state.enabled, destination, employeeId: state.config.employeeId, legacyMatch: true };
+  const destinations = Array.isArray(state.policy?.destinations) ? state.policy.destinations : [];
+  const monitored = Array.isArray(state.policy?.monitoredDomains) ? state.policy.monitoredDomains : [];
+  // "If Soter cannot check it, do not send it" — the content script cannot read this at the moment
+  // it matters (a scan that failed means state is unreachable), so it is answered up front.
+  const failClosedOnScanError = Boolean(state.policy?.offlineFailClosed || state.config.offlineFailClosed);
+  const destination = matchAIDestination(url, destinations, state.config.department, state.config.role);
+  if (destination) return { active: state.enabled, destination, employeeId: state.config.employeeId, legacyMatch: true, failClosedOnScanError };
   const hostname = domainFromUrl(url);
-  const legacyMatch = state.policy?.monitoredDomains.some((domain) => hostname === domain || hostname.endsWith(`.${domain}`));
-  return { active: Boolean(state.enabled && legacyMatch), destination: undefined, employeeId: state.config.employeeId, legacyMatch };
+  const legacyMatch = monitored.some((domain) => hostname === domain || hostname.endsWith(`.${domain}`));
+  return { active: Boolean(state.enabled && legacyMatch), destination: undefined, employeeId: state.config.employeeId, legacyMatch, failClosedOnScanError };
 }
 
 async function getSourceApps() {
@@ -406,7 +431,23 @@ async function handleClaimApproval(requestId: string, destination: string) {
   }
 }
 
-async function handleAuditBypass(text: string, url: string, action: string, justification?: string, dismissedOnly = false) {
+/**
+ * Records an override of an enforcement decision.
+ *
+ * `eventType` says which gesture was overridden. It used to be hardcoded to `"submit"`, so a
+ * dismissed *paste* block and a dismissed *file upload* both reached the admin console labelled
+ * as a submission — contradicting the scan event for the very same text, which correctly carried
+ * `"paste"` / `"file_upload"`. An admin filtering the log by event type saw override attempts
+ * attributed to a gesture the user never made.
+ */
+async function handleAuditBypass(
+  text: string,
+  url: string,
+  action: string,
+  justification?: string,
+  dismissedOnly = false,
+  eventType: ExtensionAuditEvent["eventType"] = "submit",
+) {
   const state = await getState();
   const api = new SoterExtensionApiClient(state.config);
   const result = scanPrompt(text, url, state);
@@ -426,7 +467,7 @@ async function handleAuditBypass(text: string, url: string, action: string, just
     detectedDataTypes: result.detectedDataTypes,
     matchedRules: result.policy.matchedRules.map((rule) => rule.id),
     redactedPreview: previewForScan(result, "prompt", 500, allowFullText),
-    eventType: "submit",
+    eventType,
     occurredAt: new Date().toISOString(),
     metadata: {
       // `dismissedOnly` = the user dismissed a hard-enforcement block WITHOUT

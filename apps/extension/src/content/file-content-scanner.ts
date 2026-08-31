@@ -3,6 +3,38 @@ import { showSoterOverlay } from "./overlay";
 import { clearBlockedFileInput, destinationDomainForFileScan, scanFileText } from "../lib/file-scan-policy";
 import { getState } from "../lib/storage";
 import { getFreshLineageContext } from "../lib/lineage-context";
+import { showCornerNotice } from "./corner-notice";
+
+/**
+ * Puts the held files back into the picker and lets the page notice, so an authorized upload
+ * continues by itself.
+ *
+ * This replaces "Approved! Please select the file again to upload." — an `alert()` that handed
+ * the user a manual step at the exact moment they had just been told they were allowed to
+ * proceed. Soter is the reason the picker is empty (it clears the input to hold the upload), so
+ * refilling it is Soter's job, not the user's. Re-dispatching `input` and `change` is what makes
+ * the page's own attachment UI reappear, which is also the user's confirmation that it worked.
+ *
+ * Our own listener runs first on the re-dispatched event and returns early, because every file
+ * in the selection is in `approvedFiles` by the time this is called — that is what stops this
+ * from looping back into the scanner.
+ */
+function restoreFileSelection(input: HTMLInputElement, files: File[]): boolean {
+  try {
+    if (!input.isConnected || typeof DataTransfer === "undefined") return false;
+    const transfer = new DataTransfer();
+    for (const file of files) transfer.items.add(file);
+    input.files = transfer.files;
+    if (input.files?.length !== files.length) return false;
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event("change", { bubbles: true }));
+    return true;
+  } catch {
+    // Some pages replace the input element between the change event and the verdict, and a
+    // detached input cannot be refilled. Better to say so than to claim the upload resumed.
+    return false;
+  }
+}
 
 export function installFileContentScanner() {
   const approvedFiles = new Set<string>();
@@ -57,13 +89,43 @@ export function installFileContentScanner() {
     if (!strongest.scanResult.hasFindings && strongest.action === "allow") return;
 
     const fileKeys = filesArray.map(f => `${f.name}:${f.size}`);
+    const held = ["block", "require_approval", "require_justification"].includes(strongest.action);
 
-    if (["block", "require_approval", "require_justification"].includes(strongest.action)) {
+    if (held) {
       clearBlockedFileInput(input);
     }
 
+    /** Called once the upload is authorized. Reports honestly whichever way it goes. */
+    const releaseUpload = () => {
+      fileKeys.forEach(key => approvedFiles.add(key));
+      if (!held) return true; // never cleared, so there is nothing to restore
+      if (restoreFileSelection(input, filesArray)) {
+        showCornerNotice({
+          key: "file-upload",
+          tone: "info",
+          title: filesArray.length > 1 ? "Files released for upload" : "File released for upload",
+          lines: ["Soter recorded the override in your organization's audit log."],
+          autoDismissMs: 6000,
+        });
+        return true;
+      }
+      showCornerNotice({
+        key: "file-upload",
+        tone: "warning",
+        title: "Select the file again to upload it",
+        lines: [
+          "The upload is authorized and recorded. Soter had emptied the file picker to hold it, and this page did not allow it to be refilled automatically.",
+        ],
+      });
+      return true;
+    };
+
     showSoterOverlay({
       result: strongest.scanResult,
+      // The dialog is about a file, so it must not talk about a prompt. It also gets no
+      // `onReplace`: a file's contents cannot be rewritten in the picker, and the overlay only
+      // renders "Use safe …" when a handler exists to back it.
+      subject: "file",
       onCopy: () => void navigator.clipboard?.writeText(strongest.redactedPreview),
       onTamper: (detail) => {
         chrome.runtime.sendMessage({
@@ -71,6 +133,9 @@ export function installFileContentScanner() {
           text: strongest.redactedPreview,
           url: location.href,
           action: strongest.action,
+          // A file, not a submitted prompt — the scan event for the same bytes carries
+          // `"file_upload"`, and the override record has to agree with it.
+          eventType: "file_upload",
           justification: `overlay tamper detected: ${detail}`,
           dismissedOnly: true,
         });
@@ -97,50 +162,57 @@ export function installFileContentScanner() {
           );
         });
       },
-      onApproved: () => {
+      onApproved: (approvalId) => {
         // Claim the one-time approval server-side. Only mark files approved if
         // the broker honors the claim.
         return new Promise<boolean>((resolve) => {
           chrome.runtime.sendMessage(
             {
               type: "SOTER_CLAIM_APPROVAL",
-              requestId: strongest.scanResult.policy?.auditMetadata?.approvalId || "",
+              // The approvalId the poll actually approved comes first. Falling back to the
+              // scan's own auditMetadata was the only source before, and on a require_approval
+              // verdict that field is usually absent — so the claim went out with an empty
+              // requestId and could only ever be rejected.
+              requestId: approvalId || strongest.scanResult.policy?.auditMetadata?.approvalId || "",
               destination: location.hostname,
             },
             (res: any) => {
               const allowed = res?.allowed === true;
-              if (allowed) {
-                fileKeys.forEach(key => approvedFiles.add(key));
-                alert("Approved! Please select the file again to upload.");
-              } else {
-                alert("Authorization could not be claimed. Upload remains blocked.");
-              }
+              // No alert() either way: the overlay reports "Authorized. Releasing your file…"
+              // or "Authorization could not be claimed. Nothing was sent." itself, inside the
+              // closed shadow root where the rest of the verdict lives.
+              if (allowed) releaseUpload();
               resolve(allowed);
             }
           );
         });
       },
       onDismissAudited: () => {
+        const hardEnforced = strongest.scanResult.policy.matchedRules.some((rule) => rule.id === "hard-enforcement-block");
         chrome.runtime.sendMessage({
           type: "SOTER_AUDIT_BYPASS",
           text: strongest.redactedPreview,
           url: location.href,
           action: strongest.action,
-          justification: "hard-enforcement block dismissed (no upload)",
+          eventType: "file_upload",
+          // Only say "hard enforcement" when the hard-enforcement rule actually matched. Every
+          // block is dismissible now, so the old unconditional string mislabelled ordinary
+          // policy blocks in the audit log.
+          justification: hardEnforced ? "hard-enforcement block dismissed (no upload)" : "block dismissed (no upload)",
           dismissedOnly: true,
         });
       },
       onBypass: (justification) => {
-        // Audit the bypass and store approved file keys
+        // Audit the bypass, then let the upload continue on its own.
         chrome.runtime.sendMessage({
           type: "SOTER_AUDIT_BYPASS",
           text: strongest.redactedPreview,
           url: location.href,
           action: strongest.action,
+          eventType: "file_upload",
           justification
         });
-        fileKeys.forEach(key => approvedFiles.add(key));
-        alert("Bypassed list updated. Please select the file again to upload.");
+        releaseUpload();
       }
     });
   }, true);

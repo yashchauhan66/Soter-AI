@@ -57,19 +57,24 @@ const soterGuardSubtitle = `={{
   ((parameters) => {
     const labels = {
       analyzeText: "Analyze Text",
+      toolCall: "Check Tool Call",
+      enrollIdentity: "Enroll Identity",
+      issuePassport: "Issue Passport",
+      revokePassport: "Revoke Passport",
       inputGuard: "Guard Input",
       outputGuard: "Guard Output",
       piiRedactor: "Redact Secrets or PII",
       ragScanner: "RAG Risk Summary",
       universalGuard: "Universal AI Firewall",
+      validatePassport: "Validate Passport",
       workflowAudit: "Workflow Audit"
     };
     const label = labels[parameters.action] || parameters.action;
     const enforcing = ["inputGuard", "outputGuard", "universalGuard"].includes(parameters.action);
     const base = enforcing ? label + " (" + String(parameters.onThreat || "BLOCK").toLowerCase() + ")" : label;
     if (parameters.action === "workflowAudit") return base;
-    const engine = String(parameters.detectionEngine || "CLOUD");
-    return engine === "CLOUD" ? base : base + " · " + engine.toLowerCase();
+    const engine = String(parameters.detectionEngine || "AUTO");
+    return engine === "AUTO" ? base : base + " · " + engine.toLowerCase();
   })($parameter)
 }}` as ExpressionString;
 
@@ -83,6 +88,13 @@ const soterGuardHints: NodeHint[] = [
     location: "outputPane",
     displayCondition: '={{ !["piiRedactor"].includes($parameter["action"]) }}',
     whenToDisplay: "beforeExecution",
+  },
+  {
+    message:
+      "Passport token fields are masked in the editor. Keep <b>Include Raw API Response</b> off for lifecycle workflows unless debugging; token-shaped keys in raw responses are redacted.",
+    type: "info",
+    location: "ndv",
+    displayCondition: '={{ ["issuePassport", "validatePassport", "toolCall"].includes($parameter["action"]) }}',
   },
   {
     message:
@@ -116,11 +128,18 @@ const soterGuardHints: NodeHint[] = [
     // a fully local guard is meaningfully weaker. Said once, on the canvas, where
     // someone reviewing the workflow rather than editing the node will see it.
     message:
-      "This guard runs on the bundled local rule engine, so no ML tier, cross-turn tracking, or reputation is applied. Read <code>{{ $json.engineDetail.limitations }}</code> on the output for the full list.",
-    type: "info",
+      "<b>Reduced protection:</b> Local is a pattern-only first filter (measured prompt-injection recall is about 18% on the published out-of-distribution corpus). It has no ML tier, cross-turn tracking, reputation, or passport enforcement. Use Auto for cloud-first production protection.",
+    type: "warning",
     location: "outputPane",
     displayCondition: '={{ $parameter["detectionEngine"] === "LOCAL" && $parameter["action"] !== "workflowAudit" }}',
     whenToDisplay: "beforeExecution",
+  },
+  {
+    message:
+      "Identity and passport lifecycle actions use server-side state. They require a SoterAI API Key (x-api-key) and never fall back to Local.",
+    type: "info",
+    location: "ndv",
+    displayCondition: '={{ ["enrollIdentity", "issuePassport", "validatePassport", "revokePassport"].includes($parameter["action"]) }}',
   },
 ];
 

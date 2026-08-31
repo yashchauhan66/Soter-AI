@@ -1,5 +1,347 @@
 # Changelog
 
+## [0.6.2] - 2026-08-31
+
+### Changed
+
+- Refreshed the packaged IDE extension with the latest Control Panel protection
+  experience, including a working **Turn on everything** action and updated product
+  guidance and screenshots.
+- Synchronized the website install page and direct VSIX download metadata with this
+  release version.
+
+## [0.6.1] - 2026-08-28
+
+### Changed
+
+- **The Control Panel now shows a live Data Boundary receipt.** It derives its
+  wording from workspace trust, privacy mode, cloud state, and telemetry level, so
+  users can see at a glance whether data stays local, cloud actions are merely
+  available, or optional redacted metadata is enabled. It never receives raw file
+  content, prompts, tokens, or secrets.
+- **Privacy opt-out now deletes pending telemetry metadata immediately.** Turning
+  SoterAI telemetry off, returning to local mode, disabling cloud, or disabling the
+  editor's telemetry clears the in-memory queue instead of retaining old metadata
+  that could become eligible later. Temporary offline and workspace-trust holds do
+  not silently change the user's explicit collection preference.
+- **Local protocol inputs and responses are now bounded.** The MCP stdio server
+  discards an oversized frame through its newline and then resumes on the next valid
+  JSON-RPC frame; a large chunk containing many individually valid messages remains
+  valid. Broker JSON responses are streamed through a 1 MiB cap and cancelled when
+  the peer exceeds it, rather than being buffered without a limit.
+- **Release CI now verifies the actual VSIX archive.** Both primary and independent
+  reproducibility builds reject missing runtime bundles, forbidden development or
+  secret-bearing files, duplicate/unsafe paths, excessive entry count, and excessive
+  uncompressed size. The verifier emits a SHA-256 and exact entry inventory, plus a
+  deterministic CycloneDX 1.6 SBOM whose file-component hashes are derived from the
+  actual archive members. Neither artifact is presented as a cryptographic signature.
+- **Broker request parsing now fails closed at the HTTP boundary.** Compressed bodies,
+  duplicate or ambiguous framing, unsafe declared lengths, invalid UTF-8, and streamed
+  bodies over the configured cap are rejected before detector or provider logic runs.
+  A deterministic 100-case malformed-body corpus verifies bounded errors and recovery.
+- **Control Panel messages now have mutation-specific schemas.** Toggle messages require
+  a real boolean and no extra fields. Actions consume only their allowlisted type and
+  ignore attacker-supplied URLs or command fields, preserving hardcoded destinations.
+- **Privacy UX now has real-host evidence.** VS Code host tests render local,
+  cloud-on-request, and optional-metadata states, and assert the Data Boundary's
+  semantic live region, theme tokens, forced-colors support, reduced-motion CSS,
+  260-pixel responsive layout, long-text wrapping, and malformed-message isolation.
+- **Signed-release evidence is now retained and fail-closed.** A verified detached
+  signature and its signing manifest are uploaded separately and hashed into finalized
+  provenance. A true CI flag without both files cannot set `signatureVerified`, and a
+  dirty build cannot claim the full signed/reproducible provenance gate.
+- **Install now points to the one-click install page.** The README's primary
+  install action is the SoterAI install page (`https://soterai.in/extensions/ide`),
+  which redirects straight into VS Code, Cursor, Windsurf/Devin, Kiro, Antigravity
+  or VSCodium. Marketplace/Open VSX links and the `.vsix` download remain as
+  secondary manual routes.
+- Windsurf install guidance notes the Devin rebrand (its URL protocol changed from
+  `windsurf:` to `devin:`), so users on either build reach the extension.
+
+## [0.6.0] - 2026-08-27
+
+### Added
+
+- **An administrator can now require a guard, not just hope it stays on.** Twenty-five
+  settings were `machine`-scoped, which stops a hostile repository from weakening a
+  guard but still lets the person at the keyboard switch protection off. Eight
+  safety-critical settings now declare a `policy` block, so Intune, Group Policy or
+  an MDM profile can pin them: `protection.enabled`, `privacyMode`, `cloud.enabled`,
+  `sentinel.enabled`, `protectedWorkspace.enabled`, `terminal.protectionMode`,
+  `secretInterceptor.enabled`, `autoVaultMigration.enabled`.
+
+  When a setting is pinned, the Control Panel shows the control as **Set by your
+  organisation**, disables its toggle, and says in one plain sentence that it was set
+  outside this editor. Clicking a pinned toggle previously appeared to work and
+  changed nothing, because VS Code keeps the managed value — the worst possible
+  outcome for a security control.
+
+  **How the detection works, and its limit.** VS Code exposes no API for reading a
+  policy value: `inspect()` reports default, global, workspace and folder layers and
+  stops. So `enterprise/managedSettings.ts` computes what those visible layers would
+  resolve to and compares it with the effective value; a mismatch means a layer the
+  extension cannot see won. That is why the wording says "set outside this editor"
+  rather than naming Group Policy — the inference proves an invisible override, not
+  which mechanism produced it. A policy pinning a setting to the value it already had
+  is invisible, which is harmless: the user sees the correct state either way.
+
+- **Telemetry now obeys the editor's own telemetry setting.** `TelemetryManager` read
+  only SoterAI's `telemetry.redactedEvents` and never `vscode.env.isTelemetryEnabled`,
+  so a user who turned telemetry off for the whole editor still had SoterAI events
+  queued. For a security product that is a compliance finding, not a preference
+  mismatch. Events now route through `env.createTelemetryLogger` (feature-detected,
+  since it postdates the `^1.85.0` floor) and the editor-wide flag is checked before
+  an event is even recorded — a queue built while telemetry is off is still data the
+  user asked us not to collect.
+
+  Second defect in the same file: `sendEventsToCloud()` returned `true` without
+  sending anything, so the queue was trimmed as though delivered. There is no reviewed
+  endpoint client, so it now returns `false` and the queue is held. A new
+  `holdReason()` states which gate is holding it, in one sentence, instead of leaving
+  a silent queue unexplained.
+
+  **Residual limitation.** No network telemetry transport ships at all, so the "send"
+  path is verified only as far as the logger. The gate itself
+  (`enterprise/telemetryGate.ts`) is pure and every branch is unit-tested; the
+  transport beyond it is unwritten, not merely untested.
+
+- **Dangerous commands in the integrated terminal are now detected as they run.**
+  `TerminalCommandRiskDetector` has 22 patterns — fork bombs, `curl | bash`, reverse
+  shells, reads of `~/.aws/credentials`, `--privileged` containers, destructive
+  `kubectl` — and none of them ran unless a user deliberately pasted a command into a
+  SoterAI input box. The only automatic terminal behaviour was one advisory per
+  session on `onDidOpenTerminal`, with a "Don't Show Again" that silenced it forever.
+  An AI agent running `rm -rf ~` in the integrated terminal produced nothing at all.
+
+  SoterAI now subscribes to `window.onDidStartTerminalShellExecution` and runs the
+  existing detector over `execution.commandLine`. A critical match shows a modal
+  naming the matched pattern; lower severities show a normal notification. Every
+  detection is recorded in the redacted timeline first, so a dismissed message can
+  still be found afterwards.
+
+  **"Don't show again" no longer silences a critical detection.** It suppresses the
+  coverage advisory only. Critical fires on every occurrence, not once per session.
+
+  **This is `MONITORED`, and it says so.** The event arrives after the shell has begun
+  the command; there is no veto and no way to recall a running process. The capability
+  registry records it as `DETECTION_ONLY` with `preExecutionBlock: false`, and when the
+  user asks how to undo it, SoterAI says plainly that it cannot undo a command the
+  shell already ran. Only the broker's controlled terminal is `ENFORCED`.
+
+  **Residual limitations.** The API postdates `^1.85.0`, so on the oldest supported
+  hosts this registers nothing (feature-detected, no throw). Even on a new host it
+  only fires for shells where VS Code shell integration is active — a shell without it
+  runs commands SoterAI never sees. External terminals and subprocesses spawned by a
+  running command are never visible.
+
+### Changed
+
+- **The palette no longer offers the same workflow twice.** Eight commands were thin
+  aliases forwarding to another command, with both halves listed in the palette:
+  `scanSelectedText`→`scanSelection`, `scanGitDiff`→`scanGitChanges`,
+  `reviewTerminalCommand`→`checkTerminalCommand`, `choosePolicyPack`→`applyPolicyPack`,
+  `openSecurityPanel`→`openControlPanel`, `scanMCPAgentTools`→`scanMCPConfigs`,
+  `openAIActivityLedger`→`openAILedger`, `generateCanaryToken`→`generateCanary`.
+  Each alias is **still declared and still registered** — a keybinding, task or another
+  extension's `executeCommand` that references one keeps working — but it no longer
+  occupies a palette row beside the command it forwards to.
+
+- **Eighteen `Show …` rows became one `SoterAI: Open Report`.** The old surface required
+  the user to know which report existed before they could look at anything, and the
+  titles read as module names. The new command lists every report with a one-line
+  description, phrased as the question it answers ("What is protected right now",
+  "Files an AI agent read"). All eighteen commands stay registered for automation; only
+  their palette rows are gone.
+
+- **The README stops advertising a command count.** "The full surface (162 commands)"
+  reads to a reviewer as an unfinished product and means nothing to a user who can
+  reach ten of them. The Commands table now names the canonical command for each
+  workflow, and a test fails if a raw count returns.
+
+- **One generated readiness document replaces the stale hand-written ones.**
+  `docs/vscode-extension-marketplace-readiness.md` claimed v0.1.0, "all 100 commands"
+  and a MIT license while the shipped package was 0.5.0 with a different command count
+  and `SEE LICENSE IN LICENSE.md`. It sat in the public repo the marketplace listing
+  links to, so a reviewer could find the contradiction before a customer did. It is
+  deleted. `docs/vscode-extension-readiness.md` replaces it and is **generated** from
+  the manifest and from guard-core source by `scripts/generate-readiness.mjs`, with
+  `readiness-doc.test.ts` failing the build the moment it drifts. Every count in it —
+  commands, palette visibility, settings, policy-pinnable settings, per-detector rule
+  totals — is read from source at generation time.
+
+  `SOTERAI-EXTENSION-TESTING-AND-MARKET-ANALYSIS.md` claimed "400+ detection rules",
+  "100+ commands" and "18 risk types". Corrected to the real figures (12 detectors,
+  186 explicit rules), with a note naming what it previously claimed — quietly editing
+  a wrong number is how the next wrong number survives.
+
+  **Residual limitation.** The generator reads the manifest and counts `pattern:` rule
+  entries in guard-core; it does not execute the detectors, so a rule that is declared
+  but unreachable would still be counted.
+
+
+
+- **An AI agent can now ask SoterAI whether an action is safe, instead of SoterAI
+  shouting from the sidebar.** Copilot agent mode and every MCP client work by
+  calling tools, and SoterAI contributed none — it had 162 commands and no way to
+  be consulted from inside the loop it is named for. `vscode.lm.registerTool` and
+  `vscode.lm.registerMcpServerDefinitionProvider` both existed in the installed
+  `@types/vscode` and neither was used.
+
+  Three tools, reachable two ways:
+
+  - **`soterai_scan_text`** — secrets, prompt injection and jailbreak attempts in
+    text the agent is about to send, write or commit. Returns a redacted copy when
+    the text held a secret. Catches content hidden by zero-width characters,
+    homoglyphs, leetspeak or base64.
+  - **`soterai_check_command`** — the 22-pattern terminal check, before the agent
+    runs the command: recursive deletes, fork bombs, `curl | bash`, reverse
+    shells, reads of `~/.aws/credentials`, privileged containers, destructive
+    `kubectl`.
+  - **`soterai_check_dependency`** — typosquats, unpinned versions,
+    install-from-URL and piped-shell installers, from either a whole install
+    command or a name and version.
+
+  In VS Code chat and Copilot agent mode they arrive as language model tools. For
+  every other agent — Claude Desktop, Cline, Continue — the same three are served
+  by a bundled MCP server (`dist/soterai-mcp-server.js`, stdio JSON-RPC), offered
+  to the editor through an MCP server definition provider so the user does not
+  hand-edit an `mcp.json`.
+
+  Both surfaces call one decision module, `src/agent/toolLogic.ts`. Two
+  implementations of "is `rm -rf /` dangerous" would mean two answers, decided by
+  which door the agent happened to come through.
+
+  **These tools are ADVISORY, and every result says so in its own `coverage`
+  field.** They return a verdict on text an agent chose to submit. An agent that
+  never calls them is unaffected, and VS Code exposes no API to force the call or
+  to intercept an agent's own file, network or terminal access. A result that
+  overstated its authority would be worse than no result: the model would relay
+  the overstatement to the user as protection.
+
+  **`engines.vscode` stays at `^1.85.0`.** Both APIs are far newer, so both are
+  feature-detected at runtime and register nothing at all on an older host.
+  Raising the floor would drop Cursor, Windsurf, Kiro and Antigravity, which the
+  Open VSX plan depends on. `soterai.showRuntimeCapabilitySummary` reports what
+  actually registered on the current host, and says plainly when the answer is
+  "nothing, because this editor does not implement the API".
+
+  `src/__tests__/agent-tools.test.ts` (45 assertions) pins the logic, the manifest,
+  and the whole MCP protocol surface without a host: verdicts for each tool, that
+  no raw secret survives into a result or across the wire, that a block verdict is
+  a successful call rather than a JSON-RPC error, that notifications get no reply,
+  and that the manifest, the registered tool table and the MCP definitions list
+  the same three names — a mismatch there is invisible at runtime, because the tool
+  is simply absent from the agent's list with no error anywhere.
+  `src/__tests__/host/agentTools.host.ts` (8 checks) then invokes each tool through
+  `vscode.lm.invokeTool` in a real editor, because a manifest test cannot tell a
+  registered tool from a contributed one that never registered.
+
+  **Residual limitations.**
+  - The MCP server is verified in three ways — unit tests against
+    `handleMcpMessage`, a real spawned-process handshake during development, and a
+    host check that the bundle the provider points at exists and is non-empty — but
+    no test drives a third-party MCP client (Claude Desktop, Cline) end to end.
+    Compatibility with those rests on the protocol, not on an executed run.
+  - The graceful no-op on a host without `vscode.lm` is asserted by the same suite
+    when run via `npm run test:host:floor` against VS Code 1.85.0. That run was not
+    executed for this change, so the floor behaviour is verified by construction
+    (feature detection plus the assertions that fire when the API is absent) rather
+    than by an executed 1.85 run.
+  - A tool result is handed to a language model and usually leaves the machine.
+    Tests assert no raw secret appears in any result, but redaction is only as good
+    as the detectors: a secret no detector recognises passes through untouched.
+
+- **SoterAI now appears where the risk happens, not only in the Command Palette.**
+  `contributes.menus` held exactly one key — `commandPalette` — with zero
+  keybindings, zero context-menu entries and zero view-welcome content. The
+  effect was that 162 working commands were reachable through 10 palette rows,
+  and only if the user remembered to be careful at the moment users are least
+  careful. Every surface below reuses an existing command; no command was added.
+
+  - **Editor right-click → SoterAI** (only with a selection): Scan Selection,
+    Scan Before Sending to AI, Redact Selection for AI, Review Selected AI Code.
+  - **Explorer right-click → SoterAI** (files only): Scan File, Add File to
+    Protected List.
+  - **Source Control toolbar**: Scan Git Changes, gated to `scmProvider == git` —
+    the last moment before a secret is committed.
+  - **Sidebar view toolbars**: Scan Workspace Risk on Project Risk; Open Settings
+    and Getting Started on the Control Panel.
+  - **`Ctrl+Alt+V` / `Cmd+Alt+V`** → Safe Paste, and **`Ctrl+Alt+S` /
+    `Cmd+Alt+S`** → Scan Before Sending to AI. Two bindings, both scoped to
+    `editorTextFocus`, both two-modifier chords so they do not shadow core keys.
+  - **View welcome content on all three tree views.** An empty Project Risk view
+    previously rendered nothing at all; it now says the score is *unknown* rather
+    than zero, and offers a scan or the safe demo. The empty-workspace case gets
+    its own message instead of offering a workspace scan with no workspace.
+
+  `src/__tests__/discoverability.test.ts` pins the manifest shape: 16 assertions
+  covering menu-to-command resolution, submenu declaration, a mandatory `when`
+  clause on every non-palette entry, the keybinding budget, mac chords, and
+  command icons for `view/title` navigation groups. Six of them fail against the
+  0.5.0 manifest.
+
+  `src/__tests__/host/discoverability.host.ts` runs the same surfaces in a real
+  extension host, because a manifest test cannot tell a wired menu from a dead
+  one. It reads the surfaces from the manifest the host loaded, then invokes each
+  the way the surface does: the Explorer entries with an explicit `Uri` for a
+  file that is *not* open, the editor submenu against a real full-document
+  selection, Safe Paste against a clipboard holding a fake key, Scan Git Changes
+  in a workspace that is not a repository, and the view toolbars with no
+  arguments. It also asserts no submenu command echoes the raw key back into a
+  user-visible surface. 9 checks, all passing on VS Code 1.104.0.
+
+  **Residual limitation.** No test can prove the menu item is *visible*: VS Code
+  exposes no API to enumerate a rendered context menu, so the `when` clauses
+  (`editorHasSelection`, `!explorerResourceIsFolder`, `scmProvider == git`) are
+  verified as declared, not as evaluated. The keybindings are likewise invoked as
+  commands — the chord-to-command binding itself is the host's to honour.
+
+### Fixed
+
+- **Add File to Protected List failed from the Explorer.** The handler read only
+  `window.activeTextEditor`, so right-clicking a file that was not open reported
+  "Open a file to protect" — the exact case the Explorer entry exists for, since
+  a `.env` is usually protected without ever being opened. It now accepts the
+  `Uri` VS Code passes from a resource menu and falls back to the active editor.
+
+A packaging and honesty pass driven by reading the shipped artifact rather than
+the source tree. Each item was reproduced before it was fixed, and each fix is
+pinned by a test or by an inspection of the VSIX file list.
+
+- **The package's own CI gate was red for a reason unrelated to its code.**
+  `npm run typecheck` — the command `signed-release.yml` and
+  `cross-ide-release.yml` both run before packaging — failed with `TS2688` on
+  `babel__core`, `babel__generator`, `babel__template`, `babel__traverse` and
+  `react-transition-group`. None of those are compiled here: `tsc` was implicitly
+  loading every folder in the monorepo root `node_modules/@types`, including
+  packages whose own `@types` dependencies are not installed in this workspace.
+  `tsconfig.json` now pins `types: ["node", "vscode"]`, which is the complete set
+  this package actually uses.
+- **A scratch file was shipping inside every VSIX.** `aadhaar-check.ts`, a
+  throwaway India-PII probe at the package root, travelled to users because
+  `.vscodeignore` excluded `src/**` and named `canaryVerify.ts` explicitly — a
+  rule that stops working the moment a second scratch file appears. Root-level
+  `*.ts` is now excluded as a class.
+- **A fresh install showed three SoterAI status-bar items, two of them saying
+  "Off".** 0.4.1 consolidated six status-bar entries into one honest summary, but
+  `WorkspaceGuard` and `AISentinel` still called `show()` in both branches of
+  their update, so "Protected Off" and "Sentinel Off" remained permanent
+  furniture. Both now `hide()` while disabled; their state is already reported in
+  the consolidated tooltip, so nothing is lost.
+- **An untrusted workspace could still switch off the secret interceptor.**
+  `soterai.secretInterceptor.enabled` was `machine`-scoped but missing from
+  `capabilities.untrustedWorkspaces.restrictedConfigurations`, so it was the one
+  safety-relevant setting that still applied in Restricted Mode. The count of
+  hardened settings in the README moves from 23 to 25 accordingly, and a new test
+  derives that number from the manifest instead of trusting the prose.
+- **Four dead walkthrough pages were packaged in every release.**
+  `media/walkthrough/explore.md`, `policy.md`, `privacy.md` and `scan.md` were
+  orphaned when 0.5.0 cut onboarding from five steps to three. `explore.md` was
+  worse than dead weight: it told users the Command Palette shows "12 core
+  commands" when it shows 10. `manifest-assets.test.ts` previously checked only
+  that referenced assets exist; it now also fails on any walkthrough page the
+  manifest does not reference.
+
 ## [0.5.0] - 2026-08-15
 
 ### Changed

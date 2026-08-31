@@ -70,6 +70,31 @@ if (manifest.manifest_version !== 3) errors.push(`manifest_version must be 3 (fo
 if (!manifest.name) errors.push("Missing name.");
 if (!manifest.description || manifest.description.length > 132) errors.push("description missing or >132 chars.");
 if (!/^\d+\.\d+\.\d+(\.\d+)?$/.test(manifest.version ?? "")) errors.push(`Invalid version "${manifest.version}".`);
+
+// --- One version, everywhere -------------------------------------------------
+// `SOTER_EXTENSION_VERSION` is what every heartbeat and audit event reports, so it is the
+// version an administrator sees in the console — while the manifest is the version the store
+// and the user see. Nothing kept the two in step: the constant sat at 0.2.1 through a manifest
+// bump and the fleet would have been misreported as a build it was not running.
+const versionSources = [];
+try {
+  const pkg = JSON.parse(readFileSync(resolve(extensionRoot, "package.json"), "utf8"));
+  versionSources.push(["apps/extension/package.json", pkg.version]);
+} catch {
+  warnings.push("Could not read apps/extension/package.json to cross-check the version.");
+}
+try {
+  const constantsPath = resolve(extensionRoot, "../../packages/shared/src/constants.ts");
+  const match = readFileSync(constantsPath, "utf8").match(/SOTER_EXTENSION_VERSION\s*=\s*["']([^"']+)["']/);
+  versionSources.push(["packages/shared/src/constants.ts (SOTER_EXTENSION_VERSION)", match?.[1]]);
+} catch {
+  warnings.push("Could not read packages/shared/src/constants.ts to cross-check the version.");
+}
+for (const [where, value] of versionSources) {
+  if (value !== manifest.version) {
+    errors.push(`Version mismatch: manifest is ${manifest.version} but ${where} is ${value ?? "unset"}.`);
+  }
+}
 if (!manifest.action?.default_popup) errors.push("action.default_popup missing.");
 for (const size of ["16", "48", "128"]) {
   const icon = manifest.icons?.[size];

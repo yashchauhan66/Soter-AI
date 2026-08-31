@@ -5,6 +5,7 @@
 # Source & build config
 src/**
 benchmarks/**
+benchmark-results/**
 esbuild.js
 esbuild.host-tests.js
 tsconfig.json
@@ -36,11 +37,21 @@ dist-test/**
 .gitignore
 .vscodeignore
 **/.DS_Store
+# Root-level scratch/verification scripts. `canaryVerify.ts` was excluded by
+# name, which only worked until the next one appeared: `aadhaar-check.ts` was
+# shipping inside the VSIX because no pattern covered top-level TypeScript.
+# `src/**` does not match the package root, so exclude that whole class here.
+*.ts
 canaryVerify.ts
 test_output*.txt
 
 # Ad-hoc / large assets
 *.vsix
+
+# Internal engineering documents. README.md, CHANGELOG.md and LICENSE.md are the
+# only markdown a user should receive; anything else at the package root is for
+# contributors and must not travel inside the VSIX.
+FINAL-MASTER-PROMPT.md
 
 # Stale test/typecheck logs — `*.log` is gitignored, but vsce does not read
 # .gitignore, so these were shipping inside the VSIX (0.4.1 shipped a 160 KB

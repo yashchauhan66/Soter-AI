@@ -1,16 +1,18 @@
 {
-  "generatedAt": "2026-08-15T13:07:30.572Z",
-  "extensionVersion": "0.5.0",
+  "generatedAt": "2026-08-31T12:10:15.907Z",
+  "extensionVersion": "0.6.2",
   "totals": {
-    "declared": 162,
-    "driven": 16,
-    "named": 8,
-    "untested": 138,
-    "hiddenFromPalette": 1
+    "declared": 163,
+    "driven": 20,
+    "named": 10,
+    "untested": 133,
+    "hiddenFromPalette": 27
   },
   "hostTestFiles": [
+    "agentTools.host.ts",
     "commandSweep.host.ts",
     "controlPanel.host.ts",
+    "discoverability.host.ts",
     "index.ts",
     "probe.host.ts",
     "realUser.host.ts"
@@ -19,6 +21,13 @@
     {
       "id": "soterai.openControlPanel",
       "title": "SoterAI: Open Control Panel",
+      "hiddenFromPalette": false,
+      "status": "UNTESTED",
+      "hostFiles": []
+    },
+    {
+      "id": "soterai.openReport",
+      "title": "SoterAI: Open Report",
       "hiddenFromPalette": false,
       "status": "UNTESTED",
       "hostFiles": []
@@ -82,7 +91,7 @@
     {
       "id": "soterai.scanSelectedText",
       "title": "SoterAI: Scan Selected Text",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
@@ -175,42 +184,42 @@
     {
       "id": "soterai.scanGitDiff",
       "title": "SoterAI: Scan Git Diff",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
     {
       "id": "soterai.reviewTerminalCommand",
       "title": "SoterAI: Review Terminal Command",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
     {
       "id": "soterai.scanMCPAgentTools",
       "title": "SoterAI: Scan MCP / Agent Tools",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
     {
       "id": "soterai.openAIActivityLedger",
       "title": "SoterAI: Open AI Activity Ledger",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
     {
       "id": "soterai.generateCanaryToken",
       "title": "SoterAI: Generate Canary Token",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
     {
       "id": "soterai.choosePolicyPack",
       "title": "SoterAI: Choose Policy Pack",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
@@ -218,8 +227,10 @@
       "id": "soterai.scanCurrentFile",
       "title": "SoterAI: Scan Current File",
       "hiddenFromPalette": false,
-      "status": "UNTESTED",
-      "hostFiles": []
+      "status": "DRIVEN",
+      "hostFiles": [
+        "discoverability.host.ts"
+      ]
     },
     {
       "id": "soterai.scanSelection",
@@ -259,7 +270,7 @@
     {
       "id": "soterai.openSecurityPanel",
       "title": "SoterAI: Open Security Panel",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
@@ -317,7 +328,7 @@
     {
       "id": "soterai.showProtectedFiles",
       "title": "SoterAI: Show Protected Files",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
@@ -359,7 +370,7 @@
     {
       "id": "soterai.showFileReadLog",
       "title": "SoterAI: Show AI Agent File-Read Access Log",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
@@ -492,7 +503,7 @@
     {
       "id": "soterai.showWhatAISawLastSession",
       "title": "SoterAI: Show What AI Saw Last Session",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
@@ -541,7 +552,7 @@
     {
       "id": "soterai.verifyNoCanaryInLogs",
       "title": "SoterAI: Verify No Canary in Logs/Reports",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
@@ -562,7 +573,7 @@
     {
       "id": "soterai.showAIExtensions",
       "title": "SoterAI: Show AI Extensions",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
@@ -576,7 +587,7 @@
     {
       "id": "soterai.showCoverageMatrix",
       "title": "SoterAI: Show AI Route Coverage",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "DRIVEN",
       "hostFiles": [
         "realUser.host.ts"
@@ -592,7 +603,7 @@
     {
       "id": "soterai.showMCPToolPermissions",
       "title": "SoterAI: Show MCP Tool Permissions",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
@@ -640,7 +651,7 @@
     {
       "id": "soterai.showBrokerStatus",
       "title": "SoterAI: Show Broker Status",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "DRIVEN",
       "hostFiles": [
         "realUser.host.ts"
@@ -649,14 +660,14 @@
     {
       "id": "soterai.showRuntimeCapabilitySummary",
       "title": "SoterAI: Show Runtime Capability Summary",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
     {
       "id": "soterai.showExtensionIsolationSummary",
       "title": "SoterAI: Show Extension Isolation Summary",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
@@ -738,7 +749,7 @@
     {
       "id": "soterai.showAISafeModeRules",
       "title": "SoterAI: Show AI Safe Mode Rules",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
@@ -787,14 +798,14 @@
     {
       "id": "soterai.showWhatAISaw",
       "title": "SoterAI: Show What AI Saw",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
     {
       "id": "soterai.showBlockedAIContext",
       "title": "SoterAI: Show Blocked AI Context",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
@@ -829,7 +840,7 @@
     {
       "id": "soterai.showActiveAIApprovals",
       "title": "SoterAI: Show Active AI Approvals",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
@@ -861,7 +872,7 @@
     {
       "id": "soterai.showAITimeline",
       "title": "SoterAI: Show AI Activity Timeline",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
@@ -922,15 +933,19 @@
       "id": "soterai.showProtectedFilesList",
       "title": "SoterAI: Show Protected Files List",
       "hiddenFromPalette": false,
-      "status": "UNTESTED",
-      "hostFiles": []
+      "status": "DRIVEN",
+      "hostFiles": [
+        "discoverability.host.ts"
+      ]
     },
     {
       "id": "soterai.addFileToProtected",
       "title": "SoterAI: Add File to Protected List",
       "hiddenFromPalette": false,
-      "status": "UNTESTED",
-      "hostFiles": []
+      "status": "DRIVEN",
+      "hostFiles": [
+        "discoverability.host.ts"
+      ]
     },
     {
       "id": "soterai.removeFileFromProtected",
@@ -949,7 +964,7 @@
     {
       "id": "soterai.showWorkspaceRiskScore",
       "title": "SoterAI: Show Workspace Risk Score",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
@@ -957,8 +972,10 @@
       "id": "soterai.scanWorkspaceRisk",
       "title": "SoterAI: Scan Workspace Risk",
       "hiddenFromPalette": false,
-      "status": "UNTESTED",
-      "hostFiles": []
+      "status": "NAMED",
+      "hostFiles": [
+        "discoverability.host.ts"
+      ]
     },
     {
       "id": "soterai.openMCPToolFirewall",
@@ -1005,7 +1022,7 @@
     {
       "id": "soterai.showMemoryPoisoningFindings",
       "title": "SoterAI: Show Memory Poisoning Findings",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },
@@ -1127,8 +1144,10 @@
       "id": "soterai.openWalkthrough",
       "title": "SoterAI: Open Getting Started Walkthrough",
       "hiddenFromPalette": false,
-      "status": "UNTESTED",
-      "hostFiles": []
+      "status": "NAMED",
+      "hostFiles": [
+        "controlPanel.host.ts"
+      ]
     },
     {
       "id": "soterai.applyFindingFix",
@@ -1150,8 +1169,10 @@
       "id": "soterai.safePaste",
       "title": "SoterAI: Safe Paste (scan clipboard, then paste)",
       "hiddenFromPalette": false,
-      "status": "UNTESTED",
-      "hostFiles": []
+      "status": "DRIVEN",
+      "hostFiles": [
+        "discoverability.host.ts"
+      ]
     },
     {
       "id": "soterai.setupBrokerIntegration",
@@ -1188,7 +1209,7 @@
     {
       "id": "soterai.showEgressFirewallStatus",
       "title": "SoterAI: Show AI Egress Firewall Status",
-      "hiddenFromPalette": false,
+      "hiddenFromPalette": true,
       "status": "UNTESTED",
       "hostFiles": []
     },

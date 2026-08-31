@@ -37,6 +37,24 @@ export interface MessageContract {
   scope: MessageScope;
   /** Upper bound on the serialised message, in characters. */
   maxChars: number;
+  /**
+   * Whether a content script running in a sub-frame (`sender.frameId !== 0`) may send
+   * this type. Default `false`.
+   *
+   * The manifest declares `all_frames: true` on every content_scripts entry, so the
+   * guard genuinely runs inside iframes — and real AI products (and every embedded
+   * chat widget) render their composer in one. A blanket top-frame-only rule silently
+   * un-protected all of them: the sub-frame's `SOTER_GET_DESTINATION_CONTEXT` was
+   * rejected, so it never learned it was on a guarded destination and installed no
+   * interceptor, and a secret pasted into a framed composer left the browser.
+   *
+   * So the rule is per-type instead of blanket. Opted in: the types a framed composer
+   * needs to be protected at all (context, scan, approval lifecycle, audit). Left
+   * top-frame-only: `SOTER_DISCOVER_SHADOW_AI`, because a sub-frame is not the
+   * destination the user navigated to — any ad or widget iframe would otherwise
+   * report itself as discovered shadow AI.
+   */
+  allowSubframes?: boolean;
   /** Returns the validated payload, or `null` to reject the message. */
   parse: (message: Record<string, unknown>) => Record<string, unknown> | null;
 }
@@ -234,6 +252,7 @@ export const MESSAGE_CONTRACTS: Record<string, MessageContract> = {
   SOTER_SCAN_TEXT: {
     scope: "any_internal",
     maxChars: MAX_MESSAGE_CHARS,
+    allowSubframes: true,
     parse: (message) => {
       const text = str(message.text, MAX_TEXT_CHARS);
       const url = pageUrl(message.url);
@@ -250,10 +269,11 @@ export const MESSAGE_CONTRACTS: Record<string, MessageContract> = {
   SOTER_HEARTBEAT: { scope: "extension_page", maxChars: 2048, parse: () => ({}) },
   // v0.2.0: self-service trial mode. Extension-page only — a web page can never start a trial.
   SOTER_START_TRIAL: { scope: "extension_page", maxChars: 2048, parse: () => ({}) },
-  SOTER_GET_SOURCE_APPS: { scope: "any_internal", maxChars: 2048, parse: () => ({}) },
+  SOTER_GET_SOURCE_APPS: { scope: "any_internal", maxChars: 2048, allowSubframes: true, parse: () => ({}) },
   SOTER_REQUEST_APPROVAL: {
     scope: "any_internal",
     maxChars: MAX_MESSAGE_CHARS,
+    allowSubframes: true,
     parse: (message) => {
       const text = str(message.text, MAX_TEXT_CHARS);
       const url = pageUrl(message.url);
@@ -276,6 +296,7 @@ export const MESSAGE_CONTRACTS: Record<string, MessageContract> = {
   SOTER_GET_DESTINATION_CONTEXT: {
     scope: "any_internal",
     maxChars: 8192,
+    allowSubframes: true,
     parse: (message) => {
       const url = pageUrl(message.url);
       if (url === null) return null;
@@ -285,6 +306,10 @@ export const MESSAGE_CONTRACTS: Record<string, MessageContract> = {
   SOTER_DISCOVER_SHADOW_AI: {
     scope: "content_script",
     maxChars: 8192,
+    // Stated explicitly, not left to the default: a sub-frame is not the destination the user
+    // navigated to, so any ad or widget iframe could otherwise report itself as discovered
+    // shadow AI. See MSG-007c/MSG-007d.
+    allowSubframes: false,
     parse: (message) => {
       // `employeeId` is intentionally not accepted: the worker uses enrolled identity.
       const domain = str(message.domain, 253);
@@ -298,6 +323,7 @@ export const MESSAGE_CONTRACTS: Record<string, MessageContract> = {
   SOTER_FILE_SCAN_EVENT: {
     scope: "content_script",
     maxChars: 131_072,
+    allowSubframes: true,
     parse: (message) => {
       const event = fileScanEvent(message.event);
       if (event === null) return null;
@@ -307,6 +333,7 @@ export const MESSAGE_CONTRACTS: Record<string, MessageContract> = {
   SOTER_CHECK_APPROVAL_STATUS: {
     scope: "any_internal",
     maxChars: 4096,
+    allowSubframes: true,
     parse: (message) => {
       const approvalId = str(message.approvalId, 200);
       if (approvalId === null || approvalId.length === 0) return null;
@@ -316,6 +343,7 @@ export const MESSAGE_CONTRACTS: Record<string, MessageContract> = {
   SOTER_CLAIM_APPROVAL: {
     scope: "any_internal",
     maxChars: 4096,
+    allowSubframes: true,
     parse: (message) => {
       const requestId = str(message.requestId, 200);
       const destination = str(message.destination, 253);
@@ -326,14 +354,20 @@ export const MESSAGE_CONTRACTS: Record<string, MessageContract> = {
   SOTER_AUDIT_BYPASS: {
     scope: "any_internal",
     maxChars: MAX_MESSAGE_CHARS,
+    allowSubframes: true,
     parse: (message) => {
       const text = str(message.text, MAX_TEXT_CHARS);
       const url = pageUrl(message.url);
       const action = enumValue(message.action, ACTION_VALUES);
       const justification = optionalStr(message.justification, 2000);
       if (text === null || url === null || action === null || justification === null) return null;
+      // Which gesture was overridden. Defaulted rather than required, so an older content script
+      // still validates; the audit record used to hardcode "submit" even for a paste that was
+      // never submitted or a file that was never uploaded.
+      const eventType = message.eventType === undefined ? "submit" : enumValue(message.eventType, EVENT_TYPES);
+      if (eventType === null) return null;
       return {
-        text, url, action, dismissedOnly: bool(message.dismissedOnly),
+        text, url, action, eventType, dismissedOnly: bool(message.dismissedOnly),
         ...(justification === undefined ? {} : { justification }),
       };
     },
@@ -394,8 +428,9 @@ export function validateRuntimeMessage(
 
   const fromContentScript = isContentScriptSender(sender);
   const fromExtensionPage = isExtensionPageSender(sender, runtimeId);
+  const fromSubframe = sender.frameId !== undefined && sender.frameId !== 0;
   if (contract.scope === "content_script" && !fromContentScript) {
-    if (sender.tab && sender.frameId !== undefined && sender.frameId !== 0) {
+    if (sender.tab && fromSubframe) {
       return { ok: false, code: "subframe_sender", reason: "Message came from a subframe." };
     }
     return { ok: false, code: "wrong_scope", reason: `${type} is only accepted from a content script.` };
@@ -406,9 +441,16 @@ export function validateRuntimeMessage(
   if (contract.scope === "any_internal" && !fromContentScript && !fromExtensionPage) {
     return { ok: false, code: "wrong_scope", reason: `${type} came from neither a content script nor an extension page.` };
   }
-  // Content scripts are declared without `all_frames`, so only the top frame is real.
-  if (fromContentScript && sender.frameId !== undefined && sender.frameId !== 0) {
-    return { ok: false, code: "subframe_sender", reason: "Message came from a subframe; only top-level frames are accepted." };
+  // The manifest declares `all_frames: true`, so content scripts DO run in iframes and a
+  // framed composer is a real destination. Per-type opt-in (see `allowSubframes`) rather
+  // than a blanket rule, so protection reaches framed composers while types that are only
+  // meaningful for the document the user navigated to stay top-frame-only.
+  if (fromContentScript && fromSubframe && contract.allowSubframes !== true) {
+    return {
+      ok: false,
+      code: "subframe_sender",
+      reason: `${type} is only accepted from a top-level frame.`,
+    };
   }
 
   let serialised: string;

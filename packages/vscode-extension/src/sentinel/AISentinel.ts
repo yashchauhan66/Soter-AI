@@ -3,7 +3,7 @@ import * as vscode from "vscode";
 export interface SentinelEvent {
     id: string;
     timestamp: number;
-    type: "file_change" | "protected_access" | "mcp_config_change" | "repo_instruction_change" | "canary_hit" | "extension_change" | "config_change";
+    type: "file_change" | "protected_access" | "mcp_config_change" | "repo_instruction_change" | "canary_hit" | "extension_change" | "config_change" | "terminal_command";
     risk: "low" | "medium" | "high" | "critical";
     source: string;
     filePath?: string;
@@ -99,13 +99,18 @@ export class AISentinel implements vscode.Disposable {
         return this.events.filter((e) => e.risk === "high" || e.risk === "critical");
     }
 
-    recordEvent(event: Omit<SentinelEvent, "id" | "timestamp">): void {
+    recordEvent(event: Omit<SentinelEvent, "id" | "timestamp">, options?: { notify?: boolean }): void {
         this.pruneExpired();
         const full: SentinelEvent = { ...event, id: `sent_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`, timestamp: Date.now() };
         this.events.push(full);
         if (this.events.length > this.maxEvents) this.events.splice(0, this.events.length - this.maxEvents);
         void this.context.globalState.update("soterai.sentinelEvents", this.events);
 
+        // `notify: false` is for callers that already told the user themselves.
+        // The terminal watcher (Gap 4) shows a modal naming the matched pattern,
+        // and a second generic Sentinel toast for the same event would read as
+        // two findings.
+        if (options?.notify === false) return;
         if (event.risk === "high" || event.risk === "critical") {
             vscode.window.showWarningMessage(`[SoterAI Sentinel] ${event.risk.toUpperCase()}: ${event.redactedEvidence}`);
         }
@@ -228,14 +233,17 @@ export class AISentinel implements vscode.Disposable {
     }
 
     private updateStatusBar(): void {
-        if (this.enabled) {
-            const highRisk = this.getHighRiskEvents().length;
-            this.statusBarItem.text = `$(eye) Sentinel${highRisk > 0 ? ` (${highRisk})` : ""}`;
-            this.statusBarItem.tooltip = `AI Activity Sentinel: Active. ${this.events.length} events, ${highRisk} high-risk.`;
-        } else {
-            this.statusBarItem.text = "$(eye-closed) Sentinel Off";
-            this.statusBarItem.tooltip = "AI Activity Sentinel is disabled.";
+        // Same rule as WorkspaceGuard: an item that only ever says "Off" is not
+        // status, it is clutter. The consolidated item in extension.ts already
+        // reports Sentinel state in its tooltip, so this entry appears only
+        // while the Sentinel is actually recording.
+        if (!this.enabled) {
+            this.statusBarItem.hide();
+            return;
         }
+        const highRisk = this.getHighRiskEvents().length;
+        this.statusBarItem.text = `$(eye) Sentinel${highRisk > 0 ? ` (${highRisk})` : ""}`;
+        this.statusBarItem.tooltip = `AI Activity Sentinel: Active. ${this.events.length} events, ${highRisk} high-risk.`;
         this.statusBarItem.show();
     }
 

@@ -1,5 +1,5 @@
 export const EXTENSION_ID = 'soterai.soterai-ide-guard';
-export const EXTENSION_VERSION = '0.6.0';
+export const EXTENSION_VERSION = '0.6.2';
 export const EXTENSION_DISPLAY_NAME = 'SoterAI IDE Guard — Local AI Security';
 export const EXTENSION_SEARCH_NAME = 'SoterAI IDE Guard';
 

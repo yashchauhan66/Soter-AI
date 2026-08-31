@@ -2,6 +2,27 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.7.0] - 2026-08-29
+
+### Added
+
+- First-class **Enroll Identity**, **Issue Passport**, **Validate Passport**, **Check Tool Call**, and **Revoke Passport** actions, including the previously missing `passportToken` input.
+- Least-privilege Read Only, Customer Support, and Coding Agent policy presets, with custom JSON overlays.
+- Importable end-to-end passport lifecycle workflow with no embedded credential or token.
+- Stable `verdictCode`, `enforcement`, `contentVerdict`, `reputationVerdict`, and `schemaVersion` output semantics.
+- Local redaction for Aadhaar, PAN, GSTIN, Voter ID/EPIC, and Indian driving licences, with mixed-identifier regression coverage.
+
+### Fixed
+
+- Session IDs now reach guard APIs as top-level schema fields, enabling actual multi-turn correlation and session-isolated reputation.
+- Reputation no longer rewrites clean benign content into a fake content block, even when the caller reputation is BANNED; risky probes remain gated.
+- Empty and whitespace-only text now returns an `EMPTY_INPUT` safe no-op without a network request.
+
+### Changed
+
+- Auto is the default for new nodes and remains cloud-first. Local mode has a prominent measured-recall warning.
+- Credential type explicitly documents `x-api-key` and never implies Bearer-token reuse.
+
 ## [0.6.2] - 2026-08-26
 
 Packaging-only release. No behaviour change: detection, verdicts, outputs, and every parameter are identical to 0.6.1.

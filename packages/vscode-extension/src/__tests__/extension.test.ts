@@ -217,15 +217,24 @@ describe("Launch readiness command surface", () => {
 
 describe("Marketplace README media hygiene", () => {
     it("shows verified VS Code evidence screenshots in the Marketplace README", () => {
+        // Screenshots are referenced by absolute URL (hosted on soterai.in) so they
+        // render on BOTH the VS Code Marketplace and Open VSX. Open VSX does not
+        // resolve README-relative image paths, so a relative `media/...` reference
+        // is silently dropped from the Open VSX listing even though the file ships
+        // in the VSIX. The local file stays the source of truth that is deployed to
+        // the website and still bundled in the VSIX as a fallback.
         const screenshots = [
-            "media/marketplace/secret-scan-result.png",
-            "media/marketplace/scan-selection-result.png",
-            "media/marketplace/safe-mode-enabled.png",
+            "control-panel-protection.png",
+            "secret-scan-result.png",
+            "scan-selection-result.png",
+            "safe-mode-enabled.png",
         ];
-        for (const image of screenshots) {
-            assert.ok(readmeSrc.includes(image), `README must render ${image}`);
-            assert.ok(fs.existsSync(path.join(root, image)), `missing Marketplace screenshot ${image}`);
-            assert.ok(!vscodeIgnoreSrc.includes(image), `Marketplace screenshot is excluded from the VSIX: ${image}`);
+        for (const name of screenshots) {
+            const url = `https://soterai.in/marketplace/screenshots/${name}`;
+            const local = `media/marketplace/${name}`;
+            assert.ok(readmeSrc.includes(url), `README must render the absolute URL ${url}`);
+            assert.ok(fs.existsSync(path.join(root, local)), `missing Marketplace screenshot source ${local}`);
+            assert.ok(!vscodeIgnoreSrc.includes(local), `Marketplace screenshot is excluded from the VSIX: ${local}`);
         }
     });
 });
@@ -238,8 +247,17 @@ describe("Local-first privacy mode", () => {
     });
 
     it("prevents telemetry flush in local mode and untrusted workspaces", () => {
-        assert.match(telemetrySrc, /privacyMode === "local"/);
-        assert.match(telemetrySrc, /!vscode\.workspace\.isTrusted/);
+        // The gate moved into `enterprise/telemetryGate.ts` so each branch of
+        // "may this leave the machine?" is exercised by a real unit test rather
+        // than a source-string match (see enterprise-policy.test.ts). What must
+        // stay true here is that telemetry.ts still routes through that gate and
+        // still feeds it privacy mode and workspace trust.
+        const gateSrc = read("src/enterprise/telemetryGate.ts");
+        assert.match(telemetrySrc, /shouldSend\(/);
+        assert.match(telemetrySrc, /privacyMode: config\.get<string>\("privacyMode", "local"\)/);
+        assert.match(telemetrySrc, /trusted: vscode\.workspace\.isTrusted/);
+        assert.match(gateSrc, /privacyMode === "local"/);
+        assert.match(gateSrc, /input\.trusted/);
     });
 
     it("health reports never include raw secrets or prompt text", () => {
@@ -386,12 +404,18 @@ describe("Local AI Broker, Safe Mode, and Memory Inspector", () => {
 });
 
 describe("Command-palette hygiene (clutter control)", () => {
+    // Gap 5 changed two of these deliberately:
+    //   - `scanGitDiff` was the alias; `scanGitChanges` is the command that does
+    //     the work, so the canonical id is the one the palette offers.
+    //   - `openReport` is the single row that replaced eighteen `show*` rows, so
+    //     it has to be reachable without enabling the advanced surface.
     const core = [
         "soterai.openControlPanel",
-        "soterai.runDemoScan", "soterai.scanCurrentFile", "soterai.scanGitDiff",
+        "soterai.runDemoScan", "soterai.scanCurrentFile", "soterai.scanGitChanges",
         "soterai.openWalkthrough", "soterai.scanClipboard", "soterai.checkBeforeSendingToAI",
         "soterai.autoMigrateWorkspace",
         "soterai.secureAllAI", "soterai.restoreAIConfigs",
+        "soterai.openReport",
     ];
     const palette: Array<{ command: string; when?: string }> = pkg.contributes.menus?.commandPalette ?? [];
     const gated = new Map(palette.map((e) => [e.command, e.when]));
@@ -402,11 +426,12 @@ describe("Command-palette hygiene (clutter control)", () => {
         }
     });
 
-    it("keeps the default palette to ten clear, reversible newcomer workflows", () => {
-        assert.strictEqual(core.length, 10);
+    it("keeps the default palette to a small set of clear, reversible newcomer workflows", () => {
+        assert.strictEqual(core.length, 11);
         assert.ok(core.includes("soterai.autoMigrateWorkspace"), "vault migration must be discoverable");
         assert.ok(core.includes("soterai.secureAllAI"), "AI routing must be discoverable");
         assert.ok(core.includes("soterai.restoreAIConfigs"), "the reversible route must remain discoverable");
+        assert.ok(core.includes("soterai.openReport"), "the one route to every report must be discoverable");
     });
 
     it("every non-core declared command is gated behind soterai.advancedCommands (or fully hidden)", () => {

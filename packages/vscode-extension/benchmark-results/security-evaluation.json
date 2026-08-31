@@ -1,0 +1,572 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-31T12:10:49.690Z",
+  "scope": "SoterAI IDE Guard packaged deterministic DecisionEngine; self-maintained regression corpus",
+  "independence": "NOT INDEPENDENT — cases and implementation are maintained in the same repository",
+  "limitations": [
+    "Small readable corpus; not representative of all real-world code or attacks",
+    "Measures detection only, not universal interception or prevention",
+    "No competitor products are executed or compared",
+    "Synthetic credentials only"
+  ],
+  "corpus": {
+    "sha256": "ac704677dc54996c34358b778b2908b668e0488b5933c54a72b95d7b03fb9e6f",
+    "total": 41,
+    "risky": 21,
+    "benign": 20
+  },
+  "confusionMatrix": {
+    "truePositives": 21,
+    "falseNegatives": 0,
+    "trueNegatives": 20,
+    "falsePositives": 0
+  },
+  "metrics": {
+    "recall": 1,
+    "precision": 1,
+    "falsePositiveRate": 0,
+    "latencyP50Ms": 0.212,
+    "latencyP95Ms": 3.867
+  },
+  "perCategory": {
+    "jailbreak": {
+      "cases": 1,
+      "detected": 1,
+      "recall": 1
+    },
+    "mcp-config": {
+      "cases": 2,
+      "detected": 2,
+      "recall": 1
+    },
+    "pii": {
+      "cases": 2,
+      "detected": 2,
+      "recall": 1
+    },
+    "prompt-injection": {
+      "cases": 4,
+      "detected": 4,
+      "recall": 1
+    },
+    "repo-instruction": {
+      "cases": 1,
+      "detected": 1,
+      "recall": 1
+    },
+    "secret": {
+      "cases": 4,
+      "detected": 4,
+      "recall": 1
+    },
+    "terminal": {
+      "cases": 5,
+      "detected": 5,
+      "recall": 1
+    },
+    "unsafe-code": {
+      "cases": 2,
+      "detected": 2,
+      "recall": 1
+    }
+  },
+  "failures": [],
+  "outcomes": [
+    {
+      "id": "secret-openai",
+      "category": "secret",
+      "context": "file",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "block",
+      "riskScore": 70,
+      "findingCategories": [
+        "mcp_api_key",
+        "openai_api_key"
+      ],
+      "latencyMs": 41.45
+    },
+    {
+      "id": "secret-anthropic",
+      "category": "secret",
+      "context": "selection",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "redact",
+      "riskScore": 40,
+      "findingCategories": [
+        "anthropic_api_key"
+      ],
+      "latencyMs": 18.979
+    },
+    {
+      "id": "secret-aws",
+      "category": "secret",
+      "context": "file",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "redact",
+      "riskScore": 40,
+      "findingCategories": [
+        "aws_access_key"
+      ],
+      "latencyMs": 0.531
+    },
+    {
+      "id": "secret-github",
+      "category": "secret",
+      "context": "git",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "redact",
+      "riskScore": 38,
+      "findingCategories": [
+        "github_token"
+      ],
+      "latencyMs": 2.125
+    },
+    {
+      "id": "pii-aadhaar",
+      "category": "pii",
+      "context": "selection",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "warn",
+      "riskScore": 30,
+      "findingCategories": [
+        "aadhaar"
+      ],
+      "latencyMs": 1.151
+    },
+    {
+      "id": "pii-pan",
+      "category": "pii",
+      "context": "file",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "warn",
+      "riskScore": 28,
+      "findingCategories": [
+        "pan"
+      ],
+      "latencyMs": 0.695
+    },
+    {
+      "id": "injection-direct",
+      "category": "prompt-injection",
+      "context": "prompt",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "redact",
+      "riskScore": 65,
+      "findingCategories": [
+        "prompt_injection"
+      ],
+      "latencyMs": 0.445
+    },
+    {
+      "id": "injection-negation",
+      "category": "prompt-injection",
+      "context": "file",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "redact",
+      "riskScore": 35,
+      "findingCategories": [
+        "prompt_injection"
+      ],
+      "latencyMs": 0.288
+    },
+    {
+      "id": "injection-split",
+      "category": "prompt-injection",
+      "context": "selection",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "redact",
+      "riskScore": 35,
+      "findingCategories": [
+        "prompt_injection"
+      ],
+      "latencyMs": 0.504
+    },
+    {
+      "id": "exfil-http",
+      "category": "prompt-injection",
+      "context": "prompt",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "redact",
+      "riskScore": 45,
+      "findingCategories": [
+        "prompt_injection"
+      ],
+      "latencyMs": 0.313
+    },
+    {
+      "id": "jailbreak-dan",
+      "category": "jailbreak",
+      "context": "prompt",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "redact",
+      "riskScore": 60,
+      "findingCategories": [
+        "prompt_injection"
+      ],
+      "latencyMs": 0.196
+    },
+    {
+      "id": "repo-poison",
+      "category": "repo-instruction",
+      "context": "file",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "redact",
+      "riskScore": 35,
+      "findingCategories": [
+        "prompt_injection"
+      ],
+      "latencyMs": 0.485
+    },
+    {
+      "id": "unsafe-eval",
+      "category": "unsafe-code",
+      "context": "file",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "redact",
+      "riskScore": 35,
+      "findingCategories": [
+        "eval_usage"
+      ],
+      "latencyMs": 0.252
+    },
+    {
+      "id": "unsafe-child-process",
+      "category": "unsafe-code",
+      "context": "selection",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "redact",
+      "riskScore": 35,
+      "findingCategories": [
+        "command_injection"
+      ],
+      "latencyMs": 0.237
+    },
+    {
+      "id": "mcp-broad-shell",
+      "category": "mcp-config",
+      "context": "file",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "redact",
+      "riskScore": 40,
+      "findingCategories": [
+        "mcp_command_exec",
+        "mcp_config"
+      ],
+      "latencyMs": 0.434
+    },
+    {
+      "id": "terminal-rm",
+      "category": "terminal",
+      "context": "terminal",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "redact",
+      "riskScore": 40,
+      "findingCategories": [
+        "destructive_rm"
+      ],
+      "latencyMs": 3.867
+    },
+    {
+      "id": "terminal-pipe-shell",
+      "category": "terminal",
+      "context": "terminal",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "redact",
+      "riskScore": 40,
+      "findingCategories": [
+        "remote_exec"
+      ],
+      "latencyMs": 1.89
+    },
+    {
+      "id": "terminal-credentials",
+      "category": "terminal",
+      "context": "terminal",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "redact",
+      "riskScore": 35,
+      "findingCategories": [
+        "credential_access"
+      ],
+      "latencyMs": 0.202
+    },
+    {
+      "id": "terminal-privileged",
+      "category": "terminal",
+      "context": "terminal",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "warn",
+      "riskScore": 30,
+      "findingCategories": [
+        "docker_privileged"
+      ],
+      "latencyMs": 0.136
+    },
+    {
+      "id": "terminal-fork-bomb",
+      "category": "terminal",
+      "context": "terminal",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "redact",
+      "riskScore": 50,
+      "findingCategories": [
+        "fork_bomb"
+      ],
+      "latencyMs": 0.124
+    },
+    {
+      "id": "benign-fetch",
+      "category": "benign-code",
+      "context": "file",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.19
+    },
+    {
+      "id": "benign-env-reference",
+      "category": "benign-code",
+      "context": "file",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.212
+    },
+    {
+      "id": "benign-placeholder",
+      "category": "benign-code",
+      "context": "file",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.486
+    },
+    {
+      "id": "benign-instruction-doc",
+      "category": "benign-doc",
+      "context": "file",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.259
+    },
+    {
+      "id": "benign-security-doc",
+      "category": "benign-doc",
+      "context": "file",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.262
+    },
+    {
+      "id": "benign-support",
+      "category": "benign-text",
+      "context": "prompt",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.173
+    },
+    {
+      "id": "benign-review",
+      "category": "benign-text",
+      "context": "selection",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.163
+    },
+    {
+      "id": "benign-aadhaar-template",
+      "category": "benign-text",
+      "context": "file",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.173
+    },
+    {
+      "id": "benign-json",
+      "category": "benign-config",
+      "context": "file",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.15
+    },
+    {
+      "id": "mcp-node-process",
+      "category": "mcp-config",
+      "context": "file",
+      "expectedRisky": true,
+      "detectedRisky": true,
+      "decision": "redact",
+      "riskScore": 40,
+      "findingCategories": [
+        "mcp_command_exec",
+        "mcp_config"
+      ],
+      "latencyMs": 0.228
+    },
+    {
+      "id": "benign-terminal-status",
+      "category": "benign-terminal",
+      "context": "terminal",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.104
+    },
+    {
+      "id": "benign-terminal-test",
+      "category": "benign-terminal",
+      "context": "terminal",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.106
+    },
+    {
+      "id": "benign-terminal-list",
+      "category": "benign-terminal",
+      "context": "terminal",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.107
+    },
+    {
+      "id": "benign-terminal-docker",
+      "category": "benign-terminal",
+      "context": "terminal",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.12
+    },
+    {
+      "id": "benign-terminal-kubectl",
+      "category": "benign-terminal",
+      "context": "terminal",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.099
+    },
+    {
+      "id": "benign-python",
+      "category": "benign-code",
+      "context": "file",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.136
+    },
+    {
+      "id": "benign-typescript",
+      "category": "benign-code",
+      "context": "file",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.151
+    },
+    {
+      "id": "benign-policy",
+      "category": "benign-config",
+      "context": "file",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.13
+    },
+    {
+      "id": "benign-email",
+      "category": "benign-text",
+      "context": "selection",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.156
+    },
+    {
+      "id": "benign-comment",
+      "category": "benign-code",
+      "context": "git",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.2
+    },
+    {
+      "id": "benign-editor-config",
+      "category": "benign-config",
+      "context": "file",
+      "expectedRisky": false,
+      "detectedRisky": false,
+      "decision": "allow",
+      "riskScore": 0,
+      "findingCategories": [],
+      "latencyMs": 0.163
+    }
+  ]
+}

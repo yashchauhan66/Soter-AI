@@ -83,6 +83,7 @@ test('runtime-verified badges are backed by current packaged-host evidence', () 
 
 test('product screenshots used by the page are present', () => {
   for (const asset of [
+    'public/marketplace/screenshots/control-panel-protection.png',
     'public/marketplace/screenshots/secret-scan-result.png',
     'public/marketplace/screenshots/scan-selection-result.png',
     'public/marketplace/screenshots/safe-mode-enabled.png',

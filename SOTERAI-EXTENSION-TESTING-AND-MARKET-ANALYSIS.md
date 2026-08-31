@@ -1,5 +1,21 @@
 # SoterAI IDE Guard — Real User Testing Guide & Market Analysis
 
+> **Numbers in this document are corrected as of 2026-08-27.** It previously
+> advertised "400+ detection rules", "100+ commands", "140+ prompt-injection
+> rules" and "18 risk types" — none of which the packaged extension backed. The
+> VSIX bundles **12 deterministic detectors** and **no ML model**
+> (`onnxruntime` appears zero times in `dist/extension.js`; the ONNX classifier
+> is server-side only).
+>
+> Every count below now comes from
+> [`docs/vscode-extension-readiness.md`](./docs/vscode-extension-readiness.md),
+> which is generated from the manifest and from guard-core source and is asserted
+> by `readiness-doc.test.ts`. If a number here and a number there disagree, the
+> generated document is correct and this one is stale.
+>
+> The competitor columns are qualitative. A comparison figure that cannot be
+> reproduced locally is not a claim this product makes.
+
 ## 📋 Table of Contents
 1. [Real User Testing Guide (Step-by-Step)](#1-real-user-testing-guide)
 2. [Market Gaps Filled By SoterAI](#2-market-gaps-filled-by-soterai)
@@ -141,9 +157,9 @@
 - **SoterAI Solution**: Aadhaar, PAN, GSTIN, UPI, IFSC, etc. detection
 - **Market Impact**: India market ke liye unique advantage (DPDP Act compliance)
 
-### Gap #7: 🎯 **VS Code Native Integration (100+ Commands)**
+### Gap #7: 🎯 **VS Code Native Integration**
 - **Problem**: Saare competitors alag platforms/APIs hain
-- **SoterAI Solution**: Direct VSCode mein integrated — 100+ commands, 40+ features
+- **SoterAI Solution**: Direct VSCode mein integrated — native menus, keybindings, agent tools
 - **Market Impact**: Developers ke liye zero-friction security
 
 ### Gap #8: 🎯 **Zero-Dependency Semantic Classification**
@@ -170,18 +186,18 @@
 | Feature | SoterAI ✅ | Lakera ❌ | LLM Guard ⚠️ | Prompt Armor ❌ | Pangea ❌ | Cisco ⚠️ |
 |---|---|---|---|---|---|---|
 | **Local-First** | ✅ 100% local | ❌ API-only | ✅ Open source | ✅ Offline | ❌ API-only | ❌ Cloud |
-| **VSCode Extension** | ✅ 100+ commands | ❌ No | ❌ No | ❌ No | ❌ No | ❌ No |
-| **Prompt Injection** | ✅ 140+ rules | ✅ ML-based | ✅ ML | ✅ 5-layer | ✅ 3-layer | ✅ ML |
-| **Jailbreak Detection** | ✅ 64+ rules | ✅ ML | ✅ ML | ❌ Partial | ❌ Partial | ✅ Red team |
+| **VSCode Extension** | ✅ Native, in-editor | ❌ No | ❌ No | ❌ No | ❌ No | ❌ No |
+| **Prompt Injection** | ✅ 36 explicit rules | ✅ ML-based | ✅ ML | ✅ 5-layer | ✅ 3-layer | ✅ ML |
+| **Jailbreak Detection** | ✅ 19 explicit rules | ✅ ML | ✅ ML | ❌ Partial | ❌ Partial | ✅ Red team |
 | **Agent Firewall** | ✅ **Unique** | ❌ No | ❌ No | ❌ No | ❌ No | ❌ Partial |
 | **RAG Security** | ✅ **Unique** | ❌ No | ❌ No | ❌ No | ❌ No | ❌ No |
 | **Context Lineage** | ✅ **Unique** | ❌ No | ❌ No | ❌ No | ❌ No | ❌ No |
 | **Blast Radius Sim** | ✅ **Unique** | ❌ No | ❌ No | ❌ No | ❌ No | ❌ No |
 | **MCP Firewall** | ✅ **Unique** | ❌ No | ❌ No | ❌ No | ❌ No | ❌ Partial |
 | **Memory Poisoning** | ✅ **Unique** | ❌ No | ❌ No | ❌ No | ❌ No | ❌ No |
-| **PII Detection** | ✅ 15+ rules | ✅ Yes | ✅ Yes | ❌ No | ✅ Yes | ✅ Yes |
+| **PII Detection** | ✅ 7 explicit rules | ✅ Yes | ✅ Yes | ❌ No | ✅ Yes | ✅ Yes |
 | **India PII** | ✅ **Aadhaar/PAN** | ❌ No | ❌ No | ❌ No | ❌ No | ❌ No |
-| **Secrets Detection** | ✅ 20+ rules | ❌ Partial | ✅ Yes | ❌ No | ❌ No | ❌ No |
+| **Secrets Detection** | ✅ 42 explicit rules | ❌ Partial | ✅ Yes | ❌ No | ❌ No | ❌ No |
 | **SSRF Detection** | ✅ **Unique** | ❌ No | ❌ URLs | ❌ No | ❌ URLs | ❌ No |
 | **Hallucination** | ✅ 20+ rules | ❌ No | ❌ Partial | ❌ No | ❌ No | ❌ No |
 | **Bias Detection** | ✅ 20+ rules | ❌ No | ✅ Yes | ❌ No | ❌ No | ❌ No |
@@ -198,9 +214,9 @@
 | Factor | Lakera | SoterAI (Better) |
 |---|---|---|
 | **Architecture** | API-only (data leaves your machine) | **Local-first** (data stays with you) |
-| **Detection** | Black-box ML (opaque) | **400+ explicit audit-able rules** |
+| **Detection** | Black-box ML (opaque) | **186 explicit, auditable rules** |
 | **Agent Security** | None | **Complete agent firewall** |
-| **VSCode Integration** | None | **100+ commands, native** |
+| **VSCode Integration** | None | **Native, in-editor** |
 | **Offline Mode** | ❌ | ✅ Complete offline |
 | **RAG Security** | ❌ | ✅ Unique |
 
@@ -212,14 +228,14 @@
 | **Evasion Hardening** | ❌ | ✅ 15+ transforms |
 | **Context Lineage** | ❌ | ✅ Unique |
 | **Blast Radius Sim** | ❌ | ✅ Unique |
-| **VSCode Native** | ❌ | ✅ 100+ commands |
+| **VSCode Native** | ❌ | ✅ In-editor menus and agent tools |
 
 #### 🥇 vs **Prompt Armor**
 | Factor | Prompt Armor | SoterAI (Better) |
 |---|---|---|
-| **Scope** | ✅ Only Prompt Injection | ✅ **18 risk types** |
-| **PII** | ❌ | ✅ 15+ rules |
-| **Secrets** | ❌ | ✅ 20+ rules |
+| **Scope** | ✅ Only Prompt Injection | ✅ **12 bundled detectors** |
+| **PII** | ❌ | ✅ 7 explicit rules |
+| **Secrets** | ❌ | ✅ 42 explicit rules |
 | **Agent Security** | ❌ | ✅ Complete |
 | **Terminal Guard** | ❌ | ✅ Complete |
 | **Git Diff Scan** | ❌ | ✅ Complete |
@@ -272,10 +288,10 @@
 
 | Metric | SoterAI | Lakera | LLM Guard | Prompt Armor |
 |---|---|---|---|---|
-| **Detection Rules** | **400+** | ML-only (opaque) | 35 scanners | 5 layers |
+| **Detection Rules** | **186 explicit** | ML-only (opaque) | 35 scanners | 5 layers |
 | **Risk Types** | **18** | ~8 | ~10 | 1 (PI only) |
 | **Unique Features** | **8** | 0 | 0 | 0 |
-| **VSCode Commands** | **100+** | 0 | 0 | 0 |
+| **VSCode Commands** | **Native, in-editor** | 0 | 0 | 0 |
 | **Architecture** | **Local-first** | API-only | Self-host | Offline |
 | **Price** | **Free** | Paid | Free | Free |
 | **India PII** | **✅** | ❌ | ❌ | ❌ |
@@ -296,8 +312,8 @@
 1. 🏆 **100% Local-First** — No data leaves your machine
 2. 🏆 **Complete Agent Firewall** — No competitor offers this
 3. 🏆 **RAG Security + Context Lineage + Blast Radius** — Unique capabilities
-4. 🏆 **400+ Explicit Detection Rules** — Auditable, transparent
-5. 🏆 **VSCode Native** — 100+ commands, zero friction
+4. 🏆 **186 Explicit Detection Rules** — Auditable, transparent
+5. 🏆 **VSCode Native** — in-editor menus, keybindings and agent tools
 6. 🏆 **India PII Support** — Aadhaar, PAN, GSTIN, etc.
 7. 🏆 **Free** — While competitors charge thousands
 

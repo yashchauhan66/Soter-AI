@@ -105,6 +105,18 @@ const PROMPT_INJECTION_SPECS = [
     pattern: /(?:सिस्टम|डेवलपर)\s+(?:प्रॉम्प्ट|निर्देश|संदेश)[^\n]{0,40}(?:बताओ|दिखाओ|लिखो|उजागर|निकालो)/gu,
     message: "Devanagari Hindi system-prompt extraction wording detected.",
   },
+  {
+    // Byte smuggling: arbitrary bytes hidden as a run of variation selectors riding on one emoji
+    // (U+FE00..FE0F encode 0..15, U+E0100..E01EF encode 16..255). A legitimate emoji uses at most
+    // ONE selector, so a run of eight or more is always a concealed payload. We flag the RUN rather
+    // than decode it — robust, and matches the backend promptInjectionDetector's parity check.
+    type: "prompt_injection",
+    label: "Variation-selector data smuggling",
+    severity: "high" as const,
+    score: 30,
+    pattern: /[\uFE00-\uFE0F\u{E0100}-\u{E01EF}]{8,}/gu,
+    message: "A hidden payload was smuggled as a run of variation selectors on an emoji.",
+  },
 ];
 
 export function detectPromptInjection(text: string): DetectorFinding[] {

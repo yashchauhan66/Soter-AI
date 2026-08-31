@@ -162,19 +162,18 @@ test("the redaction carve-out does not extend to attack or credential signals", 
   }
 });
 
-test("BANNED still blocks a redaction-only privacy turn", () => {
-  // Past 85 the documented contract is to block regardless of this turn's
-  // content. The carve-out above is scoped to ABUSIVE only.
+test("BANNED reputation does not discard a safely redacted privacy turn", () => {
   const rep = assessAttackerReputation(history({ attempts: 8, blocks: 6, securityHits: 5, crescendo: 1 }));
   assert.equal(rep.level, "BANNED");
   const applied = applyAttackerReputation(
     result({ action: "ALLOW_WITH_REDACTION", allowed: true, riskScore: 55, riskTypes: ["PII_DETECTED"] }),
     rep,
   );
-  assert.equal(applied.action, "BLOCK");
+  assert.equal(applied.action, "ALLOW_WITH_REDACTION");
+  assert.equal(applied.allowed, true);
 });
 
-test("BANNED hard-blocks even a benign request", () => {
+test("BANNED reputation does not rewrite a benign content verdict", () => {
   const rep = assessAttackerReputation(
     history({ attempts: 8, blocks: 6, securityHits: 5, crescendo: 1 }),
   );
@@ -183,9 +182,21 @@ test("BANNED hard-blocks even a benign request", () => {
     result({ action: "ALLOW", allowed: true, riskScore: 0, riskTypes: ["LOW_RISK"] }),
     rep,
   );
-  assert.equal(applied.action, "BLOCK");
-  assert.equal(applied.allowed, false);
-  assert.match(applied.reason, /temporarily restricted/i);
+  assert.equal(applied.action, "ALLOW");
+  assert.equal(applied.allowed, true);
+  assert.equal((applied.metadata?.attacker as { level?: string }).level, "BANNED");
+});
+
+test("attacker fingerprints isolate explicit sessions on a shared key", () => {
+  const shared = { apiKeyId: "key-1", clientIp: "203.0.113.10" };
+  assert.notEqual(
+    attackerFingerprint({ ...shared, sessionId: "customer-a" }),
+    attackerFingerprint({ ...shared, sessionId: "customer-b" }),
+  );
+  assert.equal(
+    attackerFingerprint({ ...shared, sessionId: "customer-a" }),
+    attackerFingerprint({ ...shared, clientIp: "203.0.113.99", sessionId: "customer-a" }),
+  );
 });
 
 test("Crescendo escalations accelerate a fingerprint's reputation", () => {

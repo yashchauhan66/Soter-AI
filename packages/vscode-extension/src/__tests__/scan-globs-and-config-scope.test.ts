@@ -175,6 +175,10 @@ describe("configuration scope — a workspace cannot disable protection", () => 
         "soterai.terminal.warnOnRawTerminalOpen",
         "soterai.sentinel.retentionDays",
         "soterai.dependencyGuard.osvMode",
+        // Turning the interceptor off is exactly as safety-relevant as the
+        // other guards; it was machine-scoped but absent from
+        // restrictedConfigurations, so this list and the manifest had drifted.
+        "soterai.secretInterceptor.enabled",
     ];
 
     for (const key of MUST_BE_MACHINE) {

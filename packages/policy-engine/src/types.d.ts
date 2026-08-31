@@ -57,11 +57,11 @@ export interface EmergencyLockdownPolicy {
     policyVersion: number;
     reason?: string | null;
     enabledAt?: string | null;
-    blockUnknownDestinations: true;
-    blockAllFileUploads: true;
-    blockedDataTypes: string[];
-    requireApprovalDataTypes: string[];
-    allowOnlyEnterpriseDestinations: true;
+    blockUnknownDestinations?: boolean;
+    blockAllFileUploads?: boolean;
+    blockedDataTypes?: string[];
+    requireApprovalDataTypes?: string[];
+    allowOnlyEnterpriseDestinations?: boolean;
 }
 export interface PolicyEvaluationInput {
     organizationId: string;

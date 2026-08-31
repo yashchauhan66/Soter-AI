@@ -27,6 +27,17 @@ export interface PanelFacts {
     mcpFirewall: boolean;
     brokerRunning: boolean;
     trusted: boolean;
+    /** Current data-boundary settings. Optional for old hosts/test adapters. */
+    privacyMode?: string;
+    cloudEnabled?: boolean;
+    telemetryLevel?: string;
+    /**
+     * GAP 3. Controls an administrator pinned, keyed by control id, with the
+     * plain-language reason to show. Absent for every control on an unmanaged
+     * machine, which is the normal case — so the panel behaves identically for a
+     * solo developer and only changes where a policy actually applies.
+     */
+    managedReasons?: Partial<Record<ControlId, string>>;
 }
 
 export type ControlId =
@@ -46,6 +57,10 @@ export interface PlainControl {
     detail: string;
     on: boolean;
     level?: ProtectionLevel;
+    /** An administrator pinned this; the panel must not offer a toggle. */
+    managed?: boolean;
+    /** Why it cannot be changed. Always present when `managed` is true. */
+    managedReason?: string;
 }
 
 export interface PanelTask {
@@ -64,6 +79,49 @@ export interface PrimaryCta {
     label: string;
     hint: string;
     tone: "go" | "fix" | "calm";
+}
+
+export interface PrivacyBoundaryInput {
+    privacyMode: string;
+    cloudEnabled: boolean;
+    telemetryLevel: string;
+    trusted: boolean;
+}
+
+export interface PrivacyBoundaryReceipt {
+    title: string;
+    detail: string;
+    tone: "local" | "connected" | "attention";
+}
+
+/** A short, state-derived receipt of what may cross the device boundary. */
+export function privacyBoundary(input: PrivacyBoundaryInput): PrivacyBoundaryReceipt {
+    if (!input.trusted) {
+        return {
+            title: "Data stays on this device",
+            detail: "This workspace is not trusted, so cloud features are disabled and nothing can be sent.",
+            tone: "local",
+        };
+    }
+    if (input.privacyMode === "local" || !input.cloudEnabled) {
+        return {
+            title: "Data stays on this device",
+            detail: "Local checks run here. No scan content or telemetry is sent to SoterAI.",
+            tone: "local",
+        };
+    }
+    if (input.telemetryLevel === "off") {
+        return {
+            title: "Cloud is available on request",
+            detail: "Data leaves only when you start a cloud action. Automatic telemetry is off.",
+            tone: "connected",
+        };
+    }
+    return {
+        title: "Optional metadata is enabled",
+        detail: "Redacted metadata may be recorded when every privacy gate allows it; not raw prompts and not raw secrets. Cloud actions can send only the content you explicitly submit.",
+        tone: "attention",
+    };
 }
 
 /**
@@ -99,7 +157,14 @@ export function plainControls(facts: PanelFacts): PlainControl[] {
     const mcpLevel = capabilityUiBadge("mcp-config-scan")?.uiLevel ?? "MONITORED";
     const mcpRegistry = capabilityUiBadge("mcp-config-scan")?.registryLevel ?? "DETECTION_ONLY";
 
-    return [
+    // GAP 3: a pinned control is annotated, never re-worded. The state a user
+    // reads must stay the true state; only its editability changes.
+    const withManaged = (control: PlainControl): PlainControl => {
+        const reason = facts.managedReasons?.[control.id];
+        return reason ? { ...control, managed: true, managedReason: reason } : control;
+    };
+
+    const controls: PlainControl[] = [
         {
             id: "safeMode",
             label: "Block risky AI requests",
@@ -161,6 +226,8 @@ export function plainControls(facts: PanelFacts): PlainControl[] {
             level: levelFor(facts.mcpFirewall, mcpLevel),
         },
     ];
+
+    return controls.map(withManaged);
 }
 
 /**
@@ -251,11 +318,16 @@ export function primaryCta(state: ProtectionStateName, facts: PanelFacts): Prima
             tone: "go",
         };
     }
-    if (state === "FULLY_ENFORCED") {
+    const everyVisibleControlOn = facts.safeMode
+        && facts.protectedWorkspace
+        && facts.liveScan
+        && facts.sentinel
+        && facts.mcpFirewall;
+    if (state === "FULLY_ENFORCED" || (facts.brokerRunning && everyVisibleControlOn)) {
         return {
             action: "action:openCoverage",
             label: "See what is covered",
-            hint: "Everything supported is on. This shows exactly what that does and does not cover.",
+            hint: "Every available control is on. See which paths are enforced and which remain advisory.",
             tone: "calm",
         };
     }

@@ -15,15 +15,44 @@ Host permissions are needed to:
 
 An admin can disable response scanning or disable it per destination through policy.
 
-Exact host permissions:
+Exact host permissions (36, all of them; `scripts/validate-manifest-permissions.js` fails if any host
+in `apps/extension/manifest.json` is missing from this list, so a host cannot be added to the
+extension without being justified here):
+
+Public AI assistants — the destinations a prompt is typed into:
 
 - `https://chatgpt.com/*`
 - `https://chat.openai.com/*`
 - `https://claude.ai/*`
 - `https://gemini.google.com/*`
+- `https://aistudio.google.com/*`
+- `https://notebooklm.google.com/*`
+- `https://perplexity.ai/*`
 - `https://www.perplexity.ai/*`
+- `https://copilot.microsoft.com/*`
+- `https://grok.com/*`
+- `https://chat.deepseek.com/*`
+- `https://chat.mistral.ai/*`
+- `https://chat.qwen.ai/*`
+- `https://kimi.com/*`
+- `https://www.kimi.com/*`
+- `https://meta.ai/*`
+- `https://www.meta.ai/*`
+- `https://you.com/*`
+- `https://phind.com/*`
+- `https://www.phind.com/*`
 - `https://poe.com/*`
 - `https://openrouter.ai/*`
+- `https://openwebui.com/*`
+- `https://huggingface.co/chat/*`
+
+Two of these deserve a note. `perplexity.ai` and `www.perplexity.ai` are both listed because the site
+serves the app on the bare domain as well, and a pattern for only `www.` left the app itself
+unprotected. `huggingface.co` is scoped to `/chat/*` — the Hugging Face assistant — rather than the
+whole domain, because nothing outside that path is an AI prompt destination.
+
+Cloud coding environments — the same prompt fields, plus source code that may contain secrets:
+
 - `https://replit.com/*`
 - `https://*.replit.dev/*`
 - `https://stackblitz.com/*`
@@ -35,8 +64,18 @@ Exact host permissions:
 - `https://bolt.new/*`
 - `https://v0.dev/*`
 - `https://lovable.dev/*`
-- `https://openwebui.com/*`
+
+The SoterAI service itself, for enrollment and policy:
+
 - `https://soterai.in/*`
+
+Sites deliberately **not** requested, to keep the permission set as small as the feature allows:
+`x.com` (a whole-of-Twitter host permission cannot be justified in order to reach Grok, which has its
+own domain), the rest of `huggingface.co` outside `/chat/*`, and `cursor.com` / `windsurf.com` (those
+are download pages; the IDEs themselves are covered by a separate VS Code extension, not this one).
+
+The extension is Chromium-based only (Microsoft Edge and Chrome); it declares an MV3 service worker,
+`side_panel`, and `declarativeNetRequestWithHostAccess`, and no Firefox or Safari build exists.
 
 Exact required extension permissions:
 

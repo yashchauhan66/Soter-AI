@@ -2,11 +2,11 @@
     "name": "soterai-ide-guard",
     "displayName": "SoterAI IDE Guard — Local AI Security",
     "description": "Protect secrets, prompts, MCP tools, terminal commands, and AI coding context locally before they reach AI.",
-    "version": "0.5.0",
+    "version": "0.6.2",
     "publisher": "soterai",
     "preview": false,
     "pricing": "Free",
-    "icon": "media/Bestlogo.png",
+    "icon": "media/logo_circle_whiter.png",
     "galleryBanner": {
         "color": "#F96403",
         "theme": "light"
@@ -88,7 +88,8 @@
                 "soterai.liveScan.enabled",
                 "soterai.protection.enabled",
                 "soterai.autoVaultMigration.enabled",
-                "soterai.dependencyGuard.osvMode"
+                "soterai.dependencyGuard.osvMode",
+                "soterai.secretInterceptor.enabled"
             ]
         }
     },
@@ -98,6 +99,12 @@
                 "command": "soterai.openControlPanel",
                 "title": "Open Control Panel",
                 "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openReport",
+                "title": "Open Report",
+                "category": "SoterAI",
+                "icon": "$(output)"
             },
             {
                 "command": "soterai.enableFullProtection",
@@ -127,7 +134,8 @@
             {
                 "command": "soterai.openSettings",
                 "title": "Open Settings",
-                "category": "SoterAI"
+                "category": "SoterAI",
+                "icon": "$(gear)"
             },
             {
                 "command": "soterai.runDemoScan",
@@ -257,7 +265,8 @@
             {
                 "command": "soterai.scanGitChanges",
                 "title": "Scan Git Changes",
-                "category": "SoterAI"
+                "category": "SoterAI",
+                "icon": "$(shield)"
             },
             {
                 "command": "soterai.openSecurityPanel",
@@ -737,7 +746,8 @@
             {
                 "command": "soterai.scanWorkspaceRisk",
                 "title": "Scan Workspace Risk",
-                "category": "SoterAI"
+                "category": "SoterAI",
+                "icon": "$(search)"
             },
             {
                 "command": "soterai.openMCPToolFirewall",
@@ -935,6 +945,138 @@
                 }
             ]
         },
+        "submenus": [
+            {
+                "id": "soterai.editorContext",
+                "label": "SoterAI"
+            },
+            {
+                "id": "soterai.explorerContext",
+                "label": "SoterAI"
+            }
+        ],
+        "languageModelTools": [
+            {
+                "name": "soterai_scan_text",
+                "displayName": "Check text for secrets and prompt injection",
+                "modelDescription": "Check text for secrets, prompt injection, and jailbreak attempts before sending it to a model, writing it to a file, or including it in a commit. Returns a verdict (allow/warn/block) and, when secrets are present, a redacted copy safe to use instead. Also catches content hidden by zero-width characters, homoglyphs, leetspeak or base64. ADVISORY: this returns a verdict, it cannot block your action.",
+                "userDescription": "Checks text for secrets and prompt-injection before it reaches an AI model.",
+                "toolReferenceName": "soteraiScanText",
+                "canBeReferencedInPrompt": true,
+                "icon": "$(shield)",
+                "tags": [
+                    "soterai",
+                    "security"
+                ],
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                        "text": {
+                            "type": "string",
+                            "description": "The text to check."
+                        }
+                    },
+                    "required": [
+                        "text"
+                    ]
+                }
+            },
+            {
+                "name": "soterai_check_command",
+                "displayName": "Check a shell command before running it",
+                "modelDescription": "Check a shell command for destructive or credential-stealing behaviour before running it: recursive deletes, fork bombs, piping a download into a shell, reverse shells, reading ~/.aws/credentials or SSH keys, privileged containers, destructive kubectl. Returns a verdict (allow/warn/block). ADVISORY and pattern-based: it cannot see what a script the command invokes will do.",
+                "userDescription": "Checks a terminal command for destructive or credential-stealing patterns.",
+                "toolReferenceName": "soteraiCheckCommand",
+                "canBeReferencedInPrompt": true,
+                "icon": "$(terminal)",
+                "tags": [
+                    "soterai",
+                    "security"
+                ],
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                        "command": {
+                            "type": "string",
+                            "description": "The exact command line you intend to run."
+                        }
+                    },
+                    "required": [
+                        "command"
+                    ]
+                }
+            },
+            {
+                "name": "soterai_check_dependency",
+                "displayName": "Check a package before installing it",
+                "modelDescription": "Check a package before installing it: typosquatting, unpinned versions, install-from-URL, and piped-shell install commands. Accepts a whole install command or a name and version. Returns a verdict (allow/warn/block). ADVISORY and offline — local heuristics only, no CVE database is queried, so a known-vulnerable but well-named package can still pass.",
+                "userDescription": "Checks a dependency for typosquatting and unsafe install patterns.",
+                "toolReferenceName": "soteraiCheckDependency",
+                "canBeReferencedInPrompt": true,
+                "icon": "$(package)",
+                "tags": [
+                    "soterai",
+                    "security"
+                ],
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                        "command": {
+                            "type": "string",
+                            "description": "A full install command, e.g. \"npm install expres\"."
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "Package name, if you do not have a command."
+                        },
+                        "version": {
+                            "type": "string",
+                            "description": "Version or range. Defaults to \"latest\"."
+                        }
+                    }
+                }
+            }
+        ],
+        "mcpServerDefinitionProviders": [
+            {
+                "id": "soterai.guard-tools",
+                "label": "SoterAI Guard"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "soterai.safePaste",
+                "key": "ctrl+alt+v",
+                "mac": "cmd+alt+v",
+                "when": "editorTextFocus && !editorReadonly"
+            },
+            {
+                "command": "soterai.checkBeforeSendingToAI",
+                "key": "ctrl+alt+s",
+                "mac": "cmd+alt+s",
+                "when": "editorTextFocus"
+            }
+        ],
+        "viewsWelcome": [
+            {
+                "view": "soterai-project-risk",
+                "contents": "No workspace scan yet, so this risk score is unknown rather than zero.\n[Scan this workspace](command:soterai.scanWorkspaceRisk)\nOr try a safe built-in example first.\n[Run safe demo](command:soterai.runDemoScan)",
+                "when": "workbenchState != empty"
+            },
+            {
+                "view": "soterai-project-risk",
+                "contents": "Open a folder to scan it. Single files can still be checked with the editor right-click menu.\n[Open folder](command:vscode.openFolder)",
+                "when": "workbenchState == empty"
+            },
+            {
+                "view": "soterai-latest-findings",
+                "contents": "Nothing scanned yet. Findings appear here after a file, selection, or workspace scan.\n[Scan the current file](command:soterai.scanCurrentFile)"
+            },
+            {
+                "view": "soterai-policy-status",
+                "contents": "No project policy file found. SoterAI is running on local defaults, which is the safest mode.\n[Choose a policy pack](command:soterai.choosePolicyPack)"
+            }
+        ],
         "configuration": {
             "title": "SoterAI IDE Guard Settings",
             "properties": {
@@ -942,7 +1084,11 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Enable cloud features like policy sync and high-risk cloud scan escalation.",
-                    "scope": "machine"
+                    "scope": "machine",
+                    "policy": {
+                        "name": "SoterAICloudEnabled",
+                        "minimumVersion": "1.85"
+                    }
                 },
                 "soterai.cloud.baseUrl": {
                     "type": "string",
@@ -981,7 +1127,11 @@
                     ],
                     "default": "local",
                     "description": "Controls whether SoterAI uses only local detectors, configured cloud checks, or local-first hybrid checks with user consent.",
-                    "scope": "machine"
+                    "scope": "machine",
+                    "policy": {
+                        "name": "SoterAIPrivacyMode",
+                        "minimumVersion": "1.85"
+                    }
                 },
                 "soterai.sensitiveContext.defaultAction": {
                     "type": "string",
@@ -1089,7 +1239,11 @@
                     ],
                     "default": "warn",
                     "description": "Action on detecting dangerous terminal commands.",
-                    "scope": "machine"
+                    "scope": "machine",
+                    "policy": {
+                        "name": "SoterAITerminalProtectionMode",
+                        "minimumVersion": "1.85"
+                    }
                 },
                 "soterai.terminal.warnOnRawTerminalOpen": {
                     "type": "boolean",
@@ -1101,25 +1255,41 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Monitor sensitive documents opened in VS Code and offer encrypted vault migration. This is visibility only: VS Code does not expose the caller or an awaitable file-read interception hook. Vault migration removes detected plaintext from disk for editor and CLI agents.",
-                    "scope": "machine"
+                    "scope": "machine",
+                    "policy": {
+                        "name": "SoterAISecretInterceptorEnabled",
+                        "minimumVersion": "1.85"
+                    }
                 },
                 "soterai.autoVaultMigration.enabled": {
                     "type": "boolean",
                     "default": true,
                     "description": "Enable AutoVaultMigration: scan the workspace on startup for sensitive files (.env*, *.pem, etc.) that contain raw secrets and offer to migrate them to the encrypted vault. This is the only protection that works against CLI-based agents (Claude Code, Codex) that read files directly from disk.",
-                    "scope": "machine"
+                    "scope": "machine",
+                    "policy": {
+                        "name": "SoterAIAutoVaultMigrationEnabled",
+                        "minimumVersion": "1.85"
+                    }
                 },
                 "soterai.sentinel.enabled": {
                     "type": "boolean",
                     "default": false,
                     "description": "Enable AI Activity Sentinel background monitor.",
-                    "scope": "machine"
+                    "scope": "machine",
+                    "policy": {
+                        "name": "SoterAISentinelEnabled",
+                        "minimumVersion": "1.85"
+                    }
                 },
                 "soterai.protectedWorkspace.enabled": {
                     "type": "boolean",
                     "default": false,
                     "description": "Enable Protected Workspace Mode — auto-protect sensitive files.",
-                    "scope": "machine"
+                    "scope": "machine",
+                    "policy": {
+                        "name": "SoterAIProtectedWorkspaceEnabled",
+                        "minimumVersion": "1.85"
+                    }
                 },
                 "soterai.mcpFirewall.strictMode": {
                     "type": "boolean",
@@ -1147,7 +1317,11 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Enable the central SoterAI protection state. This does not imply universal interception; coverage is reported from verified runtime facts.",
-                    "scope": "machine"
+                    "scope": "machine",
+                    "policy": {
+                        "name": "SoterAIProtectionEnabled",
+                        "minimumVersion": "1.85"
+                    }
                 },
                 "soterai.sentinel.retentionDays": {
                     "type": "number",
@@ -1171,6 +1345,78 @@
             }
         },
         "menus": {
+            "editor/context": [
+                {
+                    "submenu": "soterai.editorContext",
+                    "group": "1_modification@100",
+                    "when": "editorHasSelection && !editorReadonly"
+                }
+            ],
+            "soterai.editorContext": [
+                {
+                    "command": "soterai.scanSelection",
+                    "group": "1_check@1",
+                    "when": "editorHasSelection"
+                },
+                {
+                    "command": "soterai.checkBeforeSendingToAI",
+                    "group": "1_check@2",
+                    "when": "editorHasSelection"
+                },
+                {
+                    "command": "soterai.redactSelectionForAI",
+                    "group": "2_fix@1",
+                    "when": "editorHasSelection"
+                },
+                {
+                    "command": "soterai.reviewSelectedAICode",
+                    "group": "2_fix@2",
+                    "when": "editorHasSelection"
+                }
+            ],
+            "explorer/context": [
+                {
+                    "submenu": "soterai.explorerContext",
+                    "group": "7_modification@100",
+                    "when": "!explorerResourceIsFolder"
+                }
+            ],
+            "soterai.explorerContext": [
+                {
+                    "command": "soterai.scanCurrentFile",
+                    "group": "1_check@1",
+                    "when": "!explorerResourceIsFolder"
+                },
+                {
+                    "command": "soterai.addFileToProtected",
+                    "group": "2_protect@1",
+                    "when": "!explorerResourceIsFolder"
+                }
+            ],
+            "scm/title": [
+                {
+                    "command": "soterai.scanGitChanges",
+                    "group": "navigation@100",
+                    "when": "scmProvider == git"
+                }
+            ],
+            "view/title": [
+                {
+                    "command": "soterai.scanWorkspaceRisk",
+                    "group": "navigation@1",
+                    "when": "view == soterai-project-risk"
+                },
+                {
+                    "command": "soterai.openSettings",
+                    "group": "navigation@2",
+                    "when": "view == soterai-control-panel"
+                },
+                {
+                    "command": "soterai.openWalkthrough",
+                    "group": "1_help@1",
+                    "when": "view == soterai-control-panel"
+                }
+            ],
             "commandPalette": [
                 {
                     "command": "soterai.quickStart",
@@ -1190,7 +1436,7 @@
                 },
                 {
                     "command": "soterai.scanSelectedText",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.buildSafePromptForAI",
@@ -1206,23 +1452,23 @@
                 },
                 {
                     "command": "soterai.reviewTerminalCommand",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.scanMCPAgentTools",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.openAIActivityLedger",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.generateCanaryToken",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.choosePolicyPack",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.scanClipboardAICode",
@@ -1313,12 +1559,8 @@
                     "when": "soterai.advancedCommands"
                 },
                 {
-                    "command": "soterai.scanGitChanges",
-                    "when": "soterai.advancedCommands"
-                },
-                {
                     "command": "soterai.openSecurityPanel",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.configurePolicy",
@@ -1350,7 +1592,7 @@
                 },
                 {
                     "command": "soterai.showProtectedFiles",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.addToProtectedFiles",
@@ -1370,7 +1612,7 @@
                 },
                 {
                     "command": "soterai.showFileReadLog",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.clearFileReadLog",
@@ -1446,7 +1688,7 @@
                 },
                 {
                     "command": "soterai.showWhatAISawLastSession",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.scanAIOutput",
@@ -1474,7 +1716,7 @@
                 },
                 {
                     "command": "soterai.verifyNoCanaryInLogs",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.rotateCanary",
@@ -1486,7 +1728,7 @@
                 },
                 {
                     "command": "soterai.showAIExtensions",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.generateExtensionRiskReport",
@@ -1494,7 +1736,7 @@
                 },
                 {
                     "command": "soterai.showCoverageMatrix",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.scanMCPConfigs",
@@ -1502,7 +1744,7 @@
                 },
                 {
                     "command": "soterai.showMCPToolPermissions",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.blockRiskyMCPRecommendation",
@@ -1526,15 +1768,15 @@
                 },
                 {
                     "command": "soterai.showBrokerStatus",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.showRuntimeCapabilitySummary",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.showExtensionIsolationSummary",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.configureAIBroker",
@@ -1574,7 +1816,7 @@
                 },
                 {
                     "command": "soterai.showAISafeModeRules",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.configureSafeMode",
@@ -1602,11 +1844,11 @@
                 },
                 {
                     "command": "soterai.showWhatAISaw",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.showBlockedAIContext",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.compareAIResponseWithContext",
@@ -1626,7 +1868,7 @@
                 },
                 {
                     "command": "soterai.showActiveAIApprovals",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.clearAIApprovals",
@@ -1642,7 +1884,7 @@
                 },
                 {
                     "command": "soterai.showAITimeline",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.exportAIActivityReport",
@@ -1690,7 +1932,7 @@
                 },
                 {
                     "command": "soterai.showWorkspaceRiskScore",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.openMCPToolFirewall",
@@ -1718,7 +1960,7 @@
                 },
                 {
                     "command": "soterai.showMemoryPoisoningFindings",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.checkDependencyInstall",
@@ -1774,11 +2016,15 @@
                 },
                 {
                     "command": "soterai.showEgressFirewallStatus",
-                    "when": "soterai.advancedCommands"
+                    "when": "false"
                 },
                 {
                     "command": "soterai.checkEgressPayload",
                     "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.scanGitDiff",
+                    "when": "false"
                 }
             ]
         },
@@ -1837,6 +2083,8 @@
         "bundle": "node esbuild.js --production",
         "vscode:prepublish": "npm run bundle",
         "package": "vsce package --allow-missing-repository --skip-license --no-dependencies",
+        "verify:vsix": "node scripts/verify-vsix.mjs",
+        "benchmark:security": "tsx benchmarks/security-evaluation.ts",
         "vscode:package": "vsce package --allow-missing-repository --skip-license --no-dependencies",
         "vscode:publish": "vsce publish --no-dependencies",
         "openvsx:package": "npm run vscode:package",

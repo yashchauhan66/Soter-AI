@@ -1,9 +1,77 @@
-# SoterAI IDE Guard
+<div align="center">
 
-**Local-first AI security guard for VS Code.** SoterAI IDE Guard scans code,
-selections, terminal commands, git changes, and AI prompts for secrets, PII,
-prompt injection, and insecure AI-generated code - entirely on your machine.
-Nothing leaves your computer unless you explicitly connect to SoterAI Cloud.
+<img src="./media/logo_circle_whiter.png" width="112" alt="SoterAI IDE Guard logo" />
+
+<h1>SoterAI IDE Guard</h1>
+
+<h1>Safer AI Coding</h1>
+
+<h2>Local by Default</h2>
+
+Protect secrets, prompts, agent tools, terminal commands, and AI coding context
+before they become security incidents.
+
+<p>
+  <img src="https://img.shields.io/badge/LOCAL--FIRST-Enabled-F96403?style=for-the-badge" alt="Local-first protection" />
+  <img src="https://img.shields.io/badge/ACCOUNT-Not_Required-202830?style=for-the-badge" alt="No account required" />
+  <img src="https://img.shields.io/badge/API_KEY-Not_Required-202830?style=for-the-badge" alt="No API key required for local scanning" />
+  <img src="https://img.shields.io/badge/PRICE-Free-202830?style=for-the-badge" alt="Free extension" />
+</p>
+
+### Scan locally · Redact sensitive context · Guard supported AI traffic
+
+</div>
+
+SoterAI IDE Guard adds a security layer to the editor you already use. Catch
+secrets and personal data, inspect prompts and AI-generated code, review risky
+commands and agent configurations, and route supported AI traffic through an
+enforceable local broker—all without creating an account.
+
+---
+
+<div align="center">
+
+<h1>Install SoterAI IDE Guard</h1>
+
+<h2><a href="https://soterai.in/extensions/ide">Choose Your IDE &amp; Install →</a></h2>
+
+One guided installer for VS Code, Cursor, Windsurf / Devin, Kiro, Antigravity,
+and VSCodium.
+
+</div>
+
+| **Guided install — recommended** | **Direct VS Code install** | **Open VSX / offline** |
+| :--- | :--- | :--- |
+| Choose your editor and get the right route automatically. | Install immediately or open the official listing. | Use VSCodium, Theia, OpenVSCode Server, or a `.vsix`. |
+| **[Open guided installer →](https://soterai.in/extensions/ide)** | **[Install in VS Code →](vscode:extension/soterai.soterai-ide-guard)**<br>[Marketplace listing](https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard) | **[Open Open VSX →](https://open-vsx.org/extension/soterai/soterai-ide-guard)** |
+
+### Install from inside your editor
+
+Open **Extensions** with `Ctrl+Shift+X` (`Cmd+Shift+X` on macOS), search for
+**SoterAI IDE Guard**, and select **Install**. In VS Code, you can also open
+Quick Open with `Ctrl+P` / `Cmd+P` and paste:
+
+```text
+ext install soterai.soterai-ide-guard
+```
+
+> **Install the authentic extension**
+>
+> **Name:** SoterAI IDE Guard — Local AI Security · **Publisher:** `soterai` ·
+> **Extension ID:** `soterai.soterai-ide-guard`
+
+For offline installation, download the `.vsix` from
+[Open VSX](https://open-vsx.org/extension/soterai/soterai-ide-guard), then choose
+**Extensions → Install from VSIX…**. After installation, select the **SoterAI
+Guard shield** in the Activity Bar.
+
+> **Cannot find it in editor search?** Use the direct
+> [Marketplace](https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard),
+> [Open VSX](https://open-vsx.org/extension/soterai/soterai-ide-guard), or
+> [guided installer](https://soterai.in/extensions/ide). Registry search results
+> can take time to refresh after a release.
+
+<div align="center">
 
 [Website](https://soterai.in) ·
 [Docs](https://soterai.in/vscode-ai-security) ·
@@ -11,49 +79,66 @@ Nothing leaves your computer unless you explicitly connect to SoterAI Cloud.
 [Report an issue](https://github.com/yashchauhan66/Soter-AI/issues) ·
 [Source](https://github.com/yashchauhan66/Soter-AI)
 
-The same links are in the Control Panel footer inside the editor.
+</div>
 
-## Install
+## Start protecting your workspace in 60 seconds
 
-**Fastest way — one-click for any IDE:** open the [SoterAI install page](https://soterai.in/extensions/ide), pick your editor (VS Code, Cursor, Windsurf, Kiro, Antigravity, VSCodium), and it opens directly in the editor with a guided redirect and fallbacks.
+Open **SoterAI Guard → Control Panel** after installation:
 
-> **Search in your IDE** — open the Extensions view (`Ctrl+Shift+X`) and search for the extension name: **"SoterAI IDE Guard"** (shown in VS Code as **SoterAI IDE Guard — Local AI Security**, publisher `soterai`, extension ID `soterai.soterai-ide-guard`), then press **Install**.
+1. Run `SoterAI: Run Safe Demo Scan` to see a real local verdict using built-in
+   test data—without exposing your code.
+2. Run `SoterAI: Protect Workspace Secrets` to preview sensitive files and
+   replace only approved values with safe local placeholders.
+3. Run `SoterAI: Secure Installed AI Tools (One Click)` to review supported AI
+   client routing changes. Every approved rewrite gets an encrypted backup
+   outside your workspace and can be reversed with
+   `SoterAI: Undo AI Tool Security Changes`.
 
-Or install without leaving your editor:
+**Local scanning is already enabled when you install.** These first steps need
+no account, cloud connection, or provider API key.
 
-- **VS Code** — [Install in VS Code](vscode:extension/soterai.soterai-ide-guard) · press `Ctrl+P` and paste `ext install soterai.soterai-ide-guard` · [Marketplace page](https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard)
-- **VSCodium / Eclipse Theia / OpenVSCode Server** — search `soterai` in Extensions (these editors read the [Open VSX registry](https://open-vsx.org/extension/soterai/soterai-ide-guard) directly)
-- **Any editor (offline/manual)** — download the `.vsix` from [Open VSX](https://open-vsx.org/extension/soterai/soterai-ide-guard) and run **Extensions → Install from VSIX...**
+## Your AI security posture, in one view
 
-> **Not showing up in IDE search yet?** Marketplace mirrors and IDE search caches can lag a few hours after a new release, and brand-new extensions rank below established ones for generic keywords. Search by the exact publisher name `soterai`, or use the direct routes above — they work immediately.
+See active controls, request checking, editor warnings, known gaps, and the
+current data boundary without leaving your editor.
 
-## Start in under a minute
+![SoterAI Control Panel showing five active controls, active request checking, local data boundary, and zero known gaps in the detected workspace state](https://soterai.in/marketplace/screenshots/control-panel-protection.png)
 
-1. Run **SoterAI: Run Safe Demo Scan** to see a real verdict using safe built-in test data.
-2. Run **SoterAI: Protect Workspace Secrets** to review sensitive files and replace approved values with safe placeholders on disk.
-3. Run **SoterAI: Secure Installed AI Tools (One Click)** to review supported AI client routing changes. Every approved change has an encrypted backup and can be undone with **SoterAI: Undo AI Tool Security Changes**.
+## Know your protection at a glance
 
-Local scanning is already on after installation. No account, API key, or cloud connection is required for these first steps.
+| Surface | What SoterAI does | Coverage |
+| --- | --- | --- |
+| Files, selections, clipboard, and git changes | Scans locally for secrets, PII, prompt injection, and risky code; offers redacted output | **Local detection and redaction** |
+| Supported AI requests routed through the local broker | Checks content before forwarding and scans supported responses | **Blocks on the routed path** |
+| Protected workspace context built by SoterAI | Excludes protected files before SoterAI builds AI context | **Blocks on the SoterAI-built path** |
+| Raw integrated terminal | Detects supported risky commands after shell execution begins and directs you to the checked terminal | **Warns / monitors** |
+| Controlled terminal | Allows a bounded set of fixed-argument, read-only commands after pre-execution checks | **Blocks unsupported commands** |
+| MCP and agent configuration | Detects broad process execution, remote endpoints, embedded credentials, and risky configuration | **Detection only unless routed through a supported guard** |
+| Other extensions’ private network calls | Cannot be intercepted by a VS Code extension API | **Not controlled** |
 
-## In VS Code
+The Control Panel always shows the current **data boundary**, active controls,
+known gaps, and one recommended next action. Green protection labels are reserved
+for paths SoterAI technically controls.
 
-Real captures from the VS Code extension-host verification flow. They use test data only.
+## See it inside VS Code
 
-### Secret finding with a safe copy
+Real extension-host captures using test data only.
 
-![SoterAI reports a secret finding and offers a redacted copy](media/marketplace/secret-scan-result.png)
+### Find a secret without exposing it in the result
 
-### Scan selected text before it reaches AI
+![SoterAI reports a secret finding and offers a redacted copy](https://soterai.in/marketplace/screenshots/secret-scan-result.png)
 
-![SoterAI scan-selection result in VS Code](media/marketplace/scan-selection-result.png)
+### Check selected context before sharing it with AI
 
-### Local request protection enabled
+![SoterAI scan-selection result in VS Code](https://soterai.in/marketplace/screenshots/scan-selection-result.png)
 
-![SoterAI Safe Mode enabled in VS Code](media/marketplace/safe-mode-enabled.png)
+### Turn on local request protection
+
+![SoterAI Safe Mode enabled in VS Code](https://soterai.in/marketplace/screenshots/safe-mode-enabled.png)
 
 ## Features
 
-- **Control Panel** - one sidebar view with instant-apply toggles for Safe Mode, Protected Workspace, Live Scan, Sentinel, and the MCP firewall, plus Emergency Lockdown. Every control states in plain language what it does, and each coverage badge is resolved from the capability registry — a protection is only labelled `ENFORCED` when it is actually broker-gated, otherwise `MONITORED`.
+- **Control Panel** - one sidebar view with instant-apply toggles for Safe Mode, Protected Workspace, Live Scan, Sentinel, and the MCP firewall, plus Emergency Lockdown. A live **Data boundary** receipt says whether data stays local, cloud actions are available, or optional redacted metadata is enabled. Every coverage badge is resolved from the capability registry — a protection is only labelled `ENFORCED` when it is actually broker-gated, otherwise `MONITORED`.
 - **Secure My AI (one click)** - finds the AI tools already installed (Cline, Claude Code, Copilot, Continue, Aider, and generic `.env` / shell profiles) and routes them through the local broker so prompts are scanned before they leave. Every rewritten file is backed up first, encrypted, outside your workspace — and `SoterAI: Undo AI Tool Security Changes` puts every original back in one click.
 - **Scan Current File / Selection / Workspace** - detect leaked secrets, PII, prompt injection, unsafe instructions, and risky patterns with a redacted report.
 - **Live inline scanning + Quick Fixes** - supported files are scanned as you type; findings appear as native diagnostics with lightbulb fixes (redact in place, copy a safe version of the line, move secrets to the vault).
@@ -66,6 +151,7 @@ Real captures from the VS Code extension-host verification flow. They use test d
 - **Check Terminal Command** - flag destructive, remote-exec, credential-exposing, or suspicious shell commands before you run them.
 - **Review Selected AI Code** - surface likely vulnerabilities in AI-generated code inside a hardened webview.
 - **Local AI Broker** - authenticated loopback-only OpenAI/Anthropic-compatible routing with request/response scanning, redaction, canary blocking, and **SSE streaming** (`stream: true`) with scan-before-forward output protection.
+- **Bounded local protocols** - broker JSON responses and MCP stdio frames are capped at 1 MiB. Oversized MCP frames are discarded through their newline so later valid checks remain synchronized.
 - **Secret Broker** - replaces raw secrets with scoped `soterai://secret/...` references so AI sees structure and approved operations, not values.
 - **AI Safe Mode** - Developer, Strict, and Enterprise protection overlays for SoterAI-routed workflows.
 - **AI Memory Inspector** - hashes, decisions, redacted evidence, and file metadata showing what SoterAI brokered or built for AI.
@@ -77,9 +163,12 @@ Real captures from the VS Code extension-host verification flow. They use test d
 - **No raw secrets leave the extension by default.** Reports, webviews, telemetry, logs, clipboard output, hash caches, broker records, and exported views are designed to avoid raw secret material.
 - **Secret broker privacy proof.** `SoterAI: Local Privacy Status`, `SoterAI: Preview What AI Will See`, and `SoterAI: What Stays Local?` explain what stays local without displaying raw secrets.
 - **Redacted, opt-in telemetry only.** Telemetry is off by default. When enabled, it uses minimized event metadata, not raw content or tokens.
+- **Opt-out purges pending metadata.** Turning SoterAI telemetry off, returning to local privacy mode, disabling cloud, or disabling editor telemetry immediately clears SoterAI's in-memory telemetry queue.
 - **Cloud tokens stay in VS Code SecretStorage.** Provider and cloud credentials are stored locally through VS Code's secret APIs and are never logged.
 - **Config backups are encrypted and kept out of your workspace.** When "Secure My AI" rewrites a config, the pre-rewrite copy is encrypted (AES-GCM, key in VS Code SecretStorage) and stored in the extension's global storage — never as a plaintext sibling file that `.gitignore` would miss. If the backup cannot be written, the rewrite does not happen.
 - **A repository cannot turn its own protection off.** The 25 safety-relevant settings are `machine`-scoped and declared as restricted in untrusted workspaces, so a checked-in `.vscode/settings.json` cannot disable a guard or repoint the broker at another endpoint.
+- **The packaged artifact is inspected, not assumed safe.** Release CI rejects unexpected source, tests, maps, logs, `.env` files, dependencies, duplicate/unsafe archive paths, missing runtime bundles, and oversized archives. It records a SHA-256 and exact entry inventory, then generates a deterministic CycloneDX 1.6 SBOM with a SHA-256 component for every file that actually ships. Integrity evidence and the SBOM are not claimed to be a cryptographic signature.
+- **Broker ingress fails closed.** Request bodies are capped, declared oversize is rejected before reading, compressed and ambiguous framing is refused, and malformed UTF-8 is never replacement-decoded into apparently valid JSON.
 
 ### What Leaves Your Machine?
 

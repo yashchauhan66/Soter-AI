@@ -13,14 +13,25 @@ Soter AI Security Guard is an enterprise security extension that helps organizat
 5. **Reporting:** Security events are transmitted to the organization's backend in redacted form for audit and compliance.
 
 ### Content Scripts
-Content scripts are injected ONLY on:
-- `chatgpt.com` and `chat.openai.com`
-- `claude.ai`
-- `gemini.google.com`
-- `perplexity.ai`
-- `*.localhost` (only during lockdown to block local AI)
+Content scripts are injected ONLY on the AI prompt destinations and cloud coding environments listed
+in `host_permissions`, plus the vendor's own site for enrollment. That list is enumerated exactly, with
+the reason for each entry, in `permission-justification.md`, and it is the single authority:
+`scripts/validate-manifest-permissions.js` fails if the manifest and that document disagree, so this
+document deliberately does not keep a second copy that could drift out of date.
 
-Content scripts do NOT run on general websites.
+At v0.2.2 that is 36 patterns: 24 public AI assistants (ChatGPT, Claude, Gemini, Google AI Studio,
+NotebookLM, Perplexity, Copilot, Grok, DeepSeek, Mistral, Qwen, Kimi, Meta AI, You.com, Phind, Poe,
+OpenRouter, Open WebUI, and the Hugging Face assistant at `/chat/*` only), 11 cloud coding
+environments (Replit, StackBlitz, CodeSandbox, github.dev, Bolt, v0, Lovable), and `soterai.in` for
+enrollment and policy.
+
+There is no `localhost` or `*.localhost` pattern, in lockdown or otherwise, and no wildcard pattern
+that could match a host not named in that document. Content scripts do NOT run on general websites.
+
+One browser-specific note for reviewers: on Microsoft Edge, `copilot.microsoft.com` is present in
+`host_permissions` but Edge itself refuses to run extension content scripts on that host, so nothing
+is injected there in Edge. The permission is retained because Chrome applies no such restriction. No
+part of the product's UI tells a user that Copilot is protected.
 
 ### Network Communication
 The extension communicates with:

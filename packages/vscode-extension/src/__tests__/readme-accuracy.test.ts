@@ -67,12 +67,20 @@ describe("README accuracy", () => {
     });
 
     it("does not advertise a version other than the one being published", () => {
+        // The engine floor is a version the README legitimately states, and it
+        // is verifiable against the manifest rather than hand-maintained — Gap 2
+        // added "SoterAI keeps its VS Code `^1.85.0` floor", which this check
+        // read as a stale product version. Allow exactly the declared floor, and
+        // nothing else.
+        const engineFloor = String(manifest.engines?.vscode ?? "").replace(/^[^\d]*/, "");
+        const allowed = new Set([manifest.version, engineFloor].filter(Boolean));
         const versions = [...new Set([...readme.matchAll(/\b\d+\.\d+\.\d+\b/g)].map((m) => m[0]))];
-        const stale = versions.filter((v) => v !== manifest.version);
+        const stale = versions.filter((v) => !allowed.has(v));
         assert.deepEqual(
             stale,
             [],
-            `README mentions version(s) ${stale.join(", ")} while package.json is ${manifest.version}`,
+            `README mentions version(s) ${stale.join(", ")} while package.json is ${manifest.version} ` +
+                `and engines.vscode is ${manifest.engines?.vscode}`,
         );
     });
 
@@ -85,5 +93,25 @@ describe("README accuracy", () => {
                 `README links ./${file} but that file does not exist`,
             );
         }
+    });
+
+    /**
+     * The README states a *number* of hardened settings. A hand-written count
+     * goes stale the first time a setting is added — 0.5.0 shipped claiming 23
+     * while the manifest had 25 — and it is the specific kind of claim a
+     * security reviewer checks first.
+     */
+    it("states the real count of machine-scoped settings", () => {
+        const machineScoped = Object.values(
+            manifest.contributes.configuration.properties as Record<string, { scope?: string }>,
+        ).filter((property) => property.scope === "machine").length;
+
+        const claim = readme.match(/The (\d+) safety-relevant settings are `machine`-scoped/);
+        assert.ok(claim, "the README no longer states how many settings are machine-scoped");
+        assert.equal(
+            Number(claim[1]),
+            machineScoped,
+            `README claims ${claim[1]} machine-scoped settings, the manifest declares ${machineScoped}`,
+        );
     });
 });

@@ -37,14 +37,14 @@ Restart n8n after installation.
 
 1. Open [https://soterai.in](https://soterai.in) and create or select a project.
 2. Create a SoterAI API key.
-3. In n8n, create a new **SoterAI API** credential.
+3. In n8n, create a new **SoterAI API** credential (it authenticates with `x-api-key`).
 4. Paste the API key. n8n stores it in its encrypted credential store.
 5. Keep **Base URL** as `https://soterai.in` unless you operate a self-hosted SoterAI API. HTTPS is required except for `http://localhost` local development.
 6. Optionally set a default **Project ID**. Each node can override it.
 
 Do not paste real production secrets into test workflows. Use fake values such as `sk-test-1234567890abcdef`.
 
-The credential is optional. **Local mode** (below) runs without one, so a node on an air-gapped instance is not permanently marked as misconfigured.
+The credential sends the key only as the `x-api-key` header. It is not a Bearer credential and never reuses a stale `Authorization: Bearer` value. The credential is optional for Local analysis and Workflow Audit; identity enrollment and passport issuance always require it.
 
 ## Detection Engine: Cloud, Local, or Auto
 
@@ -52,13 +52,15 @@ The credential is optional. **Local mode** (below) runs without one, so a node o
 
 | Engine | Network | Credential | What runs |
 | --- | --- | --- | --- |
-| **Cloud** (default) | Yes | Required | The full SoterAI engine: pattern rules, ONNX classifier, multi-turn correlation, attacker reputation, semantic egress comparison, agent-passport enforcement. |
+| **Cloud** | Yes | Required | The full SoterAI engine: pattern rules, ONNX classifier, multi-turn correlation, attacker reputation, semantic egress comparison, agent-passport enforcement. |
 | **Local** | None | Not needed | The bundled pattern-and-heuristic engine, inside the n8n process. No request leaves your instance. |
-| **Auto** | When reachable | Used if present | Cloud, falling back to Local when the cloud could not be asked. |
+| **Auto** (default) | When reachable | Used if present | Cloud-first, falling back to Local only when the cloud could not be asked. Credential-creation actions never fall back. |
 
 ### Local mode
 
-Local mode exists for the case where sending prompts to any external service is not an option: air-gapped hosts, data-residency rules, or an evaluation you do not want to sign up for. It covers prompt injection, jailbreaks, exfiltration phrasing, code and SQL payloads, secrets, PII including Indian identifiers (Aadhaar, PAN, UPI, IFSC, Indian mobile numbers), RAG document trust scoring, tool-call risk, and egress comparison against Protected Sources whose text you supply inline.
+Local mode exists for the case where sending prompts to any external service is not an option: air-gapped hosts, data-residency rules, or an evaluation you do not want to sign up for. It covers prompt injection, jailbreaks, exfiltration phrasing, code and SQL payloads, secrets, PII including Indian identifiers (Aadhaar, PAN, GSTIN, Voter ID/EPIC, driving licence, UPI, IFSC, Indian mobile numbers), RAG document trust scoring, tool-call risk, and egress comparison against Protected Sources whose text you supply inline.
+
+> **Reduced protection:** Local is a low-false-positive pattern filter, not full protection. Its measured prompt-injection recall is about **18%** on the published out-of-distribution corpus. Use **Auto** (cloud-first) for production unless policy or connectivity requires fully local processing.
 
 It is the pattern tier and only the pattern tier, and every item says so. Each local result carries:
 
@@ -92,6 +94,36 @@ Auto falls back to the local engine only when the cloud **could not be asked**:
 In the Universal AI Firewall, fallback is per layer: one dead optional layer is answered locally and listed in `locallyCheckedLayers` instead of leaving that layer unchecked. In Auto mode this also covers a missing **Session ID** and an agent with no passport enrolled — both of which used to leave the tool payload uninspected.
 
 A degraded item is never silently equivalent to a clean cloud pass. If you want fallback to be visible downstream, branch on `engineDegraded`.
+
+## Agent Identity and Passport Flow
+
+The node now exposes the complete lifecycle; raw HTTP nodes are not required:
+
+1. **Enroll Agent Identity** — enter a unique name, type, and least-privilege policy preset. The output contains `agentIdentityId`.
+2. **Issue Agent Passport** — pass that `agentIdentityId`, a stable `sessionId`, TTL, and optional narrower policy. The output contains a one-time `passportToken`.
+3. **Validate Agent Passport** — verify the session/token and optionally test a specific tool, action, and target before execution.
+4. **Check Agent Tool Call** — pass the same `sessionId` and `passportToken`, plus tool/action/target/content. A valid passport can reach `ALLOW`; a missing token returns `verdictCode: TOKEN_MISSING`.
+5. **Revoke Agent Passport** — revoke by `sessionId` or `passportId` as soon as the task ends or compromise is suspected.
+
+Treat `passportToken` as a secret. Prefer an expression from the issuance step or an encrypted n8n credential; do not hard-code it in workflow JSON. Local tool checks inspect payload/capability risk only and explicitly set `passportEnforced: false`.
+
+Policy presets provide auditable least-privilege starting points: **Read Only**, **Customer Support**, and **Coding Agent**. Custom Policy JSON overrides only the keys you provide, while unmodified preset deny/approval controls remain active. Select **Custom JSON Only** when no preset applies.
+
+Import `examples/soterai-agent-passport-lifecycle.workflow.json` for a complete enroll → issue → validate → tool check → revoke reference. It contains expressions and a credential placeholder, never a real token.
+
+### Cloud API schema used by the node
+
+All requests use `Content-Type: application/json` and `x-api-key: <SoterAI API key>`.
+
+| Action | Endpoint | Required body fields | Important optional fields |
+| --- | --- | --- | --- |
+| Enroll Agent Identity | `POST /api/agent/identity/create` | `name`, `agentType` | `description`, `defaultPolicy` |
+| Issue Agent Passport | `POST /api/agent/passport/issue` | `agentIdentityId` | `sessionId`, `ttlSeconds` (60–86400), policy arrays, `metadata` |
+| Validate Agent Passport | `POST /api/agent/passport/validate` | `sessionId` | `passportToken`, `tool`, `action`, `target`, `domain`, `metadata` |
+| Check Agent Tool Call | `POST /api/agent/tool/check` | `tool`, `action` | `sessionId`, `passportToken`, `target`, `content`, `destination`, `riskContext`, `metadata` |
+| Revoke Agent Passport | `POST /api/agent/passport/revoke` | `sessionId` or `passportId` | `reason`, `metadata` |
+
+Policy objects support `allowedTools`, `blockedTools`, `approvalRequiredTools`, `allowedDomains`, `blockedDomains`, `dataScopes`, and `memoryScopes`, each as a string array.
 
 ## Advanced Options
 
@@ -463,13 +495,30 @@ Benign: Please summarize this public article.
 
 ## Output Fields
 
+### Stable verdict contract
+
+Prefer these fields for new workflows:
+
+| Field | Meaning |
+| --- | --- |
+| `verdictCode` | Stable cause, including `ALLOW`, `CONTENT_BLOCKED`, `REPUTATION_THROTTLED`, `TOKEN_MISSING`, `APPROVAL_REQUIRED`, `EMPTY_INPUT`, `IDENTITY_ENROLLED`, `PASSPORT_ISSUED`, `PASSPORT_VALID`, `PASSPORT_INVALID`, and `PASSPORT_REVOKED`. |
+| `enforcement.outcome` | What this node did: `BLOCKED`, `CONTINUED`, or `SKIPPED`. |
+| `enforcement.routedTo` | `Safe` or `Flagged`. |
+| `contentVerdict` | Cloud content decision before reputation enforcement, when available. |
+| `reputationVerdict` | Separate caller/session reputation state and whether it changed enforcement. |
+| `schemaVersion` | Output contract version (`1.0`). |
+
+Legacy `action`, `rawAction`, `allowed`, and `blocked` remain for existing expressions: `action` is normalized security intent, `rawAction` is the server value, `allowed` describes the security verdict, and `blocked` describes node enforcement after **On Threat**. They overlap by design for backward compatibility; new workflows should branch on `verdictCode` and `enforcement`.
+
+Whitespace-only text is a successful no-op: `verdictCode: EMPTY_INPUT`, `skipped: true`, no network call, and routing to **Safe**.
+
 ### Analyze Text, Guard Input, Guard Output, Universal AI Firewall
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `allowed` | boolean | Whether SoterAI considers the text safe. |
+| `allowed` | boolean | Legacy verdict boolean; prefer `verdictCode` for new workflows. |
 | `operation` | string | The SoterAI node operation that produced the item, such as `universalGuard`, `inputGuard`, or `outputGuard`. |
-| `blocked` | boolean | Whether local node behavior blocked the item. |
+| `blocked` | boolean | Legacy enforcement boolean; prefer `enforcement.outcome` for new workflows. |
 | `riskScore` | number | Risk score returned by the API. |
 | `categories` | string[] | Detected risk types. Ordered by which detector ran, not by confidence — read `primaryRiskType` instead when you want the one that mattered. |
 | `primaryRiskType` | string | The risk type that actually drove the verdict, chosen by confidence. This is the field to branch an IF node on. |
@@ -566,7 +615,7 @@ API keys, bearer tokens, common provider tokens, AWS access key IDs, database UR
 ## Compatibility
 
 - Package: `n8n-nodes-soterai`
-- Version: `0.6.2`
+- Version: `0.7.0`
 - n8n node API: `1`
 - Peer dependency: `n8n-workflow` `*`
 - Runtime: n8n versions that support community nodes and Node.js 20+ are expected to work; verify in your own n8n host before production use.
@@ -575,6 +624,8 @@ API keys, bearer tokens, common provider tokens, AWS access key IDs, database UR
 
 - Cloud mode requires a reachable SoterAI API and a valid API key. Local mode requires neither, at the cost of the detection tiers listed under [Local mode](#local-mode).
 - Local mode is pattern-based: no ML classifier, no cross-turn correlation, no attacker reputation, no passport enforcement, and egress comparison only against Protected Sources supplied inline. Treat it as the best answer available offline, not as an equivalent of Cloud mode.
+- Passport lifecycle actions are cloud-only because identity state, token hashes, revocation, and audit records live on the configured SoterAI deployment. Auto never pretends to complete these actions locally.
+- Version 0.7.0 passes package, type, lint, unit, ReDoS, stress, build, runtime-load, and fresh Docker n8n 2.27.4 workflow/UI metadata gates. Cloud passport execution still requires a reachable SoterAI backend and valid API key.
 - RAG/document risk summaries in Cloud mode depend on the `/api/rag/document/trust-score` endpoint being enabled for your SoterAI deployment. In Local mode the document is scored in-process instead.
 - Very large payloads should be chunked before analysis.
 

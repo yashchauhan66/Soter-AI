@@ -97,12 +97,55 @@ test("MSG-006: a content script cannot trigger enrollment (endpoint rebinding ve
   assert.equal(result.code, "wrong_scope");
 });
 
-test("MSG-007: a subframe content script is refused (content scripts declare no all_frames)", () => {
+/* ── Sub-frames ──────────────────────────────────────────────────────────── */
+
+/**
+ * MSG-007 used to assert the opposite of this, on the stated premise that "content scripts
+ * declare no all_frames". That premise was false — every `content_scripts` entry in the
+ * manifest declares `all_frames: true` — and the blanket top-frame-only rule it locked in was
+ * a real protection gap: a composer rendered in an iframe (which is how embedded chat widgets
+ * and several real AI products ship) had its `SOTER_GET_DESTINATION_CONTEXT` refused, never
+ * learned it was on a guarded destination, installed no interceptor, and let a pasted secret
+ * leave the browser. The rule is now a per-type opt-in (`allowSubframes`), so the assertions
+ * below pin both halves of it, and MSG-007a reads the manifest so the premise cannot rot again.
+ */
+test("MSG-007a: the manifest really does inject into sub-frames", () => {
+  const manifest = JSON.parse(readFileSync(
+    resolve(import.meta.dirname, "../../apps/extension/manifest.json"),
+    "utf8",
+  )) as { content_scripts?: Array<{ all_frames?: boolean }> };
+  const entries = manifest.content_scripts ?? [];
+  assert.ok(entries.length > 0, "the manifest must declare content scripts");
+  for (const entry of entries) {
+    assert.equal(entry.all_frames, true,
+      "a top-frame-only message rule is only defensible if the guard never runs in a sub-frame");
+  }
+});
+
+test("MSG-007b: a framed composer can still be protected (scan, context, approval, audit)", () => {
+  const subframe = { ...contentScript, frameId: 7 };
+  accept({ type: "SOTER_SCAN_TEXT", text: "hello", url: "https://chatgpt.com/", eventType: "submit" }, subframe);
+  accept({ type: "SOTER_GET_DESTINATION_CONTEXT", url: "https://chatgpt.com/" }, subframe);
+  accept({ type: "SOTER_REQUEST_APPROVAL", text: "hello", url: "https://chatgpt.com/" }, subframe);
+  accept({ type: "SOTER_CHECK_APPROVAL_STATUS", approvalId: "ap_1" }, subframe);
+  accept({ type: "SOTER_CLAIM_APPROVAL", requestId: "ap_1", destination: "chatgpt.com" }, subframe);
+  accept({ type: "SOTER_AUDIT_BYPASS", text: "hello", url: "https://chatgpt.com/", action: "block" }, subframe);
+});
+
+test("MSG-007c: shadow-AI discovery stays top-frame-only, so no ad iframe can self-report", () => {
   const result = reject(
-    { type: "SOTER_SCAN_TEXT", text: "hello", url: "https://chatgpt.com/", eventType: "submit" },
+    { type: "SOTER_DISCOVER_SHADOW_AI", domain: "ads.example", destination: "Ad", riskLevel: "high", url: "https://ads.example/" },
     { ...contentScript, frameId: 7 },
   );
   assert.equal(result.code, "subframe_sender");
+});
+
+test("MSG-007d: the sub-frame allowance is opt-in per type, never a default", () => {
+  for (const [type, contract] of Object.entries(MESSAGE_CONTRACTS)) {
+    if (contract.scope !== "content_script") continue;
+    assert.notEqual(contract.allowSubframes, undefined,
+      `${type} is content-script scoped, so its sub-frame stance must be stated explicitly`);
+  }
 });
 
 test("MSG-008: an extension page cannot impersonate a content-script-only message", () => {
@@ -278,6 +321,42 @@ test("MSG-023: a missing page URL degrades to unknown destination instead of dro
   const result = accept({ type: "SOTER_SCAN_TEXT", text: "hello" }, contentScript);
   assert.equal(result.payload.url, "");
   assert.equal(result.payload.eventType, "scan");
+});
+
+/**
+ * The override record used to hardcode `eventType: "submit"`, so a dismissed paste block and a
+ * dismissed file upload both reached the admin console labelled as a submission — contradicting
+ * the scan event for the very same text. An admin filtering the log by event type saw override
+ * attempts attributed to a gesture the user never made.
+ */
+test("MSG-025: a bypass audit carries the gesture that was actually overridden", () => {
+  const base = { type: "SOTER_AUDIT_BYPASS", text: "hello", url: "https://chatgpt.com/", action: "block" };
+  for (const eventType of ["paste", "file_upload", "submit", "context_menu"]) {
+    assert.equal(accept({ ...base, eventType }, contentScript).payload.eventType, eventType);
+  }
+  // Absent stays "submit", so an older content script still validates rather than being dropped.
+  assert.equal(accept(base, contentScript).payload.eventType, "submit");
+  // And it is an enum, not a free-text field that reaches the audit log unchecked.
+  assert.equal(reject({ ...base, eventType: "definitely_not_a_bypass" }, contentScript).code, "invalid_payload");
+});
+
+test("MSG-026: the three override call sites each declare their own gesture", () => {
+  const sites: Array<[string, string]> = [
+    ["../../apps/extension/src/content/paste-listener.ts", "paste"],
+    ["../../apps/extension/src/content/file-content-scanner.ts", "file_upload"],
+  ];
+  for (const [file, eventType] of sites) {
+    const source = readFileSync(resolve(import.meta.dirname, file), "utf8");
+    // Scoped to each message literal, not counted file-wide: these files also send
+    // SOTER_SCAN_TEXT with its own eventType, which must not be mistaken for a bypass.
+    const literals = source.split("SOTER_AUDIT_BYPASS").slice(1);
+    assert.ok(literals.length > 0, `${file} should send bypass audits`);
+    for (const [index, literal] of literals.entries()) {
+      const body = literal.slice(0, literal.indexOf("});") + 1);
+      assert.ok(body.includes(`eventType: "${eventType}"`),
+        `SOTER_AUDIT_BYPASS #${index + 1} in ${file} must declare eventType: "${eventType}"`);
+    }
+  }
 });
 
 test("MSG-024: lineage context is bounded and rejected when malformed", () => {

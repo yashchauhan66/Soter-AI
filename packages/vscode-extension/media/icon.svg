@@ -1,19 +1,19 @@
 <!--
   Activity-bar icon for the SoterAI Guard container.
 
-  This is the saffron SoterAI mark (media/Bestlogo.png) — the same hexagonal
-  shield with a keyhole core — reduced to a monochrome outline. The saffron
+  This is the SoterAI mark (media/logo_circle_whiter.png) — the same shield and
+  keyhole core — reduced to a monochrome outline. The saffron
   (#F96403) cannot be carried over here: VS Code masks this file to its alpha
   channel and repaints it with the activity-bar foreground colour, so every fill
   colour in the file is discarded. A recoloured copy of the orange logo would
   therefore render as an indistinct filled blob at 24x24, not as a saffron icon.
-  Saffron lives where it survives: the marketplace icon (media/Bestlogo.png) and
+  Saffron lives where it survives: the marketplace icon (media/logo_circle_whiter.png) and
   the galleryBanner.
 
   Recovered from the 0.4.0 VSIX after the working-tree copy was deleted while the
   manifest's viewsContainers entry still pointed here — 0.4.1 packaged an
   activity-bar icon that did not exist in the archive. Do not repoint this at
-  Bestlogo.png: it is the 512x512 full-colour raster, which masks to a solid
+  logo_circle_whiter.png: it is a full-colour raster, which masks to a solid
   square. The retired media/icon.png raster was dropped from the package in
   0.4.1+ after the manifest stopped referencing it.
 -->

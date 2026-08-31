@@ -85,8 +85,14 @@ export interface AttackerObservation {
  * abuse identity; the client IP disambiguates shared keys. Hashed so raw IPs are
  * never used as storage keys.
  */
-export function attackerFingerprint(input: { apiKeyId?: string | null; clientIp?: string | null }): string {
-  const material = `${input.apiKeyId ?? "nokey"}|${input.clientIp ?? "noip"}`;
+export function attackerFingerprint(input: { apiKeyId?: string | null; clientIp?: string | null; sessionId?: string | null }): string {
+  // A supplied session is the strongest isolation boundary. Shared automation
+  // API keys often serve many unrelated end users behind one n8n worker/IP; using
+  // only key+IP lets one hostile conversation throttle every benign conversation.
+  const session = input.sessionId?.trim();
+  const material = session
+    ? `${input.apiKeyId ?? "nokey"}|session:${session}`
+    : `${input.apiKeyId ?? "nokey"}|ip:${input.clientIp ?? "noip"}`;
   return createHash("sha256").update(material).digest("hex").slice(0, 32);
 }
 
@@ -199,8 +205,9 @@ export function assessAttackerReputation(history: AttackerHistory): AttackerRepu
  *               passes so legitimate interleaved traffic is not punished, and so
  *               does a redaction-only privacy turn, whose sensitive data the
  *               guard has already stripped (see REMEDIATED_PRIVACY_RISK_TYPES).
- *  - BANNED   → hard BLOCK regardless of this turn's content: the fingerprint
- *               has established itself as an active attacker for the window.
+ *  - BANNED   → blocks current attack-bearing turns, while clean and fully
+ *               remediated privacy turns retain their content verdict. Session
+ *               isolation prevents one conversation poisoning another.
  */
 export function applyAttackerReputation(result: GuardResult, reputation: AttackerReputation): GuardResult {
   if (reputation.level === "NONE") return result;
@@ -217,6 +224,10 @@ export function applyAttackerReputation(result: GuardResult, reputation: Attacke
   if (reputation.level === "SUSPECT") return { ...result, metadata };
 
   const carriesSecurityRisk = result.riskTypes.some((type) => SECURITY_RISK_TYPES.has(type));
+  const remediatedPrivacyOnly =
+    (result.action === "REWRITE" || result.action === "ALLOW_WITH_REDACTION") &&
+    result.riskTypes.length > 0 &&
+    result.riskTypes.every((type) => type === "LOW_RISK" || REMEDIATED_PRIVACY_RISK_TYPES.has(type));
 
   if (reputation.level === "ABUSIVE") {
     // A redaction-only privacy turn is not a probe, and escalating it breaks
@@ -228,14 +239,6 @@ export function applyAttackerReputation(result: GuardResult, reputation: Attacke
     // data the guard has already stripped — came back as a hard BLOCK with a
     // RATE_LIMIT finding. The caller loses their redacted text and gains
     // nothing in security: the identifiers were removed either way.
-    //
-    // BANNED is untouched on purpose. Past 85 the fingerprint is an
-    // established attacker and the documented contract there is to block
-    // regardless of this turn's content.
-    const remediatedPrivacyOnly =
-      (result.action === "REWRITE" || result.action === "ALLOW_WITH_REDACTION") &&
-      result.riskTypes.length > 0 &&
-      result.riskTypes.every((type) => type === "LOW_RISK" || REMEDIATED_PRIVACY_RISK_TYPES.has(type));
     if (remediatedPrivacyOnly) return { ...result, metadata };
 
     const risky =
@@ -247,7 +250,12 @@ export function applyAttackerReputation(result: GuardResult, reputation: Attacke
     return blockForReputation(result, reputation, metadata, "abusive");
   }
 
-  // BANNED
+  // BANNED reputation remains a hard gate for requests that contain a current
+  // security signal. It must not rewrite a clean content verdict into RATE_LIMIT:
+  // that was collateral damage for shared API keys, not content protection.
+  if (remediatedPrivacyOnly || (result.action === "ALLOW" && !carriesSecurityRisk && result.riskScore < ESCALATION_MIN_RISK)) {
+    return { ...result, metadata };
+  }
   return blockForReputation(result, reputation, metadata, "banned");
 }
 

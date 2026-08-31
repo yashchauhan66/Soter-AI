@@ -17,6 +17,7 @@ import {
     INTERNAL_VOCABULARY,
     panelTasks,
     plainControls,
+    privacyBoundary,
     primaryCta,
     type PanelFacts,
 } from "../webview/panelContent";
@@ -157,6 +158,55 @@ describe("Control Panel plain-language content", () => {
     });
 });
 
+describe("Control Panel privacy boundary", () => {
+    it("states that local mode keeps scan data on this device", () => {
+        const receipt = privacyBoundary({
+            privacyMode: "local",
+            cloudEnabled: false,
+            telemetryLevel: "off",
+            trusted: true,
+        });
+        assert.strictEqual(receipt.tone, "local");
+        assert.match(receipt.title, /stays on this device/i);
+        assert.match(receipt.detail, /no scan content|not sent/i);
+    });
+
+    it("does not imply cloud transfer merely because cloud is configured", () => {
+        const receipt = privacyBoundary({
+            privacyMode: "hybrid",
+            cloudEnabled: true,
+            telemetryLevel: "off",
+            trusted: true,
+        });
+        assert.strictEqual(receipt.tone, "connected");
+        assert.match(receipt.detail, /only when you start/i);
+        assert.match(receipt.detail, /telemetry is off/i);
+    });
+
+    it("makes optional metadata collection explicit without claiming content upload", () => {
+        const receipt = privacyBoundary({
+            privacyMode: "cloud",
+            cloudEnabled: true,
+            telemetryLevel: "batched",
+            trusted: true,
+        });
+        assert.strictEqual(receipt.tone, "attention");
+        assert.match(receipt.detail, /redacted metadata/i);
+        assert.match(receipt.detail, /not raw prompts|not raw secrets/i);
+    });
+
+    it("states that an untrusted workspace cannot send", () => {
+        const receipt = privacyBoundary({
+            privacyMode: "cloud",
+            cloudEnabled: true,
+            telemetryLevel: "batched",
+            trusted: false,
+        });
+        assert.strictEqual(receipt.tone, "local");
+        assert.match(receipt.detail, /not trusted|nothing can be sent/i);
+    });
+});
+
 describe("Control Panel primary action", () => {
     const STATES: ProtectionStateName[] = [
         "DISABLED", "INITIALISING", "MONITORING_ONLY", "PARTIALLY_ENFORCED",
@@ -188,6 +238,13 @@ describe("Control Panel primary action", () => {
     it("does not push more setup when everything supported is already on", () => {
         const cta = primaryCta("FULLY_ENFORCED", ALL_ON);
         assert.strictEqual(cta.action, "action:openCoverage");
+        assert.strictEqual(cta.tone, "calm");
+    });
+
+    it("does not offer a no-op full-protection action when all visible controls are on", () => {
+        const cta = primaryCta("PARTIALLY_ENFORCED", ALL_ON);
+        assert.strictEqual(cta.action, "action:openCoverage");
+        assert.strictEqual(cta.label, "See what is covered");
         assert.strictEqual(cta.tone, "calm");
     });
 

@@ -49,6 +49,13 @@ export interface LabBrowserOptions {
   /** base64(SHA-256(SPKI)) of the lab certificate. */
   spkiSha256Base64: string;
   headless?: boolean;
+  /**
+   * Explicit store artefact to load, overriding the version-derived default from
+   * `packagePathFor`. Used when the lab must prove a *published* artefact (e.g. the v0.2.1
+   * zip submitted to the Edge Add-ons store) while the working tree has already moved on
+   * to the next dev version.
+   */
+  packagePath?: string;
 }
 
 export interface LabBrowser {
@@ -86,7 +93,7 @@ export function builtManifestSha256(): string {
 }
 
 export async function launchLabBrowser(options: LabBrowserOptions): Promise<LabBrowser> {
-  const packagePath = packagePathFor(options.channel);
+  const packagePath = options.packagePath ?? packagePathFor(options.channel);
   if (!existsSync(packagePath)) {
     throw new Error(
       `Packaged extension not found: ${packagePath}\nRun \`npm run package\` in apps/extension first — the runtime lab tests the store artefact, not the build tree.`,

@@ -26,6 +26,11 @@ for (const action of [
   "ragScanner",
   "analyzeText",
   "workflowAudit",
+  "enrollIdentity",
+  "issuePassport",
+  "validatePassport",
+  "revokePassport",
+  "toolCall",
 ]) {
   const outputs = resolve({ action });
   const drawn = outputs.map((o) => o.displayName || "(single)").join(" | ");

@@ -1,10 +1,22 @@
 {
-  "generatedAt": "2026-08-15T12:31:02.264Z",
+  "generatedAt": "2026-08-30T13:26:56.676Z",
   "extensionId": "soterai.soterai-ide-guard",
-  "treeVersion": "0.5.0",
-  "comparedAgainstVersion": "0.4.1",
-  "treeVersionIsPublished": false,
+  "treeVersion": "0.6.1",
+  "comparedAgainstVersion": "0.6.1",
+  "treeVersionIsPublished": true,
   "liveVersions": [
+    {
+      "version": "0.6.1",
+      "lastUpdated": "2026-08-28T10:42:01.837Z"
+    },
+    {
+      "version": "0.6.0",
+      "lastUpdated": "2026-08-27T16:54:29.15Z"
+    },
+    {
+      "version": "0.5.0",
+      "lastUpdated": "2026-08-15T13:30:14.597Z"
+    },
     {
       "version": "0.4.1",
       "lastUpdated": "2026-08-14T13:15:44.32Z"
@@ -34,68 +46,68 @@
       "lastUpdated": "2026-07-06T15:20:47.627Z"
     }
   ],
-  "installs": 6,
+  "installs": 7,
   "publisherDomain": null,
   "publisherDomainVerified": false,
   "icon": {
-    "declared": "media/Bestlogo.png",
-    "treeSha256": "5616d87b5da61159ef26c6c82814d46823b2b62ceef2d1b0bf52f38c2540df2e",
+    "declared": "media/logo_circle_whiter.png",
+    "treeSha256": "49ba85f42522528544b3d18a234559942935642d6f7fc48e775aaba5042e2173",
     "liveSha256": "5616d87b5da61159ef26c6c82814d46823b2b62ceef2d1b0bf52f38c2540df2e"
   },
   "checks": [
     {
-      "name": "tree version 0.5.0 is published",
-      "pass": false,
-      "detail": "version 0.5.0 is not on the Marketplace (latest live is 0.4.1). Comparing the tree against live 0.4.1 below shows what publishing would change.",
-      "blocking": false
-    },
-    {
-      "name": "marketplace icon bytes match media/Bestlogo.png [informational: live 0.4.1 vs tree 0.5.0]",
+      "name": "tree version 0.6.1 is published",
       "pass": true,
-      "detail": "both 5616d87b5da61159… (1123706 bytes)",
-      "blocking": false
+      "detail": "published 2026-08-28T10:42:01.837Z",
+      "blocking": true
     },
     {
-      "name": "galleryBanner.color matches [informational: live 0.4.1 vs tree 0.5.0]",
+      "name": "marketplace icon bytes match media/logo_circle_whiter.png",
+      "pass": false,
+      "detail": "tree 49ba85f425225285… (951992 B) != live 5616d87b5da61159… (1123706 B) — the listing is showing a different logo than this tree ships",
+      "blocking": true
+    },
+    {
+      "name": "galleryBanner.color matches",
       "pass": true,
       "detail": "both #F96403",
-      "blocking": false
+      "blocking": true
     },
     {
-      "name": "galleryBanner.theme matches [informational: live 0.4.1 vs tree 0.5.0]",
+      "name": "galleryBanner.theme matches",
       "pass": true,
       "detail": "both light",
-      "blocking": false
+      "blocking": true
     },
     {
-      "name": "homepage -> Links.Learn matches [informational: live 0.4.1 vs tree 0.5.0]",
+      "name": "homepage -> Links.Learn matches",
       "pass": true,
       "detail": "both https://soterai.in/vscode-ai-security",
-      "blocking": false
+      "blocking": true
     },
     {
-      "name": "repository.url -> Links.Source matches [informational: live 0.4.1 vs tree 0.5.0]",
+      "name": "repository.url -> Links.Source matches",
       "pass": true,
       "detail": "both https://github.com/yashchauhan66/Soter-AI",
-      "blocking": false
+      "blocking": true
     },
     {
-      "name": "bugs.url -> Links.Support matches [informational: live 0.4.1 vs tree 0.5.0]",
+      "name": "bugs.url -> Links.Support matches",
       "pass": true,
       "detail": "both https://github.com/yashchauhan66/Soter-AI/issues",
-      "blocking": false
+      "blocking": true
     },
     {
-      "name": "qna -> CustomerQnALink matches [informational: live 0.4.1 vs tree 0.5.0]",
+      "name": "qna -> CustomerQnALink matches",
       "pass": true,
       "detail": "both https://soterai.in/support",
-      "blocking": false
+      "blocking": true
     },
     {
-      "name": "published README carries all 5 header links [informational: live 0.4.1 vs tree 0.5.0]",
+      "name": "published README carries all 12 header links",
       "pass": true,
-      "detail": "found: Website, Docs, Support, Report an issue, Source",
-      "blocking": false
+      "detail": "found: Website, Docs, Support, Report an issue, Source, soterai.in/extensions/ide, Marketplace page, Open VSX registry, Open VSX, SoterAI reports a secret finding and offers a redacted copy, SoterAI scan-selection result in VS Code, SoterAI Safe Mode enabled in VS Code",
+      "blocking": true
     },
     {
       "name": "publisher domain verified (renders the website chip)",
@@ -104,5 +116,5 @@
       "blocking": false
     }
   ],
-  "verdict": "PENDING"
+  "verdict": "DRIFT"
 }
