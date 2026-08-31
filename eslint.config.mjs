@@ -26,6 +26,7 @@ const eslintConfig = [
       "**/__pycache__/**",
       "extensions/jupyterlab/lib/**",
       "extensions/jupyterlab/soterai_jupyterlab_guard/labextension/static/**",
+      "real-user-review-evidence/**",
     ],
   },
   ...nextEslintConfig,
