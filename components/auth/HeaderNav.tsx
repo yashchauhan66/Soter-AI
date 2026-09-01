@@ -1,71 +1,80 @@
 "use client";
 
-import { KeyRound, LogIn } from "lucide-react";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { KeyRound, LayoutDashboard, LogIn } from "lucide-react";
+import { DesktopNav } from "@/components/layout/DesktopNav";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { SignOutButton } from "./SignOutButton";
 
+/**
+ * Header right rail: primary navigation plus account actions.
+ *
+ * The previous version inlined nine link definitions per auth state and hid the
+ * entire desktop nav below `xl` (1280px) — so a 1024–1279px laptop got the phone
+ * drawer. Navigation now comes from `lib/navigation.ts` and the breakpoint is
+ * `lg`, which keeps the full menu on real laptop widths.
+ *
+ * The "Get API Key" affordance is deliberately kept: it is the highest-intent
+ * action for a developer audience, and pointing signed-out visitors at /signup
+ * rather than a login wall preserves the funnel.
+ */
 export function HeaderNav() {
   const { data: session, status } = useSession();
-  const signedIn = status === "authenticated" && session?.user;
+  const signedIn = status === "authenticated" && Boolean(session?.user);
   const isAdmin = Boolean(session?.user?.isAdmin);
 
-  const apiKeyLink = (compact = false) => (
-    <Link
-      href={signedIn ? "/dashboard/api-keys" : "/signup"}
-      className="inline-flex items-center gap-1.5 rounded-md border border-yellow-500/30 bg-yellow-500/10 px-3 py-1.5 text-sm font-medium text-yellow-300 transition hover:bg-yellow-500/20"
-    >
-      <KeyRound size={compact ? 12 : 14} aria-hidden="true" />
-      {signedIn ? "API Key" : "Get API Key"}
-    </Link>
-  );
+  const apiKeyHref = signedIn ? "/dashboard/api-keys" : "/signup";
+  const apiKeyLabel = signedIn ? "API Key" : "Get API Key";
 
   return (
-    <>
-      <nav className="hidden items-center gap-1 text-sm text-slate-300 xl:flex">
-        {signedIn ? (
-          <>
-            <Link href={isAdmin ? "/admin" : "/dashboard"} className="rounded-lg px-3 py-2 font-semibold text-cyan transition hover:bg-cyan/10 hover:text-white">{isAdmin ? "Admin" : "Dashboard"}</Link>
-            <Link href="/docs" className="rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white">Docs</Link>
-            <Link href="/benchmarks" className="rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white">Benchmarks</Link>
-            <Link href="/playground" className="rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white">Playground</Link>
-            <span className="mx-2 h-5 w-px bg-slate-700/60" />
-            {apiKeyLink()}
-            <span className="ml-2 max-w-36 truncate text-xs text-slate-400">{session.user?.email}</span>
+    <div className="flex flex-1 items-center justify-end gap-2">
+      <DesktopNav />
+
+      {/* Divider only appears once both nav and actions are on screen. */}
+      <span className="mx-2 hidden h-5 w-px bg-slate-700/60 lg:block" aria-hidden="true" />
+
+      <Link
+        href={apiKeyHref}
+        className="hidden items-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm font-medium text-amber-200 transition-colors hover:bg-amber-500/20 sm:inline-flex"
+      >
+        <KeyRound size={14} aria-hidden="true" />
+        {apiKeyLabel}
+      </Link>
+
+      {signedIn ? (
+        <>
+          <Link href={isAdmin ? "/admin" : "/dashboard"} className="button-primary button-sm">
+            <LayoutDashboard size={15} aria-hidden="true" />
+            {isAdmin ? "Admin" : "Dashboard"}
+          </Link>
+          {/* The email confirms which account is active but is the least
+              important item in the row, so it is hidden until there is genuine
+              room rather than truncated to an ellipsis on a laptop. */}
+          {session?.user?.email && (
+            <span className="hidden max-w-40 truncate text-xs text-slate-400 xl:inline">
+              {session.user.email}
+            </span>
+          )}
+          <span className="hidden lg:block">
             <SignOutButton />
-          </>
-        ) : (
-          <>
-            <Link href="/#features" className="rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white">Features</Link>
-            <Link href="/docs" className="rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white">Docs</Link>
-            <Link href="/demo" className="rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white">Demo</Link>
-            <Link href="/comparison" className="rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white">Compare</Link>
-            <Link href="/benchmarks" className="rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white">Benchmarks</Link>
-            <Link href="/playground" className="rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white">Playground</Link>
-            <span className="mx-2 h-5 w-px bg-slate-700/60" />
-            {apiKeyLink()}
-            <Link href="/signin" className="ml-1 inline-flex items-center gap-1.5 rounded-lg px-3 py-2 transition hover:bg-slate-800/60 hover:text-white"><LogIn size={14} aria-hidden="true" /> Sign in</Link>
-            <Link href="/signup" className="button-primary ml-1 !px-4 !py-2">Get started</Link>
-          </>
-        )}
-      </nav>
-      <div className="flex items-center gap-3 xl:hidden">
-        {signedIn ? (
-          <>
-            {apiKeyLink(true)}
-            <Link href={isAdmin ? "/admin" : "/dashboard"} className="button-primary !px-4 !py-2">{isAdmin ? "Admin" : "Dashboard"}</Link>
-          </>
-        ) : (
-          <>
-            {apiKeyLink(true)}
-            <Link href="/signup" className="button-primary !px-4 !py-2">Sign up</Link>
-          </>
-        )}
-        {/* Hamburger: without this, a phone/tablet visitor has no way to reach
-            Docs, Pricing, Demo, Playground, etc. (desktop nav is hidden). */}
-        <MobileNav />
-      </div>
-    </>
+          </span>
+        </>
+      ) : (
+        <>
+          <Link
+            href="/signin"
+            className="hidden items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition-colors hover:bg-slate-800/60 hover:text-white lg:inline-flex"
+          >
+            <LogIn size={14} aria-hidden="true" /> Sign in
+          </Link>
+          <Link href="/signup" className="button-primary button-sm">
+            Start free
+          </Link>
+        </>
+      )}
+
+      <MobileNav />
+    </div>
   );
 }

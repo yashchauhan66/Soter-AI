@@ -2,24 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CodeBlock, InlineCode } from "@/components/ui/CodeBlock";
-import { DocViewTracker } from "@/components/docs/DocViewTracker";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
   title: "SoterAI WordPress Plugin Guide - AI Security for CMS Chatbots",
   description:
     "Complete WordPress integration guide for SoterAI. Install the plugin, configure settings, use shortcodes, and protect your WordPress chatbot with PHP and REST API input/output guarding.",
   alternates: { canonical: "/docs/wordpress" },
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.in" },
-    { "@type": "ListItem", position: 2, name: "Docs", item: "https://soterai.in/docs" },
-    { "@type": "ListItem", position: 3, name: "WordPress", item: "https://soterai.in/docs/wordpress" },
-  ],
 };
 
 const phpCode = `$in = soter_guard_input( $user_message );
@@ -44,16 +33,7 @@ const { blocked, safe_text, decision } = await res.json();`;
 
 export default function WordpressDocsPage() {
   return (
-    <main className="py-16">
-      <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
-      <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
-        <p className="eyebrow mt-6">Platform guide</p>
-        <h1 className="mt-3 text-4xl font-bold">WordPress Plugin Guide</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-200">
-          Protect your WordPress chatbot by guarding input and output server-side through the SoterAI REST API.
-        </p>
+    <DocsPageShell path="/docs/wordpress">
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 1: Install the plugin</h2>
@@ -152,7 +132,6 @@ export default function WordpressDocsPage() {
           <Link href="/docs/zendesk" className="text-sm text-cyan hover:text-cyan/80 transition-colors">← Zendesk</Link>
           <Link href="/docs/generic-chatbot" className="text-sm text-cyan hover:text-cyan/80 transition-colors">Generic Chatbot →</Link>
         </div>
-      </div>
-    </main>
+    </DocsPageShell>
   );
 }

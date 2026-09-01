@@ -1,5 +1,6 @@
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -18,9 +19,13 @@ export default async function EnterpriseScimPage() {
   const baseUrl = process.env.NEXTAUTH_URL ?? "";
   return (
     <div>
-      <p className="eyebrow">Enterprise provisioning</p>
-      <h1 className="mt-2 text-3xl font-bold">SCIM v2</h1>
-      <p className="mt-3 max-w-3xl text-slate-200">
+      <PageHeader
+        eyebrow="Enterprise provisioning"
+        title="SCIM v2"
+      >
+        {/* Description retained as JSX because it contains markup. */}
+      </PageHeader>
+      <p className="mb-7 max-w-prose leading-7 text-slate-400">
         Bearer-token SCIM provisioning for Users and Groups. Raw tokens are shown only once when generated through <code>POST /api/enterprise/scim-tokens</code>.
       </p>
 

@@ -6,6 +6,7 @@ import { getActiveOrganization } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { checkMonthlyLimit, planLimit } from "@/lib/rateLimit";
 import { BillingActions } from "@/components/ops/BillingActions";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -57,11 +58,11 @@ export default async function BillingPage({
     <div>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="eyebrow">Billing &amp; usage</p>
-          <h1 className="mt-2 text-3xl font-bold">Plan and billing</h1>
-          <p className="mt-3 text-slate-200">
-            Razorpay-backed subscriptions. Plan changes update on verified payment events; the server never trusts client-side payment status.
-          </p>
+          <PageHeader
+        eyebrow="Billing &amp; usage"
+        title="Plan and billing"
+        description="Razorpay-backed subscriptions. Plan changes update on verified payment events; the server never trusts client-side payment status."
+      />
         </div>
         <ProjectSwitcher projects={projects} selectedId={project.id} />
       </div>

@@ -3,6 +3,7 @@ import { ArrowRight, CheckCircle2, Circle, Clock3, LifeBuoy, Route } from "lucid
 import { loadOnboarding } from "@/lib/onboarding";
 import { ACTIVATION_PATHS, nextOnboardingAction } from "@/lib/ux/activationPaths";
 import { SdkInstalledButton } from "@/components/dashboard/SdkInstalledButton";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -12,23 +13,21 @@ export default async function OnboardingPage() {
 
   return (
     <div className="space-y-7">
-      <p className="eyebrow">Beta onboarding</p>
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h1 className="mt-2 text-3xl font-bold">Get to first protected value</h1>
-          <p className="mt-3 max-w-2xl text-slate-200">
-            Pick the path closest to your job, then follow the checklist. Every step has a clear outcome and a place to continue.
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Link href="/dashboard/support" className="button-secondary !px-4 !py-2 text-sm gap-2">
-            <LifeBuoy size={15} aria-hidden="true" /> Get help
-          </Link>
-          <Link href="/dashboard" className="button-secondary !px-4 !py-2 text-sm gap-2">
-            Skip for now <ArrowRight size={15} aria-hidden="true" />
-          </Link>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="Beta onboarding"
+        title="Get to first protected value"
+        description="Pick the path closest to your job, then follow the checklist. Every step has a clear outcome and a place to continue."
+        actions={
+          <>
+            <Link href="/dashboard/support" className="button-secondary button-sm">
+              <LifeBuoy size={15} aria-hidden="true" /> Get help
+            </Link>
+            <Link href="/dashboard" className="button-ghost button-sm">
+              Skip for now <ArrowRight size={15} aria-hidden="true" />
+            </Link>
+          </>
+        }
+      />
 
       <section className="grid gap-3 md:grid-cols-2 xl:grid-cols-4" aria-label="Role-based setup paths">
         {ACTIVATION_PATHS.map((path) => {

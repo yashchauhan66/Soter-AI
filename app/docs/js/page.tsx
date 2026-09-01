@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CodeBlock, InlineCode, TipBox, WarnBox } from "@/components/ui/CodeBlock";
-import { DocViewTracker } from "@/components/docs/DocViewTracker";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
   title: "SoterAI JavaScript/TypeScript SDK Guide - Protect Your AI Chatbot",
@@ -14,16 +13,6 @@ export const metadata: Metadata = {
     title: "SoterAI JavaScript/TypeScript SDK Guide",
     description: "Protect your Node.js, Deno, or Bun applications from AI security threats with the @soterai/core package.",
   },
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.in" },
-    { "@type": "ListItem", position: 2, name: "Docs", item: "https://soterai.in/docs" },
-    { "@type": "ListItem", position: 3, name: "JavaScript/TypeScript SDK", item: "https://soterai.in/docs/js" },
-  ],
 };
 
 const installCode = `npm install @soterai/core`;
@@ -131,20 +120,7 @@ try {
 
 export default function JSDocsPage() {
   return (
-    <main className="py-16">
-      <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
-      
-      <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
-        
-        <p className="eyebrow mt-6">Language guide</p>
-        <h1 className="mt-3 text-4xl font-bold">JavaScript / TypeScript SDK</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-200">
-          The <InlineCode>@soterai/core</InlineCode> package is the primary SDK for Node.js (≥18.18), 
-          Deno, Bun, and any JavaScript backend. It provides input/output guarding, 
-          conversation protection, and framework-specific helpers.
-        </p>
+    <DocsPageShell path="/docs/js">
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 1: Install the package</h2>
@@ -298,7 +274,6 @@ app.post(
           <Link href="/docs/quickstart" className="text-sm text-cyan hover:text-cyan/80 transition-colors">← Quickstart</Link>
           <Link href="/docs/python" className="text-sm text-cyan hover:text-cyan/80 transition-colors">Python Guide →</Link>
         </div>
-      </div>
-    </main>
+    </DocsPageShell>
   );
 }

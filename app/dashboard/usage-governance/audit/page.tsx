@@ -1,6 +1,7 @@
 import { Activity } from "lucide-react";
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { queryAuditLogs } from "@/lib/usage-governance";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -22,12 +23,11 @@ export default async function GovernanceAuditPage({
   return (
     <div className="space-y-6">
       <div>
-        <p className="eyebrow">Governance</p>
-        <h1 className="mt-2 text-3xl font-bold">Audit Trail</h1>
-        <p className="mt-3 max-w-3xl text-slate-200">
-          Complete audit log of AI usage governance events, including policy changes,
-          approval decisions, and usage monitoring events across your organization.
-        </p>
+        <PageHeader
+        eyebrow="Governance"
+        title="Audit Trail"
+        description="Complete audit log of AI usage governance events, including policy changes, approval decisions, and usage monitoring events across your organization."
+      />
       </div>
 
       {/* Filters */}

@@ -2,42 +2,178 @@
 @tailwind components;
 @tailwind utilities;
 
-:root { color-scheme: dark; }
-* { border-color: rgb(51 65 85 / 0.75); }
-html { scroll-behavior: smooth; }
-body { @apply bg-ink text-slate-100 antialiased; font-feature-settings: "cv02", "cv03", "cv04", "cv11"; }
+/* ══════════════════════════════════════════════════════════════════
+   SoterAI Design System
+   ─────────────────────────────────────────────────────────────────
+   1. Tokens          — CSS custom properties (single source of truth)
+   2. Base            — element defaults, typography, focus, scrollbars
+   3. Keyframes       — motion primitives
+   4. Components      — .card / .button-* / .surface / .badge / …
+   5. Utilities       — layout + effect helpers
+   6. Motion & a11y   — reduced-motion, forced-colors, print
+   ══════════════════════════════════════════════════════════════════ */
 
-/* ── Focus-visible ring for keyboard navigation ────────────────── */
-:focus-visible {
-  outline: 2px solid #00c8c8;
-  outline-offset: 2px;
-  border-radius: 6px;
+/* ── 1. Tokens ──────────────────────────────────────────────────── */
+:root {
+  color-scheme: dark;
+
+  /* Surfaces: a 5-step elevation ladder. Higher step = closer to viewer. */
+  --surface-0: 8 17 31;      /* page background        #08111f */
+  --surface-1: 12 21 36;     /* sunken section         #0c1524 */
+  --surface-2: 16 27 45;     /* card                   #101b2d */
+  --surface-3: 22 36 59;     /* raised card / popover  #16243b */
+  --surface-4: 27 44 72;     /* menu / tooltip         #1b2c48 */
+
+  /* Brand */
+  --brand: 49 215 200;       /* #31d7c8 */
+  --brand-strong: 20 184 171;
+  --accent: 183 243 74;      /* #b7f34a */
+
+  /* Semantic status */
+  --danger: 244 63 94;
+  --warning: 245 158 11;
+  --success: 16 185 129;
+  --info: 56 189 248;
+
+  /* Hairlines: two weights so nested borders don't compound visually. */
+  --hairline: 51 65 85;
+  --hairline-strong: 71 85 105;
+
+  /* Radii */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1.25rem;
+  --radius-full: 999px;
+
+  /* Motion. Durations are short on purpose: an enterprise console should feel
+     instant. Anything above ~360ms reads as sluggish on repeat interactions. */
+  --dur-fast: 140ms;
+  --dur-base: 220ms;
+  --dur-slow: 360ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Elevation */
+  --shadow-1: 0 1px 2px rgba(2, 6, 14, 0.32), 0 1px 3px rgba(2, 6, 14, 0.18);
+  --shadow-2: 0 2px 4px rgba(2, 6, 14, 0.34), 0 6px 16px rgba(2, 6, 14, 0.22);
+  --shadow-3: 0 4px 8px rgba(2, 6, 14, 0.36), 0 12px 32px rgba(2, 6, 14, 0.28);
+  --shadow-4: 0 8px 16px rgba(2, 6, 14, 0.38), 0 24px 64px rgba(2, 6, 14, 0.34);
+  --hairline-top: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  /* Header offset for scroll-margin so anchors don't land under the sticky bar. */
+  --header-offset: 5rem;
 }
 
-/* Restore default focus for mouse users */
-:focus:not(:focus-visible) {
-  outline: none;
+/* ── 2. Base ────────────────────────────────────────────────────── */
+@layer base {
+  /* Scoped to elements that can actually paint a border. The previous universal
+     `*` selector also matched every wrapper div and pseudo-element, making it
+     one of the most-evaluated declarations on the page for no visual gain. */
+  *,
+  *::before,
+  *::after {
+    border-color: rgb(var(--hairline) / 0.75);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-ink text-slate-100 antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    /* Ambient brand light. no-repeat + fixed so it never tiles on long pages. */
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgb(var(--brand) / 0.07), transparent 60%),
+      radial-gradient(ellipse 60% 40% at 100% 0%, rgb(var(--brand) / 0.04), transparent 60%);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  /* Balanced wrapping removes the one-word orphan line that marketing headlines
+     otherwise get at common breakpoints. Unsupported engines ignore it. */
+  h1, h2, h3, h4 { text-wrap: balance; }
+  p, li { text-wrap: pretty; }
+
+  /* Anchor targets must clear the sticky header. */
+  :target { scroll-margin-top: var(--header-offset); }
+
+  /* Tabular figures so metric digits don't jitter as counters update. */
+  [data-numeric], .tabular { font-variant-numeric: tabular-nums; }
+
+  code, pre, .font-mono {
+    font-family: var(--font-jetbrains-mono), Consolas, Monaco, monospace;
+    font-feature-settings: "calt" 1, "liga" 1;
+  }
+
+  pre code { font-size: 0.8125rem; line-height: 1.6; }
+
+  /* ── Focus-visible ring ────────────────────────────────────────
+     `outline` (not box-shadow) so the ring is never clipped by an
+     `overflow: hidden` ancestor — a common failure in card grids. */
+  :focus-visible {
+    outline: 2px solid rgb(var(--brand));
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  :focus:not(:focus-visible) { outline: none; }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  summary:focus-visible,
+  [tabindex]:not([tabindex="-1"]):focus-visible {
+    outline: 2px solid rgb(var(--brand));
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  a, button, input, select, textarea, summary, [tabindex] {
+    transition:
+      outline-color var(--dur-fast) var(--ease-smooth),
+      outline-offset var(--dur-fast) var(--ease-smooth);
+  }
+
+  ::selection { background: rgb(var(--brand) / 0.25); color: #fff; }
+
+  /* Native disclosure markers are inconsistent across engines and every
+     <details> in this codebase supplies its own chevron. */
+  summary::-webkit-details-marker { display: none; }
+  summary { list-style: none; }
+
+  /* Scrollbars — thin and consistent across Firefox and WebKit. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--hairline) / 0.8) transparent;
+  }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--hairline) / 0.7);
+    border-radius: var(--radius-full);
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--hairline-strong) / 0.9);
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-corner { background: transparent; }
+
+  /* Media should never blow out its grid cell. */
+  img, svg, video, canvas { max-width: 100%; height: auto; }
 }
 
-/* Increase specificity for interactive elements that need consistent ring */
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible,
-[tabindex]:not([tabindex="-1"]):focus-visible {
-  outline: 2px solid #00c8c8;
-  outline-offset: 2px;
-  border-radius: 6px;
-}
+/* ── 3. Keyframes ───────────────────────────────────────────────── */
 
-/* Smooth transition for the focus ring */
-a, button, input, select, textarea, [tabindex] {
-  transition: outline-color 0.15s ease, outline-offset 0.15s ease, border-radius 0.15s ease;
-}
-::selection { background: rgba(49, 215, 200, 0.25); }
-
-/* ── Keyframe Animations ────────────────────────────────────────── */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -110,60 +246,77 @@ a, button, input, select, textarea, [tabindex] {
   100% { background-position: 44px 44px, 44px 44px; }
 }
 
-/* ── Utility Animation Classes ──────────────────────────────────── */
-.animate-fade-in {
-  animation: fadeIn 0.4s ease-out forwards;
+/* Marquee for the logo/proof rail. Translating -50% works because the track
+   renders its children twice, so the loop point is visually identical. */
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
 }
 
-.animate-slide-up {
-  animation: slideUp 0.5s ease-out forwards;
+/* Slow conic rotation behind a masked border — used by .border-beam. */
+@keyframes beamSpin {
+  to { transform: rotate(1turn); }
 }
 
-.animate-slide-down {
-  animation: slideDown 0.3s ease-out forwards;
+/* Status dot "breathing" halo. Uses box-shadow spread rather than scale so it
+   never shifts sibling layout. */
+@keyframes ping {
+  0% { box-shadow: 0 0 0 0 currentColor; opacity: 0.6; }
+  70% { box-shadow: 0 0 0 7px currentColor; opacity: 0; }
+  100% { box-shadow: 0 0 0 0 currentColor; opacity: 0; }
 }
 
-.animate-scale-in {
-  animation: scaleIn 0.3s ease-out forwards;
+/* Drawer / sheet transitions. */
+@keyframes slideInRight {
+  from { opacity: 0; transform: translate3d(16px, 0, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
 }
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Left-to-right progress fill for meters and risk bars. */
+@keyframes growX {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Gradient text sweep for the hero headline accent. */
+@keyframes textSheen {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* ── 4. Animation utilities ─────────────────────────────────────── */
+/* All entrance animations are `forwards` and paired with an initial
+   `opacity-0` at the call site so there is no flash of final state. */
+.animate-fade-in { animation: fadeIn var(--dur-slow) var(--ease-smooth) forwards; }
+.animate-slide-up { animation: slideUp 0.5s var(--ease-out-expo) forwards; }
+.animate-slide-down { animation: slideDown var(--dur-base) var(--ease-out-expo) forwards; }
+.animate-scale-in { animation: scaleIn var(--dur-base) var(--ease-out-back) forwards; }
+.animate-slide-in-right { animation: slideInRight var(--dur-base) var(--ease-out-expo) forwards; }
+.animate-overlay-in { animation: overlayIn var(--dur-fast) var(--ease-smooth) forwards; }
+.animate-grow-x { animation: growX 0.7s var(--ease-out-expo) forwards; transform-origin: left center; }
+.animate-marquee { animation: marquee 38s linear infinite; }
+.animate-beam { animation: beamSpin 6s linear infinite; }
+.animate-ping-dot { animation: ping 2s var(--ease-smooth) infinite; }
 
 .animate-shimmer {
   background: linear-gradient(
     90deg,
-    rgba(51, 65, 85, 0.3) 25%,
-    rgba(49, 215, 200, 0.08) 50%,
-    rgba(51, 65, 85, 0.3) 75%
+    rgb(var(--hairline) / 0.28) 25%,
+    rgb(var(--brand) / 0.09) 50%,
+    rgb(var(--hairline) / 0.28) 75%
   );
   background-size: 200% 100%;
   animation: shimmer 1.8s ease-in-out infinite;
 }
 
-/* Code-specific styles */
-code, pre, .font-mono {
-  font-family: var(--font-jetbrains-mono), Consolas, Monaco, monospace;
-  font-feature-settings: "calt" 1, "liga" 1;
-}
 
-pre code {
-  font-size: 0.8125rem;
-  line-height: 1.6;
-}
-
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(51, 65, 85, 0.5);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(51, 65, 85, 0.8);
-}
+/* Code styles and scrollbars now live in the @layer base block above so they
+   participate in Tailwind's layer ordering and can be overridden by utilities. */
 
 .animate-pulse-glow {
   animation: pulseGlow 3s ease-in-out infinite;
@@ -173,7 +326,9 @@ pre code {
   animation: spinner 0.8s linear infinite;
 }
 
-/* Staggered animation delay helpers */
+/* Staggered animation delay helpers. Kept as fixed steps (not arbitrary values)
+   so a list can stagger without inline styles, which CSP would otherwise need
+   to allow. */
 .stagger-1 { animation-delay: 0.05s; }
 .stagger-2 { animation-delay: 0.1s; }
 .stagger-3 { animation-delay: 0.15s; }
@@ -182,101 +337,451 @@ pre code {
 .stagger-6 { animation-delay: 0.3s; }
 .stagger-7 { animation-delay: 0.35s; }
 .stagger-8 { animation-delay: 0.4s; }
+.stagger-9 { animation-delay: 0.45s; }
+.stagger-10 { animation-delay: 0.5s; }
+.stagger-11 { animation-delay: 0.55s; }
+.stagger-12 { animation-delay: 0.6s; }
 
-/* ── Component Styles ───────────────────────────────────────────── */
+/* ── 5. Components ──────────────────────────────────────────────── */
 @layer components {
+  /* Layout containers. `container-page` is the 1280px marketing/app measure;
+     `container-docs` is the narrower reading measure for long-form docs. */
   .container-page { @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8; }
   .container-docs { @apply mx-auto w-full max-w-4xl px-4 sm:px-6 lg:px-8; }
+  .container-wide { @apply mx-auto w-full max-w-[1440px] px-4 sm:px-6 lg:px-8; }
 
-  /* Premium card with subtle glass + glow */
+  /* Vertical rhythm. Sections previously hand-rolled py-20 / py-24 per file,
+     which drifted apart; these keep spacing consistent and fluid. */
+  .section { @apply py-16 sm:py-20 lg:py-24; }
+  .section-tight { @apply py-12 sm:py-14 lg:py-16; }
+
+  /* ── Surfaces ──────────────────────────────────────────────────
+     One elevation ladder for every panel in the product. `.card` keeps its
+     existing name and visual weight (it is used in ~200 places) but is now
+     token-driven, so a single change propagates everywhere. */
   .card {
-    @apply rounded-xl border border-slate-800/80 bg-panel/80 backdrop-blur;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.15);
-    transition: border-color 0.2s ease, box-shadow 0.25s ease, transform 0.2s ease;
+    @apply rounded-card border backdrop-blur;
+    background: rgb(var(--surface-2) / 0.8);
+    border-color: rgb(var(--hairline) / 0.55);
+    box-shadow: var(--shadow-1), var(--hairline-top);
+    transition:
+      border-color var(--dur-base) var(--ease-smooth),
+      box-shadow var(--dur-base) var(--ease-smooth),
+      transform var(--dur-base) var(--ease-out-expo);
   }
   .card:hover {
-    border-color: rgba(49, 215, 200, 0.25);
-    box-shadow: 0 4px 24px rgba(0,0,0,0.25), 0 0 0 1px rgba(49,215,200,0.08), 0 8px 32px rgba(49,215,200,0.06);
+    border-color: rgb(var(--brand) / 0.28);
+    box-shadow: var(--shadow-2), 0 0 0 1px rgb(var(--brand) / 0.10), var(--hairline-top);
   }
 
-  /* Premium primary button with gradient + glow */
-  .button-primary {
-    @apply inline-flex items-center justify-center rounded-lg px-5 py-3 font-semibold text-ink transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50;
-    background: linear-gradient(135deg, #31d7c8 0%, #00c8c8 100%);
-    box-shadow: 0 2px 8px rgba(49,215,200,0.25), 0 1px 2px rgba(0,0,0,0.2);
-  }
-  .button-primary:hover {
-    background: linear-gradient(135deg, #45e0d2 0%, #1ad4d4 100%);
-    box-shadow: 0 4px 16px rgba(49,215,200,0.35), 0 2px 4px rgba(0,0,0,0.2);
-    transform: translateY(-1px);
-  }
-  .button-primary:active { transform: translateY(0); }
+  /* Opt-in lift. Applied only to cards that are themselves links/buttons —
+     a non-interactive card that moves on hover is a false affordance. */
+  .card-interactive { cursor: pointer; }
+  .card-interactive:hover { transform: translateY(-2px); }
+  .card-interactive:active { transform: translateY(0); }
 
-  /* Premium secondary button with glass */
-  .button-secondary {
-    @apply inline-flex items-center justify-center rounded-lg border border-slate-700/80 px-5 py-3 font-semibold text-slate-100 transition-all duration-200;
-    background: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(8px);
+  /* Static well: same surface language, no hover reaction. */
+  .surface {
+    @apply rounded-card border;
+    background: rgb(var(--surface-1) / 0.72);
+    border-color: rgb(var(--hairline) / 0.5);
+    box-shadow: var(--hairline-top);
   }
-  .button-secondary:hover {
-    border-color: rgba(49,215,200,0.4);
-    background: rgba(30, 41, 59, 0.7);
-    box-shadow: 0 0 0 1px rgba(49,215,200,0.1), 0 4px 12px rgba(0,0,0,0.2);
-    transform: translateY(-1px);
+
+  .surface-raised {
+    @apply rounded-panel border backdrop-blur-xl;
+    background: rgb(var(--surface-3) / 0.86);
+    border-color: rgb(var(--hairline-strong) / 0.5);
+    box-shadow: var(--shadow-3), var(--hairline-top);
   }
-  .button-secondary:active { transform: translateY(0); }
 
-  .input { @apply w-full rounded-lg border border-slate-700 bg-slate-950/80 px-4 py-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan focus:ring-2 focus:ring-cyan/10; }
-  .eyebrow { @apply text-xs font-bold uppercase tracking-[0.18em] text-cyan; }
-
-  /* Premium glass panel */
   .glass-panel {
-    background: rgba(13, 23, 36, 0.7);
+    background: rgb(var(--surface-2) / 0.7);
     backdrop-filter: blur(16px);
-    border: 1px solid rgba(51, 65, 85, 0.6);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03);
+    border: 1px solid rgb(var(--hairline) / 0.6);
+    box-shadow: var(--shadow-3), var(--hairline-top);
   }
 
-  /* Gradient border card */
+  /* Gradient hairline border. The mask trick paints the gradient only in the
+     1px padding ring, so the card's own background stays flat and legible. */
   .gradient-border {
     position: relative;
-    border-radius: 12px;
-    background: rgba(13, 23, 36, 0.8);
+    border-radius: var(--radius-lg);
+    background: rgb(var(--surface-2) / 0.8);
   }
   .gradient-border::before {
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: 12px;
+    border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, rgba(49,215,200,0.3), rgba(51,65,85,0.5), rgba(49,215,200,0.1));
+    background: linear-gradient(
+      135deg,
+      rgb(var(--brand) / 0.35),
+      rgb(var(--hairline) / 0.5) 45%,
+      rgb(var(--brand) / 0.12)
+    );
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
   }
 
-  .grid-fade { background-image: linear-gradient(rgba(49,215,200,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(49,215,200,.05) 1px, transparent 1px); background-size: 44px 44px; }
-  .grid-fade-anim { background-image: linear-gradient(rgba(49,215,200,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(49,215,200,.06) 1px, transparent 1px); background-size: 44px 44px; animation: gridDrift 9s linear infinite; }
+  /* ── Buttons ───────────────────────────────────────────────────
+     Every variant shares one box model so variants align on a row, and every
+     one has a real disabled + :active state. Hover effects are guarded with
+     `:not(:disabled)` — the old rules animated disabled buttons on hover. */
+  .button-base {
+    @apply inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-lg
+           text-sm font-semibold leading-none
+           disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50;
+    /* 44px minimum target — WCAG 2.5.5 / Apple HIG touch minimum. */
+    min-height: 2.75rem;
+    padding: 0.75rem 1.25rem;
+    transition:
+      background-color var(--dur-fast) var(--ease-smooth),
+      border-color var(--dur-fast) var(--ease-smooth),
+      box-shadow var(--dur-base) var(--ease-smooth),
+      color var(--dur-fast) var(--ease-smooth),
+      transform var(--dur-fast) var(--ease-out-expo);
+  }
+
+  .button-primary {
+    @apply button-base text-ink;
+    background: linear-gradient(135deg, rgb(var(--brand)) 0%, rgb(var(--brand-strong)) 100%);
+    box-shadow: 0 1px 2px rgba(2, 6, 14, 0.28), 0 4px 14px rgb(var(--brand) / 0.22);
+  }
+  .button-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #45e0d2 0%, #1ad4d4 100%);
+    box-shadow: 0 2px 4px rgba(2, 6, 14, 0.3), 0 8px 24px rgb(var(--brand) / 0.32);
+    transform: translateY(-1px);
+  }
+  .button-primary:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(2, 6, 14, 0.3), 0 2px 8px rgb(var(--brand) / 0.2);
+  }
+
+  .button-secondary {
+    @apply button-base border text-slate-100;
+    border-color: rgb(var(--hairline-strong) / 0.7);
+    background: rgb(var(--surface-2) / 0.65);
+    backdrop-filter: blur(8px);
+  }
+  .button-secondary:hover:not(:disabled) {
+    border-color: rgb(var(--brand) / 0.45);
+    background: rgb(var(--surface-3) / 0.8);
+    box-shadow: var(--shadow-2);
+    transform: translateY(-1px);
+  }
+  .button-secondary:active:not(:disabled) { transform: translateY(0); box-shadow: none; }
+
+  /* Tertiary: text-only affordance for a third action, where another bordered
+     button would create a "which one do I press" problem. */
+  .button-ghost {
+    @apply button-base text-slate-300;
+    background: transparent;
+  }
+  .button-ghost:hover:not(:disabled) {
+    background: rgb(var(--surface-3) / 0.7);
+    color: #fff;
+  }
+
+  .button-danger {
+    @apply button-base text-white;
+    background: rgb(var(--danger) / 0.92);
+    box-shadow: 0 1px 2px rgba(2, 6, 14, 0.28), 0 4px 14px rgb(var(--danger) / 0.2);
+  }
+  .button-danger:hover:not(:disabled) { background: rgb(var(--danger)); transform: translateY(-1px); }
+  .button-danger:active:not(:disabled) { transform: translateY(0); }
+
+  /* Size modifiers reset min-height too, so a small button is genuinely
+     smaller rather than padded inside a 44px box. */
+  .button-sm { min-height: 2.25rem; padding: 0.5rem 0.875rem; @apply text-xs; }
+  .button-lg { min-height: 3.25rem; padding: 1rem 1.75rem; @apply text-base; }
+
+  /* Square icon-only button. Requires an aria-label at the call site. */
+  .button-icon {
+    @apply button-base border text-slate-300;
+    min-height: 2.5rem;
+    width: 2.5rem;
+    padding: 0;
+    border-color: rgb(var(--hairline-strong) / 0.6);
+    background: rgb(var(--surface-2) / 0.6);
+  }
+  .button-icon:hover:not(:disabled) {
+    border-color: rgb(var(--brand) / 0.5);
+    color: rgb(var(--brand));
+  }
+
+  /* ── Form controls ─────────────────────────────────────────────
+     `outline-none` on the old .input removed the focus ring for keyboard users
+     and relied solely on a border-colour change, which fails 1.4.11 (non-text
+     contrast) against the dark field. The ring is now explicit. */
+  .input {
+    @apply w-full rounded-lg border px-4 py-3 text-slate-100 placeholder:text-slate-500;
+    min-height: 2.75rem;
+    border-color: rgb(var(--hairline-strong) / 0.75);
+    background: rgb(var(--surface-0) / 0.85);
+    transition:
+      border-color var(--dur-fast) var(--ease-smooth),
+      box-shadow var(--dur-fast) var(--ease-smooth),
+      background-color var(--dur-fast) var(--ease-smooth);
+  }
+  .input:hover:not(:disabled):not(:focus) { border-color: rgb(var(--hairline-strong)); }
+  .input:focus {
+    outline: none;
+    border-color: rgb(var(--brand) / 0.7);
+    box-shadow: 0 0 0 3px rgb(var(--brand) / 0.16);
+  }
+  .input:disabled { @apply cursor-not-allowed opacity-55; }
+  /* `aria-invalid` drives the error style so validity is announced *and* shown,
+     rather than being a colour-only signal from a separate class. */
+  .input[aria-invalid="true"] { border-color: rgb(var(--danger) / 0.7); }
+  .input[aria-invalid="true"]:focus { box-shadow: 0 0 0 3px rgb(var(--danger) / 0.18); }
+
+  .label { @apply mb-1.5 block text-sm font-medium text-slate-200; }
+  .field-hint { @apply mt-1.5 text-xs leading-5 text-slate-400; }
+  .field-error { @apply mt-1.5 flex items-center gap-1.5 text-xs font-medium text-rose-300; }
+
+  /* ── Typography ────────────────────────────────────────────────
+     `text-cyan` resolves again (see tailwind.config.ts) but the token keeps the
+     eyebrow consistent even if the brand hue is retuned. */
+  .eyebrow {
+    @apply text-xs font-bold uppercase tracking-eyebrow;
+    color: rgb(var(--brand));
+  }
+
+  /**
+   * The hero headline sits one step below the largest display size.
+   *
+   * `display-xl` (up to 72px) was overpowering the sub-heading and CTAs next to
+   * it, and at that size the headline pushed the proof stats and the live console
+   * further down the fold. `display-lg` caps at 60px, which still reads as the
+   * page's primary voice without dominating everything beneath it.
+   *
+   * This class is used only by the homepage hero, so the shared `display-xl`
+   * token is left intact for any future use.
+   */
+  .heading-hero { @apply text-display-lg font-bold; }
+  .heading-1 { @apply text-display-lg font-bold; }
+  .heading-2 { @apply text-display-md font-bold; }
+  .heading-3 { @apply text-display-sm font-semibold; }
+
+  /* Long-form copy capped at a comfortable reading measure. */
+  .lede { @apply max-w-prose text-lg leading-8 text-slate-300; }
+  .body-copy { @apply max-w-prose leading-7 text-slate-300; }
+
+  /* Brand gradient text. `inline-block` + padding-bottom stop descenders from
+     being clipped by background-clip on WebKit. */
+  .text-gradient-brand {
+    display: inline-block;
+    padding-bottom: 0.08em;
+    background: linear-gradient(100deg, #5ef4e8 0%, #31d7c8 40%, #b7f34a 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .text-gradient-brand-animated { animation: textSheen 7s linear infinite; }
+
+  /* ── Badges / pills ───────────────────────────────────────────
+     Semantic variants replace the ad-hoc `border-x-500/30 bg-x-500/10
+     text-x-300` triplet that was repeated across dozens of files. */
+  .badge {
+    @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border
+           px-2.5 py-1 text-xs font-semibold;
+  }
+  .badge-neutral { @apply badge border-slate-700 bg-slate-900/70 text-slate-300; }
+  .badge-brand { @apply badge; border-color: rgb(var(--brand) / 0.3); background: rgb(var(--brand) / 0.1); color: #5ef4e8; }
+  .badge-success { @apply badge border-emerald-500/30 bg-emerald-500/10 text-emerald-300; }
+  .badge-warning { @apply badge border-amber-500/30 bg-amber-500/10 text-amber-200; }
+  .badge-danger { @apply badge border-rose-500/30 bg-rose-500/10 text-rose-300; }
+  .badge-info { @apply badge border-sky-500/30 bg-sky-500/10 text-sky-300; }
+
+  /* Live status dot. `currentColor` lets the halo inherit the text colour, so
+     one keyframe serves every status variant. */
+  .status-dot {
+    @apply inline-block h-2 w-2 shrink-0 rounded-full;
+    background: currentColor;
+  }
+
+  /* ── Callouts ──────────────────────────────────────────────── */
+  .tip-card {
+    @apply rounded-lg border p-4 text-sm leading-6 text-slate-300;
+    border-color: rgb(var(--brand) / 0.22);
+    background: rgb(var(--brand) / 0.05);
+  }
+  .warn-card { @apply rounded-lg border border-amber-500/25 bg-amber-500/5 p-4 text-sm leading-6 text-amber-100; }
+  .danger-card { @apply rounded-lg border border-rose-500/25 bg-rose-500/5 p-4 text-sm leading-6 text-rose-100; }
+
+  .docs-section { @apply mt-12 scroll-mt-24; }
+
+  /* ── Decorative backgrounds ────────────────────────────────────
+     Decorative only; call sites must render them behind content with
+     `pointer-events-none` so they never intercept clicks. */
+  .grid-fade {
+    background-image:
+      linear-gradient(rgb(var(--brand) / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--brand) / 0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+  .grid-fade-anim {
+    background-image:
+      linear-gradient(rgb(var(--brand) / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--brand) / 0.06) 1px, transparent 1px);
+    background-size: 44px 44px;
+    animation: gridDrift 9s linear infinite;
+  }
+
+  /* Fades a decorative layer toward the edges so the grid never terminates in a
+     hard visible line at the section boundary. */
+  .mask-radial-fade {
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 40%, transparent 100%);
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 40%, transparent 100%);
+  }
+
   .animate-scan-sweep { animation: scanSweep 1.15s ease-in-out infinite; }
   .animate-radar { animation: radarSweep 4s linear infinite; transform-origin: center; }
   .animate-caret { animation: caretBlink 1s step-end infinite; }
   .animate-float-y { animation: floatY 6s ease-in-out infinite; }
-  .animate-verdict-pop { animation: verdictPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-  .animate-chip-in { animation: chipIn 0.32s ease-out forwards; }
-  .tip-card { @apply rounded-lg border border-cyan/20 bg-cyan/5 p-4 text-sm leading-6 text-slate-300; }
-  .warn-card { @apply rounded-lg border border-amber-500/25 bg-amber-500/5 p-4 text-sm leading-6 text-amber-100; }
-  .docs-section { @apply mt-12 scroll-mt-24; }
+  .animate-verdict-pop { animation: verdictPop 0.5s var(--ease-out-back) forwards; }
+  .animate-chip-in { animation: chipIn 0.32s var(--ease-out-expo) forwards; }
 }
 
-/* ── Respect users who prefer reduced motion ────────────────────── */
+/* ── 6. Utilities ───────────────────────────────────────────────── */
+@layer utilities {
+  /* Marquee track: children are duplicated in markup, so translating -50%
+     produces a seamless loop. `w-max` keeps the track from wrapping. */
+  .marquee-track { @apply flex w-max items-center; }
+  .marquee-mask {
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  /* Rotating conic beam confined to a 1px border ring. Purely decorative. */
+  .border-beam { position: relative; isolation: isolate; }
+  .border-beam::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(from 0deg, transparent 0 65%, rgb(var(--brand) / 0.55) 78%, transparent 92%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: beamSpin 6s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Promotes an element to its own compositing layer. Applied narrowly:
+     leaving `will-change` on permanently wastes GPU memory. */
+  .gpu { transform: translateZ(0); backface-visibility: hidden; }
+
+  /* Truncate to N lines so uneven copy length does not create ragged card
+     heights in a grid. */
+  .clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+}
+
+/* ── 7. Motion & accessibility ──────────────────────────────────── */
+
+/* Users who ask for less motion get none. `!important` is needed to beat
+   utility specificity; the explicit `animation: none` list below matters
+   because a 0.001ms infinite animation still loops forever. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+
+  .animate-marquee,
+  .animate-beam,
+  .animate-ping-dot,
+  .animate-radar,
+  .animate-scan-sweep,
+  .animate-float-y,
+  .animate-caret,
+  .animate-pulse-glow,
+  .grid-fade-anim,
+  .border-beam::before,
+  .text-gradient-brand-animated {
+    animation: none !important;
+  }
+
+  /* Hover lift is motion too. */
+  .card-interactive:hover,
+  .button-primary:hover:not(:disabled),
+  .button-secondary:hover:not(:disabled),
+  .button-danger:hover:not(:disabled) {
+    transform: none;
+  }
 }
+
+/* Windows High Contrast / forced-colors: translucent surfaces and
+   shadow-only borders vanish there, so restore real borders and system colours. */
+@media (forced-colors: active) {
+  .card,
+  .surface,
+  .surface-raised,
+  .glass-panel,
+  .input,
+  .badge,
+  .button-primary,
+  .button-secondary,
+  .button-ghost,
+  .button-danger,
+  .button-icon {
+    border: 1px solid ButtonBorder;
+    background: ButtonFace;
+    color: ButtonText;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  /* Gradient text renders invisible once colours are forced. */
+  .text-gradient-brand {
+    -webkit-text-fill-color: currentColor;
+    color: CanvasText;
+    background: none;
+  }
+}
+
+/* Print: strip chrome and decoration so exported reports stay readable. */
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    background-image: none !important;
+  }
+
+  header, footer, nav, .no-print { display: none !important; }
+
+  .card,
+  .surface,
+  .surface-raised,
+  .glass-panel {
+    border: 1px solid #ccc !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+
+  /* Expand every disclosure so collapsed content is not silently dropped. */
+  details > *:not(summary) { display: block !important; }
+
+  a { text-decoration: underline; }
+}
+

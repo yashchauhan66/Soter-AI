@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { Timestamp } from "@/components/ui/Timestamp";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -130,12 +131,11 @@ export default async function GovernanceMonitoringPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="eyebrow">Governance</p>
-        <h1 className="mt-2 text-3xl font-bold">Employee AI Usage Monitoring</h1>
-        <p className="mt-3 max-w-3xl text-slate-200">
-          Monitor AI tool usage across your organization. Track which providers are being used,
-          how often, and whether usage complies with your governance policies.
-        </p>
+        <PageHeader
+        eyebrow="Governance"
+        title="Employee AI Usage Monitoring"
+        description="Monitor AI tool usage across your organization. Track which providers are being used, how often, and whether usage complies with your governance policies."
+      />
       </div>
 
       {/* ── Stats Row ── */}

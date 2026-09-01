@@ -1,6 +1,7 @@
 import { Shield } from "lucide-react";
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { listDataClassifications } from "@/lib/usage-governance";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -23,12 +24,11 @@ export default async function DataClassificationPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="eyebrow">Governance</p>
-        <h1 className="mt-2 text-3xl font-bold">Data Classification Rules</h1>
-        <p className="mt-3 max-w-3xl text-slate-200">
-          Define what data sensitivity levels can be sent to which AI providers. 
-          This helps prevent sensitive data from being shared with unauthorized AI services.
-        </p>
+        <PageHeader
+        eyebrow="Governance"
+        title="Data Classification Rules"
+        description="Define what data sensitivity levels can be sent to which AI providers. This helps prevent sensitive data from being shared with unauthorized AI services."
+      />
       </div>
 
       <form action="/api/usage-governance/data-classification" method="POST" className="card p-5 space-y-4">

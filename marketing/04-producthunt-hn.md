@@ -1,7 +1,7 @@
 # 04 — Product Hunt + Hacker News Launch Kit (v2 — updated with live benchmark + n8n/Make/Zapier)
 
 **Goal:** PH = 100–250 users | HN = 50–150 users | **Timing:** PH = Tue/Wed (Day 9–10), HN = Tue/Wed/Thu (Day 11–13)
-**Verified numbers (benchmarks/results/latest.json, Aug 2026):** 3,200 cases (2,200 attacks / 1,000 benign) → precision 1.000, recall 1.000, F1 1.000, FPR 0.000, latency p50 9.3ms / p95 17.8ms. All 10 attack families at 100% recall (prompt injection, jailbreak, RAG poisoning, secret/PII, system-prompt leak, tool abuse, MCP risk, data exfiltration, unicode obfuscation, Hinglish multilingual).
+**Verified numbers (benchmarks/results/latest.json, generated 2026-07-22):** 3,200 cases (2,200 attacks / 1,000 benign) → precision 1.000, recall 1.000, F1 1.000, FPR 0.000, latency p50 9.3ms / p95 17.8ms. All 10 attack families at 100% recall (prompt injection, jailbreak, RAG poisoning, secret/PII, system-prompt leak, tool abuse, MCP risk, data exfiltration, unicode obfuscation, Hinglish multilingual).
 
 ---
 
@@ -23,19 +23,31 @@
 - [ ] Pricing: "Free"
 - [ ] First comment pre-written (below)
 
+## How to post (mechanics — only you can do this, ~10 min)
+
+> Note: Product Hunt API v2 is read-only for creating posts (write scope is granted case-by-case by PH), so this must be done in the browser. I cannot log in or drive your browser — the copy below is ready to copy-paste.
+
+1. Log in at producthunt.com → sidebar → **Post a product** (or producthunt.com/new)
+2. Fill from the copy below: **Name** → `SoterAI` · **Tagline** (≤60 chars) · **Website** → `https://soterai.in` · **Description** (≤260 chars)
+3. Topics (pick 3–4): Artificial Intelligence, Developer Tools, Privacy, Security, Open Source
+4. Pricing → **Free**. Maker → add yourself (Yash Chauhan) as founder
+5. Upload thumbnail (240×240) + gallery (1270×760 each) — checklist below
+6. **Schedule** for 12:01 AM PT on Tue/Wed (12:31 PM IST) — do not launch instantly; scheduled launches give you prep time
+7. When live: post the first comment within minutes (below), then reply to every comment for the next 24 hours
+
 ## Launch copy (final)
 
 **Product name:** SoterAI
-**Tagline (60 chars, primary):**
-> Open-source AI security layer — blocks prompt injection & data leaks
+**Tagline (PH limit = 60 chars, primary — 49 chars ✓):**
+> AI security guard for chatbots, RAG apps & agents
 
-**Alt taglines (A/B in comments):**
-- "The OSS guard for ChatGPT-era apps — 100% benchmark recall, 0% FP"
-- "AI agents that can't leak, jailbreak, or spend without approval"
-- "Prompt injection, PII leaks & rogue agents — blocked before they reach your AI"
+**Alt taglines (all verified ≤60 chars, A/B in comments):**
+- "Blocks prompt injection, PII leaks & rogue AI agents" (52)
+- "Open-source AI security layer for LLM apps & agents" (51)
+- "AI security guard — chatbots, RAG apps & AI agents" (50)
 
-**Description (260 chars):**
-> SoterAI protects chatbots, RAG apps & AI agents from prompt injection, jailbreaks, data leaks & rogue agent actions. Public reproducible benchmark: 3,200 cases, 100% recall, 0% FP, 9.3ms p50. 79 languages incl. Hinglish. Aadhaar/PAN/GSTIN detection. Native n8n/Make/Zapier nodes. Self-host in 1 command. Free tier.
+**Description (PH limit = 260 chars — 259 chars ✓):**
+> SoterAI blocks prompt injection, jailbreaks, data leaks & rogue AI agent actions for chatbots, RAG apps & agents. Reproducible benchmark: 3,200 cases, 100% recall, 0% FP, 9.3ms p50. Hinglish-aware. Aadhaar/PAN/GSTIN detection. n8n/Make/Zapier. Self-hostable.
 
 **First comment (post immediately as maker):**
 > Hey Product Hunt! 👋 I'm Yash, solo founder of SoterAI.

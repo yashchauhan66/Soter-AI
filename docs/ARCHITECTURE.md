@@ -41,9 +41,105 @@ App Router tree. Notable route groups:
 
 ### Design system
 
-Tailwind with shared utility classes in `app/globals.css`: `.card`, `.eyebrow`,
-`.button-primary`, `.button-secondary`, `.input`. Reusable dashboard primitives live in
-`components/dashboard/` (`MetricCard`, `StatusBadge`, `EmptyRow`, …).
+**Tokens** live in `:root` in `app/globals.css` as CSS custom properties:
+a five-step surface ladder (`--surface-0`…`--surface-4`), brand and semantic
+colours, two hairline weights, radii, motion durations/easings, and a four-step
+elevation scale. Component classes reference tokens rather than literal hex
+values, so retuning the palette is a single-file change.
+
+**Tailwind theme** (`tailwind.config.ts`) exposes the same vocabulary as
+utilities: `bg-ink` / `bg-panel`, full `cyan` and `lime` ramps, fluid
+`text-display-xs…xl` sizes built on `clamp()`, `shadow-elevation-1…4`,
+`duration-fast|base|slow`, `ease-out-expo|out-back|in-out-smooth`,
+`rounded-card|panel`, `max-w-prose|measure`, and named `z-banner…toast`.
+
+> `cyan` and `lime` **must** stay full colour objects with a `DEFAULT` key.
+> `theme.extend.colors` merges shallowly, so assigning a bare hex string
+> replaces Tailwind's built-in ramp and silently deletes every
+> `text-cyan-300` / `bg-cyan-500/10` class in the codebase.
+
+**Component classes** in `app/globals.css`:
+
+| Group | Classes |
+| --- | --- |
+| Layout | `.container-page`, `.container-docs`, `.container-wide`, `.section`, `.section-tight` |
+| Surfaces | `.card`, `.card-interactive`, `.surface`, `.surface-raised`, `.glass-panel`, `.gradient-border` |
+| Buttons | `.button-primary`, `.button-secondary`, `.button-ghost`, `.button-danger`, `.button-icon`, `.button-sm`, `.button-lg` |
+| Forms | `.input`, `.label`, `.field-hint`, `.field-error` |
+| Type | `.eyebrow`, `.heading-hero`, `.heading-1…3`, `.lede`, `.body-copy`, `.text-gradient-brand` |
+| Status | `.badge-neutral|brand|success|warning|danger|info`, `.status-dot` |
+| Callouts | `.tip-card`, `.warn-card`, `.danger-card` |
+
+All buttons share `.button-base`, so every variant is at least 44px tall
+(WCAG 2.5.5) and hover/active states are gated behind `:not(:disabled)`.
+Field errors are driven by `aria-invalid="true"` rather than a separate class, so
+the visual and assistive-technology states cannot diverge.
+
+`prefers-reduced-motion`, `forced-colors`, and `print` blocks at the end of
+`globals.css` neutralise animation, restore real borders under High Contrast, and
+expand collapsed `<details>` for printing.
+
+**Navigation** is data, not markup: `lib/navigation.ts` holds `PRIMARY_NAV`
+(desktop mega menu + mobile drawer), `FOOTER_NAV`, `LEGAL_NAV`,
+`MOBILE_SHORTCUTS`, and `buildCrumbs()` for the breadcrumb trail and its
+`BreadcrumbList` JSON-LD. Add a page in one place, not four.
+
+Reusable dashboard primitives live in `components/dashboard/`:
+
+| Component | Role |
+| --- | --- |
+| `PageHeader` | The only page header. Eyebrow, H1, description, `actions` slot, optional `status` badges and `docsHref`. |
+| `SectionHeader` | Labelled boundary between panels inside a page. |
+| `EmptyState` | Explains what will appear and offers the action that makes it appear. |
+| `MetricCard` | Label/value tile. Optional `hint`, plus `delta` + `deltaIsGood` — direction alone is ambiguous when more blocked attacks is good news and more failed deliveries is not. |
+| `StatCard` | Icon-anchored metric tile for four-or-fewer headline figures. |
+| `StatusBadge` / `RiskLevel` | Resolve through `lib/dashboard/status.ts`. |
+| `TableWrapper` | Keyboard-focusable scroll region (`role="region"`, `tabIndex={0}`) with a clipped-content fade. |
+
+`lib/dashboard/status.ts` is the status vocabulary: every enum maps to a
+human label plus one of five semantic **intents** (`success`, `info`, `warning`,
+`danger`, `neutral`) which resolve to the shared `.badge-*` classes. Before this,
+badges rendered raw enums (`ALLOW_WITH_REDACTION`, `PROMPT_INJECTION_DETECTED`)
+and hard-coded colour triplets at 60+ call sites. Unmapped values degrade to title
+case rather than leaking the enum.
+
+`FeatureGuide` (52 pages) delegates its header to `PageHeader` and collapses its
+explainer into a `<details>`, so operational panels sit above the fold instead of
+below ~400px of explanation on every visit.
+
+`tests/dashboard-ui-consistency.test.ts` enforces: one `<h1>` per page, no
+hand-rolled eyebrow+h1 pairs, no raw enums surfaced to users, badge classes drawn
+only from the semantic set, sticky sidebar, and a modal mobile drawer.
+
+### Documentation (`/docs`)
+
+The docs are a **structured site**, not a folder of pages. Three data modules own
+everything shared, so 18 guides cannot drift apart again:
+
+| File | Owns |
+| --- | --- |
+| `lib/docs/navigation.ts` | `DOCS_SECTIONS` (5 sections), per-page label, summary, hands-on `minutes`, search `keywords`, plus `getDocsNeighbours()` for the pager |
+| `lib/docs/scope.ts` | `DOCS_SCOPE` — the "what this guide does not cover" note for every route |
+| `lib/docs/services.ts` | `SERVICES` / `SERVICE_GROUPS` — the security-control catalogue behind `/docs/services` |
+
+Components:
+
+- `DocsPageShell` — wraps every guide. Renders the header (section, H1, summary,
+  time estimate), `BreadcrumbList` JSON-LD derived from the nav tree, the scope
+  note, and the previous/next pager. Accepts optional `jsonLd` for genuinely
+  page-specific structured data (the quickstart's `HowTo`, for example).
+  **Throws** if the route is missing from `DOCS_SECTIONS`, so an orphan page
+  fails the build rather than shipping invisible.
+- `DocsSidebar` — the full tree, always expanded, rendered in a `lg:sticky`
+  column by `app/docs/layout.tsx`.
+- `DocsSearch` — ⌘K / Ctrl+K / `/`. Client-side ranked index over labels,
+  summaries, and keyword aliases; no external service, so it works offline and
+  leaks no queries.
+- `DocsMobileNav` — drawer below `lg`, reusing `DocsSidebar`.
+
+To add a guide: create the page, add an entry to `DOCS_SECTIONS`, add a scope
+note to `DOCS_SCOPE`, and wrap the body in `DocsPageShell`. `tests/docs-structure.test.ts`
+enforces all four and rejects absolute security claims in scope notes.
 
 ## Security services (`lib/`)
 

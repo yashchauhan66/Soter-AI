@@ -1,5 +1,6 @@
 import { ProjectSwitcher } from "@/components/dashboard/ProjectSwitcher";
 import { ReportActions } from "@/components/dashboard/ReportActions";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 import Link from "next/link";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { db } from "@/lib/db";
@@ -42,18 +43,23 @@ export default async function ReportsPage({
 
   return (
     <div>
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Monthly posture</p>
-          <h1 className="mt-2 text-3xl font-bold">{month} report</h1>
-        </div>
-        <div className="flex flex-wrap gap-3">
-          <ReportActions />
-          <ProjectSwitcher projects={projects} selectedId={project.id} />
-          <Link href={`/dashboard/reports/white-label?project=${project.id}`} className="button-secondary !py-2 text-sm">White-label view</Link>
-        </div>
-      </div>
-      <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <PageHeader
+        eyebrow="Monthly posture"
+        title={`${month} report`}
+        actions={
+          <>
+            <ReportActions />
+            <ProjectSwitcher projects={projects} selectedId={project.id} />
+            <Link
+              href={`/dashboard/reports/white-label?project=${project.id}`}
+              className="button-secondary button-sm"
+            >
+              White-label view
+            </Link>
+          </>
+        }
+      />
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {[
           ["Total requests", metrics.totalRequests],
           ["Blocked", metrics.blockedRequests],
@@ -61,8 +67,10 @@ export default async function ReportsPage({
           ["Average risk", metrics.avgRiskScore],
         ].map(([label, value]) => (
           <div className="card p-5" key={label}>
-            <p className="text-sm text-slate-300">{label}</p>
-            <p className="mt-2 text-3xl font-bold">{value}</p>
+            <p className="text-sm text-slate-400">{label}</p>
+            <p data-numeric className="mt-2 text-3xl font-bold text-slate-100">
+              {value}
+            </p>
           </div>
         ))}
       </div>

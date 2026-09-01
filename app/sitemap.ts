@@ -15,7 +15,7 @@ const siteUrl = SITE_URL;
  * content that actually changes often. Bump this when the site is meaningfully
  * updated.
  */
-const SITE_LAST_MODIFIED = "2026-07-28";
+const SITE_LAST_MODIFIED = "2026-09-01";
 
 type ChangeFrequency = NonNullable<MetadataRoute.Sitemap[number]["changeFrequency"]>;
 
@@ -63,6 +63,7 @@ const featurePages: Entry[] = [
   { url: "/ai-memory-inspector", priority: 0.6, changeFrequency: "monthly" },
   { url: "/limitations", priority: 0.6, changeFrequency: "monthly" },
   { url: "/ai-agent-security", priority: 0.9, changeFrequency: "monthly" },
+  { url: "/ai-user-security", priority: 0.9, changeFrequency: "monthly", lastModified: "2026-09-01" },
   { url: "/llm-security", priority: 0.8, changeFrequency: "monthly" },
   { url: "/rag-security", priority: 0.8, changeFrequency: "monthly" },
   { url: "/jailbreak-detection", priority: 0.8, changeFrequency: "monthly" },
@@ -84,6 +85,11 @@ const featurePages: Entry[] = [
 ];
 
 const compliancePages: Entry[] = [
+  // Hub page. The three readiness pages existed without an index, so
+  // /compliance itself 404'd while the nav and the service smoke-test both
+  // linked to it. It carries the highest priority in this group because it is
+  // the entry point security reviewers land on.
+  { url: "/compliance", priority: 0.8, changeFrequency: "monthly", lastModified: "2026-09-01" },
   { url: "/compliance/owasp-llm-top-10", priority: 0.7, changeFrequency: "monthly" },
   { url: "/compliance/iso27001-readiness", priority: 0.6, changeFrequency: "monthly" },
   { url: "/compliance/soc2-readiness", priority: 0.6, changeFrequency: "monthly" },

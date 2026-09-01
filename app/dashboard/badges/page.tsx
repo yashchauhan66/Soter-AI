@@ -3,6 +3,7 @@ import { ExternalLink, ShieldCheck } from "lucide-react";
 import { getCurrentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { ClientProjectActions } from "@/components/dashboard/ClientProjectActions";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -16,9 +17,11 @@ export default async function BadgesPage() {
 
   return (
     <div>
-      <p className="eyebrow">Public trust</p>
-      <h1 className="mt-2 text-3xl font-bold">Security badges</h1>
-      <p className="mt-3 text-slate-200">Each project ships a public badge endpoint and embeddable script. The page never exposes raw logs or customer text.</p>
+      <PageHeader
+        eyebrow="Public trust"
+        title="Security badges"
+        description="Each project ships a public badge endpoint and embeddable script. The page never exposes raw logs or customer text."
+      />
 
       {!projects.length ? (
         <div className="card mt-7 p-10 text-center">

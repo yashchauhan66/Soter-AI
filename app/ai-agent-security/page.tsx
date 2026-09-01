@@ -95,6 +95,7 @@ const data: FeatureLandingData = {
     },
   ],
   related: [
+    { label: "AI User Security", href: "/ai-user-security" },
     { label: "MCP Security", href: "/mcp-security" },
     { label: "AI Workflow Security", href: "/ai-workflow-security" },
     { label: "Enterprise AI Security", href: "/enterprise-ai-security" },

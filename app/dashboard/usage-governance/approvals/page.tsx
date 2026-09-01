@@ -1,6 +1,7 @@
 import { Clock, CheckCircle, XCircle, HelpCircle } from "lucide-react";
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { listApprovalRequests } from "@/lib/usage-governance";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -21,11 +22,11 @@ export default async function GovernanceApprovalsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="eyebrow">Governance</p>
-        <h1 className="mt-2 text-3xl font-bold">Approval Requests</h1>
-        <p className="mt-3 max-w-3xl text-slate-200">
-          Review and manage requests from employees to use AI providers that require approval.
-        </p>
+        <PageHeader
+        eyebrow="Governance"
+        title="Approval Requests"
+        description="Review and manage requests from employees to use AI providers that require approval."
+      />
       </div>
 
       {pendingRequests.length > 0 && (

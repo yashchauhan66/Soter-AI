@@ -289,7 +289,7 @@ Reproduce the public benchmark with **`node scripts/phase-9-run-public-benchmark
 | **Vector Store** | Qdrant (optional) |
 | **Auth** | NextAuth v5 (JWT sessions) |
 | **Payments** | Razorpay |
-| **UI** | Tailwind CSS + Lucide Icons |
+| **UI** | Tailwind CSS + Lucide Icons, token-driven design system (`app/globals.css`) |
 | **Container** | Docker (multi-stage build) |
 | **CI/CD** | GitHub Actions → Docker Hub → EC2 |
 | **SDKs** | TypeScript, Python, LangChain, LlamaIndex |

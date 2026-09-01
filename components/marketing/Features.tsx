@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, Ban, DatabaseZap, FileSearch, Fingerprint, Gauge, ScanText, ShieldAlert, Users, Eye, Scale, Lock } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { productStatus, roleMessaging } from "@/lib/marketing/launchStatus";
+import { productStatus, roleMessaging, STATUS_BADGE } from "@/lib/marketing/launchStatus";
 
 const productFeatures = [
   {
@@ -63,9 +63,14 @@ const NODE_HREFS: Record<string, { href: string; label: string }> = {
   },
 };
 
+/**
+ * Status badge tones are shared with the pricing page via
+ * `lib/marketing/launchStatus.ts`, so a status label means the same thing
+ * everywhere on the site.
+ */
 export function Features() {
   return (
-    <section id="features" className="py-24">
+    <section id="features" className="section">
       <div className="container-page">
         <SectionHeading
           eyebrow="Focused product"
@@ -76,23 +81,20 @@ export function Features() {
         <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {productStatus.map((product) => (
             <article key={product.name} className="card flex flex-col p-5">
-              <div className="flex items-center justify-between gap-3">
+              <div className="flex items-start justify-between gap-3">
                 <h3 className="font-semibold">{product.name}</h3>
-                <div className="flex items-center gap-1.5">
-                  {product.name === "IDE Guard" && (
-                    <span className="rounded-md border border-emerald-400/25 bg-emerald-400/10 px-2 py-0.5 text-xs font-semibold text-emerald-300">
-                      Free
-                    </span>
-                  )}
-                  <span className="rounded-md border border-cyan/30 bg-cyan/10 px-2 py-0.5 text-xs font-semibold text-cyan">{product.status}</span>
+                <div className="flex shrink-0 items-center gap-1.5">
+                  {product.name === "IDE Guard" && <span className="badge-success">Free</span>}
+                  <span className={STATUS_BADGE[product.status]}>{product.status}</span>
                 </div>
               </div>
-              <p className="mt-3 flex-1 text-sm leading-6 text-slate-200">{product.copy}</p>
+              <p className="mt-3 flex-1 text-sm leading-6 text-slate-300">{product.copy}</p>
               <Link
                 href={CHOOSER_HREFS[product.name] ?? product.href}
-                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-cyan"
+                className="group mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan"
               >
-                {product.cta} <ArrowRight size={14} aria-hidden="true" />
+                {product.cta}
+                <ArrowRight size={14} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
               </Link>
               {NODE_HREFS[product.name] && (
                 <Link
@@ -100,16 +102,16 @@ export function Features() {
                   {...(NODE_HREFS[product.name].href.startsWith("http")
                     ? { target: "_blank", rel: "noopener noreferrer" }
                     : {})}
-                  className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-slate-200 transition hover:text-cyan"
+                  className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 transition-colors hover:text-cyan"
                 >
                   View node ({NODE_HREFS[product.name].label}) <ArrowRight size={12} aria-hidden="true" />
                 </Link>
               )}
               {CHOOSER_HREFS[product.name] && (
-                <p className="mt-2 text-xs text-slate-300">
-              {product.name === "Browser Guard"
-                ? "Opens the Chrome / Edge installer chooser."
-                : "Opens the VS Code / Cursor / Windsurf / Kiro / Antigravity / VSCodium installer chooser."}
+                <p className="mt-2 text-xs text-slate-400">
+                  {product.name === "Browser Guard"
+                    ? "Opens the Chrome / Edge installer chooser."
+                    : "Opens the VS Code / Cursor / Windsurf / Kiro / Antigravity / VSCodium installer chooser."}
                 </p>
               )}
             </article>
@@ -120,17 +122,17 @@ export function Features() {
             too narrow for a two-line sentence. Widen the steps instead. */}
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {roleMessaging.map((item) => (
-            <article key={item.role} className="rounded-lg border border-slate-800 bg-slate-950/50 p-4">
+            <article key={item.role} className="surface p-4">
               <h3 className="text-sm font-semibold text-slate-100">{item.role}</h3>
-              <p className="mt-2 text-xs leading-5 text-slate-200">{item.copy}</p>
+              <p className="mt-2 text-xs leading-5 text-slate-300">{item.copy}</p>
             </article>
           ))}
         </div>
 
         <div className="mt-12 space-y-6">
           {productFeatures.map((group) => (
-            <div key={group.group} className={`rounded-2xl border p-6 ${group.accent}`}>
-              <h3 className="mb-4 text-sm font-bold uppercase tracking-wider text-slate-200">{group.group}</h3>
+            <div key={group.group} className={`rounded-panel border p-6 ${group.accent}`}>
+              <h3 className="mb-4 text-sm font-bold uppercase tracking-micro text-slate-200">{group.group}</h3>
               <div className="grid gap-5 md:grid-cols-3">
                 {group.items.map(([Icon, title, copy]) => {
                   const FeatureIcon = Icon as typeof Ban;
@@ -140,7 +142,7 @@ export function Features() {
                         <FeatureIcon aria-hidden="true" size={20} />
                       </span>
                       <h4 className="mt-4 text-lg font-semibold">{String(title)}</h4>
-                      <p className="mt-2 text-sm leading-6 text-slate-200">{String(copy)}</p>
+                      <p className="mt-2 text-sm leading-6 text-slate-300">{String(copy)}</p>
                     </article>
                   );
                 })}
@@ -155,13 +157,9 @@ export function Features() {
             <details> keeps the copy in the DOM (crawlable, no client JS) while
             letting a first-time visitor stop at the products above. */}
         <details className="group mt-10">
-          <summary className="flex cursor-pointer items-center gap-2 text-sm font-semibold text-cyan">
+          <summary className="inline-flex cursor-pointer items-center gap-2 rounded-lg py-2 text-sm font-semibold text-cyan">
             How the detection actually works
-            <ArrowRight
-              size={14}
-              aria-hidden="true"
-              className="transition-transform group-open:rotate-90"
-            />
+            <ArrowRight size={14} aria-hidden="true" className="transition-transform group-open:rotate-90" />
           </summary>
           <div className="mt-5 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {coreFeatures.map(([Icon, title, copy]) => {
@@ -172,7 +170,7 @@ export function Features() {
                     <FeatureIcon aria-hidden="true" size={20} />
                   </span>
                   <h3 className="mt-4 text-lg font-semibold">{String(title)}</h3>
-                  <p className="mt-2 text-sm leading-6 text-slate-200">{String(copy)}</p>
+                  <p className="mt-2 text-sm leading-6 text-slate-300">{String(copy)}</p>
                 </article>
               );
             })}
@@ -182,3 +180,4 @@ export function Features() {
     </section>
   );
 }
+

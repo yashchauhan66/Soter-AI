@@ -28,23 +28,26 @@ export function ServiceDirectory() {
     <section className="mt-12" aria-labelledby="service-directory-heading">
       <div className="flex flex-col justify-between gap-4 lg:flex-row lg:items-end">
         <div>
-          <p className="eyebrow">Service directory</p>
-          <h2 id="service-directory-heading" className="mt-2 text-3xl font-bold">
+          <h2 id="service-directory-heading" className="heading-3">
             Find the control you need
           </h2>
-          <p className="mt-2 max-w-2xl text-slate-300">
-            Choose a service to open only its setup workflow, verification steps, API route, and related guidance.
+          <p className="mt-2 max-w-prose text-slate-400">
+            Filter by category or search by outcome. Each result opens one focused setup workflow.
           </p>
         </div>
         <label className="relative block w-full lg:max-w-sm">
           <span className="sr-only">Search security services</span>
-          <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} aria-hidden="true" />
+          <Search
+            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+            size={18}
+            aria-hidden="true"
+          />
           <input
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search services or outcomes"
-            className="input h-11 pl-10 pr-10"
+            className="input pl-10 pr-10"
           />
           {query && (
             <button
@@ -106,16 +109,16 @@ export function ServiceDirectory() {
               <Link
                 key={service.id}
                 href={`/docs/services/${service.id}`}
-                className="group flex min-h-52 flex-col rounded-lg border border-slate-800 bg-panel/70 p-5 transition hover:border-cyan/45 hover:bg-panel"
+                className="card card-interactive group flex min-h-52 flex-col p-5"
               >
                 <div className="flex items-start justify-between gap-4">
                   <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-md ${service.bg} ${service.color}`}>
                     <Icon size={20} aria-hidden="true" />
                   </span>
-                  <span className="text-xs font-medium text-slate-400">{groupLabel}</span>
+                  <span className="text-xs font-medium text-slate-500">{groupLabel}</span>
                 </div>
                 <h3 className="mt-4 text-lg font-semibold text-white group-hover:text-cyan">{service.title}</h3>
-                <p className="mt-2 flex-1 text-sm leading-6 text-slate-300">{service.description}</p>
+                <p className="mt-2 flex-1 text-sm leading-6 text-slate-400">{service.description}</p>
                 <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan">
                   Open setup guide
                   <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" aria-hidden="true" />

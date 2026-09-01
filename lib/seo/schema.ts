@@ -62,40 +62,6 @@ export const websiteNode = {
     "AI security guardrail platform protecting against prompt injection, jailbreaks, PII leakage, and unsafe outputs.",
   publisher: { "@id": ORGANIZATION_ID },
   inLanguage: "en",
-  // Sitelinks SearchAction — enables Google sitelinks search box in branded SERPs
-  potentialAction: {
-    "@type": "SearchAction",
-    "target": {
-      "@type": "EntryPoint",
-      "urlTemplate": `${SITE_URL}/docs?q={search_term_string}`,
-    },
-    "query-input": "required name=search_term_string",
-  },
-} as const;
-
-/** LocalBusiness node for India presence - boosts local SEO for Indian searches. */
-export const localBusinessNode = {
-  "@type": "LocalBusiness",
-  "@id": `${SITE_URL}#localbusiness`,
-  name: SITE_NAME,
-  url: SITE_URL,
-  description:
-    "India-focused AI security platform with Aadhaar, PAN, GSTIN, and UPI PII detection for Indian enterprises and startups.",
-  // telephone omitted intentionally — empty string harms schema validity
-  email: "support@soterai.in",
-  address: {
-    "@type": "PostalAddress",
-    addressCountry: "IN",
-    addressLocality: "India",
-  },
-  priceRange: "INR 0 - INR 9,999",
-  sameAs: ORG_SAME_AS,
-  knowsLanguage: ["en", "hi"],
-  areaServed: [
-    { "@type": "Country", name: "IN" },
-    { "@type": "Country", name: "US" },
-    { "@type": "Country", name: "GB" },
-  ],
 } as const;
 
 /**
@@ -104,7 +70,7 @@ export const localBusinessNode = {
  */
 export const siteJsonLd = {
   "@context": "https://schema.org",
-  "@graph": [organizationNode, websiteNode, localBusinessNode],
+  "@graph": [organizationNode, websiteNode],
 } as const;
 
 /**

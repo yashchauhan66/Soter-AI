@@ -2,24 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CodeBlock, InlineCode, TipBox } from "@/components/ui/CodeBlock";
-import { DocViewTracker } from "@/components/docs/DocViewTracker";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
   title: "SoterAI Security Best Practices - OWASP LLM Top 10 Alignment Guide",
   description:
     "SoterAI security best practices for AI guardrails. Learn API key management, webhook verification, fail-open vs fail-closed, output guarding, rate limiting, and OWASP LLM Top 10 alignment.",
   alternates: { canonical: "/docs/best-practices" },
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.in" },
-    { "@type": "ListItem", position: 2, name: "Docs", item: "https://soterai.in/docs" },
-    { "@type": "ListItem", position: 3, name: "Security Best Practices", item: "https://soterai.in/docs/best-practices" },
-  ],
 };
 
 const webhookVerifyCode = `import { createHmac, timingSafeEqual } from "crypto";
@@ -39,17 +28,7 @@ function verify(rawBody: string, header: string, secret: string) {
 
 export default function BestPracticesDocsPage() {
   return (
-    <main className="py-16">
-      <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
-      <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
-        <p className="eyebrow mt-6">Security guide</p>
-        <h1 className="mt-3 text-4xl font-bold">Security Best Practices</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-200">
-          SoterAI is OWASP LLM Top 10 aligned and built for defense-in-depth: <strong>detect, block, redact, monitor, and report</strong>.
-          It reduces risk. It does <strong>not</strong> guarantee complete protection.
-        </p>
+    <DocsPageShell path="/docs/best-practices">
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Keep the API key server-side only</h2>
@@ -157,7 +136,6 @@ export default function BestPracticesDocsPage() {
           <Link href="/docs/cli" className="text-sm text-cyan hover:text-cyan/80 transition-colors">← CLI</Link>
           <Link href="/docs/quickstart" className="text-sm text-cyan hover:text-cyan/80 transition-colors">Quickstart →</Link>
         </div>
-      </div>
-    </main>
+    </DocsPageShell>
   );
 }

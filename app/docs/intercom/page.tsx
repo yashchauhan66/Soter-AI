@@ -2,24 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CodeBlock } from "@/components/ui/CodeBlock";
-import { DocViewTracker } from "@/components/docs/DocViewTracker";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
   title: "SoterAI Intercom Integration Guide - AI Security for Customer Support",
   description:
     "Complete Intercom integration guide for SoterAI. Protect AI-powered customer support chats from prompt injection, PII leaks, and unsafe responses. Includes REST API examples and best practices.",
   alternates: { canonical: "/docs/intercom" },
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.in" },
-    { "@type": "ListItem", position: 2, name: "Docs", item: "https://soterai.in/docs" },
-    { "@type": "ListItem", position: 3, name: "Intercom", item: "https://soterai.in/docs/intercom" },
-  ],
 };
 
 const apiCode = `// Guard incoming customer message (server-side)
@@ -49,16 +38,7 @@ const outputResult = await fetch(\`$\{process.env.SOTER_BASE_URL\}/api/guard/out
 
 export default function IntercomDocsPage() {
   return (
-    <main className="py-16">
-      <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
-      <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
-        <p className="eyebrow mt-6">Platform guide</p>
-        <h1 className="mt-3 text-4xl font-bold">Intercom Integration Guide</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-200">
-          Use SoterAI to protect AI support-chat conversations in your Intercom workflows from prompt injection, PII leakage, and unsafe responses.
-        </p>
+    <DocsPageShell path="/docs/intercom">
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Integration pattern</h2>
@@ -129,7 +109,6 @@ export default function IntercomDocsPage() {
           <Link href="/docs/botpress" className="text-sm text-cyan hover:text-cyan/80 transition-colors">← Botpress</Link>
           <Link href="/docs/whatsapp" className="text-sm text-cyan hover:text-cyan/80 transition-colors">WhatsApp →</Link>
         </div>
-      </div>
-    </main>
+    </DocsPageShell>
   );
 }

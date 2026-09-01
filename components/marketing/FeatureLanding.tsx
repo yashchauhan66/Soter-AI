@@ -26,6 +26,9 @@ const IDE_PAGES = new Set([
 
 /** Determine the primary CTA for a feature page based on its path. */
 function primaryCta(path: string): { label: string; href: string; external: boolean } {
+  if (path === "/ai-user-security") {
+    return { label: "Explore Browser Guard", href: "/extensions/browser", external: false };
+  }
   if (IDE_PAGES.has(path)) {
     return { label: "Install the VS Code extension", href: VSCODE_MARKETPLACE_URL, external: true };
   }
@@ -35,6 +38,9 @@ function primaryCta(path: string): { label: string; href: string; external: bool
 
 /** Determine the secondary CTA based on page path. */
 function secondaryCta(path: string): { label: string; href: string } {
+  if (path === "/ai-user-security") {
+    return { label: "Book a security demo", href: "/contact-sales" };
+  }
   if (IDE_PAGES.has(path)) {
     return { label: "Read the docs", href: "/docs/quickstart" };
   }
@@ -96,57 +102,44 @@ export function FeatureLanding({ data }: { data: FeatureLandingData }) {
       {/* Hero */}
       <section className="max-w-3xl">
         <p className="eyebrow">{data.eyebrow}</p>
-        <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
-          {data.h1}
-        </h1>
-        <p className="mt-5 text-lg leading-8 text-slate-200">{data.intro}</p>
-        <div className="mt-8 flex flex-wrap gap-4">
+        <h1 className="heading-1 mt-3">{data.h1}</h1>
+        <p className="lede mt-5">{data.intro}</p>
+        {/* Primary + secondary only. These used hand-rolled `bg-cyan px-5 py-3`
+            buttons, so their height, focus ring, and hover behaviour differed
+            from every other CTA on the site. */}
+        <div className="mt-8 flex flex-wrap gap-3">
           {cta.external ? (
-            <a
-              href={cta.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-cyan px-5 py-3 text-sm font-semibold text-ink transition hover:opacity-90"
-            >
-              {cta.label} <ArrowRight className="h-4 w-4" />
+            <a href={cta.href} target="_blank" rel="noopener noreferrer" className="button-primary">
+              {cta.label} <ArrowRight size={16} aria-hidden="true" />
             </a>
           ) : (
-            <Link
-              href={cta.href}
-              className="inline-flex items-center gap-2 rounded-lg bg-cyan px-5 py-3 text-sm font-semibold text-ink transition hover:opacity-90"
-            >
-              {cta.label} <ArrowRight className="h-4 w-4" />
+            <Link href={cta.href} className="button-primary">
+              {cta.label} <ArrowRight size={16} aria-hidden="true" />
             </Link>
           )}
-          <Link
-            href={secondary.href}
-            className="inline-flex items-center gap-2 rounded-lg border border-slate-700/60 px-5 py-3 text-sm font-semibold text-slate-200 transition hover:border-slate-500"
-          >
+          <Link href={secondary.href} className="button-secondary">
             {secondary.label}
           </Link>
         </div>
         {IDE_PAGES.has(data.path) && (
-          <p className="mt-4 text-xs text-slate-300">
-            Runs locally in your editor. Secret, PII, prompt-injection, and MCP
-            scanning happen on your machine before anything reaches an AI model.
+          <p className="mt-4 text-xs leading-5 text-slate-400">
+            Runs locally in your editor. Secret, PII, prompt-injection, and MCP scanning happen on your machine before
+            anything reaches an AI model.
           </p>
         )}
       </section>
 
       {/* Features */}
       <section className="mt-16">
-        <h2 className="text-2xl font-bold">What it does</h2>
+        <h2 className="heading-3">What it does</h2>
         <div className="mt-6 grid gap-5 sm:grid-cols-2">
           {data.features.map((f) => (
-            <div
-              key={f.title}
-              className="rounded-xl border border-slate-800 bg-panel/40 p-5"
-            >
+            <div key={f.title} className="card p-5">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="h-5 w-5 text-cyan" />
+                <ShieldCheck size={20} className="shrink-0 text-cyan" aria-hidden="true" />
                 <h3 className="font-semibold text-slate-100">{f.title}</h3>
               </div>
-              <p className="mt-2 text-sm leading-6 text-slate-200">{f.body}</p>
+              <p className="mt-2 text-sm leading-6 text-slate-300">{f.body}</p>
             </div>
           ))}
         </div>
@@ -154,28 +147,32 @@ export function FeatureLanding({ data }: { data: FeatureLandingData }) {
 
       {/* How it works */}
       <section className="mt-16">
-        <h2 className="text-2xl font-bold">How it works</h2>
+        <h2 className="heading-3">How it works</h2>
         <ol className="mt-6 space-y-4">
           {data.how.map((s, i) => (
             <li key={s.step} className="flex gap-4">
-              <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-cyan/10 text-sm font-bold text-cyan">
+              <span
+                data-numeric
+                className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-cyan/10 text-sm font-bold text-cyan"
+              >
                 {i + 1}
               </span>
               <div>
                 <p className="font-semibold text-slate-100">{s.step}</p>
-                <p className="mt-1 text-sm leading-6 text-slate-200">{s.body}</p>
+                <p className="mt-1 text-sm leading-6 text-slate-300">{s.body}</p>
               </div>
             </li>
           ))}
         </ol>
       </section>
 
-      {/* Honest limitations */}
+      {/* Honest limitations. Kept above the FAQ on purpose: a reviewer who
+          scrolls should hit the caveats before the closing CTA, not after. */}
       <section className="mt-16">
-        <h2 className="text-2xl font-bold">Honest limitations</h2>
-        <p className="mt-2 max-w-2xl text-sm text-slate-300">
-          No security tool is perfect. Here is what this feature does not claim
-          to do, so you can layer defenses appropriately.
+        <h2 className="heading-3">Honest limitations</h2>
+        <p className="mt-2 max-w-prose text-sm text-slate-400">
+          No security tool is perfect. Here is what this feature does not claim to do, so you can layer defenses
+          appropriately.
         </p>
         <ul className="mt-5 space-y-3">
           {data.limitations.map((l) => (
@@ -189,12 +186,12 @@ export function FeatureLanding({ data }: { data: FeatureLandingData }) {
 
       {/* FAQ */}
       <section className="mt-16">
-        <h2 className="text-2xl font-bold">Frequently asked questions</h2>
+        <h2 className="heading-3">Frequently asked questions</h2>
         <div className="mt-6 space-y-6">
           {data.faqs.map((f) => (
             <div key={f.q}>
               <h3 className="font-semibold text-slate-100">{f.q}</h3>
-              <p className="mt-2 text-sm leading-6 text-slate-200">{f.a}</p>
+              <p className="mt-2 max-w-prose text-sm leading-6 text-slate-300">{f.a}</p>
             </div>
           ))}
         </div>
@@ -202,58 +199,50 @@ export function FeatureLanding({ data }: { data: FeatureLandingData }) {
 
       {/* Related internal links */}
       <section className="mt-16 border-t border-slate-800 pt-8">
-        <h2 className="text-sm font-bold uppercase tracking-widest text-slate-200">
-          Related
-        </h2>
-        <div className="mt-4 flex flex-wrap gap-3">
+        <h2 className="text-sm font-bold uppercase tracking-micro text-slate-200">Related</h2>
+        <nav aria-label="Related pages" className="mt-4 flex flex-wrap gap-2">
           {data.related.map((r) => (
             <Link
               key={r.href}
               href={r.href}
-              className="inline-flex items-center gap-1.5 rounded-full border border-slate-700/60 px-4 py-2 text-sm text-slate-300 transition hover:border-cyan/50 hover:text-cyan"
+              className="badge-neutral transition-colors hover:border-cyan/50 hover:text-cyan"
             >
-              <CheckCircle2 className="h-3.5 w-3.5" /> {r.label}
+              <CheckCircle2 size={13} aria-hidden="true" /> {r.label}
             </Link>
           ))}
-        </div>
+        </nav>
       </section>
 
       {/* Final CTA */}
-      <section className="mt-16 rounded-2xl border border-cyan/20 bg-cyan/5 p-8 text-center">
+      <section className="mt-16 rounded-panel border border-cyan/20 bg-cyan/[0.06] p-8 text-center">
         {IDE_PAGES.has(data.path) ? (
           <>
-            <h2 className="text-2xl font-bold">Protect your AI coding context</h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-200">
-              Install SoterAI IDE Guard and scan secrets, prompts, MCP tools, and
-              terminal commands locally before they ever reach an AI model.
+            <h2 className="heading-3">Protect your AI coding context</h2>
+            <p className="mx-auto mt-3 max-w-measure text-sm leading-6 text-slate-300">
+              Install SoterAI IDE Guard and scan secrets, prompts, MCP tools, and terminal commands locally before they
+              ever reach an AI model.
             </p>
             <a
               href={VSCODE_MARKETPLACE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-cyan px-6 py-3 text-sm font-semibold text-ink transition hover:opacity-90"
+              className="button-primary mt-6"
             >
-              Install for VS Code <ArrowRight className="h-4 w-4" />
+              Install for VS Code <ArrowRight size={16} aria-hidden="true" />
             </a>
           </>
         ) : (
           <>
-            <h2 className="text-2xl font-bold">Add security to your AI application</h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-200">
-              Free tier available. Integrate with a single SDK call and protect your
-              first AI workflow in under 10 minutes.
+            <h2 className="heading-3">Add security to your AI application</h2>
+            <p className="mx-auto mt-3 max-w-measure text-sm leading-6 text-slate-300">
+              Free tier available. Integrate with a single SDK call and protect your first AI workflow in under ten
+              minutes.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Link
-                href="/signup"
-                className="inline-flex items-center gap-2 rounded-lg bg-cyan px-6 py-3 text-sm font-semibold text-ink transition hover:opacity-90"
-              >
-                Start for free <ArrowRight className="h-4 w-4" />
+              <Link href="/signup" className="button-primary">
+                Start for free <ArrowRight size={16} aria-hidden="true" />
               </Link>
-              <Link
-                href="/playground"
-                className="inline-flex items-center gap-2 rounded-lg border border-slate-700 px-6 py-3 text-sm font-semibold text-slate-200 transition hover:border-slate-500"
-              >
+              <Link href="/playground" className="button-secondary">
                 Try the playground
               </Link>
             </div>
@@ -263,3 +252,4 @@ export function FeatureLanding({ data }: { data: FeatureLandingData }) {
     </main>
   );
 }
+

@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CodeBlock, InlineCode, WarnBox } from "@/components/ui/CodeBlock";
-import { DocViewTracker } from "@/components/docs/DocViewTracker";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
   title: "SoterAI REST API - AI Security Integration for Any Language (Java, Go, PHP, C#, Ruby)",
@@ -14,16 +13,6 @@ export const metadata: Metadata = {
     title: "SoterAI REST API - AI Security for Any Language",
     description: "Integrate SoterAI from any backend language with our REST API. Examples for Java, Go, PHP, C#, Python, JavaScript, and more.",
   },
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.in" },
-    { "@type": "ListItem", position: 2, name: "Docs", item: "https://soterai.in/docs" },
-    { "@type": "ListItem", position: 3, name: "REST API", item: "https://soterai.in/docs/rest-api" },
-  ],
 };
 
 const envCode = `# 📁 .env file - server-side only!
@@ -74,20 +63,7 @@ const endpoints = [
 
 export default function RestApiDocsPage() {
   return (
-    <main className="py-16">
-      <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
-      
-      <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
-        
-        <p className="eyebrow mt-6">Any language</p>
-        <h1 className="mt-3 text-4xl font-bold leading-tight">REST API integration guide</h1>
-        <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-300">
-          No SDK for your language? <strong>No problem.</strong> If your backend can make HTTPS requests, 
-          it can use SoterAI. This page shows the exact request fields, response shapes, 
-          and working examples for 7+ programming languages.
-        </p>
+    <DocsPageShell path="/docs/rest-api">
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Prerequisites</h2>
@@ -456,7 +432,6 @@ async fn guard_input(message: &str) -> Result<serde_json::Value, Box<dyn std::er
           <Link href="/docs/python" className="text-sm text-cyan hover:text-cyan/80 transition-colors">← Python SDK</Link>
           <Link href="/docs/nextjs" className="text-sm text-cyan hover:text-cyan/80 transition-colors">Next.js Guide →</Link>
         </div>
-      </div>
-    </main>
+    </DocsPageShell>
   );
 }

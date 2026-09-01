@@ -4,6 +4,7 @@ import { getOrCreateAgency } from "@/lib/agency";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { enqueueBackgroundJob } from "@/lib/backgroundJobs";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -76,8 +77,10 @@ export default async function WhiteLabelReportPage({
     <div className="print:bg-white">
       <div className="flex flex-wrap items-end justify-between gap-4 print:hidden">
         <div>
-          <p className="eyebrow">White-label</p>
-          <h1 className="mt-2 text-3xl font-bold">Branded monthly report</h1>
+          <PageHeader
+        eyebrow="White-label"
+        title="Branded monthly report"
+      />
           <p className="mt-2 text-slate-200">Use the print action for an A4-friendly export. Configure branding under agency settings.</p>
         </div>
         <ProjectSwitcher projects={projects} selectedId={project.id} />

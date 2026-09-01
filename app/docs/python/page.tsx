@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CodeBlock, InlineCode, TipBox } from "@/components/ui/CodeBlock";
-import { DocViewTracker } from "@/components/docs/DocViewTracker";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
   title: "SoterAI Python SDK Guide - Protect Your AI Chatbot (FastAPI, LangChain)",
@@ -14,16 +13,6 @@ export const metadata: Metadata = {
     title: "SoterAI Python SDK Guide",
     description: "Protect your Python AI applications from prompt injection, PII leaks, and unsafe outputs with SoterAI.",
   },
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.in" },
-    { "@type": "ListItem", position: 2, name: "Docs", item: "https://soterai.in/docs" },
-    { "@type": "ListItem", position: 3, name: "Python SDK", item: "https://soterai.in/docs/python" },
-  ],
 };
 
 const installCode = `# Install the Python client
@@ -103,19 +92,7 @@ except SoterError:
 
 export default function PythonDocsPage() {
   return (
-    <main className="py-16">
-      <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
-      
-      <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
-        
-        <p className="eyebrow mt-6">Language guide</p>
-        <h1 className="mt-3 text-4xl font-bold">Python SDK Guide</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-200">
-          SoterAI provides a Python client for protecting AI chatbots, agents, RAG systems, and LLM applications.
-          The core client uses only the Python standard library (<InlineCode>urllib</InlineCode>) — no third-party HTTP dependency required.
-        </p>
+    <DocsPageShell path="/docs/python">
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 1: Install the package</h2>
@@ -262,7 +239,6 @@ result = safe_chain.invoke({"input": prompt})`}</CodeBlock>
           <Link href="/docs/js" className="text-sm text-cyan hover:text-cyan/80 transition-colors">← JavaScript SDK</Link>
           <Link href="/docs/fastapi" className="text-sm text-cyan hover:text-cyan/80 transition-colors">FastAPI Guide →</Link>
         </div>
-      </div>
-    </main>
+    </DocsPageShell>
   );
 }

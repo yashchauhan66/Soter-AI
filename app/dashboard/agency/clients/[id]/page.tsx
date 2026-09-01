@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, FolderKanban, ShieldCheck } from "lucide-react";
 import { getClientWithStats } from "@/lib/agency";
 import { ClientProjectActions } from "@/components/dashboard/ClientProjectActions";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -15,15 +16,13 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
   return (
     <div>
       <Link href="/dashboard/agency/clients" className="inline-flex items-center gap-2 text-sm text-slate-200 hover:text-white"><ArrowLeft size={14} /> Back to clients</Link>
-      <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Client</p>
-          <h1 className="mt-2 text-3xl font-bold">{client.name}</h1>
-          <p className="mt-2 text-slate-200">{client.contactEmail ?? "No contact email"}</p>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="Client"
+        title={client.name}
+        description={client.contactEmail ?? "No contact email on file."}
+      />
 
-      <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <div className="card p-5"><p className="text-sm text-slate-300">Requests scanned</p><p className="mt-2 text-3xl font-bold">{totals.requests}</p></div>
         <div className="card p-5"><p className="text-sm text-slate-300">Blocked</p><p className="mt-2 text-3xl font-bold">{totals.blocked}</p></div>
         <div className="card p-5"><p className="text-sm text-slate-300">Redacted</p><p className="mt-2 text-3xl font-bold">{totals.redacted}</p></div>

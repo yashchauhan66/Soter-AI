@@ -1,6 +1,7 @@
 import dynamicImport from "next/dynamic";
 import { getCurrentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -34,11 +35,11 @@ export default async function WebhooksPage() {
   }));
   return (
     <div>
-      <p className="eyebrow">Event delivery</p>
-      <h1 className="mt-2 text-3xl font-bold">Webhooks</h1>
-      <p className="mb-7 mt-3 text-slate-200">
-        Receive signed notifications when the guard blocks risk or hits usage limits. Payloads never include raw secrets.
-      </p>
+      <PageHeader
+        eyebrow="Event delivery"
+        title="Webhooks"
+        description="Receive signed notifications when the guard blocks risk or hits usage limits. Payloads never include raw secrets."
+      />
       <WebhookManager projects={projects} endpoints={safeEndpoints} />
     </div>
   );

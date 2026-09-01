@@ -1,6 +1,7 @@
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
 import { PRIVACY_PREVIEW_GAPS } from "@/lib/privacy";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -15,9 +16,11 @@ export default async function PrivacyDashboardPage() {
   ]);
   return (
     <div>
-      <p className="eyebrow">Privacy - Preview</p>
-      <h1 className="mt-2 text-3xl font-bold">DPDP readiness workflow</h1>
-      <p className="mt-3 max-w-3xl text-slate-200">Preview workflow for data subject requests, consent evidence, processing records, privacy incidents, and breach-notification drafts. This is readiness support, not legal advice or compliance certification.</p>
+      <PageHeader
+        eyebrow="Privacy - Preview"
+        title="DPDP readiness workflow"
+        description="Preview workflow for data subject requests, consent evidence, processing records, privacy incidents, and breach-notification drafts. This is readiness support, not legal advice or compliance certification."
+      />
       <div className="mt-7 grid gap-4 sm:grid-cols-4">
         {[["DSRs", dsr], ["Consent records", consents], ["Privacy incidents", incidents], ["Processing records", processing]].map(([label, value]) => <section className="card p-5" key={String(label)}><p className="text-sm text-slate-200">{label}</p><p className="mt-2 text-2xl font-bold">{String(value)}</p></section>)}
       </div>

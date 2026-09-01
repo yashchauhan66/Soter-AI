@@ -13,20 +13,21 @@ import { safeJsonLd } from "@/lib/seo/jsonLd";
 const siteUrl = "https://soterai.in";
 
 export const metadata: Metadata = {
-  title: "AI Security Platform for Prompt Injection, RAG Security and Agent Firewall",
+  title: "AI Agent Security & LLM Firewall for Prompts, Data and Tools",
   description:
-    "SoterAI is an AI security platform for LLM apps, chatbots, RAG pipelines and autonomous agents. Block prompt injection, jailbreaks, AI data leakage, unsafe outputs, risky tool calls, secrets and Indian PII.",
+    "Stop prompt injection, sensitive-data leaks, unsafe outputs, and risky agent tool calls across LLM apps, RAG pipelines, browsers, IDEs, and workflows. Test SoterAI free—no signup required.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "SoterAI - AI Security Platform | Prompt Injection, PII Redaction & Agent Firewall",
+    title: "Stop AI Data Leaks and Risky Agent Actions | SoterAI",
     description:
-      "India's AI security command layer. Detect prompt injection, jailbreaks, and PII leakage. Redact Aadhaar, PAN, GSTIN. Protect chatbots, RAG apps, and AI agents. Free tier available.",
+      "Inspect prompts and outputs, redact secrets and Indian PII, and stop risky agent tool calls before execution. Try the public AI security playground without signup.",
+    images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: "SoterAI AI security control layer" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "SoterAI - AI Security Platform",
+    title: "Stop AI Data Leaks and Risky Agent Actions | SoterAI",
     description:
-      "India's AI security platform. Protect against prompt injection, data leakage, and AI agent abuse.",
+      "Inspect prompts and outputs, redact secrets and Indian PII, and stop risky agent tool calls before execution. Test it free without signup.",
     images: ["/opengraph-image.png"],
   },
 };
@@ -62,11 +63,43 @@ const aiSecurityTopics = [
 ];
 
 const seoInternalLinks = [
+  ["AI user security", "/ai-user-security"],
+  ["AI agent security", "/ai-agent-security"],
   ["LLM security docs", "/docs"],
   ["OWASP LLM Top 10 alignment", "/compliance/owasp-llm-top-10"],
   ["Public benchmark", "/benchmark"],
   ["VS Code AI security", "/vscode-ai-security"],
   ["Trust center", "/trust"],
+];
+
+/**
+ * Benchmark figures. Extracted from JSX because four near-identical cards are
+ * data, not markup — and because the metric, its colour, and the sample it was
+ * measured on now live together, which makes an inconsistent update obvious.
+ */
+const benchmarkMetrics = [
+  { value: "100%", label: "Recall", basis: "2,200 synthetic attacks", Icon: ShieldCheck, tone: "text-cyan" },
+  { value: "0.00%", label: "False-positive rate", basis: "1,000 benign controls", Icon: Zap, tone: "text-lime" },
+  { value: "17.83ms", label: "Analyzer p95", basis: "Local benchmark run", Icon: Gauge, tone: "text-cyan" },
+  { value: "10", label: "Attack categories", basis: "Synthetic public corpus", Icon: BarChart3, tone: "text-cyan" },
+];
+
+/**
+ * Attack families covered by the corpus. The previous list ended with both
+ * "Secrets / Credentials" and "Secret / PII" — a near-duplicate that made the
+ * ten-category claim above look like nine categories padded to ten.
+ */
+const attackCategories = [
+  "Prompt injection",
+  "Jailbreak / DAN",
+  "Encoding / obfuscation",
+  "Multilingual (Hindi)",
+  "RAG poisoning",
+  "Tool abuse",
+  "MCP risk",
+  "PII detection",
+  "Secrets / credentials",
+  "Unsafe output",
 ];
 
 const homepageJsonLd = {
@@ -154,7 +187,7 @@ const homepageJsonLd = {
     {
       "@type": "Dataset",
       "name": "SoterAI Phase 9 Public Benchmark",
-      "description": "Self-maintained synthetic public benchmark with published dataset, methodology, limitations, and downloadable results. Latest generated run: 100% recall, 0% false-positive rate, 0% false-negative rate, and p95 latency under 15 ms on 3,200 synthetic cases. Not an independent third-party benchmark.",
+      "description": "Self-maintained synthetic public benchmark with published dataset, methodology, limitations, and downloadable results. Latest generated run: 100% recall, 0% false-positive rate, 0% false-negative rate, and 17.83 ms p95 analyzer latency on 3,200 synthetic cases. Not an independent third-party benchmark.",
       "url": `${siteUrl}/benchmark`,
       "mainEntityOfPage": { "@type": "WebPage", "@id": `${siteUrl}/benchmark` },
       "creator": { "@id": `${siteUrl}#organization` },
@@ -286,45 +319,51 @@ export default function Home() {
       />
       <Hero />
 
-      {/* World-class extension cards: clickable surfaces */}
-      <section className="container-page mt-10 mb-16 grid gap-8 md:grid-cols-2">
-        <Link href="/extensions/browser" className="group rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900/80 p-6 shadow-lg transition-transform duration-200 hover:-translate-y-1 hover:border-cyan/60 hover:shadow-cyan/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
-          <h2 className="text-lg font-semibold text-white">SoterAI Browser Guard</h2>
-          <p className="mt-2 text-sm text-slate-200">Scan prompts, redact sensitive data, and apply safer AI usage controls in Chrome and Microsoft Edge.</p>
-          <p className="mt-4 inline-flex items-center text-sm font-medium text-cyan group-hover:text-cyan-300">
-            Choose your browser
-            <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </p>
-        </Link>
-
-        <Link href="/extensions/ide" className="group rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900/80 p-6 shadow-lg transition-transform duration-200 hover:-translate-y-1 hover:border-cyan/60 hover:shadow-cyan/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950">
-          <h2 className="text-lg font-semibold text-white">SoterAI IDE Guard</h2>
-          <p className="mt-2 text-sm text-slate-200">Secure AI pair-programming in VS Code and JetBrains IDEs with the same command-layer, unified policy.</p>
-          <p className="mt-4 inline-flex items-center text-sm font-medium text-cyan group-hover:text-cyan-300">
-            Choose your IDE
-            <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-          </p>
-        </Link>
-      </section>
-      <section className="border-b border-slate-800 bg-slate-950/45 py-20">
-        <div className="container-page">
-          <div className="max-w-3xl">
-            <p className="eyebrow">AI security platform</p>
-            <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
-              Security controls for LLM apps, RAG pipelines, copilots, and AI agents
-            </h2>
-            <p className="mt-4 leading-7 text-slate-200">
-              SoterAI helps product, engineering, and security teams protect production AI systems from prompt injection,
-              jailbreaks, AI data leakage, unsafe model outputs, and risky agent tool calls. It works as a real-time
-              AI security guard between users, models, retrieval, tools, and your application.
+      {/* Extension entry points. These were `rounded-2xl` one-off gradient cards
+          with a bespoke focus ring; they now use the shared card + interactive
+          lift so hover, focus, and elevation match every other card on the site.
+          The headings are h2 because they are siblings of the section headings
+          below, not children of them. */}
+      <section className="container-page mt-10 mb-16 grid gap-6 md:grid-cols-2">
+        {[
+          {
+            href: "/extensions/browser",
+            title: "SoterAI Browser Guard",
+            copy: "Scan prompts, redact sensitive data, and apply safer AI usage controls in Chrome and Microsoft Edge.",
+            cta: "Choose your browser",
+          },
+          {
+            href: "/extensions/ide",
+            title: "SoterAI IDE Guard",
+            copy: "Secure AI pair-programming across VS Code, Cursor, Windsurf, and Kiro under one policy.",
+            cta: "Choose your IDE",
+          },
+        ].map((card) => (
+          <Link key={card.href} href={card.href} className="card card-interactive group p-6">
+            <h2 className="text-lg font-semibold text-white">{card.title}</h2>
+            <p className="mt-2 text-sm leading-6 text-slate-300">{card.copy}</p>
+            <p className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan">
+              {card.cta}
+              <ArrowRight size={15} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
             </p>
-          </div>
+          </Link>
+        ))}
+      </section>
+
+      <section className="section border-b border-slate-800 bg-slate-950/45">
+        <div className="container-page">
+          <SectionHeading
+            eyebrow="AI security platform"
+            title="Security controls for LLM apps, RAG pipelines, copilots, and AI agents"
+            copy="SoterAI helps product, engineering, and security teams protect production AI systems from prompt injection, jailbreaks, data leakage, unsafe model outputs, and risky agent tool calls — in real time, between users, models, retrieval, and tools."
+          />
 
           <div className="mt-10 grid gap-4 md:grid-cols-2">
             {aiSecurityTopics.map((topic) => (
               <article className="card p-6" key={topic.title}>
                 <h3 className="text-lg font-semibold">{topic.title}</h3>
-                <p className="mt-3 leading-7 text-slate-200">{topic.copy}</p>
+                <p className="mt-3 leading-7 text-slate-300">{topic.copy}</p>
+
                 <Link href={topic.href} className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan">
                   Learn more <ArrowRight size={15} aria-hidden="true" />
                 </Link>
@@ -332,33 +371,35 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="mt-8 flex flex-wrap gap-3">
+          <nav aria-label="Related AI security topics" className="mt-8 flex flex-wrap gap-2">
             {seoInternalLinks.map(([label, href]) => (
               <Link
                 href={href}
                 key={href}
-                className="rounded-md border border-slate-700 bg-slate-950/70 px-3 py-2 text-sm text-slate-300 transition hover:border-cyan/50 hover:text-cyan"
+                className="badge-neutral transition-colors hover:border-cyan/50 hover:text-cyan"
               >
                 {label}
               </Link>
             ))}
-          </div>
+          </nav>
         </div>
       </section>
-      <section className="py-20">
+      <section className="section">
         <div className="container-page grid gap-5 md:grid-cols-3">
           <div className="card p-7 md:col-span-2">
             <p className="eyebrow">The problem</p>
-            <h2 className="mt-3 text-3xl font-bold">Your AI workflow can become a path to data exposure.</h2>
-            <p className="mt-4 max-w-2xl leading-7 text-slate-200">
-              Untrusted prompts, copied secrets, personal data, and unsafe model responses need controls outside the model itself.
-              SoterAI adds an observable security gateway to the flow.
+            <h2 className="heading-3 mt-3">Your AI workflow can become a path to data exposure.</h2>
+            <p className="body-copy mt-4">
+              Untrusted prompts, copied secrets, personal data, and unsafe model responses need controls outside the
+              model itself. SoterAI adds an observable security gateway to the flow.
             </p>
           </div>
           <div className="card p-7">
-            <p className="text-5xl font-black text-cyan">2-way</p>
+            <p data-numeric className="text-5xl font-black text-cyan">2-way</p>
             <p className="mt-4 font-semibold">Input, output, and agent coverage</p>
-            <p className="mt-2 text-sm leading-6 text-slate-200">Risk reduction around users, models, retrieval, and tools.</p>
+            <p className="mt-2 text-sm leading-6 text-slate-300">
+              Risk reduction around users, models, retrieval, and tools.
+            </p>
           </div>
         </div>
       </section>
@@ -368,21 +409,19 @@ export default function Home() {
       <Features />
 
       {/* ── Demo Video Section ── */}
-      <section className="border-y border-slate-800 bg-slate-950/40 py-20">
+      <section className="section border-y border-slate-800 bg-slate-950/40">
         <div className="container-page">
-          <p className="eyebrow text-center">See it in action</p>
-          <h2 className="mt-3 text-center text-3xl font-bold sm:text-4xl">
-            Watch SoterAI <span className="text-cyan">block attacks</span> in real time
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-center text-slate-200">
-            An interactive walkthrough showing prompt injection blocking, India PII redaction,
-            secret detection, jailbreak prevention, and the evidence-backed public benchmark in action.
-          </p>
+          <SectionHeading
+            center
+            eyebrow="See it in action"
+            title="Watch SoterAI block attacks in real time"
+            copy="An interactive walkthrough of prompt-injection blocking, India PII redaction, secret detection, jailbreak prevention, and the public benchmark."
+          />
           <div className="mx-auto mt-10 max-w-5xl">
             <DemoVideo />
           </div>
           <div className="mt-10 text-center">
-            <Link href="/demo" className="button-secondary inline-flex items-center gap-2">
+            <Link href="/demo" className="button-secondary">
               View all demos <ArrowRight size={18} aria-hidden="true" />
             </Link>
           </div>
@@ -390,81 +429,50 @@ export default function Home() {
       </section>
 
 
-      <section className="border-y border-slate-800 bg-slate-950/40 py-20">
+      <section className="section border-y border-slate-800 bg-slate-950/40">
         <div className="container-page text-center">
-          <p className="eyebrow">Adversarial Benchmark</p>
-          <h2 className="mt-3 text-3xl font-bold sm:text-4xl">
-            Public benchmark: <span className="text-cyan">100% recall on synthetic Phase 9 dataset</span>
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-200">
-            Latest generated run: 2,200 synthetic attack cases and 1,000 benign controls evaluated with the production detector.
-            This self-maintained benchmark is useful regression evidence, not an independent audit or production guarantee.
-          </p>
+          <SectionHeading
+            center
+            eyebrow="Adversarial benchmark"
+            title="Published benchmark, published limitations"
+            copy="Latest generated run: 2,200 synthetic attack cases and 1,000 benign controls evaluated with the production detector. This is self-maintained regression evidence — not an independent audit, and not a production guarantee."
+          />
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="card p-6">
-              <ShieldCheck className="mx-auto text-cyan" size={28} aria-hidden="true" />
-              <p className="mt-3 text-3xl font-black text-cyan">100%</p>
-              <p className="mt-1 text-sm text-slate-200">Recall</p>
-              <p className="text-xs text-slate-300">2,200 synthetic attacks</p>
-            </div>
-            <div className="card p-6">
-              <Zap className="mx-auto text-lime" size={28} aria-hidden="true" />
-              <p className="mt-3 text-3xl font-black text-lime">0.00%</p>
-              <p className="mt-1 text-sm text-slate-200">False-Positive Rate</p>
-              <p className="text-xs text-slate-300">1,000 benign controls</p>
-            </div>
-            <div className="card p-6">
-              <Gauge className="mx-auto text-cyan" size={28} aria-hidden="true" />
-              <p className="mt-3 text-3xl font-black text-cyan">10.92ms</p>
-              <p className="mt-1 text-sm text-slate-200">Analyzer p95</p>
-              <p className="text-xs text-slate-300">Local benchmark run</p>
-            </div>
-            <div className="card p-6">
-              <BarChart3 className="mx-auto text-cyan" size={28} aria-hidden="true" />
-              <p className="mt-3 text-3xl font-black text-cyan">10</p>
-              <p className="mt-1 text-sm text-slate-200">Attack Categories</p>
-              <p className="text-xs text-slate-300">Synthetic public corpus</p>
-            </div>
-          </div>
-
-          <div className="mt-8 flex flex-wrap justify-center gap-3 text-sm">
-            {[
-              "Prompt Injection",
-              "Jailbreak / DAN",
-              "Encoding / Obfuscation",
-              "Multilingual (Hindi)",
-              "RAG Poisoning",
-              "Tool Abuse",
-              "MCP Risk",
-              "PII Detection",
-              "Secrets / Credentials",
-              "Secret / PII",
-            ].map((cat) => (
-              <span
-                key={cat}
-                className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-xs text-slate-300"
-              >
-                {cat}
-              </span>
+          <dl className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {benchmarkMetrics.map((metric) => (
+              <div className="card p-6" key={metric.label}>
+                <metric.Icon className={`mx-auto ${metric.tone}`} size={28} aria-hidden="true" />
+                <dd data-numeric className={`mt-3 text-3xl font-black ${metric.tone}`}>
+                  {metric.value}
+                </dd>
+                <dt className="mt-1 text-sm font-medium text-slate-200">{metric.label}</dt>
+                <p className="mt-0.5 text-xs text-slate-400">{metric.basis}</p>
+              </div>
             ))}
-          </div>
+          </dl>
 
-          <Link
-            href="/benchmark"
-            className="button-secondary mt-8 inline-flex items-center gap-2"
-          >
-            View full benchmark details <ArrowRight size={16} aria-hidden="true" />
-          </Link>
+          <ul className="mt-8 flex flex-wrap justify-center gap-2">
+            {attackCategories.map((category) => (
+              <li className="badge-neutral" key={category}>
+                {category}
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-8">
+            <Link href="/benchmark" className="button-secondary">
+              View full benchmark details <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+          </div>
         </div>
       </section>
 
-      <section className="border-y border-slate-800 bg-slate-950/40 py-24">
+      <section className="section border-y border-slate-800 bg-slate-950/40">
         <div className="container-page">
           <SectionHeading
             eyebrow="OWASP alignment"
             title="Focused coverage for production AI workflows"
-            copy="Controls map to relevant OWASP LLM Top 10 risk areas. Alignment supports risk reduction and is not a certification or claim of complete coverage."
+            copy="Controls map to relevant OWASP LLM Top 10 risk areas. Alignment supports risk reduction and is not a certification or a claim of complete coverage."
           />
           <div className="mt-10 grid gap-4 md:grid-cols-2">
             {owaspCoverage.map(([id, title, copy]) => (
@@ -473,60 +481,80 @@ export default function Home() {
                   <span className="rounded-md bg-cyan/10 px-2.5 py-1 text-xs font-bold text-cyan">{id}</span>
                   <h3 className="font-semibold">{title}</h3>
                 </div>
-                <p className="mt-3 text-sm leading-6 text-slate-200">{copy}</p>
+                <p className="mt-3 text-sm leading-6 text-slate-300">{copy}</p>
               </article>
             ))}
           </div>
+          <Link
+            href="/compliance"
+            className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan hover:underline"
+          >
+            See the full compliance mapping <ArrowRight size={14} aria-hidden="true" />
+          </Link>
         </div>
       </section>
-      <section className="py-20">
+
+      <section className="section">
         <div className="container-page">
           <div className="card overflow-hidden p-8 sm:p-12">
             <div className="grid items-center gap-8 lg:grid-cols-2">
               <div>
                 <p className="eyebrow">Built for India</p>
-                <h2 className="mt-3 text-3xl font-bold">Recognize local personal-data patterns.</h2>
-                <p className="mt-4 leading-7 text-slate-200">
-                  Detect and redact Aadhaar-like patterns, PAN, GSTIN, UPI, IFSC, Indian mobile numbers,
-                  and contextual student, patient, and bank identifiers.
+                <h2 className="heading-3 mt-3">Recognize local personal-data patterns.</h2>
+                <p className="body-copy mt-4">
+                  Detect and redact Aadhaar-like patterns, PAN, GSTIN, UPI, IFSC, Indian mobile numbers, and contextual
+                  student, patient, and bank identifiers.
                 </p>
               </div>
-              <div className="grid grid-cols-2 gap-3 text-sm">
+              <ul className="grid grid-cols-2 gap-3 text-sm">
                 {["Aadhaar-like", "PAN", "GSTIN", "UPI ID", "IFSC", "Indian mobile"].map((label) => (
-                  <div className="flex items-center gap-2 rounded-md border border-slate-800 bg-slate-950/60 p-4 text-slate-300" key={label}>
-                    <CheckCircle2 className="text-lime" size={16} aria-hidden="true" />{label}
-                  </div>
+                  <li className="surface flex items-center gap-2 p-4 text-slate-300" key={label}>
+                    <CheckCircle2 className="shrink-0 text-lime" size={16} aria-hidden="true" />
+                    {label}
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           </div>
         </div>
       </section>
-      <section className="pb-24">
+
+      <section className="section-tight">
         <div className="container-page">
           <div className="card grid items-center gap-6 border-cyan/30 p-8 md:grid-cols-[1fr_auto]">
             <div>
               <p className="eyebrow">Interactive playground</p>
-              <h2 className="mt-2 text-2xl font-bold">Test AI security decisions before integration.</h2>
-              <p className="mt-2 text-slate-200">Use safe defensive examples to inspect findings, redaction, action, and risk score.</p>
+              <h2 className="heading-3 mt-2">Test AI security decisions before integration.</h2>
+              <p className="mt-2 text-slate-300">
+                Use safe defensive examples to inspect findings, redaction, action, and risk score.
+              </p>
             </div>
-            <Link href="/playground" className="button-primary gap-2">Try the guard <ArrowRight size={18} aria-hidden="true" /></Link>
+            <Link href="/playground" className="button-primary">
+              Try the guard <ArrowRight size={18} aria-hidden="true" />
+            </Link>
           </div>
         </div>
       </section>
       <FAQ />
-      <section className="pb-24">
+
+      {/* Closing CTA. The old version used a one-off emerald button that appeared
+          nowhere else on the site and a hand-rolled bordered link, so the most
+          important conversion point on the page was the least consistent element
+          on it. Brand primary + secondary now carry it. */}
+      <section className="section-tight">
         <div className="container-page">
-          <div className="rounded-lg bg-ink p-10 text-center">
-            <h2 className="text-3xl font-black text-cyan">Add observable controls to every AI turn.</h2>
-            <p className="mx-auto mt-3 max-w-2xl text-white">
-              Free tier available. Create a project, get an API key, and protect your first AI workflow in under 10 minutes.
+          <div className="gradient-border overflow-hidden p-10 text-center sm:p-14">
+            <p className="eyebrow">Get started</p>
+            <h2 className="heading-2 mt-3">Add observable controls to every AI turn.</h2>
+            <p className="mx-auto mt-4 max-w-prose leading-7 text-slate-300">
+              Free tier available. Create a project, get an API key, and protect your first AI workflow in under ten
+              minutes.
             </p>
-            <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link href="/signup" className="inline-flex items-center gap-2 rounded-md bg-emerald-500 px-6 py-3 font-bold text-[#04070c] shadow-[0_8px_24px_rgba(0,0,0,0.2)] transition hover:bg-emerald-400">
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Link href="/signup" className="button-primary button-lg">
                 Create free account <ArrowRight size={18} aria-hidden="true" />
               </Link>
-              <Link href="/docs" className="inline-flex items-center gap-2 rounded-md border-2 border-cyan/30 bg-cyan/10 px-6 py-3 font-bold text-cyan backdrop-blur-sm transition hover:bg-cyan/20">
+              <Link href="/docs" className="button-secondary button-lg">
                 Read integration docs
               </Link>
             </div>
@@ -535,7 +563,7 @@ export default function Home() {
       </section>
     </main>
   );
-  
 }
+
 
 

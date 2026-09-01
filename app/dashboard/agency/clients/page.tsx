@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Plus, Users } from "lucide-react";
 import { listClients } from "@/lib/agency";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -10,8 +11,10 @@ export default async function AgencyClientsPage() {
     <div>
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="eyebrow">Agency</p>
-          <h1 className="mt-2 text-3xl font-bold">Clients</h1>
+          <PageHeader
+        eyebrow="Agency"
+        title="Clients"
+      />
           <p className="mt-2 text-slate-200">Each client has their own projects, API keys, badge, and reports.</p>
         </div>
         <Link href="/dashboard/agency/clients/new" className="button-primary gap-2"><Plus size={18} /> Add client</Link>

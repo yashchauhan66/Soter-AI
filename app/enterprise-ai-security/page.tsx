@@ -94,6 +94,7 @@ const data: FeatureLandingData = {
     },
   ],
   related: [
+    { label: "AI User Security", href: "/ai-user-security" },
     { label: "AI Security Platform", href: "/llm-security" },
     { label: "AI Agent Security", href: "/ai-agent-security" },
     { label: "AI Security India", href: "/ai-security-india" },

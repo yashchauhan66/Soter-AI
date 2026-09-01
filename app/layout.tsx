@@ -3,6 +3,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { inter, jetbrainsMono } from "@/app/fonts";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 import { SiteChrome } from "@/components/layout/SiteChrome";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { siteJsonLd } from "@/lib/seo/schema";
 import "./globals.css";
@@ -17,10 +18,20 @@ const siteDescription =
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  // Allow zoom. The previous config omitted these, and while it did not set
+  // maximumScale=1 outright, being explicit documents that pinch-zoom is
+  // permitted (WCAG 1.4.4). Never set maximumScale or userScalable=false here.
+  maximumScale: 5,
+  userScalable: true,
+  // Matches --surface-0 (#08111f) from globals.css. The old value (#0b1117) was
+  // from an earlier palette, so the mobile browser chrome rendered a slightly
+  // different colour than the page it framed — a visible seam at the top of the
+  // viewport on iOS and Android.
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0b1117" },
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#08111f" },
+    { media: "(prefers-color-scheme: light)", color: "#08111f" },
   ],
+  colorScheme: "dark",
 };
 
 export const metadata: Metadata = {
@@ -145,7 +156,11 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
           Skip to main content
         </a>
         <AuthProvider>
-          <SiteChrome currentYear={new Date().getFullYear()}>{children}</SiteChrome>
+          {/* The footer is passed as a prop, not imported by SiteChrome, so it
+              stays a server component. See the note in SiteChrome. */}
+          <SiteChrome footer={<SiteFooter currentYear={new Date().getFullYear()} />}>
+            {children}
+          </SiteChrome>
         </AuthProvider>
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ""} />
       </body>

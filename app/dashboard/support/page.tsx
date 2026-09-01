@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -49,8 +50,10 @@ export default async function SupportPage({
     <div>
       <div className="flex items-end justify-between gap-4">
         <div>
-          <p className="eyebrow">Customer support</p>
-          <h1 className="mt-2 text-3xl font-bold">Support tickets</h1>
+          <PageHeader
+        eyebrow="Customer support"
+        title="Support tickets"
+      />
         </div>
         <div className="flex items-center gap-4">
           {hasMore && (
