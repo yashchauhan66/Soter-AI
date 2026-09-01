@@ -83,6 +83,7 @@ const data: FeatureLandingData = {
     },
   ],
   related: [
+    { label: "AI User Security", href: "/ai-user-security" },
     { label: "Local AI Broker", href: "/local-ai-broker" },
     { label: "Prompt Injection Protection", href: "/prompt-injection-protection" },
     { label: "AI Memory Inspector", href: "/ai-memory-inspector" },

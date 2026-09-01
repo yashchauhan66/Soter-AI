@@ -2,24 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CodeBlock } from "@/components/ui/CodeBlock";
-import { DocViewTracker } from "@/components/docs/DocViewTracker";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
   title: "SoterAI WhatsApp Chatbot Security Guide - India PII Protection",
   description:
     "Complete WhatsApp chatbot security guide for SoterAI. Protect WhatsApp deployments with input/output guarding, India-specific PII redaction (Aadhaar, PAN, UPI), and prompt injection detection.",
   alternates: { canonical: "/docs/whatsapp" },
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.in" },
-    { "@type": "ListItem", position: 2, name: "Docs", item: "https://soterai.in/docs" },
-    { "@type": "ListItem", position: 3, name: "WhatsApp", item: "https://soterai.in/docs/whatsapp" },
-  ],
 };
 
 const apiCode = `// Guard incoming WhatsApp message (server-side)
@@ -54,16 +43,7 @@ sendWhatsAppReply(sender, safeReply);`;
 
 export default function WhatsappDocsPage() {
   return (
-    <main className="py-16">
-      <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
-      <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
-        <p className="eyebrow mt-6">Platform guide</p>
-        <h1 className="mt-3 text-4xl font-bold">WhatsApp Chatbot Security Guide</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-200">
-          Protect your WhatsApp chatbot deployments with input/output guarding and India-specific PII redaction.
-        </p>
+    <DocsPageShell path="/docs/whatsapp">
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Integration flow</h2>
@@ -127,7 +107,6 @@ export default function WhatsappDocsPage() {
           <Link href="/docs/intercom" className="text-sm text-cyan hover:text-cyan/80 transition-colors">← Intercom</Link>
           <Link href="/docs/zendesk" className="text-sm text-cyan hover:text-cyan/80 transition-colors">Zendesk →</Link>
         </div>
-      </div>
-    </main>
+    </DocsPageShell>
   );
 }

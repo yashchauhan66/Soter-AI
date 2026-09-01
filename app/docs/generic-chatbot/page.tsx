@@ -2,24 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CodeBlock } from "@/components/ui/CodeBlock";
-import { DocViewTracker } from "@/components/docs/DocViewTracker";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
   title: "SoterAI Generic Chatbot & Agent Security Guide - Tool Firewall Integration",
   description:
     "Complete guide to protecting any chatbot, RAG bot, browser agent, or AI agent with SoterAI. Includes basic chatbot pattern, agent tool firewall, key rules, and code examples.",
   alternates: { canonical: "/docs/generic-chatbot" },
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.in" },
-    { "@type": "ListItem", position: 2, name: "Docs", item: "https://soterai.in/docs" },
-    { "@type": "ListItem", position: 3, name: "Generic Chatbot & Agent", item: "https://soterai.in/docs/generic-chatbot" },
-  ],
 };
 
 const basicCode = `import { Soter } from "@soterai/core";
@@ -87,16 +76,7 @@ return final.safeText ?? final.redactedText ?? toolResult;`;
 
 export default function GenericChatbotDocsPage() {
   return (
-    <main className="py-16">
-      <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
-      <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
-        <p className="eyebrow mt-6">Pattern guide</p>
-        <h1 className="mt-3 text-4xl font-bold">Generic Chatbot & Agent Security</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-200">
-          Use this pattern for any chatbot, RAG bot, browser agent, desktop agent, or custom tool-using AI system.
-        </p>
+    <DocsPageShell path="/docs/generic-chatbot">
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 1: Install the SDK</h2>
@@ -157,7 +137,6 @@ export default function GenericChatbotDocsPage() {
           <Link href="/docs/wordpress" className="text-sm text-cyan hover:text-cyan/80 transition-colors">← WordPress</Link>
           <Link href="/docs/cli" className="text-sm text-cyan hover:text-cyan/80 transition-colors">CLI →</Link>
         </div>
-      </div>
-    </main>
+    </DocsPageShell>
   );
 }

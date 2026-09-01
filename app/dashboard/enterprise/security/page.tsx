@@ -1,5 +1,6 @@
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -13,9 +14,13 @@ export default async function EnterpriseSecurityPage() {
   ]);
   return (
     <div>
-      <p className="eyebrow">Enterprise controls</p>
-      <h1 className="mt-2 text-3xl font-bold">Security settings</h1>
-      <p className="mt-3 max-w-3xl text-slate-200">IP allowlist, session revocation, API key rotation, quotas, and tenant disable controls are enforced through <code>/api/enterprise/security</code>.</p>
+      <PageHeader
+        eyebrow="Enterprise controls"
+        title="Security settings"
+      >
+        {/* Description retained as JSX because it contains markup. */}
+      </PageHeader>
+      <p className="mb-7 max-w-prose leading-7 text-slate-400">IP allowlist, session revocation, API key rotation, quotas, and tenant disable controls are enforced through <code>/api/enterprise/security</code>.</p>
       <section className="mt-6 grid gap-5 lg:grid-cols-3">
         <div className="card p-5">
           <h2 className="font-semibold">Network</h2>

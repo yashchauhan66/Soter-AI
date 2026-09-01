@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { getOrCreateAgency } from "@/lib/agency";
 import { BrandingForm } from "@/components/dashboard/BrandingForm";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -9,9 +10,11 @@ export default async function AgencySettingsPage() {
   const branding = await db.brandingSettings.findUnique({ where: { agencyId: agency.id } });
   return (
     <div>
-      <p className="eyebrow">Agency</p>
-      <h1 className="mt-2 text-3xl font-bold">Settings &amp; branding</h1>
-      <p className="mt-3 text-slate-200">Configure the brand used on white-label reports and the public security status pages.</p>
+      <PageHeader
+        eyebrow="Agency"
+        title="Settings &amp; branding"
+        description="Configure the brand used on white-label reports and the public security status pages."
+      />
       <BrandingForm
         agency={{ id: agency.id, name: agency.name, contactEmail: agency.contactEmail ?? "" }}
         branding={branding ? {

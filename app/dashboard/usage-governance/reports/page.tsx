@@ -1,6 +1,7 @@
 import { FileBarChart } from "lucide-react";
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { listReports } from "@/lib/usage-governance";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -13,12 +14,11 @@ export default async function GovernanceReportsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="eyebrow">Governance</p>
-        <h1 className="mt-2 text-3xl font-bold">Compliance Reports</h1>
-        <p className="mt-3 max-w-3xl text-slate-200">
-          Generate and view AI usage governance compliance reports. Reports show usage trends,
-          compliance scores, top providers, and recommendations.
-        </p>
+        <PageHeader
+        eyebrow="Governance"
+        title="Compliance Reports"
+        description="Generate and view AI usage governance compliance reports. Reports show usage trends, compliance scores, top providers, and recommendations."
+      />
       </div>
 
       {/* Generate report */}

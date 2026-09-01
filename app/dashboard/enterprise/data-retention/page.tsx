@@ -1,5 +1,6 @@
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -13,11 +14,11 @@ export default async function DataRetentionPage() {
   const confirmation = `DELETE ORGANIZATION ${active.org.slug}`;
   return (
     <div>
-      <p className="eyebrow">Enterprise data controls</p>
-      <h1 className="mt-2 text-3xl font-bold">Data retention and deletion</h1>
-      <p className="mt-3 max-w-3xl text-slate-200">
-        Configure tenant retention windows, request deletion workflows, and keep an audit trail. Export review is recommended before destructive deletion.
-      </p>
+      <PageHeader
+        eyebrow="Enterprise data controls"
+        title="Data retention and deletion"
+        description="Configure tenant retention windows, request deletion workflows, and keep an audit trail. Export review is recommended before destructive deletion."
+      />
       <section className="mt-6 grid gap-5 lg:grid-cols-2">
         <div className="card p-5">
           <h2 className="font-semibold">Current retention policy</h2>

@@ -211,20 +211,19 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
   });
 
   return (
-    <aside className="card h-fit p-3">
-      <div className="mb-3 px-3 py-3">
-        <p className="text-xs font-bold uppercase tracking-wider text-slate-300">Workspace</p>
-        <p className="mt-1 font-semibold">Security team</p>
-      </div>
-
+    // No `card` wrapper. The sidebar is chrome, not content — giving it a card
+    // border and glow made it compete visually with the actual data panels beside
+    // it, and nested the sticky container inside a bordered box that then clipped
+    // its own scroll shadow.
+    <div className="pb-6">
       <Link
         href="/dashboard/onboarding"
         onClick={onClose}
-        className="mb-3 flex items-center gap-3 rounded-xl border border-cyan/25 bg-cyan/10 px-3 py-3 text-sm font-semibold text-cyan transition hover:border-cyan/40 hover:bg-cyan/15"
+        className="mb-4 flex items-center gap-3 rounded-lg border border-cyan/25 bg-cyan/10 px-3 py-2.5 text-sm font-semibold text-cyan transition-colors hover:border-cyan/40 hover:bg-cyan/15"
       >
-        <ListChecks size={16} aria-hidden="true" />
+        <ListChecks size={16} aria-hidden="true" className="shrink-0" />
         <span className="flex-1">Start here</span>
-        <span className="text-[10px] font-bold uppercase tracking-wider text-cyan">2 min</span>
+        <span className="text-[10px] font-bold uppercase tracking-micro">2 min</span>
       </Link>
 
       <nav className="space-y-3" aria-label="Dashboard navigation">
@@ -286,14 +285,15 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
                       <Link
                         href={item.href}
                         onClick={onClose}
-                        className={`flex items-center gap-3 rounded-lg px-3 py-1.5 text-xs transition ${
+                        aria-current={isActive(item.href) ? "page" : undefined}
+                        className={`flex items-center gap-2.5 rounded-md px-3 py-1.5 text-xs transition-colors ${
                           isActive(item.href)
-                            ? `${product.accent} bg-white/5`
-                            : "text-slate-300 hover:bg-white/5 hover:text-slate-300"
+                            ? `${product.accent} bg-white/[0.07] font-medium`
+                            : "text-slate-400 hover:bg-white/5 hover:text-slate-100"
                         }`}
                       >
-                        <item.Icon size={13} />
-                        <span>{item.label}</span>
+                        <item.Icon size={13} aria-hidden="true" className="shrink-0" />
+                        <span className="min-w-0 truncate">{item.label}</span>
                       </Link>
                     </li>
                   ))}
@@ -312,19 +312,20 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
             <div key={group.label}>
               <button
                 onClick={() => setExpandedGroup(isExpanded ? null : group.label)}
-                className="flex w-full items-center justify-between px-3 py-2 text-left"
+                className="flex w-full items-center justify-between rounded-md px-3 py-2 text-left transition-colors hover:bg-slate-900/50"
                 aria-expanded={isExpanded}
               >
-                <p
-                  className={`text-[10px] font-bold uppercase tracking-[0.18em] ${
-                    isGroupActive ? "text-cyan" : "text-slate-600"
+                <span
+                  className={`text-[10px] font-bold uppercase tracking-micro ${
+                    isGroupActive ? "text-cyan" : "text-slate-500"
                   }`}
                 >
                   {group.label}
-                </p>
+                </span>
                 <ChevronDown
                   size={12}
-                  className={`text-slate-600 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
+                  aria-hidden="true"
+                  className={`shrink-0 text-slate-500 transition-transform ${isExpanded ? "rotate-180" : ""}`}
                 />
               </button>
 
@@ -343,25 +344,33 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
                         <Link
                           href={href}
                           onClick={onClose}
-                          className={`flex items-center gap-3 rounded-xl px-3 py-2 text-sm transition ${
+                          aria-current={isActive(href) ? "page" : undefined}
+                          className={`flex items-center gap-3 rounded-lg border-l-2 py-2 pl-2.5 pr-3 text-sm transition-colors ${
                             isActive(href)
-                              ? "bg-cyan/10 text-cyan"
-                              : "text-slate-200 hover:bg-slate-800 hover:text-white"
+                              ? "border-cyan bg-cyan/10 font-medium text-white"
+                              : "border-transparent text-slate-400 hover:border-slate-600 hover:bg-slate-900/60 hover:text-slate-100"
                           }`}
                         >
-                          <Icon size={16} />
-                          <span className="flex-1">{label}</span>
+                          <Icon size={15} aria-hidden="true" className="shrink-0" />
+                          <span className="min-w-0 flex-1 truncate">{label}</span>
                           {badge && (
-                            <span className="rounded-full bg-cyan/15 px-1.5 py-0.5 text-[9px] font-bold text-cyan">
+                            <span className="shrink-0 rounded-full bg-cyan/15 px-1.5 py-0.5 text-[9px] font-bold text-cyan">
                               {badge}
                             </span>
                           )}
+                          {/* Maturity label. Kept as text rather than a colour dot:
+                              "Beta" is information the operator needs before relying
+                              on a control, and a bare coloured dot conveys nothing. */}
                           {status && (
-                            <span className={`ml-auto text-[10px] ${
-                              status === "Stable" ? "text-emerald-400/90" :
-                              status === "Beta" ? "text-yellow-400/90" :
-                              "text-purple-400/90"
-                            }`}>
+                            <span
+                              className={`shrink-0 text-[10px] ${
+                                status === "Stable"
+                                  ? "text-emerald-400/90"
+                                  : status === "Beta"
+                                    ? "text-amber-400/90"
+                                    : "text-violet-400/90"
+                              }`}
+                            >
                               {status}
                             </span>
                           )}
@@ -375,6 +384,6 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
           );
         })}
       </nav>
-    </aside>
+    </div>
   );
 }

@@ -3,6 +3,7 @@ import dynamicImport from "next/dynamic";
 import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { requireProjectPermission } from "@/lib/auth/guards";
 import { loadProjectPolicy } from "@/lib/guard/policy";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -24,9 +25,11 @@ export default async function PolicyPage({
     <div>
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="eyebrow">Project policy</p>
-          <h1 className="mt-2 text-3xl font-bold">Guard policy &amp; thresholds</h1>
-          <p className="mt-3 text-slate-200">Choose a mode, toggle individual detectors, add custom topics or patterns, and set the fallback message returned on a block.</p>
+          <PageHeader
+        eyebrow="Project policy"
+        title="Guard policy &amp; thresholds"
+        description="Choose a mode, toggle individual detectors, add custom topics or patterns, and set the fallback message returned on a block."
+      />
         </div>
         <ProjectSwitcher projects={projects} selectedId={project.id} />
       </div>

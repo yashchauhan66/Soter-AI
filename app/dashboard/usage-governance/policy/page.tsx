@@ -3,6 +3,7 @@ import dynamicImport from "next/dynamic";
 import { getActiveOrganization, requireUser } from "@/lib/auth/guards";
 import { getOrCreatePolicy } from "@/lib/usage-governance";
 import { db } from "@/lib/db";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -29,12 +30,11 @@ export default async function GovernancePolicyPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="eyebrow">Governance</p>
-        <h1 className="mt-2 text-3xl font-bold">Policy Configuration</h1>
-        <p className="mt-3 max-w-3xl text-slate-200">
-          Configure the default AI usage governance policy. This controls how your organization
-          handles AI provider usage, data sensitivity, and employee monitoring.
-        </p>
+        <PageHeader
+        eyebrow="Governance"
+        title="Policy Configuration"
+        description="Configure the default AI usage governance policy. This controls how your organization handles AI provider usage, data sensitivity, and employee monitoring."
+      />
       </div>
 
       <form

@@ -2,24 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CodeBlock, InlineCode, TipBox } from "@/components/ui/CodeBlock";
-import { DocViewTracker } from "@/components/docs/DocViewTracker";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
   title: "SoterAI Express.js Integration Guide - AI Security Middleware",
   description:
     "Complete Express.js integration guide for SoterAI. Learn to protect your Express chatbot with input/output guard middleware, session context, and error handling.",
   alternates: { canonical: "/docs/express" },
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.in" },
-    { "@type": "ListItem", position: 2, name: "Docs", item: "https://soterai.in/docs" },
-    { "@type": "ListItem", position: 3, name: "Express.js", item: "https://soterai.in/docs/express" },
-  ],
 };
 
 const installCode = `npm install @soterai/core express`;
@@ -76,17 +65,7 @@ app.post(
 
 export default function ExpressDocsPage() {
   return (
-    <main className="py-16">
-      <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
-      
-      <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
-        <p className="eyebrow mt-6">Framework guide</p>
-        <h1 className="mt-3 text-4xl font-bold">Express.js Integration Guide</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-200">
-          Protect your Express.js chatbot with Soter middleware or direct API calls.
-        </p>
+    <DocsPageShell path="/docs/express">
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 1: Install</h2>
@@ -137,7 +116,6 @@ export default function ExpressDocsPage() {
           <Link href="/docs/nextjs" className="text-sm text-cyan hover:text-cyan/80 transition-colors">← Next.js Guide</Link>
           <Link href="/docs/fastapi" className="text-sm text-cyan hover:text-cyan/80 transition-colors">FastAPI Guide →</Link>
         </div>
-      </div>
-    </main>
+    </DocsPageShell>
   );
 }

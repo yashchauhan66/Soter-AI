@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -52,8 +53,10 @@ export default async function EnterpriseAuditPage({
 
   return (
     <div>
-      <p className="eyebrow">Enterprise audit</p>
-      <h1 className="mt-2 text-3xl font-bold">Audit and security events</h1>
+      <PageHeader
+        eyebrow="Enterprise audit"
+        title="Audit and security events"
+      />
       <section className="mt-6 grid gap-5 lg:grid-cols-2">
         <div className="card p-5">
           <div className="flex items-center justify-between gap-3">

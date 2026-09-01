@@ -2,6 +2,7 @@ import { CheckCircle, XCircle, HelpCircle } from "lucide-react";
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { listProviderRules } from "@/lib/usage-governance";
 import { KNOWN_AI_PROVIDERS } from "@/lib/shadow-ai";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -22,12 +23,11 @@ export default async function GovernanceProvidersPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="eyebrow">Governance</p>
-        <h1 className="mt-2 text-3xl font-bold">Provider Allow/Block Lists</h1>
-        <p className="mt-3 max-w-3xl text-slate-200">
-          Control which AI providers and models are allowed, blocked, or require approval
-          for use across your organization. Add rules for specific models using wildcard patterns.
-        </p>
+        <PageHeader
+        eyebrow="Governance"
+        title="Provider Allow/Block Lists"
+        description="Control which AI providers and models are allowed, blocked, or require approval for use across your organization. Add rules for specific models using wildcard patterns."
+      />
       </div>
 
       {/* Add rule form */}

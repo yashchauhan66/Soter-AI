@@ -2,24 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CodeBlock, InlineCode } from "@/components/ui/CodeBlock";
-import { DocViewTracker } from "@/components/docs/DocViewTracker";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
   title: "SoterAI RAG / LangChain / LlamaIndex Security Guide",
   description:
     "Complete RAG security guide for SoterAI. Protect LangChain chains, LlamaIndex query engines, and RAG retrieval flows from prompt injection, poisoned documents, and data leakage. Python and TypeScript examples.",
   alternates: { canonical: "/docs/rag" },
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.in" },
-    { "@type": "ListItem", position: 2, name: "Docs", item: "https://soterai.in/docs" },
-    { "@type": "ListItem", position: 3, name: "RAG / LangChain", item: "https://soterai.in/docs/rag" },
-  ],
 };
 
 const langchainCode = `from soter import Soter
@@ -87,16 +76,7 @@ const result = await soter.protectRag({
 
 export default function RagDocsPage() {
   return (
-    <main className="py-16">
-      <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
-      <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
-        <p className="eyebrow mt-6">Integration guide</p>
-        <h1 className="mt-3 text-4xl font-bold">RAG / LangChain / LlamaIndex Security</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-200">
-          Protect RAG retrieval flows, LangChain chains, and LlamaIndex query engines with SoterAI.
-        </p>
+    <DocsPageShell path="/docs/rag">
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">LangChain chain protection</h2>
@@ -165,7 +145,6 @@ export default function RagDocsPage() {
           <Link href="/docs/rest-api" className="text-sm text-cyan hover:text-cyan/80 transition-colors">← REST API</Link>
           <Link href="/docs/botpress" className="text-sm text-cyan hover:text-cyan/80 transition-colors">Botpress →</Link>
         </div>
-      </div>
-    </main>
+    </DocsPageShell>
   );
 }

@@ -181,10 +181,21 @@ describe("UX — Integration Wizard Code Copy", () => {
 });
 
 describe("UX — Hero CTA", () => {
-  it("Hero has 'Start Free' button", () => {
+  it("Hero offers a free-signup CTA alongside the zero-friction primary", () => {
     const src = file("components/marketing/Hero.tsx");
-    assert.ok(src.includes("Start Free"), "should have Start Free CTA");
+    // Assert the *affordance*, not one exact string. The literal used to be
+    // "Start Free"; the copy is owned by marketing and has already changed once,
+    // which silently broke this assertion. What must not regress is that the
+    // hero always offers a free-account path in addition to the playground.
+    assert.match(src, /start free|create free account/i, "hero should offer a free-signup CTA");
     assert.ok(src.includes("/signup"), "should link to signup");
+    assert.ok(src.includes("/playground"), "should keep the no-signup primary CTA");
+  });
+
+  it("Hero has exactly one primary button", () => {
+    const src = file("components/marketing/Hero.tsx");
+    const primaryCount = (src.match(/button-primary/g) ?? []).length;
+    assert.equal(primaryCount, 1, "competing primary CTAs leave the visitor with no clear next step");
   });
 });
 

@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, ExternalLink } from "lucide-react";
 import { CodeBlock, InlineCode, TipBox, WarnBox } from "@/components/ui/CodeBlock";
-import { DocViewTracker } from "@/components/docs/DocViewTracker";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
   title: "SoterAI Quickstart - Protect Your AI Chatbot in 5 Minutes (Beginner Guide)",
@@ -14,16 +13,6 @@ export const metadata: Metadata = {
     title: "SoterAI Quickstart - Protect Your AI Chatbot in 5 Minutes",
     description: "Step-by-step guide with code examples. Protect your AI from prompt injection, PII leaks, and unsafe outputs.",
   },
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.in" },
-    { "@type": "ListItem", position: 2, name: "Developer Documentation", item: "https://soterai.in/docs" },
-    { "@type": "ListItem", position: 3, name: "Quickstart", item: "https://soterai.in/docs/quickstart" },
-  ],
 };
 
 const howToSchema = {
@@ -110,21 +99,7 @@ const steps = [
 
 export default function QuickstartDocsPage() {
   return (
-    <main className="py-16">
-      <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(howToSchema) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
-      
-      <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to all docs</Link>
-        
-        <p className="eyebrow mt-6">Quickstart</p>
-        <h1 className="mt-3 text-4xl font-bold leading-tight">Protect your AI chatbot in 5 minutes</h1>
-        <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-300">
-          This guide is for <strong>beginners</strong>. You don&apos;t need AI security experience.
-          By the end, you will have a working chatbot route protected from prompt injection, 
-          PII leakage, and unsafe model output.
-        </p>
+    <DocsPageShell path="/docs/quickstart" jsonLd={howToSchema}>
 
         {/* What you'll build */}
         <div className="docs-section">
@@ -290,7 +265,6 @@ export default function QuickstartDocsPage() {
           <Link href="/docs" className="text-sm text-slate-300 hover:text-cyan transition-colors">← All docs</Link>
           <Link href="/docs/js" className="text-sm text-cyan hover:text-cyan/80 transition-colors">Next: JavaScript SDK →</Link>
         </div>
-      </div>
-    </main>
+    </DocsPageShell>
   );
 }

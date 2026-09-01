@@ -1,13 +1,29 @@
 export type LaunchStatus = "Stable" | "Beta" | "Labs" | "Coming Soon";
 
+/**
+ * Maps a launch status to a semantic badge class from `globals.css`.
+ *
+ * Lives here rather than in a component because the homepage Features grid and
+ * the pricing page both render status chips. When each file owned its own map,
+ * every status rendered in the same cyan chip on both pages — making "Stable",
+ * "Beta", and "Labs" visually identical, which defeats the point of publishing
+ * honest status labels at all.
+ */
+export const STATUS_BADGE: Record<LaunchStatus, string> = {
+  Stable: "badge-success",
+  Beta: "badge-info",
+  Labs: "badge-warning",
+  "Coming Soon": "badge-neutral",
+};
+
 export const finalPositioning =
-  "SoterAI protects company data and AI-agent actions across browsers, IDEs, workflows, and APIs before sensitive context reaches external AI systems.";
+  "SoterAI is the control layer that stops sensitive data and risky AI-agent actions across browsers, IDEs, workflows, and APIs before they become security incidents.";
 
 export const heroCopy = {
-  headline: "Stop sensitive company data and risky AI-agent actions before they reach external AI systems.",
+  headline: "Stop sensitive company data and risky AI-agent actions—before they become incidents.",
   subheading:
-    "SoterAI helps teams detect prompt injection, secrets, PII, risky MCP tools, unsafe AI outputs, and AI-agent actions across browsers, IDEs, workflows, and APIs.",
-  primaryCta: "Start Free",
+    "One security layer to inspect prompts and outputs, redact secrets and Indian PII, and approve or block agent tool calls across browsers, IDEs, workflows, and APIs.",
+  primaryCta: "Test It Live — No Signup",
   secondaryCta: "Book Security Demo",
 };
 

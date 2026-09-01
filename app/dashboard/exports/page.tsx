@@ -2,6 +2,7 @@ import { Download, FileJson, FileSpreadsheet } from "lucide-react";
 import Link from "next/link";
 import { getActiveOrganization, requirePermission } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -26,11 +27,11 @@ export default async function ExportsPage() {
 
   return (
     <div>
-      <p className="eyebrow">Audit</p>
-      <h1 className="mt-2 text-3xl font-bold">Exports</h1>
-      <p className="mt-3 text-slate-200">
-        Each row carries an HMAC-SHA256 signature. The X-Manifest-Signature response header signs the row count + generation timestamp so downstream SIEMs can verify provenance.
-      </p>
+      <PageHeader
+        eyebrow="Audit"
+        title="Exports"
+        description="Each row carries an HMAC-SHA256 signature. The X-Manifest-Signature response header signs the row count + generation timestamp so downstream SIEMs can verify provenance."
+      />
 
       <div className="mt-7 grid gap-4 md:grid-cols-2">
         {downloads.map((download) => {

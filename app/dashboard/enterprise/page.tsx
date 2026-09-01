@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -21,9 +22,11 @@ export default async function EnterprisePage() {
   ]);
   return (
     <div>
-      <p className="eyebrow">Enterprise controls</p>
-      <h1 className="mt-2 text-3xl font-bold">Enterprise readiness</h1>
-      <p className="mt-3 text-slate-200">SAML SSO, SCIM v2 provisioning, data retention, security controls, and audit review for enterprise tenants.</p>
+      <PageHeader
+        eyebrow="Enterprise controls"
+        title="Enterprise readiness"
+        description="SAML SSO, SCIM v2 provisioning, data retention, security controls, and audit review for enterprise tenants."
+      />
       <nav className="mt-5 flex flex-wrap gap-2 text-sm">
         {[
           ["SAML SSO", "/dashboard/enterprise/sso"],

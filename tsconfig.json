@@ -17,6 +17,24 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    /**
+     * Pin ambient @types resolution to this project.
+     *
+     * Without `typeRoots`, TypeScript walks every ancestor directory looking for
+     * `node_modules/@types` and auto-includes everything it finds. On a machine
+     * with a stray `C:\Users\<user>\node_modules\@types` (a common side effect of
+     * running `npm install` outside a project), the compiler tries to load
+     * packages such as `babel__core` and `react-transition-group` that this repo
+     * never installed, and `next build` fails at the type-check step with
+     * "Cannot find type definition file for 'babel__core'".
+     *
+     * Restricting the roots makes the build depend only on what package.json
+     * actually declares, so it behaves identically on CI and on any developer
+     * machine regardless of what lives in the parent directories.
+     */
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
     "plugins": [
       {
         "name": "next"

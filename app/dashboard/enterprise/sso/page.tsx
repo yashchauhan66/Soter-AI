@@ -1,5 +1,6 @@
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { db } from "@/lib/db";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -14,9 +15,13 @@ export default async function EnterpriseSsoPage() {
   });
   return (
     <div>
-      <p className="eyebrow">Enterprise identity</p>
-      <h1 className="mt-2 text-3xl font-bold">SAML SSO</h1>
-      <p className="mt-3 max-w-3xl text-slate-200">
+      <PageHeader
+        eyebrow="Enterprise identity"
+        title="SAML SSO"
+      >
+        {/* Description retained as JSX because it contains markup. */}
+      </PageHeader>
+      <p className="mb-7 max-w-prose leading-7 text-slate-400">
         SAML 2.0 with metadata upload, JIT provisioning, signature verification, audience/issuer/timing checks, and replay protection. Configure via <code>POST /api/enterprise/saml</code>. SP metadata is at <code>/api/sso/saml/metadata</code>. Login flow lives at <code>/api/sso/saml/login?org={`{slug}`}</code>.
       </p>
       <section className="mt-6 grid gap-5 md:grid-cols-2">

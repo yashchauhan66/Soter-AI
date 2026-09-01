@@ -1,6 +1,7 @@
 import { Users, Plus, Trash2 } from "lucide-react";
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { listDepartments } from "@/lib/usage-governance";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -13,12 +14,11 @@ export default async function GovernanceDepartmentsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <p className="eyebrow">Governance</p>
-        <h1 className="mt-2 text-3xl font-bold">Department Rules</h1>
-        <p className="mt-3 max-w-3xl text-slate-200">
-          Define AI usage policies for specific departments. Each department can have its own
-          default action and provider-specific rules.
-        </p>
+        <PageHeader
+        eyebrow="Governance"
+        title="Department Rules"
+        description="Define AI usage policies for specific departments. Each department can have its own default action and provider-specific rules."
+      />
       </div>
 
       <form action="/api/usage-governance/departments" method="POST" className="card p-5 space-y-4">

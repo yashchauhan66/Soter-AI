@@ -55,6 +55,7 @@ import { db } from "@/lib/db";
 import { guardLogListSelect } from "@/lib/guard/logSelect";
 import { checkMonthlyLimit } from "@/lib/rateLimit";
 import { recordRequestMetric } from "@/lib/ops/monitoring";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -233,8 +234,10 @@ export default async function DashboardPage({
         <div className="space-y-4">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="eyebrow">Security overview</p>
-              <h1 className="mt-2 text-3xl font-bold">Guard operations</h1>
+              <PageHeader
+        eyebrow="Security overview"
+        title="Guard operations"
+      />
             </div>
             <div className="flex items-center gap-3">
               <ProjectSwitcher projects={projects} selectedId={project.id} />

@@ -2,24 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CodeBlock } from "@/components/ui/CodeBlock";
-import { DocViewTracker } from "@/components/docs/DocViewTracker";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
   title: "SoterAI Zendesk Integration Guide - AI Security for Support Tickets",
   description:
     "Complete Zendesk integration guide for SoterAI. Protect AI-powered ticket workflows from prompt injection, PII leaks, and unsafe AI drafts. Includes REST API examples and best practices for support teams.",
   alternates: { canonical: "/docs/zendesk" },
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.in" },
-    { "@type": "ListItem", position: 2, name: "Docs", item: "https://soterai.in/docs" },
-    { "@type": "ListItem", position: 3, name: "Zendesk", item: "https://soterai.in/docs/zendesk" },
-  ],
 };
 
 const apiCode = `// Guard incoming ticket message (server-side)
@@ -49,16 +38,7 @@ const outputResult = await fetch(\`$\{process.env.SOTER_BASE_URL\}/api/guard/out
 
 export default function ZendeskDocsPage() {
   return (
-    <main className="py-16">
-      <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
-      <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
-        <p className="eyebrow mt-6">Platform guide</p>
-        <h1 className="mt-3 text-4xl font-bold">Zendesk Integration Guide</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-200">
-          Use SoterAI to protect AI ticket workflows in your Zendesk environment from prompt injection, PII leakage, and unsafe AI drafts.
-        </p>
+    <DocsPageShell path="/docs/zendesk">
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Integration pattern</h2>
@@ -130,7 +110,6 @@ export default function ZendeskDocsPage() {
           <Link href="/docs/whatsapp" className="text-sm text-cyan hover:text-cyan/80 transition-colors">← WhatsApp</Link>
           <Link href="/docs/wordpress" className="text-sm text-cyan hover:text-cyan/80 transition-colors">WordPress →</Link>
         </div>
-      </div>
-    </main>
+    </DocsPageShell>
   );
 }

@@ -7,6 +7,7 @@ import { ExtensionEnrollPanel } from "@/components/dashboard/extension/Extension
 import { ExtensionDevicesPanel } from "@/components/dashboard/extension/ExtensionDevicesPanel";
 import { ExtensionPolicyPanel } from "@/components/dashboard/extension/ExtensionPolicyPanel";
 import { ExtensionActivityPanel } from "@/components/dashboard/extension/ExtensionActivityPanel";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 export const dynamic = "force-dynamic";
 
@@ -19,9 +20,8 @@ export default async function BrowserExtensionPage() {
   if (!active) {
     return (
       <div className="space-y-4">
-        <p className="eyebrow">Browser Extension</p>
-        <h1 className="text-3xl font-bold">Browser Extension</h1>
-        <section className="card p-6 text-slate-200">
+        <PageHeader eyebrow="AI Usage Governance" title="Browser Extension" />
+        <section className="card p-6 text-slate-300">
           Create an organization first to deploy and manage the SoterAI browser extension.
         </section>
       </div>
@@ -79,15 +79,12 @@ export default async function BrowserExtensionPage() {
 
   return (
     <div className="space-y-7">
-      <header>
-        <p className="eyebrow">AI Usage Governance</p>
-        <h1 className="mt-2 text-3xl font-bold">Browser Extension</h1>
-        <p className="mt-3 max-w-3xl text-slate-200">
-          Deploy the SoterAI browser extension across your team to stop secrets, PII, and source code
-          from leaking into ChatGPT, Claude, Gemini, and 20+ other AI tools. Enroll browsers, manage
-          devices, tune policy, and watch activity — all from here.
-        </p>
-      </header>
+      <PageHeader
+        eyebrow="AI Usage Governance"
+        title="Browser Extension"
+        description="Deploy the SoterAI browser extension across your team to stop secrets, PII, and source code from leaking into ChatGPT, Claude, Gemini, and other AI tools. Enroll browsers, manage devices, tune policy, and watch activity from here."
+        docsHref="/extensions/browser"
+      />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <MetricCard

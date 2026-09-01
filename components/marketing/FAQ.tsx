@@ -17,22 +17,33 @@ const faqs = [
 
 export function FAQ() {
   return (
-    <section className="border-t border-slate-800 bg-slate-950/35 py-20">
+    <section id="faq" className="section border-t border-slate-800 bg-slate-950/35">
       <div className="container-page">
         <p className="eyebrow">Questions</p>
-        <h2 className="mt-3 text-3xl font-bold">Built for serious AI security work</h2>
+        <h2 className="heading-2 mt-3">Built for serious AI security work</h2>
+        <p className="body-copy mt-4">
+          Straight answers, including the ones that are inconvenient. If SoterAI does not do something, this section says
+          so.
+        </p>
+
+        {/* Native <details> keeps every answer in the initial HTML — crawlable,
+            zero client JS, and expandable before hydration. A JS accordion would
+            hide this content from crawlers that do not execute scripts. */}
         <div className="mt-10 max-w-3xl space-y-3">
-          {faqs.map(([q, a]) => (
-            <details key={q} className="group overflow-hidden rounded-lg border border-slate-800 bg-slate-950/50 transition-colors open:border-cyan/40">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 text-sm font-semibold text-slate-100 transition hover:text-cyan sm:text-base">
-                <span>{q}</span>
+          {faqs.map(([question, answer]) => (
+            <details
+              key={question}
+              className="group overflow-hidden rounded-card border border-slate-800 bg-slate-950/50 transition-colors open:border-cyan/40"
+            >
+              <summary className="flex cursor-pointer items-center justify-between gap-4 p-5 text-sm font-semibold text-slate-100 transition-colors hover:text-cyan sm:text-base">
+                <span>{question}</span>
                 <ChevronDown
                   size={16}
                   aria-hidden="true"
                   className="shrink-0 text-cyan transition-transform duration-200 group-open:rotate-180"
                 />
               </summary>
-              <p className="border-t border-slate-800/70 p-5 leading-7 text-slate-200">{a}</p>
+              <p className="border-t border-slate-800/70 p-5 leading-7 text-slate-300">{answer}</p>
             </details>
           ))}
         </div>

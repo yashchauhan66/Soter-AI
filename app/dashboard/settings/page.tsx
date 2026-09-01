@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Check, Copy } from "lucide-react";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 import {
   DEFAULT_RPM,
   FREE_PLAN_LIMIT_PER_MONTH,
@@ -46,8 +47,10 @@ export default function SettingsPage() {
 
   return (
     <div>
-      <p className="eyebrow">Configuration</p>
-      <h1 className="mt-2 text-3xl font-bold">Guard Configuration</h1>
+      <PageHeader
+        eyebrow="Configuration"
+        title="Guard Configuration"
+      />
       <p className="mt-2 text-sm text-slate-300">These are system-wide defaults. Per-project settings coming soon.</p>
       <div className="card mt-7 max-w-2xl p-6">
         <h2 className="font-semibold">Guard defaults</h2>

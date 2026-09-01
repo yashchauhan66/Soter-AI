@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { CodeBlock, InlineCode, WarnBox } from "@/components/ui/CodeBlock";
-import { DocViewTracker } from "@/components/docs/DocViewTracker";
+import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
   title: "SoterAI Botpress Integration Guide - AI Security for Chatbots",
@@ -43,15 +42,7 @@ return {
 
 export default function BotpressDocsPage() {
   return (
-    <main className="py-16">
-      <DocViewTracker />
-      <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
-        <p className="eyebrow mt-6">Platform guide</p>
-        <h1 className="mt-3 text-4xl font-bold">Botpress Integration Guide</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-200">
-          Add SoterAI as a pre-processing and post-processing HTTP step in your Botpress workflows.
-        </p>
+    <DocsPageShell path="/docs/botpress">
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">How it works</h2>
@@ -85,7 +76,6 @@ export default function BotpressDocsPage() {
         <WarnBox>
           Keep the API key server-side in your Botpress environment variables. Never expose it to the browser.
         </WarnBox>
-      </div>
-    </main>
+    </DocsPageShell>
   );
 }

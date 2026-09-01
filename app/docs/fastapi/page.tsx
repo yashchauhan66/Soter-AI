@@ -2,24 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CodeBlock, InlineCode } from "@/components/ui/CodeBlock";
-import { DocViewTracker } from "@/components/docs/DocViewTracker";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
   title: "SoterAI FastAPI Integration Guide - AI Security for Python APIs",
   description:
     "Complete FastAPI integration guide for SoterAI. Protect your Python chatbot with create_chat_route, manual guarding, async support, and Pydantic models.",
   alternates: { canonical: "/docs/fastapi" },
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.in" },
-    { "@type": "ListItem", position: 2, name: "Docs", item: "https://soterai.in/docs" },
-    { "@type": "ListItem", position: 3, name: "FastAPI", item: "https://soterai.in/docs/fastapi" },
-  ],
 };
 
 const installCode = `pip install "soter[fastapi]"`;
@@ -71,17 +60,7 @@ async def chat(req: ChatRequest):
 
 export default function FastapiDocsPage() {
   return (
-    <main className="py-16">
-      <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
-      
-      <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
-        <p className="eyebrow mt-6">Framework guide</p>
-        <h1 className="mt-3 text-4xl font-bold">FastAPI Integration Guide</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-200">
-          Guard your FastAPI chatbot with input/output protection in one route wrapper.
-        </p>
+    <DocsPageShell path="/docs/fastapi">
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 1: Install</h2>
@@ -130,7 +109,6 @@ export default function FastapiDocsPage() {
           <Link href="/docs/express" className="text-sm text-cyan hover:text-cyan/80 transition-colors">← Express.js Guide</Link>
           <Link href="/docs/python" className="text-sm text-cyan hover:text-cyan/80 transition-colors">Python SDK →</Link>
         </div>
-      </div>
-    </main>
+    </DocsPageShell>
   );
 }

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Building2, FolderKanban, Plus, ShieldCheck, Users } from "lucide-react";
 import { listClients } from "@/lib/agency";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 import { db } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
@@ -15,19 +16,23 @@ export default async function AgencyOverviewPage() {
 
   return (
     <div>
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="eyebrow">Agency control</p>
-          <h1 className="mt-2 text-3xl font-bold">{agency.name}</h1>
-          <p className="mt-2 text-slate-200">Manage clients, projects, branding, and reports from one workspace.</p>
-        </div>
-        <div className="flex flex-wrap gap-3">
-          <Link href="/dashboard/agency/clients/new" className="button-primary gap-2"><Plus size={18} /> Add client</Link>
-          <Link href="/dashboard/agency/settings" className="button-secondary">Branding</Link>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="Agency control"
+        title={agency.name}
+        description="Manage clients, projects, branding, and reports from one workspace."
+        actions={
+          <>
+            <Link href="/dashboard/agency/clients/new" className="button-primary button-sm">
+              <Plus size={16} aria-hidden="true" /> Add client
+            </Link>
+            <Link href="/dashboard/agency/settings" className="button-secondary button-sm">
+              Branding
+            </Link>
+          </>
+        }
+      />
 
-      <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <div className="card p-5"><div className="flex items-center gap-3"><Users className="text-cyan" /><p className="text-sm text-slate-300">Clients</p></div><p className="mt-3 text-3xl font-bold">{clients.length}</p></div>
         <div className="card p-5"><div className="flex items-center gap-3"><FolderKanban className="text-cyan" /><p className="text-sm text-slate-300">Projects</p></div><p className="mt-3 text-3xl font-bold">{projectIds.length}</p></div>
         <div className="card p-5"><div className="flex items-center gap-3"><Building2 className="text-cyan" /><p className="text-sm text-slate-300">Requests scanned</p></div><p className="mt-3 text-3xl font-bold">{requests}</p></div>

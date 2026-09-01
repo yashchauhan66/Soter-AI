@@ -1,121 +1,118 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, BookOpen, Shield, Zap, Layers, Eye } from "lucide-react";
-import { SERVICES } from "@/lib/docs/services";
-import { DocViewTracker } from "@/components/docs/DocViewTracker";
+import { ArrowRight } from "lucide-react";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { ServiceDirectory } from "@/components/docs/ServiceDirectory";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { SERVICE_GROUPS, SERVICES } from "@/lib/docs/services";
+import { SITE_URL } from "@/lib/seo/schema";
+
+/**
+ * Service directory hub.
+ *
+ * Removed from the previous version:
+ *
+ * - **The four "quick stat" cards.** "6 Protection Layers", "8 Detection
+ *   Engines", "4 Monitoring Tools" were hard-coded integers with no runtime
+ *   source. Nothing recomputed them when a service was added or removed, so they
+ *   were guaranteed to drift into being wrong — and on a security product,
+ *   invented numbers are worse than no numbers. The one honest figure
+ *   (`SERVICES.length`) is now stated inline in the intro.
+ * - **The "Need integration help?" block and the "Related documentation" chip
+ *   row.** Twelve links to guides that the persistent sidebar already lists on
+ *   every page. Duplicated navigation makes a page feel busy without making
+ *   anything easier to find.
+ *
+ * What remains is the actual job of this page: explain how the catalogue is
+ * organised, then get out of the way of the searchable directory.
+ */
 
 export const metadata: Metadata = {
-  title: "SoterAI Services Documentation - All Security Features Explained",
-  description:
-    "Complete documentation for all SoterAI security services. Learn what each service does, how to use it, and how it protects your AI from prompt injection, data leakage, and other threats.",
+  title: "All SoterAI Security Services: Setup Guides for Every Control",
+  description: `Searchable directory of all ${SERVICES.length} SoterAI security controls — monitoring, protection, detection, agent governance, compliance evidence, and administration. Each service has its own setup, verification, and API reference.`,
   alternates: { canonical: "/docs/services" },
   openGraph: {
-    title: "SoterAI Services Documentation",
-    description: "Comprehensive documentation for all SoterAI AI security services and features.",
+    title: "All SoterAI Security Services",
+    description: `Browse ${SERVICES.length} security controls, each with a focused setup guide.`,
   },
 };
 
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.in" },
-    { "@type": "ListItem", position: 2, name: "Documentation", item: "https://soterai.in/docs" },
-    { "@type": "ListItem", position: 3, name: "Services", item: "https://soterai.in/docs/services" },
-  ],
-};
-
-const quickStatCards = [
-  { icon: Shield, label: "Security Services", value: `${SERVICES.length}`, color: "text-cyan", bg: "bg-cyan/10" },
-  { icon: Layers, label: "Protection Layers", value: "6", color: "text-emerald-300", bg: "bg-emerald-400/10" },
-  { icon: Zap, label: "Detection Engines", value: "8", color: "text-orange-300", bg: "bg-orange-400/10" },
-  { icon: Eye, label: "Monitoring Tools", value: "4", color: "text-blue-300", bg: "bg-blue-400/10" },
-];
-
 export default function ServicesHubPage() {
   return (
-    <main className="py-16">
-      <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
+    <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+                { "@type": "ListItem", position: 2, name: "Documentation", item: `${SITE_URL}/docs` },
+                { "@type": "ListItem", position: 3, name: "All services", item: `${SITE_URL}/docs/services` },
+              ],
+            },
+            /**
+             * `ItemList` rather than a `SoftwareApplication` per service: these
+             * are features of one product, not separate applications. Claiming
+             * 30-plus applications would be structured-data spam.
+             */
+            {
+              "@type": "ItemList",
+              name: "SoterAI security services",
+              numberOfItems: SERVICES.length,
+              itemListElement: SERVICES.map((service, index) => ({
+                "@type": "ListItem",
+                position: index + 1,
+                name: service.title,
+                url: `${SITE_URL}/docs/services/${service.id}`,
+              })),
+            },
+          ],
+        }}
+      />
 
-      <div className="container-page">
-        <section className="border-b border-slate-800 pb-10">
-          <div>
-            <p className="eyebrow">Service documentation</p>
-            <h1 className="mt-3 max-w-4xl text-4xl font-bold leading-tight sm:text-5xl">
-              Choose a security service. Follow one focused setup guide.
-            </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-300">
-              Browse all {SERVICES.length} SoterAI controls. Each service page now keeps the user on one path:
-              understand the control, open the correct workspace, configure it, integrate it, and verify the result.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link href="/docs/quickstart" className="button-primary gap-2">
-                <Zap size={18} /> Quickstart guide <ArrowRight size={18} />
-              </Link>
-              <Link href="/docs/rest-api" className="button-secondary gap-2">
-                REST API reference
-              </Link>
-            </div>
-          </div>
-        </section>
+      <header className="max-w-3xl">
+        <p className="eyebrow">Service documentation</p>
+        <h1 className="heading-1 mt-3">Every security control, with its own setup guide</h1>
+        <p className="lede mt-4">
+          {SERVICES.length} controls, grouped by what they do for you. Each page follows the same path: understand the
+          control, open the right workspace, configure it, integrate it, and verify the result.
+        </p>
+      </header>
 
-        {/* ── Quick Stats ── */}
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {quickStatCards.map((stat, i) => {
-            const Icon = stat.icon;
+      {/* The six groups explained once, up front. Without this the filter buttons
+          in the directory below are six unexplained words. */}
+      <section aria-labelledby="service-groups" className="mt-10">
+        <h2 id="service-groups" className="text-sm font-bold uppercase tracking-micro text-slate-200">
+          How the catalogue is organised
+        </h2>
+        <dl className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {SERVICE_GROUPS.map((group) => {
+            const count = SERVICES.filter((service) => service.group === group.id).length;
             return (
-              <div key={i} className="card group p-5 transition-all duration-300 hover:border-cyan/30 hover:shadow-lg hover:shadow-cyan/5">
-                <div className="flex items-center gap-3">
-                  <span className={`flex h-10 w-10 items-center justify-center rounded-xl ${stat.bg} ${stat.color}`}>
-                    <Icon size={20} />
+              <div key={group.id} className="surface p-4">
+                <dt className="flex items-center justify-between gap-2">
+                  <span className="font-semibold text-slate-100">{group.label}</span>
+                  <span data-numeric className="text-xs text-slate-500">
+                    {count}
                   </span>
-                  <div>
-                    <p className="text-2xl font-bold text-white">{stat.value}</p>
-                    <p className="text-xs text-slate-300">{stat.label}</p>
-                  </div>
-                </div>
+                </dt>
+                <dd className="mt-1 text-sm leading-6 text-slate-400">{group.description}</dd>
               </div>
             );
           })}
-        </div>
+        </dl>
+      </section>
 
-        <ServiceDirectory />
+      <ServiceDirectory />
 
-        {/* ── CTA Section ── */}
-        <section className="mt-16 rounded-2xl border border-cyan/20 bg-gradient-to-br from-cyan/5 to-blue-500/5 p-8 sm:p-12">
-          <div className="flex flex-col items-center text-center">
-            <BookOpen size={32} className="text-cyan" />
-            <h2 className="mt-4 text-2xl font-bold">Need integration help?</h2>
-            <p className="mt-3 max-w-2xl text-slate-200">
-              Check out our language-specific integration guides for step-by-step setup 
-              instructions with code examples in your preferred framework.
-            </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
-              <Link href="/docs/js" className="button-secondary">JavaScript SDK</Link>
-              <Link href="/docs/python" className="button-secondary">Python SDK</Link>
-              <Link href="/docs/nextjs" className="button-secondary">Next.js</Link>
-              <Link href="/docs/express" className="button-secondary">Express.js</Link>
-              <Link href="/docs/fastapi" className="button-secondary">FastAPI</Link>
-              <Link href="/docs/rest-api" className="button-secondary">REST API</Link>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Related Links ── */}
-        <section className="mt-12 rounded-lg border border-slate-800 bg-slate-950/40 p-6">
-          <h2 className="text-lg font-semibold">Related documentation</h2>
-          <div className="mt-4 flex flex-wrap gap-2 text-sm">
-            <Link href="/docs/quickstart" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">Quickstart</Link>
-            <Link href="/docs/rest-api" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">REST API</Link>
-            <Link href="/docs/api-contract" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">API Contract</Link>
-            <Link href="/docs/best-practices" className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">Best Practices</Link>
-            <Link href="/trust" className="rounded-md border border-slate-700 bg-slate-900/60 px-3 py-1.5 text-slate-300 hover:border-cyan/50 hover:text-cyan">Trust Center</Link>
-          </div>
-        </section>
-      </div>
-    </main>
+      <p className="mt-12 border-t border-slate-800 pt-6 text-sm text-slate-400">
+        Looking for language setup instead of individual controls?{" "}
+        <Link href="/docs/quickstart" className="inline-flex items-center gap-1 font-semibold text-cyan hover:underline">
+          Start with the quickstart
+          <ArrowRight size={13} aria-hidden="true" />
+        </Link>
+      </p>
+    </>
   );
 }

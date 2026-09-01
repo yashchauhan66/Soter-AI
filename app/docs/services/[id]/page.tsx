@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Zap, Code2, Shield } from "lucide-react";
 import { SERVICES, SERVICE_GROUPS, type ServiceDoc } from "@/lib/docs/services";
 import { getServiceExperience } from "@/lib/docs/serviceExperience";
-import { DocViewTracker } from "@/components/docs/DocViewTracker";
 import { CodeBlock, TipBox, WarnBox } from "@/components/ui/CodeBlock";
 
 interface Props {
@@ -56,49 +55,41 @@ export default async function ServiceDocPage({ params }: Props) {
   const showLegacyIntegrationExample = false;
 
   return (
-    <main className="py-12">
-      <DocViewTracker />
-      
-      <div className="container-page">
-        {/* ── Breadcrumb ── */}
-        <nav className="mb-8 flex items-center gap-2 text-sm text-slate-300">
-          <Link href="/docs" className="transition hover:text-slate-300">Docs</Link>
-          <span>/</span>
-          <Link href="/docs/services" className="transition hover:text-slate-300">Services</Link>
-          <span>/</span>
-          <span className="text-slate-200">{service.title}</span>
-        </nav>
-
-        {/* ── Hero Section ── */}
-        <section className="rounded-lg border border-slate-800 bg-panel/70 p-6 sm:p-8">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
-            <div className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-lg ${service.bg} ${service.color}`}>
-              <Icon size={32} />
+    // No `<main>` or `container-page` here: the docs layout supplies both, and
+    // nesting `container-page` inside itself doubled the horizontal padding.
+    // `DocViewTracker` and the breadcrumb trail also moved up to the layout and
+    // the site chrome respectively, so both were previously firing twice here.
+    <>
+      {/* ── Hero ── */}
+      <section className="card p-6 sm:p-8">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
+          <div
+            className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-lg ${service.bg} ${service.color}`}
+          >
+            <Icon size={32} aria-hidden="true" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-3">
+              <p className="eyebrow">{groupLabel}</p>
+              {service.apiEndpoint && (
+                <span className="badge-neutral font-mono !text-[10px]">{service.apiEndpoint}</span>
+              )}
             </div>
-            <div className="min-w-0 flex-1">
-              <div className="flex flex-wrap items-center gap-3">
-                <p className="eyebrow">{groupLabel}</p>
-                <span className="rounded-full border border-slate-700 bg-slate-900/60 px-3 py-1 text-xs text-slate-200">
-                  {service.apiEndpoint ?? "Service"}
-                </span>
-              </div>
-              <h1 className="mt-2 text-3xl font-bold sm:text-4xl">{service.title}</h1>
-              <p className="mt-3 max-w-3xl text-lg leading-8 text-slate-300">
-                {service.longDescription}
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Link href={experience.dashboardHref} className="button-primary gap-2">
-                  Open {experience.dashboardLabel} <ArrowRight size={17} aria-hidden="true" />
-                </Link>
-                <Link href={service.apiEndpoint ? "/docs/rest-api" : "/docs/quickstart"} className="button-secondary gap-2">
-                  {service.apiEndpoint ? "Open integration guide" : "Open quickstart"}
-                </Link>
-              </div>
+            <h1 className="heading-2 mt-2">{service.title}</h1>
+            <p className="mt-3 max-w-prose text-lg leading-8 text-slate-300">{service.longDescription}</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link href={experience.dashboardHref} className="button-primary">
+                Open {experience.dashboardLabel} <ArrowRight size={17} aria-hidden="true" />
+              </Link>
+              <Link href={service.apiEndpoint ? "/docs/rest-api" : "/docs/quickstart"} className="button-secondary">
+                {service.apiEndpoint ? "Open integration guide" : "Open quickstart"}
+              </Link>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <div className="mt-8 grid gap-8 xl:grid-cols-[1fr_280px]">
+      <div className="mt-8 grid gap-8 xl:grid-cols-[1fr_260px]">
           {/* ── Main Content ── */}
           <div className="space-y-10">
             <section className="docs-section" id="setup">
@@ -377,17 +368,16 @@ export default async function ServiceDocPage({ params }: Props) {
           </aside>
         </div>
 
-        {/* ── Back to hub ── */}
-        <div className="mt-12 border-t border-slate-800 pt-8">
-          <Link
-            href="/docs/services"
-            className="group inline-flex items-center gap-2 text-sm text-slate-200 transition hover:text-cyan"
-          >
-            <ArrowLeft size={16} className="transition-transform duration-200 group-hover:-translate-x-1" />
-            Back to all services
-          </Link>
-        </div>
+      {/* ── Back to the directory ── */}
+      <div className="mt-12 border-t border-slate-800 pt-8">
+        <Link
+          href="/docs/services"
+          className="group inline-flex items-center gap-2 text-sm text-slate-400 transition-colors hover:text-cyan"
+        >
+          <ArrowLeft size={16} aria-hidden="true" className="transition-transform group-hover:-translate-x-1" />
+          Back to all services
+        </Link>
       </div>
-    </main>
+    </>
   );
 }

@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CodeBlock, InlineCode, TipBox, WarnBox } from "@/components/ui/CodeBlock";
-import { DocViewTracker } from "@/components/docs/DocViewTracker";
-import { safeJsonLd } from "@/lib/seo/jsonLd";
+import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
   title: "SoterAI Next.js Integration Guide - Protect Your AI Chat Routes",
@@ -14,16 +13,6 @@ export const metadata: Metadata = {
     title: "SoterAI Next.js Integration Guide",
     description: "Protect your Next.js App Router routes and server actions from prompt injection and PII leaks.",
   },
-};
-
-const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: "Home", item: "https://soterai.in" },
-    { "@type": "ListItem", position: 2, name: "Docs", item: "https://soterai.in/docs" },
-    { "@type": "ListItem", position: 3, name: "Next.js", item: "https://soterai.in/docs/nextjs" },
-  ],
 };
 
 const installCode = `npm install @soterai/core`;
@@ -145,19 +134,7 @@ export default function ChatPage() {
 
 export default function NextjsDocsPage() {
   return (
-    <main className="py-16">
-      <DocViewTracker />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbSchema) }} />
-      
-      <div className="container-docs">
-        <Link href="/docs" className="text-sm text-slate-300 transition-colors hover:text-cyan">← Back to docs</Link>
-        
-        <p className="eyebrow mt-6">Framework guide</p>
-        <h1 className="mt-3 text-4xl font-bold">Next.js Integration Guide</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-200">
-          Protect your Next.js chatbot with route handler helpers, server actions, and the one-line 
-          <InlineCode>createGuardedRoute</InlineCode> wrapper. Works with both App Router and Pages Router.
-        </p>
+    <DocsPageShell path="/docs/nextjs">
 
         <section className="docs-section">
           <h2 className="text-2xl font-bold">Step 1: Install</h2>
@@ -264,7 +241,6 @@ export default function NextjsDocsPage() {
           <Link href="/docs/rest-api" className="text-sm text-cyan hover:text-cyan/80 transition-colors">← REST API</Link>
           <Link href="/docs/express" className="text-sm text-cyan hover:text-cyan/80 transition-colors">Express.js Guide →</Link>
         </div>
-      </div>
-    </main>
+    </DocsPageShell>
   );
 }
