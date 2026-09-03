@@ -47,6 +47,8 @@ An LLM app has three attack surfaces, and most tools cover one. SoterAI covers a
 
 Detection runs **locally, on CPU, with no network call** — so it works air-gapped and adds single-digit milliseconds rather than an extra LLM round-trip.
 
+**OWASP LLM Top 10 aligned defense-in-depth for risk reduction:** the layers below work together — detection, protection, control, compliance, and monitoring — because no single check is sufficient on its own.
+
 ---
 
 ## Quick start
