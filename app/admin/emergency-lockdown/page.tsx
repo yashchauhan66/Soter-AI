@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import type { ChangeEvent } from "react";
-import { AlertTriangle, Lock, Unlock, Activity } from "lucide-react";
+import { Activity, AlertTriangle, Ban, Check, Lock, ShieldAlert, Unlock } from "lucide-react";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 
 interface LockdownState {
   enabled: boolean;
@@ -80,70 +81,104 @@ export default function EmergencyLockdownPage() {
   }
 
   return (
-    <div className="container mx-auto py-8 px-4 max-w-4xl">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold mb-2">Emergency Lockdown Control</h1>
-        <p className="text-muted-foreground">
-          Instantly block all high-risk AI destinations across your organization when a security incident is detected.
-        </p>
-      </div>
+    /**
+     * Page shell.
+     *
+     * Was `container mx-auto py-8 px-4 max-w-4xl` — a fourth distinct page-width
+     * convention in this codebase, alongside `.container-page`, `.container-docs`,
+     * and the dashboard grid. `.container-page` is the shared one.
+     *
+     * The light-mode remnants fixed here are the same class of bug documented in
+     * app/admin/fleet/page.tsx: `text-muted-foreground` generates no CSS in this
+     * project (there is no shadcn token layer), and `bg-red-50` / `text-red-800` /
+     * `text-green-600` are light-theme values that render as near-white blocks or
+     * illegibly dark text on `--surface-0`.
+     */
+    <div className="container-page max-w-4xl py-8">
+      <PageHeader
+        eyebrow="Incident response"
+        title="Emergency lockdown control"
+        icon={ShieldAlert}
+        description="Instantly block all high-risk AI destinations across your organization when a security incident is detected."
+        status={
+          lockdown.enabled ? (
+            <span className="badge-danger">Active</span>
+          ) : (
+            <span className="badge-neutral">Standby</span>
+          )
+        }
+      />
 
       {lockdown.enabled && (
-        <div className="mb-6 rounded-lg border border-red-500 bg-red-50 p-4">
-          <AlertTriangle className="h-4 w-4 text-red-600" />
-          <div className="text-red-800">
-            <strong>Emergency Lockdown Active</strong>
-            <br />
-            Enabled: {lockdown.enabledAt ? new Date(lockdown.enabledAt).toLocaleString() : "Unknown"}
-            <br />
-            Policy Version: {lockdown.policyVersion}
-            <br />
-            Reason: {lockdown.reason || "No reason provided"}
+        <div className="danger-card mb-6" role="status">
+          <div className="flex items-start gap-2.5">
+            <AlertTriangle size={15} aria-hidden="true" className="mt-0.5 shrink-0 text-rose-400" />
+            <div>
+              <p className="font-semibold text-rose-200">Emergency lockdown active</p>
+              <dl className="mt-2 grid gap-x-6 gap-y-1 sm:grid-cols-[auto_1fr]">
+                <dt className="text-rose-200/70">Enabled</dt>
+                <dd>{lockdown.enabledAt ? new Date(lockdown.enabledAt).toLocaleString() : "Unknown"}</dd>
+                <dt className="text-rose-200/70">Policy version</dt>
+                <dd data-numeric>{lockdown.policyVersion}</dd>
+                <dt className="text-rose-200/70">Reason</dt>
+                <dd>{lockdown.reason || "No reason provided"}</dd>
+              </dl>
+            </div>
           </div>
         </div>
       )}
 
+      {/* `role="status"` + aria-live: the outcome of enabling a lockdown must be
+          announced, not only recoloured. */}
       {message && (
-        <div className={`mb-6 rounded-lg border p-4 ${message.type === "success" ? "border-green-500 bg-green-50" : "border-red-500 bg-red-50"}`}>
-          <div className={message.type === "success" ? "text-green-800" : "text-red-800"}>
-            {message.text}
-          </div>
+        <div
+          className={message.type === "success" ? "tip-card mb-6" : "danger-card mb-6"}
+          role="status"
+          aria-live="polite"
+        >
+          {message.text}
         </div>
       )}
 
       <div className="grid gap-6">
-        <div className="card">
+        <section className="card">
           <div className="border-b border-slate-800 p-4">
-            <h2 className="flex items-center gap-2 font-semibold">
-              <Activity className="h-5 w-5" />
-              Current Status
+            <h2 className="flex items-center gap-2 font-semibold text-slate-100">
+              <Activity size={16} aria-hidden="true" className="text-slate-400" />
+              Current status
             </h2>
-            <p className="text-sm text-slate-200">Emergency lockdown protection status</p>
+            <p className="mt-1 text-sm text-slate-400">Emergency lockdown protection status</p>
           </div>
           <div className="p-4">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-4">
               <div>
-                <p className="text-sm font-medium">Lockdown Status</p>
-                <p className={`text-2xl font-bold ${lockdown.enabled ? "text-red-600" : "text-green-600"}`}>
-                  {lockdown.enabled ? "ENABLED" : "DISABLED"}
+                <p className="text-sm text-slate-400">Lockdown status</p>
+                <p className={`text-2xl font-semibold ${lockdown.enabled ? "text-rose-300" : "text-emerald-300"}`}>
+                  {lockdown.enabled ? "Enabled" : "Disabled"}
                 </p>
               </div>
               <div className="text-right">
-                <p className="text-sm text-muted-foreground">Policy Version</p>
-                <p className="text-xl font-mono">{lockdown.policyVersion}</p>
+                <p className="text-sm text-slate-400">Policy version</p>
+                <p data-numeric className="font-mono text-xl text-slate-100">
+                  {lockdown.policyVersion}
+                </p>
               </div>
             </div>
           </div>
-        </div>
+        </section>
 
-        <div className="card">
+        <section className="card">
           <div className="border-b border-slate-800 p-4">
-            <h2 className="font-semibold">Lockdown Controls</h2>
-            <p className="text-sm text-slate-200">Enable or disable emergency lockdown for all enrolled extensions</p>
+            <h2 className="font-semibold text-slate-100">Lockdown controls</h2>
+            <p className="mt-1 text-sm text-slate-400">
+              Enable or disable emergency lockdown for all enrolled extensions
+            </p>
           </div>
           <div className="space-y-4 p-4">
             <div>
-              <label className="text-sm font-medium" htmlFor="reason">Reason for Lockdown</label>
+              <label className="label" htmlFor="reason">
+                Reason for lockdown
+              </label>
               <textarea
                 id="reason"
                 placeholder="e.g., Detected credential leak in #engineering Slack channel. Blocking all public AI access until investigation complete."
@@ -153,57 +188,59 @@ export default function EmergencyLockdownPage() {
                 rows={4}
                 className="input mt-2 min-h-24 w-full"
               />
-              <p className="text-sm text-muted-foreground mt-2">
+              <p className="field-hint mt-2">
                 This reason will be shown to employees when they attempt to use blocked AI tools.
               </p>
             </div>
 
             <div className="flex gap-4">
               {!lockdown.enabled ? (
-                <button onClick={() => toggleLockdown(true)} disabled={loading} className="flex flex-1 items-center justify-center rounded-lg bg-red-600 px-4 py-2 font-semibold text-white disabled:opacity-60">
-                  <Lock className="mr-2 h-4 w-4" />
-                  {loading ? "Enabling..." : "Enable Emergency Lockdown"}
+                <button onClick={() => toggleLockdown(true)} disabled={loading} className="button-danger flex-1">
+                  <Lock size={15} aria-hidden="true" />
+                  {loading ? "Enabling…" : "Enable emergency lockdown"}
                 </button>
               ) : (
-                <button onClick={() => toggleLockdown(false)} disabled={loading} className="flex flex-1 items-center justify-center rounded-lg bg-slate-700 px-4 py-2 font-semibold text-white disabled:opacity-60">
-                  <Unlock className="mr-2 h-4 w-4" />
-                  {loading ? "Disabling..." : "Disable Emergency Lockdown"}
+                <button onClick={() => toggleLockdown(false)} disabled={loading} className="button-secondary flex-1">
+                  <Unlock size={15} aria-hidden="true" />
+                  {loading ? "Disabling…" : "Disable emergency lockdown"}
                 </button>
               )}
             </div>
           </div>
-        </div>
+        </section>
 
-        <div className="card">
+        <section className="card">
           <div className="border-b border-slate-800 p-4">
-            <h2 className="font-semibold">What Happens During Lockdown</h2>
+            <h2 className="font-semibold text-slate-100">What happens during lockdown</h2>
           </div>
           <div className="p-4">
-            <ul className="space-y-2 text-sm">
-              <li className="flex items-start gap-2">
-                <span className="text-red-600 font-bold">•</span>
-                <span>All public AI tools (ChatGPT, Claude, Gemini, etc.) are blocked</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-600 font-bold">•</span>
-                <span>File uploads to any destination are blocked</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-red-600 font-bold">•</span>
-                <span>Unknown AI destinations are automatically blocked</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-green-600 font-bold">•</span>
-                <span>Enterprise-approved AI tools remain accessible (if configured)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blue-600 font-bold">•</span>
-                <span>Policy syncs every 30 seconds (instead of 15 minutes) for rapid updates</span>
-              </li>
+            {/* Data-driven so "blocks" vs "still allowed" is a property of each
+                item rather than a colour hand-typed five times — the previous
+                version used red/green/blue bullets with no legend. */}
+            <ul className="space-y-2.5 text-sm">
+              {LOCKDOWN_EFFECTS.map((effect) => (
+                <li key={effect.text} className="flex items-start gap-2.5">
+                  {effect.blocks ? (
+                    <Ban size={14} aria-hidden="true" className="mt-1 shrink-0 text-rose-400" />
+                  ) : (
+                    <Check size={14} aria-hidden="true" className="mt-1 shrink-0 text-emerald-400" />
+                  )}
+                  <span className="text-slate-300">{effect.text}</span>
+                </li>
+              ))}
             </ul>
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );
 }
+
+/** Effects of an active lockdown. `blocks` drives the icon and its tone. */
+const LOCKDOWN_EFFECTS: Array<{ text: string; blocks: boolean }> = [
+  { text: "All public AI tools (ChatGPT, Claude, Gemini, etc.) are blocked", blocks: true },
+  { text: "File uploads to any destination are blocked", blocks: true },
+  { text: "Unknown AI destinations are automatically blocked", blocks: true },
+  { text: "Enterprise-approved AI tools remain accessible (if configured)", blocks: false },
+  { text: "Policy syncs every 30 seconds instead of 15 minutes, for rapid updates", blocks: false },
+];

@@ -35,7 +35,7 @@ function renderInline(text: string, keyPrefix: string): React.ReactNode[] {
       );
     } else if (token.startsWith("**")) {
       nodes.push(
-        <strong key={`${keyPrefix}-b${i}`} className="font-semibold text-white">
+        <strong key={`${keyPrefix}-b${i}`} className="font-semibold text-slate-100">
           {token.slice(2, -2)}
         </strong>
       );
@@ -105,7 +105,7 @@ export function ChatMarkdown({ content }: { content: string }) {
             : "text-sm font-semibold";
       const k = key++;
       blocks.push(
-        <p key={k} className={`${cls} mt-1 text-white`}>
+        <p key={k} className={`${cls} mt-1 text-slate-100`}>
           {renderInline(heading[2], `h${k}`)}
         </p>
       );

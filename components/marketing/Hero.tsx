@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, PlayCircle, ShieldCheck } from "lucide-react";
 import { LiveThreatConsole } from "@/components/marketing/LiveThreatConsole";
-import { heroCopy, productStatus } from "@/lib/marketing/launchStatus";
+import { heroCopy } from "@/lib/marketing/launchStatus";
 
 /**
  * Homepage hero.
@@ -41,22 +41,20 @@ const outcomes = [
 ];
 
 export function Hero() {
-  // Surfaces that are actually shipping. Labs / Coming Soon chips would dilute
-  // the hero's credibility, so they are surfaced in Features instead.
-  const shippingProducts = productStatus.filter(
-    (product) => product.status === "Stable" || product.status === "Beta",
-  );
-
   return (
     <section className="relative isolate overflow-hidden border-b border-slate-800">
-      {/* Decorative layers. pointer-events-none so they never swallow a CTA click. */}
-      <div className="pointer-events-none absolute inset-0 z-[1] grid-fade mask-radial-fade opacity-40" />
-      <div className="pointer-events-none absolute inset-0 z-[2] bg-[linear-gradient(90deg,rgba(8,17,31,0.88)_0%,rgba(8,17,31,0.55)_48%,rgba(8,17,31,0.2)_100%)]" />
+      {/* Decorative grid. `pointer-events-none` so it never swallows a CTA click.
+
+          The dark version also painted a full-bleed scrim over the hero to darken
+          the left side under the headline. On white there is nothing to darken —
+          the scrim would be a grey wash across the copy — so it is gone, and the
+          grid alone carries the texture. */}
+      <div className="pointer-events-none absolute inset-0 z-[1] grid-fade mask-radial-fade opacity-60" />
 
       <div className="container-page relative z-10 grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-[1.02fr_.98fr] lg:py-24">
         <div>
-          <span className="badge-brand">
-            <ShieldCheck size={14} aria-hidden="true" />
+          <span className="badge-neutral">
+            <ShieldCheck size={13} aria-hidden="true" className="text-cyan" />
             Runtime security for every AI interaction
           </span>
 
@@ -96,7 +94,13 @@ export function Hero() {
           </ul>
 
           {/* Proof rail. Linking each figure to its source also gives the
-              benchmark pages four internal links from the site's strongest page. */}
+              benchmark pages four internal links from the site's strongest page.
+
+              The figures are `text-slate-100`, not teal. Four large teal numbers
+              directly under a teal badge and beside a teal CTA meant the accent
+              appeared five times above the fold, so none of the five read as
+              important. A metric is credible when it is legible, not when it is
+              coloured. */}
           <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-slate-800 pt-8 sm:grid-cols-4">
             {trustStats.map((stat) => (
               <div key={stat.label}>
@@ -105,11 +109,11 @@ export function Hero() {
                   <Link href={stat.href} className="group block">
                     <span
                       data-numeric
-                      className="block text-2xl font-black text-cyan transition-colors group-hover:text-cyan-300 sm:text-3xl"
+                      className="block text-2xl font-semibold text-slate-100 sm:text-3xl"
                     >
                       {stat.value}
                     </span>
-                    <span className="mt-1 block text-xs leading-5 text-slate-400 group-hover:text-slate-300">
+                    <span className="mt-1 block text-xs leading-5 text-slate-500 group-hover:text-slate-300">
                       {stat.label}
                     </span>
                   </Link>
@@ -126,18 +130,11 @@ export function Hero() {
             .
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-2">
-            {shippingProducts.map((product) => (
-              <Link
-                key={product.name}
-                href={product.href}
-                className="badge-neutral transition-colors hover:border-cyan/40 hover:text-white"
-              >
-                {product.name}
-                <span className="text-cyan">{product.status}</span>
-              </Link>
-            ))}
-          </div>
+          {/* The seven product badges that used to sit here are gone. They linked
+              to the same eight destinations as the Surfaces grid in the very next
+              section, which now shows each one with a status chip and a line of
+              copy — so the badges were a compressed, less useful copy of content
+              the reader was about to reach anyway. */}
         </div>
 
         <LiveThreatConsole />
@@ -151,7 +148,7 @@ export function Hero() {
               key={audience}
               className={`p-5 ${index > 0 ? "border-t border-slate-800 sm:border-l sm:border-t-0" : ""}`}
             >
-              <p className="text-xs font-bold uppercase tracking-micro text-cyan">For {audience}</p>
+              <p className="text-[11px] font-semibold uppercase tracking-micro text-slate-500">For {audience}</p>
               <p className="mt-2 text-sm leading-6 text-slate-300">{outcome}</p>
             </div>
           ))}

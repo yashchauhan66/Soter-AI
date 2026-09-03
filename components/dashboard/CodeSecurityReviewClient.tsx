@@ -155,7 +155,7 @@ function ReviewResults({ result }: { result: CodeReviewResult | null }) {
   </section>;
 }
 
-function TabButton({ active, onClick, icon, label }: { active: boolean; onClick: () => void; icon: React.ReactNode; label: string }) { return <button role="tab" aria-selected={active} onClick={onClick} className={`flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-semibold transition ${active ? "border-cyan/40 bg-cyan/10 text-cyan" : "border-slate-800 bg-slate-900/50 text-slate-200 hover:text-white"}`}>{icon}{label}</button>; }
+function TabButton({ active, onClick, icon, label }: { active: boolean; onClick: () => void; icon: React.ReactNode; label: string }) { return <button role="tab" aria-selected={active} onClick={onClick} className={`flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-semibold transition ${active ? "border-cyan/40 bg-cyan/10 text-cyan" : "border-slate-800 bg-slate-900/50 text-slate-200 hover:text-slate-100"}`}>{icon}{label}</button>; }
 function ContextToggle({ checked, onChange, label }: { checked: boolean; onChange: (value: boolean) => void; label: string }) { return <label className={`flex cursor-pointer items-center gap-2 rounded-lg border p-2 text-xs ${checked ? "border-cyan/30 bg-cyan/5 text-cyan" : "border-slate-800 text-slate-300"}`}><input type="checkbox" checked={checked} onChange={(event) => onChange(event.target.checked)} className="accent-cyan-400" />{label}</label>; }
 function severityClass(severity: string) { return severity === "CRITICAL" ? "bg-rose-500/20 text-rose-300" : severity === "HIGH" ? "bg-orange-500/20 text-orange-300" : severity === "MEDIUM" ? "bg-amber-500/20 text-amber-300" : "bg-slate-700 text-slate-300"; }
 

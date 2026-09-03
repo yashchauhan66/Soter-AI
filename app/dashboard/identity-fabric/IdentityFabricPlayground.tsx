@@ -60,7 +60,7 @@ export function IdentityFabricPlayground({
             className={`rounded-lg px-3 py-1.5 text-xs font-medium transition ${
               activeTab === tab.id
                 ? "bg-cyan/10 text-cyan"
-                : "text-slate-200 hover:text-white"
+                : "text-slate-200 hover:text-slate-100"
             }`}
           >
             {tab.label}

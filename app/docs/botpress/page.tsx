@@ -48,16 +48,16 @@ export default function BotpressDocsPage() {
           <h2 className="text-2xl font-bold">How it works</h2>
           <div className="mt-4 space-y-3">
             <div className="rounded-lg border border-slate-800 p-4">
-              <span className="font-semibold text-white">1. Input step</span> — Call <InlineCode>POST /api/guard/input</InlineCode> before the user message reaches your AI agent
+              <span className="font-semibold text-slate-100">1. Input step</span> — Call <InlineCode>POST /api/guard/input</InlineCode> before the user message reaches your AI agent
             </div>
             <div className="rounded-lg border border-slate-800 p-4">
-              <span className="font-semibold text-white">2. Output step</span> — Call <InlineCode>POST /api/guard/output</InlineCode> before the AI response goes to the user
+              <span className="font-semibold text-slate-100">2. Output step</span> — Call <InlineCode>POST /api/guard/output</InlineCode> before the AI response goes to the user
             </div>
             <div className="rounded-lg border border-slate-800 p-4">
-              <span className="font-semibold text-white">3. Handle decisions</span> — Block or redirect when the guard returns BLOCK or HUMAN_REVIEW
+              <span className="font-semibold text-slate-100">3. Handle decisions</span> — Block or redirect when the guard returns BLOCK or HUMAN_REVIEW
             </div>
             <div className="rounded-lg border border-slate-800 p-4">
-              <span className="font-semibold text-white">4. Audit logs</span> — Store only the public guard result (not raw text) in Botpress logs
+              <span className="font-semibold text-slate-100">4. Audit logs</span> — Store only the public guard result (not raw text) in Botpress logs
             </div>
           </div>
         </section>

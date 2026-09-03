@@ -54,7 +54,7 @@ export function ServiceDirectory() {
               type="button"
               onClick={() => setQuery("")}
               aria-label="Clear service search"
-              className="absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-md text-slate-400 hover:bg-slate-800 hover:text-white"
+              className="absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-md text-slate-400 hover:bg-slate-800 hover:text-slate-100"
             >
               <X size={16} aria-hidden="true" />
             </button>
@@ -70,7 +70,7 @@ export function ServiceDirectory() {
           className={`h-9 shrink-0 rounded-md border px-3 text-sm font-medium transition ${
             group === "all"
               ? "border-cyan/40 bg-cyan/10 text-cyan"
-              : "border-slate-700 text-slate-300 hover:border-slate-500 hover:text-white"
+              : "border-slate-700 text-slate-300 hover:border-slate-500 hover:text-slate-100"
           }`}
         >
           All ({SERVICES.length})
@@ -87,7 +87,7 @@ export function ServiceDirectory() {
               className={`h-9 shrink-0 rounded-md border px-3 text-sm font-medium transition ${
                 active
                   ? "border-cyan/40 bg-cyan/10 text-cyan"
-                  : "border-slate-700 text-slate-300 hover:border-slate-500 hover:text-white"
+                  : "border-slate-700 text-slate-300 hover:border-slate-500 hover:text-slate-100"
               }`}
             >
               {item.label} ({count})
@@ -117,7 +117,7 @@ export function ServiceDirectory() {
                   </span>
                   <span className="text-xs font-medium text-slate-500">{groupLabel}</span>
                 </div>
-                <h3 className="mt-4 text-lg font-semibold text-white group-hover:text-cyan">{service.title}</h3>
+                <h3 className="mt-4 text-lg font-semibold text-slate-100 group-hover:text-cyan">{service.title}</h3>
                 <p className="mt-2 flex-1 text-sm leading-6 text-slate-400">{service.description}</p>
                 <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan">
                   Open setup guide

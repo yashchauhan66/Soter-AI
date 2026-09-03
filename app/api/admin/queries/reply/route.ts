@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { apiError, jsonResponse, readJson } from "@/lib/apiResponse";
 import { requireAdmin } from "@/lib/auth/guards";
+import { BRAND, INK } from "@/lib/brand";
 import { db } from "@/lib/db";
 import { getEmailClient } from "@/lib/email/client";
 import { sanitizeLogText } from "@/lib/guard/logSafety";
@@ -20,13 +21,15 @@ function renderReplyEmail(input: { body: string }) {
   const safeBody = escapeHtml(input.body).replace(/\n/g, "<br>");
   return {
     text: `${input.body}\n\nSoterAI Support\nsupport@soterai.in`,
-    html: `<div style="font-family:Arial,sans-serif;max-width:640px;color:#0f172a;line-height:1.6">
-      <div style="background:#08111f;color:#ffffff;padding:18px 22px;border-radius:12px 12px 0 0">
+    // Colours are inline literals from lib/brand.ts. Mail clients strip <style>
+    // and do not support CSS variables, so this is the one correct way to do it.
+    html: `<div style="font-family:Arial,sans-serif;max-width:640px;color:${INK.heading};line-height:1.6">
+      <div style="background:${BRAND};color:${INK.page};padding:18px 22px;border-radius:12px 12px 0 0">
         <strong>SoterAI Support</strong>
       </div>
-      <div style="border:1px solid #e2e8f0;border-top:0;padding:22px;border-radius:0 0 12px 12px">
+      <div style="border:1px solid ${INK.hairline};border-top:0;padding:22px;border-radius:0 0 12px 12px">
         <p>${safeBody}</p>
-        <p style="margin-top:24px;color:#64748b;font-size:13px">SoterAI Support<br>support@soterai.in</p>
+        <p style="margin-top:24px;color:${INK.faint};font-size:13px">SoterAI Support<br>support@soterai.in</p>
       </div>
     </div>`,
   };

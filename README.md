@@ -1,724 +1,501 @@
-
 <div align="center">
-  <img src="https://raw.githubusercontent.com/yashchauhan66/Ai-Security-Guard/main/public/logo.png" alt="SoterAI Logo" width="280" />
-  
-  # SoterAI — The AI Security Guard for the Age of Agents
-  
-  **Stop prompt injection, data leakage, rogue agent actions & regulatory drift — before they happen.**
-  *Self-hostable, offline-capable, India-first detection. Honest, reproducible benchmarks. 966/966 tests. 9-class attack classifier. Response-side DLP.*
-  
-  <p align="center">
-    <a href="https://github.com/yashchauhan66/Ai-Security-Guard"><img src="https://img.shields.io/github/stars/yashchauhan66/Ai-Security-Guard?style=for-the-badge&logo=github&logoColor=white&label=⭐%20Star%20us" alt="GitHub Stars" /></a>
-    <a href="https://www.producthunt.com"><img src="https://img.shields.io/badge/Live%20on%20Product%20Hunt-da552f?style=for-the-badge&logo=producthunt&logoColor=white" alt="Live on Product Hunt" /></a>
-    <a href="https://soterai.in"><img src="https://img.shields.io/badge/Live%20Demo-soterai.in-31d7c8?style=for-the-badge&logo=vercel&logoColor=white" alt="Live Demo" /></a>
-    <a href="https://soterai.in/playground"><img src="https://img.shields.io/badge/Try%20Playground-00dc82?style=for-the-badge&logo=react&logoColor=white" alt="Playground" /></a>
-    <a href="https://soterai.in/docs"><img src="https://img.shields.io/badge/Docs-31d7c8?style=for-the-badge&logo=gitbook&logoColor=white" alt="Documentation" /></a>
-    <a href="https://www.npmjs.com/package/n8n-nodes-soterai"><img src="https://img.shields.io/badge/n8n%20node-0.5.0-blue?style=for-the-badge&logo=n8n" alt="n8n node v0.5.0" /></a>
-    <a href="https://pypi.org/project/soter/"><img src="https://img.shields.io/badge/PyPI%20soter-blue?style=for-the-badge&logo=python" alt="PyPI soter" /></a>
-  </p>
-  
-  <p align="center">
-    <a href="LICENSE">Business Source License (open core)</a> · <a href="docs/SOTERAI-WORLD-MARKET-RANKING-2026-08-02.md">World analysis</a> · <a href="docs/SOTERAI-ML-COMPETITOR-GAP-MATRIX.md">Model gap matrix</a> · <a href="docs/SOTERLLM-MODEL-CARD.md">Model card</a>
-  </p>
 
-  <p align="center">
-    <img src="https://img.shields.io/badge/Phase%209%20Recall-100%25%20synthetic%20dataset-00c8c8?style=flat-square&logo=checkmarx&logoColor=white" alt="100% recall on the Phase 9 synthetic benchmark dataset" />
+<img src="https://raw.githubusercontent.com/yashchauhan66/Soter-AI/main/public/logo.png" alt="SoterAI" width="220" />
 
-    <img src="https://img.shields.io/badge/Phase%209%20FPR-0.00%25%20synthetic%20controls-00dc82?style=flat-square&logo=test&logoColor=white" alt="0.00% false-positive rate on the Phase 9 synthetic benchmark controls" />
-    <img src="https://img.shields.io/badge/p95%2010.92ms%20analyzer-00dc82?style=flat-square&logo=shield&logoColor=white" alt="10.92ms p95 analyzer CPU latency" />
-    <img src="https://img.shields.io/badge/Phase%209%20Dataset-3200%20rows-00dc82?style=flat-square&logo=check&logoColor=white" alt="3,200-row Phase 9 synthetic benchmark dataset" />
-    <img src="https://img.shields.io/badge/p50%20~5ms%20analyzer-00c8c8?style=flat-square&logo=zap&logoColor=white" alt="~5ms p50 analyzer CPU latency" />
-    <img src="https://img.shields.io/github/actions/workflow/status/yashchauhan66/Ai-Security-Guard/ci-cd.yml?branch=main&style=flat-square&logo=githubactions&logoColor=white&label=CI%2FCD" alt="CI/CD" />
-    <img src="https://img.shields.io/github/license/yashchauhan66/Ai-Security-Guard?style=flat-square" alt="License" />
-    <img src="https://img.shields.io/badge/OWASP%20LLM%20Top%2010-Mapped-brightgreen?style=flat-square" alt="OWASP LLM Top 10 mapped" />
-  </p>
-  
-  <br />
-  
-  **[✨ Features](#-key-features) • [🏆 Benchmark](#-benchmark-results) • [🚀 Quick Start](#-quick-start) • [📋 Services](#-services-overview) • [🏗️ Architecture](#️-architecture) • [🐳 Deployment](#-deployment)**
-  
-  <br />
+# SoterAI
 
-  ### Two Core Products
+**The AI security command layer.** Stop prompt injection, data exfiltration, and rogue agent actions — at the input, at the output, and at the tool call.
 
-  <table>
-    <tr>
-      <td align="center" width="50%">
-        <img src="https://img.shields.io/badge/🎛️%20AI%20Agent%20Control-orange?style=for-the-badge" alt="Agent Control" /><br /><br />
-        <sub><strong>For AI agents using email, CRM, databases, and payments</strong></sub><br /><br />
-        <sub>Action ledger with reversibility classification · Human-in-the-loop approval queue · Compensating action rollback with audit trail · Continuous compliance assurance</sub>
-      </td>
-      <td align="center" width="50%">
-        <img src="https://img.shields.io/badge/🏛️%20AI%20Usage%20Governance-7c3aed?style=for-the-badge" alt="Usage Governance" /><br /><br />
-        <sub><strong>For 50–500 employee companies using ChatGPT, Claude, Cursor</strong></sub><br /><br />
-        <sub>Company-wide AI usage policies · Department-specific rules · Provider allow/block lists · Employee DLP monitoring · Compliance reports for regulators</sub>
-      </td>
-    </tr>
-  </table>
+Self-hostable · Offline-capable · India-first PII detection · Reproducible benchmarks
+
+<p>
+  <a href="https://soterai.in"><img src="https://img.shields.io/badge/Live-soterai.in-1f6feb?style=flat-square&logo=googlechrome&logoColor=white" alt="Live site" /></a>
+  <a href="https://soterai.in/playground"><img src="https://img.shields.io/badge/Playground-try%20it-00a67e?style=flat-square&logo=react&logoColor=white" alt="Playground" /></a>
+  <a href="https://soterai.in/docs"><img src="https://img.shields.io/badge/Docs-read-6e7781?style=flat-square&logo=gitbook&logoColor=white" alt="Docs" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-BUSL--1.1-1f6feb?style=flat-square" alt="Business Source License 1.1" /></a>
+  <a href="https://github.com/yashchauhan66/Soter-AI/actions/workflows/ci-cd.yml"><img src="https://img.shields.io/github/actions/workflow/status/yashchauhan66/Soter-AI/ci-cd.yml?branch=main&style=flat-square&logo=githubactions&logoColor=white&label=CI" alt="CI status" /></a>
+  <a href="https://github.com/yashchauhan66/Soter-AI/stargazers"><img src="https://img.shields.io/github/stars/yashchauhan66/Soter-AI?style=flat-square&logo=github&logoColor=white" alt="Stars" /></a>
+</p>
+
+<p>
+  <img src="https://img.shields.io/badge/recall-98.40%25-00a67e?style=flat-square" alt="98.40% recall" />
+  <img src="https://img.shields.io/badge/benign%20FPR-0.00%25-00a67e?style=flat-square" alt="0.00% false-positive rate" />
+  <img src="https://img.shields.io/badge/p95-17.8ms-00a67e?style=flat-square" alt="17.8ms p95" />
+  <img src="https://img.shields.io/badge/OWASP%20LLM%20Top%2010-mapped-6e7781?style=flat-square" alt="OWASP LLM Top 10 mapped" />
+</p>
+
+<a href="#quick-start"><b>Quick start</b></a> ·
+<a href="#detection-performance"><b>Benchmarks</b></a> ·
+<a href="#architecture"><b>Architecture</b></a> ·
+<a href="#sdks--integrations"><b>SDKs</b></a> ·
+<a href="#self-hosting"><b>Self-host</b></a> ·
+<a href="#licensing"><b>Licensing</b></a>
 
 </div>
 
 ---
 
-## What is SoterAI?
+## Why SoterAI
 
-**SoterAI** (from Greek *sōtēr* — "savior, protector") is an **open-source AI security command layer** that protects chatbots, RAG systems, and autonomous agents from:
+An LLM app has three attack surfaces, and most tools cover one. SoterAI covers all three from a single policy engine:
 
-- 🎯 **Prompt injection & jailbreak attacks**
-- 🔓 **Data exfiltration & PII leakage**
-- 🤖 **Rogue agent behavior & tool abuse**
-- 🧠 **Memory poisoning & context manipulation**
-- 💸 **Runaway LLM costs & budget overruns**
-- ⚖️ **Regulatory compliance violations**
-- 🎛️ **Uncontrolled agent actions** (payments, emails, deployments)
-- 🏛️ **Shadow AI usage** by employees without governance
+| Surface | The risk | What SoterAI does |
+|---|---|---|
+| **Input** | Prompt injection, jailbreaks, encoded payloads, multilingual trojans | Classifies and blocks, rewrites, or redacts before the model is called |
+| **Output** | PII/secret leakage, unsafe HTML/script sinks, exfiltration channels | Scans and redacts before the response reaches the user |
+| **Tool calls** | Rogue agent actions — payments, emails, deletes, deployments | Classifies reversibility, holds risky calls for human approval, supports rollback |
 
-With **40+ product services** organized across 6 layers of defense — Monitor, Protect, Detect, Control, Compliance, and Manage — plus two dedicated **core products** (AI Agent Control and AI Usage Governance), SoterAI provides a broad security control surface for AI systems. Some modules are explicitly marked Preview and have open production-integration gaps.
-
-> **Phase 9 public benchmark:** latest generated run over the self-maintained synthetic public dataset produced 100.00% recall, 0.00% false-positive rate, 0.00% false-negative rate, and 10.92 ms p95 analyzer latency across 3,200 cases (2,200 attacks / 1,000 benign controls). This is not an independent audit or a production-traffic result. Reproduce with `node scripts/phase-9-run-public-benchmark.js`. [See the raw results](benchmarks/results/latest.json).
->
-> **🔒 Production-oriented** — Includes Docker/EC2 deployment assets, CI/CD, health checks, workers, and operational runbooks. No production customer count or traffic volume is claimed in this repository. Source-available under the Business Source License (open core) — see [LICENSING.md](LICENSING.md).
->
-> **📋 Comprehensive audit completed 2026-06-27** — See the [full audit report](docs/APP_AUDIT_AND_COMPETITIVE_REPORT_2026-06-27.md) including bug fixes, competitor comparison, and 30/60/90-day roadmap. 670+ tests pass, TypeScript compiles with zero errors, and Prisma schema is valid.
-
-<br />
+Detection runs **locally, on CPU, with no network call** — so it works air-gapped and adds single-digit milliseconds rather than an extra LLM round-trip.
 
 ---
 
-## ✨ Key Features
+## Quick start
 
-
-### Advanced LLM Attack Coverage
-
-Recent guard updates expand SoterAI beyond classic prompt-injection and jailbreak detection. The guard now detects active indicators for:
-
-- **Encoded and obfuscated attacks** - base64/base64url, hex, binary, decimal bytes, Morse, leetspeak, compact spacing, Unicode controls, homoglyph markers, and Caesar-shift payloads.
-- **15 advanced jailbreak families** - roleplay jailbreaks, adversarial suffixes, multilingual trojans, token smuggling, ASCII-art smuggling, evolutionary jailbreak generation, cognitive-overload attacks, function-call wrappers, cross-modal payloads, automated chain attacks, and multi-agent compromise propagation.
-- **Adversarial NLP attacks** - imperceptible perturbations, gradient/word-substitution evasion, universal transferable suffixes, classifier/NER evasion, tabular entity-swap attacks, and cross-lingual adversarial adaptation.
-- **Backdoor and data-poisoning attempts** - trigger phrases, syntactic/style triggers, BadPrompt/BadPre/BITE-style poisoning, poisoned embeddings, LoRA/PEFT safety compromise, code-search poisoning, seq2seq backdoors, and model-hijacking prompts.
-- **llmsecurity.net-style attack families** - training-data extraction, membership/private-attribute inference, data reconstruction, LLM resource exhaustion, agent RCE/escalation, package hallucination/dependency confusion, XSS/CSRF/CPRF browser attacks, multimodal visual/audio prompt injection, model theft, attack automation, and detector evasion.
-- **Unsafe output handling** - model-generated HTML/script sinks, credentialed browser requests, script exfiltration, and unverified package installation guidance are held for review before reaching downstream systems.
-
-These rules are covered by regression tests in `tests/guard.test.ts` and red-team benchmark categories in `lib/classifiers/datasets/guardRedTeamBenchmark.ts`.
-
-### 🎛️ AI Agent Control Center (NEW)
-
-> **For AI agents that take real-world actions** — email, CRM updates, database writes, payments, deployments.
-
-| Capability | Description |
-|------------|-------------|
-| **Agent Action Ledger** | Classifies every agent action as IRREVERSIBLE, COMPENSATING_ACTION, or REVERSIBLE using regex patterns against dotted action names (`gmail.send`, `payment.charge`, `filesystem.write`) |
-| **Reversibility Engine** | Automatically infers rollback actions (e.g., `ticket.close` → `reopen_ticket`, `draft` → `delete_draft`) with SHA-256 evidence hashing |
-| **Risk Scoring** | 4-level risk classification (LOW/MEDIUM/HIGH/CRITICAL) derived from reversal status + action keywords |
-| **Rollback Windows** | 15-minute window for COMPENSATING/HIGH-risk actions, 60-minute window for REVERSIBLE actions — with dry-run support |
-| **Human Approval Queue** | Unified queue for agent firewall holds and transaction escrow, with redacted payload review |
-| **Continuous Assurance** | Real-time compliance posture scoring with SOC 2 / ISO 27001 evidence collection |
-| **Operator Audit Trail** | Human rollback decisions are attributed to operators and retained separately from agent-generated logs |
-
-### 🏛️ AI Usage Governance (NEW)
-
-> **For companies where employees paste company data into ChatGPT, Claude, and Cursor every day.**
-
-| Capability | Description |
-|------------|-------------|
-| **5-Step Governance Engine** | Resolution order: dept rules → data classification → policy rules → sensitive data override → policy default |
-| **Provider Allow/Block Lists** | Allow or block specific AI providers (OpenAI, Anthropic, DeepSeek) with wildcard and model-level patterns |
-| **Department Rules** | Per-department AI usage policies — different rules for engineering, marketing, finance, legal |
-| **Data Classification** | Define what data sensitivity levels (PUBLIC, INTERNAL, RESTRICTED, PII, FINANCIAL, HEALTH) can go to which providers |
-| **Approval Workflows** | 14-day auto-expiry approval requests with GRANTED/DENIED audit log entries |
-| **Employee Monitoring** | 30-day stats, enforcement alerts, blocked provider breakdown, usage timeline |
-| **Compliance Reports** | WEEKLY/MONTHLY/QUARTERLY reports with compliance scoring, findings, and actionable recommendations |
-| **Governance Enforcement** | Integrated into all 3 guard routes (input/output/streaming) — returns HTTP 403 with `X-Governance-Action` and `X-Governance-Reason` headers |
-| **Notification Dispatch** | Webhooks + emails to OWNER/ADMIN users on blocked events and approval requests |
-
-### 6 Layers of AI Security
-
-**OWASP LLM Top 10 aligned defense-in-depth for risk reduction:** the layers below work together — detection, protection, control, compliance, and monitoring — because no single check is sufficient on its own.
-
-<table>
-  <tr>
-    <td width="50%" valign="top">
-      <h3>👁️ Monitor</h3>
-      <p><em>Observe, analyze, and understand your AI security posture</em></p>
-      <ul>
-        <li><strong>Guard Logs</strong> — Full audit trail of every security decision</li>
-        <li><strong>Reports</strong> — Automated monthly security reports with trends</li>
-        <li><strong>Detection Feedback</strong> — Improve accuracy by marking false positives</li>
-        <li><strong>Customer Success</strong> — Activation rates and churn risk analytics</li>
-      </ul>
-    </td>
-    <td width="50%" valign="top">
-      <h3>🛡️ Protect</h3>
-      <p><em>Shield your AI from attacks, abuse, and data leaks</em></p>
-      <ul>
-        <li><strong>Agent Firewall</strong> — Block unauthorized tool calls in real-time</li>
-        <li><strong>Policy Engine</strong> — Custom risk thresholds and action defaults</li>
-        <li><strong>RAG Security</strong> — Guard retrieval pipelines from poisoned docs</li>
-        <li><strong>Webhooks</strong> — Real-time signed security event notifications</li>
-      </ul>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" valign="top">
-      <h3>🔍 Detect</h3>
-      <p><em>Identify threats, vulnerabilities, and suspicious patterns</em></p>
-      <ul>
-        <li><strong>Shadow AI</strong> — Discover unauthorized AI tool usage</li>
-        <li><strong>Red Team Lab</strong> — Test against 100+ adversarial scenarios</li>
-        <li><strong>Forensics</strong> — Full incident investigation toolkit</li>
-        <li><strong>Semantic Egress</strong> — Detect paraphrased confidential data leaks</li>
-        <li><strong>Canary Network</strong> — Tripwire tokens to detect prompt injection</li>
-      </ul>
-    </td>
-    <td width="50%" valign="top">
-      <h3>🎛️ Control</h3>
-      <p><em>Govern agent behavior with fine-grained policies</em></p>
-      <ul>
-        <li><strong>Agent Control Center</strong> — Unified approval queue, reversibility ledger, and compliance posture</li>
-        <li><strong>Agent Passports</strong> — Cryptographic agent identity verification</li>
-        <li><strong>Action Ledger</strong> — Classify actions as irreversible/compensating/reversible with rollback windows</li>
-        <li><strong>Transaction Escrow</strong> — Human-in-the-loop for risky actions</li>
-        <li><strong>Intent Guard</strong> — Verify actions match original user intent</li>
-        <li><strong>Tool Chain</strong> — Detect risky multi-tool attack sequences</li>
-        <li><strong>Memory Firewall</strong> — Quarantine poisoned agent memory</li>
-        <li><strong>MCP Drift</strong> — Detect MCP server tool changes</li>
-        <li><strong>Legal Boundary</strong> — Hard guardrails for regulatory compliance</li>
-      </ul>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" valign="top">
-      <h3>📋 Compliance</h3>
-      <p><em>Meet regulatory requirements with audit-ready evidence</em></p>
-      <ul>
-        <li><strong>Evidence Vault</strong> — SOC 2 / ISO 27001 evidence packaging</li>
-        <li><strong>Context Lineage</strong> — Track data provenance and block cross-domain leaks</li>
-        <li><strong>Blast Radius</strong> — Estimate damage if an agent is compromised</li>
-        <li><strong>Credential Vault</strong> — Secure server-side credential storage</li>
-      </ul>
-    </td>
-    <td width="50%" valign="top">
-      <h3>⚙️ Manage</h3>
-      <p><em>Configure, monitor, and administer your security stack</em></p>
-      <ul>
-        <li><strong>Projects</strong> — Multi-environment project organization</li>
-        <li><strong>API Keys</strong> — Scoped keys with independent rate limits</li>
-        <li><strong>Cost Firewall</strong> — Prevent runaway LLM spending</li>
-        <li><strong>Security Badges</strong> — Real-time protection status badges</li>
-        <li><strong>Audit Exports</strong> — Compliance-ready audit log exports</li>
-      </ul>
-    </td>
-  </tr>
-</table>
-
-<br />
-
----
-
-## 🏆 Benchmark Results
-
-The guard is evaluated with the **exact production classifier** (`analyzeText`) over a disclosed Phase 9 public JSONL dataset. The public dataset is self-maintained and synthetic; it is regression evidence, not an independent third-party benchmark.
-
-| Metric | Result |
-|--------|--------|
-| Recall | **100.00%** on 2,200 synthetic attack cases |
-| Precision | **100.00%** on the Phase 9 dataset |
-| False-positive rate | **0.00%** on 1,000 synthetic benign controls |
-| False-negative rate | **0.00%** on the Phase 9 dataset |
-| F1 | **1.0000** |
-| Analyzer latency | **7.99ms p50 / 10.92ms p95 / 15.92ms p99** (CPU only, no network) |
-
-> **Benchmark limits:** This is a self-authored synthetic corpus and can overestimate real-world performance versus adaptive attacks. No independent audit or production-traffic result is claimed. Drop real PINT / JailbreakBench / HarmBench corpora into `datasets/external/` to benchmark against third-party sets.
-
-Reproduce the public benchmark with **`node scripts/phase-9-run-public-benchmark.js`**. Per-category recall, methodology, limitations, and downloads are on the [`/benchmark`](https://soterai.in/benchmark) page.
-
-> 📄 [Raw results](benchmarks/results/latest.json) | [Try the interactive playground](https://soterai.in/playground) | [Phase 9 benchmark runner](scripts/phase-9-run-public-benchmark.js)
-
-<br />
-
----
-
-## 🏗️ Architecture
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                     Your Application                      │
-│  ┌────────────┐  ┌──────────┐  ┌──────────────────┐     │
-│  │   Chatbot   │  │ RAG App  │  │ Autonomous Agent │     │
-│  └─────┬──────┘  └────┬─────┘  └────────┬─────────┘     │
-│        │              │                  │               │
-└────────┼──────────────┼──────────────────┼───────────────┘
-         │              │                  │
-         ▼              ▼                  ▼
-┌─────────────────────────────────────────────────────────┐
-│                   SoterAI Guard API                       │
-│                                                           │
-│  ┌──────────────┐  ┌─────────────┐  ┌──────────────┐    │
-│  │ Input Guard  │  │ Output Guard│  │Agent Firewall│    │
-│  ├──────────────┤  ├─────────────┤  ├──────────────┤    │
-│  │• Prompt Inj. │  │• PII Leak   │  │• Tool Check  │    │
-│  │• Jailbreak   │  │• Secrets    │  │• Auth Verify │    │
-│  │• Toxicity    │  │• Toxicity   │  │• Risk Score  │    │
-│  │• PII Redact  │  │• Hallucin.  │  │• Policy Eval │    │
-│  └──────────────┘  └─────────────┘  └──────┬───────┘    │
-│                                            │            │
-│  ┌─────────────────────────────────────────┘            │
-│  ▼                                                       │
-│  ┌──────────────┐  ┌─────────────┐  ┌──────────────┐    │
-│  │  Webhooks    │  │   Reports   │  │  Forensics   │    │
-│  │  & SIEM      │  │ & Analytics │  │  & Audit     │    │
-│  └──────────────┘  └─────────────┘  └──────────────┘    │
-│                                                           │
-└─────────────────────────┬─────────────────────────────────┘
-                          │
-          ┌───────────────┼───────────────┐
-          ▼               ▼               ▼
-┌─────────────┐  ┌──────────────┐  ┌──────────────┐
-│  PostgreSQL │  │  Upstash     │  │  Qdrant      │
-│  (Prisma)   │  │  Redis       │  │  (Vector DB) │
-└─────────────┘  └──────────────┘  └──────────────┘
-```
-
-### Tech Stack
-
-| Component | Technology |
-|-----------|-----------|
-| **Framework** | Next.js 15.5 (TypeScript) + Turbopack |
-| **Database** | PostgreSQL 16 + Prisma ORM 5.22 |
-| **Caching** | Upstash Redis |
-| **Vector Store** | Qdrant (optional) |
-| **Auth** | NextAuth v5 (JWT sessions) |
-| **Payments** | Razorpay |
-| **UI** | Tailwind CSS + Lucide Icons, token-driven design system (`app/globals.css`) |
-| **Container** | Docker (multi-stage build) |
-| **CI/CD** | GitHub Actions → Docker Hub → EC2 |
-| **SDKs** | TypeScript, Python, LangChain, LlamaIndex |
-
-<br />
-
----
-
-## 🚀 Quick Start
-
-### 1️⃣ One-liner (Node.js)
+### 1. Guard an LLM call (Node.js)
 
 ```bash
 npm install @soterai/core
 ```
 
-### 2️⃣ Basic Usage
-
 ```typescript
 import { Soter } from "@soterai/core";
 
-const soter = new Soter({
-  apiKey: process.env.SOTERAI_API_KEY,
-});
+const soter = new Soter({ apiKey: process.env.SOTERAI_API_KEY });
 
-// Guard user input before passing to LLM
-const result = await soter.guardInput({
+// ── Input: check before you spend a token on the model ──
+const check = await soter.guardInput({
   message: userMessage,
   userId: "user_123",
   sessionId: "session_456",
 });
 
-if (soter.shouldBlock(result)) {
-  // 🛑 Blocked — don't call the LLM
+if (soter.shouldBlock(check)) {
   return { reply: "Message blocked for security reasons." };
 }
 
-const safeInput = soter.getSafeText(result, userMessage) ?? userMessage;
-const llmResponse = await callMyLLM(safeInput);
+const safeInput = soter.getSafeText(check, userMessage) ?? userMessage;
+const answer = await callMyLLM(safeInput);
 
-// Guard the output before returning to user
-const outputResult = await soter.guardOutput({
-  aiResponse: llmResponse,
+// ── Output: check before it reaches the user ──
+const outbound = await soter.guardOutput({
+  aiResponse: answer,
   sessionId: "session_456",
 });
 
-const safeOutput = soter.getSafeText(outputResult, llmResponse) ?? llmResponse;
-return { reply: safeOutput };
+return { reply: soter.getSafeText(outbound, answer) ?? answer };
 ```
 
-### 3️⃣ Self-Host (Docker)
+### 2. Guard an LLM call (Python)
 
 ```bash
-docker pull yashchauhan66/soter:latest
-docker run -p 3000:3000 --env-file .env.production yashchauhan66/soter:latest
+pip install soter
+```
+
+```python
+from soter import Soter
+
+guard = Soter()  # reads SOTER_API_KEY / SOTER_BASE_URL
+
+check = guard.input(user_message, session_id="session_456")
+if not guard.should_call_llm(check):
+    return "Message blocked for security reasons."
+
+answer = call_my_llm(guard.get_safe_input(check, user_message))
+
+outbound = guard.output(answer, session_id="session_456")
+return guard.get_safe_output(outbound, answer)
+```
+
+Or let the SDK run the whole round-trip, guarding both sides:
+
+```python
+result = guard.protect_chat(user_message, call_llm=call_my_llm, session_id="session_456")
+print(result.reply)
+```
+
+### 3. No code — try it first
+
+The [**playground**](https://soterai.in/playground) runs the same classifier this repo ships. Paste an attack, see the decision and which detector fired.
+
+---
+
+## Detection performance
+
+Every number below is produced by the **production classifier** (`analyzeText`) — the same code path the API serves — and is reproducible from a clean checkout.
+
+### Measured 2026-09-02 · commit `911e8d8b` · Node v22.16.0
+
+```bash
+npx tsx scripts/readme-recall-audit.ts
+```
+
+| Corpus | Recall | n |
+|---|---:|---:|
+| Jailbreak | 100.00% | 300 |
+| Multilingual / Hinglish | 100.00% | 150 |
+| Red-team benchmark | 100.00% | 68 |
+| Tool abuse | 99.33% | 150 |
+| RAG poisoning | 99.00% | 100 |
+| Data exfiltration | 98.00% | 150 |
+| System-prompt leak | 98.00% | 150 |
+| **Aggregate** | **98.40%** | **1,122** |
+| **Blind held-out** (never tuned against) | **61.54%** | 26 |
+
+| Benign controls | False positives | n |
+|---|---:|---:|
+| **Aggregate benign FPR** | **0.00%** | **322** |
+
+> **Read the blind-set row before you trust the aggregate.** The 98.40% figure covers corpora the detectors were iterated against — it is a **regression** measure, not a generalization one. On the blind held-out set, which no detector has ever been tuned against, recall is **61.54%**, consistent with the ~64% documented ceiling of a rules-first engine on novel phrasings. That gap is the honest state of the art here, it is asserted as a floor in CI (`tests/guard/heldout-generalization.test.ts`), and closing it is what the ML/semantic tier exists for.
+>
+> Precision is treated as the hard gate, not recall: benign false positives break real users, so FPR is held at ≤5% on every set, tuned or blind. It currently measures 0.00% on 322 controls.
+
+### Latency
+
+From the committed benchmark run ([`benchmarks/results/latest.json`](benchmarks/results/latest.json), 2026-07-22, 3,200 cases, CPU only, no network):
+
+| p50 | p95 | p99 |
+|---:|---:|---:|
+| 9.30 ms | 17.83 ms | 31.31 ms |
+
+### Public synthetic benchmark
+
+A separate 3,200-case synthetic corpus (2,200 attacks / 1,000 benign) scores 100.00% recall at 0.00% FPR. It is **self-authored and self-maintained** — useful as a release gate, not as evidence against an adaptive attacker, and not an independent audit.
+
+```bash
+node scripts/phase-9-run-public-benchmark.js
+```
+
+Methodology, per-category recall, and stated limitations: [`/benchmark`](https://soterai.in/benchmark) · [dataset card](benchmarks/soterai-public-benchmark/dataset-card.md) · [limitations](benchmarks/soterai-public-benchmark/limitations.md)
+
+To benchmark against third-party corpora, drop PINT / JailbreakBench / HarmBench files into `datasets/external/`.
+
+---
+
+## Architecture
+
+```
+        ┌──────────────┐   ┌──────────┐   ┌──────────────────┐
+        │   Chatbot    │   │ RAG app  │   │ Autonomous agent │
+        └──────┬───────┘   └────┬─────┘   └────────┬─────────┘
+               │                │                  │
+               ▼                ▼                  ▼
+   ╔═══════════════════════════════════════════════════════════╗
+   ║                      SoterAI Guard                        ║
+   ║                                                           ║
+   ║   ┌─────────────┐  ┌─────────────┐  ┌─────────────────┐  ║
+   ║   │ Input Guard │  │Output Guard │  │ Agent Firewall  │  ║
+   ║   ├─────────────┤  ├─────────────┤  ├─────────────────┤  ║
+   ║   │ injection   │  │ PII leak    │  │ tool allowlist  │  ║
+   ║   │ jailbreak   │  │ secrets     │  │ identity verify │  ║
+   ║   │ encoding    │  │ unsafe HTML │  │ risk score      │  ║
+   ║   │ PII redact  │  │ exfil sinks │  │ policy eval     │  ║
+   ║   └─────────────┘  └─────────────┘  └────────┬────────┘  ║
+   ║                                              │           ║
+   ║   ┌──────────────────────────────────────────┘           ║
+   ║   ▼                                                       ║
+   ║   ┌─────────────┐  ┌─────────────┐  ┌─────────────────┐  ║
+   ║   │  Webhooks   │  │   Reports   │  │   Forensics     │  ║
+   ║   │  + SIEM     │  │ + analytics │  │   + audit       │  ║
+   ║   └─────────────┘  └─────────────┘  └─────────────────┘  ║
+   ╚═══════════════════════════════════════════════════════════╝
+               │                │                  │
+               ▼                ▼                  ▼
+        ┌─────────────┐  ┌───────────┐  ┌──────────────┐
+        │ PostgreSQL  │  │   Redis   │  │    Qdrant    │
+        │  (Prisma)   │  │  (cache)  │  │  (optional)  │
+        └─────────────┘  └───────────┘  └──────────────┘
+```
+
+Detection is a **three-tier cascade**: deterministic rules first (fast, explainable), then an ONNX classifier, then an optional semantic/LLM judge. Each tier is independently gated and fails open, so a tier being disabled degrades coverage rather than breaking traffic.
+
+| Component | Technology |
+|---|---|
+| Framework | Next.js 15.5 (TypeScript) + Turbopack |
+| Database | PostgreSQL 16 + Prisma ORM 5.22 |
+| Cache | Redis (Upstash-compatible) |
+| Vector store | Qdrant (optional) |
+| Auth | NextAuth v5 (JWT sessions) |
+| ML runtime | ONNX Runtime (CPU) |
+| Container | Docker (multi-stage) |
+| CI/CD | GitHub Actions → registry → EC2 |
+
+---
+
+## SDKs & integrations
+
+Versions below are the **currently published** ones, verified against the registries on 2026-09-02.
+
+| Surface | Package | Version | Status |
+|---|---|---|---|
+| Node.js / TypeScript | [`@soterai/core`](https://www.npmjs.com/package/@soterai/core) | 0.2.0 | GA |
+| Python | [`soter`](https://pypi.org/project/soter/) | 0.2.2 | GA |
+| LangChain | [`@soterai/langchain-middleware`](https://www.npmjs.com/package/@soterai/langchain-middleware) | 0.2.0 | GA |
+| LlamaIndex | [`@soterai/llamaindex-middleware`](https://www.npmjs.com/package/@soterai/llamaindex-middleware) | 0.2.0 | GA |
+| Vercel AI SDK | [`@soterai/vercel-ai-sdk-middleware`](https://www.npmjs.com/package/@soterai/vercel-ai-sdk-middleware) | 0.2.0 | GA |
+| MCP gateway | [`@soterai/mcp-gateway`](https://www.npmjs.com/package/@soterai/mcp-gateway) | 0.2.0 | GA |
+| CLI | [`@soterai/cli`](https://www.npmjs.com/package/@soterai/cli) | 0.1.0 | Beta |
+| n8n community node | [`n8n-nodes-soterai`](https://www.npmjs.com/package/n8n-nodes-soterai) | 0.7.0 | GA |
+| VS Code / Cursor / Windsurf | [`soterai.soterai-ide-guard`](https://open-vsx.org/extension/soterai/soterai-ide-guard) | 0.6.2 | GA (Open VSX) |
+| REST API | `/api/*` | — | GA · [docs](https://soterai.in/docs/rest-api) |
+
+<details>
+<summary><b>In this repo, not yet published</b></summary>
+
+These are real code, but do not claim them as installable products yet: Go SDK (`packages/go-sdk`), PII library (`packages/soter-pii`), browser extension (`apps/extension`), JupyterLab extension (`extensions/jupyterlab`), WordPress plugin, and the Botpress / Intercom / Zendesk / WhatsApp integration channels (`packages/integrations`).
+
+</details>
+
+---
+
+## Products
+
+<table>
+<tr>
+<td width="50%" valign="top">
+
+### Agent Control
+
+*For agents that take real-world actions — email, CRM, DB writes, payments, deploys.*
+
+- **Action ledger** — classifies every call as `IRREVERSIBLE`, `COMPENSATING_ACTION`, or `REVERSIBLE`
+- **Reversibility engine** — infers the rollback action, SHA-256 evidence hashing
+- **Rollback windows** — 15 min for high-risk, 60 min for reversible, with dry-run
+- **Approval queue** — human-in-the-loop with redacted payload review
+- **Operator audit trail** — human decisions attributed and stored separately from agent logs
+
+</td>
+<td width="50%" valign="top">
+
+### Usage Governance
+
+*For 50–500 person companies whose staff paste company data into ChatGPT, Claude, and Cursor daily.*
+
+- **5-step policy engine** — dept rules → data class → policy rules → sensitive override → default
+- **Provider allow/block** — per provider and per model, wildcards supported
+- **Data classification** — which sensitivity levels may reach which provider
+- **Enforcement** — HTTP 403 with `X-Governance-Action` / `X-Governance-Reason` on all guard routes
+- **Compliance reports** — weekly/monthly/quarterly with scoring and findings
+
+</td>
+</tr>
+</table>
+
+<details>
+<summary><b>Six defense layers — full service list (40+)</b></summary>
+
+**Monitor** — Guard Logs · Reports · Detection Feedback · Customer Success
+
+**Protect** — Agent Firewall · Policy Engine · RAG Security · Webhooks
+
+**Detect** — Shadow AI · Red Team Lab · Forensics · Semantic Egress · Canary Network
+
+**Control** — Agent Control Center · Agent Passports · Action Ledger · Identity Fabric · Transaction Escrow · Intent Guard · Tool Chain · Dry-Run Sandbox · Memory Firewall · MCP Drift · Legal Boundary
+
+**Compliance** — Evidence Vault · Context Lineage · Blast Radius · Credential Vault
+
+**Manage** — Projects · API Keys · Cost Firewall · Security Badges · Billing · Audit Exports · Onboarding · Settings
+
+Some modules are marked **Preview** and have open production-integration gaps — the per-service docs state which. Full reference: [soterai.in/docs/services](https://soterai.in/docs/services)
+
+</details>
+
+### Attack coverage
+
+<details>
+<summary><b>What the guard detects — expand for the full taxonomy</b></summary>
+
+- **Encoding & obfuscation** — base64/base64url, hex, binary, decimal bytes, Morse, leetspeak, compact spacing, Unicode controls, homoglyphs, Caesar shifts
+- **Jailbreak families (15)** — roleplay, adversarial suffixes, multilingual trojans, token smuggling, ASCII-art smuggling, evolutionary generation, cognitive overload, function-call wrappers, cross-modal payloads, automated chains, multi-agent propagation
+- **Adversarial NLP** — imperceptible perturbations, gradient/word-substitution evasion, universal transferable suffixes, classifier/NER evasion, tabular entity swaps, cross-lingual adaptation
+- **Backdoors & poisoning** — trigger phrases, syntactic/style triggers, BadPrompt/BadPre/BITE-style poisoning, poisoned embeddings, LoRA/PEFT safety compromise, code-search poisoning, seq2seq backdoors
+- **Extraction & inference** — training-data extraction, membership and private-attribute inference, data reconstruction, model theft
+- **Agent & supply chain** — RCE/escalation, package hallucination, dependency confusion, resource exhaustion, MCP poisoning
+- **Unsafe output handling** — model-generated HTML/script sinks, credentialed browser requests, script exfiltration, unverified install guidance
+
+Regression coverage lives in `tests/guard.test.ts` and `lib/classifiers/datasets/guardRedTeamBenchmark.ts`.
+
+</details>
+
+---
+
+## Self-hosting
+
+SoterAI runs entirely on your own infrastructure. No telemetry leaves the box, and detection needs no outbound network.
+
+```bash
+git clone https://github.com/yashchauhan66/Soter-AI.git
+cd Soter-AI
+cp .env.example .env.local        # set DATABASE_URL and AUTH_SECRET
+docker compose up -d --build
+# → http://localhost:3000
 ```
 
 <details>
-<summary><strong>📄 Requirements: .env.production (click to expand)</strong></summary>
+<summary><b>Minimum environment</b></summary>
 
 ```env
 # Required
 DATABASE_URL=postgresql://user:pass@host:5432/soter
-AUTH_SECRET=<your-32-char-secret>
-
-# API Keys
-SOTERAI_API_KEY=<your-api-key>
+AUTH_SECRET=<32+ char random string>
 
 # Optional
 REDIS_URL=redis://...
 QDRANT_URL=http://qdrant:6333
-SLM_API_KEY=sk-...
+SOTERAI_API_KEY=<key for the hosted control plane>
 ```
+
+Validate before you boot: `npx tsx scripts/validate-env.ts`
+
 </details>
 
-<br />
-
----
-
-## 📋 Services Overview
-
-| Category | Service | Description |
-|----------|---------|-------------|
-| **🎛️ Agent Control** | [Agent Control Center](https://soterai.in/docs/services/agent-control) | Unified approval queue, reversibility ledger, and compliance posture |
-| | [Agent Firewall](https://soterai.in/docs/services/agent-firewall) | Real-time agent action monitoring and blocking |
-| | [Action Ledger](https://soterai.in/docs/services/action-ledger) | Classify actions as irreversible/compensating/reversible with rollback |
-| | [Identity Fabric](https://soterai.in/docs/services/identity-fabric) | Cryptographic agent identities, delegation chains, service principals |
-| | [Agent Passports](https://soterai.in/docs/services/agent-passports) | Cryptographic agent identity verification |
-| | [Transaction Escrow](https://soterai.in/docs/services/transaction-escrow) | Human-in-the-loop for risky agent actions |
-| | [Intent Guard](https://soterai.in/docs/services/intent-guard) | Verify actions match original user intent |
-| | [Tool Chain](https://soterai.in/docs/services/tool-chain) | Multi-step attack pattern detection |
-| | [Dry-Run Sandbox](https://soterai.in/docs/services/dry-run-sandbox) | Simulate policies without production impact |
-| | [Memory Firewall](https://soterai.in/docs/services/memory-firewall) | Quarantine poisoned agent memory |
-| | [MCP Drift](https://soterai.in/docs/services/mcp-drift) | Monitor MCP server tool changes |
-| | [Legal Boundary](https://soterai.in/docs/services/legal-boundary) | Hard guardrails for regulatory compliance |
-| **🏛️ Usage Governance** | [Governance Dashboard](https://soterai.in/docs/services/usage-governance) | Company-wide AI usage policy management |
-| | [Policy Configuration](https://soterai.in/docs/services/governance-policy) | Default actions, data handling rules, approval requirements |
-| | [Provider Rules](https://soterai.in/docs/services/governance-providers) | Allow/block specific AI providers and models |
-| | [Department Rules](https://soterai.in/docs/services/governance-departments) | Per-department AI usage policies |
-| | [Data Classification](https://soterai.in/docs/services/governance-data-classification) | Sensitivity levels per provider mapping |
-| | [Approval Workflows](https://soterai.in/docs/services/governance-approvals) | Review and manage AI provider access requests |
-| | [Employee Monitoring](https://soterai.in/docs/services/governance-monitoring) | Track AI usage across the organization |
-| | [Audit Trail](https://soterai.in/docs/services/governance-audit) | Complete log of AI usage and policy changes |
-| | [Compliance Reports](https://soterai.in/docs/services/governance-reports) | Weekly/monthly/quarterly governance reports |
-| **👁️ Monitor** | [Guard Logs](https://soterai.in/docs/services/guard-logs) | Full audit trail of every security decision |
-| | [Reports](https://soterai.in/docs/services/reports) | Automated security reports with trend analysis |
-| | [Detection Feedback](https://soterai.in/docs/services/detection-feedback) | Improve detection accuracy by marking false positives |
-| | [Customer Success](https://soterai.in/docs/services/customer-success) | Activation rates and churn risk analytics |
-| **🛡️ Protect** | [Agent Firewall](https://soterai.in/docs/services/agent-firewall) | Real-time agent action monitoring and blocking |
-| | [Policy Engine](https://soterai.in/docs/services/policy-engine) | Configurable risk thresholds and action policies |
-| | [RAG Security](https://soterai.in/docs/services/rag-security) | Document scanning and retrieval-time guard |
-| | [Webhooks](https://soterai.in/docs/services/webhooks) | Signed real-time security event notifications |
-| **🔍 Detect** | [Shadow AI](https://soterai.in/docs/services/shadow-ai) | Uncover unauthorized AI tool usage |
-| | [Red Team Lab](https://soterai.in/docs/services/red-team-lab) | 100+ adversarial attack scenarios |
-| | [Forensics](https://soterai.in/docs/services/forensics) | Incident investigation and root cause analysis |
-| | [Semantic Egress](https://soterai.in/docs/services/semantic-egress) | Detect paraphrased confidential data leaks |
-| | [Canary Network](https://soterai.in/docs/services/canary-network) | Tripwire tokens for prompt injection detection |
-| **📋 Compliance** | [Evidence Vault](https://soterai.in/docs/services/evidence-vault) | SOC 2 / ISO 27001 evidence packaging |
-| | [Context Lineage](https://soterai.in/docs/services/context-lineage) | Data provenance and cross-domain leak blocking |
-| | [Blast Radius](https://soterai.in/docs/services/blast-radius) | Agent compromise damage estimation |
-| | [Credential Vault](https://soterai.in/docs/services/credential-vault) | Secure credential storage for agents |
-| **⚙️ Manage** | [Projects](https://soterai.in/docs/services/projects) | Multi-environment project organization |
-| | [API Keys](https://soterai.in/docs/services/api-keys) | Scoped keys with independent rate limits |
-| | [Cost Firewall](https://soterai.in/docs/services/cost-firewall) | Prevent runaway LLM spending |
-| | [Security Badges](https://soterai.in/docs/services/security-badges) | Real-time protection status badges |
-| | [Billing](https://soterai.in/docs/services/billing) | Plan management and usage tracking |
-| | [Settings](https://soterai.in/docs/services/settings) | Profile, team, and preferences |
-| | [Audit Exports](https://soterai.in/docs/services/audit-exports) | Compliance-ready audit log exports |
-| | [Onboarding](https://soterai.in/docs/services/onboarding) | Guided setup with live validation |
-
-> 📖 **Full documentation available at:** [soterai.in/docs/services](https://soterai.in/docs/services)
-
-<br />
-
----
-
-## 🔌 SDKs & Integrations
-
-| Platform | Package | Status |
-|----------|---------|--------|
-| **Node.js / TypeScript** | `@soterai/core` | ✅ Stable |
-| **Python** | `@soterai/python` | ✅ Stable |
-| **Next.js** | `@soterai/core/next` | ✅ Stable |
-| **Express** | `@soterai/core/express` | ✅ Stable |
-| **LangChain** | `@soterai/langchain-middleware` | ✅ Stable |
-| **LlamaIndex** | `@soterai/llamaindex-middleware` | ✅ Stable |
-| **WordPress** | Plugin package available | ✅ Stable |
-| **Botpress** | Integration channel | ✅ Stable |
-| **Intercom** | Integration channel | ✅ Stable |
-| **Zendesk** | Integration channel | ✅ Stable |
-| **WhatsApp** | Business API integration | ✅ Stable |
-| **REST API** | `/api/*` routes (see [API docs](/docs/rest-api)) | ✅ Implemented |
-
-<br />
-
----
-
-## 🐳 Deployment
-
-### Docker (Production)
+<details>
+<summary><b>Production Docker build</b></summary>
 
 ```bash
-# Build
-docker build -t soter:latest --secret id=npmrc,src=$HOME/.npmrc .
-
-# Run
-docker run -p 3000:3000 --env-file .env.production soter:latest
+docker build -t soterai:latest --secret id=npmrc,src=$HOME/.npmrc .
+docker run -p 3000:3000 --env-file .env.production soterai:latest
 ```
 
-### CI/CD Pipeline (Automatic)
+`docker-compose.prod.yml` is the reference production topology (app + Redis + Qdrant). There is no public prebuilt image yet — build from source, or point `DOCKER_IMAGE` in `.github/workflows/ci-cd.yml` at your own registry.
 
-The project includes a **fully automated CI/CD pipeline** via GitHub Actions:
+</details>
 
-| Stage | Description |
-|-------|-------------|
-| 🔨 **Build & Typecheck** | TypeScript compilation + Prisma validation |
-| 🧪 **Tests** | 50+ test suites (670+ passing tests) covering all security services |
-| 🐳 **Docker Build & Push** | Multi-stage build → Docker Hub |
-| 🚀 **Deploy to EC2** | SSH → pull image → restart containers |
+<details>
+<summary><b>CI/CD</b></summary>
 
-Deployment happens automatically on push to `main` branch.
+`.github/workflows/ci-cd.yml` runs typecheck + Prisma validation → tests → Docker build/push → SSH deploy, on every push to `main`.
 
-### Architecture
-
-```
-GitHub Push → GitHub Actions → Docker Hub → EC2 Instance
-                                                    │
-                                          ┌─────────┴──────────┐
-                                          │  docker-compose     │
-                                          │  or docker run      │
-                                          │  with --env-file    │
-                                          └─────────┬──────────┘
-                                                    │
-                                          ┌─────────▼──────────┐
-                                          │  App (port 3000)   │
-                                          │  Redis (cache)     │
-                                          │  Qdrant (vectors)  │
-                                          └────────────────────┘
-```
-
-<br />
+</details>
 
 ---
 
-## 🧪 Testing
+## Development
 
 ```bash
-# Run all tests (50+ test suites, 670+ tests)
-npm test
+npm install
+npx prisma migrate deploy      # requires a running PostgreSQL
+npm run dev                    # → http://localhost:3000
+npm run db:seed                # optional fixtures
+```
 
-# TypeScript typecheck
-npm run typecheck
+### Testing
 
-# SDK tests
+```bash
+npm test                       # unit + security suites (103 test files)
+npm run typecheck              # tsc --noEmit
+npm run test:e2e               # Playwright
+npm run verify                 # full gate
 npm run test:sdk:js
 npm run test:sdk:python
-
-# Integration tests
-npm run test:integrations
-
-# E2E tests (Playwright)
-npm run test:e2e
-
-# Production env validation
-npx tsx scripts/validate-env.ts
-
-# Full verification
-npm run verify
 ```
 
-Playwright applies migrations and seed fixtures. Use a dedicated local database
-via `E2E_DATABASE_URL`; as a safety fallback, a loopback-only `DATABASE_URL` is
-accepted. A remote default `DATABASE_URL` is never modified unless it is
-explicitly repeated as `E2E_DATABASE_URL` to confirm that it is test-only.
+The CI badge at the top of this file is the source of truth for what currently passes — see the [latest run](https://github.com/yashchauhan66/Soter-AI/actions/workflows/ci-cd.yml?query=branch%3Amain).
 
-### Verified test results (as of 2026-06-29)
-
-| Suite | Tests | Result |
-|-------|------:|--------|
-| Auth (signup, verify, reset) | 11 | ✅ All pass |
-| Guard (input/output, decisions) | 34 | ✅ All pass |
-| Agent Firewall (MVP1-3) | 25 | ✅ All pass |
-| Agent Passport / Intent / Escrow | 50 | ✅ All pass |
-| Tool Chain / Dry Run / Canary | 25 | ✅ All pass |
-| Semantic Egress / Evidence / RAG | 20 | ✅ All pass |
-| Advanced Security (MVPs 1-3) | 20 | ✅ All pass |
-| Security (XSS, rate limit, sanitize) | 13 | ✅ All pass |
-| Attack-Pack Regression | 74 | ✅ All pass |
-| Phase Tests (2-12) | 67 | ✅ All pass |
-| SLM Evaluation / Performance | 15 | ✅ All pass |
-| Billing / Webhooks / Retention | 20 | ✅ All pass |
-| API Route Audit / Integrations | 15 | ✅ All pass |
-| Service Catalog Contract Tests | 2 | ✅ All pass |
-| Deep Agent Control & Governance | 101 | ✅ All pass |
-| Governance Enforcement | 35 | ✅ All pass |
-| Identity Fabric | 100 | ✅ All pass |
-| Agent Control Metrics | 2 | ✅ All pass |
-| **Total** | **~670+** | **✅ All pass** |
-
-Test suites cover: auth, guard, agent-firewall, agent-passports, identity-fabric, intent verification, tool chain, escrow, dry-run, semantic egress, evidence vault, canary network, RAG, SLM evaluation, billing, webhooks, retention, API contract verification, agent control (action ledger, reversibility, rollback), usage governance (5-step engine, enforcement, notifications, approval workflows, compliance reports), and more.
-
-<br />
-
----
-
-## 🛠️ Development Setup
-
-```bash
-# 1. Clone and install
-git clone https://github.com/yashchauhan66/Ai-Security-Guard.git
-cd Ai-Security-Guard
-npm install
-
-# 2. Setup PostgreSQL database
-createdb soter
-npx prisma migrate deploy
-
-# 3. Configure environment
-cp .env.example .env.local
-# Edit .env.local with your settings
-
-# 4. Start dev server
-npm run dev
-# → http://localhost:3000
-
-# 5. Seed database (optional)
-npm run db:seed
-```
-
-<br />
-
----
-
-## 📊 Compliance & Standards
-
-SoterAI is designed to help you meet:
-
-| Framework | Coverage |
-|-----------|----------|
-| **OWASP LLM Top 10** | ✅ Full mapping for all 10 categories |
-| **SOC 2** | ✅ Evidence collection for security, availability, confidentiality |
-| **ISO 27001** | ✅ Evidence collection for A.8 (Access Control), A.12 (Operations Security) |
-| **HIPAA** | ✅ PII/PHI detection and redaction |
-| **GDPR** | ✅ Data subject request workflows |
-| **DPDP (India)** | ✅ Consent records, breach notifications |
-| **PCI-DSS** | ✅ Secret detection and masking |
-
-<br />
-
----
-
-## 🧠 Why SoterAI?
+Playwright applies migrations and seeds fixtures. Point it at a dedicated database via `E2E_DATABASE_URL`; a loopback-only `DATABASE_URL` is accepted as a fallback. A remote `DATABASE_URL` is never touched unless it is repeated verbatim as `E2E_DATABASE_URL` to confirm it is test-only.
 
 <details>
-<summary><strong>vs. Guardrails & Content Filters</strong></summary>
-
-Traditional content filters only match known patterns. SoterAI uses **semantic understanding**, **behavioral analysis**, and **multi-layer defense** to catch:
-- Novel prompt injection attacks never seen before
-- Paraphrased confidential data (Semantic Egress)
-- Gradual multi-turn manipulation (Intent Guard)
-- Multi-step tool chain attacks (Tool Chain Detector)
-- Memory poisoning across sessions (Memory Firewall)
-</details>
-
-<details>
-<summary><strong>vs. Agent Monitoring Platforms</strong></summary>
-
-Most agent monitoring tools are **observability-first** — they show you what happened. SoterAI is **protection-first** — we block attacks in real-time before they cause damage, with full audit trails for after-action analysis.
-</details>
-
-<details>
-<summary><strong>vs. DIY Security Wrappers</strong></summary>
-
-Building your own security layer means maintaining 30+ detection models, policy engines, compliance frameworks, and a real-time dashboard. SoterAI gives you all of this out-of-the-box with zero configuration for basic protection.
-</details>
-
-<br />
-
----
-
-## 📁 Project Structure
+<summary><b>Repository layout</b></summary>
 
 ```
-├── app/                    # Next.js app (pages, API routes)
-│   ├── api/                #   REST API endpoints
-│   │   ├── guard/          #     Input/output/streaming guard with governance enforcement
-│   │   └── agent/          #     23 agent API routes (firewall, ledger, passport, escrow)
-│   ├── dashboard/          #   Dashboard (50+ feature pages)
-│   │   ├── agent-control/  #     Agent Control Center (approval queue, ledger, compliance)
-│   │   ├── usage-governance/ #   9 governance sub-pages (policy, providers, departments, etc.)
-│   │   ├── agent-firewall/ #     8 agent firewall dashboard pages
-│   │   └── ...             #     12 advanced security dashboards + more
-│   ├── docs/               #   Documentation pages
-│   └── (public pages)      #   Marketing, pricing, etc.
-├── components/             # React components
-│   ├── auth/               #   Auth UI
-│   ├── dashboard/          #   Dashboard widgets
-│   ├── docs/               #   Doc components
-│   └── ui/                 #   Shared UI primitives
-├── lib/                    # Shared utilities & services
-│   ├── agent-firewall/     #   Agent firewall logic
-│   ├── agent-action-ledger/ #  Action classification & reversibility engine
-│   ├── agent-control/      #   Control metrics & rollback window state
-│   ├── usage-governance/   #   Governance engine, notifications, 5-step resolution
-│   ├── guard/              #   Guard analysis engine
-│   ├── auth/               #   Auth helpers
-│   └── docs/               #   Service documentation data
-├── packages/               # SDK packages (monorepo)
-│   ├── sdk/                #   TypeScript SDK
-│   └── python-sdk/         #   Python SDK
-├── prisma/                 # Database schema & migrations (14+ agent/governance models)
-├── workers/                # Background workers
-├── scripts/                # Maintenance & CI scripts
-├── tests/                  # Test suites (50+, 670+ tests)
-├── examples/               # Example integrations
-├── .github/workflows/      # CI/CD pipeline
-└── docker-compose.prod.yml # Production Docker setup
+app/                     Next.js app — pages and API routes
+  api/guard/               input / output / streaming guard
+  api/agent/               agent firewall, ledger, passport, escrow
+  dashboard/               50+ feature pages
+lib/
+  guard/                   detection engine (rules → ONNX → semantic)
+  classifiers/datasets/    benchmark corpora
+  agent-firewall/          tool-call enforcement
+  agent-action-ledger/     reversibility classification
+  usage-governance/        5-step policy engine
+  control-plane/           enterprise modules (commercial)
+packages/                Publishable SDKs and middleware
+apps/                    Browser extension, local AI broker
+prisma/                  Schema and migrations
+benchmarks/              Public benchmark corpus and results
+scripts/                 Maintenance, benchmark and CI scripts
+tests/                   103 test files
 ```
 
-<br />
+</details>
 
 ---
 
-## 🤝 Contributing
+## Compliance
 
-We welcome contributions!
+Evidence collection and control mappings are implemented; **certification is a separate audit process this repository does not claim to have completed.**
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m "Add amazing feature"`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-<br />
+| Framework | What SoterAI provides |
+|---|---|
+| **OWASP LLM Top 10** | Detector mapping for all 10 categories |
+| **SOC 2** | Evidence collection — security, availability, confidentiality |
+| **ISO 27001** | Evidence for A.8 (access control), A.12 (operations security) |
+| **DPDP (India)** | Consent records, breach-notification workflow |
+| **GDPR** | Data-subject request workflows |
+| **HIPAA** | PII/PHI detection and redaction |
+| **PCI-DSS** | Secret detection and masking |
 
 ---
 
-## 📄 License
+## Security
 
-SoterAI is **open core**, not MIT. Different parts are licensed differently — see [LICENSING.md](LICENSING.md) for the full map:
+Found a vulnerability? Please **do not** open a public issue — see [SECURITY.md](SECURITY.md) for the disclosure process.
 
-- **Core product & server** — [Business Source License 1.1](LICENSE) (source-available; production/SaaS/competing use needs a commercial license from Yash Chauhan; auto-converts to Apache-2.0 on 2030-06-25).
-- **Client SDKs & middleware** (`packages/*`) — Apache-2.0, free to integrate.
-- **Enterprise modules** — Commercial, all rights reserved.
+---
+
+## Licensing
+
+SoterAI is **open core**, not permissively licensed. Read [LICENSING.md](LICENSING.md) for the authoritative map.
+
+| Area | License | You may |
+|---|---|---|
+| Core product & server | [**BUSL-1.1**](LICENSE) | Read, modify, self-host for internal or non-production use. Converts to **Apache-2.0 on 2030-06-25** |
+| Client SDKs & middleware (`packages/*`) | **Apache-2.0** | Install, use, and ship in your own apps freely |
+| Enterprise modules (`lib/control-plane`, `lib/agent-firewall`) | **Commercial** | Requires a written license |
+
+**You may not** offer SoterAI as a hosted or managed AI-security service to third parties, or build a competing product from it, without a commercial license.
+
+> **Why GitHub shows "NOASSERTION" on this repo.** GitHub's license detector (`licensee`) only recognizes the licenses listed on choosealicense.com, and **BUSL-1.1 is not among them** — so the sidebar reads "Other" for every BSL project, including HashiCorp Terraform and Sentry. It is a limitation of the detector, not a missing or ambiguous license. The authoritative terms are in [`LICENSE`](LICENSE); the SPDX identifier is **`BUSL-1.1`**, also declared in `package.json`.
+
+Commercial licensing and enterprise enquiries: [**soterai.in/contact-sales**](https://soterai.in/contact-sales)
 
 Copyright © 2026 Yash Chauhan. Contributions require signing the [CLA](CLA.md).
 
-<br />
+---
+
+## Contributing
+
+Issues and pull requests are welcome — start with [CONTRIBUTING.md](CONTRIBUTING.md).
+
+```bash
+git checkout -b feature/your-change
+npm run verify                 # must pass before you open a PR
+```
+
+Two ground rules specific to this project:
+
+1. **Never tune a detector against the blind held-out set** (`heldoutBlindWide.ts`, `VALIDATION_ATTACKS`). Doing so destroys the only honest generalization measurement in the repo.
+2. **Benchmark claims need a reproduce command.** If you change a number in this README, change the script that produces it in the same PR.
 
 ---
+
 <div align="center">
-  <br />
-  <a href="https://github.com/yashchauhan66/Ai-Security-Guard">
-    <img src="https://img.shields.io/github/stars/yashchauhan66/Ai-Security-Guard?style=for-the-badge&logo=github&logoColor=white&label=⭐%20Star%20us%20on%20GitHub" alt="Star us" />
-  </a>
-  <br /><br />
-  <p>
-    <strong>⭐ Star us on GitHub</strong> — it helps developers discover SoterAI and makes AI safer for everyone!
-  </p>
-  <br />
-  <p>
-    <a href="https://soterai.in">🌐 Website</a> •
-    <a href="https://soterai.in/docs">📖 Docs</a> •
-    <a href="https://soterai.in/playground">🎮 Playground</a> •
-    <a href="https://soterai.in/pricing">💵 Pricing</a> •
-    <a href="https://github.com/yashchauhan66/Ai-Security-Guard/issues">🐛 Issues</a> •
-    <a href="https://github.com/yashchauhan66/Ai-Security-Guard/discussions">💬 Discussions</a>
-  </p>
-  <p>
-    <sub>Built with ❤️ for the AI security community | Open core (BSL 1.1) | India-first PII detection</sub>
-  </p>
+
+<a href="https://soterai.in">Website</a> ·
+<a href="https://soterai.in/docs">Docs</a> ·
+<a href="https://soterai.in/playground">Playground</a> ·
+<a href="https://soterai.in/benchmark">Benchmarks</a> ·
+<a href="https://soterai.in/pricing">Pricing</a> ·
+<a href="https://soterai.in/trust">Trust</a> ·
+<a href="https://github.com/yashchauhan66/Soter-AI/issues">Issues</a>
+
+<br /><br />
+
+<a href="https://github.com/yashchauhan66/Soter-AI">
+  <img src="https://img.shields.io/github/stars/yashchauhan66/Soter-AI?style=for-the-badge&logo=github&logoColor=white&label=Star%20on%20GitHub" alt="Star on GitHub" />
+</a>
+
+<br /><br />
+
+<sub>Open core under BSL 1.1 · Built for the AI security community · India-first PII detection</sub>
+
 </div>

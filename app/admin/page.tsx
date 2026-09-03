@@ -454,7 +454,7 @@ export default async function AdminOverviewPage() {
           ["SIEM failures", siemFailures24h, "/admin/integrations/siem-webhooks"],
           ["Worker backlog", pendingJobs, "/admin/production"],
         ].map(([label, value, href]) => (
-          <Link href={String(href)} className="card p-5 transition hover:border-cyan/40" key={String(label)}>
+          <Link href={String(href)} className="card card-interactive p-5" key={String(label)}>
             <p className="text-xs uppercase tracking-wider text-slate-300">{label}</p>
             <p className="mt-2 text-3xl font-bold">{numberFormat(Number(value))}</p>
           </Link>

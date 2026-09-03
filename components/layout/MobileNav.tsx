@@ -124,7 +124,7 @@ export function MobileNav() {
       {open && (
         <div className="fixed inset-0 z-overlay lg:hidden">
           <div
-            className="animate-overlay-in absolute inset-0 bg-ink/80 backdrop-blur-sm"
+            className="animate-overlay-in absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
             onClick={() => setOpen(false)}
             aria-hidden="true"
           />
@@ -180,7 +180,7 @@ export function MobileNav() {
                           onClick={() => setOpen(false)}
                           aria-current={isActive(section.href) ? "page" : undefined}
                           className={`block rounded-lg px-3 py-3 text-sm font-semibold transition-colors ${
-                            isActive(section.href) ? "bg-cyan/10 text-white" : "text-slate-100 hover:bg-slate-900"
+                            isActive(section.href) ? "bg-cyan/10 text-cyan" : "text-slate-100 hover:bg-slate-900"
                           }`}
                         >
                           {section.label}

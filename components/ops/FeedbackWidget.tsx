@@ -36,7 +36,7 @@ export function FeedbackWidget() {
           // Reset status message when reopening
           if (open) { setMessage(""); setOk(false); }
         }}
-        className="flex h-11 w-11 items-center justify-center rounded-full bg-cyan text-ink shadow-glow transition hover:scale-105 hover:bg-cyan/90"
+        className="flex h-11 w-11 items-center justify-center rounded-full bg-cyan text-white shadow-glow transition hover:scale-105 hover:bg-cyan/90"
       >
         {open ? <X size={19} /> : <MessageSquare size={19} />}
       </button>
@@ -49,14 +49,14 @@ export function FeedbackWidget() {
         >
           {/* Panel header with title + close button */}
           <div className="mb-3 flex items-center justify-between">
-            <label htmlFor="feedback-message" className="font-semibold text-white">
+            <label htmlFor="feedback-message" className="font-semibold text-slate-100">
               Product feedback
             </label>
             <button
               type="button"
               aria-label="Close feedback"
               onClick={() => { setOpen(false); setMessage(""); setOk(false); }}
-              className="rounded-lg p-1 text-slate-200 transition hover:bg-slate-800 hover:text-white"
+              className="rounded-lg p-1 text-slate-200 transition hover:bg-slate-800 hover:text-slate-100"
             >
               <X size={16} />
             </button>

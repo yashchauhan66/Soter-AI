@@ -17,7 +17,7 @@ const faqs = [
 
 export function FAQ() {
   return (
-    <section id="faq" className="section border-t border-slate-800 bg-slate-950/35">
+    <section id="faq" className="section">
       <div className="container-page">
         <p className="eyebrow">Questions</p>
         <h2 className="heading-2 mt-3">Built for serious AI security work</h2>

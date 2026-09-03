@@ -1,14 +1,35 @@
-import { buildFleetInventory } from "@/lib/fleet-inventory";
+import { buildFleetInventory, type FleetRisk } from "@/lib/fleet-inventory";
 import { getCurrentProject } from "@/lib/auth";
+import { PageHeader, EmptyState } from "@/components/dashboard/PageHeader";
+import { MetricCard } from "@/components/dashboard/MetricCard";
+import { Table, THead, TBody, TH, TR, TD, TEmpty } from "@/components/ui/DataTable";
+import { TableWrapper } from "@/components/dashboard/TableWrapper";
+import { RISK_LEVEL } from "@/lib/dashboard/status";
+import { ServerCog } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
-const RISK_STYLE: Record<string, string> = {
-  CRITICAL: "bg-red-100 text-red-800 border-red-300",
-  HIGH: "bg-orange-100 text-orange-800 border-orange-300",
-  MEDIUM: "bg-yellow-100 text-yellow-800 border-yellow-300",
-  LOW: "bg-green-100 text-green-800 border-green-300",
-};
+/**
+ * Fleet inventory — estate-wide view of discovered AI assets.
+ *
+ * This page was rendering as a **light-theme page inside a dark console**. Three
+ * separate causes, all fixed here:
+ *
+ * 1. `text-muted-foreground` (used 8 times) is not defined in this project's
+ *    Tailwind config — there is no shadcn-style `--muted-foreground` token here.
+ *    It therefore generated *no CSS at all*, so every "muted" caption rendered at
+ *    full `text-slate-100` body colour. Nothing looked muted; it looked like the
+ *    hierarchy had been forgotten.
+ * 2. The risk tiles and badges used `bg-red-100 text-red-800` — a light-mode
+ *    palette. On `--surface-0` those paint near-white blocks.
+ * 3. `<thead className="bg-slate-50 border-b">` was the only light-background
+ *    table header in the codebase, and `border-b` with no colour resolved to the
+ *    global hairline, so the header had a near-white fill with a dark rule.
+ *
+ * Risk styling now comes from `RISK_LEVEL` in `lib/dashboard/status.ts`, which is
+ * the same ordered ramp the rest of the console uses, so "CRITICAL" here matches
+ * "CRITICAL" on the agent pages.
+ */
 
 const KIND_LABEL: Record<string, string> = {
   provider: "AI Provider",
@@ -18,81 +39,99 @@ const KIND_LABEL: Record<string, string> = {
   model: "Model",
 };
 
+/**
+ * Risk tile tone. Mirrors the four-step `RISK_LEVEL` ramp so HIGH and CRITICAL
+ * stay distinguishable — collapsing both to red is what the old light-mode
+ * palette did, and it hid the difference that matters most on this page.
+ */
+const RISK_TONE: Record<FleetRisk, "red" | "orange" | "yellow" | "green"> = {
+  CRITICAL: "red",
+  HIGH: "orange",
+  MEDIUM: "yellow",
+  LOW: "green",
+};
+
 export default async function FleetPage() {
   const project = await getCurrentProject();
   const organizationId = project?.organizationId ?? null;
 
   if (!organizationId) {
     return (
-      <main className="mx-auto max-w-6xl p-8">
-        <h1 className="text-2xl font-bold mb-2">Fleet Inventory</h1>
-        <p className="text-sm text-muted-foreground">No organization context on this session.</p>
-      </main>
+      <div>
+        <PageHeader eyebrow="Estate" title="Fleet inventory" icon={ServerCog} />
+        <EmptyState
+          title="No organization context"
+          description="This session is not attached to an organization, so there is no estate to inventory."
+        />
+      </div>
     );
   }
 
   const inv = await buildFleetInventory(organizationId);
 
   return (
-    <main className="mx-auto max-w-6xl p-8">
-      <header className="mb-6">
-        <h1 className="text-2xl font-bold">Fleet Inventory</h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          Estate-wide view of AI assets discovered by Shadow-AI across your organization.
-          Generated {new Date(inv.generatedAt).toLocaleString()}.
-        </p>
-      </header>
+    <div>
+      <PageHeader
+        eyebrow="Estate"
+        title="Fleet inventory"
+        icon={ServerCog}
+        description={`Estate-wide view of AI assets discovered by Shadow AI across your organization. Generated ${new Date(inv.generatedAt).toLocaleString()}.`}
+      />
 
-      <section className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-6">
-        {(["CRITICAL", "HIGH", "MEDIUM", "LOW"] as const).map((r) => (
-          <div key={r} className={`rounded-lg border p-4 ${RISK_STYLE[r]}`}>
-            <div className="text-2xl font-bold">{inv.byRisk[r]}</div>
-            <div className="text-xs font-medium">{r}</div>
-          </div>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+        {(["CRITICAL", "HIGH", "MEDIUM", "LOW"] as const).map((risk) => (
+          <MetricCard
+            key={risk}
+            label={RISK_LEVEL[risk]?.label ?? risk}
+            value={inv.byRisk[risk]}
+            tone={RISK_TONE[risk]}
+          />
         ))}
-        <div className="rounded-lg border p-4 bg-slate-50">
-          <div className="text-2xl font-bold">{inv.totalAssets}</div>
-          <div className="text-xs font-medium text-muted-foreground">Total assets</div>
-        </div>
-      </section>
+        <MetricCard label="Total assets" value={inv.totalAssets} hint="All discovered AI surfaces" />
+      </div>
 
-      <section className="rounded-lg border overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-slate-50 border-b">
-            <tr>
-              <th className="text-left p-3 font-semibold">Asset</th>
-              <th className="text-left p-3 font-semibold">Type</th>
-              <th className="text-left p-3 font-semibold">Risk</th>
-              <th className="text-left p-3 font-semibold">Policy</th>
-              <th className="text-left p-3 font-semibold">Seen</th>
-              <th className="text-left p-3 font-semibold">Last seen</th>
-            </tr>
-          </thead>
-          <tbody>
-            {inv.entries.map((e) => (
-              <tr key={e.fingerprint} className="border-b last:border-0 hover:bg-slate-50">
-                <td className="p-3 font-medium">{e.displayName}</td>
-                <td className="p-3 text-muted-foreground">{KIND_LABEL[e.kind] ?? e.kind}</td>
-                <td className="p-3">
-                  <span className={`inline-block rounded-full border px-2 py-0.5 text-xs font-medium ${RISK_STYLE[e.risk]}`}>
-                    {e.risk}
-                  </span>
-                </td>
-                <td className="p-3 text-muted-foreground">{e.policyState}</td>
-                <td className="p-3 text-muted-foreground">{e.seenCount}</td>
-                <td className="p-3 text-muted-foreground">
-                  {e.lastSeenAt ? new Date(e.lastSeenAt).toLocaleDateString() : "—"}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {inv.entries.length === 0 && (
-          <div className="p-8 text-center text-sm text-muted-foreground">
-            No assets discovered yet. Run a Shadow-AI scan to populate the estate view.
-          </div>
-        )}
-      </section>
-    </main>
+      <div className="card mt-6 overflow-hidden">
+        <TableWrapper label="Fleet inventory">
+          <Table label="Discovered AI assets" minWidth="52rem">
+            <THead sticky={false}>
+              <TR>
+                <TH>Asset</TH>
+                <TH>Type</TH>
+                <TH>Risk</TH>
+                <TH>Policy</TH>
+                <TH numeric>Seen</TH>
+                <TH>Last seen</TH>
+              </TR>
+            </THead>
+            <TBody>
+              {inv.entries.map((entry) => (
+                <TR key={entry.fingerprint} interactive>
+                  <TD className="font-medium text-slate-100">{entry.displayName}</TD>
+                  <TD className="text-slate-400">{KIND_LABEL[entry.kind] ?? entry.kind}</TD>
+                  <TD>
+                    <span className={`text-xs font-semibold ${RISK_LEVEL[entry.risk]?.className ?? "text-slate-400"}`}>
+                      {RISK_LEVEL[entry.risk]?.label ?? entry.risk}
+                    </span>
+                  </TD>
+                  <TD className="text-slate-400">{entry.policyState}</TD>
+                  <TD numeric className="text-slate-400">
+                    {entry.seenCount}
+                  </TD>
+                  <TD className="text-slate-400">
+                    {entry.lastSeenAt ? new Date(entry.lastSeenAt).toLocaleDateString() : "—"}
+                  </TD>
+                </TR>
+              ))}
+              {inv.entries.length === 0 && (
+                <TEmpty
+                  colSpan={6}
+                  message="No assets discovered yet. Run a Shadow AI scan to populate the estate view."
+                />
+              )}
+            </TBody>
+          </Table>
+        </TableWrapper>
+      </div>
+    </div>
   );
 }

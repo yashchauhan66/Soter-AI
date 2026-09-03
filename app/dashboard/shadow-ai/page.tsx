@@ -192,7 +192,7 @@ const { scan } = await res.json();`}
         </p>
         <div className="mt-4">
           <Link
-            className="inline-flex items-center gap-2 rounded-xl bg-cyan px-4 py-2 text-sm font-semibold text-black transition hover:bg-cyan/90"
+            className="inline-flex items-center gap-2 rounded-xl bg-cyan px-4 py-2 text-sm font-semibold text-white transition hover:bg-cyan/90"
             href={`/dashboard/shadow-ai/scan?project=${project.id}`}
           >
             <ScanLine size={16} />

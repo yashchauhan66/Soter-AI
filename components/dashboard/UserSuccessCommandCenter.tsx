@@ -18,7 +18,7 @@ export function UserSuccessCommandCenter({
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="max-w-2xl">
           <p className="eyebrow">Start here</p>
-          <h2 id="success-center-heading" className="mt-2 text-2xl font-bold text-white">
+          <h2 id="success-center-heading" className="mt-2 text-2xl font-bold text-slate-100">
             Choose your path. Reach first value without guessing.
           </h2>
           <p className="mt-2 text-sm leading-6 text-slate-200">
@@ -47,7 +47,7 @@ export function UserSuccessCommandCenter({
                     <Icon size={19} aria-hidden="true" />
                   </span>
                   <div className="min-w-0">
-                    <p className="font-semibold text-white">{path.label}</p>
+                    <p className="font-semibold text-slate-100">{path.label}</p>
                     <p className="mt-1 text-xs leading-5 text-slate-300">{path.who}</p>
                     <p className="mt-2 text-xs font-medium text-emerald-300">{path.outcome}</p>
                   </div>
@@ -59,7 +59,7 @@ export function UserSuccessCommandCenter({
         </div>
 
         <aside className="rounded-xl border border-slate-800 bg-slate-900/50 p-4" aria-label="Recommended next action">
-          <div className="flex items-center gap-2 text-sm font-semibold text-white">
+          <div className="flex items-center gap-2 text-sm font-semibold text-slate-100">
             <Sparkles size={16} className="text-cyan" aria-hidden="true" />
             Recommended next step
           </div>

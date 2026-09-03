@@ -138,9 +138,9 @@ export function EmergencyLockdownClient({ organizations, initialState }: Props) 
         <button
           className={`mt-4 rounded-md px-6 py-3 text-sm font-bold ${
             isLockedDown
-              ? "bg-lime text-slate-900 hover:bg-lime/80"
+              ? "bg-lime text-white hover:bg-lime/80"
               : confirmText === "LOCKDOWN"
-              ? "bg-red-500 text-white hover:bg-red-600"
+              ? "bg-rose-500 text-white hover:bg-rose-400"
               : "bg-slate-800 text-slate-300 cursor-not-allowed"
           }`}
           disabled={loading || (!isLockedDown && confirmText !== "LOCKDOWN")}

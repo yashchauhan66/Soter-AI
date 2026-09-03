@@ -357,7 +357,7 @@ export function PolicyBuilderClient({ organizationId, organizations, initialPoli
         <div className="space-y-5">
           <section className="rounded-lg border border-slate-800 bg-slate-950/60 p-5">
             <h2 className="font-semibold">Policy preview</h2>
-            <pre className="mt-3 max-h-96 overflow-auto rounded-md bg-black/40 p-3 text-xs text-slate-300">{JSON.stringify(customPreview, null, 2)}</pre>
+            <pre className="surface mt-3 max-h-96 overflow-auto p-3 text-xs text-slate-300">{JSON.stringify(customPreview, null, 2)}</pre>
           </section>
           <section className="rounded-lg border border-slate-800 bg-slate-950/60 p-5">
             <h2 className="font-semibold">Test policy</h2>
@@ -373,7 +373,7 @@ export function PolicyBuilderClient({ organizationId, organizations, initialPoli
             >
               <TestTube2 size={16} /> Test policy
             </button>
-            {testResult && <pre className="mt-3 max-h-80 overflow-auto rounded-md bg-black/40 p-3 text-xs text-slate-300">{JSON.stringify(testResult, null, 2)}</pre>}
+            {testResult && <pre className="surface mt-3 max-h-80 overflow-auto p-3 text-xs text-slate-300">{JSON.stringify(testResult, null, 2)}</pre>}
           </section>
         </div>
       </section>

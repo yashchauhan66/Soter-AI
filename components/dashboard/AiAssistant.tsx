@@ -821,7 +821,7 @@ export function AiAssistant() {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-[72px] right-5 z-30 flex items-center gap-2 rounded-full bg-cyan p-4 text-ink shadow-lg shadow-cyan/20 transition hover:bg-cyan/90 hover:scale-105 hover:shadow-xl hover:shadow-cyan/30 lg:right-8"
+          className="fixed bottom-[72px] right-5 z-30 flex items-center gap-2 rounded-full bg-cyan p-4 text-white shadow-lg shadow-cyan/20 transition hover:bg-cyan/90 hover:scale-105 hover:shadow-xl hover:shadow-cyan/30 lg:right-8"
           aria-label="Open AI assistant"
         >
           <Bot size={22} />
@@ -843,7 +843,7 @@ export function AiAssistant() {
                 <Sparkles size={16} />
               </span>
               <div>
-                <p className="text-sm font-semibold text-white">SoterAI Assistant</p>
+                <p className="text-sm font-semibold text-slate-100">SoterAI Assistant</p>
                 <p className="text-[10px] text-slate-300">AI Security Help</p>
               </div>
             </div>
@@ -858,7 +858,7 @@ export function AiAssistant() {
               </button>
               <button
                 onClick={() => setIsOpen(false)}
-                className="rounded-lg p-1.5 text-slate-200 transition hover:bg-slate-800 hover:text-white"
+                className="rounded-lg p-1.5 text-slate-200 transition hover:bg-slate-800 hover:text-slate-100"
                 aria-label="Close AI assistant"
               >
                 <X size={18} />
@@ -887,7 +887,7 @@ export function AiAssistant() {
                   <div
                     className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
                       msg.role === "user"
-                        ? "bg-cyan text-ink"
+                        ? "bg-cyan text-white"
                         : msg.variant === "warning"
                           ? "border border-amber-500/40 bg-amber-950/40 text-amber-100"
                         : "border border-slate-700 bg-slate-900/60 text-slate-200"
@@ -960,7 +960,7 @@ export function AiAssistant() {
               <button
                 type="submit"
                 disabled={!input.trim() || loading}
-                className="rounded-xl bg-cyan p-2.5 text-ink transition hover:bg-cyan/90 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-xl bg-cyan p-2.5 text-white transition hover:bg-cyan/90 disabled:cursor-not-allowed disabled:opacity-50"
                 aria-label="Send message"
               >
                 {loading ? (

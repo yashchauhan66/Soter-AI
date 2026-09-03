@@ -186,14 +186,14 @@ export function ApprovalQueueClient({ organizations, initialApprovals, initialAc
                         onChange={(e) => setActionNote(e.target.value)}
                       />
                       <button
-                        className="rounded-md bg-lime px-3 py-2 text-xs font-bold text-slate-900 hover:bg-lime/80 disabled:opacity-50"
+                        className="rounded-md bg-lime px-3 py-2 text-xs font-bold text-white hover:bg-lime/80 disabled:opacity-50"
                         disabled={loading === approval.id}
                         onClick={() => handleAction(approval.id, "approve")}
                       >
                         <CheckCircle2 size={14} className="inline" /> Approve
                       </button>
                       <button
-                        className="rounded-md bg-red-500 px-3 py-2 text-xs font-bold text-white hover:bg-red-600 disabled:opacity-50"
+                        className="rounded-md bg-rose-500 px-3 py-2 text-xs font-bold text-white hover:bg-rose-400 disabled:opacity-50"
                         disabled={loading === approval.id}
                         onClick={() => handleAction(approval.id, "reject")}
                       >

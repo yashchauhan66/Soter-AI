@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Save } from "lucide-react";
+import { BRAND } from "@/lib/brand";
 
 interface Props {
   agency: { id: string; name: string; contactEmail: string };
@@ -74,7 +75,7 @@ export function BrandingForm({ agency, branding }: Props) {
         </div>
         <div>
           <label className="text-sm font-semibold">Brand colour</label>
-          <input name="brandColor" defaultValue={branding?.brandColor ?? "#31d7c8"} maxLength={7} className="input mt-2" placeholder="#31d7c8" />
+          <input name="brandColor" defaultValue={branding?.brandColor ?? BRAND} maxLength={7} className="input mt-2" placeholder={BRAND} />
         </div>
       </div>
       <div>

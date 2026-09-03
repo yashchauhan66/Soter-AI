@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { Menu, PanelLeftClose, X } from "lucide-react";
+import { useState } from "react";
+import { Menu } from "lucide-react";
+import { Dialog, DialogTrigger, SheetContent } from "@/components/ui/Dialog";
 import { DashboardSidebar } from "./DashboardSidebar";
 import { CommandPalette } from "./CommandPalette";
 import { FeedbackWidget } from "@/components/ops/FeedbackWidget";
@@ -21,76 +22,41 @@ import { TourTrigger } from "@/components/onboarding/TourTrigger";
  * - **The column is wider** (208px → 248px). At 208px, entries like
  *   "Data classification" and "Employee monitoring" truncated mid-word, so a
  *   reader could not tell two similar items apart without hovering.
- * - **The mobile drawer is a real dialog** with `role="dialog" aria-modal`, a
- *   focus trap, and body-scroll lock. Previously it was a `translate-x` panel
- *   that left the page behind it focusable and scrollable, so a keyboard user
- *   could Tab straight out of an open drawer into hidden content.
- * - **The mobile header says where you are.** It read a hard-coded
- *   "Security team", which is not navigation information.
+ * - **The mobile drawer is a Radix sheet.** It was ~40 lines of hand-rolled
+ *   dialog: an Escape listener, a `querySelectorAll` Tab trap, and manual
+ *   `body.style.overflow` juggling. All three now come from
+ *   `components/ui/Dialog.tsx`, which also gives the drawer correct focus
+ *   *restore* — the previous version never returned focus to the trigger after
+ *   closing, so a keyboard user landed back at the top of the document. The trap
+ *   also missed `<input>`/`<select>`, which matters here because the sidebar
+ *   contains a search field.
  */
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Escape closes; Tab is trapped inside the drawer while it is open.
-  useEffect(() => {
-    if (!sidebarOpen) return;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setSidebarOpen(false);
-        return;
-      }
-
-      if (event.key !== "Tab") return;
-
-      const panel = document.getElementById("dashboard-mobile-nav");
-      const focusable = panel?.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      );
-      if (!focusable || focusable.length === 0) return;
-
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [sidebarOpen]);
-
   return (
     <DashboardTourProvider>
       <div className="container-page py-4 sm:py-8">
-        {/* Mobile navigation trigger */}
-        <div className="mb-4 lg:hidden">
-          <button
-            onClick={() => setSidebarOpen(true)}
-            aria-expanded={sidebarOpen}
-            aria-controls="dashboard-mobile-nav"
-            className="surface flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:border-cyan/40"
-          >
-            <Menu size={17} aria-hidden="true" className="shrink-0 text-cyan" />
-            <span className="min-w-0 flex-1">
-              <span className="block text-[10px] font-bold uppercase tracking-micro text-slate-500">
-                SoterAI console
+        {/* Mobile navigation trigger + drawer */}
+        <Dialog open={sidebarOpen} onOpenChange={setSidebarOpen}>
+          <div className="mb-4 lg:hidden">
+            <DialogTrigger className="surface flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:border-slate-700">
+              <Menu size={17} aria-hidden="true" className="shrink-0 text-slate-400" />
+              <span className="min-w-0 flex-1">
+                <span className="block text-[10px] font-semibold uppercase tracking-micro text-slate-500">
+                  SoterAI console
+                </span>
+                <span className="block text-sm font-semibold text-slate-100">Browse all sections</span>
               </span>
-              <span className="block text-sm font-semibold text-slate-100">Browse all sections</span>
-            </span>
-          </button>
-        </div>
+            </DialogTrigger>
+          </div>
+
+          <SheetContent title="Navigation">
+            {/* Closing on navigation stays explicit: Radix cannot know that a link
+                click inside the sheet changed the route. */}
+            <DashboardSidebar onClose={() => setSidebarOpen(false)} />
+          </SheetContent>
+        </Dialog>
 
         <div className="lg:grid lg:grid-cols-[248px_minmax(0,1fr)] lg:gap-8">
           {/* Desktop sidebar — sticky, independently scrollable. */}
@@ -107,43 +73,6 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
 
         <FeedbackWidget />
       </div>
-
-      {/* Mobile drawer */}
-      {sidebarOpen && (
-        <div className="fixed inset-0 z-overlay lg:hidden">
-          <div
-            className="animate-overlay-in absolute inset-0 bg-ink/80 backdrop-blur-sm"
-            onClick={() => setSidebarOpen(false)}
-            aria-hidden="true"
-          />
-
-          <div
-            id="dashboard-mobile-nav"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Dashboard navigation"
-            className="animate-slide-in-right absolute inset-y-0 right-0 flex w-full max-w-[300px] flex-col border-l border-slate-800 bg-ink shadow-elevation-4"
-          >
-            <div className="flex h-14 shrink-0 items-center justify-between border-b border-slate-800 px-4">
-              <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-micro text-slate-400">
-                <PanelLeftClose size={14} aria-hidden="true" />
-                Navigation
-              </span>
-              <button
-                onClick={() => setSidebarOpen(false)}
-                className="button-icon"
-                aria-label="Close navigation"
-              >
-                <X size={16} aria-hidden="true" />
-              </button>
-            </div>
-
-            <div className="flex-1 overflow-y-auto">
-              <DashboardSidebar onClose={() => setSidebarOpen(false)} />
-            </div>
-          </div>
-        </div>
-      )}
 
       <TourOverlay />
       <TourTrigger />

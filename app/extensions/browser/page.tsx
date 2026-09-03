@@ -61,9 +61,9 @@ const PRIVACY_PROOF = [
 
 export default function BrowserExtensionPage() {
   return (
-    <main className="bg-[#080f19]">
+    <main className="bg-white">
       {/* ── Hero ── */}
-      <section className="border-b border-slate-800 bg-[#0b1420]">
+      <section className="border-b border-slate-800 bg-slate-950">
         <div className="container-page py-14 sm:py-20">
           <nav className="flex items-center gap-2 text-xs font-medium text-slate-300" aria-label="Breadcrumb">
             <Link href="/" className="transition hover:text-slate-300">SoterAI</Link>
@@ -77,7 +77,7 @@ export default function BrowserExtensionPage() {
               <span className="border border-slate-700 bg-slate-900 px-2 py-1 text-slate-300">Chrome & Edge</span>
               <span className="border border-emerald-400/30 bg-emerald-400/10 px-2 py-1 text-emerald-300">Free to start</span>
             </div>
-            <h1 className="mt-5 text-3xl font-bold leading-tight text-white sm:text-4xl lg:text-5xl">
+            <h1 className="mt-5 text-3xl font-bold leading-tight text-slate-100 sm:text-4xl lg:text-5xl">
               Guard every AI conversation in your browser
             </h1>
             <p className="mt-5 max-w-3xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
@@ -95,25 +95,25 @@ export default function BrowserExtensionPage() {
             </div>
           </div>
 
-          <div className="mt-10 grid border border-slate-800 bg-[#08101a] sm:grid-cols-3">
+          <div className="mt-10 grid border border-slate-800 bg-slate-950 sm:grid-cols-3">
             <div className="flex items-start gap-3 border-b border-slate-800 p-4 sm:border-b-0 sm:border-r">
               <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-lime" aria-hidden="true" />
               <div>
-                <p className="text-sm font-semibold text-white">20+ AI tools covered</p>
+                <p className="text-sm font-semibold text-slate-100">20+ AI tools covered</p>
                 <p className="mt-1 text-xs leading-5 text-slate-300">ChatGPT, Claude, Gemini, Copilot & more</p>
               </div>
             </div>
             <div className="flex items-start gap-3 border-b border-slate-800 p-4 sm:border-b-0 sm:border-r">
               <Lock className="mt-0.5 h-4 w-4 shrink-0 text-cyan" aria-hidden="true" />
               <div>
-                <p className="text-sm font-semibold text-white">Raw prompts stay local</p>
+                <p className="text-sm font-semibold text-slate-100">Raw prompts stay local</p>
                 <p className="mt-1 text-xs leading-5 text-slate-300">No raw text sent to SoterAI by default</p>
               </div>
             </div>
             <div className="flex items-start gap-3 p-4">
               <MonitorSmartphone className="mt-0.5 h-4 w-4 shrink-0 text-cyan" aria-hidden="true" />
               <div>
-                <p className="text-sm font-semibold text-white">Side panel control plane</p>
+                <p className="text-sm font-semibold text-slate-100">Side panel control plane</p>
                 <p className="mt-1 text-xs leading-5 text-slate-300">Scan history, policy status, self-test</p>
               </div>
             </div>
@@ -125,7 +125,7 @@ export default function BrowserExtensionPage() {
       <section className="container-page py-14 sm:py-20">
         <div className="max-w-3xl">
           <p className="eyebrow">Pick your browser</p>
-          <h2 className="mt-3 text-2xl font-bold text-white sm:text-3xl">One extension, both browsers</h2>
+          <h2 className="mt-3 text-2xl font-bold text-slate-100 sm:text-3xl">One extension, both browsers</h2>
           <p className="mt-3 text-sm leading-6 text-slate-200 sm:text-base">
             The same guarded experience ships for Chrome and Microsoft Edge. Choose your browser to open the
             install guide and store listing.
@@ -135,14 +135,14 @@ export default function BrowserExtensionPage() {
         <div className="mt-8 grid gap-6 md:grid-cols-2">
           <Link
             href="/extensions/browser/chrome"
-            className="group flex flex-col rounded-2xl border border-slate-800 bg-[#0d1724] p-6 transition-all duration-200 hover:border-cyan/45 hover:shadow-lg hover:shadow-cyan/5"
+            className="group flex flex-col rounded-2xl border border-slate-800 bg-white p-6 transition-all duration-200 hover:border-cyan/45 hover:shadow-lg hover:shadow-cyan/5"
           >
             <div className="flex items-center gap-4">
               <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-cyan/10 text-cyan">
                 <Chrome className="h-6 w-6" aria-hidden="true" />
               </span>
               <div>
-                <h3 className="text-lg font-semibold text-white group-hover:text-cyan">Google Chrome</h3>
+                <h3 className="text-lg font-semibold text-slate-100 group-hover:text-cyan">Google Chrome</h3>
                 <p className="text-xs text-slate-300">Chrome Web Store</p>
               </div>
             </div>
@@ -156,14 +156,14 @@ export default function BrowserExtensionPage() {
 
           <Link
             href="/extensions/browser/edge"
-            className="group flex flex-col rounded-2xl border border-slate-800 bg-[#0d1724] p-6 transition-all duration-200 hover:border-cyan/45 hover:shadow-lg hover:shadow-cyan/5"
+            className="group flex flex-col rounded-2xl border border-slate-800 bg-white p-6 transition-all duration-200 hover:border-cyan/45 hover:shadow-lg hover:shadow-cyan/5"
           >
             <div className="flex items-center gap-4">
               <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-cyan/10 text-cyan">
                 <Globe className="h-6 w-6" aria-hidden="true" />
               </span>
               <div>
-                <h3 className="text-lg font-semibold text-white group-hover:text-cyan">Microsoft Edge</h3>
+                <h3 className="text-lg font-semibold text-slate-100 group-hover:text-cyan">Microsoft Edge</h3>
                 <p className="text-xs text-slate-300">Edge Add-ons</p>
               </div>
             </div>
@@ -178,11 +178,11 @@ export default function BrowserExtensionPage() {
       </section>
 
       {/* ── Capabilities ── */}
-      <section className="border-y border-slate-800 bg-[#0b1420]">
+      <section className="border-y border-slate-800 bg-slate-950">
         <div className="container-page py-14 sm:py-20">
           <div className="max-w-3xl">
             <p className="eyebrow">What you get</p>
-            <h2 className="mt-3 text-2xl font-bold text-white sm:text-3xl">Enterprise protection while you browse</h2>
+            <h2 className="mt-3 text-2xl font-bold text-slate-100 sm:text-3xl">Enterprise protection while you browse</h2>
             <p className="mt-3 text-sm leading-6 text-slate-200 sm:text-base">
               Protection activates the moment you land on a supported AI tool. No configuration required for local scanning.
             </p>
@@ -191,9 +191,9 @@ export default function BrowserExtensionPage() {
             {CAPABILITIES.map((item) => {
               const Icon = item.icon;
               return (
-                <article key={item.title} className="bg-[#0d1724] p-5">
+                <article key={item.title} className="bg-white p-5">
                   <Icon className="h-5 w-5 text-cyan" aria-hidden="true" />
-                  <h3 className="mt-4 text-sm font-semibold text-white">{item.title}</h3>
+                  <h3 className="mt-4 text-sm font-semibold text-slate-100">{item.title}</h3>
                   <p className="mt-2 text-xs leading-5 text-slate-200">{item.copy}</p>
                 </article>
               );
@@ -207,7 +207,7 @@ export default function BrowserExtensionPage() {
         <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
           <div>
             <p className="eyebrow">Privacy model</p>
-            <h2 className="mt-3 text-2xl font-bold text-white sm:text-3xl">What leaves your browser?</h2>
+            <h2 className="mt-3 text-2xl font-bold text-slate-100 sm:text-3xl">What leaves your browser?</h2>
             <p className="mt-4 text-sm leading-6 text-slate-200">
               Prompt scanning happens in the browser first, and extension storage avoids keeping raw prompt text
               by default. This is the same contract surfaced inside the extension's side panel.
@@ -218,12 +218,12 @@ export default function BrowserExtensionPage() {
               </Link>
             </div>
           </div>
-          <div className="rounded-2xl border border-slate-800 bg-[#0d1724] p-6">
+          <div className="rounded-2xl border border-slate-800 bg-white p-6">
             <dl className="divide-y divide-slate-800">
               {PRIVACY_PROOF.map((row) => (
                 <div key={row.label} className="flex items-start justify-between gap-4 py-3.5 first:pt-0 last:pb-0">
                   <dt className="text-sm text-slate-300">{row.label}</dt>
-                  <dd className="max-w-[55%] text-right text-sm font-semibold text-white">{row.value}</dd>
+                  <dd className="max-w-[55%] text-right text-sm font-semibold text-slate-100">{row.value}</dd>
                 </div>
               ))}
             </dl>
@@ -232,13 +232,13 @@ export default function BrowserExtensionPage() {
       </section>
 
       {/* ── Cross-surface CTA ── */}
-      <section className="border-t border-slate-800 bg-[#0b1420]">
+      <section className="border-t border-slate-800 bg-slate-950">
         <div className="container-page py-14 sm:py-16">
           <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
             <div>
               <div className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-cyan" aria-hidden="true" />
-                <h2 className="text-xl font-bold text-white sm:text-2xl">Protect every surface, not just the browser</h2>
+                <h2 className="text-xl font-bold text-slate-100 sm:text-2xl">Protect every surface, not just the browser</h2>
               </div>
               <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">
                 Pair Browser Guard with IDE Guard, workflow automation, and the REST API for complete coverage.

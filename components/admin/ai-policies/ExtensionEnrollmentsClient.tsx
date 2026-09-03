@@ -118,7 +118,7 @@ export function ExtensionEnrollmentsClient({ organizations }: { organizations: P
               <input className="rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm" type="number" min={1} max={1000} value={form.maxUses} onChange={(event) => setForm({ ...form, maxUses: Number(event.target.value) })} />
               <input className="rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm" type="number" min={1} max={365} value={form.expiresInDays} onChange={(event) => setForm({ ...form, expiresInDays: Number(event.target.value) })} />
             </div>
-            <button className="inline-flex items-center justify-center gap-2 rounded-md bg-cyan px-4 py-2 text-sm font-bold text-slate-950 disabled:opacity-50" disabled={loading || !organizationId} onClick={createToken}>
+            <button className="inline-flex items-center justify-center gap-2 rounded-md bg-cyan px-4 py-2 text-sm font-bold text-white disabled:opacity-50" disabled={loading || !organizationId} onClick={createToken}>
               <Plus size={16} /> Create token
             </button>
             {createdToken && (

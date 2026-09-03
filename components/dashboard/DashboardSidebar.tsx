@@ -50,14 +50,24 @@ import {
 
 // ── Hero product definitions ────────────────────────────────────────────
 
+/**
+ * A top-level product area with its own sub-navigation.
+ *
+ * The `accent` / `gradient` / `border` / `iconBg` fields were removed. Each of
+ * the two products carried its own colour identity — orange for Agent Control,
+ * violet for Usage Governance — rendered as a gradient-filled, coloured-border
+ * card in the sidebar, with the accent then re-used for that product's active
+ * link colour.
+ *
+ * That is two competing brand colours inside the navigation of a product whose
+ * brand colour is teal, and it meant "active" was a different colour depending
+ * on which section you were in. Active state is now one colour everywhere,
+ * which is the only way a user can learn to read it.
+ */
 export interface HeroProduct {
   label: string;
   description: string;
   href: string;
-  accent: string;
-  gradient: string;
-  border: string;
-  iconBg: string;
   Icon: typeof Gauge;
   items: { Icon: typeof Gauge; label: string; href: string }[];
 }
@@ -67,10 +77,6 @@ export const heroProducts: HeroProduct[] = [
     label: "AI Agent Control",
     description: "Approve, log, rollback agent actions",
     href: "/dashboard/agent-control",
-    accent: "text-orange-300",
-    gradient: "from-orange-500/10 via-amber-500/5 to-transparent",
-    border: "border-orange-500/25",
-    iconBg: "bg-orange-500/15",
     Icon: Gauge,
     items: [
       { Icon: ShieldAlert, label: "Agent firewall", href: "/dashboard/agent-firewall" },
@@ -91,10 +97,6 @@ export const heroProducts: HeroProduct[] = [
     label: "AI Usage Governance",
     description: "Policy, DLP, monitoring for employee AI use",
     href: "/dashboard/usage-governance",
-    accent: "text-violet-300",
-    gradient: "from-violet-500/10 via-blue-500/5 to-transparent",
-    border: "border-violet-500/25",
-    iconBg: "bg-violet-500/15",
     Icon: Landmark,
     items: [
       { Icon: SlidersHorizontal, label: "Policy config", href: "/dashboard/usage-governance/policy" },
@@ -236,26 +238,33 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
           return (
             <div
               key={product.label}
-              className={`rounded-xl border bg-gradient-to-br p-1 ${product.border} ${product.gradient}`}
+              className="rounded-card border border-slate-800 bg-slate-900/40 p-1"
             >
               {/* Product header */}
               <button
                 onClick={() => setExpandedHero(isExpanded ? null : product.label)}
-                className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition hover:bg-white/5"
+                className="flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-left transition-colors hover:bg-slate-800/60"
                 aria-expanded={isExpanded}
               >
-                <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${product.iconBg}`}>
-                  <product.Icon size={16} className={product.accent} />
+                <span
+                  className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-md border ${
+                    isProductActive
+                      ? "border-cyan/30 bg-cyan/10 text-cyan"
+                      : "border-slate-700/60 bg-slate-900/60 text-slate-400"
+                  }`}
+                >
+                  <product.Icon size={16} aria-hidden="true" />
                 </span>
                 <div className="min-w-0 flex-1">
-                  <p className={`text-sm font-semibold ${isProductActive ? product.accent : "text-white"}`}>
+                  <p className={`text-sm font-semibold ${isProductActive ? "text-cyan" : "text-slate-100"}`}>
                     {product.label}
                   </p>
-                  <p className="text-[10px] text-slate-300">{product.description}</p>
+                  <p className="text-[10px] text-slate-500">{product.description}</p>
                 </div>
                 <ChevronDown
                   size={14}
-                  className={`shrink-0 text-slate-300 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
+                  aria-hidden="true"
+                  className={`shrink-0 text-slate-500 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}
                 />
               </button>
 
@@ -263,13 +272,13 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
               <Link
                 href={product.href}
                 onClick={onClose}
-                className={`mx-1 flex items-center gap-3 rounded-lg px-3 py-1.5 text-sm transition ${
+                className={`mx-1 flex items-center gap-3 rounded-md px-3 py-1.5 text-sm transition-colors ${
                   isActive(product.href) && !product.items.some((i) => isActive(i.href))
-                    ? `${product.accent} bg-white/5`
-                    : "text-slate-200 hover:bg-white/5 hover:text-white"
+                    ? "bg-cyan/10 font-medium text-cyan"
+                    : "text-slate-300 hover:bg-slate-800/60 hover:text-slate-100"
                 }`}
               >
-                <product.Icon size={14} />
+                <product.Icon size={14} aria-hidden="true" />
                 <span>Overview</span>
               </Link>
 
@@ -288,8 +297,8 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
                         aria-current={isActive(item.href) ? "page" : undefined}
                         className={`flex items-center gap-2.5 rounded-md px-3 py-1.5 text-xs transition-colors ${
                           isActive(item.href)
-                            ? `${product.accent} bg-white/[0.07] font-medium`
-                            : "text-slate-400 hover:bg-white/5 hover:text-slate-100"
+                            ? "bg-cyan/10 font-medium text-cyan"
+                            : "text-slate-400 hover:bg-slate-800/60 hover:text-slate-100"
                         }`}
                       >
                         <item.Icon size={13} aria-hidden="true" className="shrink-0" />
@@ -347,14 +356,14 @@ export function DashboardSidebar({ onClose }: { onClose?: () => void }) {
                           aria-current={isActive(href) ? "page" : undefined}
                           className={`flex items-center gap-3 rounded-lg border-l-2 py-2 pl-2.5 pr-3 text-sm transition-colors ${
                             isActive(href)
-                              ? "border-cyan bg-cyan/10 font-medium text-white"
+                              ? "border-cyan bg-cyan/10 font-medium text-slate-100"
                               : "border-transparent text-slate-400 hover:border-slate-600 hover:bg-slate-900/60 hover:text-slate-100"
                           }`}
                         >
                           <Icon size={15} aria-hidden="true" className="shrink-0" />
                           <span className="min-w-0 flex-1 truncate">{label}</span>
                           {badge && (
-                            <span className="shrink-0 rounded-full bg-cyan/15 px-1.5 py-0.5 text-[9px] font-bold text-cyan">
+                            <span className="badge-brand shrink-0 !px-1.5 !py-0 !text-[9px] !font-bold">
                               {badge}
                             </span>
                           )}

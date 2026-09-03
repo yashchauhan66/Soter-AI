@@ -153,7 +153,7 @@ export function SiemWebhooksClient({ organizations }: { organizations: Pick<Orga
                 </label>
               ))}
             </div>
-            <button className="rounded-md bg-cyan px-4 py-2 text-sm font-bold text-slate-950" onClick={create}>Add webhook</button>
+            <button className="rounded-md bg-cyan px-4 py-2 text-sm font-bold text-white" onClick={create}>Add webhook</button>
           </div>
         </section>
 

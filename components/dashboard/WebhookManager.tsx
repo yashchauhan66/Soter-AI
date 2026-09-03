@@ -259,7 +259,7 @@ export function WebhookManager({ projects, endpoints }: { projects: Project[]; e
 
       {!endpoints.length ? (
         <div className="card p-10 text-center">
-          <Webhook className="mx-auto text-slate-700" size={42} />
+          <Webhook className="mx-auto text-slate-500" size={42} />
           <p className="mt-4 font-semibold">No webhooks yet</p>
           <p className="mt-2 text-sm text-slate-300">Add an HTTPS endpoint to receive guard event notifications.</p>
         </div>

@@ -29,7 +29,7 @@ export default function PrivacyPage() {
         {/* 1. Introduction */}
         <h2
           id="introduction"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           1. Introduction
         </h2>
@@ -50,7 +50,7 @@ export default function PrivacyPage() {
         {/* 2. Information We Collect */}
         <h2
           id="information-we-collect"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           2. Information We Collect
         </h2>
@@ -88,7 +88,7 @@ export default function PrivacyPage() {
         {/* 3. AI Workflow Data */}
         <h2
           id="ai-workflow-data"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           3. AI Workflow Data
         </h2>
@@ -111,7 +111,7 @@ export default function PrivacyPage() {
 
         <h2
           id="browser-extension"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           3a. Browser Extension Data
         </h2>
@@ -145,7 +145,7 @@ export default function PrivacyPage() {
         {/* 4. Logs and Audit Records */}
         <h2
           id="logs-and-audit-records"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           4. Logs and Audit Records
         </h2>
@@ -169,7 +169,7 @@ export default function PrivacyPage() {
         {/* 5. API Keys and Authentication */}
         <h2
           id="api-keys-and-authentication"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           5. API Keys and Authentication
         </h2>
@@ -188,7 +188,7 @@ export default function PrivacyPage() {
         {/* 6. How We Use Information */}
         <h2
           id="how-we-use-information"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           6. How We Use Information
         </h2>
@@ -215,7 +215,7 @@ export default function PrivacyPage() {
         {/* 7. How We Protect Data */}
         <h2
           id="how-we-protect-data"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           7. How We Protect Data
         </h2>
@@ -244,7 +244,7 @@ export default function PrivacyPage() {
         {/* 8. Data Retention */}
         <h2
           id="data-retention"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           8. Data Retention
         </h2>
@@ -285,7 +285,7 @@ export default function PrivacyPage() {
         {/* 9. Third-Party Integrations */}
         <h2
           id="third-party-integrations"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           9. Third-Party Integrations
         </h2>
@@ -310,7 +310,7 @@ export default function PrivacyPage() {
         {/* 10. Cookies and Analytics */}
         <h2
           id="cookies-and-analytics"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           10. Cookies and Analytics
         </h2>
@@ -343,7 +343,7 @@ export default function PrivacyPage() {
         {/* 11. Your Rights */}
         <h2
           id="your-rights"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           11. Your Rights
         </h2>
@@ -389,7 +389,7 @@ export default function PrivacyPage() {
         {/* 12. Children's Privacy */}
         <h2
           id="childrens-privacy"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           12. Children&apos;s Privacy
         </h2>
@@ -407,7 +407,7 @@ export default function PrivacyPage() {
         {/* 13. Changes to This Policy */}
         <h2
           id="changes-to-this-policy"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           13. Changes to This Policy
         </h2>
@@ -427,7 +427,7 @@ export default function PrivacyPage() {
         {/* 14. Contact Information */}
         <h2
           id="contact-information"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           14. Contact Information
         </h2>
@@ -459,7 +459,7 @@ export default function PrivacyPage() {
         {/* 15. Last Updated */}
         <h2
           id="last-updated"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           15. Last Updated
         </h2>

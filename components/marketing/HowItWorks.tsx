@@ -18,7 +18,7 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section className="section border-y border-slate-800 bg-slate-950/40">
+    <section className="section">
       <div className="container-page">
         <SectionHeading
           center

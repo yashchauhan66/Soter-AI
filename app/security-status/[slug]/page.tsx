@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ShieldAlert, ShieldCheck, ShieldOff } from "lucide-react";
 import { loadBadgeStatus, type BadgeStatus } from "@/lib/badge";
+import { BRAND } from "@/lib/brand";
 
 export const dynamic = "force-dynamic";
 
@@ -47,7 +48,7 @@ export default async function PublicSecurityStatusPage({ params }: { params: Pro
   const { slug } = await params;
   const status = await loadBadgeStatus(slug);
   if (!status) notFound();
-  const accent = status.brandColor ?? "#31d7c8";
+  const accent = status.brandColor ?? BRAND;
 
   const styles: Record<string, { bg: string; label: string; Icon: typeof ShieldCheck }> = {
     PROTECTED: { bg: "bg-emerald-500/15 text-emerald-300", label: "Protected", Icon: ShieldCheck },
@@ -93,7 +94,7 @@ export default async function PublicSecurityStatusPage({ params }: { params: Pro
           negatives; the badge represents defensive activity, not a promise of complete protection.
         </p>
 
-        <Link href="/" className="mt-7 inline-block text-sm text-slate-200 hover:text-white">Powered by SoterAI →</Link>
+        <Link href="/" className="mt-7 inline-block text-sm text-slate-200 hover:text-slate-100">Powered by SoterAI →</Link>
       </div>
     </main>
   );

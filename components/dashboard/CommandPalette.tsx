@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowRight, CornerDownLeft, Search } from "lucide-react";
+import { Dialog, DialogContent } from "@/components/ui/Dialog";
 import { heroProducts, navGroups } from "./DashboardSidebar";
 import { FEATURES, matchScore, type FeatureItem } from "./FeatureSearchBar";
 
@@ -14,8 +15,29 @@ import { FEATURES, matchScore, type FeatureItem } from "./FeatureSearchBar";
  * Keyword hints are layered in from FeatureSearchBar's FEATURES index (keyed
  * by href) so search matches the same terms as the home-page search box.
  *
- * Dependency-free: substring + FeatureSearchBar's matchScore ranking, native
- * keyboard handling, no third-party fuzzy-search lib.
+ * Ranking stays dependency-free: substring + FeatureSearchBar's `matchScore`, no
+ * third-party fuzzy-search lib.
+ *
+ * ## What the Radix migration fixed
+ *
+ * The dialog shell is now `components/ui/Dialog.tsx` (Radix) instead of a
+ * hand-rolled overlay. That resolves three real defects, not just duplication:
+ *
+ * 1. **The page scrolled behind the open palette.** There was no scroll lock at
+ *    all, so a mouse wheel or trackpad gesture over the backdrop scrolled the
+ *    dashboard underneath. Radix locks the body and compensates for the scrollbar
+ *    width, so the page does not shift sideways when the palette opens either.
+ * 2. **The focus trap was `event.preventDefault()` on Tab.** That pins focus to
+ *    the input by disabling Tab entirely — which also means a keyboard user can
+ *    never reach the close affordance, and any future control added to this dialog
+ *    would be unreachable. Radix cycles focus within the dialog properly.
+ * 3. **Focus restore ran on every `open` change including first mount**, so
+ *    `previouslyFocused.current?.focus?.()` fired against a null ref on load.
+ *
+ * What is deliberately kept custom: the listbox. `aria-activedescendant` combobox
+ * navigation over a filtered list is the correct pattern here and Radix has no
+ * primitive for it — arrow keys move a *virtual* selection while real focus stays
+ * in the text field, which is what lets the user keep typing.
  */
 
 interface PaletteItem {
@@ -78,9 +100,6 @@ export function CommandPalette() {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
-  const dialogRef = useRef<HTMLDivElement>(null);
-  // Element focused before the palette opened, so we can restore it on close.
-  const previouslyFocused = useRef<HTMLElement | null>(null);
 
   const results = useMemo(() => {
     const q = query.trim();
@@ -94,18 +113,27 @@ export function CommandPalette() {
       .map((s) => s.item);
   }, [query]);
 
-  const close = useCallback(() => {
-    setOpen(false);
-    setQuery("");
-    setSelectedIndex(0);
+  /**
+   * Reset the query when the dialog closes.
+   *
+   * Radix owns open/close (Escape, outside pointer-down, close button), so this
+   * runs from one `onOpenChange` rather than from a bespoke `close()` that every
+   * exit path had to remember to call — the previous version had four such paths.
+   */
+  const onOpenChange = useCallback((next: boolean) => {
+    setOpen(next);
+    if (!next) {
+      setQuery("");
+      setSelectedIndex(0);
+    }
   }, []);
 
   const navigate = useCallback(
     (href: string) => {
-      close();
+      onOpenChange(false);
       router.push(href);
     },
-    [close, router],
+    [onOpenChange, router],
   );
 
   // Global Cmd/Ctrl+K toggles the palette.
@@ -120,18 +148,8 @@ export function CommandPalette() {
     return () => window.removeEventListener("keydown", handler);
   }, []);
 
-  // Manage focus: capture prior focus, focus the input, restore on close.
-  useEffect(() => {
-    if (open) {
-      previouslyFocused.current = document.activeElement as HTMLElement | null;
-      // Focus after paint so the input is mounted.
-      const t = setTimeout(() => inputRef.current?.focus(), 0);
-      return () => clearTimeout(t);
-    }
-    previouslyFocused.current?.focus?.();
-  }, [open]);
-
-  // Keep the highlighted row scrolled into view.
+  // Keep the highlighted row scrolled into view. Radix owns focus capture and
+  // restore, so there is no focus effect left in this component.
   useEffect(() => {
     if (!open || !listRef.current) return;
     const el = listRef.current.children[selectedIndex] as
@@ -140,6 +158,11 @@ export function CommandPalette() {
     el?.scrollIntoView({ block: "nearest" });
   }, [selectedIndex, open, results.length]);
 
+  /**
+   * Arrow/Enter only. Escape and Tab are Radix's responsibility now — handling
+   * Escape here as well would run the close path twice, and swallowing Tab was
+   * the bug described in the file header.
+   */
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
@@ -151,38 +174,31 @@ export function CommandPalette() {
       e.preventDefault();
       const item = results[selectedIndex];
       if (item) navigate(item.href);
-    } else if (e.key === "Escape") {
-      e.preventDefault();
-      close();
-    } else if (e.key === "Tab") {
-      // Single focusable element — trap focus on the input.
-      e.preventDefault();
     }
   };
 
-  if (!open) return null;
-
   return (
-    <div
-      className="fixed inset-0 z-[100] flex items-start justify-center bg-black/60 px-4 pt-[12vh] backdrop-blur-sm"
-      onMouseDown={(e) => {
-        // Close when clicking the backdrop (outside the dialog).
-        if (e.target === e.currentTarget) close();
-      }}
-    >
-      <div
-        ref={dialogRef}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Command palette — jump to a service"
-        className="card w-full max-w-xl overflow-hidden border-slate-700 p-0 shadow-2xl shadow-black/50"
-        onMouseDown={(e) => e.stopPropagation()}
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent
+        title="Command palette — jump to a service"
+        titleVisuallyHidden
+        hideClose
+        // The search field is the point of this dialog, so focus goes there
+        // rather than to Radix's default (the first focusable node).
+        onOpenAutoFocus={(event) => {
+          event.preventDefault();
+          inputRef.current?.focus();
+        }}
+        // Top-anchored rather than vertically centred: a palette whose result list
+        // grows downward would otherwise shift on every keystroke as the filtered
+        // list changes height. `translate-y-0` cancels the centring transform.
+        className="top-[12vh] max-w-xl translate-y-0 overflow-hidden p-0"
       >
         {/* Search input */}
         <div className="relative border-b border-slate-800">
           <Search
-            size={18}
-            className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-300"
+            size={17}
+            className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-500"
             aria-hidden="true"
           />
           <input
@@ -195,7 +211,7 @@ export function CommandPalette() {
             }}
             onKeyDown={handleKeyDown}
             placeholder="Jump to a service..."
-            className="h-14 w-full bg-transparent pl-12 pr-4 text-base text-slate-100 outline-none placeholder:text-slate-300"
+            className="h-14 w-full bg-transparent pl-12 pr-4 text-base text-slate-100 outline-none placeholder:text-slate-500"
             maxLength={200}
             role="combobox"
             aria-expanded={results.length > 0}
@@ -226,16 +242,16 @@ export function CommandPalette() {
                   type="button"
                   onClick={() => navigate(item.href)}
                   onMouseEnter={() => setSelectedIndex(index)}
-                  className={`flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition ${
+                  className={`flex w-full items-center justify-between gap-3 rounded-md px-3 py-2.5 text-left text-sm transition-colors ${
                     index === selectedIndex
-                      ? "bg-cyan/10 text-cyan"
-                      : "text-slate-300 hover:bg-slate-800/70"
+                      ? "bg-slate-800/80 text-slate-100"
+                      : "text-slate-300 hover:bg-slate-800/50"
                   }`}
                   tabIndex={-1}
                 >
                   <span className="min-w-0 flex-1 truncate">
                     <span className="font-medium">{item.label}</span>
-                    <span className="ml-2 text-[11px] text-slate-300">
+                    <span className="ml-2 text-[11px] text-slate-500">
                       {item.group}
                     </span>
                   </span>
@@ -257,30 +273,41 @@ export function CommandPalette() {
             ))}
           </ul>
         ) : (
-          <div className="px-4 py-10 text-center text-sm text-slate-300">
+          <div className="px-4 py-10 text-center text-sm text-slate-400">
             No services match &ldquo;{query}&rdquo;
           </div>
         )}
 
         {/* Footer hint */}
-        <div className="flex items-center justify-between border-t border-slate-800 px-4 py-2.5 text-[11px] text-slate-300">
+        <div className="flex items-center justify-between border-t border-slate-800 px-4 py-2.5 text-[11px] text-slate-500">
           <span className="flex items-center gap-3">
             <span>
-              <kbd className="rounded border border-slate-700 bg-slate-800/50 px-1.5 py-0.5">↑</kbd>{" "}
-              <kbd className="rounded border border-slate-700 bg-slate-800/50 px-1.5 py-0.5">↓</kbd>{" "}
-              navigate
+              <Kbd>↑</Kbd> <Kbd>↓</Kbd> navigate
             </span>
             <span>
-              <kbd className="rounded border border-slate-700 bg-slate-800/50 px-1.5 py-0.5">↵</kbd>{" "}
-              open
+              <Kbd>↵</Kbd> open
             </span>
           </span>
           <span>
-            <kbd className="rounded border border-slate-700 bg-slate-800/50 px-1.5 py-0.5">Esc</kbd>{" "}
-            close
+            <Kbd>Esc</Kbd> close
           </span>
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+/**
+ * Keycap.
+ *
+ * Extracted because the same class string appeared five times inline. `font-sans`
+ * is explicit: the browser default for `<kbd>` is monospace, which at 11px next to
+ * Inter renders noticeably smaller and misaligned on the baseline.
+ */
+function Kbd({ children }: { children: React.ReactNode }) {
+  return (
+    <kbd className="rounded-sm border border-slate-700 bg-slate-800/60 px-1.5 py-0.5 font-sans">
+      {children}
+    </kbd>
   );
 }

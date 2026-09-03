@@ -47,7 +47,7 @@ export default function GuidedDemoPage() {
             ["Adversarial benchmark", "Phase 9 synthetic benchmark results with methodology, limitations, and downloads.", "/benchmark"],
             ["Agent firewall approvals", "See the real approvals queue in the dashboard.", "/dashboard/agent-firewall/approvals"],
           ].map(([title, copy, href]) => (
-            <Link key={title} href={href} className="card p-5 transition hover:border-cyan/50">
+            <Link key={title} href={href} className="card card-interactive p-5">
               <h3 className="font-semibold text-slate-100">{title}</h3>
               <p className="mt-2 text-sm text-slate-200">{copy}</p>
               <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-cyan">
@@ -60,16 +60,16 @@ export default function GuidedDemoPage() {
 
       {/* CTA */}
       <section className="mt-16 max-w-4xl">
-        <div className="rounded-3xl bg-cyan p-10 text-center text-ink">
+        <div className="rounded-3xl bg-cyan p-10 text-center text-white">
           <h2 className="text-3xl font-black">Protect your agents in production.</h2>
-          <p className="mx-auto mt-3 max-w-2xl text-ink/70">
+          <p className="mx-auto mt-3 max-w-2xl text-[0.9375rem] leading-7 text-white">
             Drop in the SDK, set a policy mode, and get this exact loop — block, approve, evidence, SIEM — out of the box.
           </p>
           <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link href="/signup" className="inline-flex items-center gap-2 rounded-xl bg-ink px-6 py-3 font-semibold text-white">
+            <Link href="/signup" className="inline-flex items-center gap-2 rounded-xl bg-ink px-6 py-3 font-semibold text-slate-100">
               Get started free <ArrowRight size={18} />
             </Link>
-            <Link href="/docs" className="inline-flex items-center gap-2 rounded-xl border border-ink/20 bg-ink/10 px-6 py-3 font-semibold text-ink">
+            <Link href="/docs" className="inline-flex items-center gap-2 rounded-xl border border-white/50 px-6 py-3 font-semibold text-white">
               Read the docs
             </Link>
           </div>

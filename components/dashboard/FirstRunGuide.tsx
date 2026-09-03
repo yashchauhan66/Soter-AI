@@ -62,7 +62,7 @@ export function FirstRunGuide({ hasApiKey, hasActivity, apiBaseUrl }: FirstRunGu
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <p className="eyebrow">Welcome</p>
-            <h2 id="first-run-heading" className="mt-1 text-xl font-bold text-white">
+            <h2 id="first-run-heading" className="mt-1 text-xl font-bold text-slate-100">
               Get your first guarded request live in 2 minutes
             </h2>
             <p className="mt-1 text-sm text-slate-200">
@@ -96,7 +96,7 @@ export function FirstRunGuide({ hasApiKey, hasActivity, apiBaseUrl }: FirstRunGu
                 <div className="min-w-0 flex-1 pb-1">
                   <div className="flex items-center gap-2">
                     <StepIcon size={15} className="text-cyan" />
-                    <h3 className={`text-sm font-semibold ${step.done ? "text-slate-200 line-through decoration-slate-600" : "text-white"}`}>
+                    <h3 className={`text-sm font-semibold ${step.done ? "text-slate-200 line-through decoration-slate-600" : "text-slate-100"}`}>
                       {step.title}
                     </h3>
                   </div>

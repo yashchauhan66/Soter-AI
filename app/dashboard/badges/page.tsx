@@ -25,7 +25,7 @@ export default async function BadgesPage() {
 
       {!projects.length ? (
         <div className="card mt-7 p-10 text-center">
-          <ShieldCheck className="mx-auto text-slate-700" size={42} />
+          <ShieldCheck className="mx-auto text-slate-500" size={42} />
           <p className="mt-4 font-semibold">No projects yet</p>
           <p className="mt-2 text-sm text-slate-300">Create a project to issue its public badge slug.</p>
           <Link href="/dashboard/projects/new" className="button-primary mt-5 inline-flex">Create project</Link>

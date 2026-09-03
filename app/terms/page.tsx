@@ -29,7 +29,7 @@ export default function TermsPage() {
         {/* 1. Acceptance of Terms */}
         <h2
           id="acceptance-of-terms"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           1. Acceptance of Terms
         </h2>
@@ -49,7 +49,7 @@ export default function TermsPage() {
         {/* 2. Description of Service */}
         <h2
           id="description-of-service"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           2. Description of Service
         </h2>
@@ -71,7 +71,7 @@ export default function TermsPage() {
         {/* 3. Accounts and Access */}
         <h2
           id="accounts-and-access"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           3. Accounts and Access
         </h2>
@@ -93,7 +93,7 @@ export default function TermsPage() {
         {/* 4. API Keys and Security Responsibilities */}
         <h2
           id="api-keys-and-security"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           4. API Keys and Security Responsibilities
         </h2>
@@ -118,7 +118,7 @@ export default function TermsPage() {
         {/* 5. Acceptable Use */}
         <h2
           id="acceptable-use"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           5. Acceptable Use
         </h2>
@@ -137,7 +137,7 @@ export default function TermsPage() {
         {/* 6. Prohibited Use */}
         <h2
           id="prohibited-use"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           6. Prohibited Use
         </h2>
@@ -159,7 +159,7 @@ export default function TermsPage() {
         {/* 7. AI Security Limitations */}
         <h2
           id="ai-security-limitations"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           7. AI Security Limitations
         </h2>
@@ -183,7 +183,7 @@ export default function TermsPage() {
         {/* 8. Customer Content and Data */}
         <h2
           id="customer-content-and-data"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           8. Customer Content and Data
         </h2>
@@ -208,7 +208,7 @@ export default function TermsPage() {
         {/* 9. Marketplace Integrations */}
         <h2
           id="marketplace-integrations"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           9. Marketplace Integrations
         </h2>
@@ -233,7 +233,7 @@ export default function TermsPage() {
         {/* 10. Billing and Subscriptions */}
         <h2
           id="billing-and-subscriptions"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           10. Billing and Subscriptions
         </h2>
@@ -252,7 +252,7 @@ export default function TermsPage() {
         {/* 11. Free Plan Limitations */}
         <h2
           id="free-plan-limitations"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           11. Free Plan Limitations
         </h2>
@@ -272,7 +272,7 @@ export default function TermsPage() {
         {/* 12. Service Availability */}
         <h2
           id="service-availability"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           12. Service Availability
         </h2>
@@ -296,7 +296,7 @@ export default function TermsPage() {
         {/* 13. Beta and Developer-Preview Features */}
         <h2
           id="beta-features"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           13. Beta and Developer-Preview Features
         </h2>
@@ -320,7 +320,7 @@ export default function TermsPage() {
         {/* 14. Intellectual Property */}
         <h2
           id="intellectual-property"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           14. Intellectual Property
         </h2>
@@ -339,7 +339,7 @@ export default function TermsPage() {
         {/* 15. Disclaimers */}
         <h2
           id="disclaimers"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           15. Disclaimers
         </h2>
@@ -362,7 +362,7 @@ export default function TermsPage() {
         {/* 16. Limitation of Liability */}
         <h2
           id="limitation-of-liability"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           16. Limitation of Liability
         </h2>
@@ -390,7 +390,7 @@ export default function TermsPage() {
         {/* 17. Termination */}
         <h2
           id="termination"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           17. Termination
         </h2>
@@ -419,7 +419,7 @@ export default function TermsPage() {
         {/* 18. Changes to Terms */}
         <h2
           id="changes-to-terms"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           18. Changes to Terms
         </h2>
@@ -439,7 +439,7 @@ export default function TermsPage() {
         {/* 19. Governing Law */}
         <h2
           id="governing-law"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           19. Governing Law
         </h2>
@@ -458,7 +458,7 @@ export default function TermsPage() {
         {/* 20. Contact Information */}
         <h2
           id="contact-information"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           20. Contact Information
         </h2>
@@ -490,7 +490,7 @@ export default function TermsPage() {
         {/* 21. Last Updated */}
         <h2
           id="last-updated"
-          className="text-2xl font-semibold text-white mt-12 mb-4"
+          className="text-2xl font-semibold text-slate-100 mt-12 mb-4"
         >
           21. Last Updated
         </h2>

@@ -135,11 +135,11 @@ const applicationSchema = {
 
 export default function IdeExtensionPage() {
   return (
-    <main className="overflow-hidden bg-[#070d16] text-slate-100">
+    <main className="overflow-hidden bg-white text-slate-100">
       <JsonLd data={applicationSchema} />
 
-      <section className="relative border-b border-slate-800/80 bg-[#09121d]">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_78%_18%,rgba(34,211,238,0.1),transparent_32%),radial-gradient(circle_at_18%_0%,rgba(163,230,53,0.06),transparent_25%)]" />
+      <section className="relative border-b border-slate-800/80 bg-slate-950">
+        <div className="pointer-events-none absolute inset-0 hero-wash" />
         <div className="container-page relative py-10 sm:py-14 lg:py-20">
           <nav
             className="flex items-center gap-2 text-xs font-medium text-slate-400"
@@ -147,7 +147,7 @@ export default function IdeExtensionPage() {
           >
             <Link
               href="/"
-              className="rounded-sm transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
+              className="rounded-sm transition hover:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
             >
               SoterAI
             </Link>
@@ -169,7 +169,7 @@ export default function IdeExtensionPage() {
                 </span>
               </div>
 
-              <h1 className="mt-6 max-w-2xl text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
+              <h1 className="mt-6 max-w-2xl text-4xl font-bold leading-[1.05] tracking-tight text-slate-100 sm:text-5xl lg:text-6xl">
                 Build with AI Without Exposing Your Private Data.
               </h1>
               <p className="mt-6 max-w-xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
@@ -204,7 +204,7 @@ export default function IdeExtensionPage() {
 
             <figure className="relative lg:pl-4">
               <div className="absolute -inset-5 bg-cyan/5 blur-3xl" aria-hidden="true" />
-              <div className="relative overflow-hidden border border-slate-700/90 bg-[#0d1724] p-2 shadow-[0_28px_80px_rgba(0,0,0,0.5)] sm:p-3">
+              <div className="relative overflow-hidden border border-slate-800 bg-white p-2 shadow-elevation-4 sm:p-3">
                 <div
                   className="flex items-center gap-1.5 border-b border-slate-800 px-2 pb-2.5"
                   aria-hidden="true"
@@ -239,7 +239,7 @@ export default function IdeExtensionPage() {
         <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
           <div className="max-w-2xl">
             <p className="eyebrow">Pick your editor</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-100 sm:text-4xl">
               One guard. Six familiar editors.
             </h2>
             <p className="mt-4 text-sm leading-6 text-slate-300 sm:text-base">
@@ -261,14 +261,14 @@ export default function IdeExtensionPage() {
             return (
               <article
                 key={editor.name}
-                className="group flex min-w-0 flex-col border border-slate-800 bg-[#0b1420] p-5 transition hover:border-slate-700 hover:bg-[#0d1825] sm:p-6"
+                className="group flex min-w-0 flex-col border border-slate-800 bg-slate-950 p-5 transition hover:border-slate-700 hover:bg-slate-900 sm:p-6"
               >
                 <div className="flex items-start gap-3">
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center border border-slate-700 bg-slate-900 text-cyan transition group-hover:border-cyan/40">
                     <Icon className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <div className="min-w-0 flex-1">
-                    <h3 className="font-semibold text-white">{editor.name}</h3>
+                    <h3 className="font-semibold text-slate-100">{editor.name}</h3>
                     <p className="mt-1 text-xs text-slate-400">{editor.summary}</p>
                   </div>
                   <span
@@ -299,7 +299,7 @@ export default function IdeExtensionPage() {
 
                 <a
                   href={editor.deepLink}
-                  className="mt-4 inline-flex min-h-11 items-center justify-center gap-2 bg-cyan px-4 py-2.5 text-sm font-bold text-ink transition hover:bg-cyan/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#0b1420]"
+                  className="mt-4 inline-flex min-h-11 items-center justify-center gap-2 bg-cyan px-4 py-2.5 text-sm font-bold text-white transition hover:bg-cyan/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan focus-visible:ring-offset-2"
                 >
                   Open in {editor.name} <ArrowRight className="h-4 w-4" aria-hidden="true" />
                 </a>
@@ -307,7 +307,7 @@ export default function IdeExtensionPage() {
                   href={editor.listingUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 inline-flex items-center justify-center gap-1.5 rounded-sm text-xs font-semibold text-slate-300 transition hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
+                  className="mt-3 inline-flex items-center justify-center gap-1.5 rounded-sm text-xs font-semibold text-slate-300 transition hover:text-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
                 >
                   {editor.listingLabel} fallback{' '}
                   <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
@@ -320,9 +320,9 @@ export default function IdeExtensionPage() {
           })}
         </div>
 
-        <div className="mt-5 flex flex-col justify-between gap-4 border border-slate-800 bg-[#0b1420] p-5 sm:flex-row sm:items-center">
+        <div className="mt-5 flex flex-col justify-between gap-4 border border-slate-800 bg-slate-950 p-5 sm:flex-row sm:items-center">
           <div>
-            <p className="text-sm font-semibold text-white">Offline or controlled deployment</p>
+            <p className="text-sm font-semibold text-slate-100">Offline or controlled deployment</p>
             <p className="mt-1 text-xs leading-5 text-slate-400">
               Download the exact Open VSX package and verify its registry-provided SHA-256 checksum.
             </p>
@@ -338,11 +338,11 @@ export default function IdeExtensionPage() {
         </div>
       </section>
 
-      <section className="border-y border-slate-800 bg-[#09121d]">
+      <section className="border-y border-slate-800 bg-slate-950">
         <div className="container-page py-16 sm:py-20">
           <div className="max-w-2xl">
             <p className="eyebrow">Three-step setup</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-100 sm:text-4xl">
               From install to useful protection in minutes.
             </h2>
           </div>
@@ -369,10 +369,10 @@ export default function IdeExtensionPage() {
             ].map((item) => {
               const Icon = item.icon;
               return (
-                <li key={item.step} className="relative bg-[#0b1420] p-6 sm:p-8">
+                <li key={item.step} className="relative bg-slate-950 p-6 sm:p-8">
                   <span className="font-mono text-xs font-bold text-cyan">{item.step}</span>
                   <Icon className="mt-8 h-6 w-6 text-lime" aria-hidden="true" />
-                  <h3 className="mt-4 text-lg font-semibold text-white">{item.title}</h3>
+                  <h3 className="mt-4 text-lg font-semibold text-slate-100">{item.title}</h3>
                   <p className="mt-2 text-sm leading-6 text-slate-300">{item.copy}</p>
                 </li>
               );
@@ -385,7 +385,7 @@ export default function IdeExtensionPage() {
         <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:gap-16">
           <div>
             <p className="eyebrow">Protection you can inspect</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-100 sm:text-4xl">
               Less blind trust. More informed decisions.
             </h2>
             <p className="mt-5 text-sm leading-7 text-slate-300 sm:text-base">
@@ -397,12 +397,12 @@ export default function IdeExtensionPage() {
             {PROTECTION_LAYERS.map((item) => {
               const Icon = item.icon;
               return (
-                <article key={item.title} className="bg-[#0b1420] p-6">
+                <article key={item.title} className="bg-slate-950 p-6">
                   <div className="flex items-center justify-between">
                     <Icon className="h-5 w-5 text-cyan" aria-hidden="true" />
                     <span className="font-mono text-[10px] text-slate-500">{item.number}</span>
                   </div>
-                  <h3 className="mt-7 font-semibold text-white">{item.title}</h3>
+                  <h3 className="mt-7 font-semibold text-slate-100">{item.title}</h3>
                   <p className="mt-2 text-sm leading-6 text-slate-300">{item.copy}</p>
                 </article>
               );
@@ -417,7 +417,7 @@ export default function IdeExtensionPage() {
           <div className="grid gap-5 md:grid-cols-[auto_1fr] md:gap-6">
             <ShieldCheck className="h-7 w-7 text-amber-300" aria-hidden="true" />
             <div>
-              <h2 id="coverage-heading" className="text-lg font-semibold text-white">
+              <h2 id="coverage-heading" className="text-lg font-semibold text-slate-100">
                 Clear coverage, including the boundaries
               </h2>
               <p className="mt-3 max-w-4xl text-sm leading-6 text-slate-300">
@@ -431,12 +431,12 @@ export default function IdeExtensionPage() {
         </aside>
       </section>
 
-      <section className="border-y border-slate-800 bg-[#09121d]">
+      <section className="border-y border-slate-800 bg-slate-950">
         <div className="container-page py-16 sm:py-20">
           <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:gap-16">
             <div>
               <p className="eyebrow">For security-minded teams</p>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-100 sm:text-4xl">
                 Local by default. Governed when you need it.
               </h2>
               <p className="mt-5 text-sm leading-7 text-slate-300 sm:text-base">
@@ -456,9 +456,9 @@ export default function IdeExtensionPage() {
               {DEPLOYMENT_CONTROLS.map((item) => {
                 const Icon = item.icon;
                 return (
-                  <article key={item.title} className="bg-[#0b1420] p-5 sm:p-6">
+                  <article key={item.title} className="bg-slate-950 p-5 sm:p-6">
                     <Icon className="h-5 w-5 text-cyan" aria-hidden="true" />
-                    <h3 className="mt-5 text-sm font-semibold text-white">{item.title}</h3>
+                    <h3 className="mt-5 text-sm font-semibold text-slate-100">{item.title}</h3>
                     <p className="mt-2 text-xs leading-5 text-slate-300">{item.copy}</p>
                   </article>
                 );
@@ -494,7 +494,7 @@ export default function IdeExtensionPage() {
               href={SOURCE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-slate-300 transition hover:text-white"
+              className="inline-flex items-center gap-2 text-slate-300 transition hover:text-slate-100"
             >
               <Github className="h-4 w-4" aria-hidden="true" /> Source
             </a>
@@ -502,11 +502,11 @@ export default function IdeExtensionPage() {
               href={ISSUE_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-slate-300 transition hover:text-white"
+              className="inline-flex items-center gap-2 text-slate-300 transition hover:text-slate-100"
             >
               Report an issue <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
             </a>
-            <Link href="/support" className="text-slate-300 transition hover:text-white">
+            <Link href="/support" className="text-slate-300 transition hover:text-slate-100">
               Support
             </Link>
           </div>

@@ -209,7 +209,7 @@ export function LiveThreatConsole() {
   return (
     <div
       aria-hidden="true"
-      className="card animate-float-y overflow-hidden p-0 shadow-glow"
+      className="card animate-float-y overflow-hidden p-0 shadow-elevation-3"
     >
       {/* Title bar */}
       <div className="flex items-center justify-between gap-4 border-b border-slate-800 bg-slate-950/80 px-5 py-3.5">

@@ -16,7 +16,7 @@ export function TourTrigger() {
   return (
     <button
       onClick={startTour}
-      className="group fixed bottom-[132px] right-5 z-50 flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan to-blue-400 p-3 text-black shadow-lg shadow-cyan/20 transition-all hover:scale-105 hover:shadow-xl hover:shadow-cyan/30 lg:right-8"
+      className="group fixed bottom-[132px] right-5 z-50 flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan to-blue-400 p-3 text-white shadow-lg shadow-cyan/20 transition-all hover:scale-105 hover:shadow-xl hover:shadow-cyan/30 lg:right-8"
       aria-label="Start guided tour"
       title={completed ? "Restart the dashboard tour" : "Take the dashboard tour"}
     >

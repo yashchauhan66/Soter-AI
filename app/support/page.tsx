@@ -90,7 +90,7 @@ export default function SupportPage() {
         </p>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {integrations.map((i) => (
-            <Link key={i.name} href={i.href} className="card block p-5 hover:border-slate-600">
+            <Link key={i.name} href={i.href} className="card card-interactive block p-5">
               <h3 className="font-semibold">{i.name}</h3>
               <p className="mt-1 text-sm text-slate-200">{i.note}</p>
               <span className="mt-3 inline-block text-sm text-cyan">

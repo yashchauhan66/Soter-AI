@@ -124,14 +124,14 @@ const STEPS = [
 
 export default function StudentDiscountPage() {
   return (
-    <main className="bg-[#080f19]">
+    <main className="bg-white">
       <JsonLd data={studentSchema} />
 
       {/* Hero */}
-      <section className="relative overflow-hidden border-b border-slate-800 bg-gradient-to-b from-[#0b1420] via-[#080f19] to-[#080f19]">
+      <section className="relative overflow-hidden hero-wash border-b border-slate-800">
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[radial-gradient(60%_50%_at_50%_0%,rgba(34,211,238,0.15),transparent)]"
+          className="absolute inset-0"
         />
         <div className="container-page relative py-16 sm:py-20 lg:py-24">
           <div className="flex flex-col items-center text-center">
@@ -139,7 +139,7 @@ export default function StudentDiscountPage() {
               <ShieldCheck size={14} aria-hidden="true" />
               Free for everyone · Worldwide
             </span>
-            <h1 className="mt-6 max-w-3xl text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            <h1 className="mt-6 max-w-3xl text-4xl font-extrabold tracking-tight text-slate-100 sm:text-5xl lg:text-6xl">
               Your AI coding assistant&apos;s{" "}
               <span className="bg-gradient-to-r from-cyan to-emerald-300 bg-clip-text text-transparent">
                 security blanket
@@ -148,11 +148,11 @@ export default function StudentDiscountPage() {
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
               SoterAI IDE Guard scans your code, selections, and prompts for secrets, PII, and
-              prompt injection — <strong className="text-white">100% locally</strong> — before they
-              reach ChatGPT, Claude, Cursor, or Copilot. <strong className="text-white">100% free</strong>{" "}
+              prompt injection — <strong className="text-slate-100">100% locally</strong> — before they
+              reach ChatGPT, Claude, Cursor, or Copilot. <strong className="text-slate-100">100% free</strong>{" "}
               for every developer.
             </p>
-            <p className="mt-4 inline-flex max-w-2xl flex-wrap items-center justify-center gap-2 rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-5 py-3 text-base font-semibold text-white">
+            <p className="mt-4 inline-flex max-w-2xl flex-wrap items-center justify-center gap-2 rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-5 py-3 text-base font-semibold text-slate-100">
               <Zap size={18} className="text-emerald-300" aria-hidden="true" />
               <span>
                 Risk-free <span className="text-emerald-300">vibe coding</span> — your secrets never
@@ -162,14 +162,14 @@ export default function StudentDiscountPage() {
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row">
               <Link
                 href="#editors"
-                className="inline-flex items-center gap-2 rounded-lg bg-cyan px-6 py-3.5 text-base font-bold text-slate-950 transition hover:bg-cyan/90"
+                className="inline-flex items-center gap-2 rounded-lg bg-cyan px-6 py-3.5 text-base font-bold text-white transition hover:bg-cyan/90"
               >
                 <Download size={18} aria-hidden="true" />
                 Install free — no signup needed
               </Link>
               <Link
                 href="/extensions/ide"
-                className="inline-flex items-center gap-2 rounded-lg border border-slate-700 px-6 py-3.5 text-base font-semibold text-white transition hover:border-slate-500 hover:bg-slate-900"
+                className="inline-flex items-center gap-2 rounded-lg border border-slate-700 px-6 py-3.5 text-base font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-900"
               >
                 Learn more about IDE Guard
               </Link>
@@ -193,7 +193,7 @@ export default function StudentDiscountPage() {
                 <a
                   key={editor.name}
                   href={editor.deepLink}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-slate-700 bg-slate-900/60 px-4 py-1.5 text-sm font-semibold text-white transition hover:border-cyan/50 hover:bg-cyan/10"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-slate-700 bg-slate-900/60 px-4 py-1.5 text-sm font-semibold text-slate-100 transition hover:border-cyan/50 hover:bg-cyan/10"
                 >
                   <Download size={13} className="text-cyan" aria-hidden="true" />
                   {editor.name}
@@ -207,7 +207,7 @@ export default function StudentDiscountPage() {
       {/* Perks */}
       <section className="border-b border-slate-800">
         <div className="container-page py-16 lg:py-20">
-          <h2 className="text-center text-3xl font-bold text-white">
+          <h2 className="text-center text-3xl font-bold text-slate-100">
             Everything a developer needs
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-center text-slate-300">
@@ -222,7 +222,7 @@ export default function StudentDiscountPage() {
                 <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-cyan/10">
                   <perk.icon size={22} className="text-cyan" aria-hidden="true" />
                 </span>
-                <h3 className="mt-4 text-lg font-semibold text-white">{perk.title}</h3>
+                <h3 className="mt-4 text-lg font-semibold text-slate-100">{perk.title}</h3>
                 <p className="mt-2 text-sm leading-6 text-slate-300">{perk.copy}</p>
               </div>
             ))}
@@ -231,25 +231,25 @@ export default function StudentDiscountPage() {
       </section>
 
       {/* How to claim */}
-      <section className="border-b border-slate-800 bg-[#0b1420]">
+      <section className="border-b border-slate-800 bg-slate-950">
         <div className="container-page py-16 lg:py-20">
-          <h2 className="text-center text-3xl font-bold text-white">
+          <h2 className="text-center text-3xl font-bold text-slate-100">
             Get it in 4 steps, under 3 minutes
           </h2>
           <div className="mt-12 grid gap-6 md:grid-cols-4">
             {STEPS.map((s) => (
               <div key={s.step} className="relative rounded-2xl border border-slate-800 bg-slate-900/50 p-6">
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-cyan to-emerald-300 text-lg font-extrabold text-slate-950">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-cyan to-emerald-300 text-lg font-extrabold text-white">
                   {s.step}
                 </span>
-                <h3 className="mt-4 text-base font-semibold text-white">{s.title}</h3>
+                <h3 className="mt-4 text-base font-semibold text-slate-100">{s.title}</h3>
                 <p className="mt-2 text-sm leading-6 text-slate-300">{s.copy}</p>
               </div>
             ))}
           </div>
           <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center gap-3 rounded-2xl border border-cyan/20 bg-cyan/5 p-6 text-center">
             <p className="text-sm leading-6 text-slate-300">
-              <strong className="text-white">Docs-first:</strong> follow the official integration
+              <strong className="text-slate-100">Docs-first:</strong> follow the official integration
               guide to verify installs, understand scan coverage, and tune Safe Mode for your
               workflow.
             </p>
@@ -266,11 +266,11 @@ export default function StudentDiscountPage() {
       {/* Supported editors */}
       <section id="editors" className="border-b border-slate-800">
         <div className="container-page py-16 lg:py-20">
-          <h2 className="text-center text-3xl font-bold text-white">
+          <h2 className="text-center text-3xl font-bold text-slate-100">
             Works in every editor you love
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-center text-slate-300">
-            One extension, six editors. Click <strong className="text-white">Install now</strong> —
+            One extension, six editors. Click <strong className="text-slate-100">Install now</strong> —
             it opens the extension page directly inside your IDE.
           </p>
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -281,7 +281,7 @@ export default function StudentDiscountPage() {
               >
                 <div>
                   <div className="flex items-center justify-between gap-3">
-                    <p className="text-lg font-semibold text-white">{editor.name}</p>
+                    <p className="text-lg font-semibold text-slate-100">{editor.name}</p>
                     <span className="rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300">
                       {editor.status === "runtime-verified" ? "Verified" : "Available"}
                     </span>
@@ -292,7 +292,7 @@ export default function StudentDiscountPage() {
                 <div className="mt-5 flex flex-col gap-2">
                   <a
                     href={editor.deepLink}
-                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-cyan px-4 py-2.5 text-sm font-bold text-slate-950 transition hover:bg-cyan/90"
+                    className="inline-flex items-center justify-center gap-2 rounded-lg bg-cyan px-4 py-2.5 text-sm font-bold text-white transition hover:bg-cyan/90"
                   >
                     <Download size={16} aria-hidden="true" />
                     Install in {editor.name}
@@ -301,7 +301,7 @@ export default function StudentDiscountPage() {
                     href={editor.listingUrl}
                     target="_blank"
                     rel="noopener"
-                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-700 px-4 py-2 text-sm font-semibold text-white transition hover:border-slate-500 hover:bg-slate-900"
+                    className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-900"
                   >
                     View {editor.listingLabel} listing
                   </a>
@@ -319,7 +319,7 @@ export default function StudentDiscountPage() {
                 href={VSCODE_MARKETPLACE_URL}
                 target="_blank"
                 rel="noopener"
-                className="rounded-lg border border-slate-700 px-4 py-2 text-sm font-semibold text-white transition hover:border-slate-500 hover:bg-slate-900"
+                className="rounded-lg border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-900"
               >
                 VS Marketplace
               </a>
@@ -327,13 +327,13 @@ export default function StudentDiscountPage() {
                 href={OPEN_VSX_URL}
                 target="_blank"
                 rel="noopener"
-                className="rounded-lg border border-slate-700 px-4 py-2 text-sm font-semibold text-white transition hover:border-slate-500 hover:bg-slate-900"
+                className="rounded-lg border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-900"
               >
                 Open VSX
               </a>
               <a
                 href={DIRECT_VSIX_URL}
-                className="rounded-lg border border-slate-700 px-4 py-2 text-sm font-semibold text-white transition hover:border-slate-500 hover:bg-slate-900"
+                className="rounded-lg border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-900"
               >
                 Direct VSIX + SHA-256
               </a>
@@ -343,16 +343,16 @@ export default function StudentDiscountPage() {
       </section>
 
       {/* Why now */}
-      <section className="border-b border-slate-800 bg-[#0b1420]">
+      <section className="border-b border-slate-800 bg-slate-950">
         <div className="container-page py-16 lg:py-20">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="text-3xl font-bold text-white">Why every developer needs this now</h2>
+            <h2 className="text-3xl font-bold text-slate-100">Why every developer needs this now</h2>
             <p className="mt-4 text-lg leading-8 text-slate-300">
               68% of developers use AI assistants today. Your assignments, projects, and side
               projects flow through ChatGPT and Cursor — and with them, your API keys, database
               strings, and personal data. IDE Guard is the seatbelt for the AI era of coding.
             </p>
-            <p className="mx-auto mt-5 inline-flex max-w-2xl flex-wrap items-center justify-center gap-2 rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-5 py-3 text-base font-semibold text-white">
+            <p className="mx-auto mt-5 inline-flex max-w-2xl flex-wrap items-center justify-center gap-2 rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-5 py-3 text-base font-semibold text-slate-100">
               <Zap size={18} className="text-emerald-300" aria-hidden="true" />
               <span>
                 <span className="text-emerald-300">Vibe code freely</span> — API keys, secrets &
@@ -393,7 +393,7 @@ export default function StudentDiscountPage() {
       {/* FAQ */}
       <section className="border-b border-slate-800">
         <div className="container-page py-16 lg:py-20">
-          <h2 className="text-center text-3xl font-bold text-white">Free offer FAQ</h2>
+          <h2 className="text-center text-3xl font-bold text-slate-100">Free offer FAQ</h2>
           <div className="mx-auto mt-10 max-w-3xl space-y-4">
             {[
               {
@@ -425,7 +425,7 @@ export default function StudentDiscountPage() {
                 key={item.q}
                 className="group rounded-xl border border-slate-800 bg-slate-900/50 p-5"
               >
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-white">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-slate-100">
                   {item.q}
                   <span className="text-cyan transition group-open:rotate-45" aria-hidden="true">
                     +
@@ -442,10 +442,10 @@ export default function StudentDiscountPage() {
       <section className="relative overflow-hidden">
         <div
           aria-hidden="true"
-          className="absolute inset-0 bg-[radial-gradient(50%_60%_at_50%_100%,rgba(16,185,129,0.12),transparent)]"
+          className="absolute inset-0"
         />
         <div className="container-page relative py-16 text-center lg:py-20">
-          <h2 className="mx-auto max-w-2xl text-3xl font-bold text-white sm:text-4xl">
+          <h2 className="mx-auto max-w-2xl text-3xl font-bold text-slate-100 sm:text-4xl">
             Your future self will thank you
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-lg text-slate-300">
@@ -454,14 +454,14 @@ export default function StudentDiscountPage() {
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="#editors"
-              className="inline-flex items-center gap-2 rounded-lg bg-cyan px-6 py-3.5 text-base font-bold text-slate-950 transition hover:bg-cyan/90"
+              className="inline-flex items-center gap-2 rounded-lg bg-cyan px-6 py-3.5 text-base font-bold text-white transition hover:bg-cyan/90"
             >
               <Download size={18} aria-hidden="true" />
               Install free — no signup needed
             </Link>
             <Link
               href="/extensions/ide"
-              className="inline-flex items-center gap-2 rounded-lg border border-slate-700 px-6 py-3.5 text-base font-semibold text-white transition hover:border-slate-500 hover:bg-slate-900"
+              className="inline-flex items-center gap-2 rounded-lg border border-slate-700 px-6 py-3.5 text-base font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-900"
             >
               Learn more about IDE Guard
             </Link>

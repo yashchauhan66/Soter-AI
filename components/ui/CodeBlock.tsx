@@ -62,7 +62,7 @@ export function CodeBlock({ children, language, className, title, showLineNumber
   // Remove trailing empty line
   if (lines[lines.length - 1] === "") lines.pop();
 
-  const classes = `mt-4 overflow-hidden rounded-xl border border-slate-800 bg-[#0d1117] text-sm ${className ?? ""}`;
+  const classes = `mt-4 overflow-hidden rounded-xl border border-slate-800 bg-slate-950 text-sm ${className ?? ""}`;
 
   return (
     <div className={classes}>

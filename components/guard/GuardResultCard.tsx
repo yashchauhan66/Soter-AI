@@ -1,4 +1,5 @@
 import type { GuardResult } from "@/lib/guard/types";
+import { TriangleAlert } from "lucide-react";
 import { RiskBadge } from "./RiskBadge";
 import { RiskScore } from "./RiskScore";
 import { RedactedTextView } from "./RedactedTextView";
@@ -9,13 +10,17 @@ export function GuardResultCard({ result }: { result: GuardResult }) {
 
   return (
     <div className="card p-6">
+      {/* Warn-mode notice. Uses the shared `.warn-card` callout instead of a
+          hand-rolled yellow box, and a real icon instead of the ⚠️ emoji — an
+          emoji renders at a different size and colour on every OS, which is why
+          this notice looked different on Windows than on macOS. */}
       {hasWarnings && (
-        <div className="mb-5 rounded-xl border border-yellow-500/30 bg-yellow-500/10 p-4">
-          <div className="flex items-start gap-3">
-            <span className="mt-0.5 text-lg">⚠️</span>
+        <div className="warn-card mb-5">
+          <div className="flex items-start gap-2.5">
+            <TriangleAlert size={15} aria-hidden="true" className="mt-0.5 shrink-0 text-amber-400" />
             <div>
-              <p className="font-semibold text-yellow-300">Warning mode active</p>
-              <p className="mt-1 text-sm text-yellow-200/70">
+              <p className="font-semibold text-amber-200">Warning mode active</p>
+              <p className="mt-1 text-amber-100/70">
                 Content was flagged but allowed through with a warning. The original text has been
                 replaced with a security notice. Review findings below for details.
               </p>
@@ -23,11 +28,12 @@ export function GuardResultCard({ result }: { result: GuardResult }) {
           </div>
         </div>
       )}
+
       <div className="flex flex-wrap items-start justify-between gap-5">
         <RiskScore score={result.riskScore} />
         <div className="text-right">
           <RiskBadge action={result.action} />
-          <p className="mt-2 text-sm text-slate-300">
+          <p className="mt-2 text-sm text-slate-400">
             {hasWarnings
               ? "Request allowed with warning"
               : result.allowed
@@ -36,38 +42,38 @@ export function GuardResultCard({ result }: { result: GuardResult }) {
           </p>
         </div>
       </div>
-      <p className="mt-6 rounded-xl bg-slate-950/60 p-4 text-sm leading-6 text-slate-300">
-        {result.reason}
-      </p>
+
+      <p className="surface mt-6 p-4 text-sm leading-6 text-slate-300">{result.reason}</p>
+
       <div className="mt-5 flex flex-wrap gap-2">
         {result.riskTypes.map((type) => (
-          <span
-            key={type}
-            className="rounded-lg border border-slate-700 px-2.5 py-1 text-xs text-slate-300"
-          >
+          <span key={type} className="badge-neutral">
             {type.replaceAll("_", " ")}
           </span>
         ))}
       </div>
+
       {result.findings.length > 0 && (
         <div className="mt-6">
-          <p className="mb-3 text-xs font-bold uppercase tracking-wider text-slate-300">Findings</p>
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-micro text-slate-500">Findings</p>
           <div className="space-y-2">
             {result.findings.map((finding, index) => (
-              <div
-                key={`${finding.label}-${index}`}
-                className="rounded-xl border border-slate-800 p-4"
-              >
+              <div key={`${finding.label}-${index}`} className="surface p-4">
                 <div className="flex justify-between gap-4">
-                  <p className="font-medium">{finding.label}</p>
-                  <span className="text-xs font-bold text-cyan">{finding.severity}</span>
+                  <p className="font-medium text-slate-100">{finding.label}</p>
+                  {/* Severity was `text-cyan` — the brand colour applied to a
+                      severity value, which inverts its meaning. */}
+                  <span className="text-xs font-semibold uppercase tracking-micro text-slate-500">
+                    {finding.severity}
+                  </span>
                 </div>
-                <p className="mt-1 text-sm text-slate-200">{finding.message}</p>
+                <p className="mt-1 text-sm leading-6 text-slate-400">{finding.message}</p>
               </div>
             ))}
           </div>
         </div>
       )}
+
       <div className="mt-6">
         <RedactedTextView text={result.redactedText ?? result.safeText} />
       </div>

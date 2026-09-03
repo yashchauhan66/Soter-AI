@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Activity, ArrowUpRight, Github, Mail } from "lucide-react";
+import { Logo } from "@/components/layout/Logo";
 import { FOOTER_NAV, LEGAL_NAV } from "@/lib/navigation";
 
 /**
@@ -23,13 +23,13 @@ import { FOOTER_NAV, LEGAL_NAV } from "@/lib/navigation";
  */
 export function SiteFooter({ currentYear }: { currentYear: number }) {
   return (
-    <footer className="border-t border-slate-800/60 bg-slate-950/60 text-sm text-slate-300">
+    <footer className="border-t border-slate-800 bg-slate-950 text-sm text-slate-300">
       <div className="container-page py-14">
         <div className="grid gap-10 lg:grid-cols-[minmax(0,18rem)_1fr]">
           {/* Brand column */}
           <div>
             <Link href="/" aria-label="SoterAI home" className="inline-flex items-center">
-              <Image src="/logo.png" alt="SoterAI" width={97} height={34} className="h-8 w-auto" />
+              <Logo size={28} />
             </Link>
 
             <p className="mt-4 max-w-xs leading-6 text-slate-400">
@@ -74,7 +74,7 @@ export function SiteFooter({ currentYear }: { currentYear: number }) {
                 <ul className="mt-4 space-y-2.5">
                   {group.links.map((link) => (
                     <li key={link.href}>
-                      <Link href={link.href} className="text-slate-400 transition-colors hover:text-white">
+                      <Link href={link.href} className="text-slate-400 transition-colors hover:text-slate-100">
                         {link.label}
                       </Link>
                     </li>
@@ -93,7 +93,7 @@ export function SiteFooter({ currentYear }: { currentYear: number }) {
           <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs">
             {LEGAL_NAV.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="text-slate-400 transition-colors hover:text-white">
+                <Link href={link.href} className="text-slate-400 transition-colors hover:text-slate-100">
                   {link.label}
                 </Link>
               </li>
@@ -106,11 +106,11 @@ export function SiteFooter({ currentYear }: { currentYear: number }) {
         <p className="mt-6 max-w-3xl text-xs leading-5 text-slate-500">
           SoterAI reduces risk through defense in depth. It does not provide complete security, and published benchmarks
           are self-maintained rather than independently audited. See{" "}
-          <Link href="/limitations" className="font-medium text-slate-400 underline hover:text-white">
+          <Link href="/limitations" className="font-medium text-slate-400 underline hover:text-slate-100">
             known limitations
           </Link>{" "}
           and{" "}
-          <Link href="/benchmark" className="font-medium text-slate-400 underline hover:text-white">
+          <Link href="/benchmark" className="font-medium text-slate-400 underline hover:text-slate-100">
             benchmark methodology
           </Link>
           .

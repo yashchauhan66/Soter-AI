@@ -147,8 +147,8 @@ export function AdminCommandPalette({ counts }: { counts: AdminBadgeCounts }) {
 
   return (
     <div className="fixed inset-0 z-[60] flex items-start justify-center px-4 pt-[12vh]" role="dialog" aria-modal="true" aria-label="Admin command palette">
-      <button type="button" aria-label="Close command palette" onClick={close} className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
-      <div className="relative w-full max-w-xl overflow-hidden rounded-2xl border border-slate-700 bg-panel shadow-glow" onKeyDown={onListKeyDown}>
+      <button type="button" aria-label="Close command palette" onClick={close} className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" />
+      <div className="relative w-full max-w-xl overflow-hidden rounded-panel border border-slate-800 bg-panel shadow-elevation-4" onKeyDown={onListKeyDown}>
         <div className="flex items-center gap-3 border-b border-slate-800 px-4">
           <Search size={18} className="text-slate-300" />
           <input

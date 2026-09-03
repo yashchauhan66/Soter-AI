@@ -24,7 +24,19 @@ Yash Chauhan.**
 
 For production/SaaS/OEM/enterprise use, contact the Licensor:
 
-- **Yash Chauhan** — <add your email here>
+- **Yash Chauhan** — [soterai.in/contact-sales](https://soterai.in/contact-sales)
+
+## Why GitHub reports this repository as "NOASSERTION"
+
+GitHub detects licenses with [`licensee`](https://github.com/licensee/licensee), which
+only recognises the licenses catalogued on choosealicense.com. **BUSL-1.1 is not in
+that catalogue**, so GitHub's sidebar and API report `Other` / `NOASSERTION` for every
+Business Source License project — HashiCorp Terraform and Sentry included. This is a
+detector limitation, not a missing or ambiguous license.
+
+The authoritative terms are in [`LICENSE`](LICENSE). The SPDX identifier is
+**`BUSL-1.1`**, declared in `package.json` so npm, SBOM generators, and SCA tools
+resolve it correctly.
 
 ## Note on copyright registration
 

@@ -373,7 +373,7 @@ Webhook ──► SoterAI ─┤
             href={NODE_NPM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-lg bg-cyan px-6 py-3 text-sm font-semibold text-ink transition hover:opacity-90"
+            className="inline-flex items-center gap-2 rounded-lg bg-cyan px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90"
           >
             View the node <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>

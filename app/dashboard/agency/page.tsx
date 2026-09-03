@@ -43,7 +43,7 @@ export default async function AgencyOverviewPage() {
       {clients.length ? (
         <div className="mt-4 grid gap-4 md:grid-cols-2">
           {clients.map((client) => (
-            <Link key={client.id} href={`/dashboard/agency/clients/${client.id}`} className="card block p-5 transition hover:border-cyan/40">
+            <Link key={client.id} href={`/dashboard/agency/clients/${client.id}`} className="card card-interactive block p-5">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <h3 className="text-xl font-semibold">{client.name}</h3>
@@ -62,7 +62,7 @@ export default async function AgencyOverviewPage() {
         </div>
       ) : (
         <div className="card mt-4 p-10 text-center">
-          <Users className="mx-auto text-slate-700" size={42} />
+          <Users className="mx-auto text-slate-500" size={42} />
           <p className="mt-4 font-semibold">No clients yet</p>
           <p className="mt-2 text-sm text-slate-300">Add a client to issue scoped projects, keys, badges, and reports.</p>
           <Link href="/dashboard/agency/clients/new" className="button-primary mt-5 inline-flex gap-2"><Plus size={16} /> Add first client</Link>

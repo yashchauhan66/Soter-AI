@@ -11,7 +11,7 @@ export default function DemoPage(){
   useEffect(() => {
     document.title = "AI Security Demos | SoterAI";
   }, []);
-  return <main className="container-page py-16"><p className="eyebrow">Product demos</p><h1 className="mt-2 text-4xl font-bold">Explore guarded AI workflows</h1><p className="mt-4 max-w-3xl text-slate-200">These demos illustrate risk reduction and defense-in-depth behavior. They do not demonstrate offensive exploitation or guarantee complete detection.</p><div className="mt-10 grid gap-4 md:grid-cols-2">{demos.map(([title,copy,href])=><Link className="card p-6 hover:border-cyan/50" href={href} key={title}><h2 className="text-xl font-semibold">{title}</h2><p className="mt-2 text-sm text-slate-200">{copy}</p></Link>)}</div>      {/* Demo Video Section */}
+  return <main className="container-page py-16"><p className="eyebrow">Product demos</p><h1 className="mt-2 text-4xl font-bold">Explore guarded AI workflows</h1><p className="mt-4 max-w-3xl text-slate-200">These demos illustrate risk reduction and defense-in-depth behavior. They do not demonstrate offensive exploitation or guarantee complete detection.</p><div className="mt-10 grid gap-4 md:grid-cols-2">{demos.map(([title,copy,href])=><Link className="card card-interactive p-6" href={href} key={title}><h2 className="text-xl font-semibold">{title}</h2><p className="mt-2 text-sm text-slate-200">{copy}</p></Link>)}</div>      {/* Demo Video Section */}
       <section id="video" className="mt-16 scroll-mt-20 border-t border-slate-800 pt-10">
         <p className="eyebrow text-center">Live walkthrough</p>
         <h2 className="mt-2 text-center text-3xl font-bold">See SoterAI in action</h2>

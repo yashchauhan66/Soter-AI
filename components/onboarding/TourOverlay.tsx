@@ -171,7 +171,7 @@ export function TourOverlay() {
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 z-[99] bg-black/60 backdrop-blur-sm transition-opacity duration-300"
+        className="fixed inset-0 z-[99] bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300"
         role="dialog"
         aria-modal="true"
         aria-label="Dashboard feature tour"
@@ -180,7 +180,7 @@ export function TourOverlay() {
       {/* Highlight ring around the target element */}
       {highlightRect && (
         <div
-          className="fixed z-[100] rounded-2xl border-2 border-cyan/50 shadow-[0_0_0_4px_rgba(49,215,200,0.15)] transition-all duration-300"
+          className="fixed z-[100] rounded-panel border-2 border-cyan/50 shadow-ring-brand transition-all duration-300"
           style={{
             left: `${highlightRect.left - 4}px`,
             top: `${highlightRect.top - 4}px`,
@@ -204,7 +204,7 @@ export function TourOverlay() {
           {/* Close button */}
           <button
             onClick={endTour}
-            className="absolute right-3 top-3 rounded-lg p-1 text-slate-300 transition hover:bg-slate-800 hover:text-white"
+            className="absolute right-3 top-3 rounded-lg p-1 text-slate-300 transition hover:bg-slate-800 hover:text-slate-100"
             aria-label="Close tour"
           >
             <X size={16} />
@@ -236,7 +236,7 @@ export function TourOverlay() {
           <div className="flex items-start gap-3">
             <span className="mt-0.5 text-2xl">{step.icon}</span>
             <div className="min-w-0 flex-1">
-              <h3 className="text-lg font-bold text-white">{step.title}</h3>
+              <h3 className="text-lg font-bold text-slate-100">{step.title}</h3>
               <p className="mt-2 text-sm leading-6 text-slate-300">
                 {step.description}
               </p>
@@ -279,7 +279,7 @@ export function TourOverlay() {
 
               <button
                 onClick={nextStep}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-cyan px-4 py-2 text-sm font-bold text-black transition hover:bg-cyan/90"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-cyan px-4 py-2 text-sm font-bold text-white transition hover:bg-cyan/90"
               >
                 {isLast ? (
                   <>

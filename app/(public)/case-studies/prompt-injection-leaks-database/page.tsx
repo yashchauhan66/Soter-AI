@@ -14,7 +14,7 @@ export default function CaseStudyPage() {
           <div className="flex items-center gap-2 text-rose-400 text-sm font-bold tracking-wider uppercase mb-4">
             <AlertTriangle className="w-4 h-4" /> Threat Analysis
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-6">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-100 leading-tight mb-6">
             How a Prompt Injection Leaked an Entire Enterprise Database
           </h1>
           <p className="text-xl text-slate-200 leading-relaxed">
@@ -28,7 +28,7 @@ export default function CaseStudyPage() {
           </div>
         </header>
 
-        <article className="prose prose-invert prose-slate prose-a:text-cyan-400 prose-headings:text-white max-w-none space-y-8 text-slate-300 leading-loose">
+        <article className="prose prose-slate prose-a:text-cyan prose-headings:text-slate-100 max-w-none space-y-8 text-slate-300 leading-loose">
           <p>
             In early 2026, a mid-sized healthcare tech company launched an internal HR chatbot. The goal was simple: allow employees to query their PTO balances and company policies using natural language. The architecture was standard—a Retrieval-Augmented Generation (RAG) pipeline connected to an LLM, searching an internal database.
           </p>
@@ -37,7 +37,7 @@ export default function CaseStudyPage() {
             Within 72 hours of launch, the bot had leaked the salary information and home addresses of over 400 employees. Here is the autopsy of that breach.
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12 mb-6">The Anatomy of the Attack</h2>
+          <h2 className="text-2xl font-bold text-slate-100 mt-12 mb-6">The Anatomy of the Attack</h2>
           
           <p>
             The attack didn't require complex hacking or network infiltration. It was executed purely through English text. An employee, curious about the bot's capabilities, entered the following prompt:
@@ -51,7 +51,7 @@ export default function CaseStudyPage() {
             The LLM, designed to be helpful and compliant, processed the instruction. Because the chatbot's backend executed the LLM's generated SQL queries directly against the database to fetch the RAG context, it pulled the requested data. The LLM then formatted it nicely and served it back to the user.
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12 mb-6">Why Standard Defenses Failed</h2>
+          <h2 className="text-2xl font-bold text-slate-100 mt-12 mb-6">Why Standard Defenses Failed</h2>
           
           <ul className="list-disc pl-6 space-y-4">
             <li><strong>System Prompts are not Security Boundaries:</strong> The developers had added "Never reveal other employees' data" to the system prompt. However, LLMs are probabilistic models. A strong adversarial prompt easily overrode the initial instructions.</li>
@@ -67,7 +67,7 @@ export default function CaseStudyPage() {
             </p>
           </div>
 
-          <h2 className="text-2xl font-bold text-white mt-12 mb-6">Stage 1: Intent Guard (Input Phase)</h2>
+          <h2 className="text-2xl font-bold text-slate-100 mt-12 mb-6">Stage 1: Intent Guard (Input Phase)</h2>
           <p>
             Before the user's prompt ever reached the LLM, SoterAI's Intent Guard would have analyzed it. SoterAI doesn't just rely on keyword matching; it uses specialized, lightweight ML models to detect the semantic intent of a prompt injection or jailbreak attempt.
           </p>
@@ -75,7 +75,7 @@ export default function CaseStudyPage() {
             The prompt would have been flagged with <code>PROMPT_INJECTION</code> and blocked with an HTTP 403, logging the event in the security dashboard instantly.
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12 mb-6">Stage 2: PII Redaction (Output Phase)</h2>
+          <h2 className="text-2xl font-bold text-slate-100 mt-12 mb-6">Stage 2: PII Redaction (Output Phase)</h2>
           <p>
             Even if the prompt had somehow bypassed input filters (a zero-day injection), SoterAI's Output Guard acts as a final fail-safe. It scans the LLM's generated response in milliseconds.
           </p>
@@ -87,15 +87,15 @@ export default function CaseStudyPage() {
 
         <div className="mt-16 bg-gradient-to-br from-slate-900 to-cyan-950 border border-cyan-900/50 rounded-3xl p-8 md:p-12 text-center shadow-2xl relative overflow-hidden">
           <Database className="absolute -bottom-10 -right-10 w-64 h-64 text-cyan-500/5" />
-          <h2 className="text-3xl font-bold text-white mb-4 relative z-10">Secure your AI Agents today</h2>
+          <h2 className="text-3xl font-bold text-slate-100 mb-4 relative z-10">Secure your AI Agents today</h2>
           <p className="text-slate-200 mb-8 max-w-xl mx-auto relative z-10">
             Don't let your RAG application become a data liability. Integrate SoterAI with just two lines of code.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10">
-            <Link href="/signup" className="px-8 py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold rounded-xl transition-all shadow-lg shadow-cyan-500/25 flex items-center gap-2">
+            <Link href="/signup" className="px-8 py-3 bg-cyan hover:bg-cyan-press text-white font-bold rounded-xl transition-all shadow-lg shadow-cyan-500/25 flex items-center gap-2">
               Start Free Trial <ArrowRight className="w-5 h-5" />
             </Link>
-            <Link href="/contact-sales" className="px-8 py-3 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-xl transition-all">
+            <Link href="/contact-sales" className="px-8 py-3 bg-slate-800 hover:bg-slate-700 text-slate-100 font-semibold rounded-xl transition-all">
               Book a Demo
             </Link>
           </div>

@@ -4,4 +4,4 @@ const resources = [["Agency pitch deck", "/docs/sales/agency-pitch.md"],["Client
 export default function PartnerResourcesPage() { return <div><PageHeader
         eyebrow="Enablement"
         title="Partner resources"
-      /><div className="mt-7 grid gap-4 md:grid-cols-2">{resources.map(([title,href]) => <Link className="card p-5 font-semibold hover:border-cyan/50" href={href} key={title}>{title}</Link>)}</div></div>; }
+      /><div className="mt-7 grid gap-4 md:grid-cols-2">{resources.map(([title,href]) => <Link className="card card-interactive p-5 font-semibold" href={href} key={title}>{title}</Link>)}</div></div>; }

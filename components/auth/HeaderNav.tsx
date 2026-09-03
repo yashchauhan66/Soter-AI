@@ -17,7 +17,11 @@ import { SignOutButton } from "./SignOutButton";
  *
  * The "Get API Key" affordance is deliberately kept: it is the highest-intent
  * action for a developer audience, and pointing signed-out visitors at /signup
- * rather than a login wall preserves the funnel.
+ * rather than a login wall preserves the funnel. It is no longer amber, though —
+ * an amber-bordered, amber-filled, amber-text button sat next to the teal primary
+ * CTA in every header, which made the header the only place in the product with
+ * two competing accent colours and left it ambiguous which one was the primary
+ * action. It is now a standard secondary button.
  */
 export function HeaderNav() {
   const { data: session, status } = useSession();
@@ -32,12 +36,9 @@ export function HeaderNav() {
       <DesktopNav />
 
       {/* Divider only appears once both nav and actions are on screen. */}
-      <span className="mx-2 hidden h-5 w-px bg-slate-700/60 lg:block" aria-hidden="true" />
+      <span className="mx-2 hidden h-5 w-px bg-slate-800 lg:block" aria-hidden="true" />
 
-      <Link
-        href={apiKeyHref}
-        className="hidden items-center gap-1.5 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-sm font-medium text-amber-200 transition-colors hover:bg-amber-500/20 sm:inline-flex"
-      >
+      <Link href={apiKeyHref} className="button-secondary button-sm hidden sm:inline-flex">
         <KeyRound size={14} aria-hidden="true" />
         {apiKeyLabel}
       </Link>
@@ -64,7 +65,7 @@ export function HeaderNav() {
         <>
           <Link
             href="/signin"
-            className="hidden items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition-colors hover:bg-slate-800/60 hover:text-white lg:inline-flex"
+            className="hidden items-center gap-1.5 rounded-md px-3 py-2 text-sm font-medium text-slate-300 transition-colors hover:bg-slate-800/60 hover:text-slate-100 lg:inline-flex"
           >
             <LogIn size={14} aria-hidden="true" /> Sign in
           </Link>

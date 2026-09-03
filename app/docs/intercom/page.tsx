@@ -44,16 +44,16 @@ export default function IntercomDocsPage() {
           <h2 className="text-2xl font-bold">Integration pattern</h2>
           <div className="mt-4 space-y-3">
             <div className="rounded-lg border border-slate-800 p-4">
-              <span className="font-semibold text-white">1.</span> Guard user messages before they reach the AI assistant
+              <span className="font-semibold text-slate-100">1.</span> Guard user messages before they reach the AI assistant
             </div>
             <div className="rounded-lg border border-slate-800 p-4">
-              <span className="font-semibold text-white">2.</span> Guard AI-generated replies before they reach customers
+              <span className="font-semibold text-slate-100">2.</span> Guard AI-generated replies before they reach customers
             </div>
             <div className="rounded-lg border border-slate-800 p-4">
-              <span className="font-semibold text-white">3.</span> Redact PII/secrets before saving examples for review
+              <span className="font-semibold text-slate-100">3.</span> Redact PII/secrets before saving examples for review
             </div>
             <div className="rounded-lg border border-slate-800 p-4">
-              <span className="font-semibold text-white">4.</span> Use monthly reports for security evidence and compliance
+              <span className="font-semibold text-slate-100">4.</span> Use monthly reports for security evidence and compliance
             </div>
           </div>
         </section>

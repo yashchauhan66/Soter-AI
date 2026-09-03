@@ -204,7 +204,7 @@ export function DocsSearch() {
             if (event.target === event.currentTarget) close();
           }}
         >
-          <div className="animate-overlay-in absolute inset-0 bg-ink/80 backdrop-blur-sm" aria-hidden="true" />
+          <div className="animate-overlay-in absolute inset-0 bg-slate-900/60 backdrop-blur-sm" aria-hidden="true" />
 
           <div
             role="dialog"

@@ -9,8 +9,12 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: "/",
     display: "standalone",
     display_override: ["window-controls-overlay", "minimal-ui"],
-    background_color: "#08111f",
-    theme_color: "#31d7c8",
+    // Tracks --surface-0 in app/globals.css. The PWA splash screen paints this
+    // before the app renders, so a stale value shows as a colour flash on launch.
+    background_color: "#ffffff",
+    // The brand's *text* step, not the logo's #f96403. This paints the task
+    // switcher and address bar, where it sits behind white system glyphs.
+    theme_color: "#b23b0b",
     orientation: "portrait-primary",
     categories: ["security", "developer-tools", "productivity"],
     lang: "en",

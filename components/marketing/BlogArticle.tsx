@@ -107,7 +107,7 @@ export function BlogArticle({
             href={VSCODE_MARKETPLACE_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-5 inline-flex items-center gap-2 rounded-lg bg-cyan px-5 py-3 text-sm font-semibold text-ink transition hover:opacity-90"
+            className="mt-5 inline-flex items-center gap-2 rounded-lg bg-cyan px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90"
           >
             Install the VS Code extension <ArrowRight className="h-4 w-4" />
           </a>

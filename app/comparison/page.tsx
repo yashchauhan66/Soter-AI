@@ -477,7 +477,7 @@ export default function ComparisonPage() {
             <Link href="/benchmark" className="button-secondary gap-2">
               <BarChart3 size={16} aria-hidden="true" /> View benchmarks
             </Link>
-            <Link href="/playground" className="text-sm text-slate-200 hover:text-white">
+            <Link href="/playground" className="text-sm text-slate-200 hover:text-slate-100">
               Try the playground
             </Link>
           </div>
@@ -495,7 +495,7 @@ export default function ComparisonPage() {
               <Link
                 key={href}
                 href={href}
-                className="rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-cyan/50 hover:text-white"
+                className="rounded-full border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm font-medium text-slate-200 transition hover:border-cyan/50 hover:text-slate-100"
               >
                 {label} →
               </Link>
@@ -911,27 +911,27 @@ export default function ComparisonPage() {
 
         {/* ── CTA ── */}
         <section className="mt-16">
-          <div className="rounded-3xl bg-cyan p-10 text-center text-ink">
+          <div className="rounded-3xl bg-cyan p-10 text-center text-white">
             <h2 className="text-3xl font-black">Ready to secure your AI?</h2>
-            <p className="mx-auto mt-3 max-w-2xl text-ink/70">
+            <p className="mx-auto mt-3 max-w-2xl text-[0.9375rem] leading-7 text-white">
               Start with the interactive playground, then protect your chatbot with a single SDK call.
             </p>
             <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
                 href="/signup"
-                className="inline-flex items-center gap-2 rounded-xl bg-ink px-6 py-3 font-semibold text-white"
+                className="inline-flex items-center gap-2 rounded-xl bg-ink px-6 py-3 font-semibold text-slate-100"
               >
                 Sign up free <ArrowRight size={18} />
               </Link>
               <Link
                 href="/playground"
-                className="inline-flex items-center gap-2 rounded-xl border border-ink/20 bg-ink/10 px-6 py-3 font-semibold text-ink"
+                className="inline-flex items-center gap-2 rounded-xl border border-white/50 px-6 py-3 font-semibold text-white"
               >
                 Try the playground
               </Link>
               <Link
                 href="/docs"
-                className="inline-flex items-center gap-2 text-sm text-ink/60 hover:text-ink"
+                className="inline-flex items-center gap-2 text-sm font-medium text-white underline underline-offset-4"
               >
                 Read docs
               </Link>

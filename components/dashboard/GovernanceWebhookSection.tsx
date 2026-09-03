@@ -270,14 +270,14 @@ export function GovernanceWebhookSection({ projects }: GovernanceWebhookSectionP
                   >
                     {ep.isActive ? "Pause" : "Resume"}
                   </button>
-                  <span className="text-slate-700">·</span>
+                  <span className="text-slate-500">·</span>
                   <button
                     onClick={() => removeWebhook(ep.id)}
                     className="text-xs text-red-400 hover:text-red-300 transition-colors"
                   >
                     Remove
                   </button>
-                  <span className="text-slate-700">·</span>
+                  <span className="text-slate-500">·</span>
                   <button
                     onClick={() => setExpandedId(expandedId === ep.id ? null : ep.id)}
                     className="text-xs text-cyan hover:text-cyan/80 transition-colors"

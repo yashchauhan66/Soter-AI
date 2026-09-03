@@ -195,7 +195,7 @@ const res = await fetch("https://soterai.in/api/cost-firewall/budget", {
         </div>
         {budgets.length > 0 && (
           <Link
-            className="mt-4 inline-flex items-center gap-2 rounded-xl bg-cyan px-4 py-2 text-sm font-semibold text-black transition hover:bg-cyan/90"
+            className="mt-4 inline-flex items-center gap-2 rounded-xl bg-cyan px-4 py-2 text-sm font-semibold text-white transition hover:bg-cyan/90"
             href={`/dashboard/cost-firewall/budget?project=${project.id}`}
           >
             Manage budgets

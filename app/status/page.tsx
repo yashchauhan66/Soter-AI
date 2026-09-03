@@ -36,7 +36,7 @@ export default async function StatusPage() {
   return (
     <main>
       {/* ── Live status hero ──────────────────────────────────────── */}
-      <section className="relative overflow-hidden border-b border-slate-800 bg-[radial-gradient(ellipse_at_top,rgba(49,215,200,0.1),transparent_45%),linear-gradient(180deg,rgba(15,23,42,0.6),rgba(2,6,23,0))] py-16">
+      <section className="relative overflow-hidden hero-wash border-b border-slate-800 py-16">
         <div className="pointer-events-none absolute inset-0 -z-10 grid-fade-anim opacity-40" />
         <div className="container-page">
           <p className="eyebrow">Service status</p>

@@ -5,6 +5,7 @@ import { getCurrentProjectById, getCurrentUserProjects } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { enqueueBackgroundJob } from "@/lib/backgroundJobs";
 import { PageHeader } from "@/components/dashboard/PageHeader";
+import { BRAND } from "@/lib/brand";
 
 export const dynamic = "force-dynamic";
 
@@ -91,7 +92,7 @@ export default async function WhiteLabelReportPage({
           logoUrl: branding?.logoUrl ?? null,
           contactEmail: branding?.contactEmail ?? agency.contactEmail ?? null,
           footer: branding?.reportFooter ?? null,
-          brandColor: branding?.brandColor ?? "#31d7c8",
+          brandColor: branding?.brandColor ?? BRAND,
         }}
         project={{
           name: projectWithClient?.publicName ?? project.name,

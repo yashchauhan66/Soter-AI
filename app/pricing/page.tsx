@@ -231,7 +231,7 @@ export default function PricingPage() {
             <tbody className="divide-y divide-slate-800">
               {comparisonRows.map((row) => (
                 <tr key={row.feature} className="bg-slate-950/40">
-                  <th scope="row" className="px-4 py-3 font-medium text-white">{row.feature}</th>
+                  <th scope="row" className="px-4 py-3 font-medium text-slate-100">{row.feature}</th>
                   <td className="px-4 py-3 text-slate-300">{row.starter}</td>
                   <td className="px-4 py-3 text-slate-300">{row.pro}</td>
                   <td className="px-4 py-3 text-slate-300">{row.enterprise}</td>
@@ -291,7 +291,7 @@ export default function PricingPage() {
           <div className="mt-8 grid gap-6 md:grid-cols-2">
             {faqs.map((faq) => (
               <div key={faq.q} className="card p-5">
-                <h3 className="font-semibold text-white">{faq.q}</h3>
+                <h3 className="font-semibold text-slate-100">{faq.q}</h3>
                 <p className="mt-2 text-sm leading-6 text-slate-300">{faq.a}</p>
               </div>
             ))}

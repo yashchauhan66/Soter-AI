@@ -48,7 +48,7 @@ export function OpenIdeButton({
       aria-label={`Redirect to ${ideName} to install SoterAI IDE Guard`}
       className={
         className ??
-        'mt-4 inline-flex min-h-10 items-center justify-center gap-2 bg-cyan px-4 py-2.5 text-sm font-semibold text-ink transition hover:bg-cyan/90'
+        'mt-4 inline-flex min-h-10 items-center justify-center gap-2 bg-cyan px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-cyan/90'
       }
     >
       {children ?? `Open in ${ideName}`}

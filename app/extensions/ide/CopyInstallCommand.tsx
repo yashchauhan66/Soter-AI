@@ -31,14 +31,14 @@ export function CopyInstallCommand({ command }: { command: string }) {
   const Icon = state === 'copied' ? Check : state === 'failed' ? TriangleAlert : Copy;
 
   return (
-    <div className="flex min-w-0 items-center border border-slate-700 bg-[#070d15]">
+    <div className="flex min-w-0 items-center border border-slate-700 bg-slate-950">
       <code className="min-w-0 flex-1 overflow-x-auto whitespace-nowrap px-3 py-2.5 text-xs text-slate-300">
         {command}
       </code>
       <button
         type="button"
         onClick={handleCopy}
-        className="inline-flex h-9 min-w-9 shrink-0 items-center justify-center gap-1.5 border-l border-slate-700 px-2.5 text-xs font-semibold text-slate-300 transition hover:bg-slate-800 hover:text-white"
+        className="inline-flex h-9 min-w-9 shrink-0 items-center justify-center gap-1.5 border-l border-slate-700 px-2.5 text-xs font-semibold text-slate-300 transition hover:bg-slate-800 hover:text-slate-100"
         aria-label={`${label} install command`}
         title={`${label} install command`}
       >

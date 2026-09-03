@@ -38,7 +38,7 @@ export function RunRedTeamButton({ projectId }: { projectId: string }) {
   return (
     <div>
       <button
-        className="inline-flex items-center gap-2 rounded-xl bg-cyan px-4 py-2 text-sm font-semibold text-black transition hover:bg-cyan/90 disabled:opacity-50"
+        className="inline-flex items-center gap-2 rounded-xl bg-cyan px-4 py-2 text-sm font-semibold text-white transition hover:bg-cyan/90 disabled:opacity-50"
         type="button"
         disabled={loading}
         onClick={handleRun}

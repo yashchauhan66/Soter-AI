@@ -76,7 +76,7 @@ export function DocsMobileNav() {
       {open && (
         <div className="fixed inset-0 z-overlay">
           <div
-            className="animate-overlay-in absolute inset-0 bg-ink/80 backdrop-blur-sm"
+            className="animate-overlay-in absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
             onClick={() => setOpen(false)}
             aria-hidden="true"
           />

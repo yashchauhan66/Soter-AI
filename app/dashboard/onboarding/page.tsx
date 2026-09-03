@@ -39,7 +39,7 @@ export default async function OnboardingPage() {
                   <Icon size={18} aria-hidden="true" />
                 </span>
                 <div>
-                  <p className="font-semibold text-white">{path.label}</p>
+                  <p className="font-semibold text-slate-100">{path.label}</p>
                   <p className="mt-1 text-xs leading-5 text-slate-300">{path.who}</p>
                 </div>
               </div>
@@ -64,7 +64,7 @@ export default async function OnboardingPage() {
         </div>
 
         <aside className="rounded-xl border border-cyan/25 bg-cyan/5 p-5" aria-label="Next best action">
-          <div className="flex items-center gap-2 text-sm font-semibold text-white">
+          <div className="flex items-center gap-2 text-sm font-semibold text-slate-100">
             <Route size={16} className="text-cyan" aria-hidden="true" />
             Next best action
           </div>

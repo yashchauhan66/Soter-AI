@@ -237,7 +237,7 @@ export function ShadowAIClient({ organizations, initialProviders, initialModels,
                     </span>
                     {provider.status !== "APPROVED" && (
                       <button
-                        className="rounded-md bg-lime px-3 py-1.5 text-xs font-bold text-slate-900 hover:bg-lime/80 disabled:opacity-50"
+                        className="rounded-md bg-lime px-3 py-1.5 text-xs font-bold text-white hover:bg-lime/80 disabled:opacity-50"
                         disabled={loading === provider.id}
                         onClick={() => handleProviderAction(provider.id, "approve")}
                       >
@@ -246,7 +246,7 @@ export function ShadowAIClient({ organizations, initialProviders, initialModels,
                     )}
                     {provider.status !== "BLOCKED" && (
                       <button
-                        className="rounded-md bg-red-500 px-3 py-1.5 text-xs font-bold text-white hover:bg-red-600 disabled:opacity-50"
+                        className="rounded-md bg-rose-500 px-3 py-1.5 text-xs font-bold text-white hover:bg-rose-400 disabled:opacity-50"
                         disabled={loading === provider.id}
                         onClick={() => handleProviderAction(provider.id, "block")}
                       >

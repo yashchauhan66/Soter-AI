@@ -168,7 +168,7 @@ export function GuidedDemoFlow() {
                 <div className="flex items-center gap-1.5">
                   <span
                     className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${
-                      current ? "bg-cyan text-ink" : done ? "bg-lime-500/20 text-lime-300" : "bg-slate-800 text-slate-200"
+                      current ? "bg-cyan text-white" : done ? "bg-lime-500/20 text-lime-300" : "bg-slate-800 text-slate-200"
                     }`}
                   >
                     {done ? "✓" : s.step}

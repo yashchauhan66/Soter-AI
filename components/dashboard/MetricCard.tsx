@@ -22,9 +22,17 @@ import { getStatusClass, getStatusMeta, RISK_LEVEL } from "@/lib/dashboard/statu
 
 // ── MetricCard ──────────────────────────────────────────────────────────
 
-/** Legacy tone names, kept so all 73 existing call sites work unchanged. */
+/**
+ * Legacy tone names, kept so all 73 existing call sites work unchanged.
+ *
+ * `orange` was added so the four-step risk ramp in `lib/dashboard/status.ts`
+ * (LOW → MEDIUM → HIGH → CRITICAL = emerald → amber → orange → rose) can be
+ * expressed here without collapsing HIGH and CRITICAL into the same red. A metric
+ * tile that cannot distinguish "high" from "critical" is worse than no colour.
+ */
 const VALUE_TONES: Record<string, string> = {
   yellow: "text-amber-300",
+  orange: "text-orange-300",
   red: "text-rose-300",
   gray: "text-slate-100",
   cyan: "text-cyan",
@@ -43,7 +51,7 @@ export function MetricCard({
 }: {
   label: string;
   value: string | number;
-  tone?: "yellow" | "red" | "gray" | "cyan" | "blue" | "green";
+  tone?: "yellow" | "orange" | "red" | "gray" | "cyan" | "blue" | "green";
   /** One line of context: what this number means, or the window it covers. */
   hint?: string;
   /** Change vs the previous period, pre-formatted (e.g. "+12%", "-3"). */
@@ -73,14 +81,14 @@ export function MetricCard({
       <div className="flex items-start justify-between gap-3">
         <p className="text-sm text-slate-400">{label}</p>
         {Icon && (
-          <span className="shrink-0 rounded-lg border border-slate-700/70 bg-slate-900/60 p-1.5 text-slate-400">
+          <span className="shrink-0 rounded-md border border-slate-700/60 bg-slate-900/60 p-1.5 text-slate-400">
             <Icon size={15} aria-hidden="true" />
           </span>
         )}
       </div>
 
       <div className="mt-2 flex items-baseline gap-2.5">
-        <p data-numeric className={`text-2xl font-bold ${VALUE_TONES[tone] ?? VALUE_TONES.gray}`}>
+        <p data-numeric className={`text-2xl font-semibold ${VALUE_TONES[tone] ?? VALUE_TONES.gray}`}>
           {value}
         </p>
         {delta && (
@@ -125,8 +133,8 @@ export function RiskLevel({ level }: { level: string }) {
 export function PayloadViewer({ title, value }: { title: string; value: string | null | undefined }) {
   return (
     <div>
-      <p className="text-xs font-semibold uppercase tracking-micro text-slate-400">{title}</p>
-      <pre className="mt-1.5 max-h-36 overflow-auto rounded-lg border border-slate-800 bg-slate-950/70 p-2.5 text-xs leading-6 text-slate-300">
+      <p className="text-[11px] font-semibold uppercase tracking-micro text-slate-500">{title}</p>
+      <pre className="surface mt-1.5 max-h-36 overflow-auto p-2.5 text-xs leading-6 text-slate-300">
         {value ?? "No data supplied."}
       </pre>
     </div>

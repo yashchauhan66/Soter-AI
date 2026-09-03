@@ -53,8 +53,8 @@ export function PageHeader({
         <div className="min-w-0">
           <div className="flex items-center gap-2.5">
             {Icon && (
-              <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-cyan/25 bg-cyan/10 text-cyan">
-                <Icon size={15} aria-hidden="true" />
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-sm border border-slate-800 bg-slate-950 text-slate-400">
+                <Icon size={13} aria-hidden="true" />
               </span>
             )}
             <p className="eyebrow">{eyebrow}</p>
@@ -138,8 +138,8 @@ export function EmptyState({
   return (
     <div className="surface flex flex-col items-center px-6 py-12 text-center">
       {Icon && (
-        <span className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl border border-slate-700 bg-slate-900/70 text-slate-400">
-          <Icon size={20} aria-hidden="true" />
+        <span className="mb-4 flex h-10 w-10 items-center justify-center rounded-md border border-slate-700/60 bg-slate-900/60 text-slate-500">
+          <Icon size={18} aria-hidden="true" />
         </span>
       )}
       <p className="font-semibold text-slate-100">{title}</p>

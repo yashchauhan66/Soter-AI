@@ -79,7 +79,7 @@ export default function ScannerPage() {
             <button
               onClick={handleScan}
               disabled={isScanning || !prompt}
-              className="px-6 py-2.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="px-6 py-2.5 bg-cyan hover:bg-cyan-press text-white rounded-lg font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
             >
               {isScanning ? (
                 <span className="animate-pulse">Scanning...</span>
@@ -135,7 +135,7 @@ export default function ScannerPage() {
                 {!leadCaptured && (
                   <div className="absolute inset-0 z-20 bg-slate-950/80 backdrop-blur-sm flex flex-col items-center justify-center p-6 text-center border-t border-slate-800 mt-20">
                     <Lock className="w-10 h-10 text-slate-200 mb-4" />
-                    <h4 className="text-xl font-bold text-white mb-2">View Full Threat Analysis</h4>
+                    <h4 className="text-xl font-bold text-slate-100 mb-2">View Full Threat Analysis</h4>
                     <p className="text-slate-200 mb-6 max-w-md">
                       Enter your email to unlock the detailed vulnerability report and learn how SoterAI can block this automatically.
                     </p>
@@ -146,12 +146,12 @@ export default function ScannerPage() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="work@email.com"
-                        className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-4 text-white focus:outline-none focus:border-cyan-500"
+                        className="flex-1 bg-slate-900 border border-slate-700 rounded-lg px-4 text-slate-100 focus:outline-none focus:border-cyan-500"
                         maxLength={254}
                       />
                       <button
                         type="submit"
-                        className="px-6 py-2 bg-white text-slate-950 hover:bg-slate-200 rounded-lg font-semibold transition-colors"
+                        className="px-6 py-2 bg-cyan text-white hover:bg-cyan-press rounded-lg font-semibold transition-colors"
                       >
                         Unlock
                       </button>

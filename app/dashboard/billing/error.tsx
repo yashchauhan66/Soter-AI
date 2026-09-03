@@ -17,7 +17,7 @@ export default function BillingError({
   return (
     <div className="flex flex-col items-center justify-center py-20 text-center">
       <div className="mb-4 text-4xl">⚠️</div>
-      <h2 className="mb-2 text-xl font-semibold text-white">Something went wrong</h2>
+      <h2 className="mb-2 text-xl font-semibold text-slate-100">Something went wrong</h2>
       <p className="mb-6 max-w-md text-sm text-slate-200">
         An unexpected error occurred. Please try again or contact support if the issue persists.
       </p>
@@ -30,7 +30,7 @@ export default function BillingError({
         </button>
         <Link
           href="/dashboard"
-          className="rounded-xl bg-white/5 px-4 py-2 text-sm font-medium text-slate-300 hover:bg-white/10"
+          className="rounded-xl bg-slate-800/60 px-4 py-2 text-sm font-medium text-slate-300 hover:bg-slate-800"
         >
           Back to Dashboard
         </Link>

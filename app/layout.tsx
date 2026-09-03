@@ -23,15 +23,18 @@ export const viewport: Viewport = {
   // permitted (WCAG 1.4.4). Never set maximumScale or userScalable=false here.
   maximumScale: 5,
   userScalable: true,
-  // Matches --surface-0 (#08111f) from globals.css. The old value (#0b1117) was
-  // from an earlier palette, so the mobile browser chrome rendered a slightly
-  // different colour than the page it framed — a visible seam at the top of the
-  // viewport on iOS and Android.
+  // Matches --surface-0 (#ffffff) from globals.css. Mobile browser chrome frames
+  // the page, so any drift between these two values renders as a visible seam at
+  // the top of the viewport on iOS and Android. Update both together.
+  //
+  // Both entries are white on purpose. The product has one theme; reporting a
+  // dark theme-color to a device in dark mode would tint the browser chrome
+  // against a white page.
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#08111f" },
-    { media: "(prefers-color-scheme: light)", color: "#08111f" },
+    { media: "(prefers-color-scheme: dark)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
   ],
-  colorScheme: "dark",
+  colorScheme: "light",
 };
 
 export const metadata: Metadata = {
@@ -151,7 +154,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <JsonLd data={siteJsonLd} />
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-cyan focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-cyan focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
         >
           Skip to main content
         </a>

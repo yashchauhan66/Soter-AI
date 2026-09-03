@@ -101,10 +101,10 @@ export function DesktopNav() {
                 key={section.label}
                 href={section.href}
                 aria-current={isActive(section.href) ? "page" : undefined}
-                className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                   isActive(section.href)
-                    ? "bg-cyan/10 text-white"
-                    : "text-slate-300 hover:bg-slate-800/60 hover:text-white"
+                    ? "bg-slate-800/70 text-slate-100"
+                    : "text-slate-300 hover:bg-slate-800/60 hover:text-slate-100"
                 }`}
               >
                 {section.label}
@@ -130,8 +130,8 @@ export function DesktopNav() {
                   cancelClose();
                   setOpenLabel(section.label);
                 }}
-                className={`inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                  open ? "bg-slate-800/70 text-white" : "text-slate-300 hover:bg-slate-800/60 hover:text-white"
+                className={`inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+                  open ? "bg-slate-800/70 text-slate-100" : "text-slate-300 hover:bg-slate-800/60 hover:text-slate-100"
                 }`}
               >
                 {section.label}
@@ -175,7 +175,7 @@ function MegaPanel({
     <div
       id={id}
       onMouseEnter={onMouseEnter}
-      className="animate-slide-down absolute left-0 right-0 top-full z-drawer border-b border-slate-800/70 bg-ink/95 backdrop-blur-xl"
+      className="animate-slide-down absolute left-0 right-0 top-full z-drawer border-b border-slate-800/70 bg-white/95 backdrop-blur-xl"
     >
       <div
         className={`container-page grid gap-8 py-8 ${
@@ -195,11 +195,11 @@ function MegaPanel({
                     <Link
                       href={link.href}
                       onClick={onNavigate}
-                      className="group flex items-start gap-3 rounded-lg p-2.5 transition-colors hover:bg-slate-800/60"
+                      className="group flex items-start gap-3 rounded-md p-2.5 transition-colors hover:bg-slate-800/60"
                     >
                       {Icon && (
-                        <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-700/70 bg-slate-900/70 text-slate-300 transition-colors group-hover:border-cyan/40 group-hover:text-cyan">
-                          <Icon size={16} aria-hidden="true" />
+                        <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md border border-slate-700/60 bg-slate-900/60 text-slate-400 transition-colors group-hover:text-slate-200">
+                          <Icon size={15} aria-hidden="true" />
                         </span>
                       )}
                       <span className="min-w-0">
@@ -208,7 +208,7 @@ function MegaPanel({
                           {link.tag && <span className="badge-neutral !px-1.5 !py-0 !text-[10px]">{link.tag}</span>}
                         </span>
                         {link.desc && (
-                          <span className="mt-0.5 block text-xs leading-5 text-slate-400">{link.desc}</span>
+                          <span className="mt-0.5 block text-xs leading-5 text-slate-500">{link.desc}</span>
                         )}
                       </span>
                     </Link>
@@ -227,7 +227,7 @@ function MegaPanel({
           >
             <div>
               <p className="eyebrow">{section.feature.eyebrow}</p>
-              <p className="mt-2 text-base font-semibold text-white">{section.feature.title}</p>
+              <p className="mt-2 text-base font-semibold text-slate-100">{section.feature.title}</p>
               <p className="mt-2 text-sm leading-6 text-slate-300">{section.feature.copy}</p>
             </div>
             <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan">

@@ -209,7 +209,7 @@ export default function Page() {
           Free tier available. No credit card required to get started.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <Link href="/signup" className="inline-flex items-center gap-2 rounded-lg bg-cyan px-5 py-3 text-sm font-semibold text-ink transition hover:opacity-90">
+          <Link href="/signup" className="inline-flex items-center gap-2 rounded-lg bg-cyan px-5 py-3 text-sm font-semibold text-white transition hover:opacity-90">
             Create free account <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </Link>
           <Link href="/docs/quickstart" className="inline-flex items-center gap-2 rounded-lg border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-200 transition hover:border-slate-500">

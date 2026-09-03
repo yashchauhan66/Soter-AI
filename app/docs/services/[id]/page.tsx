@@ -166,14 +166,14 @@ export default async function ServiceDocPage({ params }: Props) {
                     key={index}
                     className="card relative overflow-hidden p-5 transition-all duration-200 hover:border-cyan/30"
                   >
-                    <div className="absolute right-3 top-3 text-4xl font-bold text-slate-800/40 select-none">
+                    <div className="absolute right-3 top-3 text-4xl font-bold text-slate-800 select-none">
                       {String(index + 1).padStart(2, "0")}
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="flex h-8 w-8 items-center justify-center rounded-full bg-cyan/10 text-sm font-bold text-cyan">
                         {index + 1}
                       </span>
-                      <h3 className="font-semibold text-white">{step.heading}</h3>
+                      <h3 className="font-semibold text-slate-100">{step.heading}</h3>
                     </div>
                     <p className="mt-3 text-sm leading-6 text-slate-200">{step.body}</p>
                   </div>
@@ -194,7 +194,7 @@ export default async function ServiceDocPage({ params }: Props) {
                     <div className="flex items-start gap-3">
                       <CheckCircle2 size={16} className="mt-0.5 shrink-0 text-lime" />
                       <div>
-                        <h3 className="font-medium text-white">{feature.title}</h3>
+                        <h3 className="font-medium text-slate-100">{feature.title}</h3>
                         <p className="mt-1 text-sm leading-6 text-slate-200">{feature.description}</p>
                       </div>
                     </div>
@@ -342,25 +342,25 @@ export default async function ServiceDocPage({ params }: Props) {
                 {prevService && (
                   <Link
                     href={`/docs/services/${prevService.id}`}
-                    className="card group flex items-center gap-2 p-3 text-sm transition hover:border-cyan/30"
+                    className="card card-interactive group flex items-center gap-2 p-3 text-sm"
                   >
-                    <ArrowLeft size={14} className="shrink-0 text-slate-300 transition group-hover:text-cyan" />
+                    <ArrowLeft size={14} className="shrink-0 text-slate-500 transition group-hover:text-slate-300" />
                     <div className="min-w-0">
-                      <p className="text-xs text-slate-300">Previous</p>
-                      <p className="truncate text-slate-300 transition group-hover:text-cyan">{prevService.title}</p>
+                      <p className="text-xs text-slate-500">Previous</p>
+                      <p className="truncate text-slate-300">{prevService.title}</p>
                     </div>
                   </Link>
                 )}
                 {nextService && (
                   <Link
                     href={`/docs/services/${nextService.id}`}
-                    className="card group flex items-center gap-2 p-3 text-sm transition hover:border-cyan/30"
+                    className="card card-interactive group flex items-center gap-2 p-3 text-sm"
                   >
                     <div className="min-w-0 flex-1 text-right">
-                      <p className="text-xs text-slate-300">Next</p>
-                      <p className="truncate text-slate-300 transition group-hover:text-cyan">{nextService.title}</p>
+                      <p className="text-xs text-slate-500">Next</p>
+                      <p className="truncate text-slate-300">{nextService.title}</p>
                     </div>
-                    <ArrowRight size={14} className="shrink-0 text-slate-300 transition group-hover:text-cyan" />
+                    <ArrowRight size={14} className="shrink-0 text-slate-500 transition group-hover:text-slate-300" />
                   </Link>
                 )}
               </div>

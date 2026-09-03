@@ -30,12 +30,12 @@ export function VideoPlayer({ source, className = "" }: VideoPlayerProps) {
 
   return (
     <div
-      className={`relative mx-auto max-w-4xl overflow-hidden rounded-xl border border-slate-800 bg-black shadow-glow transition-all duration-500 ${
+      className={`relative mx-auto max-w-4xl overflow-hidden rounded-panel border border-slate-800 bg-slate-950 shadow-elevation-3 transition-all duration-500 ${
         isLoaded ? "opacity-100" : "opacity-0"
       } ${className}`}
     >
       {/* Source badge */}
-      <div className="pointer-events-none absolute left-3 top-3 z-10 flex items-center gap-1.5 rounded-md bg-black/70 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-200 backdrop-blur">
+      <div className="pointer-events-none absolute left-3 top-3 z-10 flex items-center gap-1.5 rounded-sm bg-slate-900/80 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-200 backdrop-blur">
         {source.type === "youtube" ? (
           <>
             <Youtube size={12} className="text-red-400" />

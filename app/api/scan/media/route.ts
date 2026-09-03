@@ -9,8 +9,9 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
-import { scanMedia, detectMediaType, isScannableMediaType, type MultimodalScanResult } from "@/packages/detectors/src/multimodal";
+import { scanMedia, detectMediaType, type MultimodalScanResult } from "@/packages/detectors/src/multimodal";
 import { requireUser } from "@/lib/auth/guards";
+import { SEVERITY } from "@/lib/brand";
 import { checkMemoryRateLimit } from "@/lib/rateLimit";
 
 // Configuration
@@ -264,9 +265,9 @@ function determineAction(result: MultimodalScanResult): "allow" | "warn" | "bloc
 }
 
 function getRiskLevel(riskScore: number): { label: string; color: string } {
-  if (riskScore >= 80) return { label: "Critical", color: "#dc2626" };
-  if (riskScore >= 60) return { label: "High", color: "#ea580c" };
-  if (riskScore >= 40) return { label: "Medium", color: "#d97706" };
-  if (riskScore >= 20) return { label: "Low", color: "#65a30d" };
-  return { label: "Safe", color: "#16a34a" };
+  if (riskScore >= 80) return { label: "Critical", color: SEVERITY.critical };
+  if (riskScore >= 60) return { label: "High", color: SEVERITY.high };
+  if (riskScore >= 40) return { label: "Medium", color: SEVERITY.medium };
+  if (riskScore >= 20) return { label: "Low", color: SEVERITY.low };
+  return { label: "Safe", color: SEVERITY.safe };
 }

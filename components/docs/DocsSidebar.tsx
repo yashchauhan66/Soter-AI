@@ -49,7 +49,7 @@ export function DocsSidebar() {
                         aria-current={active ? "page" : undefined}
                         className={`flex items-center justify-between gap-2 rounded-md border-l-2 py-1.5 pl-3 pr-2 transition-colors ${
                           active
-                            ? "border-cyan bg-cyan/10 font-semibold text-white"
+                            ? "border-cyan bg-cyan/10 font-semibold text-slate-100"
                             : "border-transparent text-slate-400 hover:border-slate-600 hover:bg-slate-900/60 hover:text-slate-100"
                         }`}
                       >

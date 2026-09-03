@@ -100,7 +100,7 @@ export function VsCompetitor({ data }: { data: VsContent }) {
             <Link href="/comparison" className="button-secondary gap-2">
               Full comparison
             </Link>
-            <Link href="/playground" className="text-sm text-slate-200 hover:text-white">
+            <Link href="/playground" className="text-sm text-slate-200 hover:text-slate-100">
               Try the playground
             </Link>
           </div>
@@ -192,16 +192,16 @@ export function VsCompetitor({ data }: { data: VsContent }) {
 
         {/* CTA */}
         <section className="mt-16">
-          <div className="rounded-3xl bg-cyan p-10 text-center text-ink">
+          <div className="rounded-3xl bg-cyan p-10 text-center text-white">
             <h2 className="text-3xl font-black">See the difference yourself.</h2>
-            <p className="mx-auto mt-3 max-w-2xl text-ink/70">
+            <p className="mx-auto mt-3 max-w-2xl text-[0.9375rem] leading-7 text-white">
               Fire a prompt-injection or PII attack in the live playground and watch SoterAI block it in under 50ms.
             </p>
             <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link href="/playground" className="inline-flex items-center gap-2 rounded-xl bg-ink px-6 py-3 font-semibold text-white">
+              <Link href="/playground" className="inline-flex items-center gap-2 rounded-xl bg-ink px-6 py-3 font-semibold text-slate-100">
                 Try the playground <ArrowRight size={18} aria-hidden="true" />
               </Link>
-              <Link href="/benchmarks" className="inline-flex items-center gap-2 rounded-xl border border-ink/20 bg-ink/10 px-6 py-3 font-semibold text-ink">
+              <Link href="/benchmarks" className="inline-flex items-center gap-2 rounded-xl border border-white/50 px-6 py-3 font-semibold text-white">
                 View benchmarks
               </Link>
             </div>

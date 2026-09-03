@@ -102,7 +102,7 @@ await sendEmail(checked.safeContent ?? emailBody);`}
           ["Replay", "replay"],
         ].map(([label, slug]) => (
           <a
-            className="rounded-full border border-slate-700 px-3 py-1 text-slate-300 hover:border-slate-500 hover:text-white"
+            className="rounded-full border border-slate-700 px-3 py-1 text-slate-300 hover:border-slate-500 hover:text-slate-100"
             href={`/dashboard/agent-firewall/${slug}?project=${project.id}`}
             key={slug}
           >

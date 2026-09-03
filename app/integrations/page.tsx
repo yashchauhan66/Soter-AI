@@ -144,7 +144,7 @@ export default function Page() {
           SoterAI works with any platform via the REST API. If your use case is not covered,
           contact us and we will help you integrate.
         </p>
-        <Link href="/contact" className="mt-5 inline-flex items-center gap-2 rounded-lg bg-cyan px-5 py-3 text-sm font-semibold text-ink">
+        <Link href="/contact" className="mt-5 inline-flex items-center gap-2 rounded-lg bg-cyan px-5 py-3 text-sm font-semibold text-white">
           Request an integration <ArrowRight size={16} aria-hidden="true" />
         </Link>
       </section>

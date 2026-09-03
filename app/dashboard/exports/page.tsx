@@ -38,7 +38,7 @@ export default async function ExportsPage() {
           const href = `/api/exports?organizationId=${encodeURIComponent(orgId)}&kind=${download.kind}&format=${download.format}`;
           const Icon = download.Icon;
           return (
-            <Link key={`${download.kind}-${download.format}`} href={href} className="card flex items-center justify-between p-5 transition hover:border-cyan/40">
+            <Link key={`${download.kind}-${download.format}`} href={href} className="card card-interactive flex items-center justify-between p-5">
               <div className="flex items-center gap-3">
                 <span className="rounded-xl bg-cyan/10 p-3 text-cyan"><Icon size={20} /></span>
                 <div>

@@ -1,11 +1,13 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { ArrowRight, BarChart3, CheckCircle2, Gauge, ShieldCheck, Zap } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { DemoVideo } from "@/components/marketing/DemoVideo";
+import { Evidence } from "@/components/marketing/Evidence";
 import { FAQ } from "@/components/marketing/FAQ";
 import { Features } from "@/components/marketing/Features";
-import { DemoVideo } from "@/components/marketing/DemoVideo";
 import { Hero } from "@/components/marketing/Hero";
 import { HowItWorks } from "@/components/marketing/HowItWorks";
+import { Surfaces } from "@/components/marketing/Surfaces";
 import { TwoProducts } from "@/components/marketing/TwoProducts";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { safeJsonLd } from "@/lib/seo/jsonLd";
@@ -32,75 +34,12 @@ export const metadata: Metadata = {
   },
 };
 
-const owaspCoverage = [
-  ["LLM01", "Prompt injection", "Detect instruction overrides, jailbreak combinations, and prompt extraction attempts."],
-  ["LLM02", "Sensitive information disclosure", "Redact PII, Indian identifiers, credentials, tokens, and database URLs."],
-  ["LLM05", "Improper output handling", "Inspect model output for leaked instructions, unsafe claims, and suspicious links."],
-  ["LLM10", "Unbounded consumption", "Apply text-size, per-minute, and monthly usage controls."],
-];
-
-const aiSecurityTopics = [
-  {
-    title: "Prompt injection protection",
-    copy: "Block direct and indirect prompt injection, jailbreak prompts, hidden instruction overrides, prompt extraction attempts, and multilingual attack patterns before they reach your LLM.",
-    href: "/prompt-injection-protection",
-  },
-  {
-    title: "AI data leakage prevention",
-    copy: "Detect and redact secrets, credentials, database URLs, Aadhaar-like numbers, PAN, GSTIN, UPI IDs, IFSC codes, Indian phone numbers, and other sensitive context.",
-    href: "/ai-data-leakage-prevention",
-  },
-  {
-    title: "RAG security",
-    copy: "Inspect retrieved documents and model outputs for poisoned context, untrusted sources, sensitive snippets, unsafe citations, and disclosure risks in retrieval-augmented generation.",
-    href: "/docs/rag",
-  },
-  {
-    title: "AI agent firewall",
-    copy: "Review agent actions, MCP tools, browser automation, workflow steps, and high-risk operations before an AI agent can execute sensitive work.",
-    href: "/mcp-security",
-  },
-];
-
-const seoInternalLinks = [
-  ["AI user security", "/ai-user-security"],
-  ["AI agent security", "/ai-agent-security"],
-  ["LLM security docs", "/docs"],
-  ["OWASP LLM Top 10 alignment", "/compliance/owasp-llm-top-10"],
-  ["Public benchmark", "/benchmark"],
-  ["VS Code AI security", "/vscode-ai-security"],
-  ["Trust center", "/trust"],
-];
-
 /**
- * Benchmark figures. Extracted from JSX because four near-identical cards are
- * data, not markup — and because the metric, its colour, and the sample it was
- * measured on now live together, which makes an inconsistent update obvious.
+ * Homepage structured data. The visible sections that used to live in this file
+ * — deployment surfaces, the benchmark/OWASP/India evidence block — moved into
+ * `components/marketing/Surfaces.tsx` and `Evidence.tsx`, so this file is now
+ * metadata, JSON-LD, and section order.
  */
-const benchmarkMetrics = [
-  { value: "100%", label: "Recall", basis: "2,200 synthetic attacks", Icon: ShieldCheck, tone: "text-cyan" },
-  { value: "0.00%", label: "False-positive rate", basis: "1,000 benign controls", Icon: Zap, tone: "text-lime" },
-  { value: "17.83ms", label: "Analyzer p95", basis: "Local benchmark run", Icon: Gauge, tone: "text-cyan" },
-  { value: "10", label: "Attack categories", basis: "Synthetic public corpus", Icon: BarChart3, tone: "text-cyan" },
-];
-
-/**
- * Attack families covered by the corpus. The previous list ended with both
- * "Secrets / Credentials" and "Secret / PII" — a near-duplicate that made the
- * ten-category claim above look like nine categories padded to ten.
- */
-const attackCategories = [
-  "Prompt injection",
-  "Jailbreak / DAN",
-  "Encoding / obfuscation",
-  "Multilingual (Hindi)",
-  "RAG poisoning",
-  "Tool abuse",
-  "MCP risk",
-  "PII detection",
-  "Secrets / credentials",
-  "Unsafe output",
-];
 
 const homepageJsonLd = {
   "@context": "https://schema.org",
@@ -319,96 +258,30 @@ export default function Home() {
       />
       <Hero />
 
-      {/* Extension entry points. These were `rounded-2xl` one-off gradient cards
-          with a bespoke focus ring; they now use the shared card + interactive
-          lift so hover, focus, and elevation match every other card on the site.
-          The headings are h2 because they are siblings of the section headings
-          below, not children of them. */}
-      <section className="container-page mt-10 mb-16 grid gap-6 md:grid-cols-2">
-        {[
-          {
-            href: "/extensions/browser",
-            title: "SoterAI Browser Guard",
-            copy: "Scan prompts, redact sensitive data, and apply safer AI usage controls in Chrome and Microsoft Edge.",
-            cta: "Choose your browser",
-          },
-          {
-            href: "/extensions/ide",
-            title: "SoterAI IDE Guard",
-            copy: "Secure AI pair-programming across VS Code, Cursor, Windsurf, and Kiro under one policy.",
-            cta: "Choose your IDE",
-          },
-        ].map((card) => (
-          <Link key={card.href} href={card.href} className="card card-interactive group p-6">
-            <h2 className="text-lg font-semibold text-white">{card.title}</h2>
-            <p className="mt-2 text-sm leading-6 text-slate-300">{card.copy}</p>
-            <p className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan">
-              {card.cta}
-              <ArrowRight size={15} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
-            </p>
-          </Link>
-        ))}
-      </section>
+      {/* Section order is deliberate, and it is the redesign: identity (Hero) →
+          where it installs (Surfaces) → who it is for (TwoProducts) → how it
+          runs (HowItWorks) → what it detects (Features) → proof (Evidence) →
+          see it (DemoVideo) → objections (FAQ) → act (CTA).
 
-      <section className="section border-b border-slate-800 bg-slate-950/45">
-        <div className="container-page">
-          <SectionHeading
-            eyebrow="AI security platform"
-            title="Security controls for LLM apps, RAG pipelines, copilots, and AI agents"
-            copy="SoterAI helps product, engineering, and security teams protect production AI systems from prompt injection, jailbreaks, data leakage, unsafe model outputs, and risky agent tool calls — in real time, between users, models, retrieval, and tools."
-          />
+          Nine stops, down from fifteen. Four of the removed sections were
+          duplicates of ones that remain: a loose pair of Browser/IDE Guard cards
+          that the Surfaces grid already lists, an "AI security platform" grid
+          whose four topics restate the four capability cards in Features, a
+          seven-link SEO badge row that only repeats the header navigation, and a
+          playground CTA one screen above the closing CTA. */}
+      <Surfaces />
 
-          <div className="mt-10 grid gap-4 md:grid-cols-2">
-            {aiSecurityTopics.map((topic) => (
-              <article className="card p-6" key={topic.title}>
-                <h3 className="text-lg font-semibold">{topic.title}</h3>
-                <p className="mt-3 leading-7 text-slate-300">{topic.copy}</p>
-
-                <Link href={topic.href} className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-cyan">
-                  Learn more <ArrowRight size={15} aria-hidden="true" />
-                </Link>
-              </article>
-            ))}
-          </div>
-
-          <nav aria-label="Related AI security topics" className="mt-8 flex flex-wrap gap-2">
-            {seoInternalLinks.map(([label, href]) => (
-              <Link
-                href={href}
-                key={href}
-                className="badge-neutral transition-colors hover:border-cyan/50 hover:text-cyan"
-              >
-                {label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      </section>
-      <section className="section">
-        <div className="container-page grid gap-5 md:grid-cols-3">
-          <div className="card p-7 md:col-span-2">
-            <p className="eyebrow">The problem</p>
-            <h2 className="heading-3 mt-3">Your AI workflow can become a path to data exposure.</h2>
-            <p className="body-copy mt-4">
-              Untrusted prompts, copied secrets, personal data, and unsafe model responses need controls outside the
-              model itself. SoterAI adds an observable security gateway to the flow.
-            </p>
-          </div>
-          <div className="card p-7">
-            <p data-numeric className="text-5xl font-black text-cyan">2-way</p>
-            <p className="mt-4 font-semibold">Input, output, and agent coverage</p>
-            <p className="mt-2 text-sm leading-6 text-slate-300">
-              Risk reduction around users, models, retrieval, and tools.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <HowItWorks />
       <TwoProducts />
+      <HowItWorks />
       <Features />
+      <Evidence />
 
-      {/* ── Demo Video Section ── */}
+      {/* Tinted. Section backgrounds alternate strictly from here to the footer —
+          Surfaces white, TwoProducts tinted, HowItWorks white, Features tinted,
+          Evidence white, this one tinted, FAQ white. The old page had five
+          consecutive `bg-slate-950/40` sections, which is why a long scroll read
+          as one undifferentiated column: when almost everything is the alternate
+          shade, the shade stops marking anything. */}
       <section className="section border-y border-slate-800 bg-slate-950/40">
         <div className="container-page">
           <SectionHeading
@@ -428,113 +301,6 @@ export default function Home() {
         </div>
       </section>
 
-
-      <section className="section border-y border-slate-800 bg-slate-950/40">
-        <div className="container-page text-center">
-          <SectionHeading
-            center
-            eyebrow="Adversarial benchmark"
-            title="Published benchmark, published limitations"
-            copy="Latest generated run: 2,200 synthetic attack cases and 1,000 benign controls evaluated with the production detector. This is self-maintained regression evidence — not an independent audit, and not a production guarantee."
-          />
-
-          <dl className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {benchmarkMetrics.map((metric) => (
-              <div className="card p-6" key={metric.label}>
-                <metric.Icon className={`mx-auto ${metric.tone}`} size={28} aria-hidden="true" />
-                <dd data-numeric className={`mt-3 text-3xl font-black ${metric.tone}`}>
-                  {metric.value}
-                </dd>
-                <dt className="mt-1 text-sm font-medium text-slate-200">{metric.label}</dt>
-                <p className="mt-0.5 text-xs text-slate-400">{metric.basis}</p>
-              </div>
-            ))}
-          </dl>
-
-          <ul className="mt-8 flex flex-wrap justify-center gap-2">
-            {attackCategories.map((category) => (
-              <li className="badge-neutral" key={category}>
-                {category}
-              </li>
-            ))}
-          </ul>
-
-          <div className="mt-8">
-            <Link href="/benchmark" className="button-secondary">
-              View full benchmark details <ArrowRight size={16} aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="section border-y border-slate-800 bg-slate-950/40">
-        <div className="container-page">
-          <SectionHeading
-            eyebrow="OWASP alignment"
-            title="Focused coverage for production AI workflows"
-            copy="Controls map to relevant OWASP LLM Top 10 risk areas. Alignment supports risk reduction and is not a certification or a claim of complete coverage."
-          />
-          <div className="mt-10 grid gap-4 md:grid-cols-2">
-            {owaspCoverage.map(([id, title, copy]) => (
-              <article className="card p-6" key={id}>
-                <div className="flex items-center gap-3">
-                  <span className="rounded-md bg-cyan/10 px-2.5 py-1 text-xs font-bold text-cyan">{id}</span>
-                  <h3 className="font-semibold">{title}</h3>
-                </div>
-                <p className="mt-3 text-sm leading-6 text-slate-300">{copy}</p>
-              </article>
-            ))}
-          </div>
-          <Link
-            href="/compliance"
-            className="mt-8 inline-flex items-center gap-1.5 text-sm font-semibold text-cyan hover:underline"
-          >
-            See the full compliance mapping <ArrowRight size={14} aria-hidden="true" />
-          </Link>
-        </div>
-      </section>
-
-      <section className="section">
-        <div className="container-page">
-          <div className="card overflow-hidden p-8 sm:p-12">
-            <div className="grid items-center gap-8 lg:grid-cols-2">
-              <div>
-                <p className="eyebrow">Built for India</p>
-                <h2 className="heading-3 mt-3">Recognize local personal-data patterns.</h2>
-                <p className="body-copy mt-4">
-                  Detect and redact Aadhaar-like patterns, PAN, GSTIN, UPI, IFSC, Indian mobile numbers, and contextual
-                  student, patient, and bank identifiers.
-                </p>
-              </div>
-              <ul className="grid grid-cols-2 gap-3 text-sm">
-                {["Aadhaar-like", "PAN", "GSTIN", "UPI ID", "IFSC", "Indian mobile"].map((label) => (
-                  <li className="surface flex items-center gap-2 p-4 text-slate-300" key={label}>
-                    <CheckCircle2 className="shrink-0 text-lime" size={16} aria-hidden="true" />
-                    {label}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section-tight">
-        <div className="container-page">
-          <div className="card grid items-center gap-6 border-cyan/30 p-8 md:grid-cols-[1fr_auto]">
-            <div>
-              <p className="eyebrow">Interactive playground</p>
-              <h2 className="heading-3 mt-2">Test AI security decisions before integration.</h2>
-              <p className="mt-2 text-slate-300">
-                Use safe defensive examples to inspect findings, redaction, action, and risk score.
-              </p>
-            </div>
-            <Link href="/playground" className="button-primary">
-              Try the guard <ArrowRight size={18} aria-hidden="true" />
-            </Link>
-          </div>
-        </div>
-      </section>
       <FAQ />
 
       {/* Closing CTA. The old version used a one-off emerald button that appeared

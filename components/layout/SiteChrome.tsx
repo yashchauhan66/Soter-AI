@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { HeaderNav } from "@/components/auth/HeaderNav";
 import { AiAssistantLoader } from "@/components/dashboard/AiAssistantLoader";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
+import { Logo } from "@/components/layout/Logo";
 import { IdeExtensionBanner } from "@/components/marketing/IdeExtensionBanner";
 
 type SiteChromeProps = {
@@ -58,21 +58,14 @@ export function SiteChrome({ children, footer }: SiteChromeProps) {
           work the user came to do. */}
       {!dashboardRoute && <IdeExtensionBanner />}
 
-      <header className="sticky top-0 z-header border-b border-slate-800/60 bg-ink/85 backdrop-blur-xl">
+      <header className="sticky top-0 z-header border-b border-slate-800 bg-white/85 backdrop-blur-xl">
         <div className="container-page flex h-16 items-center gap-4">
           <Link
             href="/"
             aria-label="SoterAI home"
-            className="group flex shrink-0 items-center gap-2 rounded-lg font-semibold tracking-wide"
+            className="flex shrink-0 items-center rounded-lg"
           >
-            <Image
-              src="/logo.png"
-              alt="SoterAI"
-              width={114}
-              height={40}
-              priority
-              className="h-9 w-auto transition-transform group-hover:scale-[1.02]"
-            />
+            <Logo size={30} priority />
           </Link>
           <HeaderNav />
         </div>

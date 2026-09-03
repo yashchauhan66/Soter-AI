@@ -15,52 +15,113 @@
 
 /* ── 1. Tokens ──────────────────────────────────────────────────── */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  /* Surfaces: a 5-step elevation ladder. Higher step = closer to viewer. */
-  --surface-0: 8 17 31;      /* page background        #08111f */
-  --surface-1: 12 21 36;     /* sunken section         #0c1524 */
-  --surface-2: 16 27 45;     /* card                   #101b2d */
-  --surface-3: 22 36 59;     /* raised card / popover  #16243b */
-  --surface-4: 27 44 72;     /* menu / tooltip         #1b2c48 */
+  /* ── Surfaces ────────────────────────────────────────────────────
+     A 5-step ladder on a **white** page.
 
-  /* Brand */
-  --brand: 49 215 200;       /* #31d7c8 */
-  --brand-strong: 20 184 171;
-  --accent: 183 243 74;      /* #b7f34a */
+     The direction is inverted from the previous dark ladder, but the contract is
+     unchanged: higher step = closer to the viewer. That matters because ~200
+     `.card`s, every popover, and every menu read their background from these
+     tokens, so the ladder is what makes "raised" mean the same thing everywhere.
 
-  /* Semantic status */
-  --danger: 244 63 94;
-  --warning: 245 158 11;
-  --success: 16 185 129;
-  --info: 56 189 248;
+     The step sizes are deliberately tiny (2–4% luminance apart). On a dark page
+     you can separate two surfaces by lightening one, because there is a lot of
+     room below white. On white there is no room *above* it, so elevation has to
+     come from a hairline and a shadow instead, and the fills stay nearly equal.
+     A light UI that tries to show depth with grey steps ends up looking dirty.
 
-  /* Hairlines: two weights so nested borders don't compound visually. */
-  --hairline: 51 65 85;
-  --hairline-strong: 71 85 105;
+     surface-0 is off-white, not #fff, so a white card reads as a distinct object
+     when it sits on the page background. Cards themselves are pure white. */
+  --surface-0: 255 255 255;  /* page background        #ffffff */
+  --surface-1: 248 250 252;  /* sunken well            #f8fafc  slate-50 */
+  --surface-2: 255 255 255;  /* card                   #ffffff */
+  --surface-3: 255 255 255;  /* raised card / popover  #ffffff (shadow does the work) */
+  --surface-4: 255 255 255;  /* menu / tooltip         #ffffff */
 
-  /* Radii */
-  --radius-sm: 0.5rem;
-  --radius-md: 0.625rem;
-  --radius-lg: 0.875rem;
-  --radius-xl: 1.25rem;
+  /* ── Brand ───────────────────────────────────────────────────────
+     Sampled from the logo (#f96403). Two steps, because one hex cannot serve
+     both roles on white:
+
+     - `--brand` (#b23b0b, 5.96:1) is the *text and action* value: links, active
+       nav, primary button fill, focus ring.
+     - `--brand-graphic` (#f96403, 3.06:1) is the logo's own colour. Fine for a
+       mark, an icon, or a chart series; it fails 1.4.3 as body text.
+
+     `--brand` is deliberately darker than the obvious orange-700 (#c2410c).
+     ~90 call sites put brand text inside a `bg-cyan/10` chip, and when such a chip
+     nests inside another brand-tinted panel the tint stacks: measured on the real
+     DOM, #c2410c landed at 4.10–4.48:1 there. #b23b0b holds 4.70:1 even on the
+     doubled tint. See the note in tailwind.config.ts.
+
+     Do not use --brand-graphic for text. */
+  --brand: 178 59 11;          /* #b23b0b */
+  --brand-graphic: 249 100 3;  /* #f96403 — logo mark */
+  --brand-strong: 154 52 18;   /* #9a3412 — pressed state */
+  --accent: 21 128 61;         /* #15803d — "safe" green, was acid lime */
+
+  /* Semantic status. Each is the step that clears 4.5:1 on white, so status text
+     is legible without a tinted background behind it. */
+  --danger: 190 18 60;   /* rose-700  6.29:1 */
+  --warning: 180 83 9;   /* amber-700 5.02:1 */
+  --success: 4 120 87;   /* emerald-700 5.48:1 */
+  --info: 3 105 161;     /* sky-700   5.93:1 */
+
+  /* ── Hairlines ───────────────────────────────────────────────────
+     On white, a hairline is the *primary* separator — there is no elevation
+     lightening to fall back on — so these are the most-used tokens in the system
+     (~640 border call sites).
+
+     `--hairline` (slate-200) is the default rule between surfaces. It is
+     intentionally below 3:1: WCAG 1.4.11 exempts purely decorative boundaries,
+     and a 3:1 grey ruling every card, row, and cell turns a page into a grid of
+     boxes. `--hairline-strong` (slate-400, 3.0:1) is for boundaries a user is
+     meant to *act on* — inputs, secondary buttons, table sort controls — where
+     the border is the only thing announcing the control. */
+  --hairline: 226 232 240;         /* slate-200 */
+  --hairline-strong: 148 163 184;  /* slate-400 — interactive controls */
+
+  /* ── Radii ───────────────────────────────────────────────────────
+     Large radii are a consumer-app signal. On a console where cards nest inside
+     panels inside sections, a 14px outer radius forces the inner elements to
+     either match it (and look inflated) or not match it (and look misaligned at
+     the corner). 10px outer / 6px inner reads as precise instead of soft. */
+  --radius-sm: 0.375rem;   /* 6px  — inputs, badges, inner chips */
+  --radius-md: 0.5rem;     /* 8px  — buttons */
+  --radius-lg: 0.625rem;   /* 10px — cards */
+  --radius-xl: 0.875rem;   /* 14px — panels, modals */
   --radius-full: 999px;
+
 
   /* Motion. Durations are short on purpose: an enterprise console should feel
      instant. Anything above ~360ms reads as sluggish on repeat interactions. */
-  --dur-fast: 140ms;
-  --dur-base: 220ms;
-  --dur-slow: 360ms;
+  --dur-fast: 120ms;
+  --dur-base: 180ms;
+  --dur-slow: 280ms;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Elevation */
-  --shadow-1: 0 1px 2px rgba(2, 6, 14, 0.32), 0 1px 3px rgba(2, 6, 14, 0.18);
-  --shadow-2: 0 2px 4px rgba(2, 6, 14, 0.34), 0 6px 16px rgba(2, 6, 14, 0.22);
-  --shadow-3: 0 4px 8px rgba(2, 6, 14, 0.36), 0 12px 32px rgba(2, 6, 14, 0.28);
-  --shadow-4: 0 8px 16px rgba(2, 6, 14, 0.38), 0 24px 64px rgba(2, 6, 14, 0.34);
-  --hairline-top: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  /* ── Elevation ───────────────────────────────────────────────────
+     Slate-tinted, low-opacity shadows.
+
+     Opacity dropped from 24–32% to 5–10%. A dark-theme shadow has to be heavy to
+     register against near-black; the same shadow under a white card reads as
+     dirt. The tint is slate rather than pure black, because neutral black over
+     white goes grey and slightly dead next to a blue-grey hairline.
+
+     Kept in sync with the `boxShadow` scale in tailwind.config.ts. */
+  --shadow-1: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --shadow-2: 0 1px 2px rgba(15, 23, 42, 0.05), 0 2px 8px rgba(15, 23, 42, 0.05);
+  --shadow-3: 0 2px 4px rgba(15, 23, 42, 0.05), 0 8px 24px rgba(15, 23, 42, 0.07);
+  --shadow-4: 0 4px 8px rgba(15, 23, 42, 0.06), 0 16px 48px rgba(15, 23, 42, 0.10);
+
+  /* Kept as a no-op so the ~6 `var(--hairline-top)` call sites in the component
+     layer stay valid. It was `inset 0 1px 0 rgba(255,255,255,0.04)` — a white
+     top-edge highlight, which is how a dark UI fakes a light source. On a white
+     card it is invisible, so the value is empty rather than the rule being
+     deleted from six box-shadow declarations. */
+  --hairline-top: 0 0 rgba(0, 0, 0, 0);
 
   /* Header offset for scroll-margin so anchors don't land under the sticky bar. */
   --header-offset: 5rem;
@@ -70,11 +131,16 @@
 @layer base {
   /* Scoped to elements that can actually paint a border. The previous universal
      `*` selector also matched every wrapper div and pseudo-element, making it
-     one of the most-evaluated declarations on the page for no visual gain. */
+     one of the most-evaluated declarations on the page for no visual gain.
+
+     Full opacity, not `/ 0.75`. On the dark theme a translucent hairline let the
+     page bleed through and softened the rule; over white the same alpha lifts
+     slate-200 to slate-100, which is close enough to invisible that cards lose
+     their edges. */
   *,
   *::before,
   *::after {
-    border-color: rgb(var(--hairline) / 0.75);
+    border-color: rgb(var(--hairline));
   }
 
   html {
@@ -84,21 +150,41 @@
   }
 
   body {
-    @apply bg-ink text-slate-100 antialiased;
+    @apply bg-white text-slate-200 antialiased;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-    /* Ambient brand light. no-repeat + fixed so it never tiles on long pages. */
-    background-image:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgb(var(--brand) / 0.07), transparent 60%),
-      radial-gradient(ellipse 60% 40% at 100% 0%, rgb(var(--brand) / 0.04), transparent 60%);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    /**
+     * No ambient gradient.
+     *
+     * The dark theme painted two fixed radial gradients over the whole page (a
+     * grey lift plus a teal trace) to keep a flat near-black background from
+     * looking dead. A white page does not have that problem, and the same trick
+     * on white produces a visible grey bloom that follows the viewport as you
+     * scroll — it reads as a rendering artefact, not as depth.
+     *
+     * `background-attachment: fixed` also went with it, which removes a
+     * full-viewport repaint on every scroll frame.
+     */
     min-height: 100vh;
   }
 
-  /* Balanced wrapping removes the one-word orphan line that marketing headlines
-     otherwise get at common breakpoints. Unsupported engines ignore it. */
+
+  /* Headings inherit their colour; they do not set one.
+
+     A base rule like `h1,h2,h3,h4 { color: … }` looks harmless and is not: an
+     inherited colour loses to a *directly set* one at any specificity, so every
+     heading inside a coloured panel would ignore that panel. This is not
+     hypothetical — the six `bg-cyan … text-white` CTA panels rendered near-black
+     `<h2>`s on orange (measured 3.00:1) until this rule came out.
+
+     Inheriting from `body` (slate-200, #1e293b at 14.63:1) gives bare headings a
+     near-black default and lets `text-white` on an ancestor propagate. Where an
+     exact ink is wanted, `.heading-1` … `.heading-3` set it explicitly.
+
+     `text-wrap: balance` removes the one-word orphan line that marketing
+     headlines otherwise get at common breakpoints. Unsupported engines ignore it. */
   h1, h2, h3, h4 { text-wrap: balance; }
   p, li { text-wrap: pretty; }
+
 
   /* Anchor targets must clear the sticky header. */
   :target { scroll-margin-top: var(--header-offset); }
@@ -142,28 +228,31 @@
       outline-offset var(--dur-fast) var(--ease-smooth);
   }
 
-  ::selection { background: rgb(var(--brand) / 0.25); color: #fff; }
+  ::selection { background: rgb(var(--brand) / 0.16); color: rgb(15 23 42); }
 
   /* Native disclosure markers are inconsistent across engines and every
      <details> in this codebase supplies its own chevron. */
   summary::-webkit-details-marker { display: none; }
   summary { list-style: none; }
 
-  /* Scrollbars — thin and consistent across Firefox and WebKit. */
+  /* Scrollbars — thin and consistent across Firefox and WebKit. The thumb uses
+     the *strong* hairline: at `--hairline` (slate-200) a scrollbar on white is
+     effectively invisible, which is a real usability regression rather than a
+     subtle one. */
   * {
     scrollbar-width: thin;
-    scrollbar-color: rgb(var(--hairline) / 0.8) transparent;
+    scrollbar-color: rgb(var(--hairline-strong)) transparent;
   }
   ::-webkit-scrollbar { width: 8px; height: 8px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb {
-    background: rgb(var(--hairline) / 0.7);
+    background: rgb(var(--hairline-strong));
     border-radius: var(--radius-full);
     border: 2px solid transparent;
     background-clip: content-box;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgb(var(--hairline-strong) / 0.9);
+    background: rgb(100 116 139);
     background-clip: content-box;
   }
   ::-webkit-scrollbar-corner { background: transparent; }
@@ -200,8 +289,8 @@
 }
 
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 20px rgba(49, 215, 200, 0.08); }
-  50% { box-shadow: 0 0 30px rgba(49, 215, 200, 0.18); }
+  0%, 100% { box-shadow: 0 0 0 0 rgb(var(--brand) / 0.14); }
+  50% { box-shadow: 0 0 0 6px rgb(var(--brand) / 0.06); }
 }
 
 @keyframes spinner {
@@ -246,20 +335,11 @@
   100% { background-position: 44px 44px, 44px 44px; }
 }
 
-/* Marquee for the logo/proof rail. Translating -50% works because the track
-   renders its children twice, so the loop point is visually identical. */
-@keyframes marquee {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-50%, 0, 0); }
-}
-
-/* Slow conic rotation behind a masked border — used by .border-beam. */
-@keyframes beamSpin {
-  to { transform: rotate(1turn); }
-}
+/* Marquee and conic-beam keyframes were removed with their utilities — zero
+   call sites. */
 
 /* Status dot "breathing" halo. Uses box-shadow spread rather than scale so it
-   never shifts sibling layout. */
+   never shifts sibling layout. Consumed by `.animate-ping-dot`. */
 @keyframes ping {
   0% { box-shadow: 0 0 0 0 currentColor; opacity: 0.6; }
   70% { box-shadow: 0 0 0 7px currentColor; opacity: 0; }
@@ -289,9 +369,14 @@
   100% { background-position: 200% 50%; }
 }
 
-/* ── 4. Animation utilities ─────────────────────────────────────── */
-/* All entrance animations are `forwards` and paired with an initial
-   `opacity-0` at the call site so there is no flash of final state. */
+/* ── 4. Animation utilities ───────────────────────────────────────
+   All entrance animations are `forwards` and paired with an initial
+   `opacity-0` at the call site so there is no flash of final state.
+
+   `.animate-marquee` and `.animate-beam` were removed along with their
+   keyframes and the `.marquee-*` / `.border-beam` utilities: zero call sites
+   across app/ and components/. They were shipping in every page's CSS to
+   animate nothing. */
 .animate-fade-in { animation: fadeIn var(--dur-slow) var(--ease-smooth) forwards; }
 .animate-slide-up { animation: slideUp 0.5s var(--ease-out-expo) forwards; }
 .animate-slide-down { animation: slideDown var(--dur-base) var(--ease-out-expo) forwards; }
@@ -299,16 +384,14 @@
 .animate-slide-in-right { animation: slideInRight var(--dur-base) var(--ease-out-expo) forwards; }
 .animate-overlay-in { animation: overlayIn var(--dur-fast) var(--ease-smooth) forwards; }
 .animate-grow-x { animation: growX 0.7s var(--ease-out-expo) forwards; transform-origin: left center; }
-.animate-marquee { animation: marquee 38s linear infinite; }
-.animate-beam { animation: beamSpin 6s linear infinite; }
 .animate-ping-dot { animation: ping 2s var(--ease-smooth) infinite; }
 
 .animate-shimmer {
   background: linear-gradient(
     90deg,
-    rgb(var(--hairline) / 0.28) 25%,
-    rgb(var(--brand) / 0.09) 50%,
-    rgb(var(--hairline) / 0.28) 75%
+    rgb(var(--surface-1)) 25%,
+    rgb(var(--hairline)) 50%,
+    rgb(var(--surface-1)) 75%
   );
   background-size: 200% 100%;
   animation: shimmer 1.8s ease-in-out infinite;
@@ -358,48 +441,81 @@
   /* ── Surfaces ──────────────────────────────────────────────────
      One elevation ladder for every panel in the product. `.card` keeps its
      existing name and visual weight (it is used in ~200 places) but is now
-     token-driven, so a single change propagates everywhere. */
+     token-driven, so a single change propagates everywhere.
+
+     On white, a card is defined by its **border**, not its fill — the fill is the
+     same `#ffffff` as the page. That inverts which token does the work:
+     `--hairline` went from a detail to the single most important value in the
+     system. A `--shadow-1` under it lifts the card off the page without the
+     "floating in dirt" look a heavier shadow gives on a light surface.
+
+     Two rules carried over from the dark pass, both still load-bearing:
+
+     1. **`.card` is opaque and does not blur.** Translucency means a card's
+        colour depends on whatever is behind it, so the same card rendered a
+        different shade on the homepage than in the dashboard, and two adjacent
+        cards over different backdrops did not match. It also promoted every one
+        of ~200 cards to its own compositing layer.
+
+     2. **`.card` does not react to hover.** A hover response is a promise that
+        something will happen when you click; making that promise on a static
+        metric tile is the difference between a product that feels designed and
+        one that feels decorated. Interactive cards opt in via
+        `.card-interactive`. */
   .card {
-    @apply rounded-card border backdrop-blur;
-    background: rgb(var(--surface-2) / 0.8);
-    border-color: rgb(var(--hairline) / 0.55);
-    box-shadow: var(--shadow-1), var(--hairline-top);
+    @apply rounded-card border;
+    background: rgb(var(--surface-2));
+    border-color: rgb(var(--hairline));
+    box-shadow: var(--shadow-1);
     transition:
       border-color var(--dur-base) var(--ease-smooth),
       box-shadow var(--dur-base) var(--ease-smooth),
       transform var(--dur-base) var(--ease-out-expo);
   }
-  .card:hover {
-    border-color: rgb(var(--brand) / 0.28);
-    box-shadow: var(--shadow-2), 0 0 0 1px rgb(var(--brand) / 0.10), var(--hairline-top);
-  }
 
-  /* Opt-in lift. Applied only to cards that are themselves links/buttons —
-     a non-interactive card that moves on hover is a false affordance. */
+  /* Opt-in interactivity. Applied only to cards that are themselves links or
+     buttons — a non-interactive card that moves on hover is a false affordance.
+
+     The lift is 1px, not 2px. At 2px a grid of tiles visibly jumps as the
+     pointer crosses it; 1px plus a border change reads as responsive without
+     the page feeling loose. */
   .card-interactive { cursor: pointer; }
-  .card-interactive:hover { transform: translateY(-2px); }
-  .card-interactive:active { transform: translateY(0); }
+  .card-interactive:hover {
+    transform: translateY(-1px);
+    border-color: rgb(var(--hairline-strong));
+    box-shadow: var(--shadow-2);
+  }
+  .card-interactive:active { transform: translateY(0); box-shadow: var(--shadow-1); }
 
-  /* Static well: same surface language, no hover reaction. */
+  /* Static well: one step *below* the card, for content nested inside a card
+     (a code sample, a summary row, an empty state). Sunken rather than raised,
+     so nesting reads as containment instead of a second stacked card.
+
+     This is the one place the ladder still changes fill — `--surface-1`
+     (#f8fafc) against the card's #ffffff. Down is the only direction available
+     on a white page. */
   .surface {
     @apply rounded-card border;
-    background: rgb(var(--surface-1) / 0.72);
-    border-color: rgb(var(--hairline) / 0.5);
-    box-shadow: var(--hairline-top);
+    background: rgb(var(--surface-1));
+    border-color: rgb(var(--hairline));
+    box-shadow: none;
   }
 
+  /* Popovers, dropdowns, dialogs. Same white fill as a card, separated from the
+     page purely by a heavier shadow — correct for a transient layer, where the
+     shadow is what says "this is above the page and will go away". */
   .surface-raised {
-    @apply rounded-panel border backdrop-blur-xl;
-    background: rgb(var(--surface-3) / 0.86);
-    border-color: rgb(var(--hairline-strong) / 0.5);
-    box-shadow: var(--shadow-3), var(--hairline-top);
+    @apply rounded-panel border;
+    background: rgb(var(--surface-3));
+    border-color: rgb(var(--hairline));
+    box-shadow: var(--shadow-3);
   }
 
   .glass-panel {
-    background: rgb(var(--surface-2) / 0.7);
+    background: rgb(255 255 255 / 0.85);
     backdrop-filter: blur(16px);
-    border: 1px solid rgb(var(--hairline) / 0.6);
-    box-shadow: var(--shadow-3), var(--hairline-top);
+    border: 1px solid rgb(var(--hairline));
+    box-shadow: var(--shadow-3);
   }
 
   /* Gradient hairline border. The mask trick paints the gradient only in the
@@ -407,7 +523,7 @@
   .gradient-border {
     position: relative;
     border-radius: var(--radius-lg);
-    background: rgb(var(--surface-2) / 0.8);
+    background: rgb(var(--surface-2));
   }
   .gradient-border::before {
     content: "";
@@ -417,9 +533,9 @@
     padding: 1px;
     background: linear-gradient(
       135deg,
-      rgb(var(--brand) / 0.35),
-      rgb(var(--hairline) / 0.5) 45%,
-      rgb(var(--brand) / 0.12)
+      rgb(var(--brand) / 0.5),
+      rgb(var(--hairline)) 45%,
+      rgb(var(--brand) / 0.18)
     );
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
@@ -430,9 +546,21 @@
   /* ── Buttons ───────────────────────────────────────────────────
      Every variant shares one box model so variants align on a row, and every
      one has a real disabled + :active state. Hover effects are guarded with
-     `:not(:disabled)` — the old rules animated disabled buttons on hover. */
+     `:not(:disabled)` — the old rules animated disabled buttons on hover.
+
+     Two changes in this pass:
+
+     - **No lift on hover.** Every variant used to `translateY(-1px)`. A button
+       that moves away from the cursor is a consumer-marketing gesture; on a
+       console where an operator clicks the same button dozens of times it reads
+       as unsteady, and it forces a repaint on hover. Hover is now a colour
+       change only.
+     - **Solid fills, not gradients.** `.button-primary` was a 135° two-stop
+       gradient with a coloured glow. Enterprise primary actions are flat: the
+       gradient made the button the most decorated element on any page it
+       appeared on, competing with the data. */
   .button-base {
-    @apply inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-lg
+    @apply inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-md
            text-sm font-semibold leading-none
            disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50;
     /* 44px minimum target — WCAG 2.5.5 / Apple HIG touch minimum. */
@@ -441,39 +569,28 @@
     transition:
       background-color var(--dur-fast) var(--ease-smooth),
       border-color var(--dur-fast) var(--ease-smooth),
-      box-shadow var(--dur-base) var(--ease-smooth),
-      color var(--dur-fast) var(--ease-smooth),
-      transform var(--dur-fast) var(--ease-out-expo);
+      box-shadow var(--dur-fast) var(--ease-smooth),
+      color var(--dur-fast) var(--ease-smooth);
   }
 
   .button-primary {
-    @apply button-base text-ink;
-    background: linear-gradient(135deg, rgb(var(--brand)) 0%, rgb(var(--brand-strong)) 100%);
-    box-shadow: 0 1px 2px rgba(2, 6, 14, 0.28), 0 4px 14px rgb(var(--brand) / 0.22);
+    @apply button-base text-white;
+    background: rgb(var(--brand));
+    box-shadow: var(--shadow-1);
   }
-  .button-primary:hover:not(:disabled) {
-    background: linear-gradient(135deg, #45e0d2 0%, #1ad4d4 100%);
-    box-shadow: 0 2px 4px rgba(2, 6, 14, 0.3), 0 8px 24px rgb(var(--brand) / 0.32);
-    transform: translateY(-1px);
-  }
-  .button-primary:active:not(:disabled) {
-    transform: translateY(0);
-    box-shadow: 0 1px 2px rgba(2, 6, 14, 0.3), 0 2px 8px rgb(var(--brand) / 0.2);
-  }
+  .button-primary:hover:not(:disabled) { background: rgb(var(--brand-strong)); }
+  .button-primary:active:not(:disabled) { background: rgb(124 45 18); box-shadow: none; }
 
   .button-secondary {
     @apply button-base border text-slate-100;
-    border-color: rgb(var(--hairline-strong) / 0.7);
-    background: rgb(var(--surface-2) / 0.65);
-    backdrop-filter: blur(8px);
+    border-color: rgb(var(--hairline-strong));
+    background: rgb(var(--surface-2));
   }
   .button-secondary:hover:not(:disabled) {
-    border-color: rgb(var(--brand) / 0.45);
-    background: rgb(var(--surface-3) / 0.8);
-    box-shadow: var(--shadow-2);
-    transform: translateY(-1px);
+    border-color: rgb(100 116 139);
+    background: rgb(var(--surface-1));
   }
-  .button-secondary:active:not(:disabled) { transform: translateY(0); box-shadow: none; }
+  .button-secondary:active:not(:disabled) { background: rgb(241 245 249); }
 
   /* Tertiary: text-only affordance for a third action, where another bordered
      button would create a "which one do I press" problem. */
@@ -482,17 +599,17 @@
     background: transparent;
   }
   .button-ghost:hover:not(:disabled) {
-    background: rgb(var(--surface-3) / 0.7);
-    color: #fff;
+    background: rgb(var(--surface-1));
+    color: rgb(15 23 42);
   }
 
   .button-danger {
     @apply button-base text-white;
-    background: rgb(var(--danger) / 0.92);
-    box-shadow: 0 1px 2px rgba(2, 6, 14, 0.28), 0 4px 14px rgb(var(--danger) / 0.2);
+    background: rgb(var(--danger));
+    box-shadow: var(--shadow-1);
   }
-  .button-danger:hover:not(:disabled) { background: rgb(var(--danger)); transform: translateY(-1px); }
-  .button-danger:active:not(:disabled) { transform: translateY(0); }
+  .button-danger:hover:not(:disabled) { background: rgb(159 18 57); }
+  .button-danger:active:not(:disabled) { background: rgb(136 19 55); box-shadow: none; }
 
   /* Size modifiers reset min-height too, so a small button is genuinely
      smaller rather than padded inside a 44px box. */
@@ -505,78 +622,112 @@
     min-height: 2.5rem;
     width: 2.5rem;
     padding: 0;
-    border-color: rgb(var(--hairline-strong) / 0.6);
-    background: rgb(var(--surface-2) / 0.6);
+    border-color: rgb(var(--hairline));
+    background: rgb(var(--surface-2));
   }
   .button-icon:hover:not(:disabled) {
-    border-color: rgb(var(--brand) / 0.5);
-    color: rgb(var(--brand));
+    border-color: rgb(var(--hairline-strong));
+    background: rgb(var(--surface-1));
+    color: rgb(15 23 42);
   }
 
   /* ── Form controls ─────────────────────────────────────────────
-     `outline-none` on the old .input removed the focus ring for keyboard users
-     and relied solely on a border-colour change, which fails 1.4.11 (non-text
-     contrast) against the dark field. The ring is now explicit. */
+     Three things a light theme changes about an input.
+
+     - **The field is white, not sunken.** On the dark theme the field was
+       *darker* than its card, which is how a dark UI says "you can type here".
+       Inverting that literally (a grey field on a white card) reads as disabled,
+       so the field stays white and the border carries the affordance.
+     - **The border is `--hairline-strong`, not `--hairline`.** An input is the one
+       boundary that must clear 3:1 (WCAG 1.4.11) — it is the only thing telling
+       the user a control is there. slate-200 would fail.
+     - **Placeholder is named slate-400** (#64748b, 4.76:1) to document that this
+       is the legibility floor, not a free choice: placeholder text is real text. */
   .input {
-    @apply w-full rounded-lg border px-4 py-3 text-slate-100 placeholder:text-slate-500;
+    @apply w-full rounded-md border px-3.5 py-2.5 text-slate-100 placeholder:text-slate-400;
     min-height: 2.75rem;
-    border-color: rgb(var(--hairline-strong) / 0.75);
-    background: rgb(var(--surface-0) / 0.85);
+    border-color: rgb(var(--hairline-strong));
+    background: rgb(var(--surface-0));
     transition:
       border-color var(--dur-fast) var(--ease-smooth),
       box-shadow var(--dur-fast) var(--ease-smooth),
       background-color var(--dur-fast) var(--ease-smooth);
   }
-  .input:hover:not(:disabled):not(:focus) { border-color: rgb(var(--hairline-strong)); }
+  .input:hover:not(:disabled):not(:focus) { border-color: rgb(100 116 139); }
   .input:focus {
     outline: none;
-    border-color: rgb(var(--brand) / 0.7);
-    box-shadow: 0 0 0 3px rgb(var(--brand) / 0.16);
+    border-color: rgb(var(--brand));
+    box-shadow: 0 0 0 3px rgb(var(--brand) / 0.14);
   }
-  .input:disabled { @apply cursor-not-allowed opacity-55; }
+  .input:disabled { @apply cursor-not-allowed opacity-55; background: rgb(var(--surface-1)); }
   /* `aria-invalid` drives the error style so validity is announced *and* shown,
      rather than being a colour-only signal from a separate class. */
-  .input[aria-invalid="true"] { border-color: rgb(var(--danger) / 0.7); }
-  .input[aria-invalid="true"]:focus { box-shadow: 0 0 0 3px rgb(var(--danger) / 0.18); }
+  .input[aria-invalid="true"] { border-color: rgb(var(--danger)); }
+  .input[aria-invalid="true"]:focus { box-shadow: 0 0 0 3px rgb(var(--danger) / 0.16); }
 
-  .label { @apply mb-1.5 block text-sm font-medium text-slate-200; }
+  .label { @apply mb-1.5 block text-sm font-medium text-slate-100; }
   .field-hint { @apply mt-1.5 text-xs leading-5 text-slate-400; }
   .field-error { @apply mt-1.5 flex items-center gap-1.5 text-xs font-medium text-rose-300; }
 
   /* ── Typography ────────────────────────────────────────────────
-     `text-cyan` resolves again (see tailwind.config.ts) but the token keeps the
-     eyebrow consistent even if the brand hue is retuned. */
+     The eyebrow is slate, not brand. It appears above the H1 on every one of the
+     ~200 pages, so a coloured eyebrow means the first thing the eye lands on, on
+     every single page, is an accent-tinted label carrying the *least* important
+     information there.
+
+     slate-400 (#64748b, 4.76:1), not slate-500 — at 11px uppercase with 0.18em
+     tracking a label needs more contrast than body copy, not less, because the
+     letterforms are small and the tracking breaks up word shapes. */
   .eyebrow {
-    @apply text-xs font-bold uppercase tracking-eyebrow;
-    color: rgb(var(--brand));
+    @apply text-[11px] font-semibold uppercase tracking-eyebrow text-slate-400;
   }
 
   /**
-   * The hero headline sits one step below the largest display size.
+   * Display scale.
    *
-   * `display-xl` (up to 72px) was overpowering the sub-heading and CTAs next to
-   * it, and at that size the headline pushed the proof stats and the live console
-   * further down the fold. `display-lg` caps at 60px, which still reads as the
-   * page's primary voice without dominating everything beneath it.
+   * Headings are **bold and near-black** (`text-slate-100` = #0f172a, 17.85:1).
+   * The colour is also set in `@layer base` on h1–h4, so a page that writes a raw
+   * `<h2>` gets it too.
    *
-   * This class is used only by the homepage hero, so the shared `display-xl`
-   * token is left intact for any future use.
+   * The weights went *up* one step from the dark theme, which is the opposite of
+   * the usual advice. The usual advice is right when the same design is ported
+   * between modes: light text on a dark ground blooms optically, so it looks
+   * heavier than it is, and matching that appearance on white needs less weight.
+   *
+   * This is not that case. On the dark console `heading-3` had been pulled down to
+   * 30px/semibold to stop 84 dashboard pages reading like brochures. On white,
+   * with no glow to lean on, the same setting reads *weak* — a page title has to
+   * hold the top of an all-white page on its own. Bold at the same size does that
+   * without spending vertical space.
+   *
+   * `heading-hero` is untouched — a marketing hero *should* be large.
    */
-  .heading-hero { @apply text-display-lg font-bold; }
-  .heading-1 { @apply text-display-lg font-bold; }
-  .heading-2 { @apply text-display-md font-bold; }
-  .heading-3 { @apply text-display-sm font-semibold; }
+  .heading-hero { @apply text-display-lg font-bold text-slate-100; }
+  .heading-1 { @apply text-display-md font-bold text-slate-100; }
+  .heading-2 { @apply text-display-sm font-bold text-slate-100; }
+  .heading-3 { @apply text-display-xs font-bold text-slate-100; }
 
-  /* Long-form copy capped at a comfortable reading measure. */
+  /* Long-form copy capped at a comfortable reading measure.
+     `text-slate-300` = #334155 (10.35:1) — the "light black" body voice: clearly
+     subordinate to a #0f172a heading, still far above the 4.5:1 floor. */
   .lede { @apply max-w-prose text-lg leading-8 text-slate-300; }
   .body-copy { @apply max-w-prose leading-7 text-slate-300; }
 
+  /* Secondary/supporting copy, named so pages stop reaching for a raw
+     `text-slate-400` and drifting apart. */
+  .body-muted { @apply leading-7 text-slate-400; }
+
   /* Brand gradient text. `inline-block` + padding-bottom stop descenders from
-     being clipped by background-clip on WebKit. */
+     being clipped by background-clip on WebKit.
+
+     Both stops sit at the dark end of the ramp. A gradient headline on white has
+     to stay legible across its whole length, so this runs #9a3412 → #f96403
+     rather than through a pale mid-tone: 3.06:1 at the lightest point is already
+     the floor for large text. */
   .text-gradient-brand {
     display: inline-block;
     padding-bottom: 0.08em;
-    background: linear-gradient(100deg, #5ef4e8 0%, #31d7c8 40%, #b7f34a 100%);
+    background: linear-gradient(100deg, #9a3412 0%, #b23b0b 45%, #f96403 100%);
     background-size: 200% auto;
     -webkit-background-clip: text;
     background-clip: text;
@@ -587,17 +738,27 @@
 
   /* ── Badges / pills ───────────────────────────────────────────
      Semantic variants replace the ad-hoc `border-x-500/30 bg-x-500/10
-     text-x-300` triplet that was repeated across dozens of files. */
+     text-x-300` triplet that was repeated across dozens of files.
+
+     Now `rounded-sm` (6px), not `rounded-full`. A pill is a consumer shape; a
+     6px chip sits square against the tables and inputs it labels. Padding is
+     also tighter, because a badge is a label, not a button.
+
+     Each variant is a **tint plus a dark label**: a 10% fill of the mid step
+     under 700-step text. That pairing is what keeps a badge readable on white
+     without an opaque fill that would out-shout the table row it sits in. The
+     ramp mirror in tailwind.config.ts is what makes the utility names below
+     resolve to those steps, so these classes read the same as they did on dark. */
   .badge {
-    @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border
-           px-2.5 py-1 text-xs font-semibold;
+    @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-sm border
+           px-2 py-0.5 text-xs font-medium;
   }
-  .badge-neutral { @apply badge border-slate-700 bg-slate-900/70 text-slate-300; }
-  .badge-brand { @apply badge; border-color: rgb(var(--brand) / 0.3); background: rgb(var(--brand) / 0.1); color: #5ef4e8; }
-  .badge-success { @apply badge border-emerald-500/30 bg-emerald-500/10 text-emerald-300; }
-  .badge-warning { @apply badge border-amber-500/30 bg-amber-500/10 text-amber-200; }
-  .badge-danger { @apply badge border-rose-500/30 bg-rose-500/10 text-rose-300; }
-  .badge-info { @apply badge border-sky-500/30 bg-sky-500/10 text-sky-300; }
+  .badge-neutral { @apply badge border-slate-700/70 bg-slate-800/60 text-slate-300; }
+  .badge-brand { @apply badge; border-color: rgb(var(--brand) / 0.3); background: rgb(var(--brand) / 0.08); color: rgb(var(--brand)); }
+  .badge-success { @apply badge border-emerald-500/25 bg-emerald-500/10 text-emerald-300; }
+  .badge-warning { @apply badge border-amber-500/25 bg-amber-500/10 text-amber-200; }
+  .badge-danger { @apply badge border-rose-500/25 bg-rose-500/10 text-rose-300; }
+  .badge-info { @apply badge border-sky-500/25 bg-sky-500/10 text-sky-300; }
 
   /* Live status dot. `currentColor` lets the halo inherit the text colour, so
      one keyframe serves every status variant. */
@@ -606,32 +767,59 @@
     background: currentColor;
   }
 
-  /* ── Callouts ──────────────────────────────────────────────── */
+  /* ── Callouts ────────────────────────────────────────────────
+     `rounded-sm` and a left rule rather than a full rounded box. A callout is an
+     aside inside prose; a 10px-radius tinted card at that position reads as a
+     second content column and interrupts the reading flow. */
   .tip-card {
-    @apply rounded-lg border p-4 text-sm leading-6 text-slate-300;
-    border-color: rgb(var(--brand) / 0.22);
+    @apply rounded-sm border-l-2 py-3 pl-4 pr-4 text-sm leading-6 text-slate-300;
+    border-color: rgb(var(--brand));
     background: rgb(var(--brand) / 0.05);
   }
-  .warn-card { @apply rounded-lg border border-amber-500/25 bg-amber-500/5 p-4 text-sm leading-6 text-amber-100; }
-  .danger-card { @apply rounded-lg border border-rose-500/25 bg-rose-500/5 p-4 text-sm leading-6 text-rose-100; }
+  .warn-card { @apply rounded-sm border-l-2 border-amber-600 bg-amber-500/5 py-3 pl-4 pr-4 text-sm leading-6 text-amber-100; }
+  .danger-card { @apply rounded-sm border-l-2 border-rose-600 bg-rose-500/5 py-3 pl-4 pr-4 text-sm leading-6 text-rose-100; }
 
   .docs-section { @apply mt-12 scroll-mt-24; }
 
   /* ── Decorative backgrounds ────────────────────────────────────
      Decorative only; call sites must render them behind content with
-     `pointer-events-none` so they never intercept clicks. */
+     `pointer-events-none` so they never intercept clicks.
+
+     The grid is drawn in **slate**, not brand. At 5% over white a brand-tinted
+     grid is a faint orange haze rather than a grid — the hue registers before the
+     structure does. Opacity is up from 5% to 6/8% as well, because a hairline has
+     less to work with over white than over near-black. */
   .grid-fade {
     background-image:
-      linear-gradient(rgb(var(--brand) / 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(var(--brand) / 0.05) 1px, transparent 1px);
+      linear-gradient(rgb(15 23 42 / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(15 23 42 / 0.06) 1px, transparent 1px);
     background-size: 44px 44px;
   }
   .grid-fade-anim {
     background-image:
-      linear-gradient(rgb(var(--brand) / 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(var(--brand) / 0.06) 1px, transparent 1px);
+      linear-gradient(rgb(15 23 42 / 0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(15 23 42 / 0.08) 1px, transparent 1px);
     background-size: 44px 44px;
     animation: gridDrift 9s linear infinite;
+  }
+
+  /* Hero wash.
+     A single faint brand bloom at the top of a hero section, replacing the
+     per-page `bg-[radial-gradient(...)]` arbitrary values that four heroes each
+     spelled slightly differently.
+
+     This exists as a class rather than a utility because Tailwind arbitrary
+     values **cannot contain spaces** — `bg-[radial-gradient(…,rgb(194 65 12 /
+     0.06),…)]` silently emits no CSS at all, which is exactly the trap the
+     previous per-page versions fell into after a find-and-replace. In a real
+     stylesheet the modern `rgb(r g b / a)` syntax is fine.
+
+     5% is not a typo. On near-black a 10–15% wash reads as ambient light; the
+     same value on white is a visible orange stain across the headline. */
+  .hero-wash {
+    background-image:
+      radial-gradient(ellipse 70% 55% at 50% 0%, rgb(var(--brand) / 0.05), transparent 60%),
+      linear-gradient(180deg, rgb(var(--surface-1)), rgb(var(--surface-0)) 70%);
   }
 
   /* Fades a decorative layer toward the edges so the grid never terminates in a
@@ -651,35 +839,6 @@
 
 /* ── 6. Utilities ───────────────────────────────────────────────── */
 @layer utilities {
-  /* Marquee track: children are duplicated in markup, so translating -50%
-     produces a seamless loop. `w-max` keeps the track from wrapping. */
-  .marquee-track { @apply flex w-max items-center; }
-  .marquee-mask {
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  }
-
-  /* Rotating conic beam confined to a 1px border ring. Purely decorative. */
-  .border-beam { position: relative; isolation: isolate; }
-  .border-beam::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: conic-gradient(from 0deg, transparent 0 65%, rgb(var(--brand) / 0.55) 78%, transparent 92%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    animation: beamSpin 6s linear infinite;
-    pointer-events: none;
-    z-index: -1;
-  }
-
-  /* Promotes an element to its own compositing layer. Applied narrowly:
-     leaving `will-change` on permanently wastes GPU memory. */
-  .gpu { transform: translateZ(0); backface-visibility: hidden; }
-
   /* Truncate to N lines so uneven copy length does not create ragged card
      heights in a grid. */
   .clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -702,8 +861,6 @@
     scroll-behavior: auto !important;
   }
 
-  .animate-marquee,
-  .animate-beam,
   .animate-ping-dot,
   .animate-radar,
   .animate-scan-sweep,
@@ -711,16 +868,13 @@
   .animate-caret,
   .animate-pulse-glow,
   .grid-fade-anim,
-  .border-beam::before,
   .text-gradient-brand-animated {
     animation: none !important;
   }
 
-  /* Hover lift is motion too. */
-  .card-interactive:hover,
-  .button-primary:hover:not(:disabled),
-  .button-secondary:hover:not(:disabled),
-  .button-danger:hover:not(:disabled) {
+  /* Hover lift is motion too. Only `.card-interactive` still translates —
+     buttons no longer lift at all, so they are not listed here. */
+  .card-interactive:hover {
     transform: none;
   }
 }

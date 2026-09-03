@@ -119,7 +119,7 @@ export function AdminSidebar({ counts, adminEmail }: { counts: AdminBadgeCounts;
   return (
     <>
       {/* Mobile top bar */}
-      <div className="sticky top-0 z-30 flex items-center justify-between border-b border-slate-800 bg-ink/90 px-4 py-3 backdrop-blur lg:hidden">
+      <div className="sticky top-0 z-30 flex items-center justify-between border-b border-slate-800 bg-white/90 px-4 py-3 backdrop-blur lg:hidden">
         <div className="flex items-center gap-2">
           <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-cyan/15 text-cyan">
             <ShieldAlert size={16} />
@@ -165,7 +165,7 @@ export function AdminSidebar({ counts, adminEmail }: { counts: AdminBadgeCounts;
         <div className="px-3 pt-4">
           <Link
             href="/"
-            className="mb-3 flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition hover:bg-slate-800/50 hover:text-white"
+            className="mb-3 flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-slate-300 transition hover:bg-slate-800/50 hover:text-slate-100"
           >
             <ArrowLeft size={15} aria-hidden="true" /> Back to Home
           </Link>
@@ -195,9 +195,9 @@ export function AdminSidebar({ counts, adminEmail }: { counts: AdminBadgeCounts;
             type="button"
             aria-label="Close admin navigation"
             onClick={() => setMobileOpen(false)}
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
           />
-          <div className="absolute left-0 top-0 flex h-full w-[280px] flex-col border-r border-slate-800 bg-panel shadow-glow">
+          <div className="absolute left-0 top-0 flex h-full w-[280px] flex-col border-r border-slate-800 bg-panel shadow-elevation-4">
             <div className="flex items-center justify-between border-b border-slate-800 py-5 pr-3">
               {brand}
               <button

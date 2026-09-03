@@ -46,7 +46,7 @@ export default async function AgencyClientsPage() {
         </div>
       ) : (
         <div className="card mt-7 p-10 text-center">
-          <Users className="mx-auto text-slate-700" size={42} />
+          <Users className="mx-auto text-slate-500" size={42} />
           <p className="mt-4 font-semibold">No clients yet</p>
           <Link href="/dashboard/agency/clients/new" className="button-primary mt-5 inline-flex gap-2"><Plus size={16} /> Add first client</Link>
         </div>

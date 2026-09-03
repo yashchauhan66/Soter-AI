@@ -59,7 +59,7 @@ export default async function AgentReplayPage({ searchParams }: { searchParams: 
                   <td className="max-w-[320px] text-slate-300">{replay?.summary ?? "No replay generated yet."}</td>
                   <td>{row.createdAt.toLocaleString()}</td>
                   <td><Link className="font-mono text-xs text-blue-300 hover:underline" href={`/api/agent/replay/${row.id}`}>{row.id.slice(0, 12)}…</Link></td>
-                  <td><Link className="text-xs text-slate-200 hover:text-white hover:underline" href={`/api/agent/replay/${row.id}?format=pdf`}>PDF</Link></td>
+                  <td><Link className="text-xs text-slate-200 hover:text-slate-100 hover:underline" href={`/api/agent/replay/${row.id}?format=pdf`}>PDF</Link></td>
                 </tr>
               );
             })}

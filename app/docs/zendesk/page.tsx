@@ -44,16 +44,16 @@ export default function ZendeskDocsPage() {
           <h2 className="text-2xl font-bold">Integration pattern</h2>
           <div className="mt-4 space-y-3">
             <div className="rounded-lg border border-slate-800 p-4">
-              <span className="font-semibold text-white">1.</span> Guard inbound ticket messages before they reach the AI agent
+              <span className="font-semibold text-slate-100">1.</span> Guard inbound ticket messages before they reach the AI agent
             </div>
             <div className="rounded-lg border border-slate-800 p-4">
-              <span className="font-semibold text-white">2.</span> Guard AI draft replies before they are sent to customers
+              <span className="font-semibold text-slate-100">2.</span> Guard AI draft replies before they are sent to customers
             </div>
             <div className="rounded-lg border border-slate-800 p-4">
-              <span className="font-semibold text-white">3.</span> Use distinct SoterAI projects per brand or client for isolation
+              <span className="font-semibold text-slate-100">3.</span> Use distinct SoterAI projects per brand or client for isolation
             </div>
             <div className="rounded-lg border border-slate-800 p-4">
-              <span className="font-semibold text-white">4.</span> Use webhooks and scheduled reports for security review
+              <span className="font-semibold text-slate-100">4.</span> Use webhooks and scheduled reports for security review
             </div>
           </div>
         </section>

@@ -15,7 +15,7 @@ export default async function ClientDetailPage({ params }: { params: Promise<{ i
 
   return (
     <div>
-      <Link href="/dashboard/agency/clients" className="inline-flex items-center gap-2 text-sm text-slate-200 hover:text-white"><ArrowLeft size={14} /> Back to clients</Link>
+      <Link href="/dashboard/agency/clients" className="inline-flex items-center gap-2 text-sm text-slate-200 hover:text-slate-100"><ArrowLeft size={14} /> Back to clients</Link>
       <PageHeader
         eyebrow="Client"
         title={client.name}

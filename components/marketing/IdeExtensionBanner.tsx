@@ -14,7 +14,7 @@ export function IdeExtensionBanner() {
         </div>
         <Link
           href="/extensions/ide"
-          className="inline-flex items-center gap-1.5 rounded-md bg-emerald-400 px-3 py-1 text-xs font-semibold text-ink transition hover:bg-emerald-300"
+          className="inline-flex items-center gap-1.5 rounded-md bg-emerald-400 px-3 py-1 text-xs font-semibold text-white transition hover:bg-emerald-300"
         >
           Get SoterAI IDE Guard <ArrowRight size={12} aria-hidden="true" />
         </Link>

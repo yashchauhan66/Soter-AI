@@ -127,7 +127,7 @@ const res = await fetch("https://soterai.in/api/credentials", {
                   </span>
                 )}
                 <Link
-                  className="rounded-lg border border-slate-700 px-3 py-1.5 text-xs text-slate-300 hover:border-slate-500 hover:text-white"
+                  className="rounded-lg border border-slate-700 px-3 py-1.5 text-xs text-slate-300 hover:border-slate-500 hover:text-slate-100"
                   href={`/dashboard/credentials/${cred.id}?project=${project.id}`}
                 >
                   Manage
@@ -176,7 +176,7 @@ const res = await fetch("https://soterai.in/api/credentials", {
           AES-256-GCM and never exposed in plaintext.
         </p>
         <Link
-          className="mt-4 inline-flex items-center gap-2 rounded-xl bg-cyan px-4 py-2 text-sm font-semibold text-black transition hover:bg-cyan/90"
+          className="mt-4 inline-flex items-center gap-2 rounded-xl bg-cyan px-4 py-2 text-sm font-semibold text-white transition hover:bg-cyan/90"
           href={`/dashboard/credentials/new?project=${project.id}`}
         >
           <ShieldCheck size={16} />

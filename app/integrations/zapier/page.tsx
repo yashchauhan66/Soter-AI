@@ -195,7 +195,7 @@ export default function Page() {
         <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-200">
           Create a free SoterAI project, add two webhook steps to your Zap, and every AI action is protected.
         </p>
-        <Link href="/signup" className="mt-6 inline-flex items-center gap-2 rounded-lg bg-cyan px-6 py-3 text-sm font-semibold text-ink transition hover:opacity-90">
+        <Link href="/signup" className="mt-6 inline-flex items-center gap-2 rounded-lg bg-cyan px-6 py-3 text-sm font-semibold text-white transition hover:opacity-90">
           Get started free <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </Link>
       </section>

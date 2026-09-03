@@ -86,7 +86,7 @@ export default function ModelSupplyChainPage() {
             <Link href="/dashboard/security/model-scan" className="button-secondary gap-2">
               Open the scanner
             </Link>
-            <Link href="/comparison/hiddenlayer" className="text-sm text-slate-200 hover:text-white">
+            <Link href="/comparison/hiddenlayer" className="text-sm text-slate-200 hover:text-slate-100">
               vs HiddenLayer
             </Link>
           </div>
@@ -174,16 +174,16 @@ export default function ModelSupplyChainPage() {
 
         {/* CTA */}
         <section className="mt-16">
-          <div className="rounded-3xl bg-cyan p-10 text-center text-ink">
+          <div className="rounded-3xl bg-cyan p-10 text-center text-white">
             <h2 className="text-3xl font-black">Trust no model you didn&apos;t scan.</h2>
-            <p className="mx-auto mt-3 max-w-2xl text-ink/70">
+            <p className="mx-auto mt-3 max-w-2xl text-[0.9375rem] leading-7 text-white">
               Drag a model file into the scanner, or call the API in CI before every deploy.
             </p>
             <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link href="/dashboard/security/model-scan" className="inline-flex items-center gap-2 rounded-xl bg-ink px-6 py-3 font-semibold text-white">
+              <Link href="/dashboard/security/model-scan" className="inline-flex items-center gap-2 rounded-xl bg-ink px-6 py-3 font-semibold text-slate-100">
                 Open the scanner <ArrowRight size={18} />
               </Link>
-              <Link href="/docs" className="inline-flex items-center gap-2 rounded-xl border border-ink/20 bg-ink/10 px-6 py-3 font-semibold text-ink">
+              <Link href="/docs" className="inline-flex items-center gap-2 rounded-xl border border-white/50 px-6 py-3 font-semibold text-white">
                 Read the docs
               </Link>
             </div>

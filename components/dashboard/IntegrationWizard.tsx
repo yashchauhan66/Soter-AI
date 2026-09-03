@@ -260,7 +260,7 @@ export function IntegrationWizard({
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-2">
               <PlugZap size={18} className="text-cyan" aria-hidden="true" />
-              <p className="text-sm font-semibold text-white">Setup readiness</p>
+              <p className="text-sm font-semibold text-slate-100">Setup readiness</p>
             </div>
             <span className="rounded-md border border-cyan/30 bg-cyan/10 px-2 py-1 text-xs font-bold text-cyan">{readinessPercent}%</span>
           </div>
@@ -298,7 +298,7 @@ export function IntegrationWizard({
         </div>
         {status && <p aria-live="polite" className={`mt-4 rounded-xl bg-slate-950 p-3 text-sm ${status.includes("failed") || status.includes("error") ? "text-red-300" : "text-emerald-300"}`}>{status}</p>}
         <div className="mt-4 rounded-xl border border-slate-800 bg-slate-950/70 p-4">
-          <div className="flex items-center gap-2 text-sm font-semibold text-white">
+          <div className="flex items-center gap-2 text-sm font-semibold text-slate-100">
             <AlertCircle size={16} className="text-amber-300" aria-hidden="true" />
             Common blockers
           </div>
@@ -324,14 +324,14 @@ export function IntegrationWizard({
 
         <div className="grid gap-4 lg:grid-cols-3">
           <div className="card p-4">
-            <div className="flex items-center gap-2 text-sm font-semibold text-white">
+            <div className="flex items-center gap-2 text-sm font-semibold text-slate-100">
               <Terminal size={16} className="text-cyan" aria-hidden="true" />
               Install
             </div>
             <p className="mt-3 rounded-md border border-slate-800 bg-slate-950 px-3 py-2 font-mono text-xs text-slate-300">{meta.install}</p>
           </div>
           <div className="card p-4">
-            <div className="flex items-center gap-2 text-sm font-semibold text-white">
+            <div className="flex items-center gap-2 text-sm font-semibold text-slate-100">
               <ServerCog size={16} className="text-cyan" aria-hidden="true" />
               Prerequisites
             </div>
@@ -342,7 +342,7 @@ export function IntegrationWizard({
             </ul>
           </div>
           <div className="card p-4">
-            <div className="flex items-center gap-2 text-sm font-semibold text-white">
+            <div className="flex items-center gap-2 text-sm font-semibold text-slate-100">
               <ClipboardCheck size={16} className="text-cyan" aria-hidden="true" />
               Verify
             </div>
@@ -353,7 +353,7 @@ export function IntegrationWizard({
             </ul>
           </div>
           <div className="card p-4">
-            <div className="flex items-center gap-2 text-sm font-semibold text-white">
+            <div className="flex items-center gap-2 text-sm font-semibold text-slate-100">
               <LifeBuoy size={16} className="text-cyan" aria-hidden="true" />
               Troubleshooting
             </div>
@@ -373,7 +373,7 @@ export function IntegrationWizard({
         </div>
 
         <div className="card mt-5 p-4">
-          <div className="flex items-center gap-2 text-sm font-semibold text-white">
+          <div className="flex items-center gap-2 text-sm font-semibold text-slate-100">
             <KeyRound size={16} className="text-cyan" aria-hidden="true" />
             Production security checklist
           </div>

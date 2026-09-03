@@ -104,7 +104,7 @@ const res = await fetch("https://soterai.in/api/forensics", {
           )}
           {incidents.map((incident) => (
             <Link
-              className="card flex items-center justify-between p-4 transition hover:border-slate-600"
+              className="card card-interactive flex items-center justify-between p-4"
               href={`/dashboard/forensics/${incident.id}?project=${project.id}`}
               key={incident.id}
             >
@@ -170,7 +170,7 @@ const res = await fetch("https://soterai.in/api/forensics", {
           reconstruct the timeline and collect evidence.
         </p>
         <Link
-          className="mt-4 inline-flex items-center gap-2 rounded-xl bg-cyan px-4 py-2 text-sm font-semibold text-black transition hover:bg-cyan/90"
+          className="mt-4 inline-flex items-center gap-2 rounded-xl bg-cyan px-4 py-2 text-sm font-semibold text-white transition hover:bg-cyan/90"
           href={`/dashboard/forensics/new?project=${project.id}`}
         >
           <FileSearch size={16} />

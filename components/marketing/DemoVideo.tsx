@@ -9,6 +9,7 @@ import {
   Play,
   Shield,
 } from "lucide-react";
+import { INK, SEVERITY } from "@/lib/brand";
 
 /* ── Types ──────────────────────────────────────────────── */
 
@@ -280,7 +281,7 @@ export function DemoVideo() {
             onClick={() => handleSelect(idx)}
             className={`rounded-full px-3 py-1.5 text-xs font-medium transition-all ${
               idx === activeIndex
-                ? "bg-cyan text-ink shadow-sm"
+                ? "bg-cyan text-white shadow-sm"
                 : "bg-slate-800/60 text-slate-200 hover:bg-slate-700/60 hover:text-slate-200"
             }`}
           >
@@ -367,14 +368,20 @@ export function DemoVideo() {
               <div className="relative mx-auto flex h-20 w-20 items-center justify-center">
                 {/* Circular progress background */}
                 <svg className="absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 80 80">
-                  <circle cx="40" cy="40" r="34" fill="none" stroke="rgba(51,65,85,0.4)" strokeWidth="5" />
+                  {/* SVG `stroke` cannot take a utility class, so these are the
+                      two documented literal exceptions — see lib/brand.ts. */}
+                  <circle cx="40" cy="40" r="34" fill="none" stroke={INK.hairline} strokeWidth="5" />
                   <circle
                     cx="40"
                     cy="40"
                     r="34"
                     fill="none"
                     stroke={
-                      scene.riskScore > 70 ? "#ef4444" : scene.riskScore > 30 ? "#f59e0b" : "#22c55e"
+                      scene.riskScore > 70
+                        ? SEVERITY.critical
+                        : scene.riskScore > 30
+                          ? SEVERITY.medium
+                          : SEVERITY.safe
                     }
                     strokeWidth="5"
                     strokeDasharray={`${(scene.riskScore / 100) * 213.6} 213.6`}

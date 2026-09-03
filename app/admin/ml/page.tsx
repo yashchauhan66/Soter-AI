@@ -33,7 +33,7 @@ export default async function MLOverviewPage() {
           ["Review queue (open)", reviewPending, "/admin/ml/review"],
           ["Active deployments", deployments, "/admin/ml/deployments"],
         ].map(([label, value, href]) => (
-          <Link key={String(label)} href={String(href)} className="card p-5 hover:border-cyan-500/40">
+          <Link key={String(label)} href={String(href)} className="card card-interactive p-5">
             <p className="text-xs font-bold uppercase tracking-wider text-slate-300">{label}</p>
             <p className="mt-2 text-3xl font-black text-cyan">{String(value)}</p>
           </Link>
