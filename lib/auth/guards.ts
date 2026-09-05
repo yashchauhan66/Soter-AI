@@ -6,31 +6,42 @@ import { cache } from "react";
 import type { OrgRole, Organization, OrganizationMember } from "@prisma/client";
 import { auth } from "../../auth";
 import { db } from "../db";
+import {
+  assertOrganizationAvailable,
+  assertProjectAvailable,
+  buildActiveMembershipWhere,
+} from "./availability";
+import { AuthError, ForbiddenError, NotFoundError } from "./errors";
 import { hasPermission, type Permission } from "./permissions";
 import { listGuardEventsByProject } from "../events/store";
 
-export class AuthError extends Error {
-  status: number;
-  constructor(message: string, status = 401) {
-    super(message);
-    this.name = "AuthError";
-    this.status = status;
-  }
-}
+// The error hierarchy lives in ./errors so that every module which throws an
+// authorization failure produces an instance of the SAME class.
+// lib/apiResponse.ts maps `instanceof AuthError` onto the HTTP status, and
+// `instanceof` is identity-based: a second, structurally identical copy of these
+// classes declared here (which is what used to live in this file) meant a
+// ForbiddenError raised by ./availability was NOT an instance of the AuthError
+// apiError checks, so a deliberate 403 was reported to the caller as a generic
+// 500. Re-export the single definition instead of redeclaring it.
+export { AuthError, ForbiddenError, NotFoundError } from "./errors";
 
-export class ForbiddenError extends AuthError {
-  constructor(message = "Forbidden") {
-    super(message, 403);
-    this.name = "ForbiddenError";
-  }
-}
-
-export class NotFoundError extends AuthError {
-  constructor(message = "Not found") {
-    super(message, 404);
-    this.name = "NotFoundError";
-  }
-}
+/**
+ * `cache` de-duplicates a call for the lifetime of one server request.
+ *
+ * It is a React *canary* API: `@types/react` only declares it in canary.d.ts,
+ * and the `react` package this repo installs (18.2.0) does not export it at all
+ * — Next.js substitutes its own bundled React during `next build` / `next dev`,
+ * which is the only reason the app works. Calling the import directly therefore
+ * crashes every consumer that runs outside the Next bundler (plain `tsx` tests,
+ * standalone workers, one-off scripts) with
+ * "(0 , import_react.cache) is not a function".
+ *
+ * Falling back to the identity wrapper keeps this module importable there. The
+ * only thing lost outside a request scope is memoisation, which is a
+ * performance property and not a security one: every call still re-runs the
+ * full session lookup and membership check.
+ */
+const requestCache: typeof cache = typeof cache === "function" ? cache : (fn) => fn;
 
 export interface SessionUser {
   id: string;
@@ -39,7 +50,7 @@ export interface SessionUser {
   isAdmin: boolean;
 }
 
-export const requireUser = cache(async (): Promise<SessionUser> => {
+export const requireUser = requestCache(async (): Promise<SessionUser> => {
   const session = await auth();
   if (!session?.user?.id) {
     throw new AuthError("Sign in required.", 401);
@@ -52,16 +63,16 @@ export const requireUser = cache(async (): Promise<SessionUser> => {
   return { id: user.id, email: user.email, name: user.name, isAdmin: user.isAdmin };
 });
 
-export const getActiveOrganization = cache(async (input?: { organizationId?: string | null }): Promise<{ org: Organization; membership: OrganizationMember & { role: OrgRole } } | null> => {
+export const getActiveOrganization = requestCache(async (input?: { organizationId?: string | null }): Promise<{ org: Organization; membership: OrganizationMember & { role: OrgRole } } | null> => {
   const user = await requireUser();
-  const targetId = input?.organizationId ?? null;
 
-  const where = targetId
-    ? { userId: user.id, organizationId: targetId }
-    : { userId: user.id };
-
+  // buildActiveMembershipWhere hides organizations an administrator has
+  // suspended from ordinary members while keeping them visible to platform
+  // admins for recovery. Inlining a plain `{ userId }` filter here (which is
+  // what this used to do) meant a suspended tenant was silently picked as
+  // somebody's active organization again on the very next request.
   const membership = await db.organizationMember.findFirst({
-    where,
+    where: buildActiveMembershipWhere(user, input?.organizationId ?? null),
     include: { organization: true },
     orderBy: { createdAt: "asc" },
   });
@@ -83,6 +94,12 @@ export async function requireOrganizationAccess(organizationId: string): Promise
     }
     throw new ForbiddenError("You do not have access to this organization.");
   }
+  // A tenant an administrator suspended has to stop serving its own members, not
+  // just its API keys. lib/apiKey.ts already rejects on organization.disabled,
+  // so before this check the same suspension blocked SDK traffic while leaving
+  // every session-authenticated dashboard route and server action fully usable.
+  // Platform admins stay exempt so the suspension can be lifted.
+  assertOrganizationAvailable(membership.organization, user);
   return { user, org: membership.organization, role: membership.role };
 }
 
@@ -90,6 +107,9 @@ export async function requireProjectAccess(projectId: string): Promise<{ user: S
   const user = await requireUser();
   const project = await db.project.findUnique({ where: { id: projectId } });
   if (!project) throw new NotFoundError("Project not found.");
+  // Same asymmetry as the organization check above: lib/apiKey.ts rejects on
+  // project.disabledAt, the session path did not.
+  assertProjectAvailable(project, user);
   if (!project.organizationId) {
     if (project.userId !== user.id && !user.isAdmin) throw new ForbiddenError("You do not have access to this project.");
     const fallback = await getActiveOrganization();

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CodeBlock, InlineCode, TipBox, WarnBox } from "@/components/ui/CodeBlock";
+import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
@@ -137,12 +138,12 @@ export default function NextjsDocsPage() {
     <DocsPageShell path="/docs/nextjs">
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 1: Install</h2>
+          <DocsHeading>Step 1: Install</DocsHeading>
           <CodeBlock language="bash" title="terminal">{installCode}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 2: Environment variables</h2>
+          <DocsHeading>Step 2: Environment variables</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Add these to your <InlineCode>.env.local</InlineCode> file:
           </p>
@@ -155,7 +156,7 @@ export default function NextjsDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 3: Route Handler (manual control)</h2>
+          <DocsHeading>Step 3: Route Handler (manual control)</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Full control over the guard flow in your API route:
           </p>
@@ -163,7 +164,7 @@ export default function NextjsDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 4: One-line helper (recommended)</h2>
+          <DocsHeading>Step 4: One-line helper (recommended)</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Use <InlineCode>createGuardedRoute</InlineCode> from <InlineCode>@soterai/core/next</InlineCode> 
             for a minimal setup:
@@ -177,7 +178,7 @@ export default function NextjsDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 5: Server Actions</h2>
+          <DocsHeading>Step 5: Server Actions</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Guard inputs directly in server actions without exposing the API key:
           </p>
@@ -185,7 +186,7 @@ export default function NextjsDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 6: Client component (safe pattern)</h2>
+          <DocsHeading>Step 6: Client component (safe pattern)</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             The client component only talks to <strong>your</strong> server, never to SoterAI directly:
           </p>
@@ -197,7 +198,7 @@ export default function NextjsDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Key points for Next.js developers</h2>
+          <DocsHeading>Key points for Next.js developers</DocsHeading>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {[
               ["Don't use NEXT_PUBLIC_", "SoterAI API keys must never be exposed to the browser."],

@@ -2,6 +2,7 @@ import { Shield, Users, ClipboardCheck, FileBarChart, Ban, CheckCircle, Clock, A
 import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { MetricCard } from "@/components/dashboard/MetricCard";
+import { PageHeader } from "@/components/dashboard/PageHeader";
 import { getActiveOrganization } from "@/lib/auth/guards";
 import { getGovernanceSummary } from "@/lib/usage-governance";
 
@@ -106,21 +107,26 @@ export default async function UsageGovernancePage() {
        * because they explain what the section does, but as a plain hairline-
        * separated row rather than gradient cards.
        */}
-      <header>
-        <p className="eyebrow">Governance</p>
-        <h1 className="heading-3 mt-2.5">AI usage governance</h1>
-        <p className="mt-3 max-w-prose leading-7 text-slate-400">
-          Employees paste company data into ChatGPT, Claude, and Cursor every day. Define company-wide
-          policies, set department-specific rules, classify data sensitivity, monitor usage, and keep a
-          complete audit trail for legal accountability.
-        </p>
+      <div>
+        <PageHeader
+          eyebrow="Governance"
+          title="AI usage governance"
+          icon={Shield}
+          description={
+            <>
+              Employees paste company data into ChatGPT, Claude, and Cursor every day. Define company-wide
+              policies, set department-specific rules, classify data sensitivity, monitor usage, and keep a
+              complete audit trail for legal accountability.
+            </>
+          }
+        />
 
-        <div className="mt-6 grid overflow-hidden rounded-card border border-slate-800 sm:grid-cols-3">
+        <div className="-mt-2 grid overflow-hidden rounded-card border border-slate-800 sm:grid-cols-3">
           <HeroFeature icon={<Shield size={16} />} title="Policy control" text="Allow or block AI providers, set department rules, require approval." />
           <HeroFeature icon={<Eye size={16} />} title="Employee DLP" text="Detect and block company data flowing to unauthorized AI tools." />
           <HeroFeature icon={<Scale size={16} />} title="Legal accountability" text="Complete audit trail with compliance reports for regulators." />
         </div>
-      </header>
+      </div>
 
       {/**
        * Summary metrics.

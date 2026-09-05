@@ -1,5 +1,5 @@
 /**
- * SoterAI Guard — Flowise Custom Nodes
+ * SoterAI Guard â€” Flowise Custom Nodes
  *
  * Checks user messages for prompt injection, jailbreaks, PII leakage,
  * and other threats before they reach the LLM.
@@ -49,7 +49,7 @@ class SoterInputGuard_Tools {
       label: "Base URL",
       name: "baseUrl",
       type: "string",
-      default: "https://api.cybersecurityguard.com",
+      default: "https://api.soterai.in",
       optional: true,
     },
     {
@@ -89,7 +89,7 @@ class SoterInputGuard_Tools {
     const inputs = nodeData.inputs as Record<string, unknown>;
     return {
       apiKey: inputs.apiKey as string,
-      baseUrl: (inputs.baseUrl as string) || "https://api.cybersecurityguard.com",
+      baseUrl: (inputs.baseUrl as string) || "https://api.soterai.in",
       projectId: inputs.projectId as string | undefined,
       policyMode: (inputs.policyMode as SoterInputGuardParams["policyMode"]) || "BALANCED",
       onThreat: (inputs.onThreat as SoterInputGuardParams["onThreat"]) || "BLOCK",
@@ -141,7 +141,7 @@ class SoterOutputGuard_Tools {
       label: "Base URL",
       name: "baseUrl",
       type: "string",
-      default: "https://api.cybersecurityguard.com",
+      default: "https://api.soterai.in",
       optional: true,
     },
     {
@@ -181,7 +181,7 @@ class SoterOutputGuard_Tools {
     const inputs = nodeData.inputs as Record<string, unknown>;
     return {
       apiKey: inputs.apiKey as string,
-      baseUrl: (inputs.baseUrl as string) || "https://api.cybersecurityguard.com",
+      baseUrl: (inputs.baseUrl as string) || "https://api.soterai.in",
       projectId: inputs.projectId as string | undefined,
       policyMode: (inputs.policyMode as SoterInputGuardParams["policyMode"]) || "BALANCED",
       onThreat: (inputs.onThreat as SoterInputGuardParams["onThreat"]) || "BLOCK",
@@ -229,7 +229,7 @@ class SoterPiiRedactor_Tools {
       label: "Base URL",
       name: "baseUrl",
       type: "string",
-      default: "https://api.cybersecurityguard.com",
+      default: "https://api.soterai.in",
       optional: true,
     },
     {
@@ -256,7 +256,7 @@ class SoterPiiRedactor_Tools {
     const inputs = nodeData.inputs as Record<string, unknown>;
     return {
       apiKey: inputs.apiKey as string,
-      baseUrl: (inputs.baseUrl as string) || "https://api.cybersecurityguard.com",
+      baseUrl: (inputs.baseUrl as string) || "https://api.soterai.in",
       projectId: inputs.projectId as string | undefined,
       redactionMode: (inputs.redactionMode as string) || "PARTIAL",
     };
@@ -300,7 +300,7 @@ class SoterRagScanner_Tools {
       label: "Base URL",
       name: "baseUrl",
       type: "string",
-      default: "https://api.cybersecurityguard.com",
+      default: "https://api.soterai.in",
       optional: true,
     },
     {
@@ -339,7 +339,7 @@ class SoterRagScanner_Tools {
     const inputs = nodeData.inputs as Record<string, unknown>;
     return {
       apiKey: inputs.apiKey as string,
-      baseUrl: (inputs.baseUrl as string) || "https://api.cybersecurityguard.com",
+      baseUrl: (inputs.baseUrl as string) || "https://api.soterai.in",
       projectId: inputs.projectId as string | undefined,
       sourceName: inputs.sourceName as string | undefined,
       policyMode: (inputs.policyMode as string) || "BALANCED",

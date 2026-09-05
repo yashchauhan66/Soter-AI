@@ -41,7 +41,7 @@ import {
   normalizeRedactionMode,
 } from "./validators";
 
-const DEFAULT_BASE_URL = "https://api.cybersecurityguard.com";
+const DEFAULT_BASE_URL = "https://api.soterai.in";
 const DEFAULT_TIMEOUT_MS = 8_000;
 const DEFAULT_RETRY_BACKOFF_MS = 250;
 const DEFAULT_MAX_RETRIES = 1;

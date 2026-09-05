@@ -13,10 +13,16 @@
 
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "fs";
+import { readFileSync, readdirSync, statSync } from "fs";
 import { join } from "path";
 
 const ROOT = process.cwd();
+
+/** The retired brand domain. Its DNS record no longer exists, so any default
+ *  that still points at it fails closed with a lookup error at runtime. */
+const DEAD_HOST = "cybersecurityguard.com";
+/** The canonical hosted API origin, matching packages/sdk/src/client.ts. */
+const CANONICAL_API_ORIGIN = "https://api.soterai.in";
 
 function file(path: string): string {
   try {
@@ -25,6 +31,35 @@ function file(path: string): string {
     return "";
   }
 }
+
+const SKIP_DIRS = new Set(["node_modules", "dist", "build", ".next", ".turbo", "coverage"]);
+
+/** Recursively collect repo-relative file paths under `dir` matching `exts`. */
+function walk(dir: string, exts: string[]): string[] {
+  const found: string[] = [];
+  let entries: string[];
+  try {
+    entries = readdirSync(join(ROOT, dir));
+  } catch {
+    return found;
+  }
+  for (const entry of entries) {
+    if (SKIP_DIRS.has(entry)) continue;
+    const rel = `${dir}/${entry}`;
+    let isDir = false;
+    try {
+      isDir = statSync(join(ROOT, rel)).isDirectory();
+    } catch {
+      continue;
+    }
+    if (isDir) found.push(...walk(rel, exts));
+    else if (exts.some((ext) => entry.endsWith(ext))) found.push(rel);
+  }
+  return found;
+}
+
+const SHIPPED_SOURCE_ROOTS = ["packages/sdk/src", "packages/integrations", "docs/integrations", "app/dashboard"];
+const SHIPPED_SOURCE_EXTS = [".ts", ".tsx", ".js", ".mjs", ".py", ".md", ".json"];
 
 describe("Integration — SDK Exports", () => {
   it("SDK index exports Soter class", () => {
@@ -35,7 +70,31 @@ describe("Integration — SDK Exports", () => {
   it("SDK has correct default base URL", () => {
     const src = file("packages/sdk/src/client.ts");
     assert.ok(src.includes("api.soterai.in"), "should use canonical soterai.in domain");
-    assert.ok(!src.includes("cybersecurityguard.com"), "should not use old brand domain");
+    assert.ok(!src.includes(DEAD_HOST), "should not use old brand domain");
+  });
+
+  // Regression guard for the 2026-09-04 fix: the check above only covered
+  // client.ts, so six sibling SDK modules and the Botpress/Flowise/Langflow
+  // integrations kept shipping a DEFAULT_BASE_URL on the retired domain.
+  // Scan every shipped source and doc instead of a single file.
+  it("no shipped source or doc points at the retired brand domain", () => {
+    const offenders = SHIPPED_SOURCE_ROOTS.flatMap((root) => walk(root, SHIPPED_SOURCE_EXTS)).filter(
+      (path) => file(path).includes(DEAD_HOST),
+    );
+    assert.deepEqual(offenders, [], `retired domain ${DEAD_HOST} still referenced in: ${offenders.join(", ")}`);
+  });
+
+  it("every SDK module declares the canonical API origin", () => {
+    const declarations = walk("packages/sdk/src", [".ts"]).flatMap((path) =>
+      [...file(path).matchAll(/const DEFAULT_BASE_URL = "([^"]+)"/g)].map((match) => ({ path, origin: match[1] })),
+    );
+    assert.ok(declarations.length >= 6, `expected several DEFAULT_BASE_URL declarations, found ${declarations.length}`);
+    const wrong = declarations.filter((entry) => entry.origin !== CANONICAL_API_ORIGIN);
+    assert.deepEqual(
+      wrong,
+      [],
+      `these modules do not use ${CANONICAL_API_ORIGIN}: ${wrong.map((e) => `${e.path} -> ${e.origin}`).join(", ")}`,
+    );
   });
 
   it("SDK error messages use correct brand", () => {

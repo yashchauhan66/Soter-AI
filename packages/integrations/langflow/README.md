@@ -41,7 +41,7 @@ All components require a **SoterAI API Key** (`sk_...`) from your SoterAI dashbo
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
 | api_key | password | - | Your SoterAI API key |
-| base_url | string | `https://api.cybersecurityguard.com` | SoterAI API endpoint |
+| base_url | string | `https://api.soterai.in` | SoterAI API endpoint |
 | project_id | string | - | Optional project identifier |
 | policy_mode | MONITOR / BALANCED / STRICT | BALANCED | Server-side policy strictness |
 | on_threat | BLOCK / REDACT / WARN / CONTINUE | BLOCK | Action when a threat is detected |
@@ -55,7 +55,7 @@ Same configuration as Input Guard. Place after your LLM node to scan AI response
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
 | api_key | password | - | Your SoterAI API key |
-| base_url | string | `https://api.cybersecurityguard.com` | SoterAI API endpoint |
+| base_url | string | `https://api.soterai.in` | SoterAI API endpoint |
 | project_id | string | - | Optional project identifier |
 | redaction_mode | PARTIAL / FULL / HASH | PARTIAL | How detected PII is redacted |
 
@@ -64,7 +64,7 @@ Same configuration as Input Guard. Place after your LLM node to scan AI response
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
 | api_key | password | - | Your SoterAI API key |
-| base_url | string | `https://api.cybersecurityguard.com` | SoterAI API endpoint |
+| base_url | string | `https://api.soterai.in` | SoterAI API endpoint |
 | project_id | string | - | Optional project identifier |
 | source_name | string | - | Optional label for the document source |
 | policy_mode | MONITOR / BALANCED / STRICT | BALANCED | Server-side policy strictness |

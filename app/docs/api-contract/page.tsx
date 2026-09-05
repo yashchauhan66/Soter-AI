@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CodeBlock, InlineCode } from "@/components/ui/CodeBlock";
+import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
@@ -40,7 +41,7 @@ export default function ApiContractDocsPage() {
     <DocsPageShell path="/docs/api-contract">
 
         <section className="mt-10">
-          <h2 className="text-2xl font-bold">Endpoints</h2>
+          <DocsHeading>Endpoints</DocsHeading>
           <div className="mt-4 space-y-3">
             <div className="rounded-lg border border-slate-800 p-4">
               <div className="flex items-center gap-2">
@@ -74,7 +75,7 @@ export default function ApiContractDocsPage() {
         </section>
 
         <section className="mt-10">
-          <h2 className="text-2xl font-bold">Response Shape</h2>
+          <DocsHeading>Response Shape</DocsHeading>
           <CodeBlock language="json">{`{
   "allowed": false,
   "action": "BLOCK",
@@ -93,7 +94,7 @@ export default function ApiContractDocsPage() {
         </section>
 
         <section className="mt-10">
-          <h2 className="text-2xl font-bold">Risk Types</h2>
+          <DocsHeading>Risk Types</DocsHeading>
           <div className="mt-4 overflow-x-auto rounded-lg border border-slate-800">
             <table className="w-full text-sm">
               <thead>
@@ -124,7 +125,7 @@ export default function ApiContractDocsPage() {
         </section>
 
         <section className="mt-10">
-          <h2 className="text-2xl font-bold">Actions</h2>
+          <DocsHeading>Actions</DocsHeading>
           <div className="mt-4 flex flex-wrap gap-2">
             {actions.map((action) => (
               <span key={action} className="rounded-lg border border-slate-800 px-3 py-1.5 text-sm font-medium text-slate-300">
@@ -135,7 +136,7 @@ export default function ApiContractDocsPage() {
         </section>
 
         <section className="mt-10">
-          <h2 className="text-2xl font-bold">Error Codes</h2>
+          <DocsHeading>Error Codes</DocsHeading>
           <div className="mt-4 overflow-x-auto rounded-lg border border-slate-800">
             <table className="w-full text-sm">
               <thead>
@@ -159,7 +160,7 @@ export default function ApiContractDocsPage() {
         </section>
 
         <section className="mt-10">
-          <h2 className="text-2xl font-bold">Webhook Events</h2>
+          <DocsHeading>Webhook Events</DocsHeading>
           <div className="mt-4 flex flex-wrap gap-2">
             {[
               "guard.prompt_injection.blocked",

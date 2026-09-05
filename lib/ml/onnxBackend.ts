@@ -35,6 +35,7 @@ import type { GuardDirection } from "../guard/types";
 import { EXTENDED_MODEL_LABELS } from "./types";
 import type { ModelBackend, ModelInference, ModelLabel } from "./types";
 import { BertTokenizer, parseVocabTxt } from "./bertTokenizer";
+import { resolveLabelsPath, resolveModelPath } from "./modelVersion";
 import {
   attackProbability,
   clearsLabelThreshold,
@@ -257,10 +258,8 @@ export class ONNXClassifierBackend implements ModelBackend {
   private initPromise: Promise<void> | null = null;
 
   constructor(options?: OnnxBackendOptions) {
-    const labelsPath =
-      options?.labelsPath ?? process.env.ML_ONNX_LABELS_PATH ?? "models/ml-classifier-v3/labels.json";
-    const modelPath =
-      options?.modelPath ?? process.env.ML_ONNX_MODEL_PATH ?? "models/ml-classifier-v3/model.onnx";
+    const labelsPath = resolveLabelsPath(options?.labelsPath);
+    const modelPath = resolveModelPath(options?.modelPath);
     const maxLength = options?.maxLength
       ?? (process.env.ML_ONNX_MAX_LENGTH ? Number(process.env.ML_ONNX_MAX_LENGTH) : undefined)
       ?? (modelPath.includes("v4") ? 256 : 128);

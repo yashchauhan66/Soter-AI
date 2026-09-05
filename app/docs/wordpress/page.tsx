@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CodeBlock, InlineCode } from "@/components/ui/CodeBlock";
+import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
@@ -36,7 +37,7 @@ export default function WordpressDocsPage() {
     <DocsPageShell path="/docs/wordpress">
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 1: Install the plugin</h2>
+          <DocsHeading>Step 1: Install the plugin</DocsHeading>
           <ol className="mt-4 list-decimal space-y-2 pl-5 leading-7 text-slate-200">
             <li>Copy the plugin folder into <InlineCode>wp-content/plugins/</InlineCode>, or upload via <strong>Plugins → Add New → Upload Plugin</strong>.</li>
             <li>Activate <strong>SoterAI Guard</strong> from the Plugins page.</li>
@@ -46,7 +47,7 @@ export default function WordpressDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 2: Configure settings</h2>
+          <DocsHeading>Step 2: Configure settings</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Navigate to <strong>Settings → SoterAI Guard</strong> to configure:
           </p>
@@ -80,17 +81,17 @@ export default function WordpressDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 3: Use shortcodes</h2>
+          <DocsHeading>Step 3: Use shortcodes</DocsHeading>
           <CodeBlock language="html" title="wordpress editor">{shortcodeCode}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 4: PHP integration (server-side)</h2>
+          <DocsHeading>Step 4: PHP integration (server-side)</DocsHeading>
           <CodeBlock language="php" title="functions.php" showLineNumbers>{phpCode}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 5: Frontend via local proxy</h2>
+          <DocsHeading>Step 5: Frontend via local proxy</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             The frontend JavaScript calls the <strong>local</strong> WordPress REST route, never the SoterAI API directly:
           </p>
@@ -98,7 +99,7 @@ export default function WordpressDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Troubleshooting</h2>
+          <DocsHeading>Troubleshooting</DocsHeading>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {[
               ["Auth error on test", "Re-enter the API key (the masked value is a placeholder)"],

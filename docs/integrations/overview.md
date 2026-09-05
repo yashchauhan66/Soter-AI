@@ -68,8 +68,8 @@ Scan documents/chunks before adding to vector databases.
 ## Configuration
 
 Every integration requires:
-- **Soter API Key** — get from [Soter Dashboard](https://app.cybersecurityguard.com)
-- **Base URL** — `https://api.cybersecurityguard.com` (or self-hosted URL)
+- **Soter API Key** — get from [Soter Dashboard](https://soterai.in/dashboard)
+- **Base URL** — `https://api.soterai.in` (or self-hosted URL)
 - **Project ID** — optional, for multi-project setups
 
 ## Policy Modes

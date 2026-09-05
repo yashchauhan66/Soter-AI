@@ -7,7 +7,7 @@ exports.editAndApproveEscrow = editAndApproveEscrow;
 exports.executeEscrowTransaction = executeEscrowTransaction;
 exports.getEscrowTransaction = getEscrowTransaction;
 exports.listPendingEscrowTransactions = listPendingEscrowTransactions;
-const DEFAULT_BASE_URL = "https://api.cybersecurityguard.com";
+const DEFAULT_BASE_URL = "https://api.soterai.in";
 const DEFAULT_TIMEOUT_MS = 8000;
 function createEscrowTransaction(options, input) {
     return post(options, "/api/escrow/create", input);

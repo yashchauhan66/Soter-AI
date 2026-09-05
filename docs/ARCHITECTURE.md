@@ -69,6 +69,7 @@ utilities: `bg-ink` / `bg-panel`, full `cyan` and `lime` ramps, fluid
 | Type | `.eyebrow`, `.heading-hero`, `.heading-1…3`, `.lede`, `.body-copy`, `.text-gradient-brand` |
 | Status | `.badge-neutral|brand|success|warning|danger|info`, `.status-dot` |
 | Callouts | `.tip-card`, `.warn-card`, `.danger-card` |
+| Docs | `.docs-section`, `.docs-h2`, `.docs-h3`, `.docs-anchor`, `.docs-toc-link`, `.docs-toc-progress`, `.docs-toc-top`, `.docs-toc-inline` |
 
 All buttons share `.button-base`, so every variant is at least 44px tall
 (WCAG 2.5.5) and hover/active states are gated behind `:not(:disabled)`.
@@ -178,9 +179,28 @@ backed by `app/api/dashboard/extension/**`.
 | Script | Purpose |
 |--------|---------|
 | `npm run dev` | Run the web app locally. |
+| `npm run clean` | Delete `.next` and `tsconfig.tsbuildinfo`. First thing to try on an inexplicable dev-mode failure. |
 | `npm run verify` | Typecheck + tests + Prisma validate + build (pre-push gate). |
 | `npm run build:extension` / `npm run package` | Build / package the browser extension. |
 | `npm run db:migrate` / `db:seed` | Prisma migrations / seed data. |
+
+> **Stop the dev server before running `npm run build`.**
+>
+> `next dev --turbopack` and `next build` both write to `.next/`, and they write
+> *different* things — dev produces `build-manifest.json` and a Turbopack module
+> graph under `server/`, the production build produces `BUILD_ID`,
+> `prerender-manifest.json`, `standalone/`, and its own manifests. Run them
+> concurrently and `.next/` ends up holding half of each.
+>
+> The dev server keeps working, which is what makes this expensive to diagnose: it
+> serves an RSC payload whose module graph no longer matches what it re-renders on
+> the client, and React reports the divergence as a **hydration mismatch at an
+> arbitrary component boundary** — typically somewhere in the root layout, on a
+> page unrelated to whatever you last edited. The reported stack points at
+> untouched files, so the obvious next move is to go debug code that is fine.
+>
+> `npm run clean`, then restart `npm run dev`. Nothing is lost; `.next` is
+> entirely regenerable.
 
 ## Conventions
 

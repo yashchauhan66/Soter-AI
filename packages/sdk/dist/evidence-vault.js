@@ -6,7 +6,7 @@ exports.generateEvidenceReport = generateEvidenceReport;
 exports.listEvidenceReports = listEvidenceReports;
 exports.getEvidenceReport = getEvidenceReport;
 exports.exportEvidenceReport = exportEvidenceReport;
-const DEFAULT_BASE_URL = "https://api.cybersecurityguard.com";
+const DEFAULT_BASE_URL = "https://api.soterai.in";
 const DEFAULT_TIMEOUT_MS = 8000;
 function collectComplianceEvidence(options, input) {
     return post(options, "/api/evidence/collect", input);

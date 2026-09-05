@@ -1,0 +1,48 @@
+{
+  "generatedAt": "2026-09-04T12:43:20.587Z",
+  "mode": "rules+ml-v14-enforce",
+  "detection": {
+    "hit": 67,
+    "total": 67,
+    "pct": 100
+  },
+  "benignFpr": {
+    "hit": 0,
+    "total": 15,
+    "pct": 0
+  },
+  "perFamily": [
+    {
+      "family": "DATA_EXFILTRATION",
+      "hit": 5,
+      "total": 5,
+      "pct": 100
+    },
+    {
+      "family": "ENCODING_OBFUSCATION",
+      "hit": 28,
+      "total": 28,
+      "pct": 100
+    },
+    {
+      "family": "MODEL_EXTRACTION",
+      "hit": 14,
+      "total": 14,
+      "pct": 100
+    },
+    {
+      "family": "MULTI_TURN_ESCALATION",
+      "hit": 10,
+      "total": 10,
+      "pct": 100
+    },
+    {
+      "family": "TOOL_CALL_ABUSE",
+      "hit": 10,
+      "total": 10,
+      "pct": 100
+    }
+  ],
+  "misses": [],
+  "falsePositives": []
+}

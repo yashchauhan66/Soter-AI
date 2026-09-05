@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.extractAgentIntent = extractAgentIntent;
 exports.checkIntentAction = checkIntentAction;
 exports.getIntentSession = getIntentSession;
-const DEFAULT_BASE_URL = "https://api.cybersecurityguard.com";
+const DEFAULT_BASE_URL = "https://api.soterai.in";
 const DEFAULT_TIMEOUT_MS = 8000;
 function extractAgentIntent(options, input) {
     return post(options, "/api/intent/extract", input);

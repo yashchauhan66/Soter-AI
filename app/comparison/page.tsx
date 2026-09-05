@@ -491,6 +491,10 @@ export default function ComparisonPage() {
               ["SoterAI vs Lakera", "/comparison/lakera"],
               ["SoterAI vs Prompt Security", "/comparison/prompt-security"],
               ["SoterAI vs HiddenLayer", "/comparison/hiddenlayer"],
+              ["SoterAI vs Guardrails AI", "/comparison/guardrails-ai"],
+              ["SoterAI vs NVIDIA NeMo Guardrails", "/comparison/nemo-guardrails"],
+              ["SoterAI vs AWS Bedrock Guardrails", "/comparison/bedrock-guardrails"],
+              ["SoterAI vs LLM Guard", "/comparison/llm-guard"],
             ].map(([label, href]) => (
               <Link
                 key={href}

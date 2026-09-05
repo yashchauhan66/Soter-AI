@@ -31,6 +31,12 @@ const AI_CRAWLERS = [
   "Google-Extended", // Gemini / Vertex grounding
   "Applebot-Extended", // Apple Intelligence
   "CCBot", // Common Crawl (feeds many LLMs)
+  "meta-externalagent", // Meta AI / Llama grounding
+  "Amazonbot", // Amazon Rufus / Alexa answers
+  "MistralAI-User", // Le Chat live browsing
+  "DuckAssistBot", // DuckDuckGo AI assist
+  "YouBot", // You.com
+  "cohere-ai", // Cohere grounding
 ];
 
 export default function robots(): MetadataRoute.Robots {

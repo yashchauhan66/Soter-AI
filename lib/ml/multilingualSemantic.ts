@@ -7,6 +7,7 @@
 
 import { InferenceSession, Tensor } from "onnxruntime-node";
 import { BertTokenizer, parseVocabTxt } from "./bertTokenizer";
+import { resolveSemanticModelPath } from "./modelVersion";
 import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 
@@ -35,8 +36,8 @@ export class MultilingualSemanticDetector {
   private modelPath: string;
   private hash: string = "";
 
-  constructor(modelPath = "models/ml-classifier-v4/model.onnx") {
-    this.modelPath = modelPath;
+  constructor(modelPath?: string) {
+    this.modelPath = resolveSemanticModelPath(modelPath);
   }
 
   async init(): Promise<void> {

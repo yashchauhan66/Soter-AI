@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CodeBlock, InlineCode } from "@/components/ui/CodeBlock";
+import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
@@ -63,12 +64,12 @@ export default function FastapiDocsPage() {
     <DocsPageShell path="/docs/fastapi">
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 1: Install</h2>
+          <DocsHeading>Step 1: Install</DocsHeading>
           <CodeBlock language="bash" title="terminal">{installCode}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 2: Quickstart (one-line route)</h2>
+          <DocsHeading>Step 2: Quickstart (one-line route)</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             The fastest way to add AI security to your FastAPI app:
           </p>
@@ -76,7 +77,7 @@ export default function FastapiDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 3: Manual guarding (more control)</h2>
+          <DocsHeading>Step 3: Manual guarding (more control)</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Use <InlineCode>protect_chat</InlineCode> for manual control:
           </p>
@@ -84,7 +85,7 @@ export default function FastapiDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 4: Async support</h2>
+          <DocsHeading>Step 4: Async support</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Use <InlineCode>AsyncSoter</InlineCode> for async endpoints (requires <InlineCode>httpx</InlineCode>):
           </p>

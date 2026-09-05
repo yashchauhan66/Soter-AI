@@ -31,6 +31,9 @@ import { generalizedIntentDetector } from "./detectors/generalizedIntentDetector
 import { adversarialCyberDetector } from "./detectors/adversarialCyberDetector";
 import { codeInjectionDetector } from "./detectors/codeInjectionDetector";
 import { academicPretextDetector } from "./detectors/academicPretextDetector";
+import { modelExtractionDetector } from "./detectors/modelExtractionDetector";
+import { sessionEscalationDetector } from "./detectors/sessionEscalationDetector";
+import { toolCallAbuseDetector } from "./detectors/toolCallAbuseDetector";
 import { topicalAlignmentDetector } from "./detectors/topicalAlignmentDetector";
 import { decideGuardAction, type DecisionContext } from "./decisionEngine";
 import { fuseEvidence } from "./evidenceFusion";
@@ -115,7 +118,7 @@ const COMMON_DETECTORS = [piiDetector, indiaPiiDetector, secretsDetector, toxici
 // interaction is handled in `applyPolicy` (lib/guard/policy.ts) by keying on risk
 // types rather than finding count, so registering this detector does not break the
 // legacy single-injection REWRITE / HUMAN_REVIEW / BLOCK policy branch.
-const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, academicPretextDetector, systemPromptLeakAttemptDetector, multilingualAttackDetector, recursiveInjectionDetector, ssrfDetector, adversarialCyberDetector, codeInjectionDetector, competitiveIntelDetector, socialEngineeringDetector, embeddingPoisoningDetector, mcpToolPoisoningDetector, memoryPoisoningDetector, multimodalAttackDetector, modelSupplyChainDetector, behavioralAnomalyDetector, advancedUnicodeSmugglingDetector, insecureDeserializationDetector, dataExfiltrationInputDetector, replyChannelExfilDetector, harmfulContentRequestDetector, broadHarmfulContentDetector, generalizedIntentDetector, (text: string) => {
+const INPUT_DETECTORS = [promptInjectionDetector, jailbreakDetector, academicPretextDetector, systemPromptLeakAttemptDetector, multilingualAttackDetector, recursiveInjectionDetector, ssrfDetector, adversarialCyberDetector, codeInjectionDetector, competitiveIntelDetector, socialEngineeringDetector, embeddingPoisoningDetector, mcpToolPoisoningDetector, memoryPoisoningDetector, multimodalAttackDetector, modelSupplyChainDetector, behavioralAnomalyDetector, advancedUnicodeSmugglingDetector, insecureDeserializationDetector, dataExfiltrationInputDetector, replyChannelExfilDetector, harmfulContentRequestDetector, broadHarmfulContentDetector, generalizedIntentDetector, modelExtractionDetector, sessionEscalationDetector, toolCallAbuseDetector, (text: string) => {
   // Cryptojacking / device-hijack hard-block (2026-08-02): standalone verified regex
   if (/mine|cryptocurrenc|crypto|monero|bitcoin|coins?/i.test(text) && /evad|without|undetect|silently|stealth|hidden/i.test(text) && /hijack|take over|compromise|infect|enslave|cryptojack/i.test(text)) {
       return [{ type: "TOXICITY" as const, label: "Cyber abuse production request", message: "Crypto-hijack mining detection", severity: "CRITICAL" as const, score: 50, code: "CRYPTOJACK" }];

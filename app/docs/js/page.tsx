@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CodeBlock, InlineCode, TipBox, WarnBox } from "@/components/ui/CodeBlock";
+import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
@@ -123,7 +124,7 @@ export default function JSDocsPage() {
     <DocsPageShell path="/docs/js">
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 1: Install the package</h2>
+          <DocsHeading>Step 1: Install the package</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Open your terminal and run:
           </p>
@@ -136,7 +137,7 @@ export default function JSDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 2: Configure environment</h2>
+          <DocsHeading>Step 2: Configure environment</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Add these to your <InlineCode>.env</InlineCode> file:
           </p>
@@ -149,7 +150,7 @@ export default function JSDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 3: Basic usage (guarding user input)</h2>
+          <DocsHeading>Step 3: Basic usage (guarding user input)</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Protect a single user message before it reaches your AI model:
           </p>
@@ -169,7 +170,7 @@ export default function JSDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 4: Complete example with error handling</h2>
+          <DocsHeading>Step 4: Complete example with error handling</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Here&apos;s a production-ready example that guards both input and output, handles errors,
             and decides whether to fail open or fail closed:
@@ -178,7 +179,7 @@ export default function JSDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Framework integrations</h2>
+          <DocsHeading>Framework integrations</DocsHeading>
           
           <h3 className="mt-8 text-xl font-bold">Next.js</h3>
           <p className="mt-3 leading-7 text-slate-200">
@@ -215,7 +216,7 @@ app.post(
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Error handling</h2>
+          <DocsHeading>Error handling</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             The SDK exports typed error classes for each failure mode:
           </p>
@@ -227,7 +228,7 @@ app.post(
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Security best practices</h2>
+          <DocsHeading>Security best practices</DocsHeading>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {[
               ["API key is never logged", "Even with debug: true, the SDK never logs the API key or raw text."],

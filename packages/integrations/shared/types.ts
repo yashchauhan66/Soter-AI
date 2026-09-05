@@ -32,7 +32,7 @@ export type Metadata = Record<string, MetadataValue>;
 export interface SoterClientOptions {
   /** Soter API key (`sk_...`). Required for authenticated endpoints. */
   apiKey: string;
-  /** Base URL of the Soter API, e.g. https://api.cybersecurityguard.com */
+  /** Base URL of the Soter API, e.g. https://api.soterai.in */
   baseUrl?: string;
   /** Default project id applied to requests when not given per-call. */
   projectId?: string;

@@ -14,7 +14,6 @@ import {
   Eye,
   FileCheck2,
   Fingerprint,
-  Github,
   KeyRound,
   Laptop,
   LockKeyhole,
@@ -38,7 +37,6 @@ import {
   EXTENSION_VERSION,
   ISSUE_URL,
   OPEN_VSX_URL,
-  SOURCE_URL,
   VSCODE_MARKETPLACE_URL,
   VSIX_SHA256_URL,
   type EditorIconName,
@@ -491,17 +489,7 @@ export default function IdeExtensionPage() {
           </div>
           <div className="flex flex-wrap gap-x-5 gap-y-3 text-sm">
             <a
-              href={SOURCE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-slate-300 transition hover:text-slate-100"
-            >
-              <Github className="h-4 w-4" aria-hidden="true" /> Source
-            </a>
-            <a
               href={ISSUE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-slate-300 transition hover:text-slate-100"
             >
               Report an issue <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />

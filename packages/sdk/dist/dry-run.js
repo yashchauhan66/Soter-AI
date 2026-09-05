@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.simulateAgentAction = simulateAgentAction;
 exports.getDryRun = getDryRun;
 exports.getDryRunSession = getDryRunSession;
-const DEFAULT_BASE_URL = "https://api.cybersecurityguard.com";
+const DEFAULT_BASE_URL = "https://api.soterai.in";
 const DEFAULT_TIMEOUT_MS = 8000;
 function simulateAgentAction(options, input) {
     return post(options, "/api/dry-run/simulate", input);

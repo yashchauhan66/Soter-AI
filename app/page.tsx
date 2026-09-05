@@ -324,6 +324,21 @@ export default function Home() {
                 Read integration docs
               </Link>
             </div>
+            {/* Direct links to the two pillar pages. The homepage previously
+                reached them only through <TwoProducts />, so the pages that are
+                meant to rank for the head terms had no link from the body of the
+                highest-authority page on the site. */}
+            <p className="mt-6 text-sm text-slate-400">
+              Not sure where to start? Compare{" "}
+              <Link href="/ai-agent-security" className="font-medium text-cyan hover:underline">
+                AI agent security
+              </Link>{" "}
+              for the systems you build, and{" "}
+              <Link href="/ai-user-security" className="font-medium text-cyan hover:underline">
+                AI user security
+              </Link>{" "}
+              for the tools your employees already use.
+            </p>
           </div>
         </div>
       </section>

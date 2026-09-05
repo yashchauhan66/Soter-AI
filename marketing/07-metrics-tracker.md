@@ -76,10 +76,25 @@ Record these once, reuse everywhere:
 |-------|----------------|
 | 3-sec "block GIF" (Aadhaar into ChatGPT → blocked) | `/marketing/assets/` — record with ScreenToGif |
 | 15-sec demo video (playground breaking an attack) | same |
+| **Narrated product video — 16:9 + 9:16 + 1:1, burned-in captions** | `/marketing/video/soterai-<cut>-<lang>-<size>.mp4` — regenerate with `npm run marketing:video` (never hand-edit) |
+| **Video script + publish copy (titles, description, pinned comment, UTMs)** | `/marketing/video/SCRIPT-<cut>-<lang>.md` — generated with the video, so the spoken words and the numbers cannot drift apart |
 | Screenshot set (benchmark table, approval queue, extension popup) | same |
 | Founder photo + 1-line bio | for PH/HN/newsletter pitches |
-| 5 ready numbers: 100% recall · 0% FP · 10.92ms p95 · 3,200 cases · 79 languages | copy-paste to any post |
+| 5 ready numbers — **read them from `marketing/video/manifest-short-hi.json`, never from memory** | that file is regenerated from `benchmarks/results/latest.json` + the newest `readme-detection-audit-*.txt`; every quote needs "self-maintained synthetic benchmark, not an independent audit" |
 | Benchmark reproduction command: `node scripts/phase-9-run-public-benchmark.js` | same |
+
+### Video assets shipped
+
+Fill a row per published cut. `npm run test:marketing-video` must pass before anything here goes public.
+
+| Asset | Cut · lang | Runtime | Voice | Presenter | Published to | Views / CTR |
+|-------|-----------|---------|-------|-----------|--------------|-------------|
+| `soterai-short-hi-*.mp4` | short · Hinglish | 01:00 | neural (`hi-IN-MadhurNeural`) | none yet | — | — |
+| `soterai-full-hi-*.mp4` | full · Hinglish | 04:20 | neural (`hi-IN-MadhurNeural`) | none yet | — | — |
+| `soterai-full-en-*.mp4` | full · English | — | neural (`en-IN-PrabhatNeural`) | none yet | — | — |
+
+Voice column values are the manifest's own `voiceSource`: `tts`, `mixed`, or `recorded`. Only write "founder's voice" in a post when it says `recorded`.
+
 
 ---
 

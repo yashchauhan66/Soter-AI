@@ -39,6 +39,16 @@ NUL
 .gradle/
 *.mp4
 
+# Video render intermediates: per-scene PNG slides, caption plates, TTS mp3/srt
+# and pre-concat clips. Regenerable by `npm run marketing:video`, hundreds of
+# files per run, and meaningless without the mp4s (which *.mp4 above already
+# ignores). The reviewable outputs — SCRIPT-*.md, *.srt, manifest-*.json — stay
+# tracked, because those are what tests/marketing-video-claims.test.ts reads.
+marketing/video/build/
+marketing/video/presenter/*
+!marketing/video/presenter/PRESENTER-BRIEF.md
+marketing/video/voice/
+
 # accidental / junk artifacts
 *.pid
 testout.txt

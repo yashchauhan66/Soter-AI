@@ -33,6 +33,14 @@ made the product read as assembled rather than designed.
 | `CodeBlock.tsx` | Syntax-highlighted snippet with copy |
 | `Timestamp.tsx` | Client-local time rendering without hydration mismatch |
 
+Documentation pages have their own three primitives in `components/docs/`, for the
+same reason: `DocsPageShell` (header, scope note, pager), `DocsHeading` (a section
+heading that emits its own anchor id), and `DocsToc` (the "On this page" rail,
+derived from the rendered headings rather than a hand-maintained list). Read
+`DocsHeading.tsx` before writing a raw `<h2>` in a guide — a heading written by
+hand emits no id, so its section cannot be linked to and does not appear in the
+rail. `tests/docs-structure.test.ts` fails the build on one.
+
 ## Colour and the light theme
 
 The product renders on a **solid white** page, and it did not always. Read the

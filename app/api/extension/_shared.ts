@@ -1,3 +1,4 @@
+import { timingSafeEqual } from "crypto";
 import { z } from "zod";
 import type { Prisma } from "@prisma/client";
 import { db } from "@/lib/db";
@@ -14,6 +15,22 @@ function jsonResponse(data: unknown, init: ResponseInit = {}) {
     ...init,
     headers: { "Cache-Control": "no-store, max-age=0", ...(init.headers ?? {}) },
   });
+}
+
+/**
+ * Constant-time comparison for the long-lived shared deployment tokens below.
+ * `===` on a secret short-circuits at the first differing byte, so response
+ * timing leaks both the length and how much of a guess was correct — enough to
+ * recover an operator-set token one byte at a time. Length is compared first
+ * (timingSafeEqual throws on a length mismatch) and that leak is unavoidable
+ * and harmless by comparison.
+ */
+function secretsMatch(supplied: string | null | undefined, expected: string | null | undefined): boolean {
+  if (!supplied || !expected) return false;
+  const a = Buffer.from(supplied, "utf8");
+  const b = Buffer.from(expected, "utf8");
+  if (a.length !== b.length) return false;
+  return timingSafeEqual(a, b);
 }
 
 export async function authenticateExtensionRequest(request: Request, organizationId: string) {
@@ -33,7 +50,7 @@ export async function authenticateExtensionRequest(request: Request, organizatio
 
   const expected = process.env.SOTER_EXTENSION_DEVICE_TOKEN ?? process.env.SOTER_EXTENSION_TOKEN;
   const supplied = request.headers.get("x-soter-extension-token");
-  if (expected && supplied === expected) {
+  if (secretsMatch(supplied, expected)) {
     // The static deployment token is shared, so it MUST be bound to an org before
     // it can write org-scoped rows in a multi-tenant deployment. When
     // SOTER_EXTENSION_TOKEN_ORG_ID is set, reject any request whose body targets a
@@ -123,10 +140,29 @@ export function defaultExtensionPolicy(organizationId: string): ExtensionOrgPoli
   };
 }
 
-export async function authenticateAgentRequest(request: Request, _organizationId: string) {
+export async function authenticateAgentRequest(request: Request, organizationId: string) {
   const supplied = request.headers.get("x-soter-device-token");
   const expected = process.env.SOTER_AGENT_DEVICE_TOKEN;
-  if (expected && supplied === expected) return { ok: true as const, source: "device_token" as const };
+  if (secretsMatch(supplied, expected)) {
+    // SECURITY: SOTER_AGENT_DEVICE_TOKEN is a single shared deployment secret, so
+    // on its own it proves the caller is *an* agent — never *which tenant's* agent.
+    // `organizationId` arrives from the caller (query string or request body) and
+    // this function used to ignore it outright; the parameter was even named
+    // `_organizationId`. One valid token therefore read and wrote agent policy,
+    // scans, heartbeats and audit logs for every organization in the deployment.
+    // Bind it the same way authenticateExtensionRequest above binds its own token.
+    // Falls back to SOTER_EXTENSION_TOKEN_ORG_ID so an operator who already
+    // declared the owning tenant for the extension gets the agent routes bound
+    // too, without a second variable to remember.
+    const boundOrg = process.env.SOTER_AGENT_DEVICE_TOKEN_ORG_ID ?? process.env.SOTER_EXTENSION_TOKEN_ORG_ID;
+    if (boundOrg && boundOrg !== organizationId) {
+      return {
+        ok: false as const,
+        response: jsonResponse({ error: true, message: "Agent token is not scoped to this organization." }, { status: 403 }),
+      };
+    }
+    return { ok: true as const, source: "device_token" as const };
+  }
   if (!expected && process.env.NODE_ENV !== "production") return { ok: true as const, source: "dev_unconfigured" as const };
   return {
     ok: false as const,

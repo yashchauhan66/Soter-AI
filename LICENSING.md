@@ -1,42 +1,71 @@
-# Licensing — Open Core Model
+# Licensing
 
-SoterAI follows an **open-core** model. The source is publicly visible, but it
-is **not** "do whatever you want" software. Different parts of this repository
-are governed by different licenses. **Copyright in all of it belongs to
-Yash Chauhan.**
+SoterAI is **proprietary, closed-source software**. This repository is private
+and its contents are confidential. **Copyright in all of it belongs to Yash
+Chauhan.** See [`LICENSE`](LICENSE) for the governing terms.
 
-| Area | Path(s) | License | What you may do |
-|------|---------|---------|-----------------|
-| **Core product / server** | repo root, `app/`, `lib/`, `workers/`, `prisma/`, `infra/`, `helm/`, `scripts/` | **Business Source License 1.1** (see [`LICENSE`](LICENSE)) | View, modify, and use for **non-production / internal** purposes. **Production use as a service to third parties, or building a competing product, requires a commercial license.** Auto-converts to Apache-2.0 on the Change Date (2030-06-25). |
-| **Client SDKs & middleware** | `packages/sdk`, `packages/python-sdk`, `packages/langchain-middleware`, `packages/llamaindex-middleware`, `packages/vercel-ai-sdk-middleware`, `packages/soter-pii` | **Apache-2.0** | Freely install, use, and integrate into your own apps (so you can call the SoterAI service). |
-| **Enterprise / proprietary modules** | `lib/agent-firewall`, `lib/control-plane` (and any module marked "Commercial") | **Commercial — All rights reserved** | No use, copy, or redistribution without a written commercial license from Yash Chauhan. |
+This repository was previously distributed publicly under an open-core model
+(Business Source License 1.1 core + Apache-2.0/MIT client packages). That model
+has been retired. This page records what changed and which components still
+carry their own license, so the record stays accurate.
+
+## Repository
+
+| Area | Path(s) | License |
+|------|---------|---------|
+| **Everything not listed below** | repo root, `app/`, `lib/`, `workers/`, `prisma/`, `infra/`, `helm/`, `scripts/`, `apps/`, `data/`, `models/`, `reports/` | **Proprietary — All rights reserved** ([`LICENSE`](LICENSE)). No use, copy, modification, or redistribution without a written agreement. |
+| **Enterprise modules** | `lib/agent-firewall`, `lib/advanced-security` | **Commercial — All rights reserved** (own `LICENSE` files, unchanged) |
+
+## Components already published to public registries
+
+These were released publicly **before** this repository became private. Rights
+already granted for those published versions **cannot be and are not revoked** —
+each package's own `LICENSE` file governs that package, and prevails over the
+root [`LICENSE`](LICENSE) for that path. Everything outside these paths is
+proprietary.
+
+| Package | Path | License | Published to |
+|---------|------|---------|--------------|
+| `@soterai/core` | `packages/sdk` | Apache-2.0 | npm |
+| `soter-pii` | `packages/soter-pii` | Apache-2.0 | npm |
+| `@soterai/cli` | `packages/soterai-cli` | BUSL-1.1 | npm |
+| `@soterai/mcp-gateway` | `packages/mcp-gateway` | MIT | npm |
+| `@soterai/ide-common` | `packages/ide-common` | BUSL-1.1 | npm |
+| `@soterai/ide-protocol` | `packages/ide-protocol` | BUSL-1.1 | npm |
+| `n8n-nodes-soterai` | `packages/integrations/n8n` | MIT | npm |
+| `soterai-ide-guard` | `packages/vscode-extension` | BUSL-1.1 | VS Code Marketplace, Open VSX |
+
+Browser-extension builds distributed through the Microsoft Edge Add-ons store
+are governed by that store's listing terms; the source in `apps/extension` is
+proprietary.
+
+Packages under `packages/` that carry an open-source `LICENSE` file but have
+**not** been published (for example `packages/python-sdk`,
+`packages/guard-core`, `packages/integrations/{botpress,flowise,zapier}`,
+`extensions/jupyterlab`) have never been distributed under that license. They
+are treated as proprietary unless and until they are published.
+
+Third-party dependencies remain under their own licenses.
 
 ## In plain terms
 
-- **You can read and learn from the code.** It's source-available.
-- **You cannot take the core, host it, and sell a competing AI-security
-  service** — that needs a paid commercial license.
-- **You can use the SDKs** to connect your own app to SoterAI.
-- **Contributions** require signing the [Contributor License Agreement](CLA.md),
-  which assigns rights to Yash Chauhan so the open-core model stays enforceable.
+- **This source is not public and not licensed for outside use.** Access is by
+  authorization only.
+- **The npm/marketplace packages above stay usable** by anyone who already
+  installed them, under the license each one shipped with.
+- **The core service, models, detection rules, benchmarks, and evidence
+  artifacts are proprietary.** Reading, copying, or benchmarking them without
+  written permission is not permitted.
 
-## Want a commercial license?
-
-For production/SaaS/OEM/enterprise use, contact the Licensor:
+## Want a commercial license or evaluation access?
 
 - **Yash Chauhan** — [soterai.in/contact-sales](https://soterai.in/contact-sales)
 
-## Why GitHub reports this repository as "NOASSERTION"
+## Contributions
 
-GitHub detects licenses with [`licensee`](https://github.com/licensee/licensee), which
-only recognises the licenses catalogued on choosealicense.com. **BUSL-1.1 is not in
-that catalogue**, so GitHub's sidebar and API report `Other` / `NOASSERTION` for every
-Business Source License project — HashiCorp Terraform and Sentry included. This is a
-detector limitation, not a missing or ambiguous license.
-
-The authoritative terms are in [`LICENSE`](LICENSE). The SPDX identifier is
-**`BUSL-1.1`**, declared in `package.json` so npm, SBOM generators, and SCA tools
-resolve it correctly.
+External contributions are no longer accepted. [`CLA.md`](CLA.md) existed to
+keep the open-core model enforceable and is retained for historical record
+only; it does not imply that this repository accepts outside contributions.
 
 ## Note on copyright registration
 
@@ -45,3 +74,6 @@ have to register it. If you want stronger legal proof for enforcement, you can
 optionally register the work with the **Copyright Office of India**
 (copyright.gov.in) or the relevant office in your jurisdiction. That step is
 done outside this repository.
+
+> This file is a plain-language map, not legal advice. Have a lawyer review
+> [`LICENSE`](LICENSE) before you rely on it in a commercial agreement.

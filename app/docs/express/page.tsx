@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CodeBlock, InlineCode, TipBox } from "@/components/ui/CodeBlock";
+import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
@@ -68,12 +69,12 @@ export default function ExpressDocsPage() {
     <DocsPageShell path="/docs/express">
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 1: Install</h2>
+          <DocsHeading>Step 1: Install</DocsHeading>
           <CodeBlock language="bash" title="terminal">{installCode}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 2: Basic usage</h2>
+          <DocsHeading>Step 2: Basic usage</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Guard user input, call your LLM with safe text, then guard the model output:
           </p>
@@ -81,7 +82,7 @@ export default function ExpressDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 3: Use middleware (recommended)</h2>
+          <DocsHeading>Step 3: Use middleware (recommended)</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Use built-in middleware from <InlineCode>@soterai/core/express</InlineCode> for cleaner code:
           </p>
@@ -92,7 +93,7 @@ export default function ExpressDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Example project</h2>
+          <DocsHeading>Example project</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             See <InlineCode>examples/express-chatbot</InlineCode> for a complete working example.
           </p>

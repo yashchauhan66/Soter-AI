@@ -20,7 +20,7 @@ class SoterGuardComponent:
     """Base Langflow component for SoterAI Guard API calls."""
 
     display_name = "SoterAI Guard"
-    description = "AI security guard — checks text for prompt injection, jailbreaks, PII, and unsafe content"
+    description = "AI security guard â€” checks text for prompt injection, jailbreaks, PII, and unsafe content"
     icon = "shield"
 
     def build_config(self):
@@ -34,7 +34,7 @@ class SoterGuardComponent:
             "base_url": {
                 "display_name": "Base URL",
                 "type": "str",
-                "value": "https://api.cybersecurityguard.com",
+                "value": "https://api.soterai.in",
                 "info": "SoterAI API base URL",
             },
             "project_id": {
@@ -114,7 +114,7 @@ class SoterInputGuard(SoterGuardComponent):
         self,
         input_text: str,
         api_key: str,
-        base_url: str = "https://api.cybersecurityguard.com",
+        base_url: str = "https://api.soterai.in",
         project_id: str = "",
         policy_mode: str = "BALANCED",
         on_threat: str = "BLOCK",
@@ -164,7 +164,7 @@ class SoterOutputGuard(SoterGuardComponent):
         self,
         output_text: str,
         api_key: str,
-        base_url: str = "https://api.cybersecurityguard.com",
+        base_url: str = "https://api.soterai.in",
         project_id: str = "",
         policy_mode: str = "BALANCED",
         on_threat: str = "BLOCK",
@@ -219,7 +219,7 @@ class SoterPiiRedactor(SoterGuardComponent):
         self,
         text: str,
         api_key: str,
-        base_url: str = "https://api.cybersecurityguard.com",
+        base_url: str = "https://api.soterai.in",
         project_id: str = "",
         redaction_mode: str = "PARTIAL",
     ) -> dict:
@@ -270,7 +270,7 @@ class SoterRagScanner(SoterGuardComponent):
         self,
         document_text: str,
         api_key: str,
-        base_url: str = "https://api.cybersecurityguard.com",
+        base_url: str = "https://api.soterai.in",
         project_id: str = "",
         policy_mode: str = "BALANCED",
         source_name: str = "",

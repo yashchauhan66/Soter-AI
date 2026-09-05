@@ -1,0 +1,219 @@
+{
+  "generatedAt": "2026-09-04T05:37:47.976Z",
+  "cut": "full",
+  "language": "hi",
+  "voice": "hi-IN-MadhurNeural",
+  "voiceRate": "+12%",
+  "voiceSource": "tts",
+  "recordedVoiceDir": null,
+  "presenter": null,
+  "runtimeSeconds": 259.898,
+  "fps": 30,
+  "captionsBurnedIn": true,
+  "claimSource": "benchmarks/results/latest.json",
+  "auditSource": "benchmarks/results/readme-detection-audit-2026-09-02.txt",
+  "requiredDisclaimer": "Self-maintained synthetic benchmark, not an independent audit.",
+  "syntheticIdentifiersOnly": true,
+  "metrics": {
+    "recall": "100.00%",
+    "fpr": "0.00%",
+    "p50": "9.30ms",
+    "p95": "17.83ms",
+    "cases": "3,200",
+    "attacks": "2,200",
+    "benign": "1,000",
+    "independent": false,
+    "generatedAt": "2026-07-22"
+  },
+  "blindHeldOut": {
+    "pct": "61.54%",
+    "n": 26,
+    "hit": 16
+  },
+  "aggregateRecall": {
+    "pct": "98.40%",
+    "n": 1122,
+    "hit": 1104
+  },
+  "aggregateFpr": {
+    "pct": "0.00%",
+    "n": 322,
+    "hit": 0
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "start": 0,
+      "end": 14.182,
+      "duration": 14.182,
+      "presenter": true,
+      "voiceSource": "tts",
+      "eyebrow": "AI security guard",
+      "headline": "Your AI app checks auth. It never checks the prompt.",
+      "sub": "One layer for prompts, outputs, RAG context and agent actions.",
+      "footnote": "All identifiers on screen are synthetic test values. Detection is defense-in-depth, not a guarantee.",
+      "narration": "आपका AI app login check करता है, permission check करता है — लेकिन prompt कभी check नहीं करता। और हमला वहीं से आता है: user के prompt में, model के output में, और agent के tool call में।",
+      "captionCues": 2
+    },
+    {
+      "id": "surfaces",
+      "start": 14.182,
+      "end": 32.108,
+      "duration": 17.926,
+      "presenter": true,
+      "voiceSource": "tts",
+      "eyebrow": "Three attack surfaces",
+      "headline": "Most tools cover one. This covers all three.",
+      "sub": "One policy engine, three enforcement points.",
+      "footnote": "Detection runs locally on CPU with no outbound network call, so it also works air-gapped.",
+      "narration": "Input पर prompt injection और jailbreak। Output पर PII और secret leak। Tool call पर payment, delete, deploy। एक policy engine, तीन enforcement points — और detection पूरी तरह local, CPU पर, बिना network call।",
+      "captionCues": 5
+    },
+    {
+      "id": "input-guard",
+      "start": 32.108,
+      "end": 51.69,
+      "duration": 19.582,
+      "presenter": false,
+      "voiceSource": "tts",
+      "eyebrow": "Layer 1 — Input Guard",
+      "headline": "Blocked before the model is even called.",
+      "sub": "Deterministic rules first, then an ONNX classifier, then an optional semantic judge.",
+      "footnote": "Self-maintained synthetic benchmark, not an independent audit. Latency measured over 3,200 cases, CPU only.",
+      "narration": "पहली layer — Input Guard। Base64, hex, homoglyph, invisible Unicode — payload पहले decode होता है, फिर block। पंद्रह jailbreak families, और Hinglish attacks भी। p95 पर 17.83ms — extra LLM round-trip नहीं।",
+      "captionCues": 4
+    },
+    {
+      "id": "output-guard",
+      "start": 51.69,
+      "end": 70.072,
+      "duration": 18.382,
+      "presenter": false,
+      "voiceSource": "tts",
+      "eyebrow": "Layer 2 — Output Guard",
+      "headline": "The model sees this instead.",
+      "sub": "Aadhaar-like numbers, PAN, UPI IDs and live keys, redacted before the response leaves.",
+      "footnote": "All identifiers on screen are synthetic test values. India-first PII: Aadhaar-like, PAN, UPI, IFSC, GSTIN.",
+      "narration": "दूसरी layer — Output Guard। Aadhaar जैसा number, PAN, UPI ID, live API key — response जाने से पहले redact। Unsafe HTML या script sink — block। India-first PII, जो लगभग कोई global vendor नहीं करता।",
+      "captionCues": 4
+    },
+    {
+      "id": "agent-control",
+      "start": 70.072,
+      "end": 97.118,
+      "duration": 27.046,
+      "presenter": false,
+      "voiceSource": "tts",
+      "eyebrow": "Layer 3 — Agent Control",
+      "headline": "Your agent decided to transfer ₹2,50,000.",
+      "sub": "Every tool call is classified by reversibility before it is allowed to run.",
+      "footnote": "Action ledger with SHA-256 evidence hashing and a separate operator audit trail. MCP / Agent Guard is Labs status.",
+      "narration": "तीसरी layer — Agent Control। Agent ने ढाई लाख रुपये transfer करने का फ़ैसला किया। Tool call बीच में रुकता है और reversibility से classify होता है। Irreversible action human approval queue में जाता है, payload redacted। Approve के बाद execute, और पंद्रह मिनट का rollback window। हर decision action ledger में, SHA-256 hash के साथ।",
+      "captionCues": 6
+    },
+    {
+      "id": "governance",
+      "start": 97.118,
+      "end": 120.468,
+      "duration": 23.35,
+      "presenter": false,
+      "voiceSource": "tts",
+      "eyebrow": "Usage Governance",
+      "headline": "Your team already pastes company data into ChatGPT.",
+      "sub": "Which provider, which data class, which department — decided by policy, not by hope.",
+      "footnote": "API Guard and Audit Evidence are Stable. Browser Guard, IDE Guard and the n8n node are Beta.",
+      "narration": "अब वो problem जो हर company में है — staff company data ChatGPT, Claude, Cursor में paste कर रहा है। पाँच-step policy engine decide करता है: department, data class, provider, model। Block पर साफ़ HTTP 403 और reason header। साथ में Shadow AI discovery और compliance reports।",
+      "captionCues": 5
+    },
+    {
+      "id": "layers",
+      "start": 120.468,
+      "end": 157.018,
+      "duration": 36.55,
+      "presenter": false,
+      "voiceSource": "tts",
+      "eyebrow": "Six defence layers",
+      "headline": "40+ services. One dashboard.",
+      "sub": null,
+      "footnote": "Some modules ship as Preview and say so in their own docs. Full reference: soterai.in/docs/services",
+      "narration": "पूरा product छह layers में है। Monitor — logs और reports। Protect — agent firewall, policy engine, RAG security। Detect — shadow AI, red team lab, forensics, canary network। Control — action ledger, agent passports, escrow, memory firewall। Compliance — evidence vault, blast radius। और Manage — projects, API keys, cost firewall। चालीस से ज़्यादा services, एक dashboard। कुछ modules Preview हैं — docs में साफ़ लिखा है।",
+      "captionCues": 9
+    },
+    {
+      "id": "integrate",
+      "start": 157.018,
+      "end": 175.976,
+      "duration": 18.958,
+      "presenter": false,
+      "voiceSource": "tts",
+      "eyebrow": "Ships where you already build",
+      "headline": "Two calls. Five lines. Any stack.",
+      "sub": null,
+      "footnote": "Published packages only. Go SDK, browser extension and chat channels are in the repo, not yet products.",
+      "narration": "Integration पाँच lines का काम है — guardInput और guardOutput, बस दो calls। Node, Python, LangChain, LlamaIndex, Vercel AI SDK, MCP gateway, n8n, और VS Code, Cursor, Windsurf। या सीधा REST API।",
+      "captionCues": 4
+    },
+    {
+      "id": "honesty",
+      "start": 175.976,
+      "end": 215.382,
+      "duration": 39.406,
+      "presenter": true,
+      "voiceSource": "tts",
+      "eyebrow": "The number most vendors cut",
+      "headline": "98.40% tuned. 61.54% blind. Both are ours.",
+      "sub": "The tuned aggregate is a regression measure. The blind held-out set is the generalization one.",
+      "footnote": "Self-maintained synthetic benchmark, not an independent audit. Reproduce: npx tsx scripts/readme-recall-audit.ts",
+      "narration": "अब वो number जो आम तौर पर छिपाया जाता है। Aggregate recall 98.40% — लेकिन वो tuned corpora पर है, यानी regression measure। Blind held-out set पर, जहाँ कभी tuning नहीं हुई, recall 61.54% है। यही असली generalization number है — और इसीलिए ML tier मौजूद है। False positive rate 0.00%, 322 benign controls पर। यह हमारा ही synthetic benchmark है, independent audit नहीं। Command screen पर है।",
+      "captionCues": 7
+    },
+    {
+      "id": "self-host",
+      "start": 215.382,
+      "end": 241.012,
+      "duration": 25.63,
+      "presenter": false,
+      "voiceSource": "tts",
+      "eyebrow": "Self-host and compliance",
+      "headline": "Runs on your box. No telemetry leaves it.",
+      "sub": null,
+      "footnote": "Control mappings and evidence collection are implemented. Certification is a separate audit, not claimed.",
+      "narration": "पूरा stack self-host हो सकता है — docker compose up, बस इतना। कोई telemetry बाहर नहीं जाती। OWASP LLM Top 10 mapped, DPDP, GDPR, HIPAA, PCI, और SOC 2 तथा ISO 27001 के लिए evidence collection — certification का दावा नहीं। Core BUSL-1.1, 2030 में Apache-2.0।",
+      "captionCues": 5
+    },
+    {
+      "id": "cta",
+      "start": 241.012,
+      "end": 259.898,
+      "duration": 18.886,
+      "presenter": true,
+      "voiceSource": "tts",
+      "eyebrow": "Try to break it",
+      "headline": "Free playground. No signup.",
+      "sub": "soterai.in/playground",
+      "footnote": "Enterprise is volume-based with SAML, SCIM, SIEM and retention. Detection is defense-in-depth, not a guarantee.",
+      "narration": "Playground खुला है, signup नहीं चाहिए। Attack paste कीजिए, verdict देखिए — और bypass कर पाएँ तो हमें बताइए। Free शून्य रुपये, Pro दो हज़ार नौ सौ निन्यानवे प्रति महीना, Enterprise volume के हिसाब से। soterai.in — SoterAI।",
+      "captionCues": 4
+    }
+  ],
+  "assets": [
+    {
+      "name": "soterai-full-hi-1920x1080.mp4",
+      "size": "1920x1080",
+      "seconds": 259.99,
+      "note": "YouTube, site hero, docs embed"
+    },
+    {
+      "name": "soterai-full-hi-1080x1920.mp4",
+      "size": "1080x1920",
+      "seconds": 259.99,
+      "note": "Shorts, Reels, TikTok"
+    },
+    {
+      "name": "soterai-full-hi-1080x1080.mp4",
+      "size": "1080x1080",
+      "seconds": 260,
+      "note": "LinkedIn, Product Hunt"
+    }
+  ]
+}

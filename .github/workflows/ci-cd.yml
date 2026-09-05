@@ -105,6 +105,14 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
+      # Lint was never wired into CI, which is how `eslint .` was able to rot
+      # into an out-of-memory crash unnoticed (it died at the 4 GB V8 ceiling
+      # after ~11 minutes). `npm run lint` now shells through
+      # scripts/runLint.mjs, which splits the tree into groups and raises the
+      # heap per group; keeping it here is what stops that regressing again.
+      - name: Lint
+        run: npm run lint
+
       - name: Build application
         run: npm run build
 

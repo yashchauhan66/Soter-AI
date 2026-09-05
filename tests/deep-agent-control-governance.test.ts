@@ -662,10 +662,39 @@ test("DEEP-SEC-004: rollback reason has length validation", () => {
   assert.ok(source.includes("reason.length > 500"), "Must enforce maximum reason length");
 });
 
-test("DEEP-SEC-005: agent policy route requires policy:manage permission", () => {
+test("DEEP-SEC-005: agent policy route authenticates and scopes to the requested organization", () => {
   const source = readFileSync("app/api/agent/policy/route.ts", "utf8");
-  assert.ok(source.includes('requireProjectPermission'), "Must check permissions");
-  assert.ok(source.includes('"policy:manage"'), "Must require policy:manage");
+  // This asserted `requireProjectPermission` + "policy:manage", which never
+  // matched the endpoint: /api/agent/* is an SDK surface listed in
+  // PUBLIC_API_PREFIXES precisely because agents present a device token and have
+  // no session cookie, so a session-based guard would 401 every legitimate
+  // caller — and "policy:manage" is a *write* permission on a read-only GET.
+  // The invariant that does matter is that the handler authenticates and hands
+  // the caller-supplied organizationId to that check, so a token cannot read
+  // another tenant's policy.
+  assert.ok(source.includes("authenticateAgentJson"), "Must authenticate the agent request");
+  assert.match(
+    source,
+    /authenticateAgentJson\(\s*request\s*,\s*organizationId\s*\)/,
+    "Authentication must be scoped to the requested organizationId",
+  );
+});
+
+test("DEEP-SEC-005b: the shared agent device token is bound to one organization", () => {
+  const source = readFileSync("app/api/extension/_shared.ts", "utf8");
+  const helper = source.slice(source.indexOf("export async function authenticateAgentRequest"));
+  const body = helper.slice(0, helper.indexOf("\nexport "));
+
+  // Regression: the organizationId argument was accepted and then discarded
+  // behind an underscore-prefixed parameter name, so a single valid
+  // SOTER_AGENT_DEVICE_TOKEN authorised every organization in the deployment.
+  assert.match(
+    body,
+    /authenticateAgentRequest\(request: Request, organizationId: string\)/,
+    "organizationId must be enforced, not ignored",
+  );
+  assert.ok(body.includes("SOTER_AGENT_DEVICE_TOKEN_ORG_ID"), "Shared token must be bindable to one organization");
+  assert.ok(body.includes("secretsMatch"), "Shared token must be compared in constant time");
 });
 
 test("DEEP-SEC-006: ledger route requires passport authentication", () => {

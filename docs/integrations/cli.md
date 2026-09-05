@@ -18,7 +18,7 @@ When implemented, `npx soter init` would:
    - Unknown
 
 2. **Prompt for configuration:**
-   - Base URL (default: `https://api.cybersecurityguard.com`)
+   - Base URL (default: `https://api.soterai.in`)
    - API key (stored in `.env`, never committed)
 
 3. **Generate files:**

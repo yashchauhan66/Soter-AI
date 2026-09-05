@@ -235,9 +235,22 @@ describe("UX — Projects Empty State", () => {
 });
 
 describe("UX — Dashboard Mobile CTA", () => {
-  it("Hero cards are visible on mobile", () => {
+  it("Hero cards are reachable on mobile", () => {
     const src = file("app/dashboard/page.tsx");
-    assert.ok(src.includes("sm:opacity-0"), "should be visible on mobile");
+
+    // This used to assert the literal class `sm:opacity-0`, a remnant of a
+    // hover-reveal hero that was invisible on touch devices until the redesign
+    // replaced it with plain stacked cards. Asserting the workaround meant the
+    // test failed once the underlying problem was actually fixed. Assert the
+    // property instead: the hero is a grid that starts single-column and its
+    // cards are ordinary links, with nothing gated behind hover or a breakpoint.
+    assert.ok(src.includes("lg:grid-cols-2"), "hero grid must stack to one column on small screens");
+    assert.ok(
+      src.includes('<Link href="/dashboard/agent-control"') && src.includes('<Link href="/dashboard/usage-governance"'),
+      "both hero cards must be plain links, not hover-revealed panels",
+    );
+    assert.ok(!/opacity-0/.test(src), "no dashboard content may start fully transparent");
+    assert.ok(!/\bhidden sm:|\bhidden md:|\bhidden lg:/.test(src), "no dashboard content may be desktop-only");
   });
 });
 
@@ -391,15 +404,25 @@ describe("UX — Accessibility ARIA", () => {
     assert.ok(src.includes("aria-expanded"), "should have aria-expanded");
   });
 
-  it("LogsTable has role and aria-label", () => {
-    const src = file("components/dashboard/LogsTable.tsx");
-    assert.ok(src.includes('role="table"'), "should have role=table");
-    assert.ok(src.includes("aria-label"), "should have aria-label");
-  });
+  it("LogsTable is an accessible table", () => {
+    // These two used to grep LogsTable.tsx for the literal `role="table"`,
+    // `aria-label` and `scope="col"` it wrote by hand. The console's 11 divergent
+    // hand-rolled tables were consolidated onto components/ui/DataTable.tsx, so
+    // the attributes moved into the primitive and the greps started failing on a
+    // file that is now *more* accessible than before. Assert the guarantee where
+    // it lives, and assert LogsTable actually routes through it — otherwise a
+    // future hand-rolled <table> would slip past both checks.
+    const logs = file("components/dashboard/LogsTable.tsx");
+    assert.ok(logs.includes('from "@/components/ui/DataTable"'), "LogsTable must use the shared table primitive");
+    assert.ok(!/<table\b/.test(logs), "LogsTable must not hand-roll a <table>");
+    assert.ok(/<Table\b[^>]*label=/.test(logs), "LogsTable must give its table an accessible name");
 
-  it("LogsTable th has scope='col'", () => {
-    const src = file("components/dashboard/LogsTable.tsx");
-    assert.ok(src.includes('scope="col"'), "should have scope=col");
+    const primitive = file("components/ui/DataTable.tsx");
+    // A native <table> already carries an implicit role="table"; what it cannot
+    // infer is the accessible name and the header-cell association.
+    assert.ok(primitive.includes("aria-label={label}"), "Table must expose an accessible name");
+    assert.ok(primitive.includes('scope = "col"'), "TH must default to scope=col");
+    assert.ok(primitive.includes("scope={scope}"), "TH must emit the scope attribute");
   });
 
   it("PlanGrid has aria-disabled", () => {

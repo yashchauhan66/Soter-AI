@@ -136,9 +136,15 @@ jobs:
       - name: Verify package contents
         run: npm pack --dry-run
 
+      # NOTE: `--provenance` was removed on 2026-09-04 when this repository went
+      # private. npm only mints Sigstore provenance attestations for packages
+      # built from a PUBLIC repository — the attestation has to be publicly
+      # verifiable. Left in place, this step fails outright rather than
+      # degrading, so it is gone deliberately, not by accident. Publishing still
+      # happens from CI (never locally) so the token stays in Actions secrets.
       - name: Publish to npm
         if: ${{ github.event.inputs.dry_run != 'true' }}
-        run: npm publish --access public --provenance --tag "${DIST_TAG}"
+        run: npm publish --access public --tag "${DIST_TAG}"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           DIST_TAG: ${{ github.event.inputs.dist_tag || 'next' }}

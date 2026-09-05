@@ -5,7 +5,7 @@ exports.issueAgentPassport = issueAgentPassport;
 exports.validateAgentPassport = validateAgentPassport;
 exports.revokeAgentPassport = revokeAgentPassport;
 exports.getAgentPassport = getAgentPassport;
-const DEFAULT_BASE_URL = "https://api.cybersecurityguard.com";
+const DEFAULT_BASE_URL = "https://api.soterai.in";
 const DEFAULT_TIMEOUT_MS = 8000;
 function createAgentIdentity(options, input) {
     return post(options, "/api/agent/identity/create", input);

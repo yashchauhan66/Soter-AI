@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { apiError } from "@/lib/apiResponse";
 import { requireOrganizationAccess } from "@/lib/auth/guards";
 import { addDataClassification } from "@/lib/usage-governance";
 
@@ -20,7 +21,8 @@ export async function POST(request: Request) {
 
     return NextResponse.redirect(new URL("/dashboard/usage-governance/data-classification", request.url));
   } catch (error) {
-    console.error("[SoterAI] Governance data classification add error:", error);
-    return NextResponse.json({ error: true, message: "Failed to add data classification." }, { status: 500 });
+    // apiError maps AuthError -> 401/403; a hardcoded 500 reported a tenant
+    // boundary refusal as a server fault.
+    return apiError(error, "Failed to add data classification.");
   }
 }

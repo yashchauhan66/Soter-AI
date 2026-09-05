@@ -50,6 +50,10 @@ const marketingPages: Entry[] = [
   { url: "/comparison/lakera", priority: 0.7, changeFrequency: "monthly" },
   { url: "/comparison/prompt-security", priority: 0.7, changeFrequency: "monthly" },
   { url: "/comparison/hiddenlayer", priority: 0.7, changeFrequency: "monthly" },
+  { url: "/comparison/guardrails-ai", priority: 0.7, changeFrequency: "monthly", lastModified: "2026-09-03" },
+  { url: "/comparison/nemo-guardrails", priority: 0.7, changeFrequency: "monthly", lastModified: "2026-09-03" },
+  { url: "/comparison/bedrock-guardrails", priority: 0.7, changeFrequency: "monthly", lastModified: "2026-09-03" },
+  { url: "/comparison/llm-guard", priority: 0.7, changeFrequency: "monthly", lastModified: "2026-09-03" },
 ];
 
 // AI-security feature landing pages (also the marketplace homepage targets).

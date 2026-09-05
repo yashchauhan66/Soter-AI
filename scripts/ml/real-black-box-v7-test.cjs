@@ -84,7 +84,8 @@ const CASES = [
 
 async function main() {
   const session = await ort.InferenceSession.create(path.join(MODEL_DIR, 'model.onnx'));
-  let correct = 0, lat = [];
+  let correct = 0;
+  const lat = [];
   const rows = [];
   for (const c of CASES) {
     const feeds = tokenize(c.t);

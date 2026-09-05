@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CodeBlock, InlineCode, WarnBox } from "@/components/ui/CodeBlock";
+import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
@@ -66,7 +67,7 @@ export default function RestApiDocsPage() {
     <DocsPageShell path="/docs/rest-api">
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Prerequisites</h2>
+          <DocsHeading>Prerequisites</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             You need two things: your SoterAI server URL and an API key.
           </p>
@@ -78,7 +79,7 @@ export default function RestApiDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Available endpoints</h2>
+          <DocsHeading>Available endpoints</DocsHeading>
           <div className="mt-5 grid gap-3">
             {endpoints.map(({ method, path, desc, auth, public: isPublic }) => (
               <div key={path} className="rounded-lg border border-slate-800 bg-slate-950/45 p-4">
@@ -97,7 +98,7 @@ export default function RestApiDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">1. Guard user input (before LLM)</h2>
+          <DocsHeading>1. Guard user input (before LLM)</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Call this endpoint <strong>before</strong> your message reaches the AI model. 
             If <InlineCode>allowed</InlineCode> is <InlineCode>false</InlineCode>, do not call the model.
@@ -125,7 +126,7 @@ export default function RestApiDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">2. Guard model output (after LLM)</h2>
+          <DocsHeading>2. Guard model output (after LLM)</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Call this endpoint <strong>after</strong> the LLM responds and <strong>before</strong> 
             returning the response to the user or tool.
@@ -134,7 +135,7 @@ export default function RestApiDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Response shape (for both endpoints)</h2>
+          <DocsHeading>Response shape (for both endpoints)</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Both <InlineCode>/api/guard/input</InlineCode> and <InlineCode>/api/guard/output</InlineCode> 
             return the same response format:
@@ -169,7 +170,7 @@ export default function RestApiDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Code examples in every language</h2>
+          <DocsHeading>Code examples in every language</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Here&apos;s how to call the input guard endpoint from different backend languages:
           </p>
@@ -369,7 +370,7 @@ async fn guard_input(message: &str) -> Result<serde_json::Value, Box<dyn std::er
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Error codes</h2>
+          <DocsHeading>Error codes</DocsHeading>
           <div className="mt-4 overflow-x-auto rounded-lg border border-slate-800">
             <table className="w-full text-sm">
               <thead>
@@ -390,7 +391,7 @@ async fn guard_input(message: &str) -> Result<serde_json::Value, Box<dyn std::er
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Security rules (read this)</h2>
+          <DocsHeading>Security rules (read this)</DocsHeading>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {[
               ["Send API key in header", "Use the x-api-key header for authentication. Never include it in the URL."],

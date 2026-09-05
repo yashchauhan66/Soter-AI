@@ -16,6 +16,18 @@ const eslintConfig = [
       "next-env.d.ts",
       "examples/**",
       "**/dist/**",
+      // Build and host-test artifacts. All three are gitignored regenerable
+      // output, and linting them is what made `eslint .` unusable: the ~350 MB
+      // VS Code that the extension host suite downloads into
+      // packages/vscode-extension/.vscode-test/ contributed 99 files and ~39,500
+      // errors of VS Code's own bundled JavaScript, and parsing it exhausted the
+      // 4 GB V8 heap before the run could finish.
+      "**/.vscode-test/**",
+      "**/dist-test/**",
+      "**/test-build/**",
+      // Maven / Gradle output under the IDE extensions.
+      "**/target/**",
+      "**/build/classes/**",
       "playwright-report/**",
       "test-results/**",
       "coverage/**",

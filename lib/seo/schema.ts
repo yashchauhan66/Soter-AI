@@ -14,13 +14,33 @@ export const SITE_NAME = "SoterAI";
 export const ORGANIZATION_ID = `${SITE_URL}#organization`;
 export const WEBSITE_ID = `${SITE_URL}#website`;
 
+/**
+ * `sameAs` profiles for the Organization node.
+ *
+ * These are the off-site URLs search engines and AI answer engines use to
+ * reconcile "SoterAI" into a single entity. Every URL here MUST resolve — a
+ * 404 in `sameAs` weakens entity consolidation instead of strengthening it, so
+ * only list distribution channels that are actually published.
+ *
+ * Kept in sync with `packages/sdk/package.json#name` ("@soterai/core") and
+ * `packages/python-sdk/pyproject.toml#name` ("soter"). The source repository is
+ * private, so it is deliberately absent.
+ */
 const ORG_SAME_AS = [
-  "https://github.com/yashchauhan66/Ai-Security-Guard",
   "https://twitter.com/soterai",
+  // Open VSX — the IDE Guard extension is published here (see README SDK table)
+  "https://open-vsx.org/extension/soterai/soterai-ide-guard",
   // VS Code Marketplace — entity-confirms the IDE Guard product
   "https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard",
-  // npm SDK — developer entity signal
-  "https://www.npmjs.com/package/@soterai/sdk",
+  // npm — the published JS SDK is @soterai/core (NOT @soterai/sdk)
+  "https://www.npmjs.com/package/@soterai/core",
+  // PyPI — the published Python SDK
+  "https://pypi.org/project/soter/",
+  // n8n community node — automation-ecosystem entity signal
+  "https://www.npmjs.com/package/n8n-nodes-soterai",
+  // NOTE: the GitHub repository is intentionally NOT listed. It went private on
+  // 2026-09-04, so the URL now 404s for crawlers — which per the rule above
+  // would weaken entity consolidation rather than strengthen it.
 ];
 
 /** Canonical Organization node. Referenced by other graphs via ORGANIZATION_ID. */

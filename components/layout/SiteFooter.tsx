@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Activity, ArrowUpRight, Github, Mail } from "lucide-react";
+import { Activity, ArrowUpRight, Mail } from "lucide-react";
 import { Logo } from "@/components/layout/Logo";
 import { FOOTER_NAV, LEGAL_NAV } from "@/lib/navigation";
 
@@ -53,15 +53,6 @@ export function SiteFooter({ currentYear }: { currentYear: number }) {
                 className="button-icon"
               >
                 <Mail size={16} aria-hidden="true" />
-              </a>
-              <a
-                href="https://github.com/yashchauhan66/Soter-AI"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="SoterAI on GitHub"
-                className="button-icon"
-              >
-                <Github size={16} aria-hidden="true" />
               </a>
             </div>
           </div>

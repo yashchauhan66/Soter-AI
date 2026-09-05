@@ -8,8 +8,9 @@ export const VSCODE_MARKETPLACE_URL =
 export const OPEN_VSX_URL = 'https://open-vsx.org/extension/soterai/soterai-ide-guard';
 export const DIRECT_VSIX_URL = `https://open-vsx.org/api/soterai/soterai-ide-guard/${EXTENSION_VERSION}/file/soterai.soterai-ide-guard-${EXTENSION_VERSION}.vsix`;
 export const VSIX_SHA256_URL = `https://open-vsx.org/api/soterai/soterai-ide-guard/${EXTENSION_VERSION}/file/soterai.soterai-ide-guard-${EXTENSION_VERSION}.sha256`;
-export const SOURCE_URL = 'https://github.com/yashchauhan66/Soter-AI';
-export const ISSUE_URL = 'https://github.com/yashchauhan66/Soter-AI/issues';
+// The source repository is private (proprietary). Nothing on the public site
+// may link to it — see LICENSING.md. Issues come in through support instead.
+export const ISSUE_URL = 'mailto:support@soterai.in?subject=IDE%20Guard%20issue';
 
 export type EditorIconName = 'code' | 'cursor' | 'windsurf' | 'kiro' | 'antigravity' | 'vscodium';
 

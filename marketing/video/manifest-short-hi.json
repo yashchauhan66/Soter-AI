@@ -1,0 +1,149 @@
+{
+  "generatedAt": "2026-09-04T05:10:37.038Z",
+  "cut": "short",
+  "language": "hi",
+  "voice": "hi-IN-MadhurNeural",
+  "voiceRate": "+12%",
+  "voiceSource": "tts",
+  "recordedVoiceDir": null,
+  "presenter": null,
+  "runtimeSeconds": 60.06,
+  "fps": 30,
+  "captionsBurnedIn": true,
+  "claimSource": "benchmarks/results/latest.json",
+  "auditSource": "benchmarks/results/readme-detection-audit-2026-09-02.txt",
+  "requiredDisclaimer": "Self-maintained synthetic benchmark, not an independent audit.",
+  "syntheticIdentifiersOnly": true,
+  "metrics": {
+    "recall": "100.00%",
+    "fpr": "0.00%",
+    "p50": "9.30ms",
+    "p95": "17.83ms",
+    "cases": "3,200",
+    "attacks": "2,200",
+    "benign": "1,000",
+    "independent": false,
+    "generatedAt": "2026-07-22"
+  },
+  "blindHeldOut": {
+    "pct": "61.54%",
+    "n": 26,
+    "hit": 16
+  },
+  "aggregateRecall": {
+    "pct": "98.40%",
+    "n": 1122,
+    "hit": 1104
+  },
+  "aggregateFpr": {
+    "pct": "0.00%",
+    "n": 322,
+    "hit": 0
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "start": 0,
+      "end": 9.19,
+      "duration": 9.19,
+      "presenter": true,
+      "voiceSource": "tts",
+      "eyebrow": "AI security guard",
+      "headline": "Your AI app checks auth. It never checks the prompt.",
+      "sub": "One layer for prompts, outputs, RAG context and agent actions.",
+      "footnote": "All identifiers on screen are synthetic test values. Detection is defense-in-depth, not a guarantee.",
+      "narration": "आपका AI app auth check करता है। Prompt कभी check नहीं करता। हमला वहीं से आता है।",
+      "captionCues": 3
+    },
+    {
+      "id": "input-guard",
+      "start": 9.19,
+      "end": 18.164,
+      "duration": 8.974,
+      "presenter": false,
+      "voiceSource": "tts",
+      "eyebrow": "Layer 1 — Input Guard",
+      "headline": "Blocked before the model is even called.",
+      "sub": "Deterministic rules first, then an ONNX classifier, then an optional semantic judge.",
+      "footnote": "Self-maintained synthetic benchmark, not an independent audit. Latency measured over 3,200 cases, CPU only.",
+      "narration": "Prompt injection — model तक पहुँचने से पहले block। p95 17.83ms, बिना network call।",
+      "captionCues": 2
+    },
+    {
+      "id": "output-guard",
+      "start": 18.164,
+      "end": 27.618,
+      "duration": 9.454,
+      "presenter": false,
+      "voiceSource": "tts",
+      "eyebrow": "Layer 2 — Output Guard",
+      "headline": "The model sees this instead.",
+      "sub": "Aadhaar-like numbers, PAN, UPI IDs and live keys, redacted before the response leaves.",
+      "footnote": "All identifiers on screen are synthetic test values. India-first PII: Aadhaar-like, PAN, UPI, IFSC, GSTIN.",
+      "narration": "Aadhaar जैसा number, PAN, live API key — response जाने से पहले redact। सारे values synthetic हैं।",
+      "captionCues": 2
+    },
+    {
+      "id": "agent-control",
+      "start": 27.618,
+      "end": 37.192,
+      "duration": 9.574,
+      "presenter": false,
+      "voiceSource": "tts",
+      "eyebrow": "Layer 3 — Agent Control",
+      "headline": "Your agent decided to transfer ₹2,50,000.",
+      "sub": "Every tool call is classified by reversibility before it is allowed to run.",
+      "footnote": "Action ledger with SHA-256 evidence hashing and a separate operator audit trail. MCP / Agent Guard is Labs status.",
+      "narration": "Agent ने ढाई लाख transfer करने का फ़ैसला किया। IRREVERSIBLE — human approval पर रुका, rollback window पंद्रह मिनट।",
+      "captionCues": 2
+    },
+    {
+      "id": "honesty",
+      "start": 37.192,
+      "end": 52.118,
+      "duration": 14.926,
+      "presenter": true,
+      "voiceSource": "tts",
+      "eyebrow": "The number most vendors cut",
+      "headline": "98.40% tuned. 61.54% blind. Both are ours.",
+      "sub": "The tuned aggregate is a regression measure. The blind held-out set is the generalization one.",
+      "footnote": "Self-maintained synthetic benchmark, not an independent audit. Reproduce: npx tsx scripts/readme-recall-audit.ts",
+      "narration": "Tuned recall 98.40%। Blind held-out 61.54%। दोनों हमारे ही numbers हैं — self-maintained synthetic benchmark, independent audit नहीं।",
+      "captionCues": 3
+    },
+    {
+      "id": "cta",
+      "start": 52.118,
+      "end": 60.06,
+      "duration": 7.942,
+      "presenter": true,
+      "voiceSource": "tts",
+      "eyebrow": "Try to break it",
+      "headline": "Free playground. No signup.",
+      "sub": "soterai.in/playground",
+      "footnote": "Enterprise is volume-based with SAML, SCIM, SIEM and retention. Detection is defense-in-depth, not a guarantee.",
+      "narration": "soterai.in slash playground — signup नहीं चाहिए। तोड़ के दिखाइए, और हमें बताइए।",
+      "captionCues": 2
+    }
+  ],
+  "assets": [
+    {
+      "name": "soterai-short-hi-1920x1080.mp4",
+      "size": "1920x1080",
+      "seconds": 60.1,
+      "note": "YouTube, site hero, docs embed"
+    },
+    {
+      "name": "soterai-short-hi-1080x1920.mp4",
+      "size": "1080x1920",
+      "seconds": 60.1,
+      "note": "Shorts, Reels, TikTok"
+    },
+    {
+      "name": "soterai-short-hi-1080x1080.mp4",
+      "size": "1080x1080",
+      "seconds": 60.1,
+      "note": "LinkedIn, Product Hunt"
+    }
+  ]
+}

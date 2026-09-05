@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, ExternalLink } from "lucide-react";
 import { CodeBlock, InlineCode, TipBox, WarnBox } from "@/components/ui/CodeBlock";
+import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
@@ -103,7 +104,7 @@ export default function QuickstartDocsPage() {
 
         {/* What you'll build */}
         <div className="docs-section">
-          <h2 className="text-2xl font-bold">What you&apos;ll build</h2>
+          <DocsHeading>What you&apos;ll build</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             A secure chat API endpoint that:
           </p>
@@ -117,7 +118,7 @@ export default function QuickstartDocsPage() {
 
         {/* Step-by-step visual guide */}
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">The 6-step plan</h2>
+          <DocsHeading>The 6-step plan</DocsHeading>
           <div className="mt-6 grid gap-3 md:grid-cols-3 lg:grid-cols-6">
             {steps.map(([title, copy], index) => (
               <div key={title} className="card p-4">
@@ -133,7 +134,7 @@ export default function QuickstartDocsPage() {
 
         {/* Step 1 */}
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 1: Install the SDK</h2>
+          <DocsHeading>Step 1: Install the SDK</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Open your backend project in a terminal and run:
           </p>
@@ -146,7 +147,7 @@ export default function QuickstartDocsPage() {
 
         {/* Step 2 */}
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 2: Add environment variables</h2>
+          <DocsHeading>Step 2: Add environment variables</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Create a <InlineCode>.env</InlineCode> file in your project root and add your API key:
           </p>
@@ -164,7 +165,7 @@ export default function QuickstartDocsPage() {
 
         {/* Step 3-4-5 */}
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 3-5: Write the integration code</h2>
+          <DocsHeading>Step 3-5: Write the integration code</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             The pattern is simple: <strong>guard input → call model → guard output</strong>. 
             Here&apos;s the complete code for a chat route:
@@ -188,7 +189,7 @@ export default function QuickstartDocsPage() {
 
         {/* Step 6 */}
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 6: Test your integration</h2>
+          <DocsHeading>Step 6: Test your integration</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             First, let&apos;s test with a <strong>dangerous prompt</strong> that should be blocked:
           </p>
@@ -211,7 +212,7 @@ export default function QuickstartDocsPage() {
 
         {/* Common mistakes */}
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">🚫 Common beginner mistakes (and how to avoid them)</h2>
+          <DocsHeading>🚫 Common beginner mistakes (and how to avoid them)</DocsHeading>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             {[
               ["Putting the API key in frontend code", "Use your own backend route as a proxy. The API key never leaves your server."],

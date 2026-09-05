@@ -91,10 +91,28 @@ export function enforceCsrfOrigin(request: Request): Response | null {
           { status: 400, headers: { "content-type": "application/json" } },
         );
       }
+    } else {
+      // Neither Origin nor Referer: fail CLOSED.
+      //
+      // This used to allow the request through, on the reasoning that "direct
+      // API calls, server-side fetches, and tools like curl/Postman legitimately
+      // omit these headers". That reasoning does not apply to the routes this
+      // check actually covers. Everything authenticated by a machine credential
+      // — the guard endpoints, SCIM, webhooks, the extension control plane,
+      // next-auth's own handlers — is already in CSRF_EXEMPT_PREFIXES above and
+      // never reaches this branch. What is left is exclusively
+      // session-cookie-authenticated mutation, and every browser sends Origin on
+      // a cross-origin fetch/XHR/form POST, so a mutation arriving with neither
+      // header is not a case we need to serve. Allowing it left the whole check
+      // trivially bypassable by simply stripping two headers.
+      //
+      // A same-origin curl/Postman debugging session can still pass by sending
+      // `-H "Origin: $NEXTAUTH_URL"`.
+      return new Response(
+        JSON.stringify({ error: true, message: "Missing Origin or Referer header." }),
+        { status: 403, headers: { "content-type": "application/json" } },
+      );
     }
-    // If neither Origin nor Referer is present, allow the request to proceed.
-    // Direct API calls, server-side fetches, and tools like curl/Postman
-    // legitimately omit these headers.
   }
 
   return null;

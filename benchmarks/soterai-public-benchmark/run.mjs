@@ -106,11 +106,14 @@ function isFlagged(result) {
 }
 
 async function runAdapter(adapterPath, corpus) {
-  const module = await import(new URL(adapterPath, `file://${here.replace(/\\/g, "/")}/`).href);
-  if (typeof module.detect !== "function") {
+  // Named `adapterModule`, not `module`: assigning to the bare identifier
+  // `module` shadows the CommonJS binding and trips
+  // @next/next/no-assign-module-variable, which the linter treats as an error.
+  const adapterModule = await import(new URL(adapterPath, `file://${here.replace(/\\/g, "/")}/`).href);
+  if (typeof adapterModule.detect !== "function") {
     throw new Error(`${adapterPath} does not export a detect(text) function.`);
   }
-  const { detect, adapterInfo } = module;
+  const { detect, adapterInfo } = adapterModule;
 
   const hash = createHash("sha256");
   const latencies = [];

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CodeBlock } from "@/components/ui/CodeBlock";
+import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
@@ -46,7 +47,7 @@ export default function WhatsappDocsPage() {
     <DocsPageShell path="/docs/whatsapp">
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Integration flow</h2>
+          <DocsHeading>Integration flow</DocsHeading>
           <CodeBlock language="text" title="message flow">{`WhatsApp Message → Soter Input Guard → LLM/RAG → Soter Output Guard → WhatsApp Reply`}</CodeBlock>
           <div className="mt-4 space-y-3">
             <div className="rounded-lg border border-slate-800 p-4">1. Route inbound WhatsApp messages through input guard before the LLM</div>
@@ -57,18 +58,18 @@ export default function WhatsappDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Environment</h2>
+          <DocsHeading>Environment</DocsHeading>
           <CodeBlock language="bash" title=".env">{`SOTER_API_KEY=ck_live_your_key_here
 # SOTER_BASE_URL is optional if using the SDK — a default is included`}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">API example</h2>
+          <DocsHeading>API example</DocsHeading>
           <CodeBlock language="typescript" title="rest api" showLineNumbers>{apiCode}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">India-specific PII detection</h2>
+          <DocsHeading>India-specific PII detection</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             SoterAI automatically detects and redacts India-specific personally identifiable information:
           </p>

@@ -95,19 +95,34 @@ test('product screenshots used by the page are present', () => {
 test('every page link resolves to a known internal or verified external destination', () => {
   const pageSource = readFileSync('app/extensions/ide/page.tsx', 'utf8');
   const dataSource = readFileSync('app/extensions/ide/extensionData.ts', 'utf8');
+  // Literal URLs — these appear verbatim in the source.
   const externalConstants = [
     VSCODE_MARKETPLACE_URL,
     OPEN_VSX_URL,
-    DIRECT_VSIX_URL,
-    VSIX_SHA256_URL,
-    'https://github.com/yashchauhan66/Soter-AI',
-    'https://github.com/yashchauhan66/Soter-AI/issues',
+    // The source repository went private on 2026-09-04, so no GitHub URL may be
+    // declared here or linked from the page — it would 404 for every visitor.
+    'mailto:support@soterai.in?subject=IDE%20Guard%20issue',
   ];
+  // DIRECT_VSIX_URL and VSIX_SHA256_URL are built from a template literal, so the
+  // resolved string is never present in the source text — match the fixed prefix
+  // and assert the resolved value still carries the shipped version.
+  const derivedConstants = [DIRECT_VSIX_URL, VSIX_SHA256_URL];
   const internalLinks = ['/', '/contact-sales', '/docs', '/support'];
 
   for (const url of externalConstants) {
     assert.ok(dataSource.includes(url), `${url} must stay declared in extensionData.ts`);
   }
+  for (const url of derivedConstants) {
+    assert.ok(
+      dataSource.includes('https://open-vsx.org/api/soterai/soterai-ide-guard/'),
+      'the Open VSX download base must stay declared in extensionData.ts',
+    );
+    assert.ok(url.includes(EXTENSION_VERSION), `${url} must resolve to the shipped version`);
+  }
+  assert.ok(
+    !dataSource.includes('github.com') && !pageSource.includes('github.com'),
+    'the private source repository must not be linked from the public IDE page',
+  );
   for (const href of internalLinks) {
     assert.ok(pageSource.includes(`href="${href}"`), `${href} must stay linked from the page`);
   }

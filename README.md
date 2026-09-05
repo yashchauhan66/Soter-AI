@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/yashchauhan66/Soter-AI/main/public/logo.png" alt="SoterAI" width="220" />
+<img src="public/logo.png" alt="SoterAI" width="220" />
 
 # SoterAI
 
@@ -12,9 +12,8 @@ Self-hostable · Offline-capable · India-first PII detection · Reproducible be
   <a href="https://soterai.in"><img src="https://img.shields.io/badge/Live-soterai.in-1f6feb?style=flat-square&logo=googlechrome&logoColor=white" alt="Live site" /></a>
   <a href="https://soterai.in/playground"><img src="https://img.shields.io/badge/Playground-try%20it-00a67e?style=flat-square&logo=react&logoColor=white" alt="Playground" /></a>
   <a href="https://soterai.in/docs"><img src="https://img.shields.io/badge/Docs-read-6e7781?style=flat-square&logo=gitbook&logoColor=white" alt="Docs" /></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-BUSL--1.1-1f6feb?style=flat-square" alt="Business Source License 1.1" /></a>
-  <a href="https://github.com/yashchauhan66/Soter-AI/actions/workflows/ci-cd.yml"><img src="https://img.shields.io/github/actions/workflow/status/yashchauhan66/Soter-AI/ci-cd.yml?branch=main&style=flat-square&logo=githubactions&logoColor=white&label=CI" alt="CI status" /></a>
-  <a href="https://github.com/yashchauhan66/Soter-AI/stargazers"><img src="https://img.shields.io/github/stars/yashchauhan66/Soter-AI?style=flat-square&logo=github&logoColor=white" alt="Stars" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Proprietary-b42318?style=flat-square" alt="Proprietary — all rights reserved" /></a>
+  <img src="https://img.shields.io/badge/repository-private-6e7781?style=flat-square&logo=github&logoColor=white" alt="Private repository" />
 </p>
 
 <p>
@@ -324,6 +323,8 @@ Regression coverage lives in `tests/guard.test.ts` and `lib/classifiers/datasets
 
 SoterAI runs entirely on your own infrastructure. No telemetry leaves the box, and detection needs no outbound network.
 
+> This repository is private. Cloning it requires authorized access, and self-hosting from source requires a written license — see [LICENSING.md](LICENSING.md).
+
 ```bash
 git clone https://github.com/yashchauhan66/Soter-AI.git
 cd Soter-AI
@@ -391,7 +392,7 @@ npm run test:sdk:js
 npm run test:sdk:python
 ```
 
-The CI badge at the top of this file is the source of truth for what currently passes — see the [latest run](https://github.com/yashchauhan66/Soter-AI/actions/workflows/ci-cd.yml?query=branch%3Amain).
+The [latest `main` run of `ci-cd.yml`](https://github.com/yashchauhan66/Soter-AI/actions/workflows/ci-cd.yml?query=branch%3Amain) is the source of truth for what currently passes. The repository is private, so that link and the run logs are visible to authorized collaborators only.
 
 Playwright applies migrations and seeds fixtures. Point it at a dedicated database via `E2E_DATABASE_URL`; a loopback-only `DATABASE_URL` is accepted as a fallback. A remote `DATABASE_URL` is never touched unless it is repeated verbatim as `E2E_DATABASE_URL` to confirm it is test-only.
 
@@ -446,27 +447,27 @@ Found a vulnerability? Please **do not** open a public issue — see [SECURITY.m
 
 ## Licensing
 
-SoterAI is **open core**, not permissively licensed. Read [LICENSING.md](LICENSING.md) for the authoritative map.
+SoterAI is **proprietary, closed-source software**. This repository is private and confidential. Read [LICENSING.md](LICENSING.md) for the authoritative map.
 
 | Area | License | You may |
 |---|---|---|
-| Core product & server | [**BUSL-1.1**](LICENSE) | Read, modify, self-host for internal or non-production use. Converts to **Apache-2.0 on 2030-06-25** |
-| Client SDKs & middleware (`packages/*`) | **Apache-2.0** | Install, use, and ship in your own apps freely |
+| This repository (core product, server, models, benchmarks, evidence) | [**Proprietary — all rights reserved**](LICENSE) | Nothing without a written agreement. Access is by authorization only |
 | Enterprise modules (`lib/control-plane`, `lib/agent-firewall`) | **Commercial** | Requires a written license |
+| Packages already published to npm / VS Code Marketplace / Open VSX | **Their own shipped license** (Apache-2.0, MIT, or BUSL-1.1) | Keep using the published versions under that license — see [LICENSING.md](LICENSING.md) for the per-package map |
 
-**You may not** offer SoterAI as a hosted or managed AI-security service to third parties, or build a competing product from it, without a commercial license.
+**You may not** use, copy, modify, redistribute, or self-host this source, offer SoterAI as a hosted or managed AI-security service, or build a competing product from it, without a commercial license.
 
-> **Why GitHub shows "NOASSERTION" on this repo.** GitHub's license detector (`licensee`) only recognizes the licenses listed on choosealicense.com, and **BUSL-1.1 is not among them** — so the sidebar reads "Other" for every BSL project, including HashiCorp Terraform and Sentry. It is a limitation of the detector, not a missing or ambiguous license. The authoritative terms are in [`LICENSE`](LICENSE); the SPDX identifier is **`BUSL-1.1`**, also declared in `package.json`.
+> **Previously open core.** Until 2026-09-04 this repository was public under BUSL-1.1 with Apache-2.0/MIT client packages. That model is retired. Rights already granted on **published package versions** are not revoked; the repository source is no longer licensed for outside use.
 
 Commercial licensing and enterprise enquiries: [**soterai.in/contact-sales**](https://soterai.in/contact-sales)
 
-Copyright © 2026 Yash Chauhan. Contributions require signing the [CLA](CLA.md).
+Copyright © 2026 Yash Chauhan. All rights reserved.
 
 ---
 
 ## Contributing
 
-Issues and pull requests are welcome — start with [CONTRIBUTING.md](CONTRIBUTING.md).
+This is a private repository and external contributions are not accepted. For authorized collaborators, [CONTRIBUTING.md](CONTRIBUTING.md) has the workflow.
 
 ```bash
 git checkout -b feature/your-change
@@ -488,16 +489,10 @@ Two ground rules specific to this project:
 <a href="https://soterai.in/benchmark">Benchmarks</a> ·
 <a href="https://soterai.in/pricing">Pricing</a> ·
 <a href="https://soterai.in/trust">Trust</a> ·
-<a href="https://github.com/yashchauhan66/Soter-AI/issues">Issues</a>
+<a href="https://soterai.in/contact-sales">Contact sales</a>
 
 <br /><br />
 
-<a href="https://github.com/yashchauhan66/Soter-AI">
-  <img src="https://img.shields.io/github/stars/yashchauhan66/Soter-AI?style=for-the-badge&logo=github&logoColor=white&label=Star%20on%20GitHub" alt="Star on GitHub" />
-</a>
-
-<br /><br />
-
-<sub>Open core under BSL 1.1 · Built for the AI security community · India-first PII detection</sub>
+<sub>Proprietary — © 2026 Yash Chauhan, all rights reserved · India-first PII detection</sub>
 
 </div>

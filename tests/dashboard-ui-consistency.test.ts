@@ -87,15 +87,28 @@ test("status intents map to the shared badge classes", async () => {
 
 test("shared dashboard primitives exist and are wired to the design system", () => {
   const shell = readFileSync(join(root, "components", "dashboard", "DashboardShell.tsx"), "utf8");
+  const dialog = readFileSync(join(root, "components", "ui", "Dialog.tsx"), "utf8");
   const header = readFileSync(join(root, "components", "dashboard", "PageHeader.tsx"), "utf8");
   const badge = readFileSync(join(root, "components", "dashboard", "MetricCard.tsx"), "utf8");
   const table = readFileSync(join(root, "components", "dashboard", "TableWrapper.tsx"), "utf8");
 
   // The sidebar must stay reachable on long pages.
   assert.match(shell, /sticky/, "the dashboard sidebar should be sticky");
-  // The mobile drawer must be a real dialog, not a translated panel.
-  assert.match(shell, /aria-modal="true"/, "the mobile drawer should be a modal dialog");
-  assert.match(shell, /role="dialog"/, "the mobile drawer needs role=dialog");
+
+  // The mobile drawer must be a real modal dialog, not a translated panel.
+  //
+  // This used to grep DashboardShell.tsx for the literal strings `role="dialog"`
+  // and `aria-modal="true"`, which is what the hand-rolled ~40-line drawer wrote
+  // by hand. That drawer was deliberately replaced by the shared Radix-backed
+  // Dialog, which emits both attributes at runtime along with the focus trap,
+  // Escape handling and scroll lock the hand-rolled version got wrong — so the
+  // old assertion started failing precisely because the accessibility got
+  // better. Assert the guarantee where it now lives: the shell renders the shared
+  // Dialog, and the shared Dialog is the Radix primitive.
+  assert.match(shell, /<Dialog\b/, "the mobile drawer should render the shared Dialog");
+  assert.match(shell, /from "@\/components\/ui\/Dialog"/, "the drawer must use the shared Dialog primitive");
+  assert.match(dialog, /@radix-ui\/react-dialog/, "the shared Dialog must be the Radix modal primitive");
+  assert.match(dialog, /DialogPrimitive\.Root/, "Dialog must re-export the Radix root, not a hand-rolled overlay");
 
   assert.match(header, /className="eyebrow"/, "PageHeader should use the shared eyebrow class");
   assert.match(header, /heading-3/, "PageHeader should use the shared heading scale");

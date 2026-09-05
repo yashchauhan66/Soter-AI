@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CodeBlock } from "@/components/ui/CodeBlock";
+import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
@@ -41,7 +42,7 @@ export default function ZendeskDocsPage() {
     <DocsPageShell path="/docs/zendesk">
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Integration pattern</h2>
+          <DocsHeading>Integration pattern</DocsHeading>
           <div className="mt-4 space-y-3">
             <div className="rounded-lg border border-slate-800 p-4">
               <span className="font-semibold text-slate-100">1.</span> Guard inbound ticket messages before they reach the AI agent
@@ -59,18 +60,18 @@ export default function ZendeskDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Environment</h2>
+          <DocsHeading>Environment</DocsHeading>
           <CodeBlock language="bash" title=".env">{`SOTER_API_KEY=ck_live_your_key_here
 # SOTER_BASE_URL is optional if using the SDK — a default is included`}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">API example</h2>
+          <DocsHeading>API example</DocsHeading>
           <CodeBlock language="typescript" title="rest api" showLineNumbers>{apiCode}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Best practices</h2>
+          <DocsHeading>Best practices</DocsHeading>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {[
               ["Use separate projects per client", "Isolate data with distinct SoterAI projects per brand or client."],

@@ -84,14 +84,23 @@ export async function getCurrentProject() {
   });
 }
 
+/**
+ * Resolves an explicitly requested project.
+ *
+ * SECURITY: this fails CLOSED. An earlier version caught the authorization
+ * error and returned `getCurrentProject()` instead, which meant a request for a
+ * project the caller may not touch silently rendered a DIFFERENT project's data
+ * under the requested project's URL — no 403, no signal to the user, and a
+ * page that then let them act (rotate keys, edit policy, export logs) against
+ * the wrong tenant boundary. It also made cross-tenant probing invisible,
+ * because every id returned 200. `requireProjectAccess` already raises
+ * NotFoundError / ForbiddenError with the right status; let it propagate so
+ * apiError and app/dashboard/error.tsx can report it honestly.
+ */
 export async function getCurrentProjectById(projectId?: string) {
   if (projectId) {
-    try {
-      const access = await requireProjectAccess(projectId);
-      return access.project;
-    } catch (error) {
-      console.warn("[SoterAI] Project access fallback for", projectId, error instanceof Error ? error.message : error);
-    }
+    const access = await requireProjectAccess(projectId);
+    return access.project;
   }
   return getCurrentProject();
 }

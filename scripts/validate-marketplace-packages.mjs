@@ -88,7 +88,11 @@ function validateN8n() {
   requireValue(pkg.version, "n8n package version is required");
   requireValue(pkg.description, "n8n package description is required");
   requireValue(pkg.license, "n8n package license is required");
-  requireValue(pkg.repository?.url, "n8n repository URL is required");
+  // The source repository went private on 2026-09-04, so a `repository` URL here
+  // would render as a dead link on the npm page. Contact surfaces replace it.
+  requireValue(!pkg.repository, "n8n package must not link the private source repository");
+  requireValue(pkg.homepage, "n8n homepage is required");
+  requireValue(pkg.bugs?.url, "n8n bugs URL is required");
   requireValue(pkg.keywords?.includes("n8n-community-node-package"), "n8n keyword n8n-community-node-package is required");
   requireValue(pkg.n8n?.nodes, "n8n nodes manifest is required");
   requireValue(pkg.n8n?.credentials, "n8n credentials manifest is required");
@@ -111,7 +115,8 @@ function validateZapier() {
   requireValue(pkg.version && pkg.version !== "0.0.0", "Zapier package version must be release-ready, not 0.0.0");
   requireValue(pkg.description, "Zapier description is required");
   requireValue(pkg.homepage, "Zapier homepage is required");
-  requireValue(pkg.repository?.url, "Zapier repository URL is required");
+  requireValue(!pkg.repository, "Zapier package must not link the private source repository");
+  requireValue(pkg.bugs?.url, "Zapier bugs URL is required");
   requireValue(pkg.keywords?.includes("zapier"), "Zapier keyword is required");
   requireValue(pkg.scripts?.build, "Zapier build script is required");
   requireValue(pkg.scripts?.validate, "Zapier validate script is required");

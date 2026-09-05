@@ -1,93 +1,94 @@
-Business Source License 1.1
+SoterAI — AI Security Command Layer
+PROPRIETARY AND CONFIDENTIAL
 
-Parameters
-
-Licensor:             Yash Chauhan
-Licensed Work:        SoterAI — AI Security Command Layer
-                      The Licensed Work is (c) 2026 Yash Chauhan.
-Additional Use Grant: You may use the Licensed Work for development,
-                      testing, evaluation, and other NON-PRODUCTION
-                      purposes free of charge. You may also use it in
-                      production for INTERNAL purposes within a single
-                      entity. You may NOT use the Licensed Work, in whole
-                      or in part, to provide a commercial hosted or managed
-                      service that offers AI-security, prompt-injection
-                      detection, or guardrail functionality to third
-                      parties, nor to build a competing product, without a
-                      separate commercial license from the Licensor.
-Change Date:          2030-06-25
-Change License:       Apache License, Version 2.0
-
-For information about alternative licensing arrangements for the Licensed
-Work, please contact the Licensor.
+Copyright (c) 2026 Yash Chauhan. All rights reserved.
 
 -----------------------------------------------------------------------------
 
-Terms
+1. Ownership
 
-The Licensor hereby grants you the right to copy, modify, create derivative
-works, redistribute, and make non-production use of the Licensed Work. The
-Licensor may make an Additional Use Grant, above, permitting limited
-production use.
+   This repository, its source code, models, datasets, benchmarks, evidence
+   artifacts, documentation, and all other contents (the "Software") are the
+   proprietary and confidential property of Yash Chauhan (the "Licensor").
+   The Software is licensed, not sold. No title or ownership is transferred.
 
-Effective on the Change Date, or the fourth anniversary of the first publicly
-available distribution of a specific version of the Licensed Work under this
-License, whichever comes first, the Licensor hereby grants you rights under
-the terms of the Change License, and the rights granted in the paragraph
-above terminate.
+2. No license granted
 
-If your use of the Licensed Work does not comply with the requirements
-currently in effect as described in this License, you must purchase a
-commercial license from the Licensor, its affiliated entities, or authorized
-resellers, or you must refrain from using the Licensed Work.
+   No right or license — express, implied, by estoppel, or otherwise — to
+   use, copy, reproduce, modify, adapt, translate, create derivative works
+   of, publish, distribute, sublicense, sell, host, or make the Software
+   publicly available is granted to any person or entity, except under a
+   separate written agreement signed by the Licensor.
 
-All copies of the original and modified Licensed Work, and derivative works
-of the Licensed Work, are subject to this License. This License applies
-separately for each version of the Licensed Work and the Change Date may vary
-for each version of the Licensed Work released by Licensor.
+3. Authorized access only
 
-You must conspicuously display this License on each original or modified copy
-of the Licensed Work. If you receive the Licensed Work in original or modified
-form from a third party, the terms and conditions set forth in this License
-apply to your use of that work.
+   Access to the Software is granted only to persons expressly authorized by
+   the Licensor, and only for the purpose stated in that authorization. If
+   you have received a copy of the Software without such authorization, you
+   must not use it, must not retain it, and must notify the Licensor and
+   destroy all copies in your possession or control.
 
-Any use of the Licensed Work in violation of this License will automatically
-terminate your rights under this License for the current and all other
-versions of the Licensed Work.
+4. Confidentiality
 
-This License does not grant you any right in any trademark or logo of
-Licensor or its affiliates (provided that you may use a trademark or logo of
-Licensor as expressly required by this License).
+   The Software is confidential information of the Licensor. Authorized
+   recipients must not disclose it to any third party, and must protect it
+   with no less care than they use for their own confidential information.
 
-TO THE EXTENT PERMITTED BY APPLICABLE LAW, THE LICENSED WORK IS PROVIDED ON
-AN "AS IS" BASIS. LICENSOR HEREBY DISCLAIMS ALL WARRANTIES AND CONDITIONS,
-EXPRESS OR IMPLIED, INCLUDING (WITHOUT LIMITATION) WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, AND
-TITLE.
+5. No reverse engineering or benchmark disclosure
 
-MariaDB hereby grants you permission to use this License's text to license
-your works, and to refer to it using the trademark "Business Source License",
-as long as you comply with the Covenants of Licensor below.
+   Except where such a restriction is unenforceable under applicable law,
+   you may not decompile, disassemble, or reverse engineer any part of the
+   Software, nor publish any performance, detection-accuracy, or benchmark
+   result derived from it, without the Licensor's prior written consent.
+
+6. Separately licensed components
+
+   Certain client-side packages under packages/ have been publicly
+   distributed by the Licensor under their own open-source licenses (Apache
+   License 2.0 or MIT), and certain modules are governed by the Business
+   Source License 1.1. Each such component carries its own LICENSE file,
+   and for that component that file governs and prevails over this LICENSE.
+   Rights already granted for previously published versions of those
+   components remain in force under their respective licenses. Nothing in
+   this LICENSE extends any of those grants to the rest of the Software.
+   See LICENSING.md for the component map.
+
+   Third-party dependencies remain subject to their own licenses.
+
+7. Trademarks
+
+   "SoterAI" and the SoterAI logo are trademarks of Yash Chauhan. Nothing in
+   this LICENSE, and no authorization to access the Software, grants any
+   right to use those trademarks.
+
+8. Termination
+
+   Any authorization to access or use the Software terminates immediately,
+   without notice, upon any breach of this LICENSE. On termination you must
+   cease all use and destroy all copies of the Software.
+
+9. No warranty
+
+   TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS
+   PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+   INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+   FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, AND TITLE. THE SOFTWARE IS A
+   SECURITY TOOL AND IS NOT WARRANTED TO DETECT OR PREVENT ALL ATTACKS.
+
+10. Limitation of liability
+
+   TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL THE
+   LICENSOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN
+   AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN
+   CONNECTION WITH THE SOFTWARE OR ITS USE.
+
+11. Governing law
+
+   This LICENSE is governed by the laws of India, and the courts at
+   <CITY, STATE> India shall have exclusive jurisdiction over any dispute
+   arising under it. (Replace <CITY, STATE> with your place of business.)
 
 -----------------------------------------------------------------------------
 
-Covenants of Licensor
-
-In consideration of the right to use this License's text and the "Business
-Source License" name and trademark, Licensor covenants to MariaDB, and to all
-other recipients of the licensed work to be provided by Licensor:
-
-1. To specify as the Change License the GPL Version 2.0 or any later version,
-   or a license that is compatible with GPL Version 2.0 or a later version,
-   where "compatible" means that software provided under the Change License can
-   be included in a program with software provided under GPL Version 2.0 or a
-   later version. Licensor may specify additional Change Licenses without
-   limitation.
-
-2. To either: (a) specify an additional grant of rights to use that does not
-   impose any additional restriction on the right granted in this License, as
-   the Additional Use Grant; or (b) insert the text "None".
-
-3. To specify a Change Date.
-
-4. Not to modify this License in any other way.
+For commercial licensing, evaluation access, or any other permission,
+contact the Licensor: https://soterai.in/contact-sales

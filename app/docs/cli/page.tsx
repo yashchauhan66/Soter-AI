@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { InlineCode } from "@/components/ui/CodeBlock";
+import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
@@ -16,7 +17,7 @@ export default function CliDocsPage() {
     <DocsPageShell path="/docs/cli">
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Status: Planned</h2>
+          <DocsHeading>Status: Planned</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             The CLI init command is planned but not yet implemented. The SDK, examples, and documentation
             provide clear integration paths — manual setup takes less than 2 minutes for most developers.
@@ -24,7 +25,7 @@ export default function CliDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Planned behavior</h2>
+          <DocsHeading>Planned behavior</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">When implemented, <InlineCode>npx soter init</InlineCode> would:</p>
           <div className="mt-4 space-y-3">
             <div className="rounded-lg border border-slate-800 p-4">1. <strong>Detect framework</strong> — Next.js, Express, Node.js, Python/FastAPI, or unknown</div>
@@ -35,7 +36,7 @@ export default function CliDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Alternative: Dashboard wizard</h2>
+          <DocsHeading>Alternative: Dashboard wizard</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             While the CLI is not yet available, the <Link href="/dashboard/integrations" className="text-cyan underline">integration wizard</Link> in the dashboard
             already provides copy-paste snippets for all supported languages and frameworks.

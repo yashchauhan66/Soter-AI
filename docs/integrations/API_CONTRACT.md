@@ -3,10 +3,10 @@
 Base URL:
 
 ```text
-https://api.cybersecurityguard.com
+https://api.soterai.in
 ```
 
-> The default base URL is `https://api.cybersecurityguard.com`. This can be overridden via `SOTER_BASE_URL` environment variable or the `baseUrl` config option.
+> The default base URL is `https://api.soterai.in`. This can be overridden via `SOTER_BASE_URL` environment variable or the `baseUrl` config option.
 
 Local development often uses:
 

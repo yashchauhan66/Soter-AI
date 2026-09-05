@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CodeBlock, InlineCode, TipBox } from "@/components/ui/CodeBlock";
+import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
@@ -31,7 +32,7 @@ export default function BestPracticesDocsPage() {
     <DocsPageShell path="/docs/best-practices">
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Keep the API key server-side only</h2>
+          <DocsHeading>Keep the API key server-side only</DocsHeading>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {[
               ["Never expose in browser code", "SOTER_API_KEY must never appear in client-side JavaScript, mobile apps, or shipped artifacts."],
@@ -50,7 +51,7 @@ export default function BestPracticesDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Rotate keys regularly</h2>
+          <DocsHeading>Rotate keys regularly</DocsHeading>
           <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-200">
             <li>Rotate API keys on a schedule and immediately if one may have leaked.</li>
             <li>Use separate <InlineCode>ck_test_…</InlineCode> and <InlineCode>ck_live_…</InlineCode> keys per environment.</li>
@@ -59,7 +60,7 @@ export default function BestPracticesDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Always run the output guard</h2>
+          <DocsHeading>Always run the output guard</DocsHeading>
           <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-200">
             <li>Guarding input is not enough. Run <InlineCode>guardOutput</InlineCode> on every LLM response to catch leaked secrets, PII, system-prompt leakage, and unsafe output.</li>
             <li>For RAG, also verify grounding so answers stay attributable to authorized sources.</li>
@@ -67,7 +68,7 @@ export default function BestPracticesDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Redact logs</h2>
+          <DocsHeading>Redact logs</DocsHeading>
           <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-200">
             <li>Do not log raw prompts or completions in your application.</li>
             <li>The SDKs never log the API key or raw text, even in debug mode; keep that property in your own code.</li>
@@ -76,14 +77,14 @@ export default function BestPracticesDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Sign and verify webhooks</h2>
+          <DocsHeading>Sign and verify webhooks</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">If you consume SoterAI webhooks, verify the HMAC signature before trusting the payload:</p>
           <CodeBlock language="typescript" title="webhook verification" showLineNumbers>{webhookVerifyCode}</CodeBlock>
           <TipBox>Reject stale timestamps to prevent replay attacks. Check that the timestamp is within 5 minutes of the current time.</TipBox>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Timeout and fail behavior</h2>
+          <DocsHeading>Timeout and fail behavior</DocsHeading>
           <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-200">
             <li>Set a sensible <InlineCode>timeoutMs</InlineCode> (5s is a good default).</li>
             <li>Decide your failure mode deliberately:
@@ -98,7 +99,7 @@ export default function BestPracticesDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Rate limiting and abuse prevention</h2>
+          <DocsHeading>Rate limiting and abuse prevention</DocsHeading>
           <ul className="mt-4 list-disc space-y-2 pl-5 leading-7 text-slate-200">
             <li>Respect <InlineCode>429</InlineCode> and the <InlineCode>Retry-After</InlineCode> header; back off rather than hammering.</li>
             <li>Add your own per-IP/per-user limits in front of public chat endpoints.</li>

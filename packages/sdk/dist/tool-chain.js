@@ -4,7 +4,7 @@ exports.startToolChainSession = startToolChainSession;
 exports.checkToolChainStep = checkToolChainStep;
 exports.getToolChainSession = getToolChainSession;
 exports.getToolChainFindings = getToolChainFindings;
-const DEFAULT_BASE_URL = "https://api.cybersecurityguard.com";
+const DEFAULT_BASE_URL = "https://api.soterai.in";
 const DEFAULT_TIMEOUT_MS = 8000;
 function startToolChainSession(options, input = {}) {
     return post(options, "/api/tool-chain/session/start", input);

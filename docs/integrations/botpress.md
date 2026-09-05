@@ -17,7 +17,7 @@ See [Botpress README](../../packages/integrations/botpress/README.md) for the fu
 
 ```bash
 SOTER_API_KEY=soter_key_your_key_here
-SOTER_BASE_URL=https://api.cybersecurityguard.com
+SOTER_BASE_URL=https://api.soterai.in
 ```
 
 ## Example Botpress Workflow

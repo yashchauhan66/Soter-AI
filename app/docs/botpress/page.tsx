@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CodeBlock, InlineCode, WarnBox } from "@/components/ui/CodeBlock";
+import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
@@ -45,7 +46,7 @@ export default function BotpressDocsPage() {
     <DocsPageShell path="/docs/botpress">
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">How it works</h2>
+          <DocsHeading>How it works</DocsHeading>
           <div className="mt-4 space-y-3">
             <div className="rounded-lg border border-slate-800 p-4">
               <span className="font-semibold text-slate-100">1. Input step</span> — Call <InlineCode>POST /api/guard/input</InlineCode> before the user message reaches your AI agent
@@ -63,13 +64,13 @@ export default function BotpressDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Environment</h2>
+          <DocsHeading>Environment</DocsHeading>
           <CodeBlock language="bash" title=".env">{`SOTER_API_KEY=ck_live_your_key_here
 # SOTER_BASE_URL is optional if using the SDK — a default is included`}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Botpress workflow example</h2>
+          <DocsHeading>Botpress workflow example</DocsHeading>
           <CodeBlock language="typescript" title="botpress action" showLineNumbers>{workflowCode}</CodeBlock>
         </section>
 

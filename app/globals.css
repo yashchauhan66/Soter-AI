@@ -781,6 +781,79 @@
 
   .docs-section { @apply mt-12 scroll-mt-24; }
 
+  /* ── Documentation long-form ────────────────────────────────────
+     `.docs-h2` replaces the 89 `<h2 className="text-2xl font-bold">` headings the
+     guides used to write by hand. `text-2xl` is a fixed 24px, which made the docs
+     the one place on the site whose headings did not respond to viewport width and
+     did not match any `.heading-*`. `text-display-xs` is the same setting as
+     `.heading-3`, so a section heading now sits a deliberate step below the
+     shell's `.heading-1` page title instead of an accidental one.
+
+     `scroll-mt` is 6rem and is load-bearing: the sticky header is 4rem, and
+     `HEADING_OFFSET` in DocsToc.tsx uses the same 96px to decide which section is
+     current. Change one and the rail highlights the section above the one the
+     reader just clicked. */
+  .docs-h2 { @apply mt-0 scroll-mt-24 text-display-xs font-bold text-slate-100; }
+  .docs-h3 { @apply mt-8 scroll-mt-24 text-lg font-bold text-slate-100; }
+
+  /* Section anchor. Hidden below `lg` — it would cost ~23px on every heading at a
+     width where headings already wrap, and a touch user shares a page URL rather
+     than a section one. Revealed on hover *and* on keyboard focus, so it is never
+     a focusable control with nothing visible (WCAG 2.4.7). */
+  .docs-anchor {
+    @apply ml-2 hidden translate-y-[0.06em] align-middle text-slate-500 opacity-0
+           transition-opacity lg:inline-flex;
+  }
+  .group:hover > .docs-anchor { @apply opacity-100; }
+  .docs-anchor:focus-visible { @apply opacity-100; }
+  .docs-anchor:hover { color: rgb(var(--brand)); }
+
+  /* ── "On this page" rail ────────────────────────────────────────
+     The rail rule is drawn on every entry at the same 2px width and only changes
+     colour when active. Growing a 1px rule to 2px on the active item shifts its
+     label by a pixel, and with a sticky rail that shift happens on every scroll
+     past a heading — a subtle jitter that is very visible once noticed.
+
+     Active state is a rule plus colour plus weight, not colour alone (1.4.1), and
+     it matches `DocsSidebar`'s active treatment so the two rails read as one
+     system rather than two components that happen to sit on the same page. */
+  .docs-toc-link {
+    @apply block border-l-2 border-slate-800 py-1.5 pr-2 text-[13px] leading-5
+           text-slate-400 transition-colors;
+  }
+  .docs-toc-link:hover { @apply border-slate-600 text-slate-100; }
+  .docs-toc-link[aria-current] {
+    @apply font-semibold text-slate-100;
+    border-color: rgb(var(--brand));
+  }
+
+  .docs-toc-progress { @apply h-0.5 w-full overflow-hidden rounded-full bg-slate-800; }
+  .docs-toc-progress > span {
+    @apply block h-full w-full origin-left rounded-full;
+    background: rgb(var(--brand));
+    transition: transform var(--dur-base) var(--ease-smooth);
+  }
+
+  .docs-toc-top {
+    @apply inline-flex items-center gap-1.5 text-xs font-medium text-slate-400 transition-colors;
+  }
+  .docs-toc-top:hover { color: rgb(var(--brand)); }
+
+  /* Collapsed outline for viewports without room for the rail. A bordered box
+     rather than a bare disclosure: it sits between the scope callout and the first
+     section heading, and without an edge it reads as a stray link list belonging
+     to whichever of the two it happens to be nearer. */
+  .docs-toc-inline { @apply overflow-hidden rounded-card border border-slate-800; }
+  .docs-toc-inline > summary {
+    @apply flex cursor-pointer items-center justify-between gap-3 px-4 py-3 text-sm
+           font-semibold text-slate-100 transition-colors;
+  }
+  .docs-toc-inline > summary:hover { background: rgb(var(--surface-1)); }
+  /* Targeted by class, not `svg:last-child`. The label's icon is the only *element*
+     child of its own span — text nodes do not count for `:last-child` — so a
+     positional selector would rotate that one too. */
+  .docs-toc-inline[open] .docs-toc-chevron { transform: rotate(180deg); }
+
   /* ── Decorative backgrounds ────────────────────────────────────
      Decorative only; call sites must render them behind content with
      `pointer-events-none` so they never intercept clicks.

@@ -110,3 +110,81 @@ test("navigation labels and time estimates are usable", async () => {
     assert.ok(page.minutes > 0 && page.minutes <= 30, `${page.href} has an implausible time estimate`);
   }
 });
+
+/**
+ * The `<h2>` pattern below is what all 17 guides used to write by hand, 89 times.
+ * It produced no `id`, so no section was linkable and no table of contents could
+ * be built without maintaining a second copy of the outline per page.
+ */
+const RAW_SECTION_HEADING = /<h2 className="text-2xl font-bold">/;
+const DOCS_HEADING_CALL = /<DocsHeading(?:\s[^>]*)?>(.*?)<\/DocsHeading>/g;
+
+/** The entities these headings actually contain; JSX decodes them before render. */
+function decodeJsxText(text: string): string {
+  return text
+    .replace(/&apos;/g, "'")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&nbsp;/g, " ");
+}
+
+test("guides use DocsHeading so every section is linkable", () => {
+  for (const page of guidePages()) {
+    assert.doesNotMatch(
+      page.source,
+      RAW_SECTION_HEADING,
+      `${page.file} has a hand-written section heading — it emits no id, so the section ` +
+        "cannot be linked to and will not appear in the On this page rail. Use <DocsHeading>.",
+    );
+
+    const headings = [...page.source.matchAll(DOCS_HEADING_CALL)];
+    assert.ok(headings.length > 0, `${page.file} renders no DocsHeading — the guide has no navigable structure`);
+  }
+});
+
+test("heading anchors are unique and non-empty within a guide", async () => {
+  const { docsSlug } = await import("../lib/docs/slug");
+
+  for (const page of guidePages()) {
+    const slugs = [...page.source.matchAll(DOCS_HEADING_CALL)].map((match) => ({
+      text: match[1],
+      slug: docsSlug(decodeJsxText(match[1])),
+    }));
+
+    const seen = new Map<string, string>();
+    for (const entry of slugs) {
+      // A heading made entirely of punctuation or emoji would produce `id=""`,
+      // which is invalid and silently drops the entry from the rail.
+      assert.notEqual(entry.slug, "", `${page.file}: heading "${entry.text}" produces an empty anchor`);
+
+      const previous = seen.get(entry.slug);
+      assert.equal(
+        previous,
+        undefined,
+        `${page.file}: "${entry.text}" and "${previous}" both slug to "#${entry.slug}" — ` +
+          "duplicate DOM ids, and the anchor would jump to whichever comes first",
+      );
+      seen.set(entry.slug, entry.text);
+    }
+  }
+});
+
+test("the table of contents offset matches the heading scroll margin", () => {
+  const toc = readFileSync(join(root, "components", "docs", "DocsToc.tsx"), "utf8");
+  const css = readFileSync(join(root, "app", "globals.css"), "utf8");
+
+  const offset = /const HEADING_OFFSET = (\d+);/.exec(toc);
+  assert.ok(offset, "DocsToc.tsx no longer declares HEADING_OFFSET");
+
+  const rule = /\.docs-h2 \{[^}]*scroll-mt-(\d+)[^}]*\}/.exec(css);
+  assert.ok(rule, ".docs-h2 no longer sets a scroll-mt — clicked anchors will land under the sticky header");
+
+  // Tailwind's spacing scale is 0.25rem per step, and 1rem is 16px here.
+  assert.equal(
+    Number(offset[1]),
+    Number(rule[1]) * 4,
+    "HEADING_OFFSET and .docs-h2's scroll-mt have drifted apart. The rail decides which " +
+      "section is current using HEADING_OFFSET, so a mismatch highlights the section above " +
+      "the one the reader just clicked.",
+  );
+});

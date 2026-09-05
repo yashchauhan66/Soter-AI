@@ -27,7 +27,7 @@ export const integration = {
         baseUrl: {
           type: "string",
           title: "Base URL",
-          default: "https://api.cybersecurityguard.com",
+          default: "https://api.soterai.in",
         },
         projectId: { type: "string", title: "Project ID" },
         policyMode: {
@@ -183,7 +183,7 @@ export async function handler(props: {
 }) {
   const {
     apiKey,
-    baseUrl = "https://api.cybersecurityguard.com",
+    baseUrl = "https://api.soterai.in",
     projectId,
     policyMode = "BALANCED",
   } = props.ctx.configuration;

@@ -1,0 +1,219 @@
+{
+  "generatedAt": "2026-09-04T06:03:45.909Z",
+  "cut": "full",
+  "language": "en",
+  "voice": "en-IN-PrabhatNeural",
+  "voiceRate": "+8%",
+  "voiceSource": "tts",
+  "recordedVoiceDir": null,
+  "presenter": null,
+  "runtimeSeconds": 266.546,
+  "fps": 30,
+  "captionsBurnedIn": true,
+  "claimSource": "benchmarks/results/latest.json",
+  "auditSource": "benchmarks/results/readme-detection-audit-2026-09-02.txt",
+  "requiredDisclaimer": "Self-maintained synthetic benchmark, not an independent audit.",
+  "syntheticIdentifiersOnly": true,
+  "metrics": {
+    "recall": "100.00%",
+    "fpr": "0.00%",
+    "p50": "9.30ms",
+    "p95": "17.83ms",
+    "cases": "3,200",
+    "attacks": "2,200",
+    "benign": "1,000",
+    "independent": false,
+    "generatedAt": "2026-07-22"
+  },
+  "blindHeldOut": {
+    "pct": "61.54%",
+    "n": 26,
+    "hit": 16
+  },
+  "aggregateRecall": {
+    "pct": "98.40%",
+    "n": 1122,
+    "hit": 1104
+  },
+  "aggregateFpr": {
+    "pct": "0.00%",
+    "n": 322,
+    "hit": 0
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "start": 0,
+      "end": 12.718,
+      "duration": 12.718,
+      "presenter": true,
+      "voiceSource": "tts",
+      "eyebrow": "AI security guard",
+      "headline": "Your AI app checks auth. It never checks the prompt.",
+      "sub": "One layer for prompts, outputs, RAG context and agent actions.",
+      "footnote": "All identifiers on screen are synthetic test values. Detection is defense-in-depth, not a guarantee.",
+      "narration": "Your AI app checks the login and the permissions — it never checks the prompt. And that is where the attack arrives: in the prompt, in the output, and in the agent's tool call.",
+      "captionCues": 3
+    },
+    {
+      "id": "surfaces",
+      "start": 12.718,
+      "end": 33.476,
+      "duration": 20.758,
+      "presenter": true,
+      "voiceSource": "tts",
+      "eyebrow": "Three attack surfaces",
+      "headline": "Most tools cover one. This covers all three.",
+      "sub": "One policy engine, three enforcement points.",
+      "footnote": "Detection runs locally on CPU with no outbound network call, so it also works air-gapped.",
+      "narration": "At the input, prompt injection and jailbreaks. At the output, PII and secret leakage. At the tool call, payments, deletes, deploys. One policy engine, three enforcement points — and detection runs locally on CPU, with no network call.",
+      "captionCues": 5
+    },
+    {
+      "id": "input-guard",
+      "start": 33.476,
+      "end": 55.386,
+      "duration": 21.91,
+      "presenter": false,
+      "voiceSource": "tts",
+      "eyebrow": "Layer 1 — Input Guard",
+      "headline": "Blocked before the model is even called.",
+      "sub": "Deterministic rules first, then an ONNX classifier, then an optional semantic judge.",
+      "footnote": "Self-maintained synthetic benchmark, not an independent audit. Latency measured over 3,200 cases, CPU only.",
+      "narration": "Layer one, the Input Guard. Base64, hex, homoglyphs, invisible Unicode — the payload is decoded first, then blocked. Fifteen jailbreak families, and Hinglish attacks too. 17.83ms at p95 — not an extra LLM round-trip.",
+      "captionCues": 4
+    },
+    {
+      "id": "output-guard",
+      "start": 55.386,
+      "end": 74.584,
+      "duration": 19.198,
+      "presenter": false,
+      "voiceSource": "tts",
+      "eyebrow": "Layer 2 — Output Guard",
+      "headline": "The model sees this instead.",
+      "sub": "Aadhaar-like numbers, PAN, UPI IDs and live keys, redacted before the response leaves.",
+      "footnote": "All identifiers on screen are synthetic test values. India-first PII: Aadhaar-like, PAN, UPI, IFSC, GSTIN.",
+      "narration": "Layer two, the Output Guard. Aadhaar-like numbers, PAN, UPI IDs, live API keys — redacted before the response leaves. Unsafe HTML or a script sink — blocked. India-first PII, which almost no global vendor does.",
+      "captionCues": 4
+    },
+    {
+      "id": "agent-control",
+      "start": 74.584,
+      "end": 102.398,
+      "duration": 27.814,
+      "presenter": false,
+      "voiceSource": "tts",
+      "eyebrow": "Layer 3 — Agent Control",
+      "headline": "Your agent decided to transfer ₹2,50,000.",
+      "sub": "Every tool call is classified by reversibility before it is allowed to run.",
+      "footnote": "Action ledger with SHA-256 evidence hashing and a separate operator audit trail. MCP / Agent Guard is Labs status.",
+      "narration": "Layer three, Agent Control. The agent decided to transfer two hundred and fifty thousand rupees. The tool call is intercepted and classified by reversibility. An irreversible action goes to the human approval queue with the payload redacted. Approve it and it executes, with a fifteen-minute rollback window. Every decision lands in the action ledger with a SHA-256 hash.",
+      "captionCues": 6
+    },
+    {
+      "id": "governance",
+      "start": 102.398,
+      "end": 126.3,
+      "duration": 23.902,
+      "presenter": false,
+      "voiceSource": "tts",
+      "eyebrow": "Usage Governance",
+      "headline": "Your team already pastes company data into ChatGPT.",
+      "sub": "Which provider, which data class, which department — decided by policy, not by hope.",
+      "footnote": "API Guard and Audit Evidence are Stable. Browser Guard, IDE Guard and the n8n node are Beta.",
+      "narration": "Now the problem every company has — staff pasting company data into ChatGPT, Claude and Cursor. A five-step policy engine decides: department, data class, provider, model. When something is blocked you get an HTTP 403 and a reason header. Plus Shadow AI discovery and compliance reports.",
+      "captionCues": 4
+    },
+    {
+      "id": "layers",
+      "start": 126.3,
+      "end": 162.154,
+      "duration": 35.854,
+      "presenter": false,
+      "voiceSource": "tts",
+      "eyebrow": "Six defence layers",
+      "headline": "40+ services. One dashboard.",
+      "sub": null,
+      "footnote": "Some modules ship as Preview and say so in their own docs. Full reference: soterai.in/docs/services",
+      "narration": "The product sits in six layers. Monitor: logs and reports. Protect: agent firewall, policy engine, RAG security. Detect: shadow AI, red team lab, forensics, canary network. Control: action ledger, agent passports, escrow, memory firewall. Compliance: evidence vault, blast radius. And Manage: projects, API keys, cost firewall. Forty plus services, one dashboard — and the Preview modules say so in their docs.",
+      "captionCues": 8
+    },
+    {
+      "id": "integrate",
+      "start": 162.154,
+      "end": 182.384,
+      "duration": 20.23,
+      "presenter": false,
+      "voiceSource": "tts",
+      "eyebrow": "Ships where you already build",
+      "headline": "Two calls. Five lines. Any stack.",
+      "sub": null,
+      "footnote": "Published packages only. Go SDK, browser extension and chat channels are in the repo, not yet products.",
+      "narration": "Integration is a five-line job — guardInput and guardOutput, just two calls. Node, Python, LangChain, LlamaIndex, the Vercel AI SDK, an MCP gateway, n8n, and VS Code, Cursor and Windsurf. Or the REST API directly.",
+      "captionCues": 4
+    },
+    {
+      "id": "honesty",
+      "start": 182.384,
+      "end": 220.638,
+      "duration": 38.254,
+      "presenter": true,
+      "voiceSource": "tts",
+      "eyebrow": "The number most vendors cut",
+      "headline": "98.40% tuned. 61.54% blind. Both are ours.",
+      "sub": "The tuned aggregate is a regression measure. The blind held-out set is the generalization one.",
+      "footnote": "Self-maintained synthetic benchmark, not an independent audit. Reproduce: npx tsx scripts/readme-recall-audit.ts",
+      "narration": "Now the number that usually gets hidden. Aggregate recall is 98.40% — but that is on tuned corpora, so it is a regression measure. On the blind held-out set, never tuned against, recall is 61.54%. That is the honest generalization number, and it is why the ML tier exists. False positive rate is 0.00% on 322 benign controls. This is our own synthetic benchmark, not an independent audit. The reproduce command is on screen.",
+      "captionCues": 7
+    },
+    {
+      "id": "self-host",
+      "start": 220.638,
+      "end": 247.324,
+      "duration": 26.686,
+      "presenter": false,
+      "voiceSource": "tts",
+      "eyebrow": "Self-host and compliance",
+      "headline": "Runs on your box. No telemetry leaves it.",
+      "sub": null,
+      "footnote": "Control mappings and evidence collection are implemented. Certification is a separate audit, not claimed.",
+      "narration": "The whole stack can be self-hosted — docker compose up, that is it. No telemetry leaves the box. OWASP LLM Top 10 mapped, DPDP, GDPR, HIPAA, PCI, and evidence collection for SOC 2 and ISO 27001 — evidence, not certification. Core is BUSL-1.1, Apache-2.0 in 2030.",
+      "captionCues": 5
+    },
+    {
+      "id": "cta",
+      "start": 247.324,
+      "end": 266.546,
+      "duration": 19.222,
+      "presenter": true,
+      "voiceSource": "tts",
+      "eyebrow": "Try to break it",
+      "headline": "Free playground. No signup.",
+      "sub": "soterai.in/playground",
+      "footnote": "Enterprise is volume-based with SAML, SCIM, SIEM and retention. Detection is defense-in-depth, not a guarantee.",
+      "narration": "The playground is open, no signup needed. Paste an attack, watch the verdict — and if you can bypass it, tell us. Free is zero rupees, Pro is two thousand nine hundred ninety-nine a month, Enterprise is volume-based. soterai.in — SoterAI.",
+      "captionCues": 5
+    }
+  ],
+  "assets": [
+    {
+      "name": "soterai-full-en-1920x1080.mp4",
+      "size": "1920x1080",
+      "seconds": 266.68,
+      "note": "YouTube, site hero, docs embed"
+    },
+    {
+      "name": "soterai-full-en-1080x1920.mp4",
+      "size": "1080x1920",
+      "seconds": 266.68,
+      "note": "Shorts, Reels, TikTok"
+    },
+    {
+      "name": "soterai-full-en-1080x1080.mp4",
+      "size": "1080x1080",
+      "seconds": 266.67,
+      "note": "LinkedIn, Product Hunt"
+    }
+  ]
+}

@@ -17,7 +17,7 @@ export default async function RedTeamPage() {
     ]}
     integrationCode={`// Trigger the defensive suite against a project you administer.
 // The API validates policy:manage permission server-side.
-const res = await fetch("https://api.cybersecurityguard.com/api/redteam/run", {
+const res = await fetch("https://api.soterai.in/api/redteam/run", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",

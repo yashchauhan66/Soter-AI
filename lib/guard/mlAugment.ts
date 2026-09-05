@@ -298,6 +298,8 @@ export interface MlAugmentDetail {
   escalated?: boolean;
   floor?: number;
   error?: string;
+  /** Set when the abstention-review path held the request for human review. */
+  abstainReview?: boolean;
 }
 
 /**
@@ -384,6 +386,30 @@ export async function augmentWithMl(
               ? "label-family"
               : "semantic-benign";
 
+    // ── ABSTENTION-REVIEW (v14 improvement, measured 2026-09-05) ─────────────
+    // An abstention is "declined to decide", never "SAFE". Measured on the
+    // fully-novel held-out set (.tmp/audit/novel-eval.jsonl): every ML-only miss
+    // on that set was an abstention, and in most of them attackProbability was
+    // >= 0.8 (e.g. argmax SAFE 0.5078 with attackProb 0.9915). On crossdist
+    // (2,000 rows) abstention was the #2 recall leak after the semantic veto.
+    //
+    // Routing HIGH-attack-probability abstentions to human review recovers most
+    // of that at low FP risk because a human sees them; the raw model's own
+    // measured precision at high attack probability is >= 0.99 on external
+    // corpora, and this path can never BLOCK — it caps at HUMAN_REVIEW exactly
+    // like a normal ML escalation.
+    //   SOTERAI_ML_ABSTAIN_REVIEW_AP (default 0.80): attack-probability bar.
+    //   SOTERAI_ML_ABSTAIN_REVIEW=off disables the path entirely.
+    const abstainReviewAp = Number(process.env.SOTERAI_ML_ABSTAIN_REVIEW_AP ?? "0.80");
+    const abstainReviewEnabled =
+      (process.env.SOTERAI_ML_ABSTAIN_REVIEW ?? "on").toLowerCase() !== "off";
+    const abstainWantsReview =
+      abstainReviewEnabled &&
+      abstained &&
+      typeof attackProb === "number" &&
+      attackProb >= abstainReviewAp &&
+      direction === "INPUT";
+
     detail = {
       mode,
       ran: true,
@@ -400,7 +426,35 @@ export async function augmentWithMl(
 
 
     if (!isAttack) {
-      return withMlMetadata(base, detail);
+      // Abstention-review path: the model declined to decide but carries high
+      // attack mass. Not an escalation of a *label* — a hold for review keyed on
+      // the raw attack probability the backend already surfaced. Caps at
+      // HUMAN_REVIEW, never BLOCK, and is skipped entirely in shadow mode.
+      if (!abstainWantsReview || mode === "shadow" || PROTECTIVE_ACTIONS.has(base.action)) {
+        return withMlMetadata(base, detail);
+      }
+      const abstainFinding: GuardFinding = {
+        type: "PROMPT_INJECTION",
+        label: `ML abstained with high attack probability (${((attackProb ?? 0) * 100).toFixed(1)}%)`,
+        severity: "MEDIUM",
+        score: 40,
+        message:
+          "The classifier was uncertain which attack class applied, but the probability " +
+          `this is an attack was ${((attackProb ?? 0) * 100).toFixed(1)}%. Held for human review.`,
+      };
+      detail.abstainReview = true;
+      return withMlMetadata(
+        {
+          ...base,
+          action: "HUMAN_REVIEW",
+          allowed: false,
+          safeText: undefined,
+          findings: [...base.findings, abstainFinding],
+          riskTypes: Array.from(new Set([...base.riskTypes.filter((t) => t !== "LOW_RISK"), "PROMPT_INJECTION"])),
+          reason: `Held for human review: ${abstainFinding.label}.`,
+        },
+        detail,
+      );
     }
 
     // SHADOW: record only, never change the action.

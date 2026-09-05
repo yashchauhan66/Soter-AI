@@ -38,6 +38,32 @@ test("csrf: allows a same-origin POST on a session-cookie route", () => {
   assert.equal(enforceCsrfOrigin(req), null);
 });
 
+test("csrf: a session-cookie mutation with neither Origin nor Referer fails closed", async () => {
+  process.env.NEXTAUTH_URL = CANONICAL;
+  const req = post(`${CANONICAL}/api/account/settings`);
+  const res = enforceCsrfOrigin(req);
+  assert.ok(res, "a mutation with no Origin and no Referer must be rejected");
+  assert.equal(res.status, 403);
+  assert.match(await res.text(), /Missing Origin or Referer/i);
+});
+
+test("csrf: machine-authenticated routes stay exempt when both headers are absent", () => {
+  process.env.NEXTAUTH_URL = CANONICAL;
+  // The fail-closed branch above must not reach anything that authenticates on a
+  // header instead of a session cookie — those callers are servers, not browsers,
+  // and legitimately send no Origin.
+  for (const path of [
+    "/api/guard/input",
+    "/api/scim/v2/Users",
+    "/api/billing/webhook",
+    "/api/extension/heartbeat",
+    "/api/auth/callback/credentials",
+    "/api/scanner",
+  ]) {
+    assert.equal(enforceCsrfOrigin(post(`${CANONICAL}${path}`)), null, `${path} must stay exempt`);
+  }
+});
+
 test("regression: extension enroll is allowed from a chrome-extension origin", () => {
   process.env.NEXTAUTH_URL = CANONICAL;
   const req = post(`${CANONICAL}/api/extension/enroll`, { origin: "chrome-extension://abcdefgh" });

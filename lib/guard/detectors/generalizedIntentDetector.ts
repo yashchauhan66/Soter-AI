@@ -430,6 +430,15 @@ const rules: IntentRule[] = [
     not: [
       // Benign dev requests ("export a function", "list all files in a dir").
       /\b(?:export\s*(?:a |an |the )?(?:function|const|class|component|module|default)|list all (?:files?|items?|elements?|users? in my local|the steps|options))\b/i,
+      // Database/schema DESIGN prose. Measured false positive: "Following up on
+      // your earlier answer about indexes: which column order would you pick for
+      // this query?" fires because DUMP_VERB matches the noun "query" and
+      // SENSITIVE_DATA matches the noun "order" (as in sort order). Neither is an
+      // extraction verb or a sensitive object here — both are schema vocabulary —
+      // so a question about index/column/join/sort ORDERING is exempt. The
+      // extraction forms ("dump the orders table", "export all customer orders")
+      // do not match this clause because they name a table or a qualified object.
+      /\b(?:column|index(?:es|ing)?|sort|join|clustering|key|partition|shard|collation)\s+order\b|\border\s+(?:of\s+(?:the\s+)?(?:columns?|indexe?s?|joins?|keys?|operations?|magnitude)|by\s+clause)\b/i,
         // Genuine how-to / best-practice questions (not extraction commands).
         /\b(?:how\s+(?:do|can|should|would|to|many)\b|best\s+(?:way|practice|practices)|recommended\s+way|the\s+right\s+way|explain\s+(?:how|what|why)\b|where\s+(?:do|should)\s+I\s+(?:store|put|keep)|can\s+I\s+export\s+my\b)\b/i,
       // Benign conceptual questions about what a technology exposes/provides —

@@ -74,7 +74,7 @@ Validates documents before they are embedded into a vector database, catching in
 | Property | Type | Required | Default | Description |
 |---|---|---|---|---|
 | `apiKey` | string (secret) | Yes | -- | Your SoterAI API key (`sk_...`) |
-| `baseUrl` | string | No | `https://api.cybersecurityguard.com` | SoterAI API base URL |
+| `baseUrl` | string | No | `https://api.soterai.in` | SoterAI API base URL |
 | `projectId` | string | No | -- | Project identifier for multi-project setups |
 | `policyMode` | enum | No | `BALANCED` | `MONITOR`, `BALANCED`, or `STRICT` |
 

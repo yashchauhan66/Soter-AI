@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CodeBlock, InlineCode, TipBox } from "@/components/ui/CodeBlock";
+import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
@@ -95,7 +96,7 @@ export default function PythonDocsPage() {
     <DocsPageShell path="/docs/python">
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 1: Install the package</h2>
+          <DocsHeading>Step 1: Install the package</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Install from PyPI:
           </p>
@@ -107,7 +108,7 @@ export default function PythonDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 2: Configure environment</h2>
+          <DocsHeading>Step 2: Configure environment</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Set these environment variables on your server:
           </p>
@@ -119,7 +120,7 @@ SOTER_PROJECT_ID=                        # optional`}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 3: Basic usage</h2>
+          <DocsHeading>Step 3: Basic usage</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Guard user input and model output in a simple chat flow:
           </p>
@@ -133,7 +134,7 @@ SOTER_PROJECT_ID=                        # optional`}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 4: Production-ready example</h2>
+          <DocsHeading>Step 4: Production-ready example</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             Here&apos;s a complete example with error handling and proper response formatting:
           </p>
@@ -141,7 +142,7 @@ SOTER_PROJECT_ID=                        # optional`}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Framework integrations</h2>
+          <DocsHeading>Framework integrations</DocsHeading>
           
           <h3 className="mt-8 text-xl font-bold">FastAPI</h3>
           <p className="mt-3 leading-7 text-slate-200">
@@ -180,7 +181,7 @@ result = safe_chain.invoke({"input": prompt})`}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Error handling</h2>
+          <DocsHeading>Error handling</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             The SDK exports typed exception classes:
           </p>
@@ -192,7 +193,7 @@ result = safe_chain.invoke({"input": prompt})`}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Security best practices</h2>
+          <DocsHeading>Security best practices</DocsHeading>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {[
               ["Read API key from environment", "Never hardcode your API key. Read it from environment variables only."],

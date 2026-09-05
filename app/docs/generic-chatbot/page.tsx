@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CodeBlock } from "@/components/ui/CodeBlock";
+import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
@@ -79,17 +80,17 @@ export default function GenericChatbotDocsPage() {
     <DocsPageShell path="/docs/generic-chatbot">
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 1: Install the SDK</h2>
+          <DocsHeading>Step 1: Install the SDK</DocsHeading>
           <CodeBlock language="bash" title="terminal">{`npm install @soterai/core`}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 2: Basic chatbot pattern</h2>
+          <DocsHeading>Step 2: Basic chatbot pattern</DocsHeading>
           <CodeBlock language="typescript" title="chatbot.js" showLineNumbers>{basicCode}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Step 3: Agent with tool firewall</h2>
+          <DocsHeading>Step 3: Agent with tool firewall</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">
             For agents that call tools, APIs, or access data:
           </p>
@@ -97,7 +98,7 @@ export default function GenericChatbotDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Key rules</h2>
+          <DocsHeading>Key rules</DocsHeading>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {[
               ["Approve tools first", "Never execute a tool before the firewall approves it."],

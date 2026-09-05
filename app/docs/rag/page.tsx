@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { CodeBlock, InlineCode } from "@/components/ui/CodeBlock";
+import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
@@ -79,7 +80,7 @@ export default function RagDocsPage() {
     <DocsPageShell path="/docs/rag">
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">LangChain chain protection</h2>
+          <DocsHeading>LangChain chain protection</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">Wrap any LCEL Runnable or chain using <InlineCode>protect_langchain_chain</InlineCode>:</p>
           <CodeBlock language="python" title="langchain.py" showLineNumbers>{langchainCode}</CodeBlock>
           <div className="mt-6 rounded-lg border border-slate-800 bg-slate-950/50 p-4">
@@ -94,19 +95,19 @@ export default function RagDocsPage() {
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Direct RAG protection</h2>
+          <DocsHeading>Direct RAG protection</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">Guard every stage with <InlineCode>protect_rag</InlineCode>:</p>
           <CodeBlock language="python" title="rag.py" showLineNumbers>{ragCode}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">TypeScript RAG</h2>
+          <DocsHeading>TypeScript RAG</DocsHeading>
           <p className="mt-3 leading-7 text-slate-200">Use <InlineCode>protectRag</InlineCode> from the JS SDK:</p>
           <CodeBlock language="typescript" title="rag.ts" showLineNumbers>{tsRagCode}</CodeBlock>
         </section>
 
         <section className="docs-section">
-          <h2 className="text-2xl font-bold">Security notes</h2>
+          <DocsHeading>Security notes</DocsHeading>
           <div className="mt-4 grid gap-3 sm:grid-cols-2">
             {[
               ["Guard both input and output", "Not just the user query — always guard model responses too."],

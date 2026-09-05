@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { apiError } from "@/lib/apiResponse";
 import { requireOrganizationAccess } from "@/lib/auth/guards";
 import { updatePolicy } from "@/lib/usage-governance";
 
@@ -24,7 +25,10 @@ export async function POST(request: Request) {
 
     return NextResponse.redirect(new URL("/dashboard/usage-governance", request.url));
   } catch (error) {
-    console.error("[SoterAI] Governance policy update error:", error);
-    return NextResponse.json({ error: true, message: "Failed to update policy." }, { status: 500 });
+    // apiError maps AuthError -> 401/403 and ZodError -> 400. Returning a
+    // hardcoded 500 here (the previous behaviour) reported a deliberate
+    // authorization refusal as a server fault, which hid tenant-boundary
+    // rejections from both the caller and the logs.
+    return apiError(error, "Failed to update policy.");
   }
 }
