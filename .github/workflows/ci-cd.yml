@@ -181,6 +181,25 @@ jobs:
         with:
           lfs: true
 
+      # ubuntu-latest ships ~14 GB of disk, of which the preinstalled toolchains
+      # (Android SDK ~9 GB, dotnet ~1.6 GB, ghc ~1.2 GB) take most. This image
+      # build is large on its own — a deps stage with a full node_modules, a
+      # builder stage that compiles the SDK, guard-core and a Next.js standalone
+      # build, plus the mode=max layer cache — and 2026-09-06 the "Build and
+      # Push" step died with ENOSPC ("No space left on device") in the runner's
+      # own log writer. Nothing the build produces needs those toolchains:
+      # deleting them is the documented way to get the headroom back and costs
+      # seconds. df before/after stays in the log so a future ENOSPC has
+      # numbers next to it.
+      - name: Free runner disk space
+        run: |
+          echo "── before ──"
+          df -h /
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc /usr/local/.ghcup || true
+          sudo docker image prune -af >/dev/null 2>&1 || true
+          echo "── after ──"
+          df -h /
+
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:

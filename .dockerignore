@@ -1,9 +1,16 @@
 node_modules
+**/node_modules
 .next
 .env*
 !.env.example
 .git
+.github
 npm-debug.log*
 docs
 !docs/api/openapi.v1.json
 tests
+# Marketing planning docs and video scripts are repo content, not build
+# inputs — nothing in app/ or lib/ reads them at build time (the pages that
+# render marketing copy import from components/marketing, not this dir), and
+# locally they carry ~226MB of rendered mp4s into the context for nothing.
+marketing
