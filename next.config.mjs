@@ -25,6 +25,16 @@ const nextConfig = {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.soterai.in" }],
+        destination: "https://soterai.in/:path*",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     const scriptSources = ["'self'", "'unsafe-inline'", "https://checkout.razorpay.com", "https://www.googletagmanager.com", "https://www.google-analytics.com"];
     if (process.env.NODE_ENV !== "production") scriptSources.push("'unsafe-eval'");
@@ -38,7 +48,20 @@ const nextConfig = {
     if (process.env.NODE_ENV === "production") {
       securityHeaders.push({ key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains; preload" });
     }
-    return [{ source: "/:path*", headers: securityHeaders }];
+    const noIndexHeaders = [
+      { key: "X-Robots-Tag", value: "noindex, nofollow" },
+    ];
+
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      { source: "/admin/:path*", headers: noIndexHeaders },
+      { source: "/dashboard/:path*", headers: noIndexHeaders },
+      { source: "/signin", headers: noIndexHeaders },
+      { source: "/signup", headers: noIndexHeaders },
+      { source: "/forgot-password", headers: noIndexHeaders },
+      { source: "/reset-password", headers: noIndexHeaders },
+      { source: "/verify-email", headers: noIndexHeaders },
+    ];
   },
 };
 

@@ -1,9 +1,33 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ShieldCheck, Database, AlertTriangle } from "lucide-react";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { articleLd, buildMetadata } from "@/lib/seo/metadata";
+
+const title = "How Prompt Injection Can Leak an Enterprise Database";
+const description =
+  "Analyze a RAG chatbot prompt injection scenario, why system prompts and output filtering failed, and the controls that reduce database leakage risk.";
+const path = "/case-studies/prompt-injection-leaks-database";
+
+export const metadata: Metadata = buildMetadata({
+  title,
+  description,
+  path,
+  isArticle: true,
+  datePublished: "2026-09-01",
+});
 
 export default function CaseStudyPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-cyan-500/30 pt-24 pb-20">
+      <JsonLd
+        data={articleLd({
+          headline: title,
+          description,
+          path,
+          datePublished: "2026-09-01",
+        })}
+      />
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
         
         <Link href="/case-studies" className="text-cyan-400 hover:text-cyan-300 text-sm font-medium inline-flex items-center gap-1 mb-8">

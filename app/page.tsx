@@ -17,7 +17,7 @@ const siteUrl = "https://soterai.in";
 export const metadata: Metadata = {
   title: "AI Agent Security & LLM Firewall for Prompts, Data and Tools",
   description:
-    "Stop prompt injection, sensitive-data leaks, unsafe outputs, and risky agent tool calls across LLM apps, RAG pipelines, browsers, IDEs, and workflows. Test SoterAI free—no signup required.",
+    "Stop prompt injection, data leaks, unsafe outputs, and risky tool calls across LLM apps, RAG, browsers, IDEs, and workflows. Test SoterAI free.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "Stop AI Data Leaks and Risky Agent Actions | SoterAI",

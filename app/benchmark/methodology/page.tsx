@@ -3,7 +3,9 @@ import { join } from "node:path";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Benchmark Methodology | SoterAI",
+  title: "AI Security Benchmark Methodology",
+  description:
+    "Review SoterAI's reproducible AI security benchmark methodology, datasets, scoring rules, limitations, and test environment.",
   alternates: { canonical: "/benchmark/methodology" },
 };
 

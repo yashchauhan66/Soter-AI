@@ -13,7 +13,7 @@ import "./globals.css";
 const siteUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://soterai.in";
 const siteName = "SoterAI";
 const siteDescription =
-  "SoterAI is an AI security platform for chatbots, RAG apps, copilots, and autonomous agents. Detect prompt injection, jailbreaks, AI data leakage, unsafe outputs, risky tool calls, secrets, and Indian PII such as Aadhaar, PAN, GSTIN, UPI, and IFSC.";
+  "Protect AI apps and agents from prompt injection, data leaks, unsafe outputs, and risky tool calls with SoterAI's runtime security platform.";
 
 export const viewport: Viewport = {
   width: "device-width",

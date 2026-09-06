@@ -1,0 +1,138 @@
+{
+  "file": "datasets/_redteam-battery.jsonl",
+  "rows": 82,
+  "baselineLabels": [
+    "PROMPT_INJECTION",
+    "JAILBREAK",
+    "SYSTEM_PROMPT_LEAK_ATTEMPT",
+    "PII",
+    "SECRET",
+    "RAG_POISONING",
+    "ENCODING_OBFUSCATION",
+    "MODEL_EXTRACTION"
+  ],
+  "candidatesTested": [
+    "TOOL_CALL_ABUSE",
+    "MULTI_TURN_ESCALATION",
+    "DATA_EXFILTRATION_ATTEMPT"
+  ],
+  "candidatesNotInBattery": [
+    "UNSAFE_OUTPUT",
+    "TOXICITY_HARASSMENT"
+  ],
+  "arms": {
+    "baseline": {
+      "recall": 100,
+      "fpr": 0,
+      "caught": 67,
+      "attacks": 67,
+      "fp": 0,
+      "benign": 15
+    },
+    "TOOL_CALL_ABUSE": {
+      "recall": 100,
+      "fpr": 6.67,
+      "caught": 67,
+      "attacks": 67,
+      "fp": 1,
+      "benign": 15
+    },
+    "MULTI_TURN_ESCALATION": {
+      "recall": 100,
+      "fpr": 0,
+      "caught": 67,
+      "attacks": 67,
+      "fp": 0,
+      "benign": 15
+    },
+    "DATA_EXFILTRATION_ATTEMPT": {
+      "recall": 100,
+      "fpr": 0,
+      "caught": 67,
+      "attacks": 67,
+      "fp": 0,
+      "benign": 15
+    },
+    "all": {
+      "recall": 100,
+      "fpr": 6.67,
+      "caught": 67,
+      "attacks": 67,
+      "fp": 1,
+      "benign": 15
+    }
+  },
+  "perCandidate": [
+    {
+      "label": "TOOL_CALL_ABUSE",
+      "ownLabelRecallBefore": 100,
+      "ownLabelRecallAfter": 100,
+      "ownLabelRulesOnlyRecall": 100,
+      "attacksGained": 0,
+      "falsePositivesAdded": 1,
+      "verdict": "HOLD OUT (cost exceeds gain)"
+    },
+    {
+      "label": "MULTI_TURN_ESCALATION",
+      "ownLabelRecallBefore": 100,
+      "ownLabelRecallAfter": 100,
+      "ownLabelRulesOnlyRecall": 100,
+      "attacksGained": 0,
+      "falsePositivesAdded": 0,
+      "verdict": "NO-OP on these rows"
+    },
+    {
+      "label": "DATA_EXFILTRATION_ATTEMPT",
+      "ownLabelRecallBefore": 100,
+      "ownLabelRecallAfter": 100,
+      "ownLabelRulesOnlyRecall": 100,
+      "attacksGained": 0,
+      "falsePositivesAdded": 0,
+      "verdict": "NO-OP on these rows"
+    }
+  ],
+  "perLabelDetail": {
+    "ENCODING_OBFUSCATION": {
+      "attacks": 28,
+      "caught": 28,
+      "benign": 0,
+      "fp": 0,
+      "rulesCaught": 28
+    },
+    "MODEL_EXTRACTION": {
+      "attacks": 14,
+      "caught": 14,
+      "benign": 0,
+      "fp": 0,
+      "rulesCaught": 14
+    },
+    "MULTI_TURN_ESCALATION": {
+      "attacks": 10,
+      "caught": 10,
+      "benign": 0,
+      "fp": 0,
+      "rulesCaught": 10
+    },
+    "TOOL_CALL_ABUSE": {
+      "attacks": 10,
+      "caught": 10,
+      "benign": 0,
+      "fp": 0,
+      "rulesCaught": 10
+    },
+    "DATA_EXFILTRATION_ATTEMPT": {
+      "attacks": 5,
+      "caught": 5,
+      "benign": 0,
+      "fp": 0,
+      "rulesCaught": 5
+    },
+    "SAFE": {
+      "attacks": 0,
+      "caught": 0,
+      "benign": 15,
+      "fp": 1,
+      "rulesCaught": 0
+    }
+  }
+}

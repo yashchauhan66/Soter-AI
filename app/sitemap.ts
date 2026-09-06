@@ -34,6 +34,7 @@ const marketingPages: Entry[] = [
   { url: "/comparison", priority: 0.9, changeFrequency: "weekly" },
   { url: "/pricing", priority: 0.8, changeFrequency: "weekly" },
   { url: "/playground", priority: 0.7, changeFrequency: "monthly" },
+  { url: "/scanner", priority: 0.8, changeFrequency: "monthly" },
   { url: "/case-studies", priority: 0.7, changeFrequency: "monthly" },
   { url: "/case-studies/prompt-injection-leaks-database", priority: 0.6, changeFrequency: "monthly" },
   { url: "/changelog", priority: 0.6, changeFrequency: "weekly" },
@@ -46,6 +47,7 @@ const marketingPages: Entry[] = [
   { url: "/demo-chatbot", priority: 0.6, changeFrequency: "monthly" },
   { url: "/demo/rag", priority: 0.5, changeFrequency: "monthly" },
   { url: "/demo/red-team", priority: 0.5, changeFrequency: "monthly" },
+  { url: "/benchmark/methodology", priority: 0.6, changeFrequency: "monthly" },
   { url: "/partners/agency", priority: 0.6, changeFrequency: "monthly" },
   { url: "/comparison/lakera", priority: 0.7, changeFrequency: "monthly" },
   { url: "/comparison/prompt-security", priority: 0.7, changeFrequency: "monthly" },
@@ -79,6 +81,11 @@ const featurePages: Entry[] = [
   // New IDE-specific pages
   { url: "/cursor-ai-security", priority: 0.8, changeFrequency: "monthly" },
   { url: "/windsurf-ai-security", priority: 0.7, changeFrequency: "monthly" },
+  { url: "/extensions/browser", priority: 0.8, changeFrequency: "monthly" },
+  { url: "/extensions/browser/chrome", priority: 0.7, changeFrequency: "monthly" },
+  { url: "/extensions/browser/edge", priority: 0.7, changeFrequency: "monthly" },
+  { url: "/extensions/ide", priority: 0.8, changeFrequency: "monthly" },
+  { url: "/student-discount", priority: 0.6, changeFrequency: "monthly" },
   // Integration pages
   { url: "/integrations", priority: 0.7, changeFrequency: "monthly" },
   { url: "/integrations/n8n", priority: 0.7, changeFrequency: "monthly" },

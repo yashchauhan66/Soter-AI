@@ -6,13 +6,12 @@ const PRIVATE_PATHS = [
   "/api/",
   "/admin/",
   "/dashboard/",
-  "/signin",
-  "/signup",
-  "/forgot-password",
-  "/reset-password",
-  "/verify-email",
-  "/_next/",
 ];
+
+// Do not block /_next/: search engines must be able to fetch CSS and JavaScript
+// to render public pages correctly. Authentication pages are also intentionally
+// crawlable so bots can see their X-Robots-Tag: noindex response header; blocking
+// them here would prevent Google from processing that directive.
 
 // Answer-engine / LLM crawlers we explicitly welcome. For an AI-security brand,
 // being citable inside ChatGPT, Claude, Perplexity and Google AI answers

@@ -21,9 +21,9 @@ import {
 const siteUrl = process.env.NEXT_PUBLIC_APP_URL ?? "https://soterai.in";
 
 export const metadata: Metadata = {
-  title: "Student Offer: Free SoterAI IDE Guard Forever | SoterAI",
+  title: "Free AI Security IDE Guard for Students and Developers",
   description:
-    "SoterAI IDE Guard is free for everyone — no credit card, no trial clock. Scan AI coding context for secrets, PII, and prompt injection before it reaches ChatGPT, Claude, Cursor, or Copilot.",
+    "Scan AI coding context for secrets, PII, and prompt injection before it reaches ChatGPT, Claude, Cursor, or Copilot. Free with no credit card.",
   keywords: [
     "free ai security extension",
     "free ide extension",
