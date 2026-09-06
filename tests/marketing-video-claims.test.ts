@@ -95,6 +95,17 @@ function loadAudit() {
 
 const manifests = loadManifests();
 const skipReason = "no rendered video — run: node scripts/marketing/generate-video.mjs --crops";
+/**
+ * The mp4 renders are gitignored on purpose (~40MB per crop, regenerable by
+ * `npm run marketing:video`); only the reviewable outputs — manifests,
+ * shooting scripts, SRTs — are committed. So a fresh checkout has no renders
+ * by design, and "every asset file is absent" is the state of every fresh
+ * clone — distinct from "some assets are absent", which is the deleted-render
+ * regression the per-asset check exists to catch. Timeline continuity, sizes
+ * and durations are manifest data and are enforced everywhere.
+ */
+const renderedAssets = manifests.flatMap((manifest) => manifest.assets.map((asset) => join(videoDir, asset.name)));
+const anyRenderOnDisk = renderedAssets.length > 0 && renderedAssets.some((path) => existsSync(path));
 
 /** Everything a viewer can read or hear, per scene. */
 const spokenAndSeen = (scene: Scene) =>
@@ -337,7 +348,14 @@ test("the rendered timeline is continuous and the assets match it", (t) => {
         Math.abs(asset.seconds - manifest.runtimeSeconds) <= 0.5,
         `${where}: asset "${asset.name}" is ${asset.seconds}s but the timeline is ${manifest.runtimeSeconds}s`,
       );
-      assert.ok(existsSync(join(videoDir, asset.name)), `${where}: manifest lists ${asset.name} but the file is gone`);
+      // File existence is the one check that needs the renders, and renders
+      // are regenerable local-only artifacts (see anyRenderOnDisk above). On a
+      // machine that has rendered, a missing asset file is a deleted-render
+      // regression; on a fresh checkout with no renders at all it is the
+      // repo's designed state.
+      if (anyRenderOnDisk) {
+        assert.ok(existsSync(join(videoDir, asset.name)), `${where}: manifest lists ${asset.name} but the file is gone`);
+      }
     }
     const sizes = manifest.assets.map((asset) => asset.size);
     assert.ok(sizes.includes("1920x1080"), `${where}: no 16:9 master was rendered`);

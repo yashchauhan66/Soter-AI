@@ -34,6 +34,7 @@
     "test:marketing-claims": "tsx --test tests/marketing-launch-claims.test.ts",
     "test:marketing-video": "tsx --test tests/marketing-video-claims.test.ts",
     "test:phase3": "tsx --test tests/guard/jailbreak-expanded.test.ts tests/guard/system-prompt-leak-expanded.test.ts tests/guard/data-exfiltration-expanded.test.ts tests/guard/tool-abuse-expanded.test.ts tests/guard/rag-poisoning-expanded.test.ts tests/guard/multilingual-hinglish-expanded.test.ts tests/guard/benign-false-positive-expanded.test.ts",
+    "pretest": "node scripts/ensure-n8n-deps.mjs",
     "test": "tsx --test \"tests/**/*.test.ts\"",
     "test:market": "tsx --test tests/trust-events.test.ts tests/causal-siem.test.ts tests/compliance-assurance.test.ts tests/rag-authorization-continuity.test.ts tests/agent-passport-delegation.test.ts tests/agent-behavior-baseline.test.ts tests/ai-bom-cyclonedx.test.ts tests/a2a-security.test.ts tests/agent-market-gap-features.test.ts",
     "test:load": "tsx scripts/loadTest.ts",
