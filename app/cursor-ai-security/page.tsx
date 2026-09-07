@@ -96,7 +96,7 @@ const data: FeatureLandingData = {
   ],
   related: [
     { label: "VS Code AI Security", href: "/vscode-ai-security" },
-    { label: "Windsurf AI Security", href: "/windsurf-ai-security" },
+    { label: "AI Platform Security", href: "/ai-platform-security" },
     { label: "MCP Security", href: "/mcp-security" },
     { label: "Prompt Injection Protection", href: "/prompt-injection-protection" },
     { label: "AI Data Leakage Prevention", href: "/ai-data-leakage-prevention" },

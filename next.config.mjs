@@ -34,6 +34,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: "/windsurf-ai-security",
+        destination: "/ai-platform-security",
+        permanent: true,
+      },
+      {
         source: "/integrations/:path*",
         has: [{ type: "host", value: "api.soterai.in" }],
         destination: "https://soterai.in/integrations/:path*",

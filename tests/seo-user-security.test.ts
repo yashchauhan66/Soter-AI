@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 
 const read = (path: string) => readFileSync(path, "utf8");
@@ -106,16 +106,16 @@ test("llms discovery file does not advertise the private source repository", () 
 });
 
 test("Search Console priority pages cover their demonstrated query clusters", () => {
-  const windsurf = read("app/windsurf-ai-security/page.tsx");
+  const platformHub = read("app/ai-platform-security/page.tsx");
   const mcp = read("app/mcp-security/page.tsx");
 
   for (const intent of [/windsurf security risks/i, /is windsurf safe/i, /secure windsurf ai usage/i]) {
-    assert.match(windsurf, intent);
+    assert.match(platformHub, intent);
   }
   for (const intent of [/mcp permissions/i, /mcp access control/i, /mcp security scanner/i, /mcp protection/i]) {
     assert.match(mcp, intent);
   }
-  assert.match(windsurf, /contentSections:/);
+  assert.match(platformHub, /contentSections:|Windsurf security risks to review/);
   assert.match(mcp, /contentSections:/);
 });
 
@@ -137,4 +137,29 @@ test("API hostname redirects indexed marketing routes to the canonical site", ()
   assert.match(config, /source: "\/integrations\/:path\*"/);
   assert.match(config, /value: "api\.soterai\.in"/);
   assert.match(config, /destination: "https:\/\/soterai\.in\/integrations\/:path\*"/);
+});
+
+test("windsurf route permanently redirects to the multi-platform hub", () => {
+  const config = read("next.config.mjs");
+
+  assert.match(config, /source: "\/windsurf-ai-security"/);
+  assert.match(config, /destination: "\/ai-platform-security"/);
+  assert.match(config, /permanent: true/);
+  assert.ok(!existsSync("app/windsurf-ai-security"), "old windsurf route should not remain");
+});
+
+test("platform hub covers platforms, usefulness, gaps and real install links", () => {
+  const hub = read("app/ai-platform-security/page.tsx");
+
+  // Real, verified install targets (no invented store links).
+  assert.match(hub, /VSCODE_MARKETPLACE_URL/);
+  assert.match(hub, /OPEN_VSX_URL/);
+  assert.match(hub, /n8n-nodes-soterai/);
+  assert.match(hub, /--install-extension/);
+  assert.match(hub, /Market gaps this fills/);
+  // Platform coverage spans the surfaces the product actually secures.
+  for (const surface of [/VS Code/, /Cursor/, /Windsurf/, /Chrome/, /n8n/]) {
+    assert.match(hub, surface);
+  }
+  assert.match(hub, /Honest limitations/);
 });

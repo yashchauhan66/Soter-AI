@@ -80,7 +80,7 @@ const featurePages: Entry[] = [
   { url: "/model-supply-chain-security", priority: 0.6, changeFrequency: "monthly" },
   // New IDE-specific pages
   { url: "/cursor-ai-security", priority: 0.8, changeFrequency: "monthly" },
-  { url: "/windsurf-ai-security", priority: 0.7, changeFrequency: "monthly" },
+  { url: "/ai-platform-security", priority: 0.8, changeFrequency: "monthly" },
   { url: "/extensions/browser", priority: 0.8, changeFrequency: "monthly" },
   { url: "/extensions/browser/chrome", priority: 0.7, changeFrequency: "monthly" },
   { url: "/extensions/browser/edge", priority: 0.7, changeFrequency: "monthly" },

@@ -15,7 +15,6 @@ export const VSCODE_MARKETPLACE_URL =
 const IDE_PAGES = new Set([
   "/vscode-ai-security",
   "/cursor-ai-security",
-  "/windsurf-ai-security",
   "/mcp-security",
   "/prompt-injection-protection",
   "/ai-data-leakage-prevention",

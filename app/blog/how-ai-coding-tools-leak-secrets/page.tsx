@@ -196,9 +196,10 @@ JWT_SIGNING_SECRET=CANARY-jwt-signing-secret-EXAMPLE`}</code></pre>
         belongs.
       </p>
       <p>
-        If your team uses Windsurf, apply this checklist with the dedicated{" "}
-        <Link href="/windsurf-ai-security">Windsurf security risk guide</Link>,
-        including Cascade context, MCP permission, and terminal-command controls.
+        Whichever AI coding tool your team uses — VS Code, Cursor, or Windsurf — apply this checklist
+        with the{" "}
+        <Link href="/ai-platform-security">AI platform security guide</Link>, which covers Cascade
+        context, MCP permissions, terminal commands, and the install links for every supported editor.
       </p>
     </BlogArticle>
   );

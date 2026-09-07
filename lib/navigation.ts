@@ -306,7 +306,7 @@ const PATH_OVERRIDES: Record<string, string> = {
   "/mcp-security": "MCP & Tool Security",
   "/rag-security": "RAG Security",
   "/vscode-ai-security": "VS Code AI Security",
-  "/windsurf-ai-security": "Windsurf AI Security",
+  "/ai-platform-security": "AI Platform Security",
 };
 
 /**
