@@ -33,6 +33,12 @@ const nextConfig = {
         destination: "https://soterai.in/:path*",
         permanent: true,
       },
+      {
+        source: "/integrations/:path*",
+        has: [{ type: "host", value: "api.soterai.in" }],
+        destination: "https://soterai.in/integrations/:path*",
+        permanent: true,
+      },
     ];
   },
   async headers() {

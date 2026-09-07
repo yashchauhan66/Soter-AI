@@ -3,9 +3,9 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Prompt Injection Protection for AI Coding Tools",
+  title: "Prompt Injection Protection for Direct and Indirect Attacks",
   description:
-    "Detect prompt-injection and instruction-override text hidden in files, dependencies, and AI output before it reaches your coding assistant — locally, in VS Code.",
+    "Detect direct and indirect prompt injection hidden in prompts, files, RAG content, tool output, and AI responses before it can steer your assistant.",
   path: "/prompt-injection-protection",
   keywords: [
     "prompt injection protection",
@@ -22,7 +22,7 @@ export const metadata: Metadata = buildMetadata({
 const data: FeatureLandingData = {
   path: "/prompt-injection-protection",
   eyebrow: "Prompt Injection Protection",
-  h1: "Catch prompt injection before it reaches your assistant",
+  h1: "Prompt injection protection for direct and indirect attacks",
   productName: "SoterAI Prompt Injection Protection",
   intro:
     "Prompt injection hides instructions inside content an AI reads — a README, a dependency file, a pasted snippet, or a tool result — to hijack the assistant into leaking data or taking unwanted actions. SoterAI IDE Guard scans the context you are about to share, and the output you get back, for instruction-override and extraction patterns before they can take effect.",

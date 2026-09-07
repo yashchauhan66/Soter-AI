@@ -104,3 +104,37 @@ test("llms discovery file does not advertise the private source repository", () 
 
   assert.doesNotMatch(llms, /github\.com\/yashchauhan66\/Soter-AI/);
 });
+
+test("Search Console priority pages cover their demonstrated query clusters", () => {
+  const windsurf = read("app/windsurf-ai-security/page.tsx");
+  const mcp = read("app/mcp-security/page.tsx");
+
+  for (const intent of [/windsurf security risks/i, /is windsurf safe/i, /secure windsurf ai usage/i]) {
+    assert.match(windsurf, intent);
+  }
+  for (const intent of [/mcp permissions/i, /mcp access control/i, /mcp security scanner/i, /mcp protection/i]) {
+    assert.match(mcp, intent);
+  }
+  assert.match(windsurf, /contentSections:/);
+  assert.match(mcp, /contentSections:/);
+});
+
+test("Search Console quick-win pages use query-aligned titles", () => {
+  const promptInjection = read("app/prompt-injection-protection/page.tsx");
+  const jailbreak = read("app/jailbreak-detection/page.tsx");
+  const posts = read("lib/blog/posts.ts");
+
+  assert.match(promptInjection, /Prompt Injection Protection for Direct and Indirect Attacks/);
+  assert.match(jailbreak, /LLM Jailbreak Detection/);
+  assert.match(posts, /How to Prevent Secret Leaks from AI Coding Tools/);
+  assert.match(posts, /What Are LLM Guardrails\? Types, Examples and Architecture/);
+  assert.match(posts, /What Is an AI Context Firewall\? Definition and Architecture/);
+});
+
+test("API hostname redirects indexed marketing routes to the canonical site", () => {
+  const config = read("next.config.mjs");
+
+  assert.match(config, /source: "\/integrations\/:path\*"/);
+  assert.match(config, /value: "api\.soterai\.in"/);
+  assert.match(config, /destination: "https:\/\/soterai\.in\/integrations\/:path\*"/);
+});

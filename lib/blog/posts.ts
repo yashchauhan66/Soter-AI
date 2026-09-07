@@ -21,9 +21,9 @@ export interface BlogPostMeta {
 export const BLOG_POSTS: BlogPostMeta[] = [
   {
     slug: "how-ai-coding-tools-leak-secrets",
-    title: "How AI Coding Tools Can Leak Secrets — and How to Reduce the Risk",
+    title: "How to Prevent Secret Leaks from AI Coding Tools",
     description:
-      "AI coding assistants read more of your project than you think. Here is how secrets end up in prompts, and practical steps to reduce the risk locally.",
+      "Prevent secret leaks from AI coding tools with local scanning, redaction, narrow context, canaries, and credential rotation before prompts leave your editor.",
     datePublished: "2026-07-06",
     excerpt:
       "AI coding assistants read more of your project than you think. Here is how credentials end up in prompts — and a practical, local-first checklist to reduce the risk.",
@@ -32,9 +32,9 @@ export const BLOG_POSTS: BlogPostMeta[] = [
   },
   {
     slug: "what-is-ai-context-firewall",
-    title: "What Is an AI Context Firewall? A Developer Guide",
+    title: "What Is an AI Context Firewall? Definition and Architecture",
     description:
-      "A developer-focused explanation of the AI context firewall pattern: what it inspects, where it sits, and how it differs from a traditional firewall or DLP.",
+      "An AI context firewall inspects prompts, files, tool results, and model output for secret leakage and injected instructions. Learn its architecture and limits.",
     datePublished: "2026-07-06",
     excerpt:
       "The context an AI reads is the new attack surface. This guide explains the AI context firewall pattern — what it inspects, where it sits, and its honest limits.",
@@ -76,9 +76,9 @@ export const BLOG_POSTS: BlogPostMeta[] = [
   },
   {
     slug: "llm-guardrails-explained-developer-guide",
-    title: "LLM Guardrails Explained: A Developer's Guide to AI Safety Controls",
+    title: "What Are LLM Guardrails? Types, Examples and Architecture",
     description:
-      "What are LLM guardrails? This developer guide explains input/output guards, topic fencing, PII redaction, jailbreak detection, and how to deploy guardrails in production chatbots and RAG apps.",
+      "Learn what LLM guardrails are, with input, output, RAG, and agent examples plus a practical architecture for deploying AI safety controls in production.",
     datePublished: "2026-07-20",
     excerpt:
       "LLM guardrails are the safety layer between your AI and your users. This guide explains input/output guards, jailbreak detection, topic fencing, and PII redaction for production AI apps.",

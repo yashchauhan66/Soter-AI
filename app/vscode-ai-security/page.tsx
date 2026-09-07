@@ -88,6 +88,7 @@ const data: FeatureLandingData = {
     },
   ],
   related: [
+    { label: "Windsurf Security", href: "/windsurf-ai-security" },
     { label: "Prompt Injection Protection", href: "/prompt-injection-protection" },
     { label: "MCP Security", href: "/mcp-security" },
     { label: "AI Data Leakage Prevention", href: "/ai-data-leakage-prevention" },

@@ -195,6 +195,11 @@ JWT_SIGNING_SECRET=CANARY-jwt-signing-secret-EXAMPLE`}</code></pre>
         </Link>{" "}
         belongs.
       </p>
+      <p>
+        If your team uses Windsurf, apply this checklist with the dedicated{" "}
+        <Link href="/windsurf-ai-security">Windsurf security risk guide</Link>,
+        including Cascade context, MCP permission, and terminal-command controls.
+      </p>
     </BlogArticle>
   );
 }

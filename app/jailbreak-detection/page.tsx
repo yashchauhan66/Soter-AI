@@ -3,9 +3,9 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Jailbreak Detection — Block LLM Jailbreak and DAN Attacks",
+  title: "LLM Jailbreak Detection for DAN and AI Attacks",
   description:
-    "Detect and block LLM jailbreak attempts, DAN (Do Anything Now) variants, role-play exploits, and multilingual attacks before they compromise your AI application.",
+    "Detect LLM jailbreak attempts, DAN variants, role-play exploits, obfuscation, and multilingual AI attacks before they reach your application.",
   path: "/jailbreak-detection",
   keywords: [
     "jailbreak detection",

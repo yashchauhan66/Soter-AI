@@ -65,6 +65,12 @@ export interface FeatureLandingData {
   features: Array<{ title: string; body: string }>;
   /** "How it works" ordered steps. */
   how: Array<{ step: string; body: string }>;
+  /** Optional educational sections for search intents that need more depth. */
+  contentSections?: Array<{
+    title: string;
+    intro: string;
+    items: Array<{ title: string; body: string }>;
+  }>;
   /** Honest limitations — what the feature does NOT do. */
   limitations: string[];
   /** FAQ pairs (also emitted as FAQPage JSON-LD). */
@@ -165,6 +171,21 @@ export function FeatureLanding({ data }: { data: FeatureLandingData }) {
           ))}
         </ol>
       </section>
+
+      {data.contentSections?.map((section) => (
+        <section key={section.title} className="mt-16">
+          <h2 className="heading-3">{section.title}</h2>
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-slate-300">{section.intro}</p>
+          <div className="mt-6 grid gap-5 sm:grid-cols-2">
+            {section.items.map((item) => (
+              <div key={item.title} className="rounded-panel border border-slate-800 bg-slate-950/40 p-5">
+                <h3 className="font-semibold text-slate-100">{item.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-300">{item.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
 
       {/* Honest limitations. Kept above the FAQ on purpose: a reviewer who
           scrolls should hit the caveats before the closing CTA, not after. */}
