@@ -35,13 +35,15 @@ function load(rel) {
     loader: rel.endsWith("tsx") ? "tsx" : "ts",
     format: "cjs",
   });
-  const module = { exports: {} };
+  // Named anything but `module`: @next/next/no-assign-module-variable flags
+  // that identifier because bundlers treat it as special in source files.
+  const cjsHost = { exports: {} };
   // The registries import lucide-react icons purely for the UI; stub them out so
   // this script stays dependency-free of the React runtime.
   const stubRequire = (id) =>
     id === "lucide-react" ? new Proxy({}, { get: () => () => null }) : require(id);
-  new Function("module", "exports", "require", result.code)(module, module.exports, stubRequire);
-  return module.exports;
+  new Function("module", "exports", "require", result.code)(cjsHost, cjsHost.exports, stubRequire);
+  return cjsHost.exports;
 }
 
 const { BLOG_POSTS } = load("lib/blog/posts.ts");
