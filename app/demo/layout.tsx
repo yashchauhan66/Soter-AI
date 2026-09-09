@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "AI Security Demos",
   description:
-    "Explore SoterAI live demos: a guarded chatbot, a RAG workflow with document quarantine and ACL enforcement, and safe red-team scenarios against an owned demo project.",
+    "Explore SoterAI live demos: a guarded chatbot, a RAG workflow with document quarantine and ACL enforcement, and safe red-team scenarios.",
   alternates: { canonical: "/demo" },
   openGraph: {
     title: "AI Security Demos | SoterAI",

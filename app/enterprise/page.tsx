@@ -4,9 +4,9 @@ import { safeJsonLd } from "@/lib/seo/jsonLd";
 import { SITE_URL } from "@/lib/seo/schema";
 
 export const metadata: Metadata = {
-  title: "Enterprise AI Security Platform | SoterAI for Business",
+  title: "Enterprise AI Security Platform",
   description:
-    "Enterprise AI security platform for Indian businesses: Aadhaar/PAN PII compliance, SSO, SCIM, SIEM integration, tenant isolation, self-hosted deployment, and real-time AI guardrails for chatbots, RAG apps, and agents.",
+    "Enterprise AI security for Indian businesses: Aadhaar/PAN PII compliance, SSO, SCIM, SIEM, tenant isolation, self-hosted deployment and live guardrails.",
   keywords: ["enterprise ai security", "ai security platform india", "enterprise llm security", "aadhaar compliance ai", "self-hosted ai guardrails", "enterprise ai firewall"],
   alternates: { canonical: "/enterprise" },
   openGraph: {

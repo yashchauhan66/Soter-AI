@@ -7,7 +7,7 @@ import { getPost } from "@/lib/blog/posts";
 const post = getPost("ai-agent-security-risks-threats-protection")!;
 
 export const metadata: Metadata = buildMetadata({
-  title: post.title,
+  title: post.seoTitle ?? post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
   isArticle: true,

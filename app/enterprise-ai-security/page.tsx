@@ -3,9 +3,11 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Enterprise AI Security — Platform for Large-Scale AI Deployments",
+  // Deliberately distinct from /enterprise ("Enterprise AI Security Platform")
+  // so the two do not compete for the same query.
+  title: "Enterprise AI Security at Large Scale",
   description:
-    "Enterprise AI security platform with SSO, RBAC, audit logging, self-hosted deployment, and compliance tooling. Protect enterprise LLM applications, AI agents, and RAG pipelines at scale.",
+    "Enterprise AI security with SSO, RBAC, audit logging, self-hosted deployment and compliance tooling. Protect LLM apps, AI agents and RAG pipelines at scale.",
   path: "/enterprise-ai-security",
   keywords: [
     "enterprise ai security",

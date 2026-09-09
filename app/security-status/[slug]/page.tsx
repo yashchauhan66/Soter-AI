@@ -19,14 +19,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const status = await loadBadgeStatus(slug);
   if (!status) {
     return {
-      title: "Security Status Not Found | SoterAI",
+      title: "Security Status Not Found",
       description: "The requested security status page could not be found.",
       robots: { index: false },
     };
   }
 
   const label = statusLabels[status.status] ?? status.status;
-  const title = `${label} — ${slug} | SoterAI Security Status`;
+  // The root layout's title template appends the brand, so it is absent here.
+  const title = `${label} — ${slug} Security Status`;
   const description = status.message;
 
   return {

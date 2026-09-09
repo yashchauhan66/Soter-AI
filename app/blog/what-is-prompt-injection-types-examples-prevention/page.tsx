@@ -7,7 +7,7 @@ import { getPost } from "@/lib/blog/posts";
 const post = getPost("what-is-prompt-injection-types-examples-prevention")!;
 
 export const metadata: Metadata = buildMetadata({
-  title: post.title,
+  title: post.seoTitle ?? post.title,
   description: post.description,
   path: `/blog/${post.slug}`,
   isArticle: true,

@@ -3,9 +3,9 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
 
 export const metadata: Metadata = buildMetadata({
-  title: "AI Workflow Security — Protect n8n, Zapier, Make and AI Automations",
+  title: "AI Workflow Security: Protect n8n, Zapier & Make",
   description:
-    "Secure AI-powered workflows and automations: n8n, Zapier, Make.com, and custom AI agent pipelines. SoterAI Guard prevents prompt injection, data leakage, and tool abuse in automated AI workflows.",
+    "Secure AI workflows in n8n, Zapier, Make.com and custom agent pipelines. SoterAI Guard prevents prompt injection, data leakage and tool abuse.",
   path: "/ai-workflow-security",
   keywords: [
     "ai workflow security",

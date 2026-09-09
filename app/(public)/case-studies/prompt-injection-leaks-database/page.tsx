@@ -10,7 +10,10 @@ const description =
 const path = "/case-studies/prompt-injection-leaks-database";
 
 export const metadata: Metadata = buildMetadata({
-  title,
+  // `title` above is the editorial headline (h1 + Article headline). With the
+  // layout's " | SoterAI" suffix it renders 62 chars and gets truncated, so the
+  // SERP gets a shorter variant while the h1 keeps the full headline.
+  title: "How Prompt Injection Leaks a Database",
   description,
   path,
   isArticle: true,

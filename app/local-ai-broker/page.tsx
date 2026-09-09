@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Local AI Broker — Redact Prompts Before They Reach the Model",
+  title: "Local AI Broker: Redact Prompts Before LLM",
   description:
     "A loopback-only proxy for OpenAI- and Anthropic-compatible APIs. The Local AI Broker scans and redacts prompts on your machine before forwarding them upstream.",
   path: "/local-ai-broker",

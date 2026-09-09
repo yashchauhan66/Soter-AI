@@ -6,9 +6,9 @@ import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
-  title: "SoterAI Security Best Practices - OWASP LLM Top 10 Alignment Guide",
+  title: "AI Security Best Practices: OWASP LLM Top 10",
   description:
-    "SoterAI security best practices for AI guardrails. Learn API key management, webhook verification, fail-open vs fail-closed, output guarding, rate limiting, and OWASP LLM Top 10 alignment.",
+    "AI guardrail best practices: API key management, webhook verification, fail-open vs fail-closed, output guarding, rate limiting and OWASP LLM Top 10.",
   alternates: { canonical: "/docs/best-practices" },
 };
 

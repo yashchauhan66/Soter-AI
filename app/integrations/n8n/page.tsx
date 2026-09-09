@@ -12,7 +12,7 @@ const NODE_NPM_URL = "https://www.npmjs.com/package/n8n-nodes-soterai";
 export const metadata: Metadata = buildMetadata({
   title: "n8n AI Security — Install the SoterAI Community Node",
   description:
-    "Install the SoterAI community node (n8n-nodes-soterai) directly from the n8n marketplace. Add prompt injection, jailbreak, PII, and data leakage protection to any n8n AI workflow in minutes.",
+    "Install the SoterAI community node (n8n-nodes-soterai) from the n8n marketplace. Add prompt injection, jailbreak, PII and leak protection in minutes.",
   path: "/integrations/n8n",
   keywords: [
     "n8n ai security",

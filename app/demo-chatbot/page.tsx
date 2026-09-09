@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { DemoChatClient } from "@/components/guard/DemoChatClient";
 
 export const metadata: Metadata = {
-  title: "AI Chatbot Security Demo | SoterAI",
+  title: "AI Chatbot Security Demo",
   description:
     "Interactive demo showing how SoterAI guards chatbot inputs and outputs. See prompt injection blocking and PII redaction in real time.",
   alternates: { canonical: "/demo-chatbot" },

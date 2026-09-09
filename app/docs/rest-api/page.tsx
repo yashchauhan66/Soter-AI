@@ -6,9 +6,9 @@ import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
-  title: "SoterAI REST API - AI Security Integration for Any Language (Java, Go, PHP, C#, Ruby)",
+  title: "REST API: AI Security for Any Language",
   description:
-    "Complete SoterAI REST API guide. Integrate AI security from any programming language: curl, JavaScript, Python, Java, Go, PHP, C#, Ruby, Rust, Swift, Kotlin, Laravel, Spring, .NET. Example requests and responses for every endpoint.",
+    "Integrate AI security from any language with the SoterAI REST API: curl, Java, Go, PHP, C#, Ruby, Rust and more. Example request and response per endpoint.",
   alternates: { canonical: "/docs/rest-api" },
   openGraph: {
     title: "SoterAI REST API - AI Security for Any Language",

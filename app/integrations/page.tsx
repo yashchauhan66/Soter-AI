@@ -8,7 +8,7 @@ import { breadcrumbList } from "@/lib/seo/schema";
 export const metadata: Metadata = buildMetadata({
   title: "Integrations — Connect SoterAI to n8n, Zapier, Make and More",
   description:
-    "Connect SoterAI Guard to your AI workflows: n8n, Zapier, Make.com, LangChain, Vercel AI SDK, Express, FastAPI and more. Add real-time prompt injection and data leakage protection to any AI automation.",
+    "Connect SoterAI Guard to n8n, Zapier, Make.com, LangChain, Vercel AI SDK, Express and FastAPI — real-time prompt injection and data leakage protection.",
   path: "/integrations",
   keywords: [
     "soterai integrations",

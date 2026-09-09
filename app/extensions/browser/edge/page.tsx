@@ -16,9 +16,9 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Install SoterAI for Microsoft Edge — AI Security Extension",
+  title: { absolute: "Install SoterAI for Microsoft Edge — AI Security Extension" },
   description:
-    "Install the SoterAI Browser Guard extension for Microsoft Edge. Real-time prompt scanning, secret & PII redaction, and organization policy enforcement across 20+ AI tools.",
+    "Install SoterAI Browser Guard for Microsoft Edge: real-time prompt scanning, secret & PII redaction and org policy enforcement across 20+ AI tools.",
   alternates: { canonical: "/extensions/browser/edge" },
   openGraph: {
     title: "SoterAI for Microsoft Edge — AI Security Extension",

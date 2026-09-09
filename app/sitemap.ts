@@ -47,6 +47,7 @@ const marketingPages: Entry[] = [
   { url: "/demo-chatbot", priority: 0.6, changeFrequency: "monthly" },
   { url: "/demo/rag", priority: 0.5, changeFrequency: "monthly" },
   { url: "/demo/red-team", priority: 0.5, changeFrequency: "monthly" },
+  { url: "/demo/guided", priority: 0.5, changeFrequency: "monthly" },
   { url: "/benchmark/methodology", priority: 0.6, changeFrequency: "monthly" },
   { url: "/partners/agency", priority: 0.6, changeFrequency: "monthly" },
   { url: "/comparison/lakera", priority: 0.7, changeFrequency: "monthly" },

@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
 
 export const metadata: Metadata = buildMetadata({
-  title: "AI Memory Inspector — See What AI Saw in Your Session",
+  title: "AI Memory Inspector: See What AI Saw",
   description:
     "The AI Memory Inspector keeps a local, reviewable record of the context your AI assistant read during a session, so you can audit exposure after the fact.",
   path: "/ai-memory-inspector",

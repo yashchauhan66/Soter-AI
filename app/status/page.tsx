@@ -3,7 +3,7 @@ import { Activity, CheckCircle2, AlertTriangle, Boxes, History } from "lucide-re
 import { db } from "@/lib/db";
 
 export const metadata: Metadata = {
-  title: "Service Status | SoterAI",
+  title: "Service Status",
   description:
     "SoterAI real-time service status and incident history. Check API, Guard API, Dashboard, and worker availability.",
   alternates: { canonical: "/status" },

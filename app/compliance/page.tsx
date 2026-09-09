@@ -17,9 +17,9 @@ import { breadcrumbList } from "@/lib/seo/schema";
  */
 
 export const metadata: Metadata = buildMetadata({
-  title: "AI Compliance Mapping: OWASP LLM Top 10, SOC 2 and ISO 27001 Readiness",
+  title: "AI Compliance: OWASP LLM Top 10, SOC 2 & ISO 27001",
   description:
-    "See how SoterAI controls map to OWASP LLM Top 10 risk categories, and review the honest state of SOC 2 and ISO 27001 readiness. Alignment guidance, not certification.",
+    "See how SoterAI controls map to the OWASP LLM Top 10, and the honest state of SOC 2 and ISO 27001 readiness. Alignment guidance, not certification.",
   path: "/compliance",
   keywords: [
     "AI compliance",

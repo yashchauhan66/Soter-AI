@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { VsCompetitor, type VsContent } from "@/components/marketing/VsCompetitor";
 
 export const metadata: Metadata = {
-  title: "SoterAI vs NVIDIA NeMo Guardrails | AI Guardrails Comparison",
+  title: { absolute: "SoterAI vs NVIDIA NeMo Guardrails | AI Guardrails Comparison" },
   description:
-    "SoterAI vs NVIDIA NeMo Guardrails: compare Colang DSL conversational rails against inline runtime enforcement, agent tool-call control, PII redaction, and self-hosting. Honest strengths on both sides.",
+    "SoterAI vs NVIDIA NeMo Guardrails: Colang conversational rails vs inline runtime enforcement, agent tool-call control, PII redaction and self-hosting.",
   alternates: { canonical: "/comparison/nemo-guardrails" },
   openGraph: {
     title: "SoterAI vs NVIDIA NeMo Guardrails — AI Guardrails Comparison",

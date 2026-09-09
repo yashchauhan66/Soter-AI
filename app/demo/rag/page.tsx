@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "RAG Security Demo | SoterAI",
+  title: "RAG Security Demo",
   description:
     "Walk through SoterAI RAG security: upload sandbox, defensive document scan, quarantine review, tenant retrieval, and grounding guard stages.",
   alternates: { canonical: "/demo/rag" },

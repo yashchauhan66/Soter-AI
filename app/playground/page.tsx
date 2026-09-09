@@ -4,9 +4,9 @@ import dynamic from "next/dynamic";
 const PlaygroundClient = dynamic(() => import("@/components/guard/PlaygroundClient").then((mod) => mod.PlaygroundClient));
 
 export const metadata: Metadata = {
-  title: "AI Security Playground | SoterAI",
+  title: "AI Security Playground",
   description:
-    "Test SoterAI AI security guardrails in the interactive playground. Try prompt injection detection, PII redaction, and unsafe output blocking with defensive examples.",
+    "Test SoterAI guardrails in the interactive playground. Try prompt injection detection, PII redaction and unsafe output blocking with defensive examples.",
   alternates: { canonical: "/playground" },
 };
 

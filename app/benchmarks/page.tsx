@@ -6,9 +6,9 @@ import type { Metadata } from "next";
 import { safeJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata: Metadata = {
-  title: "SoterAI Adversarial Benchmark — Recall, ROC-AUC and Multi-Turn Detection",
+  title: "Adversarial Benchmark: Recall & ROC-AUC",
   description:
-    "Reproducible adversarial benchmark of the SoterAI guard: Recall at 1% FPR, ROC-AUC, multi-turn Crescendo detection and latency — measured with the exact production classifier on a disclosed corpus. Full methodology and limitations included.",
+    "Reproducible adversarial benchmark of the SoterAI guard: recall at 1% FPR, ROC-AUC, multi-turn Crescendo detection and latency.",
   alternates: { canonical: "/benchmarks" },
   openGraph: {
     title: "SoterAI Adversarial Benchmark — Recall, ROC-AUC and Multi-Turn Detection",
@@ -144,7 +144,7 @@ export default function BenchmarksPage() {
     return (
       <main className="container-page py-24 text-center">
         <p className="eyebrow">Benchmark</p>
-        <h1 className="mt-4 text-4xl font-bold">Results not available</h1>
+        <h2 className="mt-4 text-4xl font-bold">Results not available</h2>
         <p className="mx-auto mt-4 max-w-xl text-slate-200">Generate the honest benchmark artifact first:</p>
         <pre className="mx-auto mt-6 max-w-lg rounded-xl border border-slate-800 bg-slate-950 p-4 text-left text-sm text-slate-300">
           npm run benchmark:honest

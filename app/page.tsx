@@ -15,7 +15,9 @@ import { safeJsonLd } from "@/lib/seo/jsonLd";
 const siteUrl = "https://soterai.in";
 
 export const metadata: Metadata = {
-  title: "AI Agent Security & LLM Firewall for Prompts, Data and Tools",
+  // Rendered as "<title> | SoterAI" by the root layout template, so the authored
+  // string must stay <= 50 chars to survive Google's ~60-char SERP truncation.
+  title: "AI Agent Security & LLM Firewall",
   description:
     "Stop prompt injection, data leaks, unsafe outputs, and risky tool calls across LLM apps, RAG, browsers, IDEs, and workflows. Test SoterAI free.",
   alternates: { canonical: "/" },

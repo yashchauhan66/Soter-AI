@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Enterprise Sales | SoterAI",
+  title: "Enterprise Sales",
   description:
     "Plan your enterprise AI security deployment with SoterAI. SSO, SCIM, compliance readiness, data retention, SIEM, and self-hosting for high-scale AI workloads.",
   alternates: { canonical: "/contact-sales" },

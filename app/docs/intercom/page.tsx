@@ -6,9 +6,9 @@ import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
-  title: "SoterAI Intercom Integration Guide - AI Security for Customer Support",
+  title: "Intercom Integration: AI Support Security",
   description:
-    "Complete Intercom integration guide for SoterAI. Protect AI-powered customer support chats from prompt injection, PII leaks, and unsafe responses. Includes REST API examples and best practices.",
+    "Protect Intercom AI customer-support chats from prompt injection, PII leaks and unsafe responses. REST API examples and best practices included.",
   alternates: { canonical: "/docs/intercom" },
 };
 

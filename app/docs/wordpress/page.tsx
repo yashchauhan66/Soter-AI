@@ -6,9 +6,9 @@ import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
-  title: "SoterAI WordPress Plugin Guide - AI Security for CMS Chatbots",
+  title: "WordPress Plugin: AI Security for Chatbots",
   description:
-    "Complete WordPress integration guide for SoterAI. Install the plugin, configure settings, use shortcodes, and protect your WordPress chatbot with PHP and REST API input/output guarding.",
+    "Install the SoterAI WordPress plugin, configure settings, use shortcodes and protect your chatbot with PHP and REST API input/output guarding.",
   alternates: { canonical: "/docs/wordpress" },
 };
 

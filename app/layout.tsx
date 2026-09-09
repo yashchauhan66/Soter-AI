@@ -40,7 +40,10 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${siteName} | AI Security Platform for Prompt Injection, RAG and Agent Security`,
+    // Homepage title. Kept under ~60 chars so Google renders it whole instead of
+    // truncating the tail; the dropped keywords ("prompt injection", "RAG",
+    // "agent security") are each carried by their own dedicated landing page.
+    default: `${siteName} | AI Security Platform for LLMs & Agents`,
     template: `%s | ${siteName}`,
   },
   description: siteDescription,

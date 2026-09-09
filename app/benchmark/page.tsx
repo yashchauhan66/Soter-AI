@@ -5,9 +5,9 @@ import Link from "next/link";
 import { AlertTriangle, BarChart3, Download, Gauge, ShieldCheck } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "AI Security Benchmark: Prompt Injection, Jailbreak & PII Detection Results",
+  title: "AI Security Benchmark: Injection & PII",
   description:
-    "SoterAI public AI security benchmark showing detection rates for prompt injection, jailbreak, MCP attacks, secret leakage, and PII across synthetic test cases. Methodology, confusion matrix, and explicit limitations included.",
+    "Public AI security benchmark: detection rates for prompt injection, jailbreak, MCP attacks, secret leakage and PII — with methodology and honest limitations.",
   keywords: ["ai security benchmark", "prompt injection benchmark", "jailbreak detection test", "llm guardrail benchmark", "ai guard performance", "pii detection benchmark"],
   alternates: { canonical: "/benchmark" },
 };
@@ -69,7 +69,7 @@ export default function BenchmarkPage() {
     return (
       <main className="container-page py-24">
         <p className="eyebrow">Benchmark</p>
-        <h1 className="mt-3 text-4xl font-bold">SoterAI AI Security Benchmark</h1>
+        <h2 className="mt-3 text-4xl font-bold">SoterAI AI Security Benchmark</h2>
         <p className="mt-4 max-w-2xl text-slate-200">
           Results are not available yet. Run <code className="text-cyan">node scripts/phase-9-run-public-benchmark.js</code>.
         </p>

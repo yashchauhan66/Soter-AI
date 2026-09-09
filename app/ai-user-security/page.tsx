@@ -5,7 +5,7 @@ import { buildMetadata } from "@/lib/seo/metadata";
 export const metadata: Metadata = buildMetadata({
   title: "AI User Security for ChatGPT and Employee AI Tools",
   description:
-    "Secure employee use of ChatGPT, Claude, Gemini, and AI coding tools. Detect data leaks, enforce usage policies, discover shadow AI, and retain redacted evidence.",
+    "Secure employee use of ChatGPT, Claude, Gemini and AI coding tools. Detect data leaks, enforce usage policies, discover shadow AI and retain redacted evidence.",
   path: "/ai-user-security",
   keywords: [
     "AI user security",

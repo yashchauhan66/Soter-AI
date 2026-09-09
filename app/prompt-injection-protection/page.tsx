@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Prompt Injection Protection for Direct and Indirect Attacks",
+  title: "Prompt Injection Protection: Direct & Indirect",
   description:
     "Detect direct and indirect prompt injection hidden in prompts, files, RAG content, tool output, and AI responses before it can steer your assistant.",
   path: "/prompt-injection-protection",

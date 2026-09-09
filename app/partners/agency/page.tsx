@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 const resources=["White-label security reports","Client and chatbot portfolio","Signed alerts and policy controls","Referral code and commission placeholder","Proposal, pitch, and demo resources","Security badge deployment guide"];
 export const metadata: Metadata = {
-  title: "Agency Partner Program | SoterAI",
+  title: "Agency Partner Program",
   description:
-    "Offer AI chatbot security as a managed service with SoterAI's agency partner program. White-label reports, client portfolios, security badges, and partner resources.",
+    "Offer AI chatbot security as a managed service with the SoterAI agency partner program: white-label reports, client portfolios and security badges.",
   alternates: { canonical: "/partners/agency" },
 };
 

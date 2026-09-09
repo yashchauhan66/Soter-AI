@@ -6,9 +6,9 @@ import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
-  title: "SoterAI Python SDK Guide - Protect Your AI Chatbot (FastAPI, LangChain)",
+  title: "Python SDK Guide: Protect Your AI Chatbot",
   description:
-    "Complete Python SDK guide for SoterAI. Install, configure, and use the Python client to protect FastAPI, Flask, LangChain, and LlamaIndex applications from prompt injection, PII leaks, and unsafe outputs. Includes async support.",
+    "Install and use the SoterAI Python SDK to protect FastAPI, Flask, LangChain and LlamaIndex apps from prompt injection and PII leaks. Async support included.",
   alternates: { canonical: "/docs/python" },
   openGraph: {
     title: "SoterAI Python SDK Guide",

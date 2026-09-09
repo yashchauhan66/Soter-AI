@@ -6,9 +6,9 @@ import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
-  title: "SoterAI Express.js Integration Guide - AI Security Middleware",
+  title: "Express.js Integration: AI Security Middleware",
   description:
-    "Complete Express.js integration guide for SoterAI. Learn to protect your Express chatbot with input/output guard middleware, session context, and error handling.",
+    "Protect your Express.js chatbot with SoterAI input/output guard middleware, session context and error handling. Working code for every step.",
   alternates: { canonical: "/docs/express" },
 };
 

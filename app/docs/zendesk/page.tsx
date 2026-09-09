@@ -6,9 +6,9 @@ import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
-  title: "SoterAI Zendesk Integration Guide - AI Security for Support Tickets",
+  title: "Zendesk Integration: Support Ticket Security",
   description:
-    "Complete Zendesk integration guide for SoterAI. Protect AI-powered ticket workflows from prompt injection, PII leaks, and unsafe AI drafts. Includes REST API examples and best practices for support teams.",
+    "Protect Zendesk AI ticket workflows from prompt injection, PII leaks and unsafe AI drafts. REST API examples and best practices for support teams.",
   alternates: { canonical: "/docs/zendesk" },
 };
 

@@ -4,9 +4,9 @@ import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
-  title: "SoterAI Botpress Integration Guide - AI Security for Chatbots",
+  title: "Botpress Integration: Chatbot AI Security",
   description:
-    "Complete Botpress integration guide for SoterAI. Learn to add input and output guarding as pre/post processing HTTP steps in Botpress workflows to protect against prompt injection and PII leaks.",
+    "Add SoterAI input and output guarding as pre/post-processing HTTP steps in Botpress workflows to protect against prompt injection and PII leaks.",
   alternates: { canonical: "/docs/botpress" },
 };
 

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { VsCompetitor, type VsContent } from "@/components/marketing/VsCompetitor";
 
 export const metadata: Metadata = {
-  title: "SoterAI vs HiddenLayer | AI Security Comparison",
+  title: { absolute: "SoterAI vs HiddenLayer | AI Security Comparison" },
   description:
-    "SoterAI vs HiddenLayer: app-layer runtime guardrails and agent controls vs model/ML asset security. Compare prompt injection, RAG security, agent firewall, and self-hosting.",
+    "SoterAI vs HiddenLayer: app-layer runtime guardrails and agent controls vs model/ML asset security. Prompt injection, RAG security and self-hosting.",
   alternates: { canonical: "/comparison/hiddenlayer" },
   openGraph: {
     title: "SoterAI vs HiddenLayer — AI Security Comparison",

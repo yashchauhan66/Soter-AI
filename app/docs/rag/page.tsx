@@ -6,9 +6,9 @@ import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
-  title: "SoterAI RAG / LangChain / LlamaIndex Security Guide",
+  title: "RAG Security: LangChain & LlamaIndex Guide",
   description:
-    "Complete RAG security guide for SoterAI. Protect LangChain chains, LlamaIndex query engines, and RAG retrieval flows from prompt injection, poisoned documents, and data leakage. Python and TypeScript examples.",
+    "Protect LangChain chains, LlamaIndex query engines and RAG retrieval from prompt injection, poisoned documents and data leakage. Python and TypeScript.",
   alternates: { canonical: "/docs/rag" },
 };
 

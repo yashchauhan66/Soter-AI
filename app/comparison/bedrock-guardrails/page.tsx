@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { VsCompetitor, type VsContent } from "@/components/marketing/VsCompetitor";
 
 export const metadata: Metadata = {
-  title: "SoterAI vs AWS Bedrock Guardrails | AI Security Comparison",
+  title: { absolute: "SoterAI vs AWS Bedrock Guardrails | AI Security Comparison" },
   description:
-    "SoterAI vs AWS Bedrock Guardrails: compare model-agnostic runtime security, agent tool-call control, India PII detection, and self-hosting against AWS-native guardrails. Honest strengths on both sides.",
+    "SoterAI vs AWS Bedrock Guardrails: model-agnostic runtime security, agent tool-call control, India PII detection and self-hosting vs AWS-native guardrails.",
   alternates: { canonical: "/comparison/bedrock-guardrails" },
   openGraph: {
     title: "SoterAI vs AWS Bedrock Guardrails — AI Security Comparison",
