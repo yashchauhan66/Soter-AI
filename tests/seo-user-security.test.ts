@@ -124,7 +124,11 @@ test("Search Console quick-win pages use query-aligned titles", () => {
   const jailbreak = read("app/jailbreak-detection/page.tsx");
   const posts = read("lib/blog/posts.ts");
 
-  assert.match(promptInjection, /Prompt Injection Protection for Direct and Indirect Attacks/);
+  // 85746062 deliberately shortened this SERP title to fit the 60-char budget
+  // (the "| SoterAI" suffix is appended by the root layout); the on-page h1
+  // keeps the full phrase, so the test asserts both.
+  assert.match(promptInjection, /title: "Prompt Injection Protection: Direct & Indirect"/);
+  assert.match(promptInjection, /h1: "Prompt injection protection for direct and indirect attacks"/);
   assert.match(jailbreak, /LLM Jailbreak Detection/);
   assert.match(posts, /How to Prevent Secret Leaks from AI Coding Tools/);
   assert.match(posts, /What Are LLM Guardrails\? Types, Examples and Architecture/);
