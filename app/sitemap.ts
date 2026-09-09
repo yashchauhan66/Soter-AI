@@ -94,6 +94,8 @@ const featurePages: Entry[] = [
   { url: "/integrations/make", priority: 0.7, changeFrequency: "monthly" },
   // About page
   { url: "/about", priority: 0.6, changeFrequency: "monthly" },
+  // Press & media kit — link-worthy entity asset for journalists/aggregators.
+  { url: "/press", priority: 0.5, changeFrequency: "monthly" },
 ];
 
 const compliancePages: Entry[] = [

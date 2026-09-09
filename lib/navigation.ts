@@ -239,6 +239,7 @@ export const FOOTER_NAV: NavGroup[] = [
     label: "Company",
     links: [
       { href: "/about", label: "About" },
+      { href: "/press", label: "Press & media" },
       { href: "/trust", label: "Trust center" },
       { href: "/security", label: "Security" },
       { href: "/status", label: "Status" },
