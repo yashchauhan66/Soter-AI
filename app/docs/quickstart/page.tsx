@@ -6,9 +6,9 @@ import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
-  title: "SoterAI Quickstart - Protect Your AI Chatbot in 5 Minutes (Beginner Guide)",
+  title: "Quickstart: Protect Your AI Chatbot in 5 Minutes",
   description:
-    "Complete step-by-step SoterAI quickstart for beginner developers. Learn to protect an AI chatbot from prompt injection, PII leaks, and unsafe outputs. Includes code examples, expected outputs, and common mistakes to avoid.",
+    "Step-by-step quickstart: protect an AI chatbot from prompt injection, PII leaks and unsafe outputs. Code examples, expected output and mistakes to avoid.",
   alternates: { canonical: "/docs/quickstart" },
   openGraph: {
     title: "SoterAI Quickstart - Protect Your AI Chatbot in 5 Minutes",

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Changelog | SoterAI Product Updates",
+  title: "Changelog: Product Updates",
   description:
     "SoterAI product changelog and update history. Track new features, security enhancements, and platform improvements.",
   alternates: { canonical: "/changelog" },

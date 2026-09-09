@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
 
 export const metadata: Metadata = buildMetadata({
-  title: "AI Data Leakage Prevention — Stop Secrets Reaching AI",
+  title: "AI Data Leakage Prevention: Stop Secret Leaks",
   description:
     "Scan and redact secrets, API keys, and PII locally before they reach an AI coding assistant. SoterAI IDE Guard reduces accidental data leakage at the source.",
   path: "/ai-data-leakage-prevention",

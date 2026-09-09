@@ -6,7 +6,7 @@ import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
-  title: "SoterAI FastAPI Integration Guide - AI Security for Python APIs",
+  title: "FastAPI Integration: AI Security for Python",
   description:
     "Complete FastAPI integration guide for SoterAI. Protect your Python chatbot with create_chat_route, manual guarding, async support, and Pydantic models.",
   alternates: { canonical: "/docs/fastapi" },

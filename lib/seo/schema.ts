@@ -27,7 +27,6 @@ export const WEBSITE_ID = `${SITE_URL}#website`;
  * private, so it is deliberately absent.
  */
 const ORG_SAME_AS = [
-  "https://twitter.com/soterai",
   // Open VSX — the IDE Guard extension is published here (see README SDK table)
   "https://open-vsx.org/extension/soterai/soterai-ide-guard",
   // VS Code Marketplace — entity-confirms the IDE Guard product
@@ -41,6 +40,10 @@ const ORG_SAME_AS = [
   // NOTE: the GitHub repository is intentionally NOT listed. It went private on
   // 2026-09-04, so the URL now 404s for crawlers — which per the rule above
   // would weaken entity consolidation rather than strengthen it.
+  //
+  // NOTE: twitter.com/soterai is also absent — verified 404 on 2026-09-08 (both
+  // twitter.com and x.com; a known-good handle returned 200 in the same run, so
+  // this is a missing account, not bot-blocking). Re-add once the handle exists.
 ];
 
 /** Canonical Organization node. Referenced by other graphs via ORGANIZATION_ID. */

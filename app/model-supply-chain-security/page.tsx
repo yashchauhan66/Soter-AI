@@ -12,9 +12,9 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Model Supply-Chain Security | SoterAI",
+  title: "Model Supply-Chain Security",
   description:
-    "Scan model artifacts for malicious serialization (pickle code execution), verify integrity & SLSA/in-toto provenance, and generate a CycloneDX AI-BOM. Best-in-class model supply-chain security — pure static analysis, nothing executed.",
+    "Scan model artifacts for pickle code execution, verify SLSA/in-toto provenance and generate a CycloneDX AI-BOM. Pure static analysis — nothing is executed.",
   alternates: { canonical: "/model-supply-chain-security" },
   openGraph: {
     title: "Model Supply-Chain Security | SoterAI",

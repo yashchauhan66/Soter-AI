@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | SoterAI",
+  title: "Privacy Policy",
   description:
-    "SoterAI privacy policy: how we collect, use, and protect your data. Minimized content retention, in-memory processing, encrypted API key storage, and stateless platform integrations.",
+    "SoterAI privacy policy: minimized content retention, in-memory processing, encrypted API key storage and stateless platform integrations.",
   alternates: { canonical: "/privacy" },
   openGraph: {
     title: "Privacy Policy | SoterAI",
     description:
-      "SoterAI privacy policy: how we collect, use, and protect your data. Minimized content retention, in-memory processing, encrypted API key storage, and stateless platform integrations.",
+      "SoterAI privacy policy: minimized content retention, in-memory processing, encrypted API key storage and stateless platform integrations.",
     url: "/privacy",
     type: "website",
   },

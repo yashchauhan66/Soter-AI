@@ -8,9 +8,9 @@ import { faqPageLd } from "@/lib/seo/metadata";
 import { safeJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Make.com AI Security — Guard AI Scenarios from Prompt Injection",
+  title: "Make.com AI Security: Prompt Injection Guard",
   description:
-    "Protect Make.com AI scenarios from prompt injection, PII leakage, and unsafe AI outputs. SoterAI integrates with Make via the HTTP module to secure every AI step in your automation.",
+    "Protect Make.com AI scenarios from prompt injection, PII leakage and unsafe AI output. SoterAI integrates via the HTTP module to secure every AI step.",
   path: "/integrations/make",
   keywords: [
     "make.com ai security",

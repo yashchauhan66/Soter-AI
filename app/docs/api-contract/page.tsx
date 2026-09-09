@@ -6,9 +6,9 @@ import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
-  title: "SoterAI API Contract - Complete API Reference for AI Security Endpoints",
+  title: "API Contract: AI Security Endpoint Reference",
   description:
-    "Complete API reference for all SoterAI endpoints including input guard, output guard, analyze, badge, risk types, error codes, and webhook events. Request/response shapes and status codes.",
+    "API reference for every SoterAI endpoint: input guard, output guard, analyze, badge, risk types, error codes and webhook events, with request/response shapes.",
   alternates: { canonical: "/docs/api-contract" },
 };
 

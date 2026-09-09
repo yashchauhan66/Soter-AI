@@ -4,7 +4,7 @@ import { ArrowRight, Clock } from "lucide-react";
 import { GuidedDemoFlow } from "@/components/marketing/GuidedDemoFlow";
 
 export const metadata: Metadata = {
-  title: "2-Minute Guided Demo | SoterAI",
+  title: "2-Minute Guided Demo",
   description:
     "Watch one attack walk through SoterAI's full control loop: prompt injection attempt → tool action blocked → human approval → evidence report → SIEM/audit trace.",
   alternates: { canonical: "/demo/guided" },

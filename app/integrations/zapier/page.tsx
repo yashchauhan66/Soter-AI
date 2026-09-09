@@ -8,9 +8,9 @@ import { faqPageLd } from "@/lib/seo/metadata";
 import { safeJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Zapier AI Security — Protect Zapier AI Actions from Prompt Injection",
+  title: "Zapier AI Security: Prompt Injection Protection",
   description:
-    "Add prompt injection protection and PII redaction to Zapier AI actions. SoterAI Guard integrates with Zapier via webhooks to scan every AI step before and after execution.",
+    "Add prompt injection protection and PII redaction to Zapier AI actions. SoterAI Guard scans every AI step via webhooks, before and after execution.",
   path: "/integrations/zapier",
   keywords: [
     "zapier ai security",

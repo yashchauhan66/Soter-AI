@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | SoterAI",
+  title: "Terms of Service",
   description:
     "SoterAI terms of service: defense-in-depth AI security software, acceptable use, API responsibilities, marketplace integrations, and service limitations.",
   alternates: { canonical: "/terms" },

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Zap, Code2, Shield } from "lucide-react";
 import { SERVICES, SERVICE_GROUPS, type ServiceDoc } from "@/lib/docs/services";
 import { getServiceExperience } from "@/lib/docs/serviceExperience";
+import { clampDescription } from "@/lib/seo/metadata";
 import { CodeBlock, TipBox, WarnBox } from "@/components/ui/CodeBlock";
 
 interface Props {
@@ -25,15 +26,17 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const service = findService(id);
-  if (!service) return { title: "Service not found - SoterAI" };
+  if (!service) return { title: "Service not found" };
 
   return {
-    title: `${service.title} - SoterAI Service Documentation`,
-    description: service.longDescription,
+    // The root layout title template already appends the brand, so it is
+    // deliberately absent here — repeating it renders the name twice in the SERP.
+    title: `${service.title} — Setup Guide`,
+    description: clampDescription(service.longDescription),
     alternates: { canonical: `/docs/services/${service.id}` },
     openGraph: {
       title: `${service.title} - SoterAI Service`,
-      description: service.longDescription.substring(0, 160),
+      description: clampDescription(service.longDescription),
     },
   };
 }

@@ -5,7 +5,7 @@ import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/
 export const metadata: Metadata = buildMetadata({
   title: "VS Code AI Security — Local Guard for AI Coding",
   description:
-    "SoterAI IDE Guard is a local VS Code security extension that scans secrets, prompts, MCP tools, and terminal commands before they reach Copilot, Cursor, or Claude.",
+    "SoterAI IDE Guard is a local VS Code extension that scans secrets, prompts, MCP tools and terminal commands before they reach Copilot, Cursor or Claude.",
   path: "/vscode-ai-security",
   keywords: [
     "vscode ai security",

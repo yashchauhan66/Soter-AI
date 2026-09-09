@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PilotRequestForm } from "@/components/ops/PilotRequestForm";
 
 export const metadata: Metadata = {
-  title: "Enterprise Pilot Program | SoterAI",
+  title: "Enterprise Pilot Program",
   description:
     "Request a scoped SoterAI enterprise pilot for chatbots, RAG applications, and AI agents. Includes OWASP LLM Top 10 alignment review and SIEM setup.",
   alternates: { canonical: "/enterprise/pilot" },

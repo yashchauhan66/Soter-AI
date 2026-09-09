@@ -17,8 +17,28 @@ import { SITE_URL, SITE_NAME, ORGANIZATION_ID } from "@/lib/seo/schema";
 /** Default social share image (1200×630). Overridable per page. */
 export const DEFAULT_OG_IMAGE = "/og/soterai-og.png";
 
+/**
+ * Trim a description to a SERP-safe length without cutting mid-word.
+ *
+ * Google truncates around 155–160 characters, so anything longer is spent
+ * rendering an ellipsis rather than a reason to click. Use this when the source
+ * text is authored for the page body (e.g. a service's longDescription) and is
+ * reused as the meta description.
+ */
+export function clampDescription(text: string, max = 155): string {
+  const clean = text.replace(/\s+/g, " ").trim();
+  if (clean.length <= max) return clean;
+  const cut = clean.slice(0, max);
+  const lastSpace = cut.lastIndexOf(" ");
+  // Strip trailing punctuation so we don't produce "… ,…" or "word.…".
+  return `${(lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut).replace(/[\s,;:.!-]+$/, "")}…`;
+}
+
 export interface PageMetaInput {
-  /** Page <title>; the root layout appends " | SoterAI" via its template. */
+  /**
+   * Page <title>. The root layout appends " | SoterAI" via its template, unless
+   * the title already names the brand — then it is emitted as-is.
+   */
   title: string;
   /** Meta description (aim for 150–160 chars). */
   description: string;
@@ -59,8 +79,17 @@ export function buildMetadata({
   const url = path.startsWith("http") ? path : `${SITE_URL}${path}`;
   const images = [{ url: ogImage, width: 1200, height: 630, alt: title }];
 
+  // The root layout's title template appends " | SoterAI" to every plain-string
+  // title. When the title already names the brand — "SoterAI vs Lakera",
+  // "About SoterAI" — that renders it twice and wastes SERP pixel budget, so
+  // mark it absolute to opt out of the template. There is no case where showing
+  // the brand twice in one title is preferable.
+  const titleMeta: Metadata["title"] = title.includes(SITE_NAME)
+    ? { absolute: title }
+    : title;
+
   return {
-    title,
+    title: titleMeta,
     description,
     ...(keywords ? { keywords } : {}),
     alternates: { canonical: path },

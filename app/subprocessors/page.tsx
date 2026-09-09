@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { ReadinessPage } from "@/lib/compliance/publicContent";
+import { ReadinessPage } from "@/lib/compliance/publicContent";
 
 export const metadata: Metadata = {
-  title: "Subprocessors | SoterAI Data Processing",
+  title: "Subprocessors: Data Processing",
   description:
-    "SoterAI subprocessor list: Vercel, Upstash, Resend, Razorpay, Qdrant, Google Cloud KMS, and AWS/GCP for observability. Self-hosted deployments can run without managed subprocessors.",
+    "SoterAI subprocessor list: Vercel, Upstash, Resend, Razorpay, Qdrant, Google Cloud KMS and AWS/GCP. Self-hosted deployments need no managed subprocessors.",
   alternates: { canonical: "/subprocessors" },
 };
 

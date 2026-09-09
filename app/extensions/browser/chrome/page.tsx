@@ -16,9 +16,9 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Install SoterAI for Chrome — AI Security Extension",
+  title: { absolute: "Install SoterAI for Chrome — AI Security Extension" },
   description:
-    "Install the SoterAI Browser Guard extension for Google Chrome. Real-time prompt scanning, secret & PII redaction, and organization policy enforcement across 20+ AI tools.",
+    "Install SoterAI Browser Guard for Google Chrome: real-time prompt scanning, secret & PII redaction and org policy enforcement across 20+ AI tools.",
   alternates: { canonical: "/extensions/browser/chrome" },
   openGraph: {
     title: "SoterAI for Chrome — AI Security Extension",

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { VsCompetitor, type VsContent } from "@/components/marketing/VsCompetitor";
 
 export const metadata: Metadata = {
-  title: "SoterAI vs LLM Guard | Open-Source LLM Security Comparison",
+  title: { absolute: "SoterAI vs LLM Guard | Open-Source LLM Security Comparison" },
   description:
-    "SoterAI vs LLM Guard (Protect AI): compare open-source scanner libraries against a managed policy engine with agent tool-call control, India PII, signed audit exports, and a hosted API.",
+    "SoterAI vs LLM Guard (Protect AI): open-source scanner libraries vs a managed policy engine with agent tool-call control, India PII and signed audit exports.",
   alternates: { canonical: "/comparison/llm-guard" },
   openGraph: {
     title: "SoterAI vs LLM Guard — Open-Source LLM Security Comparison",

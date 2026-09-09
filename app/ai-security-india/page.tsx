@@ -3,9 +3,9 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
 
 export const metadata: Metadata = buildMetadata({
-  title: "AI Security India — India PII Detection, DPDP Compliance & AI Guardrails",
+  title: "AI Security India: PII Detection & DPDP",
   description:
-    "India's first AI security platform with native Aadhaar, PAN, GSTIN, UPI, and IFSC PII detection. Protect AI applications from prompt injection, data leakage, and ensure DPDP Act compliance.",
+    "AI security with native Aadhaar, PAN, GSTIN, UPI and IFSC PII detection. Protect AI apps from prompt injection and data leakage, with DPDP Act alignment.",
   path: "/ai-security-india",
   keywords: [
     "ai security india",

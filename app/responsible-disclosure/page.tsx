@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ReadinessPage } from "@/lib/compliance/publicContent";
 
 export const metadata: Metadata = {
-  title: "Responsible Disclosure | SoterAI",
+  title: "Responsible Disclosure",
   description:
     "Report suspected vulnerabilities to SoterAI security team. Guidelines for responsible disclosure and authorized security testing.",
   alternates: { canonical: "/responsible-disclosure" },

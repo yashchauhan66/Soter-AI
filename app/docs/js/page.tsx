@@ -6,9 +6,9 @@ import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
-  title: "SoterAI JavaScript/TypeScript SDK Guide - Protect Your AI Chatbot",
+  title: "JavaScript SDK Guide: Protect Your AI Chatbot",
   description:
-    "Complete JavaScript/TypeScript SDK guide for SoterAI. Learn to install, configure, and use the @soterai/core package to protect Node.js, Deno, and Bun applications from prompt injection and PII leaks. Includes Next.js and Express.js examples.",
+    "Install and use the @soterai/core JavaScript SDK to protect Node.js, Deno and Bun apps from prompt injection and PII leaks. Next.js and Express examples.",
   alternates: { canonical: "/docs/js" },
   openGraph: {
     title: "SoterAI JavaScript/TypeScript SDK Guide",

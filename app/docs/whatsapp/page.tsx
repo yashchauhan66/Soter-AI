@@ -6,9 +6,9 @@ import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
-  title: "SoterAI WhatsApp Chatbot Security Guide - India PII Protection",
+  title: "WhatsApp Chatbot Security: India PII Guard",
   description:
-    "Complete WhatsApp chatbot security guide for SoterAI. Protect WhatsApp deployments with input/output guarding, India-specific PII redaction (Aadhaar, PAN, UPI), and prompt injection detection.",
+    "Protect WhatsApp chatbots with input/output guarding, India PII redaction (Aadhaar, PAN, UPI) and prompt injection detection.",
   alternates: { canonical: "/docs/whatsapp" },
 };
 

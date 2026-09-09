@@ -6,9 +6,9 @@ import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
-  title: "SoterAI Next.js Integration Guide - Protect Your AI Chat Routes",
+  title: "Next.js Integration: Protect AI Chat Routes",
   description:
-    "Complete Next.js integration guide for SoterAI. Learn to protect App Router route handlers, server actions, and AI chat endpoints with input/output guards, createGuardedRoute helper, and middleware.",
+    "Protect Next.js App Router route handlers, server actions and AI chat endpoints with input/output guards, the createGuardedRoute helper and middleware.",
   alternates: { canonical: "/docs/nextjs" },
   openGraph: {
     title: "SoterAI Next.js Integration Guide",

@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Red-Team Demo | SoterAI AI Security Testing",
+  title: "Red-Team Demo: AI Security Testing",
   description:
-    "Defensive red-team validation mode for SoterAI. Test prompt injection detection, sensitive data disclosure prevention, and unsafe output blocking on your own projects.",
+    "Defensive red-team validation mode: test prompt injection detection, sensitive data disclosure prevention and unsafe output blocking on your own projects.",
   alternates: { canonical: "/demo/red-team" },
 };
 

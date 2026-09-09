@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { ReadinessPage } from "@/lib/compliance/publicContent";
 
 export const metadata: Metadata = {
-  title: "SOC 2 Readiness | SoterAI",
+  title: "SOC 2 Readiness",
   description:
-    "SoterAI SOC 2 readiness program covering access control, change management, vulnerability management, audit logging, backup/restore, incident response, and vendor risk.",
+    "SoterAI SOC 2 readiness: access control, change management, vulnerability management, audit logging, backup/restore, incident response and vendor risk.",
   alternates: { canonical: "/compliance/soc2-readiness" },
 };
 

@@ -16,9 +16,9 @@ import Link from "next/link";
 import { safeJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata: Metadata = {
-  title: "SoterAI vs Competitors | AI Security Guardrail Platform Comparison 2026",
+  title: { absolute: "SoterAI vs Competitors: AI Security Guardrail Comparison" },
   description:
-    "Compare SoterAI against 15+ AI security competitors: Lakera, Palo Alto Prisma AIRS, Galileo, Arthur AI, Prompt Security, HiddenLayer, Protect AI, Pangea, Cisco AI Defense, NVIDIA NeMo, Guardrails AI, and more. India's first AI security platform with Aadhaar/PAN PII detection.",
+    "Compare SoterAI with Lakera, Prompt Security, HiddenLayer, NeMo Guardrails, Bedrock Guardrails and LLM Guard — plus Aadhaar/PAN PII detection for India.",
   keywords: ["ai security comparison", "SoterAI vs Lakera", "best ai guardrail platform", "ai security vendor comparison", "prompt injection protection comparison", "enterprise ai security india"],
   alternates: { canonical: "/comparison" },
   openGraph: {

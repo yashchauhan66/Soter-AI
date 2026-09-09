@@ -3,9 +3,9 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
 
 export const metadata: Metadata = buildMetadata({
-  title: "RAG Security — Protect Retrieval-Augmented Generation Pipelines",
+  title: "RAG Security: Protect Retrieval Pipelines",
   description:
-    "Secure RAG applications against document poisoning, data leakage, and unauthorized retrieval. SoterAI Guard scans, quarantines, and enforces access controls on vector database content.",
+    "Secure RAG apps against document poisoning, data leakage and unauthorized retrieval. SoterAI Guard scans, quarantines and enforces vector-store access control.",
   path: "/rag-security",
   keywords: [
     "rag security",

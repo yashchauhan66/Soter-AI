@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { ReadinessPage } from "@/lib/compliance/publicContent";
 
 export const metadata: Metadata = {
-  title: "Security Overview | SoterAI AI Security Platform",
+  title: "Security Overview: Platform Controls",
   description:
-    "SoterAI security controls include tenant isolation, RBAC, encrypted API tokens, redacted logs, webhook signing, KMS-backed secrets, SAML SSO, SCIM v2 provisioning, audit exports, and SIEM delivery.",
+    "SoterAI security controls: tenant isolation, RBAC, encrypted API tokens, redacted logs, webhook signing, KMS-backed secrets, SAML SSO and SCIM v2.",
   alternates: { canonical: "/security" },
   openGraph: {
     title: "Security Overview | SoterAI",

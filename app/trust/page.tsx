@@ -16,9 +16,9 @@ import {
 import { trustProof } from "@/lib/marketing/launchStatus";
 
 export const metadata: Metadata = {
-  title: "Trust Center | SoterAI Security",
+  title: "Trust Center: Live Security Status",
   description:
-    "SoterAI trust center: live test status, data handling, security controls, deployment model, and responsible disclosure. OWASP LLM Top 10 aligned AI security command layer with transparent scope limitations.",
+    "SoterAI trust center: live test status, data handling, security controls, deployment model and responsible disclosure — aligned to the OWASP LLM Top 10.",
   alternates: { canonical: "/trust" },
   openGraph: {
     title: "Trust Center | SoterAI",

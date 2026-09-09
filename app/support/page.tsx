@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Support | SoterAI",
+  title: "Support",
   description:
     "Get help with SoterAI — API issues, integration support, billing questions, and security vulnerability reporting.",
   alternates: { canonical: "/support" },

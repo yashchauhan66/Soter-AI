@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { ContactSalesForm } from "@/components/ops/ContactSalesForm";
 
 export const metadata: Metadata = {
-  title: "Contact Sales | SoterAI AI Security",
+  title: "Contact Us",
   description:
     "Contact SoterAI sales to discuss your AI security workflow. Share architecture and scale requirements for chatbot, RAG, and agent protection.",
   alternates: { canonical: "/contact" },

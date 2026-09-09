@@ -51,7 +51,7 @@ const pricingJsonLd = {
 };
 
 export const metadata: Metadata = {
-  title: "AI Security Pricing: Free to Enterprise Plans | SoterAI",
+  title: "AI Security Pricing: Free to Enterprise",
   description:
     "SoterAI AI security pricing for Indian businesses. Free plan at ₹0/mo, Starter at ₹999/mo, Pro at ₹2,999/mo, Agency and Enterprise plans. AI guardrails, PII redaction, and agent firewall for every budget.",
   keywords: ["ai security pricing", "ai guardrail cost", "llm security pricing india", "prompt injection protection price", "aadhaar pii detection cost", "budget ai security"],

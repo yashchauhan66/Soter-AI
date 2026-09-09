@@ -3,9 +3,9 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
 
 export const metadata: Metadata = buildMetadata({
-  title: "AI Agent Security — Protect Autonomous Agents from Exploitation",
+  title: "AI Agent Security: Protect Autonomous Agents",
   description:
-    "Secure AI agents against prompt injection, tool abuse, data exfiltration, and privilege escalation. SoterAI Guard provides agent firewall, MCP security, and runtime enforcement.",
+    "Secure AI agents against prompt injection, tool abuse, data exfiltration and privilege escalation with an agent firewall, MCP security and runtime enforcement.",
   path: "/ai-agent-security",
   keywords: [
     "ai agent security",

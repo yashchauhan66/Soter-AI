@@ -26,9 +26,9 @@ import { SITE_URL } from "@/lib/seo/schema";
  */
 
 export const metadata: Metadata = {
-  title: "SoterAI Documentation: Guard Your First AI Request in 5 Minutes",
+  title: "Documentation: Guard Your First AI Request",
   description:
-    "Integration guides for SoterAI AI security. Quickstart, JavaScript and Python SDKs, REST API for any language, Next.js, Express, FastAPI, RAG, WordPress, WhatsApp, Intercom, Zendesk, and Botpress — each with setup steps, working code, and an honest scope note.",
+    "Integration guides for SoterAI: quickstart, JavaScript and Python SDKs, REST API for any language, Next.js, Express, FastAPI, RAG, WordPress and WhatsApp.",
   alternates: { canonical: "/docs" },
   openGraph: {
     title: "SoterAI Documentation — AI Security Integration Guides",

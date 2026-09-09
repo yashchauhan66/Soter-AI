@@ -44,9 +44,9 @@ import {
 import { OpenIdeButton } from './OpenIdeButton';
 
 export const metadata: Metadata = {
-  title: 'SoterAI IDE Guard Extension',
+  title: 'IDE Guard Extension for VS Code & Cursor',
   description:
-    'Install SoterAI IDE Guard for VS Code, Cursor, Windsurf, Kiro, Antigravity, and VSCodium. Scan AI coding context locally for secrets, PII, prompt injection, and risky tools.',
+    'Install SoterAI IDE Guard for VS Code, Cursor, Windsurf, Kiro and VSCodium. Scan AI coding context locally for secrets, PII, prompt injection and risky tools.',
   alternates: { canonical: '/extensions/ide' },
   openGraph: {
     title: 'SoterAI IDE Guard — Local AI Security for Developers',

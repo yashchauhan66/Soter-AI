@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { VsCompetitor, type VsContent } from "@/components/marketing/VsCompetitor";
 
 export const metadata: Metadata = {
-  title: "SoterAI vs Lakera | AI Security Guardrail Comparison",
+  title: { absolute: "SoterAI vs Lakera | AI Security Guardrail Comparison" },
   description:
-    "SoterAI vs Lakera (Check Point): compare prompt injection detection, RAG security, agent firewall, self-hosting, India PII, and audit exports. Honest strengths on both sides.",
+    "SoterAI vs Lakera (Check Point): prompt injection detection, RAG security, agent firewall, self-hosting, India PII and audit exports compared.",
   alternates: { canonical: "/comparison/lakera" },
   openGraph: {
     title: "SoterAI vs Lakera — AI Security Comparison",

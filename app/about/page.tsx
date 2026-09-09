@@ -3,13 +3,13 @@ import type { Metadata } from "next";
 import { ArrowRight, ShieldCheck } from "lucide-react";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { breadcrumbList, SITE_URL } from "@/lib/seo/schema";
+import { breadcrumbList, ORGANIZATION_ID, SITE_URL } from "@/lib/seo/schema";
 import { safeJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata: Metadata = buildMetadata({
-  title: "About SoterAI — AI Security Platform Built for Developers and Enterprises",
+  title: "About SoterAI: Who Builds the AI Guard Layer",
   description:
-    "SoterAI is an AI security platform protecting LLM applications, AI agents, and developer workflows from prompt injection, data leakage, and unsafe AI outputs. Built in India for a global AI-first world.",
+    "SoterAI protects LLM apps, AI agents and developer workflows from prompt injection, data leakage and unsafe AI output. Built in India for an AI-first world.",
   path: "/about",
   keywords: [
     "about soterai",
@@ -26,24 +26,11 @@ const aboutJsonLd = {
   "url": `${SITE_URL}/about`,
   "name": "About SoterAI",
   "description": "SoterAI builds AI security infrastructure for LLM applications, AI agents, and developer workflows.",
-  "mainEntity": {
-    "@type": "Organization",
-    "@id": `${SITE_URL}#organization`,
-    "name": "SoterAI",
-    "url": SITE_URL,
-    "foundingDate": "2024",
-    "description": "AI security platform protecting LLM applications, AI agents, and developer workflows from prompt injection, data leakage, jailbreaks, and unsafe AI outputs.",
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "IN",
-    },
-    "sameAs": [
-      "https://github.com/yashchauhan66/Ai-Security-Guard",
-      "https://twitter.com/soterai",
-      "https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard",
-      "https://www.npmjs.com/package/@soterai/sdk",
-    ],
-  },
+  // Reference the canonical Organization node from schema.ts by @id instead of
+  // restating it. The inlined copy had drifted: 3 of its 4 sameAs URLs 404ed
+  // (private repo, unregistered @soterai/sdk, non-existent X handle), which
+  // weakens entity consolidation rather than strengthening it.
+  "mainEntity": { "@id": ORGANIZATION_ID },
 };
 
 const principles = [
@@ -186,7 +173,9 @@ export default function Page() {
             { label: "General enquiries", value: "support@soterai.in", href: "mailto:support@soterai.in" },
             { label: "Enterprise sales", value: "Contact Sales", href: "/contact-sales" },
             { label: "Security disclosures", value: "Responsible Disclosure", href: "/responsible-disclosure" },
-            { label: "GitHub", value: "Ai-Security-Guard", href: "https://github.com/yashchauhan66/Ai-Security-Guard" },
+            // The GitHub repo went private on 2026-09-04 and now 404s, so it is
+            // replaced with a distribution channel that actually resolves.
+            { label: "VS Code Marketplace", value: "SoterAI IDE Guard", href: "https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard" },
           ].map((c) => (
             <div key={c.label} className="rounded-xl border border-slate-800 p-4">
               <p className="text-xs font-medium uppercase tracking-wide text-slate-300">{c.label}</p>

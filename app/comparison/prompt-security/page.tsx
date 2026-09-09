@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { VsCompetitor, type VsContent } from "@/components/marketing/VsCompetitor";
 
 export const metadata: Metadata = {
-  title: "SoterAI vs Prompt Security | AI Security Comparison",
+  title: { absolute: "SoterAI vs Prompt Security | AI Security Comparison" },
   description:
-    "SoterAI vs Prompt Security (SentinelOne): developer-integrated runtime guardrails vs employee/SaaS AI governance. Compare RAG security, agent firewall, self-hosting, and audit exports.",
+    "SoterAI vs Prompt Security (SentinelOne): developer runtime guardrails vs employee/SaaS AI governance. RAG security, agent firewall and self-hosting.",
   alternates: { canonical: "/comparison/prompt-security" },
   openGraph: {
     title: "SoterAI vs Prompt Security — AI Security Comparison",

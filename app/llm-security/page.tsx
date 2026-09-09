@@ -3,9 +3,9 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
 
 export const metadata: Metadata = buildMetadata({
-  title: "LLM Security Platform — Protect Large Language Model Applications",
+  title: "LLM Security Platform: Protect LLM Applications",
   description:
-    "SoterAI Guard is an LLM security platform that detects prompt injection, jailbreaks, data leakage, and unsafe outputs. Protect chatbots, RAG apps, and AI agents with runtime guardrails.",
+    "SoterAI Guard detects prompt injection, jailbreaks, data leakage and unsafe output. Protect chatbots, RAG apps and AI agents with runtime guardrails.",
   path: "/llm-security",
   keywords: [
     "llm security",

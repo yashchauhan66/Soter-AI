@@ -3,9 +3,9 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { FeatureLanding, type FeatureLandingData } from "@/components/marketing/FeatureLanding";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Cursor AI Security — Local Secret and Prompt Injection Guard for Cursor",
+  title: "Cursor AI Security: Secret & Injection Guard",
   description:
-    "SoterAI IDE Guard protects Cursor users from secret leakage, prompt injection, and risky MCP tools. Scan your workspace context locally before it reaches Claude or GPT-4 inside Cursor.",
+    "SoterAI IDE Guard protects Cursor from secret leakage, prompt injection and risky MCP tools. Scan workspace context locally before it reaches the model.",
   path: "/cursor-ai-security",
   keywords: [
     "cursor ai security",

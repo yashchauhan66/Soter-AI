@@ -6,9 +6,9 @@ import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
-  title: "SoterAI CLI Tool - npx soter init for Framework Detection & Scaffolding",
+  title: "CLI Tool: Scaffold AI Security with npx soter",
   description:
-    "SoterAI CLI documentation for npx soter init. Framework detection, project scaffolding, and automated setup for Next.js, Express, Node.js, Python, and FastAPI projects.",
+    "SoterAI CLI docs for npx soter init: framework detection, project scaffolding and automated setup for Next.js, Express, Node.js, Python and FastAPI.",
   alternates: { canonical: "/docs/cli" },
 };
 

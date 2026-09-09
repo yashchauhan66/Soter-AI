@@ -6,9 +6,9 @@ import { DocsHeading } from "@/components/docs/DocsHeading";
 import { DocsPageShell } from "@/components/docs/DocsPageShell";
 
 export const metadata: Metadata = {
-  title: "SoterAI Generic Chatbot & Agent Security Guide - Tool Firewall Integration",
+  title: "Chatbot & Agent Security: Tool Firewall Guide",
   description:
-    "Complete guide to protecting any chatbot, RAG bot, browser agent, or AI agent with SoterAI. Includes basic chatbot pattern, agent tool firewall, key rules, and code examples.",
+    "Protect any chatbot, RAG bot, browser agent or AI agent with SoterAI: the basic chatbot pattern, agent tool firewall, key rules and code examples.",
   alternates: { canonical: "/docs/generic-chatbot" },
 };
 

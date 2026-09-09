@@ -27,8 +27,8 @@ import { SITE_URL } from "@/lib/seo/schema";
  */
 
 export const metadata: Metadata = {
-  title: "All SoterAI Security Services: Setup Guides for Every Control",
-  description: `Searchable directory of all ${SERVICES.length} SoterAI security controls — monitoring, protection, detection, agent governance, compliance evidence, and administration. Each service has its own setup, verification, and API reference.`,
+  title: "All Security Services: Setup for Every Control",
+  description: `Searchable directory of all ${SERVICES.length} SoterAI security controls — monitoring, protection, detection, agent governance and compliance evidence.`,
   alternates: { canonical: "/docs/services" },
   openGraph: {
     title: "All SoterAI Security Services",

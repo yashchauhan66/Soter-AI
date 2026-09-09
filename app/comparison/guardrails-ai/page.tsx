@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { VsCompetitor, type VsContent } from "@/components/marketing/VsCompetitor";
 
 export const metadata: Metadata = {
-  title: "SoterAI vs Guardrails AI | LLM Guardrails Comparison",
+  title: { absolute: "SoterAI vs Guardrails AI | LLM Guardrails Comparison" },
   description:
-    "SoterAI vs Guardrails AI: compare runtime blocking vs output validation, prompt injection detection, agent tool-call control, India PII, and self-hosting. Honest strengths on both sides.",
+    "SoterAI vs Guardrails AI: runtime blocking vs output validation, prompt injection detection, agent tool-call control, India PII and self-hosting.",
   alternates: { canonical: "/comparison/guardrails-ai" },
   openGraph: {
     title: "SoterAI vs Guardrails AI — LLM Guardrails Comparison",
