@@ -170,7 +170,12 @@ def group_key_for(text: str) -> str:
     normalized = "".join(ch for ch in normalized if not unicodedata.combining(ch))
     normalized = normalized.translate(str.maketrans({"0": "o", "1": "i", "3": "e", "4": "a", "5": "s", "7": "t", "@": "a", "$": "s", "!": "i"}))
     tokens = re.findall(r"[a-z]+", normalized)
-    return " ".join(sorted(tokens))
+    key = " ".join(sorted(tokens))
+    # non-Latin scripts have no [a-z]; see soter_augment.group_key_for.
+    nonascii = sorted(ch for ch in normalized if ch.isalpha() and not ch.isascii())
+    if nonascii:
+        key = f"{key} |{''.join(nonascii)}" if key else f"|{''.join(nonascii)}"
+    return key
 
 
 def split_group_key_for(text: str, source: str = "<missing>", record_id: str | None = None) -> str:

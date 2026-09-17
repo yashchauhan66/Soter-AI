@@ -113,7 +113,13 @@ def group_key_for(text: str) -> str:
     letters = re.findall(r"[a-z]+", t)
     # 4. Sort the token multiset — kills word-reordering augmentation
     letters.sort()
-    return " ".join(letters)
+    key = " ".join(letters)
+    # 5. Non-Latin scripts contribute no [a-z] at all and would every one of them
+    #    collapse to "". See the rationale on soter_augment.group_key_for.
+    nonascii = sorted(ch for ch in t if ch.isalpha() and not ch.isascii())
+    if nonascii:
+        key = f"{key} |{''.join(nonascii)}" if key else f"|{''.join(nonascii)}"
+    return key
 
 
 class AdversarialDataset(Dataset):

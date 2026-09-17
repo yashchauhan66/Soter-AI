@@ -1,15 +1,6 @@
-<div align="center">
+# SoterAI IDE Guard — Safer AI Coding, Local by Default
 
-<img src="./media/logo_circle_whiter.png" width="112" alt="SoterAI IDE Guard logo" />
-
-<h1>SoterAI IDE Guard</h1>
-
-<h1>Safer AI Coding</h1>
-
-<h2>Local by Default</h2>
-
-Protect secrets, prompts, agent tools, terminal commands, and AI coding context
-before they become security incidents.
+**Protect secrets, prompts, agent tools, terminal commands, and AI coding context before they become security incidents — in the editor you already use.**
 
 <p>
   <img src="https://img.shields.io/badge/LOCAL--FIRST-Enabled-F96403?style=for-the-badge" alt="Local-first protection" />
@@ -18,32 +9,30 @@ before they become security incidents.
   <img src="https://img.shields.io/badge/PRICE-Free-202830?style=for-the-badge" alt="Free extension" />
 </p>
 
-### Scan locally · Redact sensitive context · Guard supported AI traffic
+Scan locally · Redact sensitive context · Guard supported AI traffic — no account, no cloud, no API key required.
 
-</div>
+## See it in action
 
-SoterAI IDE Guard adds a security layer to the editor you already use. Catch
-secrets and personal data, inspect prompts and AI-generated code, review risky
-commands and agent configurations, and route supported AI traffic through an
-enforceable local broker—all without creating an account.
+![SoterAI catches a secret before it reaches AI](https://soterai.in/marketplace/screenshots/soterai-secret-caught-before-ai.gif)
+
+*Recorded from the real playground with the real detection engine (synthetic test secret, BLOCK verdict). Regenerate: `node scripts/marketing/generate-readme-gif.mjs`.*
 
 ---
 
-<div align="center">
+## 🚀 Install — Pick Your Editor
 
-<h1>Install SoterAI IDE Guard</h1>
+**One click, inside your editor.** These links open the extension panel in your editor and install directly. Free, no account.
 
-<h2><a href="https://soterai.in/extensions/ide">Choose Your IDE &amp; Install →</a></h2>
-
-One guided installer for VS Code, Cursor, Windsurf / Devin, Kiro, Antigravity,
-and VSCodium.
-
-</div>
-
-| **Guided install — recommended** | **Direct VS Code install** | **Open VSX / offline** |
+| Editor | Direct Install | Command line |
 | :--- | :--- | :--- |
-| Choose your editor and get the right route automatically. | Install immediately or open the official listing. | Use VSCodium, Theia, OpenVSCode Server, or a `.vsix`. |
-| **[Open guided installer →](https://soterai.in/extensions/ide)** | **[Install in VS Code →](vscode:extension/soterai.soterai-ide-guard)**<br>[Marketplace listing](https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard) | **[Open Open VSX →](https://open-vsx.org/extension/soterai/soterai-ide-guard)** |
+| **VS Code** | **[Install now →](vscode:extension/soterai.soterai-ide-guard)** | `code --install-extension soterai.soterai-ide-guard` |
+| **Cursor** | **[Install now →](cursor:extension/soterai.soterai-ide-guard)** | `cursor --install-extension soterai.soterai-ide-guard` |
+| **Windsurf / Devin** | **[Install now →](windsurf:extension/soterai.soterai-ide-guard)** | `windsurf --install-extension soterai.soterai-ide-guard` |
+| **Kiro** | **[Install now →](kiro:extension/soterai.soterai-ide-guard)** | `kiro --install-extension soterai.soterai-ide-guard` |
+| **Antigravity** | **[Install now →](antigravity:extension/soterai.soterai-ide-guard)** | `antigravity --install-extension soterai.soterai-ide-guard` |
+| **VSCodium** | **[Install now →](vscodium:extension/soterai.soterai-ide-guard)** | `codium --install-extension soterai.soterai-ide-guard` |
+
+> **Windsurf rebrand note:** Windsurf is now Devin. If the link above does not open, try the alternative: [devin:extension/soterai.soterai-ide-guard](devin:extension/soterai.soterai-ide-guard)
 
 ### Install from inside your editor
 
@@ -57,18 +46,20 @@ ext install soterai.soterai-ide-guard
 
 > **Install the authentic extension**
 >
-> **Name:** SoterAI IDE Guard — Local AI Security · **Publisher:** `soterai` ·
+> **Name:** SoterAI IDE Guard - AI Security & Secret Protection · **Publisher:** `soterai` ·
 > **Extension ID:** `soterai.soterai-ide-guard`
 
-For offline installation, download the `.vsix` from
-[Open VSX](https://open-vsx.org/extension/soterai/soterai-ide-guard), then choose
+### Offline / manual installation
+
+For offline or restricted environments, download the `.vsix` from
+[Open VSX](https://open-vsx.org/extension/soterai/soterai-ide-guard) or the
+[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard), then choose
 **Extensions → Install from VSIX…**. After installation, select the **SoterAI
 Guard shield** in the Activity Bar.
 
-> **Cannot find it in editor search?** Use the direct
-> [Marketplace](https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard),
-> [Open VSX](https://open-vsx.org/extension/soterai/soterai-ide-guard), or
-> [guided installer](https://soterai.in/extensions/ide). Registry search results
+> **Cannot find it in editor search?** Use the direct links above, the
+> [Marketplace](https://marketplace.visualstudio.com/items?itemName=soterai.soterai-ide-guard), or
+> [Open VSX](https://open-vsx.org/extension/soterai/soterai-ide-guard). Registry search results
 > can take time to refresh after a release.
 
 <div align="center">
@@ -81,9 +72,9 @@ Guard shield** in the Activity Bar.
 
 </div>
 
-## Start protecting your workspace in 60 seconds
+## ✅ 60 seconds after install — do these 3 things
 
-Open **SoterAI Guard → Control Panel** after installation:
+Open **SoterAI Guard → Control Panel**:
 
 1. Run `SoterAI: Run Safe Demo Scan` to see a real local verdict using built-in
    test data—without exposing your code.

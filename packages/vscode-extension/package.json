@@ -1,8 +1,8 @@
 {
     "name": "soterai-ide-guard",
-    "displayName": "SoterAI IDE Guard — Local AI Security",
-    "description": "Protect secrets, prompts, MCP tools, terminal commands, and AI coding context locally before they reach AI.",
-    "version": "0.6.2",
+    "displayName": "SoterAI IDE Guard - AI Security & Secret Protection",
+    "description": "Stop secrets, API keys, PII and prompt injection before they reach AI. Local scanning for Copilot, Cursor, Claude. Free, no account.",
+    "version": "0.6.3",
     "publisher": "soterai",
     "preview": false,
     "pricing": "Free",
@@ -77,6 +77,7 @@
                 "soterai.audit.storeRawPrompts",
                 "soterai.telemetry.redactedEvents",
                 "soterai.broker.port",
+                "soterai.broker.autoStart",
                 "soterai.broker.openAIProviderUrl",
                 "soterai.broker.anthropicProviderUrl",
                 "soterai.terminal.protectionMode",
@@ -1216,6 +1217,12 @@
                     "minimum": 1024,
                     "maximum": 65535,
                     "description": "Loopback-only Local AI Broker port.",
+                    "scope": "machine"
+                },
+                "soterai.broker.autoStart": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Start the Local AI Broker automatically when the editor opens. The broker is the only component that can block a request rather than just report it, so with this off SoterAI is advisory until you start it by hand.",
                     "scope": "machine"
                 },
                 "soterai.broker.openAIProviderUrl": {

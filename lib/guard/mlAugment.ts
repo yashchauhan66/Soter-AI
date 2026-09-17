@@ -119,6 +119,30 @@ export type MlAugmentMode = "off" | "shadow" | "enforce";
 // modelled and both only remove escalations.
 // These two are no-ops on v7/v4 (those models cannot emit them), so this widening is
 // safe to leave in place across a rollback.
+//
+// MEASURED RE-EXPANSION (2026-09-07, v14): TOOL_CALL_ABUSE was HELD OUT above on the
+// strength of ONE v12 measurement (1 benign FP / 4 attacks). Re-measured on v14 — the
+// model actually shipped — over the SAME 6,424 crossdist benign rows plus, for the
+// first time, real GOLD rows for the blocked classes (74 of them, from
+// datasets/v15-test-battery.jsonl; corpus artifacts/ml/_gate-fpcost-corpus.jsonl,
+// harness scripts/ml/measure-arms-singlepass.ts, report artifacts/ml/v15-arms-atscale.json):
+//   TOOL_CALL_ABUSE            0 benign (0.000%)   +1 attack   -> ADMITTED
+//   DATA_EXFILTRATION_ATTEMPT  1 benign (0.016%)   +0 attacks  -> STILL HELD OUT
+//   UNSAFE_OUTPUT              1 benign (0.016%)   +0 attacks  -> STILL HELD OUT
+//   MULTI_TURN_ESCALATION      0 benign            +0 attacks  -> no-op, stays out
+//   TOXICITY_HARASSMENT        0 benign            +0 attacks  -> no-op, stays out
+// So TOOL_CALL_ABUSE now meets the same +0-benign-FP standard that admitted
+// PII/SECRET/RAG_POISONING and ENCODING/MODEL_EXTRACTION. The v12 note above is not
+// wrong — the FP it measured was v12's prediction on those rows; v14 does not repeat
+// it. That is a MODEL-VERSION difference, which is exactly why the gate is coupled to
+// the deployed weights and not to the label space.
+//
+// DO NOT admit DATA_EXFILTRATION_ATTEMPT even though a 36-row adversarial battery
+// showed +1 attack / +0 FPs for it. On 6,424 ordinary benign rows it is +0 attacks and
+// +1 FP, and — unlike every label admitted here — it is index 8 in v7's label map, so
+// admitting it would NOT survive a rollback: v7 would start escalating a class whose
+// calibration was never measured on v7. TOOL_CALL_ABUSE is index 9, which v7 cannot
+// emit, so this widening stays a no-op across a rollback like the two before it.
 const DEFAULT_INPUT_RELIABLE_LABELS = [
   "PROMPT_INJECTION",
   "JAILBREAK",
@@ -128,6 +152,7 @@ const DEFAULT_INPUT_RELIABLE_LABELS = [
   "RAG_POISONING",
   "ENCODING_OBFUSCATION",
   "MODEL_EXTRACTION",
+  "TOOL_CALL_ABUSE",
 ] as const;
 
 function resolveInputReliableLabels(): Set<string> {
@@ -230,6 +255,12 @@ const LABEL_TO_RISK: Record<Exclude<ModelLabel, "SAFE">, RiskType> = {
   MULTI_TURN_ESCALATION: "MULTI_TURN_ESCALATION",
   MODEL_EXTRACTION: "MODEL_EXTRACTION",
   TOXICITY_HARASSMENT: "TOXICITY_HARASSMENT",
+  // v17. Exact on the guard side -- RISK_TYPES already carries MEMORY_POISONING, so
+  // unlike the DB projection in lib/ml/types.ts this mapping loses nothing. Note the
+  // label is deliberately NOT added to DEFAULT_INPUT_RELIABLE_LABELS below: no
+  // deployed weights emit it yet, so its INPUT precision is unmeasured, and this repo
+  // has already paid once for trusting an unmeasured class to escalate.
+  MEMORY_POISONING: "MEMORY_POISONING",
 };
 
 const PROTECTIVE_ACTIONS = new Set(["BLOCK", "HUMAN_REVIEW", "REWRITE", "ALLOW_WITH_REDACTION"]);

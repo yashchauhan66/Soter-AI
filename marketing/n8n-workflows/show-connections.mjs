@@ -1,0 +1,11 @@
+import { login, api, WF_ID } from './ultra-common.mjs';
+const cookie = await login();
+const wf = await api(cookie, `/rest/workflows/${WF_ID}`);
+const d = wf.data?.data;
+console.log('NAME:', d.name, '| active:', d.active, '| versionId:', d.versionId);
+console.log('\n--- NODES ---');
+for (const n of d.nodes ?? []) console.log('-', n.name, '|', n.type, '| v'+n.typeVersion);
+console.log('\n--- CONNECTIONS ---');
+console.log(JSON.stringify(d.connections, null, 1).slice(0, 4000));
+console.log('\n--- SETTINGS ---', JSON.stringify(d.settings));
+console.log('--- PIN? ---', JSON.stringify(d.pinData)?.slice(0,200));

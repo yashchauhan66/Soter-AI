@@ -51,7 +51,9 @@ const soterGuardOutputs = `={{
  *
  * The engine is appended whenever it is not the default, because "this guard is
  * running on the weaker local engine" is exactly the kind of fact that should
- * not require opening the node to discover.
+ * not require opening the node to discover. Sensitivity is appended on the same
+ * grounds: a guard someone quietly set to Lenient stops fewer things than the
+ * reviewer standing in front of the canvas is assuming.
  */
 const soterGuardSubtitle = `={{
   ((parameters) => {
@@ -71,8 +73,12 @@ const soterGuardSubtitle = `={{
     };
     const label = labels[parameters.action] || parameters.action;
     const enforcing = ["inputGuard", "outputGuard", "universalGuard"].includes(parameters.action);
-    const base = enforcing ? label + " (" + String(parameters.onThreat || "BLOCK").toLowerCase() + ")" : label;
+    let base = enforcing ? label + " (" + String(parameters.onThreat || "BLOCK").toLowerCase() + ")" : label;
     if (parameters.action === "workflowAudit") return base;
+    const sensitivity = String(parameters.sensitivity || "BALANCED");
+    if (["inputGuard", "outputGuard"].includes(parameters.action) && sensitivity !== "BALANCED") {
+      base = base + " · " + sensitivity.toLowerCase();
+    }
     const engine = String(parameters.detectionEngine || "AUTO");
     return engine === "AUTO" ? base : base + " · " + engine.toLowerCase();
   })($parameter)
@@ -111,6 +117,36 @@ const soterGuardHints: NodeHint[] = [
     location: "ndv",
     displayCondition:
       '={{ ["inputGuard", "outputGuard", "universalGuard"].includes($parameter["action"]) && !$parameter["sessionId"] }}',
+  },
+  {
+    // The complaint this node was fixed for: a helpdesk blocking its own
+    // customers, with topics filled in and nothing to make them count. Shown
+    // only when the author has actually named topics, so it is advice and not
+    // nagging.
+    message:
+      "<b>Topic Handling</b> is set to Advisory, so your <b>Allowed Topics</b> only annotate the result. If ordinary questions about these topics are being blocked, switch it to <b>Trust My Topics</b>.",
+    type: "info",
+    location: "ndv",
+    displayCondition:
+      '={{ ["inputGuard", "universalGuard"].includes($parameter["action"]) && !!$parameter["allowedTopics"] && $parameter["topicHandling"] === "ADVISORY" }}',
+  },
+  {
+    // Always Allow is the one control here that can genuinely reduce coverage,
+    // so it says so in the node rather than only in the README.
+    message:
+      "<b>Always Allow</b> skips detection completely for messages that match one of your lines exactly. Nothing about them is scanned, and the result is marked <code>bypassed: ALWAYS_ALLOW</code>. Keep the list to the questions you are certain about.",
+    type: "warning",
+    location: "ndv",
+    displayCondition:
+      '={{ ["inputGuard", "universalGuard"].includes($parameter["action"]) && !!$parameter["alwaysAllow"] }}',
+  },
+  {
+    message:
+      "<b>Sensitivity</b> is Lenient: borderline findings are reported but not enforced, so expect fewer stops and more items on <b>Safe</b>. Live secrets and clear injection or jailbreak attempts are still stopped at every level.",
+    type: "info",
+    location: "ndv",
+    displayCondition:
+      '={{ ["inputGuard", "outputGuard"].includes($parameter["action"]) && $parameter["sensitivity"] === "LENIENT" }}',
   },
   {
     // The one local-mode gap a user cannot see from the output alone: the egress

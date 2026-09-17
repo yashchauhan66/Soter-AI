@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.6.3] - 2026-09-12
+
+### Changed
+
+- **Marketplace listing optimized for search discovery.** The display name is now
+  "SoterAI IDE Guard - AI Security & Secret Protection" and the description leads
+  with the problem a user is searching for ("stop secrets, API keys, PII and
+  prompt injection before they reach AI") rather than a feature list. No runtime
+  behaviour change: commands, settings, activation events, and every protection
+  are identical to 0.6.2.
+- The em-dash in the display name was replaced with an ASCII hyphen. The
+  Marketplace page rendered the UTF-8 em-dash as mojibake (`â€”`) in some
+  contexts, which looked broken on the listing a visitor sees first.
+- **README restructured to be installation-first.** The hero logo image was
+  removed (the Marketplace already shows the extension icon at large size next
+  to the title; a second copy pushed the install section below the fold), the
+  header is a compact one-liner, and the install section now leads the page
+  with a per-editor table: direct `vscode:` / `cursor:` / `windsurf:` / `kiro:`
+  / `antigravity:` / `vscodium:` install links plus the exact
+  `--install-extension` command for each editor, a `devin:` fallback link for
+  the Windsurf→Devin rebrand, the in-editor search path, and the offline VSIX
+  route. A first-time visitor can now install from the README alone, on any
+  supported editor, without visiting the website. No content sections were
+  removed; everything below the install block is unchanged.
+
 ## [0.6.2] - 2026-08-31
 
 ### Changed

@@ -1,0 +1,17 @@
+﻿const BASE='http://localhost:5678';
+const wfId='zC0IhnQkfnj0gPlU';
+const lr=await fetch(BASE+'/rest/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({emailOrLdapLoginId:'admin@soterai.in',password:'Soterai123!'})});
+const ck=lr.headers.get('set-cookie').split(';')[0];
+const gw=await fetch(BASE+'/rest/workflows/'+wfId,{headers:{Cookie:ck}});
+const gj=await gw.json();
+const d=gj.data;
+console.log('VER',d.versionId);
+const chat=d.nodes.find(n=>n.name==='When chat message received');
+console.log('BEFORE',JSON.stringify(chat.parameters));
+chat.parameters.responseMode='responseNode';
+console.log('AFTER',JSON.stringify(chat.parameters));
+const body={versionId:d.versionId,name:d.name,nodes:d.nodes,connections:d.connections,settings:d.settings||{},staticData:d.staticData||null,pinData:d.pinData||{}};
+const pr=await fetch(BASE+'/rest/workflows/'+wfId,{method:'PATCH',headers:{'Content-Type':'application/json',Cookie:ck},body:JSON.stringify(body)});
+console.log('PATCH',pr.status);
+const pt=await pr.text();
+console.log(pt.slice(0,1500));

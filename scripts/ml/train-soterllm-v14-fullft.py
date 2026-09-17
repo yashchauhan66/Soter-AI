@@ -142,6 +142,14 @@ ENCODERS: dict[str, str] = {
     "electra-base": "google/electra-base-discriminator",  # 110M, 768 -- strong discriminator pretraining
     "bge-base": "BAAI/bge-base-en-v1.5",                  # 110M, 768 -- retrieval-tuned BERT
     "mbert": "bert-base-multilingual-cased",              # 178M, 768 -- Hinglish / multilingual attacks
+    # v17's encoder. Measured on the 744 authored strings in _v17_langbanks_{a,b}.py
+    # (scripts/ml/_v17_measure_langbanks.py): languages with >=5% UNK go 8/31 -> 0/31
+    # -- gu 83.8%, pa 85.1%, te 78.2%, ml 77.7%, kn 75.6%, th 66.7% all to 0.00% --
+    # for 1.3x English fertility (10 -> 13 tokens). Same DistilBert architecture as
+    # "distilbert", so the layer-decay path (encoder.transformer.layer) already
+    # covers it. CASED: its tokenizer_config sets do_lower_case=false, so the
+    # golden parity file must be regenerated before this ships.
+    "mdistilbert": "distilbert-base-multilingual-cased",   # 135M, 768 -- v17 multilingual
     "electra-large": "google/electra-large-discriminator", # 335M, 1024
 }
 

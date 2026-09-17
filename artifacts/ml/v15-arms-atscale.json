@@ -1,0 +1,820 @@
+{
+  "file": "artifacts/ml/_gate-fpcost-corpus.jsonl",
+  "rows": 6498,
+  "mlRan": 6498,
+  "mlErrors": 0,
+  "prodAp": 0.8,
+  "baselineLabels": [
+    "PROMPT_INJECTION",
+    "JAILBREAK",
+    "SYSTEM_PROMPT_LEAK_ATTEMPT",
+    "PII",
+    "SECRET",
+    "RAG_POISONING",
+    "ENCODING_OBFUSCATION",
+    "MODEL_EXTRACTION"
+  ],
+  "candidates": [
+    "TOOL_CALL_ABUSE",
+    "MULTI_TURN_ESCALATION",
+    "DATA_EXFILTRATION_ATTEMPT",
+    "UNSAFE_OUTPUT",
+    "TOXICITY_HARASSMENT"
+  ],
+  "derivation": "flagged(L,T) = rulesHit || (abstained ? attackProb >= T : mlEscalatedPermissive && L.has(predictedLabel))",
+  "verification": null,
+  "gateArms": {
+    "baseline": {
+      "recall": 95.95,
+      "fpr": 5.82,
+      "attacks": 74,
+      "caught": 71,
+      "benign": 6424,
+      "fp": 374,
+      "misses": 3,
+      "fps": 374,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 93.1,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 6424,
+          "fp": 374,
+          "recall": 0,
+          "fpr": 5.82
+        }
+      }
+    },
+    "TOOL_CALL_ABUSE": {
+      "recall": 97.3,
+      "fpr": 5.82,
+      "attacks": 74,
+      "caught": 72,
+      "benign": 6424,
+      "fp": 374,
+      "misses": 2,
+      "fps": 374,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 93.1,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 24,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 6424,
+          "fp": 374,
+          "recall": 0,
+          "fpr": 5.82
+        }
+      }
+    },
+    "MULTI_TURN_ESCALATION": {
+      "recall": 95.95,
+      "fpr": 5.82,
+      "attacks": 74,
+      "caught": 71,
+      "benign": 6424,
+      "fp": 374,
+      "misses": 3,
+      "fps": 374,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 93.1,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 6424,
+          "fp": 374,
+          "recall": 0,
+          "fpr": 5.82
+        }
+      }
+    },
+    "DATA_EXFILTRATION_ATTEMPT": {
+      "recall": 95.95,
+      "fpr": 5.84,
+      "attacks": 74,
+      "caught": 71,
+      "benign": 6424,
+      "fp": 375,
+      "misses": 3,
+      "fps": 375,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 93.1,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 6424,
+          "fp": 375,
+          "recall": 0,
+          "fpr": 5.84
+        }
+      }
+    },
+    "UNSAFE_OUTPUT": {
+      "recall": 95.95,
+      "fpr": 5.84,
+      "attacks": 74,
+      "caught": 71,
+      "benign": 6424,
+      "fp": 375,
+      "misses": 3,
+      "fps": 375,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 93.1,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 6424,
+          "fp": 375,
+          "recall": 0,
+          "fpr": 5.84
+        }
+      }
+    },
+    "TOXICITY_HARASSMENT": {
+      "recall": 95.95,
+      "fpr": 5.82,
+      "attacks": 74,
+      "caught": 71,
+      "benign": 6424,
+      "fp": 374,
+      "misses": 3,
+      "fps": 374,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 93.1,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 6424,
+          "fp": 374,
+          "recall": 0,
+          "fpr": 5.82
+        }
+      }
+    },
+    "all": {
+      "recall": 97.3,
+      "fpr": 5.85,
+      "attacks": 74,
+      "caught": 72,
+      "benign": 6424,
+      "fp": 376,
+      "misses": 2,
+      "fps": 376,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 93.1,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 24,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 6424,
+          "fp": 376,
+          "recall": 0,
+          "fpr": 5.85
+        }
+      }
+    }
+  },
+  "gateVerdicts": [
+    {
+      "label": "TOOL_CALL_ABUSE",
+      "measurable": true,
+      "ownLabelAttacks": 24,
+      "attacksGained": 1,
+      "falsePositivesAdded": 0,
+      "benignDenominator": 6424,
+      "verdict": "ADMIT (free recall on this corpus)"
+    },
+    {
+      "label": "MULTI_TURN_ESCALATION",
+      "measurable": true,
+      "ownLabelAttacks": 29,
+      "attacksGained": 0,
+      "falsePositivesAdded": 0,
+      "benignDenominator": 6424,
+      "verdict": "NO-OP on these rows"
+    },
+    {
+      "label": "DATA_EXFILTRATION_ATTEMPT",
+      "measurable": true,
+      "ownLabelAttacks": 20,
+      "attacksGained": 0,
+      "falsePositivesAdded": 1,
+      "benignDenominator": 6424,
+      "verdict": "HOLD OUT (cost exceeds gain)"
+    },
+    {
+      "label": "UNSAFE_OUTPUT",
+      "measurable": false,
+      "ownLabelAttacks": 0,
+      "attacksGained": 0,
+      "falsePositivesAdded": 1,
+      "benignDenominator": 6424,
+      "verdict": "NOT MEASURABLE on this corpus (no gold rows)"
+    },
+    {
+      "label": "TOXICITY_HARASSMENT",
+      "measurable": true,
+      "ownLabelAttacks": 1,
+      "attacksGained": 0,
+      "falsePositivesAdded": 0,
+      "benignDenominator": 6424,
+      "verdict": "NO-OP on these rows"
+    }
+  ],
+  "apArms": {
+    "0.80": {
+      "recall": 95.95,
+      "fpr": 5.82,
+      "attacks": 74,
+      "caught": 71,
+      "benign": 6424,
+      "fp": 374,
+      "misses": 3,
+      "fps": 374,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 93.1,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 6424,
+          "fp": 374,
+          "recall": 0,
+          "fpr": 5.82
+        }
+      }
+    },
+    "0.75": {
+      "recall": 97.3,
+      "fpr": 5.96,
+      "attacks": 74,
+      "caught": 72,
+      "benign": 6424,
+      "fp": 383,
+      "misses": 2,
+      "fps": 383,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 28,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.55,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 6424,
+          "fp": 383,
+          "recall": 0,
+          "fpr": 5.96
+        }
+      }
+    },
+    "0.70": {
+      "recall": 97.3,
+      "fpr": 6.06,
+      "attacks": 74,
+      "caught": 72,
+      "benign": 6424,
+      "fp": 389,
+      "misses": 2,
+      "fps": 389,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 28,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.55,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 6424,
+          "fp": 389,
+          "recall": 0,
+          "fpr": 6.06
+        }
+      }
+    },
+    "0.65": {
+      "recall": 97.3,
+      "fpr": 6.07,
+      "attacks": 74,
+      "caught": 72,
+      "benign": 6424,
+      "fp": 390,
+      "misses": 2,
+      "fps": 390,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 28,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.55,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 6424,
+          "fp": 390,
+          "recall": 0,
+          "fpr": 6.07
+        }
+      }
+    },
+    "0.60": {
+      "recall": 97.3,
+      "fpr": 6.18,
+      "attacks": 74,
+      "caught": 72,
+      "benign": 6424,
+      "fp": 397,
+      "misses": 2,
+      "fps": 397,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 28,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.55,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 6424,
+          "fp": 397,
+          "recall": 0,
+          "fpr": 6.18
+        }
+      }
+    }
+  },
+  "perLanguage": [
+    {
+      "lang": "en",
+      "attacks": 29,
+      "rulesOnlyRecall": 82.76,
+      "rulesPlusMlRecall": 100,
+      "mlContribution": 17.24,
+      "benign": 6354,
+      "fpr": 5.87
+    },
+    {
+      "lang": "hinglish",
+      "attacks": 7,
+      "rulesOnlyRecall": 71.43,
+      "rulesPlusMlRecall": 100,
+      "mlContribution": 28.57,
+      "benign": 0,
+      "fpr": 0
+    },
+    {
+      "lang": "ru",
+      "attacks": 6,
+      "rulesOnlyRecall": 66.67,
+      "rulesPlusMlRecall": 83.33,
+      "mlContribution": 16.66,
+      "benign": 0,
+      "fpr": 0
+    },
+    {
+      "lang": "zh",
+      "attacks": 5,
+      "rulesOnlyRecall": 40,
+      "rulesPlusMlRecall": 100,
+      "mlContribution": 60,
+      "benign": 0,
+      "fpr": 0
+    },
+    {
+      "lang": "de",
+      "attacks": 5,
+      "rulesOnlyRecall": 40,
+      "rulesPlusMlRecall": 100,
+      "mlContribution": 60,
+      "benign": 0,
+      "fpr": 0
+    },
+    {
+      "lang": "es",
+      "attacks": 4,
+      "rulesOnlyRecall": 25,
+      "rulesPlusMlRecall": 100,
+      "mlContribution": 75,
+      "benign": 1,
+      "fpr": 0
+    },
+    {
+      "lang": "fr",
+      "attacks": 4,
+      "rulesOnlyRecall": 25,
+      "rulesPlusMlRecall": 100,
+      "mlContribution": 75,
+      "benign": 0,
+      "fpr": 0
+    },
+    {
+      "lang": "ja",
+      "attacks": 4,
+      "rulesOnlyRecall": 50,
+      "rulesPlusMlRecall": 100,
+      "mlContribution": 50,
+      "benign": 0,
+      "fpr": 0
+    },
+    {
+      "lang": "pt",
+      "attacks": 4,
+      "rulesOnlyRecall": 25,
+      "rulesPlusMlRecall": 75,
+      "mlContribution": 50,
+      "benign": 0,
+      "fpr": 0
+    },
+    {
+      "lang": "ar",
+      "attacks": 3,
+      "rulesOnlyRecall": 33.33,
+      "rulesPlusMlRecall": 66.67,
+      "mlContribution": 33.34,
+      "benign": 0,
+      "fpr": 0
+    },
+    {
+      "lang": "ko",
+      "attacks": 2,
+      "rulesOnlyRecall": 50,
+      "rulesPlusMlRecall": 100,
+      "mlContribution": 50,
+      "benign": 0,
+      "fpr": 0
+    },
+    {
+      "lang": "hi",
+      "attacks": 1,
+      "rulesOnlyRecall": 100,
+      "rulesPlusMlRecall": 100,
+      "mlContribution": 0,
+      "benign": 0,
+      "fpr": 0
+    },
+    {
+      "lang": "mixed",
+      "attacks": 0,
+      "rulesOnlyRecall": 0,
+      "rulesPlusMlRecall": 0,
+      "mlContribution": 0,
+      "benign": 69,
+      "fpr": 1.45
+    }
+  ]
+}

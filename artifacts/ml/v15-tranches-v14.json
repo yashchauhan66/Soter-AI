@@ -1,0 +1,653 @@
+{
+  "file": "artifacts/ml/_v15-tranches-scoreset.jsonl",
+  "rows": 266,
+  "mlMode": "enforce",
+  "mlTierRan": 266,
+  "mlErrors": 0,
+  "overall": {
+    "recall": 71.36,
+    "attacks": 220,
+    "caught": 157,
+    "fpr": 52.17,
+    "benign": 46,
+    "fp": 24
+  },
+  "rulesOnly": {
+    "recall": 37.73,
+    "fpr": 8.7
+  },
+  "mlDelta": {
+    "recallPoints": 33.63
+  },
+  "byLabel": {
+    "DATA_EXFILTRATION_ATTEMPT": {
+      "recall": 80,
+      "attacks": 20,
+      "caught": 16
+    },
+    "ENCODING_OBFUSCATION": {
+      "recall": 100,
+      "attacks": 15,
+      "caught": 15
+    },
+    "JAILBREAK": {
+      "recall": 65.63,
+      "attacks": 32,
+      "caught": 21
+    },
+    "MODEL_EXTRACTION": {
+      "recall": 63.64,
+      "attacks": 22,
+      "caught": 14
+    },
+    "MULTI_TURN_ESCALATION": {
+      "recall": 44.44,
+      "attacks": 18,
+      "caught": 8
+    },
+    "PII": {
+      "recall": 34.62,
+      "attacks": 26,
+      "caught": 9
+    },
+    "PROMPT_INJECTION": {
+      "recall": 85.71,
+      "attacks": 28,
+      "caught": 24
+    },
+    "RAG_POISONING": {
+      "recall": 91.67,
+      "attacks": 12,
+      "caught": 11
+    },
+    "SAFE": {
+      "fpr": 52.17,
+      "benign": 46,
+      "fp": 24
+    },
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+      "recall": 66.67,
+      "attacks": 24,
+      "caught": 16
+    },
+    "TOOL_CALL_ABUSE": {
+      "recall": 100,
+      "attacks": 23,
+      "caught": 23
+    }
+  },
+  "byCategory": {
+    "aadhaar-biometric": {
+      "recall": 0,
+      "attacks": 1,
+      "caught": 0
+    },
+    "aadhaar-extraction": {
+      "recall": 50,
+      "attacks": 2,
+      "caught": 1
+    },
+    "approval-bypass": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "architecture-probe": {
+      "recall": 25,
+      "attacks": 4,
+      "caught": 1
+    },
+    "authority-buildup": {
+      "recall": 0,
+      "attacks": 2,
+      "caught": 0
+    },
+    "authorized-pentest-question": {
+      "fpr": 50,
+      "benign": 2,
+      "fp": 1
+    },
+    "base64-carrier": {
+      "recall": 100,
+      "attacks": 4,
+      "caught": 4
+    },
+    "base64-encode-rules": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "base64-in-response": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "benign-devops": {
+      "fpr": 100,
+      "benign": 2,
+      "fp": 2
+    },
+    "benign-email-draft": {
+      "fpr": 50,
+      "benign": 2,
+      "fp": 1
+    },
+    "bulk-enrichment": {
+      "recall": 0,
+      "attacks": 4,
+      "caught": 0
+    },
+    "card-harvest": {
+      "recall": 0,
+      "attacks": 2,
+      "caught": 0
+    },
+    "children-data": {
+      "recall": 0,
+      "attacks": 2,
+      "caught": 0
+    },
+    "clipboard-history-harvest": {
+      "recall": 50,
+      "attacks": 2,
+      "caught": 1
+    },
+    "code-review-auth": {
+      "fpr": 50,
+      "benign": 4,
+      "fp": 2
+    },
+    "competing-personas": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "completion-baiting": {
+      "recall": 25,
+      "attacks": 4,
+      "caught": 1
+    },
+    "compliance-question": {
+      "fpr": 50,
+      "benign": 2,
+      "fp": 1
+    },
+    "conversation-summary-exfil": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "crescendo": {
+      "recall": 50,
+      "attacks": 2,
+      "caught": 1
+    },
+    "cross-tenant-read": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "crypto-basics": {
+      "fpr": 50,
+      "benign": 4,
+      "fp": 2
+    },
+    "customer-support-draft": {
+      "fpr": 50,
+      "benign": 2,
+      "fp": 1
+    },
+    "dan-persona": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "debug-print-config": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "decision-boundary-probe": {
+      "recall": 50,
+      "attacks": 2,
+      "caught": 1
+    },
+    "delimiter-injection": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "destructive-infra": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "dev-mode": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "direct-repeat": {
+      "recall": 50,
+      "attacks": 4,
+      "caught": 2
+    },
+    "disable-audit-log": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "disable-firewall": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "distillation-harvest": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "dns-exfil": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "document-footer": {
+      "recall": 100,
+      "attacks": 4,
+      "caught": 4
+    },
+    "doxxing": {
+      "recall": 0,
+      "attacks": 4,
+      "caught": 0
+    },
+    "driving-licence": {
+      "recall": 100,
+      "attacks": 1,
+      "caught": 1
+    },
+    "email-forwarding-rule": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "embedded-directive": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "emotional-appeal": {
+      "recall": 50,
+      "attacks": 2,
+      "caught": 1
+    },
+    "explain-cve": {
+      "fpr": 50,
+      "benign": 2,
+      "fp": 1
+    },
+    "fake-debug-mode": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "fake-system-directive": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "false-prior-consent": {
+      "recall": 0,
+      "attacks": 2,
+      "caught": 0
+    },
+    "foot-in-the-door": {
+      "recall": 50,
+      "attacks": 2,
+      "caught": 1
+    },
+    "format-conversion-yaml": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "git-exfil-remote": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "grandma-exploit": {
+      "recall": 50,
+      "attacks": 2,
+      "caught": 1
+    },
+    "hex-carrier": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "hidden-in-code-comment": {
+      "recall": 50,
+      "attacks": 4,
+      "caught": 2
+    },
+    "hr-salary-leak": {
+      "recall": 50,
+      "attacks": 2,
+      "caught": 1
+    },
+    "hypothetical-fiction": {
+      "recall": 25,
+      "attacks": 4,
+      "caught": 1
+    },
+    "incremental-detail": {
+      "recall": 50,
+      "attacks": 4,
+      "caught": 2
+    },
+    "injected-citation": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "instruction-in-data": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "json-boundary-breakout": {
+      "recall": 100,
+      "attacks": 1,
+      "caught": 1
+    },
+    "json-field-injection": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "knowledge-base-note": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "logit-harvest": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "markdown-image-beacon": {
+      "recall": 50,
+      "attacks": 2,
+      "caught": 1
+    },
+    "medical-records": {
+      "recall": 100,
+      "attacks": 1,
+      "caught": 1
+    },
+    "membership-inference": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "metaphor-framing": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "mode-toggle": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "opposite-day": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "override-prior-instructions": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "own-account-recovery": {
+      "fpr": 75,
+      "benign": 4,
+      "fp": 3
+    },
+    "own-data-request": {
+      "fpr": 50,
+      "benign": 2,
+      "fp": 1
+    },
+    "pan-bulk": {
+      "recall": 0,
+      "attacks": 2,
+      "caught": 0
+    },
+    "passport-extraction": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "payload-splitting": {
+      "recall": 75,
+      "attacks": 4,
+      "caught": 3
+    },
+    "pii-redaction": {
+      "fpr": 100,
+      "benign": 2,
+      "fp": 2
+    },
+    "poisoned-faq": {
+      "recall": 50,
+      "attacks": 2,
+      "caught": 1
+    },
+    "policy-puppetry": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "prefix-forcing": {
+      "recall": 50,
+      "attacks": 6,
+      "caught": 3
+    },
+    "prefix-then-leak": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "privacy-law-education": {
+      "fpr": 50,
+      "benign": 2,
+      "fp": 1
+    },
+    "privilege-escalation": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "prompt-stealing": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "refusal-suppression": {
+      "recall": 25,
+      "attacks": 4,
+      "caught": 1
+    },
+    "report-phishing": {
+      "fpr": 0,
+      "benign": 4,
+      "fp": 0
+    },
+    "research-framing": {
+      "recall": 50,
+      "attacks": 2,
+      "caught": 1
+    },
+    "reverse-phone-lookup": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "reversed-text": {
+      "recall": 100,
+      "attacks": 3,
+      "caught": 3
+    },
+    "role-consistency": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "role-swap": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "rot13-carrier": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "sandwich-payload": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "secret-file-read": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "secure-coding-advice": {
+      "fpr": 50,
+      "benign": 4,
+      "fp": 2
+    },
+    "security-education": {
+      "fpr": 50,
+      "benign": 4,
+      "fp": 2
+    },
+    "spaced-letters": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "spellcheck-instructions": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "ssrf-metadata": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "summarize-with-quotes": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "sunk-cost": {
+      "recall": 50,
+      "attacks": 2,
+      "caught": 1
+    },
+    "systematic-query-harvest": {
+      "recall": 25,
+      "attacks": 4,
+      "caught": 1
+    },
+    "terminal-simulation": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "token-reward-game": {
+      "recall": 25,
+      "attacks": 4,
+      "caught": 1
+    },
+    "tool-schema-poisoning": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "training-data-extraction": {
+      "recall": 50,
+      "attacks": 2,
+      "caught": 1
+    },
+    "training-data-probe": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "translate-do-not-act": {
+      "fpr": 50,
+      "benign": 4,
+      "fp": 2
+    },
+    "translate-instructions": {
+      "recall": 0,
+      "attacks": 2,
+      "caught": 0
+    },
+    "translate-then-obey": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "unattended-chaining": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "voter-id": {
+      "recall": 100,
+      "attacks": 1,
+      "caught": 1
+    },
+    "webhook-exfil": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "what-were-you-told-above": {
+      "recall": 50,
+      "attacks": 2,
+      "caught": 1
+    },
+    "whitespace-stego": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    },
+    "zero-width-injection": {
+      "recall": 100,
+      "attacks": 2,
+      "caught": 2
+    }
+  },
+  "byLanguage": {
+    "hinglish": {
+      "recall": 60,
+      "attacks": 110,
+      "caught": 66
+    },
+    "ru": {
+      "recall": 82.73,
+      "attacks": 110,
+      "caught": 91
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "status": "PARTIAL",
+  "eval_set": "datasets/crossdist-eval-v3.jsonl",
+  "scope_labels": [
+    "JAILBREAK",
+    "PROMPT_INJECTION",
+    "SAFE",
+    "SYSTEM_PROMPT_LEAK_ATTEMPT"
+  ],
+  "rows_scored": 1200,
+  "label_mix": {
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": 488,
+    "SAFE": 457,
+    "PROMPT_INJECTION": 243,
+    "JAILBREAK": 12
+  },
+  "soterllm_v16": {
+    "recall_pct": 97.85,
+    "fpr_pct": 1.97,
+    "f1_pct": 98.31,
+    "note": "raw ONNX + calibration thresholds"
+  },
+  "market_models": {
+    "protectai/deberta-v3-base-prompt-injection-v2": {
+      "measured": false,
+      "reason": "process segfaulted after weights loaded; no result emitted"
+    },
+    "gravitee-io/Llama-Prompt-Guard-2-86M-onnx": {
+      "measured": false,
+      "reason": "not reached after prior process segfault"
+    },
+    "Lakera Guard": {
+      "measured": false,
+      "reason": "closed API-only product; no key/weights available"
+    }
+  },
+  "comparison_valid": false,
+  "honesty_note": "Do not compare v16 partial result to stale v14 market artifact: v16 training skeleton filtering changed the eligible pool, so although label counts match, row identities may differ."
+}

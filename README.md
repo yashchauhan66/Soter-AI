@@ -8,6 +8,8 @@
 
 Self-hostable · Offline-capable · India-first PII detection · Reproducible benchmarks
 
+![SoterAI catches a secret before it reaches AI](https://soterai.in/marketplace/screenshots/soterai-secret-caught-before-ai.gif)
+
 <p>
   <a href="https://soterai.in"><img src="https://img.shields.io/badge/Live-soterai.in-1f6feb?style=flat-square&logo=googlechrome&logoColor=white" alt="Live site" /></a>
   <a href="https://soterai.in/playground"><img src="https://img.shields.io/badge/Playground-try%20it-00a67e?style=flat-square&logo=react&logoColor=white" alt="Playground" /></a>

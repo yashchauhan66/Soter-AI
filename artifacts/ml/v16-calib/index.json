@@ -1,0 +1,134 @@
+{
+  "model_dir": "models\\ml-classifier-v16",
+  "model_onnx_sha256": "08b99181c9f24f200c67fe93180f8898766aea884eaeebe12aafc234a865e469",
+  "calibration_rows": 12138,
+  "candidates": {
+    "0.01": {
+      "file": "artifacts\\ml\\v16-calib\\calibration-fpr0.01.json",
+      "thresholds": {
+        "SAFE": 0.0,
+        "PROMPT_INJECTION": 0.2421189248561859,
+        "JAILBREAK": 0.13309472799301147,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 0.5,
+        "PII": 0.05,
+        "SECRET": 0.05,
+        "UNSAFE_OUTPUT": 0.05,
+        "RAG_POISONING": 0.05,
+        "DATA_EXFILTRATION_ATTEMPT": 0.05,
+        "TOOL_CALL_ABUSE": 0.05,
+        "ENCODING_OBFUSCATION": 0.05,
+        "MULTI_TURN_ESCALATION": 0.08011319488286972,
+        "MODEL_EXTRACTION": 0.05,
+        "TOXICITY_HARASSMENT": 0.05
+      },
+      "inert": [
+        "PII",
+        "SECRET",
+        "UNSAFE_OUTPUT",
+        "RAG_POISONING",
+        "DATA_EXFILTRATION_ATTEMPT",
+        "TOOL_CALL_ABUSE",
+        "ENCODING_OBFUSCATION",
+        "MODEL_EXTRACTION",
+        "TOXICITY_HARASSMENT"
+      ]
+    },
+    "0.02": {
+      "file": "artifacts\\ml\\v16-calib\\calibration-fpr0.02.json",
+      "thresholds": {
+        "SAFE": 0.0,
+        "PROMPT_INJECTION": 0.14155103266239166,
+        "JAILBREAK": 0.06665398180484772,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 0.34670907258987427,
+        "PII": 0.05,
+        "SECRET": 0.05,
+        "UNSAFE_OUTPUT": 0.05,
+        "RAG_POISONING": 0.05,
+        "DATA_EXFILTRATION_ATTEMPT": 0.05,
+        "TOOL_CALL_ABUSE": 0.05,
+        "ENCODING_OBFUSCATION": 0.05,
+        "MULTI_TURN_ESCALATION": 0.05,
+        "MODEL_EXTRACTION": 0.05,
+        "TOXICITY_HARASSMENT": 0.05
+      },
+      "inert": [
+        "JAILBREAK",
+        "PII",
+        "SECRET",
+        "UNSAFE_OUTPUT",
+        "RAG_POISONING",
+        "DATA_EXFILTRATION_ATTEMPT",
+        "TOOL_CALL_ABUSE",
+        "ENCODING_OBFUSCATION",
+        "MULTI_TURN_ESCALATION",
+        "MODEL_EXTRACTION",
+        "TOXICITY_HARASSMENT"
+      ]
+    },
+    "0.03": {
+      "file": "artifacts\\ml\\v16-calib\\calibration-fpr0.03.json",
+      "thresholds": {
+        "SAFE": 0.0,
+        "PROMPT_INJECTION": 0.07249271869659424,
+        "JAILBREAK": 0.05,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 0.1397431343793869,
+        "PII": 0.05,
+        "SECRET": 0.05,
+        "UNSAFE_OUTPUT": 0.05,
+        "RAG_POISONING": 0.05,
+        "DATA_EXFILTRATION_ATTEMPT": 0.05,
+        "TOOL_CALL_ABUSE": 0.05,
+        "ENCODING_OBFUSCATION": 0.05,
+        "MULTI_TURN_ESCALATION": 0.05,
+        "MODEL_EXTRACTION": 0.05,
+        "TOXICITY_HARASSMENT": 0.05
+      },
+      "inert": [
+        "JAILBREAK",
+        "PII",
+        "SECRET",
+        "UNSAFE_OUTPUT",
+        "RAG_POISONING",
+        "DATA_EXFILTRATION_ATTEMPT",
+        "TOOL_CALL_ABUSE",
+        "ENCODING_OBFUSCATION",
+        "MULTI_TURN_ESCALATION",
+        "MODEL_EXTRACTION",
+        "TOXICITY_HARASSMENT"
+      ]
+    },
+    "0.05": {
+      "file": "artifacts\\ml\\v16-calib\\calibration-fpr0.05.json",
+      "thresholds": {
+        "SAFE": 0.0,
+        "PROMPT_INJECTION": 0.05,
+        "JAILBREAK": 0.05,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 0.08236133307218552,
+        "PII": 0.05,
+        "SECRET": 0.05,
+        "UNSAFE_OUTPUT": 0.05,
+        "RAG_POISONING": 0.05,
+        "DATA_EXFILTRATION_ATTEMPT": 0.05,
+        "TOOL_CALL_ABUSE": 0.05,
+        "ENCODING_OBFUSCATION": 0.05,
+        "MULTI_TURN_ESCALATION": 0.05,
+        "MODEL_EXTRACTION": 0.05,
+        "TOXICITY_HARASSMENT": 0.05
+      },
+      "inert": [
+        "PROMPT_INJECTION",
+        "JAILBREAK",
+        "PII",
+        "SECRET",
+        "UNSAFE_OUTPUT",
+        "RAG_POISONING",
+        "DATA_EXFILTRATION_ATTEMPT",
+        "TOOL_CALL_ABUSE",
+        "ENCODING_OBFUSCATION",
+        "MULTI_TURN_ESCALATION",
+        "MODEL_EXTRACTION",
+        "TOXICITY_HARASSMENT"
+      ]
+    }
+  }
+}

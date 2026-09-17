@@ -45,7 +45,41 @@ Packages under `packages/` that carry an open-source `LICENSE` file but have
 `extensions/jupyterlab`) have never been distributed under that license. They
 are treated as proprietary unless and until they are published.
 
+That status is enforced, not just documented: each of those manifests carries
+`"private": true`, so `npm publish` refuses outright. A stray publish from the
+wrong directory is otherwise the single likeliest way one of them becomes
+distributed under the open-source `LICENSE` text sitting next to it — and a
+published version can never be withdrawn, only deprecated. Removing the
+`private` flag is therefore the deliberate act of releasing that package, and
+`tests/publish-surface-guard.test.ts` fails if one goes missing.
+
 Third-party dependencies remain under their own licenses.
+
+## What the published packages actually ship
+
+The packages above are meant to be **used** by anyone who installs them; they
+are not meant to be an easy source of copyable detection logic. Two things
+enforce the difference, and it is worth being precise about what each one does:
+
+- **The trained classifier never ships.** The ONNX weights, tokenizer vocab and
+  training corpus stay server-side. No npm tarball or extension build contains
+  them — `tests/publish-surface-guard.test.ts` asserts it.
+- **The compiled JS is minified before publishing**
+  (`scripts/minify-published-dist.mjs`, wired into each `prepublishOnly`). Raw
+  `tsc` output is the TypeScript with the types removed: comments, JSDoc and
+  internal names all survive, and for a detection engine the comments are the
+  most valuable part because they explain why each rule exists. Minification
+  removes that. The `.d.ts` files stay readable on purpose — consumers need
+  types, and types describe the API surface, not its mechanics.
+
+Minification is a cost, not a barrier. Anything that runs on a consumer's
+machine can be read by that consumer given enough time, and the licenses below
+are what make copying actionable — not the packaging. Note in particular that
+`@soterai/core`, `soter-pii`, `@soterai/mcp-gateway` and `n8n-nodes-soterai`
+ship under Apache-2.0/MIT, which **grant** the right to copy, modify and
+redistribute. Those grants are irrevocable for every version already published.
+Restricting future versions means relicensing them (BUSL-1.1, as `@soterai/cli`
+already does), which is a product decision, not a packaging one.
 
 ## In plain terms
 

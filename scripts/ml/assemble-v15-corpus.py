@@ -75,6 +75,14 @@ def load_rows(path: Path) -> list[dict]:
     return rows
 
 
+def ascii_safe(value: str) -> str:
+    """Windows consoles are cp1252. Printing a CJK/Cyrillic/Arabic row raised
+    UnicodeEncodeError *from inside the leak report*, so the guard fired and then
+    crashed before naming a single offending row — the operator saw a traceback
+    instead of the finding. Escape rather than crash."""
+    return repr(value).encode("ascii", "backslashreplace").decode("ascii")
+
+
 def clean(rows: list[dict], origin: str) -> tuple[list[dict], collections.Counter]:
     """Normalize + validate; return (kept, drop_reasons)."""
     kept: list[dict] = []
@@ -111,6 +119,13 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--batches", required=True,
                     help="JSON file with {batches:[{cleanTrain:[],cleanTest:[]}]} from the generation workflow")
+    ap.add_argument("--extra-train-jsonl", nargs="*", default=[],
+                    help="raw JSONL files whose rows are added as TRAIN rows (never battery), "
+                         "one {text,label,category,language} object per line. Used for tranches "
+                         "authored directly rather than emitted by the generation workflow. They "
+                         "pass the same clean() + every leak guard as batch rows; anything that "
+                         "collides with the frozen battery or an eval set is deduped/refused, so "
+                         "adding rows here can never contaminate the before/after measurement.")
     ap.add_argument("--train-out", default="datasets/ml-v15-threat-corpus.jsonl")
     ap.add_argument("--test-out", default="datasets/v15-test-battery.jsonl")
     ap.add_argument("--leak-against", nargs="*",
@@ -121,6 +136,9 @@ def main() -> int:
                          "v14 already trained on makes the before/after measurement "
                          "fraudulent. Train-side overlap is only deduped, not fatal.")
     ap.add_argument("--report-out", default="artifacts/ml/v15-corpus-report.json")
+    ap.add_argument("--quarantine-out", default="artifacts/ml/v15-battery-quarantine.jsonl",
+                    help="where battery rows found in v14's training data are written "
+                         "after being dropped from the battery")
     args = ap.parse_args()
 
     payload = json.loads(Path(args.batches).read_text(encoding="utf-8"))
@@ -143,6 +161,21 @@ def main() -> int:
         raw_train.extend(tr)
         raw_test.extend(te)
         per_dim[key] = {"train_in": len(tr), "test_in": len(te)}
+
+    # Directly-authored tranches (e.g. datasets/ml-v15-ru-hinglish-expansion.jsonl).
+    # They are TRAIN-only by construction: the held-out battery stays frozen so the
+    # v14-vs-v15 delta is measured on identical rows. Guards 1-3 below still apply, so
+    # a row here that duplicates the battery or an eval set is dropped, not trusted.
+    for p in args.extra_train_jsonl:
+        path = Path(p)
+        if not path.exists():
+            print(f"[FATAL] --extra-train-jsonl file missing: {p}")
+            return 2
+        extra = load_rows(path)
+        for r in extra:
+            r.setdefault("_dim", f"extra:{path.stem}")
+        raw_train.extend(extra)
+        per_dim[f"extra:{path.stem}"] = {"train_in": len(extra), "test_in": 0}
 
     train, train_drops = clean(raw_train, "v15-threat-corpus")
     test, test_drops = clean(raw_test, "v15-test-battery")
@@ -172,7 +205,7 @@ def main() -> int:
         print("        share a group key with an eval set. Refusing to write a corpus")
         print("        that would produce an unfalsifiable gain.")
         for r in (train_leaks + test_leaks)[:5]:
-            print(f"        - {r['label']}: {r['text'][:90]!r}")
+            print(f"        - {r['label']}: {ascii_safe(r['text'][:90])}")
         return 2
 
     # ── Guard 3: the battery must be UNSEEN by v14 ───────────────────────────
@@ -192,12 +225,25 @@ def main() -> int:
 
     battery_seen = [r for r in test if group_key_for(r["text"]) in seen_keys]
     if battery_seen:
-        print(f"[FATAL] {len(battery_seen)} battery rows were ALREADY IN v14's TRAINING DATA.")
-        print("        v14 would score them from memory, understating the weakness this")
-        print("        battery exists to measure. Refusing to write a fake baseline.")
+        # QUARANTINE, not abort. The invariant that matters is "no row v14 trained
+        # on is ever scored in the battery" — dropping the row enforces that just as
+        # strictly as refusing to write the file, and a hard abort with no recourse
+        # simply blocked the whole pass on a handful of rows. The drop is loud and
+        # itemised in the report; the rows are written out so they can be inspected
+        # rather than vanishing.
+        qpath = Path(args.quarantine_out)
+        qpath.parent.mkdir(parents=True, exist_ok=True)
+        with qpath.open("w", encoding="utf-8") as fh:
+            for r in battery_seen:
+                fh.write(json.dumps(r, ensure_ascii=False) + "\n")
+        print(f"[QUARANTINE] {len(battery_seen)} battery rows were already in v14's")
+        print("             training data; v14 would score them from memory and")
+        print("             understate the weakness this battery measures. DROPPED:")
         for r in battery_seen[:5]:
-            print(f"        - {r['label']}: {r['text'][:90]!r}")
-        return 2
+            print(f"        - {r['label']}: {ascii_safe(r['text'][:90])}")
+        if len(battery_seen) > 5:
+            print(f"        ... and {len(battery_seen) - 5} more (see {qpath})")
+        test = [r for r in test if group_key_for(r["text"]) not in seen_keys]
     # Train-side overlap with v14 is expected (we merge the old corpora anyway), so
     # it is reported, not fatal.
     train_seen = sum(1 for r in train if group_key_for(r["text"]) in seen_keys)
@@ -224,7 +270,9 @@ def main() -> int:
         "test_drops": dict(test_drops),
         "leak_check": {"eval_sets": eval_detail, "train_leaks": 0, "battery_leaks": 0,
                        "status": "CLEAN"},
-        "battery_unseen_by_v14": {"checked_against": seen_detail, "battery_overlap": 0,
+        "battery_unseen_by_v14": {"checked_against": seen_detail,
+                                  "battery_rows_quarantined": len(battery_seen),
+                                  "quarantine_file": args.quarantine_out if battery_seen else None,
                                   "train_rows_v14_already_saw": train_seen,
                                   "status": "CLEAN"},
         "train_by_label": dict(label_counts.most_common()),

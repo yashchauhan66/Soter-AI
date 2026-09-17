@@ -595,7 +595,7 @@ export class BrokerServer {
             return;
         }
 
-        const provider = await this.forwardProvider("openai", forward, req);
+        const provider = await this.forwardProvider("openai", forward, req, sessionId, model);
         const responseText = extractOpenAIResponse(provider.body);
         const responseScan = await scanBrokerResponse(responseText, { canaries: this.options.canaries });
         this.recordResponseMemory(sessionId, responseScan, model, "openai-compatible");
@@ -620,7 +620,13 @@ export class BrokerServer {
         const inlineSystem = rawList.find((m) => m?.role === "system");
         const forward = {
             ...body,
-            system: typeof body.system === "string" ? body.system : (inlineSystem?.content as string | undefined),
+            // `system` is folded into the scan set above, so it must be redacted
+            // on the same terms as the messages — forwarding body.system verbatim
+            // sent a scanned secret while claiming decision=redact.
+            system: forwardRawSystem(
+                scan.redacted ? "redact" : scan.decision,
+                body.system ?? inlineSystem?.content,
+            ),
             messages: rawList.filter((m) => m?.role !== "system"),
         };
         res.setHeader("x-soterai-request-decision", scan.decision);
@@ -630,7 +636,7 @@ export class BrokerServer {
             return;
         }
 
-        const provider = await this.forwardProvider("anthropic", forward, req);
+        const provider = await this.forwardProvider("anthropic", forward, req, sessionId, model);
         const responseText = extractAnthropicResponse(provider.body);
         const responseScan = await scanBrokerResponse(responseText, { canaries: this.options.canaries });
         this.recordResponseMemory(sessionId, responseScan, model, "anthropic-compatible");
@@ -669,6 +675,9 @@ export class BrokerServer {
             headers["anthropic-version"] = stringValue(req.headers["anthropic-version"]) ?? "2023-06-01";
         }
 
+        // Same egress invariant as the non-streaming path, before the socket
+        // opens — and before the abort timer, so a block leaves no dangling timer.
+        const wire = this.serializeEgress({ ...body, stream: true }, providerLabel, sessionId, model);
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), this.options.requestTimeoutMs ?? 60_000);
         let upstream: Response;
@@ -676,7 +685,7 @@ export class BrokerServer {
             upstream = await (this.options.fetchImpl ?? fetch)(target, {
                 method: "POST",
                 headers,
-                body: JSON.stringify({ ...body, stream: true }),
+                body: wire,
                 signal: controller.signal,
             });
         } catch {
@@ -810,7 +819,47 @@ export class BrokerServer {
     }
 
 
-    private async forwardProvider(kind: "openai" | "anthropic", body: JsonBody, req: IncomingMessage): Promise<{ status: number; body: JsonBody }> {
+    /**
+     * The egress invariant — the last gate before any byte leaves this process.
+     *
+     * Scanning runs on a FLATTENED copy of the request, but the forwarded body
+     * is rebuilt from the original fields (`{ ...body }` plus targeted
+     * rewrites). Every field that rebuild copies through is scanned-but-never-
+     * redacted, and each new provider parameter silently widens that gap. Rather
+     * than chase field names, this verifies the serialized bytes that are about
+     * to be written and fails CLOSED if any high-risk secret class survives.
+     *
+     * It is a backstop, not the primary control: with redaction correct it never
+     * fires. When it does fire, either a passthrough field carries a secret we
+     * cannot safely rewrite (unknown shape — blocking is the honest answer) or
+     * the scanner and the redactor disagree, which is a bug worth surfacing.
+     *
+     * Deliberately not disableable: an opt-out here would recreate exactly the
+     * "reported protection it did not deliver" failure this closes.
+     */
+    private serializeEgress(body: JsonBody, provider: string, sessionId?: string, model?: string): string {
+        const wire = JSON.stringify(body);
+        const survivors = findSurvivingSecrets(wire);
+        if (survivors.length === 0) return wire;
+        this.record({
+            sessionId,
+            eventType: "broker_egress_blocked",
+            decision: "block",
+            riskScore: 100,
+            categories: ["egress_secret_survived", ...survivors],
+            model,
+            provider,
+        });
+        throw new HttpError(
+            422,
+            "egress_secret_blocked",
+            `The request was stopped at the wire: ${survivors.join(", ")} survived redaction and would have reached the provider. ` +
+            "Move the value into the Protected Vault, or remove it from the request.",
+            { survivingSecretClasses: survivors, stage: "egress_verify" },
+        );
+    }
+
+    private async forwardProvider(kind: "openai" | "anthropic", body: JsonBody, req: IncomingMessage, sessionId?: string, model?: string): Promise<{ status: number; body: JsonBody }> {
         const target = kind === "openai" ? this.options.openAIProviderUrl : this.options.anthropicProviderUrl;
         if (!target) throw new HttpError(503, "provider_not_configured", `${kind} provider routing is not configured`);
         const apiKey = this.options.providerApiKey ?? stringValue(req.headers["x-soterai-provider-key"]);
@@ -818,10 +867,12 @@ export class BrokerServer {
         const headers: Record<string, string> = { "content-type": "application/json" };
         if (kind === "openai") headers.authorization = `Bearer ${apiKey}`;
         else { headers["x-api-key"] = apiKey; headers["anthropic-version"] = stringValue(req.headers["anthropic-version"]) ?? "2023-06-01"; }
+        // Serialize and verify BEFORE opening the socket.
+        const wire = this.serializeEgress(body, `${kind}-compatible`, sessionId, model);
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), this.options.requestTimeoutMs ?? 30_000);
         try {
-            const response = await (this.options.fetchImpl ?? fetch)(target, { method: "POST", headers, body: JSON.stringify(body), signal: controller.signal });
+            const response = await (this.options.fetchImpl ?? fetch)(target, { method: "POST", headers, body: wire, signal: controller.signal });
             const parsed = await response.json() as JsonBody;
             if (!response.ok) throw providerSafetyError(kind, response.status, parsed);
             return { status: response.status, body: parsed };
@@ -1039,13 +1090,19 @@ function forwardRawMessages(decision: GuardAction, raw: unknown): unknown {
     return raw.map((rawMsg) => {
         if (!rawMsg || typeof rawMsg !== "object") return rawMsg;
         const item = rawMsg as Record<string, unknown>;
-        if (typeof item.content === "string") {
-            return { ...item, content: redactForSharing(item.content) };
+        // tool_calls args are scanned by normalizeMessages, so they raise the
+        // redact decision — they must therefore also BE redacted. Missing this
+        // forwarded a scanned secret verbatim (wire-egress.test.ts covers it).
+        const withCalls = Array.isArray(item.tool_calls)
+            ? { ...item, tool_calls: redactToolCalls(item.tool_calls) }
+            : item;
+        if (typeof withCalls.content === "string") {
+            return { ...withCalls, content: redactForSharing(withCalls.content) };
         }
-        if (Array.isArray(item.content)) {
+        if (Array.isArray(withCalls.content)) {
             return {
-                ...item,
-                content: item.content.map((part) => {
+                ...withCalls,
+                content: withCalls.content.map((part) => {
                     if (!part || typeof part !== "object") return part;
                     const p = part as Record<string, unknown>;
                     if (typeof p.text === "string") return { ...p, text: redactForSharing(p.text) };
@@ -1054,8 +1111,43 @@ function forwardRawMessages(decision: GuardAction, raw: unknown): unknown {
                 }),
             };
         }
-        return rawMsg; // null content (assistant tool_calls) — untouched
+        return withCalls; // null content (assistant tool_calls) — args already handled
     });
+}
+
+/** Redact the user-authored `arguments` payload of each OpenAI tool call. */
+function redactToolCalls(calls: unknown[]): unknown[] {
+    return calls.map((call) => {
+        if (!call || typeof call !== "object") return call;
+        const tc = call as Record<string, unknown>;
+        const fn = tc.function;
+        if (!fn || typeof fn !== "object") return call;
+        const f = fn as Record<string, unknown>;
+        if (typeof f.arguments !== "string") return call;
+        return { ...tc, function: { ...f, arguments: redactForSharing(f.arguments) } };
+    });
+}
+
+/**
+ * Redact Anthropic's top-level `system` field.
+ *
+ * `system` is scanned (proxyAnthropic folds it into the scan set) but the
+ * forward body was rebuilt from `body.system` verbatim, so a secret there was
+ * scanned, counted toward the redact decision, and then sent raw while the
+ * response still advertised `x-soterai-request-decision: redact`.
+ */
+function forwardRawSystem(decision: GuardAction, raw: unknown): unknown {
+    if (decision !== "redact") return raw;
+    if (typeof raw === "string") return redactForSharing(raw);
+    if (Array.isArray(raw)) {
+        return raw.map((part) => {
+            if (!part || typeof part !== "object") return part;
+            const p = part as Record<string, unknown>;
+            if (typeof p.text === "string") return { ...p, text: redactForSharing(p.text) };
+            return part;
+        });
+    }
+    return raw;
 }
 
 function safeRequestResult(result: Awaited<ReturnType<typeof scanBrokerRequest>>): JsonBody {

@@ -430,8 +430,25 @@ function shannonEntropy(s: string): number {
     return h;
 }
 
+/**
+ * Placeholder heuristic for the *value* side of an assignment.
+ *
+ * A bare prefix test is too aggressive: real-world credentials routinely start
+ * with these words (`test_sk_live_...`, environment-scoped keys, zero-padded
+ * account ids), and suppressing them is a false NEGATIVE — the secret ships to
+ * the model with no finding at all. A genuine placeholder is short and
+ * low-entropy; a real credential is long and high-entropy. Require BOTH the
+ * placeholder prefix AND low entropy before suppressing.
+ */
 function isPlaceholderValue(m: string): boolean {
-    return /^(?:your|example|dummy|test|fake|sample|placeholder|xxx+|0{8,}|1{8,}|a{8,}|x{8,})/i.test(m.trim());
+    const v = m.trim();
+    if (!/^(?:your|example|dummy|test|fake|sample|placeholder|xxx+|0{8,}|1{8,}|a{8,}|x{8,})/i.test(v)) return false;
+    // High-entropy content after a "test"-ish prefix is a real credential shape,
+    // not documentation. Keep it.
+    if (shannonEntropy(v) >= 3.5) return false;
+    // Long values are not hand-typed placeholders regardless of prefix.
+    if (v.length >= 32) return false;
+    return true;
 }
 
 function extractAssignedValue(match: string): string {

@@ -1,0 +1,424 @@
+{
+  "file": "artifacts/ml/_crossdist-gate-subset.jsonl",
+  "rows": 3987,
+  "modelA": "models/ml-classifier-v14",
+  "modelB": "models/ml-classifier-v16",
+  "a": {
+    "recall": 97.52,
+    "fpr": 5.56
+  },
+  "b": {
+    "recall": 97.13,
+    "fpr": 5.34
+  },
+  "delta": {
+    "recallPoints": -0.39,
+    "fprPoints": -0.22
+  },
+  "mcnemar": {
+    "overall": {
+      "onlyA": 24,
+      "onlyB": 14,
+      "bothRight": 3836,
+      "bothWrong": 113,
+      "p": 0.143307
+    },
+    "attacksOnly": {
+      "onlyA": 21,
+      "onlyB": 9,
+      "p": 0.042774
+    },
+    "benignOnly": {
+      "onlyA": 3,
+      "onlyB": 5,
+      "p": 0.726563
+    }
+  },
+  "verdict": "NO SIGNIFICANT DIFFERENCE — the delta is within sampling noise",
+  "perLabel": {
+    "JAILBREAK": {
+      "n": 241,
+      "aRecall": 97.1,
+      "bRecall": 96.68,
+      "deltaPoints": -0.42,
+      "onlyA": 1,
+      "onlyB": 0
+    },
+    "PII": {
+      "n": 926,
+      "aRecall": 99.57,
+      "bRecall": 99.57,
+      "deltaPoints": 0,
+      "onlyA": 3,
+      "onlyB": 3
+    },
+    "PROMPT_INJECTION": {
+      "n": 943,
+      "aRecall": 97.03,
+      "bRecall": 96.18,
+      "deltaPoints": -0.85,
+      "onlyA": 11,
+      "onlyB": 3
+    },
+    "SAFE": {
+      "n": 918,
+      "aRecall": 94.44,
+      "bRecall": 94.66,
+      "deltaPoints": 0.22,
+      "onlyA": 3,
+      "onlyB": 5
+    },
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+      "n": 959,
+      "aRecall": 96.14,
+      "bRecall": 95.83,
+      "deltaPoints": -0.31,
+      "onlyA": 6,
+      "onlyB": 3
+    }
+  },
+  "flips": [
+    {
+      "i": 74,
+      "label": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "direction": "B_IMPROVED",
+      "aPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "bPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "aGate": "abstention",
+      "bGate": null
+    },
+    {
+      "i": 130,
+      "label": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "direction": "B_IMPROVED",
+      "aPred": "SAFE",
+      "bPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "aGate": "safe-label",
+      "bGate": null
+    },
+    {
+      "i": 283,
+      "label": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "direction": "B_REGRESSED",
+      "aPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "bPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "aGate": null,
+      "bGate": "abstention"
+    },
+    {
+      "i": 359,
+      "label": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "direction": "B_REGRESSED",
+      "aPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "bPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "aGate": "abstention",
+      "bGate": "abstention"
+    },
+    {
+      "i": 489,
+      "label": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "direction": "B_REGRESSED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "aGate": null,
+      "bGate": "abstention"
+    },
+    {
+      "i": 632,
+      "label": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "direction": "B_REGRESSED",
+      "aPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "bPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "aGate": null,
+      "bGate": "abstention"
+    },
+    {
+      "i": 638,
+      "label": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "direction": "B_IMPROVED",
+      "aPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "bPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "aGate": "abstention",
+      "bGate": null
+    },
+    {
+      "i": 644,
+      "label": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "direction": "B_REGRESSED",
+      "aPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "bPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "aGate": "abstention",
+      "bGate": "abstention"
+    },
+    {
+      "i": 732,
+      "label": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "direction": "B_REGRESSED",
+      "aPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "bPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "aGate": null,
+      "bGate": "abstention"
+    },
+    {
+      "i": 970,
+      "label": "SAFE",
+      "direction": "B_REGRESSED",
+      "aPred": "SAFE",
+      "bPred": "JAILBREAK",
+      "aGate": "safe-label",
+      "bGate": "abstention"
+    },
+    {
+      "i": 1285,
+      "label": "SAFE",
+      "direction": "B_IMPROVED",
+      "aPred": "RAG_POISONING",
+      "bPred": "DATA_EXFILTRATION_ATTEMPT",
+      "aGate": null,
+      "bGate": "label-family"
+    },
+    {
+      "i": 1443,
+      "label": "SAFE",
+      "direction": "B_IMPROVED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "PROMPT_INJECTION",
+      "aGate": "abstention",
+      "bGate": "abstention"
+    },
+    {
+      "i": 1444,
+      "label": "SAFE",
+      "direction": "B_IMPROVED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "PROMPT_INJECTION",
+      "aGate": null,
+      "bGate": "abstention"
+    },
+    {
+      "i": 1453,
+      "label": "SAFE",
+      "direction": "B_IMPROVED",
+      "aPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "bPred": "SAFE",
+      "aGate": null,
+      "bGate": "safe-label"
+    },
+    {
+      "i": 1613,
+      "label": "SAFE",
+      "direction": "B_REGRESSED",
+      "aPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "bPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "aGate": "abstention",
+      "bGate": "abstention"
+    },
+    {
+      "i": 1643,
+      "label": "SAFE",
+      "direction": "B_IMPROVED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "PROMPT_INJECTION",
+      "aGate": null,
+      "bGate": "abstention"
+    },
+    {
+      "i": 1671,
+      "label": "SAFE",
+      "direction": "B_REGRESSED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "PROMPT_INJECTION",
+      "aGate": "abstention",
+      "bGate": null
+    },
+    {
+      "i": 1878,
+      "label": "PROMPT_INJECTION",
+      "direction": "B_REGRESSED",
+      "aPred": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "bPred": "SAFE",
+      "aGate": null,
+      "bGate": "safe-label"
+    },
+    {
+      "i": 1882,
+      "label": "PROMPT_INJECTION",
+      "direction": "B_REGRESSED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "PROMPT_INJECTION",
+      "aGate": null,
+      "bGate": "abstention"
+    },
+    {
+      "i": 1883,
+      "label": "PROMPT_INJECTION",
+      "direction": "B_REGRESSED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "PROMPT_INJECTION",
+      "aGate": "abstention",
+      "bGate": "abstention"
+    },
+    {
+      "i": 1950,
+      "label": "PROMPT_INJECTION",
+      "direction": "B_REGRESSED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "PROMPT_INJECTION",
+      "aGate": null,
+      "bGate": "abstention"
+    },
+    {
+      "i": 2025,
+      "label": "PROMPT_INJECTION",
+      "direction": "B_REGRESSED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "SAFE",
+      "aGate": null,
+      "bGate": "safe-label"
+    },
+    {
+      "i": 2180,
+      "label": "PROMPT_INJECTION",
+      "direction": "B_REGRESSED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "PROMPT_INJECTION",
+      "aGate": null,
+      "bGate": "abstention"
+    },
+    {
+      "i": 2243,
+      "label": "PROMPT_INJECTION",
+      "direction": "B_IMPROVED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "PROMPT_INJECTION",
+      "aGate": "abstention",
+      "bGate": null
+    },
+    {
+      "i": 2345,
+      "label": "PROMPT_INJECTION",
+      "direction": "B_REGRESSED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "PROMPT_INJECTION",
+      "aGate": "abstention",
+      "bGate": "abstention"
+    },
+    {
+      "i": 2392,
+      "label": "PROMPT_INJECTION",
+      "direction": "B_REGRESSED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "PROMPT_INJECTION",
+      "aGate": null,
+      "bGate": "abstention"
+    },
+    {
+      "i": 2501,
+      "label": "PROMPT_INJECTION",
+      "direction": "B_IMPROVED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "PROMPT_INJECTION",
+      "aGate": "abstention",
+      "bGate": null
+    },
+    {
+      "i": 2542,
+      "label": "PROMPT_INJECTION",
+      "direction": "B_REGRESSED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "PROMPT_INJECTION",
+      "aGate": null,
+      "bGate": "abstention"
+    },
+    {
+      "i": 2650,
+      "label": "PROMPT_INJECTION",
+      "direction": "B_REGRESSED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "PROMPT_INJECTION",
+      "aGate": null,
+      "bGate": "abstention"
+    },
+    {
+      "i": 2749,
+      "label": "PROMPT_INJECTION",
+      "direction": "B_IMPROVED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "PROMPT_INJECTION",
+      "aGate": "abstention",
+      "bGate": null
+    },
+    {
+      "i": 2788,
+      "label": "PROMPT_INJECTION",
+      "direction": "B_REGRESSED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "PROMPT_INJECTION",
+      "aGate": null,
+      "bGate": "abstention"
+    },
+    {
+      "i": 3013,
+      "label": "JAILBREAK",
+      "direction": "B_REGRESSED",
+      "aPred": "PROMPT_INJECTION",
+      "bPred": "DATA_EXFILTRATION_ATTEMPT",
+      "aGate": null,
+      "bGate": "label-family"
+    },
+    {
+      "i": 3078,
+      "label": "PII",
+      "direction": "B_IMPROVED",
+      "aPred": "PII",
+      "bPred": "PII",
+      "aGate": "abstention",
+      "bGate": null
+    },
+    {
+      "i": 3255,
+      "label": "PII",
+      "direction": "B_REGRESSED",
+      "aPred": "PII",
+      "bPred": "PII",
+      "aGate": null,
+      "bGate": "abstention"
+    },
+    {
+      "i": 3582,
+      "label": "PII",
+      "direction": "B_IMPROVED",
+      "aPred": "PII",
+      "bPred": "PII",
+      "aGate": "abstention",
+      "bGate": null
+    },
+    {
+      "i": 3733,
+      "label": "PII",
+      "direction": "B_REGRESSED",
+      "aPred": "PII",
+      "bPred": "PII",
+      "aGate": null,
+      "bGate": "abstention"
+    },
+    {
+      "i": 3790,
+      "label": "PII",
+      "direction": "B_IMPROVED",
+      "aPred": "SAFE",
+      "bPred": "PII",
+      "aGate": "safe-label",
+      "bGate": null
+    },
+    {
+      "i": 3795,
+      "label": "PII",
+      "direction": "B_REGRESSED",
+      "aPred": "PII",
+      "bPred": "PII",
+      "aGate": null,
+      "bGate": "abstention"
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "generatedAtIso": "2026-09-12T07:09:26.673Z",
+  "model": {
+    "dir": "models/ml-classifier-v14",
+    "artifact": "models/ml-classifier-v14/model.onnx",
+    "calibration": "models/ml-classifier-v14/calibration.json"
+  },
+  "provenance": {
+    "corpusRows": 146757,
+    "splitSha256": "c472a0f6a4bbc04285c8baa53e7689c076e5b1692e3c357d47ba9ea5a1f9b817",
+    "heldOutValidationRows": 17745,
+    "attacksSampled": 10000,
+    "benignEvaluated": 5705,
+    "novelExternalAttacks": 500,
+    "seed": 20260912,
+    "note": "Attacks sampled stratified-per-label from the group-disjoint VALIDATION split only; all held-out benign used for FPR. Novel bucket = HarmBench+JailbreakBench, absent from the v14 training manifest."
+  },
+  "metrics": {
+    "attackRecall": 0.9464,
+    "benignFpr": 0.0010517090271691498,
+    "precision": 0.9993664202745512,
+    "f1": 0.9721623009758603,
+    "rocAuc": 0.9996746888694128,
+    "novelExternalRecall": 0.294,
+    "latencyMs": {
+      "p50": 62.54940000001807,
+      "p95": 137.90620000008494,
+      "p99": 197.0814000000246,
+      "max": 468.64930000004824
+    }
+  },
+  "perLabel": [
+    {
+      "label": "MODEL_EXTRACTION",
+      "total": 259,
+      "caught": 147,
+      "recall": 0.5675675675675675
+    },
+    {
+      "label": "JAILBREAK",
+      "total": 789,
+      "caught": 701,
+      "recall": 0.8884664131812421
+    },
+    {
+      "label": "TOXICITY_HARASSMENT",
+      "total": 450,
+      "caught": 410,
+      "recall": 0.9111111111111111
+    },
+    {
+      "label": "PROMPT_INJECTION",
+      "total": 1637,
+      "caught": 1509,
+      "recall": 0.921808185705559
+    },
+    {
+      "label": "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "total": 1811,
+      "caught": 1684,
+      "recall": 0.9298729983434566
+    },
+    {
+      "label": "PII",
+      "total": 923,
+      "caught": 893,
+      "recall": 0.9674972914409534
+    },
+    {
+      "label": "ENCODING_OBFUSCATION",
+      "total": 365,
+      "caught": 362,
+      "recall": 0.9917808219178083
+    },
+    {
+      "label": "SECRET",
+      "total": 773,
+      "caught": 769,
+      "recall": 0.9948253557567918
+    },
+    {
+      "label": "TOOL_CALL_ABUSE",
+      "total": 280,
+      "caught": 279,
+      "recall": 0.9964285714285714
+    },
+    {
+      "label": "UNSAFE_OUTPUT",
+      "total": 1108,
+      "caught": 1106,
+      "recall": 0.9981949458483754
+    },
+    {
+      "label": "DATA_EXFILTRATION_ATTEMPT",
+      "total": 899,
+      "caught": 898,
+      "recall": 0.9988876529477196
+    },
+    {
+      "label": "MULTI_TURN_ESCALATION",
+      "total": 171,
+      "caught": 171,
+      "recall": 1
+    },
+    {
+      "label": "RAG_POISONING",
+      "total": 535,
+      "caught": 535,
+      "recall": 1
+    }
+  ],
+  "confusion": {
+    "tp": 9464,
+    "fn": 536,
+    "fp": 6,
+    "tn": 5699
+  },
+  "finalRating": {
+    "grade": "B+",
+    "verdict": "Solid: reliable core detection; some categories or FPR headroom to improve."
+  },
+  "wallClockSeconds": 1196.444
+}

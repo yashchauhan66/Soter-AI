@@ -1,0 +1,81 @@
+{
+  "product": "SoterLLM",
+  "version": "v14",
+  "datasets": [
+    "datasets/ml-augmented-v8-final.jsonl",
+    "datasets/ml-v8-targeted-fix.jsonl",
+    "datasets/ml-v10-advanced-attacks.jsonl",
+    "datasets/ml-v10-targeted-fix.jsonl",
+    "datasets/ml-v11-weak-fix.jsonl",
+    "artifacts/ml-v2/v12-toxicity-fix.jsonl",
+    "datasets/ml-v13-meta-instructional.jsonl",
+    "datasets/ml-v13-attack-gaps.jsonl",
+    "datasets/ml-v15-threat-corpus.jsonl"
+  ],
+  "rows_per_file": {
+    "datasets/ml-augmented-v8-final.jsonl": 120620,
+    "datasets/ml-v8-targeted-fix.jsonl": 8500,
+    "datasets/ml-v10-advanced-attacks.jsonl": 8000,
+    "datasets/ml-v10-targeted-fix.jsonl": 5000,
+    "datasets/ml-v11-weak-fix.jsonl": 1212,
+    "artifacts/ml-v2/v12-toxicity-fix.jsonl": 1000,
+    "datasets/ml-v13-meta-instructional.jsonl": 2019,
+    "datasets/ml-v13-attack-gaps.jsonl": 406,
+    "datasets/ml-v15-threat-corpus.jsonl": 1155
+  },
+  "rows_total": 2996,
+  "groups_total": 2611,
+  "sampled": true,
+  "sample_size": 3000,
+  "split": {
+    "seed": 42,
+    "method": "group_aware_three_way_sorted_groups",
+    "rows_total": 2996,
+    "groups_total": 2611,
+    "augmented_rows_appended_to_train": 755,
+    "counts": {
+      "train": 2401,
+      "calibration": 254,
+      "validation": 341
+    },
+    "sha256": "f6b094e508475ab03ca42a801557f7b070cacd94a8d832bd1debbaadbff8b90a",
+    "note": "Indices address the corpus as loaded by load_jsonl over `datasets` in dataset_manifest.json, in file order. Augmented rows are appended AFTER index len(rows_total) and belong to train only."
+  },
+  "augmentation": {
+    "enabled": true,
+    "attack_rate": 0.35,
+    "benign_rate": 0.12,
+    "seed": 20260823,
+    "max_stack": 2,
+    "generated": 755,
+    "skipped_label": 186,
+    "skipped_noop": 15,
+    "by_transform": {
+      "invisible": 111,
+      "whitespace": 134,
+      "spaced": 138,
+      "leet": 120,
+      "combining": 119,
+      "homoglyph": 111,
+      "punct": 116,
+      "case": 120,
+      "typo": 123
+    },
+    "by_label": {
+      "TOOL_CALL_ABUSE": 69,
+      "SECRET": 60,
+      "UNSAFE_OUTPUT": 56,
+      "SYSTEM_PROMPT_LEAK_ATTEMPT": 60,
+      "TOXICITY_HARASSMENT": 66,
+      "DATA_EXFILTRATION_ATTEMPT": 56,
+      "MODEL_EXTRACTION": 66,
+      "MULTI_TURN_ESCALATION": 54,
+      "RAG_POISONING": 73,
+      "JAILBREAK": 51,
+      "PII": 62,
+      "PROMPT_INJECTION": 66,
+      "SAFE": 16
+    },
+    "parent_groups_verified": 755
+  }
+}

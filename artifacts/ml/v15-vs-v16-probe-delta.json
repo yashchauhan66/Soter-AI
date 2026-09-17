@@ -1,0 +1,44 @@
+{
+  "a": {
+    "name": "v15",
+    "file": "artifacts/ml/v16-probe-v15.json",
+    "overall": {
+      "recall": 89.29,
+      "attacks": 56,
+      "caught": 50,
+      "fpr": 28.57,
+      "benign": 14,
+      "fp": 4
+    }
+  },
+  "b": {
+    "name": "v16",
+    "file": "artifacts/ml/v16-probe-v16.json",
+    "overall": {
+      "recall": 78.57,
+      "attacks": 56,
+      "caught": 44,
+      "fpr": 21.43,
+      "benign": 14,
+      "fp": 3
+    }
+  },
+  "regressions": [
+    "byLabel/DATA_EXFILTRATION_ATTEMPT: 3/4 -> 2/4",
+    "byLabel/MODEL_EXTRACTION: 4/4 -> 2/4",
+    "byLabel/MULTI_TURN_ESCALATION: 5/8 -> 4/8",
+    "byLabel/PII: 3/3 -> 2/3",
+    "byLabel/PROMPT_INJECTION: 8/8 -> 7/8",
+    "byLabel/SYSTEM_PROMPT_LEAK_ATTEMPT: 7/7 -> 6/7",
+    "byLanguage/en: 25/26 -> 24/26",
+    "byLanguage/hi: 2/2 -> 1/2",
+    "byLanguage/hinglish: 6/8 -> 5/8",
+    "byLanguage/ja: 2/3 -> 1/3",
+    "byLanguage/ru: 6/8 -> 5/8",
+    "byLanguage/zh: 3/3 -> 2/3"
+  ],
+  "attacks_fixed": 1,
+  "attacks_broken": 7,
+  "fps_fixed": 1,
+  "fps_new": 0
+}

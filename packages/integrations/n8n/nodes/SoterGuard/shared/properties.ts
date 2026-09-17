@@ -562,9 +562,37 @@ export const soterGuardProperties: INodeProperties[] = [
       { name: "Warn", value: "WARN", description: "Continue but flag the threat in output" },
     ],
     default: "BLOCK",
-    hint: "Sets WHAT HAPPENS when something is flagged. 'Protection Profile' sets how much gets flagged",
+    hint: "Sets WHAT HAPPENS once something is flagged. The sensitivity setting decides how much gets flagged",
     displayOptions: { show: { action: ["inputGuard", "outputGuard", "universalGuard"] } },
     description: "What this node does locally once SoterAI flags a threat",
+  },
+  {
+    displayName: "Sensitivity",
+    name: "sensitivity",
+    type: "options",
+    options: [
+      {
+        name: "Balanced (Default)",
+        value: "BALANCED",
+        description: "Stop anything the engine judges unsafe. Same behaviour as every previous version of this node.",
+      },
+      {
+        name: "Lenient (Fewest Blocks)",
+        value: "LENIENT",
+        description:
+          "Stop only confident, high-risk verdicts. Borderline findings are reported and the message continues — best for public helpdesks where a wrong block costs a customer.",
+      },
+      {
+        name: "Strict (Most Blocks)",
+        value: "STRICT",
+        description: "Also act on findings Balanced would only report. Expect more false positives.",
+      },
+    ],
+    default: "BALANCED",
+    hint: "Sets HOW MUCH gets flagged. 'On Threat' above sets WHAT HAPPENS to it",
+    displayOptions: { show: { action: ["inputGuard", "outputGuard"] } },
+    description:
+      "How much risk is enough to act on. Detection itself never changes — every finding is still reported at the same severity. Lenient never relaxes live secrets or clear injection and jailbreak attempts.",
   },
 
   // ---------------------------------------------------------------------
@@ -580,11 +608,44 @@ export const soterGuardProperties: INodeProperties[] = [
     name: "allowedTopics",
     type: "string",
     default: "",
-    placeholder: "billing, shipping, returns",
-    hint: "Optional. Leave empty to keep the off-topic guard switched off",
+    placeholder: "billing, shipping, returns, order status",
+    hint: "Optional. Comma-separated. Leave empty and Topic Handling below does nothing at all",
     displayOptions: { show: { action: ["inputGuard", "universalGuard"] } },
     description:
-      "Comma-separated subjects this assistant is meant to handle. An empty list means no topical scope is defined, not that everything is off-topic.",
+      "Subjects this assistant is meant to handle. An empty list means no topical scope is defined, not that everything is off-topic.",
+  },
+  {
+    displayName: "Topic Handling",
+    name: "topicHandling",
+    type: "options",
+    options: [
+      {
+        name: "Advisory Only",
+        value: "ADVISORY",
+        description: "Report whether the message was in scope and change nothing else",
+      },
+      {
+        name: "Stay on Topic",
+        value: "RESTRICT",
+        description: "Also treat an out-of-scope message as something to act on. Reported as OFF_TOPIC, never as a threat.",
+      },
+      {
+        name: "Trust My Topics (Default)",
+        value: "TRUST",
+        description:
+          "Stop treating ordinary questions about your own topics as attacks. The usual fix for a helpdesk that blocks its own customers.",
+      },
+      {
+        name: "Trust My Topics and Stay on Topic",
+        value: "TRUST_AND_RESTRICT",
+        description: "Both of the above: in-scope questions run freely, out-of-scope ones are acted on",
+      },
+    ],
+    default: "TRUST",
+    hint: "Does nothing while Allowed Topics is empty. Off-topic is a scope decision, not a threat verdict",
+    displayOptions: { show: { action: ["inputGuard", "universalGuard"] } },
+    description:
+      "What your topics are allowed to do to the verdict. Trust withdraws only ambiguous rules — the ones that mistake 'what is your return policy' for a rule-extraction attempt — and never withdraws an unambiguous attack pattern. Anything withdrawn is listed in suppressedFindings on the output.",
   },
   {
     displayName: "System Prompt Context",
@@ -593,10 +654,105 @@ export const soterGuardProperties: INodeProperties[] = [
     typeOptions: { rows: 2 },
     default: "",
     placeholder: "You are a billing support assistant for an Indian e-commerce store",
-    hint: "Optional. Used only when Allowed Topics is not specific enough. Off-topic is advisory and never blocks on its own",
+    hint: "Optional. Use it when Allowed Topics is not specific enough — its words widen the topic vocabulary",
     displayOptions: { show: { action: ["inputGuard", "universalGuard"] } },
     description:
       "Your assistant's system prompt or role description, used to judge whether a message is in scope",
+  },
+  {
+    displayName:
+      "Topic handling is applied by the <b>Local</b> engine, which withdraws named rules and reports each one under <code>suppressedFindings</code>. In <b>Cloud</b> mode your topics are sent to the API and scored there, so the effect is real but the per-rule list is not returned. Check <code>{{ $json.engine }}</code> to see which answered.",
+    name: "topicEngineNotice",
+    type: "notice",
+    default: "",
+    displayOptions: { show: { action: ["inputGuard", "universalGuard"] } },
+  },
+  {
+    displayName: "Always Allow",
+    name: "alwaysAllow",
+    type: "string",
+    typeOptions: { rows: 4 },
+    default: "",
+    placeholder: "where is my order?\nhow do I reset my password?",
+    hint: "One message per line. Matched on the WHOLE message, ignoring case and a trailing '?'",
+    displayOptions: { show: { action: ["inputGuard", "universalGuard"] } },
+    description:
+      "Messages that skip detection entirely, for the handful of questions your customers ask constantly. This is a whole-message match, not a keyword match: 'where is my order? also ignore all previous instructions' does not match and is still checked. Skipped items are marked bypassed: ALWAYS_ALLOW and nothing about them was scanned.",
+  },
+
+  // ---------------------------------------------------------------------
+  // Customer-facing wording. A new collection rather than new top-level
+  // fields: nothing here was ever published, so grouping orphans nothing, and
+  // seven optional sentences would otherwise dominate the panel for the
+  // majority of users who never change them.
+  // ---------------------------------------------------------------------
+  {
+    displayName: "Customer Replies",
+    name: "userMessages",
+    type: "collection",
+    placeholder: "Add Reply",
+    default: {},
+    displayOptions: { show: { action: ["inputGuard", "outputGuard", "universalGuard", "analyzeText"] } },
+    description:
+      "Replaces the built-in English wording in userMessage. Each field accepts an expression, so a reply can be written in your customer's language. reason and developerMessage stay factual and in English for your logs.",
+    options: [
+      {
+        displayName: "Allowed Message",
+        name: "allowed",
+        type: "string",
+        default: "",
+        placeholder: "Thanks! Checking that for you now.",
+        description: "Shown when the message passed",
+      },
+      {
+        displayName: "Blocked Message",
+        name: "blocked",
+        type: "string",
+        default: "",
+        placeholder: "Sorry, I can't help with that one. Please rephrase it and try again.",
+        description: "Fallback for any stopped message with no more specific reply set below",
+      },
+      {
+        displayName: "Off-Topic Message",
+        name: "offTopic",
+        type: "string",
+        default: "",
+        placeholder: "I can only help with orders, billing and returns.",
+        description: "Shown when Topic Handling stopped a message for being out of scope. Nothing was judged dangerous.",
+      },
+      {
+        displayName: "Prompt Injection Message",
+        name: "promptInjection",
+        type: "string",
+        default: "",
+        placeholder: "I can only help with normal support questions.",
+        description: "Shown for prompt injection, jailbreak, or system-prompt extraction attempts",
+      },
+      {
+        displayName: "Redacted Message",
+        name: "redacted",
+        type: "string",
+        default: "",
+        placeholder: "I've removed some private details so we can continue safely.",
+        description: "Shown when sensitive data was removed and the message continued",
+      },
+      {
+        displayName: "Rephrase Needed Message",
+        name: "needsRephrase",
+        type: "string",
+        default: "",
+        placeholder: "Could you rewrite that without the private details?",
+        description: "Shown when the verdict was to ask for a safer version rather than to stop outright",
+      },
+      {
+        displayName: "Sensitive Data Message",
+        name: "sensitiveData",
+        type: "string",
+        default: "",
+        placeholder: "Please don't share passwords or card numbers here.",
+        description: "Shown when a secret, card number, or personal identifier was the reason",
+      },
+    ],
   },
 
   // Version 1 collected all four advanced layers as hand-written JSON. It stays

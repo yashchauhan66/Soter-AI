@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+const BASE = 'http://localhost:5678';
+const l = await fetch(BASE + '/rest/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ emailOrLdapLoginId: 'admin@soterai.in', password: 'Soterai123!' }) });
+const c = l.headers.get('set-cookie').split(';')[0];
+const r = await fetch(BASE + '/types/nodes.json', { headers: { Cookie: c } });
+const all = await r.json();
+fs.writeFileSync('marketing/n8n-workflows/nodetypes.json', JSON.stringify(all.map((n) => ({ name: n.name, display: n.displayName, v: n.version })), null, 1));
+const pick = (s) => all.filter((n) => (n.name + ' ' + (n.displayName || '')).toLowerCase().includes(s)).map((n) => n.name + ' v' + JSON.stringify(n.version) + ' :: ' + n.displayName);
+console.log('SWITCH:', pick('switch').slice(0, 10).join('\n'));
+console.log('---CHAT:', pick('chat').slice(0, 20).join('\n'));
+console.log('---GROQ:', pick('groq').slice(0, 10).join('\n'));
+console.log('---CODE:', pick('code').slice(0, 5).join('\n'));
+console.log('---SOTER:', pick('soter').slice(0, 10).join('\n'));

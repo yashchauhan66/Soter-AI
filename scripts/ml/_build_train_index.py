@@ -9,7 +9,12 @@ def group_key_for(text: str) -> str:
     leet = {"0":"o","1":"i","3":"e","4":"a","5":"s","7":"t","@":"a","$":"s","!":"i"}
     t = "".join(leet.get(ch, ch) for ch in t)
     letters = re.findall(r"[a-z]+", t); letters.sort()
-    return " ".join(letters)
+    key = " ".join(letters)
+    # non-Latin scripts have no [a-z]; see soter_augment.group_key_for.
+    nonascii = sorted(ch for ch in t if ch.isalpha() and not ch.isascii())
+    if nonascii:
+        key = f"{key} |{''.join(nonascii)}" if key else f"|{''.join(nonascii)}"
+    return key
 
 FILES = ["datasets/ml-augmented-v8-final.jsonl","datasets/ml-v8-targeted-fix.jsonl",
          "datasets/ml-v10-advanced-attacks.jsonl","datasets/ml-v10-targeted-fix.jsonl"]
