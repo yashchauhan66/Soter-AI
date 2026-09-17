@@ -3,30 +3,16 @@ import { spawn, type ChildProcess } from "node:child_process";
 import { randomBytes, randomUUID } from "node:crypto";
 import { LOCKDOWN_STATE_KEY, type LockdownRecord } from "../protection/LockdownState";
 import { readBoundedResponseBody } from "../security/boundedResponse";
+import { BrokerStartFailure } from "./autoStart";
 
 const TOKEN_KEY = "soterai.localBrokerToken";
 const SESSION_KEY = "soterai.memorySessionId";
 export const EXPECTED_BROKER_VERSION = "0.1.0";
 
-/**
- * A start failure that says whether trying again could ever help.
- *
- * Auto-start needs this to avoid two opposite mistakes: retrying a port
- * conflict or a version mismatch (which produces the identical error three
- * times and delays the notification the user actually needs), and giving up on
- * a slow first spawn (cold disk, antivirus scanning the bundle) that would have
- * succeeded a second later.
- *
- * It is a flag rather than a message match on purpose — the message strings are
- * user-facing copy and are pinned by tests, so keying retry behaviour on them
- * would make an innocuous wording edit silently change enforcement.
- */
-export class BrokerStartFailure extends Error {
-    constructor(message: string, readonly retryable: boolean) {
-        super(message);
-        this.name = "BrokerStartFailure";
-    }
-}
+// Declared in ./autoStart because that module does not import `vscode` and can
+// therefore be unit-tested; re-exported here because this is where it is
+// thrown, so callers can catch it without knowing where it lives.
+export { BrokerStartFailure } from "./autoStart";
 
 export type BrokerLifecycleState =
     | "stopped"
