@@ -35,7 +35,14 @@ def group_key_for(text: str) -> str:
     t = "".join(leet.get(ch, ch) for ch in t)
     letters = re.findall(r"[a-z]+", t)
     letters.sort()
-    return " ".join(letters)
+    key = " ".join(letters)
+    # `[a-z]+` alone returns "" for text with no Latin letters, collapsing every
+    # CJK/Cyrillic/Arabic/Devanagari row into ONE group. See the rationale block on
+    # soter_augment.group_key_for; identical output when all letters are ASCII.
+    nonascii = sorted(ch for ch in t if ch.isalpha() and not ch.isascii())
+    if nonascii:
+        key = f"{key} |{''.join(nonascii)}" if key else f"|{''.join(nonascii)}"
+    return key
 
 
 def main() -> int:

@@ -10,5 +10,6 @@
 export * from "./commands";
 export * from "./broker";
 export * from "./schemas";
+export * from "./secrets";
 
 export const IDE_PROTOCOL_VERSION = "0.1.0" as const;

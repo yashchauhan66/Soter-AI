@@ -1,6 +1,6 @@
 export const EXTENSION_ID = 'soterai.soterai-ide-guard';
-export const EXTENSION_VERSION = '0.6.2';
-export const EXTENSION_DISPLAY_NAME = 'SoterAI IDE Guard — Local AI Security';
+export const EXTENSION_VERSION = '0.6.3';
+export const EXTENSION_DISPLAY_NAME = 'SoterAI IDE Guard - AI Security & Secret Protection';
 export const EXTENSION_SEARCH_NAME = 'SoterAI IDE Guard';
 
 export const VSCODE_MARKETPLACE_URL =

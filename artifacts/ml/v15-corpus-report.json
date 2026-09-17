@@ -1,0 +1,158 @@
+{
+  "train_rows": 1155,
+  "test_rows": 274,
+  "battery_rows_removed_from_train": 0,
+  "train_drops": {},
+  "test_drops": {},
+  "leak_check": {
+    "eval_sets": {
+      "datasets/crossdist-eval-v3.jsonl": 22681
+    },
+    "train_leaks": 0,
+    "battery_leaks": 0,
+    "status": "CLEAN"
+  },
+  "battery_unseen_by_v14": {
+    "checked_against": {
+      "datasets/ml-augmented-v8-final.jsonl": 120620,
+      "datasets/ml-v8-targeted-fix.jsonl": 2151,
+      "datasets/ml-v10-advanced-attacks.jsonl": 1217,
+      "datasets/ml-v10-targeted-fix.jsonl": 546,
+      "datasets/ml-v11-weak-fix.jsonl": 1212,
+      "artifacts/ml-v2/v12-toxicity-fix.jsonl": 716,
+      "datasets/ml-v13-meta-instructional.jsonl": 2019,
+      "datasets/ml-v13-attack-gaps.jsonl": 406
+    },
+    "battery_rows_quarantined": 0,
+    "quarantine_file": null,
+    "train_rows_v14_already_saw": 0,
+    "status": "CLEAN"
+  },
+  "train_by_label": {
+    "SAFE": 179,
+    "JAILBREAK": 142,
+    "PROMPT_INJECTION": 121,
+    "MODEL_EXTRACTION": 109,
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": 108,
+    "TOOL_CALL_ABUSE": 105,
+    "MULTI_TURN_ESCALATION": 103,
+    "DATA_EXFILTRATION_ATTEMPT": 88,
+    "RAG_POISONING": 75,
+    "PII": 62,
+    "SECRET": 38,
+    "ENCODING_OBFUSCATION": 23,
+    "TOXICITY_HARASSMENT": 2
+  },
+  "train_by_language": {
+    "en": 437,
+    "hinglish": 181,
+    "ru": 174,
+    "es": 54,
+    "de": 52,
+    "hi": 50,
+    "fr": 46,
+    "zh": 40,
+    "pt": 39,
+    "ja": 38,
+    "ar": 29,
+    "sv": 4,
+    "id": 4,
+    "ko": 4,
+    "tr": 3
+  },
+  "train_distinct_categories": 402,
+  "test_by_label": {
+    "SAFE": 36,
+    "MULTI_TURN_ESCALATION": 29,
+    "JAILBREAK": 29,
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": 28,
+    "PROMPT_INJECTION": 27,
+    "MODEL_EXTRACTION": 27,
+    "TOOL_CALL_ABUSE": 24,
+    "RAG_POISONING": 21,
+    "DATA_EXFILTRATION_ATTEMPT": 20,
+    "SECRET": 14,
+    "PII": 13,
+    "ENCODING_OBFUSCATION": 5,
+    "TOXICITY_HARASSMENT": 1
+  },
+  "test_by_language": {
+    "en": 115,
+    "zh": 18,
+    "de": 18,
+    "fr": 17,
+    "es": 16,
+    "ru": 16,
+    "hinglish": 15,
+    "ja": 14,
+    "ar": 14,
+    "pt": 13,
+    "hi": 11,
+    "ko": 3,
+    "tr": 2,
+    "sv": 1,
+    "id": 1
+  },
+  "per_dimension": {
+    "dim01-verified": {
+      "train_in": 81,
+      "test_in": 26
+    },
+    "dim02-verified": {
+      "train_in": 81,
+      "test_in": 25
+    },
+    "dim05-verified": {
+      "train_in": 62,
+      "test_in": 20
+    },
+    "dim04-verified": {
+      "train_in": 70,
+      "test_in": 25
+    },
+    "dim03-verified": {
+      "train_in": 85,
+      "test_in": 25
+    },
+    "dim07-verified": {
+      "train_in": 71,
+      "test_in": 25
+    },
+    "dim06-verified": {
+      "train_in": 84,
+      "test_in": 24
+    },
+    "dim08-verified": {
+      "train_in": 61,
+      "test_in": 20
+    },
+    "dim00-verified": {
+      "train_in": 83,
+      "test_in": 25
+    },
+    "dim09-verified": {
+      "train_in": 116,
+      "test_in": 29
+    },
+    "dim10-verified": {
+      "train_in": 95,
+      "test_in": 30
+    },
+    "extra:ml-v15-ru-hinglish-expansion": {
+      "train_in": 95,
+      "test_in": 0
+    },
+    "extra:ml-v15-ru-hinglish-expansion-2": {
+      "train_in": 66,
+      "test_in": 0
+    },
+    "extra:ml-v15-ru-hinglish-expansion-3": {
+      "train_in": 65,
+      "test_in": 0
+    },
+    "extra:ml-v15-ru-hinglish-expansion-4": {
+      "train_in": 40,
+      "test_in": 0
+    }
+  }
+}

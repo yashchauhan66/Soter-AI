@@ -237,6 +237,18 @@ describe("Marketplace README media hygiene", () => {
             assert.ok(!vscodeIgnoreSrc.includes(local), `Marketplace screenshot is excluded from the VSIX: ${local}`);
         }
     });
+
+    it("embeds the real-product README demo GIF (22-GIF-RECORDING-KIT contract)", () => {
+        const name = "soterai-secret-caught-before-ai.gif";
+        const url = `https://soterai.in/marketplace/screenshots/${name}`;
+        const local = `media/marketplace/${name}`;
+        const abs = path.join(root, local);
+        assert.ok(readmeSrc.includes(url), `README must render the demo GIF absolute URL ${url}`);
+        assert.ok(fs.existsSync(abs), `missing demo GIF source ${local}`);
+        assert.ok(!vscodeIgnoreSrc.includes(local), `demo GIF is excluded from the VSIX: ${local}`);
+        // Marketplace budget from 22-GIF-RECORDING-KIT: < 3 MB so the README stays fast.
+        assert.ok(fs.statSync(abs).size < 3 * 1024 * 1024, `demo GIF exceeds 3 MB budget: ${fs.statSync(abs).size} bytes`);
+    });
 });
 
 describe("Local-first privacy mode", () => {

@@ -37,6 +37,7 @@
   "main": "dist/nodes/SoterGuard/SoterGuard.node.js",
   "files": [
     "dist",
+    "!dist/**/*.map",
     "examples",
     "README.md",
     "LICENSE",
@@ -54,7 +55,7 @@
     "test:stress": "node scripts/stress-local-engine.cjs",
     "measure": "node scripts/measure-local-engine.cjs",
     "test": "npm run validate && npm run typecheck && npm run test:unit && npm run test:redos && npm run test:stress",
-    "prepublishOnly": "npm test && npm run build"
+    "prepublishOnly": "npm test && npm run build && node ../../../scripts/minify-published-dist.mjs ."
   },
   "peerDependencies": {
     "n8n-workflow": "*"

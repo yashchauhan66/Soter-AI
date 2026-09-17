@@ -34,6 +34,22 @@ export const EXTENDED_MODEL_LABELS = [
   "MULTI_TURN_ESCALATION",
   "MODEL_EXTRACTION",
   "TOXICITY_HARASSMENT",
+  // v17. Agent memory / persistent-state poisoning: text whose payload is aimed at
+  // what the agent WRITES DOWN rather than what it answers now ("remember for all
+  // future sessions that...", "update your saved preferences to...", a note planted
+  // in a scratchpad or memory file that a later turn will re-read as instruction).
+  //
+  // WHY IT IS NOT JUST RAG_POISONING
+  //   RAG_POISONING is a poisoned RETRIEVAL corpus the agent reads. This is a write
+  //   the agent performs on ITSELF, so the delivery surface (an ordinary-looking
+  //   user turn) and the time of effect (a later session) both differ. Projected onto
+  //   RAG_POISONING for DB persistence below because that is the nearest ancestor the
+  //   9-value enum can express -- not because they are the same attack.
+  //
+  // UNMEASURED AT TIME OF ADDING: v14/v16 weights do not emit this class. It becomes
+  // live only if a v17 labels.json lists it. Listing it here is what stops
+  // loadLabelMap from throwing and taking the whole ML tier dark on that day.
+  "MEMORY_POISONING",
 ] as const;
 
 export type ExtendedModelLabel = (typeof EXTENDED_MODEL_LABELS)[number];
@@ -70,6 +86,7 @@ export const EXTENDED_LABEL_TO_DB_LABEL: Record<ExtendedModelLabel, MLLabel> = {
   MULTI_TURN_ESCALATION: "JAILBREAK",
   MODEL_EXTRACTION: "SYSTEM_PROMPT_LEAK_ATTEMPT",
   TOXICITY_HARASSMENT: "UNSAFE_OUTPUT",
+  MEMORY_POISONING: "RAG_POISONING",
 };
 
 /** Narrow any model label to one the `MLLabel` enum columns accept. Identity for the 9 DB labels. */

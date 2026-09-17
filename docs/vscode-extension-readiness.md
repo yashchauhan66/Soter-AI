@@ -6,7 +6,7 @@
 
 # SoterAI IDE Guard — readiness
 
-**Package:** `soterai-ide-guard` v0.6.2 · publisher `soterai`
+**Package:** `soterai-ide-guard` v0.6.3 · publisher `soterai`
 **License:** `SEE LICENSE IN LICENSE.md`
 **Editor floor:** `^1.85.0` — kept deliberately low so Cursor, Windsurf, Kiro and Antigravity stay supported.
 **Entry point:** `./dist/extension.js` (single esbuild bundle; no `node_modules` in the VSIX)

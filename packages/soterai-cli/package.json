@@ -16,6 +16,8 @@
     },
     "files": [
         "dist/",
+        "!dist/**/*.map",
+        "!dist/**/__tests__/**",
         "README.md",
         "LICENSE",
         "CHANGELOG.md"
@@ -27,7 +29,7 @@
         "test": "tsx --test src/__tests__/**/*.test.ts",
         "typecheck": "tsc --noEmit",
         "start": "node dist/cli.js",
-        "prepublishOnly": "npm run build"
+        "prepublishOnly": "npm run build && node ../../scripts/minify-published-dist.mjs ."
     },
     "engines": {
         "node": ">=18.0.0"

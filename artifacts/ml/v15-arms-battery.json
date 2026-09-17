@@ -1,0 +1,1667 @@
+{
+  "file": "datasets/v15-test-battery.jsonl",
+  "rows": 274,
+  "mlRan": 274,
+  "mlErrors": 0,
+  "prodAp": 0.8,
+  "baselineLabels": [
+    "PROMPT_INJECTION",
+    "JAILBREAK",
+    "SYSTEM_PROMPT_LEAK_ATTEMPT",
+    "PII",
+    "SECRET",
+    "RAG_POISONING",
+    "ENCODING_OBFUSCATION",
+    "MODEL_EXTRACTION"
+  ],
+  "candidates": [
+    "TOOL_CALL_ABUSE",
+    "MULTI_TURN_ESCALATION",
+    "DATA_EXFILTRATION_ATTEMPT",
+    "UNSAFE_OUTPUT",
+    "TOXICITY_HARASSMENT"
+  ],
+  "derivation": "flagged(L,T) = rulesHit || (abstained ? attackProb >= T : mlEscalatedPermissive && L.has(predictedLabel))",
+  "verification": [
+    {
+      "ap": "0.80",
+      "expected": {
+        "misses": 20,
+        "fps": 28
+      },
+      "derived": {
+        "misses": 20,
+        "fps": 28
+      },
+      "ok": true
+    },
+    {
+      "ap": "0.75",
+      "expected": {
+        "misses": 16,
+        "fps": 28
+      },
+      "derived": {
+        "misses": 16,
+        "fps": 28
+      },
+      "ok": true
+    },
+    {
+      "ap": "0.70",
+      "expected": {
+        "misses": 15,
+        "fps": 29
+      },
+      "derived": {
+        "misses": 15,
+        "fps": 29
+      },
+      "ok": true
+    },
+    {
+      "ap": "0.65",
+      "expected": {
+        "misses": 14,
+        "fps": 29
+      },
+      "derived": {
+        "misses": 14,
+        "fps": 29
+      },
+      "ok": true
+    },
+    {
+      "ap": "0.60",
+      "expected": {
+        "misses": 14,
+        "fps": 30
+      },
+      "derived": {
+        "misses": 14,
+        "fps": 30
+      },
+      "ok": true
+    }
+  ],
+  "gateArms": {
+    "baseline": {
+      "recall": 91.6,
+      "fpr": 77.78,
+      "attacks": 238,
+      "caught": 218,
+      "benign": 36,
+      "fp": 28,
+      "misses": 20,
+      "fps": 28,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 93.1,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 36,
+          "fp": 28,
+          "recall": 0,
+          "fpr": 77.78
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+          "attacks": 28,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.43,
+          "fpr": 0
+        },
+        "JAILBREAK": {
+          "attacks": 29,
+          "caught": 22,
+          "benign": 0,
+          "fp": 0,
+          "recall": 75.86,
+          "fpr": 0
+        },
+        "PII": {
+          "attacks": 13,
+          "caught": 10,
+          "benign": 0,
+          "fp": 0,
+          "recall": 76.92,
+          "fpr": 0
+        },
+        "SECRET": {
+          "attacks": 14,
+          "caught": 14,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "PROMPT_INJECTION": {
+          "attacks": 27,
+          "caught": 26,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.3,
+          "fpr": 0
+        },
+        "RAG_POISONING": {
+          "attacks": 21,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.24,
+          "fpr": 0
+        },
+        "MODEL_EXTRACTION": {
+          "attacks": 27,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 85.19,
+          "fpr": 0
+        },
+        "ENCODING_OBFUSCATION": {
+          "attacks": 5,
+          "caught": 5,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        }
+      }
+    },
+    "TOOL_CALL_ABUSE": {
+      "recall": 92.02,
+      "fpr": 80.56,
+      "attacks": 238,
+      "caught": 219,
+      "benign": 36,
+      "fp": 29,
+      "misses": 19,
+      "fps": 29,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 93.1,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 24,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 36,
+          "fp": 29,
+          "recall": 0,
+          "fpr": 80.56
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+          "attacks": 28,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.43,
+          "fpr": 0
+        },
+        "JAILBREAK": {
+          "attacks": 29,
+          "caught": 22,
+          "benign": 0,
+          "fp": 0,
+          "recall": 75.86,
+          "fpr": 0
+        },
+        "PII": {
+          "attacks": 13,
+          "caught": 10,
+          "benign": 0,
+          "fp": 0,
+          "recall": 76.92,
+          "fpr": 0
+        },
+        "SECRET": {
+          "attacks": 14,
+          "caught": 14,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "PROMPT_INJECTION": {
+          "attacks": 27,
+          "caught": 26,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.3,
+          "fpr": 0
+        },
+        "RAG_POISONING": {
+          "attacks": 21,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.24,
+          "fpr": 0
+        },
+        "MODEL_EXTRACTION": {
+          "attacks": 27,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 85.19,
+          "fpr": 0
+        },
+        "ENCODING_OBFUSCATION": {
+          "attacks": 5,
+          "caught": 5,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        }
+      }
+    },
+    "MULTI_TURN_ESCALATION": {
+      "recall": 91.6,
+      "fpr": 77.78,
+      "attacks": 238,
+      "caught": 218,
+      "benign": 36,
+      "fp": 28,
+      "misses": 20,
+      "fps": 28,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 93.1,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 36,
+          "fp": 28,
+          "recall": 0,
+          "fpr": 77.78
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+          "attacks": 28,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.43,
+          "fpr": 0
+        },
+        "JAILBREAK": {
+          "attacks": 29,
+          "caught": 22,
+          "benign": 0,
+          "fp": 0,
+          "recall": 75.86,
+          "fpr": 0
+        },
+        "PII": {
+          "attacks": 13,
+          "caught": 10,
+          "benign": 0,
+          "fp": 0,
+          "recall": 76.92,
+          "fpr": 0
+        },
+        "SECRET": {
+          "attacks": 14,
+          "caught": 14,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "PROMPT_INJECTION": {
+          "attacks": 27,
+          "caught": 26,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.3,
+          "fpr": 0
+        },
+        "RAG_POISONING": {
+          "attacks": 21,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.24,
+          "fpr": 0
+        },
+        "MODEL_EXTRACTION": {
+          "attacks": 27,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 85.19,
+          "fpr": 0
+        },
+        "ENCODING_OBFUSCATION": {
+          "attacks": 5,
+          "caught": 5,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        }
+      }
+    },
+    "DATA_EXFILTRATION_ATTEMPT": {
+      "recall": 92.02,
+      "fpr": 77.78,
+      "attacks": 238,
+      "caught": 219,
+      "benign": 36,
+      "fp": 28,
+      "misses": 19,
+      "fps": 28,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 93.1,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 36,
+          "fp": 28,
+          "recall": 0,
+          "fpr": 77.78
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+          "attacks": 28,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.43,
+          "fpr": 0
+        },
+        "JAILBREAK": {
+          "attacks": 29,
+          "caught": 22,
+          "benign": 0,
+          "fp": 0,
+          "recall": 75.86,
+          "fpr": 0
+        },
+        "PII": {
+          "attacks": 13,
+          "caught": 11,
+          "benign": 0,
+          "fp": 0,
+          "recall": 84.62,
+          "fpr": 0
+        },
+        "SECRET": {
+          "attacks": 14,
+          "caught": 14,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "PROMPT_INJECTION": {
+          "attacks": 27,
+          "caught": 26,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.3,
+          "fpr": 0
+        },
+        "RAG_POISONING": {
+          "attacks": 21,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.24,
+          "fpr": 0
+        },
+        "MODEL_EXTRACTION": {
+          "attacks": 27,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 85.19,
+          "fpr": 0
+        },
+        "ENCODING_OBFUSCATION": {
+          "attacks": 5,
+          "caught": 5,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        }
+      }
+    },
+    "UNSAFE_OUTPUT": {
+      "recall": 91.6,
+      "fpr": 77.78,
+      "attacks": 238,
+      "caught": 218,
+      "benign": 36,
+      "fp": 28,
+      "misses": 20,
+      "fps": 28,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 93.1,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 36,
+          "fp": 28,
+          "recall": 0,
+          "fpr": 77.78
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+          "attacks": 28,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.43,
+          "fpr": 0
+        },
+        "JAILBREAK": {
+          "attacks": 29,
+          "caught": 22,
+          "benign": 0,
+          "fp": 0,
+          "recall": 75.86,
+          "fpr": 0
+        },
+        "PII": {
+          "attacks": 13,
+          "caught": 10,
+          "benign": 0,
+          "fp": 0,
+          "recall": 76.92,
+          "fpr": 0
+        },
+        "SECRET": {
+          "attacks": 14,
+          "caught": 14,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "PROMPT_INJECTION": {
+          "attacks": 27,
+          "caught": 26,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.3,
+          "fpr": 0
+        },
+        "RAG_POISONING": {
+          "attacks": 21,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.24,
+          "fpr": 0
+        },
+        "MODEL_EXTRACTION": {
+          "attacks": 27,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 85.19,
+          "fpr": 0
+        },
+        "ENCODING_OBFUSCATION": {
+          "attacks": 5,
+          "caught": 5,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        }
+      }
+    },
+    "TOXICITY_HARASSMENT": {
+      "recall": 91.6,
+      "fpr": 77.78,
+      "attacks": 238,
+      "caught": 218,
+      "benign": 36,
+      "fp": 28,
+      "misses": 20,
+      "fps": 28,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 93.1,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 36,
+          "fp": 28,
+          "recall": 0,
+          "fpr": 77.78
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+          "attacks": 28,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.43,
+          "fpr": 0
+        },
+        "JAILBREAK": {
+          "attacks": 29,
+          "caught": 22,
+          "benign": 0,
+          "fp": 0,
+          "recall": 75.86,
+          "fpr": 0
+        },
+        "PII": {
+          "attacks": 13,
+          "caught": 10,
+          "benign": 0,
+          "fp": 0,
+          "recall": 76.92,
+          "fpr": 0
+        },
+        "SECRET": {
+          "attacks": 14,
+          "caught": 14,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "PROMPT_INJECTION": {
+          "attacks": 27,
+          "caught": 26,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.3,
+          "fpr": 0
+        },
+        "RAG_POISONING": {
+          "attacks": 21,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.24,
+          "fpr": 0
+        },
+        "MODEL_EXTRACTION": {
+          "attacks": 27,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 85.19,
+          "fpr": 0
+        },
+        "ENCODING_OBFUSCATION": {
+          "attacks": 5,
+          "caught": 5,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        }
+      }
+    },
+    "all": {
+      "recall": 92.44,
+      "fpr": 80.56,
+      "attacks": 238,
+      "caught": 220,
+      "benign": 36,
+      "fp": 29,
+      "misses": 18,
+      "fps": 29,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 93.1,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 24,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 36,
+          "fp": 29,
+          "recall": 0,
+          "fpr": 80.56
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+          "attacks": 28,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.43,
+          "fpr": 0
+        },
+        "JAILBREAK": {
+          "attacks": 29,
+          "caught": 22,
+          "benign": 0,
+          "fp": 0,
+          "recall": 75.86,
+          "fpr": 0
+        },
+        "PII": {
+          "attacks": 13,
+          "caught": 11,
+          "benign": 0,
+          "fp": 0,
+          "recall": 84.62,
+          "fpr": 0
+        },
+        "SECRET": {
+          "attacks": 14,
+          "caught": 14,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "PROMPT_INJECTION": {
+          "attacks": 27,
+          "caught": 26,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.3,
+          "fpr": 0
+        },
+        "RAG_POISONING": {
+          "attacks": 21,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.24,
+          "fpr": 0
+        },
+        "MODEL_EXTRACTION": {
+          "attacks": 27,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 85.19,
+          "fpr": 0
+        },
+        "ENCODING_OBFUSCATION": {
+          "attacks": 5,
+          "caught": 5,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        }
+      }
+    }
+  },
+  "gateVerdicts": [
+    {
+      "label": "TOOL_CALL_ABUSE",
+      "measurable": true,
+      "ownLabelAttacks": 24,
+      "attacksGained": 1,
+      "falsePositivesAdded": 1,
+      "benignDenominator": 36,
+      "verdict": "HOLD OUT (cost exceeds gain)"
+    },
+    {
+      "label": "MULTI_TURN_ESCALATION",
+      "measurable": true,
+      "ownLabelAttacks": 29,
+      "attacksGained": 0,
+      "falsePositivesAdded": 0,
+      "benignDenominator": 36,
+      "verdict": "NO-OP on these rows"
+    },
+    {
+      "label": "DATA_EXFILTRATION_ATTEMPT",
+      "measurable": true,
+      "ownLabelAttacks": 20,
+      "attacksGained": 1,
+      "falsePositivesAdded": 0,
+      "benignDenominator": 36,
+      "verdict": "ADMIT (free recall on this corpus)"
+    },
+    {
+      "label": "UNSAFE_OUTPUT",
+      "measurable": false,
+      "ownLabelAttacks": 0,
+      "attacksGained": 0,
+      "falsePositivesAdded": 0,
+      "benignDenominator": 36,
+      "verdict": "NOT MEASURABLE on this corpus (no gold rows)"
+    },
+    {
+      "label": "TOXICITY_HARASSMENT",
+      "measurable": true,
+      "ownLabelAttacks": 1,
+      "attacksGained": 0,
+      "falsePositivesAdded": 0,
+      "benignDenominator": 36,
+      "verdict": "NO-OP on these rows"
+    }
+  ],
+  "apArms": {
+    "0.80": {
+      "recall": 91.6,
+      "fpr": 77.78,
+      "attacks": 238,
+      "caught": 218,
+      "benign": 36,
+      "fp": 28,
+      "misses": 20,
+      "fps": 28,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 93.1,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 36,
+          "fp": 28,
+          "recall": 0,
+          "fpr": 77.78
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+          "attacks": 28,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.43,
+          "fpr": 0
+        },
+        "JAILBREAK": {
+          "attacks": 29,
+          "caught": 22,
+          "benign": 0,
+          "fp": 0,
+          "recall": 75.86,
+          "fpr": 0
+        },
+        "PII": {
+          "attacks": 13,
+          "caught": 10,
+          "benign": 0,
+          "fp": 0,
+          "recall": 76.92,
+          "fpr": 0
+        },
+        "SECRET": {
+          "attacks": 14,
+          "caught": 14,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "PROMPT_INJECTION": {
+          "attacks": 27,
+          "caught": 26,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.3,
+          "fpr": 0
+        },
+        "RAG_POISONING": {
+          "attacks": 21,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.24,
+          "fpr": 0
+        },
+        "MODEL_EXTRACTION": {
+          "attacks": 27,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 85.19,
+          "fpr": 0
+        },
+        "ENCODING_OBFUSCATION": {
+          "attacks": 5,
+          "caught": 5,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        }
+      }
+    },
+    "0.75": {
+      "recall": 93.28,
+      "fpr": 77.78,
+      "attacks": 238,
+      "caught": 222,
+      "benign": 36,
+      "fp": 28,
+      "misses": 16,
+      "fps": 28,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 28,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.55,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 36,
+          "fp": 28,
+          "recall": 0,
+          "fpr": 77.78
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+          "attacks": 28,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.43,
+          "fpr": 0
+        },
+        "JAILBREAK": {
+          "attacks": 29,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 79.31,
+          "fpr": 0
+        },
+        "PII": {
+          "attacks": 13,
+          "caught": 10,
+          "benign": 0,
+          "fp": 0,
+          "recall": 76.92,
+          "fpr": 0
+        },
+        "SECRET": {
+          "attacks": 14,
+          "caught": 14,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "PROMPT_INJECTION": {
+          "attacks": 27,
+          "caught": 26,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.3,
+          "fpr": 0
+        },
+        "RAG_POISONING": {
+          "attacks": 21,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.24,
+          "fpr": 0
+        },
+        "MODEL_EXTRACTION": {
+          "attacks": 27,
+          "caught": 25,
+          "benign": 0,
+          "fp": 0,
+          "recall": 92.59,
+          "fpr": 0
+        },
+        "ENCODING_OBFUSCATION": {
+          "attacks": 5,
+          "caught": 5,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        }
+      }
+    },
+    "0.70": {
+      "recall": 93.7,
+      "fpr": 80.56,
+      "attacks": 238,
+      "caught": 223,
+      "benign": 36,
+      "fp": 29,
+      "misses": 15,
+      "fps": 29,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 28,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.55,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 36,
+          "fp": 29,
+          "recall": 0,
+          "fpr": 80.56
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+          "attacks": 28,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.43,
+          "fpr": 0
+        },
+        "JAILBREAK": {
+          "attacks": 29,
+          "caught": 24,
+          "benign": 0,
+          "fp": 0,
+          "recall": 82.76,
+          "fpr": 0
+        },
+        "PII": {
+          "attacks": 13,
+          "caught": 10,
+          "benign": 0,
+          "fp": 0,
+          "recall": 76.92,
+          "fpr": 0
+        },
+        "SECRET": {
+          "attacks": 14,
+          "caught": 14,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "PROMPT_INJECTION": {
+          "attacks": 27,
+          "caught": 26,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.3,
+          "fpr": 0
+        },
+        "RAG_POISONING": {
+          "attacks": 21,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.24,
+          "fpr": 0
+        },
+        "MODEL_EXTRACTION": {
+          "attacks": 27,
+          "caught": 25,
+          "benign": 0,
+          "fp": 0,
+          "recall": 92.59,
+          "fpr": 0
+        },
+        "ENCODING_OBFUSCATION": {
+          "attacks": 5,
+          "caught": 5,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        }
+      }
+    },
+    "0.65": {
+      "recall": 94.12,
+      "fpr": 80.56,
+      "attacks": 238,
+      "caught": 224,
+      "benign": 36,
+      "fp": 29,
+      "misses": 14,
+      "fps": 29,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 28,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.55,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 36,
+          "fp": 29,
+          "recall": 0,
+          "fpr": 80.56
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+          "attacks": 28,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.43,
+          "fpr": 0
+        },
+        "JAILBREAK": {
+          "attacks": 29,
+          "caught": 25,
+          "benign": 0,
+          "fp": 0,
+          "recall": 86.21,
+          "fpr": 0
+        },
+        "PII": {
+          "attacks": 13,
+          "caught": 10,
+          "benign": 0,
+          "fp": 0,
+          "recall": 76.92,
+          "fpr": 0
+        },
+        "SECRET": {
+          "attacks": 14,
+          "caught": 14,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "PROMPT_INJECTION": {
+          "attacks": 27,
+          "caught": 26,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.3,
+          "fpr": 0
+        },
+        "RAG_POISONING": {
+          "attacks": 21,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.24,
+          "fpr": 0
+        },
+        "MODEL_EXTRACTION": {
+          "attacks": 27,
+          "caught": 25,
+          "benign": 0,
+          "fp": 0,
+          "recall": 92.59,
+          "fpr": 0
+        },
+        "ENCODING_OBFUSCATION": {
+          "attacks": 5,
+          "caught": 5,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        }
+      }
+    },
+    "0.60": {
+      "recall": 94.12,
+      "fpr": 83.33,
+      "attacks": 238,
+      "caught": 224,
+      "benign": 36,
+      "fp": 30,
+      "misses": 14,
+      "fps": 30,
+      "byLabel": {
+        "MULTI_TURN_ESCALATION": {
+          "attacks": 29,
+          "caught": 28,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.55,
+          "fpr": 0
+        },
+        "TOOL_CALL_ABUSE": {
+          "attacks": 24,
+          "caught": 23,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.83,
+          "fpr": 0
+        },
+        "SAFE": {
+          "attacks": 0,
+          "caught": 0,
+          "benign": 36,
+          "fp": 30,
+          "recall": 0,
+          "fpr": 83.33
+        },
+        "DATA_EXFILTRATION_ATTEMPT": {
+          "attacks": 20,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+          "attacks": 28,
+          "caught": 27,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.43,
+          "fpr": 0
+        },
+        "JAILBREAK": {
+          "attacks": 29,
+          "caught": 25,
+          "benign": 0,
+          "fp": 0,
+          "recall": 86.21,
+          "fpr": 0
+        },
+        "PII": {
+          "attacks": 13,
+          "caught": 10,
+          "benign": 0,
+          "fp": 0,
+          "recall": 76.92,
+          "fpr": 0
+        },
+        "SECRET": {
+          "attacks": 14,
+          "caught": 14,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "PROMPT_INJECTION": {
+          "attacks": 27,
+          "caught": 26,
+          "benign": 0,
+          "fp": 0,
+          "recall": 96.3,
+          "fpr": 0
+        },
+        "RAG_POISONING": {
+          "attacks": 21,
+          "caught": 20,
+          "benign": 0,
+          "fp": 0,
+          "recall": 95.24,
+          "fpr": 0
+        },
+        "MODEL_EXTRACTION": {
+          "attacks": 27,
+          "caught": 25,
+          "benign": 0,
+          "fp": 0,
+          "recall": 92.59,
+          "fpr": 0
+        },
+        "ENCODING_OBFUSCATION": {
+          "attacks": 5,
+          "caught": 5,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        },
+        "TOXICITY_HARASSMENT": {
+          "attacks": 1,
+          "caught": 1,
+          "benign": 0,
+          "fp": 0,
+          "recall": 100,
+          "fpr": 0
+        }
+      }
+    }
+  },
+  "perLanguage": [
+    {
+      "lang": "en",
+      "attacks": 92,
+      "rulesOnlyRecall": 76.09,
+      "rulesPlusMlRecall": 94.57,
+      "mlContribution": 18.48,
+      "benign": 23,
+      "fpr": 73.91
+    },
+    {
+      "lang": "de",
+      "attacks": 17,
+      "rulesOnlyRecall": 29.41,
+      "rulesPlusMlRecall": 100,
+      "mlContribution": 70.59,
+      "benign": 1,
+      "fpr": 100
+    },
+    {
+      "lang": "ru",
+      "attacks": 16,
+      "rulesOnlyRecall": 50,
+      "rulesPlusMlRecall": 75,
+      "mlContribution": 25,
+      "benign": 0,
+      "fpr": 0
+    },
+    {
+      "lang": "es",
+      "attacks": 15,
+      "rulesOnlyRecall": 26.67,
+      "rulesPlusMlRecall": 100,
+      "mlContribution": 73.33,
+      "benign": 1,
+      "fpr": 100
+    },
+    {
+      "lang": "zh",
+      "attacks": 15,
+      "rulesOnlyRecall": 40,
+      "rulesPlusMlRecall": 100,
+      "mlContribution": 60,
+      "benign": 3,
+      "fpr": 66.67
+    },
+    {
+      "lang": "fr",
+      "attacks": 15,
+      "rulesOnlyRecall": 13.33,
+      "rulesPlusMlRecall": 93.33,
+      "mlContribution": 80,
+      "benign": 2,
+      "fpr": 50
+    },
+    {
+      "lang": "ja",
+      "attacks": 14,
+      "rulesOnlyRecall": 28.57,
+      "rulesPlusMlRecall": 92.86,
+      "mlContribution": 64.29,
+      "benign": 0,
+      "fpr": 0
+    },
+    {
+      "lang": "ar",
+      "attacks": 13,
+      "rulesOnlyRecall": 38.46,
+      "rulesPlusMlRecall": 76.92,
+      "mlContribution": 38.46,
+      "benign": 1,
+      "fpr": 100
+    },
+    {
+      "lang": "hinglish",
+      "attacks": 12,
+      "rulesOnlyRecall": 58.33,
+      "rulesPlusMlRecall": 83.33,
+      "mlContribution": 25,
+      "benign": 3,
+      "fpr": 100
+    },
+    {
+      "lang": "pt",
+      "attacks": 12,
+      "rulesOnlyRecall": 16.67,
+      "rulesPlusMlRecall": 91.67,
+      "mlContribution": 75,
+      "benign": 1,
+      "fpr": 100
+    },
+    {
+      "lang": "hi",
+      "attacks": 10,
+      "rulesOnlyRecall": 70,
+      "rulesPlusMlRecall": 90,
+      "mlContribution": 20,
+      "benign": 1,
+      "fpr": 100
+    },
+    {
+      "lang": "ko",
+      "attacks": 3,
+      "rulesOnlyRecall": 66.67,
+      "rulesPlusMlRecall": 100,
+      "mlContribution": 33.33,
+      "benign": 0,
+      "fpr": 0
+    },
+    {
+      "lang": "tr",
+      "attacks": 2,
+      "rulesOnlyRecall": 0,
+      "rulesPlusMlRecall": 50,
+      "mlContribution": 50,
+      "benign": 0,
+      "fpr": 0
+    },
+    {
+      "lang": "sv",
+      "attacks": 1,
+      "rulesOnlyRecall": 0,
+      "rulesPlusMlRecall": 100,
+      "mlContribution": 100,
+      "benign": 0,
+      "fpr": 0
+    },
+    {
+      "lang": "id",
+      "attacks": 1,
+      "rulesOnlyRecall": 0,
+      "rulesPlusMlRecall": 0,
+      "mlContribution": 0,
+      "benign": 0,
+      "fpr": 0
+    }
+  ]
+}

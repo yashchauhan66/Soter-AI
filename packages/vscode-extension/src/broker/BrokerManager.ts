@@ -8,6 +8,26 @@ const TOKEN_KEY = "soterai.localBrokerToken";
 const SESSION_KEY = "soterai.memorySessionId";
 export const EXPECTED_BROKER_VERSION = "0.1.0";
 
+/**
+ * A start failure that says whether trying again could ever help.
+ *
+ * Auto-start needs this to avoid two opposite mistakes: retrying a port
+ * conflict or a version mismatch (which produces the identical error three
+ * times and delays the notification the user actually needs), and giving up on
+ * a slow first spawn (cold disk, antivirus scanning the bundle) that would have
+ * succeeded a second later.
+ *
+ * It is a flag rather than a message match on purpose — the message strings are
+ * user-facing copy and are pinned by tests, so keying retry behaviour on them
+ * would make an innocuous wording edit silently change enforcement.
+ */
+export class BrokerStartFailure extends Error {
+    constructor(message: string, readonly retryable: boolean) {
+        super(message);
+        this.name = "BrokerStartFailure";
+    }
+}
+
 export type BrokerLifecycleState =
     | "stopped"
     | "starting"
@@ -56,7 +76,7 @@ export class BrokerManager implements vscode.Disposable {
     }
 
     private async startInternal(): Promise<BrokerStatus> {
-        if (this.isLockedDown()) throw new Error("Emergency Lockdown is active; broker start is blocked");
+        if (this.isLockedDown()) throw new BrokerStartFailure("Emergency Lockdown is active; broker start is blocked", false);
         const existing = await this.status();
         if (existing.running && existing.state === "healthy") return existing;
         if (existing.state === "incompatible") {
@@ -91,9 +111,10 @@ export class BrokerManager implements vscode.Disposable {
         if (await this.isPortServed()) {
             this.lifecycle = "error";
             this.lastError = `port ${this.port} is already in use`;
-            throw new Error(
+            throw new BrokerStartFailure(
                 `${this.url} is already in use, so the local AI broker cannot start there. ` +
                     'If another editor is already running SoterAI, give this one its own port with the "soterai.broker.port" setting.',
+                false,
             );
         }
 
@@ -103,7 +124,20 @@ export class BrokerManager implements vscode.Disposable {
         const token = await this.getOrCreateToken();
         const script = this.context.asAbsolutePath("dist/local-ai-broker.js");
         const config = vscode.workspace.getConfiguration("soterai");
-        const providerKey = await this.context.secrets.get("soterai.providerApiKey");
+        // The stored provider key is withheld in a restricted workspace.
+        //
+        // The manifest's own `untrustedWorkspaces` description promises exactly
+        // this — "Cloud connection, token storage, and remote scan escalation
+        // are disabled in untrusted workspaces" — but the read below used to be
+        // unconditional. That was survivable while starting the broker required
+        // an explicit user command; now that activation starts it automatically,
+        // opening an untrusted folder would hand the key to a child process with
+        // no user action at all. Local scanning is unaffected: it needs no
+        // provider key, which is what keeps the manifest's other promise, that
+        // "scanning works in restricted mode".
+        const providerKey = vscode.workspace.isTrusted
+            ? await this.context.secrets.get("soterai.providerApiKey")
+            : undefined;
         const env: NodeJS.ProcessEnv = {
             ...process.env,
             ELECTRON_RUN_AS_NODE: "1",
@@ -173,11 +207,19 @@ export class BrokerManager implements vscode.Disposable {
         this.lastError = `Local AI Broker did not become ready before the startup deadline${reason ? `: ${reason}` : ""}`;
         this.intentionalStop = true;
         await this.stop();
-        throw new Error(`Local AI Broker did not become ready on 127.0.0.1${reason ? `: ${reason}` : ""}`);
+        // Retryable: a missed startup deadline is usually transient — a cold
+        // disk, or antivirus reading the bundle before the first spawn.
+        throw new BrokerStartFailure(`Local AI Broker did not become ready on 127.0.0.1${reason ? `: ${reason}` : ""}`, true);
     }
 
     private incompatibleError(version: string | undefined): Error {
-        return new Error(`Local AI Broker version ${version ?? "unknown"} is incompatible; expected ${EXPECTED_BROKER_VERSION}`);
+        // Not retryable: the bundled broker is whatever it is. Respawning it
+        // cannot change its version, so a retry loop would just delay telling
+        // the user their install is mismatched.
+        return new BrokerStartFailure(
+            `Local AI Broker version ${version ?? "unknown"} is incompatible; expected ${EXPECTED_BROKER_VERSION}`,
+            false,
+        );
     }
 
     /**

@@ -1,0 +1,78 @@
+{
+  "product": "SoterLLM",
+  "version": "v14",
+  "base_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "temperature": 0.9247112821099552,
+  "ece_before": 0.02093757521916621,
+  "ece_after": 0.01562379105275933,
+  "target_fpr": 0.01,
+  "per_label_thresholds": {
+    "SAFE": 0.0,
+    "PROMPT_INJECTION": 0.99,
+    "JAILBREAK": 0.99,
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": 0.99,
+    "PII": 0.99,
+    "SECRET": 0.99,
+    "UNSAFE_OUTPUT": 0.99,
+    "RAG_POISONING": 0.99,
+    "DATA_EXFILTRATION_ATTEMPT": 0.99,
+    "TOOL_CALL_ABUSE": 0.99,
+    "ENCODING_OBFUSCATION": 0.99,
+    "MULTI_TURN_ESCALATION": 0.99,
+    "MODEL_EXTRACTION": 0.99,
+    "TOXICITY_HARASSMENT": 0.99
+  },
+  "threshold_audit": {
+    "policy": "legacy",
+    "target_fpr": 0.01,
+    "argmax_floor": 0.07142857142857142,
+    "argmax_floor_derivation": "argmax of a 14-class softmax is >= 1/14",
+    "fitted_before_clamp": {
+      "SAFE": 0.0,
+      "PROMPT_INJECTION": 0.23757347464561462,
+      "JAILBREAK": 0.13194499909877777,
+      "SYSTEM_PROMPT_LEAK_ATTEMPT": 0.7495524883270264,
+      "PII": 0.03376544639468193,
+      "SECRET": 0.03836977854371071,
+      "UNSAFE_OUTPUT": 0.014551995322108269,
+      "RAG_POISONING": 0.03190557658672333,
+      "DATA_EXFILTRATION_ATTEMPT": 0.02222318761050701,
+      "TOOL_CALL_ABUSE": 0.025166349485516548,
+      "ENCODING_OBFUSCATION": 0.005794850178062916,
+      "MULTI_TURN_ESCALATION": 0.08070620149374008,
+      "MODEL_EXTRACTION": 0.049457959830760956,
+      "TOXICITY_HARASSMENT": 0.0026931436732411385
+    },
+    "inert_thresholds": [
+      "PII",
+      "SECRET",
+      "UNSAFE_OUTPUT",
+      "RAG_POISONING",
+      "DATA_EXFILTRATION_ATTEMPT",
+      "TOOL_CALL_ABUSE",
+      "ENCODING_OBFUSCATION",
+      "MODEL_EXTRACTION",
+      "TOXICITY_HARASSMENT"
+    ],
+    "labels_without_negatives": [],
+    "consequence": "A label listed in inert_thresholds can never fail its threshold. Because lib/ml/calibration.ts clearsLabelThreshold() prefers any finite per-label threshold over the global ML_ONNX_CONFIDENCE_FLOOR, emitting an inert value also disables that global floor for the label. Under policy=legacy these values are emitted anyway to preserve v12's measured behaviour; under policy=omit-inert they are dropped so the global floor governs."
+  },
+  "ood": {
+    "max_prob_p05": 0.7495524883270264,
+    "max_prob_mean": 0.9614472389221191,
+    "suggested_abstain_max_prob": 0.55,
+    "entropy_mean": 0.13542690873146057,
+    "entropy_p95": 0.7565237879753113,
+    "binary_entropy_p95": 0.1689756065607071,
+    "entropy_fit_provenance": {
+      "fitted_by": "scripts/ml/train-soterllm-v14-fullft.py (inline, during training)",
+      "reference": "true-calibration-split",
+      "rows": 12138,
+      "manifest_split_reproduced": true,
+      "bound": "Fitted on the actual held-out calibration split, which is group-disjoint from train and persisted verbatim to split_indices.json. Unlike v12 these percentiles carry no substitute-reference bias in either direction.",
+      "max_binary_entropy": 0.6931471805599453
+    }
+  },
+  "notes": "Temperature is ALREADY baked into the exported ONNX logits (OnnxWrapper divides before returning); do not divide again at inference. Thresholds and the OOD floor are applied in lib/ml/onnxBackend.ts. See threshold_audit.inert_thresholds for labels whose threshold cannot fail and what that does to the global floor.",
+  "_probe": "EXTREME-STRICT falsification probe: every attack label needs 0.99 conf"
+}

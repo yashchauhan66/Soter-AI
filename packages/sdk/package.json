@@ -21,12 +21,12 @@
       "default": "./dist/express.js"
     }
   },
-  "files": ["dist", "README.md"],
+  "files": ["dist", "!dist/**/*.map", "!dist/**/__tests__/**", "README.md", "LICENSE"],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit",
     "test": "npm run build && node --test test/*.test.js",
-    "prepublishOnly": "npm test"
+    "prepublishOnly": "npm test && node ../../scripts/minify-published-dist.mjs ."
   },
   "engines": { "node": ">=18.18" },
   "keywords": [

@@ -133,6 +133,18 @@ jobs:
       - name: Build
         run: npm run build
 
+      # `tsc` output is the TypeScript with the types removed — comments, JSDoc
+      # and internal names all survive, so a raw tarball reads as the source.
+      # `prepublishOnly` runs this too, but only on the publish step: run it
+      # here as well so "Verify package contents" below inspects the artifact
+      # that actually ships, and so a dry run proves the same thing a real
+      # publish would.
+      - name: Minify the published JS
+        run: |
+          set -euo pipefail
+          node ../../../scripts/minify-published-dist.mjs .
+          node ../../../scripts/minify-published-dist.mjs . --check
+
       - name: Verify package contents
         run: npm pack --dry-run
 

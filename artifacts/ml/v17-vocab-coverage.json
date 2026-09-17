@@ -1,0 +1,64 @@
+{
+  "train": {
+    "rows": 323176,
+    "tokens": 26629153,
+    "distinct_ids": 59372,
+    "vocab_share_pct": 49.66
+  },
+  "eval": {
+    "rows": 118128,
+    "tokens": 16181065,
+    "distinct_ids": 49899,
+    "vocab_share_pct": 41.74
+  },
+  "battery": {
+    "rows": 312,
+    "tokens": 12829,
+    "distinct_ids": 5252,
+    "vocab_share_pct": 4.39
+  },
+  "always_keep": 20098,
+  "vocab": 119547,
+  "candidates": [
+    {
+      "keep_set": "train-only",
+      "keep_rows": 74707,
+      "keep_share_pct": 62.49,
+      "embedding_params": 57374976,
+      "projected_model_bytes": 403476074,
+      "under_gate": true,
+      "new_unk_eval_pct": 0.01785,
+      "new_unk_battery_pct": 5.42521
+    },
+    {
+      "keep_set": "train+minfreq1-all",
+      "keep_rows": 76218,
+      "keep_share_pct": 63.76,
+      "embedding_params": 58535424,
+      "projected_model_bytes": 408117866,
+      "under_gate": true,
+      "new_unk_eval_pct": 0.0,
+      "new_unk_battery_pct": 0.0
+    },
+    {
+      "keep_set": "train-freq>=2",
+      "keep_rows": 70758,
+      "keep_share_pct": 59.19,
+      "embedding_params": 54342144,
+      "projected_model_bytes": 391344746,
+      "under_gate": true,
+      "new_unk_eval_pct": 0.0371,
+      "new_unk_battery_pct": 6.75033
+    },
+    {
+      "keep_set": "train-freq>=5",
+      "keep_rows": 64272,
+      "keep_share_pct": 53.76,
+      "embedding_params": 49360896,
+      "projected_model_bytes": 371419754,
+      "under_gate": true,
+      "new_unk_eval_pct": 0.11319,
+      "new_unk_battery_pct": 8.3015
+    }
+  ]
+}

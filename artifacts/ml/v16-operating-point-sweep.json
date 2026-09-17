@@ -1,0 +1,219 @@
+{
+  "harness": "sweep-v16-operating-point/v1",
+  "eval": "datasets/crossdist-eval-v3.jsonl",
+  "limit": 4250,
+  "v14_reference": {
+    "recall": 97.52,
+    "caught": 2993,
+    "attacks": 3069,
+    "fpr": 5.56,
+    "fp": 51,
+    "benign": 918
+  },
+  "fpr_ceiling_pct": 5.6,
+  "arms": [
+    {
+      "arm": "a0-baseline",
+      "ok": true,
+      "seconds": 681.9,
+      "calibration": "models\\ml-classifier-v16\\calibration.json",
+      "allowlist": null,
+      "recall": 97.13,
+      "caught": 2981,
+      "attacks": 3069,
+      "fpr": 5.34,
+      "fp": 49,
+      "benign": 918,
+      "gates": {
+        "safe-label": 46,
+        "abstention": 29,
+        "semantic-benign": 11,
+        "label-family": 2
+      },
+      "report": "artifacts\\ml\\_v16sweep\\a0-baseline.json"
+    },
+    {
+      "arm": "a1-plus-multiturn",
+      "ok": true,
+      "seconds": 701.0,
+      "calibration": "models\\ml-classifier-v16\\calibration.json",
+      "allowlist": [
+        "PROMPT_INJECTION",
+        "JAILBREAK",
+        "SYSTEM_PROMPT_LEAK_ATTEMPT",
+        "PII",
+        "SECRET",
+        "RAG_POISONING",
+        "ENCODING_OBFUSCATION",
+        "MODEL_EXTRACTION",
+        "TOOL_CALL_ABUSE",
+        "MULTI_TURN_ESCALATION"
+      ],
+      "recall": 97.13,
+      "caught": 2981,
+      "attacks": 3069,
+      "fpr": 5.34,
+      "fp": 49,
+      "benign": 918,
+      "gates": {
+        "safe-label": 46,
+        "abstention": 29,
+        "semantic-benign": 11,
+        "label-family": 2
+      },
+      "report": "artifacts\\ml\\_v16sweep\\a1-plus-multiturn.json"
+    },
+    {
+      "arm": "a2-plus-multiturn-exfil",
+      "ok": true,
+      "seconds": 695.7,
+      "calibration": "models\\ml-classifier-v16\\calibration.json",
+      "allowlist": [
+        "PROMPT_INJECTION",
+        "JAILBREAK",
+        "SYSTEM_PROMPT_LEAK_ATTEMPT",
+        "PII",
+        "SECRET",
+        "RAG_POISONING",
+        "ENCODING_OBFUSCATION",
+        "MODEL_EXTRACTION",
+        "TOOL_CALL_ABUSE",
+        "MULTI_TURN_ESCALATION",
+        "DATA_EXFILTRATION_ATTEMPT"
+      ],
+      "recall": 97.17,
+      "caught": 2982,
+      "attacks": 3069,
+      "fpr": 5.45,
+      "fp": 50,
+      "benign": 918,
+      "gates": {
+        "safe-label": 46,
+        "abstention": 29,
+        "semantic-benign": 11,
+        "label-family": 1
+      },
+      "report": "artifacts\\ml\\_v16sweep\\a2-plus-multiturn-exfil.json"
+    },
+    {
+      "arm": "t-fpr0.01",
+      "ok": true,
+      "seconds": 607.3,
+      "calibration": "artifacts\\ml\\v16-calib\\calibration-fpr0.01.json",
+      "allowlist": [
+        "PROMPT_INJECTION",
+        "JAILBREAK",
+        "SYSTEM_PROMPT_LEAK_ATTEMPT",
+        "PII",
+        "SECRET",
+        "RAG_POISONING",
+        "ENCODING_OBFUSCATION",
+        "MODEL_EXTRACTION",
+        "TOOL_CALL_ABUSE"
+      ],
+      "recall": 97.13,
+      "caught": 2981,
+      "attacks": 3069,
+      "fpr": 5.34,
+      "fp": 49,
+      "benign": 918,
+      "gates": {
+        "safe-label": 46,
+        "abstention": 29,
+        "semantic-benign": 11,
+        "label-family": 2
+      },
+      "report": "artifacts\\ml\\_v16sweep\\t-fpr0.01.json"
+    },
+    {
+      "arm": "t-fpr0.02",
+      "ok": true,
+      "seconds": 627.1,
+      "calibration": "artifacts\\ml\\v16-calib\\calibration-fpr0.02.json",
+      "allowlist": [
+        "PROMPT_INJECTION",
+        "JAILBREAK",
+        "SYSTEM_PROMPT_LEAK_ATTEMPT",
+        "PII",
+        "SECRET",
+        "RAG_POISONING",
+        "ENCODING_OBFUSCATION",
+        "MODEL_EXTRACTION",
+        "TOOL_CALL_ABUSE"
+      ],
+      "recall": 97.13,
+      "caught": 2981,
+      "attacks": 3069,
+      "fpr": 5.34,
+      "fp": 49,
+      "benign": 918,
+      "gates": {
+        "safe-label": 46,
+        "abstention": 29,
+        "semantic-benign": 11,
+        "label-family": 2
+      },
+      "report": "artifacts\\ml\\_v16sweep\\t-fpr0.02.json"
+    },
+    {
+      "arm": "t-fpr0.03",
+      "ok": true,
+      "seconds": 723.3,
+      "calibration": "artifacts\\ml\\v16-calib\\calibration-fpr0.03.json",
+      "allowlist": [
+        "PROMPT_INJECTION",
+        "JAILBREAK",
+        "SYSTEM_PROMPT_LEAK_ATTEMPT",
+        "PII",
+        "SECRET",
+        "RAG_POISONING",
+        "ENCODING_OBFUSCATION",
+        "MODEL_EXTRACTION",
+        "TOOL_CALL_ABUSE"
+      ],
+      "recall": 97.13,
+      "caught": 2981,
+      "attacks": 3069,
+      "fpr": 5.34,
+      "fp": 49,
+      "benign": 918,
+      "gates": {
+        "safe-label": 46,
+        "abstention": 29,
+        "semantic-benign": 11,
+        "label-family": 2
+      },
+      "report": "artifacts\\ml\\_v16sweep\\t-fpr0.03.json"
+    },
+    {
+      "arm": "t-fpr0.05",
+      "ok": true,
+      "seconds": 762.0,
+      "calibration": "artifacts\\ml\\v16-calib\\calibration-fpr0.05.json",
+      "allowlist": [
+        "PROMPT_INJECTION",
+        "JAILBREAK",
+        "SYSTEM_PROMPT_LEAK_ATTEMPT",
+        "PII",
+        "SECRET",
+        "RAG_POISONING",
+        "ENCODING_OBFUSCATION",
+        "MODEL_EXTRACTION",
+        "TOOL_CALL_ABUSE"
+      ],
+      "recall": 97.13,
+      "caught": 2981,
+      "attacks": 3069,
+      "fpr": 5.34,
+      "fp": 49,
+      "benign": 918,
+      "gates": {
+        "safe-label": 46,
+        "abstention": 29,
+        "semantic-benign": 11,
+        "label-family": 2
+      },
+      "report": "artifacts\\ml\\_v16sweep\\t-fpr0.05.json"
+    }
+  ]
+}

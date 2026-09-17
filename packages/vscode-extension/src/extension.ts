@@ -11,6 +11,7 @@ import { DashboardPanel } from "./webview/DashboardPanel";
 import { ControlPanelViewProvider } from "./webview/ControlPanelViewProvider";
 import { TelemetryManager } from "./telemetry";
 import { BrokerManager, setBrokerManager } from "./broker/BrokerManager";
+import { autoStartBroker, RETRY_START } from "./broker/autoStart";
 import { registerBrokerCommands } from "./broker/commands";
 import { AISentinel } from "./sentinel/AISentinel";
 import { registerSentinelCommands } from "./sentinel/commands";
@@ -52,6 +53,7 @@ let mcpFirewall: MCPFirewall;
 let memoryGuard: MemoryGuard;
 let extensionContext: vscode.ExtensionContext;
 let brokerManager: BrokerManager;
+let brokerLog: vscode.OutputChannel;
 let protectionState: ProtectionStateService;
 
 // Status-bar updates involve two local HTTP calls to the broker. Throttle them
@@ -120,6 +122,15 @@ export function activate(context: vscode.ExtensionContext): void {
     brokerManager = new BrokerManager(context);
     setBrokerManager(brokerManager);
     context.subscriptions.push(brokerManager);
+
+    // Where "why is protection not running?" gets a written answer.
+    //
+    // A notification is dismissed and gone; the one question a user asks later
+    // is why the broker is not up, and without a durable record the only honest
+    // answer is a shrug. Nothing secret reaches it: BrokerManager redacts the
+    // broker token out of child output before any of it is summarized.
+    brokerLog = vscode.window.createOutputChannel("SoterAI Broker");
+    context.subscriptions.push(brokerLog);
 
     sentinel = new AISentinel(context);
     permissionStore = new PermissionStore(context);
@@ -404,6 +415,34 @@ export function activate(context: vscode.ExtensionContext): void {
         },
         advisoryNoticeSuppressed: () =>
             !vscode.workspace.getConfiguration("soterai").get<boolean>("terminal.warnOnRawTerminalOpen", true),
+    });
+
+    // Bring the broker up LAST, and do not await it.
+    //
+    // Not awaited because `activate()` blocks the editor: a broker that takes
+    // three seconds to become healthy would delay every other surface built
+    // above, and those surfaces are useful while it comes up. Last because by
+    // this point every command it might offer the user is registered.
+    //
+    // The result is deliberately not discarded — `void start()` is how a guard
+    // ends up silently off. `autoStartBroker` notifies on every path where
+    // enforcement is not running, and the outcome is recorded here so the
+    // status bar reflects reality either way.
+    void autoStartBroker(
+        {
+            start: () => brokerManager.start(),
+            notify: (message, ...actions) => Promise.resolve(vscode.window.showWarningMessage(message, ...actions)),
+            runAction: async (action) => {
+                await vscode.commands.executeCommand(
+                    action === RETRY_START ? "soterai.startLocalAIBroker" : "soterai.openControlPanel",
+                );
+            },
+            log: (line) => brokerLog.appendLine(`[${new Date().toISOString()}] ${line}`),
+            delay: (ms) => new Promise((resolve) => setTimeout(resolve, ms)),
+        },
+        { enabled: vscode.workspace.getConfiguration("soterai").get<boolean>("broker.autoStart", true) },
+    ).finally(() => {
+        void updateStatusBar();
     });
 }
 

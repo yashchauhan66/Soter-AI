@@ -113,6 +113,15 @@ const HIGH_RISK_SECRET_PATTERNS: Array<[string, RegExp]> = [
 
 
 /**
+ * The names of the high-risk secret classes, derived from the patterns above so
+ * the two can never drift. `scanBrokerRequest` reports these as scan categories,
+ * and consumers key their block/allow policy on them — see
+ * `HIGH_RISK_SECRET_CLASSES` in @soterai/ide-protocol, which mirrors this list
+ * for dependency-free consumers and is pinned to it by a test in the broker.
+ */
+export const HIGH_RISK_SECRET_CLASS_NAMES: readonly string[] = HIGH_RISK_SECRET_PATTERNS.map(([name]) => name);
+
+/**
  * Redact sensitive content. Detector findings (when supplied) are masked by
  * position first, then a pattern safety-net pass ALWAYS runs so undetected
  * secrets are still removed. The result is guaranteed free of the high-risk

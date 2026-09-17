@@ -1,0 +1,151 @@
+{
+  "name": "🛡️ Secure Autonomous Multi-Tool Agent (Soter AI)",
+  "tags": ["Agentic AI", "Task Execution", "Privilege Escalation", "Security"],
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "123-manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            { "name": "user_task", "value": "Process order #12345 and send confirmation email to customer@example.com" }
+          ]
+        }
+      },
+      "id": "456-set-task",
+      "name": "Set User Task",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "action": "inputGuard",
+        "inputText": "={{ $json.user_task }}",
+        "onThreat": "BLOCK",
+        "metadata": "={\"source\": \"autonomous-agent\", \"action\": \"multi-tool\"}"
+      },
+      "id": "789-soter-guard",
+      "name": "🛡️ Soter Intent Guard",
+      "type": "n8n-nodes-soterai.soterGuard",
+      "typeVersion": 1,
+      "position": [720, 300],
+      "notesInFlow": true,
+      "notes": "🔒 Analyzes intent & prevents privilege escalation"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict" },
+          "boolean": [
+            { "value1": "={{ $json.blocked }}", "operation": "isTrue" }
+          ]
+        }
+      },
+      "id": "012-high-risk-check",
+      "name": "High Risk Action?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [960, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://hooks.slack.com/services/REPLACE_WITH_YOUR_WEBHOOK",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={ \"text\": \"⚠️ Soter AI held a high-risk task for approval!\", \"attachments\": [{\"color\": \"warning\", \"text\": $json}] }"
+      },
+      "id": "345-hold-alert",
+      "name": "Slack Approval Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 140]
+    },
+    {
+      "parameters": {},
+      "id": "678-wait-approval",
+      "name": "Wait for Approval",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [1440, 140]
+    },
+    {
+      "parameters": {
+        "model": { "__rl": true, "value": "gpt-4o", "mode": "list" },
+        "prompt": "Given this task: {{ $json.user_task }}, decide which tool to use: email, database, or calculator. Return JSON only: { \"tool\": \"...\", \"params\": { ... } }"
+      },
+      "id": "901-agent-router",
+      "name": "LLM Agent Router",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 3.4,
+      "position": [1200, 460]
+    },
+    {
+      "parameters": {
+        "values": { "string": [{ "name": "result", "value": "Task completed successfully!" }] }
+      },
+      "id": "234-task-executor",
+      "name": "Execute Task (Tool)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [1440, 460],
+      "notesInFlow": true,
+      "notes": "📝 Replace with actual tool nodes like Email, DB, etc."
+    },
+    {
+      "parameters": {
+        "action": "outputGuard",
+        "outputText": "={{ $json.result }}",
+        "onThreat": "REDACT"
+      },
+      "id": "567-output-guard",
+      "name": "🛡️ Soter Output Guard",
+      "type": "n8n-nodes-soterai.soterGuard",
+      "typeVersion": 1,
+      "position": [1680, 460]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [[{ "node": "Set User Task", "type": "main", "index": 0 }]]
+    },
+    "Set User Task": {
+      "main": [[{ "node": "🛡️ Soter Intent Guard", "type": "main", "index": 0 }]]
+    },
+    "🛡️ Soter Intent Guard": {
+      "main": [[{ "node": "High Risk Action?", "type": "main", "index": 0 }]]
+    },
+    "High Risk Action?": {
+      "main": [
+        [
+          { "node": "Slack Approval Request", "type": "main", "index": 0 },
+          { "node": "Wait for Approval", "type": "main", "index": 0 }
+        ],
+        [
+          { "node": "LLM Agent Router", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Slack Approval Request": {
+      "main": [[{ "node": "Wait for Approval", "type": "main", "index": 0 }]]
+    },
+    "LLM Agent Router": {
+      "main": [[{ "node": "Execute Task (Tool)", "type": "main", "index": 0 }]]
+    },
+    "Execute Task (Tool)": {
+      "main": [[{ "node": "🛡️ Soter Output Guard", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "staticData": null,
+  "pinData": {},
+  "versionId": "auto-generated-2"
+}

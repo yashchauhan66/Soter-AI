@@ -1,6 +1,13 @@
 import * as vscode from "vscode";
 import { ExtensionState } from "../state";
 import type { Finding, GuardDecision } from "@soterai/guard-core";
+import {
+    collapseSpacedLetters,
+    decodeBase64Blobs,
+    deobfuscate,
+    foldUnicode,
+    obfuscationVariants,
+} from "../advanced/unicodeFolding";
 
 // ── Live inline scanning — subtle markers + soft highlights ────────────────
 //
@@ -281,12 +288,47 @@ export class LiveScanner implements vscode.CodeActionProvider {
         // The document may have closed/changed during the debounce window.
         if (doc.isClosed || !this.isEnabled() || !this.isScannable(doc)) return;
         const state = ExtensionState.getInstance();
+        const raw = doc.getText();
         let decision: GuardDecision;
         try {
-            decision = await state.engine.scan(doc.getText(), { context: "file" });
+            decision = await state.engine.scan(raw, { context: "file" });
         } catch {
             // Never let a scan failure surface as a user-facing error.
             return;
+        }
+
+        // ── Obfuscated-secret sweep ───────────────────────────────────────────
+        // The single-pass scan above only sees the literal text. A secret that is
+        // base64-wrapped, zero-width-split, leetspeak-substituted or letter-spaced
+        // matches no detector pattern, so it produced ZERO findings — the file
+        // looked clean while still carrying a live credential. The egress firewall
+        // already re-scans normalized variants (Gap B); the IDE live path did not.
+        // Re-running the same engine over each normalizer output closes that hole.
+        // Findings from a folded variant carry no valid offsets into the real
+        // document, so they are reported at the line that actually triggered them
+        // (see lineForVariant) instead of being silently dropped or misplaced.
+        try {
+            for (const variant of obfuscationVariants(raw)) {
+                if (variant.name === "raw") continue; // already scanned above
+                if (!variant.text || variant.text.length < 8) continue;
+                // Only spend a second scan when the folding actually changed the
+                // text into something a detector could match. `reversed` variants
+                // are almost always noise; keep them but they rarely fire.
+                const folded = await state.engine.scan(variant.text, { context: "file", skipCache: true });
+                for (const f of folded.findings) {
+                    if (!/secret|credential|key|token|password|pii/i.test(f.category ?? "")) continue;
+                    if (decision.findings.some((existing) => existing.title === f.title)) continue;
+                    decision.findings.push({
+                        ...f,
+                        title: `${f.title} (obfuscated: ${variant.name})`,
+                        reason: `${f.reason} — matched only after ${variant.name} normalization; the raw text hides this value from single-pass detection.`,
+                    });
+                }
+                if (folded.riskScore > decision.riskScore) decision.riskScore = folded.riskScore;
+            }
+        } catch {
+            // The variant sweep is additive. If it throws, the primary scan result
+            // above still stands — never lose real findings to an optional pass.
         }
 
         const diags: vscode.Diagnostic[] = [];
@@ -369,8 +411,49 @@ export class LiveScanner implements vscode.CodeActionProvider {
         if (typeof finding.start === "number" && typeof finding.end === "number" && finding.end > finding.start) {
             return new vscode.Range(doc.positionAt(finding.start), doc.positionAt(finding.end));
         }
+        // A finding synthesized from a normalized variant has offsets into the
+        // folded string, not the document. Falling back to line 1 would point the
+        // user at an unrelated line, so recover the real line from the evidence.
+        const recovered = this.lineForVariant(doc, finding);
+        if (recovered !== undefined) return recovered;
         const firstLine = doc.lineAt(0);
         return new vscode.Range(firstLine.range.start, firstLine.range.end);
+    }
+
+    /**
+     * Recover a document range for a variant-only finding.
+     *
+     * The evidence string survived folding, so every token of it still exists in
+     * the document — possibly separated by invisible characters. We strip those
+     * from both sides and search per line, comparing folded forms so a match is
+     * found even when the raw line differs from the folded evidence.
+     */
+    private lineForVariant(doc: vscode.TextDocument, finding: Finding): vscode.Range | undefined {
+        const evidence = (finding.evidence ?? finding.reason ?? "").trim();
+        if (evidence.length < 4) return undefined;
+
+        const needle = collapseSpacedLetters(foldUnicode(deobfuscate(evidence)));
+        if (needle.length < 4) return undefined;
+
+        for (let line = 0; line < doc.lineCount; line++) {
+            const haystack = collapseSpacedLetters(foldUnicode(deobfuscate(doc.lineAt(line).text)));
+            if (haystack.includes(needle)) {
+                const range = doc.lineAt(line).range;
+                return new vscode.Range(range.start, range.end);
+            }
+        }
+
+        // Last resort: the value may be base64-encoded in the document, so compare
+        // against each line's decoded blobs too.
+        for (let line = 0; line < doc.lineCount; line++) {
+            for (const decoded of decodeBase64Blobs(doc.lineAt(line).text)) {
+                if (decoded.includes(evidence) || evidence.includes(decoded.trim())) {
+                    const range = doc.lineAt(line).range;
+                    return new vscode.Range(range.start, range.end);
+                }
+            }
+        }
+        return undefined;
     }
 
     private rescanVisible(): void {

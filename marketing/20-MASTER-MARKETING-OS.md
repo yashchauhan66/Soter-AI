@@ -75,7 +75,7 @@ Everything in the numbered files is written to be pasted, not rewritten. The cop
 Ordered by how much traffic they are costing. All three predate this kit and are still open.
 
 1. **Chrome Web Store submission never happened** (`00-START-HERE` blocker B1). This was scoped as the single largest channel in the original 500-user plan, and store search traffic is free. `docs/extension-store/final-public-upload-instructions.md` has the steps. Costs $5 and an afternoon.
-2. **No demo GIF above the fold in the README.** Every channel in this kit routes to the repo, and the repo opens with a logo and a badge wall. A 3-second "attack → BLOCKED" loop placed before the badges is the highest-leverage single edit available. Script A in `17-VIDEO-SCRIPTS-YOUTUBE-SHORTS.md` is exactly that asset.
+2. **DONE (2026-09-12) — Demo GIF shipped above the fold in the README.** Take #4: 18.7s, 960×540@12fps, 2.87 MB (< 3 MB budget), real `/playground` session + real engine BLOCK verdict on the synthetic verified fixture (`scripts/test/gif-demo-fixture.js`). Assets: `public/marketplace/screenshots/soterai-secret-caught-before-ai.gif` (+ `.json` manifest) and VSIX fallback copy at `packages/vscode-extension/media/marketplace/`. Regenerate: `node scripts/marketing/generate-readme-gif.mjs`. Embed: root README above badges + extension README "See it in action", via `https://soterai.in/marketplace/screenshots/soterai-secret-caught-before-ai.gif`. (Was: no demo GIF above the fold; Script A in `17-VIDEO-SCRIPTS-YOUTUBE-SHORTS.md`.)
 3. **Bing Webmaster Tools not set up.** Bing's index feeds ChatGPT search. Fifteen minutes, and without it the entire AEO investment in `16-` is running on one engine instead of two.
 
 ---

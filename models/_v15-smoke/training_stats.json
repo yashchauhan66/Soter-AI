@@ -1,0 +1,273 @@
+{
+  "product_name": "SoterLLM",
+  "product_version": "v14",
+  "base_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "encoder_key": "minilm",
+  "method": "partial_finetune_top3_blocks",
+  "num_labels": 14,
+  "labels": [
+    "SAFE",
+    "PROMPT_INJECTION",
+    "JAILBREAK",
+    "SYSTEM_PROMPT_LEAK_ATTEMPT",
+    "PII",
+    "SECRET",
+    "UNSAFE_OUTPUT",
+    "RAG_POISONING",
+    "DATA_EXFILTRATION_ATTEMPT",
+    "TOOL_CALL_ABUSE",
+    "ENCODING_OBFUSCATION",
+    "MULTI_TURN_ESCALATION",
+    "MODEL_EXTRACTION",
+    "TOXICITY_HARASSMENT"
+  ],
+  "architecture": {
+    "hidden_size": 384,
+    "head_layers": [
+      384,
+      512,
+      256,
+      14
+    ],
+    "dropout": 0.15,
+    "max_length": 256,
+    "aux_attack_head": true
+  },
+  "optimization": {
+    "n_encoder_layers": 6,
+    "layer_decay": 0.9,
+    "encoder_lr": 2e-05,
+    "head_lr": 0.001,
+    "param_groups": 8,
+    "trainable_params": 5854991,
+    "lr_by_block": {
+      "embeddings": 9.5659e-06,
+      "layer.0": 1.18098e-05,
+      "layer.1": 1.3122e-05,
+      "layer.2": 1.458e-05,
+      "layer.3": 1.62e-05,
+      "layer.4": 1.8e-05,
+      "layer.5": 2e-05,
+      "encoder.other": 2e-05,
+      "head": 0.001
+    },
+    "epochs": 1,
+    "batch_size": 32,
+    "grad_accum": 1,
+    "effective_batch": 32,
+    "warmup_frac": 0.06,
+    "max_grad_norm": 1.0,
+    "amp": "off",
+    "grad_checkpoint": false,
+    "length_grouped": true,
+    "length_mega_factor": 50,
+    "attack_loss_weight": 0.3,
+    "label_smoothing": 0.05,
+    "focal_gamma": 1.5
+  },
+  "epoch_selection": {
+    "rule": "NO_EPOCH_MET_FPR_CEILING<=0.0300__fell_back_to_min_fpr",
+    "fpr_ceiling": 0.03,
+    "selected_epoch": 1
+  },
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 2.647195259730021,
+      "batches": 3,
+      "f1_macro": 0.1151938207462008,
+      "accuracy": 0.16422287390029325,
+      "attack_recall": 0.9090909090909091,
+      "attack_precision": 0.9240924092409241,
+      "benign_fpr": 0.696969696969697,
+      "exact_label_accuracy": 0.14935064935064934,
+      "seconds": 26.2
+    }
+  ],
+  "augmentation": {
+    "enabled": true,
+    "attack_rate": 0.35,
+    "benign_rate": 0.12,
+    "seed": 20260823,
+    "max_stack": 2,
+    "generated": 755,
+    "skipped_label": 186,
+    "skipped_noop": 15,
+    "by_transform": {
+      "invisible": 111,
+      "whitespace": 134,
+      "spaced": 138,
+      "leet": 120,
+      "combining": 119,
+      "homoglyph": 111,
+      "punct": 116,
+      "case": 120,
+      "typo": 123
+    },
+    "by_label": {
+      "TOOL_CALL_ABUSE": 69,
+      "SECRET": 60,
+      "UNSAFE_OUTPUT": 56,
+      "SYSTEM_PROMPT_LEAK_ATTEMPT": 60,
+      "TOXICITY_HARASSMENT": 66,
+      "DATA_EXFILTRATION_ATTEMPT": 56,
+      "MODEL_EXTRACTION": 66,
+      "MULTI_TURN_ESCALATION": 54,
+      "RAG_POISONING": 73,
+      "JAILBREAK": 51,
+      "PII": 62,
+      "PROMPT_INJECTION": 66,
+      "SAFE": 16
+    },
+    "parent_groups_verified": 755
+  },
+  "tokenizer": {
+    "vocab_size": 30522,
+    "subword_tokens": 5828,
+    "contiguous_ids": true,
+    "specials_present": [
+      "[CLS]",
+      "[SEP]",
+      "[PAD]",
+      "[UNK]",
+      "[MASK]"
+    ],
+    "do_lower_case": true,
+    "strip_accents": null,
+    "tokenize_chinese_chars": true,
+    "tokenizer_class": "BertTokenizer",
+    "vocab_txt_tokens": 30522
+  },
+  "onnx_parity": {
+    "verified": true,
+    "tolerance": 0.001,
+    "worst_max_abs_logit_diff": 7.152557373046875e-07,
+    "cases": [
+      {
+        "case": "batch1_padded",
+        "shape": [
+          1,
+          14
+        ],
+        "seq_len": 256,
+        "max_abs_logit_diff": 6.854534149169922e-07
+      },
+      {
+        "case": "batch3_padded",
+        "shape": [
+          3,
+          14
+        ],
+        "seq_len": 256,
+        "max_abs_logit_diff": 7.152557373046875e-07
+      },
+      {
+        "case": "batch2_dynamic_len",
+        "shape": [
+          2,
+          14
+        ],
+        "seq_len": 11,
+        "max_abs_logit_diff": 7.152557373046875e-07
+      }
+    ],
+    "passed": true
+  },
+  "final_metrics": {
+    "accuracy": 0.16422287390029325,
+    "f1_macro": 0.1151938207462008,
+    "f1_weighted": 0.12128224387752577,
+    "attack_recall": 0.9090909090909091,
+    "attack_precision": 0.9240924092409241,
+    "benign_fpr": 0.696969696969697,
+    "exact_label_accuracy": 0.14935064935064934
+  },
+  "per_label_metrics": {
+    "SAFE": {
+      "precision": 0.2631578947368421,
+      "recall": 0.30303030303030304,
+      "f1-score": 0.28169014084507044,
+      "support": 33.0
+    },
+    "PROMPT_INJECTION": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 30.0
+    },
+    "JAILBREAK": {
+      "precision": 0.3333333333333333,
+      "recall": 0.043478260869565216,
+      "f1-score": 0.07692307692307693,
+      "support": 23.0
+    },
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 18.0
+    },
+    "PII": {
+      "precision": 0.4,
+      "recall": 0.09090909090909091,
+      "f1-score": 0.14814814814814814,
+      "support": 22.0
+    },
+    "SECRET": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 31.0
+    },
+    "UNSAFE_OUTPUT": {
+      "precision": 0.3333333333333333,
+      "recall": 0.03225806451612903,
+      "f1-score": 0.058823529411764705,
+      "support": 31.0
+    },
+    "RAG_POISONING": {
+      "precision": 0.3333333333333333,
+      "recall": 0.43478260869565216,
+      "f1-score": 0.37735849056603776,
+      "support": 23.0
+    },
+    "DATA_EXFILTRATION_ATTEMPT": {
+      "precision": 0.2608695652173913,
+      "recall": 0.20689655172413793,
+      "f1-score": 0.23076923076923078,
+      "support": 29.0
+    },
+    "TOOL_CALL_ABUSE": {
+      "precision": 0.16666666666666666,
+      "recall": 0.14285714285714285,
+      "f1-score": 0.15384615384615385,
+      "support": 21.0
+    },
+    "ENCODING_OBFUSCATION": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 14.0
+    },
+    "MULTI_TURN_ESCALATION": {
+      "precision": 0.1116751269035533,
+      "recall": 0.88,
+      "f1-score": 0.1981981981981982,
+      "support": 25.0
+    },
+    "MODEL_EXTRACTION": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "support": 22.0
+    },
+    "TOXICITY_HARASSMENT": {
+      "precision": 0.25,
+      "recall": 0.05263157894736842,
+      "f1-score": 0.08695652173913043,
+      "support": 19.0
+    }
+  },
+  "wall_clock_seconds": 147.4,
+  "device": "cpu"
+}

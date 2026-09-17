@@ -1,0 +1,89 @@
+{
+  "product": "SoterLLM",
+  "version": "v14",
+  "base_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "temperature": 0.9247112821099552,
+  "ece_before": 0.02093757521916621,
+  "ece_after": 0.01562379105275933,
+  "target_fpr": 0.01,
+  "per_label_thresholds": {
+    "SAFE": 0.0,
+    "PROMPT_INJECTION": 0.2421189248561859,
+    "JAILBREAK": 0.13309472799301147,
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": 0.5,
+    "PII": 0.05,
+    "SECRET": 0.05,
+    "UNSAFE_OUTPUT": 0.05,
+    "RAG_POISONING": 0.05,
+    "DATA_EXFILTRATION_ATTEMPT": 0.05,
+    "TOOL_CALL_ABUSE": 0.05,
+    "ENCODING_OBFUSCATION": 0.05,
+    "MULTI_TURN_ESCALATION": 0.08011319488286972,
+    "MODEL_EXTRACTION": 0.05,
+    "TOXICITY_HARASSMENT": 0.05
+  },
+  "threshold_audit": {
+    "policy": "legacy",
+    "target_fpr": 0.01,
+    "argmax_floor": 0.07142857142857142,
+    "argmax_floor_derivation": "argmax of a 14-class softmax is >= 1/14",
+    "fitted_before_clamp": {
+      "SAFE": 0.0,
+      "PROMPT_INJECTION": 0.2421189248561859,
+      "JAILBREAK": 0.13309472799301147,
+      "SYSTEM_PROMPT_LEAK_ATTEMPT": 0.7450373768806458,
+      "PII": 0.03393438830971718,
+      "SECRET": 0.038307275623083115,
+      "UNSAFE_OUTPUT": 0.0145468320697546,
+      "RAG_POISONING": 0.03233347088098526,
+      "DATA_EXFILTRATION_ATTEMPT": 0.02222028747200966,
+      "TOOL_CALL_ABUSE": 0.025127112865447998,
+      "ENCODING_OBFUSCATION": 0.005838776007294655,
+      "MULTI_TURN_ESCALATION": 0.08011319488286972,
+      "MODEL_EXTRACTION": 0.04936051368713379,
+      "TOXICITY_HARASSMENT": 0.002685022074729204
+    },
+    "inert_thresholds": [
+      "PII",
+      "SECRET",
+      "UNSAFE_OUTPUT",
+      "RAG_POISONING",
+      "DATA_EXFILTRATION_ATTEMPT",
+      "TOOL_CALL_ABUSE",
+      "ENCODING_OBFUSCATION",
+      "MODEL_EXTRACTION",
+      "TOXICITY_HARASSMENT"
+    ],
+    "labels_without_negatives": [],
+    "consequence": "A label listed in inert_thresholds can never fail its threshold. Because lib/ml/calibration.ts clearsLabelThreshold() prefers any finite per-label threshold over the global ML_ONNX_CONFIDENCE_FLOOR, emitting an inert value also disables that global floor for the label."
+  },
+  "ood": {
+    "max_prob_p05": 0.7495524883270264,
+    "max_prob_mean": 0.9614472389221191,
+    "suggested_abstain_max_prob": 0.55,
+    "entropy_mean": 0.13542690873146057,
+    "entropy_p95": 0.7565237879753113,
+    "binary_entropy_p95": 0.1689756065607071,
+    "entropy_fit_provenance": {
+      "fitted_by": "scripts/ml/train-soterllm-v14-fullft.py (inline, during training)",
+      "reference": "true-calibration-split",
+      "rows": 12138,
+      "manifest_split_reproduced": true,
+      "bound": "Fitted on the actual held-out calibration split, which is group-disjoint from train and persisted verbatim to split_indices.json. Unlike v12 these percentiles carry no substitute-reference bias in either direction.",
+      "max_binary_entropy": 0.6931471805599453
+    }
+  },
+  "notes": "Temperature is ALREADY baked into the exported ONNX logits (OnnxWrapper divides before returning); do not divide again at inference. Thresholds and the OOD floor are applied in lib/ml/onnxBackend.ts. See threshold_audit.inert_thresholds for labels whose threshold cannot fail and what that does to the global floor.",
+  "refit_provenance": {
+    "refit_by": "scripts/ml/refit-v16-thresholds.py",
+    "reference": "v16 held-out calibration split from split_indices.json",
+    "rows": 12138,
+    "model_onnx_sha256": "08b99181c9f24f200c67fe93180f8898766aea884eaeebe12aafc234a865e469",
+    "changed_fields": [
+      "per_label_thresholds",
+      "threshold_audit",
+      "target_fpr"
+    ],
+    "bound": "Fitted only on the training-time calibration split. The crossdist acceptance set was not consulted, so this file is not tuned on the gate it will later be judged by."
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "sample_rows": 300,
+  "arms": {
+    "v14": {
+      "params_total": 22899726,
+      "params_embedding": 11917824,
+      "params_compute": 10981902,
+      "embedding_share": 0.5204352226747168,
+      "file_bytes": 91774954,
+      "largest_tensors": [
+        {
+          "params": 11720448,
+          "name": "model.encoder.embeddings.word_embeddings.weight"
+        },
+        {
+          "params": 589824,
+          "name": "onnx::MatMul_1147"
+        },
+        {
+          "params": 589824,
+          "name": "onnx::MatMul_1146"
+        },
+        {
+          "params": 589824,
+          "name": "onnx::MatMul_1130"
+        }
+      ],
+      "tokens": {
+        "p50": 45,
+        "p95": 518,
+        "mean": 169.2,
+        "max": 853
+      },
+      "unk_rate_pct": 0.01,
+      "latency_fixed256": {
+        "p50_ms": 152.91,
+        "p95_ms": 274.39,
+        "mean_ms": 171.3
+      },
+      "latency_dynamic": {
+        "p50_ms": 26.8,
+        "p95_ms": 192.25,
+        "mean_ms": 67.57
+      },
+      "dynamic_speedup_p50": 5.706,
+      "vocab_size": 30522,
+      "do_lower_case": true
+    },
+    "v17-minilm": {
+      "params_total": 22899726,
+      "params_embedding": 11917824,
+      "params_compute": 10981902,
+      "embedding_share": 0.5204352226747168,
+      "file_bytes": 91774954,
+      "largest_tensors": [
+        {
+          "params": 11720448,
+          "name": "model.encoder.embeddings.word_embeddings.weight"
+        },
+        {
+          "params": 589824,
+          "name": "onnx::MatMul_1147"
+        },
+        {
+          "params": 589824,
+          "name": "onnx::MatMul_1146"
+        },
+        {
+          "params": 589824,
+          "name": "onnx::MatMul_1130"
+        }
+      ],
+      "tokens": {
+        "p50": 45,
+        "p95": 518,
+        "mean": 169.2,
+        "max": 853
+      },
+      "unk_rate_pct": 0.01,
+      "latency_fixed256": {
+        "p50_ms": 149.34,
+        "p95_ms": 281.68,
+        "mean_ms": 168.12
+      },
+      "latency_dynamic": {
+        "p50_ms": 21.33,
+        "p95_ms": 184.15,
+        "mean_ms": 61.55
+      },
+      "dynamic_speedup_p50": 7.001,
+      "vocab_size": 30522,
+      "do_lower_case": true
+    },
+    "v17-mdistilbert": {
+      "params_total": 135265806,
+      "params_embedding": 92205312,
+      "params_compute": 43060494,
+      "embedding_share": 0.6816601676849506,
+      "file_bytes": 541224554,
+      "largest_tensors": [
+        {
+          "params": 91812096,
+          "name": "model.encoder.embeddings.word_embeddings.weight"
+        },
+        {
+          "params": 2359296,
+          "name": "onnx::MatMul_1105"
+        },
+        {
+          "params": 2359296,
+          "name": "onnx::MatMul_1104"
+        },
+        {
+          "params": 2359296,
+          "name": "onnx::MatMul_1088"
+        }
+      ],
+      "tokens": {
+        "p50": 47,
+        "p95": 496,
+        "mean": 165.4,
+        "max": 913
+      },
+      "unk_rate_pct": 0.0979,
+      "latency_fixed256": {
+        "p50_ms": 443.67,
+        "p95_ms": 687.75,
+        "mean_ms": 468.73
+      },
+      "latency_dynamic": {
+        "p50_ms": 67.2,
+        "p95_ms": 528.05,
+        "mean_ms": 190.32
+      },
+      "dynamic_speedup_p50": 6.602,
+      "vocab_size": 119547,
+      "do_lower_case": false
+    }
+  }
+}
