@@ -20,6 +20,31 @@
  * unprotected without knowing it.
  */
 
+/**
+ * A start failure that says whether trying again could ever help.
+ *
+ * Auto-start needs this to avoid two opposite mistakes: retrying a port
+ * conflict or a version mismatch (which produces the identical error three
+ * times and delays the notification the user actually needs), and giving up on
+ * a slow first spawn (cold disk, antivirus scanning the bundle) that would have
+ * succeeded a second later.
+ *
+ * It is a flag rather than a message match on purpose — the message strings are
+ * user-facing copy and are pinned by tests, so keying retry behaviour on them
+ * would make an innocuous wording edit silently change enforcement.
+ *
+ * It lives HERE, next to the policy that reads it, rather than in
+ * `BrokerManager` which throws it: that module imports `vscode`, so anything
+ * declared there is unreachable from a test without an editor host — and the
+ * failure paths are exactly what has to be tested.
+ */
+export class BrokerStartFailure extends Error {
+    constructor(message: string, readonly retryable: boolean) {
+        super(message);
+        this.name = "BrokerStartFailure";
+    }
+}
+
 export type AutoStartOutcome =
     /** The broker is up and healthy. */
     | "started"

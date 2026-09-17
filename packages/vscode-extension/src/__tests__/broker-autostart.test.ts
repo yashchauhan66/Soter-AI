@@ -20,16 +20,17 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import {
     autoStartBroker,
+    BrokerStartFailure,
     isRetryable,
     RETRY_START,
     SHOW_CONTROL_PANEL,
     type AutoStartDeps,
 } from "../broker/autoStart";
-import { BrokerStartFailure } from "../broker/BrokerManager";
 
 interface Recorder extends AutoStartDeps {
     starts: number;
     notices: string[];
+    offered: string[][];
     logs: string[];
     actions: string[];
     slept: number[];
@@ -39,6 +40,7 @@ function makeDeps(start: AutoStartDeps["start"], choice?: string): Recorder {
     const rec: Recorder = {
         starts: 0,
         notices: [],
+        offered: [],
         logs: [],
         actions: [],
         slept: [],
@@ -46,8 +48,9 @@ function makeDeps(start: AutoStartDeps["start"], choice?: string): Recorder {
             rec.starts++;
             return start();
         },
-        notify: async (message) => {
+        notify: async (message, ...actions) => {
             rec.notices.push(message);
+            rec.offered.push(actions);
             return choice;
         },
         runAction: async (action) => {
@@ -139,6 +142,10 @@ describe("broker auto-start: failures are never silent", () => {
         }, RETRY_START);
 
         await autoStartBroker(deps, { enabled: true, attempts: 1 });
+        assert.deepEqual(
+            deps.offered[0], [RETRY_START, SHOW_CONTROL_PANEL],
+            "a bare warning with no route to recovery leaves the user unprotected and without options",
+        );
         assert.deepEqual(deps.actions, [RETRY_START], "a notification with no action leaves the user stuck");
     });
 

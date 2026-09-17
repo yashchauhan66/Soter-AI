@@ -367,6 +367,61 @@ describe("Enterprise policy export", () => {
     });
 });
 
+describe("Broker auto-start wiring (activation actually turns protection on)", () => {
+    const autoStartSrc = read("src/broker/autoStart.ts");
+
+    // The bug this pins: activate() constructed a BrokerManager, pushed it onto
+    // subscriptions, and stopped it on deactivate — but NEVER started it. Every
+    // enforcement surface was therefore dark on a fresh editor while the UI was
+    // already built around a broker being there. The policy module has its own
+    // unit tests, but none of them can see whether activate() calls it, and
+    // that omission is exactly what shipped.
+    it("activate() starts the broker, not just constructs one", () => {
+        assert.match(extensionSrc, /autoStartBroker\(/, "activate() must actually start the broker");
+        assert.match(
+            extensionSrc, /start:\s*\(\)\s*=>\s*brokerManager\.start\(\)/,
+            "auto-start must be wired to the real BrokerManager.start, not a stub",
+        );
+    });
+
+    it("does not await the start, so a slow broker cannot hang activation", () => {
+        assert.match(
+            extensionSrc, /void autoStartBroker\(/,
+            "awaiting the start would block every other surface behind a multi-second spawn",
+        );
+    });
+
+    it("exposes an opt-out that is declared, machine-scoped, and restricted", () => {
+        const setting = pkg.contributes.configuration.properties["soterai.broker.autoStart"];
+        assert.ok(setting, "the opt-out must be a real declared setting, not an undocumented flag");
+        assert.equal(setting.default, true, "protection that is off by default protects nobody");
+        assert.equal(setting.scope, "machine", "a workspace must not be able to set this");
+        // A repo shipping .vscode/settings.json that disables enforcement on
+        // open is the obvious attack on an auto-start feature.
+        assert.ok(
+            pkg.capabilities.untrustedWorkspaces.restrictedConfigurations.includes("soterai.broker.autoStart"),
+            "an untrusted workspace must not be able to disable enforcement",
+        );
+    });
+
+    it("never fails silently — every non-started outcome notifies the user", () => {
+        assert.match(autoStartSrc, /notify\(/, "a swallowed start failure leaves a user unprotected and unaware");
+        assert.match(
+            autoStartSrc, /not enforcing/,
+            "the notice must name the consequence; 'could not start' reads as a harmless hiccup",
+        );
+    });
+
+    it("withholds the provider key in a restricted workspace", () => {
+        // Auto-start made this reachable without user action: before, handing
+        // the stored key to a child process required an explicit command.
+        assert.match(
+            brokerManagerSrc, /isTrusted[\s\S]{0,120}secrets\.get\("soterai\.providerApiKey"\)/,
+            "the manifest promises token storage is disabled in untrusted workspaces",
+        );
+    });
+});
+
 describe("Local AI Broker, Safe Mode, and Memory Inspector", () => {
     const expected = [
         "soterai.startLocalAIBroker", "soterai.stopLocalAIBroker", "soterai.restartLocalAIBroker",
@@ -535,7 +590,14 @@ describe("Live inline scanning + Quick Fixes (UX)", () => {
         // Live path uses context "file". Prompt-injection/jailbreak parity for
         // that context is enforced in guard-core pipeline 1.1.0 and proven by
         // packages/guard-core/src/__tests__/live-scan-parity.test.ts (behavioral).
-        assert.match(liveScannerSrc, /engine\.scan\(doc\.getText\(\),\s*\{\s*context:\s*"file"\s*\}\)/);
+        //
+        // Pinned as two facts rather than one inlined expression: this assertion
+        // used to hardcode `engine.scan(doc.getText(), …)` and went red when the
+        // argument was extracted to a local for the obfuscation sweep, which
+        // changed nothing about what is scanned. What matters is that the
+        // document's own text reaches the scanner under the "file" context.
+        assert.match(liveScannerSrc, /const raw = doc\.getText\(\)/, "the document's full text is what gets scanned");
+        assert.match(liveScannerSrc, /engine\.scan\(raw,\s*\{\s*context:\s*"file"\s*\}\)/);
         assert.match(liveScannerSrc, /positionAt\(finding\.start\)/, "findings must map to editor ranges");
     });
 

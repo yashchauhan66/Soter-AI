@@ -89,6 +89,26 @@ interface OnnxBackendOptions {
    */
   slidingWindow?: boolean;
   /**
+   * Drop the [PAD] tail before the forward pass instead of always feeding
+   * maxLength columns.
+   *
+   * `forward()` already emits shape [1, len], so the only thing that forced a
+   * 256-wide tensor was tokenize()'s right padding. Measured p50 content length
+   * is 47 tokens, i.e. ~82% of every forward pass was [PAD].
+   *
+   * Free on accuracy, measured not assumed: 0 decision flips / 500 rows on v14,
+   * v17-minilm and v17-mdistilbert, max|dProb| 0.00e+00, at exact length and
+   * bucketed, single- and multi-threaded, including rows past the truncation
+   * point (artifacts/ml/v17-dynpad-fidelity.json, v17-dynpad-flip-probe.json).
+   * encodeWindow(contentIds) is byte-identical to tokenize() minus the pad tail
+   * (1,812 rows, 0 mismatches).
+   *
+   * Measured p50: v14 152.91 -> 26.80 ms, v17-minilm 149.34 -> 21.33 ms,
+   * v17-mdistilbert 443.67 -> 67.20 ms (artifacts/ml/v17-latency-anatomy.json).
+   * Default on; set ML_ONNX_DYNAMIC_PADDING=off to restore pad-to-maxLength.
+   */
+  dynamicPadding?: boolean;
+  /**
    * Content tokens per sliding window. Deliberately smaller than maxLength:
    * SoterLLM is trained on short prompts, and measurement (see
    * tests/ml/sliding-window.test.ts) shows it degrades badly on ~190+ token

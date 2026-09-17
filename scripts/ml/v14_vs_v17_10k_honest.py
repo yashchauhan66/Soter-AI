@@ -16,6 +16,10 @@ EVAL_FILES = ["datasets/crossdist-eval-v3-complement.jsonl",
               "datasets/v17-multilingual-battery.jsonl"]
 ATTACK_TARGET = 10000
 SEED = 20260913
+# Strip the [PAD] tail before each forward pass. Proven decision-identical (see
+# the DYNPAD note in the scoring loop); set SOTER_DYNPAD=0 to restore pad-to-256.
+import os
+DYNPAD = os.environ.get("SOTER_DYNPAD", "1") != "0"
 def load_jsonl(f):
     out = []
     for line in open(f, encoding="utf-8").read().split("\n"):
@@ -254,6 +258,15 @@ def main():
         for i, r in enumerate(rows):
             n_content = len(tok.encode_content(r["text"]))
             ids, mask = tok.encode(r["text"])
+            if DYNPAD:
+                # Drop the [PAD] tail. Measured decision-identical on all three
+                # arms -- 0 flips / 500 rows, max|dProb| 0.00e+00, exact-length
+                # and bucketed, single- and multi-threaded
+                # (artifacts/ml/v17-dynpad-fidelity.json, v17-dynpad-flip-probe.json).
+                # Without this the third arm never finished: 256 columns per row
+                # at 443 ms p50 instead of 67 ms.
+                keep = sum(mask)
+                ids, mask = ids[:keep], mask[:keep]
             s = time.time()
             logits = sess.run(["logits"], {"input_ids": [ids], "attention_mask": [mask]})[0][0]
             lat.append((time.time() - s) * 1000)
