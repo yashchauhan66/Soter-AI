@@ -1,4 +1,30 @@
 import type { DetectorMatch } from "./types";
+import {
+    ASSIGN,
+    CONNECTION_STRING_PASSWORD,
+    KEY_PREFIX,
+    OPAQUE_CREDENTIAL_KEYWORDS,
+    OPAQUE_CREDENTIAL_VALUE,
+} from "./detectors/SecretDetector";
+
+/**
+ * The unknown-vendor credential shape, built ONCE and used in both directions.
+ *
+ * It appears twice below — as a redaction rule and as a survivor check — and the
+ * two must never drift, because `redactForSharing` hard-fails closed: if a
+ * high-risk class survives redaction it replaces the ENTIRE message with a
+ * placeholder. A survivor pattern that can match something the redaction rule
+ * cannot remove would therefore not fail safe, it would silently make every
+ * affected message unusable. Sharing one source makes
+ * `survivor ⊆ redacted` true by construction rather than by review.
+ *
+ * Note the deliberate asymmetry with the DETECTOR: `opaque_credential` carries a
+ * strict validator (key deny-list, entropy, character classes) because it can
+ * BLOCK, while these two carry none. Redacting more than we block is the safe
+ * direction — an over-redaction costs the model some context, an under-redaction
+ * leaks a live credential.
+ */
+const OPAQUE_CREDENTIAL_SOURCE = `\\b${KEY_PREFIX}${OPAQUE_CREDENTIAL_KEYWORDS}${ASSIGN}${OPAQUE_CREDENTIAL_VALUE}["']?`;
 
 /**
  * Redactor — strips sensitive content and replaces with safe tokens.
@@ -40,7 +66,7 @@ const REDACTION_RULES: Array<[RegExp, string]> = [
     [/\batlasv1\.[A-Za-z0-9]{50,}\b/g, "[REDACTED_TERRAFORM_TOKEN]"],
     [/\b[MN][A-Za-z0-9]{23,}\.[\w-]{6}\.[\w-]{27,}\b/g, "[REDACTED_DISCORD_TOKEN]"],
     [/(?:DefaultEndpointsProtocol|AccountKey)=[A-Za-z0-9+/=]{20,}/gi, "[REDACTED_AZURE_STORAGE]"],
-    [/\b(?:Server|Data Source|Host)=[^;\s]+;[^;\n]*(?:Password|Pwd)=[^;\s]{6,}/gi, "[REDACTED_CONNECTION_STRING]"],
+    [new RegExp(CONNECTION_STRING_PASSWORD, "gi"), "[REDACTED_CONNECTION_STRING]"],
 
     // ── Cloud / provider keys ─────────────────────────────────────────────
 
@@ -62,6 +88,10 @@ const REDACTION_RULES: Array<[RegExp, string]> = [
     [/\bhttps?:\/\/hooks\.slack\.com\/services\/T[A-Z0-9]{8,}\/B[A-Z0-9]{8,}\/[A-Za-z0-9]{20,}\b/g, "[REDACTED_WEBHOOK_SECRET]"],
     [/\b(?:postgres(?:ql)?|mysql|mongodb(?:\+srv)?|redis|mssql):\/\/[^\s"'<>]+/gi, "[REDACTED_DATABASE_URL]"],
     // ── Generic assignments (last, broadest) ──────────────────────────────
+    // Unknown-vendor credentials first: this keyword set is wider (bare `token`,
+    // `auth`, `credentials`) and it reads the JSON/YAML form, which is the shape
+    // every agent config file on disk actually uses.
+    [new RegExp(OPAQUE_CREDENTIAL_SOURCE, "gi"), "[REDACTED_CREDENTIAL]"],
     [/\b(?:api[_-]?key|secret[_-]?key|access[_-]?token|client[_-]?secret|password|passwd|pwd)\b\s*[:=]\s*["']?[^"'\s]{8,}["']?/gi, "[REDACTED_SECRET]"],
     // ── PII ───────────────────────────────────────────────────────────────
     [/\b[2-9]\d{3}\s?\d{4}\s?\d{4}\b/g, "[REDACTED_AADHAAR]"],
@@ -99,7 +129,7 @@ const HIGH_RISK_SECRET_PATTERNS: Array<[string, RegExp]> = [
     ["terraform_token", /\batlasv1\.[A-Za-z0-9]{50,}\b/],
     ["discord_token", /\b[MN][A-Za-z0-9]{23,}\.[\w-]{6}\.[\w-]{27,}\b/],
     ["azure_storage", /(?:DefaultEndpointsProtocol|AccountKey)=[A-Za-z0-9+/=]{20,}/i],
-    ["connection_string", /\b(?:Server|Data Source|Host)=[^;\s]+;[^;\n]*(?:Password|Pwd)=[^;\s]{6,}/i],
+    ["connection_string", new RegExp(CONNECTION_STRING_PASSWORD, "i")],
 
     ["aws_access_key", /\b(?:AKIA|ASIA)[A-Z0-9]{16}\b/],
     ["anthropic_key", /\bsk-ant-[A-Za-z0-9_-]{20,}\b/],
@@ -109,17 +139,65 @@ const HIGH_RISK_SECRET_PATTERNS: Array<[string, RegExp]> = [
     ["bearer_token", /\bBearer\s+[A-Za-z0-9_\-.~+/]{8,}=*/i],
     ["slack_token", /\bxox(?:b|p|o|a|r|s)-[A-Za-z0-9-]{10,}\b/i],
     ["database_url", /\b(?:postgres(?:ql)?|mysql|mongodb(?:\+srv)?|redis|mssql):\/\/[^\s"'<>]+/i],
+    // Last: the only entry here that is not a vendor format. Removed by the
+    // rule built from the same source in REDACTION_RULES above.
+    ["opaque_credential", new RegExp(OPAQUE_CREDENTIAL_SOURCE, "i")],
 ];
 
 
 /**
- * The names of the high-risk secret classes, derived from the patterns above so
- * the two can never drift. `scanBrokerRequest` reports these as scan categories,
- * and consumers key their block/allow policy on them — see
- * `HIGH_RISK_SECRET_CLASSES` in @soterai/ide-protocol, which mirrors this list
- * for dependency-free consumers and is pinned to it by a test in the broker.
+ * Credential classes the DETECTOR reports under a name that no survivor pattern
+ * above happens to carry.
+ *
+ * The two lists were never the same vocabulary, and nothing said so. Survivor
+ * patterns are named for what they REDACT; scan categories are named for what
+ * the detector MATCHED. Where a vendor has both a strict and a broad rule the
+ * names differ — the detector says `openai_api_key`, the survivor pattern says
+ * `ai_api_key` — and because `collapseOverlappingMatches` keeps only the
+ * highest-scoring match, a real OpenAI key was reported as `openai_api_key`
+ * ALONE. The hook, keyed on the survivor names, did not recognise it.
+ *
+ * Measured on synthetic keys of each vendor's real shape, before this list
+ * existed: 4 of 17 credential formats were actually blocked. A genuine OpenAI,
+ * Anthropic, Groq, DeepSeek, Azure, Twilio or GitLab CI credential passed
+ * straight through the hook that exists to stop it.
+ *
+ * These names need no survivor pattern of their own: every one of them is
+ * already REMOVED by a redaction rule listed above, under that rule's name.
+ * Widening the vocabulary therefore cannot cause a fail-closed scrub — it only
+ * lets a consumer block on a category the scanner was already reporting.
  */
-export const HIGH_RISK_SECRET_CLASS_NAMES: readonly string[] = HIGH_RISK_SECRET_PATTERNS.map(([name]) => name);
+const BLOCKABLE_DETECTOR_CLASSES: readonly string[] = [
+    "openai_api_key",           // redacted by the sk- rule (as ai_api_key)
+    "anthropic_api_key",        // redacted by the sk-ant- rule
+    "gemini_api_key",           // redacted by the AIza rule
+    "groq_api_key",             // redacted by the gsk_ rule
+    "deepseek_api_key",         // redacted by the sk- rule
+    "aws_secret_key",           // redacted by the aws_secret_access_key rule
+    "azure_storage_key",        // redacted by the AccountKey rule
+    "twilio_auth_token",        // redacted by the opaque-credential rule (32 hex)
+    "gitlab_ci_job_token",      // redacted by the glcbt/gldt/glrt rule
+    "connection_string_password", // redacted by the connection-string rule
+    "webhook_secret",           // redacted by the hooks.slack.com rule
+];
+
+/**
+ * The names a consumer may block on: every survivor-verified class above, plus
+ * the detector-reported credential classes that are redacted under a different
+ * name. `scanBrokerRequest` reports these as scan categories and consumers key
+ * their block/allow policy on them — see `HIGH_RISK_SECRET_CLASSES` in
+ * @soterai/ide-protocol, which mirrors this list for dependency-free consumers
+ * and is pinned to it by a test in the broker.
+ *
+ * This is a SUPERSET of the survivor patterns, not a mirror of them. Every
+ * class the secret detector can report is either in here or carries a written
+ * reason for being unblockable — pinned by `secret-class-coverage.test.ts`, so
+ * a new detector cannot be added without deciding which.
+ */
+export const HIGH_RISK_SECRET_CLASS_NAMES: readonly string[] = [
+    ...HIGH_RISK_SECRET_PATTERNS.map(([name]) => name),
+    ...BLOCKABLE_DETECTOR_CLASSES,
+];
 
 /**
  * Redact sensitive content. Detector findings (when supplied) are masked by

@@ -1,30 +1,17 @@
 import * as vscode from "vscode";
+import { SENSITIVE_FILE_GLOBS } from "@soterai/guard-core";
 import { escapeHtml, showInfoWebview, firstWorkspaceFolder } from "../firewall/util";
 
-/** Glob patterns for vscode.workspace.findFiles() — NOT regex. */
-const PROTECTED_GLOBS = [
-    "**/.env*",
-    "**/*.pem",
-    "**/*.key",
-    "**/*.p12",
-    "**/*.pfx",
-    "**/id_rsa*",
-    "**/id_ed25519*",
-    "**/.npmrc",
-    "**/.pypirc",
-    "**/.aws/credentials",
-    "**/.azure/**/credentials*",
-    "**/secrets.yaml",
-    "**/secrets.yml",
-    "**/secrets.json",
-    "**/credentials.yaml",
-    "**/credentials.yml",
-    "**/credentials.json",
-    "**/.docker/config.json",
-    "**/.kube/config",
-    "**/.ssh/known_hosts",
-    "**/.gnupg/**",
-];
+/**
+ * Glob patterns for vscode.workspace.findFiles() — NOT regex. Canonical list,
+ * shared with every other proactive file guard via guard-core; now also covers
+ * agent credential configs (.claude/settings.json, .cursor/mcp.json …).
+ *
+ * One entry from the old local list is intentionally dropped: `.ssh/known_hosts`
+ * holds public host fingerprints, not a secret — flagging it was noise. Private
+ * keys (id_rsa, .gnupg/**) are still covered.
+ */
+const PROTECTED_GLOBS = SENSITIVE_FILE_GLOBS;
 
 const REPO_INSTRUCTION_FILES = [
     "CLAUDE.md",

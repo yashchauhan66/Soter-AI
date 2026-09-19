@@ -1,7 +1,73 @@
 import type { DetectorResult, RegexDetectorSpec } from "../types";
 import { runRegexDetectors } from "./utils";
 
-export const SECRET_DETECTOR_VERSION = "1.3.0";
+export const SECRET_DETECTOR_VERSION = "1.5.0";
+
+/**
+ * The keyword→value bridge shared by every keyword-anchored rule below.
+ *
+ * Credentials reach us in two shapes, and the rules used to see only one:
+ *
+ *   .env / shell   AGENTROUTER_TOKEN=<value>
+ *   JSON / YAML    "AGENTROUTER_TOKEN": "<value>"
+ *
+ * The old bridge was `\b(?:token|…)\b\s*[:=]`, which is blind to both halves of
+ * the JSON form. `\b` cannot match between `AGENTROUTER` and `TOKEN` because `_`
+ * is a word character, so a keyword used as an identifier SUFFIX never matched;
+ * and in JSON a closing quote sits between the key and the colon, so `\s*[:=]`
+ * never reached it either.
+ *
+ * Measured before this change: `api_key=<48 chars>` was detected, while
+ * `AGENTROUTER_TOKEN=<the same 48 chars>` and EVERY JSON form — including a
+ * plain `{ "token": "<48 high-entropy chars>" }` — were missed entirely. That
+ * gap is load-bearing, because every agent credential file on disk is JSON
+ * (`.claude/settings.json`, `.cursor/mcp.json`, `.codex/auth.json`,
+ * `.docker/config.json`).
+ *
+ * Widening the KEY side does not widen what is reported: the value side still
+ * has to clear `isFalsePositive()` (placeholder allowlist, entropy, repeated
+ * characters), which is where a documentation stub is actually suppressed.
+ */
+export const KEY_PREFIX = String.raw`[A-Za-z0-9_.\-]{0,40}`;
+
+/**
+ * `= value`, `: value`, `": "value"`, `:value` — with optional quoting on both
+ * sides. Deliberately a flat, bounded sequence with no nested quantifier: this
+ * fragment is interpolated into rules that run over whole files, so it must not
+ * be able to backtrack.
+ */
+export const ASSIGN = String.raw`["']?\s*[:=]\s*["']?`;
+
+/**
+ * The keyword set and value shape for an UNKNOWN-VENDOR credential.
+ *
+ * Exported because `Redactor` must redact exactly what this detects. The two
+ * are load-bearing on each other: `opaque_credential` is a high-risk class, and
+ * `redactForSharing` hard-fails closed — it replaces the WHOLE message with a
+ * placeholder when a high-risk class survives redaction. So a detector that can
+ * find a shape the redactor cannot remove does not fail safe, it fails useless.
+ */
+export const OPAQUE_CREDENTIAL_KEYWORDS = String.raw`(?:secret|token|credentials?|password|passwd|auth|api[_-]?key|access[_-]?key)`;
+export const OPAQUE_CREDENTIAL_VALUE = String.raw`[A-Za-z0-9+/=_-]{28,}`;
+
+/**
+ * A database connection string carrying an inline password.
+ *
+ * Shared with `Redactor` for the same reason as the shape above: it is a
+ * high-risk class, so its redaction rule and its survivor check must move
+ * together or `redactForSharing` starts scrubbing lines it cannot clean.
+ *
+ * The middle is `[^\n]{0,200}?` and not `[^;\n]*` because a connection string
+ * has more than two fields. `[^;\n]*` cannot cross a semicolon, so the rule only
+ * ever matched `Server=…;Password=…` — the shape in the test fixtures, and not
+ * the shape anyone writes. Measured: every realistic form missed, including the
+ * ADO.NET `Data Source=…;Initial Catalog=…;User ID=…;Password=…`, which meant a
+ * live database password reached the model reported only as a generic
+ * `password_assignment`, a class the hook does not block.
+ *
+ * Bounded and lazy, with no nested quantifier: this runs over whole files.
+ */
+export const CONNECTION_STRING_PASSWORD = String.raw`\b(?:Server|Data Source|Host)=[^;\s]+;[^\n]{0,200}?(?:Password|Pwd)=[^;\s]{6,}`;
 
 const SECRET_SPECS: RegexDetectorSpec[] = [
     // ── Cloud Provider Keys ───────────────────────────────────────────────
@@ -86,7 +152,7 @@ const SECRET_SPECS: RegexDetectorSpec[] = [
         label: "AWS secret key",
         severity: "critical",
         score: 45,
-        pattern: /(?:aws_secret_access_key|secret_key)\s*[:=]\s*["']?[A-Za-z0-9/+=]{40}["']?/gi,
+        pattern: new RegExp(`\\b${KEY_PREFIX}(?:aws_secret_access_key|secret_key)${ASSIGN}[A-Za-z0-9/+=]{40}["']?`, "gi"),
         message: "AWS secret access key detected.",
         confidence: 0.9,
     },
@@ -183,7 +249,10 @@ const SECRET_SPECS: RegexDetectorSpec[] = [
         label: "API key assignment",
         severity: "high",
         score: 25,
-        pattern: /\b(?:api[_-]?key|secret[_-]?key|access[_-]?token|client[_-]?secret)\b\s*[:=]\s*["']?[A-Za-z0-9_\-./+=]{16,}["']?/gi,
+        pattern: new RegExp(
+            `\\b${KEY_PREFIX}(?:api[_-]?key|secret[_-]?key|access[_-]?token|client[_-]?secret)${ASSIGN}[A-Za-z0-9_\\-./+=]{16,}["']?`,
+            "gi",
+        ),
         message: "API key or secret assignment detected.",
         confidence: 0.8,
     },
@@ -192,9 +261,17 @@ const SECRET_SPECS: RegexDetectorSpec[] = [
         label: "Password",
         severity: "high",
         score: 24,
-        pattern: /\b(?:password|passwd|pwd)\b\s*[:=]\s*["']?[^"'\s]{8,}["']?/gi,
+        pattern: new RegExp(`\\b${KEY_PREFIX}(?:password|passwd|pwd)${ASSIGN}[^"'\\s]{8,}["']?`, "gi"),
         message: "Password-like value detected.",
         confidence: 0.75,
+        // A single short all-lowercase word is a service default, not a password:
+        // `POSTGRES_PASSWORD: postgres` in a CI compose file was the loudest
+        // remaining source of noise. The length bound keeps real passphrases
+        // (`correcthorsebatterystaple`) reported.
+        validator: (m) => {
+            const v = extractAssignedValue(m).replace(/["']/g, "");
+            return !(/^[a-z]+$/.test(v) && v.length <= 12);
+        },
     },
     {
         type: "slack_token",
@@ -340,7 +417,7 @@ const SECRET_SPECS: RegexDetectorSpec[] = [
         label: "Twilio Auth Token assignment",
         severity: "critical",
         score: 38,
-        pattern: /(?:twilio[_-]?(?:auth[_-]?)?token)\s*[:=]\s*["']?[0-9a-f]{32}["']?/gi,
+        pattern: new RegExp(`\\b${KEY_PREFIX}(?:twilio[_-]?(?:auth[_-]?)?token)${ASSIGN}[0-9a-f]{32}["']?`, "gi"),
         message: "Twilio auth token assignment detected.",
         confidence: 0.9,
     },
@@ -387,7 +464,7 @@ const SECRET_SPECS: RegexDetectorSpec[] = [
         label: "Connection string with embedded password",
         severity: "critical",
         score: 40,
-        pattern: /\b(?:Server|Data Source|Host)=[^;\s]+;[^;\n]*(?:Password|Pwd)=[^;\s]{6,}/gi,
+        pattern: new RegExp(CONNECTION_STRING_PASSWORD, "gi"),
         message: "Database connection string with embedded password detected.",
         confidence: 0.9,
     },
@@ -396,13 +473,46 @@ const SECRET_SPECS: RegexDetectorSpec[] = [
         label: "High-entropy token assignment",
         severity: "high",
         score: 22,
-        pattern: /\b(?:token|secret|api[_-]?key|auth[_-]?key)\b\s*[:=]\s*["']([A-Za-z0-9+/=_-]{32,})["']/gi,
+        // Quoting is optional on BOTH sides: the quoted form is JSON/YAML, the
+        // unquoted form is `.env`. Requiring quotes here used to mean a bare
+        // `TOKEN=<48 high-entropy chars>` in a shell env file was never a match.
+        // `auth` and `credential` are safe to accept as bare keywords here only
+        // because ASSIGN anchors what follows: `author: "…"` cannot match, since
+        // after `auth` the next character must be a quote, colon or equals.
+        pattern: new RegExp(`\\b${KEY_PREFIX}(?:token|secret|credentials?|auth|api[_-]?key|auth[_-]?key)${ASSIGN}([A-Za-z0-9+/=_-]{32,})["']?`, "gi"),
         message: "High-entropy token assignment detected.",
         confidence: 0.65,
         validator: (m) => {
             const val = m.replace(/^[^:=]*[:=]\s*["']?/, "").replace(/["']$/, "");
             return shannonEntropy(val) >= 3.5 && !isPlaceholderValue(val);
         },
+    },
+    {
+        type: "opaque_credential",
+        label: "Credential for an unrecognised vendor",
+        severity: "critical",
+        // 26 is chosen against `collapseOverlappingMatches`, which keeps only
+        // the highest-scoring match in an overlapping span. It must sit ABOVE
+        // the three generic classes this one supersedes (high_entropy_token 22,
+        // password_assignment 24, generic_api_key 25) and BELOW every named
+        // class, the lowest of which is webhook_secret at 28.
+        //
+        // "Below every named class" is not conservatism, it is a measured
+        // requirement. PARTIAL overlap is enough to collapse: on
+        // `JWT_SECRET=eyJhbGci….….…`, this rule's value stops at the first dot
+        // while `jwt` spans the whole token, and the two spans still intersect.
+        // At 31 this rule won that collapse and the `jwt` category vanished from
+        // the scan — caught by the broker's production-.env test. Losing a
+        // category is not cosmetic: the hook's block list is keyed on category
+        // names, so swallowing a named class can silently un-block it.
+        score: 26,
+        pattern: new RegExp(
+            `\\b${KEY_PREFIX}${OPAQUE_CREDENTIAL_KEYWORDS}${ASSIGN}${OPAQUE_CREDENTIAL_VALUE}["']?`,
+            "gi",
+        ),
+        message: "Credential-shaped value assigned to a credential-named key (vendor not recognised).",
+        confidence: 0.85,
+        validator: isOpaqueCredential,
     },
 ];
 
@@ -457,10 +567,131 @@ function extractAssignedValue(match: string): string {
     return (assigned?.[1] ?? match).trim();
 }
 
+/**
+ * A value that NAMES where a secret lives is not a secret.
+ *
+ * `apiKey: process.env.SOTER_API_KEY` is the CORRECT way to hold a credential,
+ * and reporting it is pure over-defense — it would make the guard object to
+ * ordinary source files precisely for doing the right thing. Measured while
+ * widening the keyword bridge above, this one shape was the single largest
+ * source of new findings across this repo, far ahead of any real secret.
+ *
+ * Anchored at the START of the value so a reference is suppressed while a
+ * literal that merely mentions one (`"sk-live-process-env"`) is not.
+ */
+function isSecretReference(value: string): boolean {
+    return (
+        /^(?:process\.env|import\.meta\.env|os\.environ|Deno\.env|System\.getenv|ENV|process\[)\b/i.test(value) ||
+        /^\$\{?\{?\s*(?:secrets|env|vars|inputs)\./i.test(value) ||   // ${{ secrets.X }}
+        /^\$\{[A-Za-z_][A-Za-z0-9_]*\}$/.test(value) ||               // ${VAR}
+        /^\$[A-Za-z_][A-Za-z0-9_]*$/.test(value) ||                   // $VAR
+        /^%[A-Za-z_][A-Za-z0-9_]*%$/.test(value) ||                   // %VAR%
+        /^<[^<>]{1,60}>$/.test(value) ||                              // <your-key-here>
+        /^\{\{[^{}]{1,60}\}\}$/.test(value) ||                        // {{ placeholder }}
+        isIdentifierExpression(value)
+    );
+}
+
+/**
+ * A dotted code identifier — `Prisma.ApiKeyGetPayload`, `previous.soterApiKey`
+ * — is a reference to a value, not the value. Same family as `process.env.X`,
+ * found in the same measurement: a type alias and a property read were being
+ * reported as API keys.
+ *
+ * The length bounds are what keep real credentials out. A JWT is also
+ * dot-separated `[A-Za-z0-9_-]`, but its segments run far past 20 characters,
+ * as do SendGrid's (`SG.<22>.<43>`); both stay detected.
+ */
+function isIdentifierExpression(value: string): boolean {
+    if (value.length > 60 || !value.includes(".")) return false;
+    if (!/^[A-Za-z_$][A-Za-z0-9_$]*(?:\.[A-Za-z_$][A-Za-z0-9_$]*)+$/.test(value)) return false;
+    return value.split(".").every((seg) => seg.length <= 20);
+}
+
+/**
+ * Documentation placeholders that are not anchored at the start of the value.
+ *
+ * `isPlaceholderValue` only looks at the first word, so it cannot see
+ * `ck_live_your_key_here` or `ci-report-signing-secret-at-least-thirty-two-chars`
+ * — both of which are long and high-entropy enough to clear every other gate.
+ * These matter more than they look: once a generic class can BLOCK, a stale
+ * placeholder in a quickstart doc becomes a refusal the user cannot explain.
+ *
+ * Tested per word, so a real credential is unaffected — an opaque token does
+ * not split into English words on `_`, `-` or `.`.
+ */
+const PLACEHOLDER_WORDS =
+    /^(?:your|yours|mine|here|placeholder|changeme|change|replace|replaceme|example|examples|sample|dummy|fake|todo|insert|redacted|omitted|hidden|somekey|sometoken|dashboard|at|least|thirty|two|chars|characters)$/i;
+
+function hasPlaceholderWord(value: string): boolean {
+    const words = value.split(/[_\-.\s]+/).filter(Boolean);
+    if (words.length < 3) return false;              // opaque tokens do not split into words
+    const hits = words.filter((w) => PLACEHOLDER_WORDS.test(w)).length;
+    return hits >= 2;                                 // one coincidence is not a placeholder
+}
+
+/**
+ * Key names whose value is credential-SHAPED but not a credential.
+ *
+ * Only the prefix position needs covering. The bridge is
+ * `KEY_PREFIX + keyword + ASSIGN`, so the matched key always *ends* with the
+ * credential keyword — `token_name:` or `secret_type:` never match in the first
+ * place, and only what sits in front of the keyword can mislead us.
+ *
+ * The separator anchors are load-bearing: without them `test` would suppress
+ * `latest_token` and `attestation_token`, which are credentials.
+ *
+ * `test` is here deliberately. A key literally named `test_*` in checked-in
+ * source is overwhelmingly a fixture, and a genuine test-environment credential
+ * still has its vendor shape (`sk_test_`, `rzp_test_`) matched by the rules
+ * above, which do not consult this list.
+ */
+const NON_CREDENTIAL_KEY =
+    /(?:^|[_.\-])(?:pub|public|publishable|anon|hashed|fingerprint|thumbprint|checksum|integrity|digest|etag|hash|sha\d*|md5|crc\d*|algorithm|algo|encoding|scheme|prefix|header|pattern|regex|expected|mock|fake|dummy|example|sample|placeholder|fixture|stub|invalid|revoked|redacted|masked|test)(?:[_.\-]|$)/i;
+
+/**
+ * The gate that makes an unknown-vendor credential safe to BLOCK on.
+ *
+ * Every other high-risk class is a vendor format — `ghp_…`, `sk-ant-…` — so its
+ * regex alone is proof. This class has no format to lean on: the only evidence
+ * is that a credential-named key holds a credential-shaped value. Blocking on
+ * that is only honest if the shape test is strict, because a false positive here
+ * is no longer a noisy warning — it is a refusal the user cannot explain.
+ *
+ * Hence four independent gates, each of which alone would be too weak:
+ * the key must not name a public or derived value, the value must be long,
+ * mixed-case-or-digit, and high-entropy. A slug, a hex id, an all-caps
+ * constant, a documentation placeholder and an English phrase each fail at
+ * least one.
+ */
+function isOpaqueCredential(match: string): boolean {
+    const assignAt = match.search(/["']?\s*[:=]/);
+    if (assignAt <= 0) return false;
+    const key = match.slice(0, assignAt);
+    if (NON_CREDENTIAL_KEY.test(key)) return false;
+
+    const value = extractAssignedValue(match).replace(/["']+$/, "");
+    if (value.length < 28) return false;
+
+    // Checked before entropy: a long hyphenated English default clears 3.6 bits
+    // comfortably, so entropy on its own would not catch it.
+    const words = value.split(/[_\-.]+/).filter(Boolean);
+    if (words.length >= 4 && words.every((w) => /^[A-Za-z]+$/.test(w))) return false;
+
+    // Two character classes is what separates a generated credential from a
+    // slug, a lowercase hex id, or an ALL_CAPS constant name.
+    const classes = [/[a-z]/, /[A-Z]/, /[0-9]/].filter((re) => re.test(value)).length;
+    if (classes < 2) return false;
+
+    return shannonEntropy(value) >= 3.6;
+}
+
 function isFalsePositive(match: string): boolean {
     const m = match.trim();
     if (m.length < 8) return true;
     const value = extractAssignedValue(m);
+    if (isSecretReference(value)) return true;
+    if (hasPlaceholderWord(value)) return true;
     // Provider-prefixed real tokens must never be suppressed by generic FP rules
     // except explicit stub forms (sk-test-..., sk-example-...).
     const providerPrefixed =
@@ -493,6 +724,15 @@ function isFalsePositive(match: string): boolean {
 }
 
 
+
+/**
+ * Every class this detector can report, in declaration order.
+ *
+ * Exported so `secret-class-coverage.test.ts` can hold the block vocabulary to
+ * account. A scan category that no consumer recognises is a credential the hook
+ * silently allows, and that is invisible from inside either list on its own.
+ */
+export const SECRET_DETECTOR_CLASSES: readonly string[] = [...new Set(SECRET_SPECS.map((s) => s.type))];
 
 export function detectSecrets(text: string): DetectorResult {
     const raw = runRegexDetectors(text, SECRET_SPECS);

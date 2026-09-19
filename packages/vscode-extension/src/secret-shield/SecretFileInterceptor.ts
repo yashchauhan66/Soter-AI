@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { extractVaultCandidates } from "@soterai/guard-core";
+import { extractVaultCandidates, isSensitiveFilePath } from "@soterai/guard-core";
 
 /**
  * SecretFileInterceptor — early visibility for sensitive-file access.
@@ -22,27 +22,11 @@ import { extractVaultCandidates } from "@soterai/guard-core";
  * autosave could then destroy the only plaintext copy.
  */
 
-/** File name / extension patterns whose content should always be scanned. */
-const SENSITIVE_FILENAME_PATTERNS = [
-    /^\.env($|\.)/i,              // .env, .env.local, .env.production …
-    /\.pem$/i,
-    /\.key$/i,
-    /\.p12$/i,
-    /\.pfx$/i,
-    /^id_rsa/i,
-    /^id_ed25519/i,
-    /^\.npmrc$/i,
-    /^\.pypirc$/i,
-    /credentials$/i,              // .aws/credentials, credentials.json …
-    /secrets\.(json|ya?ml)$/i,
-    /^\.docker\/config\.json$/i,
-    /^\.kube\/config$/i,
-];
-
 function isSensitiveFile(uri: vscode.Uri): boolean {
-    const name = uri.path.split("/").pop() ?? "";
-    const rel  = vscode.workspace.asRelativePath(uri);
-    return SENSITIVE_FILENAME_PATTERNS.some((p) => p.test(name) || p.test(rel));
+    // Canonical predicate (guard-core) — same list every proactive guard uses,
+    // now including agent credential configs like .claude/settings.json.
+    const rel = vscode.workspace.asRelativePath(uri);
+    return isSensitiveFilePath(rel) || isSensitiveFilePath(uri.path.split("/").pop() ?? "");
 }
 
 export class SecretFileInterceptor implements vscode.Disposable {

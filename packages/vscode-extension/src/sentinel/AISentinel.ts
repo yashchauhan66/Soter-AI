@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { SENSITIVE_FILE_GLOBS, isSensitiveFilePath } from "@soterai/guard-core";
 
 export interface SentinelEvent {
     id: string;
@@ -11,19 +12,22 @@ export interface SentinelEvent {
     redactedEvidence: string;
 }
 
-const HIGH_RISK_PATTERNS = [
-    /\.env(\.|$)/i,
-    /\.pem$/i,
-    /id_rsa/i,
-    /\.npmrc$/i,
-    /\.pypirc$/i,
-    /\.aws[\\/]credentials/i,
-    /CLAUDE\.md$/i,
-    /\.cursorrules$/i,
-    /\.cursor[\\/]rules[\\/]?\*\*/i,
-    /\.github[\\/]copilot-instructions\.md$/i,
-    /\.vscode[\\/]mcp\.json$/i,
-    /mcp\.json$/i,
+// Secret-bearing files are classified via the canonical guard-core predicate
+// (isSensitiveFilePath) in onFileChange — shared with every other proactive
+// guard and now covering agent credential configs. The globs below are the
+// sentinel's OWN additional concern: instruction-poisoning files and dependency
+// manifests, which are not secrets but are worth watching for change.
+const INSTRUCTION_AND_MANIFEST_GLOBS = [
+    "**/CLAUDE.md",
+    "**/.cursorrules",
+    "**/.cursor/rules/**",
+    "**/.github/copilot-instructions.md",
+    "**/.windsurfrules",
+    "**/.clinerules",
+    "**/package.json",
+    "**/package-lock.json",
+    "**/yarn.lock",
+    "**/pnpm-lock.yaml",
 ];
 
 const REPO_INSTRUCTION_FILES = [
@@ -151,24 +155,10 @@ export class AISentinel implements vscode.Disposable {
         const folder = vscode.workspace.workspaceFolders?.[0];
         if (!folder) return;
 
-        const sensitivePatterns = [
-            "**/.env*",
-            "**/*.pem",
-            "**/id_rsa*",
-            "**/.npmrc",
-            "**/.pypirc",
-            "**/.aws/credentials",
-            "**/CLAUDE.md",
-            "**/.cursorrules",
-            "**/.cursor/rules/**",
-            "**/.github/copilot-instructions.md",
-            "**/.vscode/mcp.json",
-            "**/mcp.json",
-            "**/package.json",
-            "**/package-lock.json",
-            "**/yarn.lock",
-            "**/pnpm-lock.yaml",
-        ];
+        // Canonical secret files (incl. agent configs and every mcp.json form)
+        // + the sentinel's own instruction/manifest concern. Deduped so an
+        // overlapping entry does not create two watchers for one file.
+        const sensitivePatterns = [...new Set([...SENSITIVE_FILE_GLOBS, ...INSTRUCTION_AND_MANIFEST_GLOBS])];
 
         for (const pattern of sensitivePatterns) {
             const watcher = vscode.workspace.createFileSystemWatcher(pattern);
@@ -199,7 +189,6 @@ export class AISentinel implements vscode.Disposable {
 
     private async onFileChange(uri: vscode.Uri, changeType: string): Promise<void> {
         const rel = vscode.workspace.asRelativePath(uri);
-        const isHighRisk = HIGH_RISK_PATTERNS.some((p) => p.test(rel));
         const isRepoInstruction = REPO_INSTRUCTION_FILES.some((f) => rel.endsWith(f) || rel.includes(f));
 
         let risk: SentinelEvent["risk"] = "low";
@@ -218,11 +207,14 @@ export class AISentinel implements vscode.Disposable {
                     return;
                 }
             } catch { /* skip unreadable files */ }
-        } else if (isHighRisk) {
-            type = "protected_access";
-            risk = "high";
         } else if (/mcp\.json/i.test(rel)) {
+            // Checked before the generic sensitive branch so an mcp config keeps
+            // its specific event type — several mcp.json forms are now also in
+            // the canonical sensitive list.
             type = "mcp_config_change";
+            risk = "high";
+        } else if (isSensitiveFilePath(rel)) {
+            type = "protected_access";
             risk = "high";
         } else if (/package\.json|lockfile/i.test(rel)) {
             type = "config_change";

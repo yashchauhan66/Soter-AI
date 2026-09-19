@@ -32,3 +32,4 @@ export * from "./CheckpointRollback";
 export * from "./GovernancePolicy";
 export * from "./ProcessSandboxPolicy";
 export * from "./ExtensionIsolationPolicy";
+export * from "./sensitiveFiles";

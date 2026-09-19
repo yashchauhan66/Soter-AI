@@ -50,6 +50,33 @@ export const HIGH_RISK_SECRET_CLASSES = [
     "bearer_token",
     "slack_token",
     "database_url",
+    // Not a vendor format: a credential-shaped value under a credential-named
+    // key, gated by an entropy/character-class validator in guard-core. It is
+    // what makes a credential for a vendor nobody has written a rule for — an
+    // agent router, a self-hosted gateway, an internal service — blockable at
+    // all. Every entry above it can only fire for a vendor someone anticipated.
+    "opaque_credential",
+
+    // ── Reported by the detector under a name no redaction rule uses ──────
+    //
+    // guard-core redacts these, but under the name of the rule that removes
+    // them, so they were absent from this list while the scanner was reporting
+    // them as categories. The effect was not subtle: because guard-core keeps
+    // only the highest-scoring match for a span, a real OpenAI key was reported
+    // as `openai_api_key` alone and never as `ai_api_key`, so the hook read a
+    // live credential and allowed it. Measured at 4 of 17 vendor formats
+    // actually blocked before these were added.
+    "openai_api_key",
+    "anthropic_api_key",
+    "gemini_api_key",
+    "groq_api_key",
+    "deepseek_api_key",
+    "aws_secret_key",
+    "azure_storage_key",
+    "twilio_auth_token",
+    "gitlab_ci_job_token",
+    "connection_string_password",
+    "webhook_secret",
 ] as const;
 
 export type HighRiskSecretClass = (typeof HIGH_RISK_SECRET_CLASSES)[number];

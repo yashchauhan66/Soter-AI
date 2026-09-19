@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { extractVaultCandidates } from "@soterai/guard-core";
+import { extractVaultCandidates, SENSITIVE_FILE_GLOBS } from "@soterai/guard-core";
 import { VaultManager } from "../firewall/VaultManager";
 import { assertWorkspaceFileUri } from "../security/WorkspacePathGuard";
 
@@ -22,28 +22,10 @@ import { assertWorkspaceFileUri } from "../security/WorkspacePathGuard";
  *   - The user can disable auto-scan via soterai.autoVaultMigration.enabled.
  */
 
-const SENSITIVE_GLOBS = [
-    "**/.env",
-    "**/.env.*",
-    "**/*.pem",
-    "**/*.key",
-    "**/id_rsa",
-    "**/id_rsa.*",
-    "**/id_ed25519",
-    "**/id_ed25519.*",
-    "**/.npmrc",
-    "**/.pypirc",
-    "**/.aws/credentials",
-    "**/.azure/**/credentials*",
-    "**/secrets.json",
-    "**/secrets.yaml",
-    "**/secrets.yml",
-    "**/credentials.json",
-    "**/credentials.yaml",
-    "**/credentials.yml",
-    "**/.docker/config.json",
-    "**/.kube/config",
-];
+// Canonical list — shared with every other proactive file guard via guard-core.
+// Includes agent credential configs (.claude/settings.json, .cursor/mcp.json …)
+// that this list previously missed.
+const SENSITIVE_GLOBS = SENSITIVE_FILE_GLOBS;
 
 const EXCLUDE_GLOB = "{**/node_modules/**,**/.git/**,**/dist/**,**/build/**}";
 

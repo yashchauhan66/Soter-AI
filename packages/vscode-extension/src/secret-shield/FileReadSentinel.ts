@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { extractVaultCandidates } from "@soterai/guard-core";
+import { extractVaultCandidates, isSensitiveFilePath } from "@soterai/guard-core";
 
 /**
  * FileReadSentinel — privacy-safe sensitive-document-open audit log.
@@ -138,18 +138,10 @@ export class FileReadSentinel implements vscode.Disposable {
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function isSensitiveFilename(uri: vscode.Uri): boolean {
-    const name = uri.path.split("/").pop() ?? "";
-    return (
-        /^\.env($|\.)/i.test(name) ||
-        /\.(pem|key|p12|pfx)$/i.test(name) ||
-        /^id_(rsa|ed25519)/i.test(name) ||
-        /^\.npmrc$/i.test(name) ||
-        /^\.pypirc$/i.test(name) ||
-        /credentials$/i.test(name) ||
-        /secrets\.(json|ya?ml)$/i.test(name) ||
-        /^\.docker\/config\.json$/i.test(name) ||
-        /^\.kube\/config$/i.test(name)
-    );
+    // Canonical predicate (guard-core). Pass the relative path, not just the
+    // basename, so path-scoped agent configs (.claude/settings.json …) match.
+    const rel = vscode.workspace.asRelativePath(uri);
+    return isSensitiveFilePath(rel) || isSensitiveFilePath(uri.path.split("/").pop() ?? "");
 }
 
 /**
