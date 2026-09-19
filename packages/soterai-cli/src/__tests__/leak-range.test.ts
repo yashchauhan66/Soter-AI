@@ -364,6 +364,39 @@ describe("Leak Range — measured secret egress across channels and evasion tier
         assert.deepEqual(overblocked, [], "Over-defense on ordinary env use — this is how a guard gets turned off:\n  " + overblocked.join("\n  "));
     });
 
+    it("T5 SEMANTIC: the matrix leaks it judge-less, but the SEAM closes it when a judge is wired", async () => {
+        // T5 is a real gap in the shipped product: with no judge configured (the
+        // default), a reconstruct-from-prose prompt carries no token to match and
+        // leaks — which is exactly what the matrix above records against the
+        // ledger. This test proves the OTHER half honestly: the mechanism to
+        // close it is wired and works end-to-end. It does NOT promote T5 into the
+        // claimed tiers, because production ships judge-less and real-world judge
+        // efficacy is unmeasured here — it only shows the seam is real, not fake.
+        const t5 = tierText(Tier.T5_SEMANTIC, SECRET);
+
+        // Same call, no judge: leaks (matches the matrix's ledger row).
+        const judgeless = await evaluateHook(
+            normalizeCall("claude-code", { tool_name: "mcp__chat__ask", tool_input: { prompt: t5 } }),
+            makeDeps(workDir),
+            DEFAULT_HOOK_OPTIONS,
+        );
+        assert.notEqual(judgeless.action, "deny", "T5 must still leak without a judge — that is the documented gap");
+
+        // Same call, with a judge that recognises the reconstruction: blocked.
+        const withJudge: HookDeps = {
+            ...makeDeps(workDir),
+            judge: async () => ({ exfiltration: true, confidence: 0.95, rationale: "asks the model to reassemble a credential from described parts" }),
+        };
+        const judged = await evaluateHook(
+            normalizeCall("claude-code", { tool_name: "mcp__chat__ask", tool_input: { prompt: t5 } }),
+            withJudge,
+            DEFAULT_HOOK_OPTIONS,
+        );
+        assert.equal(judged.action, "deny", "with a judge wired, the semantic seam must block the reconstruction");
+        assert.ok(judged.findings.some((f) => f.classes.includes("semantic_exfiltration")));
+        assert.ok(!judged.reason.includes(SYN), "the block reason must not echo the described secret");
+    });
+
     it("TOOL OUTPUT: a credential returned by a tool is DETECTED (detection, not prevention)", async () => {
         // The channel the matrix above cannot cover: a secret that appears ONLY
         // in a tool's RESULT — an API response, a DB row, an MCP tool's output.

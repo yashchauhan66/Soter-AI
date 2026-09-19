@@ -32,6 +32,11 @@ import { HIGH_RISK_SECRET_CLASSES, highRiskSecretClasses, type ScanResponse } fr
  *      sees it. It is included because nothing else can see that leak at all,
  *      and because the honest remedy — rotate the credential — is only possible
  *      if someone is told. It must never be described as blocking.
+ *   5. SEMANTIC (optional, off by default) — the only tier that can see a leak
+ *      carrying NO credential token, where the model is asked to RECONSTRUCT a
+ *      secret from prose. A pattern scanner matches nothing there. This needs a
+ *      model reading for intent, which costs an LLM call, so it runs ONLY when a
+ *      judge endpoint is configured and it FAILS OPEN. See `judgeSemantic`.
  *
  * Scope, stated honestly: this blocks CREDENTIAL EGRESS. It is not a
  * destructive-command guard — the terminal-risk detector runs on model
@@ -137,7 +142,48 @@ export interface HookDeps {
      * carries — rotate the credential — is the whole value of the check.
      */
     recordIncident?: (record: OutputIncident) => Promise<void>;
+    /**
+     * OPTIONAL semantic judge — the only tier that can see a T5 leak, where the
+     * text carries NO credential token because the model is being asked to
+     * RECONSTRUCT a secret from a description ("the key that starts sk- then the
+     * word X repeated…"). A pattern scanner cannot match what is not there; only
+     * a model reading for intent can. This is `undefined` unless a judge endpoint
+     * is configured, so the whole tier is OFF by default: it costs an LLM call
+     * per scan, which is the user's decision to turn on, not a silent default.
+     *
+     * It is best-effort and FAILS OPEN — a judge error or timeout must never
+     * block a call, because a semantic guess is not certain enough to deny on
+     * when it cannot even complete. See `judgeSemantic`.
+     */
+    judge?: (content: string) => Promise<SemanticVerdict>;
 }
+
+/**
+ * A semantic judge's read of one piece of text. Carries NO secret value — the
+ * rationale is a description of the INTENT ("asks the model to reassemble a
+ * credential from parts"), never the reconstructed credential itself.
+ */
+export interface SemanticVerdict {
+    /** True when the text is trying to extract or reconstruct a secret. */
+    exfiltration: boolean;
+    /** 0–1. Below `SEMANTIC_JUDGE_MIN_CONFIDENCE` it is treated as not-flagged. */
+    confidence: number;
+    /** One line on WHY, value-free. Shown to the user; must not quote a secret. */
+    rationale: string;
+}
+
+/**
+ * A semantic block is a judgement call, not a byte match, so it needs a high bar
+ * before it denies a real tool call. Below this, the verdict is recorded as
+ * inconclusive and the call proceeds — an over-eager semantic tier that blocks
+ * ordinary prose is one users switch off, and a disabled tier catches nothing.
+ */
+export const SEMANTIC_JUDGE_MIN_CONFIDENCE = 0.8;
+
+/** Wall-clock bound on the judge, independent of the outer hook timeout. */
+export const SEMANTIC_JUDGE_TIMEOUT_MS = 4_000;
+
+export const SEMANTIC_EXFIL_CLASS = "semantic_exfiltration";
 
 /**
  * One credential class observed in tool output. Deliberately carries NO value
@@ -508,10 +554,12 @@ export function findingFor(
  * a block they switch off.
  */
 export function explain(findings: HookFinding[]): string {
+    const isSemantic = (f: HookFinding) => f.classes.includes(SEMANTIC_EXFIL_CLASS);
     const lines = findings.map((f) => {
         const what = f.classes.length > 0 ? f.classes.join(", ") : `risk ${f.riskScore} (${f.decision})`;
         const where = f.origin === "file" ? `the file ${f.label}` : f.label;
-        const why = f.origin === "command" && f.detail ? ` — ${f.detail}` : "";
+        // `detail` explains command-origin and semantic findings; both need the why.
+        const why = f.detail && (f.origin === "command" || isSemantic(f)) ? ` — ${f.detail}` : "";
         return `  - ${what} in ${where}${why}${f.sampled ? " (large file: head and tail sampled)" : ""}`;
     });
 
@@ -524,7 +572,15 @@ export function explain(findings: HookFinding[]): string {
             "program with `soterai run -- <command>` so the value is injected into that process only.",
         );
     }
-    if (findings.some((f) => f.origin === "file" || f.origin === "input")) {
+    if (findings.some(isSemantic)) {
+        remedies.push(
+            "This request appears to ask the model to REASSEMBLE a credential from a description, so",
+            "no literal secret is present for a scanner to catch. This is a semantic judgement, not a",
+            "byte match: if it is a false positive, rephrase to remove the reconstruction, or disable",
+            "the semantic tier. If it is real, the secret being described must be rotated.",
+        );
+    }
+    if (findings.some((f) => (f.origin === "file" || f.origin === "input") && !isSemantic(f))) {
         remedies.push(
             "Move the value into the Protected Vault and reference it by name, or remove it from the",
             "file or command.",
@@ -620,8 +676,58 @@ export async function evaluateHook(
         });
     }
 
+    // Semantic tier (optional, off unless a judge is wired): catches a leak with
+    // no credential token — a prompt asking the model to RECONSTRUCT a secret.
+    // Only run when nothing has already blocked, so the LLM call is not spent on
+    // a call that is denied anyway.
+    if (deps.judge && findings.length === 0) {
+        const inputText = [...call.inline, ...call.supplied].map((i) => i.text).filter((t) => t.trim()).join("\n\n");
+        if (inputText.trim()) {
+            const finding = await judgeSemantic(inputText, deps.judge);
+            if (finding) findings.push(finding);
+        }
+    }
+
     if (findings.length === 0) return { action: "allow", reason: "", findings: [] };
     return { action: "deny", reason: explain(findings), findings };
+}
+
+/**
+ * Run the optional semantic judge over combined input text, fail-open.
+ *
+ * Returns a finding ONLY when the judge is confident (≥ the min-confidence bar)
+ * that the text is trying to extract or reconstruct a secret. A judge error, a
+ * timeout, or a low-confidence guess all resolve to null — the call proceeds.
+ * This is the deliberate asymmetry of a probabilistic tier layered under
+ * deterministic ones: it can ADD a block the pattern tiers missed, but it can
+ * never be the reason a clean call is refused when it cannot even complete.
+ *
+ * The rationale from the judge is passed through as `detail`, so the reason
+ * shown to the user explains WHY without this code having to quote any text.
+ */
+export async function judgeSemantic(
+    text: string,
+    judge: (content: string) => Promise<SemanticVerdict>,
+): Promise<HookFinding | null> {
+    let verdict: SemanticVerdict;
+    try {
+        verdict = await Promise.race([
+            judge(text),
+            new Promise<SemanticVerdict>((_, reject) =>
+                setTimeout(() => reject(new Error("semantic judge timed out")), SEMANTIC_JUDGE_TIMEOUT_MS)),
+        ]);
+    } catch {
+        return null; // fail open: a judge that cannot answer must not block.
+    }
+    if (!verdict.exfiltration || verdict.confidence < SEMANTIC_JUDGE_MIN_CONFIDENCE) return null;
+    return {
+        origin: "input",
+        label: "the request text",
+        detail: `semantic judge (confidence ${verdict.confidence.toFixed(2)}): ${verdict.rationale}`,
+        classes: [SEMANTIC_EXFIL_CLASS],
+        decision: "block",
+        riskScore: Math.round(verdict.confidence * 100),
+    };
 }
 
 /**
