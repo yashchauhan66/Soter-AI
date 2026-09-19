@@ -6,17 +6,18 @@ import type {
     ScanPipeline,
     ScanPipelineReport,
 } from "./types";
-import { detectSecrets, SECRET_DETECTOR_VERSION, detectEnvFile, ENV_FILE_DETECTOR_VERSION, detectPII, PII_DETECTOR_VERSION, detectIndiaPII, INDIA_PII_DETECTOR_VERSION, detectPromptInjection, PROMPT_INJECTION_DETECTOR_VERSION, detectJailbreak, JAILBREAK_DETECTOR_VERSION, detectFileContextRisk, FILE_CONTEXT_RISK_DETECTOR_VERSION, detectTerminalCommandRisk, TERMINAL_COMMAND_RISK_DETECTOR_VERSION, detectRepoInstructionPoisoning, REPO_INSTRUCTION_POISONING_DETECTOR_VERSION, detectMCPConfigRisk, MCP_CONFIG_RISK_DETECTOR_VERSION, detectAIGeneratedCodeRisk, AI_CODE_RISK_DETECTOR_VERSION, deduplicateMatches, collapseOverlappingMatches } from "./detectors";
+import { detectSecrets, SECRET_DETECTOR_VERSION, detectEncodedSecrets, ENCODED_SECRET_DETECTOR_VERSION, detectEnvFile, ENV_FILE_DETECTOR_VERSION, detectPII, PII_DETECTOR_VERSION, detectIndiaPII, INDIA_PII_DETECTOR_VERSION, detectPromptInjection, PROMPT_INJECTION_DETECTOR_VERSION, detectJailbreak, JAILBREAK_DETECTOR_VERSION, detectFileContextRisk, FILE_CONTEXT_RISK_DETECTOR_VERSION, detectTerminalCommandRisk, TERMINAL_COMMAND_RISK_DETECTOR_VERSION, detectRepoInstructionPoisoning, REPO_INSTRUCTION_POISONING_DETECTOR_VERSION, detectMCPConfigRisk, MCP_CONFIG_RISK_DETECTOR_VERSION, detectAIGeneratedCodeRisk, AI_CODE_RISK_DETECTOR_VERSION, deduplicateMatches, collapseOverlappingMatches } from "./detectors";
 import { minimizeEvidence, createEvidencePreview } from "./EvidenceMinimizer";
 import { findSurvivingSecrets, redactForSharing } from "./Redactor";
 import { PolicyEvaluator } from "./PolicyEvaluator";
 import { HashCache, hashContent } from "./HashCache";
 
 /** Bump when detector selection / pipeline semantics change (invalidates cache). */
-export const SCAN_PIPELINE_VERSION = "1.1.0";
+export const SCAN_PIPELINE_VERSION = "1.2.0";
 
 export const DETECTOR_VERSIONS: Record<string, string> = {
     SecretDetector: SECRET_DETECTOR_VERSION,
+    EncodedSecretDetector: ENCODED_SECRET_DETECTOR_VERSION,
     EnvFileDetector: ENV_FILE_DETECTOR_VERSION,
     PIIDetector: PII_DETECTOR_VERSION,
     IndiaPIIDetector: INDIA_PII_DETECTOR_VERSION,
@@ -155,6 +156,10 @@ export class DecisionEngine {
 
         // Always-on content detectors
         run("SecretDetector", pipeline.secretDetection, () => detectSecrets(text));
+        // Same gate as SecretDetector: catches a credential that was ENCODED
+        // (base64/hex) to slip past the plaintext rules, by decoding and
+        // re-scanning. Closes the T4 gap the Leak Range harness measured.
+        run("EncodedSecretDetector", pipeline.secretDetection, () => detectEncodedSecrets(text));
         run("EnvFileDetector", pipeline.secretDetection, () => detectEnvFile(text));
         run("PIIDetector", pipeline.piiDetection, () => detectPII(text));
         run("IndiaPIIDetector", pipeline.piiDetection, () => detectIndiaPII(text));

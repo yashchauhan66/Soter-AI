@@ -197,6 +197,13 @@ const BLOCKABLE_DETECTOR_CLASSES: readonly string[] = [
 export const HIGH_RISK_SECRET_CLASS_NAMES: readonly string[] = [
     ...HIGH_RISK_SECRET_PATTERNS.map(([name]) => name),
     ...BLOCKABLE_DETECTOR_CLASSES,
+    // From EncodedSecretDetector, not SecretDetector: a credential found by
+    // DECODING a base64/hex blob and re-scanning the bytes. It blocks on score
+    // (>70) on its own, but it is in the vocabulary too so a host that keys on
+    // category also blocks. Redaction is by position (the match spans the
+    // encoded blob), so the decoded secret never enters the redacted copy and
+    // the survivor invariant is unaffected — there is no survivor pattern to add.
+    "encoded_secret",
 ];
 
 /**

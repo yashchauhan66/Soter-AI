@@ -859,7 +859,7 @@ const BINARY_EXTENSIONS = new Set([
     ".mp3", ".mp4", ".mov", ".avi", ".woff", ".woff2", ".ttf", ".otf",
 ]);
 
-async function isFile(absPath: string): Promise<boolean> {
+export async function isFile(absPath: string): Promise<boolean> {
     try {
         const { stat } = await import("node:fs/promises");
         return (await stat(absPath)).isFile();
@@ -880,7 +880,7 @@ async function isFile(absPath: string): Promise<boolean> {
  * Returns null when the path is not a readable regular file — an unreadable
  * path cannot leak, so it is not treated as a failure to check.
  */
-async function readTargetFile(absPath: string): Promise<BoundedFile | null> {
+export async function readTargetFile(absPath: string): Promise<BoundedFile | null> {
     if (BINARY_EXTENSIONS.has(path.extname(absPath).toLowerCase())) return null;
     const { open, stat } = await import("node:fs/promises");
     let size: number;
