@@ -36,6 +36,7 @@ import {
     type HookAgent,
     type HookDeps,
     type OnError,
+    type OutputIncident,
 } from "./hook";
 import {
     CURSOR_EVENTS,
@@ -79,6 +80,10 @@ export interface CliDeps {
     /** Read a hook's file target under a byte budget. null = not a real file. */
     readTargetFile: (absPath: string) => Promise<BoundedFile | null>;
     isFile: (absPath: string) => Promise<boolean>;
+    /** Where post-execution output-leak incidents are appended (JSON lines). */
+    incidentLogPath: string;
+    /** Append one output-leak incident (class only, never the value). */
+    recordIncident: (file: string, record: OutputIncident) => Promise<void>;
     /** Read a JSON config, returning undefined when it does not exist. */
     readJsonFile: (file: string) => Promise<unknown>;
     /** Write a JSON config atomically (temp file in the same dir, then rename). */
@@ -128,6 +133,8 @@ export function defaultDeps(overrides: Partial<CliDeps> = {}): CliDeps {
         cwd: process.cwd(),
         readTargetFile: readTargetFile,
         isFile: isFile,
+        incidentLogPath: process.env.SOTERAI_INCIDENT_LOG || path.join(homedir(), ".soterai", "incidents.log"),
+        recordIncident: appendIncident,
         readJsonFile: readJsonFile,
         writeJsonFile: writeJsonFile,
         home: homedir(),
@@ -627,7 +634,7 @@ async function cmdHookCheck(deps: CliDeps, args: ParsedArgs, requested: HookAgen
 
     // Built before the payload is parsed, so an unparseable payload can still be
     // rendered in the right dialect rather than answered with silence.
-    let call = { agent: requested, event: "PreToolUse", toolName: "unknown", inline: [], filePaths: [], supplied: [] } as
+    let call = { agent: requested, event: "PreToolUse", phase: "pre", toolName: "unknown", inline: [], filePaths: [], supplied: [], outputs: [] } as
         ReturnType<typeof normalizeCall>;
 
     try {
@@ -642,6 +649,7 @@ async function cmdHookCheck(deps: CliDeps, args: ParsedArgs, requested: HookAgen
             isFile: deps.isFile,
             cwd: deps.cwd,
             home: deps.home,
+            recordIncident: (record) => deps.recordIncident(deps.incidentLogPath, record),
         };
 
         const verdict = await withTimeout(
@@ -690,7 +698,8 @@ async function cmdHookInstall(deps: CliDeps, args: ParsedArgs, agent?: string): 
         );
         await deps.writeJsonFile(file, document);
         emit(deps, args, hookInstallReport("Claude Code", file, alreadyInstalled, [
-            "Blocks with exit code 2 plus a deny decision on stdout — either alone is sufficient.",
+            "PreToolUse blocks with exit code 2 plus a deny decision on stdout — either alone is sufficient.",
+            "PostToolUse DETECTS secrets in tool output (already in context, so it warns + logs, never blocks).",
             'Matcher is "*" so no tool is left unguarded; narrow it in the file if the per-call cost matters.',
         ]), { agent, scope, file, alreadyInstalled });
         return 0;
@@ -749,7 +758,10 @@ async function cmdHookStatus(deps: CliDeps, args: ParsedArgs): Promise<number> {
         deps.out(`  ${r.installed ? "installed    " : "not installed"}  ${r.agent} (${r.scope})  ${r.file}`);
     }
     deps.out("");
-    deps.out("Scope: this hook blocks CREDENTIAL egress into and out of the model's context.");
+    deps.out("Scope: this hook blocks CREDENTIAL egress into the model's context (PreToolUse), and");
+    deps.out("  DETECTS credentials that arrive only in tool OUTPUT (PostToolUse). Detection cannot");
+    deps.out("  block — the tool has already run — so it warns and logs an incident for rotation:");
+    deps.out(`  ${deps.incidentLogPath}`);
     deps.out("  It is not a destructive-command guard — request scanning does not score shell risk,");
     deps.out("  so `rm -rf /` passes it. Use the agent's own permission rules for that.");
     deps.out("  Codex: response schema unverified in this build; no installer is provided.");
@@ -866,6 +878,21 @@ export async function isFile(absPath: string): Promise<boolean> {
     } catch {
         return false;
     }
+}
+
+/**
+ * Append one output-leak incident as a single JSON line.
+ *
+ * The record is written class-only by `evaluateOutput` — this function never
+ * sees the secret value, and must never be changed to log the scanned text,
+ * because this file persists on disk and a log that quotes the secret is a
+ * second copy of it. The directory is created 0o700 and the file 0o600: an
+ * incident log names which credentials leaked and is itself sensitive.
+ */
+export async function appendIncident(file: string, record: OutputIncident): Promise<void> {
+    const { mkdir, appendFile } = await import("node:fs/promises");
+    await mkdir(path.dirname(file), { recursive: true, mode: 0o700 });
+    await appendFile(file, JSON.stringify(record) + "\n", { encoding: "utf8", mode: 0o600 });
 }
 
 /**

@@ -364,6 +364,54 @@ describe("Leak Range — measured secret egress across channels and evasion tier
         assert.deepEqual(overblocked, [], "Over-defense on ordinary env use — this is how a guard gets turned off:\n  " + overblocked.join("\n  "));
     });
 
+    it("TOOL OUTPUT: a credential returned by a tool is DETECTED (detection, not prevention)", async () => {
+        // The channel the matrix above cannot cover: a secret that appears ONLY
+        // in a tool's RESULT — an API response, a DB row, an MCP tool's output.
+        // By the time a PostToolUse hook sees it, the tool has run and the value
+        // is already in the transcript, so this can never be a "block". The
+        // honest guarantee here is DETECTION: the verdict is `report`, and that
+        // is what lets the credential be rotated. Measured through the real
+        // post-execution path, across the response shapes a tool actually uses.
+        const shapes: Array<[string, Record<string, unknown>]> = [
+            ["bash stdout", { hook_event_name: "PostToolUse", tool_name: "Bash", tool_response: { stdout: `OPENAI_API_KEY=${SECRET}` } }],
+            ["nested api json", { hook_event_name: "PostToolUse", tool_name: "mcp__http__get", tool_response: { body: { data: { api_key: SECRET } } } }],
+            ["db rows array", { hook_event_name: "PostToolUse", tool_name: "mcp__db__query", tool_response: { rows: [{ id: 1 }, { secret: SECRET }] } }],
+            ["opaque credential in output", { hook_event_name: "PostToolUse", tool_name: "Bash", tool_response: { stdout: OPAQUE_SECRET } }],
+        ];
+        const missed: string[] = [];
+        for (const [name, raw] of shapes) {
+            const call = normalizeCall("claude-code", raw);
+            const verdict = await evaluateHook(call, makeDeps(workDir), DEFAULT_HOOK_OPTIONS);
+            // "report" = detected (the honest outcome); "allow" = it slipped past.
+            if (verdict.action !== "report") missed.push(`${name} => ${verdict.action}`);
+        }
+        assert.deepEqual(
+            missed,
+            [],
+            "A credential in tool OUTPUT went undetected. This is the output-side channel; it cannot be " +
+                "blocked (the tool already ran) but it MUST be detected so the credential can be rotated:\n  " +
+                missed.join("\n  "),
+        );
+    });
+
+    it("TOOL OUTPUT benign: ordinary tool results are NOT flagged (no post-run noise)", async () => {
+        // Detection that fires on every clean build log is noise users mute, and
+        // a muted detector detects nothing. These must all come back `allow`.
+        const clean: Array<[string, Record<string, unknown>]> = [
+            ["build log", { hook_event_name: "PostToolUse", tool_name: "Bash", tool_response: { stdout: "compiled 42 files in 3.1s\nAll tests passed." } }],
+            ["git status", { hook_event_name: "PostToolUse", tool_name: "Bash", tool_response: { stdout: "On branch main\nnothing to commit, working tree clean" } }],
+            ["json config echo", { hook_event_name: "PostToolUse", tool_name: "Read", tool_response: { file: { content: '{"editor.tabSize":4,"port":3000}' } } }],
+            ["env var NAMES only", { hook_event_name: "PostToolUse", tool_name: "Bash", tool_response: { stdout: "Available: OPENAI_API_KEY, DB_PASSWORD (set via vault)" } }],
+        ];
+        const overflagged: string[] = [];
+        for (const [name, raw] of clean) {
+            const call = normalizeCall("claude-code", raw);
+            const verdict = await evaluateHook(call, makeDeps(workDir), DEFAULT_HOOK_OPTIONS);
+            if (verdict.action !== "allow") overflagged.push(`${name} => ${verdict.action}: ${verdict.findings.flatMap((f) => f.classes).join(",")}`);
+        }
+        assert.deepEqual(overflagged, [], "Over-flagging benign tool output — a post-run detector that cries wolf gets muted:\n  " + overflagged.join("\n  "));
+    });
+
     it("prints the honest Leak Range matrix", () => {
         const claimedCells = cells.filter((c) => c.claimed);
         const claimedBlocked = claimedCells.filter((c) => !c.leaked).length;

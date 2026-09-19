@@ -17,6 +17,7 @@ import { describe, it } from "node:test";
 import type { ScanResponse } from "@soterai/ide-protocol";
 import {
     DEFAULT_HOOK_OPTIONS,
+    collectOutputText,
     detectAgent,
     detectEnvSecretReference,
     errorVerdict,
@@ -25,9 +26,11 @@ import {
     findingFor,
     normalizeCall,
     parseHookInput,
+    phaseOf,
     renderVerdict,
     type HookDeps,
     type NormalizedHookCall,
+    type OutputIncident,
 } from "../hook";
 
 const SK48 = `sk-${"Qv7mTb2LxK9dR4hZ8sN6pW3yJ1cF5gA0uE7iO2rY4tXn"}`;
@@ -394,5 +397,119 @@ describe("detectEnvSecretReference", () => {
         );
         // It must name the VARIABLE but never imply it read the value.
         assert.match(verdict.reason, /OPENAI_API_KEY/, "naming the variable is what makes it actionable");
+    });
+});
+
+/**
+ * TOOL OUTPUT (post-execution) — the fourth check, and the honest one about its
+ * own limits. A credential returned by a genuine API call or DB row is already
+ * in the model's context by the time a PostToolUse hook sees it, so this is
+ * DETECTION, not prevention. These tests pin the properties that keep it from
+ * lying about that: the verdict is `report` (never `deny`), it renders without
+ * claiming a permission it cannot grant, and the incident it logs carries the
+ * class only — never the value, because the log persists on disk.
+ */
+describe("tool-output scanning: detection after the tool has run", () => {
+    it("recognises the post-execution events by name", () => {
+        assert.equal(phaseOf("PreToolUse"), "pre");
+        assert.equal(phaseOf("PostToolUse"), "post");
+        assert.equal(phaseOf("beforeShellExecution"), "pre");
+        assert.equal(phaseOf("afterShellExecution"), "post");
+        assert.equal(phaseOf("afterFileEdit"), "post");
+    });
+
+    it("collects strings out of any response shape, and marks a sampled one", () => {
+        const nested = { file: { content: "top secret line" }, meta: { lines: ["a", "b"] }, count: 3, ok: true };
+        const { text, sampled } = collectOutputText(nested);
+        assert.match(text, /top secret line/);
+        assert.match(text, /\na\nb/, "array strings must be collected too");
+        assert.equal(sampled, false);
+
+        const huge = { stdout: "x".repeat(400 * 1024) };
+        const big = collectOutputText(huge, 256 * 1024);
+        assert.equal(big.sampled, true, "an over-budget output must be marked sampled, not silently truncated");
+        assert.ok(big.text.length < 400 * 1024);
+    });
+
+    it("normalizeCall on PostToolUse collects the tool_response, not the input", () => {
+        const call = normalizeCall("claude-code", {
+            hook_event_name: "PostToolUse",
+            tool_name: "Bash",
+            tool_input: { command: "curl https://api.example.com/me" },
+            tool_response: { stdout: `{"api_key":"${SK48}"}` },
+        });
+        assert.equal(call.phase, "post");
+        assert.equal(call.inline.length, 0, "the input was already checked pre-execution; do not double-count it");
+        assert.equal(call.outputs.length, 1);
+        assert.ok(call.outputs[0].text.includes(SK48));
+    });
+
+    it("REPORTS (does not deny) a secret in output, and records a value-free incident", async () => {
+        const incidents: OutputIncident[] = [];
+        const call = normalizeCall("claude-code", {
+            hook_event_name: "PostToolUse",
+            tool_name: "mcp__db__query",
+            tool_response: { rows: [{ token: SK48 }] },
+        });
+        const verdict = await evaluateHook(call, makeDeps({
+            scan: async (content) => (content.includes(SK48) ? API_KEY_FOUND : CLEAN),
+            recordIncident: async (r) => { incidents.push(r); },
+        }));
+
+        assert.equal(verdict.action, "report", "output detection must NOT be a deny — nothing was prevented");
+        assert.ok(verdict.findings.some((f) => f.origin === "output"));
+        assert.match(verdict.reason, /detected/i, "the reason must admit it was detected, not blocked");
+        assert.match(verdict.reason, /ROTATE/i, "the actionable remedy for an exposed credential is rotation");
+        assert.ok(!verdict.reason.includes(SK48), "the reason leaked the very secret it found");
+
+        assert.equal(incidents.length, 1, "an output leak must be logged so it can be rotated");
+        const record = incidents[0];
+        assert.deepEqual(record.classes, ["ai_api_key"]);
+        assert.equal(record.tool, "mcp__db__query");
+        assert.ok(!JSON.stringify(record).includes(SK48), "the incident log must never contain the secret value");
+    });
+
+    it("allows and stays silent on clean output — no noise after every tool call", async () => {
+        const call = normalizeCall("claude-code", {
+            hook_event_name: "PostToolUse",
+            tool_name: "Bash",
+            tool_response: { stdout: "build succeeded in 4.2s" },
+        });
+        const verdict = await evaluateHook(call, makeDeps());
+        assert.equal(verdict.action, "allow");
+        const rendered = renderVerdict(call, verdict);
+        assert.equal(rendered.exitCode, 0);
+        assert.equal(rendered.stdout, undefined, "a clean post-scan must emit nothing");
+    });
+
+    it("renders a report as a message to the model, never as a permission decision", async () => {
+        const call = normalizeCall("claude-code", {
+            hook_event_name: "PostToolUse",
+            tool_name: "Bash",
+            tool_response: { stdout: `KEY=${SK48}` },
+        });
+        const verdict = await evaluateHook(call, makeDeps({
+            scan: async (content) => (content.includes(SK48) ? API_KEY_FOUND : CLEAN),
+        }));
+        const rendered = renderVerdict(call, verdict);
+        const payload = JSON.parse(rendered.stdout ?? "{}");
+        // On a PostToolUse hook, decision:block surfaces the reason to the model;
+        // there is no permissionDecision to grant, because the tool already ran.
+        assert.equal(payload.decision, "block");
+        assert.equal(payload.hookSpecificOutput.additionalContext, verdict.reason);
+        assert.equal(payload.permissionDecision, undefined, "a post-run hook must not claim to grant/deny permission");
+        assert.equal(rendered.exitCode, 2);
+    });
+
+    it("does not fail closed post-execution: a scan error blocks nothing that already ran", async () => {
+        const call = normalizeCall("claude-code", {
+            hook_event_name: "PostToolUse",
+            tool_name: "Bash",
+            tool_response: { stdout: "anything" },
+        });
+        // errorVerdict is a pre-execution shape (deny); rendered on a post call it
+        // must degrade to exit 0, because there is no longer anything to prevent.
+        const rendered = renderVerdict(call, errorVerdict("broker unreachable", "deny"));
+        assert.equal(rendered.exitCode, 0, "a post-execution error must not emit a blocking exit for an already-run tool");
     });
 });
