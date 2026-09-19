@@ -12,7 +12,7 @@ import { HIGH_RISK_SECRET_CLASSES, highRiskSecretClasses, type ScanResponse } fr
  *
  * It runs as a short-lived process per tool call: the agent writes the pending
  * call to stdin as JSON, this reads it, decides, and answers on stdout plus an
- * exit code. Two checks run:
+ * exit code. Three checks run:
  *
  *   1. CONTENT — the text the tool is about to send or write.
  *   2. FILE TARGET — the file the tool is about to pull INTO the model's
@@ -20,6 +20,12 @@ import { HIGH_RISK_SECRET_CLASSES, highRiskSecretClasses, type ScanResponse } fr
  *      output-scanner cannot do: by the time a secret appears in a prompt it
  *      has already left the machine. Here we resolve the path the agent named,
  *      read it locally, and scan it BEFORE the agent ever sees a byte.
+ *   3. SECRET-BY-REFERENCE — a shell command whose TEXT names no secret but
+ *      whose OUTPUT would carry one (`echo $OPENAI_API_KEY`, `printenv`, `env`).
+ *      A content scan is blind to it because the value is not in the string, so
+ *      this is a tight heuristic on the command — see `detectEnvSecretReference`.
+ *      It narrows, but does not close, the input-side blind spot: a secret in a
+ *      genuine API/DB response still needs a post-execution output scan.
  *
  * Scope, stated honestly: this blocks CREDENTIAL EGRESS. It is not a
  * destructive-command guard — the terminal-risk detector runs on model
@@ -46,13 +52,18 @@ export interface NormalizedHookCall {
 }
 
 export interface HookFinding {
-    origin: "input" | "file";
+    origin: "input" | "file" | "command";
     label: string;
     classes: string[];
     decision: string;
     riskScore: number;
     /** True when the file was larger than the read budget and was sampled. */
     sampled?: boolean;
+    /**
+     * Why a `command` finding fired. Kept separate from `label` so the reason can
+     * be shown without the class name reading as part of a sentence.
+     */
+    detail?: string;
 }
 
 export interface HookVerdict {
@@ -212,6 +223,91 @@ export async function extractShellPaths(command: string, deps: HookDeps, max: nu
     return found;
 }
 
+// ─── 2b. Secret-by-reference in a shell command ──────────────────────────────
+
+/**
+ * The credential-egress path a content scan cannot see: a shell command that
+ * prints an environment secret to stdout. The command TEXT carries only the
+ * variable NAME (`echo $OPENAI_API_KEY`), so the scanner finds nothing to
+ * redact; the VALUE materializes when the shell runs and lands in the model's
+ * NEXT turn. This is the same secret the P1 vault moves out of files and into
+ * the child env — flowing right back to the model by reference.
+ *
+ * This is a heuristic on the command string, not a scan: it is the one lever an
+ * input-side hook has on an output-side leak. It is scoped tight on purpose,
+ * because over-defense gets a guard turned off and a disabled guard leaks
+ * everything. It flags commands whose JOB is to surface env/credential values —
+ * `echo`/`printf` of a credential-named variable, a whole-environment dump via
+ * `env`/`printenv`, a read of `/proc/<pid>/environ` — including inside a `$(…)`
+ * substitution. It deliberately does NOT flag handing a secret to a remote tool
+ * (`curl -H "Authorization: $TOKEN"`): that is egress to a server, a different
+ * threat, and blocking every such call here would be a high false-positive.
+ */
+export const ENV_SECRET_REFERENCE_CLASS = "env_secret_reference";
+
+/**
+ * A credential-named variable: any underscore-delimited segment is itself a
+ * credential word. Matched segment-exact, not as a substring, so `KEYBOARD`,
+ * `AUTHOR`, `PATH`, `TOKENIZER`, `HOME`, `PWD` do NOT match, while
+ * `OPENAI_API_KEY`, `AWS_SECRET_ACCESS_KEY`, `DB_PASSWORD`, `GH_TOKEN` do.
+ */
+const CREDENTIAL_NAME_SEGMENTS = new Set([
+    "KEY", "KEYS", "TOKEN", "TOKENS", "SECRET", "SECRETS", "PASSWORD", "PASSWD",
+    "CREDENTIAL", "CREDENTIALS", "APIKEY", "AUTH", "PRIVATEKEY", "ACCESSKEY",
+]);
+
+function isCredentialVarName(name: string): boolean {
+    return name.toUpperCase().split(/_+/).filter(Boolean).some((s) => CREDENTIAL_NAME_SEGMENTS.has(s));
+}
+
+const VAR_REF = /\$\{?([A-Za-z_][A-Za-z0-9_]*)\}?/g;
+
+function referencedCredentialVars(text: string): string[] {
+    const out: string[] = [];
+    for (const m of text.matchAll(VAR_REF)) if (isCredentialVarName(m[1])) out.push(m[1]);
+    return out;
+}
+
+// Split on pipeline/sequence operators AND command-substitution delimiters, so
+// the body of `$(printenv API_SECRET)` is analyzed as its own segment.
+const COMMAND_SEGMENTS = /\|\||&&|[|;&\n]|\$\(|`|\)/g;
+
+/**
+ * Reasons a shell command would surface an environment secret to stdout.
+ * Empty ⇒ nothing to flag. Pure and synchronous, so it is trivially testable.
+ */
+export function detectEnvSecretReference(command: string): string[] {
+    const reasons: string[] = [];
+    const seen = new Set<string>();
+    const add = (r: string) => { if (!seen.has(r)) { seen.add(r); reasons.push(r); } };
+
+    // Reading the environ pseudo-file dumps every variable at once.
+    if (/\/proc\/(?:self|\d+)\/environ\b/.test(command)) {
+        add("reads /proc/<pid>/environ, which exposes the whole environment");
+    }
+
+    for (const rawSeg of command.split(COMMAND_SEGMENTS)) {
+        const seg = rawSeg.trim();
+        if (!seg) continue;
+        const words = seg.split(/\s+/);
+        const cmd = words[0].replace(/^["']|["']$/g, "").replace(/.*\//, "");
+        const operands = words.slice(1).filter((w) => w && !w.startsWith("-"));
+
+        if (cmd === "echo" || cmd === "printf") {
+            for (const v of referencedCredentialVars(seg)) add(`prints credential variable $${v} to output (${cmd})`);
+        } else if (cmd === "printenv") {
+            if (operands.length === 0) add("printenv with no argument dumps the whole environment");
+            else for (const a of operands) if (isCredentialVarName(a)) add(`printenv prints credential variable ${a}`);
+        } else if (cmd === "env") {
+            // `env VAR=val prog` SETS variables for a program; a bare `env`
+            // (optionally piped) DUMPS every variable. Any non-flag operand means
+            // it is running a program, not dumping.
+            if (operands.length === 0) add("bare env dumps the whole environment");
+        }
+    }
+    return reasons;
+}
+
 /** Expand `~` and resolve against the call's working directory. */
 export function resolveUserPath(candidate: string, deps: HookDeps): string | undefined {
     try {
@@ -256,19 +352,47 @@ export function findingFor(
     };
 }
 
-/** Compose the user-facing reason. Names classes and paths, never values. */
+/**
+ * Compose the user-facing reason. Names classes, paths and variable NAMES, never
+ * values.
+ *
+ * The remedy is chosen per finding type, because the wrong remedy is worse than
+ * none: telling someone to "move the value into the vault and reference it by
+ * name" when they were blocked for `echo $OPENAI_API_KEY` is advice they have
+ * already followed — the reference IS the leak. A block a user cannot act on is
+ * a block they switch off.
+ */
 export function explain(findings: HookFinding[]): string {
     const lines = findings.map((f) => {
         const what = f.classes.length > 0 ? f.classes.join(", ") : `risk ${f.riskScore} (${f.decision})`;
         const where = f.origin === "file" ? `the file ${f.label}` : f.label;
-        return `  - ${what} in ${where}${f.sampled ? " (large file: head and tail sampled)" : ""}`;
+        const why = f.origin === "command" && f.detail ? ` — ${f.detail}` : "";
+        return `  - ${what} in ${where}${why}${f.sampled ? " (large file: head and tail sampled)" : ""}`;
     });
+
+    const remedies: string[] = [];
+    if (findings.some((f) => f.origin === "command")) {
+        remedies.push(
+            "This command carries no secret in its TEXT, but running it would print one into the",
+            "model's context. Referencing the variable is what leaks it, so vaulting the value does",
+            "not help here. To proceed: do not print the secret. If a program needs it, run that",
+            "program with `soterai run -- <command>` so the value is injected into that process only.",
+        );
+    }
+    if (findings.some((f) => f.origin !== "command")) {
+        remedies.push(
+            "Move the value into the Protected Vault and reference it by name, or remove it from the",
+            "file or command.",
+        );
+    }
+
     return [
         "SoterAI blocked this tool call: it would have put credentials into the model's context.",
         ...lines,
         "",
-        "Nothing was sent. To proceed: move the value into the Protected Vault and reference it by name,",
-        "or remove it from the file or command. This hook reports classes and paths only — never values.",
+        "Nothing was sent.",
+        ...remedies,
+        "This hook reports classes, paths and variable names only — never values.",
     ].join("\n");
 }
 
@@ -304,6 +428,23 @@ export async function evaluateHook(
         budget--;
         const finding = findingFor(await deps.scan(file.text), "file", target, file.sampled);
         if (finding) findings.push(finding);
+    }
+
+    // Secret-by-reference: a command whose OUTPUT would carry a secret its TEXT
+    // does not. The scanner cannot see this (the value is not in the string), so
+    // it is a heuristic on the command itself — the only lever a pre-execution
+    // hook has on an output-side leak.
+    for (const command of shellText) {
+        const reasons = detectEnvSecretReference(command);
+        if (reasons.length === 0) continue;
+        findings.push({
+            origin: "command",
+            label: "the shell command",
+            detail: reasons.join("; "),
+            classes: [ENV_SECRET_REFERENCE_CLASS],
+            decision: "block",
+            riskScore: 90,
+        });
     }
 
     if (findings.length === 0) return { action: "allow", reason: "", findings: [] };
