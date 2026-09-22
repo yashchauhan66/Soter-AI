@@ -106,10 +106,32 @@ if (checkOnly) {
 
 const before = files.reduce((n, f) => n + statSync(f).size, 0);
 
+/**
+ * esbuild is resolved from the package being minified first, so a publish that
+ * runs `npm ci` in only that package — the n8n workflow does exactly this and
+ * never installs the repo root — finds it in that package's own node_modules.
+ * Falls back to this script's own location for callers that keep esbuild at the
+ * repo root, so nothing that worked before changes. Both are tried before we
+ * fail with a message that says what to do.
+ */
+function resolveEsbuildBin(fromPkgDir) {
+  for (const base of [path.join(fromPkgDir, "package.json"), import.meta.url]) {
+    try {
+      return createRequire(base).resolve("esbuild/bin/esbuild");
+    } catch {
+      /* try the next resolution base */
+    }
+  }
+  throw new Error(
+    "[minify] esbuild not found. Add it as a devDependency of the package being " +
+      "minified so its own `npm ci` installs it, or install it at the repo root.",
+  );
+}
+
 execFileSync(
   process.execPath,
   [
-    createRequire(import.meta.url).resolve("esbuild/bin/esbuild"),
+    resolveEsbuildBin(pkgDir),
     ...files,
     "--minify",
     "--platform=node",
