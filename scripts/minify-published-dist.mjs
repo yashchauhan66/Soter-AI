@@ -107,17 +107,17 @@ if (checkOnly) {
 const before = files.reduce((n, f) => n + statSync(f).size, 0);
 
 /**
- * esbuild is resolved from the package being minified first, so a publish that
+ * esbuild is loaded from the package being minified first, so a publish that
  * runs `npm ci` in only that package — the n8n workflow does exactly this and
  * never installs the repo root — finds it in that package's own node_modules.
  * Falls back to this script's own location for callers that keep esbuild at the
  * repo root, so nothing that worked before changes. Both are tried before we
  * fail with a message that says what to do.
  */
-function resolveEsbuildBin(fromPkgDir) {
+function loadEsbuild(fromPkgDir) {
   for (const base of [path.join(fromPkgDir, "package.json"), import.meta.url]) {
     try {
-      return createRequire(base).resolve("esbuild/bin/esbuild");
+      return createRequire(base)("esbuild");
     } catch {
       /* try the next resolution base */
     }
@@ -128,20 +128,28 @@ function resolveEsbuildBin(fromPkgDir) {
   );
 }
 
-execFileSync(
-  process.execPath,
-  [
-    resolveEsbuildBin(pkgDir),
-    ...files,
-    "--minify",
-    "--platform=node",
-    "--legal-comments=none",
-    `--outdir=${distDir}`,
-    `--outbase=${distDir}`,
-    "--allow-overwrite",
-  ],
-  { stdio: ["ignore", "ignore", "inherit"] },
-);
+/*
+ * The JS API drives esbuild here, not a spawned binary. `esbuild/bin/esbuild` is
+ * a native ELF executable on Linux, so launching it through `node` — which is
+ * what happened to work on Windows, where that same path is a JS shim — makes
+ * node try to parse an ELF header as JavaScript and die in CI with "Invalid or
+ * unexpected token". buildSync loads the correct platform binary the way esbuild
+ * intends on every OS. The options below are the exact flags the CLI form used,
+ * so the output is unchanged: per-file (no `bundle`), in place (`allowOverwrite`
+ * with dist as both outdir and outbase), leaving every require() edge and every
+ * main/bin/exports entry path where it was.
+ */
+const esbuild = loadEsbuild(pkgDir);
+esbuild.buildSync({
+  entryPoints: files,
+  minify: true,
+  platform: "node",
+  legalComments: "none",
+  outdir: distDir,
+  outbase: distDir,
+  allowOverwrite: true,
+  logLevel: "warning",
+});
 
 /* The banner goes after the hashbang, never before it. `#!` is only legal at
  * byte 0 of a file; one line above it turns a working CLI into an instant
