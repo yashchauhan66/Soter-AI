@@ -95,6 +95,8 @@ In the Universal AI Firewall, fallback is per layer: one dead optional layer is 
 
 A degraded item is never silently equivalent to a clean cloud pass. If you want fallback to be visible downstream, branch on `engineDegraded`.
 
+**Never Downgrade to Local** (in Advanced Options, Auto only) removes the fallback for the four "could not be asked" rows above: instead of a local answer, the item **fails**. This is for a workflow under a commitment that every message is checked by the full engine — the local pattern engine catches materially less, and `engineDegraded: true` on an item nobody reads is not a control. It is off by default and stays off on upgrade, because every published version has failed open and flipping that silently would turn a brief outage into a stopped workflow. With n8n's **Continue On Fail** enabled, a failed item leaves through **Flagged**, never Safe — an item that nothing checked is not treated as clean. The error names the setting, so the fix is not a guessing game.
+
 ## Agent Identity and Passport Flow
 
 The node now exposes the complete lifecycle; raw HTTP nodes are not required:
@@ -134,10 +136,11 @@ All optional. Only **Layers in Parallel** changes the node's previous behaviour,
 | **Items in Parallel** | `1` | How many input items are checked at once (1–20). Output order and `pairedItem` are preserved regardless of which item finishes first. |
 | **Layers in Parallel** | on | Runs the Universal AI Firewall's optional layers concurrently instead of one after another. Turn it off if your plan's per-minute rate limit is tight. |
 | **Reuse Identical Items** | on | A batch containing the same text more than once costs one API call. Reused items are marked `reusedResult` and `reusedFromItemIndex` rather than being silently identical. |
+| **Never Downgrade to Local** *(Auto only)* | off | Fail an item instead of answering it with the local engine when the cloud cannot be reached. See [Auto mode](#auto-mode). Off by default so an upgrade never changes behaviour. |
 | **Request Timeout (Ms)** | `20000` | Per-request timeout, 1000–120000. |
 | **Include Raw API Response** | on | Turn off to drop `rawResponse` from the output when you do not want the full payload in your execution data. |
 
-Items in Parallel and Reuse Identical Items are the two that matter for large batches: 100 items at concurrency 10 finish in roughly a tenth of the wall-clock time, and a deduplicated batch skips the calls entirely.
+Items in Parallel and Reuse Identical Items are the two that matter for large batches. **Items in Parallel defaults to `1` — sequential** — so a hundred-item batch is a hundred requests one after another, which is the safest thing for a rate limit but not the fastest; raising it is the single biggest speed win, and a 429 is retried after the interval the API asks for at any setting. Reuse Identical Items skips duplicate calls within one execution entirely.
 
 ## Two Outputs: Safe and Flagged
 
@@ -159,27 +162,40 @@ Two things worth knowing:
 - Setting **On Threat** to Redact, Warn, or Continue keeps those items on **Safe**, with their cleaned or annotated text. That is what those settings are for. Only genuinely stopped items go to Flagged.
 - With **Continue On Fail** enabled, an item whose check could not complete goes to **Flagged**. Nothing cleared it, so an API outage cannot become a silent bypass.
 
-`Redact Secrets or PII` has a single output. It never rejects anything, so a Flagged branch would always be empty.
+`Redact PII and Secrets` has a single output. It never rejects anything, so a Flagged branch would always be empty.
 
 ### Existing workflows
 
 Workflows built before this release keep the single output they were built with and behave exactly as before — n8n pins each saved node to the version it was created with. To adopt the two outputs, add a new SoterAI node.
 
+## The node panel (version 3)
+
+A newly added SoterAI node opens on a **Resource → Operation** pair, the way most n8n nodes work:
+
+- **Resource** — *Guardrail*, *RAG Document*, *Workflow*, or *Agent Passport*.
+- **Operation** — the task within that resource. Changing the resource selects that resource's first operation.
+
+Each operation shows only the fields it needs, then a single **Options** button holding everything optional (Detection Engine, Session ID, topic scope, batching, and so on) and exactly one banner describing what the operation does. Guardrail → Guard Input is the default, so a fresh node is ready to check inbound prompts immediately.
+
+This is node **version 3**. It is a new panel over the same engine — detection, verdicts, routing, and every output field are unchanged. Workflows saved on versions 1 and 2 keep their original panel and run identically; n8n pins each saved node to the version it was created with. An option you never open resolves to the node's real default, so a guard you drop in and run without touching Options still uses **Auto** (cloud with local fallback), not a stricter mode.
+
 ## Supported Operations
+
+These are the operations exactly as they appear in the node's **Operation** dropdown (grouped under their **Resource** on version 3; a single **Action** dropdown on versions 1 and 2).
 
 | Operation | Purpose |
 | --- | --- |
-| Universal AI Firewall (Best Protection) | Recommended one-node protection for AI workflows. Checks prompt injection, jailbreaks, PII/secrets, RAG context, tool calls, memory operations, AI output, and semantic data egress. |
+| Universal AI Firewall | Strongest one-node protection for AI workflows. Checks prompt injection, jailbreaks, PII/secrets, RAG context, tool calls, memory operations, AI output, and semantic data egress. |
 | Guard Input | Check inbound prompts before an AI app receives them. Supports Block, Redact, Warn, or Continue. |
 | Guard Output | Check AI-generated output before sending, saving, or responding with it. Supports Block, Redact, Warn, or Continue. |
-| Redact Secrets or PII | Detect and redact sensitive strings such as emails, phone-like values, API keys, and secrets. |
-| Get RAG Risk Summary | Scan a document or chunk and return `trustScore`, `trustLevel`, findings, and a recommended action. |
-| Audit n8n Workflow Security | Score an exported n8n workflow for AI Agent, tool, webhook, Code node, memory, RAG, credential, and output-egress risks. |
+| Redact PII and Secrets | Detect and redact sensitive strings such as emails, phone-like values, API keys, and secrets. |
+| Scan RAG Document | Scan a document or chunk and return `trustScore`, `trustLevel`, findings, and a recommended action. |
+| Audit Workflow Security | Score an exported n8n workflow for AI Agent, tool, webhook, Code node, memory, RAG, credential, and output-egress risks. |
 | Analyze Text | Analyze a text field and return `allowed`, `riskScore`, `categories`, `reason`, and safe text without local blocking. |
 
 ## Recommended: One-Node AI Protection
 
-Choose **Universal AI Firewall (Best Protection)** when you want the simplest and strongest workflow pattern:
+Choose **Universal AI Firewall** when you want the simplest and strongest workflow pattern:
 
 ```text
 User/Webhook Input -> SoterAI Universal AI Firewall -> LLM -> SoterAI Universal AI Firewall -> Respond/Tool/Memory
@@ -195,6 +211,10 @@ For a single pre-LLM gate, fill **Input Text** and leave optional fields empty. 
 | `On Threat` | What happens once something is flagged. Keep `Block` unless you deliberately want redaction or review branches. |
 | `Session ID` | Recommended. Links a conversation's messages so an attack spread across several turns can be caught. |
 | `Security Context` | Optional layers for retrieved context, tool calls, memory operations, and output destination. |
+| `Allowed Semantic Topics` + `Topic Handling` | Your assistant answers a defined set of subjects and ordinary questions about them are being stopped. |
+| `Ignored Identifiers` | Your assistant legitimately needs to see something normally redacted — an account number, the customer's own email. Never covers live credentials. |
+| `Always Allow` | A handful of questions you are certain about and never want scanned. |
+| `Customer Replies` | Your customers do not read English, the built-in wording does not match your brand, or you want one custom block message. |
 
 ### Security Context
 
@@ -438,7 +458,7 @@ Suggested chatbot response:
 
 ## n8n Workflow Security Audit
 
-Choose **Audit n8n Workflow Security** before deploying or sharing a workflow. Paste an exported workflow JSON or pass workflow JSON from a previous node. The audit runs locally inside the node and returns:
+Choose **Audit Workflow Security** before deploying or sharing a workflow. Paste an exported workflow JSON or pass workflow JSON from a previous node. The audit runs locally inside the node and returns:
 
 | Field | Description |
 | --- | --- |
@@ -483,11 +503,11 @@ The package includes importable workflows in `examples/`:
 | `soterai-basic-analyze.workflow.json` | Manual Trigger -> SoterAI Analyze Text -> IF High Risk. |
 | `soterai-guard-input-webhook.workflow.json` | Webhook -> SoterAI Guard Input -> IF Risk High -> Respond to Webhook. |
 | `soterai-guard-output.workflow.json` | Manual Trigger -> AI Output Text -> SoterAI Guard Output -> Save Safe Output. |
-| `soterai-secret-pii-redaction.workflow.json` | Manual Trigger -> SoterAI Redact Secrets or PII -> IF Secrets Found -> Safe Output. |
+| `soterai-secret-pii-redaction.workflow.json` | Manual Trigger -> SoterAI Redact PII and Secrets -> IF Secrets Found -> Safe Output. |
 | `soterai-error-handling.workflow.json` | Manual Trigger -> SoterAI Invalid Input with `continueOnFail` -> Error branch. |
 | `soterai-universal-ai-firewall.workflow.json` | Webhook -> SoterAI Universal AI Firewall -> blocked/allowed response branches. |
 | `soterai-security-context-templates.workflow.json` | Manual Trigger -> Set Security Context JSON -> SoterAI Universal AI Firewall. |
-| `soterai-workflow-security-audit.workflow.json` | Manual Trigger -> SoterAI Audit n8n Workflow Security -> posture report. |
+| `soterai-workflow-security-audit.workflow.json` | Manual Trigger -> SoterAI Audit Workflow Security -> posture report. |
 | `soterai-local-offline-engine.workflow.json` | Runs with **no credential**: Local guard -> Safe/Flagged branches, plus an Auto guard that reports which engine answered. Import this first if you want to try the node before signing up. |
 | `protected-chatbot-workflow.json` | Legacy protected-chatbot pattern retained for existing users. |
 
@@ -529,6 +549,7 @@ Whitespace-only text is a successful no-op: `verdictCode: EMPTY_INPUT`, `skipped
 | `categories` | string[] | Detected risk types. Ordered by which detector ran, not by confidence — read `primaryRiskType` instead when you want the one that mattered. |
 | `primaryRiskType` | string | The risk type that actually drove the verdict, chosen by confidence. This is the field to branch an IF node on. |
 | `categoryConfidence` | object | Per-category confidence behind that choice, so you can tell a weak code-syntax match from a real prompt injection. |
+| `findings` | array | Each finding's `type`, `label`, `severity`, and `redactionToken`. The matched text and offsets are stripped so a live secret is never written to run data. Emitted by both engines. |
 | `latencyMs` | number | Server-side processing time for the call, excluding network transit. |
 | `safeText` | string | Redacted or safe version when available. |
 | `outputText` | string | Text to use downstream. Empty when blocked. |
@@ -537,9 +558,10 @@ Whitespace-only text is a successful no-op: `verdictCode: EMPTY_INPUT`, `skipped
 | `userMessageSource` | string | `custom` when **Customer Replies** supplied the `userMessage`. Absent when it is the built-in wording. |
 | `developerMessage` | string | More detailed operator message for logs/admin routing. |
 | `warning` | string | Present when On Threat is Warn, and when Lenient reports a finding it did not enforce. |
-| `topicScope` | object | Present when **Allowed Topics** is set: `configured`, `inScope`, `matchedTopics`, `relevance`. |
+| `topicScope` | object | Present when **Allowed Semantic Topics** is set: `configured`, `inScope`, `matchedTopics`, `relevance`. |
 | `suppressedFindings` | array | Findings withdrawn by **Trust My Topics**, each with its `type` and `reason`. Empty when nothing was withdrawn; never silently omitted while a scope is configured. |
 | `sensitivity` | object | Present only when **Sensitivity** changed the outcome: `level`, `effect` (`NOT_ENFORCED` or `ESCALATED`), and `detail`. |
+| `ignoredIdentifiers` | object | Present when **Ignored Identifiers** is set: `entities` honoured, `refused` (credentials or unknowns), `effect` (`APPLIED`, `FINDINGS_ONLY`, `NOT_APPLIED`), any `withdrawnFindings`, and a `detail` line. |
 | `bypassed` | string | `ALWAYS_ALLOW` when the item matched **Always Allow** and was not scanned at all. |
 | `incidentId` | string | Incident ID when the API returns one. |
 | `rawAction` | string | Original backend action, such as `HUMAN_REVIEW` or `ALLOW_WITH_REDACTION`. |
@@ -562,13 +584,17 @@ Whitespace-only text is a successful no-op: `verdictCode: EMPTY_INPUT`, `skipped
 ### Tuning the guard for your assistant (Guard Input, Guard Output, Universal AI Firewall)
 
 A guard tuned for no assistant in particular blocks things your assistant should
-answer. These four fields are how you tell it what your assistant is for. All of
+answer. These controls are how you tell it what your assistant is for. All of
 them are optional, and leaving every one alone reproduces the behaviour of
 earlier versions exactly.
 
-#### Allowed Topics and Topic Handling
+#### Allowed Semantic Topics and Topic Handling
 
-- **Allowed Topics** — comma-separated subjects, e.g. `billing, shipping, returns`.
+- **Allowed Semantic Topics** — comma-separated *subjects*, e.g. `billing,
+  shipping, returns`. This scopes what the assistant is about; it does **not**
+  control redaction. To stop a particular identifier being redacted, use
+  [Ignored Identifiers](#ignored-identifiers) — that distinction is the reason
+  the field is named "Semantic".
 - **System Prompt Context** — your assistant's role description, used when the
   topic list alone is not specific enough.
 - **Topic Handling** — what those topics actually *do*:
@@ -654,16 +680,61 @@ to `custom` when an override was used.
 purpose. They are what an operator reads in the execution log during an
 incident, and they must not be rewritable from the canvas.
 
-### Redact Secrets or PII
+#### Ignored Identifiers
+
+The redaction allow-list. Some assistants legitimately need to see the very
+thing the guard redacts by default — a bank helpdesk cannot look up an account
+from `[REDACTED_BANK_ACCOUNT]`, and answering a customer while redacting their
+own email address is just broken. Pick the identifier types to leave alone, and
+they stop being redacted **and** stop being reported as privacy findings, so a
+message whose only "risk" was one of them is no longer flagged for it. Available
+on Guard Input, Guard Output, Redact PII and Secrets, and Universal AI Firewall.
+
+```
+Ignored Identifiers:  [ Bank Account Number ]  [ Email Address ]
+```
+
+Every item records what happened:
+
+```json
+{ "ignoredIdentifiers": { "entities": ["BANK_ACCOUNT", "EMAIL"], "effect": "APPLIED" } }
+```
+
+**Live credentials are never ignorable** — API keys, private keys, tokens,
+connection strings. They are not on the list, and if one is supplied by
+expression it is refused rather than half-honoured:
+
+```json
+{ "ignoredIdentifiers": { "entities": ["EMAIL"], "refused": ["PRIVATE_KEY"], "effect": "APPLIED" } }
+```
+
+A credential in a support message is a leak whatever the topic. If one specific
+message truly has to pass untouched, that is what **Always Allow** is for — it
+is explicit about skipping the scan rather than quietly narrowing it.
+
+> **Cloud and Local differ here, and it is a real difference.** Local removes the
+> identifier *before* scanning, so the value survives in `safeText`. Cloud has no
+> ignore parameter — the API redacts first — so the node filters the response
+> afterward: it withdraws the findings, and restores the original text **only**
+> when nothing else was flagged and every redaction left in the returned text is
+> one you named. When it cannot safely restore, it says so with
+> `effect: "FINDINGS_ONLY"` and leaves the cloud's redacted copy in place rather
+> than guess. If the values themselves must survive, use Detection Engine =
+> Local. On Universal AI Firewall the cloud verdict is assembled across several
+> layers server-side, so the filter reports `NOT_APPLIED` there and points you at
+> Local.
+
+### Redact PII and Secrets
 
 | Field | Type | Description |
 | --- | --- | --- |
-| `safeText` | string | Text with sensitive content redacted when available. |
-| `detectedEntities` | array | Entity labels and severity. |
+| `safeText` | string | Text with sensitive content redacted when available. When **Ignored Identifiers** is set, the named types are deliberately left in place — see `ignoredIdentifiers`. |
+| `detectedEntities` | array | Entity labels and severity. Excludes any type named in **Ignored Identifiers**. |
 | `riskScore` | number | Overall risk score. |
+| `ignoredIdentifiers` | object | Present when **Ignored Identifiers** is set. Its `detail` states plainly that `safeText` is not fully redacted for this item — that is what the setting was asked to do. |
 | `rawResponse` | object | Secret-sanitized API response. |
 
-### Get RAG Risk Summary
+### Scan RAG Document
 
 | Field | Type | Description |
 | --- | --- | --- |
@@ -673,7 +744,7 @@ incident, and they must not be rewritable from the canvas.
 | `recommendedAction` | string | Suggested downstream action. |
 | `rawResponse` | object | Secret-sanitized API response. |
 
-### Audit n8n Workflow Security
+### Audit Workflow Security
 
 | Field | Type | Description |
 | --- | --- | --- |
@@ -705,7 +776,7 @@ API keys, bearer tokens, common provider tokens, AWS access key IDs, database UR
 ## Compatibility
 
 - Package: `n8n-nodes-soterai`
-- Version: `0.7.0`
+- Version: `0.8.0`
 - n8n node API: `1`
 - Peer dependency: `n8n-workflow` `*`
 - Runtime: n8n versions that support community nodes and Node.js 20+ are expected to work; verify in your own n8n host before production use.
@@ -717,6 +788,9 @@ API keys, bearer tokens, common provider tokens, AWS access key IDs, database UR
 - Passport lifecycle actions are cloud-only because identity state, token hashes, revocation, and audit records live on the configured SoterAI deployment. Auto never pretends to complete these actions locally.
 - Version 0.7.0 passes package, type, lint, unit, ReDoS, stress, build, runtime-load, and fresh Docker n8n 2.27.4 workflow/UI metadata gates. Cloud passport execution still requires a reachable SoterAI backend and valid API key.
 - RAG/document risk summaries in Cloud mode depend on the `/api/rag/document/trust-score` endpoint being enabled for your SoterAI deployment. In Local mode the document is scored in-process instead.
+- **Topic trust is a local-engine behaviour.** In Cloud mode your topics are sent to the API and can only *add* an `OFF_TOPIC` finding; they will not exempt an in-scope message from a threat rule. Set the engine to Local if you need trust to apply, and read the notice beside the field rather than assuming both engines behave alike.
+- **Always Allow is a real hole, by design.** Matching messages are never scanned by any engine. It matches whole messages only and ignores entries under eight characters, but anything you put on that list is unprotected. Results say so with `bypassed: "ALWAYS_ALLOW"`.
+- **Ignored Identifiers cannot recover values on the Cloud path.** The API redacts before the node sees the response, so ignoring an identifier in Cloud mode withdraws the *finding* but the redaction token stays in `safeText` unless the whole item qualifies for restoration (nothing else flagged, every remaining token named). If the identifier's actual value must survive downstream, use Detection Engine = Local. Credentials are never ignorable in either engine.
 - Very large payloads should be chunked before analysis.
 
 ## Links

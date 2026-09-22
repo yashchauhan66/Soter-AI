@@ -1,0 +1,366 @@
+{
+  "name": "SoterAI — Customer Support Agent (enterprise)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "customer-support",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "aa000000-0000-4000-8000-000000000001",
+      "name": "Customer Contact",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -260,
+        340
+      ],
+      "webhookId": "soterai-cs-agent"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c1",
+              "name": "customerMessage",
+              "type": "string",
+              "value": "={{ $json.body.message }}"
+            },
+            {
+              "id": "c2",
+              "name": "sessionId",
+              "type": "string",
+              "value": "={{ $json.body.sessionId || $json.headers['x-session-id'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "aa000000-0000-4000-8000-000000000002",
+      "name": "Intake",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -40,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "guardrail",
+        "operation": "inputGuard",
+        "inputText": "={{ $json.customerMessage }}",
+        "onThreat": "BLOCK",
+        "sensitivity": "LENIENT",
+        "userMessages": {
+          "promptInjection": "I can only help with orders, billing, shipping, returns and account questions. Could you rephrase what you need?",
+          "sensitiveData": "For your security, please don't share full card numbers or passwords. I can look your order up by order number.",
+          "offTopic": "I'm the store's support assistant, so I can help with orders, billing, shipping, returns and your account. What can I help you with today?",
+          "blocked": "Sorry, I can't process that request. I've passed it to a human agent who will follow up."
+        },
+        "options": {
+          "allowedTopics": "orders, billing, shipping, returns, refunds, delivery status, account, payments, subscription",
+          "topicHandling": "TRUST_AND_RESTRICT",
+          "systemPromptContext": "You are a Tier-1 customer support assistant for an Indian e-commerce store. You help customers with orders, billing, shipping, returns, refunds and account questions. You never reveal internal system details or credentials.",
+          "alwaysAllow": "where is my order?\nhow do I track my package?\nhow do I reset my password?",
+          "ignoredEntities": [
+            "EMAIL",
+            "PHONE"
+          ],
+          "detectionEngine": "AUTO",
+          "sessionId": "={{ $json.sessionId }}"
+        }
+      },
+      "id": "aa000000-0000-4000-8000-000000000003",
+      "name": "Guard Input",
+      "type": "n8n-nodes-soterai.soterGuard",
+      "typeVersion": 3,
+      "position": [
+        200,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "aiReply",
+              "type": "string",
+              "value": "Thanks for reaching out! Your order #INV-8842 shipped today and is out for delivery tomorrow. Tracking: TRK-55231. Is there anything else I can help with?"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "aa000000-0000-4000-8000-000000000004",
+      "name": "Support Agent (LLM)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        460,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "guardrail",
+        "operation": "outputGuard",
+        "outputText": "={{ $json.aiReply }}",
+        "onThreat": "REDACT",
+        "sensitivity": "BALANCED",
+        "options": {
+          "ignoredEntities": [],
+          "detectionEngine": "AUTO",
+          "sessionId": "={{ $('Intake').item.json.sessionId }}"
+        }
+      },
+      "id": "aa000000-0000-4000-8000-000000000005",
+      "name": "Guard Output (DLP)",
+      "type": "n8n-nodes-soterai.soterGuard",
+      "typeVersion": 3,
+      "position": [
+        700,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "r1",
+              "name": "replyToCustomer",
+              "type": "string",
+              "value": "={{ $json.outputText }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "aa000000-0000-4000-8000-000000000006",
+      "name": "Send Reply",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        940,
+        140
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e1",
+              "name": "queue",
+              "type": "string",
+              "value": "human-review"
+            },
+            {
+              "id": "e2",
+              "name": "reason",
+              "type": "string",
+              "value": "={{ $json.reason || $json.developerMessage }}"
+            },
+            {
+              "id": "e3",
+              "name": "riskScore",
+              "type": "number",
+              "value": "={{ $json.riskScore }}"
+            },
+            {
+              "id": "e4",
+              "name": "customerMessage",
+              "type": "string",
+              "value": "={{ $('Intake').item.json.customerMessage }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "aa000000-0000-4000-8000-000000000007",
+      "name": "Escalate to Human",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        460,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b1",
+              "name": "queue",
+              "type": "string",
+              "value": "output-blocked"
+            },
+            {
+              "id": "b2",
+              "name": "reason",
+              "type": "string",
+              "value": "={{ $json.reason || $json.developerMessage }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "aa000000-0000-4000-8000-000000000008",
+      "name": "Blocked Output",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        940,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 1. Input guardrail\nEvery inbound customer message is scanned **before** it reaches the LLM. Prompt injection and jailbreaks are blocked; off-topic messages are stopped politely; the customer sees your own branded wording (Customer Replies).\n\n**Flagged → Escalate to Human.**",
+        "height": 180,
+        "width": 520,
+        "color": 4
+      },
+      "id": "bb000000-0000-4000-8000-00000000000a",
+      "name": "Note a",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -280,
+        120
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 2. AI support agent\nReplace this Set node with your LLM / AI Agent node. The guardrails on either side are model-agnostic.",
+        "height": 160,
+        "width": 460,
+        "color": 5
+      },
+      "id": "bb000000-0000-4000-8000-00000000000b",
+      "name": "Note b",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        420,
+        20
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 3. Output guardrail (DLP)\nThe agent's reply is scanned **before the customer sees it**. Secrets and PII the model may have leaked are redacted (On Threat = Redact), so nothing sensitive leaves — the core promise of this node.",
+        "height": 180,
+        "width": 500,
+        "color": 3
+      },
+      "id": "bb000000-0000-4000-8000-00000000000c",
+      "name": "Note c",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        680,
+        20
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Setup\nAttach your **SoterAI** credential to both guard nodes (Cloud/Auto). Leave engine on **Auto** — it uses the cloud detector and falls back to the local engine if the cloud is unreachable. No credential? Switch Detection Engine to **Local** to run fully offline.",
+        "height": 120,
+        "width": 520,
+        "color": 6
+      },
+      "id": "bb000000-0000-4000-8000-00000000000d",
+      "name": "Note d",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -280,
+        520
+      ]
+    }
+  ],
+  "connections": {
+    "Customer Contact": {
+      "main": [
+        [
+          {
+            "node": "Intake",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Intake": {
+      "main": [
+        [
+          {
+            "node": "Guard Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guard Input": {
+      "main": [
+        [
+          {
+            "node": "Support Agent (LLM)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Escalate to Human",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Support Agent (LLM)": {
+      "main": [
+        [
+          {
+            "node": "Guard Output (DLP)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guard Output (DLP)": {
+      "main": [
+        [
+          {
+            "node": "Send Reply",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Blocked Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": false
+  },
+  "pinData": {}
+}

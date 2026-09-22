@@ -1,0 +1,251 @@
+{
+  "name": "SoterAI — Customer Support Helpdesk (guarded)",
+  "meta": {
+    "templateCredsSetupCompleted": false,
+    "description": "A production-shaped support desk: incoming customer message is guarded on the way in (topic-scoped, lenient, custom replies), the assistant answers, and the reply is redacted on the way out so no secret or personal data ever leaves. Every field a support team actually tunes is filled in with a realistic value so the node can be read as documentation. Import, add your SoterAI API credential, and run."
+  },
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "b1d2c3a4-0001-4a10-9c01-000000000001",
+      "name": "Customer Message In",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -120,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "customerMessage",
+              "type": "string",
+              "value": "Hi, where is my order #INV-8842? It has been 5 days. My email is priya@shop.in"
+            },
+            {
+              "id": "a2",
+              "name": "sessionId",
+              "type": "string",
+              "value": "ticket-8842"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1d2c3a4-0002-4a10-9c01-000000000002",
+      "name": "Ticket Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        100,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "guardrail",
+        "operation": "inputGuard",
+        "inputText": "={{ $json.customerMessage }}",
+        "onThreat": "BLOCK",
+        "sensitivity": "LENIENT",
+        "userMessages": {
+          "promptInjection": "I can only help with orders, billing, shipping, and returns. Could you rephrase your question?",
+          "sensitiveData": "For your security, please do not share card numbers or passwords. I can look your order up by order number.",
+          "offTopic": "I'm the store's support assistant, so I can help with orders, billing, shipping, and returns. What can I help you with?",
+          "blocked": "Sorry, I can't process that request. A human agent has been notified."
+        },
+        "options": {
+          "allowedTopics": "orders, billing, shipping, returns, refunds, delivery status, account",
+          "topicHandling": "TRUST_AND_RESTRICT",
+          "systemPromptContext": "You are a customer support assistant for an Indian e-commerce store. You help with orders, billing, shipping, returns and account questions only.",
+          "alwaysAllow": "where is my order?\nhow do I track my package?\nhow do I reset my password?",
+          "ignoredEntities": [
+            "EMAIL",
+            "PHONE"
+          ],
+          "detectionEngine": "AUTO",
+          "sessionId": "={{ $json.sessionId }}",
+          "neverDowngradeToLocal": false
+        }
+      },
+      "id": "b1d2c3a4-0003-4a10-9c01-000000000003",
+      "name": "Guard Input",
+      "type": "n8n-nodes-soterai.soterGuard",
+      "typeVersion": 3,
+      "position": [
+        340,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "r1",
+              "name": "aiReply",
+              "type": "string",
+              "value": "Thanks Priya! Order #INV-8842 shipped today and is out for delivery tomorrow. Tracking: TRK-55231."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1d2c3a4-0004-4a10-9c01-000000000004",
+      "name": "Assistant Answers (stub LLM)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        620,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "guardrail",
+        "operation": "outputGuard",
+        "outputText": "={{ $json.aiReply }}",
+        "onThreat": "REDACT",
+        "sensitivity": "BALANCED",
+        "options": {
+          "ignoredEntities": [],
+          "detectionEngine": "AUTO",
+          "sessionId": "={{ $('Ticket Fields').item.json.sessionId }}"
+        }
+      },
+      "id": "b1d2c3a4-0005-4a10-9c01-000000000005",
+      "name": "Guard Output",
+      "type": "n8n-nodes-soterai.soterGuard",
+      "typeVersion": 3,
+      "position": [
+        860,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "s1",
+              "name": "replyToCustomer",
+              "type": "string",
+              "value": "={{ $json.outputText }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1d2c3a4-0006-4a10-9c01-000000000006",
+      "name": "Send Reply to Customer",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1100,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e1",
+              "name": "escalationReason",
+              "type": "string",
+              "value": "={{ $json.userMessage || $json.reason }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1d2c3a4-0007-4a10-9c01-000000000007",
+      "name": "Escalate to Human",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        620,
+        400
+      ]
+    }
+  ],
+  "connections": {
+    "Customer Message In": {
+      "main": [
+        [
+          {
+            "node": "Ticket Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ticket Fields": {
+      "main": [
+        [
+          {
+            "node": "Guard Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guard Input": {
+      "main": [
+        [
+          {
+            "node": "Assistant Answers (stub LLM)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Escalate to Human",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assistant Answers (stub LLM)": {
+      "main": [
+        [
+          {
+            "node": "Guard Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guard Output": {
+      "main": [
+        [
+          {
+            "node": "Send Reply to Customer",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Reply to Customer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}

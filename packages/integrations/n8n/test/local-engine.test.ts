@@ -246,6 +246,71 @@ test("egress comparison cost stays bounded as source size grows past the limit",
   assert.ok(large < Math.max(120, small * 3), `10x the source cost ${large.toFixed(0)}ms vs ${small.toFixed(0)}ms`);
 });
 
+test("many large sources hit the total budget and the rest are disclosed, not skipped silently", () => {
+  // The per-source bound caps one document; it does nothing about count. Ten
+  // sources each at the per-source limit is 2 MB of synchronous work in a worker
+  // other workflows are waiting on. The total budget stops after enough have been
+  // compared — but a source the engine never looked at cannot be reported clean,
+  // so it lands in partiallyComparedSourceIds and the verdict is REVIEW.
+  // Sources exactly at the per-source bound (not over it), so none is *truncated*
+  // — that isolates the total-budget skip being tested here from the separate
+  // over-length disclosure, which would otherwise list a source in both lists.
+  const unit = "Filler sentence about quarterly logistics. ";
+  const atLimit = unit.repeat(Math.ceil(200000 / unit.length)).slice(0, 200000);
+  assert.equal(atLimit.length, 200000, "fixture must sit exactly on the per-source bound, not over it");
+  const sources = Array.from({ length: 10 }, (_unused, i) => ({ id: `doc-${i}`, content: atLimit }));
+
+  const result = compareEgressLocal("Refunds take three to five business days.", sources);
+
+  assert.equal(result.decision, "REVIEW", "an egress check that skipped sources must not read as clean");
+  // The 1,000,000-char budget fits exactly five 200k sources; the rest are skipped.
+  assert.equal(result.comparedSourceIds.length, 5, "exactly the sources inside the budget are compared");
+  assert.equal(result.partiallyComparedSourceIds.length, 5, "the sources past the budget must be disclosed");
+  assert.equal(
+    result.comparedSourceIds.length + result.partiallyComparedSourceIds.length,
+    10,
+    "every source is accounted for as compared or partially compared",
+  );
+  assert.match(result.reason, /total comparison budget|not compared/i);
+});
+
+test("a verbatim leak in an early source still blocks even when later sources exceed the budget", () => {
+  // The one thing the budget must never do: let a real leak through because it
+  // sat behind other sources. The leak is in the first source, which is compared;
+  // the budget only ever skips *later* sources, so BLOCK still wins.
+  const leak = "The acquisition of Northwind closes on the fourteenth of March at a valuation of four hundred million dollars exactly.";
+  const unit = "Filler sentence about quarterly logistics. ";
+  const filler = unit.repeat(Math.ceil(220000 / unit.length));
+  const sources = [
+    { id: "leaky", content: `Internal deal memo. ${leak} Do not disclose.` },
+    ...Array.from({ length: 10 }, (_unused, i) => ({ id: `bulk-${i}`, content: filler })),
+  ];
+
+  const result = compareEgressLocal(`Here is the update: ${leak}`, sources);
+
+  assert.equal(result.decision, "BLOCK", "a verbatim leak must block regardless of how many sources follow it");
+  assert.ok(
+    result.matchedSources.some((entry) => entry.id === "leaky" && entry.kind === "verbatim"),
+    "the leaking source must be named",
+  );
+});
+
+test("many small sources under the budget are all compared, with no false REVIEW", () => {
+  // The other half of the pair: the budget must not fire on ordinary workflows.
+  // Fifty small protected sources are well under the total budget, so every one
+  // is compared in full and a clean output stays ALLOW.
+  const sources = Array.from({ length: 50 }, (_unused, i) => ({
+    id: `note-${i}`,
+    content: `Team standup note ${i}: shipping is on track and the demo is scheduled.`,
+  }));
+
+  const result = compareEgressLocal("Refunds take three to five business days.", sources);
+
+  assert.equal(result.decision, "ALLOW");
+  assert.deepEqual(result.partiallyComparedSourceIds, [], "no source should be left uncompared under the budget");
+  assert.equal(result.comparedSourceIds.length, 50);
+});
+
 // --- Tool call check --------------------------------------------------------
 
 test("a destructive call to an external destination is not waved through", () => {

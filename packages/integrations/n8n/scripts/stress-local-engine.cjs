@@ -121,9 +121,20 @@ const bigOut = pseudoRandomText(200000, 13);
 const bigSrc = pseudoRandomText(200000, 4242);
 const bigSources = Array.from({ length: 50 }, (_, i) => ({ id: `s${i}`, content: bigSrc }));
 
-time("compareEgressLocal 200k vs 50 x 200k sources (no overlap)", BUDGET_MS * 5, () => {
+// Fifty 200k sources is 10 MB. The per-source cap does nothing about count, so
+// the total comparison budget is what keeps this bounded: only the sources that
+// fit the budget are compared (~5 x 200k), the rest are disclosed as uncompared,
+// and the verdict is REVIEW rather than a clean ALLOW that never looked at them.
+// The budget here is the ordinary per-case one — the whole point of the fix is
+// that source *count* can no longer push this into multi-second territory.
+time("compareEgressLocal 200k vs 50 x 200k sources (budget-bounded)", BUDGET_MS, () => {
   const result = engine.compareEgressLocal(bigOut, bigSources);
-  return result.decision === "ALLOW" ? "" : `THREW expected ALLOW, got ${result.decision}`;
+  if (result.decision !== "REVIEW") return `THREW expected REVIEW (budget reached), got ${result.decision}`;
+  if (result.partiallyComparedSourceIds.length === 0) return "THREW skipped sources were not disclosed";
+  if (result.comparedSourceIds.length + result.partiallyComparedSourceIds.length !== 50) {
+    return "THREW every source must be accounted for as compared or partially compared";
+  }
+  return "";
 });
 
 // Protected source content does not pass through the node's 200,000-character item
@@ -236,6 +247,19 @@ time("checkToolCallLocal 200k argument payload", BUDGET_MS, () => {
 time("redactLocal 200k mixed sensitive payload", BUDGET_MS, () => {
   const unit = "contact a.b@c.io or 415-555-0198, ssn 123-45-6789, card 4111111111111111. ";
   engine.redactLocal(repeatTo(unit, 200000));
+});
+// Ignored identifiers are masked with sentinels and restored afterwards, so the
+// number of sentinels scales with the number of MATCHES, not with the number of
+// entities the author named. Restoring them one at a time was quadratic in the
+// item: this payload with all 20 identifiers ignored measured 5.8 seconds of
+// stalled worker against 28ms for the same text with nothing ignored. A single
+// linear restore pass is what keeps this row inside the budget, so the row has
+// to exercise the worst case — everything ignorable, ignored, over a long item.
+time("redactLocal 200k with all 20 identifiers ignored", BUDGET_MS, () => {
+  const unit = "email a@b.in card 4111 1111 1111 1111 phone 9876543210 licence MH1420160012345 ifsc HDFC0001234 ";
+  engine.redactLocal(repeatTo(unit, 200000), {
+    ignore: engine.IGNORABLE_ENTITIES.map((entity) => entity.key),
+  });
 });
 
 // ---------------------------------------------------------------------------

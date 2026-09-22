@@ -30,11 +30,10 @@
     {
       "parameters": {
         "action": "workflowAudit",
-        "workflowJson": "={{$json.workflowJson}}",
-        "metadata": "{\"workflow\":\"soterai-workflow-security-audit\"}"
+        "workflowJson": "={{$json.workflowJson}}"
       },
       "id": "soterai-workflow-audit",
-      "name": "SoterAI Workflow Audit",
+      "name": "SoterAI Audit Workflow Security",
       "type": "n8n-nodes-soterai.soterGuard",
       "typeVersion": 1,
       "position": [730, 300],
@@ -51,7 +50,7 @@
       "main": [[{ "node": "Sample Workflow JSON", "type": "main", "index": 0 }]]
     },
     "Sample Workflow JSON": {
-      "main": [[{ "node": "SoterAI Workflow Audit", "type": "main", "index": 0 }]]
+      "main": [[{ "node": "SoterAI Audit Workflow Security", "type": "main", "index": 0 }]]
     }
   }
 }

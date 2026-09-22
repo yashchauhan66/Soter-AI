@@ -14,6 +14,7 @@ const propertiesSource = fs.readFileSync(path.join(nodeDir, "shared", "propertie
 const baseSource = fs.readFileSync(path.join(root, "shared", "description.ts"), "utf8");
 const v1Source = fs.readFileSync(path.join(nodeDir, "v1", "SoterGuardV1.ts"), "utf8");
 const v2Source = fs.readFileSync(path.join(nodeDir, "v2", "SoterGuardV2.ts"), "utf8");
+const v3Source = fs.readFileSync(path.join(nodeDir, "v3", "SoterGuardV3.ts"), "utf8");
 
 const requiredKeywords = [
   "n8n-community-node-package",
@@ -64,13 +65,98 @@ assert(runtimeSource.includes('result.operation = "ragScanner"'), "RAG Scanner o
 // output, n8n would route items to a branch those workflows never connected.
 assert(entrySource.includes("extends VersionedNodeType"), "Node must be registered as a VersionedNodeType.");
 assert(/1:\s*new SoterGuardV1\(/.test(entrySource), "Version 1 must stay registered for existing workflows.");
-assert(/2:\s*new SoterGuardV2\(/.test(entrySource), "Version 2 must be registered.");
-assert(baseSource.includes("defaultVersion: 2"), "New nodes must default to version 2.");
+assert(/2:\s*new SoterGuardV2\(/.test(entrySource), "Version 2 must stay registered for existing workflows.");
+assert(/3:\s*new SoterGuardV3\(/.test(entrySource), "Version 3 must be registered.");
+assert(baseSource.includes("defaultVersion: 3"), "New nodes must default to version 3.");
 assert(v1Source.includes("outputs: [NodeConnectionTypes.Main]"), "Version 1 must keep exactly one output.");
 assert(v1Source.includes("version: 1"), "Version 1 class must declare version 1.");
 assert(v2Source.includes("version: 2"), "Version 2 class must declare version 2.");
 assert(v2Source.includes('displayName: "Flagged"'), "Version 2 must expose the Flagged output.");
 assert(v2Source.includes('displayName: "Safe"'), "Version 2 must expose the Safe output.");
+const propertiesV3Source = fs.readFileSync(path.join(nodeDir, "shared", "propertiesV3.ts"), "utf8");
+const layoutV3Source = fs.readFileSync(path.join(nodeDir, "shared", "layoutV3.ts"), "utf8");
+const wrapperSource = fs.readFileSync(path.join(nodeDir, "shared", "parameterLayout.ts"), "utf8");
+
+// Version 3 is a new PANEL over the v2 engine: a Resource -> Operation pair instead
+// of one flat Action dropdown, required fields on the panel, everything else behind
+// a single Options button. Detection, verdicts, routing and the output contract are
+// unchanged, so the Safe/Flagged branching and single-output redactor must survive.
+assert(v3Source.includes("version: 3"), "Version 3 class must declare version 3.");
+assert(/properties:\s*soterGuardPropertiesV3/.test(v3Source), "Version 3 must render the generated Resource/Operation panel.");
+assert(
+  /displayName: "Flagged"/.test(v3Source) && /displayName: "Safe"/.test(v3Source),
+  "Version 3 must expose the Safe and Flagged outputs.",
+);
+assert(/SINGLE_OUTPUT_ACTIONS/.test(v3Source), "Version 3 must keep the single-output collapse for the redactor.");
+
+// The engine is not forked. A wrapper answers execute.ts's parameter reads from
+// wherever the v3 panel stored them, so there is one place every security decision
+// lives.
+assert(/withV3ParameterLayout/.test(v3Source), "Version 3 must run the engine through the parameter-layout wrapper.");
+assert(
+  runtimeSource.includes(`export const PACKAGE_VERSION = "${packageJson.version}"`),
+  "execute.ts must not be forked for v3 — the single runtime keeps one version constant.",
+);
+assert(
+  /node\.parameters\?\.action[\s\S]{0,80}?node\.parameters\?\.operation|node\.parameters\?\.operation/.test(runtimeSource),
+  "The one permitted execute.ts edit: the empty-batch fallback must also read node.parameters.operation.",
+);
+
+// The panel selector is `operation`, not `action` — the node-creator panel only
+// lists operations when the parameter carries that name — gated by a `resource`,
+// both no-data-expression so neither can be turned into an expression.
+assert(/name: "resource"/.test(propertiesV3Source), "Version 3 must present a Resource selector.");
+assert(/name: "operation"/.test(propertiesV3Source), "Version 3 must present an Operation selector.");
+assert(/noDataExpression: true/.test(propertiesV3Source), "Resource and Operation must be no-data-expression selectors.");
+
+// Operation values are byte-identical to the v2 action values — execute.ts switches
+// on them and saved workflows store them — so layoutV3 must offer exactly the twelve.
+for (const value of [
+  "inputGuard",
+  "outputGuard",
+  "universalGuard",
+  "analyzeText",
+  "piiRedactor",
+  "ragScanner",
+  "workflowAudit",
+  "enrollIdentity",
+  "issuePassport",
+  "validatePassport",
+  "toolCall",
+  "revokePassport",
+]) {
+  assert(new RegExp(`value: "${value}"`).test(layoutV3Source), `layoutV3 must offer the "${value}" operation.`);
+}
+
+// The five detection fields and the two v2 option collections fold into one v3
+// Options collection, but the flat v1/v2 fields MUST stay, gated @version [1, 2]. A
+// property's `name` is the storage key in a saved workflow, so dropping or renaming
+// one orphans every saved v1/v2 value — for a security node, protection turning
+// itself off. This asserts both layouts coexist.
+for (const field of ["allowedTopics", "topicHandling", "systemPromptContext", "ignoredEntities", "alwaysAllow"]) {
+  assert(new RegExp(`"${field}"`).test(layoutV3Source), `Detection field "${field}" must be reachable in the v3 layout.`);
+  assert(propertiesSource.includes(`name: "${field}"`), `Detection field "${field}" must still exist flat for v1/v2.`);
+}
+assert(
+  /show:\s*\{\s*"@version":\s*\[1,\s*2\]/.test(propertiesSource),
+  "The flat detection fields must stay gated to @version [1, 2] so v1/v2 workflows keep reading them.",
+);
+
+// The constraint-8 trap: an option nobody set must resolve to the node's real
+// default (Detection Engine AUTO), not execute.ts's call-site fallback (CLOUD),
+// or a guard nobody reconfigured silently loses its local fallback.
+assert(
+  /V3_OPTION_DEFAULTS/.test(propertiesV3Source),
+  "propertiesV3 must derive V3_OPTION_DEFAULTS from the generated Options children.",
+);
+assert(
+  /V3_OPTION_DEFAULTS/.test(wrapperSource),
+  "The wrapper must resolve an unset option to the node's real default, not the caller's fallback.",
+);
+assert(
+  /"advancedOptions"|"advancedDetection"/.test(wrapperSource),
+  "The wrapper must fold the v2 option collections into the single v3 Options collection.",
+);
 
 // Fail-closed routing. An item whose check never completed has not been cleared
 // by anything, so continueOnFail must send it to Flagged, not Safe.

@@ -1,5 +1,7 @@
 import type { INodeProperties } from "n8n-workflow";
 
+import { IGNORABLE_ENTITIES } from "./localEngine";
+
 /**
  * Shared property list for every SoterAI node version.
  *
@@ -13,6 +15,11 @@ import type { INodeProperties } from "n8n-workflow";
  *   [1]    -> only the original single-output node
  *   [2]    -> only the branching node
  *   absent -> both
+ *
+ * Every `name` and every option `value` here is a storage key: it appears in the
+ * JSON of workflows people have already saved. A `displayName` is only ever read
+ * by a human, so it can be reworded at will. That asymmetry is why the tidy-up
+ * below renames labels freely and does not touch a single value.
  */
 export const soterGuardProperties: INodeProperties[] = [
   {
@@ -20,78 +27,84 @@ export const soterGuardProperties: INodeProperties[] = [
     name: "action",
     type: "options",
     noDataExpression: true,
+    // Order is deliberate, not alphabetical: the everyday guard actions come
+    // first (Guard Input is where nearly every workflow starts), and the advanced
+    // agent-access actions sit at the bottom. n8n's linter wants options sorted
+    // alphabetically, but task order is the better UX here, so that one rule is
+    // turned off for this list on purpose.
+    // eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
     options: [
       {
-        name: "Agent Passport: 1. Enroll Identity",
-        value: "enrollIdentity",
-        description: "Create a reusable agent identity with a least-privilege default policy",
-        action: "Enroll an agent identity",
-      },
-      {
-        name: "Agent Passport: 2. Issue Passport",
-        value: "issuePassport",
-        description: "Issue a short-lived passport token for an enrolled identity and session",
-        action: "Issue an agent passport",
-      },
-      {
-        name: "Agent Passport: 3. Validate Passport",
-        value: "validatePassport",
-        description: "Validate the session/token and optionally test authorization for a tool action",
-        action: "Validate an agent passport",
-      },
-      {
-        name: "Agent Passport: 4. Check Tool Call",
-        value: "toolCall",
-        description: "Authorize and inspect one planned tool call before it executes",
-        action: "Check an agent tool call",
-      },
-      {
-        name: "Agent Passport: 5. Revoke Passport",
-        value: "revokePassport",
-        description: "Immediately revoke a passport when the task ends or compromise is suspected",
-        action: "Revoke an agent passport",
-      },
-      {
-        name: "Analyze Text (Report Only)",
-        value: "analyzeText",
-        description: "Report risk for any text. Does not block — it sorts items into Safe and Flagged so you can decide.",
-        action: "Analyze text for AI security risks",
-      },
-      {
-        name: "Audit N8N Workflow Security (Report Only)",
-        value: "workflowAudit",
-        description: "Score an exported n8n workflow for AI, tool, webhook, code, RAG, and data-leak risks. Runs locally and sends nothing.",
-        action: "Audit an n8n workflow for AI security risks",
-      },
-      {
-        name: "Get RAG Risk Summary (Report Only)",
-        value: "ragScanner",
-        description: "Scan a document or chunk before adding it to a vector database. Untrusted documents leave through Flagged.",
-        action: "Scan RAG document for threats",
-      },
-      {
-        name: "Guard Input (Start Here)",
+        name: "Guard Input",
         value: "inputGuard",
-        description: "Check a user message before it reaches the LLM, and block or redact it. The usual first step.",
+        description: "Check a user's message before it reaches the AI, and block or clean it. Start here.",
         action: "Check user input for threats",
       },
       {
         name: "Guard Output",
         value: "outputGuard",
-        description: "Check an AI response before it is sent to the user, and block or redact it",
+        description: 'Check the AI\'s reply before the user sees it, and block or clean it',
         action: "Check AI output for threats",
       },
       {
-        name: "Redact Secrets or PII (Report Only)",
+        name: "Universal AI Firewall",
+        value: "universalGuard",
+        description: "All-in-one guard for prompt, files, tools, memory, output, and data leaks. Most complete.",
+        action: "Protect an AI workflow end to end",
+      },
+      {
+        name: "Analyze Text",
+        value: "analyzeText",
+        description: 'Score any text for risk without blocking — Safe and risky items are split so you decide',
+        action: "Analyze text for AI security risks",
+      },
+      {
+        name: "Redact PII and Secrets",
         value: "piiRedactor",
-        description: "Return a redacted copy of any text. Always continues — use the redacted output downstream.",
+        description: "Get a cleaned copy of text with personal data and secrets removed. Use it downstream.",
         action: "Redact PII from text",
       },
       {
-        name: "Universal AI Firewall (Advanced)",
-        value: "universalGuard",
-        description: "One guard covering prompt, RAG, tools, memory, output, and data leakage. Most powerful, most setup.",
-        action: "Protect an AI workflow end to end",
+        name: "Scan RAG Document",
+        value: "ragScanner",
+        description: "Check a document before adding it to a knowledge base. Poisoned files are flagged.",
+        action: "Scan RAG document for threats",
+      },
+      {
+        name: "Audit Workflow Security",
+        value: "workflowAudit",
+        description: "Score a workflow's AI, tool, webhook, code, and data-leak risks. Runs locally, sends nothing.",
+        action: "Audit an n8n workflow for AI security risks",
+      },
+      {
+        name: "Register Agent",
+        value: "enrollIdentity",
+        description: 'Give an AI agent a reusable identity with a safe, least-privilege starting policy',
+        action: "Register an agent identity",
+      },
+      {
+        name: "Issue Access Pass",
+        value: "issuePassport",
+        description: 'Give a registered agent a short-lived access pass for one session',
+        action: "Issue an agent access pass",
+      },
+      {
+        name: "Validate Access",
+        value: "validatePassport",
+        description: 'Check that an agent\'s session pass is still valid, and whether an action is allowed',
+        action: "Validate an agent access pass",
+      },
+      {
+        name: "Check Tool Call",
+        value: "toolCall",
+        description: 'Check one tool call an agent wants to make before it runs',
+        action: "Check an agent tool call",
+      },
+      {
+        name: "Revoke Access",
+        value: "revokePassport",
+        description: 'Cancel an agent\'s access pass when the task ends or something looks wrong',
+        action: "Revoke an agent access pass",
       },
     ],
     // Guard Input is the default rather than the Universal Firewall: it is the
@@ -99,6 +112,9 @@ export const soterGuardProperties: INodeProperties[] = [
     // and it is where nearly every real workflow starts. Defaulting to a
     // report-only action would be worse — a new user would wire up the node,
     // see it "working", and never learn that nothing was ever blocked.
+    //
+    // It is also why the label no longer says "(Start Here)": it is already
+    // selected when the node is dropped on the canvas.
     default: "inputGuard",
   },
 
@@ -118,26 +134,29 @@ export const soterGuardProperties: INodeProperties[] = [
     noDataExpression: true,
     options: [
       {
-        name: "Auto (Cloud, Local Fallback)",
+        name: "Auto — Cloud, Local Fallback (Recommended)",
         value: "AUTO",
-        description: "Use the cloud, and fall back to the local engine only when the cloud cannot be reached. No item is left unchecked.",
+        description: "Use the cloud, and fall back to the local engine only when the cloud cannot be reached. No item is left unchecked. The right default for almost everyone.",
       },
       {
-        name: "Cloud (Recommended)",
+        name: "Cloud Only",
         value: "CLOUD",
-        description: "Full detection through the SoterAI API: ML tier, cross-turn tracking, reputation, and incident history",
+        description: "Full detection through the SoterAI API — ML tier, cross-turn tracking, reputation, incident history — and fail the item on an outage rather than fall back. Strongest, but needs a reachable API.",
       },
       {
-        name: "Local (No API Key, No Network)",
+        name: "Local Only (No API Key, No Network)",
         value: "LOCAL",
-        description: "Run the bundled rule engine inside n8n. Nothing leaves your instance and no credential is needed.",
+        description: "Run the bundled rule engine inside n8n. Nothing leaves your instance and no credential is needed. Pattern-based, so weaker than Cloud.",
       },
     ],
     default: "AUTO",
     // The audit action is local in every mode, so offering the choice there
     // would imply a difference that does not exist.
     displayOptions: { hide: { action: ["workflowAudit", "enrollIdentity", "issuePassport", "validatePassport", "revokePassport"] } },
-    description: "Where detection runs. Cloud is strongest; Local trades accuracy for working with no API key and no network egress.",
+    // "Recommended" now sits on the same option as the default, rather than on
+    // Cloud while the default was Auto — a reader should never see the box
+    // pre-set to one thing and told to pick another.
+    description: "Where detection runs. Auto (cloud with local fallback) suits almost everyone.",
   },
 
   {
@@ -184,10 +203,10 @@ export const soterGuardProperties: INodeProperties[] = [
     required: true,
     placeholder: "={{ $json.agentIdentityID }}",
     displayOptions: { show: { action: ["issuePassport"] } },
-    description: "Identity ID returned by Enroll Agent Identity",
+    description: "Identity ID returned by Register Agent",
   },
   {
-    displayName: "Passport TTL (Seconds)",
+    displayName: "Access Pass Lifetime (Seconds)",
     name: "passportTtlSeconds",
     type: "number",
     typeOptions: { minValue: 60, maxValue: 86400 },
@@ -207,10 +226,10 @@ export const soterGuardProperties: INodeProperties[] = [
     ],
     default: "READ_ONLY",
     displayOptions: { show: { action: ["enrollIdentity", "issuePassport"] } },
-    description: "Least-privilege starting policy. Passport Policy JSON overrides keys from this preset.",
+    description: "Least-privilege starting policy. Access Policy JSON overrides keys from this preset.",
   },
   {
-    displayName: "Passport Policy (JSON)",
+    displayName: "Access Policy (JSON)",
     name: "passportPolicy",
     type: "json",
     typeOptions: { rows: 5 },
@@ -219,14 +238,30 @@ export const soterGuardProperties: INodeProperties[] = [
     displayOptions: { show: { action: ["enrollIdentity", "issuePassport"] } },
     description: "Optional policy keys: allowedTools, blockedTools, approvalRequiredTools, allowedDomains, blockedDomains, dataScopes, memoryScopes",
   },
+  // Tool Name and Tool Action are split by action, not shared, so the required
+  // star tells the truth. Check Tool Call rejects an empty name or action
+  // (execute.ts throws "Tool Name and Tool Action are required"), so it carries
+  // the star; Validate Access sends them only when present, so there they are
+  // genuinely optional and must not be starred. Same storage key either way, so
+  // nothing saved is affected.
   {
     displayName: "Tool Name",
     name: "toolName",
     type: "string",
     default: "",
     placeholder: "gmail.send",
-    displayOptions: { show: { action: ["toolCall", "validatePassport"] } },
+    required: true,
+    displayOptions: { show: { action: ["toolCall"] } },
     description: "Tool or function the agent plans to call",
+  },
+  {
+    displayName: "Tool Name",
+    name: "toolName",
+    type: "string",
+    default: "",
+    placeholder: "gmail.send",
+    displayOptions: { show: { action: ["validatePassport"] } },
+    description: "Optional tool or function to check the pass against",
   },
   {
     displayName: "Tool Action",
@@ -234,8 +269,18 @@ export const soterGuardProperties: INodeProperties[] = [
     type: "string",
     default: "",
     placeholder: "send_email",
-    displayOptions: { show: { action: ["toolCall", "validatePassport"] } },
+    required: true,
+    displayOptions: { show: { action: ["toolCall"] } },
     description: "Action the tool will perform",
+  },
+  {
+    displayName: "Tool Action",
+    name: "toolAction",
+    type: "string",
+    default: "",
+    placeholder: "send_email",
+    displayOptions: { show: { action: ["validatePassport"] } },
+    description: "Optional action to check the pass against",
   },
   {
     displayName: "Tool Content",
@@ -270,13 +315,13 @@ export const soterGuardProperties: INodeProperties[] = [
     description: "How far the planned call reaches",
   },
   {
-    displayName: "Passport ID",
+    displayName: "Access Pass ID",
     name: "passportId",
     type: "string",
     default: "",
     placeholder: "={{ $json.passportID }}",
     displayOptions: { show: { action: ["revokePassport"] } },
-    description: "Passport ID to revoke. Optional when Session ID is provided.",
+    description: "Access pass ID to revoke. Optional when Session ID is provided.",
   },
   {
     displayName: "Revocation Reason",
@@ -288,36 +333,21 @@ export const soterGuardProperties: INodeProperties[] = [
     description: "Audit-safe reason for revocation",
   },
   {
-    displayName: "Passport Token",
+    displayName: "Access Pass Token",
     name: "passportToken",
     type: "string",
     typeOptions: { password: true },
     default: "",
     placeholder: "={{ $json.passportToken }}",
     displayOptions: { show: { action: ["toolCall", "universalGuard", "validatePassport"] } },
-    description: "Raw short-lived token returned by Issue Agent Passport. Use an expression; do not hard-code it in workflow JSON.",
+    description: "Raw short-lived token returned by Issue Access Pass. Use an expression; do not hard-code it in workflow JSON.",
   },
-  {
-    displayName:
-      "Local mode runs the bundled rule engine in-process: <b>no API key, no network call, nothing leaves this n8n instance</b>. It is pattern-based, so it is weaker than Cloud — no ML tier, no cross-turn tracking, no reputation, and no incident history. Every item reports <code>{{ $json.engineDetail.limitations }}</code> so you can see exactly what was not checked.",
-    name: "localEngineNotice",
-    type: "notice",
-    default: "",
-    displayOptions: { show: { detectionEngine: ["LOCAL"] }, hide: { action: ["workflowAudit", "enrollIdentity", "issuePassport", "validatePassport", "revokePassport"] } },
-  },
-  {
-    displayName:
-      "Auto uses the cloud and only falls back when the cloud could not be <i>asked</i> — a network failure, a timeout, a 5xx, or a missing credential. A rejected key or a refused request is never silently downgraded. Items answered locally are marked <code>engineDegraded: true</code>, so a fallback is visible in the run data instead of looking like a clean pass.",
-    name: "autoEngineNotice",
-    type: "notice",
-    default: "",
-    displayOptions: { show: { detectionEngine: ["AUTO"] }, hide: { action: ["workflowAudit", "enrollIdentity", "issuePassport", "validatePassport", "revokePassport"] } },
-  },
-
   // ---------------------------------------------------------------------
   // Per-action notices. These are the honesty layer of the UI: four of the
-  // seven actions never block anything, and a user who assumes otherwise is
-  // unprotected while believing they are protected.
+  // actions never block anything, and a user who assumes otherwise is
+  // unprotected while believing they are protected. That claim is worth a
+  // notice; anything that is merely useful was moved to a field `hint`, which
+  // is why there are fewer of these than there used to be.
   //
   // Version 1 has one output, so its notices have to teach the IF-node
   // workaround. Version 2 routes items itself, so its notices describe the
@@ -325,7 +355,7 @@ export const soterGuardProperties: INodeProperties[] = [
   // ---------------------------------------------------------------------
   {
     displayName:
-      "This action only reports risk — it never blocks. To act on the result, add an IF node after this one and branch on <code>{{ $json.allowed }}</code>. To block automatically instead, use <b>Guard Input</b> or <b>Guard Output</b>.",
+      "Reports risk but never blocks. Add an IF node after this one and branch on <code>{{ $json.allowed }}</code>, or use <b>Guard Input</b> / <b>Guard Output</b> to block automatically.",
     name: "reportOnlyNotice",
     type: "notice",
     default: "",
@@ -333,7 +363,7 @@ export const soterGuardProperties: INodeProperties[] = [
   },
   {
     displayName:
-      "This action reports risk without blocking, but it still routes: anything it flags leaves through the <b>Flagged</b> output. Connect that output to stop the item, or leave it unconnected to drop it. No IF node needed.",
+      "Reports risk without blocking, but it still routes: anything it flags leaves through <b>Flagged</b>. Connect that output to stop the item, or leave it unconnected to drop it.",
     name: "reportOnlyNoticeV2",
     type: "notice",
     default: "",
@@ -341,15 +371,7 @@ export const soterGuardProperties: INodeProperties[] = [
   },
   {
     displayName:
-      "This returns a redacted copy of the text and always continues. Use <code>{{ $json.outputText }}</code> downstream — the original text is not modified in place.",
-    name: "redactNotice",
-    type: "notice",
-    default: "",
-    displayOptions: { show: { action: ["piiRedactor"] } },
-  },
-  {
-    displayName:
-      "Runs entirely inside n8n. The workflow JSON is analysed locally and never sent to SoterAI, so this works without network access. It is a static review — it never executes the workflow or resolves a credential.",
+      "The workflow JSON is analysed in-process and never sent to SoterAI. Static review only — it never executes the workflow or resolves a credential.",
     name: "auditNotice",
     type: "notice",
     default: "",
@@ -357,23 +379,7 @@ export const soterGuardProperties: INodeProperties[] = [
   },
   {
     displayName:
-      "Blocking happens here: set <b>On Threat</b> below. Check <code>{{ $json.blocked }}</code> downstream, and use <code>{{ $json.outputText }}</code> as the safe text to pass on.",
-    name: "enforcingNotice",
-    type: "notice",
-    default: "",
-    displayOptions: { show: { action: ["inputGuard", "outputGuard", "universalGuard"], "@version": [1] } },
-  },
-  {
-    displayName:
-      "Blocked items leave through the <b>Flagged</b> output; everything else leaves through <b>Safe</b>. Wire <b>Safe</b> into the rest of your workflow and use <code>{{ $json.outputText }}</code> as the text to pass on. Choosing Redact, Warn, or Continue under <b>On Threat</b> keeps those items on <b>Safe</b> — that is what those settings are for.",
-    name: "enforcingNoticeV2",
-    type: "notice",
-    default: "",
-    displayOptions: { show: { action: ["inputGuard", "outputGuard", "universalGuard"], "@version": [2] } },
-  },
-  {
-    displayName:
-      "<b>Step 1 of 5:</b> Create the identity once. Use a least-privilege preset, then pass <code>{{ $json.agentIdentityId }}</code> to <b>Issue Passport</b>.",
+      "<b>Step 1 of 5:</b> Register the agent once, then pass <code>{{ $json.agentIdentityId }}</code> to <b>Issue Access Pass</b>.",
     name: "enrollIdentityNotice",
     type: "notice",
     default: "",
@@ -381,7 +387,7 @@ export const soterGuardProperties: INodeProperties[] = [
   },
   {
     displayName:
-      "<b>Step 2 of 5:</b> Issue a short-lived token for one session. Pass <code>sessionId</code> and <code>passportToken</code> by expression; never paste the token into workflow JSON.",
+      "<b>Step 2 of 5:</b> Issue a short-lived access pass for one session. Pass <code>sessionId</code> and <code>passportToken</code> by expression; never paste the token into workflow JSON.",
     name: "issuePassportNotice",
     type: "notice",
     default: "",
@@ -389,7 +395,7 @@ export const soterGuardProperties: INodeProperties[] = [
   },
   {
     displayName:
-      "<b>Step 3 of 5:</b> Validate the session and token. Tool Name and Tool Action are optional here—add them to test authorization for a specific planned call.",
+      "<b>Step 3 of 5:</b> Validate the session and token. Tool Name and Tool Action are optional — add them to test authorization for a specific planned call.",
     name: "validatePassportNotice",
     type: "notice",
     default: "",
@@ -405,7 +411,7 @@ export const soterGuardProperties: INodeProperties[] = [
   },
   {
     displayName:
-      "<b>Step 5 of 5:</b> Revoke by Session ID or Passport ID when the task ends. Successful revocation returns <code>PASSPORT_REVOKED</code> on <b>Safe</b>.",
+      "<b>Step 5 of 5:</b> Revoke by Session ID or Access Pass ID when the task ends. Successful revocation returns <code>PASSPORT_REVOKED</code> on <b>Safe</b>.",
     name: "revokePassportNotice",
     type: "notice",
     default: "",
@@ -477,8 +483,7 @@ export const soterGuardProperties: INodeProperties[] = [
     default: "MAXIMUM",
     hint: "Sets HOW MUCH gets flagged. 'On Threat' below sets WHAT HAPPENS once something is flagged",
     displayOptions: { show: { action: ["universalGuard"] } },
-    description:
-      "How sensitive detection should be. This controls how many things are treated as threats, not what the node does about them — that is 'On Threat'.",
+    description: "How strict detection is. Maximum suits production and public chatbots.",
   },
 
   // PII Redactor fields
@@ -490,7 +495,9 @@ export const soterGuardProperties: INodeProperties[] = [
     default: "",
     required: true,
     placeholder: "={{ $json.text }}",
-    hint: "Any text to strip secrets and personal data from",
+    // Replaces what used to be a separate notice above this field. The same
+    // sentence, attached to the input it is about, is one fewer text wall.
+    hint: "Always continues. The redacted copy arrives as {{ $json.outputText }} — this text is never modified in place",
     displayOptions: { show: { action: ["piiRedactor"] } },
     description: "The text to scan and redact PII from",
   },
@@ -562,7 +569,11 @@ export const soterGuardProperties: INodeProperties[] = [
       { name: "Warn", value: "WARN", description: "Continue but flag the threat in output" },
     ],
     default: "BLOCK",
-    hint: "Sets WHAT HAPPENS once something is flagged. The sensitivity setting decides how much gets flagged",
+    // Names the field that sets the customer-facing wording. Without this
+    // pointer people look for a "Custom Block Message" field next to On Threat,
+    // do not find one, and conclude the node cannot do it — the reply override
+    // has been in Customer Replies all along.
+    hint: "Sets WHAT HAPPENS once something is flagged. To change the wording a customer sees, use Customer Replies below",
     displayOptions: { show: { action: ["inputGuard", "outputGuard", "universalGuard"] } },
     description: "What this node does locally once SoterAI flags a threat",
   },
@@ -591,28 +602,40 @@ export const soterGuardProperties: INodeProperties[] = [
     default: "BALANCED",
     hint: "Sets HOW MUCH gets flagged. 'On Threat' above sets WHAT HAPPENS to it",
     displayOptions: { show: { action: ["inputGuard", "outputGuard"] } },
-    description:
-      "How much risk is enough to act on. Detection itself never changes — every finding is still reported at the same severity. Lenient never relaxes live secrets or clear injection and jailbreak attempts.",
+    description: "How much risk is enough to act on. Live secrets and clear attacks are always acted on.",
   },
 
   // ---------------------------------------------------------------------
-  // Optional / advanced. Kept as top-level fields rather than folded into an
-  // "Options" collection on purpose: moving a published parameter into a
-  // collection silently orphans the values already saved in users' live
-  // workflows, and for a security node that means protection quietly turning
-  // itself off. They are gated by displayOptions instead, so each action only
-  // shows the fields it actually reads.
+  // Optional / advanced detection scope, versions 1 and 2.
+  //
+  // On those versions these are top-level fields, and they must stay that way:
+  // a field's `name` is the storage key in saved workflow JSON, so moving a
+  // published parameter into a collection silently orphans the values already
+  // saved in users' live workflows — for a security node, protection quietly
+  // turning itself off. They are gated by displayOptions instead, so each action
+  // only shows the fields it actually reads.
+  //
+  // Version 3 presents the identical five fields inside an "Advanced Detection"
+  // collection (defined further below, gated to @version 3) so a guard opens
+  // showing only its common fields. execute.ts reads them from the collection
+  // when the node is v3 and from these top-level fields otherwise, so no saved
+  // v1/v2 workflow is touched. The `@version` gate here is what keeps the two
+  // layouts from both rendering on the same node.
   // ---------------------------------------------------------------------
   {
-    displayName: "Allowed Topics",
+    // Renamed from "Allowed Topics". The old label read like a general
+    // allow-list, so authors reached for it to keep an identifier — adding
+    // "bank account no" here and expecting account numbers to stop being
+    // redacted. It has only ever meant subjects. "Semantic" says which kind of
+    // allow-list this is, and the hint points at the other one.
+    displayName: "Allowed Semantic Topics",
     name: "allowedTopics",
     type: "string",
     default: "",
     placeholder: "billing, shipping, returns, order status",
-    hint: "Optional. Comma-separated. Leave empty and Topic Handling below does nothing at all",
-    displayOptions: { show: { action: ["inputGuard", "universalGuard"] } },
-    description:
-      "Subjects this assistant is meant to handle. An empty list means no topical scope is defined, not that everything is off-topic.",
+    hint: "Subjects, not data types. To stop an identifier being redacted, use Ignored Identifiers below",
+    displayOptions: { show: { "@version": [1, 2], action: ["inputGuard", "universalGuard"] } },
+    description: "Subjects this assistant handles, comma-separated. Leave empty for no topic scope.",
   },
   {
     displayName: "Topic Handling",
@@ -642,10 +665,12 @@ export const soterGuardProperties: INodeProperties[] = [
       },
     ],
     default: "TRUST",
-    hint: "Does nothing while Allowed Topics is empty. Off-topic is a scope decision, not a threat verdict",
-    displayOptions: { show: { action: ["inputGuard", "universalGuard"] } },
-    description:
-      "What your topics are allowed to do to the verdict. Trust withdraws only ambiguous rules — the ones that mistake 'what is your return policy' for a rule-extraction attempt — and never withdraws an unambiguous attack pattern. Anything withdrawn is listed in suppressedFindings on the output.",
+    // Carries what used to be a whole notice below this block: Local names each
+    // withdrawn rule in suppressedFindings, Cloud scores the topics server-side
+    // and returns no per-rule list.
+    hint: "Does nothing while Allowed Semantic Topics is empty. Anything withdrawn is listed under suppressedFindings",
+    displayOptions: { show: { "@version": [1, 2], action: ["inputGuard", "universalGuard"] } },
+    description: "What your allowed topics do to the verdict. Never withdraws a clear attack pattern.",
   },
   {
     displayName: "System Prompt Context",
@@ -654,18 +679,33 @@ export const soterGuardProperties: INodeProperties[] = [
     typeOptions: { rows: 2 },
     default: "",
     placeholder: "You are a billing support assistant for an Indian e-commerce store",
-    hint: "Optional. Use it when Allowed Topics is not specific enough — its words widen the topic vocabulary",
-    displayOptions: { show: { action: ["inputGuard", "universalGuard"] } },
-    description:
-      "Your assistant's system prompt or role description, used to judge whether a message is in scope",
+    hint: "Optional. Use it when the topic list is not specific enough — its words widen the topic vocabulary",
+    displayOptions: { show: { "@version": [1, 2], action: ["inputGuard", "universalGuard"] } },
+    description: 'Your assistant\'s role, used to judge whether a message is in scope',
   },
+
+  // ---------------------------------------------------------------------
+  // The redaction allow-list. Separate from the topic list because they answer
+  // different questions: topics decide whether a message is in scope, this
+  // decides whether a particular kind of identifier is treated as sensitive at
+  // all. A bank helpdesk that cannot see an account number cannot look up an
+  // account, and that is a legitimate configuration — but only for identifiers,
+  // never for live credentials, which is why the list of choices is fixed and
+  // API keys, private keys, and tokens are not on it.
+  //
+  // Options come from the engine's own catalogue, so the dropdown and what the
+  // redactor honours cannot drift apart. Version-3 copy lives in the collection
+  // below; see the note on Allowed Semantic Topics above.
+  // ---------------------------------------------------------------------
   {
-    displayName:
-      "Topic handling is applied by the <b>Local</b> engine, which withdraws named rules and reports each one under <code>suppressedFindings</code>. In <b>Cloud</b> mode your topics are sent to the API and scored there, so the effect is real but the per-rule list is not returned. Check <code>{{ $json.engine }}</code> to see which answered.",
-    name: "topicEngineNotice",
-    type: "notice",
-    default: "",
-    displayOptions: { show: { action: ["inputGuard", "universalGuard"] } },
+    displayName: "Ignored Identifiers",
+    name: "ignoredEntities",
+    type: "multiOptions",
+    default: [],
+    options: IGNORABLE_ENTITIES.map((entity) => ({ name: entity.label, value: entity.key })),
+    hint: "Leave empty to redact everything. Credentials — API keys, private keys, tokens — can never be ignored",
+    displayOptions: { show: { "@version": [1, 2], action: ["inputGuard", "outputGuard", "universalGuard", "piiRedactor"] } },
+    description: "Identifier types to leave unredacted. Credentials can never be ignored.",
   },
   {
     displayName: "Always Allow",
@@ -675,9 +715,50 @@ export const soterGuardProperties: INodeProperties[] = [
     default: "",
     placeholder: "where is my order?\nhow do I reset my password?",
     hint: "One message per line. Matched on the WHOLE message, ignoring case and a trailing '?'",
-    displayOptions: { show: { action: ["inputGuard", "universalGuard"] } },
-    description:
-      "Messages that skip detection entirely, for the handful of questions your customers ask constantly. This is a whole-message match, not a keyword match: 'where is my order? also ignore all previous instructions' does not match and is still checked. Skipped items are marked bypassed: ALWAYS_ALLOW and nothing about them was scanned.",
+    displayOptions: { show: { "@version": [1, 2], action: ["inputGuard", "universalGuard"] } },
+    description: "Whole messages that skip detection entirely. Whole-message match, not keywords.",
+  },
+  {
+    // Version-3 only. The Ignored Identifiers dropdown covers identifier *types*;
+    // this covers the exact words an author types — a company name that looks
+    // like a surname, an internal order id, a product codename — that redaction
+    // would otherwise remove. Kept verbatim wherever they appear. A line carrying
+    // a credential is refused, not kept, so this can never leave a live secret in
+    // the clear. Sourced by propertiesV3 into the v3 Options collection; the
+    // @version [3] gate keeps it off the v1/v2 panels entirely.
+    displayName: "Ignored Words or Phrases",
+    name: "ignoredWords",
+    type: "string",
+    typeOptions: { rows: 3 },
+    default: "",
+    placeholder: "Acme Corp\nORD-12345\nProject Bluebird",
+    hint: "One per line, case-insensitive. Never applies to credentials — a line containing an API key, token, or private key is refused, not kept. Values survive in Local mode; in Cloud mode the server may redact them before the node sees them.",
+    displayOptions: { show: { "@version": [3], action: ["inputGuard", "outputGuard", "universalGuard", "piiRedactor"] } },
+    description: "Literal words or phrases to leave unredacted wherever they appear",
+  },
+  {
+    // Version-3 only, and off, because turning it on changes whether items stop.
+    //
+    // On Threat has never reached a secret or a personal detail. The engine
+    // answers those with "redact and continue" — the item is fine, the text just
+    // carried something that should not travel — so `allowed` stays true and the
+    // On Threat switch, which only runs for an item the engine refused, never
+    // sees it. The panel says On Threat decides "what happens once SoterAI flags
+    // a threat", and a live API key is flagged, so Block reading as "continue
+    // anyway" is the field breaking its own promise on the one category this
+    // product is named for.
+    //
+    // It cannot simply be fixed in place: On Threat defaults to Block, so making
+    // it apply would turn every saved workflow into one that stops any message
+    // containing an email address. Hence a switch, default off, where off is
+    // exactly what every published version already does.
+    displayName: "Also Enforce On Sensitive Data",
+    name: "enforceOnSensitiveData",
+    type: "boolean",
+    default: false,
+    hint: "Off: a secret or personal detail is always removed and the item continues, whatever On Threat says. On: On Threat decides — Block stops the item and routes it to Flagged. The cleaned text is used either way; this never passes an unredacted secret through.",
+    displayOptions: { show: { "@version": [3], action: ["inputGuard", "outputGuard", "universalGuard"] } },
+    description: "Whether On Threat also acts on an item whose only finding is a secret or personal data",
   },
 
   // ---------------------------------------------------------------------
@@ -693,8 +774,7 @@ export const soterGuardProperties: INodeProperties[] = [
     placeholder: "Add Reply",
     default: {},
     displayOptions: { show: { action: ["inputGuard", "outputGuard", "universalGuard", "analyzeText"] } },
-    description:
-      "Replaces the built-in English wording in userMessage. Each field accepts an expression, so a reply can be written in your customer's language. reason and developerMessage stay factual and in English for your logs.",
+    description: 'Your own wording for the customer-facing message, replacing the built-in English',
     options: [
       {
         displayName: "Allowed Message",
@@ -710,7 +790,8 @@ export const soterGuardProperties: INodeProperties[] = [
         type: "string",
         default: "",
         placeholder: "Sorry, I can't help with that one. Please rephrase it and try again.",
-        description: "Fallback for any stopped message with no more specific reply set below",
+        description:
+          "The custom block message. Used for any stopped message with no more specific reply set below, so on its own it replaces every block message the node produces.",
       },
       {
         displayName: "Off-Topic Message",
@@ -993,14 +1074,30 @@ export const soterGuardProperties: INodeProperties[] = [
   // multi-turn attack detection — an attack split across several innocuous-looking
   // messages — so it should not be something a user only discovers by reading a
   // hint on a JSON field.
+  // Session ID is split so its required star is honest. Validate Access refuses
+  // to run without it (execute.ts throws "Session ID is required to validate a
+  // passport"), so that one variant is required and starred. Everywhere else the
+  // node sends it only when present — it is optional but recommended for guards —
+  // so that variant carries no star. Same storage key, and the two are mutually
+  // exclusive by action, so exactly one ever renders.
   {
     displayName: "Session ID",
     name: "sessionId",
     type: "string",
     default: "",
     placeholder: "={{ $json.sessionId }}",
-    hint: "Required for Issue/Validate Passport and Check Tool Call; optional but recommended for guards. Revoke accepts this or Passport ID.",
-    displayOptions: { show: { "@version": [2] }, hide: { action: ["workflowAudit", "enrollIdentity"] } },
+    required: true,
+    displayOptions: { show: { "@version": [2, 3], action: ["validatePassport"] } },
+    description: "Stable per-conversation ID the pass was issued against. Validation is refused without it.",
+  },
+  {
+    displayName: "Session ID",
+    name: "sessionId",
+    type: "string",
+    default: "",
+    placeholder: "={{ $json.sessionId }}",
+    hint: "Optional but recommended for guards, so a multi-turn attack cannot pass one message at a time. Revoke accepts this or the Access Pass ID.",
+    displayOptions: { show: { "@version": [2, 3] }, hide: { action: ["workflowAudit", "enrollIdentity", "validatePassport"] } },
     description:
       "Stable per-conversation ID. Without it each message is judged alone, so a slow multi-turn attack can pass one message at a time.",
   },
@@ -1023,8 +1120,120 @@ export const soterGuardProperties: INodeProperties[] = [
     default: "",
     placeholder: '{ "userId": "{{ $json.userId }}", "tenant": "acme" }',
     hint: "Optional. Extra fields for your own audit logs. Session ID has its own field above",
-    displayOptions: { show: { "@version": [2] }, hide: { action: ["workflowAudit"] } },
+    displayOptions: { show: { "@version": [2, 3] }, hide: { action: ["workflowAudit"] } },
     description: "JSON object attached to the request for audit logging. Secrets and long strings are redacted before sending.",
+  },
+
+  // ---------------------------------------------------------------------
+  // Advanced Detection, version 3 only. The same five fields the v1/v2 panel
+  // shows at the top level (Allowed Semantic Topics, Topic Handling, System
+  // Prompt Context, Ignored Identifiers, Always Allow), folded into a collection
+  // so a guard opens showing only its common fields and the author reaches for
+  // these only when they need them.
+  //
+  // Safe to group here — and only here — because this is a NEW typeVersion: a v3
+  // node has never been saved with these as top-level keys, so nothing is
+  // orphaned. v1/v2 nodes keep their flat fields (gated @version [1,2] above) and
+  // are untouched. execute.ts reads these from the collection when the node is
+  // v3 (readDetectionOption) and from the flat fields otherwise, so the two
+  // layouts are behaviourally identical.
+  //
+  // Inner fields keep the exact per-action visibility the flat fields had, via a
+  // leading-slash `/action` path that reads the root-level Action — the same
+  // pattern the Options collection uses for `/detectionEngine`. The collection
+  // itself shows only for the four actions that read any of these, so it never
+  // appears as an empty dropdown on an action that ignores all five.
+  // ---------------------------------------------------------------------
+  {
+    displayName: "Advanced Detection",
+    name: "advancedDetection",
+    type: "collection",
+    placeholder: "Add Detection Option",
+    default: {},
+    displayOptions: {
+      show: { "@version": [3], action: ["inputGuard", "outputGuard", "universalGuard", "piiRedactor"] },
+    },
+    description: "Topic scope, redaction allow-list, and always-allow phrases. All optional.",
+    // Inner options are ordered alphabetically by displayName to satisfy the n8n
+    // linter (node-param-collection-type-unsorted-items). Order inside a
+    // collection is display-only — n8n stores the values as an object keyed by
+    // `name` — so this is not a storage change.
+    options: [
+      {
+        displayName: "Allowed Semantic Topics",
+        name: "allowedTopics",
+        type: "string",
+        default: "",
+        placeholder: "billing, shipping, returns, order status",
+        hint: "Subjects, not data types. To stop an identifier being redacted, use Ignored Identifiers below",
+        displayOptions: { show: { "/action": ["inputGuard", "universalGuard"] } },
+        description: "Subjects this assistant handles, comma-separated. Leave empty for no topic scope.",
+      },
+      {
+        displayName: "Always Allow",
+        name: "alwaysAllow",
+        type: "string",
+        typeOptions: { rows: 4 },
+        default: "",
+        placeholder: "where is my order?\nhow do I reset my password?",
+        hint: "One message per line. Matched on the WHOLE message, ignoring case and a trailing '?'",
+        displayOptions: { show: { "/action": ["inputGuard", "universalGuard"] } },
+        description: "Whole messages that skip detection entirely. Whole-message match, not keywords.",
+      },
+      {
+        displayName: "Ignored Identifiers",
+        name: "ignoredEntities",
+        type: "multiOptions",
+        default: [],
+        options: IGNORABLE_ENTITIES.map((entity) => ({ name: entity.label, value: entity.key })),
+        hint: "Leave empty to redact everything. Credentials — API keys, private keys, tokens — can never be ignored",
+        displayOptions: { show: { "/action": ["inputGuard", "outputGuard", "universalGuard", "piiRedactor"] } },
+        description: "Identifier types to leave unredacted. Credentials can never be ignored.",
+      },
+      {
+        displayName: "System Prompt Context",
+        name: "systemPromptContext",
+        type: "string",
+        typeOptions: { rows: 2 },
+        default: "",
+        placeholder: "You are a billing support assistant for an Indian e-commerce store",
+        hint: "Optional. Use it when the topic list is not specific enough — its words widen the topic vocabulary",
+        displayOptions: { show: { "/action": ["inputGuard", "universalGuard"] } },
+        description: 'Your assistant\'s role, used to judge whether a message is in scope',
+      },
+      {
+        displayName: "Topic Handling",
+        name: "topicHandling",
+        type: "options",
+        options: [
+          {
+            name: "Advisory Only",
+            value: "ADVISORY",
+            description: "Report whether the message was in scope and change nothing else",
+          },
+          {
+            name: "Stay on Topic",
+            value: "RESTRICT",
+            description: "Also treat an out-of-scope message as something to act on. Reported as OFF_TOPIC, never as a threat.",
+          },
+          {
+            name: "Trust My Topics (Default)",
+            value: "TRUST",
+            description:
+              "Stop treating ordinary questions about your own topics as attacks. The usual fix for a helpdesk that blocks its own customers.",
+          },
+          {
+            name: "Trust My Topics and Stay on Topic",
+            value: "TRUST_AND_RESTRICT",
+            description: "Both of the above: in-scope questions run freely, out-of-scope ones are acted on",
+          },
+        ],
+        default: "TRUST",
+        hint: "Does nothing while Allowed Semantic Topics is empty. Anything withdrawn is listed under suppressedFindings",
+        displayOptions: { show: { "/action": ["inputGuard", "universalGuard"] } },
+        description: "What your allowed topics do to the verdict. Never withdraws a clear attack pattern.",
+      },
+    ],
   },
 
   // ---------------------------------------------------------------------
@@ -1058,7 +1267,7 @@ export const soterGuardProperties: INodeProperties[] = [
         typeOptions: { minValue: 1, maxValue: 20 },
         default: 1,
         description:
-          "How many input items to check at the same time. 1 is sequential and safest for rate limits; raising it is the single biggest speed win on large batches. Order of the output items never changes.",
+          "How many input items to check at the same time. The default of 1 is sequential, so a hundred items are a hundred requests one after another, not a burst. Raising it is the single biggest speed win on large batches; a 429 is retried after the interval the API asks for either way. Order of the output items never changes.",
       },
       {
         displayName: "Layers in Parallel",
@@ -1067,6 +1276,23 @@ export const soterGuardProperties: INodeProperties[] = [
         default: true,
         description:
           "Whether the Universal AI Firewall runs its optional layers at the same time instead of one after another. Turn it off if your plan's per-minute rate limit is tight.",
+      },
+      {
+        // Only meaningful in Auto — Cloud already fails and Local is already
+        // local — so it is hidden elsewhere rather than sitting there doing
+        // nothing. The leading slash reads the root-level engine parameter.
+        //
+        // Default false, and it has to stay false: every published version of
+        // this node has failed open, and flipping that on upgrade would turn a
+        // ten-minute API outage into a stopped production workflow for people
+        // who never asked for it.
+        displayName: "Never Downgrade to Local",
+        name: "neverDowngradeToLocal",
+        type: "boolean",
+        default: false,
+        displayOptions: { show: { "/detectionEngine": ["AUTO"] } },
+        description:
+          "Whether to fail an item instead of answering it with the local engine when the cloud cannot be reached. For workflows under a compliance commitment that every message is checked by the full engine. With n8n's Continue On Fail set, failed items still leave through the Flagged output rather than Safe.",
       },
       {
         displayName: "Request Timeout (Ms)",

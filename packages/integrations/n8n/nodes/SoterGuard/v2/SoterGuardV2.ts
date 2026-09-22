@@ -31,7 +31,7 @@ const MAIN = NodeConnectionTypes.Main;
  * class with a hard-coded single output rather than this expression plus a
  * version check.
  */
-const soterGuardOutputs = `={{
+export const soterGuardOutputs = `={{
   ((parameters) => {
     if (${JSON.stringify(SINGLE_OUTPUT_ACTIONS)}.includes(parameters.action)) {
       return [{ displayName: "", type: "${MAIN}" }];
@@ -55,36 +55,40 @@ const soterGuardOutputs = `={{
  * grounds: a guard someone quietly set to Lenient stops fewer things than the
  * reviewer standing in front of the canvas is assuming.
  */
-const soterGuardSubtitle = `={{
+export const soterGuardSubtitle = `={{
   ((parameters) => {
     const labels = {
       analyzeText: "Analyze Text",
       toolCall: "Check Tool Call",
-      enrollIdentity: "Enroll Identity",
-      issuePassport: "Issue Passport",
-      revokePassport: "Revoke Passport",
+      enrollIdentity: "Register Agent",
+      issuePassport: "Issue Access Pass",
+      revokePassport: "Revoke Access",
       inputGuard: "Guard Input",
       outputGuard: "Guard Output",
-      piiRedactor: "Redact Secrets or PII",
-      ragScanner: "RAG Risk Summary",
+      piiRedactor: "Redact PII and Secrets",
+      ragScanner: "Scan RAG Document",
       universalGuard: "Universal AI Firewall",
-      validatePassport: "Validate Passport",
-      workflowAudit: "Workflow Audit"
+      validatePassport: "Validate Access",
+      workflowAudit: "Audit Workflow Security"
     };
     const label = labels[parameters.action] || parameters.action;
     const enforcing = ["inputGuard", "outputGuard", "universalGuard"].includes(parameters.action);
     let base = enforcing ? label + " (" + String(parameters.onThreat || "BLOCK").toLowerCase() + ")" : label;
-    if (parameters.action === "workflowAudit") return base;
     const sensitivity = String(parameters.sensitivity || "BALANCED");
     if (["inputGuard", "outputGuard"].includes(parameters.action) && sensitivity !== "BALANCED") {
       base = base + " · " + sensitivity.toLowerCase();
     }
+    // Detection Engine is hidden for the audit and passport-lifecycle actions
+    // (the hide list in properties.ts), which never run on the local engine.
+    // Appending "· local"/"· cloud" there advertised a setting the action ignores.
+    const engineLess = ["workflowAudit", "enrollIdentity", "issuePassport", "validatePassport", "revokePassport"];
+    if (engineLess.includes(parameters.action)) return base;
     const engine = String(parameters.detectionEngine || "AUTO");
     return engine === "AUTO" ? base : base + " · " + engine.toLowerCase();
   })($parameter)
 }}` as ExpressionString;
 
-const soterGuardHints: NodeHint[] = [
+export const soterGuardHints: NodeHint[] = [
   {
     // The one mistake that leaves a user unprotected while they believe the
     // opposite: enforcement configured, Flagged output left dangling.
@@ -124,7 +128,7 @@ const soterGuardHints: NodeHint[] = [
     // only when the author has actually named topics, so it is advice and not
     // nagging.
     message:
-      "<b>Topic Handling</b> is set to Advisory, so your <b>Allowed Topics</b> only annotate the result. If ordinary questions about these topics are being blocked, switch it to <b>Trust My Topics</b>.",
+      "<b>Topic Handling</b> is set to Advisory, so your <b>Allowed Semantic Topics</b> only annotate the result. If ordinary questions about these topics are being blocked, switch it to <b>Trust My Topics</b>.",
     type: "info",
     location: "ndv",
     displayCondition:
@@ -167,7 +171,11 @@ const soterGuardHints: NodeHint[] = [
       "<b>Reduced protection:</b> Local is a pattern-only first filter (measured prompt-injection recall is about 18% on the published out-of-distribution corpus). It has no ML tier, cross-turn tracking, reputation, or passport enforcement. Use Auto for cloud-first production protection.",
     type: "warning",
     location: "outputPane",
-    displayCondition: '={{ $parameter["detectionEngine"] === "LOCAL" && $parameter["action"] !== "workflowAudit" }}',
+    // Only the guard/scan actions read Detection Engine. The audit and passport
+    // actions hide the field, so a stale LOCAL value there must not raise this —
+    // it also collided with the "never fall back to Local" hint on those actions.
+    displayCondition:
+      '={{ ["analyzeText", "inputGuard", "outputGuard", "piiRedactor", "ragScanner", "universalGuard"].includes($parameter["action"]) && $parameter["detectionEngine"] === "LOCAL" }}',
     whenToDisplay: "beforeExecution",
   },
   {
