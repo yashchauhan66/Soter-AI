@@ -199,9 +199,13 @@ assert(
 );
 assert(
   runtimeSource.includes(
-    'if (options.engine !== "AUTO" || cloudOnly || !isTransientApiError(error)) throw asNodeError(node, error)',
+    'if (options.engine !== "AUTO" || cloudOnly || !(oversize || isTransientApiError(error))) throw asNodeError(node, error)',
   ),
-  "Auto may only fall back when analysis cloud could not be asked — authoritative refusals and credential mutations must surface.",
+  "Auto may only fall back when analysis cloud could not be asked (transient) or the item exceeded the API's per-request text limit — authoritative refusals and credential mutations must surface.",
+);
+assert(
+  runtimeSource.includes("const oversize = isTextTooLongError(error)"),
+  "The oversize local fallback must be gated on isTextTooLongError, so only a length rejection (never an arbitrary 400) can be answered by the local engine.",
 );
 assert(propertiesSource.includes('name: "passportToken"'), "Tool Call must expose a passportToken input.");
 assert(propertiesSource.includes('value: "enrollIdentity"'), "Identity enrollment must be available in-node.");
