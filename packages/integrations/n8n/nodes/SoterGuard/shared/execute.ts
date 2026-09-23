@@ -36,6 +36,19 @@ const USER_AGENT = `n8n-nodes-soterai/${PACKAGE_VERSION}`;
 const MAX_SANITIZE_DEPTH = 8;
 const MAX_METADATA_STRING_LENGTH = 500;
 
+/**
+ * The most text the node itself will carry in one item.
+ *
+ * Deliberately far above what the SoterAI API accepts per request. The cloud
+ * limit is a deployment setting the node cannot read (`MAX_GUARD_TEXT_LENGTH`,
+ * 8,000 by default, and each text-carrying endpoint has its own bound besides),
+ * so enforcing it here would reject text a self-hosted deployment is configured
+ * to accept. The cloud limit is handled where it is knowable instead — in the
+ * API's own rejection, see `textLimitFromRejection`. This number is the local
+ * engine's ceiling and the point past which a single item is a mistake.
+ */
+const MAX_ITEM_TEXT_LENGTH = 200_000;
+
 // Rate-limit backoff. execute() iterates the input items in a loop, so a batch
 // workflow issues one guard call per item back to back and can legitimately
 // out-run the per-minute limit. The API answers 429 with a Retry-After telling
@@ -135,6 +148,58 @@ function tagTransient(error: NodeApiError): NodeApiError {
 
 function isTransientApiError(error: unknown): boolean {
   return Boolean(error && typeof error === "object" && (error as Record<string, unknown>).soterTransient === true);
+}
+
+/**
+ * Marks an API rejection as "this text is longer than the deployment accepts".
+ *
+ * A separate tag from `soterTransient` because it is a different fact and wants a
+ * different answer. The request was refused and re-sending it unchanged will be
+ * refused again, so it is not transient — but the *local* engine has no such
+ * limit, so in Auto mode it can still answer, which is what Auto is for. Keeping
+ * the two apart is what stops an oversize item being reported as an outage.
+ */
+function tagTextTooLong(error: NodeApiError): NodeApiError {
+  (error as unknown as Record<string, unknown>).soterTextTooLong = true;
+  return error;
+}
+
+function isTextTooLongError(error: unknown): boolean {
+  return Boolean(error && typeof error === "object" && (error as Record<string, unknown>).soterTextTooLong === true);
+}
+
+/**
+ * Reads the per-request text limit out of the API's own rejection.
+ *
+ * The limit is a deployment setting (`MAX_GUARD_TEXT_LENGTH`, 8,000 by default,
+ * and every text-carrying endpoint has its own bound besides), so the node cannot
+ * know it in advance: hard-coding 8,000 here would reject text a self-hosted
+ * deployment is configured to accept, and a pre-flight check is the wrong place
+ * for a number only the server knows. The request schema names it in the 400, and
+ * that is the one moment it is knowable.
+ *
+ * Worth recognising rather than passing through, because raw it reads
+ * "SoterAI API error 400" with "String must contain at most 8000 character(s)"
+ * buried in the body — no field, no actual length, no way forward, on a node
+ * whose own limit says 200,000. Both zod phrasings are matched so a server
+ * upgrade cannot silently take the explanation away.
+ */
+function textLimitFromRejection(status: number, data: Record<string, unknown>): number | null {
+  if (status !== 400) return null;
+  const message = typeof data.message === "string" ? data.message : "";
+  const match = /at most (\d+) character|<=\s*(\d+) character/i.exec(message);
+  if (!match) return null;
+  const limit = Number(match[1] ?? match[2]);
+  return Number.isInteger(limit) && limit > 0 ? limit : null;
+}
+
+/** Length of the longest string in a request body — the field the limit refused. */
+function longestBodyText(body: Record<string, unknown>): number {
+  let longest = 0;
+  for (const value of Object.values(body)) {
+    if (typeof value === "string" && value.length > longest) longest = value.length;
+  }
+  return longest;
 }
 
 /**
@@ -312,6 +377,12 @@ interface ActionRequest {
   agentDescription?: string;
   agentIdentityId?: string;
   passportTtlSeconds?: number;
+  /**
+   * What the author actually asked for, kept beside the clamped value so the
+   * result can say a pass expires sooner than they configured. Only set when it
+   * differs from `passportTtlSeconds`.
+   */
+  passportTtlSecondsRequested?: number;
   passportPolicyPreset?: string;
   passportPolicy?: Record<string, unknown>;
   passportId?: string;
@@ -529,7 +600,7 @@ function readActionRequest(
       break;
     case "enrollIdentity":
       request.agentName = readText(ctx, node, "agentName", itemIndex, "Agent Name");
-      request.agentType = ctx.getNodeParameter("agentType", itemIndex, "CUSTOM") as string;
+      request.agentType = agentTypeValue(ctx.getNodeParameter("agentType", itemIndex, "CUSTOM"));
       request.agentDescription = readText(ctx, node, "agentDescription", itemIndex, "Agent Description") || undefined;
       request.passportPolicyPreset = ctx.getNodeParameter("passportPolicyPreset", itemIndex, "READ_ONLY") as string;
       request.passportPolicy = parseOptionalJsonObject(
@@ -540,7 +611,8 @@ function readActionRequest(
       break;
     case "issuePassport":
       request.agentIdentityId = readText(ctx, node, "agentIdentityId", itemIndex, "Agent Identity ID");
-      request.passportTtlSeconds = Number(ctx.getNodeParameter("passportTtlSeconds", itemIndex, 3600));
+      request.passportTtlSecondsRequested = Number(ctx.getNodeParameter("passportTtlSeconds", itemIndex, 3600));
+      request.passportTtlSeconds = passportTtlValue(request.passportTtlSecondsRequested);
       request.passportPolicyPreset = ctx.getNodeParameter("passportPolicyPreset", itemIndex, "READ_ONLY") as string;
       request.passportPolicy = parseOptionalJsonObject(
         node,
@@ -578,7 +650,7 @@ function readActionRequest(
     case "ragScanner":
       request.text = readText(ctx, node, "ragText", itemIndex, "Document Text");
       request.documentId = readText(ctx, node, "documentId", itemIndex, "Document ID");
-      request.documentSource = readText(ctx, node, "documentSource", itemIndex, "Document Source");
+      request.documentSource = documentSourceValue(ctx.getNodeParameter("documentSource", itemIndex, ""));
       break;
     case "workflowAudit":
       request.workflowJson = readText(ctx, node, "workflowJson", itemIndex, "Workflow JSON");
@@ -629,6 +701,7 @@ function reuseKey(request: ActionRequest): string {
     request.agentDescription ?? "",
     request.agentIdentityId ?? "",
     request.passportTtlSeconds ?? null,
+    request.passportTtlSecondsRequested ?? null,
     request.passportPolicyPreset ?? "",
     request.passportPolicy ?? null,
     request.passportId ?? "",
@@ -807,6 +880,11 @@ export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeE
  * A refused question — bad key, disabled endpoint, invalid payload — is reported,
  * because quietly downgrading it would hide the configuration error that caused it.
  *
+ * One payload rejection is on the first side of that line rather than the second:
+ * text longer than the deployment's per-request limit. Nothing about the item is
+ * misconfigured, re-sending it will be refused identically, and the local engine
+ * has no such limit — so it is the one 400 Auto answers instead of reporting.
+ *
  * "Never Downgrade to Local" removes the switch entirely. A regulated desk that
  * has told an auditor every message is checked by the full engine cannot have
  * that quietly become "checked by a regex on the days the API was down", and
@@ -865,19 +943,21 @@ async function runAction(
     result.engineDegraded = false;
     return result;
   } catch (error) {
-    if (options.engine !== "AUTO" || cloudOnly || !isTransientApiError(error)) throw asNodeError(node, error);
+    // Two different reasons the cloud could not answer, both of which the local
+    // engine can: the API was unreachable, or the item is longer than the API
+    // accepts per request while staying inside the node's own 200,000 ceiling.
+    const oversize = isTextTooLongError(error);
+    if (options.engine !== "AUTO" || cloudOnly || !(oversize || isTransientApiError(error))) throw asNodeError(node, error);
+    const headline = oversize
+      ? "This item is longer than the SoterAI API accepts per request"
+      : "The SoterAI API could not be reached";
+    const detail = sanitizeErrorMessage(error instanceof Error ? error.message : "request failed");
     if (options.neverDowngradeToLocal) {
-      throw strictCloudError(
-        node,
-        "The SoterAI API could not be reached",
-        sanitizeErrorMessage(error instanceof Error ? error.message : "request failed"),
-      );
+      throw strictCloudError(node, headline, detail);
     }
     return stampLocalEngine(
       runLocalAction(node, options, request),
-      `The SoterAI API could not be reached, so this item was checked locally instead: ${sanitizeErrorMessage(
-        error instanceof Error ? error.message : "request failed",
-      )}`,
+      `${headline}, so this item was checked locally instead: ${detail}`,
     );
   }
 }
@@ -894,8 +974,8 @@ function strictCloudError(node: INode, headline: string, detail: string): NodeOp
   return new NodeOperationError(node, `${headline}, and Never Downgrade to Local is on, so this item was not checked.`, {
     description:
       `${detail} This item was failed on purpose rather than answered by the local pattern engine, which catches ` +
-      "materially less. Turn off Never Downgrade to Local (Advanced Options) to let items through on the local engine " +
-      "during an outage, or fix the credential/connectivity problem and re-run. With Continue On Fail set, items like " +
+      "materially less. Turn off Never Downgrade to Local (Advanced Options) to let items through on the local engine, " +
+      "or fix what the sentence above names and re-run. With Continue On Fail set, items like " +
       "this leave through the Flagged branch.",
   });
 }
@@ -1025,13 +1105,15 @@ async function runCloudAction(
       if (!agentIdentityId) throw new NodeOperationError(node, "Agent Identity ID is required.", { itemIndex: request.itemIndex });
       const sessionId = metadataSessionId(request.metadata);
       const policy = resolvePassportPolicy(request.passportPolicyPreset, request.passportPolicy);
+      const ttlSeconds = request.passportTtlSeconds ?? 3600;
       const raw = await soterPost(ctx, client, "/api/agent/passport/issue", {
         agentIdentityId,
         ...(sessionId ? { sessionId } : {}),
-        ttlSeconds: request.passportTtlSeconds ?? 3600,
+        ttlSeconds,
         ...policy,
         metadata: request.metadata,
       });
+      const requestedTtl = request.passportTtlSecondsRequested;
       result = {
         operation: "issuePassport",
         verdictCode: "PASSPORT_ISSUED",
@@ -1043,6 +1125,21 @@ async function runCloudAction(
         passportToken: (raw.passportToken as string) ?? null,
         status: (raw.status as string) ?? "ACTIVE",
         expiresAt: raw.expiresAt as string,
+        ttlSeconds,
+        // A pass that expires sooner than it was configured to is not a detail to
+        // discover from a 401 four hours into a run.
+        ...(typeof requestedTtl === "number" && Number.isFinite(requestedTtl) && requestedTtl !== ttlSeconds
+          ? {
+              ttlAdjusted: {
+                requestedSeconds: requestedTtl,
+                appliedSeconds: ttlSeconds,
+                detail:
+                  `Time to Live was set to ${requestedTtl}, and the SoterAI API accepts ` +
+                  `${PASSPORT_TTL_MIN_SECONDS}–${PASSPORT_TTL_MAX_SECONDS} seconds, so the pass was issued for ` +
+                  `${ttlSeconds}. Issue a new pass when this one expires rather than raising the value.`,
+              },
+            }
+          : {}),
         tokenSafety: "Treat passportToken as a secret. Store it in n8n credentials or pass it only by expression; it is shown once.",
       };
       break;
@@ -1531,15 +1628,21 @@ async function soterPost(
     }
 
     if (statusCode < 200 || statusCode >= 300) {
+      const textLimit = textLimitFromRejection(statusCode, data);
       const error = new NodeApiError(ctx.getNode(), data as JsonObject, {
-        message: formatApiError(statusCode, data, path),
+        message: textLimit === null
+          ? formatApiError(statusCode, data, path)
+          : formatTextTooLongError(textLimit, longestBodyText(body), path),
         httpCode: String(statusCode),
       });
       // A server fault or an exhausted rate-limit window is about capacity, not
       // about this request. A 4xx other than 429 is about this request — the key,
       // the plan, or the payload — and must surface instead of being answered by
-      // a weaker engine.
+      // a weaker engine. An oversize text is the one payload rejection the local
+      // engine can still answer, so it is tagged for Auto rather than being
+      // treated as either an outage or a dead end.
       if (statusCode >= 500 || statusCode === 429 || statusCode === 408 || statusCode === 0) tagTransient(error);
+      else if (textLimit !== null) tagTextTooLong(error);
       throw error;
     }
 
@@ -1956,7 +2059,7 @@ async function executeUniversalGuard(
 
   if (params.ragText?.trim()) {
     const documentId = params.ragDocumentId?.trim() || `n8n-${Date.now()}`;
-    const source = params.ragSource || "api";
+    const source = documentSourceValue(params.ragSource) ?? "api";
     layerRuns.push(() =>
       optionalLayer(
         "rag",
@@ -2116,10 +2219,11 @@ async function executeUniversalGuard(
           // Registration happens inside the layer so a failure to fingerprint a
           // source degrades this one layer instead of the whole item.
           const sources = await registerProtectedSources(ctx, client, params.protectedSources ?? [], meta);
+          const destinationType = destinationTypeValue(params.outputDestinationType);
           const egress = await soterPost(ctx, client, "/api/semantic-egress/check", {
             sessionId: typeof meta.sessionId === "string" ? meta.sessionId : undefined,
             content: aiOutputText,
-            destinationType: params.outputDestinationType || "FINAL_OUTPUT",
+            destinationType,
             destinationName: params.outputDestinationName || undefined,
             sourceIds: sources.sourceIds,
             metadata: meta,
@@ -2127,6 +2231,21 @@ async function executeUniversalGuard(
           return {
             ...egress,
             comparedSourceIds: sources.sourceIds,
+            // Named on the layer, not swallowed: the destination decides the risk
+            // multiplier, so an author who typed one the API does not define has
+            // to be able to see which one was scored instead.
+            ...(params.outputDestinationType && params.outputDestinationType !== destinationType
+              ? {
+                  destinationTypeAdjusted: {
+                    configured: params.outputDestinationType,
+                    applied: destinationType,
+                    detail:
+                      `"${params.outputDestinationType}" is not one of the destination types the SoterAI API defines, so ` +
+                      `the check was run against ${destinationType}. Use Destination Name for the specific endpoint — a ` +
+                      "URL there is what decides whether the destination counts as external.",
+                  },
+                }
+              : {}),
             ...(sources.registeredSources.length ? { registeredSources: sources.registeredSources } : {}),
             ...(sources.skippedSources.length ? { skippedSources: sources.skippedSources } : {}),
           };
@@ -2581,7 +2700,7 @@ function runLocalUniversalGuard(node: INode, options: NodeOptions, request: Acti
     const scored = scoreRagDocumentLocal(
       context.rag.text,
       context.rag.documentId?.trim() || `n8n-${Date.now()}`,
-      context.rag.source || "api",
+      documentSourceValue(context.rag.source) ?? "api",
     );
     checks.push({ layer: "rag", ...(scored as unknown as IDataObject) });
   }
@@ -2869,20 +2988,108 @@ function alwaysAllowResult(request: ActionRequest): IDataObject | null {
 }
 
 /**
- * Applies the Ignored Identifiers list, Sensitivity, and the author's own
- * wording to a finished verdict.
+ * Applies the Ignored Identifiers list, Sensitivity, Topic Handling, and the
+ * author's own wording to a finished verdict.
  *
  * Runs once per distinct request, before `canonicalizeResult`, so `verdictCode`
  * and `enforcement` are derived from the decision the author actually asked for.
- * The identifier list goes first: it can withdraw the only finding on the item,
- * and Sensitivity then has the right verdict to reason about.
+ *
+ * The order is load-bearing at both ends. The identifier list goes first: it can
+ * withdraw the only finding on the item, and Sensitivity then has the right
+ * verdict to reason about. Topic Handling goes *after* Sensitivity, because the
+ * two judge different things and scope is not the one being relaxed — an
+ * out-of-scope message scores about 15, which is under the Lenient floor and
+ * carries no never-relaxed category, so running it first would let Lenient wave
+ * through the very message Stay on Topic was set to stop. Custom replies go
+ * last, so the sentence the customer sees matches whatever the item ended up as.
  */
 function applyAuthorControls(request: ActionRequest, result: IDataObject): IDataObject {
   applyIgnoredEntities(request, result);
   applyIgnoredWords(request, result);
   applySensitivity(request, result);
+  applyTopicRestriction(request, result);
   applyCustomReplies(request, result);
   return result;
+}
+
+/** Actions that offer Allowed Semantic Topics and therefore Topic Handling. */
+const TOPIC_SCOPE_ACTIONS = new Set(["inputGuard", "universalGuard"]);
+
+/**
+ * Makes "Stay on Topic" mean the same thing on Cloud as it does on Local.
+ *
+ * The local engine enforces the setting itself: an out-of-scope message becomes
+ * an OFF_TOPIC finding and `analyzeLocal` blocks on it. The cloud engine cannot,
+ * and not because it failed to look — `/api/guard/input` runs the same topical
+ * alignment check from the `allowedTopics` the node sends, and returns OFF_TOPIC
+ * in `riskTypes` when the message misses the scope. But OFF_TOPIC is weighted 15
+ * server-side, deliberately below every band that changes a decision, because on
+ * the API it is an advisory signal for callers to act on. There is no request
+ * parameter that turns it into enforcement.
+ *
+ * So the node acts on it, which is the only place the author's choice exists.
+ * Until this ran, picking "Stay on Topic" on a Cloud node configured everything
+ * correctly and changed nothing at all: the same workflow stopped an off-topic
+ * message or waved it through depending on which engine happened to answer, and
+ * in Auto that is a network condition the author never sees.
+ *
+ * The scope judgement stays the server's — this only enforces a verdict the
+ * engine already reported, never re-scores the text — and it is reported under
+ * `topicHandling` so an item that was stopped for being out of scope is never
+ * confused with one stopped for being an attack.
+ */
+function applyTopicRestriction(request: ActionRequest, result: IDataObject): void {
+  const mode = request.topicMode;
+  if (mode !== "RESTRICT" && mode !== "TRUST_AND_RESTRICT") return;
+  if (!TOPIC_SCOPE_ACTIONS.has(request.action)) return;
+  if (!request.allowedTopics?.length && !request.systemPromptContext?.trim()) return;
+  if (result.skipped === true || result.error === true || result.throttled === true) return;
+
+  const categories = Array.isArray(result.categories) ? result.categories.map((value) => String(value)) : [];
+  if (!categories.includes("OFF_TOPIC")) return;
+
+  // The local engine already stopped it, in exactly the way On Threat asked for.
+  // Running the same enforcement twice would be harmless but the report would be
+  // a lie about who acted, so it says what actually happened.
+  if (result.engine !== "cloud") {
+    result.topicHandling = {
+      mode,
+      effect: "ENFORCED_BY_ENGINE",
+      detail: "The local engine treats an out-of-scope message as a scope failure and stopped it directly.",
+    };
+    return;
+  }
+
+  const reason =
+    "The message is outside the topics this assistant handles. " +
+    "Reported as OFF_TOPIC by the guard, and stopped here because Topic Handling is set to Stay on Topic.";
+
+  // The engine's own sentence is kept rather than dropped: it is what the
+  // detection actually said, and an operator reading the run a week later needs
+  // both halves — what was found, and who decided it was disqualifying.
+  const engineReason = stringValue(result.reason);
+  result.allowed = false;
+  result.reason = reason;
+  result.developerMessage =
+    `${reason}${engineReason ? ` The guard's own summary was: ${engineReason}` : ""} ` +
+    "The risk score is left at the value the guard assigned — being off topic is not a threat score, and this " +
+    "node does not rewrite detection output.";
+  enforceOnThreat(result, request.onThreat, request.text, reason);
+  // The firewall's verdict is what a workflow branches on, so it has to move with
+  // the decision or the item would report ALLOW while carrying blocked: true.
+  if (request.action === "universalGuard") {
+    result.finalDecision = "BLOCK";
+    result.liveChatAction = "BLOCK";
+    result.recommendedAction = recommendedActionForDecision("BLOCK");
+  }
+  result.topicHandling = {
+    mode,
+    effect: "ENFORCED_BY_NODE",
+    detail:
+      "The SoterAI API reports OFF_TOPIC as advisory and has no parameter that makes it enforce, so the node applied " +
+      `On Threat (${request.onThreat}) to the finding instead. Detection itself is unchanged — the scope judgement is ` +
+      "the API's own.",
+  };
 }
 
 /**
@@ -3542,7 +3749,7 @@ function validateBaseUrl(node: INode, raw: string): string {
     throw new NodeOperationError(node, "SoterAI Base URL must not include credentials, query parameters, or fragments.");
   }
 
-  const isLocalDevHost = ["localhost", "127.0.0.1", "::1"].includes(parsed.hostname);
+  const isLocalDevHost = ["localhost", "127.0.0.1", "::1", "host.docker.internal"].includes(parsed.hostname);
   if (parsed.protocol !== "https:" && !(parsed.protocol === "http:" && isLocalDevHost)) {
     throw new NodeOperationError(node, "SoterAI Base URL must use HTTPS, except http://localhost for local development.");
   }
@@ -3735,6 +3942,97 @@ function toolDestinationValue(value: unknown): ToolDestination {
 function memoryActionValue(value: unknown): MemoryAction {
   return value === "STORE" || value === "READ" || value === "UPDATE" || value === "DELETE" ? value : "NONE";
 }
+
+// ---------------------------------------------------------------------------
+// Closed-list coercion
+//
+// Every field below is a dropdown in the panel *and* a `z.enum` on the API. That
+// pairing looks safe and is not: an n8n expression can put any string into a
+// dropdown-backed parameter, and `{{$json.department}}` yielding "SUPPORT" or
+// "kb-upload" is an ordinary thing for a workflow to do. What came back was a
+// bare `HTTP 400 — Invalid enum value`, naming a field the author never typed by
+// hand, from an endpoint they did not know was involved.
+//
+// So the node closes the list itself, the same way `toolDestinationValue` and
+// `memoryActionValue` already did for the two fields that had it. Each falls back
+// to the value that describes "not one of the ones we know", never to the value
+// that would quietly make the item look safer than it was measured to be.
+// ---------------------------------------------------------------------------
+
+/** `AGENT_IDENTITY_TYPES` server-side; `agentType: z.enum(...).default("CUSTOM")`. */
+const AGENT_TYPES = ["CHATBOT", "RAG_AGENT", "COMPUTER_USE", "BROWSER_AGENT", "MCP_AGENT", "CODING_AGENT", "CUSTOM"];
+
+/** `source: z.enum([...]).default("unknown")` on /api/rag/document/trust-score. */
+const RAG_DOCUMENT_SOURCES = ["upload", "url", "email", "api", "unknown"];
+
+/** `SEMANTIC_DESTINATION_TYPES` server-side; `destinationType: z.enum(...)`, required. */
+const SEMANTIC_DESTINATION_TYPES = [
+  "FINAL_OUTPUT",
+  "PUBLIC_OUTPUT",
+  "EXTERNAL_API",
+  "EMAIL",
+  "BROWSER_FORM",
+  "WEBHOOK",
+  "TOOL",
+  "MEMORY",
+  "FILE",
+  "CUSTOM",
+];
+
+/** An agent that is not one of the six named kinds is a CUSTOM one, which is what the API's own default says. */
+function agentTypeValue(value: unknown): string {
+  const type = typeof value === "string" ? value.trim().toUpperCase().replace(/[\s-]+/g, "_") : "";
+  return AGENT_TYPES.includes(type) ? type : "CUSTOM";
+}
+
+/**
+ * Undefined for "nothing was set", so the call sites keep their own defaults.
+ * An unrecognised provenance becomes `unknown` rather than `api`: the point of
+ * the field is to say where a document came from, and guessing "the API" about a
+ * document the author labelled `kb-upload` would put a wrong fact in the trust
+ * record. `unknown` is true, and is the API's own default for the same reason.
+ */
+function documentSourceValue(value: unknown): string | undefined {
+  const source = typeof value === "string" ? value.trim().toLowerCase() : "";
+  if (!source) return undefined;
+  return RAG_DOCUMENT_SOURCES.includes(source) ? source : "unknown";
+}
+
+/**
+ * Where the AI's output is going, which is a multiplier on the egress risk score.
+ *
+ * `CUSTOM` is the fallback because an unrecognised destination is genuinely an
+ * unlisted one, and because the alternative is worse than it looks: an
+ * unrecognised value used to fail the request outright, the semantic egress layer
+ * degraded, and the item came back having had no egress comparison run on it at
+ * all. A scored check against `CUSTOM` is strictly more protection than a layer
+ * that did not execute. `destinationName` still travels alongside, so a URL in
+ * the name is still what decides whether the destination counts as external.
+ */
+function destinationTypeValue(value: unknown): string {
+  const type = typeof value === "string" ? value.trim().toUpperCase().replace(/[\s-]+/g, "_") : "";
+  if (!type) return "FINAL_OUTPUT";
+  return SEMANTIC_DESTINATION_TYPES.includes(type) ? type : "CUSTOM";
+}
+
+/**
+ * `ttlSeconds: z.number().int().min(60).max(86400)` on /api/agent/passport/issue.
+ *
+ * Clamped rather than rejected: the author asked for a pass that lasts a certain
+ * time, and the useful answer to "3 days" is a pass that lasts as long as the
+ * deployment allows, reported honestly, not a failed workflow. A value that is
+ * not a number at all falls to the same one hour the field defaults to. The
+ * clamp is reported on the result, because a passport that expires sooner than
+ * the author configured is something they have to be able to find out.
+ */
+function passportTtlValue(value: unknown): number {
+  const seconds = Math.trunc(Number(value));
+  if (!Number.isFinite(seconds) || seconds <= 0) return 3600;
+  return Math.min(Math.max(seconds, PASSPORT_TTL_MIN_SECONDS), PASSPORT_TTL_MAX_SECONDS);
+}
+
+const PASSPORT_TTL_MIN_SECONDS = 60;
+const PASSPORT_TTL_MAX_SECONDS = 86_400;
 
 function decideUniversal(checks: IDataObject[], profile: ProtectionProfile) {
   const layerDecisions = checks.map(toLayerDecision);
@@ -4295,9 +4593,37 @@ function validateText(node: INode, text: string, fieldName: string): void {
   if (!text || !text.trim()) {
     throw new NodeOperationError(node, `${fieldName} is required.`);
   }
-  if (text.length > 200000) {
-    throw new NodeOperationError(node, `${fieldName} is too large. Keep text under 200,000 characters per item.`);
+  if (text.length > MAX_ITEM_TEXT_LENGTH) {
+    throw new NodeOperationError(
+      node,
+      `${fieldName} is ${text.length.toLocaleString("en-US")} characters, and the node carries at most ` +
+      `${MAX_ITEM_TEXT_LENGTH.toLocaleString("en-US")} per item.`,
+      {
+        description:
+          "Split the text into separate items before this node. Note that the SoterAI API's own per-request limit is " +
+          "much lower than this one (8,000 characters on the hosted deployment), so Cloud mode will refuse an item " +
+          "well before it reaches this ceiling; the local engine will not.",
+      },
+    );
   }
+}
+
+/**
+ * What to do about an item the API refused for being too long.
+ *
+ * The node's own ceiling is 200,000 characters per item and the local engine
+ * honours it, so "too large" is not a sentence a user can act on without knowing
+ * that the cloud limit is a different, much smaller number. All three genuine
+ * ways out are named, in the order of how likely they are to be the right one.
+ */
+function formatTextTooLongError(limit: number, sent: number, path: string): string {
+  return (
+    `SoterAI API rejected this item on ${path}: the deployment at your Base URL accepts at most ` +
+    `${limit.toLocaleString("en-US")} characters of text per request, and this item sent ` +
+    `${sent.toLocaleString("en-US")}. Split the text into smaller items before this node, raise ` +
+    "MAX_GUARD_TEXT_LENGTH on a self-hosted deployment, or set Detection Engine to Auto so long items " +
+    "are checked by the local engine instead of failing."
+  );
 }
 
 function formatApiError(status: number, data: Record<string, unknown>, path?: string): string {
