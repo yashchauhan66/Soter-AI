@@ -31,7 +31,7 @@ import type {
   LocalTopicScope,
 } from "./localEngine";
 
-export const PACKAGE_VERSION = "0.8.0";
+export const PACKAGE_VERSION = "0.8.1";
 const USER_AGENT = `n8n-nodes-soterai/${PACKAGE_VERSION}`;
 const MAX_SANITIZE_DEPTH = 8;
 const MAX_METADATA_STRING_LENGTH = 500;

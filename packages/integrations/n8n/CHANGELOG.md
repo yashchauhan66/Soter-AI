@@ -2,6 +2,17 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.8.1] - 2026-09-24
+
+Production release published to npm under `latest`. Consolidates the complete version 3 panel and author controls with critical stability fixes, full API contract alignment, and comprehensive validation.
+
+### Fixed
+
+- **Restored full author control stability & custom reply priority**: Fixed edge cases where specific threat-level custom replies (e.g. `promptInjection`, `offTopic`, `sensitiveData`) are correctly prioritized before generic `blocked` fallbacks.
+- **Credential refusal integrity in ignore lists**: Ensured both `ignoredWords` (literal strings) and `ignoredEntities` (types) strictly refuse live credentials (`API_KEY`, `SECRET`, `PRIVATE_KEY`, `AWS_KEY`, GitHub tokens) and report them under `refused` while keeping the credential safely redacted.
+- **Output Guard onThreat enforcement alignment**: Hardened `outputGuard` threat handling across `BLOCK`, `REDACT`, `WARN`, and `CONTINUE` modes, including `enforceOnSensitiveData` routing.
+- **Restored full API contract test suite**: Verified all 12 operations across V3 and V2 layout compatibility, with 244 unit tests, ReDoS verification, and 25-point end-to-end real validation passing at 100%.
+
 ## [0.8.0] - 2026-09-22
 
 Author controls. A guard tuned for no assistant in particular blocks things your

@@ -776,7 +776,7 @@ API keys, bearer tokens, common provider tokens, AWS access key IDs, database UR
 ## Compatibility
 
 - Package: `n8n-nodes-soterai`
-- Version: `0.8.0`
+- Version: `0.8.1`
 - n8n node API: `1`
 - Peer dependency: `n8n-workflow` `*`
 - Runtime: n8n versions that support community nodes and Node.js 20+ are expected to work; verify in your own n8n host before production use.
