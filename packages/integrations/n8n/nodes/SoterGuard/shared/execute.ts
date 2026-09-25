@@ -67,7 +67,9 @@ const DEFAULT_RETRY_WAIT_MS = 5_000;
  */
 export const SINGLE_OUTPUT_ACTIONS = ["piiRedactor"];
 
-export function outputCountForAction(action: string): number {
+export function outputCountForAction(action: string, optionsOrBranching?: boolean | NodeOptions): number {
+  const branching = typeof optionsOrBranching === "boolean" ? optionsOrBranching : optionsOrBranching?.branchOnRedaction;
+  if (action === "piiRedactor" && branching) return 2;
   return SINGLE_OUTPUT_ACTIONS.includes(action) ? 1 : 2;
 }
 
@@ -105,6 +107,7 @@ interface NodeOptions {
   includeRawResponse: boolean;
   /** Auto mode fails the item instead of answering it with the local engine. */
   neverDowngradeToLocal: boolean;
+  branchOnRedaction?: boolean;
 }
 
 const DEFAULT_REQUEST_TIMEOUT_MS = 20000;
@@ -127,6 +130,7 @@ function readNodeOptions(ctx: IExecuteFunctions, itemIndex: number): NodeOptions
     // open, and flipping that on upgrade would turn a brief API outage into a
     // stopped production workflow for people who never asked for it.
     neverDowngradeToLocal: advanced.neverDowngradeToLocal === true,
+    branchOnRedaction: advanced.branchOnRedaction === true,
   };
 }
 
@@ -302,10 +306,13 @@ function parseRetryAfterMs(headers: unknown): number | null {
  *   ready.
  * - Redact Secrets or PII: never flagged; it has a single output.
  */
-function isFlagged(action: string, result: IDataObject): boolean {
+function isFlagged(action: string, result: IDataObject, branchOnRedaction?: boolean): boolean {
   switch (action) {
     case "piiRedactor":
-      return false;
+      if (!branchOnRedaction) return false;
+      const count = Number(result.clientSideRedactionCount ?? 0);
+      const entities = Array.isArray(result.detectedEntities) ? result.detectedEntities.length : 0;
+      return count > 0 || entities > 0;
     case "workflowAudit":
       return result.readyForProduction !== true;
     case "ragScanner":
@@ -736,8 +743,15 @@ export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeE
       ? (this.getNodeParameter("action", 0) as string)
       : ((node.parameters?.action as string) ?? (node.parameters?.operation as string) ?? "inputGuard");
 
+  const emptyOptions = (node.parameters?.options as IDataObject) ?? (node.parameters?.advancedOptions as IDataObject) ?? {};
+  const isBranchingRedaction =
+    nodeAction === "piiRedactor" &&
+    (items.length > 0
+      ? readNodeOptions(this, 0).branchOnRedaction === true
+      : emptyOptions.branchOnRedaction === true);
+
   const shapeOutputs = (safe: INodeExecutionData[], flagged: INodeExecutionData[]) =>
-    !branchOutputs || outputCountForAction(nodeAction) === 1 ? [safe] : [safe, flagged];
+    !branchOutputs || outputCountForAction(nodeAction, isBranchingRedaction) === 1 ? [safe] : [safe, flagged];
 
   if (items.length === 0) return shapeOutputs([], []);
 
@@ -827,16 +841,16 @@ export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeE
         hit = started;
       }
 
-      const result = canonicalizeResult(action, await hit.promise);
+      const result = canonicalizeResult(action, await hit.promise, options.branchOnRedaction);
       if (hit.itemIndex === i) {
-        outcomes[i] = { json: result, flagged: isFlagged(action, result) };
+        outcomes[i] = { json: result, flagged: isFlagged(action, result, options.branchOnRedaction) };
         return;
       }
       // Marked, not hidden. A reader comparing two items with one incident id
       // between them needs to know why, and a reused answer is still an answer
       // about this item's text — it is the same text.
       const reused: IDataObject = { ...result, reusedResult: true, reusedFromItemIndex: hit.itemIndex };
-      outcomes[i] = { json: reused, flagged: isFlagged(action, reused) };
+      outcomes[i] = { json: reused, flagged: isFlagged(action, reused, options.branchOnRedaction) };
     } catch (error) {
       if (this.continueOnFail()) {
         // An item whose check never completed has not been cleared by anything,
@@ -2838,7 +2852,7 @@ function annotateThrottle(result: IDataObject, raw: Record<string, unknown>): vo
 }
 
 /** Stable integration envelope. Legacy fields remain for saved expressions. */
-function canonicalizeResult(action: string, result: IDataObject): IDataObject {
+function canonicalizeResult(action: string, result: IDataObject, branchOnRedaction?: boolean): IDataObject {
   if (result.verdictCode === undefined) {
     if (result.skipped === true) result.verdictCode = "EMPTY_INPUT";
     else if (result.throttled === true) result.verdictCode = "REPUTATION_THROTTLED";
@@ -2846,9 +2860,12 @@ function canonicalizeResult(action: string, result: IDataObject): IDataObject {
     else if (result.decision === "ASK_APPROVAL" || result.finalDecision === "ASK_APPROVAL") result.verdictCode = "APPROVAL_REQUIRED";
     else result.verdictCode = "ALLOW";
   }
+  const flagged = isFlagged(action, result, branchOnRedaction);
   result.enforcement = {
     outcome: result.blocked === true ? "BLOCKED" : result.skipped === true ? "SKIPPED" : "CONTINUED",
-    routedTo: isFlagged(action, result) ? "Flagged" : "Safe",
+    routedTo: action === "piiRedactor" && branchOnRedaction
+      ? (flagged ? "Redacted" : "Clean")
+      : (flagged ? "Flagged" : "Safe"),
   };
   result.schemaVersion = "1.0";
   result.operation = result.operation ?? action;

@@ -188,7 +188,7 @@ export const OPERATIONS: OperationSpec[] = [  {
     notice: "redactNotice",
     fields: ["piiText"],
     required: ["piiText"],
-    options: [...REDACTION, ...COMMON],
+    options: ["branchOnRedaction", ...REDACTION, ...COMMON],
   },
   {
     resource: "ragDocument",
@@ -347,6 +347,22 @@ export const INTENDED_NARROWING: Record<string, { operations: string[]; reason: 
     operations: ["enrollIdentity", "issuePassport", "revokePassport", "validatePassport"],
     reason:
       "These four are cloud-only in execute.ts and never fall back to the local engine, so there is nothing to refuse to downgrade to.",
+  },
+  branchOnRedaction: {
+    operations: [
+      "analyzeText",
+      "enrollIdentity",
+      "inputGuard",
+      "issuePassport",
+      "outputGuard",
+      "ragScanner",
+      "revokePassport",
+      "toolCall",
+      "universalGuard",
+      "validatePassport",
+    ],
+    reason:
+      "Only Redact Secrets or PII has a single output that can be split into Clean and Redacted branches. Other operations already branch into Safe and Flagged natively.",
   },
 };
 

@@ -464,6 +464,15 @@ test("an empty input batch returns two branches for a guard and one for Redact",
   const redact = await run({ action: "piiRedactor", layout: "v3", params: { options: {} }, items: 0 });
   assert.equal(redact.outputs.length, 1, "Redact with no items grew a second branch");
   assert.deepEqual(redact.outputs, [[]]);
+
+  const redactBranching = await run({
+    action: "piiRedactor",
+    layout: "v3",
+    params: { options: { branchOnRedaction: true } },
+    items: 0,
+  });
+  assert.equal(redactBranching.outputs.length, 2, "Redact with branchOnRedaction=true should have 2 outputs");
+  assert.deepEqual(redactBranching.outputs, [[], []]);
 });
 
 // ---------------------------------------------------------------------------
@@ -481,6 +490,13 @@ test("the outputs expression names Safe and Flagged for guards and a single outp
       assert.deepEqual(outputs.map((o) => o.displayName), ["Safe", "Flagged"]);
     }
   }
+
+  const branchingOutputs = evalExpression(soterGuardOutputsV3, {
+    operation: "piiRedactor",
+    options: { branchOnRedaction: true },
+  }) as Array<{ displayName: string }>;
+  assert.equal(branchingOutputs.length, 2, "Redact with branchOnRedaction should return 2 outputs");
+  assert.deepEqual(branchingOutputs.map((o) => o.displayName), ["Clean", "Redacted"]);
 });
 
 test("the subtitle renders a clean status line for every operation and reflects what weakens the guard", () => {
@@ -508,6 +524,11 @@ test("the subtitle renders a clean status line for every operation and reflects 
     String(evalExpression(soterGuardSubtitleV3, { operation: "issuePassport", options: { detectionEngine: "LOCAL" } })),
     /local/,
     "a lifecycle operation advertised an engine it does not use",
+  );
+  assert.match(
+    String(evalExpression(soterGuardSubtitleV3, { operation: "piiRedactor", options: { branchOnRedaction: true } })),
+    /branching/,
+    "branching redact did not surface its branching mode",
   );
 });
 
@@ -553,4 +574,11 @@ test("the key hints fire only in the state they warn about", () => {
   assert.equal(hintFires(custom, { operation: "enrollIdentity", passportPolicyPreset: "CUSTOM", options: {} }), true);
   assert.equal(hintFires(custom, { operation: "enrollIdentity", passportPolicyPreset: "CUSTOM", options: { passportPolicy: "{}" } }), false);
   assert.equal(hintFires(custom, { operation: "enrollIdentity", passportPolicyPreset: "READ_ONLY", options: {} }), false);
+
+  // Redaction branching hint
+  const redactBranchIdx = soterGuardHintsV3.findIndex((h) => h.message.includes("Redaction branching is active"));
+  assert.ok(redactBranchIdx !== -1, "Redaction branching hint not found");
+  assert.equal(hintFires(redactBranchIdx, { operation: "piiRedactor", options: { branchOnRedaction: true } }), true);
+  assert.equal(hintFires(redactBranchIdx, { operation: "piiRedactor", options: { branchOnRedaction: false } }), false);
+  assert.equal(hintFires(redactBranchIdx, { operation: "inputGuard", options: { branchOnRedaction: true } }), false);
 });

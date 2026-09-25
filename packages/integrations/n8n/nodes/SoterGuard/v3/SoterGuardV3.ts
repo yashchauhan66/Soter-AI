@@ -71,7 +71,14 @@ const WITH_PRESET = JSON.stringify(
  */
 export const soterGuardOutputsV3 = `={{
   ((parameters) => {
+    const options = parameters.options || {};
     if (${JSON.stringify(SINGLE_OUTPUT_ACTIONS)}.includes(parameters.operation)) {
+      if (options.branchOnRedaction) {
+        return [
+          { displayName: "Clean", type: "${MAIN}" },
+          { displayName: "Redacted", type: "${MAIN}" }
+        ];
+      }
       return [{ displayName: "", type: "${MAIN}" }];
     }
     return [
@@ -109,7 +116,11 @@ export const soterGuardSubtitleV3 = `={{
     }
     if (${ENGINE_LESS}.includes(operation)) return base;
     const engine = String(options.detectionEngine || "AUTO");
-    return engine === "AUTO" ? base : base + " · " + engine.toLowerCase();
+    if (engine !== "AUTO") base = base + " · " + engine.toLowerCase();
+    if (operation === "piiRedactor" && options.branchOnRedaction) {
+      base = base + " · branching";
+    }
+    return base;
   })($parameter)
 }}` as ExpressionString;
 
@@ -211,6 +222,14 @@ export const soterGuardHintsV3: NodeHint[] = [
     type: "info",
     location: "ndv",
     displayCondition: `={{ ${PASSPORT_LIFECYCLE}.includes($parameter["operation"]) }}`,
+  },
+  {
+    message:
+      "Redaction branching is active. Clean items leave through <b>Clean</b> (output 1) and items with redacted PII/secrets leave through <b>Redacted</b> (output 2).",
+    type: "info",
+    location: "outputPane",
+    displayCondition: '={{ $parameter["operation"] === "piiRedactor" && ($parameter["options"] || {}).branchOnRedaction === true }}',
+    whenToDisplay: "beforeExecution",
   },
   {
     // New in version 3. Custom JSON Only is the one preset that grants nothing

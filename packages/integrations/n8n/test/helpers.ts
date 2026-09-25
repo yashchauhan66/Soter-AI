@@ -60,7 +60,7 @@ export function makeCtx(options: CtxOptions) {
     type: "n8n-nodes-soterai.soterGuard",
     typeVersion: options.typeVersion ?? (v3 ? 3 : 2),
     position: [0, 0] as [number, number],
-    parameters: { [selector]: options.action },
+    parameters: { [selector]: options.action, ...options.params },
   };
   const params: Record<string, unknown> = { [selector]: options.action, ...options.params };
 

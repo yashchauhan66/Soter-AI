@@ -2,6 +2,19 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.8.2] - 2026-09-25
+
+Next patch release with offline engine detection enhancements and native canvas visual branching for PII redaction.
+
+### Added
+
+- **`piiRedactor` Dual-Output Visual Branching (`branchOnRedaction`)**: Added the **Split Outputs on Redaction** toggle under `Options`. When enabled, `piiRedactor` dynamically exposes two named canvas output branches: **`Clean`** (output 0) for items with no sensitive data detected, and **`Redacted`** (output 1) for items where PII or secrets were found and sanitized. Enables visual canvas routing (e.g. routing sanitized records to a compliance queue) without requiring downstream `IF` nodes. When disabled (default), the node keeps its single-output collapse to preserve 100% compatibility with linear pipelines.
+- **Canvas Subtitle & Hints for Redaction Branching**: Added canvas subtitle status `· branching` and an output pane guidance hint when redaction branching is active.
+
+### Fixed
+
+- **Offline Local Engine Obfuscation & Jailbreak Recall (Problem 1)**: Integrated in-memory Base64 and URL-encoding decoders directly into `detectionVariants`. Expanded declarative inversion rules, Gandalf/MossCap secret extraction probes, dual-persona jailbreaks (`jailbreak.dual_persona_split`), and anti-refusal probes. Boosted out-of-distribution prompt leak recall by +31.5% and injection recall by +14.1% while maintaining sub-millisecond latency (777 µs/row), zero ReDoS, and a safe false positive rate of 0.09%.
+
 ## [0.8.1] - 2026-09-24
 
 Production release published to npm under `latest`. Consolidates the complete version 3 panel and author controls with critical stability fixes, full API contract alignment, and comprehensive validation.

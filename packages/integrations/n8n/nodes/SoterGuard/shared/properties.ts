@@ -1310,6 +1310,15 @@ export const soterGuardProperties: INodeProperties[] = [
         description:
           "Whether two identical items in the same execution reuse one API call. The reused item is marked reusedResult so it is never mistaken for a second independent check.",
       },
+      {
+        displayName: "Split Outputs on Redaction",
+        name: "branchOnRedaction",
+        type: "boolean",
+        default: false,
+        displayOptions: { show: { "/action": ["piiRedactor"] } },
+        description:
+          "Whether to provide two output branches ('Clean' and 'Redacted'). When enabled, items with no PII leave through Clean (output 0) and items where PII was sanitized leave through Redacted (output 1).",
+      },
     ],
   },
 

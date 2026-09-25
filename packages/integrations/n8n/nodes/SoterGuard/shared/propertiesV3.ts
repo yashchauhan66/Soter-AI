@@ -226,6 +226,7 @@ const OPTION_SOURCES: Record<string, () => INodeProperties> = {
   toolContent: () => source("toolContent"),
   toolTarget: () => source("toolTarget"),
   toolDestination: () => source("toolDestination"),
+  branchOnRedaction: () => runtimeSource("branchOnRedaction"),
 };
 
 function optionChild(name: string): INodeProperties {
