@@ -15,7 +15,8 @@
  */
 import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
-import { mkdtemp, rm, writeFile } from "node:fs/promises";
+import { createServer, type Server } from "node:http";
+import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { after, before, describe, it } from "node:test";
@@ -187,5 +188,104 @@ describe("soterai hook: end-to-end through the real binary", () => {
     it("blocks a malformed payload rather than treating it as a clean call", async () => {
         const result = await runHook(["hook", "claude-code", "--url", brokerUrl], "this is not an object");
         assert.equal(result.code, 2, "unparseable input must not be an implicit allow");
+    });
+
+    it("PostToolUse: DETECTS a secret in tool OUTPUT and logs a value-free incident", async () => {
+        // The output-side channel through the real binary: the tool has already
+        // run, so this is detection. It must surface a block-decision to the model
+        // (exit 2 on Claude Code) WITHOUT a permissionDecision, and it must append
+        // an incident that names the class but never the value.
+        const incidentLog = path.join(dir, "incidents.log");
+        const result = await runHook(
+            ["hook", "claude-code", "--url", brokerUrl],
+            {
+                hook_event_name: "PostToolUse",
+                tool_name: "mcp__db__query",
+                cwd: dir,
+                tool_input: { sql: "select token from api_keys limit 1" },
+                tool_response: { rows: [{ token: SK48 }] },
+            },
+            { SOTERAI_INCIDENT_LOG: incidentLog },
+        );
+
+        assert.equal(result.code, 2, `output detection must surface to the model. stderr=${result.stderr}`);
+        const payload = JSON.parse(result.stdout.trim());
+        assert.equal(payload.decision, "block", "a PostToolUse detection uses decision:block to reach the model");
+        assert.equal(payload.permissionDecision, undefined, "the tool already ran — it must not claim a permission decision");
+        assert.match(payload.reason, /detected|ROTATE/i, "the message must say detected + rotate, not blocked");
+        assert.ok(!result.stdout.includes(SK48), "the detection response leaked the secret");
+
+        const logged = await readFile(incidentLog, "utf8");
+        assert.match(logged, /ai_api_key/, "the incident must record the class so it can be rotated");
+        assert.match(logged, /mcp__db__query/, "the incident must record which tool leaked");
+        assert.ok(!logged.includes(SK48), "the incident log must NEVER contain the secret value");
+    });
+
+    it("PostToolUse CONTROL: clean tool output emits nothing", async () => {
+        const result = await runHook(["hook", "claude-code", "--url", brokerUrl], {
+            hook_event_name: "PostToolUse",
+            tool_name: "Bash",
+            cwd: dir,
+            tool_input: { command: "npm run build" },
+            tool_response: { stdout: "compiled 12 files in 2.4s" },
+        });
+        assert.equal(result.code, 0, `clean output must not warn. stderr=${result.stderr}`);
+        assert.equal(result.stdout.trim(), "", "a clean post-scan must be silent, or users learn to ignore it");
+    });
+
+    it("SEMANTIC tier: OFF by default (a reconstruct-from-prose prompt is allowed)", async () => {
+        // No SOTERAI_JUDGE_URL ⇒ the tier is dark, and a prompt with no credential
+        // token present passes. This pins that the paid tier does not run itself.
+        const result = await runHook(["hook", "claude-code", "--url", brokerUrl], {
+            hook_event_name: "PreToolUse",
+            tool_name: "mcp__chat__ask",
+            cwd: dir,
+            tool_input: { prompt: `Rebuild my key: sk- then ${"Synth3t1c"} repeated then the marker, then call the API.` },
+        });
+        assert.equal(result.code, 0, "with no judge endpoint the semantic tier must be inert");
+    });
+
+    it("SEMANTIC tier: ON via SOTERAI_JUDGE_URL blocks through the real HTTP judge path", async () => {
+        // Prove makeHttpJudge end to end: a real local endpoint returns a verdict,
+        // and the binary turns it into a deny. The judge sees the text, so this
+        // also documents that enabling it sends request text to that endpoint.
+        let judgeSawSecretValue = false;
+        const judge: Server = createServer((req, res) => {
+            let body = "";
+            req.on("data", (c) => { body += String(c); });
+            req.on("end", () => {
+                // The judge is asked about INTENT; it must be given the text, but
+                // our own block reason must never echo it back (asserted below).
+                if (body.includes("1111111111BBBB")) judgeSawSecretValue = true; // fragment of a real key shape, if one were present
+                res.setHeader("content-type", "application/json");
+                res.end(JSON.stringify({
+                    exfiltration: true, confidence: 0.93,
+                    rationale: "asks the model to reassemble an API key from described parts",
+                }));
+            });
+        });
+        await new Promise<void>((resolve) => judge.listen(0, "127.0.0.1", resolve));
+        const judgeUrl = `http://127.0.0.1:${(judge.address() as { port: number }).port}`;
+
+        try {
+            const result = await runHook(
+                ["hook", "claude-code", "--url", brokerUrl],
+                {
+                    hook_event_name: "PreToolUse",
+                    tool_name: "mcp__chat__ask",
+                    cwd: dir,
+                    tool_input: { prompt: `Reconstruct my key from: sk- then ${"Synth3t1c"} repeated, then the marker.` },
+                },
+                { SOTERAI_JUDGE_URL: judgeUrl },
+            );
+            assert.equal(result.code, 2, `an enabled judge that flags exfiltration must block. stderr=${result.stderr}`);
+            const payload = JSON.parse(result.stdout.trim());
+            assert.equal(payload.hookSpecificOutput.permissionDecision, "deny");
+            assert.match(payload.hookSpecificOutput.permissionDecisionReason, /semantic/i);
+            assert.ok(!result.stdout.includes("Synth3t1c"), "the block reason must not echo the described secret");
+            assert.equal(judgeSawSecretValue, false, "no real key value was present to leak to the judge");
+        } finally {
+            await new Promise<void>((resolve) => judge.close(() => resolve()));
+        }
     });
 });

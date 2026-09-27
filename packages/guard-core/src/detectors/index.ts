@@ -1,4 +1,5 @@
 export { detectSecrets, SECRET_DETECTOR_VERSION } from "./SecretDetector";
+export { detectEncodedSecrets, ENCODED_SECRET_DETECTOR_VERSION } from "./EncodedSecretDetector";
 export { detectEnvFile, ENV_FILE_DETECTOR_VERSION } from "./EnvFileDetector";
 export { detectPII, PII_DETECTOR_VERSION } from "./PIIDetector";
 export { detectIndiaPII, INDIA_PII_DETECTOR_VERSION } from "./IndiaPIIDetector";

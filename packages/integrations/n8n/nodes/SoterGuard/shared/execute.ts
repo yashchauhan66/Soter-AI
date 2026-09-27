@@ -11,12 +11,16 @@ import {
   analyzeLocal,
   checkToolCallLocal,
   compareEgressLocal,
+  isPrivacyCategory,
   LOCAL_ENGINE_LIMITATIONS,
   LOCAL_ENGINE_VERSION,
   LOCAL_RULE_COUNT,
   redactLocal,
+  redactionTokensFor,
   redactUsSsn,
   scoreRagDocumentLocal,
+  screenLiterals,
+  splitIgnorableEntities,
 } from "./localEngine";
 import type {
   LocalAnalysis,
@@ -27,10 +31,23 @@ import type {
   LocalTopicScope,
 } from "./localEngine";
 
-export const PACKAGE_VERSION = "0.7.0";
+export const PACKAGE_VERSION = "0.8.1";
 const USER_AGENT = `n8n-nodes-soterai/${PACKAGE_VERSION}`;
 const MAX_SANITIZE_DEPTH = 8;
 const MAX_METADATA_STRING_LENGTH = 500;
+
+/**
+ * The most text the node itself will carry in one item.
+ *
+ * Deliberately far above what the SoterAI API accepts per request. The cloud
+ * limit is a deployment setting the node cannot read (`MAX_GUARD_TEXT_LENGTH`,
+ * 8,000 by default, and each text-carrying endpoint has its own bound besides),
+ * so enforcing it here would reject text a self-hosted deployment is configured
+ * to accept. The cloud limit is handled where it is knowable instead — in the
+ * API's own rejection, see `textLimitFromRejection`. This number is the local
+ * engine's ceiling and the point past which a single item is a mistake.
+ */
+const MAX_ITEM_TEXT_LENGTH = 200_000;
 
 // Rate-limit backoff. execute() iterates the input items in a loop, so a batch
 // workflow issues one guard call per item back to back and can legitimately
@@ -50,7 +67,9 @@ const DEFAULT_RETRY_WAIT_MS = 5_000;
  */
 export const SINGLE_OUTPUT_ACTIONS = ["piiRedactor"];
 
-export function outputCountForAction(action: string): number {
+export function outputCountForAction(action: string, optionsOrBranching?: boolean | NodeOptions): number {
+  const branching = typeof optionsOrBranching === "boolean" ? optionsOrBranching : optionsOrBranching?.branchOnRedaction;
+  if (action === "piiRedactor" && branching) return 2;
   return SINGLE_OUTPUT_ACTIONS.includes(action) ? 1 : 2;
 }
 
@@ -86,6 +105,9 @@ interface NodeOptions {
   parallelLayers: boolean;
   requestTimeoutMs: number;
   includeRawResponse: boolean;
+  /** Auto mode fails the item instead of answering it with the local engine. */
+  neverDowngradeToLocal: boolean;
+  branchOnRedaction?: boolean;
 }
 
 const DEFAULT_REQUEST_TIMEOUT_MS = 20000;
@@ -104,6 +126,11 @@ function readNodeOptions(ctx: IExecuteFunctions, itemIndex: number): NodeOptions
     parallelLayers: advanced.parallelLayers !== false,
     requestTimeoutMs: Number.isFinite(timeout) ? Math.max(1000, Math.min(120000, Math.trunc(timeout))) : DEFAULT_REQUEST_TIMEOUT_MS,
     includeRawResponse: advanced.includeRawResponse !== false,
+    // Opt-in, and default false on purpose: every published version has failed
+    // open, and flipping that on upgrade would turn a brief API outage into a
+    // stopped production workflow for people who never asked for it.
+    neverDowngradeToLocal: advanced.neverDowngradeToLocal === true,
+    branchOnRedaction: advanced.branchOnRedaction === true,
   };
 }
 
@@ -125,6 +152,58 @@ function tagTransient(error: NodeApiError): NodeApiError {
 
 function isTransientApiError(error: unknown): boolean {
   return Boolean(error && typeof error === "object" && (error as Record<string, unknown>).soterTransient === true);
+}
+
+/**
+ * Marks an API rejection as "this text is longer than the deployment accepts".
+ *
+ * A separate tag from `soterTransient` because it is a different fact and wants a
+ * different answer. The request was refused and re-sending it unchanged will be
+ * refused again, so it is not transient — but the *local* engine has no such
+ * limit, so in Auto mode it can still answer, which is what Auto is for. Keeping
+ * the two apart is what stops an oversize item being reported as an outage.
+ */
+function tagTextTooLong(error: NodeApiError): NodeApiError {
+  (error as unknown as Record<string, unknown>).soterTextTooLong = true;
+  return error;
+}
+
+function isTextTooLongError(error: unknown): boolean {
+  return Boolean(error && typeof error === "object" && (error as Record<string, unknown>).soterTextTooLong === true);
+}
+
+/**
+ * Reads the per-request text limit out of the API's own rejection.
+ *
+ * The limit is a deployment setting (`MAX_GUARD_TEXT_LENGTH`, 8,000 by default,
+ * and every text-carrying endpoint has its own bound besides), so the node cannot
+ * know it in advance: hard-coding 8,000 here would reject text a self-hosted
+ * deployment is configured to accept, and a pre-flight check is the wrong place
+ * for a number only the server knows. The request schema names it in the 400, and
+ * that is the one moment it is knowable.
+ *
+ * Worth recognising rather than passing through, because raw it reads
+ * "SoterAI API error 400" with "String must contain at most 8000 character(s)"
+ * buried in the body — no field, no actual length, no way forward, on a node
+ * whose own limit says 200,000. Both zod phrasings are matched so a server
+ * upgrade cannot silently take the explanation away.
+ */
+function textLimitFromRejection(status: number, data: Record<string, unknown>): number | null {
+  if (status !== 400) return null;
+  const message = typeof data.message === "string" ? data.message : "";
+  const match = /at most (\d+) character|<=\s*(\d+) character/i.exec(message);
+  if (!match) return null;
+  const limit = Number(match[1] ?? match[2]);
+  return Number.isInteger(limit) && limit > 0 ? limit : null;
+}
+
+/** Length of the longest string in a request body — the field the limit refused. */
+function longestBodyText(body: Record<string, unknown>): number {
+  let longest = 0;
+  for (const value of Object.values(body)) {
+    if (typeof value === "string" && value.length > longest) longest = value.length;
+  }
+  return longest;
 }
 
 /**
@@ -227,10 +306,13 @@ function parseRetryAfterMs(headers: unknown): number | null {
  *   ready.
  * - Redact Secrets or PII: never flagged; it has a single output.
  */
-function isFlagged(action: string, result: IDataObject): boolean {
+function isFlagged(action: string, result: IDataObject, branchOnRedaction?: boolean): boolean {
   switch (action) {
     case "piiRedactor":
-      return false;
+      if (!branchOnRedaction) return false;
+      const count = Number(result.clientSideRedactionCount ?? 0);
+      const entities = Array.isArray(result.detectedEntities) ? result.detectedEntities.length : 0;
+      return count > 0 || entities > 0;
     case "workflowAudit":
       return result.readyForProduction !== true;
     case "ragScanner":
@@ -275,6 +357,20 @@ interface ActionRequest {
   topicMode?: LocalTopicMode;
   sensitivity?: Sensitivity;
   alwaysAllow?: string[];
+  /** Identifier types the author asked the guard to leave in place. */
+  ignoredEntities?: string[];
+  /** Entries from the same field the node would not honour, kept so it can say so. */
+  refusedEntities?: string[];
+  /** Literal words/phrases the author asked to leave unredacted. */
+  ignoreLiterals?: string[];
+  /** Literal entries refused because they carry a credential. */
+  refusedLiterals?: string[];
+  /**
+   * Whether On Threat also acts on an item whose only finding is a secret or a
+   * personal detail. Version 3 only, off by default — see the field's own
+   * comment in `properties.ts` for why it cannot be fixed in place.
+   */
+  enforceOnSensitiveData?: boolean;
   replies?: CustomReplies;
   profile: ProtectionProfile;
   aiOutputText?: string;
@@ -288,6 +384,12 @@ interface ActionRequest {
   agentDescription?: string;
   agentIdentityId?: string;
   passportTtlSeconds?: number;
+  /**
+   * What the author actually asked for, kept beside the clamped value so the
+   * result can say a pass expires sooner than they configured. Only set when it
+   * differs from `passportTtlSeconds`.
+   */
+  passportTtlSecondsRequested?: number;
   passportPolicyPreset?: string;
   passportPolicy?: Record<string, unknown>;
   passportId?: string;
@@ -377,7 +479,16 @@ interface CustomReplies {
  * perform is the one failure this package is built to avoid.
  */
 function readText(ctx: IExecuteFunctions, node: INode, name: string, itemIndex: number, fieldName: string): string {
-  const raw = ctx.getNodeParameter(name, itemIndex, "") as unknown;
+  return coerceText(ctx.getNodeParameter(name, itemIndex, "") as unknown, node, itemIndex, fieldName);
+}
+
+/**
+ * The type-safety half of readText, split out so a value read from a collection
+ * (node version 3's "Advanced Detection") gets the same guarantee: a string
+ * passes through, a number/boolean is stringified, and an object or array is
+ * refused rather than scanned as JSON punctuation and reported as a clean pass.
+ */
+function coerceText(raw: unknown, node: INode, itemIndex: number, fieldName: string): string {
   if (typeof raw === "string") return raw;
   if (raw === null || raw === undefined) return "";
   if (typeof raw === "number" || typeof raw === "boolean" || typeof raw === "bigint") return String(raw);
@@ -392,6 +503,32 @@ function readText(ctx: IExecuteFunctions, node: INode, name: string, itemIndex: 
         `call the result checked.`,
     },
   );
+}
+
+/**
+ * Reads one of the five detection-scope fields that moved into the "Advanced
+ * Detection" collection on node version 3.
+ *
+ * On v1 and v2 these are top-level parameters. On v3 they live inside the
+ * `advancedDetection` collection, which stores only the keys the author actually
+ * set — so a key left untouched is absent, exactly as an untouched top-level
+ * field returns its default. Callers pass the same default they would have given
+ * getNodeParameter and get it back under either layout, so the read is identical
+ * across versions and only the storage location differs.
+ */
+function readDetectionOption(
+  ctx: IExecuteFunctions,
+  nodeVersion: number,
+  name: string,
+  itemIndex: number,
+  fallback: unknown,
+): unknown {
+  if (nodeVersion >= 3) {
+    const collection = ctx.getNodeParameter("advancedDetection", itemIndex, {}) as IDataObject;
+    const value = collection[name];
+    return value === undefined ? fallback : value;
+  }
+  return ctx.getNodeParameter(name, itemIndex, fallback);
 }
 
 function readActionRequest(
@@ -424,11 +561,19 @@ function readActionRequest(
     case "inputGuard":
       request.text = readText(ctx, node, "inputText", itemIndex, "Input Text");
       request.onThreat = ctx.getNodeParameter("onThreat", itemIndex) as string;
-      request.allowedTopics = splitList(ctx.getNodeParameter("allowedTopics", itemIndex, "") as string);
-      request.systemPromptContext = readText(ctx, node, "systemPromptContext", itemIndex, "System Prompt Context");
-      request.topicMode = readTopicMode(ctx, itemIndex);
+      request.allowedTopics = splitList(readDetectionOption(ctx, nodeVersion, "allowedTopics", itemIndex, "") as string);
+      request.systemPromptContext = coerceText(
+        readDetectionOption(ctx, nodeVersion, "systemPromptContext", itemIndex, ""),
+        node,
+        itemIndex,
+        "System Prompt Context",
+      );
+      request.topicMode = readTopicMode(ctx, nodeVersion, itemIndex);
       request.sensitivity = readSensitivity(ctx, itemIndex);
-      request.alwaysAllow = splitLines(ctx.getNodeParameter("alwaysAllow", itemIndex, "") as string);
+      request.alwaysAllow = splitLines(readDetectionOption(ctx, nodeVersion, "alwaysAllow", itemIndex, "") as string);
+      attachIgnoredEntities(request, readIgnoredEntities(ctx, nodeVersion, itemIndex));
+      attachIgnoredWords(ctx, request, nodeVersion, itemIndex);
+      request.enforceOnSensitiveData = readEnforceOnSensitiveData(ctx, nodeVersion, itemIndex);
       request.replies = readCustomReplies(ctx, itemIndex);
       break;
     case "universalGuard":
@@ -436,10 +581,18 @@ function readActionRequest(
       request.onThreat = ctx.getNodeParameter("onThreat", itemIndex) as string;
       request.profile = ctx.getNodeParameter("protectionProfile", itemIndex) as ProtectionProfile;
       request.aiOutputText = readText(ctx, node, "universalOutputText", itemIndex, "AI Output Text");
-      request.allowedTopics = splitList(ctx.getNodeParameter("allowedTopics", itemIndex, "") as string);
-      request.systemPromptContext = readText(ctx, node, "systemPromptContext", itemIndex, "System Prompt Context");
-      request.topicMode = readTopicMode(ctx, itemIndex);
-      request.alwaysAllow = splitLines(ctx.getNodeParameter("alwaysAllow", itemIndex, "") as string);
+      request.allowedTopics = splitList(readDetectionOption(ctx, nodeVersion, "allowedTopics", itemIndex, "") as string);
+      request.systemPromptContext = coerceText(
+        readDetectionOption(ctx, nodeVersion, "systemPromptContext", itemIndex, ""),
+        node,
+        itemIndex,
+        "System Prompt Context",
+      );
+      request.topicMode = readTopicMode(ctx, nodeVersion, itemIndex);
+      request.alwaysAllow = splitLines(readDetectionOption(ctx, nodeVersion, "alwaysAllow", itemIndex, "") as string);
+      attachIgnoredEntities(request, readIgnoredEntities(ctx, nodeVersion, itemIndex));
+      attachIgnoredWords(ctx, request, nodeVersion, itemIndex);
+      request.enforceOnSensitiveData = readEnforceOnSensitiveData(ctx, nodeVersion, itemIndex);
       request.replies = readCustomReplies(ctx, itemIndex);
       request.securityContext = readSecurityContext(ctx, node, itemIndex, nodeVersion);
       break;
@@ -454,7 +607,7 @@ function readActionRequest(
       break;
     case "enrollIdentity":
       request.agentName = readText(ctx, node, "agentName", itemIndex, "Agent Name");
-      request.agentType = ctx.getNodeParameter("agentType", itemIndex, "CUSTOM") as string;
+      request.agentType = agentTypeValue(ctx.getNodeParameter("agentType", itemIndex, "CUSTOM"));
       request.agentDescription = readText(ctx, node, "agentDescription", itemIndex, "Agent Description") || undefined;
       request.passportPolicyPreset = ctx.getNodeParameter("passportPolicyPreset", itemIndex, "READ_ONLY") as string;
       request.passportPolicy = parseOptionalJsonObject(
@@ -465,7 +618,8 @@ function readActionRequest(
       break;
     case "issuePassport":
       request.agentIdentityId = readText(ctx, node, "agentIdentityId", itemIndex, "Agent Identity ID");
-      request.passportTtlSeconds = Number(ctx.getNodeParameter("passportTtlSeconds", itemIndex, 3600));
+      request.passportTtlSecondsRequested = Number(ctx.getNodeParameter("passportTtlSeconds", itemIndex, 3600));
+      request.passportTtlSeconds = passportTtlValue(request.passportTtlSecondsRequested);
       request.passportPolicyPreset = ctx.getNodeParameter("passportPolicyPreset", itemIndex, "READ_ONLY") as string;
       request.passportPolicy = parseOptionalJsonObject(
         node,
@@ -490,15 +644,20 @@ function readActionRequest(
       request.text = readText(ctx, node, "outputText", itemIndex, "AI Output Text");
       request.onThreat = ctx.getNodeParameter("onThreat", itemIndex) as string;
       request.sensitivity = readSensitivity(ctx, itemIndex);
+      attachIgnoredEntities(request, readIgnoredEntities(ctx, nodeVersion, itemIndex));
+      attachIgnoredWords(ctx, request, nodeVersion, itemIndex);
+      request.enforceOnSensitiveData = readEnforceOnSensitiveData(ctx, nodeVersion, itemIndex);
       request.replies = readCustomReplies(ctx, itemIndex);
       break;
     case "piiRedactor":
       request.text = readText(ctx, node, "piiText", itemIndex, "Text");
+      attachIgnoredEntities(request, readIgnoredEntities(ctx, nodeVersion, itemIndex));
+      attachIgnoredWords(ctx, request, nodeVersion, itemIndex);
       break;
     case "ragScanner":
       request.text = readText(ctx, node, "ragText", itemIndex, "Document Text");
       request.documentId = readText(ctx, node, "documentId", itemIndex, "Document ID");
-      request.documentSource = readText(ctx, node, "documentSource", itemIndex, "Document Source");
+      request.documentSource = documentSourceValue(ctx.getNodeParameter("documentSource", itemIndex, ""));
       break;
     case "workflowAudit":
       request.workflowJson = readText(ctx, node, "workflowJson", itemIndex, "Workflow JSON");
@@ -531,6 +690,14 @@ function reuseKey(request: ActionRequest): string {
     request.topicMode ?? "",
     request.sensitivity ?? "",
     request.alwaysAllow ?? [],
+    request.ignoredEntities ?? [],
+    // Every field below this line changes the answer, so it has to change the
+    // key. These three are all expression-friendly, which is what makes them
+    // able to differ between two items of one batch — the only situation in
+    // which reuse can hand an item a result that was never computed for it.
+    request.ignoreLiterals ?? [],
+    request.refusedLiterals ?? [],
+    request.enforceOnSensitiveData ?? false,
     request.replies ?? null,
     request.workflowJson ?? "",
     request.securityContext ?? null,
@@ -541,6 +708,7 @@ function reuseKey(request: ActionRequest): string {
     request.agentDescription ?? "",
     request.agentIdentityId ?? "",
     request.passportTtlSeconds ?? null,
+    request.passportTtlSecondsRequested ?? null,
     request.passportPolicyPreset ?? "",
     request.passportPolicy ?? null,
     request.passportId ?? "",
@@ -563,13 +731,27 @@ export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeE
   // Read it from the saved parameters when there is no item to read it against,
   // so the number of returned branches always matches the number of outputs the
   // canvas is drawing, even for an empty input batch.
+  //
+  // Node version 3 renamed the same twelve values from `action` to `operation`,
+  // so both keys are checked. Neither is stored when the author left the
+  // dropdown alone, and the final fallback stays correct in that case: every
+  // resource's first operation returns two branches, and the one single-output
+  // operation (Redact) is never a resource default, so it cannot be the unsaved
+  // value here.
   const nodeAction =
     items.length > 0
       ? (this.getNodeParameter("action", 0) as string)
-      : ((node.parameters?.action as string) ?? "inputGuard");
+      : ((node.parameters?.action as string) ?? (node.parameters?.operation as string) ?? "inputGuard");
+
+  const emptyOptions = (node.parameters?.options as IDataObject) ?? (node.parameters?.advancedOptions as IDataObject) ?? {};
+  const isBranchingRedaction =
+    nodeAction === "piiRedactor" &&
+    (items.length > 0
+      ? readNodeOptions(this, 0).branchOnRedaction === true
+      : emptyOptions.branchOnRedaction === true);
 
   const shapeOutputs = (safe: INodeExecutionData[], flagged: INodeExecutionData[]) =>
-    !branchOutputs || outputCountForAction(nodeAction) === 1 ? [safe] : [safe, flagged];
+    !branchOutputs || outputCountForAction(nodeAction, isBranchingRedaction) === 1 ? [safe] : [safe, flagged];
 
   if (items.length === 0) return shapeOutputs([], []);
 
@@ -659,16 +841,16 @@ export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeE
         hit = started;
       }
 
-      const result = canonicalizeResult(action, await hit.promise);
+      const result = canonicalizeResult(action, await hit.promise, options.branchOnRedaction);
       if (hit.itemIndex === i) {
-        outcomes[i] = { json: result, flagged: isFlagged(action, result) };
+        outcomes[i] = { json: result, flagged: isFlagged(action, result, options.branchOnRedaction) };
         return;
       }
       // Marked, not hidden. A reader comparing two items with one incident id
       // between them needs to know why, and a reused answer is still an answer
       // about this item's text — it is the same text.
       const reused: IDataObject = { ...result, reusedResult: true, reusedFromItemIndex: hit.itemIndex };
-      outcomes[i] = { json: reused, flagged: isFlagged(action, reused) };
+      outcomes[i] = { json: reused, flagged: isFlagged(action, reused, options.branchOnRedaction) };
     } catch (error) {
       if (this.continueOnFail()) {
         // An item whose check never completed has not been cleared by anything,
@@ -711,6 +893,18 @@ export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeE
  * mean the question never reached the API, and a weaker answer beats no answer.
  * A refused question — bad key, disabled endpoint, invalid payload — is reported,
  * because quietly downgrading it would hide the configuration error that caused it.
+ *
+ * One payload rejection is on the first side of that line rather than the second:
+ * text longer than the deployment's per-request limit. Nothing about the item is
+ * misconfigured, re-sending it will be refused identically, and the local engine
+ * has no such limit — so it is the one 400 Auto answers instead of reporting.
+ *
+ * "Never Downgrade to Local" removes the switch entirely. A regulated desk that
+ * has told an auditor every message is checked by the full engine cannot have
+ * that quietly become "checked by a regex on the days the API was down", and
+ * `engineDegraded: true` on an item nobody reads is not a control. With it on,
+ * the item fails instead — which, with n8n's own Continue On Fail, still leaves
+ * through the Flagged branch rather than the Safe one.
  */
 async function runAction(
   ctx: IExecuteFunctions,
@@ -744,6 +938,13 @@ async function runAction(
     client = await resolveClient();
   } catch (error) {
     if (options.engine !== "AUTO" || cloudOnly) throw asNodeError(node, error);
+    if (options.neverDowngradeToLocal) {
+      throw strictCloudError(
+        node,
+        "No usable SoterAI credential",
+        sanitizeErrorMessage(error instanceof Error ? error.message : "credential unavailable"),
+      );
+    }
     return stampLocalEngine(
       runLocalAction(node, options, request),
       `No usable SoterAI credential: ${sanitizeErrorMessage(error instanceof Error ? error.message : "credential unavailable")}`,
@@ -756,14 +957,41 @@ async function runAction(
     result.engineDegraded = false;
     return result;
   } catch (error) {
-    if (options.engine !== "AUTO" || cloudOnly || !isTransientApiError(error)) throw asNodeError(node, error);
+    // Two different reasons the cloud could not answer, both of which the local
+    // engine can: the API was unreachable, or the item is longer than the API
+    // accepts per request while staying inside the node's own 200,000 ceiling.
+    const oversize = isTextTooLongError(error);
+    if (options.engine !== "AUTO" || cloudOnly || !(oversize || isTransientApiError(error))) throw asNodeError(node, error);
+    const headline = oversize
+      ? "This item is longer than the SoterAI API accepts per request"
+      : "The SoterAI API could not be reached";
+    const detail = sanitizeErrorMessage(error instanceof Error ? error.message : "request failed");
+    if (options.neverDowngradeToLocal) {
+      throw strictCloudError(node, headline, detail);
+    }
     return stampLocalEngine(
       runLocalAction(node, options, request),
-      `The SoterAI API could not be reached, so this item was checked locally instead: ${sanitizeErrorMessage(
-        error instanceof Error ? error.message : "request failed",
-      )}`,
+      `${headline}, so this item was checked locally instead: ${detail}`,
     );
   }
+}
+
+/**
+ * The error raised in place of a silent downgrade.
+ *
+ * It names the setting, because the person reading this in an execution log a
+ * week later is usually not the person who ticked the box, and an unexplained
+ * "API could not be reached" invites them to switch the node to Local — which
+ * is the exact downgrade the setting exists to prevent.
+ */
+function strictCloudError(node: INode, headline: string, detail: string): NodeOperationError {
+  return new NodeOperationError(node, `${headline}, and Never Downgrade to Local is on, so this item was not checked.`, {
+    description:
+      `${detail} This item was failed on purpose rather than answered by the local pattern engine, which catches ` +
+      "materially less. Turn off Never Downgrade to Local (Advanced Options) to let items through on the local engine, " +
+      "or fix what the sentence above names and re-run. With Continue On Fail set, items like " +
+      "this leave through the Flagged branch.",
+  });
 }
 
 /**
@@ -815,6 +1043,7 @@ async function runCloudAction(
         metadata: request.metadata,
         allowedTopics: request.allowedTopics,
         systemPromptContext: request.systemPromptContext,
+        enforceOnSensitiveData: request.enforceOnSensitiveData,
       });
       result.operation = "inputGuard";
       break;
@@ -839,6 +1068,7 @@ async function runCloudAction(
         outputDestinationName: context.output?.destinationName,
         protectedSources: context.output?.protectedSources,
         passportToken: request.passportToken,
+        enforceOnSensitiveData: request.enforceOnSensitiveData,
       });
       result.operation = "universalGuard";
       break;
@@ -880,7 +1110,7 @@ async function runCloudAction(
         blocked: false,
         identity: sanitizeOutputObject(raw),
         agentIdentityId: (raw.id as string) ?? null,
-        nextStep: "Use agentIdentityId with Issue Agent Passport, then pass its passportToken to Check Agent Tool Call.",
+        nextStep: "Use agentIdentityId with Issue Access Pass, then pass its passportToken to Check Tool Call.",
       };
       break;
     }
@@ -889,13 +1119,15 @@ async function runCloudAction(
       if (!agentIdentityId) throw new NodeOperationError(node, "Agent Identity ID is required.", { itemIndex: request.itemIndex });
       const sessionId = metadataSessionId(request.metadata);
       const policy = resolvePassportPolicy(request.passportPolicyPreset, request.passportPolicy);
+      const ttlSeconds = request.passportTtlSeconds ?? 3600;
       const raw = await soterPost(ctx, client, "/api/agent/passport/issue", {
         agentIdentityId,
         ...(sessionId ? { sessionId } : {}),
-        ttlSeconds: request.passportTtlSeconds ?? 3600,
+        ttlSeconds,
         ...policy,
         metadata: request.metadata,
       });
+      const requestedTtl = request.passportTtlSecondsRequested;
       result = {
         operation: "issuePassport",
         verdictCode: "PASSPORT_ISSUED",
@@ -907,6 +1139,21 @@ async function runCloudAction(
         passportToken: (raw.passportToken as string) ?? null,
         status: (raw.status as string) ?? "ACTIVE",
         expiresAt: raw.expiresAt as string,
+        ttlSeconds,
+        // A pass that expires sooner than it was configured to is not a detail to
+        // discover from a 401 four hours into a run.
+        ...(typeof requestedTtl === "number" && Number.isFinite(requestedTtl) && requestedTtl !== ttlSeconds
+          ? {
+              ttlAdjusted: {
+                requestedSeconds: requestedTtl,
+                appliedSeconds: ttlSeconds,
+                detail:
+                  `Time to Live was set to ${requestedTtl}, and the SoterAI API accepts ` +
+                  `${PASSPORT_TTL_MIN_SECONDS}–${PASSPORT_TTL_MAX_SECONDS} seconds, so the pass was issued for ` +
+                  `${ttlSeconds}. Issue a new pass when this one expires rather than raising the value.`,
+              },
+            }
+          : {}),
         tokenSafety: "Treat passportToken as a secret. Store it in n8n credentials or pass it only by expression; it is shown once.",
       };
       break;
@@ -973,6 +1220,7 @@ async function runCloudAction(
         projectId,
         onThreat: request.onThreat,
         metadata: request.metadata,
+        enforceOnSensitiveData: request.enforceOnSensitiveData,
       });
       result.operation = "outputGuard";
       break;
@@ -982,6 +1230,7 @@ async function runCloudAction(
         text: request.text,
         projectId,
         metadata: request.metadata,
+        ignoredEntities: request.ignoredEntities,
       });
       result.operation = "piiRedactor";
       break;
@@ -1018,6 +1267,15 @@ interface GuardParams {
    */
   allowedTopics?: string[];
   systemPromptContext?: string;
+  /**
+   * Whether On Threat also acts on an item the server answered with a redaction.
+   *
+   * Carried down the cloud path for one reason: a setting has to mean the same
+   * thing whichever engine answered. Auto picks the engine by whether the API is
+   * reachable, so if this switch only worked locally, the same workflow would
+   * stop an item or not depending on a network condition the author never sees.
+   */
+  enforceOnSensitiveData?: boolean;
 }
 
 function metadataSessionId(metadata?: Record<string, unknown>): string | undefined {
@@ -1139,10 +1397,70 @@ function readSensitivity(ctx: IExecuteFunctions, itemIndex: number): Sensitivity
   return raw === "LENIENT" || raw === "STRICT" ? raw : "BALANCED";
 }
 
-function readTopicMode(ctx: IExecuteFunctions, itemIndex: number): LocalTopicMode {
-  const raw = String(ctx.getNodeParameter("topicHandling", itemIndex, "TRUST") ?? "TRUST").toUpperCase();
+function readTopicMode(ctx: IExecuteFunctions, nodeVersion: number, itemIndex: number): LocalTopicMode {
+  const raw = String(readDetectionOption(ctx, nodeVersion, "topicHandling", itemIndex, "TRUST") ?? "TRUST").toUpperCase();
   if (raw === "ADVISORY" || raw === "RESTRICT" || raw === "TRUST_AND_RESTRICT") return raw;
   return "TRUST";
+}
+
+/**
+ * Reads the identifier types the author asked the guard to leave alone.
+ *
+ * The dropdown only offers ignorable ones, but the field accepts an expression,
+ * so a workflow can ask for anything — including a live credential. Those come
+ * back as refusals rather than being dropped, because a guard that is told to
+ * ignore private keys and answers by quietly honouring the other half of the
+ * list is exactly the silent behaviour this release is fixing.
+ */
+function readIgnoredEntities(ctx: IExecuteFunctions, nodeVersion: number, itemIndex: number): { ignored: string[]; refused: string[] } {
+  const raw = readDetectionOption(ctx, nodeVersion, "ignoredEntities", itemIndex, []) as unknown;
+  const requested = Array.isArray(raw)
+    ? raw.map((entry) => String(entry))
+    : splitList(typeof raw === "string" ? raw : "");
+  return splitIgnorableEntities(requested);
+}
+
+/** Copies a read entity list onto the request, leaving both fields absent when empty. */
+function attachIgnoredEntities(request: ActionRequest, read: { ignored: string[]; refused: string[] }): void {
+  if (read.ignored.length > 0) request.ignoredEntities = read.ignored;
+  if (read.refused.length > 0) request.refusedEntities = read.refused;
+}
+
+/**
+ * Reads the literal words/phrases the author asked the redactor to leave alone,
+ * and screens them for credentials.
+ *
+ * One per line (the field is a text area, like Always Allow). A line that itself
+ * carries a secret is refused rather than kept: the whole point of this list is
+ * to protect a phrase from redaction, and protecting a live credential is the
+ * one thing a security node must never be talked into. Version 3 stores this in
+ * Options; on v1/v2 the field does not exist and the read falls back to empty.
+ */
+function attachIgnoredWords(ctx: IExecuteFunctions, request: ActionRequest, nodeVersion: number, itemIndex: number): void {
+  // Version 3 only. The field is gated @version [3] in the panel, and reading it
+  // is gated here too, so a saved v1/v2 workflow behaves exactly as before even
+  // if a value ever reaches this key by another path.
+  if (nodeVersion < 3) return;
+  const raw = ctx.getNodeParameter("ignoredWords", itemIndex, "") as unknown;
+  const requested = Array.isArray(raw) ? raw.map((entry) => String(entry)) : splitLines(typeof raw === "string" ? raw : "");
+  if (requested.length === 0) return;
+  const { kept, refused } = screenLiterals(requested);
+  if (kept.length > 0) request.ignoreLiterals = kept;
+  if (refused.length > 0) request.refusedLiterals = refused;
+}
+
+/**
+ * Whether On Threat should also act on a privacy-only item.
+ *
+ * Gated to version 3 on the same grounds as Ignored Words, and for a sharper
+ * reason: this one decides whether items stop. On Threat defaults to Block, so a
+ * v1 or v2 workflow that somehow read a `true` here would start refusing every
+ * message that mentions an email address. The panel gate and this gate have to
+ * agree, and both say version 3.
+ */
+function readEnforceOnSensitiveData(ctx: IExecuteFunctions, nodeVersion: number, itemIndex: number): boolean {
+  if (nodeVersion < 3) return false;
+  return ctx.getNodeParameter("enforceOnSensitiveData", itemIndex, false) === true;
 }
 
 /** A customer-facing sentence, not a document. Long enough for two languages. */
@@ -1237,6 +1555,7 @@ interface PiiParams {
   text: string;
   projectId?: string;
   metadata?: Record<string, unknown>;
+  ignoredEntities?: string[];
 }
 
 interface RagParams {
@@ -1245,6 +1564,21 @@ interface RagParams {
   documentId: string;
   source: string;
   metadata?: Record<string, unknown>;
+}
+
+/**
+ * The scheme+host of the API, for the Origin header the server's CSRF guard wants.
+ *
+ * validateBaseUrl has already accepted the URL, so parsing cannot realistically
+ * throw here; the fallback exists only so a malformed value degrades to sending
+ * the base string rather than crashing the request.
+ */
+function apiOrigin(baseUrl: string): string {
+  try {
+    return new URL(baseUrl).origin;
+  } catch {
+    return baseUrl.replace(/\/$/, "");
+  }
 }
 
 async function soterPost(
@@ -1266,6 +1600,15 @@ async function soterPost(
           "Content-Type": "application/json",
           "x-api-key": client.apiKey,
           "User-Agent": USER_AGENT,
+          // Some endpoints (RAG trust-score, agent tool-check, the whole passport
+          // lifecycle) sit behind a CSRF guard that rejects any request without an
+          // Origin/Referer with 403 "Missing Origin or Referer header." — even a
+          // server-to-server call authenticated by x-api-key, which is exactly what
+          // this node is. Without it those actions are dead against production while
+          // guard/input and guard/output (which do not enforce it) work, so it looks
+          // like a plan limit rather than a missing header. Sending the API's own
+          // origin satisfies the guard and is a no-op for the endpoints that ignore it.
+          Origin: apiOrigin(client.baseUrl),
         },
         body: body as IDataObject,
         json: true,
@@ -1299,20 +1642,53 @@ async function soterPost(
     }
 
     if (statusCode < 200 || statusCode >= 300) {
+      const textLimit = textLimitFromRejection(statusCode, data);
       const error = new NodeApiError(ctx.getNode(), data as JsonObject, {
-        message: formatApiError(statusCode, data, path),
+        message: textLimit === null
+          ? formatApiError(statusCode, data, path)
+          : formatTextTooLongError(textLimit, longestBodyText(body), path),
         httpCode: String(statusCode),
       });
       // A server fault or an exhausted rate-limit window is about capacity, not
       // about this request. A 4xx other than 429 is about this request — the key,
       // the plan, or the payload — and must surface instead of being answered by
-      // a weaker engine.
+      // a weaker engine. An oversize text is the one payload rejection the local
+      // engine can still answer, so it is tagged for Auto rather than being
+      // treated as either an outage or a dead end.
       if (statusCode >= 500 || statusCode === 429 || statusCode === 408 || statusCode === 0) tagTransient(error);
+      else if (textLimit !== null) tagTextTooLong(error);
       throw error;
     }
 
     return data;
   }
+}
+
+/**
+ * The findings, projected down to what is safe to put in run data.
+ *
+ * `GuardFinding.matched` is the text that actually matched — for a secret rule,
+ * the live secret. n8n pins item JSON in the execution log, so copying a finding
+ * through verbatim would write the thing the guard just caught into storage that
+ * outlives the run. Offsets go too: they are only meaningful against the original
+ * text, and a start/end pair plus the redacted copy reconstructs a good deal of
+ * what was removed.
+ *
+ * What is left is what a workflow can act on — what type of thing was found, how
+ * bad it was, and which redaction token stands in for it. The Local engine has
+ * always emitted `findings`; the cloud path used to return only `categories`, so
+ * the same action produced a different shape depending on which engine answered.
+ * It is also what Ignored Identifiers matches on: the token is the only field
+ * that names an entity precisely enough to withdraw exactly one finding.
+ */
+function publicFindings(raw: Record<string, unknown>): IDataObject[] {
+  if (!Array.isArray(raw.findings)) return [];
+  return (raw.findings as Array<Record<string, unknown>>).map((finding) => ({
+    type: finding.type ?? null,
+    label: finding.label ?? null,
+    severity: finding.severity ?? null,
+    ...(typeof finding.redactionToken === "string" ? { redactionToken: finding.redactionToken } : {}),
+  }));
 }
 
 async function executeInputGuard(
@@ -1358,6 +1734,7 @@ async function executeInputGuard(
       categories: (raw.riskTypes as string[]) ?? [],
     }),
     ...calibrationFields(raw),
+    findings: publicFindings(raw),
     incidentId: (raw.incidentId as string) ?? null,
     ...rawResponseFields(client, raw),
   };
@@ -1383,6 +1760,13 @@ async function executeInputGuard(
         result.outputText = params.text;
         break;
     }
+  } else if (sensitiveEnforcement(params.enforceOnSensitiveData, allowed, raw.riskTypes)) {
+    applySensitiveOnThreat(
+      result,
+      params.onThreat ?? "",
+      (raw.safeText as string) ?? (raw.redactedText as string) ?? params.text,
+      (raw.reason as string) ?? "",
+    );
   } else {
     result.blocked = false;
     result.outputText = (raw.safeText as string) ?? (raw.redactedText as string) ?? params.text;
@@ -1430,6 +1814,7 @@ async function executeOutputGuard(
       categories: (raw.riskTypes as string[]) ?? [],
     }),
     ...calibrationFields(raw),
+    findings: publicFindings(raw),
     incidentId: (raw.incidentId as string) ?? null,
     ...rawResponseFields(client, raw),
   };
@@ -1455,6 +1840,13 @@ async function executeOutputGuard(
         result.outputText = params.text;
         break;
     }
+  } else if (sensitiveEnforcement(params.enforceOnSensitiveData, allowed, raw.riskTypes)) {
+    applySensitiveOnThreat(
+      result,
+      params.onThreat ?? "",
+      (raw.safeText as string) ?? (raw.redactedText as string) ?? params.text,
+      (raw.reason as string) ?? "",
+    );
   } else {
     result.blocked = false;
     result.outputText = (raw.safeText as string) ?? (raw.redactedText as string) ?? params.text;
@@ -1681,7 +2073,7 @@ async function executeUniversalGuard(
 
   if (params.ragText?.trim()) {
     const documentId = params.ragDocumentId?.trim() || `n8n-${Date.now()}`;
-    const source = params.ragSource || "api";
+    const source = documentSourceValue(params.ragSource) ?? "api";
     layerRuns.push(() =>
       optionalLayer(
         "rag",
@@ -1841,10 +2233,11 @@ async function executeUniversalGuard(
           // Registration happens inside the layer so a failure to fingerprint a
           // source degrades this one layer instead of the whole item.
           const sources = await registerProtectedSources(ctx, client, params.protectedSources ?? [], meta);
+          const destinationType = destinationTypeValue(params.outputDestinationType);
           const egress = await soterPost(ctx, client, "/api/semantic-egress/check", {
             sessionId: typeof meta.sessionId === "string" ? meta.sessionId : undefined,
             content: aiOutputText,
-            destinationType: params.outputDestinationType || "FINAL_OUTPUT",
+            destinationType,
             destinationName: params.outputDestinationName || undefined,
             sourceIds: sources.sourceIds,
             metadata: meta,
@@ -1852,6 +2245,21 @@ async function executeUniversalGuard(
           return {
             ...egress,
             comparedSourceIds: sources.sourceIds,
+            // Named on the layer, not swallowed: the destination decides the risk
+            // multiplier, so an author who typed one the API does not define has
+            // to be able to see which one was scored instead.
+            ...(params.outputDestinationType && params.outputDestinationType !== destinationType
+              ? {
+                  destinationTypeAdjusted: {
+                    configured: params.outputDestinationType,
+                    applied: destinationType,
+                    detail:
+                      `"${params.outputDestinationType}" is not one of the destination types the SoterAI API defines, so ` +
+                      `the check was run against ${destinationType}. Use Destination Name for the specific endpoint — a ` +
+                      "URL there is what decides whether the destination counts as external.",
+                  },
+                }
+              : {}),
             ...(sources.registeredSources.length ? { registeredSources: sources.registeredSources } : {}),
             ...(sources.skippedSources.length ? { skippedSources: sources.skippedSources } : {}),
           };
@@ -1876,6 +2284,7 @@ async function executeUniversalGuard(
     text: params.text,
     aiOutputText: params.aiOutputText,
     outputText,
+    enforceOnSensitiveData: params.enforceOnSensitiveData,
   });
 }
 
@@ -1894,6 +2303,7 @@ function finalizeUniversalGuard(input: {
   text: string;
   aiOutputText?: string;
   outputText: string;
+  enforceOnSensitiveData?: boolean;
 }): IDataObject {
   const { checks } = input;
   // A layer that never answered is not a layer that passed. Only the layers that
@@ -1925,6 +2335,7 @@ function finalizeUniversalGuard(input: {
     onThreat: input.onThreat,
     originalText: input.aiOutputText?.trim() ? input.aiOutputText : input.text,
     safeText,
+    enforceOnSensitiveData: input.enforceOnSensitiveData,
   });
   const categories = collectCategories(evaluated);
 
@@ -1968,6 +2379,8 @@ function finalizeUniversalGuard(input: {
     }),
     outputText: enforced.outputText,
     safeText,
+    ...(enforced.sensitiveDataEnforced ? { sensitiveDataEnforced: true } : {}),
+    ...(enforced.warning ? { warning: enforced.warning } : {}),
     recommendedAction: final.recommendedAction,
     safeRephrasePrompt: final.decision === "ASK_APPROVAL" ? buildSafeRephrasePrompt(categories) : "",
     checks,
@@ -2000,11 +2413,22 @@ const LOCAL_SEVERITY_SCORE: Record<string, number> = { CRITICAL: 92, HIGH: 72, M
  * memory record is not a customer asking anything.
  */
 function localTopicOptions(request: ActionRequest): LocalAnalysisOptions {
-  if (request.action !== "inputGuard" && request.action !== "universalGuard") return {};
+  // The identifier ignore list is not a topic setting and applies wherever the
+  // engine redacts, so it is attached first and for every action.
+  const ignoredEntities = request.ignoredEntities?.length ? request.ignoredEntities : undefined;
+  const ignoreLiterals = request.ignoreLiterals?.length ? request.ignoreLiterals : undefined;
+  if (request.action !== "inputGuard" && request.action !== "universalGuard") {
+    return {
+      ...(ignoredEntities ? { ignoredEntities } : {}),
+      ...(ignoreLiterals ? { ignoreLiterals } : {}),
+    };
+  }
   return {
     topics: request.allowedTopics,
     topicMode: request.topicMode,
     context: request.systemPromptContext,
+    ...(ignoredEntities ? { ignoredEntities } : {}),
+    ...(ignoreLiterals ? { ignoreLiterals } : {}),
   };
 }
 
@@ -2054,6 +2478,7 @@ function runLocalAction(node: INode, options: NodeOptions, request: ActionReques
         originalText: request.text,
         onThreat: request.onThreat,
         includeRaw: options.includeRawResponse,
+        enforceOnSensitiveData: request.enforceOnSensitiveData,
       });
       result.operation = "inputGuard";
       return result;
@@ -2061,18 +2486,22 @@ function runLocalAction(node: INode, options: NodeOptions, request: ActionReques
     case "outputGuard": {
       validateText(node, request.text, "AI Output Text");
       const result = localGuardResult({
-        analysis: analyzeLocal(request.text, "OUTPUT"),
+        analysis: analyzeLocal(request.text, "OUTPUT", localTopicOptions(request)),
         direction: "output",
         originalText: request.text,
         onThreat: request.onThreat,
         includeRaw: options.includeRawResponse,
+        enforceOnSensitiveData: request.enforceOnSensitiveData,
       });
       result.operation = "outputGuard";
       return result;
     }
     case "piiRedactor": {
       validateText(node, request.text, "Text");
-      const redaction = redactLocal(request.text);
+      const redaction = redactLocal(request.text, {
+        ignore: request.ignoredEntities ?? [],
+        ignoreLiterals: request.ignoreLiterals ?? [],
+      });
       const worst = redaction.entities.reduce(
         (score, entity) => Math.max(score, LOCAL_SEVERITY_SCORE[entity.severity] ?? 0),
         0,
@@ -2090,6 +2519,15 @@ function runLocalAction(node: INode, options: NodeOptions, request: ActionReques
       if (redaction.count > 0) {
         result.clientSideRedactedTypes = [...new Set(redaction.entities.map((entity) => entity.type))];
         result.clientSideRedactionCount = redaction.count;
+      }
+      if (redaction.ignoredEntities.length > 0) {
+        result.ignoredIdentifiers = {
+          entities: redaction.ignoredEntities,
+          effect: "APPLIED",
+          detail:
+            "These identifiers were left in the text on purpose. safeText is NOT fully redacted for this item — " +
+            "that is what Ignored Identifiers was asked to do.",
+        };
       }
       return result;
     }
@@ -2120,6 +2558,13 @@ function localGuardResult(input: {
   originalText: string;
   onThreat: string;
   includeRaw: boolean;
+  /**
+   * Whether On Threat also acts on an item whose only finding is a secret or a
+   * personal detail. Optional because the firewall's internal layers call this
+   * with a fixed `WARN` and reach their own verdict afterwards; only the two
+   * guards, which are the ones exposing On Threat, pass it.
+   */
+  enforceOnSensitiveData?: boolean;
 }): IDataObject {
   const { analysis } = input;
   const action = normalizeDecision(analysis.action) ?? (analysis.allowed ? "ALLOW" : "BLOCK");
@@ -2184,6 +2629,8 @@ function localGuardResult(input: {
         result.outputText = input.originalText;
         break;
     }
+  } else if (sensitiveEnforcement(input.enforceOnSensitiveData, analysis.allowed, analysis.riskTypes)) {
+    applySensitiveOnThreat(result, input.onThreat, analysis.safeText || input.originalText, analysis.reason);
   } else {
     result.blocked = false;
     result.outputText = analysis.safeText || input.originalText;
@@ -2267,7 +2714,7 @@ function runLocalUniversalGuard(node: INode, options: NodeOptions, request: Acti
     const scored = scoreRagDocumentLocal(
       context.rag.text,
       context.rag.documentId?.trim() || `n8n-${Date.now()}`,
-      context.rag.source || "api",
+      documentSourceValue(context.rag.source) ?? "api",
     );
     checks.push({ layer: "rag", ...(scored as unknown as IDataObject) });
   }
@@ -2336,6 +2783,7 @@ function runLocalUniversalGuard(node: INode, options: NodeOptions, request: Acti
     text: request.text,
     aiOutputText: request.aiOutputText,
     outputText,
+    enforceOnSensitiveData: request.enforceOnSensitiveData,
   });
 }
 
@@ -2404,7 +2852,7 @@ function annotateThrottle(result: IDataObject, raw: Record<string, unknown>): vo
 }
 
 /** Stable integration envelope. Legacy fields remain for saved expressions. */
-function canonicalizeResult(action: string, result: IDataObject): IDataObject {
+function canonicalizeResult(action: string, result: IDataObject, branchOnRedaction?: boolean): IDataObject {
   if (result.verdictCode === undefined) {
     if (result.skipped === true) result.verdictCode = "EMPTY_INPUT";
     else if (result.throttled === true) result.verdictCode = "REPUTATION_THROTTLED";
@@ -2412,9 +2860,12 @@ function canonicalizeResult(action: string, result: IDataObject): IDataObject {
     else if (result.decision === "ASK_APPROVAL" || result.finalDecision === "ASK_APPROVAL") result.verdictCode = "APPROVAL_REQUIRED";
     else result.verdictCode = "ALLOW";
   }
+  const flagged = isFlagged(action, result, branchOnRedaction);
   result.enforcement = {
     outcome: result.blocked === true ? "BLOCKED" : result.skipped === true ? "SKIPPED" : "CONTINUED",
-    routedTo: isFlagged(action, result) ? "Flagged" : "Safe",
+    routedTo: action === "piiRedactor" && branchOnRedaction
+      ? (flagged ? "Redacted" : "Clean")
+      : (flagged ? "Flagged" : "Safe"),
   };
   result.schemaVersion = "1.0";
   result.operation = result.operation ?? action;
@@ -2554,15 +3005,317 @@ function alwaysAllowResult(request: ActionRequest): IDataObject | null {
 }
 
 /**
- * Applies Sensitivity and the author's own wording to a finished verdict.
+ * Applies the Ignored Identifiers list, Sensitivity, Topic Handling, and the
+ * author's own wording to a finished verdict.
  *
  * Runs once per distinct request, before `canonicalizeResult`, so `verdictCode`
  * and `enforcement` are derived from the decision the author actually asked for.
+ *
+ * The order is load-bearing at both ends. The identifier list goes first: it can
+ * withdraw the only finding on the item, and Sensitivity then has the right
+ * verdict to reason about. Topic Handling goes *after* Sensitivity, because the
+ * two judge different things and scope is not the one being relaxed — an
+ * out-of-scope message scores about 15, which is under the Lenient floor and
+ * carries no never-relaxed category, so running it first would let Lenient wave
+ * through the very message Stay on Topic was set to stop. Custom replies go
+ * last, so the sentence the customer sees matches whatever the item ended up as.
  */
 function applyAuthorControls(request: ActionRequest, result: IDataObject): IDataObject {
+  applyIgnoredEntities(request, result);
+  applyIgnoredWords(request, result);
   applySensitivity(request, result);
+  applyTopicRestriction(request, result);
   applyCustomReplies(request, result);
   return result;
+}
+
+/** Actions that offer Allowed Semantic Topics and therefore Topic Handling. */
+const TOPIC_SCOPE_ACTIONS = new Set(["inputGuard", "universalGuard"]);
+
+/**
+ * Makes "Stay on Topic" mean the same thing on Cloud as it does on Local.
+ *
+ * The local engine enforces the setting itself: an out-of-scope message becomes
+ * an OFF_TOPIC finding and `analyzeLocal` blocks on it. The cloud engine cannot,
+ * and not because it failed to look — `/api/guard/input` runs the same topical
+ * alignment check from the `allowedTopics` the node sends, and returns OFF_TOPIC
+ * in `riskTypes` when the message misses the scope. But OFF_TOPIC is weighted 15
+ * server-side, deliberately below every band that changes a decision, because on
+ * the API it is an advisory signal for callers to act on. There is no request
+ * parameter that turns it into enforcement.
+ *
+ * So the node acts on it, which is the only place the author's choice exists.
+ * Until this ran, picking "Stay on Topic" on a Cloud node configured everything
+ * correctly and changed nothing at all: the same workflow stopped an off-topic
+ * message or waved it through depending on which engine happened to answer, and
+ * in Auto that is a network condition the author never sees.
+ *
+ * The scope judgement stays the server's — this only enforces a verdict the
+ * engine already reported, never re-scores the text — and it is reported under
+ * `topicHandling` so an item that was stopped for being out of scope is never
+ * confused with one stopped for being an attack.
+ */
+function applyTopicRestriction(request: ActionRequest, result: IDataObject): void {
+  const mode = request.topicMode;
+  if (mode !== "RESTRICT" && mode !== "TRUST_AND_RESTRICT") return;
+  if (!TOPIC_SCOPE_ACTIONS.has(request.action)) return;
+  if (!request.allowedTopics?.length && !request.systemPromptContext?.trim()) return;
+  if (result.skipped === true || result.error === true || result.throttled === true) return;
+
+  const categories = Array.isArray(result.categories) ? result.categories.map((value) => String(value)) : [];
+  if (!categories.includes("OFF_TOPIC")) return;
+
+  // The local engine already stopped it, in exactly the way On Threat asked for.
+  // Running the same enforcement twice would be harmless but the report would be
+  // a lie about who acted, so it says what actually happened.
+  if (result.engine !== "cloud") {
+    result.topicHandling = {
+      mode,
+      effect: "ENFORCED_BY_ENGINE",
+      detail: "The local engine treats an out-of-scope message as a scope failure and stopped it directly.",
+    };
+    return;
+  }
+
+  const reason =
+    "The message is outside the topics this assistant handles. " +
+    "Reported as OFF_TOPIC by the guard, and stopped here because Topic Handling is set to Stay on Topic.";
+
+  // The engine's own sentence is kept rather than dropped: it is what the
+  // detection actually said, and an operator reading the run a week later needs
+  // both halves — what was found, and who decided it was disqualifying.
+  const engineReason = stringValue(result.reason);
+  result.allowed = false;
+  result.reason = reason;
+  result.developerMessage =
+    `${reason}${engineReason ? ` The guard's own summary was: ${engineReason}` : ""} ` +
+    "The risk score is left at the value the guard assigned — being off topic is not a threat score, and this " +
+    "node does not rewrite detection output.";
+  enforceOnThreat(result, request.onThreat, request.text, reason);
+  // The firewall's verdict is what a workflow branches on, so it has to move with
+  // the decision or the item would report ALLOW while carrying blocked: true.
+  if (request.action === "universalGuard") {
+    result.finalDecision = "BLOCK";
+    result.liveChatAction = "BLOCK";
+    result.recommendedAction = recommendedActionForDecision("BLOCK");
+  }
+  result.topicHandling = {
+    mode,
+    effect: "ENFORCED_BY_NODE",
+    detail:
+      "The SoterAI API reports OFF_TOPIC as advisory and has no parameter that makes it enforce, so the node applied " +
+      `On Threat (${request.onThreat}) to the finding instead. Detection itself is unchanged — the scope judgement is ` +
+      "the API's own.",
+  };
+}
+
+/**
+ * Reports the author's Ignored Words or Phrases list, and — like the identifier
+ * list — says which of the two possible honourings happened.
+ *
+ * The local engine masks the phrases before redaction and restores them after,
+ * so on a local result they are genuinely kept and the effect is APPLIED. The
+ * cloud engine redacts server-side with no parameter for literal phrases, so the
+ * node cannot protect them there; the honest answer is LOCAL_ONLY, and the item
+ * says so rather than implying a protection that did not run. Refused lines —
+ * ones carrying a credential — are named on both, because a security node that
+ * silently drops half of what it was asked to keep is the failure this whole
+ * area is built to avoid.
+ */
+function applyIgnoredWords(request: ActionRequest, result: IDataObject): void {
+  const kept = request.ignoreLiterals ?? [];
+  const refused = request.refusedLiterals ?? [];
+  if (kept.length === 0 && refused.length === 0) return;
+  if (result.skipped === true || result.error === true) return;
+
+  const report: IDataObject = {};
+  if (kept.length > 0) report.words = kept;
+  if (refused.length > 0) report.refused = refused;
+  const tail =
+    refused.length > 0
+      ? ` Refused: ${refused.join(", ")} — a line carrying a credential is never left in the clear, so the secret in it is redacted like any other.`
+      : "";
+
+  if (kept.length === 0) {
+    report.effect = "NOT_APPLIED";
+    report.detail = `No word or phrase was left in the clear on this item.${tail}`;
+  } else if (result.engine !== "cloud") {
+    report.effect = "APPLIED";
+    report.detail =
+      "The local engine kept these words and phrases verbatim wherever they appeared, before and after redaction." + tail;
+  } else {
+    report.effect = "LOCAL_ONLY";
+    report.detail =
+      "The SoterAI API redacts server-side and has no parameter for keeping literal phrases, so they could not be " +
+      "protected on the cloud engine. Switch Detection Engine to Local for this action if these words must survive." +
+      tail;
+  }
+  result.ignoredWords = report;
+}
+
+/**
+ * Actions whose cloud result is a single verdict carrying the findings — and
+ * therefore the redaction tokens — the entity filter reads.
+ *
+ * `universalGuard` is deliberately absent. Its verdict is assembled from six
+ * layer results by server-side logic the node does not have, so withdrawing a
+ * finding from the envelope would not change the decision it drove: the honest
+ * answer there is that the cloud engine did not honour the list, and the result
+ * says exactly that rather than implying a filter that did nothing.
+ */
+const ENTITY_FILTER_ACTIONS = new Set(["inputGuard", "outputGuard", "analyzeText"]);
+
+/** `[REDACTED_EMAIL]` → `EMAIL`, for a token that is the entire value. */
+function redactionTokenName(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const match = /^\[REDACTED_([A-Z0-9_]+)\]$/.exec(value.trim());
+  return match ? match[1] : null;
+}
+
+/** One sentence naming what the node would not ignore, or nothing at all. */
+function refusedSentence(refused: string[]): string {
+  if (refused.length === 0) return "";
+  return (
+    ` Refused: ${refused.join(", ")} — live credentials are never ignorable, and an unknown name cannot be honoured.` +
+    " Use Always Allow if one specific message has to skip the scan entirely."
+  );
+}
+
+/**
+ * Honours the author's Ignored Identifiers list on a finished verdict, and says
+ * which of the two possible honourings actually happened.
+ *
+ * The local engine is told directly, so it never recognises the identifier in
+ * the first place and there is nothing here to undo. The cloud engine cannot be
+ * told at all — `/api/guard/input` has no parameter for it — so the findings it
+ * returned are filtered here instead, and the text it redacted stays redacted
+ * unless every single removal on it was one the author named. That last
+ * condition is checked against the `[REDACTED_…]` tokens present in the returned
+ * text rather than inferred from the findings, because restoring the original
+ * over a redaction nobody asked to keep would be a data leak dressed up as a
+ * convenience.
+ *
+ * The distinction is reported on every run rather than buried in the README:
+ * "I was told to keep bank account numbers and I did" and "I was told to keep
+ * them and the server removed them before I saw the text" are different facts,
+ * and an author reading `safeText` has no other way to tell them apart.
+ */
+function applyIgnoredEntities(request: ActionRequest, result: IDataObject): void {
+  const entities = request.ignoredEntities ?? [];
+  const refused = request.refusedEntities ?? [];
+  if (entities.length === 0 && refused.length === 0) return;
+  if (result.skipped === true || result.error === true) return;
+  // `piiRedactor` writes its own report from the raw response, where the
+  // findings still carry their tokens. Never overwrite it with a poorer one.
+  if (isRecord(result.ignoredIdentifiers)) return;
+
+  const report: IDataObject = { entities };
+  if (refused.length > 0) report.refused = refused;
+  const tail = refusedSentence(refused);
+
+  if (entities.length === 0) {
+    report.effect = "NOT_APPLIED";
+    report.detail = `No identifier was ignored on this item.${tail}`;
+    result.ignoredIdentifiers = report;
+    return;
+  }
+
+  if (result.engine !== "cloud") {
+    report.effect = "APPLIED";
+    report.detail =
+      "The local engine was told to leave these identifiers alone, so they were neither reported nor redacted." + tail;
+    result.ignoredIdentifiers = report;
+    return;
+  }
+
+  if (!ENTITY_FILTER_ACTIONS.has(request.action) || result.throttled === true) {
+    report.effect = "NOT_APPLIED";
+    report.detail =
+      result.throttled === true
+        ? "This item was gated by the API rather than analysed, so there was no verdict to apply the list to." + tail
+        : `The SoterAI API has no parameter for ignoring identifiers, and a ${request.action} verdict is assembled ` +
+          "server-side from several layers, so the list could not be honoured on the cloud engine. Switch Detection " +
+          "Engine to Local for this action if these identifiers must be left in place." + tail;
+    result.ignoredIdentifiers = report;
+    return;
+  }
+
+  const tokens = redactionTokensFor(entities);
+  const findings = Array.isArray(result.findings) ? (result.findings as IDataObject[]) : [];
+  const withdrawn: IDataObject[] = [];
+  const kept: IDataObject[] = [];
+  for (const finding of findings) {
+    const name = redactionTokenName(finding.redactionToken);
+    if (name !== null && tokens.has(name)) withdrawn.push(finding);
+    else kept.push(finding);
+  }
+
+  if (withdrawn.length > 0) {
+    result.findings = kept as unknown as IDataObject[];
+    const keptTypes = new Set(kept.map((finding) => String(finding.type)));
+    const categories = (Array.isArray(result.categories) ? result.categories.map(String) : []).filter((category) =>
+      keptTypes.has(category),
+    );
+    result.categories = categories.length > 0 ? categories : ["LOW_RISK"];
+    report.withdrawnFindings = withdrawn as unknown as IDataObject[];
+  }
+
+  // Restoring the original is only safe when the returned text differs from it
+  // solely by removals the author named, and every one of those removals is
+  // still visible as a token. A token the list does not cover — or a difference
+  // with no token to explain it — means something else was taken out too, and
+  // the node keeps the server's copy.
+  const safeText = stringValue(result.safeText);
+  let restored = false;
+  if (kept.length === 0 && typeof safeText === "string" && safeText !== request.text) {
+    const found = [...safeText.matchAll(/\[REDACTED_([A-Z0-9_]+)\]/g)].map((match) => match[1]);
+    restored = found.length > 0 && found.every((name) => tokens.has(name));
+  }
+
+  if (withdrawn.length > 0 && kept.length === 0) {
+    // Nothing else was found. The only reasons to stop this item were the ones
+    // the author asked the guard to ignore, so it continues.
+    result.allowed = true;
+    result.action = "ALLOW";
+    result.blocked = false;
+    result.riskScore = 0;
+    result.primaryRiskType = null;
+    result.categoryConfidence = {};
+    delete result.warning;
+    result.reason =
+      `Only ${withdrawn.length === 1 ? "one identifier" : `${withdrawn.length} identifiers`} of a type this node was ` +
+      "told to ignore was reported, so the item was not stopped.";
+    result.userMessage = buildUserFacingMessage({
+      allowed: true,
+      direction: request.action === "outputGuard" ? "output" : "input",
+      action: "ALLOW",
+      categories: [],
+    });
+    result.developerMessage =
+      `SoterAI reported only ${withdrawn.map((finding) => String(finding.label ?? finding.type)).join(", ")}, ` +
+      `which Ignored Identifiers covers (${entities.join(", ")}). The verdict was reduced to ALLOW by the node, ` +
+      "not by the API.";
+  }
+
+  if (restored) {
+    result.safeText = request.text;
+    if (result.blocked !== true) result.outputText = request.text;
+    report.effect = "APPLIED";
+    report.detail =
+      "The cloud engine redacted only identifiers on this list, so the original text was put back. " +
+      "The filtering was done by the node: the API itself has no parameter for ignoring identifiers." + tail;
+  } else if (withdrawn.length > 0) {
+    report.effect = "FINDINGS_ONLY";
+    report.detail =
+      "The cloud engine reported these identifiers and the node withdrew the findings, but the text it returned " +
+      "was already redacted and the original cannot be recovered from it. Use Detection Engine = Local if the " +
+      "values themselves have to survive." + tail;
+  } else {
+    report.effect = "APPLIED";
+    report.detail = "The cloud engine reported no identifier of these types on this item, so nothing needed removing." + tail;
+  }
+
+  result.ignoredIdentifiers = report;
 }
 
 function applySensitivity(request: ActionRequest, result: IDataObject): void {
@@ -2675,7 +3428,20 @@ function pickCustomReply(replies: CustomReplies, result: IDataObject): string | 
     return replies.blocked;
   }
 
-  if (result.action === "REDACT" || result.clientSideRedaction === true) return replies.redacted ?? replies.allowed;
+  // Not stopped. A redaction driven by a secret or a personal detail asks the
+  // sensitive-data reply first, because until it did, that field was unreachable:
+  // the engine answers privacy with "redact and continue", which leaves `blocked`
+  // false and `allowed` true, so every path above was skipped and the item landed
+  // on `redacted`. An author who wrote "We removed some personal details from
+  // your message" saw it never used at any sensitivity. The chain still falls
+  // through to `redacted` and then `allowed`, so a workflow that left the field
+  // empty gets exactly the sentence it got before.
+  const privacyDriven =
+    categories.has("SECRET_DETECTED") || categories.has("PII_DETECTED") || categories.has("INDIA_PII_DETECTED");
+  if (result.action === "REDACT" || result.clientSideRedaction === true) {
+    if (privacyDriven) return replies.sensitiveData ?? replies.redacted ?? replies.allowed;
+    return replies.redacted ?? replies.allowed;
+  }
   return replies.allowed;
 }
 
@@ -2695,8 +3461,20 @@ async function executePiiRedactor(
   });
 
   const findings = (raw.findings as Array<Record<string, unknown>>) ?? [];
-  const piiEntities = findings
-    .filter((f) => f.type === "PII_DETECTED" || f.type === "INDIA_PII_DETECTED" || f.type === "SECRET_DETECTED")
+  // Split before anything is reported: an identifier the author asked to keep is
+  // not a detection this action should announce, and the fail-closed check below
+  // must not demand a redacted copy of text nobody wanted redacted.
+  const ignoredTokens = redactionTokensFor(params.ignoredEntities ?? []);
+  const isIgnored = (finding: Record<string, unknown>): boolean => {
+    const name = redactionTokenName(finding.redactionToken);
+    return name !== null && ignoredTokens.has(name);
+  };
+  const privacyFindings = findings.filter(
+    (f) => f.type === "PII_DETECTED" || f.type === "INDIA_PII_DETECTED" || f.type === "SECRET_DETECTED",
+  );
+  const withdrawn = privacyFindings.filter(isIgnored);
+  const piiEntities = privacyFindings
+    .filter((f) => !isIgnored(f))
     .map((f) => ({
       type: f.type,
       label: f.label,
@@ -2731,7 +3509,12 @@ async function executePiiRedactor(
   }
 
   const baseText = serverRedacted ?? params.text;
-  const net = redactUsSsn(baseText);
+  // The node's own SSN net answers to the same list the server side of this
+  // action cannot be told about, so an author who asked to keep SSNs does not
+  // get them back from the API and removed again on the way out.
+  const net = redactionTokensFor(params.ignoredEntities ?? []).has("US_SSN")
+    ? { text: baseText, count: 0 }
+    : redactUsSsn(baseText);
   const detectedEntities = [...piiEntities];
   if (net.count > 0) {
     detectedEntities.push({
@@ -2761,7 +3544,83 @@ async function executePiiRedactor(
     result.throttleLevel = throttle.level ?? null;
     result.throttleReason = throttle.reason ?? null;
   }
+  attachPiiIgnoreReport(result, params, {
+    withdrawn,
+    keptCount: piiEntities.length,
+    serverRedacted,
+    ignoredTokens,
+  });
   return result;
+}
+
+/**
+ * Says what the Ignored Identifiers list did to a cloud redaction, and puts the
+ * original text back when — and only when — every removal the server made was
+ * one the author named.
+ *
+ * Kept as its own step because this action's contract is stricter than the
+ * guard actions': `safeText` here is *promised* to be redacted, so handing back
+ * the original has to be something an author explicitly asked for, visible on
+ * the item, and impossible to reach by accident. Anything the list does not
+ * cover — a credential, an identifier left off the list, a difference in the
+ * returned text with no token to explain it — keeps the server's copy.
+ */
+function attachPiiIgnoreReport(
+  result: IDataObject,
+  params: PiiParams,
+  input: {
+    withdrawn: Array<Record<string, unknown>>;
+    keptCount: number;
+    serverRedacted: string | undefined;
+    ignoredTokens: Set<string>;
+  },
+): void {
+  const entities = params.ignoredEntities ?? [];
+  if (entities.length === 0) return;
+
+  const report: IDataObject = { entities };
+  if (input.withdrawn.length > 0) {
+    report.withdrawnFindings = input.withdrawn.map((finding) => ({
+      type: finding.type,
+      label: finding.label,
+      severity: finding.severity,
+    })) as unknown as IDataObject[];
+  }
+
+  const current = stringValue(result.safeText);
+  let restored = false;
+  if (
+    input.keptCount === 0 &&
+    result.throttled !== true &&
+    typeof current === "string" &&
+    current !== params.text &&
+    typeof input.serverRedacted === "string"
+  ) {
+    const found = [...current.matchAll(/\[REDACTED_([A-Z0-9_]+)\]/g)].map((match) => match[1]);
+    restored = found.length > 0 && found.every((name) => input.ignoredTokens.has(name));
+  }
+
+  if (restored) {
+    result.safeText = params.text;
+    result.outputText = params.text;
+    result.clientSideRedaction = false;
+    delete result.clientSideRedactedTypes;
+    delete result.clientSideRedactionCount;
+    report.effect = "APPLIED";
+    report.detail =
+      "Every identifier the cloud engine removed from this text was on the ignore list, so the original was put " +
+      "back. safeText is NOT redacted for this item — that is what Ignored Identifiers was asked to do.";
+  } else if (input.withdrawn.length > 0) {
+    report.effect = "FINDINGS_ONLY";
+    report.detail =
+      "These identifiers were dropped from detectedEntities, but the cloud engine had already removed them from " +
+      "the text and the original cannot be recovered from what it returned. Use Detection Engine = Local if the " +
+      "values themselves have to survive.";
+  } else {
+    report.effect = "APPLIED";
+    report.detail = "The cloud engine reported no identifier of these types on this item, so nothing needed removing.";
+  }
+  result.ignoredIdentifiers = report;
 }
 
 /**
@@ -2907,7 +3766,7 @@ function validateBaseUrl(node: INode, raw: string): string {
     throw new NodeOperationError(node, "SoterAI Base URL must not include credentials, query parameters, or fragments.");
   }
 
-  const isLocalDevHost = ["localhost", "127.0.0.1", "::1"].includes(parsed.hostname);
+  const isLocalDevHost = ["localhost", "127.0.0.1", "::1", "host.docker.internal"].includes(parsed.hostname);
   if (parsed.protocol !== "https:" && !(parsed.protocol === "http:" && isLocalDevHost)) {
     throw new NodeOperationError(node, "SoterAI Base URL must use HTTPS, except http://localhost for local development.");
   }
@@ -3101,6 +3960,97 @@ function memoryActionValue(value: unknown): MemoryAction {
   return value === "STORE" || value === "READ" || value === "UPDATE" || value === "DELETE" ? value : "NONE";
 }
 
+// ---------------------------------------------------------------------------
+// Closed-list coercion
+//
+// Every field below is a dropdown in the panel *and* a `z.enum` on the API. That
+// pairing looks safe and is not: an n8n expression can put any string into a
+// dropdown-backed parameter, and `{{$json.department}}` yielding "SUPPORT" or
+// "kb-upload" is an ordinary thing for a workflow to do. What came back was a
+// bare `HTTP 400 — Invalid enum value`, naming a field the author never typed by
+// hand, from an endpoint they did not know was involved.
+//
+// So the node closes the list itself, the same way `toolDestinationValue` and
+// `memoryActionValue` already did for the two fields that had it. Each falls back
+// to the value that describes "not one of the ones we know", never to the value
+// that would quietly make the item look safer than it was measured to be.
+// ---------------------------------------------------------------------------
+
+/** `AGENT_IDENTITY_TYPES` server-side; `agentType: z.enum(...).default("CUSTOM")`. */
+const AGENT_TYPES = ["CHATBOT", "RAG_AGENT", "COMPUTER_USE", "BROWSER_AGENT", "MCP_AGENT", "CODING_AGENT", "CUSTOM"];
+
+/** `source: z.enum([...]).default("unknown")` on /api/rag/document/trust-score. */
+const RAG_DOCUMENT_SOURCES = ["upload", "url", "email", "api", "unknown"];
+
+/** `SEMANTIC_DESTINATION_TYPES` server-side; `destinationType: z.enum(...)`, required. */
+const SEMANTIC_DESTINATION_TYPES = [
+  "FINAL_OUTPUT",
+  "PUBLIC_OUTPUT",
+  "EXTERNAL_API",
+  "EMAIL",
+  "BROWSER_FORM",
+  "WEBHOOK",
+  "TOOL",
+  "MEMORY",
+  "FILE",
+  "CUSTOM",
+];
+
+/** An agent that is not one of the six named kinds is a CUSTOM one, which is what the API's own default says. */
+function agentTypeValue(value: unknown): string {
+  const type = typeof value === "string" ? value.trim().toUpperCase().replace(/[\s-]+/g, "_") : "";
+  return AGENT_TYPES.includes(type) ? type : "CUSTOM";
+}
+
+/**
+ * Undefined for "nothing was set", so the call sites keep their own defaults.
+ * An unrecognised provenance becomes `unknown` rather than `api`: the point of
+ * the field is to say where a document came from, and guessing "the API" about a
+ * document the author labelled `kb-upload` would put a wrong fact in the trust
+ * record. `unknown` is true, and is the API's own default for the same reason.
+ */
+function documentSourceValue(value: unknown): string | undefined {
+  const source = typeof value === "string" ? value.trim().toLowerCase() : "";
+  if (!source) return undefined;
+  return RAG_DOCUMENT_SOURCES.includes(source) ? source : "unknown";
+}
+
+/**
+ * Where the AI's output is going, which is a multiplier on the egress risk score.
+ *
+ * `CUSTOM` is the fallback because an unrecognised destination is genuinely an
+ * unlisted one, and because the alternative is worse than it looks: an
+ * unrecognised value used to fail the request outright, the semantic egress layer
+ * degraded, and the item came back having had no egress comparison run on it at
+ * all. A scored check against `CUSTOM` is strictly more protection than a layer
+ * that did not execute. `destinationName` still travels alongside, so a URL in
+ * the name is still what decides whether the destination counts as external.
+ */
+function destinationTypeValue(value: unknown): string {
+  const type = typeof value === "string" ? value.trim().toUpperCase().replace(/[\s-]+/g, "_") : "";
+  if (!type) return "FINAL_OUTPUT";
+  return SEMANTIC_DESTINATION_TYPES.includes(type) ? type : "CUSTOM";
+}
+
+/**
+ * `ttlSeconds: z.number().int().min(60).max(86400)` on /api/agent/passport/issue.
+ *
+ * Clamped rather than rejected: the author asked for a pass that lasts a certain
+ * time, and the useful answer to "3 days" is a pass that lasts as long as the
+ * deployment allows, reported honestly, not a failed workflow. A value that is
+ * not a number at all falls to the same one hour the field defaults to. The
+ * clamp is reported on the result, because a passport that expires sooner than
+ * the author configured is something they have to be able to find out.
+ */
+function passportTtlValue(value: unknown): number {
+  const seconds = Math.trunc(Number(value));
+  if (!Number.isFinite(seconds) || seconds <= 0) return 3600;
+  return Math.min(Math.max(seconds, PASSPORT_TTL_MIN_SECONDS), PASSPORT_TTL_MAX_SECONDS);
+}
+
+const PASSPORT_TTL_MIN_SECONDS = 60;
+const PASSPORT_TTL_MAX_SECONDS = 86_400;
+
 function decideUniversal(checks: IDataObject[], profile: ProtectionProfile) {
   const layerDecisions = checks.map(toLayerDecision);
   const worst = layerDecisions.reduce((current, item) => riskRank(item.riskLevel) > riskRank(current.riskLevel) ? item : current, {
@@ -3139,6 +4089,22 @@ function toLayerDecision(check: IDataObject) {
   let decision = normalizeDecision(check.decision);
   const allowed = typeof check.allowed === "boolean" ? check.allowed : undefined;
   if (!decision && allowed === false) decision = "BLOCK";
+  // A guard layer reports its verdict in `action`, not `decision` — only the
+  // purpose-built layers use `decision`. So a layer that answered REDACT arrived
+  // here with nothing to read, fell through to ALLOW, and the `redacted` branch
+  // of `decideUniversal` was unreachable for the input and output layers. The
+  // visible result was one self-contradicting item: `riskLevel: "CRITICAL"`,
+  // `categories: ["SECRET_DETECTED"]`, `finalDecision: "ALLOW"` — on Balanced,
+  // the default profile. (Strict and Maximum hid it, because a CRITICAL score
+  // escalates to BLOCK there for an unrelated reason.)
+  //
+  // Only REDACT is taken from `action`. It is the one that was demonstrably
+  // wrong, it cannot make the firewall softer — REDACT still counts as allowed
+  // and still routes to Safe — and it leaves the item's text exactly as it
+  // already was. A REVIEW read the same way could escalate to ASK_APPROVAL
+  // under Maximum and start stopping items, which is a different decision than
+  // fixing a mislabelled one.
+  if (!decision && normalizeDecision(check.action) === "REDACT") decision = "REDACT";
   if (!decision && typeof check.recommendedAction === "string") {
     const action = check.recommendedAction.toUpperCase();
     if (action.includes("QUARANTINE")) decision = "BLOCK";
@@ -3205,14 +4171,70 @@ function riskRank(level: UniversalRisk) {
   return { LOW: 1, MEDIUM: 2, HIGH: 3, CRITICAL: 4 }[level];
 }
 
+/**
+ * Whether On Threat should be given an item the engine did not refuse.
+ *
+ * The engine answers a secret or a personal detail with "redact and continue":
+ * the item is fine, its text just carried something that should not travel. That
+ * verdict leaves `allowed` true, and On Threat only ever ran for an item that
+ * was refused — so Block, Warn, Continue and Redact all produced the identical
+ * item for a message carrying a live API key, which is the one category this
+ * node is named for. This is the switch that hands that item over, and it is
+ * false unless the author turned it on.
+ */
+function sensitiveEnforcement(enabled: boolean | undefined, allowed: boolean, categories: unknown): boolean {
+  if (enabled !== true || !allowed) return false;
+  return Array.isArray(categories) && categories.some((value) => isPrivacyCategory(String(value)));
+}
+
+/**
+ * On Threat, applied to an item whose only finding is sensitive data.
+ *
+ * Deliberately not `enforceOnThreat`: for a threat, Warn and Continue mean "send
+ * the text through as it was", because there is nothing in it to remove. Here
+ * there is, and the author enabling this switch asked for *more* enforcement,
+ * not for their secrets to start travelling in the clear. So every setting keeps
+ * the cleaned copy and only Block changes the outcome — Warn adds the reason,
+ * Continue and Redact land exactly where the item would have landed anyway. The
+ * switch can stop an item; it can never widen what leaves the node.
+ */
+function applySensitiveOnThreat(result: IDataObject, onThreat: string, safeText: string, reason: string): void {
+  result.sensitiveDataEnforced = true;
+  if (onThreat === "BLOCK") {
+    result.blocked = true;
+    result.outputText = "";
+    return;
+  }
+  result.blocked = false;
+  result.outputText = safeText;
+  if (onThreat === "WARN") result.warning = reason;
+}
+
 function enforceUniversalDecision(input: {
   decision: UniversalDecision;
   onThreat: string;
   originalText: string;
   safeText: string;
-}) {
+  /** Whether the author asked On Threat to act on a redaction verdict too. */
+  enforceOnSensitiveData?: boolean;
+}): { blocked: boolean; outputText: string; sensitiveDataEnforced?: boolean; warning?: string } {
   if (input.decision === "REDACT") {
-    return { blocked: false, outputText: input.safeText || "[REDACTED]" };
+    // The firewall's own version of the same gap the two guards had: REDACT *is*
+    // the verdict the layers reached about sensitive data, and it answered itself
+    // without ever consulting On Threat. Off, this returns exactly what every
+    // published version returned; on, only Block changes the outcome, because an
+    // author asking for more enforcement did not ask for the cleaned copy to be
+    // replaced by the original.
+    if (input.enforceOnSensitiveData !== true) {
+      return { blocked: false, outputText: input.safeText || "[REDACTED]" };
+    }
+    if (input.onThreat === "BLOCK") return { blocked: true, outputText: "", sensitiveDataEnforced: true };
+    return {
+      blocked: false,
+      outputText: input.safeText || "[REDACTED]",
+      sensitiveDataEnforced: true,
+      ...(input.onThreat === "WARN" ? { warning: "Sensitive data was removed before this item continued." } : {}),
+    };
   }
   const threat = input.decision !== "ALLOW" && input.decision !== "REVIEW";
   if (!threat) return { blocked: false, outputText: input.safeText || input.originalText };
@@ -3588,9 +4610,37 @@ function validateText(node: INode, text: string, fieldName: string): void {
   if (!text || !text.trim()) {
     throw new NodeOperationError(node, `${fieldName} is required.`);
   }
-  if (text.length > 200000) {
-    throw new NodeOperationError(node, `${fieldName} is too large. Keep text under 200,000 characters per item.`);
+  if (text.length > MAX_ITEM_TEXT_LENGTH) {
+    throw new NodeOperationError(
+      node,
+      `${fieldName} is ${text.length.toLocaleString("en-US")} characters, and the node carries at most ` +
+      `${MAX_ITEM_TEXT_LENGTH.toLocaleString("en-US")} per item.`,
+      {
+        description:
+          "Split the text into separate items before this node. Note that the SoterAI API's own per-request limit is " +
+          "much lower than this one (8,000 characters on the hosted deployment), so Cloud mode will refuse an item " +
+          "well before it reaches this ceiling; the local engine will not.",
+      },
+    );
   }
+}
+
+/**
+ * What to do about an item the API refused for being too long.
+ *
+ * The node's own ceiling is 200,000 characters per item and the local engine
+ * honours it, so "too large" is not a sentence a user can act on without knowing
+ * that the cloud limit is a different, much smaller number. All three genuine
+ * ways out are named, in the order of how likely they are to be the right one.
+ */
+function formatTextTooLongError(limit: number, sent: number, path: string): string {
+  return (
+    `SoterAI API rejected this item on ${path}: the deployment at your Base URL accepts at most ` +
+    `${limit.toLocaleString("en-US")} characters of text per request, and this item sent ` +
+    `${sent.toLocaleString("en-US")}. Split the text into smaller items before this node, raise ` +
+    "MAX_GUARD_TEXT_LENGTH on a self-hosted deployment, or set Detection Engine to Auto so long items " +
+    "are checked by the local engine instead of failing."
+  );
 }
 
 function formatApiError(status: number, data: Record<string, unknown>, path?: string): string {

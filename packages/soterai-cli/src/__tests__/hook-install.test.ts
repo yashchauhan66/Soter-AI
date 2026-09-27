@@ -46,7 +46,9 @@ describe("Claude Code install", () => {
         assert.deepEqual(document.permissions, existing.permissions);
     });
 
-    it("PRESERVES hooks the user already had, including other PreToolUse entries", () => {
+    it("PRESERVES the user's own hooks on BOTH events while adding its own", () => {
+        // The install now wires PreToolUse (prevention) AND PostToolUse
+        // (output detection). A user's own hook on either event must survive.
         const existing = {
             hooks: {
                 PreToolUse: [{ matcher: "Bash", hooks: [{ type: "command", command: "/usr/local/bin/audit.sh" }] }],
@@ -54,11 +56,19 @@ describe("Claude Code install", () => {
             },
         };
         const { document } = mergeClaudeCodeHooks(existing, HANDLER);
-        const hooks = document.hooks as Record<string, unknown[]>;
-        assert.equal(hooks.PostToolUse.length, 1, "an unrelated event was dropped");
-        assert.equal(hooks.PreToolUse.length, 2, "the user's own PreToolUse hook was replaced instead of kept");
-        const preserved = hooks.PreToolUse[0] as { hooks: Array<{ command: string }> };
-        assert.equal(preserved.hooks[0].command, "/usr/local/bin/audit.sh");
+        const hooks = document.hooks as Record<string, Array<{ matcher: string; hooks: Array<{ command: string; args?: string[] }> }>>;
+
+        // Each event now has the user's group plus our appended group.
+        assert.equal(hooks.PreToolUse.length, 2, "the user's own PreToolUse hook was dropped");
+        assert.equal(hooks.PostToolUse.length, 2, "the user's own PostToolUse hook was dropped, or ours was not added");
+        assert.equal(hooks.PreToolUse[0].hooks[0].command, "/usr/local/bin/audit.sh", "PreToolUse user hook not preserved");
+        assert.equal(hooks.PostToolUse[0].hooks[0].command, "/usr/local/bin/lint.sh", "PostToolUse user hook not preserved");
+
+        // Ours is present on both events.
+        for (const event of ["PreToolUse", "PostToolUse"] as const) {
+            const ours = hooks[event].some((g) => g.hooks.some((h) => (h.args ?? []).some((a) => a.includes(HOOK_MARKER))));
+            assert.ok(ours, `SoterAI's own handler is missing from ${event}`);
+        }
     });
 
     it("is IDEMPOTENT: re-running replaces our entry instead of stacking duplicates", () => {

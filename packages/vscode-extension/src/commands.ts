@@ -5,7 +5,7 @@ import { promisify } from "util";
 import { ExtensionState } from "./state";
 import { TelemetryManager } from "./telemetry";
 import { DashboardPanel } from "./webview/DashboardPanel";
-import { RuntimePolicyEngine, redactForSharing, type Finding, type ProtectionMode } from "@soterai/guard-core";
+import { RuntimePolicyEngine, redactForSharing, isSensitiveFilePath, type Finding, type ProtectionMode } from "@soterai/guard-core";
 import { escapeHtml, getNonce } from "./firewall/util";
 
 const execFileAsync = promisify(execFile);
@@ -379,9 +379,7 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
             ]);
             diff = `${staged}\n${unstaged}`;
             const changedFiles = nameOnly.split("\n").map((s) => s.trim()).filter(Boolean);
-            const sensitiveFiles = changedFiles.filter((f) =>
-                /(^|\/)\.env(\.|$)|\.pem$|\.key$|id_rsa|credentials|secrets?\.(ya?ml|json)|\.pfx$/i.test(f)
-            );
+            const sensitiveFiles = changedFiles.filter((f) => isSensitiveFilePath(f));
             if (sensitiveFiles.length) {
                 vscode.window.showWarningMessage(`[SoterAI] Sensitive files in your changes: ${sensitiveFiles.map((f) => path.basename(f)).join(", ")}`);
             }

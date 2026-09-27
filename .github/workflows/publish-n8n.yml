@@ -27,9 +27,9 @@ on:
         description: "Dist-tag to publish under. `next` leaves `latest` serving the current release."
         type: choice
         options:
-          - next
           - latest
-        default: next
+          - next
+        default: latest
       dry_run:
         description: "Run the full gate and pack the tarball, but do not publish."
         type: boolean
@@ -148,18 +148,15 @@ jobs:
       - name: Verify package contents
         run: npm pack --dry-run
 
-      # NOTE: `--provenance` was removed on 2026-09-04 when this repository went
-      # private. npm only mints Sigstore provenance attestations for packages
-      # built from a PUBLIC repository — the attestation has to be publicly
-      # verifiable. Left in place, this step fails outright rather than
-      # degrading, so it is gone deliberately, not by accident. Publishing still
-      # happens from CI (never locally) so the token stays in Actions secrets.
+      # npm provenance: required for all verified n8n community nodes as of May 2026.
+      # npm mints Sigstore provenance attestations only from PUBLIC repositories.
+      # The `id-token: write` permission (set at workflow level) is required for this.
       - name: Publish to npm
         if: ${{ github.event.inputs.dry_run != 'true' }}
-        run: npm publish --access public --tag "${DIST_TAG}"
+        run: npm publish --provenance --access public --tag "${DIST_TAG}"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          DIST_TAG: ${{ github.event.inputs.dist_tag || 'next' }}
+          DIST_TAG: ${{ github.event.inputs.dist_tag || 'latest' }}
 
       # What the registry serves is the only fact that matters, and it is not the
       # same fact as "npm publish exited 0". This asserts the new version is on

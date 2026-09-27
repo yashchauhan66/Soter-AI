@@ -80,27 +80,29 @@ function isOurClaudeHook(handler: unknown): boolean {
 }
 
 /**
- * Merge the SoterAI handler into a Claude Code settings document.
+ * The Claude Code events SoterAI installs on.
  *
- * `matcher: "*"` is deliberate. A narrower list would be cheaper — the hook
- * spawns a process per tool call — but every tool left out is a hole, and a
- * hole in a guard is worth more than the milliseconds it saves. Narrow it by
- * editing the matcher if the cost matters more than the coverage.
+ * PreToolUse is where prevention happens — it can DENY a call before the tool
+ * runs. PostToolUse is added so a credential that arrives only in a tool's
+ * OUTPUT (an API response, a DB row) is at least DETECTED: the tool has already
+ * run by then, so it cannot be blocked, but the same guard command recognises
+ * the event name and answers in detection mode. Leaving PostToolUse out would
+ * make the output-side blind spot invisible instead of merely unpreventable.
  */
-export function mergeClaudeCodeHooks(
-    existing: unknown,
-    handler: { command: string; args: string[] },
-    timeoutSeconds = 10,
-): { document: Record<string, unknown>; alreadyInstalled: boolean } {
-    const document: Record<string, unknown> = isRecord(existing) ? { ...existing } : {};
-    const hooks: Record<string, unknown> = isRecord(document.hooks) ? { ...document.hooks } : {};
-    const preToolUse = asArray(hooks.PreToolUse).slice();
+export const CLAUDE_EVENTS = ["PreToolUse", "PostToolUse"] as const;
 
-    const entry = { type: "command", command: handler.command, args: handler.args, timeout: timeoutSeconds };
-
+/**
+ * Merge SoterAI's handler into one event's matcher groups, preserving every
+ * other hook and replacing only our own marked entry (so re-installs do not
+ * stack duplicates and a changed path upgrades in place).
+ */
+function mergeClaudeEvent(
+    groups: unknown[],
+    entry: Record<string, unknown>,
+): { merged: unknown[]; alreadyInstalled: boolean } {
     let alreadyInstalled = false;
     let placed = false;
-    const merged = preToolUse.map((group) => {
+    const merged = groups.map((group) => {
         if (!isRecord(group)) return group;
         const matcher = typeof group.matcher === "string" ? group.matcher : "*";
         const handlers = asArray(group.hooks);
@@ -110,10 +112,38 @@ export function mergeClaudeCodeHooks(
         placed = true;
         return { ...group, matcher, hooks: [...handlers.filter((h) => !isOurClaudeHook(h)), entry] };
     });
-
     if (!placed) merged.push({ matcher: "*", hooks: [entry] });
+    return { merged, alreadyInstalled };
+}
 
-    hooks.PreToolUse = merged;
+/**
+ * Merge the SoterAI handler into a Claude Code settings document, on both the
+ * pre- and post-tool events.
+ *
+ * `matcher: "*"` is deliberate. A narrower list would be cheaper — the hook
+ * spawns a process per tool call — but every tool left out is a hole, and a
+ * hole in a guard is worth more than the milliseconds it saves. Narrow it by
+ * editing the matcher if the cost matters more than the coverage.
+ *
+ * `alreadyInstalled` is true only when EVERY installed event already had the
+ * exact entry: adding a new event to an old install must report as a change.
+ */
+export function mergeClaudeCodeHooks(
+    existing: unknown,
+    handler: { command: string; args: string[] },
+    timeoutSeconds = 10,
+): { document: Record<string, unknown>; alreadyInstalled: boolean } {
+    const document: Record<string, unknown> = isRecord(existing) ? { ...existing } : {};
+    const hooks: Record<string, unknown> = isRecord(document.hooks) ? { ...document.hooks } : {};
+    const entry = { type: "command", command: handler.command, args: handler.args, timeout: timeoutSeconds };
+
+    let alreadyInstalled = true;
+    for (const event of CLAUDE_EVENTS) {
+        const { merged, alreadyInstalled: was } = mergeClaudeEvent(asArray(hooks[event]).slice(), entry);
+        hooks[event] = merged;
+        if (!was) alreadyInstalled = false;
+    }
+
     document.hooks = hooks;
     return { document, alreadyInstalled };
 }

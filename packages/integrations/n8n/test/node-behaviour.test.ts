@@ -618,3 +618,110 @@ test("session ID is sent at top level for cloud correlation and reputation isola
   });
   assert.equal(calls[0].body.sessionId, "customer-session-7");
 });
+
+// --- Problem 3: piiRedactor Dual-Output Visual Branching --------------------
+
+test("piiRedactor: branchOnRedaction=true routes clean text to Clean output (branch 0)", async () => {
+  const { outputs, safe, flagged } = await run({
+    action: "piiRedactor",
+    layout: "v3",
+    params: {
+      piiText: "Hello, this is a completely clean customer question without any personal data.",
+      options: { branchOnRedaction: true, detectionEngine: "LOCAL" },
+    },
+  });
+
+  assert.equal(outputs.length, 2, "must have 2 output branches when branchOnRedaction is enabled");
+  assert.equal(safe.length, 1, "clean item must route to branch 0 (Clean)");
+  assert.equal(flagged.length, 0, "branch 1 (Redacted) must be empty for clean text");
+  const json = safe[0]!.json as Record<string, any>;
+  assert.equal(json.enforcement?.routedTo, "Clean");
+  assert.equal(json.clientSideRedaction, false);
+});
+
+test("piiRedactor: branchOnRedaction=true routes text with PII to Redacted output (branch 1)", async () => {
+  const { outputs, safe, flagged } = await run({
+    action: "piiRedactor",
+    layout: "v3",
+    params: {
+      piiText: "Please contact me at john.doe@enterprise.com or call +91 9876543210 immediately.",
+      options: { branchOnRedaction: true, detectionEngine: "LOCAL" },
+    },
+  });
+
+  assert.equal(outputs.length, 2, "must have 2 output branches when branchOnRedaction is enabled");
+  assert.equal(safe.length, 0, "branch 0 (Clean) must be empty when PII is detected and redacted");
+  assert.equal(flagged.length, 1, "redacted item must route to branch 1 (Redacted)");
+  const json = flagged[0]!.json as Record<string, any>;
+  assert.equal(json.enforcement?.routedTo, "Redacted");
+  assert.equal(json.clientSideRedaction, true);
+  assert.ok(Number(json.clientSideRedactionCount) > 0);
+  assert.ok(String(json.safeText).includes("[REDACTED_"));
+});
+
+test("piiRedactor: branchOnRedaction=true cleanly splits mixed batch across Clean and Redacted branches", async () => {
+  const { outputs, safe, flagged } = await run({
+    action: "piiRedactor",
+    layout: "v3",
+    items: 2,
+    params: {
+      options: { branchOnRedaction: true, detectionEngine: "LOCAL" },
+    },
+    perItem: {
+      0: { piiText: "Benign general customer inquiry with no sensitive records." },
+      1: { piiText: "Customer Aadhaar identity: 2345 6789 0123." },
+    },
+  });
+
+  assert.equal(outputs.length, 2);
+  assert.equal(safe.length, 1, "Item 0 must land in Clean branch");
+  assert.equal(flagged.length, 1, "Item 1 must land in Redacted branch");
+  const pairedSafe = safe[0]!.pairedItem as { item: number };
+  const pairedFlagged = flagged[0]!.pairedItem as { item: number };
+  assert.equal(pairedSafe.item, 0, "Clean item must pair to item index 0");
+  assert.equal(pairedFlagged.item, 1, "Redacted item must pair to item index 1");
+  const jsonSafe = safe[0]!.json as Record<string, any>;
+  const jsonFlagged = flagged[0]!.json as Record<string, any>;
+  assert.equal(jsonSafe.enforcement?.routedTo, "Clean");
+  assert.equal(jsonFlagged.enforcement?.routedTo, "Redacted");
+});
+
+test("piiRedactor: branchOnRedaction=false (default) preserves single-output contract", async () => {
+  const { outputs } = await run({
+    action: "piiRedactor",
+    layout: "v3",
+    items: 2,
+    params: {
+      options: { detectionEngine: "LOCAL" },
+    },
+    perItem: {
+      0: { piiText: "Clean query." },
+      1: { piiText: "Sensitive PAN number: ABCDE1234F." },
+    },
+  });
+
+  assert.equal(outputs.length, 1, "must preserve single output when branchOnRedaction is not set");
+  assert.equal(outputs[0]!.length, 2, "both items must emerge through the single output");
+  const json0 = outputs[0]![0]!.json as Record<string, any>;
+  const json1 = outputs[0]![1]!.json as Record<string, any>;
+  assert.equal(json0.enforcement?.routedTo, "Safe");
+  assert.equal(json1.enforcement?.routedTo, "Safe");
+});
+
+test("piiRedactor: v2 layout supports branchOnRedaction via advancedOptions", async () => {
+  const { outputs, safe, flagged } = await run({
+    action: "piiRedactor",
+    layout: "v2",
+    params: {
+      piiText: "User phone is 9876543210",
+      detectionEngine: "LOCAL",
+      advancedOptions: { branchOnRedaction: true },
+    },
+  });
+
+  assert.equal(outputs.length, 2);
+  assert.equal(safe.length, 0);
+  assert.equal(flagged.length, 1);
+  const json = flagged[0]!.json as Record<string, any>;
+  assert.equal(json.enforcement?.routedTo, "Redacted");
+});

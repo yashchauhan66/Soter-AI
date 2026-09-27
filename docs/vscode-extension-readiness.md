@@ -68,9 +68,9 @@ what an agent does on its own.
 | `PIIDetector` | 7 |
 | `PromptInjectionLiteDetector` | 36 |
 | `RepoInstructionPoisoningDetector` | 8 |
-| `SecretDetector` | 42 |
+| `SecretDetector` | 36 |
 | `TerminalCommandRiskDetector` | 21 |
-| **Total** | **186** |
+| **Total** | **180** |
 
 All 12 detectors are deterministic regex/heuristic rules, bundled inline.
 **No ML model ships in the VSIX.** `onnxruntime` appears zero times in

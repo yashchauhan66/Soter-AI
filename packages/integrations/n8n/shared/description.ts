@@ -12,7 +12,7 @@ export const soterGuardBaseDescription: INodeTypeBaseDescription = {
   group: ["transform"],
   description:
     "Detect prompt injection, jailbreaks, secrets, PII, and unsafe AI instructions in n8n workflows",
-  defaultVersion: 2,
+  defaultVersion: 3,
   codex: {
     categories: ["Development", "Utility"],
     alias: [
