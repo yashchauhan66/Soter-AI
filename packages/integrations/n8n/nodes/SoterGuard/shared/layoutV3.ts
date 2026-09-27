@@ -238,7 +238,7 @@ export const OPERATIONS: OperationSpec[] = [  {
     // passport is a configuration the product accepts. A star here would make n8n
     // report a node issue and refuse to run that workflow at all.
     required: ["agentIdentityId"],
-    options: ["passportPolicy", ...PASSPORT_COMMON],
+    options: ["passportPolicy", "onSessionConflict", ...PASSPORT_COMMON],
   },
   {
     resource: "agentPassport",
@@ -248,9 +248,9 @@ export const OPERATIONS: OperationSpec[] = [  {
     action: "Validate an agent passport",
     notice: "validatePassportNotice",
     fields: ["passportToken", "sessionId", "toolName", "toolAction"],
-    // execute.ts throws "Session ID is required to validate a passport.", and
-    // `agentPassportValidateSchema` makes it `min(1)` server-side.
-    required: ["sessionId"],
+    // Session ID is optional on the parameter panel: if left empty, execute.ts auto-falls back to incoming itemJson.sessionId.
+    // execute.ts throws "Session ID is required to validate a passport." only if both the parameter and the incoming item lack a Session ID.
+    required: [],
     options: [...TOOL_DETAILS, ...PASSPORT_COMMON],
   },
   {

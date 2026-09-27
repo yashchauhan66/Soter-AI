@@ -354,6 +354,32 @@ test("the tool check states plainly that it cannot check identity", () => {
   assert.match(result.engineNote, /passport|authoris|identity/i);
 });
 
+test("a terminal execution call is flagged for code execution", () => {
+  const result = checkToolCallLocal({
+    name: "terminal",
+    action: "run_command",
+    destination: "INTERNAL",
+    content: "ls -la",
+  });
+  assert.notEqual(result.decision, "ALLOW");
+  assert.ok(result.findings.some((f) => f.label.includes("execute code")));
+});
+
+test("destructive commands like format or kill are flagged", () => {
+  const result = checkToolCallLocal({
+    name: "system_tool",
+    action: "format_disk",
+    destination: "EXTERNAL",
+  });
+  assert.equal(result.decision, "BLOCK");
+});
+
+test("legacy or positional arguments signature works without error", () => {
+  const result = checkToolCallLocal("bash", { command: "whoami" });
+  assert.ok(result);
+  assert.ok(result.findings.length > 0);
+});
+
 // --- Enhanced local recall & evasion tests -----------------------------------
 
 test("declarative inversion overrides are blocked", () => {

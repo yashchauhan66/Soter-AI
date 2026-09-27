@@ -117,6 +117,8 @@ test("the five passport actions compose into a working lifecycle", async () => {
   });
   assert.equal(validate.safe[0].json.verdictCode, "PASSPORT_VALID");
   assert.equal(validate.safe[0].json.allowed, true);
+  assert.equal(validate.safe[0].json.passportToken, passportToken);
+  assert.ok(validate.safe[0].json.passportTokenMasked, "validate did not return passportTokenMasked");
 
   // Step 4 — an authorized tool call on that session leaves through Safe.
   const tool = await run({
@@ -125,7 +127,20 @@ test("the five passport actions compose into a working lifecycle", async () => {
     respond,
   });
   assert.equal(tool.safe[0].json.allowed, true);
+  assert.equal(tool.safe[0].json.passportToken, passportToken);
+  assert.ok(tool.safe[0].json.passportTokenMasked, "toolCall did not return passportTokenMasked");
   assert.equal(tool.flagged.length, 0);
+
+  // Step 4b — Sub-workflow / chaining ergonomics: node automatically falls back
+  // to reading passportToken and sessionId from incoming input JSON when left empty.
+  const toolWithFallback = await run({
+    action: "toolCall",
+    inputData: [{ json: validate.safe[0].json as Record<string, unknown> }],
+    params: { toolName: "rag.search", toolAction: "search", toolDestination: "internal", detectionEngine: "CLOUD" },
+    respond,
+  });
+  assert.equal(toolWithFallback.safe[0].json.allowed, true);
+  assert.equal(toolWithFallback.safe[0].json.passportToken, passportToken);
 
   // Step 5 — revoke the session.
   const revoke = await run({
@@ -150,15 +165,16 @@ test("the five passport actions compose into a working lifecycle", async () => {
   assert.equal(afterRevoke.flagged[0].json.verdictCode, "PASSPORT_INVALID");
 });
 
-test("a passport lifecycle action refuses Local mode instead of faking server state", async () => {
-  await assert.rejects(
-    run({
-      action: "issuePassport",
-      params: { agentIdentityId: "idn_1", detectionEngine: "LOCAL" },
-      credentials: null,
-    }),
-    /require Cloud or Auto|lifecycle/i,
-  );
+test("a passport lifecycle action supports Local mode with emulated: true flag", async () => {
+  const res = await run({
+    action: "issuePassport",
+    params: { agentIdentityId: "idn_1", detectionEngine: "LOCAL" },
+    credentials: null,
+  });
+  assert.equal(res.safe.length, 1);
+  assert.equal(res.safe[0].json.verdictCode, "PASSPORT_ISSUED");
+  assert.equal(res.safe[0].json.emulated, true);
+  assert.equal(res.safe[0].json.engine, "local");
 });
 
 // ---------------------------------------------------------------------------

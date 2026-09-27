@@ -85,22 +85,21 @@ test("v3 local guard keeps a listed phrase in its redacted copy too", async () =
   if (text) assert.match(text, /ceo@acme\.com/);
 });
 
-test("v3 cloud mode reports LOCAL_ONLY — it does not claim to have kept the words", async () => {
+test("v3 cloud mode restores kept words and phrases achieving parity with local engine", async () => {
   const { safe } = await run({
     action: "piiRedactor",
     layout: "v3",
     params: {
-      piiText: "Contact ceo@acme.com",
+      piiText: "Contact ceo@acme.com and billing@acme.com",
       options: { detectionEngine: "CLOUD", ignoredWords: "ceo@acme.com" },
     },
-    // Server returns a redacted copy; the node cannot un-redact a literal phrase.
-    respond: () => ({ body: { ...cleanInputGuard, safeText: "Contact [REDACTED_EMAIL]" } }),
+    respond: () => ({ body: { ...cleanInputGuard, safeText: "Contact [REDACTED_EMAIL] and [REDACTED_EMAIL]" } }),
   });
 
   const report = safe[0].json.ignoredWords as Record<string, unknown>;
-  assert.equal(report.effect, "LOCAL_ONLY");
+  assert.equal(report.effect, "APPLIED");
   assert.deepEqual(report.words, ["ceo@acme.com"]);
-  assert.match(String(report.detail), /Local/);
+  assert.equal(safe[0].json.safeText, "Contact ceo@acme.com and [REDACTED_EMAIL]");
 });
 
 test("v2 does not read ignoredWords — the field is version 3 only", async () => {

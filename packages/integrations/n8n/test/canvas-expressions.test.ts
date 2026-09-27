@@ -114,3 +114,12 @@ test("on a passport action the two engine hints no longer contradict each other"
   assert.equal(condition(reduced, state), false);
   assert.equal(condition(lifecycle, state), true);
 });
+
+test("the sensitive-data enforcement warning fires on v2 guards when onThreat is BLOCK and enforceOnSensitiveData is off", () => {
+  const sensitiveHint = hintBy("Also Enforce On Sensitive Data");
+  assert.equal(condition(sensitiveHint, { action: "inputGuard", onThreat: "BLOCK" }), true);
+  assert.equal(condition(sensitiveHint, { action: "inputGuard", onThreat: "BLOCK", enforceOnSensitiveData: true }), false);
+  assert.equal(condition(sensitiveHint, { action: "inputGuard", onThreat: "CONTINUE" }), false);
+  assert.equal(condition(sensitiveHint, { action: "piiRedactor", onThreat: "BLOCK" }), false);
+});
+

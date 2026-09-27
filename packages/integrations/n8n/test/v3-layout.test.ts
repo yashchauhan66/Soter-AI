@@ -581,4 +581,12 @@ test("the key hints fire only in the state they warn about", () => {
   assert.equal(hintFires(redactBranchIdx, { operation: "piiRedactor", options: { branchOnRedaction: true } }), true);
   assert.equal(hintFires(redactBranchIdx, { operation: "piiRedactor", options: { branchOnRedaction: false } }), false);
   assert.equal(hintFires(redactBranchIdx, { operation: "inputGuard", options: { branchOnRedaction: true } }), false);
+
+  // Sensitive enforcement hint: On Threat = BLOCK, but enforceOnSensitiveData is falsy
+  const sensitiveHintIdx = soterGuardHintsV3.findIndex((h) => h.message.includes("Also Enforce On Sensitive Data"));
+  assert.ok(sensitiveHintIdx !== -1, "Sensitive data enforcement hint not found");
+  assert.equal(hintFires(sensitiveHintIdx, { operation: "inputGuard", onThreat: "BLOCK", options: {} }), true);
+  assert.equal(hintFires(sensitiveHintIdx, { operation: "inputGuard", onThreat: "BLOCK", options: { enforceOnSensitiveData: true } }), false);
+  assert.equal(hintFires(sensitiveHintIdx, { operation: "inputGuard", onThreat: "CONTINUE", options: {} }), false);
+  assert.equal(hintFires(sensitiveHintIdx, { operation: "piiRedactor", onThreat: "BLOCK", options: {} }), false);
 });

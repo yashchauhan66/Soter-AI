@@ -102,6 +102,13 @@ test("one choice covers both engines' spellings of the same identifier", () => {
   assert.deepEqual([...redactionTokensFor(["CARD"])].sort(), ["CARD", "CARD_LIKE"]);
 });
 
+test("PHONE_NUMBER and natural aliases resolve to PHONE and are not refused as credentials", () => {
+  const { ignored, refused } = splitIgnorableEntities(["PHONE_NUMBER", "EMAIL_ADDRESS", "MOBILE", "SSN"]);
+  assert.deepEqual(ignored.sort(), ["EMAIL", "PHONE", "US_SSN"].sort());
+  assert.deepEqual(refused, []);
+  assert.ok(redactionTokensFor(["PHONE_NUMBER"]).has("PHONE"));
+});
+
 // ---------------------------------------------------------------------------
 // The local engine
 // ---------------------------------------------------------------------------
@@ -115,6 +122,13 @@ test("an ignored identifier is left in the text and is not counted", () => {
   // The secret in the same message is untouched by the request.
   assert.match(kept.safeText, /\[REDACTED_SECRET\]/);
   assert.equal(kept.count, 1);
+});
+
+test("PHONE_NUMBER alias in redactLocal preserves phone numbers and counts them as ignored", () => {
+  const kept = redactLocal(MIXED, { ignore: ["PHONE_NUMBER"] });
+  assert.match(kept.safeText, /98765 43210/);
+  assert.match(kept.safeText, /\[REDACTED_EMAIL\]/);
+  assert.deepEqual(kept.ignoredEntities, ["PHONE"]);
 });
 
 test("an identifier that was not named is still redacted", () => {

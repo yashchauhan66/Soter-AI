@@ -192,6 +192,14 @@ export const soterGuardHints: NodeHint[] = [
     location: "ndv",
     displayCondition: '={{ ["enrollIdentity", "issuePassport", "validatePassport", "revokePassport"].includes($parameter["action"]) }}',
   },
+  {
+    message:
+      "<b>On Threat</b> is set to Block, but <b>Also Enforce On Sensitive Data</b> is off. Secrets and personal data will be redacted and continue through <b>Safe</b>. Turn it on if you want Block to stop them.",
+    type: "info",
+    location: "ndv",
+    displayCondition:
+      '={{ ["inputGuard", "outputGuard", "universalGuard"].includes($parameter["action"]) && $parameter["onThreat"] === "BLOCK" && !$parameter["enforceOnSensitiveData"] }}',
+  },
 ];
 
 export class SoterGuardV2 implements INodeType {
