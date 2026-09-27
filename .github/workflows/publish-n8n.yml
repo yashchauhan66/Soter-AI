@@ -167,7 +167,7 @@ jobs:
         env:
           NAME: ${{ steps.preflight.outputs.name }}
           VERSION: ${{ steps.preflight.outputs.version }}
-          DIST_TAG: ${{ github.event.inputs.dist_tag || 'next' }}
+          DIST_TAG: ${{ github.event.inputs.dist_tag || 'latest' }}
         run: |
           set -euo pipefail
           # Registry reads lag a publish by a few seconds; retry rather than
