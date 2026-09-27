@@ -79,6 +79,21 @@ It is the pattern tier and only the pattern tier, and every item says so. Each l
 
 Local mode still enforces. **On Threat** works exactly as it does in Cloud mode: Block empties `outputText` and routes the item to **Flagged**, Redact returns the cleaned text on **Safe**.
 
+### Sensitive Data Enforcement (`Also Enforce On Sensitive Data`)
+
+By default, **On Threat = Block** halts malicious threats (prompt injections, jailbreaks, tool abuse), while personal details (PII) and secrets are automatically redacted into sanitized tokens (e.g., `[REDACTED_SECRET]`) and allowed to proceed through the **Safe** output branch. This prevents standard customer workflows from terminating merely because a user included their contact email or phone number.
+
+If your workflow requires a zero-tolerance policy where any secret or sensitive detail immediately terminates the request:
+- Open **Options** inside the node.
+- Turn on **Also Enforce On Sensitive Data**.
+- Now, whenever a live secret, credential, or PII entity is detected, the node halts execution and routes the item to the **Flagged** branch.
+
+### Pattern Detection Nuances & Test Guidance
+
+- **Payment Cards & Luhn Check:** Card pattern detection implements the **Luhn checksum algorithm**. Arbitrary 16-digit sequences (such as order confirmation numbers or tracking codes) are intentionally ignored to eliminate false positives. When testing, use Luhn-compliant test card numbers (e.g., `4242 4242 4242 4242` or `4111 1111 1111 1111`).
+- **US Social Security Numbers (SSN):** The detector respects official US Social Security Administration rules and excludes non-issuable area codes (`000`, `666`, `900–999`). When testing, use valid SSN formats such as `219-45-7890`.
+- **Destructive & Shell Execution Tool Calls:** Local tool checking detects destructive actions (`delete`, `drop`, `truncate`, `purge`, `wipe`, `format`, `kill`, `terminate`, `revoke`, `refund`) as well as code and shell execution (`exec`, `execute`, `eval`, `run`, `bash`, `cmd`, `terminal`). External code or command execution is treated as high risk and blocked.
+
 ### Auto mode
 
 Auto falls back to the local engine only when the cloud **could not be asked**:
@@ -147,22 +162,36 @@ Items in Parallel and Reuse Identical Items are the two that matter for large ba
 Every SoterAI node has two outputs. The node routes items itself — you do not need an IF node to act on a verdict.
 
 ```text
-                      ┌─ Safe ────► rest of your workflow
+                      ┌─ Safe ────► rest of your workflow (LLM, Agents, CRM)
 Webhook ──► SoterAI ──┤
-                      └─ Flagged ─► respond "blocked", log, or leave unconnected
+                      └─ Flagged ─► respond "blocked", log to SIEM, or notify Slack
 ```
 
 | Output | What lands here |
 | --- | --- |
-| **Safe** | Everything the node let through. Use `{{ $json.outputText }}` as the text to pass on — it holds the cleaned or redacted value. |
-| **Flagged** | Items the node stopped, plus items the report-only actions flagged. Leave it unconnected to drop them, or wire it to a response/logging branch. |
+| **Safe** (Output 1) | Everything the node let through. Use `{{ $json.outputText }}` as the text to pass on — it holds the cleaned or redacted value. |
+| **Flagged** (Output 2) | Items the node stopped, plus items report-only actions flagged. Wire this branch to error responders, Slack alerts, or audit logs. |
+
+### ⚠️ Critical Note: Downstream Node Consumption & Execution
+
+When an attack or sensitive leak is detected under **On Threat = BLOCK**:
+- **1 item** is routed to **Flagged (Output 2)**.
+- **0 items** are emitted to **Safe (Output 1)**.
+
+In n8n runtime mechanics, **downstream nodes connected only to an output that emitted 0 items will not execute**. If your workflow connects only Output 1 (`Safe`) and leaves Output 2 (`Flagged`) unconnected:
+- When a prompt injection is blocked, downstream steps (e.g. your OpenAI / Anthropic node or database save) will silently not run for that item.
+- This is intentional security isolation (preventing malicious payloads from reaching downstream tools).
+- **Recommended Wiring**:
+  1. Wire **Safe** to your normal LLM / business logic nodes.
+  2. Wire **Flagged** to an alert or client response node (e.g., *Respond to Webhook* with `{{ $json.userMessage }}` or Slack alert).
+  3. If you require single-branch execution where blocked items must continue into the same downstream path, set **On Threat** to `WARN` or `CONTINUE` and branch conditionally on `{{ $json.blocked }}`.
 
 Two things worth knowing:
 
 - Setting **On Threat** to Redact, Warn, or Continue keeps those items on **Safe**, with their cleaned or annotated text. That is what those settings are for. Only genuinely stopped items go to Flagged.
 - With **Continue On Fail** enabled, an item whose check could not complete goes to **Flagged**. Nothing cleared it, so an API outage cannot become a silent bypass.
 
-`Redact PII and Secrets` has a single output. It never rejects anything, so a Flagged branch would always be empty.
+`Redact PII and Secrets` has a single output by default. It never rejects anything, so a Flagged branch would always be empty unless **Branch on Redaction** is toggled on under Options.
 
 ### Existing workflows
 
@@ -776,7 +805,7 @@ API keys, bearer tokens, common provider tokens, AWS access key IDs, database UR
 ## Compatibility
 
 - Package: `n8n-nodes-soterai`
-- Version: `0.8.1`
+- Version: `0.8.2`
 - n8n node API: `1`
 - Peer dependency: `n8n-workflow` `*`
 - Runtime: n8n versions that support community nodes and Node.js 20+ are expected to work; verify in your own n8n host before production use.
