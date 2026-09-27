@@ -45,6 +45,8 @@ export type CtxOptions = {
    * every existing test is unaffected.
    */
   perItem?: Record<number, Record<string, unknown>>;
+  /** Explicit input items to feed into ctx.getInputData() for chaining/sub-workflow tests. */
+  inputData?: Array<{ json: Record<string, unknown> }>;
 };
 
 export function makeCtx(options: CtxOptions) {
@@ -65,7 +67,7 @@ export function makeCtx(options: CtxOptions) {
   const params: Record<string, unknown> = { [selector]: options.action, ...options.params };
 
   const ctx = {
-    getInputData: () => Array.from({ length: options.items ?? 1 }, () => ({ json: {} })),
+    getInputData: () => options.inputData ?? Array.from({ length: options.items ?? 1 }, () => ({ json: {} })),
     getNode: () => node,
     getCredentials: async () => {
       if (options.credentials === null) throw new Error("Node does not have any credentials set.");

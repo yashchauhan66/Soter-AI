@@ -187,7 +187,7 @@ const REUSED_NOTICES: Record<string, string> = {
 /** The two version-3 notices with no version-2 equivalent. */
 const NEW_NOTICES: Record<string, string> = {
   enforcingNotice:
-    "This operation enforces. <b>On Threat</b> decides what happens to anything flagged, and flagged items leave through the <b>Flagged</b> output instead of the main path.",
+    "This operation enforces dual-branch security. Clean items proceed to <b>Output 1 (Safe)</b>. Blocked or flagged items leave through <b>Output 2 (Flagged)</b>, emitting 0 items to Safe (downstream nodes wired only to Safe will not execute). Wire Flagged to an incident alert or logger.",
   redactNotice:
     "Never blocks and never stops an item. The cleaned copy arrives as <code>{{ $json.outputText }}</code> on the single output; the text you pass in is not modified in place.",
 };
@@ -223,6 +223,7 @@ const OPTION_SOURCES: Record<string, () => INodeProperties> = {
   enforceOnSensitiveData: () => source("enforceOnSensitiveData"),
   passportToken: () => source("passportToken"),
   passportPolicy: () => source("passportPolicy"),
+  onSessionConflict: () => source("onSessionConflict"),
   toolContent: () => source("toolContent"),
   toolTarget: () => source("toolTarget"),
   toolDestination: () => source("toolDestination"),

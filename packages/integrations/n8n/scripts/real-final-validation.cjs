@@ -117,7 +117,7 @@ async function runNode(config) {
 
 async function main() {
   console.log("\n================================================================================");
-  console.log("       SOTERAI N8N NODE — FINAL REAL VALIDATION SUITE (v0.8.1)");
+  console.log("       SOTERAI N8N NODE — FINAL REAL VALIDATION SUITE (v0.8.2)");
   console.log("================================================================================\n");
 
   // ---------------------------------------------------------------------------

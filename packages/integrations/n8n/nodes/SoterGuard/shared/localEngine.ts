@@ -1519,6 +1519,58 @@ const IGNORABLE_BY_KEY: ReadonlyMap<string, IgnorableEntity> = new Map(
 );
 
 /**
+ * Canonical aliases for ignorable entity keys to ensure expressions,
+ * natural spellings, and API names (e.g. PHONE_NUMBER -> PHONE)
+ * are accepted rather than refused as credentials.
+ */
+const ENTITY_ALIASES: ReadonlyMap<string, string> = new Map([
+  ["PHONE_NUMBER", "PHONE"],
+  ["PHONE_NUMBERS", "PHONE"],
+  ["PHONENUMBER", "PHONE"],
+  ["MOBILE", "PHONE"],
+  ["MOBILE_NUMBER", "PHONE"],
+  ["CELL", "PHONE"],
+  ["CELL_PHONE", "PHONE"],
+  ["TELEPHONE", "PHONE"],
+  ["CONTACT_NUMBER", "PHONE"],
+  ["EMAIL_ADDRESS", "EMAIL"],
+  ["EMAIL_ADDRESSES", "EMAIL"],
+  ["EMAILS", "EMAIL"],
+  ["SSN", "US_SSN"],
+  ["SOCIAL_SECURITY_NUMBER", "US_SSN"],
+  ["CREDIT_CARD", "CARD"],
+  ["DEBIT_CARD", "CARD"],
+  ["CARD_NUMBER", "CARD"],
+  ["PAYMENT_CARD", "CARD"],
+  ["IP_ADDRESS", "IP"],
+  ["IPV4", "IP"],
+  ["IPV6", "IP"],
+  ["DRIVING_LICENSE", "DRIVING_LICENCE"],
+  ["DL", "DRIVING_LICENCE"],
+  ["AADHAAR_NUMBER", "AADHAAR"],
+  ["AADHAR", "AADHAAR"],
+  ["AADHAR_NUMBER", "AADHAAR"],
+  ["PAN_NUMBER", "PAN"],
+  ["PAN_CARD", "PAN"],
+  ["GST", "GSTIN"],
+  ["GST_NUMBER", "GSTIN"],
+  ["VOTER", "VOTER_ID"],
+  ["VOTERID", "VOTER_ID"],
+  ["EPIC", "VOTER_ID"],
+  ["BANK_ACCOUNT_NUMBER", "BANK_ACCOUNT"],
+  ["ACCOUNT_NUMBER", "BANK_ACCOUNT"],
+  ["DATE_OF_BIRTH", "DOB"],
+  ["BIRTH_DATE", "DOB"],
+  ["CPF", "BR_CPF"],
+]);
+
+export function resolveIgnorableEntityKey(raw: string): string | undefined {
+  const normalized = String(raw).trim().toUpperCase();
+  if (IGNORABLE_BY_KEY.has(normalized)) return normalized;
+  return ENTITY_ALIASES.get(normalized);
+}
+
+/**
  * Separates the entities an author is allowed to switch off from the ones they
  * are not.
  *
@@ -1531,12 +1583,14 @@ export function splitIgnorableEntities(requested: readonly string[]): { ignored:
   const ignored: string[] = [];
   const refused: string[] = [];
   for (const raw of requested) {
-    const entity = String(raw).trim().toUpperCase();
-    if (!entity) continue;
-    if (IGNORABLE_BY_KEY.has(entity)) {
-      if (!ignored.includes(entity)) ignored.push(entity);
-    } else if (!refused.includes(entity)) {
-      refused.push(entity);
+    const rawStr = String(raw).trim();
+    if (!rawStr) continue;
+    const normalized = rawStr.toUpperCase();
+    const resolvedKey = resolveIgnorableEntityKey(normalized);
+    if (resolvedKey) {
+      if (!ignored.includes(resolvedKey)) ignored.push(resolvedKey);
+    } else if (!refused.includes(normalized)) {
+      refused.push(normalized);
     }
   }
   return { ignored: ignored.sort(), refused: refused.sort() };
@@ -1552,7 +1606,9 @@ export function splitIgnorableEntities(requested: readonly string[]): { ignored:
 export function redactionTokensFor(keys: readonly string[]): Set<string> {
   const tokens = new Set<string>();
   for (const raw of keys) {
-    const entry = IGNORABLE_BY_KEY.get(String(raw).trim().toUpperCase());
+    const resolvedKey = resolveIgnorableEntityKey(String(raw));
+    if (!resolvedKey) continue;
+    const entry = IGNORABLE_BY_KEY.get(resolvedKey);
     if (!entry) continue;
     for (const token of entry.tokens) {
       if (!CREDENTIAL_ENTITIES.has(token)) tokens.add(token);
@@ -1577,7 +1633,7 @@ const CREDENTIAL_RULE_PATTERNS: readonly RegExp[] = REDACTION_RULES.filter(
 ).map((rule) => new RegExp(rule.pattern.source, rule.pattern.flags.replace("g", "")));
 
 /** Whether a literal ignore phrase contains something the redactor treats as a secret. */
-function phraseCarriesCredential(phrase: string): boolean {
+export function phraseCarriesCredential(phrase: string): boolean {
   return CREDENTIAL_RULE_PATTERNS.some((pattern) => pattern.test(phrase));
 }
 
@@ -2408,7 +2464,10 @@ export interface LocalToolCheck {
   engineNote: string;
 }
 
-const DESTRUCTIVE_ACTION = /\b(?:delete|drop|truncate|purge|wipe|remove|revoke|transfer|payout|refund|charge|deploy|shutdown|disable)\b/i;
+const DESTRUCTIVE_ACTION =
+  /\b(?:delete|drop|truncate|purge|wipe|remove|revoke|transfer|payout|refund|charge|deploy|shutdown|disable|kill|terminate|format|destroy|reset)\b/i;
+const CODE_EXEC_ACTION = /\b(?:exec|execute|eval|bash|cmd|sh|shell|terminal|powershell|system|spawn)\b/i;
+const CODE_EXEC_COMPOUND = /\b(?:run|execute|exec)\s+(?:command|script|code|process|shell|terminal|cli|tool|payload)\b/i;
 const SENDING_ACTION = /\b(?:send|post|publish|email|mail|tweet|message|notify|share|upload|export)\b/i;
 
 /**
@@ -2420,14 +2479,42 @@ const SENDING_ACTION = /\b(?:send|post|publish|email|mail|tweet|message|notify|s
  * is passport enforcement, which is server-side, and the note says so rather
  * than letting a green verdict imply an authorisation check that never ran.
  */
-export function checkToolCallLocal(input: {
-  name: string;
-  action: string;
-  destination: string;
-  target?: string;
-  content?: string;
-  riskContext?: Record<string, unknown>;
-}): LocalToolCheck {
+export function checkToolCallLocal(
+  inputOrName:
+    | {
+        name: string;
+        action: string;
+        destination: string;
+        target?: string;
+        content?: string;
+        riskContext?: Record<string, unknown>;
+      }
+    | string,
+  legacyArgs?: Record<string, unknown> | string,
+  legacyContext?: Record<string, unknown>,
+): LocalToolCheck {
+  let input: {
+    name: string;
+    action: string;
+    destination: string;
+    target?: string;
+    content?: string;
+    riskContext?: Record<string, unknown>;
+  };
+
+  if (typeof inputOrName === "string") {
+    const content = typeof legacyArgs === "string" ? legacyArgs : JSON.stringify(legacyArgs ?? "");
+    input = {
+      name: inputOrName,
+      action: "call",
+      destination: "EXTERNAL",
+      content,
+      riskContext: legacyContext,
+    };
+  } else {
+    input = inputOrName ?? { name: "", action: "", destination: "EXTERNAL" };
+  }
+
   const payload = [input.content, input.target].filter(Boolean).join("\n");
   const analysis = payload.trim() ? analyzeLocal(payload, "INPUT") : null;
   const findings: LocalFinding[] = analysis ? [...analysis.findings] : [];
@@ -2446,9 +2533,15 @@ export function checkToolCallLocal(input: {
   const external = destination === "external" || destination === "unknown";
   const destructive = DESTRUCTIVE_ACTION.test(spokenAction) || DESTRUCTIVE_ACTION.test(spokenName);
   const sending = SENDING_ACTION.test(spokenAction) || SENDING_ACTION.test(spokenName);
+  const codeExecution =
+    CODE_EXEC_ACTION.test(spokenAction) ||
+    CODE_EXEC_ACTION.test(spokenName) ||
+    CODE_EXEC_COMPOUND.test(spokenAction) ||
+    CODE_EXEC_COMPOUND.test(spokenName);
+
   const capabilities = input.riskContext ?? {};
   const canModify = capabilities.canModifyData === true || capabilities.canDeleteData === true;
-  const canRunCode = capabilities.canRunCode === true;
+  const canRunCode = capabilities.canRunCode === true || codeExecution;
   const canSend = capabilities.canSendMessage === true || capabilities.canSendEmail === true;
 
   let riskScore = analysis?.riskScore ?? 0;
@@ -2470,8 +2563,15 @@ export function checkToolCallLocal(input: {
     });
   }
   if (canRunCode) {
-    riskScore = Math.max(riskScore, 65);
-    findings.push({ type: "TOOL_ABUSE", label: "Tool can execute code", severity: "HIGH", matches: 1 });
+    riskScore = Math.max(riskScore, external ? 85 : 65);
+    findings.push({
+      type: "TOOL_ABUSE",
+      label: external
+        ? `Code or command execution (${input.action || input.name}) reaching an external destination`
+        : `Tool can execute code or shell commands (${input.action || input.name})`,
+      severity: external ? "CRITICAL" : "HIGH",
+      matches: 1,
+    });
   }
   if (external && (sending || canSend) && findings.some((finding) => PRIVACY_TYPES.has(finding.type))) {
     riskScore = Math.max(riskScore, 80);

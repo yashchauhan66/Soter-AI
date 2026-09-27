@@ -137,7 +137,7 @@ export const soterGuardHintsV3: NodeHint[] = [
     // The one mistake that leaves a user unprotected while they believe the
     // opposite: enforcement configured, Flagged output left dangling.
     message:
-      "Flagged items leave through the second output. Connect it to a response or stop step, or leave it unconnected to drop them — but do not connect it back into your main path.",
+      "Dual-branch routing: Flagged or blocked items leave through Output 2 (Flagged), emitting 0 items to Output 1 (Safe). If subsequent nodes are wired only to Safe, they will not execute when an attack is blocked. Connect Output 2 (Flagged) to an alert, incident log, or graceful notification step — but do not connect it back into your main path.",
     type: "info",
     location: "outputPane",
     displayCondition: `={{ !${JSON.stringify(SINGLE_OUTPUT_ACTIONS)}.includes($parameter["operation"]) }}`,
@@ -218,7 +218,7 @@ export const soterGuardHintsV3: NodeHint[] = [
   },
   {
     message:
-      "Identity and passport lifecycle operations use server-side state. They require a SoterAI API Key (x-api-key) and never fall back to Local.",
+      "Identity and passport lifecycle operations use server-side state in Cloud mode. In Local mode, operations run simulated locally (emulated: true); in Cloud mode, they never fall back to Local.",
     type: "info",
     location: "ndv",
     displayCondition: `={{ ${PASSPORT_LIFECYCLE}.includes($parameter["operation"]) }}`,
@@ -230,6 +230,13 @@ export const soterGuardHintsV3: NodeHint[] = [
     location: "outputPane",
     displayCondition: '={{ $parameter["operation"] === "piiRedactor" && ($parameter["options"] || {}).branchOnRedaction === true }}',
     whenToDisplay: "beforeExecution",
+  },
+  {
+    message:
+      "<b>On Threat</b> is set to Block, but <b>Also Enforce On Sensitive Data</b> is off under Options. Secrets and personal data will be redacted and continue through <b>Safe</b>. Turn it on under Options if you want Block to stop them.",
+    type: "info",
+    location: "ndv",
+    displayCondition: `={{ ${ENFORCING}.includes($parameter["operation"]) && $parameter["onThreat"] === "BLOCK" && !($parameter["options"] || {})["enforceOnSensitiveData"] }}`,
   },
   {
     // New in version 3. Custom JSON Only is the one preset that grants nothing

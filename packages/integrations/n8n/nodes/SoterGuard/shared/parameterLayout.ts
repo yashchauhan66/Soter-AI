@@ -61,9 +61,19 @@ export function withV3ParameterLayout(ctx: IExecuteFunctions): IExecuteFunctions
 
     // On the panel: n8n resolves it exactly as it did for version 2, including
     // expressions, `extractValue`, and the caller's own fallback.
-    if (placement === "panel") return read(...args);
+    if (placement === "panel") {
+      const panelValue = read(...args);
+      if (name === "userMessages") {
+        const isBlank = !panelValue || (typeof panelValue === "object" && Object.keys(panelValue as object).length === 0);
+        if (isBlank) {
+          const fromOptions = optionsAt(itemIndex)[name];
+          if (fromOptions !== undefined) return fromOptions;
+        }
+      }
+      return panelValue;
+    }
 
-    if (placement === "options") {
+    if (placement === "options" || (name === "detectionEngine" && optionsAt(itemIndex).detectionEngine !== undefined)) {
       const value = optionsAt(itemIndex)[name];
       if (value !== undefined) return value;
       if (name in V3_OPTION_DEFAULTS) return V3_OPTION_DEFAULTS[name];

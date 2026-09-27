@@ -238,6 +238,31 @@ export const soterGuardProperties: INodeProperties[] = [
     displayOptions: { show: { action: ["enrollIdentity", "issuePassport"] } },
     description: "Optional policy keys: allowedTools, blockedTools, approvalRequiredTools, allowedDomains, blockedDomains, dataScopes, memoryScopes",
   },
+  {
+    displayName: "On Session Conflict",
+    name: "onSessionConflict",
+    type: "options",
+    options: [
+      {
+        name: "Rotate (Recommended)",
+        value: "ROTATE",
+        description: "Generate a new passport and rotate the session token (idempotent for re-executions and Test Step)",
+      },
+      {
+        name: "Reuse",
+        value: "REUSE",
+        description: "Reuse existing active session passport if still valid",
+      },
+      {
+        name: "Fail",
+        value: "FAIL",
+        description: "Throw an error if a passport already exists for this session ID",
+      },
+    ],
+    default: "ROTATE",
+    displayOptions: { show: { action: ["issuePassport"] } },
+    description: "What to do if a passport already exists for this session ID in the project",
+  },
   // Tool Name and Tool Action are split by action, not shared, so the required
   // star tells the truth. Check Tool Call rejects an empty name or action
   // (execute.ts throws "Tool Name and Tool Action are required"), so it carries
@@ -395,7 +420,7 @@ export const soterGuardProperties: INodeProperties[] = [
   },
   {
     displayName:
-      "<b>Step 3 of 5:</b> Validate the session and token. Tool Name and Tool Action are optional — add them to test authorization for a specific planned call.",
+      "<b>Step 3 of 5:</b> Validate the session and token. Session ID and Passport Token auto-pick from incoming item if left empty. Tool Name and Tool Action test authorization for a specific call.",
     name: "validatePassportNotice",
     type: "notice",
     default: "",
@@ -441,7 +466,7 @@ export const soterGuardProperties: INodeProperties[] = [
     default: "",
     required: true,
     placeholder: "={{ $json.output }}",
-    hint: "The LLM node's response, such as {{ $json.output }} or {{ $json.text }}",
+    hint: "The LLM node's response, such as {{ $json.output }} or {{ $json.text }}. Downstream nodes should reference {{ $json.safeText }} or {{ $json.outputText }} for sanitized content.",
     displayOptions: { show: { action: ["outputGuard"] } },
     description: "The AI-generated response to check before sending to the user",
   },
@@ -563,7 +588,11 @@ export const soterGuardProperties: INodeProperties[] = [
     name: "onThreat",
     type: "options",
     options: [
-      { name: "Block", value: "BLOCK", description: "Stop the workflow item" },
+      {
+        name: "Block",
+        value: "BLOCK",
+        description: "Stop the workflow item (routes to Output 2 'Flagged', emitting 0 items to Output 1 'Safe')",
+      },
       { name: "Continue", value: "CONTINUE", description: "Ignore the threat and continue" },
       { name: "Redact", value: "REDACT", description: "Continue with redacted safe text" },
       { name: "Warn", value: "WARN", description: "Continue but flag the threat in output" },
@@ -573,7 +602,7 @@ export const soterGuardProperties: INodeProperties[] = [
     // pointer people look for a "Custom Block Message" field next to On Threat,
     // do not find one, and conclude the node cannot do it — the reply override
     // has been in Customer Replies all along.
-    hint: "Sets WHAT HAPPENS once something is flagged. To change the wording a customer sees, use Customer Replies below",
+    hint: "Sets WHAT HAPPENS once something is flagged. 'Block' routes items to Output 2 (Flagged) and sends 0 items to Output 1 (Safe). Wire Output 2 to an alert/logger step. To change customer wording, use Customer Replies below",
     displayOptions: { show: { action: ["inputGuard", "outputGuard", "universalGuard"] } },
     description: "What this node does locally once SoterAI flags a threat",
   },
@@ -600,9 +629,11 @@ export const soterGuardProperties: INodeProperties[] = [
       },
     ],
     default: "BALANCED",
-    hint: "Sets HOW MUCH gets flagged. 'On Threat' above sets WHAT HAPPENS to it",
+    hint: "Sets HOW MUCH gets flagged. 'On Threat' sets WHAT HAPPENS. On Output Guard under Lenient, detected secrets are redacted into safeText and outputText rather than hard-blocked, letting the assistant response continue.",
     displayOptions: { show: { action: ["inputGuard", "outputGuard"] } },
-    description: "How much risk is enough to act on. Live secrets and clear attacks are always acted on.",
+    description:
+      "How much risk is enough to act on. Live secrets and clear attacks are always acted on whatever this is set to — " +
+      "`sensitivity.effect` on the result says when the dial was overruled, and why.",
   },
 
   // ---------------------------------------------------------------------

@@ -283,31 +283,146 @@ test("Lenient never relaxes an injection, whatever the score", async () => {
   // category decides, not the number. Topics are the right tool for this one.
   assert.equal(flagged.length, 1);
   assert.equal(flagged[0].json.blocked, true);
-  assert.equal(flagged[0].json.sensitivity, undefined);
+  const report = flagged[0].json.sensitivity as Record<string, unknown>;
+  assert.equal(report.effect, "OVERRIDDEN");
+  assert.deepEqual(report.overruledBy, ["NEVER_RELAXED_CATEGORY"]);
 });
 
-test("Lenient never relaxes a block on a live secret, even below the score floor", async () => {
+test("Lenient never relaxes a block on a live secret on inputGuard, even below the score floor", async () => {
   // Score 55 is well under the Lenient enforcement floor, so the score rule
   // alone would relax this. The category rule is what has to stop it, which is
   // exactly why the fixture scores low.
   const { flagged } = await run({
-    action: "outputGuard",
-    params: { outputText: "some reply", onThreat: "BLOCK", detectionEngine: "CLOUD", sensitivity: "LENIENT" },
+    action: "inputGuard",
+    params: { inputText: "some secret token", onThreat: "BLOCK", detectionEngine: "CLOUD", sensitivity: "LENIENT" },
     respond: () => ({
       body: {
         allowed: false,
         action: "BLOCK",
         riskScore: 55,
         riskTypes: ["SECRET_DETECTED"],
-        reason: "A live credential was found in the model output.",
+        reason: "A live credential was found in the input prompt.",
         findings: [{ type: "SECRET_DETECTED", label: "AWS key", severity: "CRITICAL" }],
       },
     }),
   });
 
-  assert.equal(flagged.length, 1, "Lenient relaxed a block on a live secret");
+  assert.equal(flagged.length, 1, "Lenient relaxed a block on a live secret on inputGuard");
   assert.equal(flagged[0].json.blocked, true);
-  assert.equal(flagged[0].json.sensitivity, undefined);
+  // The overrule is reported rather than left as an absent field. A stopped item
+  // with no `sensitivity` was indistinguishable from one where the dial was
+  // never consulted, so an author could not tell whether Lenient was respected.
+  const report = flagged[0].json.sensitivity as Record<string, unknown>;
+  assert.equal(report.level, "LENIENT");
+  assert.equal(report.effect, "OVERRIDDEN");
+  assert.deepEqual(report.overruledBy, ["NEVER_RELAXED_CATEGORY"]);
+  assert.match(String(report.detail), /SECRET_DETECTED/);
+});
+
+test("Lenient reports the score-floor overrule when no category is what stopped it", async () => {
+  // Score 90 is over the 85 floor and the category is not one Lenient refuses to
+  // relax, so the number is the only reason this stopped. That path used to be
+  // completely uninterrogable: it returned before writing anything, so the item
+  // was byte-identical to one where Lenient was never consulted.
+  const { flagged } = await run({
+    action: "inputGuard",
+    params: { inputText: "borderline", onThreat: "BLOCK", detectionEngine: "CLOUD", sensitivity: "LENIENT" },
+    respond: () => ({
+      body: {
+        allowed: false,
+        action: "BLOCK",
+        riskScore: 90,
+        riskTypes: ["MANIPULATION"],
+        reason: "Confident verdict from the cloud engine.",
+      },
+    }),
+  });
+
+  assert.equal(flagged.length, 1);
+  assert.equal(flagged[0].json.blocked, true);
+  const report = flagged[0].json.sensitivity as Record<string, unknown>;
+  assert.equal(report.effect, "OVERRIDDEN");
+  assert.deepEqual(report.overruledBy, ["SCORE_FLOOR"]);
+});
+
+test("Lenient names both reasons when the score and the category each overrule it on inputGuard", async () => {
+  // An AWS key is both a never-relaxed category and scores 92. Collecting the
+  // reasons rather than testing them in order is what keeps one from hiding the
+  // other in the report.
+  const { flagged } = await run({
+    action: "inputGuard",
+    params: { inputText: "key", onThreat: "BLOCK", detectionEngine: "CLOUD", sensitivity: "LENIENT" },
+    respond: () => ({
+      body: {
+        allowed: false,
+        action: "BLOCK",
+        riskScore: 92,
+        riskTypes: ["SECRET_DETECTED"],
+        reason: "A live credential was found in the input prompt.",
+      },
+    }),
+  });
+
+  assert.equal(flagged.length, 1);
+  const report = flagged[0].json.sensitivity as Record<string, unknown>;
+  assert.equal(report.effect, "OVERRIDDEN");
+  assert.deepEqual(report.overruledBy, ["SCORE_FLOOR", "NEVER_RELAXED_CATEGORY"]);
+});
+
+test("outputGuard on LOW/LENIENT sensitivity sanitizes secrets on Cloud engine instead of hard-blocking", async () => {
+  const { safe, flagged } = await run({
+    action: "outputGuard",
+    params: {
+      outputText: "Here is your key: AKIAIOSFODNN7EXAMPLE",
+      onThreat: "BLOCK",
+      detectionEngine: "CLOUD",
+      sensitivity: "LOW",
+    },
+    respond: () => ({
+      body: {
+        allowed: false,
+        action: "BLOCK",
+        riskScore: 92,
+        riskTypes: ["SECRET_DETECTED"],
+        safeText: "Here is your key: [REDACTED_AWS_KEY]",
+        reason: "A live credential was found in the model output.",
+        findings: [{ type: "SECRET_DETECTED", label: "AWS key", severity: "CRITICAL", redactionToken: "[REDACTED_AWS_KEY]" }],
+      },
+    }),
+  });
+
+  assert.equal(flagged.length, 0, "outputGuard hard-blocked under LOW sensitivity");
+  assert.equal(safe.length, 1, "outputGuard did not route sanitized output to safe branch");
+  assert.equal(safe[0].json.blocked, false);
+  assert.match(String(safe[0].json.outputText), /\[REDACTED_AWS_KEY\]/);
+  assert.doesNotMatch(String(safe[0].json.outputText), /AKIAIOSFODNN7EXAMPLE/);
+  const report = safe[0].json.sensitivity as Record<string, unknown>;
+  assert.equal(report.level, "LENIENT");
+  assert.equal(report.effect, "REDACTED_AND_CONTINUED");
+});
+
+test("outputGuard on LOW/LENIENT sensitivity overrides hard-block when enforceOnSensitiveData is on", async () => {
+  const { safe, flagged } = await run({
+    action: "outputGuard",
+    layout: "v3",
+    params: {
+      outputText: "Here is your key: AKIAIOSFODNN7EXAMPLE",
+      onThreat: "BLOCK",
+      sensitivity: "LENIENT",
+      options: {
+        detectionEngine: "LOCAL",
+        enforceOnSensitiveData: true,
+      },
+    },
+  });
+
+  assert.equal(flagged.length, 0, "outputGuard hard-blocked under LOW sensitivity with enforceOnSensitiveData");
+  assert.equal(safe.length, 1);
+  assert.equal(safe[0].json.blocked, false);
+  assert.match(String(safe[0].json.outputText), /\[REDACTED_AWS_KEY\]/);
+  const report = safe[0].json.sensitivity as Record<string, unknown>;
+  assert.equal(report.level, "LENIENT");
+  assert.equal(report.effect, "REDACTED_AND_CONTINUED");
 });
 
 test("Lenient does not disturb redaction, which was never an enforcement stop", async () => {
