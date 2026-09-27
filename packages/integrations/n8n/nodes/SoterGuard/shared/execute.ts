@@ -1208,13 +1208,13 @@ async function runCloudAction(
                 reused: true,
               };
             } else {
-              throw err;
+              throw new NodeApiError(node, err as JsonObject);
             }
           } catch {
-            throw err;
+            throw new NodeApiError(node, err as JsonObject);
           }
         } else {
-          throw err;
+          throw new NodeApiError(node, err as JsonObject);
         }
       }
       result = {
@@ -1270,10 +1270,10 @@ async function runCloudAction(
               metadata: request.metadata,
             });
           } catch {
-            throw err;
+            throw new NodeApiError(node, err as JsonObject);
           }
         } else {
-          throw err;
+          throw new NodeApiError(node, err as JsonObject);
         }
       }
       const requestedTtl = request.passportTtlSecondsRequested;
@@ -1291,8 +1291,8 @@ async function runCloudAction(
         status: (raw.status as string) ?? "ACTIVE",
         expiresAt: raw.expiresAt as string,
         ttlSeconds,
-        ...(Boolean(raw.rotated) ? { rotated: true } : {}),
-        ...(Boolean(raw.reused) ? { reused: true } : {}),
+        ...(raw.rotated ? { rotated: true } : {}),
+        ...(raw.reused ? { reused: true } : {}),
         // A pass that expires sooner than it was configured to is not a detail to
         // discover from a 401 four hours into a run.
         ...(typeof requestedTtl === "number" && Number.isFinite(requestedTtl) && requestedTtl !== ttlSeconds
@@ -5076,7 +5076,7 @@ function scanWorkflowCodeNode(wfNode: WorkflowNode): Array<Record<string, unknow
 
   // 3. Hardcoded secrets in code (CRITICAL)
   if (
-    /(?:AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9_]{36,}|xox[baprs]-[0-9A-Za-z_-]{20,}|(?:api[_-]?key|secret|private[_-]?key|password|bearer)\s*[:=]\s*['"][a-zA-Z0-9_\-\.]{16,}['"])/i.test(
+    /(?:AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9_]{36,}|xox[baprs]-[0-9A-Za-z_-]{20,}|(?:api[_-]?key|secret|private[_-]?key|password|bearer)\s*[:=]\s*['"][a-zA-Z0-9_\-.]{16,}['"])/i.test(
       code,
     )
   ) {
