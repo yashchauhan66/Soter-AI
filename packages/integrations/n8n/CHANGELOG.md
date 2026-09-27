@@ -2,6 +2,14 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.8.3] - 2026-09-27
+
+Patch release published via GitHub Actions workflow.
+
+### Changed
+
+- Internal release process migrated to GitHub Actions workflow (`publish-n8n.yml`) for reproducible, auditable publishes with full gate (lint, type-check, unit tests, ReDoS sweep, stress budgets, and npm provenance attestation).
+
 ## [0.8.2] - 2026-09-25
 
 Patch release resolving 7 key ergonomics, engine parity, and security auditing enhancements.
