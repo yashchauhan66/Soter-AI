@@ -71,9 +71,11 @@ jobs:
           set -euo pipefail
           NAME="$(node -p "require('./package.json').name")"
           VERSION="$(node -p "require('./package.json').version")"
+          DIST_TAG="${{ github.event.inputs.dist_tag || 'latest' }}"
           echo "name=$NAME" >> "$GITHUB_OUTPUT"
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "Publishing $NAME@$VERSION"
+          echo "dist_tag=$DIST_TAG" >> "$GITHUB_OUTPUT"
+          echo "Publishing $NAME@$VERSION under dist-tag $DIST_TAG"
 
           # A tag that names a different version than it ships is how the wrong
           # thing gets released while every log line still looks correct.
@@ -156,7 +158,7 @@ jobs:
         run: npm publish --provenance --access public --tag "${DIST_TAG}"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          DIST_TAG: ${{ github.event.inputs.dist_tag || 'latest' }}
+          DIST_TAG: ${{ steps.preflight.outputs.dist_tag }}
 
       # What the registry serves is the only fact that matters, and it is not the
       # same fact as "npm publish exited 0". This asserts the new version is on
@@ -167,12 +169,12 @@ jobs:
         env:
           NAME: ${{ steps.preflight.outputs.name }}
           VERSION: ${{ steps.preflight.outputs.version }}
-          DIST_TAG: ${{ github.event.inputs.dist_tag || 'latest' }}
+          DIST_TAG: ${{ steps.preflight.outputs.dist_tag }}
         run: |
           set -euo pipefail
           # Registry reads lag a publish by a few seconds; retry rather than
           # either sleeping blind or reporting a propagation delay as a failure.
-          for attempt in 1 2 3 4 5 6; do
+          for attempt in 1 2 3 4 5 6 7 8 9 10 11 12; do
             TAGS="$(npm view "$NAME" dist-tags --json 2>/dev/null || echo '{}')"
             ON_TAG="$(echo "$TAGS" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{try{console.log(JSON.parse(s)[process.argv[1]]||'')}catch{console.log('')}})" "$DIST_TAG")"
             [ "$ON_TAG" = "$VERSION" ] && break
