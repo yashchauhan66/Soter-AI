@@ -2,6 +2,14 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.8.5] - 2026-09-28
+
+Published via GitHub Actions with npm provenance (Sigstore SLSA v1).
+
+### Fixed
+
+- **Confirm step propagation race**: Switched registry check to a two-phase strategy — Phase 1 confirms the tarball exists (`npm view @version`), Phase 2 confirms the dist-tag moved — each with up to 30 retries (5 min). This eliminates the false workflow failure that occurred when npm CDN lag caused `latest` to still show the old version moments after a successful publish.
+
 ## [0.8.4] - 2026-09-28
 
 Release published with cryptographic npm provenance attestation via GitHub Actions.

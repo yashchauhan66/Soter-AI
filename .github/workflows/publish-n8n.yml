@@ -164,6 +164,11 @@ jobs:
       # same fact as "npm publish exited 0". This asserts the new version is on
       # the tag that was asked for and — when that tag is not `latest` — that
       # `latest` did not move, so nobody can report a staged release as shipped.
+      #
+      # TWO-PHASE CHECK (fixes the npm CDN propagation race):
+      #   Phase 1 — confirm the tarball landed (fast, usually < 10 s).
+      #   Phase 2 — confirm the dist-tag moved (slower, npm says "may take a
+      #             few minutes"). 30 attempts × 10 s = up to 5 minutes.
       - name: Confirm what the registry actually serves
         if: ${{ github.event.inputs.dry_run != 'true' }}
         env:
@@ -172,19 +177,37 @@ jobs:
           DIST_TAG: ${{ steps.preflight.outputs.dist_tag }}
         run: |
           set -euo pipefail
-          # Registry reads lag a publish by a few seconds; retry rather than
-          # either sleeping blind or reporting a propagation delay as a failure.
+
+          # ── Phase 1: version tarball must be present ───────────────────────
+          echo "Phase 1: waiting for ${NAME}@${VERSION} to appear on the registry…"
+          for attempt in {1..30}; do
+            FOUND="$(npm view "${NAME}@${VERSION}" version 2>/dev/null || true)"
+            if [ "$FOUND" = "$VERSION" ]; then
+              echo "✓ ${NAME}@${VERSION} is on the registry."
+              break
+            fi
+            echo "  attempt $attempt: not found yet, retrying in 10 s…"
+            sleep 10
+          done
+          if [ "$FOUND" != "$VERSION" ]; then
+            echo "::error::${NAME}@${VERSION} never appeared on the registry after 5 minutes."
+            exit 1
+          fi
+
+          # ── Phase 2: dist-tag must point at this version ───────────────────
+          echo "Phase 2: waiting for dist-tag '${DIST_TAG}' → '${VERSION}'…"
+          ON_TAG=""
           for attempt in {1..30}; do
             TAGS="$(npm view "$NAME" dist-tags --json 2>/dev/null || echo '{}')"
             ON_TAG="$(echo "$TAGS" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{try{console.log(JSON.parse(s)[process.argv[1]]||'')}catch{console.log('')}})" "$DIST_TAG")"
             [ "$ON_TAG" = "$VERSION" ] && break
-            echo "attempt $attempt: $DIST_TAG is '$ON_TAG', waiting for $VERSION"
+            echo "  attempt $attempt: $DIST_TAG is '$ON_TAG', waiting for $VERSION"
             sleep 10
           done
 
           LATEST="$(echo "$TAGS" | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{try{console.log(JSON.parse(s).latest||'')}catch{console.log('')}})")"
           if [ "$ON_TAG" != "$VERSION" ]; then
-            echo "::error::$NAME dist-tag $DIST_TAG is '$ON_TAG', not $VERSION."
+            echo "::error::$NAME dist-tag $DIST_TAG is '$ON_TAG', not $VERSION after 5 minutes."
             exit 1
           fi
           if [ "$DIST_TAG" != "latest" ] && [ "$LATEST" = "$VERSION" ]; then
@@ -202,3 +225,4 @@ jobs:
             echo "" >> "$GITHUB_STEP_SUMMARY"
             echo "Promote once proven in a live n8n: \`npm dist-tag add $NAME@$VERSION latest\`" >> "$GITHUB_STEP_SUMMARY"
           fi
+
