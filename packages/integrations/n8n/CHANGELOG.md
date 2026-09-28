@@ -2,6 +2,15 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.8.4] - 2026-09-28
+
+Release published with cryptographic npm provenance attestation via GitHub Actions.
+
+### Fixed
+
+- **Automated Workflow Publishing with npm Provenance**: Published via GitHub Actions with `--provenance --access public` and Sigstore cryptographic attestation, meeting n8n community node verification criteria.
+- **Workflow Tag & Confirmation Alignment**: Standardized dist-tag routing between publish and verification stages, adding robust exponential propagation polling.
+
 ## [0.8.3] - 2026-09-27
 
 Patch release published via GitHub Actions workflow.
