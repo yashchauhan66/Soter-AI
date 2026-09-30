@@ -2,6 +2,13 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.8.6] - 2026-09-30
+
+### Fixed
+
+- **Action options alphabetization**: Sorted the 12 top-level action options alphabetically by name (`Analyze Text` through `Validate Access`) to satisfy the n8n community node linter rule `node-param-options-type-unsorted-items`.
+- **Repository main branch alignment**: Synchronized GitHub `main` branch with the published npm package release.
+
 ## [0.8.5] - 2026-09-28
 
 Published via GitHub Actions with npm provenance (Sigstore SLSA v1).

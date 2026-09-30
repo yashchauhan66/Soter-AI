@@ -27,13 +27,38 @@ export const soterGuardProperties: INodeProperties[] = [
     name: "action",
     type: "options",
     noDataExpression: true,
-    // Order is deliberate, not alphabetical: the everyday guard actions come
-    // first (Guard Input is where nearly every workflow starts), and the advanced
-    // agent-access actions sit at the bottom. n8n's linter wants options sorted
-    // alphabetically, but task order is the better UX here, so that one rule is
-    // turned off for this list on purpose.
-    // eslint-disable-next-line n8n-nodes-base/node-param-options-type-unsorted-items
+    // Alphabetical by `name`, because it has to be: the n8n community-package
+    // review runs `node-param-options-type-unsorted-items` over this file and
+    // rejects the submission when it trips, and — like the placeholder rule
+    // before it — it does not honour an `eslint-disable` comment. An earlier
+    // revision ordered these by task instead (Guard Input first, agent-access
+    // actions last) with the rule disabled and a note explaining why; that is
+    // what failed review for 0.8.5, so task order now lives only in the
+    // `default` below and in the v3 Resource/Operation panel, whose options are
+    // built by `.map()` in propertiesV3.ts and so are never read statically.
+    //
+    // Reordering is display-only. Every `value` is a storage key that appears in
+    // already-saved workflows, and not one of them changes here; the selected
+    // action is `default` below, which is a literal and not `options[0]`.
     options: [
+      {
+        name: "Analyze Text",
+        value: "analyzeText",
+        description: 'Score any text for risk without blocking — Safe and risky items are split so you decide',
+        action: "Analyze text for AI security risks",
+      },
+      {
+        name: "Audit Workflow Security",
+        value: "workflowAudit",
+        description: "Score a workflow's AI, tool, webhook, code, and data-leak risks. Runs locally, sends nothing.",
+        action: "Audit an n8n workflow for AI security risks",
+      },
+      {
+        name: "Check Tool Call",
+        value: "toolCall",
+        description: 'Check one tool call an agent wants to make before it runs',
+        action: "Check an agent tool call",
+      },
       {
         name: "Guard Input",
         value: "inputGuard",
@@ -47,16 +72,10 @@ export const soterGuardProperties: INodeProperties[] = [
         action: "Check AI output for threats",
       },
       {
-        name: "Universal AI Firewall",
-        value: "universalGuard",
-        description: "All-in-one guard for prompt, files, tools, memory, output, and data leaks. Most complete.",
-        action: "Protect an AI workflow end to end",
-      },
-      {
-        name: "Analyze Text",
-        value: "analyzeText",
-        description: 'Score any text for risk without blocking — Safe and risky items are split so you decide',
-        action: "Analyze text for AI security risks",
+        name: "Issue Access Pass",
+        value: "issuePassport",
+        description: 'Give a registered agent a short-lived access pass for one session',
+        action: "Issue an agent access pass",
       },
       {
         name: "Redact PII and Secrets",
@@ -65,46 +84,34 @@ export const soterGuardProperties: INodeProperties[] = [
         action: "Redact PII from text",
       },
       {
-        name: "Scan RAG Document",
-        value: "ragScanner",
-        description: "Check a document before adding it to a knowledge base. Poisoned files are flagged.",
-        action: "Scan RAG document for threats",
-      },
-      {
-        name: "Audit Workflow Security",
-        value: "workflowAudit",
-        description: "Score a workflow's AI, tool, webhook, code, and data-leak risks. Runs locally, sends nothing.",
-        action: "Audit an n8n workflow for AI security risks",
-      },
-      {
         name: "Register Agent",
         value: "enrollIdentity",
         description: 'Give an AI agent a reusable identity with a safe, least-privilege starting policy',
         action: "Register an agent identity",
       },
       {
-        name: "Issue Access Pass",
-        value: "issuePassport",
-        description: 'Give a registered agent a short-lived access pass for one session',
-        action: "Issue an agent access pass",
+        name: "Revoke Access",
+        value: "revokePassport",
+        description: 'Cancel an agent\'s access pass when the task ends or something looks wrong',
+        action: "Revoke an agent access pass",
+      },
+      {
+        name: "Scan RAG Document",
+        value: "ragScanner",
+        description: "Check a document before adding it to a knowledge base. Poisoned files are flagged.",
+        action: "Scan RAG document for threats",
+      },
+      {
+        name: "Universal AI Firewall",
+        value: "universalGuard",
+        description: "All-in-one guard for prompt, files, tools, memory, output, and data leaks. Most complete.",
+        action: "Protect an AI workflow end to end",
       },
       {
         name: "Validate Access",
         value: "validatePassport",
         description: 'Check that an agent\'s session pass is still valid, and whether an action is allowed',
         action: "Validate an agent access pass",
-      },
-      {
-        name: "Check Tool Call",
-        value: "toolCall",
-        description: 'Check one tool call an agent wants to make before it runs',
-        action: "Check an agent tool call",
-      },
-      {
-        name: "Revoke Access",
-        value: "revokePassport",
-        description: 'Cancel an agent\'s access pass when the task ends or something looks wrong',
-        action: "Revoke an agent access pass",
       },
     ],
     // Guard Input is the default rather than the Universal Firewall: it is the
