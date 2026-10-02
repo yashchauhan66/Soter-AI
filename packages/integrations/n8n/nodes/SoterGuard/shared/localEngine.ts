@@ -1845,7 +1845,7 @@ function stemToken(token: string): string {
   return stripped.length >= 3 ? stripped : singular;
 }
 
-function topicTokens(text: string): string[] {
+export function topicTokens(text: string): string[] {
   if (!text) return [];
   return foldText(text)
     .split(/[^a-z0-9]+/u)
@@ -1862,7 +1862,7 @@ function topicTokens(text: string): string[] {
  * description is a weaker signal and needs two distinct hits, because a system
  * prompt is long enough that one shared word proves nothing.
  */
-function evaluateTopicScope(text: string, topics: string[], context?: string): LocalTopicScope {
+export function evaluateTopicScope(text: string, topics: string[], context?: string): LocalTopicScope {
   const cleanTopics = topics.map((topic) => topic.trim()).filter(Boolean);
   const configured = cleanTopics.length > 0 || Boolean(context?.trim());
   if (!configured) return { configured: false, inScope: false, matchedTopics: [], relevance: 0 };

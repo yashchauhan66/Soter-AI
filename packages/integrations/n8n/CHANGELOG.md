@@ -2,6 +2,16 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.8.7] - 2026-10-03
+
+### Fixed
+
+- **Dual-Branch Verdict Consistency for Permissive Policies**: Fixed an issue where `onThreat: "WARN"`, `"CONTINUE"`, or `"REDACT"` in `localGuardResult` left `allowed: false` from underlying threat detection. The node now explicitly assigns `allowed: true`, records `threatAction`, and sets clear canonical verdict codes (`WARNED_AND_CONTINUED`, `CONTINUED`, `REDACTED_AND_CONTINUED`) on the Safe output branch.
+- **Local Engine Topic Restriction Alignment**: Synchronized topic boundary evaluation in `applyTopicRestriction` with `evaluateTopicScope`. Now properly enforces off-topic filtering (`verdictCode: CONTENT_BLOCKED`) when `topicHandling: "RESTRICT"` is configured and input topics diverge from allowed domains.
+- **Lenient Secret Redaction Content Preservation**: Improved output text reconstruction under `outputGuard` with `sensitivity: LENIENT` to preserve innocent surrounding conversational context (e.g. order numbers, verification codes) while strictly masking detected API secrets and credential patterns.
+- **Multi-Layer Decision Attribution in Universal Firewall**: Enhanced `toLayerDecision` in `universalGuard` to inspect both `action` and `decision` attributes, accurately reporting layer attribution and ensuring `drivingLayer` correctly points to the offending input or tool call.
+- **Request Timeout Granularity**: Widened `requestTimeoutMs` range from `1` to `120000` ms, allowing fine-grained timeout controls for high-throughput automated test environments and latency-sensitive deployments.
+
 ## [0.8.6] - 2026-09-30
 
 ### Fixed

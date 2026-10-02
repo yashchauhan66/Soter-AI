@@ -15,6 +15,7 @@ import {
   LOCAL_ENGINE_LIMITATIONS,
   LOCAL_ENGINE_VERSION,
   LOCAL_RULE_COUNT,
+  evaluateTopicScope,
   phraseCarriesCredential,
   redactLocal,
   redactionTokensFor,
@@ -22,6 +23,7 @@ import {
   scoreRagDocumentLocal,
   screenLiterals,
   splitIgnorableEntities,
+  topicTokens,
 } from "./localEngine";
 import type {
   LocalAnalysis,
@@ -32,7 +34,7 @@ import type {
   LocalTopicScope,
 } from "./localEngine";
 
-export const PACKAGE_VERSION = "0.8.6";
+export const PACKAGE_VERSION = "0.8.7";
 const USER_AGENT = `n8n-nodes-soterai/${PACKAGE_VERSION}`;
 const MAX_SANITIZE_DEPTH = 8;
 const MAX_METADATA_STRING_LENGTH = 500;
@@ -125,7 +127,7 @@ function readNodeOptions(ctx: IExecuteFunctions, itemIndex: number): NodeOptions
     batchConcurrency: Number.isFinite(concurrency) ? Math.max(1, Math.min(MAX_BATCH_CONCURRENCY, Math.trunc(concurrency))) : 1,
     reuseIdenticalItems: advanced.reuseIdenticalItems !== false,
     parallelLayers: advanced.parallelLayers !== false,
-    requestTimeoutMs: Number.isFinite(timeout) ? Math.max(1000, Math.min(120000, Math.trunc(timeout))) : DEFAULT_REQUEST_TIMEOUT_MS,
+    requestTimeoutMs: Number.isFinite(timeout) ? Math.max(1, Math.min(120000, Math.trunc(timeout))) : DEFAULT_REQUEST_TIMEOUT_MS,
     includeRawResponse: advanced.includeRawResponse !== false,
     // Opt-in, and default false on purpose: every published version has failed
     // open, and flipping that on upgrade would turn a brief API outage into a
@@ -192,10 +194,26 @@ function isTextTooLongError(error: unknown): boolean {
 function textLimitFromRejection(status: number, data: Record<string, unknown>): number | null {
   if (status !== 400) return null;
   const message = typeof data.message === "string" ? data.message : "";
-  const match = /at most (\d+) character|<=\s*(\d+) character/i.exec(message);
-  if (!match) return null;
-  const limit = Number(match[1] ?? match[2]);
-  return Number.isInteger(limit) && limit > 0 ? limit : null;
+  const match = /at most (\d+) character|<=\s*(\d+) character|exceeds maximum length of (\d+) character/i.exec(message);
+  if (match) {
+    const limit = Number(match[1] ?? match[2] ?? match[3]);
+    if (Number.isInteger(limit) && limit > 0) return limit;
+  }
+  if (Array.isArray(data.issues)) {
+    for (const issue of data.issues as Array<Record<string, unknown>>) {
+      if (issue.code === "too_big" && typeof issue.maximum === "number") {
+        return issue.maximum;
+      }
+      if (typeof issue.message === "string") {
+        const subMatch = /at most (\d+) character|<=\s*(\d+) character|exceeds maximum length of (\d+) character/i.exec(issue.message);
+        if (subMatch) {
+          const limit = Number(subMatch[1] ?? subMatch[2] ?? subMatch[3]);
+          if (Number.isInteger(limit) && limit > 0) return limit;
+        }
+      }
+    }
+  }
+  return null;
 }
 
 /** Length of the longest string in a request body — the field the limit refused. */
@@ -322,9 +340,22 @@ function isFlagged(action: string, result: IDataObject, branchOnRedaction?: bool
     case "analyzeText":
       return result.allowed === false;
     case "universalGuard":
-      return result.blocked === true || result.degraded === true;
+      return result.blocked === true || result.degraded === true || result.finalDecision === "ASK_APPROVAL" || result.needsHumanReview === true;
+    case "toolCall":
+    case "validatePassport":
+      return (
+        result.blocked === true ||
+        result.allowed === false ||
+        result.decision === "ASK_APPROVAL" ||
+        result.decision === "BLOCK" ||
+        result.verdictCode === "APPROVAL_REQUIRED" ||
+        result.verdictCode === "PASSPORT_INVALID" ||
+        result.verdictCode === "TOKEN_MISSING" ||
+        result.verdictCode === "TOOL_UNAUTHORIZED" ||
+        result.verdictCode === "TOOL_BLOCKED"
+      );
     default:
-      return result.blocked === true;
+      return result.blocked === true || result.decision === "ASK_APPROVAL";
   }
 }
 
@@ -697,8 +728,9 @@ function readActionRequest(
       request.passportTtlSecondsRequested = Number(ctx.getNodeParameter("passportTtlSeconds", itemIndex, 3600));
       request.passportTtlSeconds = passportTtlValue(request.passportTtlSecondsRequested);
       request.passportPolicyPreset = ctx.getNodeParameter("passportPolicyPreset", itemIndex, "READ_ONLY") as string;
+      const opt = (ctx.getNodeParameter("options", itemIndex, {}) as IDataObject) || {};
       request.onSessionConflict = String(
-        ctx.getNodeParameter("onSessionConflict", itemIndex, "ROTATE") ?? "ROTATE",
+        opt.onSessionConflict ?? ctx.getNodeParameter("onSessionConflict", itemIndex, "ROTATE") ?? "ROTATE",
       ).toUpperCase();
       request.passportPolicy = parseOptionalJsonObject(
         node,
@@ -889,6 +921,15 @@ export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeE
   const runItem = async (i: number): Promise<void> => {
     try {
       const action = this.getNodeParameter("action", i) as string;
+      const isAiToolContext = (this as unknown as { getMode?: () => string }).getMode?.() === "ai-tool" ||
+        Boolean((this as unknown as { isTool?: boolean }).isTool);
+      if (isAiToolContext && ["enrollIdentity", "issuePassport", "revokePassport"].includes(action)) {
+        throw new NodeOperationError(
+          node,
+          `Operation "${action}" is an administrative lifecycle operation and cannot be executed as an AI Agent Tool. Autonomous agents may only use runtime security guards (inputGuard, outputGuard, toolCall, piiRedactor, ragScanner, analyzeText).`,
+          { itemIndex: i },
+        );
+      }
       const request = readActionRequest(this, node, i, nodeVersion, action);
       const blank = blankInputResult(request);
       if (blank) {
@@ -1185,7 +1226,7 @@ async function runCloudAction(
           name,
           agentType: request.agentType || "CUSTOM",
           ...(request.agentDescription ? { description: request.agentDescription } : {}),
-          ...(Object.keys(policy).length ? { defaultPolicy: policy } : {}),
+          defaultPolicy: policy,
         });
       } catch (err: unknown) {
         const errorMsg = err instanceof Error ? err.message : String(err);
@@ -1331,13 +1372,25 @@ async function runCloudAction(
       const decision = normalizeDecision(raw.decision) ?? "BLOCK";
       const matches = Array.isArray(raw.policyMatches) ? raw.policyMatches as Array<Record<string, unknown>> : [];
       const tokenMissing = matches.some((match) => match.id === "passport.token_missing");
+      const isToolBlocked = Boolean(request.tool?.name) && (
+        matches.some((match) => String(match.id).startsWith("tool.") || String(match.id).includes("unauthorized") || String(match.id).includes("blocked")) ||
+        String(raw.reason ?? "").toLowerCase().includes("tool")
+      );
       result = {
         operation: "validatePassport",
-        verdictCode: tokenMissing ? "TOKEN_MISSING" : decision === "ALLOW" ? "PASSPORT_VALID" : decision === "ASK_APPROVAL" ? "APPROVAL_REQUIRED" : "PASSPORT_INVALID",
+        verdictCode: tokenMissing
+          ? "TOKEN_MISSING"
+          : decision === "ALLOW"
+          ? "PASSPORT_VALID"
+          : decision === "ASK_APPROVAL"
+          ? "APPROVAL_REQUIRED"
+          : isToolBlocked
+          ? "TOOL_UNAUTHORIZED"
+          : "PASSPORT_INVALID",
         decision,
         allowed: decision === "ALLOW",
         blocked: decision === "BLOCK",
-        riskLevel: (raw.riskLevel as string) ?? "CRITICAL",
+        riskLevel: (raw.riskLevel as string) ?? (decision === "ALLOW" ? "LOW" : "HIGH"),
         reason: (raw.reason as string) ?? "Passport validation completed.",
         policyMatches: matches as unknown as IDataObject[],
         passportId: (raw.passportId as string) ?? null,
@@ -1467,7 +1520,18 @@ const PASSPORT_POLICY_PRESETS: Record<string, Record<string, string[]>> = {
 };
 
 function resolvePassportPolicy(preset: string | undefined, custom: Record<string, unknown> | undefined): Record<string, unknown> {
-  const base = preset && preset !== "CUSTOM" ? PASSPORT_POLICY_PRESETS[preset] : undefined;
+  if (preset === "CUSTOM") {
+    return {
+      allowedTools: Array.isArray(custom?.allowedTools) ? custom.allowedTools : [],
+      blockedTools: Array.isArray(custom?.blockedTools) ? custom.blockedTools : [],
+      approvalRequiredTools: Array.isArray(custom?.approvalRequiredTools) ? custom.approvalRequiredTools : [],
+      allowedDomains: Array.isArray(custom?.allowedDomains) ? custom.allowedDomains : [],
+      blockedDomains: Array.isArray(custom?.blockedDomains) ? custom.blockedDomains : [],
+      dataScopes: Array.isArray(custom?.dataScopes) ? custom.dataScopes : [],
+      memoryScopes: Array.isArray(custom?.memoryScopes) ? custom.memoryScopes : [],
+    };
+  }
+  const base = preset ? PASSPORT_POLICY_PRESETS[preset] : undefined;
   return { ...(base ?? {}), ...(custom ?? {}) };
 }
 
@@ -1949,19 +2013,29 @@ async function executeInputGuard(
     switch (params.onThreat) {
       case "BLOCK":
         result.blocked = true;
+        result.allowed = false;
         result.outputText = "";
         break;
       case "REDACT":
         result.blocked = false;
-        result.outputText = (raw.safeText as string) ?? (raw.redactedText as string) ?? "[REDACTED]";
+        result.allowed = true;
+        result.threatAction = "REDACT";
+        result.verdictCode = "REDACTED_AND_CONTINUED";
+        result.outputText = (raw.redactedText as string) ?? (raw.safeText as string) ?? "[REDACTED]";
         break;
       case "WARN":
         result.blocked = false;
+        result.allowed = true;
+        result.threatAction = "WARN";
+        result.verdictCode = "WARNED_AND_CONTINUED";
         result.outputText = params.text;
-        result.warning = (raw.reason as string) ?? "";
+        result.warning = (raw.reason as string) ?? "Threat detected but permitted under Warn policy.";
         break;
       case "CONTINUE":
         result.blocked = false;
+        result.allowed = true;
+        result.threatAction = "CONTINUE";
+        result.verdictCode = "CONTINUED";
         result.outputText = params.text;
         break;
     }
@@ -2029,19 +2103,29 @@ async function executeOutputGuard(
     switch (params.onThreat) {
       case "BLOCK":
         result.blocked = true;
+        result.allowed = false;
         result.outputText = "";
         break;
       case "REDACT":
         result.blocked = false;
-        result.outputText = (raw.safeText as string) ?? (raw.redactedText as string) ?? "[REDACTED]";
+        result.allowed = true;
+        result.threatAction = "REDACT";
+        result.verdictCode = "REDACTED_AND_CONTINUED";
+        result.outputText = (raw.redactedText as string) ?? (raw.safeText as string) ?? "[REDACTED]";
         break;
       case "WARN":
         result.blocked = false;
+        result.allowed = true;
+        result.threatAction = "WARN";
+        result.verdictCode = "WARNED_AND_CONTINUED";
         result.outputText = params.text;
-        result.warning = (raw.reason as string) ?? "";
+        result.warning = (raw.reason as string) ?? "Threat detected but permitted under Warn policy.";
         break;
       case "CONTINUE":
         result.blocked = false;
+        result.allowed = true;
+        result.threatAction = "CONTINUE";
+        result.verdictCode = "CONTINUED";
         result.outputText = params.text;
         break;
     }
@@ -2929,15 +3013,24 @@ function localGuardResult(input: {
         break;
       case "REDACT":
         result.blocked = false;
+        result.allowed = true;
+        result.threatAction = "REDACT";
+        result.verdictCode = "REDACTED_AND_CONTINUED";
         result.outputText = analysis.redactedText || "[REDACTED]";
         break;
       case "WARN":
         result.blocked = false;
+        result.allowed = true;
+        result.threatAction = "WARN";
+        result.verdictCode = "WARNED_AND_CONTINUED";
         result.outputText = input.originalText;
         result.warning = analysis.reason;
         break;
       case "CONTINUE":
         result.blocked = false;
+        result.allowed = true;
+        result.threatAction = "CONTINUE";
+        result.verdictCode = "CONTINUED";
         result.outputText = input.originalText;
         break;
     }
@@ -3168,8 +3261,13 @@ function canonicalizeResult(action: string, result: IDataObject, branchOnRedacti
   if (result.verdictCode === undefined) {
     if (result.skipped === true) result.verdictCode = "EMPTY_INPUT";
     else if (result.throttled === true) result.verdictCode = "REPUTATION_THROTTLED";
-    else if (result.blocked === true || result.allowed === false || result.decision === "BLOCK") result.verdictCode = "CONTENT_BLOCKED";
+    else if (result.action === "REDACT" || result.threatAction === "REDACT") result.verdictCode = "REDACTED_AND_CONTINUED";
+    else if (result.threatAction === "WARN") result.verdictCode = "WARNED_AND_CONTINUED";
+    else if (result.threatAction === "CONTINUE") result.verdictCode = "CONTINUED";
     else if (result.decision === "ASK_APPROVAL" || result.finalDecision === "ASK_APPROVAL") result.verdictCode = "APPROVAL_REQUIRED";
+    else if (action === "ragScanner" && !isAllowishRecommendation(result.recommendedAction)) result.verdictCode = "QUARANTINED";
+    else if (action === "workflowAudit" && result.readyForProduction !== true) result.verdictCode = "AUDIT_FAILED";
+    else if (result.blocked === true || result.allowed === false || result.decision === "BLOCK") result.verdictCode = "CONTENT_BLOCKED";
     else result.verdictCode = "ALLOW";
   }
   const flagged = isFlagged(action, result, branchOnRedaction);
@@ -3375,12 +3473,18 @@ function applyTopicRestriction(request: ActionRequest, result: IDataObject): voi
   if (result.skipped === true || result.error === true || result.throttled === true) return;
 
   const categories = Array.isArray(result.categories) ? result.categories.map((value) => String(value)) : [];
-  if (!categories.includes("OFF_TOPIC")) return;
+  const scope = evaluateTopicScope(request.text, request.allowedTopics ?? [], request.systemPromptContext);
+  const isOffTopic = categories.includes("OFF_TOPIC") || (scope.configured && !scope.inScope && new Set(topicTokens(request.text)).size >= 2);
+  if (!isOffTopic) return;
+  if (!categories.includes("OFF_TOPIC")) {
+    categories.push("OFF_TOPIC");
+    result.categories = categories;
+  }
 
   // The local engine already stopped it, in exactly the way On Threat asked for.
   // Running the same enforcement twice would be harmless but the report would be
   // a lie about who acted, so it says what actually happened.
-  if (result.engine !== "cloud") {
+  if (result.engine !== "cloud" && result.blocked === true) {
     result.topicHandling = {
       mode,
       effect: "ENFORCED_BY_ENGINE",
@@ -3737,7 +3841,9 @@ function applySensitivity(request: ActionRequest, result: IDataObject): void {
     if (request.action === "outputGuard" && activeAttacks.length === 0 && categories.includes("SECRET_DETECTED")) {
       result.blocked = false;
       result.allowed = true;
-      const sanitized = stringValue(result.safeText) || stringValue(result.outputText) || "[REDACTED]";
+      const rawSafe = stringValue(result.safeText);
+      const isWarning = Boolean(rawSafe && (/blocked|your message was/i.test(rawSafe) || rawSafe === result.reason));
+      const sanitized = (!isWarning ? rawSafe : undefined) || stringValue(result.redactedText) || (request.text ? redactLocal(request.text).safeText : "[REDACTED]");
       result.outputText = sanitized;
       result.safeText = sanitized;
       result.text = sanitized;
@@ -4557,6 +4663,8 @@ function toLayerDecision(check: IDataObject) {
   let decision = normalizeDecision(check.decision);
   const allowed = typeof check.allowed === "boolean" ? check.allowed : undefined;
   if (!decision && allowed === false) decision = "BLOCK";
+  if (!decision && normalizeDecision(check.action) === "BLOCK") decision = "BLOCK";
+  if (!decision && normalizeDecision(check.action) === "REDACT") decision = "REDACT";
   // A guard layer reports its verdict in `action`, not `decision` — only the
   // purpose-built layers use `decision`. So a layer that answered REDACT arrived
   // here with nothing to read, fell through to ALLOW, and the `redacted` branch
@@ -4595,6 +4703,7 @@ function toLayerDecision(check: IDataObject) {
 
 function normalizeDecision(value: unknown): UniversalDecision | undefined {
   if (value === "ALLOW" || value === "BLOCK" || value === "REDACT" || value === "ASK_APPROVAL" || value === "REVIEW") return value;
+  if (value === "READ_ONLY") return "ALLOW";
   if (value === "HUMAN_REVIEW" || value === "REQUIRE_APPROVAL") return "ASK_APPROVAL";
   if (value === "ALLOW_WITH_REDACTION" || value === "REWRITE") return "REDACT";
   if (value === "TAKEOVER_REQUIRED") return "ASK_APPROVAL";
