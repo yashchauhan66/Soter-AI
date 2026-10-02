@@ -1336,7 +1336,7 @@ export const soterGuardProperties: INodeProperties[] = [
         displayName: "Request Timeout (Ms)",
         name: "requestTimeoutMs",
         type: "number",
-        typeOptions: { minValue: 1000, maxValue: 120000 },
+        typeOptions: { minValue: 1, maxValue: 120000 },
         default: 20000,
         description: "How long to wait for each API call before giving up. In Auto mode a timeout is what triggers the local fallback.",
       },
