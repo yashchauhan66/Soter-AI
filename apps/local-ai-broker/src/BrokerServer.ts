@@ -19,6 +19,11 @@ import {
     generateSafeModePolicy,
     redactForSharing,
     findSurvivingSecrets,
+    detectEncodedSecrets,
+    redactAIContext,
+    matchCanaries,
+    hashCanary,
+    canaryPreview,
     scanBrokerRequest,
     scanBrokerResponse,
     shouldForward,
@@ -42,6 +47,7 @@ import {
     type TaintedSource,
 } from "@soterai/guard-core";
 import { tokenMatches } from "./auth";
+import { validateProviderTarget, readProviderBody, MAX_PROVIDER_RESPONSE_BYTES } from "./ProviderTarget";
 import {
     CheckpointScopeError,
     FilesystemCheckpointStore,
@@ -88,6 +94,8 @@ export interface BrokerServerOptions {
     terminalExecutor?: (executable: string, args: string[], options: { timeoutMs: number; maxBufferBytes: number }) => Promise<{ stdout: string; stderr: string; exitCode: number }>;
     logger?: (message: string, metadata?: Record<string, unknown>) => void;
     canaries?: Array<Pick<Canary, "id" | "token" | "hash" | "redactedPreview">>;
+    /** Extension-managed brokers wait for authenticated registry synchronization. */
+    requireCanarySync?: boolean;
     /**
      * Enables the real reversible checkpoint/rollback resource adapter. Omitted
      * by default: without an operator-configured isolation root there is no
@@ -154,9 +162,16 @@ export class BrokerServer {
     private safeMode = { enabled: false, level: "developer" as SafeModeLevel };
     private startedAt?: string;
     private readonly checkpoints?: FilesystemCheckpointStore;
+    private canaries: Array<Pick<Canary, "id" | "token" | "hash" | "redactedPreview">>;
+    private canariesReady: boolean;
 
     constructor(private readonly options: BrokerServerOptions) {
         if (!options.token || options.token.length < 32) throw new Error("A broker auth token of at least 32 characters is required");
+        for (const target of [options.openAIProviderUrl, options.anthropicProviderUrl]) {
+            if (target) validateProviderTarget(target);
+        }
+        this.canaries = (options.canaries ?? []).map(canary => ({ ...canary }));
+        this.canariesReady = options.requireCanarySync !== true;
         this.checkpoints = options.checkpoint ? new FilesystemCheckpointStore(options.checkpoint) : undefined;
         this.server = createServer((req, res) => void this.handle(req, res));
         this.server.requestTimeout = options.requestTimeoutMs ?? 30_000;
@@ -242,6 +257,7 @@ export class BrokerServer {
             }
 
             const body = await this.readJson(req);
+            if (req.method === "POST" && url.pathname === "/v1/canaries/sync") return void await this.syncCanaries(res, body);
             if (req.method === "POST" && url.pathname === "/v1/scan") return void await this.scanEndpoint(res, body);
             if (req.method === "POST" && url.pathname === "/v1/redact") return this.redactEndpoint(res, body);
             if (req.method === "POST" && url.pathname === "/v1/decision") return void await this.scanEndpoint(res, body);
@@ -293,7 +309,7 @@ export class BrokerServer {
 
     private async scanEndpoint(res: ServerResponse, body: JsonBody): Promise<void> {
         const messages = normalizeMessages(body.messages ?? [{ role: "user", content: body.content }]);
-        const result = await scanBrokerRequest(messages, { engine: this.engine, safeMode: this.safeMode, canaries: this.options.canaries });
+        const result = await scanBrokerRequest(messages, { engine: this.engine, safeMode: this.safeMode, canaries: this.canaries });
         this.record({ eventType: "broker_request_scanned", decision: result.decision, riskScore: result.riskScore, categories: result.categories, contentHash: result.contentHash, redactedEvidence: result.evidencePreview });
         this.json(res, 200, safeRequestResult(result));
     }
@@ -510,13 +526,40 @@ export class BrokerServer {
         this.json(res, 200, decision);
     }
 
+    private requireCanaryMonitoring(): void {
+        if (!this.canariesReady) throw new HttpError(503, "canary_monitor_unavailable", "Canary monitoring must synchronize before AI requests are forwarded.");
+    }
+
+    private async syncCanaries(res: ServerResponse, body: JsonBody): Promise<void> {
+        this.canariesReady = false;
+        if (!Array.isArray(body.canaries) || body.canaries.length > 1024) {
+            throw new HttpError(400, "invalid_canary_registry", "Expected a bounded array of canary records.");
+        }
+        const next: typeof this.canaries = [];
+        for (const entry of body.canaries) {
+            const item = objectValue(entry);
+            const token = stringValue(item.token);
+            if (!token || !/^sk-soter-canary-[a-f0-9]{40}$/.test(token)) {
+                throw new HttpError(400, "invalid_canary_registry", "Invalid generated canary record.");
+            }
+            const hash = await hashCanary(token);
+            const id = "canary_" + hash.slice(0, 12);
+            if (item.id !== id || item.hash !== hash) throw new HttpError(400, "invalid_canary_registry", "Canary metadata does not match its token.");
+            next.push({ id, token, hash, redactedPreview: canaryPreview(token) });
+        }
+        this.canaries = next;
+        this.canariesReady = true;
+        this.json(res, 200, { synchronized: true, count: next.length });
+    }
+
     private previewMCPTool(res: ServerResponse, body: JsonBody): void {
         const decision = evaluateMCPToolInvocation({
             mcpConfig: parseMCPConfig(body.mcpConfig),
             serverName: requireString(body.serverName, "serverName"),
             toolName: requireString(body.toolName, "toolName"),
             args: objectValue(body.args),
-            protectionMode: brokerProtectionMode(this.safeMode),
+            protectionMode: body.strictMode === true && brokerProtectionMode(this.safeMode) === "standard"
+                ? "strict" : brokerProtectionMode(this.safeMode),
             allowedPermissions: stringArray(body.allowedPermissions) as MCPPermission[],
             taintedSources: arrayObjectValue(body.taintedSources) as unknown as TaintedSource[],
         });
@@ -577,10 +620,11 @@ export class BrokerServer {
     }
 
     private async proxyOpenAI(res: ServerResponse, body: JsonBody, req: IncomingMessage): Promise<void> {
+        this.requireCanaryMonitoring();
         const messages = normalizeMessages(body.messages);
         const sessionId = stringValue(body.session_id) ?? stringValue(req.headers["x-soterai-session-id"]) ?? randomUUID();
         const model = stringValue(body.model);
-        const scan = await scanBrokerRequest(messages, { engine: this.engine, safeMode: this.safeMode, canaries: this.options.canaries });
+        const scan = await scanBrokerRequest(messages, { engine: this.engine, safeMode: this.safeMode, canaries: this.canaries });
         const approved = this.approvals.consume(sessionId, scan.contentHash);
         this.recordRequestMemory(sessionId, scan, model, "openai-compatible");
         if (!scan.safe || !shouldForward(scan.decision, approved)) {
@@ -597,19 +641,22 @@ export class BrokerServer {
 
         const provider = await this.forwardProvider("openai", forward, req, sessionId, model);
         const responseText = extractOpenAIResponse(provider.body);
-        const responseScan = await scanBrokerResponse(responseText, { canaries: this.options.canaries });
+        const responseScan = await scanBrokerResponse(responseText, { canaries: this.canaries });
         this.recordResponseMemory(sessionId, responseScan, model, "openai-compatible");
-        if (responseScan.decision === "block") throw new HttpError(422, "unsafe_provider_response", "The provider response was blocked by local output protection");
+        if (responseScan.decision === "block" || this.unsafePayload(JSON.stringify(provider.body))) {
+            throw new HttpError(422, "unsafe_provider_response", "The provider response was blocked by local output protection");
+        }
         res.setHeader("x-soterai-response-decision", responseScan.decision);
         this.json(res, provider.status, provider.body);
     }
 
     private async proxyAnthropic(res: ServerResponse, body: JsonBody, req: IncomingMessage): Promise<void> {
+        this.requireCanaryMonitoring();
         const system = typeof body.system === "string" ? [{ role: "system", content: body.system }] : [];
         const messages = [...system, ...normalizeMessages(body.messages)];
         const sessionId = stringValue(body.session_id) ?? stringValue(req.headers["x-soterai-session-id"]) ?? randomUUID();
         const model = stringValue(body.model);
-        const scan = await scanBrokerRequest(messages, { engine: this.engine, safeMode: this.safeMode, canaries: this.options.canaries });
+        const scan = await scanBrokerRequest(messages, { engine: this.engine, safeMode: this.safeMode, canaries: this.canaries });
         const approved = this.approvals.consume(sessionId, scan.contentHash);
         this.recordRequestMemory(sessionId, scan, model, "anthropic-compatible");
         if (!scan.safe || !shouldForward(scan.decision, approved)) {
@@ -638,18 +685,18 @@ export class BrokerServer {
 
         const provider = await this.forwardProvider("anthropic", forward, req, sessionId, model);
         const responseText = extractAnthropicResponse(provider.body);
-        const responseScan = await scanBrokerResponse(responseText, { canaries: this.options.canaries });
+        const responseScan = await scanBrokerResponse(responseText, { canaries: this.canaries });
         this.recordResponseMemory(sessionId, responseScan, model, "anthropic-compatible");
-        if (responseScan.decision === "block") throw new HttpError(422, "unsafe_provider_response", "The provider response was blocked by local output protection");
+        if (responseScan.decision === "block" || this.unsafePayload(JSON.stringify(provider.body))) {
+            throw new HttpError(422, "unsafe_provider_response", "The provider response was blocked by local output protection");
+        }
         res.setHeader("x-soterai-response-decision", responseScan.decision);
         this.json(res, provider.status, provider.body);
     }
 
     /**
-     * Phase 6 — SSE/chunked streaming proxy with fail-closed output scanning.
-     * Each chunk is scanned for secrets/canaries before being forwarded. On a
-     * block decision the stream is aborted and a terminal error event is sent.
-     * Limitation: partial tokens already flushed cannot be recalled (honest).
+     * Buffer SSE output until the complete bounded response passes scanning.
+     * Preserves SSE framing but deliberately delays tokens until verification.
      */
     private async proxyStreaming(
         kind: "openai" | "anthropic",
@@ -686,6 +733,7 @@ export class BrokerServer {
                 method: "POST",
                 headers,
                 body: wire,
+                redirect: "error",
                 signal: controller.signal,
             });
         } catch {
@@ -694,11 +742,12 @@ export class BrokerServer {
         }
 
         if (!upstream.ok || !upstream.body) {
-            clearTimeout(timeout);
-            const errText = await upstream.text().catch(() => "");
-            const parsed = parseProviderJson(errText);
-            if (parsed) throw providerSafetyError(kind, upstream.status, parsed);
-            throw new HttpError(502, "provider_error", `Provider streaming failed (${upstream.status}): ${errText.slice(0, 200)}`);
+            try {
+                const errText = await readProviderBody(upstream).catch(() => "");
+                const parsed = parseProviderJson(errText);
+                if (parsed) throw providerSafetyError(kind, upstream.status, parsed);
+                throw new HttpError(502, "provider_error", "The provider returned an invalid streaming response.");
+            } finally { clearTimeout(timeout); }
         }
 
         res.statusCode = 200;
@@ -709,10 +758,12 @@ export class BrokerServer {
         res.setHeader("x-soterai-response-decision", "pending");
 
         const reader = upstream.body.getReader();
-        const decoder = new TextDecoder();
+        const decoder = new TextDecoder("utf-8", { fatal: true });
         let accumulated = "";
         let blocked = false;
         let buffer = "";
+        const pendingParts: string[] = [];
+        let responseBytes = 0;
         let wroteBody = false;
         let finalDecision: GuardAction = "allow";
 
@@ -720,8 +771,9 @@ export class BrokerServer {
             responseScan: Awaited<ReturnType<typeof scanBrokerResponse>>,
         ): Promise<void> => {
             blocked = true;
+            pendingParts.length = 0;
             finalDecision = "block";
-            this.recordResponseMemory(sessionId, responseScan, model, providerLabel);
+            this.recordResponseMemory(sessionId, { ...responseScan, decision: "block" }, model, providerLabel);
             // Headers may already be sent after the first safe chunk — never call setHeader then.
             if (!wroteBody && !res.headersSent) {
                 res.setHeader("x-soterai-response-decision", "block");
@@ -742,9 +794,8 @@ export class BrokerServer {
          */
         const shouldBlockStream = async (text: string): Promise<Awaited<ReturnType<typeof scanBrokerResponse>> | null> => {
             if (!text) return null;
-            const responseScan = await scanBrokerResponse(text, { canaries: this.options.canaries });
-            const survivors = findSurvivingSecrets(text);
-            if (responseScan.decision === "block" || responseScan.canaryLeaked || survivors.length > 0) {
+            const responseScan = await scanBrokerResponse(text, { canaries: this.canaries });
+            if (responseScan.decision === "block" || responseScan.canaryLeaked || this.unsafePayload(text)) {
                 return responseScan;
             }
             return null;
@@ -754,47 +805,62 @@ export class BrokerServer {
             while (true) {
                 const { done, value } = await reader.read();
                 if (done) break;
+                responseBytes += value.byteLength;
+                if (responseBytes > MAX_PROVIDER_RESPONSE_BYTES) {
+                    await writeBlockAndAbort({
+                        ...await scanBrokerResponse(""), decision: "block", riskScore: 100,
+                        categories: ["response_size_limit"],
+                    });
+                    break;
+                }
                 const chunk = decoder.decode(value, { stream: true });
                 buffer += chunk;
 
                 // Scan on SSE event boundaries; never forward a part until the
                 // accumulated assistant-visible text is clean.
-                const parts = buffer.split("\n\n");
+                const parts = buffer.split(/\r?\n\r?\n/);
                 buffer = parts.pop() ?? "";
                 for (const part of parts) {
                     if (!part.trim()) continue;
                     const content = extractStreamDelta(part);
                     if (content) accumulated += content;
 
-                    const blockScan = await shouldBlockStream(accumulated);
+                    const blockScan = await shouldBlockStream(accumulated) ?? await shouldBlockStream(part);
                     if (blockScan) {
                         await writeBlockAndAbort(blockScan);
                         break;
                     }
-                    res.write(part + "\n\n");
-                    wroteBody = true;
+                    // Buffer until the whole response passes: a later delta may
+                    // complete a credential whose prefix is not detectable yet.
+                    pendingParts.push(part + "\n\n");
                 }
                 if (blocked) break;
             }
 
+            if (!blocked) buffer += decoder.decode();
             if (!blocked && buffer.trim()) {
                 const content = extractStreamDelta(buffer);
                 if (content) accumulated += content;
-                const blockScan = await shouldBlockStream(accumulated || buffer);
+                const blockScan = await shouldBlockStream(accumulated) ?? await shouldBlockStream(buffer);
                 if (blockScan) {
                     await writeBlockAndAbort(blockScan);
                 } else {
-                    res.write(buffer);
-                    wroteBody = true;
-                    const responseScan = await scanBrokerResponse(accumulated || buffer, { canaries: this.options.canaries });
+                    pendingParts.push(buffer);
+                    const responseScan = await scanBrokerResponse(accumulated || buffer, { canaries: this.canaries });
                     this.recordResponseMemory(sessionId, responseScan, model, providerLabel);
                     finalDecision = responseScan.decision;
                     if (!res.headersSent) res.setHeader("x-soterai-response-decision", responseScan.decision);
                 }
             } else if (!blocked && accumulated) {
-                const responseScan = await scanBrokerResponse(accumulated, { canaries: this.options.canaries });
+                const responseScan = await scanBrokerResponse(accumulated, { canaries: this.canaries });
                 this.recordResponseMemory(sessionId, responseScan, model, providerLabel);
                 finalDecision = responseScan.decision;
+            }
+
+            if (!blocked) {
+                if (!res.headersSent) res.setHeader("x-soterai-response-decision", finalDecision);
+                for (const part of pendingParts) res.write(part);
+                wroteBody = pendingParts.length > 0;
             }
 
             // Best-effort final decision header if nothing was written yet.
@@ -811,8 +877,14 @@ export class BrokerServer {
                 model,
                 provider: providerLabel,
             });
+        } catch {
+            if (!blocked && !res.destroyed) await writeBlockAndAbort({
+                ...await scanBrokerResponse(""), decision: "block", riskScore: 100,
+                categories: ["incomplete_provider_stream"],
+            });
         } finally {
             clearTimeout(timeout);
+            controller.abort();
             try { reader.releaseLock(); } catch { /* ignore */ }
             res.end();
         }
@@ -837,9 +909,18 @@ export class BrokerServer {
      * Deliberately not disableable: an opt-out here would recreate exactly the
      * "reported protection it did not deliver" failure this closes.
      */
+    private unsafePayload(text: string): boolean {
+        return findSurvivingSecrets(text).length > 0
+            || detectEncodedSecrets(text).matches.length > 0
+            || redactAIContext(text) !== redactForSharing(text)
+            || matchCanaries(text, this.canaries ?? []).length > 0;
+    }
+
     private serializeEgress(body: JsonBody, provider: string, sessionId?: string, model?: string): string {
         const wire = JSON.stringify(body);
         const survivors = findSurvivingSecrets(wire);
+        if (detectEncodedSecrets(wire).matches.length || redactAIContext(wire) !== redactForSharing(wire)) survivors.push("encoded_or_unscannable_content");
+        if (matchCanaries(wire, this.canaries ?? []).length) survivors.push("canary");
         if (survivors.length === 0) return wire;
         this.record({
             sessionId,
@@ -872,8 +953,9 @@ export class BrokerServer {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), this.options.requestTimeoutMs ?? 30_000);
         try {
-            const response = await (this.options.fetchImpl ?? fetch)(target, { method: "POST", headers, body: wire, signal: controller.signal });
-            const parsed = await response.json() as JsonBody;
+            const response = await (this.options.fetchImpl ?? fetch)(target, { method: "POST", headers, body: wire, redirect: "error", signal: controller.signal });
+            const parsed = parseProviderJson(await readProviderBody(response));
+            if (!parsed) throw new HttpError(502, "provider_error", "The provider returned invalid JSON.");
             if (!response.ok) throw providerSafetyError(kind, response.status, parsed);
             return { status: response.status, body: parsed };
         } catch (error) {

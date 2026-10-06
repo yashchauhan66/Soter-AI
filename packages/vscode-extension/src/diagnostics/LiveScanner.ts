@@ -429,7 +429,7 @@ export class LiveScanner implements vscode.CodeActionProvider {
      * found even when the raw line differs from the folded evidence.
      */
     private lineForVariant(doc: vscode.TextDocument, finding: Finding): vscode.Range | undefined {
-        const evidence = (finding.evidence ?? finding.reason ?? "").trim();
+        const evidence = (finding.redactedEvidence ?? finding.reason ?? "").trim();
         if (evidence.length < 4) return undefined;
 
         const needle = collapseSpacedLetters(foldUnicode(deobfuscate(evidence)));

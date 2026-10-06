@@ -4,6 +4,7 @@ import { randomBytes, randomUUID } from "node:crypto";
 import { LOCKDOWN_STATE_KEY, type LockdownRecord } from "../protection/LockdownState";
 import { readBoundedResponseBody } from "../security/boundedResponse";
 import { BrokerStartFailure } from "./autoStart";
+import { CanaryManager } from "../firewall/CanaryManager";
 
 const TOKEN_KEY = "soterai.localBrokerToken";
 const SESSION_KEY = "soterai.memorySessionId";
@@ -45,7 +46,33 @@ export class BrokerManager implements vscode.Disposable {
     private lifecycle: BrokerLifecycleState = "stopped";
     private lastError?: string;
 
-    constructor(private readonly context: vscode.ExtensionContext) {}
+    private readonly canaries: CanaryManager;
+    private readonly canaryListener: vscode.Disposable;
+    private canarySync: Promise<void> = Promise.resolve();
+    private canarySyncError?: string;
+
+    constructor(private readonly context: vscode.ExtensionContext) {
+        this.canaries = new CanaryManager(context);
+        this.canaryListener = this.canaries.onDidChange(() => {
+            if (this.lifecycle === "healthy") void this.syncCanaries().catch(() => {
+                this.lifecycle = "degraded";
+                void vscode.window.showWarningMessage("SoterAI could not synchronize canary monitoring with the local broker. Restart the broker before relying on canary alerts.");
+            });
+        });
+    }
+
+    private syncCanaries(): Promise<void> {
+        const update = this.canarySync.then(async () => {
+            const canaries = await this.canaries.loadForScan();
+            await this.request("/v1/canaries/sync", { method: "POST", body: JSON.stringify({ canaries }) });
+            this.canarySyncError = undefined;
+        }).catch(() => {
+            this.canarySyncError = "Local broker canary monitoring is unavailable.";
+            throw new BrokerStartFailure(this.canarySyncError, false);
+        });
+        this.canarySync = update.catch(() => undefined);
+        return update;
+    }
 
     get port(): number {
         return vscode.workspace.getConfiguration("soterai").get<number>("broker.port", 47321);
@@ -64,7 +91,11 @@ export class BrokerManager implements vscode.Disposable {
     private async startInternal(): Promise<BrokerStatus> {
         if (this.isLockedDown()) throw new BrokerStartFailure("Emergency Lockdown is active; broker start is blocked", false);
         const existing = await this.status();
-        if (existing.running && existing.state === "healthy") return existing;
+        if (existing.running && existing.state === "healthy") {
+            await this.syncCanaries();
+            this.lifecycle = "healthy";
+            return existing;
+        }
         if (existing.state === "incompatible") {
             this.lifecycle = "incompatible";
             this.intentionalStop = true;
@@ -107,6 +138,7 @@ export class BrokerManager implements vscode.Disposable {
         this.intentionalStop = false;
         this.lifecycle = "starting";
         this.lastError = undefined;
+        this.canarySyncError = undefined;
         const token = await this.getOrCreateToken();
         const script = this.context.asAbsolutePath("dist/local-ai-broker.js");
         const config = vscode.workspace.getConfiguration("soterai");
@@ -129,6 +161,7 @@ export class BrokerManager implements vscode.Disposable {
             ELECTRON_RUN_AS_NODE: "1",
             SOTERAI_BROKER_TOKEN: token,
             SOTERAI_BROKER_PORT: String(this.port),
+            SOTERAI_REQUIRE_CANARY_SYNC: "1",
             SOTERAI_BROKER_STORAGE: this.context.globalStorageUri.fsPath,
             SOTERAI_OPENAI_PROVIDER_URL: config.get<string>("broker.openAIProviderUrl", ""),
             SOTERAI_ANTHROPIC_PROVIDER_URL: config.get<string>("broker.anthropicProviderUrl", ""),
@@ -175,6 +208,7 @@ export class BrokerManager implements vscode.Disposable {
             await new Promise((resolve) => setTimeout(resolve, 100));
             const status = await this.status();
             if (status.running && status.state === "healthy") {
+                await this.syncCanaries();
                 this.lifecycle = "healthy";
                 this.restartCount = 0;
                 this.startHeartbeat();
@@ -270,7 +304,8 @@ export class BrokerManager implements vscode.Disposable {
             if (!versionText) return { ...base, state: "degraded" };
             if (versionText !== EXPECTED_BROKER_VERSION) return { ...base, state: "incompatible", running: true, version: versionText };
             const safeMode = await this.request<{ enabled: boolean; level: string }>("/v1/safe-mode/status", { method: "GET" }, 750);
-            return { ...base, running: true, state: "healthy", version: versionText, safeMode, memorySessionId: this.memorySessionId };
+            return { ...base, running: true, state: this.canarySyncError ? "degraded" : "healthy", lastError: this.canarySyncError ?? base.lastError,
+                version: versionText, safeMode, memorySessionId: this.memorySessionId };
         } catch (error) {
             return { ...base, state: this.child ? "degraded" : "stopped", memorySessionId: this.memorySessionId, lastError: error instanceof Error ? error.message : "Broker health check failed" };
         }
@@ -286,7 +321,7 @@ export class BrokerManager implements vscode.Disposable {
         const controller = new AbortController();
         const timeout = setTimeout(() => controller.abort(), timeoutMs);
         try {
-            const response = await fetch(`${this.url}${path}`, { ...init, headers, signal: controller.signal });
+            const response = await fetch(`${this.url}${path}`, { ...init, headers, redirect: "error", signal: controller.signal });
             const raw = await readBoundedResponseBody(response);
             let body: (T & { error?: { message?: string } }) | undefined;
             try { body = raw ? JSON.parse(raw) as T & { error?: { message?: string } } : undefined; } catch { throw new Error(`Broker returned malformed JSON (${response.status})`); }
@@ -334,7 +369,7 @@ export class BrokerManager implements vscode.Disposable {
         await this.request("/v1/memory/session/event", { method: "POST", body: JSON.stringify({ sessionId, event }) });
     }
 
-    dispose(): void { void this.stop(); }
+    dispose(): void { this.canaryListener.dispose(); void this.stop(); }
 
     private startHeartbeat(): void {
         this.stopHeartbeat();

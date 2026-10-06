@@ -76,9 +76,10 @@ export class WorkspaceGuard {
         await this.persist();
     }
 
-    isProtected(filePath: string): boolean {
+    isProtected(filePath: string, manualOnly = false): boolean {
         const normalized = filePath.replace(/\\/g, "/");
         return this.protectedFiles.some((f) => {
+            if (manualOnly && f.source !== "manual") return false;
             const pattern = f.pattern.replace(/\\/g, "/");
             if (pattern.includes("*")) {
                 // Escape everything regex-special EXCEPT the glob star, then

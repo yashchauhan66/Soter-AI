@@ -6,7 +6,7 @@ import { applySafeMode, strictest, type SafeModeLevel } from "./SafeMode";
 import { matchCanaries, type Canary } from "./Canary";
 import { detectTerminalCommandRisk } from "./detectors/TerminalCommandRiskDetector";
 import { detectAIGeneratedCodeRisk } from "./detectors/AIGeneratedCodeRiskDetector";
-import { hashContent } from "./HashCache";
+import { hashExactContent } from "./HashCache";
 
 /**
  * BrokerScanner — the guard-core brain the Local AI Broker uses to inspect
@@ -75,7 +75,7 @@ export async function scanBrokerRequest(
 ): Promise<BrokerRequestScanResult> {
     const engine = options.engine ?? new DecisionEngine();
     const joined = joinMessages(messages);
-    const contentHash = await hashContent(joined);
+    const contentHash = await hashExactContent(JSON.stringify(messages));
 
     let scannerError = false;
     let decision: GuardAction = "allow";
@@ -188,7 +188,7 @@ export async function scanBrokerResponse(
         canaries: options.canaries,
         placeholders: options.placeholders,
     });
-    const contentHash = await hashContent(text);
+    const contentHash = await hashExactContent(text);
 
     const terminal = detectTerminalCommandRisk(text);
     const code = detectAIGeneratedCodeRisk(text);

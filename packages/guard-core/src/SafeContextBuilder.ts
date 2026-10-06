@@ -1,6 +1,7 @@
 import type { GuardAction } from "./types";
-import { classifyPath, type ProjectPolicy, type PathSensitivity } from "./ProjectPolicy";
-import { redactForSharing, findSurvivingSecrets } from "./Redactor";
+import { classifyPath, type ProjectPolicy, type PathSensitivity, type PathClassification } from "./ProjectPolicy";
+import { findSurvivingSecrets } from "./Redactor";
+import { redactAIContext as redactForSharing } from "./ContextRedactor";
 import { detectRepoInstructionPoisoning } from "./detectors/RepoInstructionPoisoningDetector";
 import { detectOutputExfiltration } from "./detectors/OutputExfiltrationDetector";
 
@@ -35,6 +36,8 @@ export interface ContextItem {
     path: string;
     kind: ContextKind;
     content: string;
+    /** Classification from the originating workspace root, when collected by the IDE. */
+    classification?: PathClassification;
 }
 
 export interface ContextDecision {
@@ -81,6 +84,8 @@ export interface SafeContext {
  * untrusted DATA, never as instructions the agent should follow.
  */
 const UNTRUSTED_KINDS = new Set<ContextKind>([
+    "active_file",
+    "selection",
     "readme",
     "agent_config",
     "mcp_config",
@@ -156,9 +161,9 @@ export function buildSafeContext(items: ContextItem[], policy: ProjectPolicy): S
     let quarantined = 0;
 
     for (const item of items) {
-        const cls = classifyPath(item.path, policy);
+        const cls = item.classification ?? classifyPath(item.path, policy);
 
-        if (cls.level === "protected") {
+        if (cls.level === "protected" || cls.action === "block") {
             blocked++;
             decisions.push({
                 path: item.path, kind: item.kind, level: cls.level, action: cls.action,

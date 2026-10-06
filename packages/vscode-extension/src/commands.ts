@@ -7,6 +7,7 @@ import { TelemetryManager } from "./telemetry";
 import { DashboardPanel } from "./webview/DashboardPanel";
 import { RuntimePolicyEngine, redactForSharing, isSensitiveFilePath, type Finding, type ProtectionMode } from "@soterai/guard-core";
 import { escapeHtml, getNonce } from "./firewall/util";
+import { applySelectionBoundary } from "./ai-boundary/BoundarySnapshot";
 
 const execFileAsync = promisify(execFile);
 
@@ -89,7 +90,9 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
                 "Copy Redacted"
             );
             if (copyVal === "Copy Redacted") {
-                await vscode.env.clipboard.writeText(decision.redactedText);
+                const bounded = await applySelectionBoundary(editor);
+                const safe = await state.engine.scan(bounded, { context: "selection" });
+                await vscode.env.clipboard.writeText(safe.redactedText ?? redactForSharing(bounded));
                 vscode.window.showInformationMessage("Redacted selection copied to clipboard.");
             }
         } else {
@@ -100,7 +103,7 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
     const redactSelectionForAIHandler = async () => {
         const editor = vscode.window.activeTextEditor;
         if (!editor) return;
-        const text = editor.document.getText(editor.selection);
+        const text = await applySelectionBoundary(editor);
         if (!text) return;
 
         const decision = await state.engine.scan(text, { context: "selection" });

@@ -10,10 +10,10 @@ import { detectSecrets, SECRET_DETECTOR_VERSION, detectEncodedSecrets, ENCODED_S
 import { minimizeEvidence, createEvidencePreview } from "./EvidenceMinimizer";
 import { findSurvivingSecrets, redactForSharing } from "./Redactor";
 import { PolicyEvaluator } from "./PolicyEvaluator";
-import { HashCache, hashContent } from "./HashCache";
+import { HashCache, hashExactContent } from "./HashCache";
 
 /** Bump when detector selection / pipeline semantics change (invalidates cache). */
-export const SCAN_PIPELINE_VERSION = "1.2.0";
+export const SCAN_PIPELINE_VERSION = "1.3.0";
 
 export const DETECTOR_VERSIONS: Record<string, string> = {
     SecretDetector: SECRET_DETECTOR_VERSION,
@@ -68,11 +68,24 @@ export class DecisionEngine {
 
     async scan(text: string, options?: ScanOptions): Promise<GuardDecision> {
         const started = Date.now();
-        const content = text.slice(0, options?.maxContentLength ?? this.maxContentLength);
+        const limit = options?.maxContentLength ?? this.maxContentLength;
+        if (!Number.isSafeInteger(limit) || limit <= 0 || text.length > limit) {
+            return {
+                decision: "block", riskScore: 100, severity: "high", categories: ["scan_incomplete"],
+                findings: [], redactedText: "[Content withheld: scan size limit exceeded or invalid]",
+                evidencePreview: "Content was not fully scanned; sharing is blocked.", inputHash: "",
+                detectorVersions: DETECTOR_VERSIONS, localOnly: true, createdAt: new Date().toISOString(),
+            };
+        }
+        const content = text;
+        let cacheKey = "";
         let inputHash: string;
         if (!options?.skipCache) {
-            inputHash = await hashContent(content);
-            const cached = this.hashCache.get(inputHash);
+            inputHash = await hashExactContent(content);
+            cacheKey = await hashExactContent(JSON.stringify([
+                inputHash, options?.context ?? "file", this.policyEvaluator.getPolicy(), DETECTOR_VERSIONS,
+            ]));
+            const cached = this.hashCache.get(cacheKey);
             if (cached) return cached;
         } else {
             inputHash = "";
@@ -125,8 +138,8 @@ export class DecisionEngine {
             pipeline: pipelineReport,
         };
         // Cache result
-        if (inputHash) {
-            this.hashCache.set(inputHash, decision);
+        if (cacheKey) {
+            this.hashCache.set(cacheKey, decision);
         }
         return decision;
     }

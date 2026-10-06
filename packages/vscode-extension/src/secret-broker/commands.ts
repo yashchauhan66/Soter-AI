@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { randomBytes } from "crypto";
-import { hashContent } from "@soterai/guard-core";
+import { hashContent, redactAIContext } from "@soterai/guard-core";
+import { applySelectionBoundary } from "../ai-boundary/BoundarySnapshot";
 import { EnforcedApiCapabilityBroker } from "./EnforcedApiCapability";
 import { buildSafeLLMContext } from "./LLMContext";
 import { secretBrokerRuntime, setSecretValueStore } from "./runtime";
@@ -54,13 +55,13 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
         return false;
     }
 
-    async function readSelectedText(): Promise<string | undefined> {
+    async function readSelectedText(forSharing = false): Promise<string | undefined> {
         const editor = vscode.window.activeTextEditor;
         if (!editor) {
             vscode.window.showErrorMessage("No active editor.");
             return undefined;
         }
-        const text = editor.document.getText(editor.selection);
+        const text = forSharing ? await applySelectionBoundary(editor) : editor.document.getText(editor.selection);
         if (!text.trim()) vscode.window.showErrorMessage("Selection is empty.");
         return text.trim() ? text : undefined;
     }
@@ -112,7 +113,12 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
                 await audit("approval_denied", "block", result.text, "typed confirmation missing");
                 return;
             }
-            await audit("approval_granted", "approval_required", result.text, "time-limited raw reveal approved");
+            // A reveal approval cannot override a file/region deny or a changed selection.
+            if (await readSelectedText(true) !== text) {
+                vscode.window.showErrorMessage("Selection changed or contains AI-forbidden content. Raw reveal was blocked.");
+                return;
+            }
+            await audit("approval_granted", "approval_required", "", "time-limited raw reveal approved");
             // Real behavior, not a simulation: the raw selection goes to the
             // clipboard for ONE deliberate paste. SoterAI does not send it
             // anywhere itself, and the clipboard is the only copy made.
@@ -123,38 +129,39 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
             return;
         }
 
-        const safeContext = buildSafeLLMContext("User-selected VS Code context", result, result.allowedOperations);
+        const bounded = await readSelectedText(true) ?? "";
+        const shared = bounded === text ? result : await redactorForCurrentPolicy().redact(bounded, workspace, "selection");
+        const safeContext = buildSafeLLMContext("User-selected VS Code context", shared, shared.allowedOperations);
         lastPreview = {
             model: "user-selected",
             provider: "local-or-user-selected",
-            redactedText: safeContext.redactedText,
-            maskedOriginal: maskOriginalText(text, result.text),
-            refs: result.secrets.map((secret) => secret.ref).filter((ref): ref is string => Boolean(ref)),
+            redactedText: redactAIContext(safeContext.redactedText),
+            maskedOriginal: redactAIContext(bounded),
+            refs: shared.secrets.map((secret) => secret.ref).filter((ref): ref is string => Boolean(ref)),
             allowedOperations: safeContext.allowedOperations,
-            blocked: result.blocked.map((secret) => secret.finding.type),
+            blocked: shared.blocked.map((secret) => secret.finding.type),
             policyReason: choice === "Send redacted version" ? "redacted version selected" : "brokered safe context selected",
         };
-        await audit("context_built", "redact", result.text, lastPreview.policyReason);
+        await audit("context_built", "redact", shared.text, lastPreview.policyReason);
         showPreview();
         refreshViews();
     }
 
     async function previewWhatAIWillSee(): Promise<void> {
-        if (!lastPreview) {
-            const text = await readSelectedText();
-            if (!text) return;
-            const result = await redactorForCurrentPolicy().redact(text, currentWorkspace(), "preview");
-            lastPreview = {
-                model: "user-selected",
-                provider: "local-or-user-selected",
-                redactedText: result.text,
-                maskedOriginal: maskOriginalText(text, result.text),
-                refs: result.secrets.map((secret) => secret.ref).filter((ref): ref is string => Boolean(ref)),
-                allowedOperations: result.allowedOperations,
-                blocked: result.blocked.map((secret) => secret.finding.type),
-                policyReason: "preview generated before AI send",
-            };
-        }
+        // Rebuild from current selection and rules; stale previews are not an authority.
+        const text = await readSelectedText(true);
+        if (!text) return;
+        const result = await redactorForCurrentPolicy().redact(text, currentWorkspace(), "preview");
+        lastPreview = {
+            model: "user-selected",
+            provider: "local-or-user-selected",
+            redactedText: redactAIContext(result.text),
+            maskedOriginal: maskOriginalText(text, result.text),
+            refs: result.secrets.map((secret) => secret.ref).filter((ref): ref is string => Boolean(ref)),
+            allowedOperations: result.allowedOperations,
+            blocked: result.blocked.map((secret) => secret.finding.type),
+            policyReason: "preview generated before AI send",
+        };
         showPreview();
     }
 
@@ -211,7 +218,7 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
     }
 
     async function buildSafePromptForAI(): Promise<void> {
-        const text = await readSelectedText();
+        const text = await readSelectedText(true);
         if (!text) return;
         const result = await redactorForCurrentPolicy().redact(text, currentWorkspace(), "safe-prompt");
         const safeContext = buildSafeLLMContext("Use this VS Code context safely", result, result.allowedOperations);
@@ -222,7 +229,7 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
             safeContext.task,
             "",
             "Safe context:",
-            safeContext.redactedText,
+            redactAIContext(safeContext.redactedText),
             "",
             "Allowed broker operations:",
             safeContext.allowedOperations.length ? safeContext.allowedOperations.map((op) => `- ${op}`).join("\n") : "- none",
@@ -239,7 +246,7 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
         lastPreview = {
             model: "user-selected",
             provider: "local-or-user-selected",
-            redactedText: safeContext.redactedText,
+            redactedText: redactAIContext(safeContext.redactedText),
             maskedOriginal: maskOriginalText(text, result.text),
             refs: result.secrets.map((secret) => secret.ref).filter((ref): ref is string => Boolean(ref)),
             allowedOperations: safeContext.allowedOperations,
@@ -545,7 +552,7 @@ ${row("After revocation", afterRevoke.allowed, false)}
                     const key = /^(\s*[A-Za-z0-9_.-]+\s*[=:])/.exec(line)?.[1];
                     return key ? `${key}[SENSITIVE_VALUE_LOCAL_ONLY]` : "[SENSITIVE_VALUE_LOCAL_ONLY]";
                 }
-                return line;
+                return redactAIContext(line);
             })
             .join("\n");
     }

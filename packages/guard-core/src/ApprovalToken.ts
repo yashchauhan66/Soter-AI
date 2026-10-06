@@ -1,5 +1,5 @@
 import type { GuardAction } from "./types";
-import { hashContent } from "./HashCache";
+import { hashExactContent } from "./HashCache";
 
 /**
  * Local approval workflow for the AI Context Firewall and Local AI Broker.
@@ -68,7 +68,7 @@ export async function createApprovalGrant(input: CreateApprovalInput): Promise<A
     // Token binds the identity fields plus a nonce so it cannot be guessed from
     // the (hashed) content alone.
     const nonce = randomHex(12);
-    const token = await hashContent(
+    const token = await hashExactContent(
         `${input.sessionId}|${input.contentHash}|${input.decision}|${outcome}|${now}|${nonce}`,
     );
     return {
@@ -183,7 +183,7 @@ export class ApprovalStore {
 function randomHex(bytes: number): string {
     const arr = new Uint8Array(bytes);
     const g = (globalThis as any).crypto;
-    if (g?.getRandomValues) g.getRandomValues(arr);
-    else for (let i = 0; i < bytes; i++) arr[i] = Math.floor(Math.random() * 256);
+    if (!g?.getRandomValues) throw new Error("Approval grants require cryptographic randomness.");
+    g.getRandomValues(arr);
     return Array.from(arr, (b) => b.toString(16).padStart(2, "0")).join("");
 }

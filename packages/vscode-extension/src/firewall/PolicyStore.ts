@@ -10,8 +10,8 @@ import { firstWorkspaceFolder } from "./util";
 /**
  * ProjectPolicyStore — reads/writes `.soterai/policy.json` in the workspace and
  * exposes the parsed {@link ProjectPolicy} the firewall uses to classify files.
- * Reads always go through `parseProjectPolicy` so a corrupt/partial file falls
- * back safely to the strict defaults.
+ * Missing policy uses defaults; an existing unreadable or invalid policy denies
+ * all context until repaired, so custom deny rules cannot silently disappear.
  */
 export class PolicyStore {
     static readonly REL_PATH = ".soterai/policy.json";
@@ -25,13 +25,22 @@ export class PolicyStore {
     /** Load the project policy, or the default when no file exists. */
     static async load(): Promise<ProjectPolicy> {
         const uri = this.policyUri();
-        if (!uri) return DEFAULT_PROJECT_POLICY;
+        if (!uri) return structuredClone(DEFAULT_PROJECT_POLICY);
         try {
             const bytes = await vscode.workspace.fs.readFile(uri);
-            const raw = JSON.parse(new TextDecoder().decode(bytes));
+            if (bytes.byteLength > 64 * 1024) throw new Error("Policy too large.");
+            const raw = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes));
+            if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new Error("Invalid policy.");
+            for (const field of ["protectedFiles", "sensitivePaths"]) {
+                if (raw[field] !== undefined && (!Array.isArray(raw[field])
+                    || raw[field].some((p: unknown) => typeof p !== "string" || !p.trim()))) throw new Error("Invalid path rules.");
+            }
             return parseProjectPolicy(raw);
-        } catch {
-            return DEFAULT_PROJECT_POLICY;
+        } catch (error) {
+            const code = (error as { code?: string }).code;
+            if (code === "FileNotFound" || code === "ENOENT") return structuredClone(DEFAULT_PROJECT_POLICY);
+            // A broken existing policy must not discard the user's deny rules.
+            return { ...structuredClone(DEFAULT_PROJECT_POLICY), protectedFiles: ["**"] };
         }
     }
 

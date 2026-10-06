@@ -46,6 +46,36 @@ const ORG_SAME_AS = [
   // this is a missing account, not bot-blocking). Re-add once the handle exists.
 ];
 
+export const FOUNDER_ID = `${SITE_URL}#founder`;
+
+/** Canonical Person node for Yash Chauhan, Founder & CEO. */
+export const founderNode = {
+  "@type": "Person",
+  "@id": FOUNDER_ID,
+  name: "Yash Chauhan",
+  givenName: "Yash",
+  familyName: "Chauhan",
+  jobTitle: "Founder & CEO",
+  url: `${SITE_URL}/about`,
+  worksFor: { "@id": ORGANIZATION_ID },
+  nationality: {
+    "@type": "Country",
+    name: "India",
+  },
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "IN",
+  },
+  knowsAbout: [
+    "AI Security",
+    "Prompt Injection Defense",
+    "LLM Guardrails",
+    "Autonomous AI Agent Security",
+    "Data Loss Prevention (DLP)",
+    "Cybersecurity",
+  ],
+} as const;
+
 /** Canonical Organization node. Referenced by other graphs via ORGANIZATION_ID. */
 export const organizationNode = {
   "@type": "Organization",
@@ -62,6 +92,15 @@ export const organizationNode = {
   description:
     "SoterAI is an AI security command layer for chatbots, RAG apps, and autonomous agents, protecting teams from prompt injection, data leakage, unsafe outputs, and agent abuse.",
   foundingDate: "2024",
+  founder: founderNode,
+  foundingLocation: {
+    "@type": "Place",
+    name: "India",
+    address: {
+      "@type": "PostalAddress",
+      addressCountry: "IN",
+    },
+  },
   email: "support@soterai.in",
   sameAs: ORG_SAME_AS,
   contactPoint: {

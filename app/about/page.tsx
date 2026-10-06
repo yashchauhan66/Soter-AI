@@ -7,11 +7,15 @@ import { breadcrumbList, ORGANIZATION_ID, SITE_URL } from "@/lib/seo/schema";
 import { safeJsonLd } from "@/lib/seo/jsonLd";
 
 export const metadata: Metadata = buildMetadata({
-  title: "About SoterAI: Who Builds the AI Guard Layer",
+  title: "About SoterAI: Founder Yash Chauhan & The AI Guard Layer",
   description:
-    "SoterAI protects LLM apps, AI agents and developer workflows from prompt injection, data leakage and unsafe AI output. Built in India for an AI-first world.",
+    "SoterAI was founded by Yash Chauhan in India to protect LLM apps, AI agents, and developer workflows from prompt injection, data leakage, and unsafe AI output.",
   path: "/about",
   keywords: [
+    "yash chauhan",
+    "yash chauhan soterai",
+    "soterai owner",
+    "soterai founder",
     "about soterai",
     "soterai company",
     "soterai mission",
@@ -25,7 +29,7 @@ const aboutJsonLd = {
   "@type": "AboutPage",
   "url": `${SITE_URL}/about`,
   "name": "About SoterAI",
-  "description": "SoterAI builds AI security infrastructure for LLM applications, AI agents, and developer workflows.",
+  "description": "SoterAI was founded by Yash Chauhan in India. Builds AI security infrastructure for LLM applications, AI agents, and developer workflows.",
   // Reference the canonical Organization node from schema.ts by @id instead of
   // restating it. The inlined copy had drifted: 3 of its 4 sameAs URLs 404ed
   // (private repo, unregistered @soterai/sdk, non-existent X handle), which
@@ -71,10 +75,29 @@ export default function Page() {
         </h1>
         <p className="mt-5 text-lg leading-8 text-slate-200">
           SoterAI builds AI security infrastructure for teams deploying LLM applications,
-          AI agents, and agentic developer tools. Our platform — SoterAI Guard — protects
-          against prompt injection, data leakage, jailbreaks, unsafe AI outputs, and
-          agent tool abuse across chatbots, RAG pipelines, IDE workflows, and automated processes.
+          AI agents, and agentic developer tools. Founded by <strong>Yash Chauhan</strong> in <strong>India</strong>,
+          our platform — SoterAI Guard — protects against prompt injection, data leakage, jailbreaks,
+          unsafe AI outputs, and agent tool abuse across chatbots, RAG pipelines, IDE workflows, and automated processes.
         </p>
+      </section>
+
+      {/* Leadership & Founder */}
+      <section className="mt-16 max-w-3xl">
+        <h2 className="text-2xl font-bold">Leadership &amp; Founder</h2>
+        <div className="mt-6 rounded-xl border border-slate-800 bg-panel/40 p-6 sm:p-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-slate-800 pb-5">
+            <div>
+              <h3 className="text-xl font-bold text-slate-100">Yash Chauhan</h3>
+              <p className="text-sm font-semibold text-cyan mt-0.5">Founder &amp; CEO · SoterAI</p>
+            </div>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-cyan/30 bg-cyan/10 px-3.5 py-1 text-xs font-semibold text-cyan w-fit">
+              📍 India
+            </span>
+          </div>
+          <p className="mt-4 text-base leading-7 text-slate-200">
+            SoterAI is founded and owned by <strong>Yash Chauhan</strong>, an Indian technologist and cybersecurity researcher dedicated to securing the global generative AI ecosystem. Yash architects SoterAI Guard to provide observable, zero-compromise runtime firewalls for LLMs, autonomous agents, and enterprise workflows — including pioneering native support for Indian data privacy (DPDP Act, Aadhaar Verhoeff checksums, PAN, GSTIN, UPI) as well as global secret and prompt injection defenses.
+          </p>
+        </div>
       </section>
 
       {/* Mission */}

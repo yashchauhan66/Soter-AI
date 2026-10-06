@@ -80,9 +80,12 @@ export const metadata: Metadata = {
     "enterprise AI security",
     "AI data leakage prevention",
   ],
-  authors: [{ name: "SoterAI" }],
-  creator: "SoterAI",
-  publisher: "SoterAI",
+  authors: [
+    { name: "Yash Chauhan", url: `${siteUrl}/about` },
+    { name: "SoterAI", url: siteUrl },
+  ],
+  creator: "Yash Chauhan",
+  publisher: "Yash Chauhan",
   robots: {
     index: true,
     follow: true,
@@ -129,6 +132,12 @@ export const metadata: Metadata = {
   },
   other: {
     "mobile-web-app-capable": "yes",
+    author: "Yash Chauhan",
+    founder: "Yash Chauhan",
+    owner: "Yash Chauhan",
+    "geo.region": "IN",
+    "geo.placename": "India",
+    country: "India",
   },
   alternates: {
     // en and x-default only. Hindi (hi) and en-IN removed — no Hindi content
@@ -146,6 +155,11 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <head>
+        <meta name="author" content="Yash Chauhan" />
+        <meta name="founder" content="Yash Chauhan" />
+        <meta name="owner" content="Yash Chauhan" />
+        <meta name="geo.region" content="IN" />
+        <meta name="geo.placename" content="India" />
         {/* Performance hints: warm up the Google Analytics connection so the
             tag loads off the critical path (better LCP / INP → better ranking). */}
         <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />

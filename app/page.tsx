@@ -81,6 +81,12 @@ const homepageJsonLd = {
       "description": "AI security command layer for chatbots, RAG apps, and autonomous agents. Protects against prompt injection, jailbreaks, PII leakage, unsafe outputs, and agent abuse.",
       "url": siteUrl,
       "author": { "@id": `${siteUrl}#organization` },
+      "creator": {
+        "@type": "Person",
+        "name": "Yash Chauhan",
+        "jobTitle": "Founder & CEO",
+        "address": { "@type": "PostalAddress", "addressCountry": "IN" },
+      },
       "offers": [
         {
           "@type": "Offer",

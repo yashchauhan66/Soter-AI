@@ -12,6 +12,7 @@
  * evidence only — the raw text is never stored, logged, or transmitted.
  */
 import * as vscode from "vscode";
+import { applySelectionBoundary } from "../ai-boundary/BoundarySnapshot";
 import { escapeHtml, showInfoWebview } from "../firewall/util";
 import { AuditLedger } from "./auditLedger";
 import {
@@ -26,7 +27,7 @@ import {
 async function resolveSubject(): Promise<{ text: string; origin: string } | undefined> {
     const editor = vscode.window.activeTextEditor;
     if (editor && !editor.selection.isEmpty) {
-        return { text: editor.document.getText(editor.selection), origin: "selection" };
+        return { text: await applySelectionBoundary(editor), origin: "selection" };
     }
     const clipboard = await vscode.env.clipboard.readText();
     if (clipboard.trim()) return { text: clipboard, origin: "clipboard" };

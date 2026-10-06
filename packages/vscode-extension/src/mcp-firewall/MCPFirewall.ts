@@ -69,6 +69,17 @@ export class MCPFirewall {
         return this.blockedTools.has(toolName);
     }
 
+    get strictMode(): boolean {
+        return vscode.workspace.getConfiguration("soterai").get<boolean>("mcpFirewall.strictMode", false);
+    }
+
+    /** Applies to this extension's preflight only; configs enumerate servers, not their runtime tools. */
+    preflightBlockReason(serverName: string): string | undefined {
+        if (this.isToolBlocked(serverName)) return "This MCP server is on your SoterAI deny-list.";
+        if (this.strictMode && !this.tools.some(tool => tool.serverName === serverName)) return "Strict preflight requires a configured MCP server.";
+        return undefined;
+    }
+
     async blockTool(toolName: string): Promise<void> {
         this.blockedTools.add(toolName);
         await this.context.globalState.update(TOOL_STATE_KEY, Array.from(this.blockedTools));
@@ -180,7 +191,7 @@ export function registerMCPFirewallCommands(
             <p class="note"><strong>${escapeHtml(PROTECTION.MONITORED.label)}:</strong> ${escapeHtml(PROTECTION.MONITORED.meaning)} SoterAI analyzes MCP configs and records your deny-list, but a VS Code extension cannot intercept another MCP client's traffic. Deny-listed tools still present in a config are flagged as drift below.</p>
             <table><tr><th>Tool</th><th>Config</th><th>Permissions</th><th>Secret Env</th><th>Risk</th><th>Deny-list</th><th>Reasons</th></tr>
             ${rows || "<tr><td colspan='7'>No MCP tools found.</td></tr>"}</table>
-            <p class="note">Tool descriptions are treated as untrusted (possible prompt injection). Secret env var names shown; values never read.</p>`
+            <p class="note">Tool descriptions are treated as untrusted (possible prompt injection). Secret env var names shown; values are not displayed.</p>`
         );
     });
 
@@ -257,17 +268,27 @@ export function registerMCPFirewallCommands(
             { title: "SoterAI: Preflight MCP Tool (broker gateway)", ignoreFocusOut: true },
         );
         if (!pick) return;
+        const denied = firewall.preflightBlockReason(pick.tool.serverName);
+        if (denied) return void vscode.window.showErrorMessage(denied);
+        const toolName = await vscode.window.showInputBox({
+            title: "MCP tool name",
+            prompt: "Enter the actual tool name from this server. Config scanning does not discover runtime tools.",
+            validateInput: value => value.trim() && value.length <= 128 ? undefined : "Enter a tool name (up to 128 characters).",
+            ignoreFocusOut: true,
+        });
+        if (!toolName?.trim()) return;
 
         const argsText = await vscode.window.showInputBox({
             title: "MCP tool args (JSON object)",
             value: "{}",
-            prompt: "Arguments that would be passed to the tool — scanned for secrets/injection before recommend/execute",
+            prompt: "Arguments for local preflight analysis. This command does not execute the tool.",
             ignoreFocusOut: true,
         });
         if (argsText === undefined) return;
         let args: Record<string, unknown> = {};
         try {
             args = JSON.parse(argsText || "{}") as Record<string, unknown>;
+            if (!args || typeof args !== "object" || Array.isArray(args)) throw new Error("Not an object");
         } catch {
             return void vscode.window.showErrorMessage("Args must be a JSON object.");
         }
@@ -284,6 +305,8 @@ export function registerMCPFirewallCommands(
         }
 
         try {
+            const currentDenial = firewall.preflightBlockReason(pick.tool.serverName);
+            if (currentDenial) return void vscode.window.showErrorMessage(currentDenial);
             if (broker.start) await broker.start();
             const decision = await broker.request<{
                 action: string;
@@ -298,7 +321,8 @@ export function registerMCPFirewallCommands(
                 body: JSON.stringify({
                     mcpConfig,
                     serverName: pick.tool.serverName,
-                    toolName: pick.tool.name,
+                    toolName: toolName.trim(),
+                    strictMode: firewall.strictMode,
                     args,
                 }),
             });
@@ -332,7 +356,7 @@ export function registerMCPFirewallCommands(
             );
         } catch (err) {
             vscode.window.showErrorMessage(
-                `MCP preflight failed: ${err instanceof Error ? err.message : String(err)}. Falling back to config scan (DETECTION_ONLY).`,
+                "MCP preflight failed. No approval was issued; config analysis alone does not authorize execution.",
             );
         }
     });

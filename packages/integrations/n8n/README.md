@@ -208,19 +208,24 @@ Each operation shows only the fields it needs, then a single **Options** button 
 
 This is node **version 3**. It is a new panel over the same engine — detection, verdicts, routing, and every output field are unchanged. Workflows saved on versions 1 and 2 keep their original panel and run identically; n8n pins each saved node to the version it was created with. An option you never open resolves to the node's real default, so a guard you drop in and run without touching Options still uses **Auto** (cloud with local fallback), not a stricter mode.
 
-## Supported Operations
+## Supported Operations (Version 3)
 
-These are the operations exactly as they appear in the node's **Operation** dropdown (grouped under their **Resource** on version 3; a single **Action** dropdown on versions 1 and 2).
+In version 3, operations are cleanly organized under **Resource → Operation** selectors:
 
-| Operation | Purpose |
-| --- | --- |
-| Universal AI Firewall | Strongest one-node protection for AI workflows. Checks prompt injection, jailbreaks, PII/secrets, RAG context, tool calls, memory operations, AI output, and semantic data egress. |
-| Guard Input | Check inbound prompts before an AI app receives them. Supports Block, Redact, Warn, or Continue. |
-| Guard Output | Check AI-generated output before sending, saving, or responding with it. Supports Block, Redact, Warn, or Continue. |
-| Redact PII and Secrets | Detect and redact sensitive strings such as emails, phone-like values, API keys, and secrets. |
-| Scan RAG Document | Scan a document or chunk and return `trustScore`, `trustLevel`, findings, and a recommended action. |
-| Audit Workflow Security | Score an exported n8n workflow for AI Agent, tool, webhook, Code node, memory, RAG, credential, and output-egress risks. |
-| Analyze Text | Analyze a text field and return `allowed`, `riskScore`, `categories`, `reason`, and safe text without local blocking. |
+| Resource | Operation | Purpose | Default Branching |
+| --- | --- | --- | --- |
+| **Guardrail** | **Guard Input** (`inputGuard`) | Check inbound user prompts before an AI app receives them. Supports Block, Redact, Warn, or Continue. | Safe / Flagged |
+| **Guardrail** | **Guard Output** (`outputGuard`) | Check AI-generated responses before sending to users or downstream services. Supports Block, Redact, Warn, or Continue. | Safe / Flagged |
+| **Guardrail** | **Universal AI Firewall** (`universalGuard`) | Strongest all-in-one guardrail. Checks prompt injection, jailbreaks, PII/secrets, RAG context, tool calls, memory operations, AI output, and semantic data egress. | Safe / Flagged |
+| **Guardrail** | **Analyze Text** (`analyzeText`) | Score any text for risk without blocking. Returns risk score, primary risk type, and categories. | Safe / Flagged |
+| **Guardrail** | **Redact Secrets or PII** (`piiRedactor`) | Detect and redact sensitive identifiers (emails, phone numbers, API keys, Aadhaar, PAN, SSN, cards). | Clean (Single) or Clean / Redacted |
+| **RAG Document** | **Scan Document** (`ragScanner`) | Scan a knowledge base document or chunk for indirect prompt injection, data poison, and exfiltration triggers. | Safe / Flagged |
+| **Workflow** | **Audit Workflow** (`workflowAudit`) | Static security analysis of exported n8n workflow JSON. Runs 100% offline inside n8n with zero network egress. | Safe / Flagged |
+| **Agent Passport** | **Enroll Identity** (`enrollIdentity`) | Register a persistent AI agent identity with least-privilege policy presets (Read Only, Customer Support, Coding Agent). | Safe / Flagged |
+| **Agent Passport** | **Issue Passport** (`issuePassport`) | Issue a short-lived cryptographic session passport token (`passportToken`) with TTL. | Safe / Flagged |
+| **Agent Passport** | **Validate Passport** (`validatePassport`) | Verify session pass validity and authorize a specific tool action before execution. | Safe / Flagged |
+| **Agent Passport** | **Check Tool Call** (`toolCall`) | Inspect tool arguments and authorizations in real time before an agent invokes a tool or function. | Safe / Flagged |
+| **Agent Passport** | **Revoke Passport** (`revokePassport`) | Invalidate an agent passport immediately upon task completion or anomaly detection. | Safe / Flagged |
 
 ## Recommended: One-Node AI Protection
 
@@ -538,7 +543,9 @@ The package includes importable workflows in `examples/`:
 | `soterai-security-context-templates.workflow.json` | Manual Trigger -> Set Security Context JSON -> SoterAI Universal AI Firewall. |
 | `soterai-workflow-security-audit.workflow.json` | Manual Trigger -> SoterAI Audit Workflow Security -> posture report. |
 | `soterai-local-offline-engine.workflow.json` | Runs with **no credential**: Local guard -> Safe/Flagged branches, plus an Auto guard that reports which engine answered. Import this first if you want to try the node before signing up. |
+| `soterai-agent-passport-lifecycle.workflow.json` | Complete enroll -> issue -> validate -> tool check -> revoke passport lifecycle for AI agents. |
 | `protected-chatbot-workflow.json` | Legacy protected-chatbot pattern retained for existing users. |
+| `Production-AI-Customer-Support-Agent-SoterAI.json` | **Official Production Reference:** Webhook -> Stage 1 SoterAI Threat Shield (Input Injection Guard) -> Safe/Flagged Split -> OpenAI GPT-4o Support Assistant -> Stage 2 SoterAI Output DLP (Secret/PII Redactor) -> Live Webhook Response. |
 
 Safe demo data:
 
@@ -815,7 +822,7 @@ API keys, bearer tokens, common provider tokens, AWS access key IDs, database UR
 - Cloud mode requires a reachable SoterAI API and a valid API key. Local mode requires neither, at the cost of the detection tiers listed under [Local mode](#local-mode).
 - Local mode is pattern-based: no ML classifier, no cross-turn correlation, no attacker reputation, no passport enforcement, and egress comparison only against Protected Sources supplied inline. Treat it as the best answer available offline, not as an equivalent of Cloud mode.
 - Passport lifecycle actions are cloud-only because identity state, token hashes, revocation, and audit records live on the configured SoterAI deployment. Auto never pretends to complete these actions locally.
-- Version 0.7.0 passes package, type, lint, unit, ReDoS, stress, build, runtime-load, and fresh Docker n8n 2.27.4 workflow/UI metadata gates. Cloud passport execution still requires a reachable SoterAI backend and valid API key.
+- Version 0.8.7 passes package, type, lint, unit (286/286 passing), ReDoS sweep (164 patterns), stress testing (24 heavy test cases), build, runtime-load, and fresh Docker n8n 2.x/1.x live workflow/UI metadata gates. Cloud passport execution still requires a reachable SoterAI backend and valid API key.
 - RAG/document risk summaries in Cloud mode depend on the `/api/rag/document/trust-score` endpoint being enabled for your SoterAI deployment. In Local mode the document is scored in-process instead.
 - **Topic trust is a local-engine behaviour.** In Cloud mode your topics are sent to the API and can only *add* an `OFF_TOPIC` finding; they will not exempt an in-scope message from a threat rule. Set the engine to Local if you need trust to apply, and read the notice beside the field rather than assuming both engines behave alike.
 - **Always Allow is a real hole, by design.** Matching messages are never scanned by any engine. It matches whole messages only and ignores entries under eight characters, but anything you put on that list is unprotected. Results say so with `bypassed: "ALWAYS_ALLOW"`.

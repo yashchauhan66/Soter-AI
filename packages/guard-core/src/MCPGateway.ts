@@ -1,6 +1,8 @@
 import { analyzeMCPConfig, type MCPPermission, type MCPServerAssessment } from "./MCPPolicyAnalyzer";
 import { RuntimePolicyEngine, type EnforcementAction, type ProtectionMode } from "./RuntimePolicyEngine";
-import { containsRawSecret, redactForSharing } from "./Redactor";
+import { containsRawSecret } from "./Redactor";
+import { redactAIContext } from "./ContextRedactor";
+import { detectEncodedSecrets } from "./detectors/EncodedSecretDetector";
 import { assessTaint, type TaintedSource } from "./TaintEngine";
 
 export interface MCPGatewayRequest {
@@ -68,7 +70,7 @@ export function evaluateMCPToolInvocation(request: MCPGatewayRequest): MCPGatewa
     // serialized argument blob. The patterns are stateless (no /g), so the scan
     // is evaluated exactly once and the boolean is reused by every consumer
     // below — previously the identical scan ran three times per invocation.
-    const hasRawSecret = containsRawSecret(serializedArgs);
+    const hasRawSecret = containsRawSecret(serializedArgs) || detectEncodedSecrets(serializedArgs).matches.length > 0;
     if (hasRawSecret) {
         riskScore = Math.max(riskScore, 95);
         categories.push("secret_egress");
@@ -113,7 +115,7 @@ export function evaluateMCPToolInvocation(request: MCPGatewayRequest): MCPGatewa
         reasonCodes: [...new Set([...reasonCodes, ...policy.reasonCodes])],
         categories: [...new Set(categories)],
         get redactedArgsPreview(): string {
-            if (previewCache === undefined) previewCache = redactForSharing(serializedArgs).slice(0, 500);
+            if (previewCache === undefined) previewCache = redactAIContext(serializedArgs).slice(0, 500);
             return previewCache;
         },
         explanation: [reasonCodes.length ? `MCP gateway reasons: ${reasonCodes.join(", ")}.` : "", policy.explanation].filter(Boolean).join(" "),

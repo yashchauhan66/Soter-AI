@@ -96,6 +96,11 @@
     },
     "contributes": {
         "commands": [
+            {"command": "soterai.blockFromAI", "title": "Block File or Folder from AI", "category": "SoterAI"},
+            {"command": "soterai.blockGlobFromAI", "title": "Block Pattern from AI", "category": "SoterAI"},
+            {"command": "soterai.blockSelectionFromAI", "title": "Block Selected Text from AI", "category": "SoterAI"},
+            {"command": "soterai.manageAIRules", "title": "Manage Manual AI Rules", "category": "SoterAI"},
+            {"command": "soterai.openRedactedPreview", "title": "Open Redacted AI Preview", "category": "SoterAI"},
             {
                 "command": "soterai.openControlPanel",
                 "title": "Open Control Panel",
@@ -1301,7 +1306,7 @@
                 "soterai.mcpFirewall.strictMode": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Enable strict MCP Tool Firewall — block unknown tools.",
+                    "description": "Use strict policy for SoterAI MCP preflight; deny unconfigured servers. Does not intercept other clients or discover runtime tools.",
                     "scope": "machine"
                 },
                 "soterai.showAllCommands": {
@@ -1360,6 +1365,8 @@
                 }
             ],
             "soterai.editorContext": [
+                { "command": "soterai.blockSelectionFromAI", "group": "2_fix@0", "when": "editorHasSelection && resourceScheme == file" },
+                { "command": "soterai.openRedactedPreview", "group": "2_fix@3", "when": "resourceScheme == file" },
                 {
                     "command": "soterai.scanSelection",
                     "group": "1_check@1",
@@ -1385,10 +1392,13 @@
                 {
                     "submenu": "soterai.explorerContext",
                     "group": "7_modification@100",
-                    "when": "!explorerResourceIsFolder"
+                    "when": "resourceScheme == file"
                 }
             ],
             "soterai.explorerContext": [
+                { "command": "soterai.blockFromAI", "group": "2_protect@0", "when": "resourceScheme == file" },
+                { "command": "soterai.blockGlobFromAI", "group": "2_protect@2", "when": "resourceScheme == file" },
+                { "command": "soterai.openRedactedPreview", "group": "2_protect@3", "when": "!explorerResourceIsFolder && resourceScheme == file" },
                 {
                     "command": "soterai.scanCurrentFile",
                     "group": "1_check@1",

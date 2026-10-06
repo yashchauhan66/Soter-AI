@@ -41,6 +41,7 @@ import { runPackagedRuntimeProbe } from "./packagedRuntimeProbe";
 import { SecretFileInterceptor } from "./secret-shield/SecretFileInterceptor";
 import { AutoVaultMigration } from "./secret-shield/AutoVaultMigration";
 import { FileReadSentinel } from "./secret-shield/FileReadSentinel";
+import { registerAIBoundaryCommands } from "./ai-boundary/commands";
 
 // Single consolidated status-bar item. It replaces the earlier six separate
 // items (main, firewall, broker, safe mode, memory, runtime) — those states now
@@ -138,7 +139,7 @@ export function activate(context: vscode.ExtensionContext): void {
     // Enforce the Protected Workspace list on every SoterAI-built context
     // bundle: protected files never enter gatherContext() output. Direct reads
     // by other tools remain monitoring-only (see WorkspaceGuard honesty notes).
-    setProtectedFileChecker((relPath) => workspaceGuard.isEnabled && workspaceGuard.isProtected(relPath));
+    setProtectedFileChecker((relPath) => workspaceGuard.isProtected(relPath, !workspaceGuard.isEnabled));
     mcpFirewall = new MCPFirewall(context);
     memoryGuard = new MemoryGuard();
     protectionState = new ProtectionStateService(context, { brokerManager, workspaceGuard, sentinel });
@@ -186,6 +187,7 @@ export function activate(context: vscode.ExtensionContext): void {
         void updateStatusBar();
     };
 
+    registerAIBoundaryCommands(context);
     registerCommands(context, refreshViews);
     registerFirewallCommands(context, refreshViews);
     registerScannerCommands(context, async () => (await protectionState?.refresh())?.descriptor);

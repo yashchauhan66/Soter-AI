@@ -78,7 +78,11 @@ export function SiteFooter({ currentYear }: { currentYear: number }) {
 
         <div className="mt-12 flex flex-col gap-4 border-t border-slate-800 pt-6 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-slate-400">
-            &copy; {currentYear} SoterAI. Security intelligence for AI systems in production.
+            &copy; {currentYear} SoterAI. Founded by{" "}
+            <Link href="/about" className="font-medium text-slate-300 hover:text-cyan">
+              Yash Chauhan
+            </Link>{" "}
+            in India. Security intelligence for AI systems in production.
           </p>
 
           <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs">

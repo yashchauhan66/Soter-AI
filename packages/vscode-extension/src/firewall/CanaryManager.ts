@@ -19,7 +19,19 @@ const RAW_SECRET_ID = "soterai.canaryTokens"; // JSON {id: token} in SecretStora
 const META_STATE_ID = "soterai.canaryMeta"; // CanaryMetadata[] in globalState
 
 export class CanaryManager {
-    constructor(private readonly context: vscode.ExtensionContext) {}
+    private static readonly changes = new WeakMap<vscode.ExtensionContext, vscode.EventEmitter<void>>();
+    private readonly changed: vscode.EventEmitter<void>;
+    readonly onDidChange: vscode.Event<void>;
+
+    constructor(private readonly context: vscode.ExtensionContext) {
+        let changed = CanaryManager.changes.get(context);
+        if (!changed) {
+            changed = new vscode.EventEmitter<void>();
+            CanaryManager.changes.set(context, changed);
+        }
+        this.changed = changed;
+        this.onDidChange = changed.event;
+    }
 
     private async readRaw(): Promise<Record<string, string>> {
         const json = await this.context.secrets.get(RAW_SECRET_ID);
@@ -41,6 +53,7 @@ export class CanaryManager {
 
     private async setMeta(meta: CanaryMetadata[]): Promise<void> {
         await this.context.globalState.update(META_STATE_ID, meta);
+        this.changed.fire();
     }
 
     /** Metadata list for display (never raw tokens). */

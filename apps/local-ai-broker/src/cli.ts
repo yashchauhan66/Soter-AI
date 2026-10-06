@@ -13,6 +13,7 @@ async function main(): Promise<void> {
     const broker = new BrokerServer({
         token,
         port,
+        requireCanarySync: process.env.SOTERAI_REQUIRE_CANARY_SYNC === "1",
         openAIProviderUrl: process.env.SOTERAI_OPENAI_PROVIDER_URL,
         anthropicProviderUrl: process.env.SOTERAI_ANTHROPIC_PROVIDER_URL,
         providerApiKey: process.env.SOTERAI_PROVIDER_API_KEY,

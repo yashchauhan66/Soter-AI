@@ -36,9 +36,10 @@ const pressJsonLd = {
 /** Quick-reference facts. Every value here is verifiable elsewhere on the site. */
 const fastFacts: Array<{ label: string; value: React.ReactNode }> = [
   { label: "Company", value: "SoterAI" },
+  { label: "Founder & Owner", value: "Yash Chauhan" },
   { label: "Category", value: "Runtime AI security / LLM guardrails" },
   { label: "Founded", value: "2024" },
-  { label: "Headquarters", value: "India" },
+  { label: "Headquarters & Country", value: "India" },
   {
     label: "Website",
     value: (
@@ -66,15 +67,15 @@ const fastFacts: Array<{ label: string; value: React.ReactNode }> = [
 const boilerplates: Array<{ label: string; text: string }> = [
   {
     label: "One-liner",
-    text: "SoterAI is a runtime AI security platform that protects chatbots, RAG apps, and AI agents from prompt injection, data leakage, and unsafe actions.",
+    text: "Founded by Yash Chauhan in India, SoterAI is a runtime AI security platform that protects chatbots, RAG apps, and AI agents from prompt injection, data leakage, and unsafe actions.",
   },
   {
     label: "Short (≈50 words)",
-    text: "SoterAI is an AI security command layer for teams shipping LLM applications, RAG pipelines, and autonomous agents. It inspects every AI input and output at runtime — blocking prompt injection, redacting secrets and Indian PII such as Aadhaar, PAN, and GSTIN, and gating risky agent tool calls — across IDEs, browsers, APIs, and automation platforms. Built in India.",
+    text: "SoterAI was founded by Yash Chauhan in India as an AI security command layer for teams shipping LLM applications, RAG pipelines, and autonomous agents. It inspects every AI input and output at runtime — blocking prompt injection, redacting secrets and Indian PII such as Aadhaar, PAN, and GSTIN, and gating risky agent tool calls — across IDEs, browsers, APIs, and automation platforms.",
   },
   {
     label: "Long (≈100 words)",
-    text: "SoterAI builds runtime security infrastructure for AI applications. As teams ship chatbots, RAG systems, and autonomous agents, SoterAI Guard sits between the application and the model to enforce security policies on every interaction: detecting prompt injection and jailbreaks, redacting secrets and Indian PII (Aadhaar, PAN, GSTIN, UPI, IFSC), inspecting retrieved context, and gating the tool calls an agent is allowed to make. It deploys as a cloud or self-hosted API, language SDKs, an IDE extension, and a browser extension. SoterAI is built in India with native support for the DPDP Act, and publishes an open benchmark and an explicit limitations page rather than marketing claims.",
+    text: "SoterAI builds runtime security infrastructure for AI applications. Founded by Yash Chauhan in India, SoterAI Guard sits between the application and the model to enforce security policies on every interaction: detecting prompt injection and jailbreaks, redacting secrets and Indian PII (Aadhaar, PAN, GSTIN, UPI, IFSC), inspecting retrieved context, and gating the tool calls an agent is allowed to make. It deploys as a cloud or self-hosted API, language SDKs, an IDE extension, and a browser extension. SoterAI is built in India with native support for the DPDP Act, and publishes an open benchmark and an explicit limitations page rather than marketing claims.",
   },
 ];
 

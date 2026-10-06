@@ -123,8 +123,17 @@ export class HashCache {
     }
 }
 
+/** Exact UTF-8 identity for security decisions and approvals. No weak fallback. */
+export async function hashExactContent(text: string): Promise<string> {
+    const subtle = globalThis.crypto?.subtle;
+    if (!subtle) throw new Error("Security decisions require WebCrypto SHA-256.");
+    const digest = await subtle.digest("SHA-256", new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, "0")).join("");
+}
+
 /**
- * Compute SHA-256 hash of normalized text.
+ * Legacy normalized fingerprint for existing vault/canary metadata only.
+ * Do not use for authorization or cached decisions; use hashExactContent.
  * Uses Web Crypto API (available in Node 18+ and VS Code).
  */
 export async function hashContent(text: string): Promise<string> {
