@@ -116,9 +116,13 @@ describe("DecisionEngine never emits raw secrets", () => {
 describe("HashCache never stores raw secrets", () => {
     it("cached decision has no raw canaries", async () => {
         const engine = new DecisionEngine();
-        const decision = await engine.scan(CANARY_BLOCK, { context: "selection" });
-        const cached = engine.getCache().get(decision.inputHash);
-        assert.ok(cached, "decision should be cached");
+        await engine.scan(CANARY_BLOCK, { context: "selection" });
+        const cache = engine.getCache();
+        const get = cache.get.bind(cache);
+        let hit = false;
+        cache.get = key => { const found = get(key); hit ||= found !== null; return found; };
+        const cached = await engine.scan(CANARY_BLOCK, { context: "selection" });
+        assert.ok(hit, "the repeated scan should use the policy-bound cache entry");
         const serialized = JSON.stringify(cached);
         assertNoRawCanaries(serialized, "serialized cached decision");
     });

@@ -1,0 +1,78 @@
+{
+  "teacher": "models/ml-classifier-v17",
+  "teacher_parameters": 135364367,
+  "student_parameters": 51810575,
+  "parameter_reduction_fraction": 0.6172510081622884,
+  "student_float32_parameter_mib": 197.64165878295898,
+  "initialization": {
+    "method": "teacher_even_channel_slice",
+    "teacher_layer_indices": [
+      1,
+      3,
+      5
+    ],
+    "teacher_hidden_size": 768,
+    "student_hidden_size": 384,
+    "vocabulary_preserved": true,
+    "tensors_transferred": 68,
+    "limitation": "Heuristic initialization; attention heads are recomposed. Retraining and external evaluation required."
+  },
+  "tokenizer": {
+    "vocab_size": 119547,
+    "subword_tokens": 43606,
+    "contiguous_ids": true,
+    "specials_present": [
+      "[CLS]",
+      "[SEP]",
+      "[PAD]",
+      "[UNK]",
+      "[MASK]"
+    ]
+  },
+  "forward_shape": [
+    2,
+    14
+  ],
+  "finite_forward": true,
+  "teacher_config_provenance": "Inferred tensor dimensions and standard multilingual DistilBERT with 12 attention heads; verified against existing trained ONNX. No HF cache config present.",
+  "teacher_onnx_parity": {
+    "verified": true,
+    "tolerance": 0.001,
+    "worst_max_abs_logit_diff": 3.337860107421875e-06,
+    "cases": [
+      {
+        "case": "batch1_padded",
+        "shape": [
+          1,
+          14
+        ],
+        "seq_len": 256,
+        "max_abs_logit_diff": 2.384185791015625e-06
+      },
+      {
+        "case": "batch3_padded",
+        "shape": [
+          3,
+          14
+        ],
+        "seq_len": 256,
+        "max_abs_logit_diff": 3.337860107421875e-06
+      },
+      {
+        "case": "batch2_dynamic_len",
+        "shape": [
+          2,
+          14
+        ],
+        "seq_len": 13,
+        "max_abs_logit_diff": 2.86102294921875e-06
+      }
+    ],
+    "passed": true
+  },
+  "trained": false,
+  "optimizer_steps": 0,
+  "security_improvement_measured": false,
+  "latency_measured": false,
+  "note": "Actual local v17 checkpoint reconstructed from tensor shapes/known architecture and ONNX parity without network; student initialization and forward verified, no student weights persisted."
+}

@@ -1,0 +1,1886 @@
+{
+  "resources": [
+    {
+      "value": "guardrail",
+      "name": "Guardrail"
+    },
+    {
+      "value": "ragDocument",
+      "name": "RAG Document"
+    },
+    {
+      "value": "workflow",
+      "name": "Workflow"
+    },
+    {
+      "value": "agentPassport",
+      "name": "Agent Passport"
+    }
+  ],
+  "operations": [
+    {
+      "value": "inputGuard",
+      "name": "Guard Input",
+      "resource": "guardrail",
+      "action": "Check user input for threats",
+      "required": [
+        "inputText"
+      ],
+      "panel": [
+        {
+          "name": "inputText",
+          "displayName": "Input Text",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "onThreat",
+          "displayName": "On Threat",
+          "type": "options",
+          "where": "panel",
+          "default": "BLOCK",
+          "choices": [
+            "BLOCK",
+            "CONTINUE",
+            "REDACT",
+            "WARN"
+          ]
+        },
+        {
+          "name": "sensitivity",
+          "displayName": "Sensitivity",
+          "type": "options",
+          "where": "panel",
+          "default": "BALANCED",
+          "choices": [
+            "BALANCED",
+            "LENIENT",
+            "STRICT"
+          ]
+        },
+        {
+          "name": "userMessages",
+          "displayName": "Customer Replies",
+          "type": "collection",
+          "where": "panel",
+          "default": {},
+          "children": [
+            {
+              "name": "allowed",
+              "displayName": "Allowed Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "blocked",
+              "displayName": "Blocked Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "offTopic",
+              "displayName": "Off-Topic Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "promptInjection",
+              "displayName": "Prompt Injection Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "redacted",
+              "displayName": "Redacted Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "needsRephrase",
+              "displayName": "Rephrase Needed Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "sensitiveData",
+              "displayName": "Sensitive Data Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "name": "allowedTopics",
+          "displayName": "Allowed Semantic Topics",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "enforceOnSensitiveData",
+          "displayName": "Also Enforce On Sensitive Data",
+          "type": "boolean",
+          "where": "options>options",
+          "default": false,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "alwaysAllow",
+          "displayName": "Always Allow",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "detectionEngine",
+          "displayName": "Detection Engine",
+          "type": "options",
+          "where": "options>options",
+          "default": "AUTO",
+          "choices": [
+            "AUTO",
+            "CLOUD",
+            "LOCAL"
+          ]
+        },
+        {
+          "name": "ignoredEntities",
+          "displayName": "Ignored Identifiers",
+          "type": "multiOptions",
+          "where": "options>options",
+          "default": []
+        },
+        {
+          "name": "ignoredWords",
+          "displayName": "Ignored Words or Phrases",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "includeRawResponse",
+          "displayName": "Include Raw API Response",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "batchConcurrency",
+          "displayName": "Items in Parallel",
+          "type": "number",
+          "where": "options>options",
+          "default": 1
+        },
+        {
+          "name": "metadata",
+          "displayName": "Metadata JSON",
+          "type": "json",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "neverDowngradeToLocal",
+          "displayName": "Never Downgrade to Local",
+          "type": "boolean",
+          "where": "options>options",
+          "default": false,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "projectId",
+          "displayName": "Project ID",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "requestTimeoutMs",
+          "displayName": "Request Timeout (Ms)",
+          "type": "number",
+          "where": "options>options",
+          "default": 20000
+        },
+        {
+          "name": "reuseIdenticalItems",
+          "displayName": "Reuse Identical Items",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "sessionId",
+          "displayName": "Session ID",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "systemPromptContext",
+          "displayName": "System Prompt Context",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "topicHandling",
+          "displayName": "Topic Handling",
+          "type": "options",
+          "where": "options>options",
+          "default": "TRUST",
+          "choices": [
+            "ADVISORY",
+            "RESTRICT",
+            "TRUST",
+            "TRUST_AND_RESTRICT"
+          ]
+        }
+      ]
+    },
+    {
+      "value": "outputGuard",
+      "name": "Guard Output",
+      "resource": "guardrail",
+      "action": "Check AI output for threats",
+      "required": [
+        "outputText"
+      ],
+      "panel": [
+        {
+          "name": "outputText",
+          "displayName": "AI Output Text",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "onThreat",
+          "displayName": "On Threat",
+          "type": "options",
+          "where": "panel",
+          "default": "BLOCK",
+          "choices": [
+            "BLOCK",
+            "CONTINUE",
+            "REDACT",
+            "WARN"
+          ]
+        },
+        {
+          "name": "sensitivity",
+          "displayName": "Sensitivity",
+          "type": "options",
+          "where": "panel",
+          "default": "BALANCED",
+          "choices": [
+            "BALANCED",
+            "LENIENT",
+            "STRICT"
+          ]
+        },
+        {
+          "name": "userMessages",
+          "displayName": "Customer Replies",
+          "type": "collection",
+          "where": "panel",
+          "default": {},
+          "children": [
+            {
+              "name": "allowed",
+              "displayName": "Allowed Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "blocked",
+              "displayName": "Blocked Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "offTopic",
+              "displayName": "Off-Topic Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "promptInjection",
+              "displayName": "Prompt Injection Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "redacted",
+              "displayName": "Redacted Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "needsRephrase",
+              "displayName": "Rephrase Needed Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "sensitiveData",
+              "displayName": "Sensitive Data Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "name": "enforceOnSensitiveData",
+          "displayName": "Also Enforce On Sensitive Data",
+          "type": "boolean",
+          "where": "options>options",
+          "default": false,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "detectionEngine",
+          "displayName": "Detection Engine",
+          "type": "options",
+          "where": "options>options",
+          "default": "AUTO",
+          "choices": [
+            "AUTO",
+            "CLOUD",
+            "LOCAL"
+          ]
+        },
+        {
+          "name": "ignoredEntities",
+          "displayName": "Ignored Identifiers",
+          "type": "multiOptions",
+          "where": "options>options",
+          "default": []
+        },
+        {
+          "name": "ignoredWords",
+          "displayName": "Ignored Words or Phrases",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "includeRawResponse",
+          "displayName": "Include Raw API Response",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "batchConcurrency",
+          "displayName": "Items in Parallel",
+          "type": "number",
+          "where": "options>options",
+          "default": 1
+        },
+        {
+          "name": "metadata",
+          "displayName": "Metadata JSON",
+          "type": "json",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "neverDowngradeToLocal",
+          "displayName": "Never Downgrade to Local",
+          "type": "boolean",
+          "where": "options>options",
+          "default": false,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "projectId",
+          "displayName": "Project ID",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "requestTimeoutMs",
+          "displayName": "Request Timeout (Ms)",
+          "type": "number",
+          "where": "options>options",
+          "default": 20000
+        },
+        {
+          "name": "reuseIdenticalItems",
+          "displayName": "Reuse Identical Items",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "sessionId",
+          "displayName": "Session ID",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "value": "universalGuard",
+      "name": "Universal Firewall",
+      "resource": "guardrail",
+      "action": "Protect an AI workflow end to end",
+      "required": [
+        "inputText"
+      ],
+      "panel": [
+        {
+          "name": "inputText",
+          "displayName": "Input Text",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "universalOutputText",
+          "displayName": "AI Output Text (Optional)",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "protectionProfile",
+          "displayName": "Protection Profile",
+          "type": "options",
+          "where": "panel",
+          "default": "MAXIMUM",
+          "choices": [
+            "BALANCED",
+            "MAXIMUM",
+            "STRICT"
+          ]
+        },
+        {
+          "name": "onThreat",
+          "displayName": "On Threat",
+          "type": "options",
+          "where": "panel",
+          "default": "BLOCK",
+          "choices": [
+            "BLOCK",
+            "CONTINUE",
+            "REDACT",
+            "WARN"
+          ]
+        },
+        {
+          "name": "securityContext",
+          "displayName": "Security Context",
+          "type": "fixedCollection",
+          "where": "panel",
+          "default": {},
+          "children": [
+            {
+              "name": "rag",
+              "group": true,
+              "fields": [
+                {
+                  "name": "text",
+                  "displayName": "Retrieved Text",
+                  "type": "string",
+                  "where": "panel>securityContext>rag",
+                  "default": ""
+                },
+                {
+                  "name": "documentId",
+                  "displayName": "Document ID",
+                  "type": "string",
+                  "where": "panel>securityContext>rag",
+                  "default": ""
+                },
+                {
+                  "name": "source",
+                  "displayName": "Source",
+                  "type": "options",
+                  "where": "panel>securityContext>rag",
+                  "default": "api",
+                  "choices": [
+                    "api",
+                    "email",
+                    "upload",
+                    "unknown",
+                    "url"
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "tool",
+              "group": true,
+              "fields": [
+                {
+                  "name": "content",
+                  "displayName": "Content",
+                  "type": "string",
+                  "where": "panel>securityContext>tool",
+                  "default": ""
+                },
+                {
+                  "name": "destination",
+                  "displayName": "Destination",
+                  "type": "options",
+                  "where": "panel>securityContext>tool",
+                  "default": "external",
+                  "choices": [
+                    "external",
+                    "internal",
+                    "local",
+                    "unknown"
+                  ]
+                },
+                {
+                  "name": "riskContext",
+                  "displayName": "Risk Context (JSON)",
+                  "type": "json",
+                  "where": "panel>securityContext>tool",
+                  "default": ""
+                },
+                {
+                  "name": "target",
+                  "displayName": "Target",
+                  "type": "string",
+                  "where": "panel>securityContext>tool",
+                  "default": ""
+                },
+                {
+                  "name": "action",
+                  "displayName": "Tool Action",
+                  "type": "string",
+                  "where": "panel>securityContext>tool",
+                  "default": ""
+                },
+                {
+                  "name": "name",
+                  "displayName": "Tool Name",
+                  "type": "string",
+                  "where": "panel>securityContext>tool",
+                  "default": ""
+                }
+              ]
+            },
+            {
+              "name": "memory",
+              "group": true,
+              "fields": [
+                {
+                  "name": "action",
+                  "displayName": "Operation",
+                  "type": "options",
+                  "where": "panel>securityContext>memory",
+                  "default": "STORE",
+                  "choices": [
+                    "DELETE",
+                    "READ",
+                    "STORE",
+                    "UPDATE"
+                  ]
+                },
+                {
+                  "name": "content",
+                  "displayName": "Content",
+                  "type": "string",
+                  "where": "panel>securityContext>memory",
+                  "default": ""
+                },
+                {
+                  "name": "memoryType",
+                  "displayName": "Memory Type",
+                  "type": "string",
+                  "where": "panel>securityContext>memory",
+                  "default": ""
+                }
+              ]
+            },
+            {
+              "name": "output",
+              "group": true,
+              "fields": [
+                {
+                  "name": "destinationType",
+                  "displayName": "Destination Type",
+                  "type": "options",
+                  "where": "panel>securityContext>output",
+                  "default": "FINAL_OUTPUT",
+                  "choices": [
+                    "BROWSER_FORM",
+                    "CUSTOM",
+                    "EMAIL",
+                    "EXTERNAL_API",
+                    "FILE",
+                    "FINAL_OUTPUT",
+                    "MEMORY",
+                    "PUBLIC_OUTPUT",
+                    "TOOL",
+                    "WEBHOOK"
+                  ]
+                },
+                {
+                  "name": "destinationName",
+                  "displayName": "Destination Name",
+                  "type": "string",
+                  "where": "panel>securityContext>output",
+                  "default": ""
+                },
+                {
+                  "name": "protectedSources",
+                  "displayName": "Protected Sources (JSON)",
+                  "type": "json",
+                  "where": "panel>securityContext>output",
+                  "default": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "userMessages",
+          "displayName": "Customer Replies",
+          "type": "collection",
+          "where": "panel",
+          "default": {},
+          "children": [
+            {
+              "name": "allowed",
+              "displayName": "Allowed Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "blocked",
+              "displayName": "Blocked Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "offTopic",
+              "displayName": "Off-Topic Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "promptInjection",
+              "displayName": "Prompt Injection Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "redacted",
+              "displayName": "Redacted Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "needsRephrase",
+              "displayName": "Rephrase Needed Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "sensitiveData",
+              "displayName": "Sensitive Data Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "name": "allowedTopics",
+          "displayName": "Allowed Semantic Topics",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "enforceOnSensitiveData",
+          "displayName": "Also Enforce On Sensitive Data",
+          "type": "boolean",
+          "where": "options>options",
+          "default": false,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "alwaysAllow",
+          "displayName": "Always Allow",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "detectionEngine",
+          "displayName": "Detection Engine",
+          "type": "options",
+          "where": "options>options",
+          "default": "AUTO",
+          "choices": [
+            "AUTO",
+            "CLOUD",
+            "LOCAL"
+          ]
+        },
+        {
+          "name": "ignoredEntities",
+          "displayName": "Ignored Identifiers",
+          "type": "multiOptions",
+          "where": "options>options",
+          "default": []
+        },
+        {
+          "name": "ignoredWords",
+          "displayName": "Ignored Words or Phrases",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "includeRawResponse",
+          "displayName": "Include Raw API Response",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "batchConcurrency",
+          "displayName": "Items in Parallel",
+          "type": "number",
+          "where": "options>options",
+          "default": 1
+        },
+        {
+          "name": "parallelLayers",
+          "displayName": "Layers in Parallel",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "metadata",
+          "displayName": "Metadata JSON",
+          "type": "json",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "neverDowngradeToLocal",
+          "displayName": "Never Downgrade to Local",
+          "type": "boolean",
+          "where": "options>options",
+          "default": false,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "passportToken",
+          "displayName": "Passport Token",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "projectId",
+          "displayName": "Project ID",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "requestTimeoutMs",
+          "displayName": "Request Timeout (Ms)",
+          "type": "number",
+          "where": "options>options",
+          "default": 20000
+        },
+        {
+          "name": "reuseIdenticalItems",
+          "displayName": "Reuse Identical Items",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "sessionId",
+          "displayName": "Session ID",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "systemPromptContext",
+          "displayName": "System Prompt Context",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "topicHandling",
+          "displayName": "Topic Handling",
+          "type": "options",
+          "where": "options>options",
+          "default": "TRUST",
+          "choices": [
+            "ADVISORY",
+            "RESTRICT",
+            "TRUST",
+            "TRUST_AND_RESTRICT"
+          ]
+        }
+      ]
+    },
+    {
+      "value": "analyzeText",
+      "name": "Analyze Text",
+      "resource": "guardrail",
+      "action": "Analyze text for AI security risks",
+      "required": [
+        "inputText"
+      ],
+      "panel": [
+        {
+          "name": "inputText",
+          "displayName": "Input Text",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "userMessages",
+          "displayName": "Customer Replies",
+          "type": "collection",
+          "where": "panel",
+          "default": {},
+          "children": [
+            {
+              "name": "allowed",
+              "displayName": "Allowed Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "blocked",
+              "displayName": "Blocked Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "offTopic",
+              "displayName": "Off-Topic Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "promptInjection",
+              "displayName": "Prompt Injection Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "redacted",
+              "displayName": "Redacted Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "needsRephrase",
+              "displayName": "Rephrase Needed Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            },
+            {
+              "name": "sensitiveData",
+              "displayName": "Sensitive Data Message",
+              "type": "string",
+              "where": "panel>userMessages",
+              "default": ""
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "name": "detectionEngine",
+          "displayName": "Detection Engine",
+          "type": "options",
+          "where": "options>options",
+          "default": "AUTO",
+          "choices": [
+            "AUTO",
+            "CLOUD",
+            "LOCAL"
+          ]
+        },
+        {
+          "name": "includeRawResponse",
+          "displayName": "Include Raw API Response",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "batchConcurrency",
+          "displayName": "Items in Parallel",
+          "type": "number",
+          "where": "options>options",
+          "default": 1
+        },
+        {
+          "name": "metadata",
+          "displayName": "Metadata JSON",
+          "type": "json",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "neverDowngradeToLocal",
+          "displayName": "Never Downgrade to Local",
+          "type": "boolean",
+          "where": "options>options",
+          "default": false,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "projectId",
+          "displayName": "Project ID",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "requestTimeoutMs",
+          "displayName": "Request Timeout (Ms)",
+          "type": "number",
+          "where": "options>options",
+          "default": 20000
+        },
+        {
+          "name": "reuseIdenticalItems",
+          "displayName": "Reuse Identical Items",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "sessionId",
+          "displayName": "Session ID",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "value": "piiRedactor",
+      "name": "Redact Secrets or PII",
+      "resource": "guardrail",
+      "action": "Redact secrets and PII from text",
+      "required": [
+        "piiText"
+      ],
+      "panel": [
+        {
+          "name": "piiText",
+          "displayName": "Text",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        }
+      ],
+      "options": [
+        {
+          "name": "detectionEngine",
+          "displayName": "Detection Engine",
+          "type": "options",
+          "where": "options>options",
+          "default": "AUTO",
+          "choices": [
+            "AUTO",
+            "CLOUD",
+            "LOCAL"
+          ]
+        },
+        {
+          "name": "ignoredEntities",
+          "displayName": "Ignored Identifiers",
+          "type": "multiOptions",
+          "where": "options>options",
+          "default": []
+        },
+        {
+          "name": "ignoredWords",
+          "displayName": "Ignored Words or Phrases",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "includeRawResponse",
+          "displayName": "Include Raw API Response",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "batchConcurrency",
+          "displayName": "Items in Parallel",
+          "type": "number",
+          "where": "options>options",
+          "default": 1
+        },
+        {
+          "name": "metadata",
+          "displayName": "Metadata JSON",
+          "type": "json",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "neverDowngradeToLocal",
+          "displayName": "Never Downgrade to Local",
+          "type": "boolean",
+          "where": "options>options",
+          "default": false,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "projectId",
+          "displayName": "Project ID",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "requestTimeoutMs",
+          "displayName": "Request Timeout (Ms)",
+          "type": "number",
+          "where": "options>options",
+          "default": 20000
+        },
+        {
+          "name": "reuseIdenticalItems",
+          "displayName": "Reuse Identical Items",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "sessionId",
+          "displayName": "Session ID",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "value": "ragScanner",
+      "name": "Scan Document",
+      "resource": "ragDocument",
+      "action": "Scan a RAG document for threats",
+      "required": [
+        "ragText",
+        "documentId"
+      ],
+      "panel": [
+        {
+          "name": "ragText",
+          "displayName": "Document Text",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "documentId",
+          "displayName": "Document ID",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "documentSource",
+          "displayName": "Document Source",
+          "type": "options",
+          "where": "panel",
+          "default": "api",
+          "choices": [
+            "api",
+            "email",
+            "upload",
+            "unknown",
+            "url"
+          ]
+        }
+      ],
+      "options": [
+        {
+          "name": "detectionEngine",
+          "displayName": "Detection Engine",
+          "type": "options",
+          "where": "options>options",
+          "default": "AUTO",
+          "choices": [
+            "AUTO",
+            "CLOUD",
+            "LOCAL"
+          ]
+        },
+        {
+          "name": "includeRawResponse",
+          "displayName": "Include Raw API Response",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "batchConcurrency",
+          "displayName": "Items in Parallel",
+          "type": "number",
+          "where": "options>options",
+          "default": 1
+        },
+        {
+          "name": "metadata",
+          "displayName": "Metadata JSON",
+          "type": "json",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "neverDowngradeToLocal",
+          "displayName": "Never Downgrade to Local",
+          "type": "boolean",
+          "where": "options>options",
+          "default": false,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "projectId",
+          "displayName": "Project ID",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "requestTimeoutMs",
+          "displayName": "Request Timeout (Ms)",
+          "type": "number",
+          "where": "options>options",
+          "default": 20000
+        },
+        {
+          "name": "reuseIdenticalItems",
+          "displayName": "Reuse Identical Items",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "sessionId",
+          "displayName": "Session ID",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "value": "workflowAudit",
+      "name": "Audit Workflow",
+      "resource": "workflow",
+      "action": "Audit an n8n workflow for AI security risks",
+      "required": [
+        "workflowJson"
+      ],
+      "panel": [
+        {
+          "name": "workflowJson",
+          "displayName": "Workflow JSON",
+          "type": "json",
+          "where": "panel",
+          "default": "={{JSON.stringify($json)}}"
+        }
+      ],
+      "options": []
+    },
+    {
+      "value": "enrollIdentity",
+      "name": "Enroll Identity",
+      "resource": "agentPassport",
+      "action": "Enroll an agent identity",
+      "required": [
+        "agentName"
+      ],
+      "panel": [
+        {
+          "name": "agentName",
+          "displayName": "Agent Name",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "agentType",
+          "displayName": "Agent Type",
+          "type": "options",
+          "where": "panel",
+          "default": "CUSTOM",
+          "choices": [
+            "BROWSER_AGENT",
+            "CHATBOT",
+            "CODING_AGENT",
+            "COMPUTER_USE",
+            "CUSTOM",
+            "MCP_AGENT",
+            "RAG_AGENT"
+          ]
+        },
+        {
+          "name": "agentDescription",
+          "displayName": "Agent Description",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "passportPolicyPreset",
+          "displayName": "Policy Preset",
+          "type": "options",
+          "where": "panel",
+          "default": "READ_ONLY",
+          "choices": [
+            "READ_ONLY",
+            "SUPPORT",
+            "CODING",
+            "CUSTOM"
+          ]
+        }
+      ],
+      "options": [
+        {
+          "name": "includeRawResponse",
+          "displayName": "Include Raw API Response",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "batchConcurrency",
+          "displayName": "Items in Parallel",
+          "type": "number",
+          "where": "options>options",
+          "default": 1
+        },
+        {
+          "name": "metadata",
+          "displayName": "Metadata JSON",
+          "type": "json",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "passportPolicy",
+          "displayName": "Policy Overrides (JSON)",
+          "type": "json",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "projectId",
+          "displayName": "Project ID",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "requestTimeoutMs",
+          "displayName": "Request Timeout (Ms)",
+          "type": "number",
+          "where": "options>options",
+          "default": 20000
+        },
+        {
+          "name": "reuseIdenticalItems",
+          "displayName": "Reuse Identical Items",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "value": "issuePassport",
+      "name": "Issue Passport",
+      "resource": "agentPassport",
+      "action": "Issue an agent passport",
+      "required": [
+        "agentIdentityId"
+      ],
+      "panel": [
+        {
+          "name": "agentIdentityId",
+          "displayName": "Agent Identity ID",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "sessionId",
+          "displayName": "Session ID",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "passportTtlSeconds",
+          "displayName": "Passport Lifetime (Seconds)",
+          "type": "number",
+          "where": "panel",
+          "default": 3600
+        },
+        {
+          "name": "passportPolicyPreset",
+          "displayName": "Policy Preset",
+          "type": "options",
+          "where": "panel",
+          "default": "READ_ONLY",
+          "choices": [
+            "READ_ONLY",
+            "SUPPORT",
+            "CODING",
+            "CUSTOM"
+          ]
+        }
+      ],
+      "options": [
+        {
+          "name": "includeRawResponse",
+          "displayName": "Include Raw API Response",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "batchConcurrency",
+          "displayName": "Items in Parallel",
+          "type": "number",
+          "where": "options>options",
+          "default": 1
+        },
+        {
+          "name": "metadata",
+          "displayName": "Metadata JSON",
+          "type": "json",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "passportPolicy",
+          "displayName": "Policy Overrides (JSON)",
+          "type": "json",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "projectId",
+          "displayName": "Project ID",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "requestTimeoutMs",
+          "displayName": "Request Timeout (Ms)",
+          "type": "number",
+          "where": "options>options",
+          "default": 20000
+        },
+        {
+          "name": "reuseIdenticalItems",
+          "displayName": "Reuse Identical Items",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        }
+      ]
+    },
+    {
+      "value": "validatePassport",
+      "name": "Validate Passport",
+      "resource": "agentPassport",
+      "action": "Validate an agent passport",
+      "required": [
+        "sessionId"
+      ],
+      "panel": [
+        {
+          "name": "passportToken",
+          "displayName": "Passport Token",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "sessionId",
+          "displayName": "Session ID",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "toolName",
+          "displayName": "Tool Name",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "toolAction",
+          "displayName": "Tool Action",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        }
+      ],
+      "options": [
+        {
+          "name": "includeRawResponse",
+          "displayName": "Include Raw API Response",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "batchConcurrency",
+          "displayName": "Items in Parallel",
+          "type": "number",
+          "where": "options>options",
+          "default": 1
+        },
+        {
+          "name": "metadata",
+          "displayName": "Metadata JSON",
+          "type": "json",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "projectId",
+          "displayName": "Project ID",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "requestTimeoutMs",
+          "displayName": "Request Timeout (Ms)",
+          "type": "number",
+          "where": "options>options",
+          "default": 20000
+        },
+        {
+          "name": "reuseIdenticalItems",
+          "displayName": "Reuse Identical Items",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "toolContent",
+          "displayName": "Tool Content",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "toolDestination",
+          "displayName": "Tool Destination",
+          "type": "options",
+          "where": "options>options",
+          "default": "unknown",
+          "choices": [
+            "external",
+            "internal",
+            "local",
+            "unknown"
+          ]
+        },
+        {
+          "name": "toolTarget",
+          "displayName": "Tool Target",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "value": "toolCall",
+      "name": "Check Tool Call",
+      "resource": "agentPassport",
+      "action": "Check an agent tool call",
+      "required": [
+        "toolName",
+        "toolAction"
+      ],
+      "panel": [
+        {
+          "name": "passportToken",
+          "displayName": "Passport Token",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "sessionId",
+          "displayName": "Session ID",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "toolName",
+          "displayName": "Tool Name",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "toolAction",
+          "displayName": "Tool Action",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        }
+      ],
+      "options": [
+        {
+          "name": "detectionEngine",
+          "displayName": "Detection Engine",
+          "type": "options",
+          "where": "options>options",
+          "default": "AUTO",
+          "choices": [
+            "AUTO",
+            "CLOUD",
+            "LOCAL"
+          ]
+        },
+        {
+          "name": "includeRawResponse",
+          "displayName": "Include Raw API Response",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "batchConcurrency",
+          "displayName": "Items in Parallel",
+          "type": "number",
+          "where": "options>options",
+          "default": 1
+        },
+        {
+          "name": "metadata",
+          "displayName": "Metadata JSON",
+          "type": "json",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "neverDowngradeToLocal",
+          "displayName": "Never Downgrade to Local",
+          "type": "boolean",
+          "where": "options>options",
+          "default": false,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "projectId",
+          "displayName": "Project ID",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "requestTimeoutMs",
+          "displayName": "Request Timeout (Ms)",
+          "type": "number",
+          "where": "options>options",
+          "default": 20000
+        },
+        {
+          "name": "reuseIdenticalItems",
+          "displayName": "Reuse Identical Items",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "toolContent",
+          "displayName": "Tool Content",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "toolDestination",
+          "displayName": "Tool Destination",
+          "type": "options",
+          "where": "options>options",
+          "default": "unknown",
+          "choices": [
+            "external",
+            "internal",
+            "local",
+            "unknown"
+          ]
+        },
+        {
+          "name": "toolTarget",
+          "displayName": "Tool Target",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "value": "revokePassport",
+      "name": "Revoke Passport",
+      "resource": "agentPassport",
+      "action": "Revoke an agent passport",
+      "required": [],
+      "panel": [
+        {
+          "name": "sessionId",
+          "displayName": "Session ID",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "passportId",
+          "displayName": "Passport ID",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        },
+        {
+          "name": "revokeReason",
+          "displayName": "Revocation Reason",
+          "type": "string",
+          "where": "panel",
+          "default": ""
+        }
+      ],
+      "options": [
+        {
+          "name": "includeRawResponse",
+          "displayName": "Include Raw API Response",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        },
+        {
+          "name": "batchConcurrency",
+          "displayName": "Items in Parallel",
+          "type": "number",
+          "where": "options>options",
+          "default": 1
+        },
+        {
+          "name": "metadata",
+          "displayName": "Metadata JSON",
+          "type": "json",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "projectId",
+          "displayName": "Project ID",
+          "type": "string",
+          "where": "options>options",
+          "default": ""
+        },
+        {
+          "name": "requestTimeoutMs",
+          "displayName": "Request Timeout (Ms)",
+          "type": "number",
+          "where": "options>options",
+          "default": 20000
+        },
+        {
+          "name": "reuseIdenticalItems",
+          "displayName": "Reuse Identical Items",
+          "type": "boolean",
+          "where": "options>options",
+          "default": true,
+          "choices": [
+            true,
+            false
+          ]
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "resources": 4,
+    "operations": 12,
+    "settableFields": 198,
+    "discreteChoices": 167
+  }
+}

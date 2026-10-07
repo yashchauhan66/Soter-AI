@@ -1,0 +1,599 @@
+[
+  {
+    "path": "resource",
+    "display": "Resource",
+    "type": "options",
+    "values": [
+      "guardrail",
+      "ragDocument",
+      "workflow",
+      "agentPassport"
+    ]
+  },
+  {
+    "path": "operation",
+    "display": "Operation",
+    "type": "options",
+    "values": [
+      "inputGuard",
+      "outputGuard",
+      "universalGuard",
+      "analyzeText",
+      "piiRedactor"
+    ]
+  },
+  {
+    "path": "enforcingNotice",
+    "display": "This operation enforces. <b>On Threat</b> decides what happens to anything flagged, and flagged items leave through the <b>Flagged</b> output instead of the main path.",
+    "type": "notice",
+    "values": []
+  },
+  {
+    "path": "reportOnlyNotice",
+    "display": "Reports risk without blocking, but it still routes: anything it flags leaves through <b>Flagged</b>. Connect that output to stop the item, or leave it unconnected to drop it.",
+    "type": "notice",
+    "values": []
+  },
+  {
+    "path": "redactNotice",
+    "display": "Never blocks and never stops an item. The cleaned copy arrives as <code>{{ $json.outputText }}</code> on the single output; the text you pass in is not modified in place.",
+    "type": "notice",
+    "values": []
+  },
+  {
+    "path": "auditNotice",
+    "display": "The workflow JSON is analysed in-process and never sent to SoterAI. Static review only — it never executes the workflow or resolves a credential.",
+    "type": "notice",
+    "values": []
+  },
+  {
+    "path": "enrollIdentityNotice",
+    "display": "<b>Step 1 of 5:</b> Register the agent once, then pass <code>{{ $json.agentIdentityId }}</code> to <b>Issue Access Pass</b>.",
+    "type": "notice",
+    "values": []
+  },
+  {
+    "path": "issuePassportNotice",
+    "display": "<b>Step 2 of 5:</b> Issue a short-lived access pass for one session. Pass <code>sessionId</code> and <code>passportToken</code> by expression; never paste the token into workflow JSON.",
+    "type": "notice",
+    "values": []
+  },
+  {
+    "path": "validatePassportNotice",
+    "display": "<b>Step 3 of 5:</b> Validate the session and token. Session ID and Passport Token auto-pick from incoming item if left empty. Tool Name and Tool Action test authorization for a specific call.",
+    "type": "notice",
+    "values": []
+  },
+  {
+    "path": "toolCallNotice",
+    "display": "<b>Step 4 of 5:</b> Put this immediately before the real tool. ALLOW leaves through <b>Safe</b>; blocked, invalid, or approval-required calls leave through <b>Flagged</b>.",
+    "type": "notice",
+    "values": []
+  },
+  {
+    "path": "revokePassportNotice",
+    "display": "<b>Step 5 of 5:</b> Revoke by Session ID or Access Pass ID when the task ends. Successful revocation returns <code>PASSPORT_REVOKED</code> on <b>Safe</b>.",
+    "type": "notice",
+    "values": []
+  },
+  {
+    "path": "agentName",
+    "display": "Agent Name",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "agentType",
+    "display": "Agent Type",
+    "type": "options",
+    "values": [
+      "BROWSER_AGENT",
+      "CHATBOT",
+      "CODING_AGENT",
+      "COMPUTER_USE",
+      "CUSTOM",
+      "MCP_AGENT",
+      "RAG_AGENT"
+    ]
+  },
+  {
+    "path": "agentDescription",
+    "display": "Agent Description",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "agentIdentityId",
+    "display": "Agent Identity ID",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "passportToken",
+    "display": "Passport Token",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "sessionId",
+    "display": "Session ID",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "passportId",
+    "display": "Passport ID",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "revokeReason",
+    "display": "Revocation Reason",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "toolName",
+    "display": "Tool Name",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "toolAction",
+    "display": "Tool Action",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "passportTtlSeconds",
+    "display": "Passport Lifetime (Seconds)",
+    "type": "number",
+    "values": []
+  },
+  {
+    "path": "passportPolicyPreset",
+    "display": "Policy Preset",
+    "type": "options",
+    "values": [
+      "READ_ONLY",
+      "SUPPORT",
+      "CODING",
+      "CUSTOM"
+    ]
+  },
+  {
+    "path": "inputText",
+    "display": "Input Text",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "outputText",
+    "display": "AI Output Text",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "universalOutputText",
+    "display": "AI Output Text (Optional)",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "piiText",
+    "display": "Text",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "ragText",
+    "display": "Document Text",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "documentId",
+    "display": "Document ID",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "documentSource",
+    "display": "Document Source",
+    "type": "options",
+    "values": [
+      "api",
+      "email",
+      "upload",
+      "unknown",
+      "url"
+    ]
+  },
+  {
+    "path": "workflowJson",
+    "display": "Workflow JSON",
+    "type": "json",
+    "values": []
+  },
+  {
+    "path": "protectionProfile",
+    "display": "Protection Profile",
+    "type": "options",
+    "values": [
+      "BALANCED",
+      "MAXIMUM",
+      "STRICT"
+    ]
+  },
+  {
+    "path": "onThreat",
+    "display": "On Threat",
+    "type": "options",
+    "values": [
+      "BLOCK",
+      "CONTINUE",
+      "REDACT",
+      "WARN"
+    ]
+  },
+  {
+    "path": "sensitivity",
+    "display": "Sensitivity",
+    "type": "options",
+    "values": [
+      "BALANCED",
+      "LENIENT",
+      "STRICT"
+    ]
+  },
+  {
+    "path": "securityContext",
+    "display": "Security Context",
+    "type": "fixedCollection",
+    "values": []
+  },
+  {
+    "path": "securityContext.rag.text",
+    "display": "Retrieved Text",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "securityContext.rag.documentId",
+    "display": "Document ID",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "securityContext.rag.source",
+    "display": "Source",
+    "type": "options",
+    "values": [
+      "api",
+      "email",
+      "upload",
+      "unknown",
+      "url"
+    ]
+  },
+  {
+    "path": "securityContext.tool.content",
+    "display": "Content",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "securityContext.tool.destination",
+    "display": "Destination",
+    "type": "options",
+    "values": [
+      "external",
+      "internal",
+      "local",
+      "unknown"
+    ]
+  },
+  {
+    "path": "securityContext.tool.riskContext",
+    "display": "Risk Context (JSON)",
+    "type": "json",
+    "values": []
+  },
+  {
+    "path": "securityContext.tool.target",
+    "display": "Target",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "securityContext.tool.action",
+    "display": "Tool Action",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "securityContext.tool.name",
+    "display": "Tool Name",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "securityContext.memory.action",
+    "display": "Operation",
+    "type": "options",
+    "values": [
+      "DELETE",
+      "READ",
+      "STORE",
+      "UPDATE"
+    ]
+  },
+  {
+    "path": "securityContext.memory.content",
+    "display": "Content",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "securityContext.memory.memoryType",
+    "display": "Memory Type",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "securityContext.output.destinationType",
+    "display": "Destination Type",
+    "type": "options",
+    "values": [
+      "BROWSER_FORM",
+      "CUSTOM",
+      "EMAIL",
+      "EXTERNAL_API",
+      "FILE",
+      "FINAL_OUTPUT",
+      "MEMORY",
+      "PUBLIC_OUTPUT",
+      "TOOL",
+      "WEBHOOK"
+    ]
+  },
+  {
+    "path": "securityContext.output.destinationName",
+    "display": "Destination Name",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "securityContext.output.protectedSources",
+    "display": "Protected Sources (JSON)",
+    "type": "json",
+    "values": []
+  },
+  {
+    "path": "userMessages",
+    "display": "Customer Replies",
+    "type": "collection",
+    "values": []
+  },
+  {
+    "path": "userMessages.allowed",
+    "display": "Allowed Message",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "userMessages.blocked",
+    "display": "Blocked Message",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "userMessages.offTopic",
+    "display": "Off-Topic Message",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "userMessages.promptInjection",
+    "display": "Prompt Injection Message",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "userMessages.redacted",
+    "display": "Redacted Message",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "userMessages.needsRephrase",
+    "display": "Rephrase Needed Message",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "userMessages.sensitiveData",
+    "display": "Sensitive Data Message",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "options",
+    "display": "Options",
+    "type": "collection",
+    "values": []
+  },
+  {
+    "path": "options.allowedTopics",
+    "display": "Allowed Semantic Topics",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "options.enforceOnSensitiveData",
+    "display": "Also Enforce On Sensitive Data",
+    "type": "boolean",
+    "values": []
+  },
+  {
+    "path": "options.alwaysAllow",
+    "display": "Always Allow",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "options.detectionEngine",
+    "display": "Detection Engine",
+    "type": "options",
+    "values": [
+      "AUTO",
+      "CLOUD",
+      "LOCAL"
+    ]
+  },
+  {
+    "path": "options.ignoredEntities",
+    "display": "Ignored Identifiers",
+    "type": "multiOptions",
+    "values": [
+      "AADHAAR",
+      "ADDRESS",
+      "BANK_ACCOUNT",
+      "CARD",
+      "DOB",
+      "DRIVING_LICENCE",
+      "EMAIL",
+      "GSTIN",
+      "IBAN",
+      "IFSC",
+      "IP",
+      "EU_NATIONAL_ID",
+      "PAN",
+      "PATIENT_ID",
+      "PHONE",
+      "STUDENT_ID",
+      "BR_CPF",
+      "UPI",
+      "US_SSN",
+      "VOTER_ID"
+    ]
+  },
+  {
+    "path": "options.ignoredWords",
+    "display": "Ignored Words or Phrases",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "options.includeRawResponse",
+    "display": "Include Raw API Response",
+    "type": "boolean",
+    "values": []
+  },
+  {
+    "path": "options.batchConcurrency",
+    "display": "Items in Parallel",
+    "type": "number",
+    "values": []
+  },
+  {
+    "path": "options.metadata",
+    "display": "Metadata JSON",
+    "type": "json",
+    "values": []
+  },
+  {
+    "path": "options.neverDowngradeToLocal",
+    "display": "Never Downgrade to Local",
+    "type": "boolean",
+    "values": []
+  },
+  {
+    "path": "options.projectId",
+    "display": "Project ID",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "options.requestTimeoutMs",
+    "display": "Request Timeout (Ms)",
+    "type": "number",
+    "values": []
+  },
+  {
+    "path": "options.reuseIdenticalItems",
+    "display": "Reuse Identical Items",
+    "type": "boolean",
+    "values": []
+  },
+  {
+    "path": "options.sessionId",
+    "display": "Session ID",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "options.systemPromptContext",
+    "display": "System Prompt Context",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "options.topicHandling",
+    "display": "Topic Handling",
+    "type": "options",
+    "values": [
+      "ADVISORY",
+      "RESTRICT",
+      "TRUST",
+      "TRUST_AND_RESTRICT"
+    ]
+  },
+  {
+    "path": "options.parallelLayers",
+    "display": "Layers in Parallel",
+    "type": "boolean",
+    "values": []
+  },
+  {
+    "path": "options.passportToken",
+    "display": "Passport Token",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "options.branchOnRedaction",
+    "display": "Split Outputs on Redaction",
+    "type": "boolean",
+    "values": []
+  },
+  {
+    "path": "options.passportPolicy",
+    "display": "Policy Overrides (JSON)",
+    "type": "json",
+    "values": []
+  },
+  {
+    "path": "options.toolContent",
+    "display": "Tool Content",
+    "type": "string",
+    "values": []
+  },
+  {
+    "path": "options.toolDestination",
+    "display": "Tool Destination",
+    "type": "options",
+    "values": [
+      "external",
+      "internal",
+      "local",
+      "unknown"
+    ]
+  },
+  {
+    "path": "options.toolTarget",
+    "display": "Tool Target",
+    "type": "string",
+    "values": []
+  }
+]

@@ -1,0 +1,1554 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-20T02:58:53.597275+00:00",
+  "purpose": "Audit historical teacher overlap and cached student diagnostic weaknesses; no model inference or deployment changes.",
+  "method": {
+    "teacher_rows": "Strict nonblank JSONL file-order text.strip(), using datasets ordered by teacher dataset_manifest.json; persisted teacher split_indices.json maps row indices to train/calibration/validation.",
+    "exact_match": "SHA-256 of UTF-8 text.strip(), regardless of label; no raw text stored.",
+    "normalized_match": "group_key_for(text.strip()) from scripts/ml/soter_augment.py.",
+    "teacher_split_reproduction": "Sorted unique normalized groups; numpy RandomState(seed=42) shuffle; first floor(12% groups) validation, next floor(8%) calibration, remainder train; exact persisted indices and split digest reproduced.",
+    "student_partitions": "Prepared four-way split bound to clean-corpus file SHA-256, all 110516 original rows addressed; augmented train rows excluded.",
+    "weakness_metrics": "Counts copied from four-arm report shared_input_gate slices: fixed binary entropy<=0.4, confidence>=0.5 OR attack probability>=0.85, reliable-label allowlist. These are ML-only binary attack-detection counts, not exact-label accuracy or product guard outcomes."
+  },
+  "provenance": {
+    "files": {
+      "models/ml-classifier-v17/dataset_manifest.json": "10a584a282daeb5b55056116ef30905d44dc57e1521d6d50a8c32fff6044508f",
+      "models/ml-classifier-v17/split_indices.json": "1334a0670bb134d615b51b7c2e47db3989fac839623d783ddd9da6e919428233",
+      "artifacts/ml/v18-split-indices.json": "a0fd8351a9f5ac7322b3a130ca0a3a93d381ea6349e041f39f2ea4f10d3d1ba8",
+      "datasets/ml-v18-clean-corpus.jsonl": "4e530142fffd3d0edf5d00d50a85b82ff358826335db53ab0ea769660a6a002d",
+      "artifacts/ml/v18-candidate-comparison/report.json": "7ce884db78aa6df3382994295443b9174782fbf0fa57c5e586e58a6916eb62a8",
+      "artifacts/ml/v18-data-report.json": "fe0f63c8bb1ab00253a419c811492e71a6620a4eedeb755dc369ae2cd4af1f40",
+      "artifacts/ml/v18-balanced-comparison-rows.jsonl": "a30603c4189dbb9c46ca1853c5179e98283ed6904b7696c2e822fa4c6fc3feb2",
+      "scripts/ml/soter_augment.py": "c17891afa0ac80f0be9683e4078537834451b9cd9480f43c8db650c632b8feae",
+      "scripts/ml/train-soterllm-v14-fullft.py": "279bffa4e2b2990c535387d819ef1da533e7b2eb9c5779a7a8086727f81918da",
+      "models/ml-classifier-v18-student/training_stats.json": "c6c4cdae5bf77608fe57c5c267b2d355aed51bd374adfa8ff2829d75828d522b",
+      "models/ml-classifier-v18-student/test_results.json": "0b37e815a27a904e532a1ffa8ae2b8861c1c1d582c9e2fb908543b10f794074d"
+    },
+    "teacher_training_inputs": {
+      "datasets/ml-augmented-v8-final.jsonl": {
+        "sha256": "b2da6cb232b26d97515820d128d8dfcb17cecacb00fc3cdccbc601c33bf27a0f",
+        "rows": 120620,
+        "matches_preparation_input_manifest": true
+      },
+      "datasets/ml-v8-targeted-fix.jsonl": {
+        "sha256": "ce95030cc30e72e3112c50cd3e4ca9d1738e2802d891ba8d1de8d3eac7a2d45e",
+        "rows": 8500,
+        "matches_preparation_input_manifest": true
+      },
+      "datasets/ml-v10-advanced-attacks.jsonl": {
+        "sha256": "dceea75884a7714a1c15fc4f1979b8732a24edfd2e1d9af26fa30913efa5fc64",
+        "rows": 8000,
+        "matches_preparation_input_manifest": true
+      },
+      "datasets/ml-v10-targeted-fix.jsonl": {
+        "sha256": "dfb29c541743904bb3213718270aced277327906719599fc2c3f50f177df6c9e",
+        "rows": 5000,
+        "matches_preparation_input_manifest": true
+      },
+      "datasets/ml-v11-weak-fix.jsonl": {
+        "sha256": "4d5d68701b86894ceb2637ba6b3e5efa72e0cff0ff9c5c237d7714421a5cd943",
+        "rows": 1212,
+        "matches_preparation_input_manifest": true
+      },
+      "artifacts/ml-v2/v12-toxicity-fix.jsonl": {
+        "sha256": "0b976086ccaaa34aa908a3b90522b2b110d693a36c7df1fa0e138d8ba32b8fd3",
+        "rows": 1000,
+        "matches_preparation_input_manifest": true
+      },
+      "datasets/ml-v13-meta-instructional.jsonl": {
+        "sha256": "c5bf26b53007ff39e2a1d4dad517f890ad9339e462f7404905ec6d8a25f8e9fe",
+        "rows": 2019,
+        "matches_preparation_input_manifest": true
+      },
+      "datasets/ml-v13-attack-gaps.jsonl": {
+        "sha256": "725e21640a5d42f678c49db9ac70b7e931e42a119c3dca43356a2d13bbbe9235",
+        "rows": 406,
+        "matches_preparation_input_manifest": true
+      },
+      "datasets/ml-v15-threat-corpus.jsonl": {
+        "sha256": "2bddfc2799e7fc0948a11e2fb0e57323fabfd18602bfad65859dfc2ae927d2e0",
+        "rows": 1155,
+        "matches_preparation_input_manifest": true
+      },
+      "datasets/ml-v16-threat-corpus.jsonl": {
+        "sha256": "d143eecb437cc96f84bfccc04911fa79287f3b75de0b70f4853f3402ef718049",
+        "rows": 4100,
+        "matches_preparation_input_manifest": true
+      },
+      "datasets/ml-v17-threat-corpus.jsonl": {
+        "sha256": "fa5f7febe7c8e194ead39bc5419a037083af60ddfa53a6ca9e1c7e95c0bc1b11",
+        "rows": 3871,
+        "matches_preparation_input_manifest": true
+      }
+    },
+    "teacher_weights_sha256": "e1962eca94964b0522fdcdae7fb7a7dde286d40f423fcf5104874cd3203a5091",
+    "teacher_weights_match_student_record": true,
+    "teacher_split_indices_reproduced": true,
+    "teacher_split_digest_reproduced": "6837b545207b90b0f9d30077a05f3c7012f5d94ca157152b2098e23eaefc0a0f",
+    "model_report_identity": {
+      "v17-multilingual": {
+        "model_sha256": "23a7e652794579862b30cf487dcca083288e3c90a46cf7f7876c595ce130cdfb",
+        "tokenizer_sha256": "c2c0e4d392f08c2c2eb950156eb26e4e5ddd15b557faa45ed6a0decaf45b5f98",
+        "calibration_sha256": "46de51eee40912afb77a787dd5b5c48b4139239768b0d2a24e3a1844462df917",
+        "rows_sha256": "3dd106a447f3a8f7a47e4e6f71b0acc35dd1caaa5e3d25b67f76f61361933a02",
+        "labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ],
+        "max_length": 256,
+        "format_version": 2,
+        "runtime": {
+          "platform": "Windows-11-10.0.26300-SP0",
+          "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
+          "machine": "AMD64",
+          "logical_cpus": 8,
+          "python": "3.12.10",
+          "onnxruntime": "1.27.0",
+          "numpy": "2.4.6",
+          "provider": "CPUExecutionProvider"
+        },
+        "batch_size": 16,
+        "threads": 2,
+        "latency_samples": 40
+      },
+      "v18-candidate": {
+        "model_sha256": "ecf9e1d2e957da6ba72b714a0fc0c8f8d566b48588c0257dfd8a309e4020fba5",
+        "tokenizer_sha256": "c2c0e4d392f08c2c2eb950156eb26e4e5ddd15b557faa45ed6a0decaf45b5f98",
+        "calibration_sha256": "7cdd06f36737d397d21a3b65dc7fca5761e0ffff52d466abd3fc4070706bf4fa",
+        "rows_sha256": "3dd106a447f3a8f7a47e4e6f71b0acc35dd1caaa5e3d25b67f76f61361933a02",
+        "labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ],
+        "max_length": 256,
+        "format_version": 2,
+        "runtime": {
+          "platform": "Windows-11-10.0.26300-SP0",
+          "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
+          "machine": "AMD64",
+          "logical_cpus": 8,
+          "python": "3.12.10",
+          "onnxruntime": "1.27.0",
+          "numpy": "2.4.6",
+          "provider": "CPUExecutionProvider"
+        },
+        "batch_size": 16,
+        "threads": 2,
+        "latency_samples": 40
+      }
+    }
+  },
+  "row_counts": {
+    "teacher_corpus": 155883,
+    "student_corpus": 110516
+  },
+  "student_partition_historical_teacher_overlap": {
+    "train": {
+      "student_rows": 77823,
+      "exact_teacher_validation": 9366,
+      "normalized_teacher_validation": 9366,
+      "exact_teacher_train": 62288,
+      "normalized_teacher_train": 62288,
+      "exact_teacher_calibration": 6169,
+      "normalized_teacher_calibration": 6169
+    },
+    "calibration": {
+      "student_rows": 8316,
+      "exact_teacher_train": 6694,
+      "normalized_teacher_train": 6694,
+      "exact_teacher_validation": 964,
+      "normalized_teacher_validation": 964,
+      "exact_teacher_calibration": 658,
+      "normalized_teacher_calibration": 658
+    },
+    "validation": {
+      "student_rows": 14139,
+      "exact_teacher_train": 11258,
+      "normalized_teacher_train": 11258,
+      "exact_teacher_calibration": 1141,
+      "normalized_teacher_calibration": 1141,
+      "exact_teacher_validation": 1740,
+      "normalized_teacher_validation": 1740
+    },
+    "test": {
+      "student_rows": 10238,
+      "exact_teacher_train": 8152,
+      "normalized_teacher_train": 8152,
+      "exact_teacher_validation": 1231,
+      "normalized_teacher_validation": 1231,
+      "exact_teacher_calibration": 855,
+      "normalized_teacher_calibration": 855
+    }
+  },
+  "internal_student_test": {
+    "rows": 10238,
+    "attacks": 7242,
+    "benign": 2996,
+    "tp": 7203,
+    "fp": 31,
+    "attack_recall": 0.9946147473073736,
+    "benign_fpr": 0.01034712950600801,
+    "independent_of_teacher_training": false
+  },
+  "cached_common_gate_slices": {
+    "language": {
+      "ar": {
+        "v18": {
+          "attacks": 18,
+          "benign": 5,
+          "tp": 8,
+          "fn": 10,
+          "fp": 1,
+          "tn": 4,
+          "recall": 0.4444444444444444,
+          "fpr": 0.2
+        },
+        "teacher": {
+          "attacks": 18,
+          "benign": 5,
+          "tp": 12,
+          "fn": 6,
+          "fp": 1,
+          "tn": 4,
+          "recall": 0.6666666666666666,
+          "fpr": 0.2
+        }
+      },
+      "bn": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 1,
+          "fn": 3,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.25,
+          "fpr": 0.25
+        }
+      },
+      "cs": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.0,
+          "fpr": 0.25
+        }
+      },
+      "de": {
+        "v18": {
+          "attacks": 101,
+          "benign": 5,
+          "tp": 90,
+          "fn": 11,
+          "fp": 2,
+          "tn": 3,
+          "recall": 0.8910891089108911,
+          "fpr": 0.4
+        },
+        "teacher": {
+          "attacks": 101,
+          "benign": 5,
+          "tp": 91,
+          "fn": 10,
+          "fp": 2,
+          "tn": 3,
+          "recall": 0.900990099009901,
+          "fpr": 0.4
+        }
+      },
+      "el": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 1,
+          "fn": 3,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.25,
+          "fpr": 0.25
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 1,
+          "fn": 3,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.25,
+          "fpr": 0.25
+        }
+      },
+      "en": {
+        "v18": {
+          "attacks": 1000,
+          "benign": 1762,
+          "tp": 830,
+          "fn": 170,
+          "fp": 341,
+          "tn": 1421,
+          "recall": 0.83,
+          "fpr": 0.1935300794551646
+        },
+        "teacher": {
+          "attacks": 1000,
+          "benign": 1762,
+          "tp": 939,
+          "fn": 61,
+          "fp": 243,
+          "tn": 1519,
+          "recall": 0.939,
+          "fpr": 0.13791146424517595
+        }
+      },
+      "es": {
+        "v18": {
+          "attacks": 99,
+          "benign": 6,
+          "tp": 90,
+          "fn": 9,
+          "fp": 0,
+          "tn": 6,
+          "recall": 0.9090909090909091,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 99,
+          "benign": 6,
+          "tp": 91,
+          "fn": 8,
+          "fp": 1,
+          "tn": 5,
+          "recall": 0.9191919191919192,
+          "fpr": 0.16666666666666666
+        }
+      },
+      "fa": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 1,
+          "fn": 3,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.25,
+          "fpr": 0.0
+        }
+      },
+      "fr": {
+        "v18": {
+          "attacks": 94,
+          "benign": 6,
+          "tp": 87,
+          "fn": 7,
+          "fp": 2,
+          "tn": 4,
+          "recall": 0.925531914893617,
+          "fpr": 0.3333333333333333
+        },
+        "teacher": {
+          "attacks": 94,
+          "benign": 6,
+          "tp": 87,
+          "fn": 7,
+          "fp": 1,
+          "tn": 5,
+          "recall": 0.925531914893617,
+          "fpr": 0.16666666666666666
+        }
+      },
+      "gu": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        }
+      },
+      "he": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 1,
+          "fn": 3,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.25,
+          "fpr": 0.25
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        }
+      },
+      "hi": {
+        "v18": {
+          "attacks": 16,
+          "benign": 5,
+          "tp": 11,
+          "fn": 5,
+          "fp": 0,
+          "tn": 5,
+          "recall": 0.6875,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 16,
+          "benign": 5,
+          "tp": 11,
+          "fn": 5,
+          "fp": 0,
+          "tn": 5,
+          "recall": 0.6875,
+          "fpr": 0.0
+        }
+      },
+      "hinglish": {
+        "v18": {
+          "attacks": 24,
+          "benign": 10,
+          "tp": 15,
+          "fn": 9,
+          "fp": 2,
+          "tn": 8,
+          "recall": 0.625,
+          "fpr": 0.2
+        },
+        "teacher": {
+          "attacks": 24,
+          "benign": 10,
+          "tp": 17,
+          "fn": 7,
+          "fp": 3,
+          "tn": 7,
+          "recall": 0.7083333333333334,
+          "fpr": 0.3
+        }
+      },
+      "id": {
+        "v18": {
+          "attacks": 5,
+          "benign": 4,
+          "tp": 2,
+          "fn": 3,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.4,
+          "fpr": 0.25
+        },
+        "teacher": {
+          "attacks": 5,
+          "benign": 4,
+          "tp": 3,
+          "fn": 2,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.6,
+          "fpr": 0.0
+        }
+      },
+      "it": {
+        "v18": {
+          "attacks": 79,
+          "benign": 4,
+          "tp": 77,
+          "fn": 2,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.9746835443037974,
+          "fpr": 0.25
+        },
+        "teacher": {
+          "attacks": 79,
+          "benign": 4,
+          "tp": 76,
+          "fn": 3,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.9620253164556962,
+          "fpr": 0.25
+        }
+      },
+      "ja": {
+        "v18": {
+          "attacks": 21,
+          "benign": 4,
+          "tp": 16,
+          "fn": 5,
+          "fp": 2,
+          "tn": 2,
+          "recall": 0.7619047619047619,
+          "fpr": 0.5
+        },
+        "teacher": {
+          "attacks": 21,
+          "benign": 4,
+          "tp": 16,
+          "fn": 5,
+          "fp": 2,
+          "tn": 2,
+          "recall": 0.7619047619047619,
+          "fpr": 0.5
+        }
+      },
+      "kn": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.0,
+          "fpr": 0.25
+        }
+      },
+      "ko": {
+        "v18": {
+          "attacks": 7,
+          "benign": 4,
+          "tp": 3,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.42857142857142855,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 7,
+          "benign": 4,
+          "tp": 4,
+          "fn": 3,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.5714285714285714,
+          "fpr": 0.0
+        }
+      },
+      "mixed": {
+        "v18": {
+          "attacks": 219,
+          "benign": 69,
+          "tp": 126,
+          "fn": 93,
+          "fp": 3,
+          "tn": 66,
+          "recall": 0.5753424657534246,
+          "fpr": 0.043478260869565216
+        },
+        "teacher": {
+          "attacks": 219,
+          "benign": 69,
+          "tp": 198,
+          "fn": 21,
+          "fp": 2,
+          "tn": 67,
+          "recall": 0.9041095890410958,
+          "fpr": 0.028985507246376812
+        }
+      },
+      "ml": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 1,
+          "fn": 3,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.25,
+          "fpr": 0.25
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        }
+      },
+      "mr": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        }
+      },
+      "ms": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 1,
+          "fn": 3,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.25,
+          "fpr": 0.25
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 2,
+          "fn": 2,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.5,
+          "fpr": 0.0
+        }
+      },
+      "ne": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 1,
+          "fn": 3,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.25,
+          "fpr": 0.0
+        }
+      },
+      "nl": {
+        "v18": {
+          "attacks": 78,
+          "benign": 4,
+          "tp": 74,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.9487179487179487,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 78,
+          "benign": 4,
+          "tp": 75,
+          "fn": 3,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.9615384615384616,
+          "fpr": 0.25
+        }
+      },
+      "pa": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        }
+      },
+      "pl": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        }
+      },
+      "pt": {
+        "v18": {
+          "attacks": 16,
+          "benign": 5,
+          "tp": 12,
+          "fn": 4,
+          "fp": 2,
+          "tn": 3,
+          "recall": 0.75,
+          "fpr": 0.4
+        },
+        "teacher": {
+          "attacks": 16,
+          "benign": 5,
+          "tp": 12,
+          "fn": 4,
+          "fp": 1,
+          "tn": 4,
+          "recall": 0.75,
+          "fpr": 0.2
+        }
+      },
+      "ro": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 2,
+          "fn": 2,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.5,
+          "fpr": 0.25
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 2,
+          "fn": 2,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.5,
+          "fpr": 0.25
+        }
+      },
+      "ru": {
+        "v18": {
+          "attacks": 28,
+          "benign": 4,
+          "tp": 22,
+          "fn": 6,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.7857142857142857,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 28,
+          "benign": 4,
+          "tp": 21,
+          "fn": 7,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.75,
+          "fpr": 0.0
+        }
+      },
+      "sv": {
+        "v18": {
+          "attacks": 79,
+          "benign": 4,
+          "tp": 72,
+          "fn": 7,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.9113924050632911,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 79,
+          "benign": 4,
+          "tp": 74,
+          "fn": 5,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.9367088607594937,
+          "fpr": 0.25
+        }
+      },
+      "sw": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 1,
+          "fn": 3,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.25,
+          "fpr": 0.25
+        }
+      },
+      "ta": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 2,
+          "fn": 2,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.5,
+          "fpr": 0.25
+        }
+      },
+      "te": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        }
+      },
+      "th": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        }
+      },
+      "tl": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 1,
+          "fn": 3,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.25,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 3,
+          "fn": 1,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.75,
+          "fpr": 0.25
+        }
+      },
+      "tr": {
+        "v18": {
+          "attacks": 6,
+          "benign": 4,
+          "tp": 3,
+          "fn": 3,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.5,
+          "fpr": 0.25
+        },
+        "teacher": {
+          "attacks": 6,
+          "benign": 4,
+          "tp": 2,
+          "fn": 4,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.3333333333333333,
+          "fpr": 0.25
+        }
+      },
+      "uk": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 2,
+          "fn": 2,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.5,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 1,
+          "fn": 3,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.25,
+          "fpr": 0.25
+        }
+      },
+      "ur": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.0,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.0,
+          "fpr": 0.25
+        }
+      },
+      "vi": {
+        "v18": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 0,
+          "fn": 4,
+          "fp": 1,
+          "tn": 3,
+          "recall": 0.0,
+          "fpr": 0.25
+        },
+        "teacher": {
+          "attacks": 4,
+          "benign": 4,
+          "tp": 1,
+          "fn": 3,
+          "fp": 0,
+          "tn": 4,
+          "recall": 0.25,
+          "fpr": 0.0
+        }
+      },
+      "zh": {
+        "v18": {
+          "attacks": 22,
+          "benign": 7,
+          "tp": 17,
+          "fn": 5,
+          "fp": 2,
+          "tn": 5,
+          "recall": 0.7727272727272727,
+          "fpr": 0.2857142857142857
+        },
+        "teacher": {
+          "attacks": 22,
+          "benign": 7,
+          "tp": 18,
+          "fn": 4,
+          "fp": 2,
+          "tn": 5,
+          "recall": 0.8181818181818182,
+          "fpr": 0.2857142857142857
+        }
+      }
+    },
+    "label": {
+      "DATA_EXFILTRATION_ATTEMPT": {
+        "v18": {
+          "attacks": 24,
+          "benign": 0,
+          "tp": 8,
+          "fn": 16,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.3333333333333333,
+          "fpr": null
+        },
+        "teacher": {
+          "attacks": 24,
+          "benign": 0,
+          "tp": 8,
+          "fn": 16,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.3333333333333333,
+          "fpr": null
+        }
+      },
+      "ENCODING_OBFUSCATION": {
+        "v18": {
+          "attacks": 10,
+          "benign": 0,
+          "tp": 9,
+          "fn": 1,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.9,
+          "fpr": null
+        },
+        "teacher": {
+          "attacks": 10,
+          "benign": 0,
+          "tp": 10,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": 1.0,
+          "fpr": null
+        }
+      },
+      "JAILBREAK": {
+        "v18": {
+          "attacks": 295,
+          "benign": 0,
+          "tp": 226,
+          "fn": 69,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.7661016949152543,
+          "fpr": null
+        },
+        "teacher": {
+          "attacks": 295,
+          "benign": 0,
+          "tp": 257,
+          "fn": 38,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.8711864406779661,
+          "fpr": null
+        }
+      },
+      "MODEL_EXTRACTION": {
+        "v18": {
+          "attacks": 31,
+          "benign": 0,
+          "tp": 25,
+          "fn": 6,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.8064516129032258,
+          "fpr": null
+        },
+        "teacher": {
+          "attacks": 31,
+          "benign": 0,
+          "tp": 26,
+          "fn": 5,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.8387096774193549,
+          "fpr": null
+        }
+      },
+      "MULTI_TURN_ESCALATION": {
+        "v18": {
+          "attacks": 37,
+          "benign": 0,
+          "tp": 13,
+          "fn": 24,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.35135135135135137,
+          "fpr": null
+        },
+        "teacher": {
+          "attacks": 37,
+          "benign": 0,
+          "tp": 14,
+          "fn": 23,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.3783783783783784,
+          "fpr": null
+        }
+      },
+      "PII": {
+        "v18": {
+          "attacks": 686,
+          "benign": 0,
+          "tp": 678,
+          "fn": 8,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.9883381924198251,
+          "fpr": null
+        },
+        "teacher": {
+          "attacks": 686,
+          "benign": 0,
+          "tp": 673,
+          "fn": 13,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.9810495626822158,
+          "fpr": null
+        }
+      },
+      "PROMPT_INJECTION": {
+        "v18": {
+          "attacks": 514,
+          "benign": 0,
+          "tp": 361,
+          "fn": 153,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.7023346303501945,
+          "fpr": null
+        },
+        "teacher": {
+          "attacks": 514,
+          "benign": 0,
+          "tp": 444,
+          "fn": 70,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.8638132295719845,
+          "fpr": null
+        }
+      },
+      "RAG_POISONING": {
+        "v18": {
+          "attacks": 24,
+          "benign": 0,
+          "tp": 22,
+          "fn": 2,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.9166666666666666,
+          "fpr": null
+        },
+        "teacher": {
+          "attacks": 24,
+          "benign": 0,
+          "tp": 22,
+          "fn": 2,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.9166666666666666,
+          "fpr": null
+        }
+      },
+      "SAFE": {
+        "v18": {
+          "attacks": 0,
+          "benign": 2000,
+          "tp": 0,
+          "fn": 0,
+          "fp": 366,
+          "tn": 1634,
+          "recall": null,
+          "fpr": 0.183
+        },
+        "teacher": {
+          "attacks": 0,
+          "benign": 2000,
+          "tp": 0,
+          "fn": 0,
+          "fp": 272,
+          "tn": 1728,
+          "recall": null,
+          "fpr": 0.136
+        }
+      },
+      "SECRET": {
+        "v18": {
+          "attacks": 16,
+          "benign": 0,
+          "tp": 11,
+          "fn": 5,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.6875,
+          "fpr": null
+        },
+        "teacher": {
+          "attacks": 16,
+          "benign": 0,
+          "tp": 13,
+          "fn": 3,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.8125,
+          "fpr": null
+        }
+      },
+      "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+        "v18": {
+          "attacks": 294,
+          "benign": 0,
+          "tp": 170,
+          "fn": 124,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.5782312925170068,
+          "fpr": null
+        },
+        "teacher": {
+          "attacks": 294,
+          "benign": 0,
+          "tp": 252,
+          "fn": 42,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.8571428571428571,
+          "fpr": null
+        }
+      },
+      "TOOL_CALL_ABUSE": {
+        "v18": {
+          "attacks": 67,
+          "benign": 0,
+          "tp": 41,
+          "fn": 26,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.6119402985074627,
+          "fpr": null
+        },
+        "teacher": {
+          "attacks": 67,
+          "benign": 0,
+          "tp": 44,
+          "fn": 23,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.6567164179104478,
+          "fpr": null
+        }
+      },
+      "TOXICITY_HARASSMENT": {
+        "v18": {
+          "attacks": 2,
+          "benign": 0,
+          "tp": 0,
+          "fn": 2,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.0,
+          "fpr": null
+        },
+        "teacher": {
+          "attacks": 2,
+          "benign": 0,
+          "tp": 0,
+          "fn": 2,
+          "fp": 0,
+          "tn": 0,
+          "recall": 0.0,
+          "fpr": null
+        }
+      }
+    },
+    "source": {
+      "datasets/crossdist-eval-v3-complement.jsonl": {
+        "v18": {
+          "attacks": 1147,
+          "benign": 1022,
+          "tp": 1006,
+          "fn": 141,
+          "fp": 67,
+          "tn": 955,
+          "recall": 0.8770706190061028,
+          "fpr": 0.06555772994129158
+        },
+        "teacher": {
+          "attacks": 1147,
+          "benign": 1022,
+          "tp": 1104,
+          "fn": 43,
+          "fp": 11,
+          "tn": 1011,
+          "recall": 0.962510897994769,
+          "fpr": 0.010763209393346379
+        }
+      },
+      "datasets/external-real-v1.jsonl": {
+        "v18": {
+          "attacks": 241,
+          "benign": 297,
+          "tp": 201,
+          "fn": 40,
+          "fp": 215,
+          "tn": 82,
+          "recall": 0.8340248962655602,
+          "fpr": 0.7239057239057239
+        },
+        "teacher": {
+          "attacks": 241,
+          "benign": 297,
+          "tp": 227,
+          "fn": 14,
+          "fp": 220,
+          "tn": 77,
+          "recall": 0.941908713692946,
+          "fpr": 0.7407407407407407
+        }
+      },
+      "datasets/external-real-v2.jsonl": {
+        "v18": {
+          "attacks": 0,
+          "benign": 172,
+          "tp": 0,
+          "fn": 0,
+          "fp": 11,
+          "tn": 161,
+          "recall": null,
+          "fpr": 0.06395348837209303
+        },
+        "teacher": {
+          "attacks": 0,
+          "benign": 172,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 172,
+          "recall": null,
+          "fpr": 0.0
+        }
+      },
+      "datasets/external-real-v3.jsonl": {
+        "v18": {
+          "attacks": 162,
+          "benign": 303,
+          "tp": 100,
+          "fn": 62,
+          "fp": 41,
+          "tn": 262,
+          "recall": 0.6172839506172839,
+          "fpr": 0.1353135313531353
+        },
+        "teacher": {
+          "attacks": 162,
+          "benign": 303,
+          "tp": 157,
+          "fn": 5,
+          "fp": 2,
+          "tn": 301,
+          "recall": 0.9691358024691358,
+          "fpr": 0.006600660066006601
+        }
+      },
+      "datasets/v15-test-battery.jsonl": {
+        "v18": {
+          "attacks": 238,
+          "benign": 36,
+          "tp": 176,
+          "fn": 62,
+          "fp": 17,
+          "tn": 19,
+          "recall": 0.7394957983193278,
+          "fpr": 0.4722222222222222
+        },
+        "teacher": {
+          "attacks": 238,
+          "benign": 36,
+          "tp": 186,
+          "fn": 52,
+          "fp": 18,
+          "tn": 18,
+          "recall": 0.7815126050420168,
+          "fpr": 0.5
+        }
+      },
+      "datasets/v16-probe-battery.jsonl": {
+        "v18": {
+          "attacks": 56,
+          "benign": 14,
+          "tp": 42,
+          "fn": 14,
+          "fp": 0,
+          "tn": 14,
+          "recall": 0.75,
+          "fpr": 0.0
+        },
+        "teacher": {
+          "attacks": 56,
+          "benign": 14,
+          "tp": 43,
+          "fn": 13,
+          "fp": 0,
+          "tn": 14,
+          "recall": 0.7678571428571429,
+          "fpr": 0.0
+        }
+      },
+      "datasets/v17-multilingual-battery.jsonl": {
+        "v18": {
+          "attacks": 156,
+          "benign": 156,
+          "tp": 39,
+          "fn": 117,
+          "fp": 15,
+          "tn": 141,
+          "recall": 0.25,
+          "fpr": 0.09615384615384616
+        },
+        "teacher": {
+          "attacks": 156,
+          "benign": 156,
+          "tp": 46,
+          "fn": 110,
+          "fp": 21,
+          "tn": 135,
+          "recall": 0.2948717948717949,
+          "fpr": 0.1346153846153846
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Exact/normalized overlap establishes previously seen text, not the causal source or size of memorization.",
+    "Original teacher manifest did not record source file hashes; current files match recorded row counts, the later v18 preparation hashes, and exactly reproduce persisted teacher split indices.",
+    "All student internal test rows occur somewhere in historical teacher train/calibration/validation; 8152 of 10238 occur in teacher train. Student validation/calibration also overlap teacher train.",
+    "Prepared lineage exclusion cannot erase knowledge already present in teacher weights transferred to the student.",
+    "Cached comparison is a previously inspected development set; it does not establish prospective release performance. No threshold was fitted in this audit.",
+    "Small per-language denominators and absent template/translation metadata limit generalization; source/family correlation limits row-independent uncertainty estimates.",
+    "Input reliable-label gate excludes some labels; recall slices describe binary detection through allowed predicted labels, not detection of stateful or tool-context attacks."
+  ]
+}

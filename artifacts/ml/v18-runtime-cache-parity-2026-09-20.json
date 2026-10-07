@@ -1,0 +1,1612 @@
+{
+  "measured_at_utc": "2026-09-20T03:03:44.875597+00:00",
+  "status": "mismatch",
+  "runtime_report": "artifacts\\ml\\v18-runtime-verification-2026-09-20.json",
+  "runtime_sha256": "5710e7c93f2c14990859f0620e545602719fc4246b2adb13fce17e6f4d6d1536",
+  "script_sha256": "5bc9451cdadfd21a221822b09c90cfce398c7332e734e6cb69e4715505a5f908",
+  "runtime": {
+    "node": "v22.16.0",
+    "onnxruntime_node": "1.21.1",
+    "platform": "win32",
+    "release": "10.0.26300",
+    "architecture": "x64",
+    "cpu": "Intel(R) Core(TM) i5-8350U CPU @ 1.70GHz",
+    "logical_cpus": 8,
+    "provider": "CPUExecutionProvider",
+    "intra_op_threads": 1,
+    "inter_op_threads": 1,
+    "execution_mode": "sequential",
+    "graph_optimization": "all",
+    "batch_size": 1
+  },
+  "scope": "Rounded confidence/attack-probability, argmax-label and content-token-count parity; no new inference",
+  "tolerance": 5.01e-05,
+  "arms": {
+    "v14": {
+      "python_cache": "artifacts\\ml\\v18-candidate-comparison\\v14-scores.json",
+      "python_cache_sha256": "e284a5b69a8b4bfcc30e48555db6f0e6796e2a966823a921232a3c0d65f809b7",
+      "python_identity": {
+        "model_sha256": "5b83b2810138c89bc74e7c9e7f86d913d69d27d4efb2b07ba349ed00dc4bf829",
+        "tokenizer_sha256": "953ca040b8c43e3e96adbc2cd98f7c12ceed00744ef87cec426147143fed91d3",
+        "calibration_sha256": "b5e00a9f24bd07cab722e78239d05cdab0bc51b2cad8fcb38d0011e30dbe8da6",
+        "rows_sha256": "3dd106a447f3a8f7a47e4e6f71b0acc35dd1caaa5e3d25b67f76f61361933a02",
+        "labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ],
+        "max_length": 256,
+        "format_version": 2,
+        "runtime": {
+          "platform": "Windows-11-10.0.26300-SP0",
+          "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
+          "machine": "AMD64",
+          "logical_cpus": 8,
+          "python": "3.12.10",
+          "onnxruntime": "1.27.0",
+          "numpy": "2.4.6",
+          "provider": "CPUExecutionProvider"
+        },
+        "batch_size": 16,
+        "threads": 2,
+        "latency_samples": 40
+      },
+      "samples": 60,
+      "mismatches": 3,
+      "max_confidence_absolute_delta": 5.1111777982448814e-05,
+      "max_attack_probability_absolute_delta": 5.0305616453694135e-05,
+      "comparisons": [
+        {
+          "id": "row-2073",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.3410955407799907e-05,
+          "attack_probability_absolute_delta": 2.797424543110605e-05
+        },
+        {
+          "id": "row-176",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.74887978046301e-05,
+          "attack_probability_absolute_delta": 3.74887978046301e-05
+        },
+        {
+          "id": "row-145",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.997499836594365e-05,
+          "attack_probability_absolute_delta": 1.537992240918662e-05
+        },
+        {
+          "id": "row-208",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.325128248199416e-05,
+          "attack_probability_absolute_delta": 1.1672683607466539e-06
+        },
+        {
+          "id": "row-298",
+          "matches": false,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 5.0673391819189284e-05,
+          "attack_probability_absolute_delta": 4.744110784871136e-05
+        },
+        {
+          "id": "row-96",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.2918664622340046e-05,
+          "attack_probability_absolute_delta": 3.569024162608514e-05
+        },
+        {
+          "id": "row-70",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.7152156381892176e-06,
+          "attack_probability_absolute_delta": 3.070790062664752e-05
+        },
+        {
+          "id": "row-2283",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 9.412605130432183e-06,
+          "attack_probability_absolute_delta": 9.412605130421992e-06
+        },
+        {
+          "id": "row-2160",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.3806317181952465e-05,
+          "attack_probability_absolute_delta": 3.62070690870242e-05
+        },
+        {
+          "id": "row-2151",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.7210963951685976e-05,
+          "attack_probability_absolute_delta": 4.1744928399589654e-05
+        },
+        {
+          "id": "row-126",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.515792262460572e-06,
+          "attack_probability_absolute_delta": 2.0237843257664423e-05
+        },
+        {
+          "id": "row-19",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.414696605947732e-06,
+          "attack_probability_absolute_delta": 3.196966649987587e-05
+        },
+        {
+          "id": "row-203",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 9.674851844332366e-06,
+          "attack_probability_absolute_delta": 4.951738280312146e-05
+        },
+        {
+          "id": "row-242",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.413999219354814e-06,
+          "attack_probability_absolute_delta": 1.591206747275642e-05
+        },
+        {
+          "id": "row-1127",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.4082358522959915e-05,
+          "attack_probability_absolute_delta": 3.783283008462757e-05
+        },
+        {
+          "id": "row-24",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.4967430026243704e-06,
+          "attack_probability_absolute_delta": 2.8976620242371354e-05
+        },
+        {
+          "id": "row-291",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.792679913925621e-05,
+          "attack_probability_absolute_delta": 1.7926799139297844e-05
+        },
+        {
+          "id": "row-2249",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.4405243928372613e-05,
+          "attack_probability_absolute_delta": 1.4405243928349736e-05
+        },
+        {
+          "id": "row-229",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.3694594756040743e-05,
+          "attack_probability_absolute_delta": 2.3694594756040743e-05
+        },
+        {
+          "id": "row-263",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 5.448896778337264e-06,
+          "attack_probability_absolute_delta": 4.127597875980271e-05
+        },
+        {
+          "id": "row-2165",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.0740570273680703e-05,
+          "attack_probability_absolute_delta": 2.0740570273718867e-05
+        },
+        {
+          "id": "row-2136",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.800232753587874e-05,
+          "attack_probability_absolute_delta": 4.650099041736411e-05
+        },
+        {
+          "id": "row-2079",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.1638507158018285e-07,
+          "attack_probability_absolute_delta": 1.0888330280733882e-06
+        },
+        {
+          "id": "row-2048",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.110815606344186e-05,
+          "attack_probability_absolute_delta": 3.1108156063483494e-05
+        },
+        {
+          "id": "row-293",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.44708068331645e-05,
+          "attack_probability_absolute_delta": 1.044804460548221e-05
+        },
+        {
+          "id": "row-2010",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.077454379085687e-05,
+          "attack_probability_absolute_delta": 4.407068624379118e-05
+        },
+        {
+          "id": "row-2230",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.641584568765289e-05,
+          "attack_probability_absolute_delta": 4.641584568759738e-05
+        },
+        {
+          "id": "row-5",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.936014860828063e-05,
+          "attack_probability_absolute_delta": 3.7327775571194266e-05
+        },
+        {
+          "id": "row-228",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.074881833815436e-05,
+          "attack_probability_absolute_delta": 1.7033182175718586e-05
+        },
+        {
+          "id": "row-2008",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.2753387142481216e-06,
+          "attack_probability_absolute_delta": 3.2753387143036328e-06
+        },
+        {
+          "id": "row-1840",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 9.277291934006726e-06,
+          "attack_probability_absolute_delta": 4.968768571556037e-05
+        },
+        {
+          "id": "row-2109",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.8155575394372967e-05,
+          "attack_probability_absolute_delta": 2.5817327961585868e-05
+        },
+        {
+          "id": "row-2091",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.8225884629695663e-05,
+          "attack_probability_absolute_delta": 4.4324618844626684e-05
+        },
+        {
+          "id": "row-2142",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.9074820535869286e-05,
+          "attack_probability_absolute_delta": 1.900259343079469e-05
+        },
+        {
+          "id": "row-2068",
+          "matches": false,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.0886237019058775e-05,
+          "attack_probability_absolute_delta": 5.0305616453694135e-05
+        },
+        {
+          "id": "row-2005",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.0414285388635776e-05,
+          "attack_probability_absolute_delta": 1.4974934854472544e-05
+        },
+        {
+          "id": "row-2149",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.401062446950487e-05,
+          "attack_probability_absolute_delta": 3.401062446951701e-05
+        },
+        {
+          "id": "row-2078",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 9.374333794776035e-07,
+          "attack_probability_absolute_delta": 3.054860856654962e-05
+        },
+        {
+          "id": "row-355",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.5538594883300902e-06,
+          "attack_probability_absolute_delta": 9.81350451179086e-06
+        },
+        {
+          "id": "row-326",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.4142165475239388e-05,
+          "attack_probability_absolute_delta": 3.784330003064884e-05
+        },
+        {
+          "id": "row-214",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.871559989849672e-07,
+          "attack_probability_absolute_delta": 4.5408977982663856e-05
+        },
+        {
+          "id": "row-2140",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.8713965805181605e-05,
+          "attack_probability_absolute_delta": 3.8713965805237116e-05
+        },
+        {
+          "id": "row-2052",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.4316296761028866e-05,
+          "attack_probability_absolute_delta": 2.4316296760973355e-05
+        },
+        {
+          "id": "row-2041",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.3069152035860565e-05,
+          "attack_probability_absolute_delta": 2.4964915279035438e-05
+        },
+        {
+          "id": "row-2906",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.6417087129405594e-05,
+          "attack_probability_absolute_delta": 1.6417087129381742e-05
+        },
+        {
+          "id": "row-2173",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.718228422877612e-05,
+          "attack_probability_absolute_delta": 1.1902733191848647e-05
+        },
+        {
+          "id": "row-837",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 9.783402051488643e-06,
+          "attack_probability_absolute_delta": 3.863395918080048e-05
+        },
+        {
+          "id": "row-107",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.054903943811027e-06,
+          "attack_probability_absolute_delta": 4.575923523486569e-05
+        },
+        {
+          "id": "row-312",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.3419765221688316e-05,
+          "attack_probability_absolute_delta": 2.341976522172995e-05
+        },
+        {
+          "id": "row-248",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.2612083388208184e-05,
+          "attack_probability_absolute_delta": 3.2569462035669794e-05
+        },
+        {
+          "id": "row-1034",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 6.394224016381678e-06,
+          "attack_probability_absolute_delta": 6.668706858281581e-06
+        },
+        {
+          "id": "row-308",
+          "matches": false,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 5.1111777982448814e-05,
+          "attack_probability_absolute_delta": 3.175391373044789e-05
+        },
+        {
+          "id": "row-30",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.943092684062123e-07,
+          "attack_probability_absolute_delta": 8.353367932145694e-06
+        },
+        {
+          "id": "row-2054",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 9.880819339613822e-06,
+          "attack_probability_absolute_delta": 2.713608327153949e-06
+        },
+        {
+          "id": "row-2080",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.092281471444135e-05,
+          "attack_probability_absolute_delta": 4.790333574844485e-05
+        },
+        {
+          "id": "row-2039",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.1175911445746607e-06,
+          "attack_probability_absolute_delta": 3.117591144630172e-06
+        },
+        {
+          "id": "row-2059",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.621606819548262e-06,
+          "attack_probability_absolute_delta": 6.028623258158561e-06
+        },
+        {
+          "id": "row-2101",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.4787486459000299e-05,
+          "attack_probability_absolute_delta": 9.801562497746552e-06
+        },
+        {
+          "id": "row-283",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 9.674851844332366e-06,
+          "attack_probability_absolute_delta": 4.951738280312146e-05
+        },
+        {
+          "id": "row-2170",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.143156515790114e-05,
+          "attack_probability_absolute_delta": 4.1713435215307015e-05
+        }
+      ]
+    },
+    "v17-multilingual": {
+      "python_cache": "artifacts\\ml\\v18-candidate-comparison\\v17-multilingual-scores.json",
+      "python_cache_sha256": "acfcf5badcd076765e521adab69b9470b6f75607d882355bcba60555659c1b35",
+      "python_identity": {
+        "model_sha256": "23a7e652794579862b30cf487dcca083288e3c90a46cf7f7876c595ce130cdfb",
+        "tokenizer_sha256": "c2c0e4d392f08c2c2eb950156eb26e4e5ddd15b557faa45ed6a0decaf45b5f98",
+        "calibration_sha256": "46de51eee40912afb77a787dd5b5c48b4139239768b0d2a24e3a1844462df917",
+        "rows_sha256": "3dd106a447f3a8f7a47e4e6f71b0acc35dd1caaa5e3d25b67f76f61361933a02",
+        "labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ],
+        "max_length": 256,
+        "format_version": 2,
+        "runtime": {
+          "platform": "Windows-11-10.0.26300-SP0",
+          "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
+          "machine": "AMD64",
+          "logical_cpus": 8,
+          "python": "3.12.10",
+          "onnxruntime": "1.27.0",
+          "numpy": "2.4.6",
+          "provider": "CPUExecutionProvider"
+        },
+        "batch_size": 16,
+        "threads": 2,
+        "latency_samples": 40
+      },
+      "samples": 60,
+      "mismatches": 0,
+      "max_confidence_absolute_delta": 4.9696511083330286e-05,
+      "max_attack_probability_absolute_delta": 4.982497972771949e-05,
+      "comparisons": [
+        {
+          "id": "row-2073",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 9.496378778117709e-06,
+          "attack_probability_absolute_delta": 2.281492461619905e-06
+        },
+        {
+          "id": "row-176",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.992975219440197e-06,
+          "attack_probability_absolute_delta": 8.108248414018249e-06
+        },
+        {
+          "id": "row-145",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.849379531945974e-05,
+          "attack_probability_absolute_delta": 1.1284904075870017e-05
+        },
+        {
+          "id": "row-208",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.9715895566440054e-05,
+          "attack_probability_absolute_delta": 4.473127087023521e-05
+        },
+        {
+          "id": "row-298",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.4713877389958014e-05,
+          "attack_probability_absolute_delta": 2.5622679954873107e-05
+        },
+        {
+          "id": "row-96",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.924711470404407e-05,
+          "attack_probability_absolute_delta": 4.31376126793781e-05
+        },
+        {
+          "id": "row-70",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.1659879806114049e-06,
+          "attack_probability_absolute_delta": 1.1659879805558937e-06
+        },
+        {
+          "id": "row-2283",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.5467321001968486e-05,
+          "attack_probability_absolute_delta": 4.546732100196155e-05
+        },
+        {
+          "id": "row-2160",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.4929614751135745e-06,
+          "attack_probability_absolute_delta": 1.492961475117044e-06
+        },
+        {
+          "id": "row-2151",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.9696511083330286e-05,
+          "attack_probability_absolute_delta": 4.6134565952482554e-05
+        },
+        {
+          "id": "row-126",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.776528091024243e-05,
+          "attack_probability_absolute_delta": 2.9041412934582844e-05
+        },
+        {
+          "id": "row-19",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.267869666030322e-05,
+          "attack_probability_absolute_delta": 1.3596376446933789e-06
+        },
+        {
+          "id": "row-203",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.696210576120684e-05,
+          "attack_probability_absolute_delta": 4.572397799229577e-05
+        },
+        {
+          "id": "row-242",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.203349129425991e-05,
+          "attack_probability_absolute_delta": 1.9105996058699226e-05
+        },
+        {
+          "id": "row-1127",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.5946134785812554e-05,
+          "attack_probability_absolute_delta": 2.1559937020909636e-05
+        },
+        {
+          "id": "row-24",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.299356315644708e-05,
+          "attack_probability_absolute_delta": 3.219408071464258e-06
+        },
+        {
+          "id": "row-291",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.983892280588151e-05,
+          "attack_probability_absolute_delta": 4.748403780707733e-05
+        },
+        {
+          "id": "row-2249",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.9530746798632777e-05,
+          "attack_probability_absolute_delta": 3.953074679865316e-05
+        },
+        {
+          "id": "row-229",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.8812144877432555e-05,
+          "attack_probability_absolute_delta": 4.346885126793598e-05
+        },
+        {
+          "id": "row-263",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.3041756003806526e-05,
+          "attack_probability_absolute_delta": 1.573797960130463e-05
+        },
+        {
+          "id": "row-2165",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.2394238202605443e-05,
+          "attack_probability_absolute_delta": 2.2394238202549932e-05
+        },
+        {
+          "id": "row-2136",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.784178659322791e-05,
+          "attack_probability_absolute_delta": 4.7841786593255664e-05
+        },
+        {
+          "id": "row-2079",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.083848606533213e-05,
+          "attack_probability_absolute_delta": 3.083848606530524e-05
+        },
+        {
+          "id": "row-2048",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.7342112451367306e-05,
+          "attack_probability_absolute_delta": 2.7342112451359066e-05
+        },
+        {
+          "id": "row-293",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.559718450436456e-05,
+          "attack_probability_absolute_delta": 7.784016207157407e-06
+        },
+        {
+          "id": "row-2010",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.0813889473457756e-05,
+          "attack_probability_absolute_delta": 3.0813889473457756e-05
+        },
+        {
+          "id": "row-2230",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.336172141350403e-07,
+          "attack_probability_absolute_delta": 4.3361721418361254e-07
+        },
+        {
+          "id": "row-5",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.751898503343785e-05,
+          "attack_probability_absolute_delta": 4.982497972771949e-05
+        },
+        {
+          "id": "row-228",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.0739661165326542e-05,
+          "attack_probability_absolute_delta": 2.967807239906417e-05
+        },
+        {
+          "id": "row-2008",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.279603709192223e-05,
+          "attack_probability_absolute_delta": 1.2796037091880163e-05
+        },
+        {
+          "id": "row-1840",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.1574960254188156e-06,
+          "attack_probability_absolute_delta": 1.3041708093464166e-05
+        },
+        {
+          "id": "row-2109",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 9.379173192436419e-06,
+          "attack_probability_absolute_delta": 4.33975639535511e-05
+        },
+        {
+          "id": "row-2091",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.4372094387926637e-05,
+          "attack_probability_absolute_delta": 1.4372094387965668e-05
+        },
+        {
+          "id": "row-2142",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.95592412824508e-06,
+          "attack_probability_absolute_delta": 2.9559241282277327e-06
+        },
+        {
+          "id": "row-2068",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.242550749793516e-05,
+          "attack_probability_absolute_delta": 3.242550749797159e-05
+        },
+        {
+          "id": "row-2005",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.6443778093531165e-05,
+          "attack_probability_absolute_delta": 3.5021031153603666e-05
+        },
+        {
+          "id": "row-2149",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.535111157943916e-06,
+          "attack_probability_absolute_delta": 4.535111157929171e-06
+        },
+        {
+          "id": "row-2078",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.990779520701704e-05,
+          "attack_probability_absolute_delta": 3.9907795207034386e-05
+        },
+        {
+          "id": "row-355",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.598427018500992e-05,
+          "attack_probability_absolute_delta": 2.6726869905790984e-05
+        },
+        {
+          "id": "row-326",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 9.212004830838616e-06,
+          "attack_probability_absolute_delta": 9.212004830727594e-06
+        },
+        {
+          "id": "row-214",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.887267220493596e-05,
+          "attack_probability_absolute_delta": 4.531273173391526e-05
+        },
+        {
+          "id": "row-2140",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.5961769363092024e-05,
+          "attack_probability_absolute_delta": 2.596176936308335e-05
+        },
+        {
+          "id": "row-2052",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.9228016110539592e-05,
+          "attack_probability_absolute_delta": 1.9228016110490152e-05
+        },
+        {
+          "id": "row-2041",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.7613685862570847e-05,
+          "attack_probability_absolute_delta": 1.1684039221249165e-05
+        },
+        {
+          "id": "row-2906",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.979412677632908e-05,
+          "attack_probability_absolute_delta": 1.979412677627487e-05
+        },
+        {
+          "id": "row-2173",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 9.598870390314929e-06,
+          "attack_probability_absolute_delta": 8.839244904690347e-06
+        },
+        {
+          "id": "row-837",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.7351279065168654e-05,
+          "attack_probability_absolute_delta": 3.4529523796789086e-05
+        },
+        {
+          "id": "row-107",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.0707850811874096e-07,
+          "attack_probability_absolute_delta": 3.756320196157681e-05
+        },
+        {
+          "id": "row-312",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 7.752456587573064e-06,
+          "attack_probability_absolute_delta": 7.752456587599085e-06
+        },
+        {
+          "id": "row-248",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 9.474945167342597e-07,
+          "attack_probability_absolute_delta": 4.2695134477188645e-05
+        },
+        {
+          "id": "row-1034",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.6783242779983e-05,
+          "attack_probability_absolute_delta": 4.342530082324103e-05
+        },
+        {
+          "id": "row-308",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.149439908889384e-05,
+          "attack_probability_absolute_delta": 2.831279136183973e-05
+        },
+        {
+          "id": "row-30",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.0785016056891195e-06,
+          "attack_probability_absolute_delta": 1.0785016057446306e-06
+        },
+        {
+          "id": "row-2054",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 7.414656204574044e-06,
+          "attack_probability_absolute_delta": 1.590536999407366e-05
+        },
+        {
+          "id": "row-2080",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.9804356520335418e-05,
+          "attack_probability_absolute_delta": 4.9643849238334425e-05
+        },
+        {
+          "id": "row-2039",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.662636555745724e-05,
+          "attack_probability_absolute_delta": 3.662636555741604e-05
+        },
+        {
+          "id": "row-2059",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.696302393369933e-05,
+          "attack_probability_absolute_delta": 2.4699256451765628e-05
+        },
+        {
+          "id": "row-2101",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.930934917939499e-05,
+          "attack_probability_absolute_delta": 3.930934917937461e-05
+        },
+        {
+          "id": "row-283",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.4192325858707342e-05,
+          "attack_probability_absolute_delta": 2.4192325858693464e-05
+        },
+        {
+          "id": "row-2170",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.3034297822511753e-05,
+          "attack_probability_absolute_delta": 1.3034297822562928e-05
+        }
+      ]
+    },
+    "v18-student": {
+      "python_cache": "artifacts\\ml\\v18-candidate-comparison\\v18-candidate-scores.json",
+      "python_cache_sha256": "d964c38942b5d1d4797c5b524eb5086c38042ce4903061b344f8838203c8ee45",
+      "python_identity": {
+        "model_sha256": "ecf9e1d2e957da6ba72b714a0fc0c8f8d566b48588c0257dfd8a309e4020fba5",
+        "tokenizer_sha256": "c2c0e4d392f08c2c2eb950156eb26e4e5ddd15b557faa45ed6a0decaf45b5f98",
+        "calibration_sha256": "7cdd06f36737d397d21a3b65dc7fca5761e0ffff52d466abd3fc4070706bf4fa",
+        "rows_sha256": "3dd106a447f3a8f7a47e4e6f71b0acc35dd1caaa5e3d25b67f76f61361933a02",
+        "labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ],
+        "max_length": 256,
+        "format_version": 2,
+        "runtime": {
+          "platform": "Windows-11-10.0.26300-SP0",
+          "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
+          "machine": "AMD64",
+          "logical_cpus": 8,
+          "python": "3.12.10",
+          "onnxruntime": "1.27.0",
+          "numpy": "2.4.6",
+          "provider": "CPUExecutionProvider"
+        },
+        "batch_size": 16,
+        "threads": 2,
+        "latency_samples": 40
+      },
+      "samples": 60,
+      "mismatches": 0,
+      "max_confidence_absolute_delta": 4.974669819829414e-05,
+      "max_attack_probability_absolute_delta": 4.9253928688999804e-05,
+      "comparisons": [
+        {
+          "id": "row-2073",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.4674073052223235e-06,
+          "attack_probability_absolute_delta": 7.628289910965869e-06
+        },
+        {
+          "id": "row-176",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.3159537198068634e-05,
+          "attack_probability_absolute_delta": 7.561882320983315e-06
+        },
+        {
+          "id": "row-145",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 9.068720158933452e-06,
+          "attack_probability_absolute_delta": 1.0548393417519897e-05
+        },
+        {
+          "id": "row-208",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.8143206723442162e-05,
+          "attack_probability_absolute_delta": 1.8143206723476857e-05
+        },
+        {
+          "id": "row-298",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.576339923494487e-05,
+          "attack_probability_absolute_delta": 8.189115279222392e-06
+        },
+        {
+          "id": "row-96",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.616837673969808e-05,
+          "attack_probability_absolute_delta": 2.6492010257284093e-05
+        },
+        {
+          "id": "row-70",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.057980626326341e-05,
+          "attack_probability_absolute_delta": 8.405194063754173e-06
+        },
+        {
+          "id": "row-2283",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.3965653856983238e-06,
+          "attack_probability_absolute_delta": 2.3965653856575578e-06
+        },
+        {
+          "id": "row-2160",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.030895425346845e-05,
+          "attack_probability_absolute_delta": 1.0308954253482328e-05
+        },
+        {
+          "id": "row-2151",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.943171535852885e-05,
+          "attack_probability_absolute_delta": 2.2096180717467995e-05
+        },
+        {
+          "id": "row-126",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.7007993551617666e-05,
+          "attack_probability_absolute_delta": 4.505669336185569e-05
+        },
+        {
+          "id": "row-19",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 5.291711661636889e-06,
+          "attack_probability_absolute_delta": 1.2719235401026374e-05
+        },
+        {
+          "id": "row-203",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.7815532439932085e-05,
+          "attack_probability_absolute_delta": 4.7815532439932085e-05
+        },
+        {
+          "id": "row-242",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 5.175542814317424e-06,
+          "attack_probability_absolute_delta": 5.175542814270587e-06
+        },
+        {
+          "id": "row-1127",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.441668383705963e-05,
+          "attack_probability_absolute_delta": 6.918770995567591e-06
+        },
+        {
+          "id": "row-24",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.4168414273041385e-05,
+          "attack_probability_absolute_delta": 3.71058413051184e-05
+        },
+        {
+          "id": "row-291",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.6379031220536966e-05,
+          "attack_probability_absolute_delta": 3.259508793285182e-05
+        },
+        {
+          "id": "row-2249",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 5.11651063328511e-06,
+          "attack_probability_absolute_delta": 5.116510633238272e-06
+        },
+        {
+          "id": "row-229",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.504020773241855e-05,
+          "attack_probability_absolute_delta": 2.5040207732474062e-05
+        },
+        {
+          "id": "row-263",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.127764240866803e-05,
+          "attack_probability_absolute_delta": 3.024332632817206e-05
+        },
+        {
+          "id": "row-2165",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.1406460392771045e-05,
+          "attack_probability_absolute_delta": 1.1406460392753698e-05
+        },
+        {
+          "id": "row-2136",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.241882111299944e-05,
+          "attack_probability_absolute_delta": 2.9037823422783937e-05
+        },
+        {
+          "id": "row-2079",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.72460335350344e-05,
+          "attack_probability_absolute_delta": 1.7246033535048277e-05
+        },
+        {
+          "id": "row-2048",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.3658572388108858e-05,
+          "attack_probability_absolute_delta": 1.3658572388066791e-05
+        },
+        {
+          "id": "row-293",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.974669819829414e-05,
+          "attack_probability_absolute_delta": 8.229085754152266e-06
+        },
+        {
+          "id": "row-2010",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.2398841794381e-05,
+          "attack_probability_absolute_delta": 1.2398841794339366e-05
+        },
+        {
+          "id": "row-2230",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.620454658401993e-05,
+          "attack_probability_absolute_delta": 1.6204546584033808e-05
+        },
+        {
+          "id": "row-5",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.573036396604557e-05,
+          "attack_probability_absolute_delta": 2.762495595365344e-05
+        },
+        {
+          "id": "row-228",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.8169246101207293e-05,
+          "attack_probability_absolute_delta": 1.8169246101170863e-05
+        },
+        {
+          "id": "row-2008",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.5644202326026146e-05,
+          "attack_probability_absolute_delta": 1.5644202325970635e-05
+        },
+        {
+          "id": "row-1840",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.221259726149395e-05,
+          "attack_probability_absolute_delta": 9.863019897693448e-06
+        },
+        {
+          "id": "row-2109",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.1339552952359675e-05,
+          "attack_probability_absolute_delta": 2.745964112138566e-05
+        },
+        {
+          "id": "row-2091",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.7874007291781595e-06,
+          "attack_probability_absolute_delta": 4.787400729129587e-06
+        },
+        {
+          "id": "row-2142",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.535387876156925e-05,
+          "attack_probability_absolute_delta": 2.5353878761567514e-05
+        },
+        {
+          "id": "row-2068",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.4048428460286004e-05,
+          "attack_probability_absolute_delta": 4.4048428460249575e-05
+        },
+        {
+          "id": "row-2005",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.5316949414367897e-05,
+          "attack_probability_absolute_delta": 4.241245115665926e-05
+        },
+        {
+          "id": "row-2149",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.0066957486953854e-05,
+          "attack_probability_absolute_delta": 1.0066957486929134e-05
+        },
+        {
+          "id": "row-2078",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.4866282879166803e-05,
+          "attack_probability_absolute_delta": 1.4866282879136446e-05
+        },
+        {
+          "id": "row-355",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.0040168723322047e-05,
+          "attack_probability_absolute_delta": 2.2205508700134935e-05
+        },
+        {
+          "id": "row-326",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.3415155879003002e-05,
+          "attack_probability_absolute_delta": 2.3415155878989125e-05
+        },
+        {
+          "id": "row-214",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.130526030148406e-05,
+          "attack_probability_absolute_delta": 2.6692354699542342e-05
+        },
+        {
+          "id": "row-2140",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.200057770962438e-06,
+          "attack_probability_absolute_delta": 2.200057771000602e-06
+        },
+        {
+          "id": "row-2052",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 7.686313467702988e-06,
+          "attack_probability_absolute_delta": 7.686313467674365e-06
+        },
+        {
+          "id": "row-2041",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 6.111941695974288e-06,
+          "attack_probability_absolute_delta": 6.111941695974288e-06
+        },
+        {
+          "id": "row-2906",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.241216826204262e-05,
+          "attack_probability_absolute_delta": 2.241216826205086e-05
+        },
+        {
+          "id": "row-2173",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.148576409628401e-05,
+          "attack_probability_absolute_delta": 1.984525902154477e-05
+        },
+        {
+          "id": "row-837",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.9960049488565446e-05,
+          "attack_probability_absolute_delta": 1.3210876635971758e-05
+        },
+        {
+          "id": "row-107",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.09395373986332e-05,
+          "attack_probability_absolute_delta": 2.997366772927723e-05
+        },
+        {
+          "id": "row-312",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.879414669194503e-05,
+          "attack_probability_absolute_delta": 3.879414669196064e-05
+        },
+        {
+          "id": "row-248",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.866184505085801e-05,
+          "attack_probability_absolute_delta": 1.544435205047545e-05
+        },
+        {
+          "id": "row-1034",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.436585420479865e-05,
+          "attack_probability_absolute_delta": 3.2347547997191306e-05
+        },
+        {
+          "id": "row-308",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.848637419046064e-05,
+          "attack_probability_absolute_delta": 3.8486374190405126e-05
+        },
+        {
+          "id": "row-30",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.7354773795053013e-05,
+          "attack_probability_absolute_delta": 1.7354773795108525e-05
+        },
+        {
+          "id": "row-2054",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.8481097666843702e-05,
+          "attack_probability_absolute_delta": 1.5921350615233365e-05
+        },
+        {
+          "id": "row-2080",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.971724653606401e-05,
+          "attack_probability_absolute_delta": 2.1725983805342963e-06
+        },
+        {
+          "id": "row-2039",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 2.0497701905819454e-05,
+          "attack_probability_absolute_delta": 2.049770190586152e-05
+        },
+        {
+          "id": "row-2059",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 1.4396415100148552e-05,
+          "attack_probability_absolute_delta": 2.076572868592308e-05
+        },
+        {
+          "id": "row-2101",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.826760957254983e-06,
+          "attack_probability_absolute_delta": 4.826760957268861e-06
+        },
+        {
+          "id": "row-283",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 4.925392868904144e-05,
+          "attack_probability_absolute_delta": 4.9253928688999804e-05
+        },
+        {
+          "id": "row-2170",
+          "matches": true,
+          "argmax_label_matches": true,
+          "content_token_count_matches": true,
+          "confidence_absolute_delta": 3.7573235517673886e-05,
+          "attack_probability_absolute_delta": 3.7573235517699474e-05
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "The Node report retains four-decimal summaries, not full probability vectors.",
+    "Python scores use batch 16 with two threads; Node measurements use batch one with one thread.",
+    "Parity does not measure end-to-end guard behavior or satisfy the model trust gate."
+  ]
+}

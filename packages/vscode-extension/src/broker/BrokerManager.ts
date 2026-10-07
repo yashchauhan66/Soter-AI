@@ -64,7 +64,8 @@ export class BrokerManager implements vscode.Disposable {
     private syncCanaries(): Promise<void> {
         const update = this.canarySync.then(async () => {
             const canaries = await this.canaries.loadForScan();
-            await this.request("/v1/canaries/sync", { method: "POST", body: JSON.stringify({ canaries }) });
+            const result = await this.request<{ synchronized: boolean; count: number }>("/v1/canaries/sync", { method: "POST", body: JSON.stringify({ canaries }) });
+            if (result.synchronized !== true || result.count !== canaries.length) throw new Error("Canary synchronization was not acknowledged.");
             this.canarySyncError = undefined;
         }).catch(() => {
             this.canarySyncError = "Local broker canary monitoring is unavailable.";
@@ -91,10 +92,11 @@ export class BrokerManager implements vscode.Disposable {
     private async startInternal(): Promise<BrokerStatus> {
         if (this.isLockedDown()) throw new BrokerStartFailure("Emergency Lockdown is active; broker start is blocked", false);
         const existing = await this.status();
-        if (existing.running && existing.state === "healthy") {
+        if (existing.running && existing.version === EXPECTED_BROKER_VERSION
+            && (existing.state === "healthy" || this.canarySyncError)) {
             await this.syncCanaries();
             this.lifecycle = "healthy";
-            return existing;
+            return { ...existing, state: "healthy", lastError: undefined };
         }
         if (existing.state === "incompatible") {
             this.lifecycle = "incompatible";

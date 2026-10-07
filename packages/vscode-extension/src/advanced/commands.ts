@@ -8,7 +8,7 @@
  *      and future Copilot/Cursor wrappers (Gap E). Returns the EgressResult.
  *   3. soterai.showEgressFirewallStatus — honest coverage report.
  *
- * Every decision is appended to the tamper-proof ledger (Gap C) with redacted
+ * Every decision is appended to the tamper-evident ledger (Gap C) with redacted
  * evidence only — the raw text is never stored, logged, or transmitted.
  */
 import * as vscode from "vscode";

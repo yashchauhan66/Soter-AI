@@ -1,0 +1,628 @@
+{
+  "generated": "2026-09-22T11:08:25.210352+00:00",
+  "rows": {
+    "path": "artifacts\\ml\\v18-balanced-comparison-rows.jsonl",
+    "count": 4000,
+    "sha256": "3dd106a447f3a8f7a47e4e6f71b0acc35dd1caaa5e3d25b67f76f61361933a02",
+    "attacks": 2000,
+    "benign": 2000
+  },
+  "decision_layer": {
+    "file": "compare-v18-bases.py",
+    "sha256": "6959cf381e6825645d42ab17d308255b568601dd2e146e34257c44bcac1437eb"
+  },
+  "baseline_gate": "shared_input_gate",
+  "current_allowlist": [
+    "ENCODING_OBFUSCATION",
+    "JAILBREAK",
+    "MODEL_EXTRACTION",
+    "PII",
+    "PROMPT_INJECTION",
+    "RAG_POISONING",
+    "SECRET",
+    "SYSTEM_PROMPT_LEAK_ATTEMPT",
+    "TOOL_CALL_ABUSE"
+  ],
+  "fpr_budget_points": 0.3,
+  "min_rescued_attacks": 10,
+  "budget_source": "V17-DECISION-AND-ULTRA-PLAN.md phase 0.2",
+  "arms": {
+    "v14": {
+      "emittable_labels": 14,
+      "candidates": [
+        "DATA_EXFILTRATION_ATTEMPT",
+        "MULTI_TURN_ESCALATION",
+        "TOXICITY_HARASSMENT",
+        "UNSAFE_OUTPUT"
+      ],
+      "baseline": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1795,
+        "fn": 205,
+        "fp": 327,
+        "tn": 1673,
+        "recall": 0.8975,
+        "fpr": 0.1635,
+        "recall_wilson95": [
+          0.883436204935987,
+          0.9100397424754167
+        ],
+        "fpr_wilson95": [
+          0.14793995204546784,
+          0.18035022077481533
+        ]
+      },
+      "per_label": [
+        {
+          "labels": [
+            "DATA_EXFILTRATION_ATTEMPT"
+          ],
+          "attacks_rescued": 37,
+          "new_false_positives": 2,
+          "recall_before": 0.8975,
+          "recall_after": 0.916,
+          "fpr_before": 0.1635,
+          "fpr_after": 0.1645,
+          "delta_recall_points": 1.8500000000000072,
+          "delta_fpr_points": 0.10000000000000009,
+          "gold_rows_with_this_label": 24,
+          "rescued_by_gold_label": {
+            "DATA_EXFILTRATION_ATTEMPT": 7,
+            "MODEL_EXTRACTION": 1,
+            "PII": 2,
+            "RAG_POISONING": 2,
+            "SECRET": 2,
+            "TOOL_CALL_ABUSE": 23
+          },
+          "predicted_this_label": 43,
+          "verdict": "ADMIT",
+          "why": "Rescues 37 attacks for 2 new false positives, +0.100 FPR points, inside the 0.30-point budget."
+        },
+        {
+          "labels": [
+            "MULTI_TURN_ESCALATION"
+          ],
+          "attacks_rescued": 1,
+          "new_false_positives": 0,
+          "recall_before": 0.8975,
+          "recall_after": 0.898,
+          "fpr_before": 0.1635,
+          "fpr_after": 0.1635,
+          "delta_recall_points": 0.050000000000005596,
+          "delta_fpr_points": 0.0,
+          "gold_rows_with_this_label": 37,
+          "rescued_by_gold_label": {
+            "PROMPT_INJECTION": 1
+          },
+          "predicted_this_label": 1,
+          "verdict": "INSUFFICIENT-EVIDENCE",
+          "why": "Only 1 attack(s) rescued, below the 10-row floor. The trade may well be good; this battery cannot show that it is."
+        },
+        {
+          "labels": [
+            "TOXICITY_HARASSMENT"
+          ],
+          "attacks_rescued": 0,
+          "new_false_positives": 0,
+          "recall_before": 0.8975,
+          "recall_after": 0.8975,
+          "fpr_before": 0.1635,
+          "fpr_after": 0.1635,
+          "delta_recall_points": 0.0,
+          "delta_fpr_points": 0.0,
+          "gold_rows_with_this_label": 2,
+          "rescued_by_gold_label": {},
+          "predicted_this_label": 1,
+          "verdict": "NO-OP",
+          "why": "No row passes the common gate with this argmax, so admitting it changes nothing on these rows. Not evidence that it is safe to admit, only that this battery cannot see it."
+        },
+        {
+          "labels": [
+            "UNSAFE_OUTPUT"
+          ],
+          "attacks_rescued": 1,
+          "new_false_positives": 1,
+          "recall_before": 0.8975,
+          "recall_after": 0.898,
+          "fpr_before": 0.1635,
+          "fpr_after": 0.164,
+          "delta_recall_points": 0.050000000000005596,
+          "delta_fpr_points": 0.050000000000000044,
+          "gold_rows_with_this_label": 0,
+          "rescued_by_gold_label": {
+            "SYSTEM_PROMPT_LEAK_ATTEMPT": 1
+          },
+          "predicted_this_label": 2,
+          "verdict": "INSUFFICIENT-EVIDENCE",
+          "why": "Only 1 attack(s) rescued, below the 10-row floor. The trade may well be good; this battery cannot show that it is."
+        }
+      ],
+      "all_candidates_admitted": {
+        "labels": [
+          "DATA_EXFILTRATION_ATTEMPT",
+          "MULTI_TURN_ESCALATION",
+          "TOXICITY_HARASSMENT",
+          "UNSAFE_OUTPUT"
+        ],
+        "attacks_rescued": 39,
+        "new_false_positives": 3,
+        "recall_before": 0.8975,
+        "recall_after": 0.917,
+        "fpr_before": 0.1635,
+        "fpr_after": 0.165,
+        "delta_recall_points": 1.9500000000000073,
+        "delta_fpr_points": 0.15000000000000013
+      },
+      "recommended_admission": [
+        "DATA_EXFILTRATION_ATTEMPT"
+      ],
+      "recommended_effect": {
+        "labels": [
+          "DATA_EXFILTRATION_ATTEMPT"
+        ],
+        "attacks_rescued": 37,
+        "new_false_positives": 2,
+        "recall_before": 0.8975,
+        "recall_after": 0.916,
+        "fpr_before": 0.1635,
+        "fpr_after": 0.1645,
+        "delta_recall_points": 1.8500000000000072,
+        "delta_fpr_points": 0.10000000000000009
+      }
+    },
+    "v17-minilm": {
+      "emittable_labels": 14,
+      "candidates": [
+        "DATA_EXFILTRATION_ATTEMPT",
+        "MULTI_TURN_ESCALATION",
+        "TOXICITY_HARASSMENT",
+        "UNSAFE_OUTPUT"
+      ],
+      "baseline": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1697,
+        "fn": 303,
+        "fp": 285,
+        "tn": 1715,
+        "recall": 0.8485,
+        "fpr": 0.1425,
+        "recall_wilson95": [
+          0.832119542548813,
+          0.8635442754961538
+        ],
+        "fpr_wilson95": [
+          0.1278647408518039,
+          0.15850594795429188
+        ]
+      },
+      "per_label": [
+        {
+          "labels": [
+            "DATA_EXFILTRATION_ATTEMPT"
+          ],
+          "attacks_rescued": 42,
+          "new_false_positives": 2,
+          "recall_before": 0.8485,
+          "recall_after": 0.8695,
+          "fpr_before": 0.1425,
+          "fpr_after": 0.1435,
+          "delta_recall_points": 2.100000000000002,
+          "delta_fpr_points": 0.10000000000000009,
+          "gold_rows_with_this_label": 24,
+          "rescued_by_gold_label": {
+            "DATA_EXFILTRATION_ATTEMPT": 15,
+            "JAILBREAK": 1,
+            "PROMPT_INJECTION": 1,
+            "RAG_POISONING": 3,
+            "SECRET": 2,
+            "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+            "TOOL_CALL_ABUSE": 18
+          },
+          "predicted_this_label": 49,
+          "verdict": "ADMIT",
+          "why": "Rescues 42 attacks for 2 new false positives, +0.100 FPR points, inside the 0.30-point budget."
+        },
+        {
+          "labels": [
+            "MULTI_TURN_ESCALATION"
+          ],
+          "attacks_rescued": 33,
+          "new_false_positives": 0,
+          "recall_before": 0.8485,
+          "recall_after": 0.865,
+          "fpr_before": 0.1425,
+          "fpr_after": 0.1425,
+          "delta_recall_points": 1.649999999999996,
+          "delta_fpr_points": 0.0,
+          "gold_rows_with_this_label": 37,
+          "rescued_by_gold_label": {
+            "JAILBREAK": 7,
+            "MULTI_TURN_ESCALATION": 20,
+            "PROMPT_INJECTION": 3,
+            "RAG_POISONING": 1,
+            "SYSTEM_PROMPT_LEAK_ATTEMPT": 2
+          },
+          "predicted_this_label": 39,
+          "verdict": "ADMIT",
+          "why": "Rescues 33 attacks for 0 new false positives, +0.000 FPR points, inside the 0.30-point budget."
+        },
+        {
+          "labels": [
+            "TOXICITY_HARASSMENT"
+          ],
+          "attacks_rescued": 1,
+          "new_false_positives": 0,
+          "recall_before": 0.8485,
+          "recall_after": 0.849,
+          "fpr_before": 0.1425,
+          "fpr_after": 0.1425,
+          "delta_recall_points": 0.04999999999999449,
+          "delta_fpr_points": 0.0,
+          "gold_rows_with_this_label": 2,
+          "rescued_by_gold_label": {
+            "PROMPT_INJECTION": 1
+          },
+          "predicted_this_label": 2,
+          "verdict": "INSUFFICIENT-EVIDENCE",
+          "why": "Only 1 attack(s) rescued, below the 10-row floor. The trade may well be good; this battery cannot show that it is."
+        },
+        {
+          "labels": [
+            "UNSAFE_OUTPUT"
+          ],
+          "attacks_rescued": 0,
+          "new_false_positives": 1,
+          "recall_before": 0.8485,
+          "recall_after": 0.8485,
+          "fpr_before": 0.1425,
+          "fpr_after": 0.143,
+          "delta_recall_points": 0.0,
+          "delta_fpr_points": 0.050000000000000044,
+          "gold_rows_with_this_label": 0,
+          "rescued_by_gold_label": {},
+          "predicted_this_label": 1,
+          "verdict": "REJECT",
+          "why": "Costs false positives and rescues no attack."
+        }
+      ],
+      "all_candidates_admitted": {
+        "labels": [
+          "DATA_EXFILTRATION_ATTEMPT",
+          "MULTI_TURN_ESCALATION",
+          "TOXICITY_HARASSMENT",
+          "UNSAFE_OUTPUT"
+        ],
+        "attacks_rescued": 76,
+        "new_false_positives": 3,
+        "recall_before": 0.8485,
+        "recall_after": 0.8865,
+        "fpr_before": 0.1425,
+        "fpr_after": 0.144,
+        "delta_recall_points": 3.7999999999999923,
+        "delta_fpr_points": 0.15000000000000013
+      },
+      "recommended_admission": [
+        "DATA_EXFILTRATION_ATTEMPT",
+        "MULTI_TURN_ESCALATION"
+      ],
+      "recommended_effect": {
+        "labels": [
+          "DATA_EXFILTRATION_ATTEMPT",
+          "MULTI_TURN_ESCALATION"
+        ],
+        "attacks_rescued": 75,
+        "new_false_positives": 2,
+        "recall_before": 0.8485,
+        "recall_after": 0.886,
+        "fpr_before": 0.1425,
+        "fpr_after": 0.1435,
+        "delta_recall_points": 3.749999999999998,
+        "delta_fpr_points": 0.10000000000000009
+      }
+    },
+    "v17-multilingual": {
+      "emittable_labels": 14,
+      "candidates": [
+        "DATA_EXFILTRATION_ATTEMPT",
+        "MULTI_TURN_ESCALATION",
+        "TOXICITY_HARASSMENT",
+        "UNSAFE_OUTPUT"
+      ],
+      "baseline": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1763,
+        "fn": 237,
+        "fp": 272,
+        "tn": 1728,
+        "recall": 0.8815,
+        "fpr": 0.136,
+        "recall_wilson95": [
+          0.8665987726575222,
+          0.8949385202668816
+        ],
+        "fpr_wilson95": [
+          0.12167290401775677,
+          0.15172270640299534
+        ]
+      },
+      "per_label": [
+        {
+          "labels": [
+            "DATA_EXFILTRATION_ATTEMPT"
+          ],
+          "attacks_rescued": 35,
+          "new_false_positives": 11,
+          "recall_before": 0.8815,
+          "recall_after": 0.899,
+          "fpr_before": 0.136,
+          "fpr_after": 0.1415,
+          "delta_recall_points": 1.750000000000007,
+          "delta_fpr_points": 0.5499999999999977,
+          "gold_rows_with_this_label": 24,
+          "rescued_by_gold_label": {
+            "DATA_EXFILTRATION_ATTEMPT": 14,
+            "RAG_POISONING": 2,
+            "SECRET": 2,
+            "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+            "TOOL_CALL_ABUSE": 15
+          },
+          "predicted_this_label": 52,
+          "verdict": "REJECT",
+          "why": "+0.550 FPR points exceeds the 0.30-point budget."
+        },
+        {
+          "labels": [
+            "MULTI_TURN_ESCALATION"
+          ],
+          "attacks_rescued": 58,
+          "new_false_positives": 0,
+          "recall_before": 0.8815,
+          "recall_after": 0.9105,
+          "fpr_before": 0.136,
+          "fpr_after": 0.136,
+          "delta_recall_points": 2.9000000000000026,
+          "delta_fpr_points": 0.0,
+          "gold_rows_with_this_label": 37,
+          "rescued_by_gold_label": {
+            "DATA_EXFILTRATION_ATTEMPT": 1,
+            "JAILBREAK": 20,
+            "MODEL_EXTRACTION": 1,
+            "MULTI_TURN_ESCALATION": 22,
+            "PROMPT_INJECTION": 5,
+            "SECRET": 1,
+            "SYSTEM_PROMPT_LEAK_ATTEMPT": 8
+          },
+          "predicted_this_label": 63,
+          "verdict": "ADMIT",
+          "why": "Rescues 58 attacks for 0 new false positives, +0.000 FPR points, inside the 0.30-point budget."
+        },
+        {
+          "labels": [
+            "TOXICITY_HARASSMENT"
+          ],
+          "attacks_rescued": 1,
+          "new_false_positives": 0,
+          "recall_before": 0.8815,
+          "recall_after": 0.882,
+          "fpr_before": 0.136,
+          "fpr_after": 0.136,
+          "delta_recall_points": 0.050000000000005596,
+          "delta_fpr_points": 0.0,
+          "gold_rows_with_this_label": 2,
+          "rescued_by_gold_label": {
+            "PROMPT_INJECTION": 1
+          },
+          "predicted_this_label": 1,
+          "verdict": "INSUFFICIENT-EVIDENCE",
+          "why": "Only 1 attack(s) rescued, below the 10-row floor. The trade may well be good; this battery cannot show that it is."
+        },
+        {
+          "labels": [
+            "UNSAFE_OUTPUT"
+          ],
+          "attacks_rescued": 0,
+          "new_false_positives": 0,
+          "recall_before": 0.8815,
+          "recall_after": 0.8815,
+          "fpr_before": 0.136,
+          "fpr_after": 0.136,
+          "delta_recall_points": 0.0,
+          "delta_fpr_points": 0.0,
+          "gold_rows_with_this_label": 0,
+          "rescued_by_gold_label": {},
+          "predicted_this_label": 1,
+          "verdict": "NO-OP",
+          "why": "No row passes the common gate with this argmax, so admitting it changes nothing on these rows. Not evidence that it is safe to admit, only that this battery cannot see it."
+        }
+      ],
+      "all_candidates_admitted": {
+        "labels": [
+          "DATA_EXFILTRATION_ATTEMPT",
+          "MULTI_TURN_ESCALATION",
+          "TOXICITY_HARASSMENT",
+          "UNSAFE_OUTPUT"
+        ],
+        "attacks_rescued": 94,
+        "new_false_positives": 11,
+        "recall_before": 0.8815,
+        "recall_after": 0.9285,
+        "fpr_before": 0.136,
+        "fpr_after": 0.1415,
+        "delta_recall_points": 4.700000000000005,
+        "delta_fpr_points": 0.5499999999999977
+      },
+      "recommended_admission": [
+        "MULTI_TURN_ESCALATION"
+      ],
+      "recommended_effect": {
+        "labels": [
+          "MULTI_TURN_ESCALATION"
+        ],
+        "attacks_rescued": 58,
+        "new_false_positives": 0,
+        "recall_before": 0.8815,
+        "recall_after": 0.9105,
+        "fpr_before": 0.136,
+        "fpr_after": 0.136,
+        "delta_recall_points": 2.9000000000000026,
+        "delta_fpr_points": 0.0
+      }
+    },
+    "v18-candidate": {
+      "emittable_labels": 14,
+      "candidates": [
+        "DATA_EXFILTRATION_ATTEMPT",
+        "MULTI_TURN_ESCALATION",
+        "TOXICITY_HARASSMENT",
+        "UNSAFE_OUTPUT"
+      ],
+      "baseline": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1564,
+        "fn": 436,
+        "fp": 366,
+        "tn": 1634,
+        "recall": 0.782,
+        "fpr": 0.183,
+        "recall_wilson95": [
+          0.7633734089055608,
+          0.7995453764278124
+        ],
+        "fpr_wilson95": [
+          0.16666695547445123,
+          0.20054845250186307
+        ]
+      },
+      "per_label": [
+        {
+          "labels": [
+            "DATA_EXFILTRATION_ATTEMPT"
+          ],
+          "attacks_rescued": 37,
+          "new_false_positives": 8,
+          "recall_before": 0.782,
+          "recall_after": 0.8005,
+          "fpr_before": 0.183,
+          "fpr_after": 0.187,
+          "delta_recall_points": 1.849999999999996,
+          "delta_fpr_points": 0.40000000000000036,
+          "gold_rows_with_this_label": 24,
+          "rescued_by_gold_label": {
+            "DATA_EXFILTRATION_ATTEMPT": 15,
+            "ENCODING_OBFUSCATION": 1,
+            "JAILBREAK": 1,
+            "MULTI_TURN_ESCALATION": 1,
+            "PROMPT_INJECTION": 4,
+            "RAG_POISONING": 2,
+            "SECRET": 3,
+            "TOOL_CALL_ABUSE": 10
+          },
+          "predicted_this_label": 48,
+          "verdict": "REJECT",
+          "why": "+0.400 FPR points exceeds the 0.30-point budget."
+        },
+        {
+          "labels": [
+            "MULTI_TURN_ESCALATION"
+          ],
+          "attacks_rescued": 45,
+          "new_false_positives": 2,
+          "recall_before": 0.782,
+          "recall_after": 0.8045,
+          "fpr_before": 0.183,
+          "fpr_after": 0.184,
+          "delta_recall_points": 2.2499999999999964,
+          "delta_fpr_points": 0.10000000000000009,
+          "gold_rows_with_this_label": 37,
+          "rescued_by_gold_label": {
+            "JAILBREAK": 10,
+            "MODEL_EXTRACTION": 2,
+            "MULTI_TURN_ESCALATION": 23,
+            "PROMPT_INJECTION": 5,
+            "SYSTEM_PROMPT_LEAK_ATTEMPT": 5
+          },
+          "predicted_this_label": 52,
+          "verdict": "ADMIT",
+          "why": "Rescues 45 attacks for 2 new false positives, +0.100 FPR points, inside the 0.30-point budget."
+        },
+        {
+          "labels": [
+            "TOXICITY_HARASSMENT"
+          ],
+          "attacks_rescued": 2,
+          "new_false_positives": 2,
+          "recall_before": 0.782,
+          "recall_after": 0.783,
+          "fpr_before": 0.183,
+          "fpr_after": 0.184,
+          "delta_recall_points": 0.10000000000000009,
+          "delta_fpr_points": 0.10000000000000009,
+          "gold_rows_with_this_label": 2,
+          "rescued_by_gold_label": {
+            "PROMPT_INJECTION": 1,
+            "SYSTEM_PROMPT_LEAK_ATTEMPT": 1
+          },
+          "predicted_this_label": 5,
+          "verdict": "INSUFFICIENT-EVIDENCE",
+          "why": "Only 2 attack(s) rescued, below the 10-row floor. The trade may well be good; this battery cannot show that it is."
+        },
+        {
+          "labels": [
+            "UNSAFE_OUTPUT"
+          ],
+          "attacks_rescued": 1,
+          "new_false_positives": 5,
+          "recall_before": 0.782,
+          "recall_after": 0.7825,
+          "fpr_before": 0.183,
+          "fpr_after": 0.1855,
+          "delta_recall_points": 0.04999999999999449,
+          "delta_fpr_points": 0.2500000000000002,
+          "gold_rows_with_this_label": 0,
+          "rescued_by_gold_label": {
+            "SYSTEM_PROMPT_LEAK_ATTEMPT": 1
+          },
+          "predicted_this_label": 8,
+          "verdict": "INSUFFICIENT-EVIDENCE",
+          "why": "Only 1 attack(s) rescued, below the 10-row floor. The trade may well be good; this battery cannot show that it is."
+        }
+      ],
+      "all_candidates_admitted": {
+        "labels": [
+          "DATA_EXFILTRATION_ATTEMPT",
+          "MULTI_TURN_ESCALATION",
+          "TOXICITY_HARASSMENT",
+          "UNSAFE_OUTPUT"
+        ],
+        "attacks_rescued": 85,
+        "new_false_positives": 17,
+        "recall_before": 0.782,
+        "recall_after": 0.8245,
+        "fpr_before": 0.183,
+        "fpr_after": 0.1915,
+        "delta_recall_points": 4.249999999999998,
+        "delta_fpr_points": 0.8500000000000008
+      },
+      "recommended_admission": [
+        "MULTI_TURN_ESCALATION"
+      ],
+      "recommended_effect": {
+        "labels": [
+          "MULTI_TURN_ESCALATION"
+        ],
+        "attacks_rescued": 45,
+        "new_false_positives": 2,
+        "recall_before": 0.782,
+        "recall_after": 0.8045,
+        "fpr_before": 0.183,
+        "fpr_after": 0.184,
+        "delta_recall_points": 2.2499999999999964,
+        "delta_fpr_points": 0.10000000000000009
+      }
+    }
+  }
+}

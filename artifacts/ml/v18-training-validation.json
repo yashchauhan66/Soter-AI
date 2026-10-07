@@ -1,0 +1,39 @@
+{
+  "date": "2026-09-18",
+  "purpose": "Local trainer and student architecture validation; not a security-quality benchmark",
+  "checks": {
+    "core_and_end_to_end_smoke": {
+      "command": "python -m unittest discover -s scripts/ml/tests -p test_soter_distill.py -v",
+      "tests_at_execution": 8,
+      "passed": 8,
+      "test_execution_seconds": 14.661,
+      "coverage": [
+        "Temperature-scaled KL with T squared and detached teacher",
+        "Supervised gradient accumulation including final partial window",
+        "Frozen teacher parameters and evaluation mode during distillation",
+        "Deterministic embedding and selected-layer transfer to a smaller student",
+        "Strict dataset labels and Unicode line-separator preservation",
+        "Prepared corpus hash, index overlap and completeness checks",
+        "Missing-negative calibration audit",
+        "Atomic checkpoint preserves prior state on serialization failure",
+        "Tiny student training, calibration, dynamic ONNX export and parity",
+        "Compact artifact reload and completed-checkpoint resume"
+      ],
+      "smoke_onnx_max_absolute_logit_difference_approx": 1.01e-7
+    },
+    "added_lineage_guard": {
+      "command": "python -m unittest discover -s scripts/ml/tests -p test_soter_distill.py -k prepared_lineage -v",
+      "tests_at_execution": 1,
+      "passed": 1,
+      "test_execution_seconds": 0.062,
+      "coverage": ["Prepared splits cannot separate declared template or translation lineage groups"]
+    },
+    "real_v17_checkpoint_and_student": "artifacts/ml/v18-student-initialization.json"
+  },
+  "limitations": [
+    "The tiny smoke uses synthetic local weights and measures software correctness only.",
+    "The actual 384-wide, 3-layer student was initialized and forwarded without optimization; no student weights were persisted.",
+    "No security improvement or student latency improvement has been established.",
+    "GPU training, independent evaluation, calibration and production artifact checks remain required."
+  ]
+}

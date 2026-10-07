@@ -1,0 +1,144 @@
+TAP version 13
+# Subtest: S1 a modified .env enters the bundle through the synthetic `git diff` item
+ok 1 - S1 a modified .env enters the bundle through the synthetic `git diff` item
+  ---
+  duration_ms: 10368.9404
+  type: 'test'
+  ...
+# Subtest: S2 custom data in a protected file survives the diff path
+ok 2 - S2 custom data in a protected file survives the diff path
+  ---
+  duration_ms: 2420.4258
+  type: 'test'
+  ...
+# Subtest: S3 a protected file open in the active editor is excluded
+ok 3 - S3 a protected file open in the active editor is excluded
+  ---
+  duration_ms: 1085.7397
+  type: 'test'
+  ...
+# Subtest: S4 out-of-the-box (guard never enabled) a .env tab reaches the bundle
+ok 4 - S4 out-of-the-box (guard never enabled) a .env tab reaches the bundle
+  ---
+  duration_ms: 1263.585
+  type: 'test'
+  ...
+# Subtest: S5 an inline key inside an allowed source file is redacted
+not ok 5 - S5 an inline key inside an allowed source file is redacted
+  ---
+  duration_ms: 781.5217
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\phase2\\p2-context-leak.test.ts:2:7411'
+  failureType: 'testCodeFailure'
+  error: |-
+    S5a: V-OPENAI[plain|invisibles-stripped|concatenated|lowercased|homoglyph-folded|url/escape-decoded]
+    
+    6 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 6
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\phase2\p2-context-leak.test.ts:212:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S6 summarizeFile emits the env var KEY names of a sensitive file
+ok 6 - S6 summarizeFile emits the env var KEY names of a sensitive file
+  ---
+  duration_ms: 16.2283
+  type: 'test'
+  ...
+# Subtest: S7 encoded copies of a key in allowed files
+not ok 7 - S7 encoded copies of a key in allowed files
+  ---
+  duration_ms: 7058.7973
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\phase2\\p2-context-leak.test.ts:2:10541'
+  failureType: 'testCodeFailure'
+  error: |-
+    encoded secrets reached the bundle:
+      S7a encoded/base64.txt: V-ANTHROPIC[base64-decoded] V-GITHUB[base64-decoded] V-AWS-ID[base64-decoded] V-AWS-SECRET[base64-decoded] V-OPENAI[base64-decoded] V-SLACK[base64-decoded] V-STRIPE[base64-decoded] V-JWT[base64-decoded] V-DB-URL[base64-decoded] V-PRIVKEY[base64-decoded] V-DO[base64-decoded] C-PLAIN[base64-decoded] C-ASSIGN[base64-decoded] C-PROSE[base64-decoded] C-CSV[base64-decoded]
+      S7b encoded/hex.txt: V-ANTHROPIC[hex-decoded] V-GITHUB[hex-decoded] V-AWS-ID[hex-decoded] V-AWS-SECRET[hex-decoded] V-OPENAI[hex-decoded] V-SLACK[hex-decoded] V-STRIPE[hex-decoded] V-JWT[hex-decoded] V-DB-URL[hex-decoded] V-PRIVKEY[hex-decoded] V-DO[hex-decoded] C-PLAIN[hex-decoded] C-ASSIGN[hex-decoded] C-PROSE[hex-decoded] C-CSV[hex-decoded]
+      S7d encoded/split.txt: V-ANTHROPIC[concatenated] V-GITHUB[concatenated] V-AWS-ID[concatenated] V-AWS-SECRET[concatenated] V-OPENAI[concatenated] V-SLACK[concatenated] V-STRIPE[concatenated] V-JWT[concatenated] V-DB-URL[concatenated] V-PRIVKEY[concatenated] V-DO[concatenated] C-PLAIN[concatenated] C-ASSIGN[concatenated] C-PROSE[concatenated] C-CSV[concatenated]
+      S7e encoded/zerowidth.txt: V-ANTHROPIC[invisibles-stripped|concatenated|lowercased|homoglyph-folded|url/escape-decoded] V-GITHUB[invisibles-stripped|concatenated|lowercased|homoglyph-folded|url/escape-decoded] V-AWS-ID[invisibles-stripped|concatenated|lowercased|homoglyph-folded|url/escape-decoded] V-AWS-SECRET[invisibles-stripped|concatenated|lowercased|homoglyph-folded|url/escape-decoded] V-OPENAI[invisibles-stripped|concatenated|lowercased|homoglyph-folded|url/escape-decoded] V-SLACK[invisibles-stripped|concatenated|lowercased|homoglyph-folded|url/escape-decoded] V-STRIPE[invisibles-stripped|concatenated|lowercased|homoglyph-folded|url/escape-decoded] V-JWT[invisibles-stripped|concatenated|lowercased|homoglyph-folded|url/escape-decoded] V-DB-URL[invisibles-stripped|concatenated|lowercased|homoglyph-folded|url/escape-decoded] V-PRIVKEY[invisibles-stripped|concatenated|lowercased|homoglyph-folded|url/escape-decoded] V-DO[invisibles-stripped|concatenated|lowercased|homoglyph-folded|url/escape-decoded] C-PLAIN[invisibles-stripped|concatenated|lowercased|homoglyph-folded|url/escape-decoded] C-ASSIGN[invisibles-stripped|concatenated|lowercased|homoglyph-folded|url/escape-decoded] C-PROSE[invisibles-stripped|concatenated|lowercased|homoglyph-folded|url/escape-decoded] C-CSV[invisibles-stripped|concatenated|lowercased|homoglyph-folded|url/escape-decoded]
+      S7f encoded/concat.js: V-ANTHROPIC[concatenated] V-GITHUB[concatenated] V-AWS-ID[concatenated] V-AWS-SECRET[concatenated] V-OPENAI[concatenated] V-SLACK[concatenated] V-STRIPE[concatenated] V-JWT[concatenated] V-DB-URL[concatenated] V-PRIVKEY[concatenated] V-DO[concatenated] C-PLAIN[concatenated] C-ASSIGN[concatenated] C-PROSE[concatenated] C-CSV[concatenated]
+      S7g encoded/homoglyph.txt: V-ANTHROPIC[homoglyph-folded] V-GITHUB[homoglyph-folded] V-AWS-ID[homoglyph-folded] V-AWS-SECRET[homoglyph-folded] V-OPENAI[homoglyph-folded] V-SLACK[homoglyph-folded] V-STRIPE[homoglyph-folded] V-JWT[homoglyph-folded] V-DB-URL[homoglyph-folded] V-PRIVKEY[homoglyph-folded] V-DO[homoglyph-folded] C-PLAIN[homoglyph-folded] C-ASSIGN[homoglyph-folded] C-PROSE[homoglyph-folded] C-CSV[homoglyph-folded]
+    
+    6 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 6
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\phase2\p2-context-leak.test.ts:289:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: S8 hostile README/.cursorrules are quarantined, not merged as instructions
+ok 8 - S8 hostile README/.cursorrules are quarantined, not merged as instructions
+  ---
+  duration_ms: 1038.1927
+  type: 'test'
+  ...
+# Subtest: S9 alias paths into the denied set
+ok 9 - S9 alias paths into the denied set
+  ---
+  duration_ms: 1589.4045
+  type: 'test'
+  ...
+# Subtest: S10 a copy of .env under an unprotected name
+ok 10 - S10 a copy of .env under an unprotected name
+  ---
+  duration_ms: 1092.0366
+  type: 'test'
+  ...
+# Subtest: S11 no canary reached a recorded VS Code sink
+ok 11 - S11 no canary reached a recorded VS Code sink
+  ---
+  duration_ms: 10.8038
+  type: 'test'
+  ...
+# Subtest: H1 leak oracle finds a canary in every encoding it claims to cover
+ok 12 - H1 leak oracle finds a canary in every encoding it claims to cover
+  ---
+  duration_ms: 113.0107
+  type: 'test'
+  ...
+# Subtest: H2 fixture plants all canaries on disk
+ok 13 - H2 fixture plants all canaries on disk
+  ---
+  duration_ms: 9306.1438
+  type: 'test'
+  ...
+# Subtest: H3 `vscode` resolves to the stub and modules under test load
+ok 14 - H3 `vscode` resolves to the stub and modules under test load
+  ---
+  duration_ms: 3491.3012
+  type: 'test'
+  ...
+# Subtest: H4 @soterai/guard-core resolves to a dist newer than its sources
+ok 15 - H4 @soterai/guard-core resolves to a dist newer than its sources
+  ---
+  duration_ms: 607.2743
+  type: 'test'
+  ...
+# Subtest: H5 git is available (several scenarios shell out to it)
+ok 16 - H5 git is available (several scenarios shell out to it)
+  ---
+  duration_ms: 1779.1395
+  type: 'test'
+  ...
+1..16
+# tests 16
+# suites 0
+# pass 14
+# fail 2
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 35881.1511

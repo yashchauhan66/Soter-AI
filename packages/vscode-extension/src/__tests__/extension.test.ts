@@ -477,6 +477,8 @@ describe("Command-palette hygiene (clutter control)", () => {
     //   - `openReport` is the single row that replaced eighteen `show*` rows, so
     //     it has to be reachable without enabling the advanced surface.
     const core = [
+        "soterai.blockFromAI", "soterai.blockGlobFromAI", "soterai.blockSelectionFromAI",
+        "soterai.manageAIRules", "soterai.openRedactedPreview",
         "soterai.openControlPanel",
         "soterai.runDemoScan", "soterai.scanCurrentFile", "soterai.scanGitChanges",
         "soterai.openWalkthrough", "soterai.scanClipboard", "soterai.checkBeforeSendingToAI",
@@ -494,7 +496,8 @@ describe("Command-palette hygiene (clutter control)", () => {
     });
 
     it("keeps the default palette to a small set of clear, reversible newcomer workflows", () => {
-        assert.strictEqual(core.length, 11);
+        assert.strictEqual(core.length, 16);
+        assert.ok(core.includes("soterai.blockSelectionFromAI"), "manual text protection must be discoverable");
         assert.ok(core.includes("soterai.autoMigrateWorkspace"), "vault migration must be discoverable");
         assert.ok(core.includes("soterai.secureAllAI"), "AI routing must be discoverable");
         assert.ok(core.includes("soterai.restoreAIConfigs"), "the reversible route must remain discoverable");
@@ -659,7 +662,12 @@ describe("Security search guardrails", () => {
 
     it("documents every child process boundary as non-shell fixed argv usage", () => {
         assert.match(commandsSrc, /Safe child process boundary/);
-        assert.match(read("src/firewall/ContextGatherer.ts"), /Safe child process boundary/);
+        assert.match(read("src/firewall/ContextGatherer.ts"), /collectSafeDiffs/);
+        const diffBoundary = read("src/ai-boundary/gitDiff.ts");
+        assert.match(diffBoundary, /runGit\("git"/);
+        assert.match(diffBoundary, /--literal-pathspecs/);
+        assert.match(diffBoundary, /--no-ext-diff/);
+        assert.match(diffBoundary, /--no-textconv/);
         assert.match(brokerManagerSrc, /User input never controls the executable or argv/);
     });
 });

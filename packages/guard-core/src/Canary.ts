@@ -1,4 +1,4 @@
-import { hashContent } from "./HashCache";
+import { hashExactContent } from "./HashCache";
 
 /**
  * Canary secret system — plant a locally-generated, unique fake secret and later
@@ -37,13 +37,16 @@ export interface CanaryHit {
     count: number;
 }
 
-function randomHex(bytes: number): string {
+async function randomHex(bytes: number): Promise<string> {
     const arr = new Uint8Array(bytes);
     const g = (globalThis as any).crypto;
     if (g?.getRandomValues) {
         g.getRandomValues(arr);
     } else {
-        for (let i = 0; i < bytes; i++) arr[i] = Math.floor(Math.random() * 256);
+        try {
+            const { randomBytes } = await import("node:crypto");
+            return randomBytes(bytes).toString("hex");
+        } catch { throw new Error("Canary generation requires cryptographic randomness."); }
     }
     return Array.from(arr, (b) => b.toString(16).padStart(2, "0")).join("");
 }
@@ -59,8 +62,8 @@ export function canaryPreview(token: string): string {
  * existing SecretDetector also flags it if it slips into a scan.
  */
 export async function generateCanary(): Promise<Canary> {
-    const token = `${CANARY_TOKEN_PREFIX}${randomHex(20)}`;
-    const hash = await hashContent(token);
+    const token = `${CANARY_TOKEN_PREFIX}${await randomHex(20)}`;
+    const hash = await hashExactContent(token);
     return {
         id: `canary_${hash.slice(0, 12)}`,
         token,
@@ -76,7 +79,7 @@ export function toCanaryMetadata(canary: Canary): CanaryMetadata {
 }
 
 export async function hashCanary(token: string): Promise<string> {
-    return hashContent(token);
+    return hashExactContent(token);
 }
 
 /**

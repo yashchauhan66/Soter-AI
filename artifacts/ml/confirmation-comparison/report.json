@@ -1,0 +1,2020 @@
+{
+  "rows": 4000,
+  "rows_file_sha256": "86a2eb680707c75f1e19e820813ea36a02a00cfc69534202f392d7031f28756d",
+  "hardware": "Windows-11-10.0.26300-SP0",
+  "settings": {
+    "binary_entropy_budget": 0.4,
+    "confidence_floor": 0.5,
+    "attack_probability_floor": 0.85,
+    "max_length": 256,
+    "reliable_labels": [
+      "ENCODING_OBFUSCATION",
+      "JAILBREAK",
+      "MODEL_EXTRACTION",
+      "PII",
+      "PROMPT_INJECTION",
+      "RAG_POISONING",
+      "SECRET",
+      "SYSTEM_PROMPT_LEAK_ATTEMPT",
+      "TOOL_CALL_ABUSE"
+    ]
+  },
+  "limitations": [
+    "ML only: rules and semantic veto are excluded; these are not product recall/FPR.",
+    "Diagnostic development set; no threshold is calibrated here; not independent release evidence.",
+    "Source/family correlation limits row-level Wilson intervals; unknown language is not relabeled English.",
+    "Legacy score caches are not reused. Tokenization uses exported HF tokenizer and terminal SEP."
+  ],
+  "arms": {
+    "v14": {
+      "identity": {
+        "model_sha256": "5b83b2810138c89bc74e7c9e7f86d913d69d27d4efb2b07ba349ed00dc4bf829",
+        "tokenizer_sha256": "953ca040b8c43e3e96adbc2cd98f7c12ceed00744ef87cec426147143fed91d3",
+        "calibration_sha256": "b5e00a9f24bd07cab722e78239d05cdab0bc51b2cad8fcb38d0011e30dbe8da6",
+        "rows_sha256": "8eec56e645f061c727f4acb1c4f1a2ab7e621265bdf70d15f631134ddf942a2f",
+        "labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ],
+        "max_length": 256,
+        "format_version": 2,
+        "runtime": {
+          "platform": "Windows-11-10.0.26300-SP0",
+          "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
+          "machine": "AMD64",
+          "logical_cpus": 8,
+          "python": "3.12.10",
+          "onnxruntime": "1.27.0",
+          "numpy": "2.4.6",
+          "provider": "CPUExecutionProvider"
+        },
+        "batch_size": 8,
+        "threads": 2,
+        "latency_samples": 40
+      },
+      "model_bytes": 91774954,
+      "scoring": {
+        "batch_size": 8,
+        "threads": 2,
+        "seconds": 278.6197669999965,
+        "note": "Batch throughput; not per-request latency."
+      },
+      "latency": {
+        "fixed256": {
+          "p50_ms": 155.61924999929033,
+          "p95_ms": 209.84029000101134,
+          "mean_ms": 163.3997274995636,
+          "samples": 40
+        },
+        "dynamic": {
+          "p50_ms": 26.000600002589636,
+          "p95_ms": 194.77791000826983,
+          "mean_ms": 64.49591999917175,
+          "samples": 40
+        },
+        "measured_at_utc": "2026-09-20T12:05:26.034354+00:00",
+        "runtime": {
+          "platform": "Windows-11-10.0.26300-SP0",
+          "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
+          "machine": "AMD64",
+          "logical_cpus": 8,
+          "python": "3.12.10",
+          "onnxruntime": "1.27.0",
+          "numpy": "2.4.6",
+          "provider": "CPUExecutionProvider"
+        },
+        "padding_argmax_flips": 0,
+        "batch_argmax_flips": 0,
+        "padding_decision_flips": {
+          "raw_argmax": 0,
+          "shared_attack_probability_0.90": 0,
+          "shared_input_gate": 0,
+          "shared_input_gate_with_mte": 0,
+          "input_gate_with_artifact_truncation": 0
+        },
+        "batching_decision_flips": {
+          "raw_argmax": 0,
+          "shared_attack_probability_0.90": 0,
+          "shared_input_gate": 0,
+          "shared_input_gate_with_mte": 0,
+          "input_gate_with_artifact_truncation": 0
+        },
+        "max_padding_probability_delta": 0.0,
+        "note": "CPU batch-one ONNX inference/feed allocation only; length-stratified diagnostic, concurrent host activity possible."
+      },
+      "metrics": {
+        "raw_argmax": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1983,
+          "fn": 17,
+          "fp": 375,
+          "tn": 1625,
+          "recall": 0.9915,
+          "fpr": 0.1875,
+          "recall_wilson95": [
+            0.9864293102622139,
+            0.9946862322603145
+          ],
+          "fpr_wilson95": [
+            0.1709991046047915,
+            0.20519904994599153
+          ]
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1957,
+          "fn": 43,
+          "fp": 320,
+          "tn": 1680,
+          "recall": 0.9785,
+          "fpr": 0.16,
+          "recall_wilson95": [
+            0.9711661662609156,
+            0.9839992194909254
+          ],
+          "fpr_wilson95": [
+            0.14458705229539107,
+            0.17671653985586086
+          ]
+        },
+        "shared_input_gate": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1964,
+          "fn": 36,
+          "fp": 329,
+          "tn": 1671,
+          "recall": 0.982,
+          "fpr": 0.1645,
+          "recall_wilson95": [
+            0.9751819578651543,
+            0.9869700085557177
+          ],
+          "fpr_wilson95": [
+            0.148898411257462,
+            0.18138792746825866
+          ]
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1964,
+          "fn": 36,
+          "fp": 330,
+          "tn": 1670,
+          "recall": 0.982,
+          "fpr": 0.165,
+          "recall_wilson95": [
+            0.9751819578651543,
+            0.9869700085557177
+          ],
+          "fpr_wilson95": [
+            0.14937772117810108,
+            0.18190670050033833
+          ]
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1942,
+          "fn": 58,
+          "fp": 235,
+          "tn": 1765,
+          "recall": 0.971,
+          "fpr": 0.1175,
+          "recall_wilson95": [
+            0.9626945430771895,
+            0.97749959838387
+          ],
+          "fpr_wilson95": [
+            0.10411507285054655,
+            0.13235146831961192
+          ]
+        }
+      },
+      "truncated_rows": 1063,
+      "unknown_token_rate": 0.0017864408503712745,
+      "slices": {
+        "language": {
+          "de": {
+            "attacks": 117,
+            "benign": 0,
+            "tp": 115,
+            "fn": 2,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9829059829059829,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9398099145713432,
+              0.9952996173954185
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 51015,
+            "unknown_tokens": 0,
+            "unknown_token_rate": 0.0
+          },
+          "en": {
+            "attacks": 1300,
+            "benign": 2000,
+            "tp": 1269,
+            "fn": 31,
+            "fp": 329,
+            "tn": 1671,
+            "recall": 0.9761538461538461,
+            "fpr": 0.1645,
+            "recall_wilson95": [
+              0.9663515841205449,
+              0.983150360019008
+            ],
+            "fpr_wilson95": [
+              0.148898411257462,
+              0.18138792746825866
+            ],
+            "content_tokens": 342736,
+            "unknown_tokens": 1119,
+            "unknown_token_rate": 0.003264903599271743
+          },
+          "es": {
+            "attacks": 117,
+            "benign": 0,
+            "tp": 115,
+            "fn": 2,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9829059829059829,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9398099145713432,
+              0.9952996173954185
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 50280,
+            "unknown_tokens": 2,
+            "unknown_token_rate": 3.977724741447892e-05
+          },
+          "fr": {
+            "attacks": 117,
+            "benign": 0,
+            "tp": 117,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "recall": 1.0,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9682107543372667,
+              1.0
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 45481,
+            "unknown_tokens": 1,
+            "unknown_token_rate": 2.19872034475935e-05
+          },
+          "it": {
+            "attacks": 117,
+            "benign": 0,
+            "tp": 117,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "recall": 1.0,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9682107543372667,
+              1.0
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 48691,
+            "unknown_tokens": 0,
+            "unknown_token_rate": 0.0
+          },
+          "nl": {
+            "attacks": 116,
+            "benign": 0,
+            "tp": 116,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "recall": 1.0,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9679454935003613,
+              1.0
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 45235,
+            "unknown_tokens": 1,
+            "unknown_token_rate": 2.2106775726760254e-05
+          },
+          "sv": {
+            "attacks": 116,
+            "benign": 0,
+            "tp": 115,
+            "fn": 1,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9913793103448276,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9527801658718213,
+              0.9984766122233615
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 45746,
+            "unknown_tokens": 1,
+            "unknown_token_rate": 2.185983473964937e-05
+          }
+        },
+        "label": {
+          "JAILBREAK": {
+            "attacks": 23,
+            "benign": 0,
+            "tp": 23,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "recall": 1.0,
+            "fpr": null,
+            "recall_wilson95": [
+              0.8568833815495731,
+              1.0
+            ],
+            "fpr_wilson95": null
+          },
+          "PII": {
+            "attacks": 700,
+            "benign": 0,
+            "tp": 695,
+            "fn": 5,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9928571428571429,
+            "fpr": null,
+            "recall_wilson95": [
+              0.983389156548705,
+              0.9969452516518496
+            ],
+            "fpr_wilson95": null
+          },
+          "PROMPT_INJECTION": {
+            "attacks": 639,
+            "benign": 0,
+            "tp": 627,
+            "fn": 12,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9812206572769953,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9674646277380802,
+              0.9892253796678362
+            ],
+            "fpr_wilson95": null
+          },
+          "SAFE": {
+            "attacks": 0,
+            "benign": 2000,
+            "tp": 0,
+            "fn": 0,
+            "fp": 329,
+            "tn": 1671,
+            "recall": null,
+            "fpr": 0.1645,
+            "recall_wilson95": null,
+            "fpr_wilson95": [
+              0.148898411257462,
+              0.18138792746825866
+            ]
+          },
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+            "attacks": 638,
+            "benign": 0,
+            "tp": 619,
+            "fn": 19,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9702194357366771,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9539570736230444,
+              0.9808532159809137
+            ],
+            "fpr_wilson95": null
+          }
+        },
+        "source": {
+          "datasets/crossdist-eval-v3-complement.jsonl": {
+            "attacks": 1677,
+            "benign": 1145,
+            "tp": 1652,
+            "fn": 25,
+            "fp": 4,
+            "tn": 1141,
+            "recall": 0.9850924269528921,
+            "fpr": 0.0034934497816593887,
+            "recall_wilson95": [
+              0.9780853438968655,
+              0.9898822127467755
+            ],
+            "fpr_wilson95": [
+              0.0013593475424305444,
+              0.008947957029298258
+            ]
+          },
+          "datasets/external-real-v1.jsonl": {
+            "attacks": 34,
+            "benign": 427,
+            "tp": 34,
+            "fn": 0,
+            "fp": 325,
+            "tn": 102,
+            "recall": 1.0,
+            "fpr": 0.7611241217798594,
+            "recall_wilson95": [
+              0.8984854458466761,
+              0.9999999999999999
+            ],
+            "fpr_wilson95": [
+              0.7184659011936962,
+              0.7991258844492153
+            ]
+          },
+          "datasets/external-real-v3.jsonl": {
+            "attacks": 289,
+            "benign": 428,
+            "tp": 278,
+            "fn": 11,
+            "fp": 0,
+            "tn": 428,
+            "recall": 0.9619377162629758,
+            "fpr": 0.0,
+            "recall_wilson95": [
+              0.9331401897484635,
+              0.9786159566497936
+            ],
+            "fpr_wilson95": [
+              0.0,
+              0.008895530390214679
+            ]
+          }
+        }
+      }
+    },
+    "v17-minilm": {
+      "identity": {
+        "model_sha256": "de28be9c6808bf31bacc0f1664187534a5cabb433dbad48eb529ccc5e25f2954",
+        "tokenizer_sha256": "0d3aef594edd5f9b53e7f814277a9171dc70ff93eb66bda6e01f7aa53997d963",
+        "calibration_sha256": "ee9868f8b7bc3d6b8ab8691e482867bf6dae230a9350a5db930c59b8c81a9c69",
+        "rows_sha256": "8eec56e645f061c727f4acb1c4f1a2ab7e621265bdf70d15f631134ddf942a2f",
+        "labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ],
+        "max_length": 256,
+        "format_version": 2,
+        "runtime": {
+          "platform": "Windows-11-10.0.26300-SP0",
+          "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
+          "machine": "AMD64",
+          "logical_cpus": 8,
+          "python": "3.12.10",
+          "onnxruntime": "1.27.0",
+          "numpy": "2.4.6",
+          "provider": "CPUExecutionProvider"
+        },
+        "batch_size": 8,
+        "threads": 2,
+        "latency_samples": 40
+      },
+      "model_bytes": 91774954,
+      "scoring": {
+        "batch_size": 8,
+        "threads": 2,
+        "seconds": 271.64011879998725,
+        "note": "Batch throughput; not per-request latency."
+      },
+      "latency": {
+        "fixed256": {
+          "p50_ms": 155.94304999831365,
+          "p95_ms": 228.38103499962017,
+          "mean_ms": 164.91674249882635,
+          "samples": 40
+        },
+        "dynamic": {
+          "p50_ms": 25.61854999657953,
+          "p95_ms": 164.4071750073634,
+          "mean_ms": 63.668937500187894,
+          "samples": 40
+        },
+        "measured_at_utc": "2026-09-20T12:10:10.515643+00:00",
+        "runtime": {
+          "platform": "Windows-11-10.0.26300-SP0",
+          "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
+          "machine": "AMD64",
+          "logical_cpus": 8,
+          "python": "3.12.10",
+          "onnxruntime": "1.27.0",
+          "numpy": "2.4.6",
+          "provider": "CPUExecutionProvider"
+        },
+        "padding_argmax_flips": 0,
+        "batch_argmax_flips": 0,
+        "padding_decision_flips": {
+          "raw_argmax": 0,
+          "shared_attack_probability_0.90": 0,
+          "shared_input_gate": 0,
+          "shared_input_gate_with_mte": 0,
+          "input_gate_with_artifact_truncation": 0
+        },
+        "batching_decision_flips": {
+          "raw_argmax": 0,
+          "shared_attack_probability_0.90": 0,
+          "shared_input_gate": 0,
+          "shared_input_gate_with_mte": 0,
+          "input_gate_with_artifact_truncation": 0
+        },
+        "max_padding_probability_delta": 0.0,
+        "note": "CPU batch-one ONNX inference/feed allocation only; length-stratified diagnostic, concurrent host activity possible."
+      },
+      "metrics": {
+        "raw_argmax": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1978,
+          "fn": 22,
+          "fp": 378,
+          "tn": 1622,
+          "recall": 0.989,
+          "fpr": 0.189,
+          "recall_wilson95": [
+            0.9834005531702528,
+            0.9927245745886817
+          ],
+          "fpr_wilson95": [
+            0.1724439847429343,
+            0.206748418666005
+          ]
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1954,
+          "fn": 46,
+          "fp": 310,
+          "tn": 1690,
+          "recall": 0.977,
+          "fpr": 0.155,
+          "recall_wilson95": [
+            0.9694587928717646,
+            0.9827123440219199
+          ],
+          "fpr_wilson95": [
+            0.13980191433164452,
+            0.17152084829241998
+          ]
+        },
+        "shared_input_gate": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1955,
+          "fn": 45,
+          "fp": 322,
+          "tn": 1678,
+          "recall": 0.9775,
+          "fpr": 0.161,
+          "recall_wilson95": [
+            0.9700270953304039,
+            0.9831421245159996
+          ],
+          "fpr_wilson95": [
+            0.14554475026587133,
+            0.1777550077908181
+          ]
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1955,
+          "fn": 45,
+          "fp": 323,
+          "tn": 1677,
+          "recall": 0.9775,
+          "fpr": 0.1615,
+          "recall_wilson95": [
+            0.9700270953304039,
+            0.9831421245159996
+          ],
+          "fpr_wilson95": [
+            0.1460236816757033,
+            0.17827415933370488
+          ]
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1948,
+          "fn": 52,
+          "fp": 297,
+          "tn": 1703,
+          "recall": 0.974,
+          "fpr": 0.1485,
+          "recall_wilson95": [
+            0.9660647268553368,
+            0.9801179123220352
+          ],
+          "fpr_wilson95": [
+            0.13358986385449248,
+            0.1647578203842283
+          ]
+        }
+      },
+      "truncated_rows": 1063,
+      "unknown_token_rate": 0.0017864408503712745,
+      "slices": {
+        "language": {
+          "de": {
+            "attacks": 117,
+            "benign": 0,
+            "tp": 114,
+            "fn": 3,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9743589743589743,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9273169764853294,
+              0.9912419442961798
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 51015,
+            "unknown_tokens": 0,
+            "unknown_token_rate": 0.0
+          },
+          "en": {
+            "attacks": 1300,
+            "benign": 2000,
+            "tp": 1265,
+            "fn": 35,
+            "fp": 322,
+            "tn": 1678,
+            "recall": 0.9730769230769231,
+            "fpr": 0.161,
+            "recall_wilson95": [
+              0.9627876356481814,
+              0.9805785931819074
+            ],
+            "fpr_wilson95": [
+              0.14554475026587133,
+              0.1777550077908181
+            ],
+            "content_tokens": 342736,
+            "unknown_tokens": 1119,
+            "unknown_token_rate": 0.003264903599271743
+          },
+          "es": {
+            "attacks": 117,
+            "benign": 0,
+            "tp": 114,
+            "fn": 3,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9743589743589743,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9273169764853294,
+              0.9912419442961798
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 50280,
+            "unknown_tokens": 2,
+            "unknown_token_rate": 3.977724741447892e-05
+          },
+          "fr": {
+            "attacks": 117,
+            "benign": 0,
+            "tp": 115,
+            "fn": 2,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9829059829059829,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9398099145713432,
+              0.9952996173954185
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 45481,
+            "unknown_tokens": 1,
+            "unknown_token_rate": 2.19872034475935e-05
+          },
+          "it": {
+            "attacks": 117,
+            "benign": 0,
+            "tp": 117,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "recall": 1.0,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9682107543372667,
+              1.0
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 48691,
+            "unknown_tokens": 0,
+            "unknown_token_rate": 0.0
+          },
+          "nl": {
+            "attacks": 116,
+            "benign": 0,
+            "tp": 116,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "recall": 1.0,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9679454935003613,
+              1.0
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 45235,
+            "unknown_tokens": 1,
+            "unknown_token_rate": 2.2106775726760254e-05
+          },
+          "sv": {
+            "attacks": 116,
+            "benign": 0,
+            "tp": 114,
+            "fn": 2,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9827586206896551,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9393090758931745,
+              0.9952589867968294
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 45746,
+            "unknown_tokens": 1,
+            "unknown_token_rate": 2.185983473964937e-05
+          }
+        },
+        "label": {
+          "JAILBREAK": {
+            "attacks": 23,
+            "benign": 0,
+            "tp": 23,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "recall": 1.0,
+            "fpr": null,
+            "recall_wilson95": [
+              0.8568833815495731,
+              1.0
+            ],
+            "fpr_wilson95": null
+          },
+          "PII": {
+            "attacks": 700,
+            "benign": 0,
+            "tp": 690,
+            "fn": 10,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9857142857142858,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9739045679656114,
+              0.9922220951885582
+            ],
+            "fpr_wilson95": null
+          },
+          "PROMPT_INJECTION": {
+            "attacks": 639,
+            "benign": 0,
+            "tp": 626,
+            "fn": 13,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9796557120500783,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9655060272924226,
+              0.9880727930975398
+            ],
+            "fpr_wilson95": null
+          },
+          "SAFE": {
+            "attacks": 0,
+            "benign": 2000,
+            "tp": 0,
+            "fn": 0,
+            "fp": 322,
+            "tn": 1678,
+            "recall": null,
+            "fpr": 0.161,
+            "recall_wilson95": null,
+            "fpr_wilson95": [
+              0.14554475026587133,
+              0.1777550077908181
+            ]
+          },
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+            "attacks": 638,
+            "benign": 0,
+            "tp": 616,
+            "fn": 22,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9655172413793104,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9483426480500199,
+              0.9771195386578988
+            ],
+            "fpr_wilson95": null
+          }
+        },
+        "source": {
+          "datasets/crossdist-eval-v3-complement.jsonl": {
+            "attacks": 1677,
+            "benign": 1145,
+            "tp": 1645,
+            "fn": 32,
+            "fp": 3,
+            "tn": 1142,
+            "recall": 0.9809183064997018,
+            "fpr": 0.0026200873362445414,
+            "recall_wilson95": [
+              0.9731870098865713,
+              0.9864513852370872
+            ],
+            "fpr_wilson95": [
+              0.0008914574985816235,
+              0.007674962824372734
+            ]
+          },
+          "datasets/external-real-v1.jsonl": {
+            "attacks": 34,
+            "benign": 427,
+            "tp": 34,
+            "fn": 0,
+            "fp": 319,
+            "tn": 108,
+            "recall": 1.0,
+            "fpr": 0.747072599531616,
+            "recall_wilson95": [
+              0.8984854458466761,
+              0.9999999999999999
+            ],
+            "fpr_wilson95": [
+              0.7037647857054183,
+              0.7859745271674712
+            ]
+          },
+          "datasets/external-real-v3.jsonl": {
+            "attacks": 289,
+            "benign": 428,
+            "tp": 276,
+            "fn": 13,
+            "fp": 0,
+            "tn": 428,
+            "recall": 0.9550173010380623,
+            "fpr": 0.0,
+            "recall_wilson95": [
+              0.9245706608353289,
+              0.973526217452093
+            ],
+            "fpr_wilson95": [
+              0.0,
+              0.008895530390214679
+            ]
+          }
+        }
+      }
+    },
+    "v17-multilingual": {
+      "identity": {
+        "model_sha256": "23a7e652794579862b30cf487dcca083288e3c90a46cf7f7876c595ce130cdfb",
+        "tokenizer_sha256": "c2c0e4d392f08c2c2eb950156eb26e4e5ddd15b557faa45ed6a0decaf45b5f98",
+        "calibration_sha256": "46de51eee40912afb77a787dd5b5c48b4139239768b0d2a24e3a1844462df917",
+        "rows_sha256": "8eec56e645f061c727f4acb1c4f1a2ab7e621265bdf70d15f631134ddf942a2f",
+        "labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ],
+        "max_length": 256,
+        "format_version": 2,
+        "runtime": {
+          "platform": "Windows-11-10.0.26300-SP0",
+          "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
+          "machine": "AMD64",
+          "logical_cpus": 8,
+          "python": "3.12.10",
+          "onnxruntime": "1.27.0",
+          "numpy": "2.4.6",
+          "provider": "CPUExecutionProvider"
+        },
+        "batch_size": 8,
+        "threads": 2,
+        "latency_samples": 40
+      },
+      "model_bytes": 541224554,
+      "scoring": {
+        "batch_size": 8,
+        "threads": 2,
+        "seconds": 726.6840359000198,
+        "note": "Batch throughput; not per-request latency."
+      },
+      "latency": {
+        "fixed256": {
+          "p50_ms": 326.9649499998195,
+          "p95_ms": 421.68514501536254,
+          "mean_ms": 336.25684500148054,
+          "samples": 40
+        },
+        "dynamic": {
+          "p50_ms": 62.97680000716355,
+          "p95_ms": 376.3846700065186,
+          "mean_ms": 145.2593850030098,
+          "samples": 40
+        },
+        "measured_at_utc": "2026-09-21T02:59:53.058228+00:00",
+        "runtime": {
+          "platform": "Windows-11-10.0.26300-SP0",
+          "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
+          "machine": "AMD64",
+          "logical_cpus": 8,
+          "python": "3.12.10",
+          "onnxruntime": "1.27.0",
+          "numpy": "2.4.6",
+          "provider": "CPUExecutionProvider"
+        },
+        "padding_argmax_flips": 0,
+        "batch_argmax_flips": 0,
+        "padding_decision_flips": {
+          "raw_argmax": 0,
+          "shared_attack_probability_0.90": 0,
+          "shared_input_gate": 0,
+          "shared_input_gate_with_mte": 0,
+          "input_gate_with_artifact_truncation": 0
+        },
+        "batching_decision_flips": {
+          "raw_argmax": 0,
+          "shared_attack_probability_0.90": 0,
+          "shared_input_gate": 0,
+          "shared_input_gate_with_mte": 0,
+          "input_gate_with_artifact_truncation": 0
+        },
+        "max_padding_probability_delta": 0.0,
+        "note": "CPU batch-one ONNX inference/feed allocation only; length-stratified diagnostic, concurrent host activity possible."
+      },
+      "metrics": {
+        "raw_argmax": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1981,
+          "fn": 19,
+          "fp": 397,
+          "tn": 1603,
+          "recall": 0.9905,
+          "fpr": 0.1985,
+          "recall_wilson95": [
+            0.9852096168457007,
+            0.9939097597713902
+          ],
+          "fpr_wilson95": [
+            0.18160423854818175,
+            0.21655174096241375
+          ]
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1966,
+          "fn": 34,
+          "fp": 331,
+          "tn": 1669,
+          "recall": 0.983,
+          "fpr": 0.1655,
+          "recall_wilson95": [
+            0.9763388128481535,
+            0.987809319478156
+          ],
+          "fpr_wilson95": [
+            0.14985708438214576,
+            0.1824254202490124
+          ]
+        },
+        "shared_input_gate": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1970,
+          "fn": 30,
+          "fp": 343,
+          "tn": 1657,
+          "recall": 0.985,
+          "fpr": 0.1715,
+          "recall_wilson95": [
+            0.9786675621742913,
+            0.9894729019628932
+          ],
+          "fpr_wilson95": [
+            0.15561353012721865,
+            0.1886459699365645
+          ]
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1970,
+          "fn": 30,
+          "fp": 343,
+          "tn": 1657,
+          "recall": 0.985,
+          "fpr": 0.1715,
+          "recall_wilson95": [
+            0.9786675621742913,
+            0.9894729019628932
+          ],
+          "fpr_wilson95": [
+            0.15561353012721865,
+            0.1886459699365645
+          ]
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1960,
+          "fn": 40,
+          "fp": 263,
+          "tn": 1737,
+          "recall": 0.98,
+          "fpr": 0.1315,
+          "recall_wilson95": [
+            0.9728813608112625,
+            0.9852782737987344
+          ],
+          "fpr_wilson95": [
+            0.11739290085531223,
+            0.14701996299097114
+          ]
+        }
+      },
+      "truncated_rows": 1104,
+      "unknown_token_rate": 0.0018485664501821637,
+      "slices": {
+        "language": {
+          "de": {
+            "attacks": 117,
+            "benign": 0,
+            "tp": 116,
+            "fn": 1,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9914529914529915,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9531704967258107,
+              0.9984896464262035
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 43599,
+            "unknown_tokens": 19,
+            "unknown_token_rate": 0.00043578981169292876
+          },
+          "en": {
+            "attacks": 1300,
+            "benign": 2000,
+            "tp": 1273,
+            "fn": 27,
+            "fp": 343,
+            "tn": 1657,
+            "recall": 0.9792307692307692,
+            "fpr": 0.1715,
+            "recall_wilson95": [
+              0.9699502675622097,
+              0.9856873918868071
+            ],
+            "fpr_wilson95": [
+              0.15561353012721865,
+              0.1886459699365645
+            ],
+            "content_tokens": 376495,
+            "unknown_tokens": 1065,
+            "unknown_token_rate": 0.0028287228250043163
+          },
+          "es": {
+            "attacks": 117,
+            "benign": 0,
+            "tp": 117,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "recall": 1.0,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9682107543372667,
+              1.0
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 44314,
+            "unknown_tokens": 5,
+            "unknown_token_rate": 0.00011283115945299454
+          },
+          "fr": {
+            "attacks": 117,
+            "benign": 0,
+            "tp": 117,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "recall": 1.0,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9682107543372667,
+              1.0
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 42467,
+            "unknown_tokens": 21,
+            "unknown_token_rate": 0.0004945016130171663
+          },
+          "it": {
+            "attacks": 117,
+            "benign": 0,
+            "tp": 116,
+            "fn": 1,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9914529914529915,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9531704967258107,
+              0.9984896464262035
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 42281,
+            "unknown_tokens": 32,
+            "unknown_token_rate": 0.00075684113431565
+          },
+          "nl": {
+            "attacks": 116,
+            "benign": 0,
+            "tp": 115,
+            "fn": 1,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9913793103448276,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9527801658718213,
+              0.9984766122233615
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 39028,
+            "unknown_tokens": 1,
+            "unknown_token_rate": 2.562262990673363e-05
+          },
+          "sv": {
+            "attacks": 116,
+            "benign": 0,
+            "tp": 116,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "recall": 1.0,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9679454935003613,
+              1.0
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 43116,
+            "unknown_tokens": 24,
+            "unknown_token_rate": 0.0005566379070414695
+          }
+        },
+        "label": {
+          "JAILBREAK": {
+            "attacks": 23,
+            "benign": 0,
+            "tp": 22,
+            "fn": 1,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9565217391304348,
+            "fpr": null,
+            "recall_wilson95": [
+              0.7900884492974114,
+              0.9922833338565469
+            ],
+            "fpr_wilson95": null
+          },
+          "PII": {
+            "attacks": 700,
+            "benign": 0,
+            "tp": 697,
+            "fn": 3,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9957142857142857,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9874760835631917,
+              0.9985414226559166
+            ],
+            "fpr_wilson95": null
+          },
+          "PROMPT_INJECTION": {
+            "attacks": 639,
+            "benign": 0,
+            "tp": 630,
+            "fn": 9,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9859154929577465,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9734508446448258,
+              0.9925727238089532
+            ],
+            "fpr_wilson95": null
+          },
+          "SAFE": {
+            "attacks": 0,
+            "benign": 2000,
+            "tp": 0,
+            "fn": 0,
+            "fp": 343,
+            "tn": 1657,
+            "recall": null,
+            "fpr": 0.1715,
+            "recall_wilson95": null,
+            "fpr_wilson95": [
+              0.15561353012721865,
+              0.1886459699365645
+            ]
+          },
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+            "attacks": 638,
+            "benign": 0,
+            "tp": 621,
+            "fn": 17,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9733542319749217,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9577441175672494,
+              0.9832982406340685
+            ],
+            "fpr_wilson95": null
+          }
+        },
+        "source": {
+          "datasets/crossdist-eval-v3-complement.jsonl": {
+            "attacks": 1677,
+            "benign": 1145,
+            "tp": 1658,
+            "fn": 19,
+            "fp": 6,
+            "tn": 1139,
+            "recall": 0.9886702444841979,
+            "fpr": 0.005240174672489083,
+            "recall_wilson95": [
+              0.982371972679066,
+              0.9927348652674165
+            ],
+            "fpr_wilson95": [
+              0.0024037658454385226,
+              0.011385307223839167
+            ]
+          },
+          "datasets/external-real-v1.jsonl": {
+            "attacks": 34,
+            "benign": 427,
+            "tp": 33,
+            "fn": 1,
+            "fp": 336,
+            "tn": 91,
+            "recall": 0.9705882352941176,
+            "fpr": 0.7868852459016393,
+            "recall_wilson95": [
+              0.8508442670731406,
+              0.9947890937237309
+            ],
+            "fpr_wilson95": [
+              0.7455748056878305,
+              0.8230798467001216
+            ]
+          },
+          "datasets/external-real-v3.jsonl": {
+            "attacks": 289,
+            "benign": 428,
+            "tp": 279,
+            "fn": 10,
+            "fp": 1,
+            "tn": 427,
+            "recall": 0.9653979238754326,
+            "fpr": 0.002336448598130841,
+            "recall_wilson95": [
+              0.9374875881504661,
+              0.9810981923032089
+            ],
+            "fpr_wilson95": [
+              0.0004125596805913626,
+              0.0131143000068653
+            ]
+          }
+        }
+      }
+    },
+    "v18-candidate": {
+      "identity": {
+        "model_sha256": "ecf9e1d2e957da6ba72b714a0fc0c8f8d566b48588c0257dfd8a309e4020fba5",
+        "tokenizer_sha256": "c2c0e4d392f08c2c2eb950156eb26e4e5ddd15b557faa45ed6a0decaf45b5f98",
+        "calibration_sha256": "7cdd06f36737d397d21a3b65dc7fca5761e0ffff52d466abd3fc4070706bf4fa",
+        "rows_sha256": "8eec56e645f061c727f4acb1c4f1a2ab7e621265bdf70d15f631134ddf942a2f",
+        "labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ],
+        "max_length": 256,
+        "format_version": 2,
+        "runtime": {
+          "platform": "Windows-11-10.0.26300-SP0",
+          "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
+          "machine": "AMD64",
+          "logical_cpus": 8,
+          "python": "3.12.10",
+          "onnxruntime": "1.27.0",
+          "numpy": "2.4.6",
+          "provider": "CPUExecutionProvider"
+        },
+        "batch_size": 8,
+        "threads": 2,
+        "latency_samples": 40
+      },
+      "model_bytes": 207134105,
+      "scoring": {
+        "batch_size": 8,
+        "threads": 2,
+        "seconds": 90.82841500002542,
+        "note": "Batch throughput; not per-request latency."
+      },
+      "latency": {
+        "fixed256": {
+          "p50_ms": 56.34384999575559,
+          "p95_ms": 75.08145999454426,
+          "mean_ms": 56.027837497822475,
+          "samples": 40
+        },
+        "dynamic": {
+          "p50_ms": 13.42635000764858,
+          "p95_ms": 73.82218500715679,
+          "mean_ms": 23.606037499121157,
+          "samples": 40
+        },
+        "measured_at_utc": "2026-09-21T03:01:30.702258+00:00",
+        "runtime": {
+          "platform": "Windows-11-10.0.26300-SP0",
+          "processor": "Intel64 Family 6 Model 142 Stepping 10, GenuineIntel",
+          "machine": "AMD64",
+          "logical_cpus": 8,
+          "python": "3.12.10",
+          "onnxruntime": "1.27.0",
+          "numpy": "2.4.6",
+          "provider": "CPUExecutionProvider"
+        },
+        "padding_argmax_flips": 0,
+        "batch_argmax_flips": 0,
+        "padding_decision_flips": {
+          "raw_argmax": 0,
+          "shared_attack_probability_0.90": 0,
+          "shared_input_gate": 0,
+          "shared_input_gate_with_mte": 0,
+          "input_gate_with_artifact_truncation": 0
+        },
+        "batching_decision_flips": {
+          "raw_argmax": 0,
+          "shared_attack_probability_0.90": 0,
+          "shared_input_gate": 0,
+          "shared_input_gate_with_mte": 0,
+          "input_gate_with_artifact_truncation": 0
+        },
+        "max_padding_probability_delta": 0.0,
+        "note": "CPU batch-one ONNX inference/feed allocation only; length-stratified diagnostic, concurrent host activity possible."
+      },
+      "metrics": {
+        "raw_argmax": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1805,
+          "fn": 195,
+          "fp": 535,
+          "tn": 1465,
+          "recall": 0.9025,
+          "fpr": 0.2675,
+          "recall_wilson95": [
+            0.8887174867496197,
+            0.9147392901889715
+          ],
+          "fpr_wilson95": [
+            0.24855932409894407,
+            0.2873321028868385
+          ]
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1730,
+          "fn": 270,
+          "fp": 375,
+          "tn": 1625,
+          "recall": 0.865,
+          "fpr": 0.1875,
+          "recall_wilson95": [
+            0.8493218663610855,
+            0.8792786891235997
+          ],
+          "fpr_wilson95": [
+            0.1709991046047915,
+            0.20519904994599153
+          ]
+        },
+        "shared_input_gate": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1739,
+          "fn": 261,
+          "fp": 393,
+          "tn": 1607,
+          "recall": 0.8695,
+          "fpr": 0.1965,
+          "recall_wilson95": [
+            0.8540258583313894,
+            0.8835574437277646
+          ],
+          "fpr_wilson95": [
+            0.17967444607855565,
+            0.21448920162116486
+          ]
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1741,
+          "fn": 259,
+          "fp": 395,
+          "tn": 1605,
+          "recall": 0.8705,
+          "fpr": 0.1975,
+          "recall_wilson95": [
+            0.8550719644987861,
+            0.8845075034658054
+          ],
+          "fpr_wilson95": [
+            0.18063925588488788,
+            0.21552055772027012
+          ]
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1707,
+          "fn": 293,
+          "fp": 276,
+          "tn": 1724,
+          "recall": 0.8535,
+          "fpr": 0.138,
+          "recall_wilson95": [
+            0.8373251458577445,
+            0.8683195017144097
+          ],
+          "fpr_wilson95": [
+            0.12357689890263988,
+            0.15381104332898723
+          ]
+        }
+      },
+      "truncated_rows": 1104,
+      "unknown_token_rate": 0.0018485664501821637,
+      "slices": {
+        "language": {
+          "de": {
+            "attacks": 117,
+            "benign": 0,
+            "tp": 117,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "recall": 1.0,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9682107543372667,
+              1.0
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 43599,
+            "unknown_tokens": 19,
+            "unknown_token_rate": 0.00043578981169292876
+          },
+          "en": {
+            "attacks": 1300,
+            "benign": 2000,
+            "tp": 1041,
+            "fn": 259,
+            "fp": 393,
+            "tn": 1607,
+            "recall": 0.8007692307692308,
+            "fpr": 0.1965,
+            "recall_wilson95": [
+              0.7781845685137966,
+              0.8215816029863087
+            ],
+            "fpr_wilson95": [
+              0.17967444607855565,
+              0.21448920162116486
+            ],
+            "content_tokens": 376495,
+            "unknown_tokens": 1065,
+            "unknown_token_rate": 0.0028287228250043163
+          },
+          "es": {
+            "attacks": 117,
+            "benign": 0,
+            "tp": 117,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "recall": 1.0,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9682107543372667,
+              1.0
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 44314,
+            "unknown_tokens": 5,
+            "unknown_token_rate": 0.00011283115945299454
+          },
+          "fr": {
+            "attacks": 117,
+            "benign": 0,
+            "tp": 117,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "recall": 1.0,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9682107543372667,
+              1.0
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 42467,
+            "unknown_tokens": 21,
+            "unknown_token_rate": 0.0004945016130171663
+          },
+          "it": {
+            "attacks": 117,
+            "benign": 0,
+            "tp": 117,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "recall": 1.0,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9682107543372667,
+              1.0
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 42281,
+            "unknown_tokens": 32,
+            "unknown_token_rate": 0.00075684113431565
+          },
+          "nl": {
+            "attacks": 116,
+            "benign": 0,
+            "tp": 116,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "recall": 1.0,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9679454935003613,
+              1.0
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 39028,
+            "unknown_tokens": 1,
+            "unknown_token_rate": 2.562262990673363e-05
+          },
+          "sv": {
+            "attacks": 116,
+            "benign": 0,
+            "tp": 114,
+            "fn": 2,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9827586206896551,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9393090758931745,
+              0.9952589867968294
+            ],
+            "fpr_wilson95": null,
+            "content_tokens": 43116,
+            "unknown_tokens": 24,
+            "unknown_token_rate": 0.0005566379070414695
+          }
+        },
+        "label": {
+          "JAILBREAK": {
+            "attacks": 23,
+            "benign": 0,
+            "tp": 23,
+            "fn": 0,
+            "fp": 0,
+            "tn": 0,
+            "recall": 1.0,
+            "fpr": null,
+            "recall_wilson95": [
+              0.8568833815495731,
+              1.0
+            ],
+            "fpr_wilson95": null
+          },
+          "PII": {
+            "attacks": 700,
+            "benign": 0,
+            "tp": 698,
+            "fn": 2,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9971428571428571,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9896429368497794,
+              0.9992161183786059
+            ],
+            "fpr_wilson95": null
+          },
+          "PROMPT_INJECTION": {
+            "attacks": 639,
+            "benign": 0,
+            "tp": 627,
+            "fn": 12,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.9812206572769953,
+            "fpr": null,
+            "recall_wilson95": [
+              0.9674646277380802,
+              0.9892253796678362
+            ],
+            "fpr_wilson95": null
+          },
+          "SAFE": {
+            "attacks": 0,
+            "benign": 2000,
+            "tp": 0,
+            "fn": 0,
+            "fp": 393,
+            "tn": 1607,
+            "recall": null,
+            "fpr": 0.1965,
+            "recall_wilson95": null,
+            "fpr_wilson95": [
+              0.17967444607855565,
+              0.21448920162116486
+            ]
+          },
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+            "attacks": 638,
+            "benign": 0,
+            "tp": 391,
+            "fn": 247,
+            "fp": 0,
+            "tn": 0,
+            "recall": 0.6128526645768025,
+            "fpr": null,
+            "recall_wilson95": [
+              0.574487755712314,
+              0.6498667137926359
+            ],
+            "fpr_wilson95": null
+          }
+        },
+        "source": {
+          "datasets/crossdist-eval-v3-complement.jsonl": {
+            "attacks": 1677,
+            "benign": 1145,
+            "tp": 1542,
+            "fn": 135,
+            "fp": 37,
+            "tn": 1108,
+            "recall": 0.9194991055456172,
+            "fpr": 0.032314410480349345,
+            "recall_wilson95": [
+              0.9054985704924847,
+              0.9315821622657221
+            ],
+            "fpr_wilson95": [
+              0.02353388085760407,
+              0.044222603923681374
+            ]
+          },
+          "datasets/external-real-v1.jsonl": {
+            "attacks": 34,
+            "benign": 427,
+            "tp": 33,
+            "fn": 1,
+            "fp": 318,
+            "tn": 109,
+            "recall": 0.9705882352941176,
+            "fpr": 0.7447306791569087,
+            "recall_wilson95": [
+              0.8508442670731406,
+              0.9947890937237309
+            ],
+            "fpr_wilson95": [
+              0.7013201297070951,
+              0.7837771043707907
+            ]
+          },
+          "datasets/external-real-v3.jsonl": {
+            "attacks": 289,
+            "benign": 428,
+            "tp": 164,
+            "fn": 125,
+            "fp": 38,
+            "tn": 390,
+            "recall": 0.5674740484429066,
+            "fpr": 0.08878504672897196,
+            "recall_wilson95": [
+              0.5098392114061405,
+              0.623338652674504
+            ],
+            "fpr_wilson95": [
+              0.06536813838910545,
+              0.11951790529630475
+            ]
+          }
+        }
+      }
+    }
+  },
+  "paired": {
+    "v14_vs_v17-minilm": {
+      "raw_argmax": {
+        "attack_a_only": 9,
+        "attack_b_only": 4,
+        "benign_a_only_flag": 18,
+        "benign_b_only_flag": 21
+      },
+      "shared_attack_probability_0.90": {
+        "attack_a_only": 16,
+        "attack_b_only": 13,
+        "benign_a_only_flag": 30,
+        "benign_b_only_flag": 20
+      },
+      "shared_input_gate": {
+        "attack_a_only": 18,
+        "attack_b_only": 9,
+        "benign_a_only_flag": 22,
+        "benign_b_only_flag": 15
+      },
+      "shared_input_gate_with_mte": {
+        "attack_a_only": 18,
+        "attack_b_only": 9,
+        "benign_a_only_flag": 22,
+        "benign_b_only_flag": 15
+      },
+      "input_gate_with_artifact_truncation": {
+        "attack_a_only": 16,
+        "attack_b_only": 22,
+        "benign_a_only_flag": 16,
+        "benign_b_only_flag": 78
+      }
+    },
+    "v14_vs_v17-multilingual": {
+      "raw_argmax": {
+        "attack_a_only": 9,
+        "attack_b_only": 7,
+        "benign_a_only_flag": 29,
+        "benign_b_only_flag": 51
+      },
+      "shared_attack_probability_0.90": {
+        "attack_a_only": 18,
+        "attack_b_only": 27,
+        "benign_a_only_flag": 40,
+        "benign_b_only_flag": 51
+      },
+      "shared_input_gate": {
+        "attack_a_only": 15,
+        "attack_b_only": 21,
+        "benign_a_only_flag": 36,
+        "benign_b_only_flag": 50
+      },
+      "shared_input_gate_with_mte": {
+        "attack_a_only": 15,
+        "attack_b_only": 21,
+        "benign_a_only_flag": 37,
+        "benign_b_only_flag": 50
+      },
+      "input_gate_with_artifact_truncation": {
+        "attack_a_only": 17,
+        "attack_b_only": 35,
+        "benign_a_only_flag": 44,
+        "benign_b_only_flag": 72
+      }
+    },
+    "v14_vs_v18-candidate": {
+      "raw_argmax": {
+        "attack_a_only": 182,
+        "attack_b_only": 4,
+        "benign_a_only_flag": 42,
+        "benign_b_only_flag": 202
+      },
+      "shared_attack_probability_0.90": {
+        "attack_a_only": 240,
+        "attack_b_only": 13,
+        "benign_a_only_flag": 79,
+        "benign_b_only_flag": 134
+      },
+      "shared_input_gate": {
+        "attack_a_only": 236,
+        "attack_b_only": 11,
+        "benign_a_only_flag": 66,
+        "benign_b_only_flag": 130
+      },
+      "shared_input_gate_with_mte": {
+        "attack_a_only": 234,
+        "attack_b_only": 11,
+        "benign_a_only_flag": 66,
+        "benign_b_only_flag": 131
+      },
+      "input_gate_with_artifact_truncation": {
+        "attack_a_only": 255,
+        "attack_b_only": 20,
+        "benign_a_only_flag": 102,
+        "benign_b_only_flag": 143
+      }
+    },
+    "v17-minilm_vs_v17-multilingual": {
+      "raw_argmax": {
+        "attack_a_only": 10,
+        "attack_b_only": 13,
+        "benign_a_only_flag": 28,
+        "benign_b_only_flag": 47
+      },
+      "shared_attack_probability_0.90": {
+        "attack_a_only": 17,
+        "attack_b_only": 29,
+        "benign_a_only_flag": 34,
+        "benign_b_only_flag": 55
+      },
+      "shared_input_gate": {
+        "attack_a_only": 15,
+        "attack_b_only": 30,
+        "benign_a_only_flag": 32,
+        "benign_b_only_flag": 53
+      },
+      "shared_input_gate_with_mte": {
+        "attack_a_only": 15,
+        "attack_b_only": 30,
+        "benign_a_only_flag": 33,
+        "benign_b_only_flag": 53
+      },
+      "input_gate_with_artifact_truncation": {
+        "attack_a_only": 24,
+        "attack_b_only": 36,
+        "benign_a_only_flag": 83,
+        "benign_b_only_flag": 49
+      }
+    },
+    "v17-minilm_vs_v18-candidate": {
+      "raw_argmax": {
+        "attack_a_only": 179,
+        "attack_b_only": 6,
+        "benign_a_only_flag": 44,
+        "benign_b_only_flag": 201
+      },
+      "shared_attack_probability_0.90": {
+        "attack_a_only": 241,
+        "attack_b_only": 17,
+        "benign_a_only_flag": 67,
+        "benign_b_only_flag": 132
+      },
+      "shared_input_gate": {
+        "attack_a_only": 235,
+        "attack_b_only": 19,
+        "benign_a_only_flag": 61,
+        "benign_b_only_flag": 132
+      },
+      "shared_input_gate_with_mte": {
+        "attack_a_only": 233,
+        "attack_b_only": 19,
+        "benign_a_only_flag": 62,
+        "benign_b_only_flag": 134
+      },
+      "input_gate_with_artifact_truncation": {
+        "attack_a_only": 265,
+        "attack_b_only": 24,
+        "benign_a_only_flag": 140,
+        "benign_b_only_flag": 119
+      }
+    },
+    "v17-multilingual_vs_v18-candidate": {
+      "raw_argmax": {
+        "attack_a_only": 182,
+        "attack_b_only": 6,
+        "benign_a_only_flag": 41,
+        "benign_b_only_flag": 179
+      },
+      "shared_attack_probability_0.90": {
+        "attack_a_only": 246,
+        "attack_b_only": 10,
+        "benign_a_only_flag": 75,
+        "benign_b_only_flag": 119
+      },
+      "shared_input_gate": {
+        "attack_a_only": 242,
+        "attack_b_only": 11,
+        "benign_a_only_flag": 65,
+        "benign_b_only_flag": 115
+      },
+      "shared_input_gate_with_mte": {
+        "attack_a_only": 240,
+        "attack_b_only": 11,
+        "benign_a_only_flag": 63,
+        "benign_b_only_flag": 115
+      },
+      "input_gate_with_artifact_truncation": {
+        "attack_a_only": 264,
+        "attack_b_only": 11,
+        "benign_a_only_flag": 113,
+        "benign_b_only_flag": 126
+      }
+    }
+  }
+}

@@ -31,7 +31,9 @@ export interface ResultRow {
     status: Status;
 }
 
-export const RESULTS_DIR = path.resolve(__dirname, "../../../artifacts/phase2");
+export const RESULTS_DIR = process.env.SOTERAI_TEST_RESULTS_DIR
+    ? path.resolve(process.env.SOTERAI_TEST_RESULTS_DIR)
+    : path.resolve(__dirname, "../../../artifacts/phase2");
 const RESULTS_FILE = path.join(RESULTS_DIR, "results.jsonl");
 
 export function record(row: ResultRow): void {

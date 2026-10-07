@@ -1,0 +1,150 @@
+{
+  "file": "artifacts/ml/v18-balanced-comparison-rows.jsonl",
+  "rows": 4000,
+  "baselineLabels": [
+    "PROMPT_INJECTION",
+    "JAILBREAK",
+    "SYSTEM_PROMPT_LEAK_ATTEMPT",
+    "PII",
+    "SECRET",
+    "RAG_POISONING",
+    "ENCODING_OBFUSCATION",
+    "MODEL_EXTRACTION",
+    "TOOL_CALL_ABUSE"
+  ],
+  "allCandidates": [
+    "MULTI_TURN_ESCALATION",
+    "DATA_EXFILTRATION_ATTEMPT",
+    "UNSAFE_OUTPUT",
+    "TOXICITY_HARASSMENT"
+  ],
+  "restrictedTo": [
+    "DATA_EXFILTRATION_ATTEMPT"
+  ],
+  "candidatesTested": [
+    "DATA_EXFILTRATION_ATTEMPT"
+  ],
+  "candidatesNotInBattery": [],
+  "arms": {
+    "baseline": {
+      "recall": 94.85,
+      "fpr": 23,
+      "caught": 1897,
+      "attacks": 2000,
+      "fp": 460,
+      "benign": 2000
+    },
+    "DATA_EXFILTRATION_ATTEMPT": {
+      "recall": 94.9,
+      "fpr": 23.05,
+      "caught": 1898,
+      "attacks": 2000,
+      "fp": 461,
+      "benign": 2000
+    }
+  },
+  "perCandidate": [
+    {
+      "label": "DATA_EXFILTRATION_ATTEMPT",
+      "ownLabelRecallBefore": 100,
+      "ownLabelRecallAfter": 100,
+      "ownLabelRulesOnlyRecall": 79.17,
+      "attacksGained": 1,
+      "falsePositivesAdded": 1,
+      "verdict": "HOLD OUT (cost exceeds gain)"
+    }
+  ],
+  "perLabelDetail": {
+    "DATA_EXFILTRATION_ATTEMPT": {
+      "attacks": 24,
+      "caught": 24,
+      "benign": 0,
+      "fp": 0,
+      "rulesCaught": 19
+    },
+    "ENCODING_OBFUSCATION": {
+      "attacks": 10,
+      "caught": 10,
+      "benign": 0,
+      "fp": 0,
+      "rulesCaught": 8
+    },
+    "JAILBREAK": {
+      "attacks": 295,
+      "caught": 270,
+      "benign": 0,
+      "fp": 0,
+      "rulesCaught": 205
+    },
+    "MODEL_EXTRACTION": {
+      "attacks": 31,
+      "caught": 26,
+      "benign": 0,
+      "fp": 0,
+      "rulesCaught": 13
+    },
+    "MULTI_TURN_ESCALATION": {
+      "attacks": 37,
+      "caught": 34,
+      "benign": 0,
+      "fp": 0,
+      "rulesCaught": 15
+    },
+    "PII": {
+      "attacks": 686,
+      "caught": 678,
+      "benign": 0,
+      "fp": 0,
+      "rulesCaught": 272
+    },
+    "PROMPT_INJECTION": {
+      "attacks": 514,
+      "caught": 475,
+      "benign": 0,
+      "fp": 0,
+      "rulesCaught": 171
+    },
+    "RAG_POISONING": {
+      "attacks": 24,
+      "caught": 23,
+      "benign": 0,
+      "fp": 0,
+      "rulesCaught": 17
+    },
+    "SECRET": {
+      "attacks": 16,
+      "caught": 16,
+      "benign": 0,
+      "fp": 0,
+      "rulesCaught": 12
+    },
+    "SYSTEM_PROMPT_LEAK_ATTEMPT": {
+      "attacks": 294,
+      "caught": 274,
+      "benign": 0,
+      "fp": 0,
+      "rulesCaught": 97
+    },
+    "TOOL_CALL_ABUSE": {
+      "attacks": 67,
+      "caught": 66,
+      "benign": 0,
+      "fp": 0,
+      "rulesCaught": 58
+    },
+    "TOXICITY_HARASSMENT": {
+      "attacks": 2,
+      "caught": 2,
+      "benign": 0,
+      "fp": 0,
+      "rulesCaught": 1
+    },
+    "SAFE": {
+      "attacks": 0,
+      "caught": 0,
+      "benign": 2000,
+      "fp": 461,
+      "rulesCaught": 0
+    }
+  }
+}

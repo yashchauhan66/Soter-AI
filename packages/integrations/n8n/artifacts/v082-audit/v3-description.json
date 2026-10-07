@@ -1,0 +1,2917 @@
+{
+  "displayName": "SoterAI",
+  "iconColor": "purple",
+  "group": [
+    "transform"
+  ],
+  "description": "Detect prompt injection, jailbreaks, secrets, PII, and unsafe AI instructions in n8n workflows",
+  "defaultVersion": 3,
+  "codex": {
+    "categories": [
+      "Development",
+      "Utility"
+    ],
+    "alias": [
+      "security",
+      "guardrail",
+      "guardrails",
+      "prompt injection",
+      "jailbreak",
+      "firewall",
+      "PII",
+      "redact",
+      "secrets",
+      "moderation",
+      "safety",
+      "OWASP"
+    ],
+    "resources": {
+      "primaryDocumentation": [
+        {
+          "url": "https://github.com/yashchauhan66/Soter-AI/tree/main/packages/integrations/n8n"
+        }
+      ]
+    }
+  },
+  "version": 3,
+  "subtitle": "={{\n  ((parameters) => {\n    const labels = {\"inputGuard\":\"Guard Input\",\"outputGuard\":\"Guard Output\",\"universalGuard\":\"Universal Firewall\",\"analyzeText\":\"Analyze Text\",\"piiRedactor\":\"Redact Secrets or PII\",\"ragScanner\":\"Scan Document\",\"workflowAudit\":\"Audit Workflow\",\"enrollIdentity\":\"Enroll Identity\",\"issuePassport\":\"Issue Passport\",\"validatePassport\":\"Validate Passport\",\"toolCall\":\"Check Tool Call\",\"revokePassport\":\"Revoke Passport\"};\n    const options = parameters.options || {};\n    const operation = parameters.operation;\n    const label = labels[operation] || operation;\n    let base = [\"inputGuard\",\"outputGuard\",\"universalGuard\"].includes(operation)\n      ? label + \" (\" + String(parameters.onThreat || \"BLOCK\").toLowerCase() + \")\"\n      : label;\n    const sensitivity = String(parameters.sensitivity || \"BALANCED\");\n    if ([\"inputGuard\",\"outputGuard\"].includes(operation) && sensitivity !== \"BALANCED\") {\n      base = base + \" · \" + sensitivity.toLowerCase();\n    }\n    if ([\"workflowAudit\",\"enrollIdentity\",\"issuePassport\",\"validatePassport\",\"revokePassport\"].includes(operation)) return base;\n    const engine = String(options.detectionEngine || \"AUTO\");\n    if (engine !== \"AUTO\") base = base + \" · \" + engine.toLowerCase();\n    if (operation === \"piiRedactor\" && options.branchOnRedaction) {\n      base = base + \" · branching\";\n    }\n    return base;\n  })($parameter)\n}}",
+  "defaults": {
+    "name": "SoterAI"
+  },
+  "usableAsTool": true,
+  "inputs": [
+    "main"
+  ],
+  "outputs": "={{\n  ((parameters) => {\n    const options = parameters.options || {};\n    if ([\"piiRedactor\"].includes(parameters.operation)) {\n      if (options.branchOnRedaction) {\n        return [\n          { displayName: \"Clean\", type: \"main\" },\n          { displayName: \"Redacted\", type: \"main\" }\n        ];\n      }\n      return [{ displayName: \"\", type: \"main\" }];\n    }\n    return [\n      { displayName: \"Safe\", type: \"main\" },\n      { displayName: \"Flagged\", type: \"main\" }\n    ];\n  })($parameter)\n}}",
+  "credentials": [
+    {
+      "name": "soterApi",
+      "required": false
+    }
+  ],
+  "hints": [
+    {
+      "message": "Flagged items leave through the second output. Connect it to a response or stop step, or leave it unconnected to drop them — but do not connect it back into your main path.",
+      "type": "info",
+      "location": "outputPane",
+      "displayCondition": "={{ ![\"piiRedactor\"].includes($parameter[\"operation\"]) }}",
+      "whenToDisplay": "beforeExecution"
+    },
+    {
+      "message": "Passport token fields are masked in the editor. Keep <b>Include Raw API Response</b> off for lifecycle workflows unless debugging; token-shaped keys in raw responses are redacted.",
+      "type": "info",
+      "location": "ndv",
+      "displayCondition": "={{ [\"issuePassport\", \"validatePassport\", \"toolCall\"].includes($parameter[\"operation\"]) }}"
+    },
+    {
+      "message": "<b>On Threat</b> is set to Continue, so nothing is ever stopped and the <b>Flagged</b> output stays empty. Use Block or Redact for real enforcement.",
+      "type": "warning",
+      "location": "ndv",
+      "displayCondition": "={{ [\"inputGuard\",\"outputGuard\",\"universalGuard\"].includes($parameter[\"operation\"]) && $parameter[\"onThreat\"] === \"CONTINUE\" }}"
+    },
+    {
+      "message": "No <b>Session ID</b> set. Each message will be judged on its own, so an attack spread across several turns can pass one harmless-looking message at a time. Add one under <b>Options</b>.",
+      "type": "info",
+      "location": "ndv",
+      "displayCondition": "={{ [\"inputGuard\",\"outputGuard\",\"universalGuard\"].includes($parameter[\"operation\"]) && !($parameter[\"options\"] || {})[\"sessionId\"] }}"
+    },
+    {
+      "message": "<b>Topic Handling</b> is set to Advisory, so your <b>Allowed Semantic Topics</b> only annotate the result. If ordinary questions about these topics are being blocked, switch it to <b>Trust My Topics</b> under <b>Options</b>.",
+      "type": "info",
+      "location": "ndv",
+      "displayCondition": "={{ [\"inputGuard\",\"universalGuard\"].includes($parameter[\"operation\"]) && !!($parameter[\"options\"] || {})[\"allowedTopics\"] && ($parameter[\"options\"] || {})[\"topicHandling\"] === \"ADVISORY\" }}"
+    },
+    {
+      "message": "<b>Always Allow</b> skips detection completely for messages that match one of your lines exactly. Nothing about them is scanned, and the result is marked <code>bypassed: ALWAYS_ALLOW</code>. Keep the list to the questions you are certain about.",
+      "type": "warning",
+      "location": "ndv",
+      "displayCondition": "={{ [\"inputGuard\",\"universalGuard\"].includes($parameter[\"operation\"]) && !!($parameter[\"options\"] || {})[\"alwaysAllow\"] }}"
+    },
+    {
+      "message": "<b>Sensitivity</b> is Lenient: borderline findings are reported but not enforced, so expect fewer stops and more items on <b>Safe</b>. Live secrets and clear injection or jailbreak attempts are still stopped at every level.",
+      "type": "info",
+      "location": "ndv",
+      "displayCondition": "={{ [\"inputGuard\",\"outputGuard\"].includes($parameter[\"operation\"]) && $parameter[\"sensitivity\"] === \"LENIENT\" }}"
+    },
+    {
+      "message": "Local mode can only compare the output against <b>Protected Sources</b> whose text is supplied inline, because resolving a bare source ID needs the cloud fingerprint store. Sources given by ID alone are reported as unresolved, never as clean.",
+      "type": "warning",
+      "location": "ndv",
+      "displayCondition": "={{ $parameter[\"operation\"] === \"universalGuard\" && ($parameter[\"options\"] || {})[\"detectionEngine\"] === \"LOCAL\" }}"
+    },
+    {
+      "message": "<b>Reduced protection:</b> Local is a pattern-only first filter (measured prompt-injection recall is about 18% on the published out-of-distribution corpus). It has no ML tier, cross-turn tracking, reputation, or passport enforcement. Use Auto for cloud-first production protection.",
+      "type": "warning",
+      "location": "outputPane",
+      "displayCondition": "={{ [\"inputGuard\",\"outputGuard\",\"universalGuard\",\"analyzeText\",\"piiRedactor\",\"ragScanner\",\"toolCall\"].includes($parameter[\"operation\"]) && ($parameter[\"options\"] || {})[\"detectionEngine\"] === \"LOCAL\" }}",
+      "whenToDisplay": "beforeExecution"
+    },
+    {
+      "message": "Identity and passport lifecycle operations use server-side state. They require a SoterAI API Key (x-api-key) and never fall back to Local.",
+      "type": "info",
+      "location": "ndv",
+      "displayCondition": "={{ [\"enrollIdentity\",\"issuePassport\",\"validatePassport\",\"revokePassport\"].includes($parameter[\"operation\"]) }}"
+    },
+    {
+      "message": "Redaction branching is active. Clean items leave through <b>Clean</b> (output 1) and items with redacted PII/secrets leave through <b>Redacted</b> (output 2).",
+      "type": "info",
+      "location": "outputPane",
+      "displayCondition": "={{ $parameter[\"operation\"] === \"piiRedactor\" && ($parameter[\"options\"] || {}).branchOnRedaction === true }}",
+      "whenToDisplay": "beforeExecution"
+    },
+    {
+      "message": "<b>On Threat</b> is set to Block, but <b>Also Enforce On Sensitive Data</b> is off under Options. Secrets and personal data will be redacted and continue through <b>Safe</b>. Turn it on under Options if you want Block to stop them.",
+      "type": "info",
+      "location": "ndv",
+      "displayCondition": "={{ [\"inputGuard\",\"outputGuard\",\"universalGuard\"].includes($parameter[\"operation\"]) && $parameter[\"onThreat\"] === \"BLOCK\" && !($parameter[\"options\"] || {})[\"enforceOnSensitiveData\"] }}"
+    },
+    {
+      "message": "<b>Custom JSON Only</b> starts from an empty policy, so this agent would be granted nothing. Add <b>Policy Overrides (JSON)</b> under <b>Options</b>.",
+      "type": "warning",
+      "location": "ndv",
+      "displayCondition": "={{ [\"enrollIdentity\",\"issuePassport\"].includes($parameter[\"operation\"]) && $parameter[\"passportPolicyPreset\"] === \"CUSTOM\" && !($parameter[\"options\"] || {})[\"passportPolicy\"] }}"
+    }
+  ],
+  "properties": [
+    {
+      "displayName": "Resource",
+      "name": "resource",
+      "type": "options",
+      "noDataExpression": true,
+      "options": [
+        {
+          "name": "Guardrail",
+          "value": "guardrail",
+          "description": "Check a prompt, an AI response, or a whole AI turn for threats"
+        },
+        {
+          "name": "RAG Document",
+          "value": "ragDocument",
+          "description": "Check a document before it enters a knowledge base"
+        },
+        {
+          "name": "Workflow",
+          "value": "workflow",
+          "description": "Review an n8n workflow's own AI security risks"
+        },
+        {
+          "name": "Agent Passport",
+          "value": "agentPassport",
+          "description": "Give an agent an identity, a short-lived pass, and per-call authorization"
+        }
+      ],
+      "default": "guardrail"
+    },
+    {
+      "displayName": "Operation",
+      "name": "operation",
+      "type": "options",
+      "noDataExpression": true,
+      "displayOptions": {
+        "show": {
+          "resource": [
+            "guardrail"
+          ]
+        }
+      },
+      "options": [
+        {
+          "name": "Guard Input",
+          "value": "inputGuard",
+          "description": "Check a user's message before it reaches the AI, and block or clean it. Start here.",
+          "action": "Check user input for threats"
+        },
+        {
+          "name": "Guard Output",
+          "value": "outputGuard",
+          "description": "Check the AI's reply before the user sees it, and block or clean it",
+          "action": "Check AI output for threats"
+        },
+        {
+          "name": "Universal Firewall",
+          "value": "universalGuard",
+          "description": "All-in-one guard for prompt, files, tools, memory, output, and data leaks. Most complete.",
+          "action": "Protect an AI workflow end to end"
+        },
+        {
+          "name": "Analyze Text",
+          "value": "analyzeText",
+          "description": "Score any text for risk without blocking — Safe and risky items are split so you decide",
+          "action": "Analyze text for AI security risks"
+        },
+        {
+          "name": "Redact Secrets or PII",
+          "value": "piiRedactor",
+          "description": "Get a cleaned copy of text with personal data and secrets removed. Use it downstream.",
+          "action": "Redact secrets and PII from text"
+        }
+      ],
+      "default": "inputGuard"
+    },
+    {
+      "displayName": "Operation",
+      "name": "operation",
+      "type": "options",
+      "noDataExpression": true,
+      "displayOptions": {
+        "show": {
+          "resource": [
+            "ragDocument"
+          ]
+        }
+      },
+      "options": [
+        {
+          "name": "Scan Document",
+          "value": "ragScanner",
+          "description": "Check a document before adding it to a knowledge base. Poisoned files are flagged.",
+          "action": "Scan a RAG document for threats"
+        }
+      ],
+      "default": "ragScanner"
+    },
+    {
+      "displayName": "Operation",
+      "name": "operation",
+      "type": "options",
+      "noDataExpression": true,
+      "displayOptions": {
+        "show": {
+          "resource": [
+            "workflow"
+          ]
+        }
+      },
+      "options": [
+        {
+          "name": "Audit Workflow",
+          "value": "workflowAudit",
+          "description": "Score a workflow's AI, tool, webhook, code, and data-leak risks. Runs locally, sends nothing.",
+          "action": "Audit an n8n workflow for AI security risks"
+        }
+      ],
+      "default": "workflowAudit"
+    },
+    {
+      "displayName": "Operation",
+      "name": "operation",
+      "type": "options",
+      "noDataExpression": true,
+      "displayOptions": {
+        "show": {
+          "resource": [
+            "agentPassport"
+          ]
+        }
+      },
+      "options": [
+        {
+          "name": "Enroll Identity",
+          "value": "enrollIdentity",
+          "description": "Give an AI agent a reusable identity with a safe, least-privilege starting policy",
+          "action": "Enroll an agent identity"
+        },
+        {
+          "name": "Issue Passport",
+          "value": "issuePassport",
+          "description": "Give an enrolled agent a short-lived access pass for one session",
+          "action": "Issue an agent passport"
+        },
+        {
+          "name": "Validate Passport",
+          "value": "validatePassport",
+          "description": "Check that an agent's session pass is still valid, and whether an action is allowed",
+          "action": "Validate an agent passport"
+        },
+        {
+          "name": "Check Tool Call",
+          "value": "toolCall",
+          "description": "Check one tool call an agent wants to make before it runs",
+          "action": "Check an agent tool call"
+        },
+        {
+          "name": "Revoke Passport",
+          "value": "revokePassport",
+          "description": "Cancel an agent's access pass when the task ends or something looks wrong",
+          "action": "Revoke an agent passport"
+        }
+      ],
+      "default": "enrollIdentity"
+    },
+    {
+      "displayName": "This operation enforces. <b>On Threat</b> decides what happens to anything flagged, and flagged items leave through the <b>Flagged</b> output instead of the main path.",
+      "name": "enforcingNotice",
+      "type": "notice",
+      "default": "",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "inputGuard",
+            "outputGuard",
+            "universalGuard"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Reports risk without blocking, but it still routes: anything it flags leaves through <b>Flagged</b>. Connect that output to stop the item, or leave it unconnected to drop it.",
+      "name": "reportOnlyNotice",
+      "type": "notice",
+      "default": "",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "analyzeText",
+            "ragScanner"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Never blocks and never stops an item. The cleaned copy arrives as <code>{{ $json.outputText }}</code> on the single output; the text you pass in is not modified in place.",
+      "name": "redactNotice",
+      "type": "notice",
+      "default": "",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "piiRedactor"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "The workflow JSON is analysed in-process and never sent to SoterAI. Static review only — it never executes the workflow or resolves a credential.",
+      "name": "auditNotice",
+      "type": "notice",
+      "default": "",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "workflowAudit"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "<b>Step 1 of 5:</b> Register the agent once, then pass <code>{{ $json.agentIdentityId }}</code> to <b>Issue Access Pass</b>.",
+      "name": "enrollIdentityNotice",
+      "type": "notice",
+      "default": "",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "enrollIdentity"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "<b>Step 2 of 5:</b> Issue a short-lived access pass for one session. Pass <code>sessionId</code> and <code>passportToken</code> by expression; never paste the token into workflow JSON.",
+      "name": "issuePassportNotice",
+      "type": "notice",
+      "default": "",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "issuePassport"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "<b>Step 3 of 5:</b> Validate the session and token. Session ID and Passport Token auto-pick from incoming item if left empty. Tool Name and Tool Action test authorization for a specific call.",
+      "name": "validatePassportNotice",
+      "type": "notice",
+      "default": "",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "validatePassport"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "<b>Step 4 of 5:</b> Put this immediately before the real tool. ALLOW leaves through <b>Safe</b>; blocked, invalid, or approval-required calls leave through <b>Flagged</b>.",
+      "name": "toolCallNotice",
+      "type": "notice",
+      "default": "",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "toolCall"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "<b>Step 5 of 5:</b> Revoke by Session ID or Access Pass ID when the task ends. Successful revocation returns <code>PASSPORT_REVOKED</code> on <b>Safe</b>.",
+      "name": "revokePassportNotice",
+      "type": "notice",
+      "default": "",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "revokePassport"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Agent Name",
+      "name": "agentName",
+      "type": "string",
+      "default": "",
+      "placeholder": "Customer Support Agent",
+      "description": "Unique human-readable identity name within the SoterAI project",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "enrollIdentity"
+          ]
+        }
+      },
+      "required": true
+    },
+    {
+      "displayName": "Agent Type",
+      "name": "agentType",
+      "type": "options",
+      "options": [
+        {
+          "name": "Browser Agent",
+          "value": "BROWSER_AGENT"
+        },
+        {
+          "name": "Chatbot",
+          "value": "CHATBOT"
+        },
+        {
+          "name": "Coding Agent",
+          "value": "CODING_AGENT"
+        },
+        {
+          "name": "Computer Use",
+          "value": "COMPUTER_USE"
+        },
+        {
+          "name": "Custom",
+          "value": "CUSTOM"
+        },
+        {
+          "name": "MCP Agent",
+          "value": "MCP_AGENT"
+        },
+        {
+          "name": "RAG Agent",
+          "value": "RAG_AGENT"
+        }
+      ],
+      "default": "CUSTOM",
+      "description": "Agent category recorded on the identity",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "enrollIdentity"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Agent Description",
+      "name": "agentDescription",
+      "type": "string",
+      "typeOptions": {
+        "rows": 2
+      },
+      "default": "",
+      "description": "Optional purpose and ownership description",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "enrollIdentity"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Agent Identity ID",
+      "name": "agentIdentityId",
+      "type": "string",
+      "default": "",
+      "placeholder": "={{ $json.agentIdentityID }}",
+      "description": "Identity ID returned by Register Agent",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "issuePassport"
+          ]
+        }
+      },
+      "required": true
+    },
+    {
+      "displayName": "Passport Token",
+      "name": "passportToken",
+      "type": "string",
+      "typeOptions": {
+        "password": true
+      },
+      "default": "",
+      "placeholder": "={{ $json.passportToken }}",
+      "description": "Raw short-lived token returned by Issue Passport. Use an expression; do not hard-code it in workflow JSON.",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "validatePassport",
+            "toolCall"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Session ID",
+      "name": "sessionId",
+      "type": "string",
+      "default": "",
+      "placeholder": "={{ $json.sessionId }}",
+      "hint": "Use the same value in every passport step. Revoke accepts this or Passport ID.",
+      "description": "Stable per-conversation ID tying this step to the rest of the passport flow. Validate Passport is refused without it, and Revoke accepts this or the Passport ID.",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "issuePassport",
+            "validatePassport",
+            "toolCall",
+            "revokePassport"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Passport ID",
+      "name": "passportId",
+      "type": "string",
+      "default": "",
+      "placeholder": "={{ $json.passportID }}",
+      "description": "Passport ID to revoke. Optional when Session ID is provided.",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "revokePassport"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Revocation Reason",
+      "name": "revokeReason",
+      "type": "string",
+      "default": "",
+      "placeholder": "Task completed or credential suspected compromised",
+      "description": "Audit-safe reason for revocation",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "revokePassport"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Tool Name",
+      "name": "toolName",
+      "type": "string",
+      "default": "",
+      "placeholder": "gmail.send",
+      "description": "Tool or function the agent plans to call",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "toolCall"
+          ]
+        }
+      },
+      "required": true
+    },
+    {
+      "displayName": "Tool Name",
+      "name": "toolName",
+      "type": "string",
+      "default": "",
+      "placeholder": "gmail.send",
+      "description": "Optional tool or function to check the pass against",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "validatePassport"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Tool Action",
+      "name": "toolAction",
+      "type": "string",
+      "default": "",
+      "placeholder": "send_email",
+      "description": "Action the tool will perform",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "toolCall"
+          ]
+        }
+      },
+      "required": true
+    },
+    {
+      "displayName": "Tool Action",
+      "name": "toolAction",
+      "type": "string",
+      "default": "",
+      "placeholder": "send_email",
+      "description": "Optional action to check the pass against",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "validatePassport"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Passport Lifetime (Seconds)",
+      "name": "passportTtlSeconds",
+      "type": "number",
+      "typeOptions": {
+        "minValue": 60,
+        "maxValue": 86400
+      },
+      "default": 3600,
+      "description": "Short lifetime for the issued credential (60 seconds to 24 hours)",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "issuePassport"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Policy Preset",
+      "name": "passportPolicyPreset",
+      "type": "options",
+      "options": [
+        {
+          "name": "Read Only (Recommended)",
+          "value": "READ_ONLY",
+          "description": "Allows browser.read, browser.open, rag.search, calendar.read, filesystem.read. Blocks terminal.run, filesystem.delete, payments.charge, secrets.read, and asks for approval on browser.submit_form, gmail.send, filesystem.write, api.call, mcp.tool.call."
+        },
+        {
+          "name": "Customer Support",
+          "value": "SUPPORT",
+          "description": "Allows rag.search, crm.read, orders.read, tickets.read. Blocks terminal.run, filesystem.delete, secrets.read, payments.charge, and asks for approval on gmail.send, crm.update, tickets.update, payments.refund."
+        },
+        {
+          "name": "Coding Agent",
+          "value": "CODING",
+          "description": "Allows filesystem.read, repository.search, tests.run. Blocks secrets.read, filesystem.delete, payments.charge, and asks for approval on filesystem.write, terminal.run, git.push, package.publish."
+        },
+        {
+          "name": "Custom JSON Only",
+          "value": "CUSTOM",
+          "description": "Starts from an empty policy — no allowed tools, no blocked tools, no scopes. Everything the agent may do has to come from Policy Overrides (JSON) under Options."
+        }
+      ],
+      "default": "READ_ONLY",
+      "description": "Least-privilege starting policy. Access Policy JSON overrides keys from this preset.",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "enrollIdentity",
+            "issuePassport"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Input Text",
+      "name": "inputText",
+      "type": "string",
+      "typeOptions": {
+        "rows": 4
+      },
+      "default": "",
+      "placeholder": "={{ $json.chatInput }}",
+      "hint": "Usually an expression pointing at the previous node, such as {{ $json.chatInput }} or {{ $json.message }}",
+      "description": "The user message to check for prompt injection, jailbreaks, and other threats",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "inputGuard",
+            "universalGuard",
+            "analyzeText"
+          ]
+        }
+      },
+      "required": true
+    },
+    {
+      "displayName": "AI Output Text",
+      "name": "outputText",
+      "type": "string",
+      "typeOptions": {
+        "rows": 4
+      },
+      "default": "",
+      "placeholder": "={{ $json.output }}",
+      "hint": "The LLM node's response, such as {{ $json.output }} or {{ $json.text }}. Downstream nodes should reference {{ $json.safeText }} or {{ $json.outputText }} for sanitized content.",
+      "description": "The AI-generated response to check before sending to the user",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "outputGuard"
+          ]
+        }
+      },
+      "required": true
+    },
+    {
+      "displayName": "AI Output Text (Optional)",
+      "name": "universalOutputText",
+      "type": "string",
+      "typeOptions": {
+        "rows": 4
+      },
+      "default": "",
+      "placeholder": "={{ $json.output }}",
+      "hint": "Leave empty to check the input only. Fill it in to check both directions in this one node",
+      "description": "Optional AI response to check before sending, saving, or calling another tool",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "universalGuard"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Text",
+      "name": "piiText",
+      "type": "string",
+      "typeOptions": {
+        "rows": 4
+      },
+      "default": "",
+      "placeholder": "={{ $json.text }}",
+      "hint": "Usually an expression pointing at the previous node, such as {{ $json.text }}",
+      "description": "The text to scan and redact PII from",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "piiRedactor"
+          ]
+        }
+      },
+      "required": true
+    },
+    {
+      "displayName": "Document Text",
+      "name": "ragText",
+      "type": "string",
+      "typeOptions": {
+        "rows": 4
+      },
+      "default": "",
+      "placeholder": "={{ $json.pageContent }}",
+      "hint": "The chunk or document body, such as {{ $json.pageContent }} from a loader node",
+      "description": "Document or chunk text to scan before adding to a vector database",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "ragScanner"
+          ]
+        }
+      },
+      "required": true
+    },
+    {
+      "displayName": "Document ID",
+      "name": "documentId",
+      "type": "string",
+      "default": "",
+      "placeholder": "={{ $json.documentId }}",
+      "hint": "Any stable ID for this document, so repeat scans can be correlated",
+      "description": "Stable identifier used to track the document scan",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "ragScanner"
+          ]
+        }
+      },
+      "required": true
+    },
+    {
+      "displayName": "Document Source",
+      "name": "documentSource",
+      "type": "options",
+      "options": [
+        {
+          "name": "API",
+          "value": "api"
+        },
+        {
+          "name": "Email",
+          "value": "email"
+        },
+        {
+          "name": "File Upload",
+          "value": "upload"
+        },
+        {
+          "name": "Unknown",
+          "value": "unknown"
+        },
+        {
+          "name": "URL",
+          "value": "url"
+        }
+      ],
+      "default": "api",
+      "hint": "Be accurate — untrusted sources like Email and URL are held to a stricter standard",
+      "description": "Where the document entered the RAG pipeline",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "ragScanner"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Workflow JSON",
+      "name": "workflowJson",
+      "type": "json",
+      "typeOptions": {
+        "rows": 10
+      },
+      "default": "={{JSON.stringify($json)}}",
+      "hint": "Defaults to the incoming item. To audit a saved workflow, paste its export from the n8n canvas menu",
+      "description": "Exported n8n workflow JSON to audit before production use",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "workflowAudit"
+          ]
+        }
+      },
+      "required": true
+    },
+    {
+      "displayName": "Protection Profile",
+      "name": "protectionProfile",
+      "type": "options",
+      "options": [
+        {
+          "name": "Balanced",
+          "value": "BALANCED",
+          "description": "Lower-friction protection for internal workflows and testing"
+        },
+        {
+          "name": "Maximum Protection",
+          "value": "MAXIMUM",
+          "description": "Strict fail-closed protection for production AI agents and public chatbots"
+        },
+        {
+          "name": "Strict",
+          "value": "STRICT",
+          "description": "Block critical threats and require review for high-risk behavior"
+        }
+      ],
+      "default": "MAXIMUM",
+      "hint": "Sets HOW MUCH gets flagged. 'On Threat' below sets WHAT HAPPENS once something is flagged",
+      "description": "How strict detection is. Maximum suits production and public chatbots.",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "universalGuard"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "On Threat",
+      "name": "onThreat",
+      "type": "options",
+      "options": [
+        {
+          "name": "Block",
+          "value": "BLOCK",
+          "description": "Stop the workflow item"
+        },
+        {
+          "name": "Continue",
+          "value": "CONTINUE",
+          "description": "Ignore the threat and continue"
+        },
+        {
+          "name": "Redact",
+          "value": "REDACT",
+          "description": "Continue with redacted safe text"
+        },
+        {
+          "name": "Warn",
+          "value": "WARN",
+          "description": "Continue but flag the threat in output"
+        }
+      ],
+      "default": "BLOCK",
+      "hint": "Sets WHAT HAPPENS once something is flagged. To change the wording a customer sees, use Customer Replies below",
+      "description": "What this node does locally once SoterAI flags a threat",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "inputGuard",
+            "outputGuard",
+            "universalGuard"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Sensitivity",
+      "name": "sensitivity",
+      "type": "options",
+      "options": [
+        {
+          "name": "Balanced (Default)",
+          "value": "BALANCED",
+          "description": "Stop anything the engine judges unsafe. Same behaviour as every previous version of this node."
+        },
+        {
+          "name": "Lenient (Fewest Blocks)",
+          "value": "LENIENT",
+          "description": "Stop only confident, high-risk verdicts. Borderline findings are reported and the message continues — best for public helpdesks where a wrong block costs a customer."
+        },
+        {
+          "name": "Strict (Most Blocks)",
+          "value": "STRICT",
+          "description": "Also act on findings Balanced would only report. Expect more false positives."
+        }
+      ],
+      "default": "BALANCED",
+      "hint": "Sets HOW MUCH gets flagged. 'On Threat' sets WHAT HAPPENS. On Output Guard under Lenient, detected secrets are redacted into safeText and outputText rather than hard-blocked, letting the assistant response continue.",
+      "description": "How much risk is enough to act on. Live secrets and clear attacks are always acted on whatever this is set to — `sensitivity.effect` on the result says when the dial was overruled, and why.",
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "inputGuard",
+            "outputGuard"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Security Context",
+      "name": "securityContext",
+      "type": "fixedCollection",
+      "default": {},
+      "placeholder": "Add Security Layer",
+      "description": "Optional extra layers to check alongside the prompt and response. Add only the ones your workflow actually has — each is independent.",
+      "options": [
+        {
+          "displayName": "Retrieved Context (RAG)",
+          "name": "rag",
+          "values": [
+            {
+              "displayName": "Retrieved Text",
+              "name": "text",
+              "type": "string",
+              "typeOptions": {
+                "rows": 3
+              },
+              "default": "",
+              "placeholder": "={{ $json.context }}",
+              "hint": "The chunk the vector store returned, before the model reads it",
+              "description": "Retrieved document text to scan for poisoning and hidden instructions"
+            },
+            {
+              "displayName": "Document ID",
+              "name": "documentId",
+              "type": "string",
+              "default": "",
+              "placeholder": "={{ $json.documentId }}",
+              "description": "Optional stable ID so repeat scans of the same document can be correlated"
+            },
+            {
+              "displayName": "Source",
+              "name": "source",
+              "type": "options",
+              "options": [
+                {
+                  "name": "API",
+                  "value": "api"
+                },
+                {
+                  "name": "Email",
+                  "value": "email"
+                },
+                {
+                  "name": "File Upload",
+                  "value": "upload"
+                },
+                {
+                  "name": "Unknown",
+                  "value": "unknown"
+                },
+                {
+                  "name": "URL",
+                  "value": "url"
+                }
+              ],
+              "default": "api",
+              "hint": "Be accurate — Email and URL are treated as untrusted and held to a stricter standard",
+              "description": "Where this document entered the RAG pipeline"
+            }
+          ]
+        },
+        {
+          "displayName": "Tool Call",
+          "name": "tool",
+          "values": [
+            {
+              "displayName": "Content",
+              "name": "content",
+              "type": "string",
+              "typeOptions": {
+                "rows": 2
+              },
+              "default": "",
+              "placeholder": "={{ $json.toolPayload }}",
+              "description": "Optional payload the AI generated for the call. Defaults to Input Text when empty."
+            },
+            {
+              "displayName": "Destination",
+              "name": "destination",
+              "type": "options",
+              "options": [
+                {
+                  "name": "External (Leaves Your Systems)",
+                  "value": "external"
+                },
+                {
+                  "name": "Internal (Your Own Services)",
+                  "value": "internal"
+                },
+                {
+                  "name": "Local (Same Workflow)",
+                  "value": "local"
+                },
+                {
+                  "name": "Unknown",
+                  "value": "unknown"
+                }
+              ],
+              "default": "external",
+              "hint": "External is judged most strictly, because that is where data actually leaves",
+              "description": "How far the tool call reaches"
+            },
+            {
+              "displayName": "Risk Context (JSON)",
+              "name": "riskContext",
+              "type": "json",
+              "typeOptions": {
+                "rows": 3
+              },
+              "default": "",
+              "placeholder": "{ \"canSendMessage\": true, \"canModifyData\": false, \"canRunCode\": false }",
+              "hint": "Optional capability flags describing what this tool is able to do",
+              "description": "JSON object of capability flags used to weigh how dangerous the call is"
+            },
+            {
+              "displayName": "Target",
+              "name": "target",
+              "type": "string",
+              "default": "",
+              "placeholder": "customer@example.com",
+              "description": "Optional recipient, URL, table, or file the call would act on"
+            },
+            {
+              "displayName": "Tool Action",
+              "name": "action",
+              "type": "string",
+              "default": "",
+              "placeholder": "send",
+              "hint": "Required once this layer is added",
+              "description": "What the call would do, such as send, write, delete, or query"
+            },
+            {
+              "displayName": "Tool Name",
+              "name": "name",
+              "type": "string",
+              "default": "",
+              "placeholder": "email.send",
+              "hint": "Required once this layer is added",
+              "description": "The tool or function the AI wants to call"
+            }
+          ]
+        },
+        {
+          "displayName": "Memory Operation",
+          "name": "memory",
+          "values": [
+            {
+              "displayName": "Operation",
+              "name": "action",
+              "type": "options",
+              "options": [
+                {
+                  "name": "Delete",
+                  "value": "DELETE"
+                },
+                {
+                  "name": "Read",
+                  "value": "READ"
+                },
+                {
+                  "name": "Store",
+                  "value": "STORE"
+                },
+                {
+                  "name": "Update",
+                  "value": "UPDATE"
+                }
+              ],
+              "default": "STORE",
+              "hint": "Store and Update are where memory poisoning actually lands",
+              "description": "What the agent is doing to its memory"
+            },
+            {
+              "displayName": "Content",
+              "name": "content",
+              "type": "string",
+              "typeOptions": {
+                "rows": 2
+              },
+              "default": "",
+              "placeholder": "={{ $json.memory }}",
+              "description": "The text being written or read. Defaults to Input Text when empty."
+            },
+            {
+              "displayName": "Memory Type",
+              "name": "memoryType",
+              "type": "string",
+              "default": "",
+              "placeholder": "profile",
+              "description": "Optional label such as profile, conversation_summary, or custom"
+            }
+          ]
+        },
+        {
+          "displayName": "Output Destination",
+          "name": "output",
+          "values": [
+            {
+              "displayName": "Destination Type",
+              "name": "destinationType",
+              "type": "options",
+              "options": [
+                {
+                  "name": "Browser Form",
+                  "value": "BROWSER_FORM"
+                },
+                {
+                  "name": "Custom",
+                  "value": "CUSTOM"
+                },
+                {
+                  "name": "Email",
+                  "value": "EMAIL"
+                },
+                {
+                  "name": "External API",
+                  "value": "EXTERNAL_API"
+                },
+                {
+                  "name": "File",
+                  "value": "FILE"
+                },
+                {
+                  "name": "Final Output (Back to the User)",
+                  "value": "FINAL_OUTPUT"
+                },
+                {
+                  "name": "Memory",
+                  "value": "MEMORY"
+                },
+                {
+                  "name": "Public Output",
+                  "value": "PUBLIC_OUTPUT"
+                },
+                {
+                  "name": "Tool",
+                  "value": "TOOL"
+                },
+                {
+                  "name": "Webhook",
+                  "value": "WEBHOOK"
+                }
+              ],
+              "default": "FINAL_OUTPUT",
+              "hint": "Where the AI output goes next. Only used when AI Output Text is filled in",
+              "description": "The destination the AI response is about to reach, used for the data-leak check"
+            },
+            {
+              "displayName": "Destination Name",
+              "name": "destinationName",
+              "type": "string",
+              "default": "",
+              "placeholder": "customer email",
+              "description": "Optional human-readable label for this destination, used in audit records"
+            },
+            {
+              "displayName": "Protected Sources (JSON)",
+              "name": "protectedSources",
+              "type": "json",
+              "typeOptions": {
+                "rows": 3
+              },
+              "default": "",
+              "placeholder": "[{ \"sourceId\": \"crm\", \"content\": \"internal customer record text\" }]",
+              "hint": "Optional. Private data the response must not leak, as a JSON array",
+              "description": "JSON array of confidential source snapshots to compare the output against"
+            }
+          ]
+        }
+      ],
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "universalGuard"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Customer Replies",
+      "name": "userMessages",
+      "type": "collection",
+      "placeholder": "Add Reply",
+      "default": {},
+      "description": "Your own wording for the customer-facing message, replacing the built-in English",
+      "options": [
+        {
+          "displayName": "Allowed Message",
+          "name": "allowed",
+          "type": "string",
+          "default": "",
+          "placeholder": "Thanks! Checking that for you now.",
+          "description": "Shown when the message passed"
+        },
+        {
+          "displayName": "Blocked Message",
+          "name": "blocked",
+          "type": "string",
+          "default": "",
+          "placeholder": "Sorry, I can't help with that one. Please rephrase it and try again.",
+          "description": "The custom block message. Used for any stopped message with no more specific reply set below, so on its own it replaces every block message the node produces."
+        },
+        {
+          "displayName": "Off-Topic Message",
+          "name": "offTopic",
+          "type": "string",
+          "default": "",
+          "placeholder": "I can only help with orders, billing and returns.",
+          "description": "Shown when Topic Handling stopped a message for being out of scope. Nothing was judged dangerous."
+        },
+        {
+          "displayName": "Prompt Injection Message",
+          "name": "promptInjection",
+          "type": "string",
+          "default": "",
+          "placeholder": "I can only help with normal support questions.",
+          "description": "Shown for prompt injection, jailbreak, or system-prompt extraction attempts"
+        },
+        {
+          "displayName": "Redacted Message",
+          "name": "redacted",
+          "type": "string",
+          "default": "",
+          "placeholder": "I've removed some private details so we can continue safely.",
+          "description": "Shown when sensitive data was removed and the message continued"
+        },
+        {
+          "displayName": "Rephrase Needed Message",
+          "name": "needsRephrase",
+          "type": "string",
+          "default": "",
+          "placeholder": "Could you rewrite that without the private details?",
+          "description": "Shown when the verdict was to ask for a safer version rather than to stop outright"
+        },
+        {
+          "displayName": "Sensitive Data Message",
+          "name": "sensitiveData",
+          "type": "string",
+          "default": "",
+          "placeholder": "Please don't share passwords or card numbers here.",
+          "description": "Shown when a secret, card number, or personal identifier was the reason"
+        }
+      ],
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "inputGuard",
+            "outputGuard",
+            "universalGuard",
+            "analyzeText"
+          ]
+        }
+      }
+    },
+    {
+      "displayName": "Options",
+      "name": "options",
+      "type": "collection",
+      "placeholder": "Add Option",
+      "default": {},
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "inputGuard"
+          ]
+        }
+      },
+      "options": [
+        {
+          "displayName": "Allowed Semantic Topics",
+          "name": "allowedTopics",
+          "type": "string",
+          "default": "",
+          "placeholder": "billing, shipping, returns, order status",
+          "hint": "Optional. Comma-separated. Topic Handling does nothing while this is empty.",
+          "description": "Subjects this assistant handles, comma-separated. Leave empty for no topic scope."
+        },
+        {
+          "displayName": "Also Enforce On Sensitive Data",
+          "name": "enforceOnSensitiveData",
+          "type": "boolean",
+          "default": false,
+          "hint": "Off: a secret or personal detail is always removed and the item continues, whatever On Threat says. On: On Threat decides — Block stops the item and routes it to Flagged. The cleaned text is used either way; this never passes an unredacted secret through.",
+          "description": "Whether On Threat also acts on an item whose only finding is a secret or personal data"
+        },
+        {
+          "displayName": "Always Allow",
+          "name": "alwaysAllow",
+          "type": "string",
+          "typeOptions": {
+            "rows": 4
+          },
+          "default": "",
+          "placeholder": "where is my order?\nhow do I reset my password?",
+          "hint": "One message per line. Matched on the WHOLE message, ignoring case and a trailing '?'",
+          "description": "Whole messages that skip detection entirely. Whole-message match, not keywords."
+        },
+        {
+          "displayName": "Detection Engine",
+          "name": "detectionEngine",
+          "type": "options",
+          "noDataExpression": true,
+          "options": [
+            {
+              "name": "Auto — Cloud, Local Fallback (Recommended)",
+              "value": "AUTO",
+              "description": "Use the cloud, and fall back to the local engine only when the cloud cannot be reached. No item is left unchecked. The right default for almost everyone."
+            },
+            {
+              "name": "Cloud Only",
+              "value": "CLOUD",
+              "description": "Full detection through the SoterAI API — ML tier, cross-turn tracking, reputation, incident history — and fail the item on an outage rather than fall back. Strongest, but needs a reachable API."
+            },
+            {
+              "name": "Local Only (No API Key, No Network)",
+              "value": "LOCAL",
+              "description": "Run the bundled rule engine inside n8n. Nothing leaves your instance and no credential is needed. Pattern-based, so weaker than Cloud."
+            }
+          ],
+          "default": "AUTO",
+          "description": "Where detection runs. Auto (cloud with local fallback) suits almost everyone."
+        },
+        {
+          "displayName": "Ignored Identifiers",
+          "name": "ignoredEntities",
+          "type": "multiOptions",
+          "default": [],
+          "options": [
+            {
+              "name": "Aadhaar Number (India)",
+              "value": "AADHAAR"
+            },
+            {
+              "name": "Address",
+              "value": "ADDRESS"
+            },
+            {
+              "name": "Bank Account Number",
+              "value": "BANK_ACCOUNT"
+            },
+            {
+              "name": "Card Number",
+              "value": "CARD"
+            },
+            {
+              "name": "Date of Birth",
+              "value": "DOB"
+            },
+            {
+              "name": "Driving Licence Number",
+              "value": "DRIVING_LICENCE"
+            },
+            {
+              "name": "Email Address",
+              "value": "EMAIL"
+            },
+            {
+              "name": "GSTIN (India)",
+              "value": "GSTIN"
+            },
+            {
+              "name": "IBAN",
+              "value": "IBAN"
+            },
+            {
+              "name": "IFSC Code (India)",
+              "value": "IFSC"
+            },
+            {
+              "name": "IP Address",
+              "value": "IP"
+            },
+            {
+              "name": "National ID (EU: BSN, DNI/NIE, Codice Fiscale)",
+              "value": "EU_NATIONAL_ID"
+            },
+            {
+              "name": "PAN Card Number (India)",
+              "value": "PAN"
+            },
+            {
+              "name": "Patient or Medical Record ID",
+              "value": "PATIENT_ID"
+            },
+            {
+              "name": "Phone Number",
+              "value": "PHONE"
+            },
+            {
+              "name": "Student or Admission ID",
+              "value": "STUDENT_ID"
+            },
+            {
+              "name": "Tax ID (Brazil CPF)",
+              "value": "BR_CPF"
+            },
+            {
+              "name": "UPI ID (India)",
+              "value": "UPI"
+            },
+            {
+              "name": "US Social Security Number",
+              "value": "US_SSN"
+            },
+            {
+              "name": "Voter ID (India)",
+              "value": "VOTER_ID"
+            }
+          ],
+          "hint": "Leave empty to redact everything. Credentials — API keys, private keys, tokens — can never be ignored",
+          "description": "Identifier types to leave unredacted. Credentials can never be ignored."
+        },
+        {
+          "displayName": "Ignored Words or Phrases",
+          "name": "ignoredWords",
+          "type": "string",
+          "typeOptions": {
+            "rows": 3
+          },
+          "default": "",
+          "placeholder": "Acme Corp\nORD-12345\nProject Bluebird",
+          "hint": "One per line, case-insensitive. Never applies to credentials — a line containing an API key, token, or private key is refused, not kept. Values survive in Local mode; in Cloud mode the server may redact them before the node sees them.",
+          "description": "Literal words or phrases to leave unredacted wherever they appear"
+        },
+        {
+          "displayName": "Include Raw API Response",
+          "name": "includeRawResponse",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to attach the full API response as rawResponse. It is recursively sanitized first, but turning it off keeps run data smaller on high-volume workflows."
+        },
+        {
+          "displayName": "Items in Parallel",
+          "name": "batchConcurrency",
+          "type": "number",
+          "typeOptions": {
+            "minValue": 1,
+            "maxValue": 20
+          },
+          "default": 1,
+          "description": "How many input items to check at the same time. The default of 1 is sequential, so a hundred items are a hundred requests one after another, not a burst. Raising it is the single biggest speed win on large batches; a 429 is retried after the interval the API asks for either way. Order of the output items never changes."
+        },
+        {
+          "displayName": "Metadata JSON",
+          "name": "metadata",
+          "type": "json",
+          "typeOptions": {
+            "rows": 2
+          },
+          "default": "",
+          "placeholder": "{ \"userId\": \"{{ $json.userId }}\", \"tenant\": \"acme\" }",
+          "hint": "Optional. Extra fields for your own audit logs.",
+          "description": "JSON object attached to the request for audit logging. Secrets and long strings are redacted before sending."
+        },
+        {
+          "displayName": "Never Downgrade to Local",
+          "name": "neverDowngradeToLocal",
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to fail an item instead of answering it with the local engine when the cloud cannot be reached. For workflows under a compliance commitment that every message is checked by the full engine. With n8n's Continue On Fail set, failed items still leave through the Flagged output rather than Safe."
+        },
+        {
+          "displayName": "Project ID",
+          "name": "projectId",
+          "type": "string",
+          "default": "",
+          "placeholder": "Leave empty to use the credential's project",
+          "hint": "Optional. Only needed when this node should report to a different project than the credential",
+          "description": "SoterAI project ID, overriding the one set on the credential"
+        },
+        {
+          "displayName": "Request Timeout (Ms)",
+          "name": "requestTimeoutMs",
+          "type": "number",
+          "typeOptions": {
+            "minValue": 1000,
+            "maxValue": 120000
+          },
+          "default": 20000,
+          "description": "How long to wait for each API call before giving up. In Auto mode a timeout is what triggers the local fallback."
+        },
+        {
+          "displayName": "Reuse Identical Items",
+          "name": "reuseIdenticalItems",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether two identical items in the same execution reuse one API call. The reused item is marked reusedResult so it is never mistaken for a second independent check."
+        },
+        {
+          "displayName": "Session ID",
+          "name": "sessionId",
+          "type": "string",
+          "default": "",
+          "placeholder": "={{ $json.sessionId }}",
+          "hint": "Recommended. Keeps one conversation's messages together across turns.",
+          "description": "Stable per-conversation ID. Without it each message is judged alone, so a slow multi-turn attack can pass one message at a time."
+        },
+        {
+          "displayName": "System Prompt Context",
+          "name": "systemPromptContext",
+          "type": "string",
+          "typeOptions": {
+            "rows": 2
+          },
+          "default": "",
+          "placeholder": "You are a billing support assistant for an Indian e-commerce store",
+          "hint": "Optional. Use it when the topic list is not specific enough — its words widen the topic vocabulary",
+          "description": "Your assistant's role, used to judge whether a message is in scope"
+        },
+        {
+          "displayName": "Topic Handling",
+          "name": "topicHandling",
+          "type": "options",
+          "options": [
+            {
+              "name": "Advisory Only",
+              "value": "ADVISORY",
+              "description": "Report whether the message was in scope and change nothing else"
+            },
+            {
+              "name": "Stay on Topic",
+              "value": "RESTRICT",
+              "description": "Also treat an out-of-scope message as something to act on. Reported as OFF_TOPIC, never as a threat."
+            },
+            {
+              "name": "Trust My Topics (Default)",
+              "value": "TRUST",
+              "description": "Stop treating ordinary questions about your own topics as attacks. The usual fix for a helpdesk that blocks its own customers."
+            },
+            {
+              "name": "Trust My Topics and Stay on Topic",
+              "value": "TRUST_AND_RESTRICT",
+              "description": "Both of the above: in-scope questions run freely, out-of-scope ones are acted on"
+            }
+          ],
+          "default": "TRUST",
+          "hint": "Does nothing while Allowed Semantic Topics is empty. Anything withdrawn is listed under suppressedFindings",
+          "description": "What your allowed topics do to the verdict. Never withdraws a clear attack pattern."
+        }
+      ]
+    },
+    {
+      "displayName": "Options",
+      "name": "options",
+      "type": "collection",
+      "placeholder": "Add Option",
+      "default": {},
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "outputGuard"
+          ]
+        }
+      },
+      "options": [
+        {
+          "displayName": "Also Enforce On Sensitive Data",
+          "name": "enforceOnSensitiveData",
+          "type": "boolean",
+          "default": false,
+          "hint": "Off: a secret or personal detail is always removed and the item continues, whatever On Threat says. On: On Threat decides — Block stops the item and routes it to Flagged. The cleaned text is used either way; this never passes an unredacted secret through.",
+          "description": "Whether On Threat also acts on an item whose only finding is a secret or personal data"
+        },
+        {
+          "displayName": "Detection Engine",
+          "name": "detectionEngine",
+          "type": "options",
+          "noDataExpression": true,
+          "options": [
+            {
+              "name": "Auto — Cloud, Local Fallback (Recommended)",
+              "value": "AUTO",
+              "description": "Use the cloud, and fall back to the local engine only when the cloud cannot be reached. No item is left unchecked. The right default for almost everyone."
+            },
+            {
+              "name": "Cloud Only",
+              "value": "CLOUD",
+              "description": "Full detection through the SoterAI API — ML tier, cross-turn tracking, reputation, incident history — and fail the item on an outage rather than fall back. Strongest, but needs a reachable API."
+            },
+            {
+              "name": "Local Only (No API Key, No Network)",
+              "value": "LOCAL",
+              "description": "Run the bundled rule engine inside n8n. Nothing leaves your instance and no credential is needed. Pattern-based, so weaker than Cloud."
+            }
+          ],
+          "default": "AUTO",
+          "description": "Where detection runs. Auto (cloud with local fallback) suits almost everyone."
+        },
+        {
+          "displayName": "Ignored Identifiers",
+          "name": "ignoredEntities",
+          "type": "multiOptions",
+          "default": [],
+          "options": [
+            {
+              "name": "Aadhaar Number (India)",
+              "value": "AADHAAR"
+            },
+            {
+              "name": "Address",
+              "value": "ADDRESS"
+            },
+            {
+              "name": "Bank Account Number",
+              "value": "BANK_ACCOUNT"
+            },
+            {
+              "name": "Card Number",
+              "value": "CARD"
+            },
+            {
+              "name": "Date of Birth",
+              "value": "DOB"
+            },
+            {
+              "name": "Driving Licence Number",
+              "value": "DRIVING_LICENCE"
+            },
+            {
+              "name": "Email Address",
+              "value": "EMAIL"
+            },
+            {
+              "name": "GSTIN (India)",
+              "value": "GSTIN"
+            },
+            {
+              "name": "IBAN",
+              "value": "IBAN"
+            },
+            {
+              "name": "IFSC Code (India)",
+              "value": "IFSC"
+            },
+            {
+              "name": "IP Address",
+              "value": "IP"
+            },
+            {
+              "name": "National ID (EU: BSN, DNI/NIE, Codice Fiscale)",
+              "value": "EU_NATIONAL_ID"
+            },
+            {
+              "name": "PAN Card Number (India)",
+              "value": "PAN"
+            },
+            {
+              "name": "Patient or Medical Record ID",
+              "value": "PATIENT_ID"
+            },
+            {
+              "name": "Phone Number",
+              "value": "PHONE"
+            },
+            {
+              "name": "Student or Admission ID",
+              "value": "STUDENT_ID"
+            },
+            {
+              "name": "Tax ID (Brazil CPF)",
+              "value": "BR_CPF"
+            },
+            {
+              "name": "UPI ID (India)",
+              "value": "UPI"
+            },
+            {
+              "name": "US Social Security Number",
+              "value": "US_SSN"
+            },
+            {
+              "name": "Voter ID (India)",
+              "value": "VOTER_ID"
+            }
+          ],
+          "hint": "Leave empty to redact everything. Credentials — API keys, private keys, tokens — can never be ignored",
+          "description": "Identifier types to leave unredacted. Credentials can never be ignored."
+        },
+        {
+          "displayName": "Ignored Words or Phrases",
+          "name": "ignoredWords",
+          "type": "string",
+          "typeOptions": {
+            "rows": 3
+          },
+          "default": "",
+          "placeholder": "Acme Corp\nORD-12345\nProject Bluebird",
+          "hint": "One per line, case-insensitive. Never applies to credentials — a line containing an API key, token, or private key is refused, not kept. Values survive in Local mode; in Cloud mode the server may redact them before the node sees them.",
+          "description": "Literal words or phrases to leave unredacted wherever they appear"
+        },
+        {
+          "displayName": "Include Raw API Response",
+          "name": "includeRawResponse",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to attach the full API response as rawResponse. It is recursively sanitized first, but turning it off keeps run data smaller on high-volume workflows."
+        },
+        {
+          "displayName": "Items in Parallel",
+          "name": "batchConcurrency",
+          "type": "number",
+          "typeOptions": {
+            "minValue": 1,
+            "maxValue": 20
+          },
+          "default": 1,
+          "description": "How many input items to check at the same time. The default of 1 is sequential, so a hundred items are a hundred requests one after another, not a burst. Raising it is the single biggest speed win on large batches; a 429 is retried after the interval the API asks for either way. Order of the output items never changes."
+        },
+        {
+          "displayName": "Metadata JSON",
+          "name": "metadata",
+          "type": "json",
+          "typeOptions": {
+            "rows": 2
+          },
+          "default": "",
+          "placeholder": "{ \"userId\": \"{{ $json.userId }}\", \"tenant\": \"acme\" }",
+          "hint": "Optional. Extra fields for your own audit logs.",
+          "description": "JSON object attached to the request for audit logging. Secrets and long strings are redacted before sending."
+        },
+        {
+          "displayName": "Never Downgrade to Local",
+          "name": "neverDowngradeToLocal",
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to fail an item instead of answering it with the local engine when the cloud cannot be reached. For workflows under a compliance commitment that every message is checked by the full engine. With n8n's Continue On Fail set, failed items still leave through the Flagged output rather than Safe."
+        },
+        {
+          "displayName": "Project ID",
+          "name": "projectId",
+          "type": "string",
+          "default": "",
+          "placeholder": "Leave empty to use the credential's project",
+          "hint": "Optional. Only needed when this node should report to a different project than the credential",
+          "description": "SoterAI project ID, overriding the one set on the credential"
+        },
+        {
+          "displayName": "Request Timeout (Ms)",
+          "name": "requestTimeoutMs",
+          "type": "number",
+          "typeOptions": {
+            "minValue": 1000,
+            "maxValue": 120000
+          },
+          "default": 20000,
+          "description": "How long to wait for each API call before giving up. In Auto mode a timeout is what triggers the local fallback."
+        },
+        {
+          "displayName": "Reuse Identical Items",
+          "name": "reuseIdenticalItems",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether two identical items in the same execution reuse one API call. The reused item is marked reusedResult so it is never mistaken for a second independent check."
+        },
+        {
+          "displayName": "Session ID",
+          "name": "sessionId",
+          "type": "string",
+          "default": "",
+          "placeholder": "={{ $json.sessionId }}",
+          "hint": "Recommended. Keeps one conversation's messages together across turns.",
+          "description": "Stable per-conversation ID. Without it each message is judged alone, so a slow multi-turn attack can pass one message at a time."
+        }
+      ]
+    },
+    {
+      "displayName": "Options",
+      "name": "options",
+      "type": "collection",
+      "placeholder": "Add Option",
+      "default": {},
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "universalGuard"
+          ]
+        }
+      },
+      "options": [
+        {
+          "displayName": "Allowed Semantic Topics",
+          "name": "allowedTopics",
+          "type": "string",
+          "default": "",
+          "placeholder": "billing, shipping, returns, order status",
+          "hint": "Optional. Comma-separated. Topic Handling does nothing while this is empty.",
+          "description": "Subjects this assistant handles, comma-separated. Leave empty for no topic scope."
+        },
+        {
+          "displayName": "Also Enforce On Sensitive Data",
+          "name": "enforceOnSensitiveData",
+          "type": "boolean",
+          "default": false,
+          "hint": "Off: a secret or personal detail is always removed and the item continues, whatever On Threat says. On: On Threat decides — Block stops the item and routes it to Flagged. The cleaned text is used either way; this never passes an unredacted secret through.",
+          "description": "Whether On Threat also acts on an item whose only finding is a secret or personal data"
+        },
+        {
+          "displayName": "Always Allow",
+          "name": "alwaysAllow",
+          "type": "string",
+          "typeOptions": {
+            "rows": 4
+          },
+          "default": "",
+          "placeholder": "where is my order?\nhow do I reset my password?",
+          "hint": "One message per line. Matched on the WHOLE message, ignoring case and a trailing '?'",
+          "description": "Whole messages that skip detection entirely. Whole-message match, not keywords."
+        },
+        {
+          "displayName": "Detection Engine",
+          "name": "detectionEngine",
+          "type": "options",
+          "noDataExpression": true,
+          "options": [
+            {
+              "name": "Auto — Cloud, Local Fallback (Recommended)",
+              "value": "AUTO",
+              "description": "Use the cloud, and fall back to the local engine only when the cloud cannot be reached. No item is left unchecked. The right default for almost everyone."
+            },
+            {
+              "name": "Cloud Only",
+              "value": "CLOUD",
+              "description": "Full detection through the SoterAI API — ML tier, cross-turn tracking, reputation, incident history — and fail the item on an outage rather than fall back. Strongest, but needs a reachable API."
+            },
+            {
+              "name": "Local Only (No API Key, No Network)",
+              "value": "LOCAL",
+              "description": "Run the bundled rule engine inside n8n. Nothing leaves your instance and no credential is needed. Pattern-based, so weaker than Cloud."
+            }
+          ],
+          "default": "AUTO",
+          "description": "Where detection runs. Auto (cloud with local fallback) suits almost everyone."
+        },
+        {
+          "displayName": "Ignored Identifiers",
+          "name": "ignoredEntities",
+          "type": "multiOptions",
+          "default": [],
+          "options": [
+            {
+              "name": "Aadhaar Number (India)",
+              "value": "AADHAAR"
+            },
+            {
+              "name": "Address",
+              "value": "ADDRESS"
+            },
+            {
+              "name": "Bank Account Number",
+              "value": "BANK_ACCOUNT"
+            },
+            {
+              "name": "Card Number",
+              "value": "CARD"
+            },
+            {
+              "name": "Date of Birth",
+              "value": "DOB"
+            },
+            {
+              "name": "Driving Licence Number",
+              "value": "DRIVING_LICENCE"
+            },
+            {
+              "name": "Email Address",
+              "value": "EMAIL"
+            },
+            {
+              "name": "GSTIN (India)",
+              "value": "GSTIN"
+            },
+            {
+              "name": "IBAN",
+              "value": "IBAN"
+            },
+            {
+              "name": "IFSC Code (India)",
+              "value": "IFSC"
+            },
+            {
+              "name": "IP Address",
+              "value": "IP"
+            },
+            {
+              "name": "National ID (EU: BSN, DNI/NIE, Codice Fiscale)",
+              "value": "EU_NATIONAL_ID"
+            },
+            {
+              "name": "PAN Card Number (India)",
+              "value": "PAN"
+            },
+            {
+              "name": "Patient or Medical Record ID",
+              "value": "PATIENT_ID"
+            },
+            {
+              "name": "Phone Number",
+              "value": "PHONE"
+            },
+            {
+              "name": "Student or Admission ID",
+              "value": "STUDENT_ID"
+            },
+            {
+              "name": "Tax ID (Brazil CPF)",
+              "value": "BR_CPF"
+            },
+            {
+              "name": "UPI ID (India)",
+              "value": "UPI"
+            },
+            {
+              "name": "US Social Security Number",
+              "value": "US_SSN"
+            },
+            {
+              "name": "Voter ID (India)",
+              "value": "VOTER_ID"
+            }
+          ],
+          "hint": "Leave empty to redact everything. Credentials — API keys, private keys, tokens — can never be ignored",
+          "description": "Identifier types to leave unredacted. Credentials can never be ignored."
+        },
+        {
+          "displayName": "Ignored Words or Phrases",
+          "name": "ignoredWords",
+          "type": "string",
+          "typeOptions": {
+            "rows": 3
+          },
+          "default": "",
+          "placeholder": "Acme Corp\nORD-12345\nProject Bluebird",
+          "hint": "One per line, case-insensitive. Never applies to credentials — a line containing an API key, token, or private key is refused, not kept. Values survive in Local mode; in Cloud mode the server may redact them before the node sees them.",
+          "description": "Literal words or phrases to leave unredacted wherever they appear"
+        },
+        {
+          "displayName": "Include Raw API Response",
+          "name": "includeRawResponse",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to attach the full API response as rawResponse. It is recursively sanitized first, but turning it off keeps run data smaller on high-volume workflows."
+        },
+        {
+          "displayName": "Items in Parallel",
+          "name": "batchConcurrency",
+          "type": "number",
+          "typeOptions": {
+            "minValue": 1,
+            "maxValue": 20
+          },
+          "default": 1,
+          "description": "How many input items to check at the same time. The default of 1 is sequential, so a hundred items are a hundred requests one after another, not a burst. Raising it is the single biggest speed win on large batches; a 429 is retried after the interval the API asks for either way. Order of the output items never changes."
+        },
+        {
+          "displayName": "Layers in Parallel",
+          "name": "parallelLayers",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether the Universal AI Firewall runs its optional layers at the same time instead of one after another. Turn it off if your plan's per-minute rate limit is tight."
+        },
+        {
+          "displayName": "Metadata JSON",
+          "name": "metadata",
+          "type": "json",
+          "typeOptions": {
+            "rows": 2
+          },
+          "default": "",
+          "placeholder": "{ \"userId\": \"{{ $json.userId }}\", \"tenant\": \"acme\" }",
+          "hint": "Optional. Extra fields for your own audit logs.",
+          "description": "JSON object attached to the request for audit logging. Secrets and long strings are redacted before sending."
+        },
+        {
+          "displayName": "Never Downgrade to Local",
+          "name": "neverDowngradeToLocal",
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to fail an item instead of answering it with the local engine when the cloud cannot be reached. For workflows under a compliance commitment that every message is checked by the full engine. With n8n's Continue On Fail set, failed items still leave through the Flagged output rather than Safe."
+        },
+        {
+          "displayName": "Passport Token",
+          "name": "passportToken",
+          "type": "string",
+          "typeOptions": {
+            "password": true
+          },
+          "default": "",
+          "placeholder": "={{ $json.passportToken }}",
+          "description": "Raw short-lived token returned by Issue Passport. Use an expression; do not hard-code it in workflow JSON."
+        },
+        {
+          "displayName": "Project ID",
+          "name": "projectId",
+          "type": "string",
+          "default": "",
+          "placeholder": "Leave empty to use the credential's project",
+          "hint": "Optional. Only needed when this node should report to a different project than the credential",
+          "description": "SoterAI project ID, overriding the one set on the credential"
+        },
+        {
+          "displayName": "Request Timeout (Ms)",
+          "name": "requestTimeoutMs",
+          "type": "number",
+          "typeOptions": {
+            "minValue": 1000,
+            "maxValue": 120000
+          },
+          "default": 20000,
+          "description": "How long to wait for each API call before giving up. In Auto mode a timeout is what triggers the local fallback."
+        },
+        {
+          "displayName": "Reuse Identical Items",
+          "name": "reuseIdenticalItems",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether two identical items in the same execution reuse one API call. The reused item is marked reusedResult so it is never mistaken for a second independent check."
+        },
+        {
+          "displayName": "Session ID",
+          "name": "sessionId",
+          "type": "string",
+          "default": "",
+          "placeholder": "={{ $json.sessionId }}",
+          "hint": "Recommended. Keeps one conversation's messages together across turns.",
+          "description": "Stable per-conversation ID. Without it each message is judged alone, so a slow multi-turn attack can pass one message at a time."
+        },
+        {
+          "displayName": "System Prompt Context",
+          "name": "systemPromptContext",
+          "type": "string",
+          "typeOptions": {
+            "rows": 2
+          },
+          "default": "",
+          "placeholder": "You are a billing support assistant for an Indian e-commerce store",
+          "hint": "Optional. Use it when the topic list is not specific enough — its words widen the topic vocabulary",
+          "description": "Your assistant's role, used to judge whether a message is in scope"
+        },
+        {
+          "displayName": "Topic Handling",
+          "name": "topicHandling",
+          "type": "options",
+          "options": [
+            {
+              "name": "Advisory Only",
+              "value": "ADVISORY",
+              "description": "Report whether the message was in scope and change nothing else"
+            },
+            {
+              "name": "Stay on Topic",
+              "value": "RESTRICT",
+              "description": "Also treat an out-of-scope message as something to act on. Reported as OFF_TOPIC, never as a threat."
+            },
+            {
+              "name": "Trust My Topics (Default)",
+              "value": "TRUST",
+              "description": "Stop treating ordinary questions about your own topics as attacks. The usual fix for a helpdesk that blocks its own customers."
+            },
+            {
+              "name": "Trust My Topics and Stay on Topic",
+              "value": "TRUST_AND_RESTRICT",
+              "description": "Both of the above: in-scope questions run freely, out-of-scope ones are acted on"
+            }
+          ],
+          "default": "TRUST",
+          "hint": "Does nothing while Allowed Semantic Topics is empty. Anything withdrawn is listed under suppressedFindings",
+          "description": "What your allowed topics do to the verdict. Never withdraws a clear attack pattern."
+        }
+      ]
+    },
+    {
+      "displayName": "Options",
+      "name": "options",
+      "type": "collection",
+      "placeholder": "Add Option",
+      "default": {},
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "analyzeText",
+            "ragScanner"
+          ]
+        }
+      },
+      "options": [
+        {
+          "displayName": "Detection Engine",
+          "name": "detectionEngine",
+          "type": "options",
+          "noDataExpression": true,
+          "options": [
+            {
+              "name": "Auto — Cloud, Local Fallback (Recommended)",
+              "value": "AUTO",
+              "description": "Use the cloud, and fall back to the local engine only when the cloud cannot be reached. No item is left unchecked. The right default for almost everyone."
+            },
+            {
+              "name": "Cloud Only",
+              "value": "CLOUD",
+              "description": "Full detection through the SoterAI API — ML tier, cross-turn tracking, reputation, incident history — and fail the item on an outage rather than fall back. Strongest, but needs a reachable API."
+            },
+            {
+              "name": "Local Only (No API Key, No Network)",
+              "value": "LOCAL",
+              "description": "Run the bundled rule engine inside n8n. Nothing leaves your instance and no credential is needed. Pattern-based, so weaker than Cloud."
+            }
+          ],
+          "default": "AUTO",
+          "description": "Where detection runs. Auto (cloud with local fallback) suits almost everyone."
+        },
+        {
+          "displayName": "Include Raw API Response",
+          "name": "includeRawResponse",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to attach the full API response as rawResponse. It is recursively sanitized first, but turning it off keeps run data smaller on high-volume workflows."
+        },
+        {
+          "displayName": "Items in Parallel",
+          "name": "batchConcurrency",
+          "type": "number",
+          "typeOptions": {
+            "minValue": 1,
+            "maxValue": 20
+          },
+          "default": 1,
+          "description": "How many input items to check at the same time. The default of 1 is sequential, so a hundred items are a hundred requests one after another, not a burst. Raising it is the single biggest speed win on large batches; a 429 is retried after the interval the API asks for either way. Order of the output items never changes."
+        },
+        {
+          "displayName": "Metadata JSON",
+          "name": "metadata",
+          "type": "json",
+          "typeOptions": {
+            "rows": 2
+          },
+          "default": "",
+          "placeholder": "{ \"userId\": \"{{ $json.userId }}\", \"tenant\": \"acme\" }",
+          "hint": "Optional. Extra fields for your own audit logs.",
+          "description": "JSON object attached to the request for audit logging. Secrets and long strings are redacted before sending."
+        },
+        {
+          "displayName": "Never Downgrade to Local",
+          "name": "neverDowngradeToLocal",
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to fail an item instead of answering it with the local engine when the cloud cannot be reached. For workflows under a compliance commitment that every message is checked by the full engine. With n8n's Continue On Fail set, failed items still leave through the Flagged output rather than Safe."
+        },
+        {
+          "displayName": "Project ID",
+          "name": "projectId",
+          "type": "string",
+          "default": "",
+          "placeholder": "Leave empty to use the credential's project",
+          "hint": "Optional. Only needed when this node should report to a different project than the credential",
+          "description": "SoterAI project ID, overriding the one set on the credential"
+        },
+        {
+          "displayName": "Request Timeout (Ms)",
+          "name": "requestTimeoutMs",
+          "type": "number",
+          "typeOptions": {
+            "minValue": 1000,
+            "maxValue": 120000
+          },
+          "default": 20000,
+          "description": "How long to wait for each API call before giving up. In Auto mode a timeout is what triggers the local fallback."
+        },
+        {
+          "displayName": "Reuse Identical Items",
+          "name": "reuseIdenticalItems",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether two identical items in the same execution reuse one API call. The reused item is marked reusedResult so it is never mistaken for a second independent check."
+        },
+        {
+          "displayName": "Session ID",
+          "name": "sessionId",
+          "type": "string",
+          "default": "",
+          "placeholder": "={{ $json.sessionId }}",
+          "hint": "Recommended. Keeps one conversation's messages together across turns.",
+          "description": "Stable per-conversation ID. Without it each message is judged alone, so a slow multi-turn attack can pass one message at a time."
+        }
+      ]
+    },
+    {
+      "displayName": "Options",
+      "name": "options",
+      "type": "collection",
+      "placeholder": "Add Option",
+      "default": {},
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "piiRedactor"
+          ]
+        }
+      },
+      "options": [
+        {
+          "displayName": "Detection Engine",
+          "name": "detectionEngine",
+          "type": "options",
+          "noDataExpression": true,
+          "options": [
+            {
+              "name": "Auto — Cloud, Local Fallback (Recommended)",
+              "value": "AUTO",
+              "description": "Use the cloud, and fall back to the local engine only when the cloud cannot be reached. No item is left unchecked. The right default for almost everyone."
+            },
+            {
+              "name": "Cloud Only",
+              "value": "CLOUD",
+              "description": "Full detection through the SoterAI API — ML tier, cross-turn tracking, reputation, incident history — and fail the item on an outage rather than fall back. Strongest, but needs a reachable API."
+            },
+            {
+              "name": "Local Only (No API Key, No Network)",
+              "value": "LOCAL",
+              "description": "Run the bundled rule engine inside n8n. Nothing leaves your instance and no credential is needed. Pattern-based, so weaker than Cloud."
+            }
+          ],
+          "default": "AUTO",
+          "description": "Where detection runs. Auto (cloud with local fallback) suits almost everyone."
+        },
+        {
+          "displayName": "Ignored Identifiers",
+          "name": "ignoredEntities",
+          "type": "multiOptions",
+          "default": [],
+          "options": [
+            {
+              "name": "Aadhaar Number (India)",
+              "value": "AADHAAR"
+            },
+            {
+              "name": "Address",
+              "value": "ADDRESS"
+            },
+            {
+              "name": "Bank Account Number",
+              "value": "BANK_ACCOUNT"
+            },
+            {
+              "name": "Card Number",
+              "value": "CARD"
+            },
+            {
+              "name": "Date of Birth",
+              "value": "DOB"
+            },
+            {
+              "name": "Driving Licence Number",
+              "value": "DRIVING_LICENCE"
+            },
+            {
+              "name": "Email Address",
+              "value": "EMAIL"
+            },
+            {
+              "name": "GSTIN (India)",
+              "value": "GSTIN"
+            },
+            {
+              "name": "IBAN",
+              "value": "IBAN"
+            },
+            {
+              "name": "IFSC Code (India)",
+              "value": "IFSC"
+            },
+            {
+              "name": "IP Address",
+              "value": "IP"
+            },
+            {
+              "name": "National ID (EU: BSN, DNI/NIE, Codice Fiscale)",
+              "value": "EU_NATIONAL_ID"
+            },
+            {
+              "name": "PAN Card Number (India)",
+              "value": "PAN"
+            },
+            {
+              "name": "Patient or Medical Record ID",
+              "value": "PATIENT_ID"
+            },
+            {
+              "name": "Phone Number",
+              "value": "PHONE"
+            },
+            {
+              "name": "Student or Admission ID",
+              "value": "STUDENT_ID"
+            },
+            {
+              "name": "Tax ID (Brazil CPF)",
+              "value": "BR_CPF"
+            },
+            {
+              "name": "UPI ID (India)",
+              "value": "UPI"
+            },
+            {
+              "name": "US Social Security Number",
+              "value": "US_SSN"
+            },
+            {
+              "name": "Voter ID (India)",
+              "value": "VOTER_ID"
+            }
+          ],
+          "hint": "Leave empty to redact everything. Credentials — API keys, private keys, tokens — can never be ignored",
+          "description": "Identifier types to leave unredacted. Credentials can never be ignored."
+        },
+        {
+          "displayName": "Ignored Words or Phrases",
+          "name": "ignoredWords",
+          "type": "string",
+          "typeOptions": {
+            "rows": 3
+          },
+          "default": "",
+          "placeholder": "Acme Corp\nORD-12345\nProject Bluebird",
+          "hint": "One per line, case-insensitive. Never applies to credentials — a line containing an API key, token, or private key is refused, not kept. Values survive in Local mode; in Cloud mode the server may redact them before the node sees them.",
+          "description": "Literal words or phrases to leave unredacted wherever they appear"
+        },
+        {
+          "displayName": "Include Raw API Response",
+          "name": "includeRawResponse",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to attach the full API response as rawResponse. It is recursively sanitized first, but turning it off keeps run data smaller on high-volume workflows."
+        },
+        {
+          "displayName": "Items in Parallel",
+          "name": "batchConcurrency",
+          "type": "number",
+          "typeOptions": {
+            "minValue": 1,
+            "maxValue": 20
+          },
+          "default": 1,
+          "description": "How many input items to check at the same time. The default of 1 is sequential, so a hundred items are a hundred requests one after another, not a burst. Raising it is the single biggest speed win on large batches; a 429 is retried after the interval the API asks for either way. Order of the output items never changes."
+        },
+        {
+          "displayName": "Metadata JSON",
+          "name": "metadata",
+          "type": "json",
+          "typeOptions": {
+            "rows": 2
+          },
+          "default": "",
+          "placeholder": "{ \"userId\": \"{{ $json.userId }}\", \"tenant\": \"acme\" }",
+          "hint": "Optional. Extra fields for your own audit logs.",
+          "description": "JSON object attached to the request for audit logging. Secrets and long strings are redacted before sending."
+        },
+        {
+          "displayName": "Never Downgrade to Local",
+          "name": "neverDowngradeToLocal",
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to fail an item instead of answering it with the local engine when the cloud cannot be reached. For workflows under a compliance commitment that every message is checked by the full engine. With n8n's Continue On Fail set, failed items still leave through the Flagged output rather than Safe."
+        },
+        {
+          "displayName": "Project ID",
+          "name": "projectId",
+          "type": "string",
+          "default": "",
+          "placeholder": "Leave empty to use the credential's project",
+          "hint": "Optional. Only needed when this node should report to a different project than the credential",
+          "description": "SoterAI project ID, overriding the one set on the credential"
+        },
+        {
+          "displayName": "Request Timeout (Ms)",
+          "name": "requestTimeoutMs",
+          "type": "number",
+          "typeOptions": {
+            "minValue": 1000,
+            "maxValue": 120000
+          },
+          "default": 20000,
+          "description": "How long to wait for each API call before giving up. In Auto mode a timeout is what triggers the local fallback."
+        },
+        {
+          "displayName": "Reuse Identical Items",
+          "name": "reuseIdenticalItems",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether two identical items in the same execution reuse one API call. The reused item is marked reusedResult so it is never mistaken for a second independent check."
+        },
+        {
+          "displayName": "Session ID",
+          "name": "sessionId",
+          "type": "string",
+          "default": "",
+          "placeholder": "={{ $json.sessionId }}",
+          "hint": "Recommended. Keeps one conversation's messages together across turns.",
+          "description": "Stable per-conversation ID. Without it each message is judged alone, so a slow multi-turn attack can pass one message at a time."
+        },
+        {
+          "displayName": "Split Outputs on Redaction",
+          "name": "branchOnRedaction",
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to provide two output branches ('Clean' and 'Redacted'). When enabled, items with no PII leave through Clean (output 0) and items where PII was sanitized leave through Redacted (output 1)."
+        }
+      ]
+    },
+    {
+      "displayName": "Options",
+      "name": "options",
+      "type": "collection",
+      "placeholder": "Add Option",
+      "default": {},
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "enrollIdentity",
+            "issuePassport"
+          ]
+        }
+      },
+      "options": [
+        {
+          "displayName": "Include Raw API Response",
+          "name": "includeRawResponse",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to attach the full API response as rawResponse. It is recursively sanitized first, but turning it off keeps run data smaller on high-volume workflows."
+        },
+        {
+          "displayName": "Items in Parallel",
+          "name": "batchConcurrency",
+          "type": "number",
+          "typeOptions": {
+            "minValue": 1,
+            "maxValue": 20
+          },
+          "default": 1,
+          "description": "How many input items to check at the same time. The default of 1 is sequential, so a hundred items are a hundred requests one after another, not a burst. Raising it is the single biggest speed win on large batches; a 429 is retried after the interval the API asks for either way. Order of the output items never changes."
+        },
+        {
+          "displayName": "Metadata JSON",
+          "name": "metadata",
+          "type": "json",
+          "typeOptions": {
+            "rows": 2
+          },
+          "default": "",
+          "placeholder": "{ \"userId\": \"{{ $json.userId }}\", \"tenant\": \"acme\" }",
+          "hint": "Optional. Extra fields for your own audit logs.",
+          "description": "JSON object attached to the request for audit logging. Secrets and long strings are redacted before sending."
+        },
+        {
+          "displayName": "Policy Overrides (JSON)",
+          "name": "passportPolicy",
+          "type": "json",
+          "typeOptions": {
+            "rows": 5
+          },
+          "default": "",
+          "placeholder": "{ \"allowedTools\": [\"rag.search\"], \"approvalRequiredTools\": [\"gmail.send\"], \"blockedTools\": [\"terminal.run\"] }",
+          "description": "Policy keys merged over the preset: allowedTools, blockedTools, approvalRequiredTools, allowedDomains, blockedDomains, dataScopes, memoryScopes. Required when the preset is Custom JSON Only, which starts from an empty policy."
+        },
+        {
+          "displayName": "Project ID",
+          "name": "projectId",
+          "type": "string",
+          "default": "",
+          "placeholder": "Leave empty to use the credential's project",
+          "hint": "Optional. Only needed when this node should report to a different project than the credential",
+          "description": "SoterAI project ID, overriding the one set on the credential"
+        },
+        {
+          "displayName": "Request Timeout (Ms)",
+          "name": "requestTimeoutMs",
+          "type": "number",
+          "typeOptions": {
+            "minValue": 1000,
+            "maxValue": 120000
+          },
+          "default": 20000,
+          "description": "How long to wait for each API call before giving up. In Auto mode a timeout is what triggers the local fallback."
+        },
+        {
+          "displayName": "Reuse Identical Items",
+          "name": "reuseIdenticalItems",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether two identical items in the same execution reuse one API call. The reused item is marked reusedResult so it is never mistaken for a second independent check."
+        }
+      ]
+    },
+    {
+      "displayName": "Options",
+      "name": "options",
+      "type": "collection",
+      "placeholder": "Add Option",
+      "default": {},
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "validatePassport"
+          ]
+        }
+      },
+      "options": [
+        {
+          "displayName": "Include Raw API Response",
+          "name": "includeRawResponse",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to attach the full API response as rawResponse. It is recursively sanitized first, but turning it off keeps run data smaller on high-volume workflows."
+        },
+        {
+          "displayName": "Items in Parallel",
+          "name": "batchConcurrency",
+          "type": "number",
+          "typeOptions": {
+            "minValue": 1,
+            "maxValue": 20
+          },
+          "default": 1,
+          "description": "How many input items to check at the same time. The default of 1 is sequential, so a hundred items are a hundred requests one after another, not a burst. Raising it is the single biggest speed win on large batches; a 429 is retried after the interval the API asks for either way. Order of the output items never changes."
+        },
+        {
+          "displayName": "Metadata JSON",
+          "name": "metadata",
+          "type": "json",
+          "typeOptions": {
+            "rows": 2
+          },
+          "default": "",
+          "placeholder": "{ \"userId\": \"{{ $json.userId }}\", \"tenant\": \"acme\" }",
+          "hint": "Optional. Extra fields for your own audit logs.",
+          "description": "JSON object attached to the request for audit logging. Secrets and long strings are redacted before sending."
+        },
+        {
+          "displayName": "Project ID",
+          "name": "projectId",
+          "type": "string",
+          "default": "",
+          "placeholder": "Leave empty to use the credential's project",
+          "hint": "Optional. Only needed when this node should report to a different project than the credential",
+          "description": "SoterAI project ID, overriding the one set on the credential"
+        },
+        {
+          "displayName": "Request Timeout (Ms)",
+          "name": "requestTimeoutMs",
+          "type": "number",
+          "typeOptions": {
+            "minValue": 1000,
+            "maxValue": 120000
+          },
+          "default": 20000,
+          "description": "How long to wait for each API call before giving up. In Auto mode a timeout is what triggers the local fallback."
+        },
+        {
+          "displayName": "Reuse Identical Items",
+          "name": "reuseIdenticalItems",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether two identical items in the same execution reuse one API call. The reused item is marked reusedResult so it is never mistaken for a second independent check."
+        },
+        {
+          "displayName": "Tool Content",
+          "name": "toolContent",
+          "type": "string",
+          "typeOptions": {
+            "rows": 3
+          },
+          "default": "",
+          "placeholder": "={{ $json.arguments }}",
+          "description": "Optional tool arguments or payload to inspect"
+        },
+        {
+          "displayName": "Tool Destination",
+          "name": "toolDestination",
+          "type": "options",
+          "options": [
+            {
+              "name": "External",
+              "value": "external"
+            },
+            {
+              "name": "Internal",
+              "value": "internal"
+            },
+            {
+              "name": "Local",
+              "value": "local"
+            },
+            {
+              "name": "Unknown",
+              "value": "unknown"
+            }
+          ],
+          "default": "unknown",
+          "description": "How far the planned call reaches"
+        },
+        {
+          "displayName": "Tool Target",
+          "name": "toolTarget",
+          "type": "string",
+          "default": "",
+          "description": "Optional URL, recipient, file, table, or resource"
+        }
+      ]
+    },
+    {
+      "displayName": "Options",
+      "name": "options",
+      "type": "collection",
+      "placeholder": "Add Option",
+      "default": {},
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "toolCall"
+          ]
+        }
+      },
+      "options": [
+        {
+          "displayName": "Detection Engine",
+          "name": "detectionEngine",
+          "type": "options",
+          "noDataExpression": true,
+          "options": [
+            {
+              "name": "Auto — Cloud, Local Fallback (Recommended)",
+              "value": "AUTO",
+              "description": "Use the cloud, and fall back to the local engine only when the cloud cannot be reached. No item is left unchecked. The right default for almost everyone."
+            },
+            {
+              "name": "Cloud Only",
+              "value": "CLOUD",
+              "description": "Full detection through the SoterAI API — ML tier, cross-turn tracking, reputation, incident history — and fail the item on an outage rather than fall back. Strongest, but needs a reachable API."
+            },
+            {
+              "name": "Local Only (No API Key, No Network)",
+              "value": "LOCAL",
+              "description": "Run the bundled rule engine inside n8n. Nothing leaves your instance and no credential is needed. Pattern-based, so weaker than Cloud."
+            }
+          ],
+          "default": "AUTO",
+          "description": "Where detection runs. Auto (cloud with local fallback) suits almost everyone."
+        },
+        {
+          "displayName": "Include Raw API Response",
+          "name": "includeRawResponse",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to attach the full API response as rawResponse. It is recursively sanitized first, but turning it off keeps run data smaller on high-volume workflows."
+        },
+        {
+          "displayName": "Items in Parallel",
+          "name": "batchConcurrency",
+          "type": "number",
+          "typeOptions": {
+            "minValue": 1,
+            "maxValue": 20
+          },
+          "default": 1,
+          "description": "How many input items to check at the same time. The default of 1 is sequential, so a hundred items are a hundred requests one after another, not a burst. Raising it is the single biggest speed win on large batches; a 429 is retried after the interval the API asks for either way. Order of the output items never changes."
+        },
+        {
+          "displayName": "Metadata JSON",
+          "name": "metadata",
+          "type": "json",
+          "typeOptions": {
+            "rows": 2
+          },
+          "default": "",
+          "placeholder": "{ \"userId\": \"{{ $json.userId }}\", \"tenant\": \"acme\" }",
+          "hint": "Optional. Extra fields for your own audit logs.",
+          "description": "JSON object attached to the request for audit logging. Secrets and long strings are redacted before sending."
+        },
+        {
+          "displayName": "Never Downgrade to Local",
+          "name": "neverDowngradeToLocal",
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to fail an item instead of answering it with the local engine when the cloud cannot be reached. For workflows under a compliance commitment that every message is checked by the full engine. With n8n's Continue On Fail set, failed items still leave through the Flagged output rather than Safe."
+        },
+        {
+          "displayName": "Project ID",
+          "name": "projectId",
+          "type": "string",
+          "default": "",
+          "placeholder": "Leave empty to use the credential's project",
+          "hint": "Optional. Only needed when this node should report to a different project than the credential",
+          "description": "SoterAI project ID, overriding the one set on the credential"
+        },
+        {
+          "displayName": "Request Timeout (Ms)",
+          "name": "requestTimeoutMs",
+          "type": "number",
+          "typeOptions": {
+            "minValue": 1000,
+            "maxValue": 120000
+          },
+          "default": 20000,
+          "description": "How long to wait for each API call before giving up. In Auto mode a timeout is what triggers the local fallback."
+        },
+        {
+          "displayName": "Reuse Identical Items",
+          "name": "reuseIdenticalItems",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether two identical items in the same execution reuse one API call. The reused item is marked reusedResult so it is never mistaken for a second independent check."
+        },
+        {
+          "displayName": "Tool Content",
+          "name": "toolContent",
+          "type": "string",
+          "typeOptions": {
+            "rows": 3
+          },
+          "default": "",
+          "placeholder": "={{ $json.arguments }}",
+          "description": "Optional tool arguments or payload to inspect"
+        },
+        {
+          "displayName": "Tool Destination",
+          "name": "toolDestination",
+          "type": "options",
+          "options": [
+            {
+              "name": "External",
+              "value": "external"
+            },
+            {
+              "name": "Internal",
+              "value": "internal"
+            },
+            {
+              "name": "Local",
+              "value": "local"
+            },
+            {
+              "name": "Unknown",
+              "value": "unknown"
+            }
+          ],
+          "default": "unknown",
+          "description": "How far the planned call reaches"
+        },
+        {
+          "displayName": "Tool Target",
+          "name": "toolTarget",
+          "type": "string",
+          "default": "",
+          "description": "Optional URL, recipient, file, table, or resource"
+        }
+      ]
+    },
+    {
+      "displayName": "Options",
+      "name": "options",
+      "type": "collection",
+      "placeholder": "Add Option",
+      "default": {},
+      "displayOptions": {
+        "show": {
+          "operation": [
+            "revokePassport"
+          ]
+        }
+      },
+      "options": [
+        {
+          "displayName": "Include Raw API Response",
+          "name": "includeRawResponse",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to attach the full API response as rawResponse. It is recursively sanitized first, but turning it off keeps run data smaller on high-volume workflows."
+        },
+        {
+          "displayName": "Items in Parallel",
+          "name": "batchConcurrency",
+          "type": "number",
+          "typeOptions": {
+            "minValue": 1,
+            "maxValue": 20
+          },
+          "default": 1,
+          "description": "How many input items to check at the same time. The default of 1 is sequential, so a hundred items are a hundred requests one after another, not a burst. Raising it is the single biggest speed win on large batches; a 429 is retried after the interval the API asks for either way. Order of the output items never changes."
+        },
+        {
+          "displayName": "Metadata JSON",
+          "name": "metadata",
+          "type": "json",
+          "typeOptions": {
+            "rows": 2
+          },
+          "default": "",
+          "placeholder": "{ \"userId\": \"{{ $json.userId }}\", \"tenant\": \"acme\" }",
+          "hint": "Optional. Extra fields for your own audit logs.",
+          "description": "JSON object attached to the request for audit logging. Secrets and long strings are redacted before sending."
+        },
+        {
+          "displayName": "Project ID",
+          "name": "projectId",
+          "type": "string",
+          "default": "",
+          "placeholder": "Leave empty to use the credential's project",
+          "hint": "Optional. Only needed when this node should report to a different project than the credential",
+          "description": "SoterAI project ID, overriding the one set on the credential"
+        },
+        {
+          "displayName": "Request Timeout (Ms)",
+          "name": "requestTimeoutMs",
+          "type": "number",
+          "typeOptions": {
+            "minValue": 1000,
+            "maxValue": 120000
+          },
+          "default": 20000,
+          "description": "How long to wait for each API call before giving up. In Auto mode a timeout is what triggers the local fallback."
+        },
+        {
+          "displayName": "Reuse Identical Items",
+          "name": "reuseIdenticalItems",
+          "type": "boolean",
+          "default": true,
+          "description": "Whether two identical items in the same execution reuse one API call. The reused item is marked reusedResult so it is never mistaken for a second independent check."
+        }
+      ]
+    }
+  ],
+  "iconUrl": {
+    "light": "icons/n8n-nodes-soterai/dist/nodes/SoterGuard/soterai-mark.svg",
+    "dark": "icons/n8n-nodes-soterai/dist/nodes/SoterGuard/soterai-mark.dark.svg"
+  },
+  "communityNodePackageVersion": "0.8.2",
+  "name": "n8n-nodes-soterai.soterGuard"
+}

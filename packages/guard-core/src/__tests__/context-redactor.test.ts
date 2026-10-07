@@ -32,3 +32,15 @@ test("ordinary code and encoded public text are not blanket blocked", () => {
 test("oversized context fails closed", () => {
     assert.match(redactAIContext("x".repeat(1024 * 1024 + 1)), /withheld/);
 });
+
+test("numeric hex is inspected before PII redaction can fragment its bytes", () => {
+    const credential = "sk-" + "1234567890".repeat(3) + "T".repeat(24);
+    const encoded = Buffer.from(credential).toString("hex");
+    assert.match(redactAIContext(encoded), /withheld/);
+});
+
+test("redaction placeholders do not become fake credentials during normalization", () => {
+    for (const text of ['Token: [REDACTED_GITHUB_TOKEN]', '{"system":"Internal runbook. Token: [REDACTED_GITHUB_TOKEN]","stream":true}']) {
+        assert.equal(redactAIContext(text), text);
+    }
+});

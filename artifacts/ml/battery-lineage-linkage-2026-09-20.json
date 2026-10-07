@@ -1,0 +1,306 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-20T12:08:32.554200+00:00",
+  "purpose": "Measure lineage-component linkage between the battery and each arm's fitted data, the standard v18's own corpus filter used, and re-measure on rows unlinked for every arm.",
+  "gate": "shared_input_gate",
+  "rows_file": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\artifacts\\ml\\v18-balanced-comparison-rows.jsonl",
+  "rows": 4000,
+  "method": {
+    "linking": "prepare-v18-data.lineage_tokens: normalized-text group plus declared lineage identifiers scoped to the row's corpus/dataset/source.",
+    "components": "Union-find over battery rows and the arm's train+calibration rows; a battery row counts as linked when its component contains a fitted row.",
+    "note": "Linkage is NOT proof a model memorised a battery row. It measures that the arm was trained on template relatives that v18's corpus filter removed."
+  },
+  "arms": {
+    "v14": {
+      "corpus_rows": 146757,
+      "fitted_rows": 129012,
+      "battery_rows_lineage_linked": 0,
+      "battery_rows_lineage_linked_rate": 0.0,
+      "attack_rows_linked": 0,
+      "benign_rows_linked": 0,
+      "by_source": {}
+    },
+    "v17-minilm": {
+      "corpus_rows": 155883,
+      "fitted_rows": 137499,
+      "battery_rows_lineage_linked": 0,
+      "battery_rows_lineage_linked_rate": 0.0,
+      "attack_rows_linked": 0,
+      "benign_rows_linked": 0,
+      "by_source": {}
+    },
+    "v17-multilingual": {
+      "corpus_rows": 155883,
+      "fitted_rows": 137499,
+      "battery_rows_lineage_linked": 0,
+      "battery_rows_lineage_linked_rate": 0.0,
+      "attack_rows_linked": 0,
+      "benign_rows_linked": 0,
+      "by_source": {}
+    },
+    "v18-candidate": {
+      "corpus_rows": 110516,
+      "fitted_rows": 86139,
+      "battery_rows_lineage_linked": 0,
+      "battery_rows_lineage_linked_rate": 0.0,
+      "attack_rows_linked": 0,
+      "benign_rows_linked": 0,
+      "by_source": {}
+    }
+  },
+  "unlinked_for_every_arm": {
+    "rows": 4000,
+    "attacks": 2000,
+    "benign": 2000,
+    "by_source": {
+      "external:quickium": 1020,
+      "external:dolly": 747,
+      "external:spml": 438,
+      "v17-multilingual-battery": 312,
+      "external:inthewild-regular": 287,
+      "v15-test-battery": 274,
+      "external:inthewild": 212,
+      "external:multiling": 182,
+      "external:jbclass": 119,
+      "external:deepset": 106,
+      "v16-probe-battery": 70,
+      "external:gandalf": 32
+    }
+  },
+  "metrics": {
+    "v14": {
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1795,
+        "fn": 205,
+        "fp": 327,
+        "tn": 1673,
+        "recall": 0.8975,
+        "fpr": 0.1635,
+        "recall_wilson95": [
+          0.883436204935987,
+          0.9100397424754167
+        ],
+        "fpr_wilson95": [
+          0.14793995204546784,
+          0.18035022077481533
+        ]
+      },
+      "unlinked_for_every_arm": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1795,
+        "fn": 205,
+        "fp": 327,
+        "tn": 1673,
+        "recall": 0.8975,
+        "fpr": 0.1635,
+        "recall_wilson95": [
+          0.883436204935987,
+          0.9100397424754167
+        ],
+        "fpr_wilson95": [
+          0.14793995204546784,
+          0.18035022077481533
+        ]
+      },
+      "rows_linked_to_this_arm": null,
+      "rows_not_linked_to_this_arm": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1795,
+        "fn": 205,
+        "fp": 327,
+        "tn": 1673,
+        "recall": 0.8975,
+        "fpr": 0.1635,
+        "recall_wilson95": [
+          0.883436204935987,
+          0.9100397424754167
+        ],
+        "fpr_wilson95": [
+          0.14793995204546784,
+          0.18035022077481533
+        ]
+      }
+    },
+    "v17-minilm": {
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1697,
+        "fn": 303,
+        "fp": 285,
+        "tn": 1715,
+        "recall": 0.8485,
+        "fpr": 0.1425,
+        "recall_wilson95": [
+          0.832119542548813,
+          0.8635442754961538
+        ],
+        "fpr_wilson95": [
+          0.1278647408518039,
+          0.15850594795429188
+        ]
+      },
+      "unlinked_for_every_arm": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1697,
+        "fn": 303,
+        "fp": 285,
+        "tn": 1715,
+        "recall": 0.8485,
+        "fpr": 0.1425,
+        "recall_wilson95": [
+          0.832119542548813,
+          0.8635442754961538
+        ],
+        "fpr_wilson95": [
+          0.1278647408518039,
+          0.15850594795429188
+        ]
+      },
+      "rows_linked_to_this_arm": null,
+      "rows_not_linked_to_this_arm": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1697,
+        "fn": 303,
+        "fp": 285,
+        "tn": 1715,
+        "recall": 0.8485,
+        "fpr": 0.1425,
+        "recall_wilson95": [
+          0.832119542548813,
+          0.8635442754961538
+        ],
+        "fpr_wilson95": [
+          0.1278647408518039,
+          0.15850594795429188
+        ]
+      }
+    },
+    "v17-multilingual": {
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1763,
+        "fn": 237,
+        "fp": 272,
+        "tn": 1728,
+        "recall": 0.8815,
+        "fpr": 0.136,
+        "recall_wilson95": [
+          0.8665987726575222,
+          0.8949385202668816
+        ],
+        "fpr_wilson95": [
+          0.12167290401775677,
+          0.15172270640299534
+        ]
+      },
+      "unlinked_for_every_arm": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1763,
+        "fn": 237,
+        "fp": 272,
+        "tn": 1728,
+        "recall": 0.8815,
+        "fpr": 0.136,
+        "recall_wilson95": [
+          0.8665987726575222,
+          0.8949385202668816
+        ],
+        "fpr_wilson95": [
+          0.12167290401775677,
+          0.15172270640299534
+        ]
+      },
+      "rows_linked_to_this_arm": null,
+      "rows_not_linked_to_this_arm": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1763,
+        "fn": 237,
+        "fp": 272,
+        "tn": 1728,
+        "recall": 0.8815,
+        "fpr": 0.136,
+        "recall_wilson95": [
+          0.8665987726575222,
+          0.8949385202668816
+        ],
+        "fpr_wilson95": [
+          0.12167290401775677,
+          0.15172270640299534
+        ]
+      }
+    },
+    "v18-candidate": {
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1564,
+        "fn": 436,
+        "fp": 366,
+        "tn": 1634,
+        "recall": 0.782,
+        "fpr": 0.183,
+        "recall_wilson95": [
+          0.7633734089055608,
+          0.7995453764278124
+        ],
+        "fpr_wilson95": [
+          0.16666695547445123,
+          0.20054845250186307
+        ]
+      },
+      "unlinked_for_every_arm": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1564,
+        "fn": 436,
+        "fp": 366,
+        "tn": 1634,
+        "recall": 0.782,
+        "fpr": 0.183,
+        "recall_wilson95": [
+          0.7633734089055608,
+          0.7995453764278124
+        ],
+        "fpr_wilson95": [
+          0.16666695547445123,
+          0.20054845250186307
+        ]
+      },
+      "rows_linked_to_this_arm": null,
+      "rows_not_linked_to_this_arm": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1564,
+        "fn": 436,
+        "fp": 366,
+        "tn": 1634,
+        "recall": 0.782,
+        "fpr": 0.183,
+        "recall_wilson95": [
+          0.7633734089055608,
+          0.7995453764278124
+        ],
+        "fpr_wilson95": [
+          0.16666695547445123,
+          0.20054845250186307
+        ]
+      }
+    }
+  },
+  "limitations": [
+    "ML-only binary detection; rules, semantic veto and product gating are excluded.",
+    "Lineage linkage depends on declared identifiers; corpora that declare none link only by normalized text, so linkage is a LOWER bound.",
+    "Component linkage can chain through a shared hub row and overstate relatedness for individual pairs; counts are a population signal, not per-row proof of leakage.",
+    "Subsetting shrinks n and shifts the source mix; intervals widen accordingly."
+  ]
+}

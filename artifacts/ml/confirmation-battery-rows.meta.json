@@ -1,0 +1,962 @@
+{
+  "schema_version": 1,
+  "purpose": "shared heldout model comparison; never train or calibrate on these rows",
+  "seed": 20260920,
+  "target_rows_per_binary_class": 2000,
+  "selection_policy": "fixed binary-class quotas; half English/half annotated non-English where available; label then language/source round-robin; PII capped at35% of target attack rows; shortages filled from remaining languages with unknown explicit",
+  "selection_audit": {
+    "attacks": {
+      "available": {
+        "english": 21394,
+        "non_english": 4258,
+        "unknown": 0
+      },
+      "target": {
+        "total": 2000,
+        "english": 1000,
+        "non_english": 1000
+      },
+      "selected": {
+        "total": 2000,
+        "non_english": 700,
+        "english": 1300
+      },
+      "total_shortfall": 0,
+      "english_quota_shortfall": 0,
+      "non_english_quota_shortfall": 300,
+      "pii_cap_rows": 700,
+      "selected_pii_rows": 700,
+      "selected_pii_fraction": 0.35,
+      "pii_cap_note": "Cap is35% of target attack rows; selected share can exceed35% when the pool cannot fill the quota."
+    },
+    "benign": {
+      "available": {
+        "english": 18936,
+        "non_english": 0,
+        "unknown": 0
+      },
+      "target": {
+        "total": 2000,
+        "english": 1000,
+        "non_english": 1000
+      },
+      "selected": {
+        "total": 2000,
+        "english": 2000
+      },
+      "total_shortfall": 0,
+      "english_quota_shortfall": 0,
+      "non_english_quota_shortfall": 1000
+    }
+  },
+  "output": "artifacts/ml/confirmation-battery-rows.jsonl",
+  "dataset_sha256": "86a2eb680707c75f1e19e820813ea36a02a00cfc69534202f392d7031f28756d",
+  "train_inputs": [
+    {
+      "path": "datasets/ml-augmented-v8-final.jsonl",
+      "rows": 120620,
+      "sha256": "b2da6cb232b26d97515820d128d8dfcb17cecacb00fc3cdccbc601c33bf27a0f"
+    },
+    {
+      "path": "datasets/ml-v8-targeted-fix.jsonl",
+      "rows": 8500,
+      "sha256": "ce95030cc30e72e3112c50cd3e4ca9d1738e2802d891ba8d1de8d3eac7a2d45e"
+    },
+    {
+      "path": "datasets/ml-v10-advanced-attacks.jsonl",
+      "rows": 8000,
+      "sha256": "dceea75884a7714a1c15fc4f1979b8732a24edfd2e1d9af26fa30913efa5fc64"
+    },
+    {
+      "path": "datasets/ml-v10-targeted-fix.jsonl",
+      "rows": 5000,
+      "sha256": "dfb29c541743904bb3213718270aced277327906719599fc2c3f50f177df6c9e"
+    },
+    {
+      "path": "datasets/ml-v11-weak-fix.jsonl",
+      "rows": 1212,
+      "sha256": "4d5d68701b86894ceb2637ba6b3e5efa72e0cff0ff9c5c237d7714421a5cd943"
+    },
+    {
+      "path": "artifacts/ml-v2/v12-toxicity-fix.jsonl",
+      "rows": 1000,
+      "sha256": "0b976086ccaaa34aa908a3b90522b2b110d693a36c7df1fa0e138d8ba32b8fd3"
+    },
+    {
+      "path": "datasets/ml-v13-meta-instructional.jsonl",
+      "rows": 2019,
+      "sha256": "c5bf26b53007ff39e2a1d4dad517f890ad9339e462f7404905ec6d8a25f8e9fe"
+    },
+    {
+      "path": "datasets/ml-v13-attack-gaps.jsonl",
+      "rows": 406,
+      "sha256": "725e21640a5d42f678c49db9ac70b7e931e42a119c3dca43356a2d13bbbe9235"
+    },
+    {
+      "path": "datasets/ml-v15-threat-corpus.jsonl",
+      "rows": 1155,
+      "sha256": "2bddfc2799e7fc0948a11e2fb0e57323fabfd18602bfad65859dfc2ae927d2e0"
+    },
+    {
+      "path": "datasets/ml-v16-threat-corpus.jsonl",
+      "rows": 4100,
+      "sha256": "d143eecb437cc96f84bfccc04911fa79287f3b75de0b70f4853f3402ef718049"
+    },
+    {
+      "path": "datasets/ml-v17-threat-corpus.jsonl",
+      "rows": 3871,
+      "sha256": "fa5f7febe7c8e194ead39bc5419a037083af60ddfa53a6ca9e1c7e95c0bc1b11"
+    }
+  ],
+  "holdout_audit": [
+    {
+      "path": "datasets/crossdist-eval-v3-complement.jsonl",
+      "rows": 18694,
+      "training_group_overlap": 1,
+      "prior_battery_group_overlap": 2171,
+      "sha256": "aefd44837f0a4fa7b74fa7e0e620a431f871ed87da117c8ef6fac50b3c60a443"
+    },
+    {
+      "path": "datasets/external-real-v1.jsonl",
+      "rows": 15635,
+      "training_group_overlap": 2136,
+      "prior_battery_group_overlap": 639,
+      "sha256": "ce9bb4fa4979e5449548992525d6fd267ef731cb85e1d489e77a311b7ae86f81"
+    },
+    {
+      "path": "datasets/external-real-v2.jsonl",
+      "rows": 8582,
+      "training_group_overlap": 6858,
+      "prior_battery_group_overlap": 641,
+      "sha256": "abe836d516c2cd2e984bf7170aeb159844569f94396912bcfa06bba162c86e0e"
+    },
+    {
+      "path": "datasets/external-real-v3.jsonl",
+      "rows": 52192,
+      "training_group_overlap": 27326,
+      "prior_battery_group_overlap": 1580,
+      "sha256": "3293b53b04782f13c7122ddc67068a017ae41e945d7c9bba6afd70fd922cca44"
+    },
+    {
+      "path": "datasets/v15-test-battery.jsonl",
+      "rows": 274,
+      "training_group_overlap": 0,
+      "prior_battery_group_overlap": 274,
+      "sha256": "2000986f5fd578e9e8c3dc13ec3a6c8a8b794dd298ec1230489fc5eab6ce43a4"
+    },
+    {
+      "path": "datasets/v16-probe-battery.jsonl",
+      "rows": 70,
+      "training_group_overlap": 0,
+      "prior_battery_group_overlap": 70,
+      "sha256": "5d5accda2a9a4d2de049b5e01ce75aa78f28435633a06e7ced497e537290b955"
+    },
+    {
+      "path": "datasets/v17-multilingual-battery.jsonl",
+      "rows": 312,
+      "training_group_overlap": 0,
+      "prior_battery_group_overlap": 312,
+      "sha256": "53a6f45595a8a125c532b12b96b87564d5d0648a6d9f797c4622267675cd8c4c"
+    }
+  ],
+  "pool_coverage": {
+    "rows": 44588,
+    "labels": {
+      "SYSTEM_PROMPT_LEAK_ATTEMPT": 19229,
+      "PROMPT_INJECTION": 1518,
+      "SAFE": 18936,
+      "PII": 4882,
+      "JAILBREAK": 23
+    },
+    "languages": {
+      "de": {
+        "PII": 698
+      },
+      "en": {
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 19229,
+        "PROMPT_INJECTION": 1518,
+        "SAFE": 18936,
+        "PII": 624,
+        "JAILBREAK": 23
+      },
+      "es": {
+        "PII": 730
+      },
+      "fr": {
+        "PII": 726
+      },
+      "it": {
+        "PII": 679
+      },
+      "nl": {
+        "PII": 728
+      },
+      "sv": {
+        "PII": 697
+      }
+    },
+    "priority_language_gaps": {
+      "en": {
+        "rows": 40330,
+        "benign": 18936,
+        "missing_labels": [
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "hi": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "hinglish": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "es": {
+        "rows": 730,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "pt": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "fr": {
+        "rows": 726,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "de": {
+        "rows": 698,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "ar": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "zh": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "ja": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "ko": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "ru": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "id": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "bn": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "ta": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "te": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "tr": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "vi": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      }
+    },
+    "language_annotation_note": "Missing language metadata is unknown; counts are annotations, not verified proficiency."
+  },
+  "selected_coverage": {
+    "rows": 4000,
+    "labels": {
+      "PII": 700,
+      "JAILBREAK": 23,
+      "PROMPT_INJECTION": 639,
+      "SYSTEM_PROMPT_LEAK_ATTEMPT": 638,
+      "SAFE": 2000
+    },
+    "languages": {
+      "de": {
+        "PII": 117
+      },
+      "en": {
+        "JAILBREAK": 23,
+        "PROMPT_INJECTION": 639,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 638,
+        "SAFE": 2000
+      },
+      "es": {
+        "PII": 117
+      },
+      "fr": {
+        "PII": 117
+      },
+      "it": {
+        "PII": 117
+      },
+      "nl": {
+        "PII": 116
+      },
+      "sv": {
+        "PII": 116
+      }
+    },
+    "priority_language_gaps": {
+      "en": {
+        "rows": 3300,
+        "benign": 2000,
+        "missing_labels": [
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "hi": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "hinglish": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "es": {
+        "rows": 117,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "pt": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "fr": {
+        "rows": 117,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "de": {
+        "rows": 117,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "ar": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "zh": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "ja": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "ko": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "ru": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "id": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "bn": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "ta": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "te": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "tr": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "vi": {
+        "rows": 0,
+        "benign": 0,
+        "missing_labels": [
+          "SAFE",
+          "PROMPT_INJECTION",
+          "JAILBREAK",
+          "SYSTEM_PROMPT_LEAK_ATTEMPT",
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "DATA_EXFILTRATION_ATTEMPT",
+          "TOOL_CALL_ABUSE",
+          "ENCODING_OBFUSCATION",
+          "MULTI_TURN_ESCALATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      }
+    },
+    "language_annotation_note": "Missing language metadata is unknown; counts are annotations, not verified proficiency."
+  },
+  "conflicting_exact_texts_quarantined": 2,
+  "training_group_overlap_after_filter": 0,
+  "excluded_batteries": [
+    {
+      "path": "artifacts/ml/v18-balanced-comparison-rows.jsonl",
+      "rows": 4000,
+      "sha256": "a30603c4189dbb9c46ca1853c5179e98283ed6904b7696c2e822fa4c6fc3feb2"
+    }
+  ],
+  "prior_battery_rows_removed_from_pool": 5687,
+  "prior_battery_group_overlap_after_filter": 0,
+  "limitations": [
+    "Normalized lexical groups do not establish semantic, template or translation independence.",
+    "Existing heldouts have been inspected previously and are not an untouched future release test.",
+    "Source/language-balanced sampling changes prevalence; report recall and FPR separately."
+  ]
+}

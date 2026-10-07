@@ -42,7 +42,9 @@ async function readItem(boundary: BoundarySnapshot, uri: vscode.Uri, kind: Conte
             ?? (editor?.document.uri.toString() === uri.toString() ? editor.document : undefined);
         const text = doc ? doc.getText() : disk;
         if (Buffer.byteLength(text, "utf8") > MAX_ITEM_BYTES) return undefined;
-        return { path: vscode.workspace.asRelativePath(uri), kind, content: boundary.sanitize(uri, text), classification: boundary.classify(uri) };
+        // Disk content was already sanitized by read(); only an open document
+        // needs its original text checked against the saved region digest here.
+        return { path: vscode.workspace.asRelativePath(uri), kind, content: doc ? boundary.sanitize(uri, text) : disk, classification: boundary.classify(uri) };
     } catch {
         return undefined;
     }

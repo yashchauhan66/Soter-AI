@@ -1,0 +1,2955 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-20T11:52:35.915828+00:00",
+  "purpose": "Measure whether combining the existing arms beats the best single arm on the shared decision contract, and at what latency cost.",
+  "gate": "shared_input_gate",
+  "rows": 4000,
+  "attacks": 2000,
+  "benign": 2000,
+  "rows_file_sha256": "a30603c4189dbb9c46ca1853c5179e98283ed6904b7696c2e822fa4c6fc3feb2",
+  "arm_identity": {
+    "v14": {
+      "model_sha256": "5b83b2810138c89bc74e7c9e7f86d913d69d27d4efb2b07ba349ed00dc4bf829",
+      "model_bytes": 91774954,
+      "latency_p50_fixed256_ms": 132.56365000052028
+    },
+    "v17-minilm": {
+      "model_sha256": "de28be9c6808bf31bacc0f1664187534a5cabb433dbad48eb529ccc5e25f2954",
+      "model_bytes": 91774954,
+      "latency_p50_fixed256_ms": 200.81694999680622
+    },
+    "v17-multilingual": {
+      "model_sha256": "23a7e652794579862b30cf487dcca083288e3c90a46cf7f7876c595ce130cdfb",
+      "model_bytes": 541224554,
+      "latency_p50_fixed256_ms": 621.5375499996298
+    },
+    "v18-candidate": {
+      "model_sha256": "ecf9e1d2e957da6ba72b714a0fc0c8f8d566b48588c0257dfd8a309e4020fba5",
+      "model_bytes": 207134105,
+      "latency_p50_fixed256_ms": 78.76880000003439
+    }
+  },
+  "best_single_arm_by_recall": "v14",
+  "pareto_front": [
+    "v17-multilingual",
+    "or(v14+v17-minilm)",
+    "mean(v14+v17-multilingual)",
+    "or(v14+v17-multilingual)",
+    "and(v14+v17-multilingual)",
+    "and(v14+v18-candidate)",
+    "or(v17-minilm+v17-multilingual)",
+    "and(v17-minilm+v18-candidate)",
+    "and(v17-multilingual+v18-candidate)",
+    "or(v14+v17-minilm+v17-multilingual)",
+    "and(v14+v17-minilm+v17-multilingual)",
+    "or(v14+v17-multilingual+v18-candidate)",
+    "and(v14+v17-multilingual+v18-candidate)",
+    "or(v14+v17-minilm+v17-multilingual+v18-candidate)",
+    "and(v14+v17-minilm+v17-multilingual+v18-candidate)"
+  ],
+  "significance_vs_best_single": {
+    "or(v14+v17-minilm)": {
+      "vs": "v14",
+      "attacks": {
+        "a_better": 59,
+        "b_better": 0,
+        "p_value": 3.469446951953614e-18
+      },
+      "benign": {
+        "a_better": 0,
+        "b_better": 28,
+        "p_value": 7.450580596923828e-09
+      }
+    },
+    "mean(v14+v17-multilingual)": {
+      "vs": "v14",
+      "attacks": {
+        "a_better": 38,
+        "b_better": 82,
+        "p_value": 7.291502428713535e-05
+      },
+      "benign": {
+        "a_better": 91,
+        "b_better": 7,
+        "p_value": 9.440274241692034e-20
+      }
+    },
+    "or(v14+v17-multilingual)": {
+      "vs": "v14",
+      "attacks": {
+        "a_better": 100,
+        "b_better": 0,
+        "p_value": 1.5777218104420236e-30
+      },
+      "benign": {
+        "a_better": 0,
+        "b_better": 49,
+        "p_value": 3.552713678800501e-15
+      }
+    },
+    "and(v14+v17-multilingual)": {
+      "vs": "v14",
+      "attacks": {
+        "a_better": 0,
+        "b_better": 132,
+        "p_value": 3.6734198463196485e-40
+      },
+      "benign": {
+        "a_better": 104,
+        "b_better": 0,
+        "p_value": 9.860761315262648e-32
+      }
+    },
+    "and(v14+v18-candidate)": {
+      "vs": "v14",
+      "attacks": {
+        "a_better": 0,
+        "b_better": 307,
+        "p_value": 7.670458539527698e-93
+      },
+      "benign": {
+        "a_better": 120,
+        "b_better": 0,
+        "p_value": 1.504632769052528e-36
+      }
+    },
+    "or(v17-minilm+v17-multilingual)": {
+      "vs": "v14",
+      "attacks": {
+        "a_better": 110,
+        "b_better": 82,
+        "p_value": 0.051064754678176665
+      },
+      "benign": {
+        "a_better": 61,
+        "b_better": 59,
+        "p_value": 0.9273150210898833
+      }
+    },
+    "and(v17-minilm+v18-candidate)": {
+      "vs": "v14",
+      "attacks": {
+        "a_better": 43,
+        "b_better": 368,
+        "p_value": 1.8050339985283441e-65
+      },
+      "benign": {
+        "a_better": 137,
+        "b_better": 14,
+        "p_value": 1.5378309880504167e-26
+      }
+    },
+    "and(v17-multilingual+v18-candidate)": {
+      "vs": "v14",
+      "attacks": {
+        "a_better": 58,
+        "b_better": 335,
+        "p_value": 1.8147962302224095e-48
+      },
+      "benign": {
+        "a_better": 147,
+        "b_better": 30,
+        "p_value": 9.986794981311451e-20
+      }
+    },
+    "or(v14+v17-minilm+v17-multilingual)": {
+      "vs": "v14",
+      "attacks": {
+        "a_better": 110,
+        "b_better": 0,
+        "p_value": 1.5407439555097887e-33
+      },
+      "benign": {
+        "a_better": 0,
+        "b_better": 59,
+        "p_value": 3.469446951953614e-18
+      }
+    },
+    "and(v14+v17-minilm+v17-multilingual)": {
+      "vs": "v14",
+      "attacks": {
+        "a_better": 0,
+        "b_better": 207,
+        "p_value": 9.723461371658034e-63
+      },
+      "benign": {
+        "a_better": 113,
+        "b_better": 0,
+        "p_value": 1.925929944387236e-34
+      }
+    },
+    "or(v14+v17-multilingual+v18-candidate)": {
+      "vs": "v14",
+      "attacks": {
+        "a_better": 118,
+        "b_better": 0,
+        "p_value": 6.018531076210112e-36
+      },
+      "benign": {
+        "a_better": 0,
+        "b_better": 178,
+        "p_value": 5.22024357439882e-54
+      }
+    },
+    "and(v14+v17-multilingual+v18-candidate)": {
+      "vs": "v14",
+      "attacks": {
+        "a_better": 0,
+        "b_better": 335,
+        "p_value": 2.8574684782056875e-101
+      },
+      "benign": {
+        "a_better": 147,
+        "b_better": 0,
+        "p_value": 1.1210387714598537e-44
+      }
+    },
+    "or(v14+v17-minilm+v17-multilingual+v18-candidate)": {
+      "vs": "v14",
+      "attacks": {
+        "a_better": 123,
+        "b_better": 0,
+        "p_value": 1.88079096131566e-37
+      },
+      "benign": {
+        "a_better": 0,
+        "b_better": 185,
+        "p_value": 4.078315292499078e-56
+      }
+    },
+    "and(v14+v17-minilm+v17-multilingual+v18-candidate)": {
+      "vs": "v14",
+      "attacks": {
+        "a_better": 0,
+        "b_better": 382,
+        "p_value": 2.0303534698525194e-115
+      },
+      "benign": {
+        "a_better": 154,
+        "b_better": 0,
+        "p_value": 8.758115402030107e-47
+      }
+    }
+  },
+  "group_split": {
+    "fit_rows": 1939,
+    "test_rows": 2061,
+    "note": "Split by group_key_for so near-duplicates cannot straddle; only needed for parameter-fitting variants, none of which are ranked above."
+  },
+  "configurations": {
+    "v14": {
+      "kind": "single",
+      "members": [
+        "v14"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 132.56365000052028,
+      "model_bytes_sum": 91774954,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1795,
+        "fn": 205,
+        "fp": 327,
+        "tn": 1673,
+        "recall": 0.8975,
+        "fpr": 0.1635,
+        "recall_wilson95": [
+          0.883436204935987,
+          0.9100397424754167
+        ],
+        "fpr_wilson95": [
+          0.14793995204546784,
+          0.18035022077481533
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 861,
+        "fn": 109,
+        "fp": 172,
+        "tn": 797,
+        "recall": 0.8876288659793814,
+        "fpr": 0.17750257997936017,
+        "recall_wilson95": [
+          0.8662052822265658,
+          0.9059943332125422
+        ],
+        "fpr_wilson95": [
+          0.1547320299974132,
+          0.20282002092191892
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 934,
+        "fn": 96,
+        "fp": 155,
+        "tn": 876,
+        "recall": 0.9067961165048544,
+        "fpr": 0.15033947623666344,
+        "recall_wilson95": [
+          0.887499039029574,
+          0.9230701182142349
+        ],
+        "fpr_wilson95": [
+          0.12982319444335966,
+          0.17345172380194152
+        ]
+      }
+    },
+    "v17-minilm": {
+      "kind": "single",
+      "members": [
+        "v17-minilm"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 200.81694999680622,
+      "model_bytes_sum": 91774954,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1697,
+        "fn": 303,
+        "fp": 285,
+        "tn": 1715,
+        "recall": 0.8485,
+        "fpr": 0.1425,
+        "recall_wilson95": [
+          0.832119542548813,
+          0.8635442754961538
+        ],
+        "fpr_wilson95": [
+          0.1278647408518039,
+          0.15850594795429188
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 821,
+        "fn": 149,
+        "fp": 152,
+        "tn": 817,
+        "recall": 0.8463917525773196,
+        "fpr": 0.1568627450980392,
+        "recall_wilson95": [
+          0.8223378925211989,
+          0.8677128276584295
+        ],
+        "fpr_wilson95": [
+          0.13532493312801736,
+          0.181110449050152
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 876,
+        "fn": 154,
+        "fp": 133,
+        "tn": 898,
+        "recall": 0.8504854368932039,
+        "fpr": 0.12900096993210475,
+        "recall_wilson95": [
+          0.8274073213743831,
+          0.8709589453678963
+        ],
+        "fpr_wilson95": [
+          0.10990892443467119,
+          0.15084740352324189
+        ]
+      }
+    },
+    "v17-multilingual": {
+      "kind": "single",
+      "members": [
+        "v17-multilingual"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 621.5375499996298,
+      "model_bytes_sum": 541224554,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1763,
+        "fn": 237,
+        "fp": 272,
+        "tn": 1728,
+        "recall": 0.8815,
+        "fpr": 0.136,
+        "recall_wilson95": [
+          0.8665987726575222,
+          0.8949385202668816
+        ],
+        "fpr_wilson95": [
+          0.12167290401775677,
+          0.15172270640299534
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 853,
+        "fn": 117,
+        "fp": 150,
+        "tn": 819,
+        "recall": 0.8793814432989691,
+        "fpr": 0.15479876160990713,
+        "recall_wilson95": [
+          0.8573752380964484,
+          0.8983945982907636
+        ],
+        "fpr_wilson95": [
+          0.13339147062481727,
+          0.17893224467923585
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 910,
+        "fn": 120,
+        "fp": 122,
+        "tn": 909,
+        "recall": 0.883495145631068,
+        "fpr": 0.11833171677982542,
+        "recall_wilson95": [
+          0.8624616590836199,
+          0.9016787158836942
+        ],
+        "fpr_wilson95": [
+          0.10001806787071535,
+          0.13947896494350376
+        ]
+      }
+    },
+    "v18-candidate": {
+      "kind": "single",
+      "members": [
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 78.76880000003439,
+      "model_bytes_sum": 207134105,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1564,
+        "fn": 436,
+        "fp": 366,
+        "tn": 1634,
+        "recall": 0.782,
+        "fpr": 0.183,
+        "recall_wilson95": [
+          0.7633734089055608,
+          0.7995453764278124
+        ],
+        "fpr_wilson95": [
+          0.16666695547445123,
+          0.20054845250186307
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 757,
+        "fn": 213,
+        "fp": 195,
+        "tn": 774,
+        "recall": 0.7804123711340206,
+        "fpr": 0.20123839009287925,
+        "recall_wilson95": [
+          0.7532829274765672,
+          0.8053295602878939
+        ],
+        "fpr_wilson95": [
+          0.17719685583580974,
+          0.2276393641358595
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 807,
+        "fn": 223,
+        "fp": 171,
+        "tn": 860,
+        "recall": 0.7834951456310679,
+        "fpr": 0.1658583899127061,
+        "recall_wilson95": [
+          0.757313925735045,
+          0.8075695919623112
+        ],
+        "fpr_wilson95": [
+          0.14440276356212053,
+          0.18979476580128093
+        ]
+      }
+    },
+    "mean(v14+v17-minilm)": {
+      "kind": "mean_probability",
+      "members": [
+        "v14",
+        "v17-minilm"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 333.3805999973265,
+      "model_bytes_sum": 183549908,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1712,
+        "fn": 288,
+        "fp": 275,
+        "tn": 1725,
+        "recall": 0.856,
+        "fpr": 0.1375,
+        "recall_wilson95": [
+          0.8399302416150259,
+          0.8707048207207219
+        ],
+        "fpr_wilson95": [
+          0.12310079987934935,
+          0.153289059399559
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 822,
+        "fn": 148,
+        "fp": 146,
+        "tn": 823,
+        "recall": 0.8474226804123711,
+        "fpr": 0.15067079463364294,
+        "recall_wilson95": [
+          0.8234267750316046,
+          0.8686776675295108
+        ],
+        "fpr_wilson95": [
+          0.12952877183740805,
+          0.17457160971841248
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 890,
+        "fn": 140,
+        "fp": 129,
+        "tn": 902,
+        "recall": 0.8640776699029126,
+        "fpr": 0.1251212415130941,
+        "recall_wilson95": [
+          0.8417908895120954,
+          0.8836588335581392
+        ],
+        "fpr_wilson95": [
+          0.10630671252793163,
+          0.1467189626504564
+        ]
+      }
+    },
+    "or(v14+v17-minilm)": {
+      "kind": "union_of_gates",
+      "members": [
+        "v14",
+        "v17-minilm"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 333.3805999973265,
+      "model_bytes_sum": 183549908,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1854,
+        "fn": 146,
+        "fp": 355,
+        "tn": 1645,
+        "recall": 0.927,
+        "fpr": 0.1775,
+        "recall_wilson95": [
+          0.9147622011152128,
+          0.9376006405065973
+        ],
+        "fpr_wilson95": [
+          0.16137730536745437,
+          0.1948591901289537
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 898,
+        "fn": 72,
+        "fp": 186,
+        "tn": 783,
+        "recall": 0.9257731958762887,
+        "fpr": 0.19195046439628483,
+        "recall_wilson95": [
+          0.9075441792584396,
+          0.9406431642956872
+        ],
+        "fpr_wilson95": [
+          0.16838895402360515,
+          0.21794476501454085
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 956,
+        "fn": 74,
+        "fp": 169,
+        "tn": 862,
+        "recall": 0.9281553398058252,
+        "fpr": 0.16391852570320078,
+        "recall_wilson95": [
+          0.9107433776839781,
+          0.942385496646618
+        ],
+        "fpr_wilson95": [
+          0.14257627863766315,
+          0.18775592433597582
+        ]
+      }
+    },
+    "and(v14+v17-minilm)": {
+      "kind": "intersection_of_gates",
+      "members": [
+        "v14",
+        "v17-minilm"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 333.3805999973265,
+      "model_bytes_sum": 183549908,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1638,
+        "fn": 362,
+        "fp": 257,
+        "tn": 1743,
+        "recall": 0.819,
+        "fpr": 0.1285,
+        "recall_wilson95": [
+          0.8015196993440423,
+          0.8352572244905181
+        ],
+        "fpr_wilson95": [
+          0.11454272443866984,
+          0.14388164169130105
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 784,
+        "fn": 186,
+        "fp": 138,
+        "tn": 831,
+        "recall": 0.8082474226804124,
+        "fpr": 0.14241486068111456,
+        "recall_wilson95": [
+          0.7822760225593829,
+          0.831786969505227
+        ],
+        "fpr_wilson95": [
+          0.121820954207872,
+          0.1658327598514834
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 854,
+        "fn": 176,
+        "fp": 119,
+        "tn": 912,
+        "recall": 0.829126213592233,
+        "fpr": 0.11542192046556742,
+        "recall_wilson95": [
+          0.8049267044404214,
+          0.850879845215071
+        ],
+        "fpr_wilson95": [
+          0.09732915541922313,
+          0.13636988781035217
+        ]
+      }
+    },
+    "mean(v14+v17-multilingual)": {
+      "kind": "mean_probability",
+      "members": [
+        "v14",
+        "v17-multilingual"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 754.1012000001501,
+      "model_bytes_sum": 632999508,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1751,
+        "fn": 249,
+        "fp": 243,
+        "tn": 1757,
+        "recall": 0.8755,
+        "fpr": 0.1215,
+        "recall_wilson95": [
+          0.8603068678385486,
+          0.8892534296532302
+        ],
+        "fpr_wilson95": [
+          0.10790262043403129,
+          0.13654858435787717
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 841,
+        "fn": 129,
+        "fp": 130,
+        "tn": 839,
+        "recall": 0.8670103092783505,
+        "fpr": 0.13415892672858618,
+        "recall_wilson95": [
+          0.8441867326626713,
+          0.8869384351466969
+        ],
+        "fpr_wilson95": [
+          0.11413799179043545,
+          0.1570690547724549
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 910,
+        "fn": 120,
+        "fp": 113,
+        "tn": 918,
+        "recall": 0.883495145631068,
+        "fpr": 0.1096023278370514,
+        "recall_wilson95": [
+          0.8624616590836199,
+          0.9016787158836942
+        ],
+        "fpr_wilson95": [
+          0.09196318456376629,
+          0.13013987949652134
+        ]
+      }
+    },
+    "or(v14+v17-multilingual)": {
+      "kind": "union_of_gates",
+      "members": [
+        "v14",
+        "v17-multilingual"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 754.1012000001501,
+      "model_bytes_sum": 632999508,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1895,
+        "fn": 105,
+        "fp": 376,
+        "tn": 1624,
+        "recall": 0.9475,
+        "fpr": 0.188,
+        "recall_wilson95": [
+          0.9368392097083899,
+          0.9564450329748887
+        ],
+        "fpr_wilson95": [
+          0.17148068565539723,
+          0.20571555184810456
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 917,
+        "fn": 53,
+        "fp": 203,
+        "tn": 766,
+        "recall": 0.945360824742268,
+        "fpr": 0.20949432404540763,
+        "recall_wilson95": [
+          0.9292220330869378,
+          0.9579860357154415
+        ],
+        "fpr_wilson95": [
+          0.18504366962461843,
+          0.23623921784351593
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 978,
+        "fn": 52,
+        "fp": 173,
+        "tn": 858,
+        "recall": 0.9495145631067962,
+        "fpr": 0.16779825412221144,
+        "recall_wilson95": [
+          0.9343940657477049,
+          0.9612945256696784
+        ],
+        "fpr_wilson95": [
+          0.14623035327445313,
+          0.1918325024787109
+        ]
+      }
+    },
+    "and(v14+v17-multilingual)": {
+      "kind": "intersection_of_gates",
+      "members": [
+        "v14",
+        "v17-multilingual"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 754.1012000001501,
+      "model_bytes_sum": 632999508,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1663,
+        "fn": 337,
+        "fp": 223,
+        "tn": 1777,
+        "recall": 0.8315,
+        "fpr": 0.1115,
+        "recall_wilson95": [
+          0.8144633695065567,
+          0.8472656281459726
+        ],
+        "fpr_wilson95": [
+          0.0984436045333179,
+          0.1260459412042156
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 797,
+        "fn": 173,
+        "fp": 119,
+        "tn": 850,
+        "recall": 0.8216494845360824,
+        "fpr": 0.12280701754385964,
+        "recall_wilson95": [
+          0.7963044696685848,
+          0.8444569133553559
+        ],
+        "fpr_wilson95": [
+          0.10361809683963134,
+          0.14497478191561947
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 866,
+        "fn": 164,
+        "fp": 104,
+        "tn": 927,
+        "recall": 0.8407766990291262,
+        "fpr": 0.1008729388942774,
+        "recall_wilson95": [
+          0.8171714790591795,
+          0.8618494617345602
+        ],
+        "fpr_wilson95": [
+          0.08394596882313612,
+          0.12076312648322005
+        ]
+      }
+    },
+    "mean(v14+v18-candidate)": {
+      "kind": "mean_probability",
+      "members": [
+        "v14",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 211.33245000055467,
+      "model_bytes_sum": 298909059,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1573,
+        "fn": 427,
+        "fp": 242,
+        "tn": 1758,
+        "recall": 0.7865,
+        "fpr": 0.121,
+        "recall_wilson95": [
+          0.768000614864056,
+          0.803900917043786
+        ],
+        "fpr_wilson95": [
+          0.10742889948295903,
+          0.13602422235623068
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 754,
+        "fn": 216,
+        "fp": 133,
+        "tn": 836,
+        "recall": 0.777319587628866,
+        "fpr": 0.13725490196078433,
+        "recall_wilson95": [
+          0.7500724492505978,
+          0.8023788713694023
+        ],
+        "fpr_wilson95": [
+          0.11701607382097724,
+          0.1603584730530875
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 819,
+        "fn": 211,
+        "fp": 109,
+        "tn": 922,
+        "recall": 0.7951456310679612,
+        "fpr": 0.10572259941804074,
+        "recall_wilson95": [
+          0.7694227125153318,
+          0.818675196320272
+        ],
+        "fpr_wilson95": [
+          0.08839508949391427,
+          0.12597732178684828
+        ]
+      }
+    },
+    "or(v14+v18-candidate)": {
+      "kind": "union_of_gates",
+      "members": [
+        "v14",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 211.33245000055467,
+      "model_bytes_sum": 298909059,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1871,
+        "fn": 129,
+        "fp": 486,
+        "tn": 1514,
+        "recall": 0.9355,
+        "fpr": 0.243,
+        "recall_wilson95": [
+          0.9238775789943177,
+          0.9454526728237109
+        ],
+        "fpr_wilson95": [
+          0.224707434303008,
+          0.26227792799955596
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 902,
+        "fn": 68,
+        "fp": 252,
+        "tn": 717,
+        "recall": 0.9298969072164949,
+        "fpr": 0.26006191950464397,
+        "recall_wilson95": [
+          0.912075925576045,
+          0.9443263075040297
+        ],
+        "fpr_wilson95": [
+          0.23342775991270787,
+          0.28859096597127515
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 969,
+        "fn": 61,
+        "fp": 234,
+        "tn": 797,
+        "recall": 0.9407766990291262,
+        "fpr": 0.22696411251212414,
+        "recall_wilson95": [
+          0.9246576447728435,
+          0.953620153290854
+        ],
+        "fpr_wilson95": [
+          0.20243701185716656,
+          0.25351829878375515
+        ]
+      }
+    },
+    "and(v14+v18-candidate)": {
+      "kind": "intersection_of_gates",
+      "members": [
+        "v14",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 211.33245000055467,
+      "model_bytes_sum": 298909059,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1488,
+        "fn": 512,
+        "fp": 207,
+        "tn": 1793,
+        "recall": 0.744,
+        "fpr": 0.1035,
+        "recall_wilson95": [
+          0.7244181803933457,
+          0.7626463005334029
+        ],
+        "fpr_wilson95": [
+          0.09090135668779638,
+          0.11761886180623717
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 716,
+        "fn": 254,
+        "fp": 115,
+        "tn": 854,
+        "recall": 0.7381443298969073,
+        "fpr": 0.11867905056759546,
+        "recall_wilson95": [
+          0.7095764686940484,
+          0.7648334014294462
+        ],
+        "fpr_wilson95": [
+          0.09980638157837454,
+          0.14056316342864372
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 772,
+        "fn": 258,
+        "fp": 92,
+        "tn": 939,
+        "recall": 0.7495145631067961,
+        "fpr": 0.0892337536372454,
+        "recall_wilson95": [
+          0.7221591039054006,
+          0.7750157729720669
+        ],
+        "fpr_wilson95": [
+          0.07332258990401413,
+          0.10819454706376677
+        ]
+      }
+    },
+    "mean(v17-minilm+v17-multilingual)": {
+      "kind": "mean_probability",
+      "members": [
+        "v17-minilm",
+        "v17-multilingual"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 822.3544999964361,
+      "model_bytes_sum": 632999508,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1695,
+        "fn": 305,
+        "fp": 251,
+        "tn": 1749,
+        "recall": 0.8475,
+        "fpr": 0.1255,
+        "recall_wilson95": [
+          0.8310791389176261,
+          0.8625885132219032
+        ],
+        "fpr_wilson95": [
+          0.11169516279841597,
+          0.14074070561524243
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 821,
+        "fn": 149,
+        "fp": 133,
+        "tn": 836,
+        "recall": 0.8463917525773196,
+        "fpr": 0.13725490196078433,
+        "recall_wilson95": [
+          0.8223378925211989,
+          0.8677128276584295
+        ],
+        "fpr_wilson95": [
+          0.11701607382097724,
+          0.1603584730530875
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 874,
+        "fn": 156,
+        "fp": 118,
+        "tn": 913,
+        "recall": 0.8485436893203884,
+        "fpr": 0.11445198836081474,
+        "recall_wilson95": [
+          0.8253577184795006,
+          0.8691394830730709
+        ],
+        "fpr_wilson95": [
+          0.09643371329104697,
+          0.13533266674364705
+        ]
+      }
+    },
+    "or(v17-minilm+v17-multilingual)": {
+      "kind": "union_of_gates",
+      "members": [
+        "v17-minilm",
+        "v17-multilingual"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 822.3544999964361,
+      "model_bytes_sum": 632999508,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1823,
+        "fn": 177,
+        "fp": 325,
+        "tn": 1675,
+        "recall": 0.9115,
+        "fpr": 0.1625,
+        "recall_wilson95": [
+          0.8982505492332389,
+          0.9231717208542898
+        ],
+        "fpr_wilson95": [
+          0.14698170831916652,
+          0.17931229859567915
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 884,
+        "fn": 86,
+        "fp": 178,
+        "tn": 791,
+        "recall": 0.911340206185567,
+        "fpr": 0.18369453044375644,
+        "recall_wilson95": [
+          0.8917911793885002,
+          0.9276440508248086
+        ],
+        "fpr_wilson95": [
+          0.1605781636300199,
+          0.209308887911661
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 939,
+        "fn": 91,
+        "fp": 147,
+        "tn": 884,
+        "recall": 0.9116504854368932,
+        "fpr": 0.1425800193986421,
+        "recall_wilson95": [
+          0.8927537690946697,
+          0.927488051123409
+        ],
+        "fpr_wilson95": [
+          0.1225626980386631,
+          0.16525091464758784
+        ]
+      }
+    },
+    "and(v17-minilm+v17-multilingual)": {
+      "kind": "intersection_of_gates",
+      "members": [
+        "v17-minilm",
+        "v17-multilingual"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 822.3544999964361,
+      "model_bytes_sum": 632999508,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1637,
+        "fn": 363,
+        "fp": 232,
+        "tn": 1768,
+        "recall": 0.8185,
+        "fpr": 0.116,
+        "recall_wilson95": [
+          0.8010025901242357,
+          0.8347762507576062
+        ],
+        "fpr_wilson95": [
+          0.10269607466146108,
+          0.13077621765054118
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 790,
+        "fn": 180,
+        "fp": 124,
+        "tn": 845,
+        "recall": 0.8144329896907216,
+        "fpr": 0.12796697626418987,
+        "recall_wilson95": [
+          0.7887447577329868,
+          0.8376405686205449
+        ],
+        "fpr_wilson95": [
+          0.10839322975061078,
+          0.1504788161899307
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 847,
+        "fn": 183,
+        "fp": 108,
+        "tn": 923,
+        "recall": 0.8223300970873786,
+        "fpr": 0.10475266731328807,
+        "recall_wilson95": [
+          0.7978019047428733,
+          0.844462916748641
+        ],
+        "fpr_wilson95": [
+          0.08750426801833341,
+          0.12493548006754787
+        ]
+      }
+    },
+    "mean(v17-minilm+v18-candidate)": {
+      "kind": "mean_probability",
+      "members": [
+        "v17-minilm",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 279.5857499968406,
+      "model_bytes_sum": 298909059,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1548,
+        "fn": 452,
+        "fp": 233,
+        "tn": 1767,
+        "recall": 0.774,
+        "fpr": 0.1165,
+        "recall_wilson95": [
+          0.7551549722724759,
+          0.7917944858173974
+        ],
+        "fpr_wilson95": [
+          0.10316899183684573,
+          0.13130138342787528
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 743,
+        "fn": 227,
+        "fp": 129,
+        "tn": 840,
+        "recall": 0.765979381443299,
+        "fpr": 0.13312693498452013,
+        "recall_wilson95": [
+          0.7383181970469417,
+          0.7915421773767017
+        ],
+        "fpr_wilson95": [
+          0.1131794619684284,
+          0.15597175115740383
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 805,
+        "fn": 225,
+        "fp": 104,
+        "tn": 927,
+        "recall": 0.7815533980582524,
+        "fpr": 0.1008729388942774,
+        "recall_wilson95": [
+          0.7552987026654105,
+          0.8057157498422376
+        ],
+        "fpr_wilson95": [
+          0.08394596882313612,
+          0.12076312648322005
+        ]
+      }
+    },
+    "or(v17-minilm+v18-candidate)": {
+      "kind": "union_of_gates",
+      "members": [
+        "v17-minilm",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 279.5857499968406,
+      "model_bytes_sum": 298909059,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1791,
+        "fn": 209,
+        "fp": 447,
+        "tn": 1553,
+        "recall": 0.8955,
+        "fpr": 0.2235,
+        "recall_wilson95": [
+          0.8813264561190907,
+          0.908157159481438
+        ],
+        "fpr_wilson95": [
+          0.20578231824139684,
+          0.24227780890513598
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 870,
+        "fn": 100,
+        "fp": 234,
+        "tn": 735,
+        "recall": 0.8969072164948454,
+        "fpr": 0.24148606811145512,
+        "recall_wilson95": [
+          0.8761793156698735,
+          0.9145038012026175
+        ],
+        "fpr_wilson95": [
+          0.21559352864842943,
+          0.26942019536850725
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 921,
+        "fn": 109,
+        "fp": 213,
+        "tn": 818,
+        "recall": 0.8941747572815534,
+        "fpr": 0.20659553831231814,
+        "recall_wilson95": [
+          0.8739018935403806,
+          0.9115183399703268
+        ],
+        "fpr_wilson95": [
+          0.18299350853486923,
+          0.23237587501354573
+        ]
+      }
+    },
+    "and(v17-minilm+v18-candidate)": {
+      "kind": "intersection_of_gates",
+      "members": [
+        "v17-minilm",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 279.5857499968406,
+      "model_bytes_sum": 298909059,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1470,
+        "fn": 530,
+        "fp": 204,
+        "tn": 1796,
+        "recall": 0.735,
+        "fpr": 0.102,
+        "recall_wilson95": [
+          0.7152208664166256,
+          0.7538781213611855
+        ],
+        "fpr_wilson95": [
+          0.08948985374022951,
+          0.11603611589564782
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 708,
+        "fn": 262,
+        "fp": 113,
+        "tn": 856,
+        "recall": 0.7298969072164948,
+        "fpr": 0.11661506707946337,
+        "recall_wilson95": [
+          0.7010884515464699,
+          0.7568916395251286
+        ],
+        "fpr_wilson95": [
+          0.09790343451045612,
+          0.1383544436224459
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 762,
+        "fn": 268,
+        "fp": 91,
+        "tn": 940,
+        "recall": 0.7398058252427184,
+        "fpr": 0.08826382153249272,
+        "recall_wilson95": [
+          0.7121557871642045,
+          0.7656737637647234
+        ],
+        "fpr_wilson95": [
+          0.07244107219295434,
+          0.10714340157994529
+        ]
+      }
+    },
+    "mean(v17-multilingual+v18-candidate)": {
+      "kind": "mean_probability",
+      "members": [
+        "v17-multilingual",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 700.3063499996642,
+      "model_bytes_sum": 748358659,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1590,
+        "fn": 410,
+        "fp": 238,
+        "tn": 1762,
+        "recall": 0.795,
+        "fpr": 0.119,
+        "recall_wilson95": [
+          0.7767497148011462,
+          0.8121192273029145
+        ],
+        "fpr_wilson95": [
+          0.10553480426223787,
+          0.13392598576607684
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 765,
+        "fn": 205,
+        "fp": 134,
+        "tn": 835,
+        "recall": 0.788659793814433,
+        "fpr": 0.13828689370485037,
+        "recall_wilson95": [
+          0.7618545731764447,
+          0.8131876936399124
+        ],
+        "fpr_wilson95": [
+          0.11797625225171735,
+          0.16145412805940554
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 825,
+        "fn": 205,
+        "fp": 104,
+        "tn": 927,
+        "recall": 0.8009708737864077,
+        "fpr": 0.1008729388942774,
+        "recall_wilson95": [
+          0.7754887094965394,
+          0.8242163949081879
+        ],
+        "fpr_wilson95": [
+          0.08394596882313612,
+          0.12076312648322005
+        ]
+      }
+    },
+    "or(v17-multilingual+v18-candidate)": {
+      "kind": "union_of_gates",
+      "members": [
+        "v17-multilingual",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 700.3063499996642,
+      "model_bytes_sum": 748358659,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1809,
+        "fn": 191,
+        "fp": 428,
+        "tn": 1572,
+        "recall": 0.9045,
+        "fpr": 0.214,
+        "recall_wilson95": [
+          0.890832875631817,
+          0.9166162331176492
+        ],
+        "fpr_wilson95": [
+          0.19658287469350122,
+          0.23251367635137538
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 876,
+        "fn": 94,
+        "fp": 229,
+        "tn": 740,
+        "recall": 0.9030927835051547,
+        "fpr": 0.23632610939112486,
+        "recall_wilson95": [
+          0.8828547054658157,
+          0.9201507456955972
+        ],
+        "fpr_wilson95": [
+          0.21065155492295246,
+          0.26408300190869344
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 933,
+        "fn": 97,
+        "fp": 199,
+        "tn": 832,
+        "recall": 0.9058252427184466,
+        "fpr": 0.1930164888457808,
+        "recall_wilson95": [
+          0.8864498545173141,
+          0.9221847701316408
+        ],
+        "fpr_wilson95": [
+          0.1700831797272021,
+          0.21822891909287506
+        ]
+      }
+    },
+    "and(v17-multilingual+v18-candidate)": {
+      "kind": "intersection_of_gates",
+      "members": [
+        "v17-multilingual",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 700.3063499996642,
+      "model_bytes_sum": 748358659,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1518,
+        "fn": 482,
+        "fp": 210,
+        "tn": 1790,
+        "recall": 0.759,
+        "fpr": 0.105,
+        "recall_wilson95": [
+          0.73977086883889,
+          0.7772361006694211
+        ],
+        "fpr_wilson95": [
+          0.09231372516469964,
+          0.11920074218749015
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 734,
+        "fn": 236,
+        "fp": 116,
+        "tn": 853,
+        "recall": 0.756701030927835,
+        "fpr": 0.1197110423116615,
+        "recall_wilson95": [
+          0.7287208159586324,
+          0.782656057031628
+        ],
+        "fpr_wilson95": [
+          0.10075859082065436,
+          0.14166678762342205
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 784,
+        "fn": 246,
+        "fp": 94,
+        "tn": 937,
+        "recall": 0.7611650485436893,
+        "fpr": 0.09117361784675072,
+        "recall_wilson95": [
+          0.7341863323030923,
+          0.7862029357126227
+        ],
+        "fpr_wilson95": [
+          0.07508744404746309,
+          0.11029501931008034
+        ]
+      }
+    },
+    "mean(v14+v17-minilm+v17-multilingual)": {
+      "kind": "mean_probability",
+      "members": [
+        "v14",
+        "v17-minilm",
+        "v17-multilingual"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 954.9181499969563,
+      "model_bytes_sum": 724774462,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1695,
+        "fn": 305,
+        "fp": 245,
+        "tn": 1755,
+        "recall": 0.8475,
+        "fpr": 0.1225,
+        "recall_wilson95": [
+          0.8310791389176261,
+          0.8625885132219032
+        ],
+        "fpr_wilson95": [
+          0.10885029598940679,
+          0.13759707470793917
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 815,
+        "fn": 155,
+        "fp": 128,
+        "tn": 841,
+        "recall": 0.8402061855670103,
+        "fpr": 0.13209494324045407,
+        "recall_wilson95": [
+          0.8158119045985083,
+          0.8619164812921983
+        ],
+        "fpr_wilson95": [
+          0.11222135431173713,
+          0.15487402537703693
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 880,
+        "fn": 150,
+        "fp": 117,
+        "tn": 914,
+        "recall": 0.8543689320388349,
+        "fpr": 0.11348205625606207,
+        "recall_wilson95": [
+          0.8315103146313805,
+          0.8745940824903147
+        ],
+        "fpr_wilson95": [
+          0.09553871003372477,
+          0.13429500680608794
+        ]
+      }
+    },
+    "or(v14+v17-minilm+v17-multilingual)": {
+      "kind": "union_of_gates",
+      "members": [
+        "v14",
+        "v17-minilm",
+        "v17-multilingual"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 954.9181499969563,
+      "model_bytes_sum": 724774462,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1905,
+        "fn": 95,
+        "fp": 386,
+        "tn": 1614,
+        "recall": 0.9525,
+        "fpr": 0.193,
+        "recall_wilson95": [
+          0.9422790928066445,
+          0.9609859794038216
+        ],
+        "fpr_wilson95": [
+          0.17629898745996453,
+          0.21087807957072474
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 923,
+        "fn": 47,
+        "fp": 208,
+        "tn": 761,
+        "recall": 0.9515463917525773,
+        "fpr": 0.21465428276573786,
+        "recall_wilson95": [
+          0.9361621183549532,
+          0.963368284736348
+        ],
+        "fpr_wilson95": [
+          0.18995598609252107,
+          0.24160606856090394
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 982,
+        "fn": 48,
+        "fp": 178,
+        "tn": 853,
+        "recall": 0.9533980582524272,
+        "fpr": 0.1726479146459748,
+        "recall_wilson95": [
+          0.9387546530666651,
+          0.964672068730134
+        ],
+        "fpr_wilson95": [
+          0.15080406228185284,
+          0.19692210944571759
+        ]
+      }
+    },
+    "and(v14+v17-minilm+v17-multilingual)": {
+      "kind": "intersection_of_gates",
+      "members": [
+        "v14",
+        "v17-minilm",
+        "v17-multilingual"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 954.9181499969563,
+      "model_bytes_sum": 724774462,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1588,
+        "fn": 412,
+        "fp": 214,
+        "tn": 1786,
+        "recall": 0.794,
+        "fpr": 0.107,
+        "recall_wilson95": [
+          0.7757197975727613,
+          0.8111529786258619
+        ],
+        "fpr_wilson95": [
+          0.09419820147525404,
+          0.12130859768781074
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 759,
+        "fn": 211,
+        "fp": 115,
+        "tn": 854,
+        "recall": 0.7824742268041237,
+        "fpr": 0.11867905056759546,
+        "recall_wilson95": [
+          0.7554244127387809,
+          0.8072955197886541
+        ],
+        "fpr_wilson95": [
+          0.09980638157837454,
+          0.14056316342864372
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 829,
+        "fn": 201,
+        "fp": 99,
+        "tn": 932,
+        "recall": 0.8048543689320389,
+        "fpr": 0.09602327837051407,
+        "recall_wilson95": [
+          0.779537174402196,
+          0.8279060603819474
+        ],
+        "fpr_wilson95": [
+          0.07950979612670181,
+          0.11553598320524802
+        ]
+      }
+    },
+    "majority(v14+v17-minilm+v17-multilingual)": {
+      "kind": "majority_vote",
+      "members": [
+        "v14",
+        "v17-minilm",
+        "v17-multilingual"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 954.9181499969563,
+      "model_bytes_sum": 724774462,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1762,
+        "fn": 238,
+        "fp": 284,
+        "tn": 1716,
+        "recall": 0.881,
+        "fpr": 0.142,
+        "recall_wilson95": [
+          0.8660740142339232,
+          0.8944651957377621
+        ],
+        "fpr_wilson95": [
+          0.12738805517520033,
+          0.1579845506781767
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 853,
+        "fn": 117,
+        "fp": 151,
+        "tn": 818,
+        "recall": 0.8793814432989691,
+        "fpr": 0.15583075335397317,
+        "recall_wilson95": [
+          0.8573752380964484,
+          0.8983945982907636
+        ],
+        "fpr_wilson95": [
+          0.13435802816043552,
+          0.18002152058067572
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 909,
+        "fn": 121,
+        "fp": 133,
+        "tn": 898,
+        "recall": 0.8825242718446602,
+        "fpr": 0.12900096993210475,
+        "recall_wilson95": [
+          0.8614243154278176,
+          0.9007815269446424
+        ],
+        "fpr_wilson95": [
+          0.10990892443467119,
+          0.15084740352324189
+        ]
+      }
+    },
+    "mean(v14+v17-minilm+v18-candidate)": {
+      "kind": "mean_probability",
+      "members": [
+        "v14",
+        "v17-minilm",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 412.1493999973609,
+      "model_bytes_sum": 390684013,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1560,
+        "fn": 440,
+        "fp": 233,
+        "tn": 1767,
+        "recall": 0.78,
+        "fpr": 0.1165,
+        "recall_wilson95": [
+          0.7613178846875146,
+          0.7976085688349837
+        ],
+        "fpr_wilson95": [
+          0.10316899183684573,
+          0.13130138342787528
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 747,
+        "fn": 223,
+        "fp": 125,
+        "tn": 844,
+        "recall": 0.7701030927835052,
+        "fpr": 0.12899896800825594,
+        "recall_wilson95": [
+          0.7425893391798843,
+          0.795485924769707
+        ],
+        "fpr_wilson95": [
+          0.10934960633353022,
+          0.15157827304406943
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 813,
+        "fn": 217,
+        "fp": 108,
+        "tn": 923,
+        "recall": 0.7893203883495146,
+        "fpr": 0.10475266731328807,
+        "recall_wilson95": [
+          0.7633645304390975,
+          0.8131261828273824
+        ],
+        "fpr_wilson95": [
+          0.08750426801833341,
+          0.12493548006754787
+        ]
+      }
+    },
+    "or(v14+v17-minilm+v18-candidate)": {
+      "kind": "union_of_gates",
+      "members": [
+        "v14",
+        "v17-minilm",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 412.1493999973609,
+      "model_bytes_sum": 390684013,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1887,
+        "fn": 113,
+        "fp": 500,
+        "tn": 1500,
+        "recall": 0.9435,
+        "fpr": 0.25,
+        "recall_wilson95": [
+          0.9325050206793213,
+          0.9527945583822073
+        ],
+        "fpr_wilson95": [
+          0.23151413442481875,
+          0.2694443892158077
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 913,
+        "fn": 57,
+        "fp": 258,
+        "tn": 711,
+        "recall": 0.9412371134020618,
+        "fpr": 0.26625386996904027,
+        "recall_wilson95": [
+          0.9246235608172967,
+          0.9543696184591347
+        ],
+        "fpr_wilson95": [
+          0.23938692362158875,
+          0.2949668028847432
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 974,
+        "fn": 56,
+        "fp": 242,
+        "tn": 789,
+        "recall": 0.945631067961165,
+        "fpr": 0.2347235693501455,
+        "recall_wilson95": [
+          0.930054828137648,
+          0.9578956329003194
+        ],
+        "fpr_wilson95": [
+          0.20986701383284226,
+          0.2615496023671296
+        ]
+      }
+    },
+    "and(v14+v17-minilm+v18-candidate)": {
+      "kind": "intersection_of_gates",
+      "members": [
+        "v14",
+        "v17-minilm",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 412.1493999973609,
+      "model_bytes_sum": 390684013,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1427,
+        "fn": 573,
+        "fp": 190,
+        "tn": 1810,
+        "recall": 0.7135,
+        "fpr": 0.095,
+        "recall_wilson95": [
+          0.6932905586421566,
+          0.7328908621687483
+        ],
+        "fpr_wilson95": [
+          0.08291479680735943,
+          0.10863801149045545
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 682,
+        "fn": 288,
+        "fp": 105,
+        "tn": 864,
+        "recall": 0.7030927835051546,
+        "fpr": 0.10835913312693499,
+        "recall_wilson95": [
+          0.6735845204772671,
+          0.7309987886756696
+        ],
+        "fpr_wilson95": [
+          0.09031211652775069,
+          0.12949909410868624
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 745,
+        "fn": 285,
+        "fp": 85,
+        "tn": 946,
+        "recall": 0.7233009708737864,
+        "fpr": 0.08244422890397672,
+        "recall_wilson95": [
+          0.6951886711875211,
+          0.7497538256288895
+        ],
+        "fpr_wilson95": [
+          0.06716527854579094,
+          0.10082321605782105
+        ]
+      }
+    },
+    "majority(v14+v17-minilm+v18-candidate)": {
+      "kind": "majority_vote",
+      "members": [
+        "v14",
+        "v17-minilm",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 412.1493999973609,
+      "model_bytes_sum": 390684013,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1742,
+        "fn": 258,
+        "fp": 288,
+        "tn": 1712,
+        "recall": 0.871,
+        "fpr": 0.144,
+        "recall_wilson95": [
+          0.8555951252714992,
+          0.8849824256458111
+        ],
+        "fpr_wilson95": [
+          0.12929517927927803,
+          0.160069758384974
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 844,
+        "fn": 126,
+        "fp": 156,
+        "tn": 813,
+        "recall": 0.8701030927835052,
+        "fpr": 0.1609907120743034,
+        "recall_wilson95": [
+          0.8474778714619452,
+          0.889808463491884
+        ],
+        "fpr_wilson95": [
+          0.13919597257391644,
+          0.18546274335248544
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 898,
+        "fn": 132,
+        "fp": 132,
+        "tn": 899,
+        "recall": 0.8718446601941747,
+        "fpr": 0.1280310378273521,
+        "recall_wilson95": [
+          0.850040664724829,
+          0.8908853191042373
+        ],
+        "fpr_wilson95": [
+          0.10900779758467263,
+          0.14981586717835924
+        ]
+      }
+    },
+    "mean(v14+v17-multilingual+v18-candidate)": {
+      "kind": "mean_probability",
+      "members": [
+        "v14",
+        "v17-multilingual",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 832.8700000001845,
+      "model_bytes_sum": 840133613,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1584,
+        "fn": 416,
+        "fp": 224,
+        "tn": 1776,
+        "recall": 0.792,
+        "fpr": 0.112,
+        "recall_wilson95": [
+          0.773660456950297,
+          0.8092199874374513
+        ],
+        "fpr_wilson95": [
+          0.09891575901603857,
+          0.12657186967421372
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 760,
+        "fn": 210,
+        "fp": 121,
+        "tn": 848,
+        "recall": 0.7835051546391752,
+        "fpr": 0.12487100103199174,
+        "recall_wilson95": [
+          0.7564955088523698,
+          0.8082781460565523
+        ],
+        "fpr_wilson95": [
+          0.10552678119055656,
+          0.1471777644388105
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 824,
+        "fn": 206,
+        "fp": 103,
+        "tn": 928,
+        "recall": 0.8,
+        "fpr": 0.09990300678952474,
+        "recall_wilson95": [
+          0.7744771566946205,
+          0.8232934151152531
+        ],
+        "fpr_wilson95": [
+          0.08305767202288493,
+          0.11971876008858999
+        ]
+      }
+    },
+    "or(v14+v17-multilingual+v18-candidate)": {
+      "kind": "union_of_gates",
+      "members": [
+        "v14",
+        "v17-multilingual",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 832.8700000001845,
+      "model_bytes_sum": 840133613,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1913,
+        "fn": 87,
+        "fp": 505,
+        "tn": 1495,
+        "recall": 0.9565,
+        "fpr": 0.2525,
+        "recall_wilson95": [
+          0.9466510236907602,
+          0.9645987121414559
+        ],
+        "fpr_wilson95": [
+          0.23394670491371472,
+          0.27200223349050545
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 927,
+        "fn": 43,
+        "fp": 263,
+        "tn": 706,
+        "recall": 0.9556701030927836,
+        "fpr": 0.2714138286893705,
+        "recall_wilson95": [
+          0.9408210265834348,
+          0.9669242660338145
+        ],
+        "fpr_wilson95": [
+          0.24435819891549224,
+          0.3002746947761303
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 986,
+        "fn": 44,
+        "fp": 242,
+        "tn": 789,
+        "recall": 0.9572815533980582,
+        "fpr": 0.2347235693501455,
+        "recall_wilson95": [
+          0.9431391198372439,
+          0.9680257323389709
+        ],
+        "fpr_wilson95": [
+          0.20986701383284226,
+          0.2615496023671296
+        ]
+      }
+    },
+    "and(v14+v17-multilingual+v18-candidate)": {
+      "kind": "intersection_of_gates",
+      "members": [
+        "v14",
+        "v17-multilingual",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 832.8700000001845,
+      "model_bytes_sum": 840133613,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1460,
+        "fn": 540,
+        "fp": 180,
+        "tn": 1820,
+        "recall": 0.73,
+        "fpr": 0.09,
+        "recall_wilson95": [
+          0.7101157144382858,
+          0.7490024438123378
+        ],
+        "fpr_wilson95": [
+          0.07823115160665478,
+          0.10334082716397261
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 703,
+        "fn": 267,
+        "fp": 96,
+        "tn": 873,
+        "recall": 0.7247422680412371,
+        "fpr": 0.09907120743034056,
+        "recall_wilson95": [
+          0.6957896254795247,
+          0.7519218536846389
+        ],
+        "fpr_wilson95": [
+          0.081814187440253,
+          0.11949452226266068
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 757,
+        "fn": 273,
+        "fp": 84,
+        "tn": 947,
+        "recall": 0.7349514563106796,
+        "fpr": 0.08147429679922405,
+        "recall_wilson95": [
+          0.7071605123333665,
+          0.7609963756212915
+        ],
+        "fpr_wilson95": [
+          0.06628829066083242,
+          0.09976754074789829
+        ]
+      }
+    },
+    "majority(v14+v17-multilingual+v18-candidate)": {
+      "kind": "majority_vote",
+      "members": [
+        "v14",
+        "v17-multilingual",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 832.8700000001845,
+      "model_bytes_sum": 840133613,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1749,
+        "fn": 251,
+        "fp": 280,
+        "tn": 1720,
+        "recall": 0.8745,
+        "fpr": 0.14,
+        "recall_wilson95": [
+          0.8592592943847576,
+          0.8883048372015839
+        ],
+        "fpr_wilson95": [
+          0.12548195561218853,
+          0.15589831843031357
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 841,
+        "fn": 129,
+        "fp": 158,
+        "tn": 811,
+        "recall": 0.8670103092783505,
+        "fpr": 0.16305469556243551,
+        "recall_wilson95": [
+          0.8441867326626713,
+          0.8869384351466969
+        ],
+        "fpr_wilson95": [
+          0.1411335069369949,
+          0.1876368758635233
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 908,
+        "fn": 122,
+        "fp": 122,
+        "tn": 909,
+        "recall": 0.8815533980582524,
+        "fpr": 0.11833171677982542,
+        "recall_wilson95": [
+          0.860387397133498,
+          0.8998839126441079
+        ],
+        "fpr_wilson95": [
+          0.10001806787071535,
+          0.13947896494350376
+        ]
+      }
+    },
+    "mean(v17-minilm+v17-multilingual+v18-candidate)": {
+      "kind": "mean_probability",
+      "members": [
+        "v17-minilm",
+        "v17-multilingual",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 901.1232999964705,
+      "model_bytes_sum": 840133613,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1570,
+        "fn": 430,
+        "fp": 229,
+        "tn": 1771,
+        "recall": 0.785,
+        "fpr": 0.1145,
+        "recall_wilson95": [
+          0.7664578597280761,
+          0.8024494233216096
+        ],
+        "fpr_wilson95": [
+          0.10127782200421726,
+          0.12920022144962875
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 757,
+        "fn": 213,
+        "fp": 125,
+        "tn": 844,
+        "recall": 0.7804123711340206,
+        "fpr": 0.12899896800825594,
+        "recall_wilson95": [
+          0.7532829274765672,
+          0.8053295602878939
+        ],
+        "fpr_wilson95": [
+          0.10934960633353022,
+          0.15157827304406943
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 813,
+        "fn": 217,
+        "fp": 104,
+        "tn": 927,
+        "recall": 0.7893203883495146,
+        "fpr": 0.1008729388942774,
+        "recall_wilson95": [
+          0.7633645304390975,
+          0.8131261828273824
+        ],
+        "fpr_wilson95": [
+          0.08394596882313612,
+          0.12076312648322005
+        ]
+      }
+    },
+    "or(v17-minilm+v17-multilingual+v18-candidate)": {
+      "kind": "union_of_gates",
+      "members": [
+        "v17-minilm",
+        "v17-multilingual",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 901.1232999964705,
+      "model_bytes_sum": 840133613,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1850,
+        "fn": 150,
+        "fp": 461,
+        "tn": 1539,
+        "recall": 0.925,
+        "fpr": 0.2305,
+        "recall_wilson95": [
+          0.9126241578681623,
+          0.9357463519427728
+        ],
+        "fpr_wilson95": [
+          0.21256960875452585,
+          0.24946367973006944
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 899,
+        "fn": 71,
+        "fp": 243,
+        "tn": 726,
+        "recall": 0.9268041237113402,
+        "fpr": 0.25077399380804954,
+        "recall_wilson95": [
+          0.9086757085384629,
+          0.9415653573971507
+        ],
+        "fpr_wilson95": [
+          0.22450237067934595,
+          0.2790138542711138
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 951,
+        "fn": 79,
+        "fp": 218,
+        "tn": 813,
+        "recall": 0.9233009708737864,
+        "fpr": 0.21144519883608148,
+        "recall_wilson95": [
+          0.9054306533277059,
+          0.9380255580286203
+        ],
+        "fpr_wilson95": [
+          0.18761469556523583,
+          0.23741800395758553
+        ]
+      }
+    },
+    "and(v17-minilm+v17-multilingual+v18-candidate)": {
+      "kind": "intersection_of_gates",
+      "members": [
+        "v17-minilm",
+        "v17-multilingual",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 901.1232999964705,
+      "model_bytes_sum": 840133613,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1451,
+        "fn": 549,
+        "fp": 184,
+        "tn": 1816,
+        "recall": 0.7255,
+        "fpr": 0.092,
+        "recall_wilson95": [
+          0.705523746028404,
+          0.7446116656477509
+        ],
+        "fpr_wilson95": [
+          0.08010326619960463,
+          0.10546104438189775
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 700,
+        "fn": 270,
+        "fp": 99,
+        "tn": 870,
+        "recall": 0.7216494845360825,
+        "fpr": 0.1021671826625387,
+        "recall_wilson95": [
+          0.6926125704055431,
+          0.7489377416141595
+        ],
+        "fpr_wilson95": [
+          0.0846415537159691,
+          0.12283465629811896
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 751,
+        "fn": 279,
+        "fp": 85,
+        "tn": 946,
+        "recall": 0.7291262135922331,
+        "fpr": 0.08244422890397672,
+        "recall_wilson95": [
+          0.7011716609484799,
+          0.7553780314370546
+        ],
+        "fpr_wilson95": [
+          0.06716527854579094,
+          0.10082321605782105
+        ]
+      }
+    },
+    "majority(v17-minilm+v17-multilingual+v18-candidate)": {
+      "kind": "majority_vote",
+      "members": [
+        "v17-minilm",
+        "v17-multilingual",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 901.1232999964705,
+      "model_bytes_sum": 840133613,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1723,
+        "fn": 277,
+        "fp": 278,
+        "tn": 1722,
+        "recall": 0.8615,
+        "fpr": 0.139,
+        "recall_wilson95": [
+          0.8456670391022474,
+          0.8759469357134069
+        ],
+        "fpr_wilson95": [
+          0.1245292957308537,
+          0.1548548124062109
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 832,
+        "fn": 138,
+        "fp": 155,
+        "tn": 814,
+        "recall": 0.8577319587628865,
+        "fpr": 0.15995872033023736,
+        "recall_wilson95": [
+          0.8343356608183378,
+          0.8783060055576474
+        ],
+        "fpr_wilson95": [
+          0.1382277051405316,
+          0.18437517734881217
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 891,
+        "fn": 139,
+        "fp": 123,
+        "tn": 908,
+        "recall": 0.8650485436893204,
+        "fpr": 0.11930164888457807,
+        "recall_wilson95": [
+          0.8428208402973666,
+          0.8845634153677221
+        ],
+        "fpr_wilson95": [
+          0.1009152187994996,
+          0.14051447720960075
+        ]
+      }
+    },
+    "mean(v14+v17-minilm+v17-multilingual+v18-candidate)": {
+      "kind": "mean_probability",
+      "members": [
+        "v14",
+        "v17-minilm",
+        "v17-multilingual",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 1033.6869499969907,
+      "model_bytes_sum": 931908567,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1573,
+        "fn": 427,
+        "fp": 226,
+        "tn": 1774,
+        "recall": 0.7865,
+        "fpr": 0.113,
+        "recall_wilson95": [
+          0.768000614864056,
+          0.803900917043786
+        ],
+        "fpr_wilson95": [
+          0.09986032758661222,
+          0.12762346700907756
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 758,
+        "fn": 212,
+        "fp": 123,
+        "tn": 846,
+        "recall": 0.7814432989690722,
+        "fpr": 0.12693498452012383,
+        "recall_wilson95": [
+          0.754353552679288,
+          0.80631265746666
+        ],
+        "fpr_wilson95": [
+          0.1074372969597871,
+          0.14937891554369626
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 815,
+        "fn": 215,
+        "fp": 103,
+        "tn": 928,
+        "recall": 0.7912621359223301,
+        "fpr": 0.09990300678952474,
+        "recall_wilson95": [
+          0.7653830711519412,
+          0.8149767073042467
+        ],
+        "fpr_wilson95": [
+          0.08305767202288493,
+          0.11971876008858999
+        ]
+      }
+    },
+    "or(v14+v17-minilm+v17-multilingual+v18-candidate)": {
+      "kind": "union_of_gates",
+      "members": [
+        "v14",
+        "v17-minilm",
+        "v17-multilingual",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 1033.6869499969907,
+      "model_bytes_sum": 931908567,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1918,
+        "fn": 82,
+        "fp": 512,
+        "tn": 1488,
+        "recall": 0.959,
+        "fpr": 0.256,
+        "recall_wilson95": [
+          0.9493936413450841,
+          0.9668465092507255
+        ],
+        "fpr_wilson95": [
+          0.23735369946659707,
+          0.27558181960665434
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 930,
+        "fn": 40,
+        "fp": 266,
+        "tn": 703,
+        "recall": 0.9587628865979382,
+        "fpr": 0.27450980392156865,
+        "recall_wilson95": [
+          0.9443344833957296,
+          0.9695719763659808
+        ],
+        "fpr_wilson95": [
+          0.24734324018117285,
+          0.30345715382162414
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 988,
+        "fn": 42,
+        "fp": 246,
+        "tn": 785,
+        "recall": 0.9592233009708738,
+        "fpr": 0.23860329776915615,
+        "recall_wilson95": [
+          0.9453412501403373,
+          0.9696926672255854
+        ],
+        "fpr_wilson95": [
+          0.21358653203081795,
+          0.26556073694867904
+        ]
+      }
+    },
+    "and(v14+v17-minilm+v17-multilingual+v18-candidate)": {
+      "kind": "intersection_of_gates",
+      "members": [
+        "v14",
+        "v17-minilm",
+        "v17-multilingual",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 1033.6869499969907,
+      "model_bytes_sum": 931908567,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1413,
+        "fn": 587,
+        "fp": 173,
+        "tn": 1827,
+        "recall": 0.7065,
+        "fpr": 0.0865,
+        "recall_wilson95": [
+          0.6861624316103886,
+          0.7260458278624539
+        ],
+        "fpr_wilson95": [
+          0.07495944584682306,
+          0.0996259522547731
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 677,
+        "fn": 293,
+        "fp": 93,
+        "tn": 876,
+        "recall": 0.6979381443298969,
+        "fpr": 0.09597523219814241,
+        "recall_wilson95": [
+          0.668309096799363,
+          0.7260056004461388
+        ],
+        "fpr_wilson95": [
+          0.07899238769886163,
+          0.1161488216928776
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 736,
+        "fn": 294,
+        "fp": 80,
+        "tn": 951,
+        "recall": 0.7145631067961165,
+        "fpr": 0.07759456838021339,
+        "recall_wilson95": [
+          0.6862249275531787,
+          0.7413067759095462
+        ],
+        "fpr_wilson95": [
+          0.06278733695786026,
+          0.09553784167134538
+        ]
+      }
+    },
+    "majority(v14+v17-minilm+v17-multilingual+v18-candidate)": {
+      "kind": "majority_vote",
+      "members": [
+        "v14",
+        "v17-minilm",
+        "v17-multilingual",
+        "v18-candidate"
+      ],
+      "fitted_parameters": 0,
+      "latency_p50_sum_ms": 1033.6869499969907,
+      "model_bytes_sum": 931908567,
+      "full_battery": {
+        "attacks": 2000,
+        "benign": 2000,
+        "tp": 1687,
+        "fn": 313,
+        "fp": 249,
+        "tn": 1751,
+        "recall": 0.8435,
+        "fpr": 0.1245,
+        "recall_wilson95": [
+          0.8269198508747131,
+          0.8587631376430662
+        ],
+        "fpr_wilson95": [
+          0.11074657034676971,
+          0.13969313216145118
+        ]
+      },
+      "fit_half": {
+        "attacks": 970,
+        "benign": 969,
+        "tp": 813,
+        "fn": 157,
+        "fp": 136,
+        "tn": 833,
+        "recall": 0.8381443298969072,
+        "fpr": 0.14035087719298245,
+        "recall_wilson95": [
+          0.8136392933155046,
+          0.859981647812228
+        ],
+        "fpr_wilson95": [
+          0.11989781291740124,
+          0.16364423426783786
+        ]
+      },
+      "test_half": {
+        "attacks": 1030,
+        "benign": 1031,
+        "tp": 874,
+        "fn": 156,
+        "fp": 113,
+        "tn": 918,
+        "recall": 0.8485436893203884,
+        "fpr": 0.1096023278370514,
+        "recall_wilson95": [
+          0.8253577184795006,
+          0.8691394830730709
+        ],
+        "fpr_wilson95": [
+          0.09196318456376629,
+          0.13013987949652134
+        ]
+      }
+    }
+  },
+  "limitations": [
+    "ML-only binary detection on one 4000-row battery; rules, semantic veto and product gating are excluded. These are not product recall/FPR.",
+    "No configuration here fits a parameter, so the full battery is a legitimate readout, but SELECTING the winner over ~30 configurations on these rows is itself a choice made on this data. Confirm any pick on a fresh battery before shipping it.",
+    "An ensemble runs every member: latency is the sum, and the deployed runtime currently loads exactly one ONNX model, so multi-member configurations are not drop-in.",
+    "McNemar p-values are exploratory: rows within a source family are correlated, and the values are unadjusted for multiple comparisons."
+  ]
+}

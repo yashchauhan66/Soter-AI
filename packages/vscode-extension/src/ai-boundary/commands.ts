@@ -35,7 +35,7 @@ export class RedactedDocumentProvider implements vscode.TextDocumentContentProvi
             const doc = vscode.workspace.textDocuments.find(d => d.uri.toString() === source.toString());
             const text = doc ? doc.getText() : disk;
             if (Buffer.byteLength(text, "utf8") > 64 * 1024) return OMITTED;
-            return redactForSharing(boundary.sanitize(source, text));
+            return redactForSharing(doc ? boundary.sanitize(source, text) : disk);
         } catch { return OMITTED; }
     }
 
@@ -107,13 +107,18 @@ export function registerAIBoundaryCommands(context: vscode.ExtensionContext): vo
             path: item.rel, digest: documentDigest(text),
             start: editor.document.offsetAt(editor.selection.start), end: editor.document.offsetAt(editor.selection.end),
         };
+        let hasStaleRegions = false;
         await updateRules(item.root, rules => {
-            // Re-marking after an edit replaces stale offsets; otherwise combine ranges.
-            rules.regions = rules.regions.filter(r => relativePath(r.path) !== relativePath(item.rel) || r.digest === region.digest);
+            // Marking new text must never silently remove earlier protection.
+            // Stale rules keep the whole file withheld until explicitly reviewed.
+            hasStaleRegions = rules.regions.some(r => relativePath(r.path) === relativePath(item.rel) && r.digest !== region.digest);
             rules.regions.push(region);
             return rules;
         });
-        updated();
+        if (hasStaleRegions) {
+            provider.refresh();
+            void vscode.window.showWarningMessage("Earlier protected text changed. SoterAI will withhold this whole file until you review its rules in Manage Manual AI Rules.");
+        } else updated();
     });
     reg("soterai.manageAIRules", async () => {
         const folder = await vscode.window.showWorkspaceFolderPick();

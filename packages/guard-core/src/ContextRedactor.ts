@@ -12,7 +12,10 @@ const OMITTED = "[encoded or oversized content withheld by SoterAI]";
 export function redactAIContext(text: string): string {
     if (text.length > 1024 * 1024) return OMITTED;
     const redacted = redactForSharing(text);
-    const stripped = redacted.normalize("NFKC").replace(/[\u00ad\u200b-\u200f\u202a-\u202e\u2060-\u206f\ufeff]/g, "");
+    // Mask our own placeholders while normalizing; stripping their brackets can
+    // manufacture a token-shaped value from "Token: [REDACTED_GITHUB_TOKEN]".
+    const stripped = redacted.replace(/\[REDACTED_[A-Z0-9_]+\]/g, "<masked>")
+        .normalize("NFKC").replace(/[\u00ad\u200b-\u200f\u202a-\u202e\u2060-\u206f\ufeff]/g, "");
     const packed = stripped.replace(/[\s'"`,+\[\]]/g, "");
     for (const view of [stripped, packed]) {
         if (view !== redacted && findSurvivingSecrets(view).length) return OMITTED;
@@ -25,7 +28,10 @@ export function redactAIContext(text: string): string {
         (_match, byte: string | undefined, unit: string | undefined) => String.fromCharCode(parseInt(byte ?? unit!, 16)));
     if (unescaped !== stripped && findSurvivingSecrets(unescaped).length) return OMITTED;
     let candidates = 0;
-    for (const match of stripped.matchAll(/[A-Za-z0-9+/_-]{24,}={0,2}/g)) {
+    // Decode original bytes: the PII pass may otherwise alter digit-heavy hex
+    // before it can be recognized as an encoded credential.
+    const encodedSource = text.normalize("NFKC").replace(/[\u00ad\u200b-\u200f\u202a-\u202e\u2060-\u206f\ufeff]/g, "");
+    for (const match of encodedSource.matchAll(/[A-Za-z0-9+/_-]{24,}={0,2}/g)) {
         if (++candidates > 256 || match[0].length > 16 * 1024) return OMITTED;
         const raw = match[0];
         const encodings: Array<"hex" | "base64"> = /^[a-f0-9]+$/i.test(raw) && raw.length % 2 === 0 ? ["hex", "base64"] : ["base64"];

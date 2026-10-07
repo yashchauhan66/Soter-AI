@@ -33,3 +33,22 @@ test("authorization hashes preserve case, whitespace and message boundaries", as
     const b = await scanBrokerRequest([{ role: "user", content: "a" }, { role: "tool", content: "b" }]);
     assert.notEqual(a.contentHash, b.contentHash);
 });
+
+test("exact hashes, approvals and canaries retain cryptographic identity without global WebCrypto", async () => {
+    const { createHash } = await import("node:crypto");
+    const { createApprovalGrant } = await import("../ApprovalToken");
+    const { generateCanary } = await import("../Canary");
+    const descriptor = Object.getOwnPropertyDescriptor(globalThis, "crypto");
+    assert.ok(descriptor?.configurable, "The floor simulation must be able to remove global WebCrypto.");
+    Reflect.deleteProperty(globalThis, "crypto");
+    try {
+        assert.equal(globalThis.crypto, undefined);
+        const payload = "Keep Case and\nspaces intact";
+        assert.equal(await hashExactContent(payload), createHash("sha256").update(payload).digest("hex"));
+        const grant = await createApprovalGrant({ sessionId: "fixture", contentHash: await hashExactContent(payload), decision: "approval_required", scope: "once" });
+        assert.match(grant.token, /^[a-f0-9]{64}$/);
+        const canary = await generateCanary();
+        assert.equal(canary.hash, createHash("sha256").update(canary.token).digest("hex"));
+        assert.match(canary.token, /^sk-soter-canary-[a-f0-9]{40}$/);
+    } finally { Object.defineProperty(globalThis, "crypto", descriptor!); }
+});

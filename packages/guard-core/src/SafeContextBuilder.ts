@@ -9,15 +9,15 @@ import { detectOutputExfiltration } from "./detectors/OutputExfiltrationDetector
  * SafeContextBuilder — the Phase 3/4 core. Given the raw context a user is about
  * to hand an AI assistant (selection, files, diff, configs) plus the project
  * policy, it decides per item what may be shared and produces a SAFE text
- * bundle that is guaranteed free of high-risk secrets.
+ * bundle with known credentials redacted and configured path rules applied.
  *
  * Rules:
  *   protected  → block (excluded; only a "[protected file omitted]" note)
  *   sensitive  → approval_required (summarized; secrets redacted)
  *   normal     → include, but always run redactForSharing first
  *
- * The builder NEVER emits a raw secret. It asserts `findSurvivingSecrets` is
- * empty on the assembled text and fail-closes if anything slips through.
+ * Unknown private text and unrecognized encodings can remain. It uses `findSurvivingSecrets`
+ * to check the assembled text for recognized patterns and redact survivors.
  */
 
 export type ContextKind =
@@ -66,7 +66,7 @@ export interface ContextDecision {
 
 export interface SafeContext {
     decisions: ContextDecision[];
-    /** The assembled, secret-free text ready to paste into an AI tool. */
+    /** The assembled, policy-filtered text; review unrecognized private data before sharing. */
     safeText: string;
     summary: {
         total: number;
@@ -259,7 +259,7 @@ export function buildSafeContext(items: ContextItem[], policy: ProjectPolicy): S
 // ─── Phase 4: Safe prompt templates ──────────────────────────────────────────
 
 const SECURITY_NOTE =
-    "No production secrets are included; sensitive values were redacted or summarized by SoterAI IDE Guard.";
+    "SoterAI applied configured context rules and known-secret redaction. Review before sharing; unrecognized private data may remain.";
 
 function frame(title: string, task: string, safe: SafeContext): string {
     return [

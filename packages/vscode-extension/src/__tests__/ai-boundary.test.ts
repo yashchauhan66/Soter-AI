@@ -185,6 +185,21 @@ test("redacted virtual documents use opaque URIs and re-evaluate new deny rules"
     } finally { provider.dispose(); }
 });
 
+test("closed-file previews retain public text around a manually protected region", async () => {
+    const source = "public " + custom + " suffix";
+    await write("notes.txt", source);
+    await saveRules(stub.state.folders[0].uri.toString(), {
+        paths: [], regions: [{ path: "notes.txt", digest: documentDigest(source), start: 7, end: 7 + custom.length }],
+    });
+    const provider = new RedactedDocumentProvider();
+    try {
+        const preview = provider.createUri(uri("notes.txt"));
+        assert.equal(await provider.provideTextDocumentContent(preview), "public " + OMITTED + " suffix");
+        await write("notes.txt", "edited " + source);
+        assert.equal(await provider.provideTextDocumentContent(preview), OMITTED);
+    } finally { provider.dispose(); }
+});
+
 test("Explorer Block from AI uses clicked folder, not the active editor", async () => {
     await write("clicked/memo.txt", custom);
     await write("other.txt", "normal");
@@ -195,6 +210,24 @@ test("Explorer Block from AI uses clicked folder, not the active editor", async 
     assert.equal(snapshot.blocks(uri("clicked/memo.txt")), true);
     assert.equal(snapshot.blocks(uri("other.txt")), false);
     assert.ok(!stub.capturedText().includes(custom));
+});
+
+test("marking a new selection after edits cannot silently clear an older protection", async () => {
+    await write("notes.txt", "private first\npublic second");
+    await stub.openEditor(path.join(root, "notes.txt"), { from: 0, to: 0 });
+    registerAIBoundaryCommands(context as never);
+    await stub.commands.executeCommand("soterai.blockSelectionFromAI");
+    const first = storedRules(stub.state.folders[0].uri.toString()).regions[0];
+    assert.ok(first);
+
+    const changed = "private first changed\nprivate second";
+    await write("notes.txt", changed);
+    await stub.openEditor(path.join(root, "notes.txt"), { from: 1, to: 1 });
+    await stub.commands.executeCommand("soterai.blockSelectionFromAI");
+    const rules = storedRules(stub.state.folders[0].uri.toString());
+    assert.equal(rules.regions.length, 2);
+    assert.deepEqual(rules.regions[0], first, "the earlier protection requires explicit removal");
+    assert.equal((await BoundarySnapshot.load()).sanitize(uri("notes.txt"), changed), OMITTED);
 });
 
 test("multi-root .aiignore rules do not bleed between identically named paths", async () => {

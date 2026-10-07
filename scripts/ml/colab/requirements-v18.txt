@@ -1,0 +1,9 @@
+# PyTorch is supplied by the Colab GPU image. CPU smoke used torch 2.12.1.
+# The tested Transformers major is 5; do not silently install the old v14 pin.
+transformers==5.12.1
+tokenizers==0.22.2
+onnx==1.22.0
+onnxruntime==1.27.0
+scikit-learn==1.9.0
+numpy==2.4.6
+safetensors>=0.6,<1

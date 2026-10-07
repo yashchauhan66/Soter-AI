@@ -1,0 +1,1725 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-20T11:49:56.257324+00:00",
+  "purpose": "Decide whether the shared battery is held out for every compared arm, and re-measure the comparison on the subset that is clean for all of them.",
+  "gate": "shared_input_gate",
+  "rows_file": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\artifacts\\ml\\v18-balanced-comparison-rows.jsonl",
+  "rows_file_sha256": "a30603c4189dbb9c46ca1853c5179e98283ed6904b7696c2e822fa4c6fc3feb2",
+  "rows": 4000,
+  "attacks": 2000,
+  "benign": 2000,
+  "method": {
+    "fitted": "train + calibration partition of that arm; calibration counts because each arm ships thresholds fitted on it.",
+    "exact": "SHA-256 of text.strip() (UTF-8). No raw text stored.",
+    "normalized": "group_key_for() from scripts/ml/soter_augment.py, the split key.",
+    "augmented_rows": "Appended past corpus end, not hashable here; derived from train parents only, so omission can undercount overlap, never invent it.",
+    "metrics": "Recomputed from cached probabilities via compare-v18-bases.decisions(); no new inference. ML-only binary attack detection, rules and veto excluded."
+  },
+  "overlap": {
+    "v14": {
+      "corpus_rows": 146757,
+      "split_sha256": "c472a0f6a4bbc04285c8baa53e7689c076e5b1692e3c357d47ba9ea5a1f9b817",
+      "datasets": {
+        "datasets/ml-augmented-v8-final.jsonl": {
+          "path": "datasets\\ml-augmented-v8-final.jsonl",
+          "rows": 120620
+        },
+        "datasets/ml-v8-targeted-fix.jsonl": {
+          "path": "datasets\\ml-v8-targeted-fix.jsonl",
+          "rows": 8500
+        },
+        "datasets/ml-v10-advanced-attacks.jsonl": {
+          "path": "datasets\\ml-v10-advanced-attacks.jsonl",
+          "rows": 8000
+        },
+        "datasets/ml-v10-targeted-fix.jsonl": {
+          "path": "datasets\\ml-v10-targeted-fix.jsonl",
+          "rows": 5000
+        },
+        "datasets/ml-v11-weak-fix.jsonl": {
+          "path": "datasets\\ml-v11-weak-fix.jsonl",
+          "rows": 1212
+        },
+        "artifacts/ml-v2/v12-toxicity-fix.jsonl": {
+          "path": "artifacts\\ml-v2\\v12-toxicity-fix.jsonl",
+          "rows": 1000
+        },
+        "datasets/ml-v13-meta-instructional.jsonl": {
+          "path": "datasets\\ml-v13-meta-instructional.jsonl",
+          "rows": 2019
+        },
+        "datasets/ml-v13-attack-gaps.jsonl": {
+          "path": "datasets\\ml-v13-attack-gaps.jsonl",
+          "rows": 406
+        }
+      },
+      "keying_positive_control": {
+        "dataset": "datasets\\ml-augmented-v8-final.jsonl",
+        "sampled_train_rows": 200,
+        "exact_matches": 200,
+        "normalized_matches": 200,
+        "passed": true
+      },
+      "partitions": {
+        "train": {
+          "partition_rows": 117431,
+          "augmented_rows_excluded": 0,
+          "battery_exact_matches": 0,
+          "battery_normalized_matches": 0,
+          "battery_normalized_rate": 0.0
+        },
+        "calibration": {
+          "partition_rows": 11581,
+          "augmented_rows_excluded": 0,
+          "battery_exact_matches": 0,
+          "battery_normalized_matches": 0,
+          "battery_normalized_rate": 0.0
+        },
+        "validation": {
+          "partition_rows": 17745,
+          "augmented_rows_excluded": 0,
+          "battery_exact_matches": 0,
+          "battery_normalized_matches": 0,
+          "battery_normalized_rate": 0.0
+        }
+      },
+      "fitted_train_plus_calibration": {
+        "battery_rows_fitted": 0,
+        "battery_rows_fitted_rate": 0.0,
+        "attack_rows_fitted": 0,
+        "benign_rows_fitted": 0,
+        "by_source": {}
+      }
+    },
+    "v17-minilm": {
+      "corpus_rows": 155883,
+      "split_sha256": "6837b545207b90b0f9d30077a05f3c7012f5d94ca157152b2098e23eaefc0a0f",
+      "datasets": {
+        "datasets/ml-augmented-v8-final.jsonl": {
+          "path": "datasets\\ml-augmented-v8-final.jsonl",
+          "rows": 120620
+        },
+        "datasets/ml-v8-targeted-fix.jsonl": {
+          "path": "datasets\\ml-v8-targeted-fix.jsonl",
+          "rows": 8500
+        },
+        "datasets/ml-v10-advanced-attacks.jsonl": {
+          "path": "datasets\\ml-v10-advanced-attacks.jsonl",
+          "rows": 8000
+        },
+        "datasets/ml-v10-targeted-fix.jsonl": {
+          "path": "datasets\\ml-v10-targeted-fix.jsonl",
+          "rows": 5000
+        },
+        "datasets/ml-v11-weak-fix.jsonl": {
+          "path": "datasets\\ml-v11-weak-fix.jsonl",
+          "rows": 1212
+        },
+        "artifacts/ml-v2/v12-toxicity-fix.jsonl": {
+          "path": "artifacts\\ml-v2\\v12-toxicity-fix.jsonl",
+          "rows": 1000
+        },
+        "datasets/ml-v13-meta-instructional.jsonl": {
+          "path": "datasets\\ml-v13-meta-instructional.jsonl",
+          "rows": 2019
+        },
+        "datasets/ml-v13-attack-gaps.jsonl": {
+          "path": "datasets\\ml-v13-attack-gaps.jsonl",
+          "rows": 406
+        },
+        "datasets/ml-v15-threat-corpus.jsonl": {
+          "path": "datasets\\ml-v15-threat-corpus.jsonl",
+          "rows": 1155
+        },
+        "datasets/ml-v16-threat-corpus.jsonl": {
+          "path": "datasets\\ml-v16-threat-corpus.jsonl",
+          "rows": 4100
+        },
+        "datasets/ml-v17-threat-corpus.jsonl": {
+          "path": "datasets\\ml-v17-threat-corpus.jsonl",
+          "rows": 3871
+        }
+      },
+      "keying_positive_control": {
+        "dataset": "datasets\\ml-augmented-v8-final.jsonl",
+        "sampled_train_rows": 200,
+        "exact_matches": 200,
+        "normalized_matches": 200,
+        "passed": true
+      },
+      "partitions": {
+        "train": {
+          "partition_rows": 125263,
+          "augmented_rows_excluded": 0,
+          "battery_exact_matches": 0,
+          "battery_normalized_matches": 0,
+          "battery_normalized_rate": 0.0
+        },
+        "calibration": {
+          "partition_rows": 12236,
+          "augmented_rows_excluded": 0,
+          "battery_exact_matches": 0,
+          "battery_normalized_matches": 0,
+          "battery_normalized_rate": 0.0
+        },
+        "validation": {
+          "partition_rows": 18384,
+          "augmented_rows_excluded": 0,
+          "battery_exact_matches": 0,
+          "battery_normalized_matches": 0,
+          "battery_normalized_rate": 0.0
+        }
+      },
+      "fitted_train_plus_calibration": {
+        "battery_rows_fitted": 0,
+        "battery_rows_fitted_rate": 0.0,
+        "attack_rows_fitted": 0,
+        "benign_rows_fitted": 0,
+        "by_source": {}
+      }
+    },
+    "v17-multilingual": {
+      "corpus_rows": 155883,
+      "split_sha256": "6837b545207b90b0f9d30077a05f3c7012f5d94ca157152b2098e23eaefc0a0f",
+      "datasets": {
+        "datasets/ml-augmented-v8-final.jsonl": {
+          "path": "datasets\\ml-augmented-v8-final.jsonl",
+          "rows": 120620
+        },
+        "datasets/ml-v8-targeted-fix.jsonl": {
+          "path": "datasets\\ml-v8-targeted-fix.jsonl",
+          "rows": 8500
+        },
+        "datasets/ml-v10-advanced-attacks.jsonl": {
+          "path": "datasets\\ml-v10-advanced-attacks.jsonl",
+          "rows": 8000
+        },
+        "datasets/ml-v10-targeted-fix.jsonl": {
+          "path": "datasets\\ml-v10-targeted-fix.jsonl",
+          "rows": 5000
+        },
+        "datasets/ml-v11-weak-fix.jsonl": {
+          "path": "datasets\\ml-v11-weak-fix.jsonl",
+          "rows": 1212
+        },
+        "artifacts/ml-v2/v12-toxicity-fix.jsonl": {
+          "path": "artifacts\\ml-v2\\v12-toxicity-fix.jsonl",
+          "rows": 1000
+        },
+        "datasets/ml-v13-meta-instructional.jsonl": {
+          "path": "datasets\\ml-v13-meta-instructional.jsonl",
+          "rows": 2019
+        },
+        "datasets/ml-v13-attack-gaps.jsonl": {
+          "path": "datasets\\ml-v13-attack-gaps.jsonl",
+          "rows": 406
+        },
+        "datasets/ml-v15-threat-corpus.jsonl": {
+          "path": "datasets\\ml-v15-threat-corpus.jsonl",
+          "rows": 1155
+        },
+        "datasets/ml-v16-threat-corpus.jsonl": {
+          "path": "datasets\\ml-v16-threat-corpus.jsonl",
+          "rows": 4100
+        },
+        "datasets/ml-v17-threat-corpus.jsonl": {
+          "path": "datasets\\ml-v17-threat-corpus.jsonl",
+          "rows": 3871
+        }
+      },
+      "keying_positive_control": {
+        "dataset": "datasets\\ml-augmented-v8-final.jsonl",
+        "sampled_train_rows": 200,
+        "exact_matches": 200,
+        "normalized_matches": 200,
+        "passed": true
+      },
+      "partitions": {
+        "train": {
+          "partition_rows": 125263,
+          "augmented_rows_excluded": 0,
+          "battery_exact_matches": 0,
+          "battery_normalized_matches": 0,
+          "battery_normalized_rate": 0.0
+        },
+        "calibration": {
+          "partition_rows": 12236,
+          "augmented_rows_excluded": 0,
+          "battery_exact_matches": 0,
+          "battery_normalized_matches": 0,
+          "battery_normalized_rate": 0.0
+        },
+        "validation": {
+          "partition_rows": 18384,
+          "augmented_rows_excluded": 0,
+          "battery_exact_matches": 0,
+          "battery_normalized_matches": 0,
+          "battery_normalized_rate": 0.0
+        }
+      },
+      "fitted_train_plus_calibration": {
+        "battery_rows_fitted": 0,
+        "battery_rows_fitted_rate": 0.0,
+        "attack_rows_fitted": 0,
+        "benign_rows_fitted": 0,
+        "by_source": {}
+      }
+    },
+    "v18-candidate": {
+      "corpus_rows": 110516,
+      "split_sha256": "67c7aedaaa02e639da49f07a873792462e317c200489150d0b2ed6e189def43c",
+      "datasets": {
+        "/content/soterai-v18/datasets/ml-v18-clean-corpus.jsonl": {
+          "path": "datasets\\ml-v18-clean-corpus.jsonl",
+          "rows": 110516
+        }
+      },
+      "keying_positive_control": {
+        "dataset": "datasets\\ml-v18-clean-corpus.jsonl",
+        "sampled_train_rows": 200,
+        "exact_matches": 200,
+        "normalized_matches": 200,
+        "passed": true
+      },
+      "partitions": {
+        "train": {
+          "partition_rows": 77823,
+          "augmented_rows_excluded": 0,
+          "battery_exact_matches": 0,
+          "battery_normalized_matches": 0,
+          "battery_normalized_rate": 0.0
+        },
+        "calibration": {
+          "partition_rows": 8316,
+          "augmented_rows_excluded": 0,
+          "battery_exact_matches": 0,
+          "battery_normalized_matches": 0,
+          "battery_normalized_rate": 0.0
+        },
+        "validation": {
+          "partition_rows": 14139,
+          "augmented_rows_excluded": 0,
+          "battery_exact_matches": 0,
+          "battery_normalized_matches": 0,
+          "battery_normalized_rate": 0.0
+        },
+        "test": {
+          "partition_rows": 10238,
+          "augmented_rows_excluded": 0,
+          "battery_exact_matches": 0,
+          "battery_normalized_matches": 0,
+          "battery_normalized_rate": 0.0
+        }
+      },
+      "fitted_train_plus_calibration": {
+        "battery_rows_fitted": 0,
+        "battery_rows_fitted_rate": 0.0,
+        "attack_rows_fitted": 0,
+        "benign_rows_fitted": 0,
+        "by_source": {}
+      }
+    }
+  },
+  "keying_positive_control": {
+    "v14": {
+      "dataset": "datasets\\ml-augmented-v8-final.jsonl",
+      "sampled_train_rows": 200,
+      "exact_matches": 200,
+      "normalized_matches": 200,
+      "passed": true
+    },
+    "v17-minilm": {
+      "dataset": "datasets\\ml-augmented-v8-final.jsonl",
+      "sampled_train_rows": 200,
+      "exact_matches": 200,
+      "normalized_matches": 200,
+      "passed": true
+    },
+    "v17-multilingual": {
+      "dataset": "datasets\\ml-augmented-v8-final.jsonl",
+      "sampled_train_rows": 200,
+      "exact_matches": 200,
+      "normalized_matches": 200,
+      "passed": true
+    },
+    "v18-candidate": {
+      "dataset": "datasets\\ml-v18-clean-corpus.jsonl",
+      "sampled_train_rows": 200,
+      "exact_matches": 200,
+      "normalized_matches": 200,
+      "passed": true
+    }
+  },
+  "subsets": {
+    "clean_for_all_arms": {
+      "rows": 4000,
+      "attacks": 2000,
+      "benign": 2000,
+      "by_source": {
+        "external:quickium": 1020,
+        "external:dolly": 747,
+        "external:spml": 438,
+        "v17-multilingual-battery": 312,
+        "external:inthewild-regular": 287,
+        "v15-test-battery": 274,
+        "external:inthewild": 212,
+        "external:multiling": 182,
+        "external:jbclass": 119,
+        "external:deepset": 106,
+        "v16-probe-battery": 70,
+        "external:gandalf": 32,
+        "external:mosscap-level3": 32,
+        "external:mosscap-level4": 32,
+        "external:mosscap-level5": 32,
+        "external:mosscap-level6": 32,
+        "external:mosscap-level7": 30,
+        "external:mosscap-level8": 30,
+        "external:neuralchemy-benign": 6,
+        "external:neuralchemy-system_extraction": 2,
+        "external:neuralchemy-direct_injection": 1,
+        "external:neuralchemy-encoding_obfuscation": 1,
+        "external:neuralchemy-many_shot": 1,
+        "external:neuralchemy-persona_replacement": 1,
+        "external:neuralchemy-token_smuggling": 1
+      },
+      "by_language": {
+        "en": 2762,
+        "mixed": 288,
+        "de": 106,
+        "es": 105,
+        "fr": 100,
+        "it": 83,
+        "sv": 83,
+        "nl": 82,
+        "hinglish": 34,
+        "ru": 32,
+        "zh": 29,
+        "ja": 25,
+        "ar": 23,
+        "hi": 21,
+        "pt": 21,
+        "ko": 11,
+        "tr": 10,
+        "id": 9,
+        "bn": 8,
+        "cs": 8,
+        "el": 8,
+        "fa": 8,
+        "gu": 8,
+        "he": 8,
+        "kn": 8,
+        "ml": 8,
+        "mr": 8,
+        "ms": 8,
+        "ne": 8,
+        "pa": 8,
+        "pl": 8,
+        "ro": 8,
+        "sw": 8,
+        "ta": 8,
+        "te": 8,
+        "th": 8,
+        "tl": 8,
+        "uk": 8,
+        "ur": 8,
+        "vi": 8
+      }
+    },
+    "fitted_by_some_arm": {
+      "rows": 0,
+      "attacks": 0,
+      "benign": 0,
+      "by_source": {}
+    }
+  },
+  "arms": {
+    "v14": {
+      "full_battery": {
+        "raw_argmax": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1906,
+          "fn": 94,
+          "fp": 399,
+          "tn": 1601,
+          "recall": 0.953,
+          "fpr": 0.1995,
+          "recall_wilson95": [
+            0.9428245575283534,
+            0.9614385976348314
+          ],
+          "fpr_wilson95": [
+            0.18256939308796305,
+            0.21758275232806995
+          ]
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1817,
+          "fn": 183,
+          "fp": 308,
+          "tn": 1692,
+          "recall": 0.9085,
+          "fpr": 0.154,
+          "recall_wilson95": [
+            0.8950688391276443,
+            0.9203649332435718
+          ],
+          "fpr_wilson95": [
+            0.13884556929651104,
+            0.17048102742211596
+          ]
+        },
+        "shared_input_gate": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1795,
+          "fn": 205,
+          "fp": 327,
+          "tn": 1673,
+          "recall": 0.8975,
+          "fpr": 0.1635,
+          "recall_wilson95": [
+            0.883436204935987,
+            0.9100397424754167
+          ],
+          "fpr_wilson95": [
+            0.14793995204546784,
+            0.18035022077481533
+          ]
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1796,
+          "fn": 204,
+          "fp": 327,
+          "tn": 1673,
+          "recall": 0.898,
+          "fpr": 0.1635,
+          "recall_wilson95": [
+            0.8839638841043522,
+            0.9105101462597704
+          ],
+          "fpr_wilson95": [
+            0.14793995204546784,
+            0.18035022077481533
+          ]
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1723,
+          "fn": 277,
+          "fp": 273,
+          "tn": 1727,
+          "recall": 0.8615,
+          "fpr": 0.1365,
+          "recall_wilson95": [
+            0.8456670391022474,
+            0.8759469357134069
+          ],
+          "fpr_wilson95": [
+            0.12214880212972688,
+            0.152244891243744
+          ]
+        }
+      },
+      "clean_for_all_arms": {
+        "raw_argmax": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1906,
+          "fn": 94,
+          "fp": 399,
+          "tn": 1601,
+          "recall": 0.953,
+          "fpr": 0.1995,
+          "recall_wilson95": [
+            0.9428245575283534,
+            0.9614385976348314
+          ],
+          "fpr_wilson95": [
+            0.18256939308796305,
+            0.21758275232806995
+          ]
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1817,
+          "fn": 183,
+          "fp": 308,
+          "tn": 1692,
+          "recall": 0.9085,
+          "fpr": 0.154,
+          "recall_wilson95": [
+            0.8950688391276443,
+            0.9203649332435718
+          ],
+          "fpr_wilson95": [
+            0.13884556929651104,
+            0.17048102742211596
+          ]
+        },
+        "shared_input_gate": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1795,
+          "fn": 205,
+          "fp": 327,
+          "tn": 1673,
+          "recall": 0.8975,
+          "fpr": 0.1635,
+          "recall_wilson95": [
+            0.883436204935987,
+            0.9100397424754167
+          ],
+          "fpr_wilson95": [
+            0.14793995204546784,
+            0.18035022077481533
+          ]
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1796,
+          "fn": 204,
+          "fp": 327,
+          "tn": 1673,
+          "recall": 0.898,
+          "fpr": 0.1635,
+          "recall_wilson95": [
+            0.8839638841043522,
+            0.9105101462597704
+          ],
+          "fpr_wilson95": [
+            0.14793995204546784,
+            0.18035022077481533
+          ]
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1723,
+          "fn": 277,
+          "fp": 273,
+          "tn": 1727,
+          "recall": 0.8615,
+          "fpr": 0.1365,
+          "recall_wilson95": [
+            0.8456670391022474,
+            0.8759469357134069
+          ],
+          "fpr_wilson95": [
+            0.12214880212972688,
+            0.152244891243744
+          ]
+        }
+      },
+      "fitted_by_some_arm": {
+        "raw_argmax": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_input_gate": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        }
+      },
+      "self_fitted_only": {
+        "raw_argmax": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_input_gate": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        }
+      },
+      "model_sha256": "5b83b2810138c89bc74e7c9e7f86d913d69d27d4efb2b07ba349ed00dc4bf829"
+    },
+    "v17-minilm": {
+      "full_battery": {
+        "raw_argmax": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1838,
+          "fn": 162,
+          "fp": 348,
+          "tn": 1652,
+          "recall": 0.919,
+          "fpr": 0.174,
+          "recall_wilson95": [
+            0.9062239429175495,
+            0.9301695714607606
+          ],
+          "fpr_wilson95": [
+            0.1580142296987531,
+            0.19123568512862374
+          ]
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1752,
+          "fn": 248,
+          "fp": 271,
+          "tn": 1729,
+          "recall": 0.876,
+          "fpr": 0.1355,
+          "recall_wilson95": [
+            0.8608307677957512,
+            0.8897276126487466
+          ],
+          "fpr_wilson95": [
+            0.12119707349524274,
+            0.1512004539727906
+          ]
+        },
+        "shared_input_gate": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1697,
+          "fn": 303,
+          "fp": 285,
+          "tn": 1715,
+          "recall": 0.8485,
+          "fpr": 0.1425,
+          "recall_wilson95": [
+            0.832119542548813,
+            0.8635442754961538
+          ],
+          "fpr_wilson95": [
+            0.1278647408518039,
+            0.15850594795429188
+          ]
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1730,
+          "fn": 270,
+          "fp": 285,
+          "tn": 1715,
+          "recall": 0.865,
+          "fpr": 0.1425,
+          "recall_wilson95": [
+            0.8493218663610855,
+            0.8792786891235997
+          ],
+          "fpr_wilson95": [
+            0.1278647408518039,
+            0.15850594795429188
+          ]
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1686,
+          "fn": 314,
+          "fp": 266,
+          "tn": 1734,
+          "recall": 0.843,
+          "fpr": 0.133,
+          "recall_wilson95": [
+            0.8264001978270884,
+            0.8582847077379719
+          ],
+          "fpr_wilson95": [
+            0.11881894582357963,
+            0.14858816688086
+          ]
+        }
+      },
+      "clean_for_all_arms": {
+        "raw_argmax": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1838,
+          "fn": 162,
+          "fp": 348,
+          "tn": 1652,
+          "recall": 0.919,
+          "fpr": 0.174,
+          "recall_wilson95": [
+            0.9062239429175495,
+            0.9301695714607606
+          ],
+          "fpr_wilson95": [
+            0.1580142296987531,
+            0.19123568512862374
+          ]
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1752,
+          "fn": 248,
+          "fp": 271,
+          "tn": 1729,
+          "recall": 0.876,
+          "fpr": 0.1355,
+          "recall_wilson95": [
+            0.8608307677957512,
+            0.8897276126487466
+          ],
+          "fpr_wilson95": [
+            0.12119707349524274,
+            0.1512004539727906
+          ]
+        },
+        "shared_input_gate": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1697,
+          "fn": 303,
+          "fp": 285,
+          "tn": 1715,
+          "recall": 0.8485,
+          "fpr": 0.1425,
+          "recall_wilson95": [
+            0.832119542548813,
+            0.8635442754961538
+          ],
+          "fpr_wilson95": [
+            0.1278647408518039,
+            0.15850594795429188
+          ]
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1730,
+          "fn": 270,
+          "fp": 285,
+          "tn": 1715,
+          "recall": 0.865,
+          "fpr": 0.1425,
+          "recall_wilson95": [
+            0.8493218663610855,
+            0.8792786891235997
+          ],
+          "fpr_wilson95": [
+            0.1278647408518039,
+            0.15850594795429188
+          ]
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1686,
+          "fn": 314,
+          "fp": 266,
+          "tn": 1734,
+          "recall": 0.843,
+          "fpr": 0.133,
+          "recall_wilson95": [
+            0.8264001978270884,
+            0.8582847077379719
+          ],
+          "fpr_wilson95": [
+            0.11881894582357963,
+            0.14858816688086
+          ]
+        }
+      },
+      "fitted_by_some_arm": {
+        "raw_argmax": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_input_gate": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        }
+      },
+      "self_fitted_only": {
+        "raw_argmax": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_input_gate": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        }
+      },
+      "model_sha256": "de28be9c6808bf31bacc0f1664187534a5cabb433dbad48eb529ccc5e25f2954"
+    },
+    "v17-multilingual": {
+      "full_battery": {
+        "raw_argmax": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1910,
+          "fn": 90,
+          "fp": 338,
+          "tn": 1662,
+          "recall": 0.955,
+          "fpr": 0.169,
+          "recall_wilson95": [
+            0.9450093040187729,
+            0.9632461829552866
+          ],
+          "fpr_wilson95": [
+            0.15321410271973138,
+            0.18605498258045802
+          ]
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1842,
+          "fn": 158,
+          "fp": 275,
+          "tn": 1725,
+          "recall": 0.921,
+          "fpr": 0.1375,
+          "recall_wilson95": [
+            0.9083551101095888,
+            0.9320307360795963
+          ],
+          "fpr_wilson95": [
+            0.12310079987934935,
+            0.153289059399559
+          ]
+        },
+        "shared_input_gate": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1763,
+          "fn": 237,
+          "fp": 272,
+          "tn": 1728,
+          "recall": 0.8815,
+          "fpr": 0.136,
+          "recall_wilson95": [
+            0.8665987726575222,
+            0.8949385202668816
+          ],
+          "fpr_wilson95": [
+            0.12167290401775677,
+            0.15172270640299534
+          ]
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1821,
+          "fn": 179,
+          "fp": 272,
+          "tn": 1728,
+          "recall": 0.9105,
+          "fpr": 0.136,
+          "recall_wilson95": [
+            0.897189514623585,
+            0.9222365895585062
+          ],
+          "fpr_wilson95": [
+            0.12167290401775677,
+            0.15172270640299534
+          ]
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1730,
+          "fn": 270,
+          "fp": 227,
+          "tn": 1773,
+          "recall": 0.865,
+          "fpr": 0.1135,
+          "recall_wilson95": [
+            0.8493218663610855,
+            0.8792786891235997
+          ],
+          "fpr_wilson95": [
+            0.10033274067558606,
+            0.12814913687282245
+          ]
+        }
+      },
+      "clean_for_all_arms": {
+        "raw_argmax": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1910,
+          "fn": 90,
+          "fp": 338,
+          "tn": 1662,
+          "recall": 0.955,
+          "fpr": 0.169,
+          "recall_wilson95": [
+            0.9450093040187729,
+            0.9632461829552866
+          ],
+          "fpr_wilson95": [
+            0.15321410271973138,
+            0.18605498258045802
+          ]
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1842,
+          "fn": 158,
+          "fp": 275,
+          "tn": 1725,
+          "recall": 0.921,
+          "fpr": 0.1375,
+          "recall_wilson95": [
+            0.9083551101095888,
+            0.9320307360795963
+          ],
+          "fpr_wilson95": [
+            0.12310079987934935,
+            0.153289059399559
+          ]
+        },
+        "shared_input_gate": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1763,
+          "fn": 237,
+          "fp": 272,
+          "tn": 1728,
+          "recall": 0.8815,
+          "fpr": 0.136,
+          "recall_wilson95": [
+            0.8665987726575222,
+            0.8949385202668816
+          ],
+          "fpr_wilson95": [
+            0.12167290401775677,
+            0.15172270640299534
+          ]
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1821,
+          "fn": 179,
+          "fp": 272,
+          "tn": 1728,
+          "recall": 0.9105,
+          "fpr": 0.136,
+          "recall_wilson95": [
+            0.897189514623585,
+            0.9222365895585062
+          ],
+          "fpr_wilson95": [
+            0.12167290401775677,
+            0.15172270640299534
+          ]
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1730,
+          "fn": 270,
+          "fp": 227,
+          "tn": 1773,
+          "recall": 0.865,
+          "fpr": 0.1135,
+          "recall_wilson95": [
+            0.8493218663610855,
+            0.8792786891235997
+          ],
+          "fpr_wilson95": [
+            0.10033274067558606,
+            0.12814913687282245
+          ]
+        }
+      },
+      "fitted_by_some_arm": {
+        "raw_argmax": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_input_gate": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        }
+      },
+      "self_fitted_only": {
+        "raw_argmax": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_input_gate": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        }
+      },
+      "model_sha256": "23a7e652794579862b30cf487dcca083288e3c90a46cf7f7876c595ce130cdfb"
+    },
+    "v18-candidate": {
+      "full_battery": {
+        "raw_argmax": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1724,
+          "fn": 276,
+          "fp": 482,
+          "tn": 1518,
+          "recall": 0.862,
+          "fpr": 0.241,
+          "recall_wilson95": [
+            0.8461889566710127,
+            0.8764231010973601
+          ],
+          "fpr_wilson95": [
+            0.22276389933057889,
+            0.26022913116111007
+          ]
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1626,
+          "fn": 374,
+          "fp": 346,
+          "tn": 1654,
+          "recall": 0.813,
+          "fpr": 0.173,
+          "recall_wilson95": [
+            0.7953174978047974,
+            0.829482430597138
+          ],
+          "fpr_wilson95": [
+            0.1570537986098805,
+            0.19019995031205883
+          ]
+        },
+        "shared_input_gate": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1564,
+          "fn": 436,
+          "fp": 366,
+          "tn": 1634,
+          "recall": 0.782,
+          "fpr": 0.183,
+          "recall_wilson95": [
+            0.7633734089055608,
+            0.7995453764278124
+          ],
+          "fpr_wilson95": [
+            0.16666695547445123,
+            0.20054845250186307
+          ]
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1609,
+          "fn": 391,
+          "fp": 368,
+          "tn": 1632,
+          "recall": 0.8045,
+          "fpr": 0.184,
+          "recall_wilson95": [
+            0.786542328328027,
+            0.82129018987769
+          ],
+          "fpr_wilson95": [
+            0.16762932898245075,
+            0.20158224489930104
+          ]
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1451,
+          "fn": 549,
+          "fp": 271,
+          "tn": 1729,
+          "recall": 0.7255,
+          "fpr": 0.1355,
+          "recall_wilson95": [
+            0.705523746028404,
+            0.7446116656477509
+          ],
+          "fpr_wilson95": [
+            0.12119707349524274,
+            0.1512004539727906
+          ]
+        }
+      },
+      "clean_for_all_arms": {
+        "raw_argmax": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1724,
+          "fn": 276,
+          "fp": 482,
+          "tn": 1518,
+          "recall": 0.862,
+          "fpr": 0.241,
+          "recall_wilson95": [
+            0.8461889566710127,
+            0.8764231010973601
+          ],
+          "fpr_wilson95": [
+            0.22276389933057889,
+            0.26022913116111007
+          ]
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1626,
+          "fn": 374,
+          "fp": 346,
+          "tn": 1654,
+          "recall": 0.813,
+          "fpr": 0.173,
+          "recall_wilson95": [
+            0.7953174978047974,
+            0.829482430597138
+          ],
+          "fpr_wilson95": [
+            0.1570537986098805,
+            0.19019995031205883
+          ]
+        },
+        "shared_input_gate": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1564,
+          "fn": 436,
+          "fp": 366,
+          "tn": 1634,
+          "recall": 0.782,
+          "fpr": 0.183,
+          "recall_wilson95": [
+            0.7633734089055608,
+            0.7995453764278124
+          ],
+          "fpr_wilson95": [
+            0.16666695547445123,
+            0.20054845250186307
+          ]
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1609,
+          "fn": 391,
+          "fp": 368,
+          "tn": 1632,
+          "recall": 0.8045,
+          "fpr": 0.184,
+          "recall_wilson95": [
+            0.786542328328027,
+            0.82129018987769
+          ],
+          "fpr_wilson95": [
+            0.16762932898245075,
+            0.20158224489930104
+          ]
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 2000,
+          "benign": 2000,
+          "tp": 1451,
+          "fn": 549,
+          "fp": 271,
+          "tn": 1729,
+          "recall": 0.7255,
+          "fpr": 0.1355,
+          "recall_wilson95": [
+            0.705523746028404,
+            0.7446116656477509
+          ],
+          "fpr_wilson95": [
+            0.12119707349524274,
+            0.1512004539727906
+          ]
+        }
+      },
+      "fitted_by_some_arm": {
+        "raw_argmax": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_input_gate": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        }
+      },
+      "self_fitted_only": {
+        "raw_argmax": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_attack_probability_0.90": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_input_gate": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "shared_input_gate_with_mte": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        },
+        "input_gate_with_artifact_truncation": {
+          "attacks": 0,
+          "benign": 0,
+          "tp": 0,
+          "fn": 0,
+          "fp": 0,
+          "tn": 0,
+          "recall": null,
+          "fpr": null,
+          "recall_wilson95": null,
+          "fpr_wilson95": null
+        }
+      },
+      "model_sha256": "ecf9e1d2e957da6ba72b714a0fc0c8f8d566b48588c0257dfd8a309e4020fba5"
+    }
+  },
+  "paired_on_clean_rows": {
+    "v14_vs_v17-minilm": {
+      "attack_a_only": 157,
+      "attack_b_only": 59,
+      "benign_a_only_flag": 70,
+      "benign_b_only_flag": 28
+    },
+    "v14_vs_v17-multilingual": {
+      "attack_a_only": 132,
+      "attack_b_only": 100,
+      "benign_a_only_flag": 104,
+      "benign_b_only_flag": 49
+    },
+    "v14_vs_v18-candidate": {
+      "attack_a_only": 307,
+      "attack_b_only": 76,
+      "benign_a_only_flag": 120,
+      "benign_b_only_flag": 159
+    },
+    "v17-minilm_vs_v17-multilingual": {
+      "attack_a_only": 60,
+      "attack_b_only": 126,
+      "benign_a_only_flag": 53,
+      "benign_b_only_flag": 40
+    },
+    "v17-minilm_vs_v18-candidate": {
+      "attack_a_only": 227,
+      "attack_b_only": 94,
+      "benign_a_only_flag": 81,
+      "benign_b_only_flag": 162
+    },
+    "v17-multilingual_vs_v18-candidate": {
+      "attack_a_only": 245,
+      "attack_b_only": 46,
+      "benign_a_only_flag": 62,
+      "benign_b_only_flag": 156
+    }
+  },
+  "limitations": [
+    "ML-only binary detection; rules, semantic veto and product gating are excluded.",
+    "Normalized overlap uses the split key, which collapses case/leet/homoglyph variants but not paraphrase; semantic near-duplicates are NOT detected and remain uncounted.",
+    "Subsetting an existing evaluation shrinks n; the clean subset carries wider intervals and its source mix differs from the full battery.",
+    "Absence of overlap does not make a set independent: shared upstream provenance can still correlate an arm's training data with these rows."
+  ]
+}

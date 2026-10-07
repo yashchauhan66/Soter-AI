@@ -1,0 +1,167 @@
+
+
+<pasted_content id="d827">
+# Master prompt: SoterAI n8n node, enterprise-grade panel (node version 3)
+
+Paste everything below the line into Claude Code (or any coding agent) from the repo root of `yashchauhan66/Soter-AI`. Attach `soterai-n8n-v3-panel.patch` if you have it.
+
+---
+
+## Role
+
+You are a senior TypeScript engineer who ships n8n community nodes. You work carefully, verify everything you claim, and never say "done" without running the commands in the Acceptance section and showing their output.
+
+## Goal
+
+Make the published `n8n-nodes-soterai` node (package at `packages/integrations/n8n`) look and behave like an enterprise product in the n8n editor. Today one flat `Action` dropdown holds 12 operations, and Guard Input shows 13 fields and up to 3 stacked banners. The target is a **Resource -> Operation** panel: required fields first, everything optional under one **Options** button, one banner per operation.
+
+Target numbers (visible fields on the panel, before Options):
+
+| Operation | v2 today | v3 target |
+|---|---|---|
+| Guard Input | 13 fields, 3 banners | 4 fields, 1 banner |
+| Universal Firewall | 16 fields, 3 banners | 6 fields, 1 banner |
+| Guard Output | 9 | 4 |
+| Check Tool Call | 11 | 4 |
+| Redact Secrets or PII | 6 | 1 |
+
+## Hard constraints (do not break these)
+
+1. **Do not change detection, verdicts, routing, or the output contract.** Version 3 is a new panel over the same engine.
+2. **Do not touch node versions 1 and 2.** Saved workflows are pinned to their `typeVersion`. `properties.ts`, `v1/`, `v2/` stay behaviourally identical. Version 3 is a new class registered as `3:` and `defaultVersion: 3`.
+3. **Do not fork `execute.ts`** (about 3,600 lines, it holds every security decision). Version 3 reads parameters through a wrapper (`shared/parameterLayout.ts`) that maps the names `execute.ts` already asks for (`action`, `sessionId`, `advancedOptions`, ...) to where the v3 panel stores them. The only allowed edit to `execute.ts` is letting the empty-batch fallback read `node.parameters.operation` as well as `node.parameters.action`.
+4. **Operation values stay identical to the v2 `action` values** (`inputGuard`, `outputGuard`, `universalGuard`, `analyzeText`, `piiRedactor`, `ragScanner`, `workflowAudit`, `enrollIdentity`, `issuePassport`, `validatePassport`, `toolCall`, `revokePassport`). Only the parameter name changes: `action` -> `operation`.
+5. **One source of truth for the layout.** `shared/layoutV3.ts` drives (a) the generated panel, (b) the parameter-name mapping, (c) the tests. Never hand-edit a second copy.
+6. **Field definitions are reused, not copied.** `shared/propertiesV3.ts` pulls labels, hints, defaults, and placeholders from `shared/properties.ts`, so a wording fix reaches every version. v3 only overrides copy that reads wrongly at its new position.
+7. **Children of `Options` have no `displayOptions` and are never `required`**, and are sorted alphabetically by display name (n8n convention, and its lint expects it).
+8. **An unset option must resolve to the node's real default**, not to the fallback `execute.ts` passes. Example: Detection Engine is `AUTO` on the node but `execute.ts` falls back to `CLOUD`. `optionDefaults` in `propertiesV3.ts` exists for this. Getting it wrong silently turns off the Local fallback when the API is down.
+
+## Step 0: apply the existing work
+
+If `soterai-n8n-v3-panel.patch` is present:
+
+```bash
+git checkout -b feat/n8n-node-v3-panel
+git apply --check soterai-n8n-v3-panel.patch && git apply soterai-n8n-v3-panel.patch
+cd packages/integrations/n8n
+npm install --no-save --ignore-scripts n8n-workflow@^1.0.0 typescript@^5.0.0 @types/node@20 copyfiles
+```
+
+(`npm ci` fails on the committed lockfile with a recent npm, so install like this and do not commit lockfile changes.)
+
+If the patch is not available, implement Steps 1-6 from the spec below.
+
+The patch adds `shared/layoutV3.ts`, `shared/propertiesV3.ts`, `shared/parameterLayout.ts`, `v3/SoterGuardV3.ts`, `test/v3-layout.test.ts`, and edits `SoterGuard.node.ts`, `shared/description.ts` (`defaultVersion: 3`), `execute.ts` (one line), `scripts/validate-package.cjs`, `scripts/smoke-node.cjs`, `README.md`, `CHANGELOG.md`.
+
+## Spec
+
+### 1. Resources and operations
+
+| Resource | Operation (label) | Value |
+|---|---|---|
+| Guardrail | Guard Input (default) | `inputGuard` |
+| Guardrail | Guard Output | `outputGuard` |
+| Guardrail | Universal Firewall | `universalGuard` |
+| Guardrail | Analyze Text | `analyzeText` |
+| Guardrail | Redact Secrets or PII | `piiRedactor` |
+| RAG Document | Scan Document | `ragScanner` |
+| Workflow | Audit Workflow | `workflowAudit` |
+| Agent Passport | Enroll Identity (default) | `enrollIdentity` |
+| Agent Passport | Issue Passport | `issuePassport` |
+| Agent Passport | Validate Passport | `validatePassport` |
+| Agent Passport | Check Tool Call | `toolCall` |
+| Agent Passport | Revoke Passport | `revokePassport` |
+
+`resource` and `operation` are `noDataExpression: true`. Keep each option's `action` string (used by the node-creator panel, which only works when the parameter is named `operation`). Task order beats alphabetical for UX, but only where the list is *computed*: the community-package review runs `node-param-options-type-unsorted-items` and does **not** honour an `eslint-disable` comment, so a literal `options: [...]` array written out of order fails review (it is what rejected 0.8.5). Build panel options with `.map()` over `RESOURCES`/`OPERATIONS` as `propertiesV3.ts` does — the rule reads literals statically and cannot see a computed list — and keep any hand-written literal array alphabetical by `name`, expressing task order through `default` instead.
+
+### 2. Layout per operation
+
+`fields` are on the panel; `options` are under **Options**. `RUNTIME` = `includeRawResponse, batchConcurrency, requestTimeoutMs, reuseIdenticalItems`. `COMMON` = `detectionEngine, sessionId, projectId, metadata, ...RUNTIME`. `TOPIC_SCOPE` = `allowedTopics, alwaysAllow, topicHandling, systemPromptContext`.
+
+| Operation | Panel fields (required marked *) | Options |
+|---|---|---|
+| `inputGuard` | inputText*, onThreat, sensitivity, userMessages | TOPIC_SCOPE + COMMON |
+| `outputGuard` | outputText*, onThreat, sensitivity, userMessages | COMMON |
+| `universalGuard` | inputText*, universalOutputText, protectionProfile, onThreat, securityContext, userMessages | TOPIC_SCOPE + passportToken + parallelLayers + COMMON |
+| `analyzeText` | inputText*, userMessages | COMMON |
+| `piiRedactor` | piiText* | COMMON |
+| `ragScanner` | ragText*, documentId*, documentSource | COMMON |
+| `workflowAudit` | workflowJson* | none |
+| `enrollIdentity` | agentName*, agentType, agentDescription, passportPolicyPreset | passportPolicy, projectId, metadata, RUNTIME |
+| `issuePassport` | agentIdentityId*, sessionId*, passportTtlSeconds, passportPolicyPreset | passportPolicy, projectId, metadata, RUNTIME |
+| `validatePassport` | passportToken, sessionId*, toolName, toolAction | toolContent, toolTarget, toolDestination, projectId, metadata, RUNTIME |
+| `toolCall` | passportToken, sessionId*, toolName, toolAction | detectionEngine + the validatePassport options (Check Tool Call is the only passport operation that can run on the local engine; `execute.ts` marks the other four cloud-only) |
+| `revokePassport` | sessionId, passportId, revokeReason | projectId, metadata, RUNTIME |
+
+Global panel order (filtered per operation): agentName, agentType, agentDescription, agentIdentityId, passportToken, sessionId, passportId, revokeReason, toolName, toolAction, passportTtlSeconds, passportPolicyPreset, inputText, outputText, universalOutputText, piiText, ragText, documentId, documentSource, workflowJson, protectionProfile, onThreat, sensitivity, securityContext, userMessages, then the Options collection(s).
+
+The same parameter name can be on the panel for one operation and inside Options for another (`sessionId`, `passportToken`). That is why the mapping in `parameterPath(operation, name)` is per operation, not per name. A field required for some operations and optional for others (`sessionId`) becomes two properties with disjoint `displayOptions`.
+
+Operations with identical Options share one collection property named `options`. `advancedOptions` (the v2 performance collection) is folded into `options`; the wrapper answers a read of `advancedOptions` with the whole `options` object.
+
+### 3. Copy overrides in v3
+
+- `passportPolicyPreset`: order READ_ONLY (Recommended), SUPPORT, CODING, CUSTOM. Every option has a factual description taken from `PASSPORT_POLICY_PRESETS` in `execute.ts`. Do not invent semantics. Descriptions end with a period (lint).
+- `passportPolicy` inside Options is titled "Policy Overrides (JSON)" and says it is merged over the preset and required when the preset is Custom JSON Only.
+- `sessionId` on the panel (passport operations): "Use the same value in every passport step. Revoke accepts this or Passport ID." Inside Options: "Recommended. Keeps one conversation's messages together across turns."
+- `metadata` hint: "Optional. Extra fields for your own audit logs." (no "above/below" wording; the field moved).
+- `allowedTopics` hint: "Optional. Comma-separated. Topic Handling does nothing while this is empty."
+
+### 4. Banners and hints
+
+- Exactly one `notice` per operation: `enforcingNoticeV2` for the three guards, `reportOnlyNoticeV2` for analyze and RAG, `redactNotice`, `auditNotice`, and the five passport "Step N of 5" notices. Remove the engine notices and the topic-engine notice (their content is in the option descriptions and hints).
+- Hints are rewritten against `$parameter["operation"]` and `($parameter["options"] || {})` (never optional chaining that may not evaluate; the `|| {}` form is safe). Port all ten v2 hints, and add one: preset `CUSTOM` with no Policy Overrides -> warning "Custom JSON Only starts from an empty policy. Add Policy Overrides (JSON) under Options."
+- Subtitle format is unchanged from v2: `Guard Input (block)`, plus ` · lenient` and ` · local` when those weaken the guard. Outputs: `Safe` and `Flagged`, a single unnamed output only for `piiRedactor`.
+
+## Acceptance (run all, paste the output)
+
+```bash
+cd packages/integrations/n8n
+npm run typecheck
+npx tsc -p tsconfig.test.json && (cd test-build && node --test)   # expect 123 passing
+npm run lint                                                        # official n8n-node lint, must be clean
+npm run validate
+npm run build && node scripts/smoke-node.cjs
+```
+
+The v3 tests must keep proving these, and you must add a test for anything new you build:
+
+1. Every v2 action appears exactly once as a v3 operation.
+2. For every operation, the fields visible through `NodeHelpers.displayParameter` equal the layout's `fields` and `options`.
+3. Every setting v2 offered for an action is reachable in v3 (only intended narrowing: `parallelLayers` outside Universal Firewall).
+4. v2 and v3 give identical API requests and identical outputs for the same input across all 12 operations (ignore latency/timing keys).
+5. An unset Detection Engine behaves as Auto (falls back to Local when the API is unreachable). Prove the test can fail by breaking the default on purpose, then restore it.
+6. An empty input batch still returns two branches (one for Redact).
+7. Subtitle, outputs, and every hint expression evaluate correctly for the states that should and should not show them.
+
+## Phase 2: real-editor verification (do this before any release)
+
+Unit tests do not prove how n8n draws the panel. Do it for real:
+
+1. Install the built package into a real n8n (n8n 2.x scans `<userDir>/nodes/node_modules`, see the README install section) and open the node.
+2. For each of the 12 operations, confirm: Resource and Operation dropdowns work, changing Resource resets Operation to that resource's first operation, required asterisks are right, Options lists only that operation's settings, exactly one banner, hints appear only when their condition is true, the canvas shows Safe and Flagged (single output for Redact), and the node-creator panel lists actions under SoterAI.
+3. Open a workflow saved with typeVersion 1 and one with typeVersion 2 and confirm they still load with their old panel and run unchanged.
+4. Take screenshots of the canvas node and Guard Input, Universal Firewall, Check Tool Call panels. Report anything that differs from the mockup instead of hiding it.
+
+## Phase 3: optional follow-ups (implement only the ones I confirm)
+
+Each needs its own tests and a note in `CHANGELOG.md`. Do not start one without asking.
+
+- **Example workflows to v3.** `examples/*.json` are typeVersion 1 and 2. v1 has one output, v3 has Safe/Flagged, so every connection needs review. Do not bulk-rewrite. Keep the v1/v2 examples as compatibility fixtures.
+- **Metadata as key/value.** `metadata` is a JSON string in Options; `buildMetadata` in `execute.ts` takes a string. Convert a fixedCollection to that string inside the wrapper layer, not in `execute.ts`.
+- **Guided passport policy.** Replace hand-written JSON with a fixedCollection for `allowedTools`, `blockedTools`, `approvalRequiredTools`, `allowedDomains`, `blockedDomains`, `dataScopes`, `memoryScopes`, keeping JSON as an escape hatch.
+- **Simplify output toggle.** `includeRawResponse` currently defaults to on. Changing that default changes output; make any new default apply to v3 only and say so in the changelog.
+- **Agent Passport as its own node.** Decision for me, not you: a second node in the same package versus a resource of this one.
+- **Credential.** An Environment dropdown (Cloud / Self-hosted) that shows Base URL only for self-hosted.
+
+## Release chores (only when I say "release")
+
+Bump `package.json` version, `PACKAGE_VERSION` in `execute.ts`, and the README `Version:` line together (`npm run validate` checks they match). Date the CHANGELOG entry. `prepublishOnly` runs the full suite, including `test:redos` and `test:stress`; run them once before publishing.
+
+## Working rules
+
+- Small commits: layout, properties, wrapper, class, tests, docs.
+- After every change run typecheck and the tests. If something fails, fix the cause; do not weaken a test to make it pass.
+- If a fact about n8n behaviour is uncertain (for example how a collection child resolves an unset value), test it against `n8n-workflow` or the real editor and say which you did.
+- End with a report: what changed, the command output, what you could not verify, and any decision you need from me.
+</pasted_content id="d827">

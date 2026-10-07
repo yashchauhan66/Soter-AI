@@ -15,8 +15,8 @@
 
 | Measure | Count |
 | --- | --- |
-| Commands declared and registered | 163 |
-| Visible in the palette by default | 11 |
+| Commands declared and registered | 168 |
+| Visible in the palette by default | 16 |
 | Behind `soterai.showAllCommands` | 125 |
 | Hidden from the palette (aliases, reports, internal) | 27 |
 
@@ -59,6 +59,7 @@ what an agent does on its own.
 | Detector | Rules |
 | --- | --- |
 | `AIGeneratedCodeRiskDetector` | 18 |
+| `EncodedSecretDetector` | 0 |
 | `EnvFileDetector` | 4 |
 | `FileContextRiskDetector` | 12 |
 | `IndiaPIIDetector` | 7 |
@@ -72,7 +73,7 @@ what an agent does on its own.
 | `TerminalCommandRiskDetector` | 21 |
 | **Total** | **180** |
 
-All 12 detectors are deterministic regex/heuristic rules, bundled inline.
+All 13 detectors are deterministic regex/heuristic rules, bundled inline.
 **No ML model ships in the VSIX.** `onnxruntime` appears zero times in
 `dist/extension.js`; the ONNX classifier is server-side only. Any extension-
 facing claim of ML capability is a defect.

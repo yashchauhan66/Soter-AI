@@ -1,6 +1,6 @@
 # SoterAI IDE Guard security evaluation
 
-Generated: 2026-08-31T12:10:49.690Z
+Generated: 2026-10-06T15:32:12.022Z
 
 > NOT INDEPENDENT — cases and implementation are maintained in the same repository
 
@@ -12,8 +12,8 @@ Corpus SHA-256: `ac704677dc54996c34358b778b2908b668e0488b5933c54a72b95d7b03fb9e6
 | Recall | 100.00% |
 | Precision | 100.00% |
 | False-positive rate | 0.00% |
-| Latency p50 | 0.212 ms |
-| Latency p95 | 3.867 ms |
+| Latency p50 | 0.157 ms |
+| Latency p95 | 4.660 ms |
 
 ## Per-category recall
 

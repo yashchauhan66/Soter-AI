@@ -1,0 +1,3169 @@
+{
+  "schema_version": 1,
+  "product_version": "v18",
+  "corpus": "datasets/ml-v18-clean-corpus.jsonl",
+  "dataset_sha256": "4e530142fffd3d0edf5d00d50a85b82ff358826335db53ab0ea769660a6a002d",
+  "split_manifest": "artifacts/ml/v18-split-indices.json",
+  "training_input_rows": 155883,
+  "clean_rows": 110516,
+  "removed_rows": {
+    "external_holdout_lineage": 27426,
+    "conflicting_labels": 63,
+    "exact_same_label_duplicate": 17878
+  },
+  "conflicting_normalized_text_groups": 11,
+  "lineage_fields_observed": {
+    "family": 6985
+  },
+  "lineage_fields_used": [
+    "template_id",
+    "template_family",
+    "family_id",
+    "family",
+    "translation_group",
+    "translation_group_id",
+    "canonical_id",
+    "original_id",
+    "parent_id",
+    "base_id",
+    "seed_id",
+    "variant_of"
+  ],
+  "source_and_category_alone_group_rows": false,
+  "external_holdout_rows_linked_to_training_by_file": {
+    "datasets/crossdist-eval-v3-complement.jsonl": 1,
+    "datasets/external-real-v1.jsonl": 2136,
+    "datasets/external-real-v2.jsonl": 6858,
+    "datasets/external-real-v3.jsonl": 27326,
+    "datasets/crossdist-eval-v3.jsonl": 1
+  },
+  "external_holdout_lineage_overlap_after_filter": 0,
+  "split_group_intersections": {
+    "train/validation": 0,
+    "calibration/train": 0,
+    "calibration/validation": 0,
+    "calibration/test": 0,
+    "test/train": 0,
+    "test/validation": 0
+  },
+  "independent_groups": 103437,
+  "largest_group_rows": 2730,
+  "coverage": {
+    "rows": 110516,
+    "labels": {
+      "PROMPT_INJECTION": 16752,
+      "DATA_EXFILTRATION_ATTEMPT": 8425,
+      "PII": 8806,
+      "SAFE": 37192,
+      "SYSTEM_PROMPT_LEAK_ATTEMPT": 7315,
+      "JAILBREAK": 6548,
+      "RAG_POISONING": 4684,
+      "SECRET": 6621,
+      "UNSAFE_OUTPUT": 8669,
+      "MULTI_TURN_ESCALATION": 1362,
+      "TOOL_CALL_ABUSE": 1412,
+      "ENCODING_OBFUSCATION": 807,
+      "TOXICITY_HARASSMENT": 1047,
+      "MODEL_EXTRACTION": 876
+    },
+    "languages": {
+      "ar": {
+        "MULTI_TURN_ESCALATION": 98,
+        "TOOL_CALL_ABUSE": 35,
+        "DATA_EXFILTRATION_ATTEMPT": 37,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 30,
+        "JAILBREAK": 37,
+        "PII": 23,
+        "PROMPT_INJECTION": 34,
+        "RAG_POISONING": 24,
+        "MODEL_EXTRACTION": 32,
+        "SAFE": 160,
+        "SECRET": 22
+      },
+      "bn": {
+        "PROMPT_INJECTION": 14,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 14,
+        "RAG_POISONING": 6,
+        "SAFE": 40
+      },
+      "cs": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 40
+      },
+      "de": {
+        "SAFE": 139,
+        "PROMPT_INJECTION": 39,
+        "PII": 205,
+        "MULTI_TURN_ESCALATION": 14,
+        "TOOL_CALL_ABUSE": 12,
+        "DATA_EXFILTRATION_ATTEMPT": 12,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 14,
+        "JAILBREAK": 16,
+        "SECRET": 2,
+        "RAG_POISONING": 3,
+        "MODEL_EXTRACTION": 3,
+        "ENCODING_OBFUSCATION": 1,
+        "TOXICITY_HARASSMENT": 1
+      },
+      "el": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 40
+      },
+      "en": {
+        "PROMPT_INJECTION": 14043,
+        "DATA_EXFILTRATION_ATTEMPT": 7414,
+        "PII": 4436,
+        "SAFE": 25970,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 4582,
+        "JAILBREAK": 4939,
+        "RAG_POISONING": 4056,
+        "SECRET": 4481,
+        "UNSAFE_OUTPUT": 7527,
+        "MULTI_TURN_ESCALATION": 137,
+        "TOOL_CALL_ABUSE": 88,
+        "MODEL_EXTRACTION": 93,
+        "ENCODING_OBFUSCATION": 3
+      },
+      "es": {
+        "SAFE": 252,
+        "PII": 216,
+        "MULTI_TURN_ESCALATION": 103,
+        "TOOL_CALL_ABUSE": 36,
+        "DATA_EXFILTRATION_ATTEMPT": 37,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 32,
+        "JAILBREAK": 37,
+        "SECRET": 24,
+        "PROMPT_INJECTION": 39,
+        "RAG_POISONING": 28,
+        "MODEL_EXTRACTION": 34,
+        "ENCODING_OBFUSCATION": 1
+      },
+      "fa": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 40
+      },
+      "fr": {
+        "SAFE": 110,
+        "PII": 167,
+        "MULTI_TURN_ESCALATION": 14,
+        "TOOL_CALL_ABUSE": 10,
+        "DATA_EXFILTRATION_ATTEMPT": 12,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 15,
+        "JAILBREAK": 16,
+        "SECRET": 2,
+        "PROMPT_INJECTION": 13,
+        "RAG_POISONING": 2,
+        "MODEL_EXTRACTION": 4,
+        "ENCODING_OBFUSCATION": 1
+      },
+      "gu": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 40
+      },
+      "he": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 40
+      },
+      "hi": {
+        "SAFE": 168,
+        "MULTI_TURN_ESCALATION": 102,
+        "TOOL_CALL_ABUSE": 36,
+        "DATA_EXFILTRATION_ATTEMPT": 35,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 32,
+        "JAILBREAK": 38,
+        "PII": 27,
+        "PROMPT_INJECTION": 36,
+        "RAG_POISONING": 28,
+        "MODEL_EXTRACTION": 33,
+        "ENCODING_OBFUSCATION": 2,
+        "TOXICITY_HARASSMENT": 1,
+        "SECRET": 22
+      },
+      "hinglish": {
+        "DATA_EXFILTRATION_ATTEMPT": 342,
+        "PROMPT_INJECTION": 578,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 160,
+        "UNSAFE_OUTPUT": 170,
+        "SAFE": 457,
+        "JAILBREAK": 200,
+        "RAG_POISONING": 93,
+        "SECRET": 78,
+        "PII": 96,
+        "MULTI_TURN_ESCALATION": 111,
+        "TOOL_CALL_ABUSE": 50,
+        "MODEL_EXTRACTION": 43,
+        "ENCODING_OBFUSCATION": 7
+      },
+      "id": {
+        "JAILBREAK": 9,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 9,
+        "MULTI_TURN_ESCALATION": 15,
+        "TOOL_CALL_ABUSE": 9,
+        "PROMPT_INJECTION": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "SAFE": 40
+      },
+      "it": {
+        "PII": 199,
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 106
+      },
+      "ja": {
+        "SAFE": 165,
+        "MULTI_TURN_ESCALATION": 101,
+        "TOOL_CALL_ABUSE": 38,
+        "DATA_EXFILTRATION_ATTEMPT": 36,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 31,
+        "JAILBREAK": 38,
+        "PII": 23,
+        "SECRET": 23,
+        "PROMPT_INJECTION": 34,
+        "RAG_POISONING": 26,
+        "MODEL_EXTRACTION": 32,
+        "ENCODING_OBFUSCATION": 1
+      },
+      "kn": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 40
+      },
+      "ko": {
+        "JAILBREAK": 9,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 9,
+        "MULTI_TURN_ESCALATION": 15,
+        "PROMPT_INJECTION": 9,
+        "DATA_EXFILTRATION_ATTEMPT": 14,
+        "TOOL_CALL_ABUSE": 8,
+        "RAG_POISONING": 6,
+        "SAFE": 40
+      },
+      "ml": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 40
+      },
+      "mr": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 40
+      },
+      "ms": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 40
+      },
+      "ne": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 40
+      },
+      "nl": {
+        "PII": 180,
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 98
+      },
+      "pa": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 40
+      },
+      "pl": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 40
+      },
+      "pt": {
+        "SAFE": 47,
+        "MULTI_TURN_ESCALATION": 12,
+        "TOOL_CALL_ABUSE": 11,
+        "DATA_EXFILTRATION_ATTEMPT": 12,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 13,
+        "JAILBREAK": 16,
+        "PII": 1,
+        "SECRET": 1,
+        "PROMPT_INJECTION": 12,
+        "RAG_POISONING": 4,
+        "MODEL_EXTRACTION": 2
+      },
+      "ro": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 40
+      },
+      "ru": {
+        "MULTI_TURN_ESCALATION": 112,
+        "TOOL_CALL_ABUSE": 49,
+        "DATA_EXFILTRATION_ATTEMPT": 47,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 43,
+        "JAILBREAK": 56,
+        "PII": 35,
+        "SECRET": 23,
+        "PROMPT_INJECTION": 50,
+        "RAG_POISONING": 33,
+        "MODEL_EXTRACTION": 43,
+        "SAFE": 215,
+        "ENCODING_OBFUSCATION": 9
+      },
+      "sv": {
+        "PII": 201,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 11,
+        "JAILBREAK": 9,
+        "PROMPT_INJECTION": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 109
+      },
+      "sw": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 40
+      },
+      "ta": {
+        "PROMPT_INJECTION": 14,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 14,
+        "SAFE": 40
+      },
+      "te": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 14,
+        "SAFE": 40
+      },
+      "th": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 40
+      },
+      "tl": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 40
+      },
+      "tr": {
+        "JAILBREAK": 9,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 9,
+        "PROMPT_INJECTION": 9,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 14,
+        "SAFE": 40
+      },
+      "uk": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 8,
+        "SAFE": 40
+      },
+      "unknown": {
+        "SAFE": 8030,
+        "DATA_EXFILTRATION_ATTEMPT": 168,
+        "PII": 2973,
+        "PROMPT_INJECTION": 1602,
+        "SECRET": 1919,
+        "JAILBREAK": 888,
+        "RAG_POISONING": 349,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 2102,
+        "UNSAFE_OUTPUT": 972,
+        "MULTI_TURN_ESCALATION": 182,
+        "TOOL_CALL_ABUSE": 785,
+        "ENCODING_OBFUSCATION": 781,
+        "TOXICITY_HARASSMENT": 1045,
+        "MODEL_EXTRACTION": 525
+      },
+      "ur": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 8,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 14,
+        "SAFE": 40
+      },
+      "vi": {
+        "PROMPT_INJECTION": 8,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+        "JAILBREAK": 8,
+        "DATA_EXFILTRATION_ATTEMPT": 14,
+        "TOOL_CALL_ABUSE": 8,
+        "MULTI_TURN_ESCALATION": 14,
+        "SAFE": 40
+      },
+      "zh": {
+        "MULTI_TURN_ESCALATION": 102,
+        "TOOL_CALL_ABUSE": 37,
+        "DATA_EXFILTRATION_ATTEMPT": 37,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 31,
+        "JAILBREAK": 39,
+        "PII": 24,
+        "SECRET": 24,
+        "PROMPT_INJECTION": 34,
+        "RAG_POISONING": 26,
+        "MODEL_EXTRACTION": 32,
+        "SAFE": 166,
+        "ENCODING_OBFUSCATION": 1
+      }
+    },
+    "priority_language_gaps": {
+      "en": {
+        "rows": 77769,
+        "benign": 25970,
+        "missing_labels": [
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "hi": {
+        "rows": 560,
+        "benign": 168,
+        "missing_labels": [
+          "UNSAFE_OUTPUT"
+        ]
+      },
+      "hinglish": {
+        "rows": 2385,
+        "benign": 457,
+        "missing_labels": [
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "es": {
+        "rows": 839,
+        "benign": 252,
+        "missing_labels": [
+          "UNSAFE_OUTPUT",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "pt": {
+        "rows": 131,
+        "benign": 47,
+        "missing_labels": [
+          "UNSAFE_OUTPUT",
+          "ENCODING_OBFUSCATION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "fr": {
+        "rows": 366,
+        "benign": 110,
+        "missing_labels": [
+          "UNSAFE_OUTPUT",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "de": {
+        "rows": 461,
+        "benign": 139,
+        "missing_labels": [
+          "UNSAFE_OUTPUT"
+        ]
+      },
+      "ar": {
+        "rows": 532,
+        "benign": 160,
+        "missing_labels": [
+          "UNSAFE_OUTPUT",
+          "ENCODING_OBFUSCATION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "zh": {
+        "rows": 553,
+        "benign": 166,
+        "missing_labels": [
+          "UNSAFE_OUTPUT",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "ja": {
+        "rows": 548,
+        "benign": 165,
+        "missing_labels": [
+          "UNSAFE_OUTPUT",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "ko": {
+        "rows": 110,
+        "benign": 40,
+        "missing_labels": [
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "ENCODING_OBFUSCATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "ru": {
+        "rows": 715,
+        "benign": 215,
+        "missing_labels": [
+          "UNSAFE_OUTPUT",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "id": {
+        "rows": 98,
+        "benign": 40,
+        "missing_labels": [
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "ENCODING_OBFUSCATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "bn": {
+        "rows": 106,
+        "benign": 40,
+        "missing_labels": [
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "ENCODING_OBFUSCATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "ta": {
+        "rows": 100,
+        "benign": 40,
+        "missing_labels": [
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "ENCODING_OBFUSCATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "te": {
+        "rows": 94,
+        "benign": 40,
+        "missing_labels": [
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "ENCODING_OBFUSCATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "tr": {
+        "rows": 97,
+        "benign": 40,
+        "missing_labels": [
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "ENCODING_OBFUSCATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      },
+      "vi": {
+        "rows": 100,
+        "benign": 40,
+        "missing_labels": [
+          "PII",
+          "SECRET",
+          "UNSAFE_OUTPUT",
+          "RAG_POISONING",
+          "ENCODING_OBFUSCATION",
+          "MODEL_EXTRACTION",
+          "TOXICITY_HARASSMENT"
+        ]
+      }
+    },
+    "language_annotation_note": "Missing language metadata is unknown; counts are annotations, not verified proficiency."
+  },
+  "splits": {
+    "train": {
+      "rows": 77823,
+      "labels": {
+        "PROMPT_INJECTION": 11679,
+        "DATA_EXFILTRATION_ATTEMPT": 5931,
+        "PII": 6236,
+        "SAFE": 26417,
+        "JAILBREAK": 4561,
+        "RAG_POISONING": 3272,
+        "SECRET": 4665,
+        "UNSAFE_OUTPUT": 6029,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 5150,
+        "MULTI_TURN_ESCALATION": 983,
+        "TOOL_CALL_ABUSE": 970,
+        "ENCODING_OBFUSCATION": 568,
+        "TOXICITY_HARASSMENT": 747,
+        "MODEL_EXTRACTION": 615
+      },
+      "languages": {
+        "ar": {
+          "MULTI_TURN_ESCALATION": 66,
+          "TOOL_CALL_ABUSE": 24,
+          "DATA_EXFILTRATION_ATTEMPT": 27,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 20,
+          "JAILBREAK": 29,
+          "PII": 18,
+          "PROMPT_INJECTION": 19,
+          "RAG_POISONING": 17,
+          "MODEL_EXTRACTION": 22,
+          "SAFE": 116,
+          "SECRET": 10
+        },
+        "bn": {
+          "PROMPT_INJECTION": 8,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 6,
+          "JAILBREAK": 6,
+          "DATA_EXFILTRATION_ATTEMPT": 6,
+          "TOOL_CALL_ABUSE": 5,
+          "MULTI_TURN_ESCALATION": 10,
+          "RAG_POISONING": 3,
+          "SAFE": 31
+        },
+        "cs": {
+          "PROMPT_INJECTION": 5,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 7,
+          "JAILBREAK": 5,
+          "DATA_EXFILTRATION_ATTEMPT": 6,
+          "TOOL_CALL_ABUSE": 3,
+          "MULTI_TURN_ESCALATION": 6,
+          "SAFE": 32
+        },
+        "de": {
+          "SAFE": 97,
+          "PROMPT_INJECTION": 28,
+          "PII": 146,
+          "MULTI_TURN_ESCALATION": 12,
+          "TOOL_CALL_ABUSE": 11,
+          "DATA_EXFILTRATION_ATTEMPT": 7,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 10,
+          "JAILBREAK": 11,
+          "SECRET": 1,
+          "RAG_POISONING": 3,
+          "TOXICITY_HARASSMENT": 1
+        },
+        "el": {
+          "PROMPT_INJECTION": 4,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 6,
+          "JAILBREAK": 6,
+          "DATA_EXFILTRATION_ATTEMPT": 7,
+          "TOOL_CALL_ABUSE": 5,
+          "MULTI_TURN_ESCALATION": 5,
+          "SAFE": 28
+        },
+        "en": {
+          "PROMPT_INJECTION": 9779,
+          "DATA_EXFILTRATION_ATTEMPT": 5207,
+          "PII": 3147,
+          "JAILBREAK": 3433,
+          "RAG_POISONING": 2824,
+          "SAFE": 18519,
+          "SECRET": 3175,
+          "UNSAFE_OUTPUT": 5248,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 3256,
+          "MULTI_TURN_ESCALATION": 103,
+          "TOOL_CALL_ABUSE": 52,
+          "MODEL_EXTRACTION": 66,
+          "ENCODING_OBFUSCATION": 1
+        },
+        "es": {
+          "SAFE": 175,
+          "PII": 144,
+          "MULTI_TURN_ESCALATION": 72,
+          "TOOL_CALL_ABUSE": 24,
+          "DATA_EXFILTRATION_ATTEMPT": 27,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 20,
+          "JAILBREAK": 25,
+          "SECRET": 17,
+          "PROMPT_INJECTION": 26,
+          "RAG_POISONING": 21,
+          "MODEL_EXTRACTION": 28,
+          "ENCODING_OBFUSCATION": 1
+        },
+        "fa": {
+          "PROMPT_INJECTION": 6,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 7,
+          "JAILBREAK": 3,
+          "DATA_EXFILTRATION_ATTEMPT": 5,
+          "TOOL_CALL_ABUSE": 5,
+          "MULTI_TURN_ESCALATION": 6,
+          "SAFE": 25
+        },
+        "fr": {
+          "SAFE": 77,
+          "PII": 116,
+          "MULTI_TURN_ESCALATION": 12,
+          "TOOL_CALL_ABUSE": 5,
+          "DATA_EXFILTRATION_ATTEMPT": 9,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 7,
+          "JAILBREAK": 13,
+          "PROMPT_INJECTION": 10,
+          "RAG_POISONING": 2,
+          "MODEL_EXTRACTION": 4,
+          "ENCODING_OBFUSCATION": 1
+        },
+        "gu": {
+          "PROMPT_INJECTION": 6,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 7,
+          "JAILBREAK": 6,
+          "DATA_EXFILTRATION_ATTEMPT": 5,
+          "TOOL_CALL_ABUSE": 3,
+          "MULTI_TURN_ESCALATION": 6,
+          "SAFE": 29
+        },
+        "he": {
+          "PROMPT_INJECTION": 7,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 3,
+          "JAILBREAK": 8,
+          "DATA_EXFILTRATION_ATTEMPT": 7,
+          "TOOL_CALL_ABUSE": 4,
+          "MULTI_TURN_ESCALATION": 7,
+          "SAFE": 34
+        },
+        "hi": {
+          "SAFE": 118,
+          "MULTI_TURN_ESCALATION": 74,
+          "TOOL_CALL_ABUSE": 24,
+          "DATA_EXFILTRATION_ATTEMPT": 28,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 25,
+          "JAILBREAK": 28,
+          "PII": 20,
+          "PROMPT_INJECTION": 26,
+          "RAG_POISONING": 20,
+          "MODEL_EXTRACTION": 26,
+          "ENCODING_OBFUSCATION": 2,
+          "SECRET": 15
+        },
+        "hinglish": {
+          "PROMPT_INJECTION": 414,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 112,
+          "DATA_EXFILTRATION_ATTEMPT": 239,
+          "UNSAFE_OUTPUT": 120,
+          "JAILBREAK": 135,
+          "RAG_POISONING": 67,
+          "SECRET": 55,
+          "SAFE": 341,
+          "PII": 59,
+          "MULTI_TURN_ESCALATION": 92,
+          "TOOL_CALL_ABUSE": 34,
+          "MODEL_EXTRACTION": 23,
+          "ENCODING_OBFUSCATION": 5
+        },
+        "id": {
+          "JAILBREAK": 6,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 9,
+          "MULTI_TURN_ESCALATION": 12,
+          "TOOL_CALL_ABUSE": 7,
+          "PROMPT_INJECTION": 5,
+          "DATA_EXFILTRATION_ATTEMPT": 7,
+          "SAFE": 26
+        },
+        "it": {
+          "PII": 156,
+          "PROMPT_INJECTION": 5,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 6,
+          "JAILBREAK": 7,
+          "DATA_EXFILTRATION_ATTEMPT": 2,
+          "TOOL_CALL_ABUSE": 4,
+          "MULTI_TURN_ESCALATION": 6,
+          "SAFE": 79
+        },
+        "ja": {
+          "SAFE": 120,
+          "MULTI_TURN_ESCALATION": 71,
+          "TOOL_CALL_ABUSE": 27,
+          "DATA_EXFILTRATION_ATTEMPT": 23,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 17,
+          "JAILBREAK": 28,
+          "SECRET": 15,
+          "PROMPT_INJECTION": 22,
+          "RAG_POISONING": 18,
+          "MODEL_EXTRACTION": 23,
+          "PII": 16
+        },
+        "kn": {
+          "PROMPT_INJECTION": 6,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 4,
+          "JAILBREAK": 5,
+          "DATA_EXFILTRATION_ATTEMPT": 6,
+          "TOOL_CALL_ABUSE": 5,
+          "MULTI_TURN_ESCALATION": 7,
+          "SAFE": 21
+        },
+        "ko": {
+          "JAILBREAK": 7,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 6,
+          "MULTI_TURN_ESCALATION": 13,
+          "PROMPT_INJECTION": 6,
+          "DATA_EXFILTRATION_ATTEMPT": 9,
+          "TOOL_CALL_ABUSE": 5,
+          "RAG_POISONING": 4,
+          "SAFE": 26
+        },
+        "ml": {
+          "PROMPT_INJECTION": 5,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 4,
+          "JAILBREAK": 6,
+          "DATA_EXFILTRATION_ATTEMPT": 5,
+          "TOOL_CALL_ABUSE": 7,
+          "MULTI_TURN_ESCALATION": 8,
+          "SAFE": 23
+        },
+        "mr": {
+          "PROMPT_INJECTION": 3,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 4,
+          "JAILBREAK": 6,
+          "DATA_EXFILTRATION_ATTEMPT": 5,
+          "TOOL_CALL_ABUSE": 4,
+          "MULTI_TURN_ESCALATION": 5,
+          "SAFE": 26
+        },
+        "ms": {
+          "PROMPT_INJECTION": 5,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 5,
+          "JAILBREAK": 6,
+          "DATA_EXFILTRATION_ATTEMPT": 7,
+          "TOOL_CALL_ABUSE": 6,
+          "MULTI_TURN_ESCALATION": 4,
+          "SAFE": 32
+        },
+        "ne": {
+          "PROMPT_INJECTION": 5,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 7,
+          "JAILBREAK": 6,
+          "DATA_EXFILTRATION_ATTEMPT": 7,
+          "TOOL_CALL_ABUSE": 6,
+          "MULTI_TURN_ESCALATION": 6,
+          "SAFE": 28
+        },
+        "nl": {
+          "PII": 120,
+          "PROMPT_INJECTION": 8,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 5,
+          "JAILBREAK": 5,
+          "DATA_EXFILTRATION_ATTEMPT": 6,
+          "TOOL_CALL_ABUSE": 6,
+          "MULTI_TURN_ESCALATION": 5,
+          "SAFE": 64
+        },
+        "pa": {
+          "PROMPT_INJECTION": 5,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 6,
+          "JAILBREAK": 6,
+          "DATA_EXFILTRATION_ATTEMPT": 6,
+          "TOOL_CALL_ABUSE": 5,
+          "MULTI_TURN_ESCALATION": 5,
+          "SAFE": 33
+        },
+        "pl": {
+          "PROMPT_INJECTION": 7,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 5,
+          "JAILBREAK": 6,
+          "DATA_EXFILTRATION_ATTEMPT": 5,
+          "TOOL_CALL_ABUSE": 6,
+          "MULTI_TURN_ESCALATION": 7,
+          "SAFE": 29
+        },
+        "pt": {
+          "SAFE": 35,
+          "MULTI_TURN_ESCALATION": 9,
+          "TOOL_CALL_ABUSE": 10,
+          "DATA_EXFILTRATION_ATTEMPT": 8,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 10,
+          "JAILBREAK": 10,
+          "PII": 1,
+          "SECRET": 1,
+          "PROMPT_INJECTION": 7,
+          "RAG_POISONING": 2,
+          "MODEL_EXTRACTION": 2
+        },
+        "ro": {
+          "PROMPT_INJECTION": 7,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 7,
+          "JAILBREAK": 6,
+          "DATA_EXFILTRATION_ATTEMPT": 6,
+          "TOOL_CALL_ABUSE": 5,
+          "MULTI_TURN_ESCALATION": 7,
+          "SAFE": 27
+        },
+        "ru": {
+          "MULTI_TURN_ESCALATION": 82,
+          "TOOL_CALL_ABUSE": 36,
+          "DATA_EXFILTRATION_ATTEMPT": 30,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 24,
+          "JAILBREAK": 39,
+          "PII": 27,
+          "SECRET": 14,
+          "PROMPT_INJECTION": 38,
+          "RAG_POISONING": 23,
+          "MODEL_EXTRACTION": 33,
+          "SAFE": 151,
+          "ENCODING_OBFUSCATION": 5
+        },
+        "sv": {
+          "PII": 142,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+          "JAILBREAK": 7,
+          "PROMPT_INJECTION": 4,
+          "DATA_EXFILTRATION_ATTEMPT": 5,
+          "TOOL_CALL_ABUSE": 6,
+          "MULTI_TURN_ESCALATION": 6,
+          "SAFE": 71
+        },
+        "sw": {
+          "PROMPT_INJECTION": 6,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 5,
+          "JAILBREAK": 7,
+          "DATA_EXFILTRATION_ATTEMPT": 5,
+          "TOOL_CALL_ABUSE": 5,
+          "MULTI_TURN_ESCALATION": 5,
+          "SAFE": 19
+        },
+        "ta": {
+          "PROMPT_INJECTION": 11,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 5,
+          "JAILBREAK": 7,
+          "DATA_EXFILTRATION_ATTEMPT": 8,
+          "TOOL_CALL_ABUSE": 7,
+          "MULTI_TURN_ESCALATION": 9,
+          "SAFE": 26
+        },
+        "te": {
+          "PROMPT_INJECTION": 3,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 5,
+          "JAILBREAK": 6,
+          "DATA_EXFILTRATION_ATTEMPT": 6,
+          "TOOL_CALL_ABUSE": 3,
+          "MULTI_TURN_ESCALATION": 7,
+          "SAFE": 28
+        },
+        "th": {
+          "PROMPT_INJECTION": 4,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 4,
+          "JAILBREAK": 7,
+          "DATA_EXFILTRATION_ATTEMPT": 6,
+          "TOOL_CALL_ABUSE": 6,
+          "MULTI_TURN_ESCALATION": 5,
+          "SAFE": 26
+        },
+        "tl": {
+          "PROMPT_INJECTION": 5,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 7,
+          "JAILBREAK": 7,
+          "DATA_EXFILTRATION_ATTEMPT": 5,
+          "TOOL_CALL_ABUSE": 7,
+          "MULTI_TURN_ESCALATION": 6,
+          "SAFE": 31
+        },
+        "tr": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 8,
+          "PROMPT_INJECTION": 5,
+          "JAILBREAK": 5,
+          "DATA_EXFILTRATION_ATTEMPT": 7,
+          "TOOL_CALL_ABUSE": 7,
+          "MULTI_TURN_ESCALATION": 11,
+          "SAFE": 28
+        },
+        "uk": {
+          "PROMPT_INJECTION": 4,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 7,
+          "JAILBREAK": 7,
+          "DATA_EXFILTRATION_ATTEMPT": 5,
+          "TOOL_CALL_ABUSE": 5,
+          "MULTI_TURN_ESCALATION": 5,
+          "SAFE": 26
+        },
+        "unknown": {
+          "SAFE": 5644,
+          "DATA_EXFILTRATION_ATTEMPT": 127,
+          "RAG_POISONING": 249,
+          "PROMPT_INJECTION": 1132,
+          "PII": 2111,
+          "JAILBREAK": 607,
+          "SECRET": 1346,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1459,
+          "UNSAFE_OUTPUT": 661,
+          "MULTI_TURN_ESCALATION": 125,
+          "TOOL_CALL_ABUSE": 549,
+          "ENCODING_OBFUSCATION": 552,
+          "TOXICITY_HARASSMENT": 746,
+          "MODEL_EXTRACTION": 365
+        },
+        "ur": {
+          "PROMPT_INJECTION": 6,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 7,
+          "JAILBREAK": 6,
+          "DATA_EXFILTRATION_ATTEMPT": 7,
+          "TOOL_CALL_ABUSE": 4,
+          "MULTI_TURN_ESCALATION": 11,
+          "SAFE": 34
+        },
+        "vi": {
+          "PROMPT_INJECTION": 5,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 6,
+          "JAILBREAK": 7,
+          "DATA_EXFILTRATION_ATTEMPT": 10,
+          "TOOL_CALL_ABUSE": 7,
+          "MULTI_TURN_ESCALATION": 11,
+          "SAFE": 27
+        },
+        "zh": {
+          "MULTI_TURN_ESCALATION": 64,
+          "TOOL_CALL_ABUSE": 26,
+          "DATA_EXFILTRATION_ATTEMPT": 28,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 24,
+          "JAILBREAK": 31,
+          "SECRET": 16,
+          "PROMPT_INJECTION": 22,
+          "RAG_POISONING": 19,
+          "MODEL_EXTRACTION": 23,
+          "SAFE": 115,
+          "ENCODING_OBFUSCATION": 1,
+          "PII": 13
+        }
+      },
+      "priority_language_gaps": {
+        "en": {
+          "rows": 54810,
+          "benign": 18519,
+          "missing_labels": [
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "hi": {
+          "rows": 406,
+          "benign": 118,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "hinglish": {
+          "rows": 1696,
+          "benign": 341,
+          "missing_labels": [
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "es": {
+          "rows": 580,
+          "benign": 175,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "pt": {
+          "rows": 95,
+          "benign": 35,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "fr": {
+          "rows": 256,
+          "benign": 77,
+          "missing_labels": [
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "de": {
+          "rows": 327,
+          "benign": 97,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION"
+          ]
+        },
+        "ar": {
+          "rows": 368,
+          "benign": 116,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "zh": {
+          "rows": 382,
+          "benign": 115,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ja": {
+          "rows": 380,
+          "benign": 120,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ko": {
+          "rows": 76,
+          "benign": 26,
+          "missing_labels": [
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ru": {
+          "rows": 502,
+          "benign": 151,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "id": {
+          "rows": 72,
+          "benign": 26,
+          "missing_labels": [
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "bn": {
+          "rows": 75,
+          "benign": 31,
+          "missing_labels": [
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ta": {
+          "rows": 73,
+          "benign": 26,
+          "missing_labels": [
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "te": {
+          "rows": 58,
+          "benign": 28,
+          "missing_labels": [
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "tr": {
+          "rows": 71,
+          "benign": 28,
+          "missing_labels": [
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "vi": {
+          "rows": 73,
+          "benign": 27,
+          "missing_labels": [
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        }
+      },
+      "language_annotation_note": "Missing language metadata is unknown; counts are annotations, not verified proficiency."
+    },
+    "calibration": {
+      "rows": 8316,
+      "labels": {
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 605,
+        "DATA_EXFILTRATION_ATTEMPT": 644,
+        "SAFE": 2458,
+        "PROMPT_INJECTION": 1357,
+        "UNSAFE_OUTPUT": 701,
+        "PII": 707,
+        "JAILBREAK": 507,
+        "SECRET": 519,
+        "RAG_POISONING": 367,
+        "ENCODING_OBFUSCATION": 65,
+        "TOXICITY_HARASSMENT": 79,
+        "MODEL_EXTRACTION": 71,
+        "TOOL_CALL_ABUSE": 133,
+        "MULTI_TURN_ESCALATION": 103
+      },
+      "languages": {
+        "ar": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 4,
+          "JAILBREAK": 4,
+          "MULTI_TURN_ESCALATION": 10,
+          "TOOL_CALL_ABUSE": 5,
+          "MODEL_EXTRACTION": 2,
+          "RAG_POISONING": 3,
+          "SECRET": 3,
+          "PII": 1,
+          "SAFE": 15
+        },
+        "bn": {
+          "PROMPT_INJECTION": 2,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "MULTI_TURN_ESCALATION": 2,
+          "RAG_POISONING": 1,
+          "SAFE": 1
+        },
+        "cs": {
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 2,
+          "SAFE": 2
+        },
+        "de": {
+          "PROMPT_INJECTION": 6,
+          "PII": 12,
+          "MULTI_TURN_ESCALATION": 1,
+          "MODEL_EXTRACTION": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 2,
+          "SAFE": 7
+        },
+        "el": {
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "MULTI_TURN_ESCALATION": 2,
+          "SAFE": 3
+        },
+        "en": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 376,
+          "DATA_EXFILTRATION_ATTEMPT": 577,
+          "SAFE": 1555,
+          "PROMPT_INJECTION": 1134,
+          "UNSAFE_OUTPUT": 600,
+          "PII": 361,
+          "JAILBREAK": 375,
+          "SECRET": 346,
+          "RAG_POISONING": 321,
+          "MULTI_TURN_ESCALATION": 9,
+          "TOOL_CALL_ABUSE": 11,
+          "MODEL_EXTRACTION": 9
+        },
+        "es": {
+          "PII": 12,
+          "TOOL_CALL_ABUSE": 6,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 3,
+          "PROMPT_INJECTION": 5,
+          "MULTI_TURN_ESCALATION": 8,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "MODEL_EXTRACTION": 3,
+          "JAILBREAK": 3,
+          "RAG_POISONING": 2,
+          "SECRET": 2,
+          "SAFE": 21
+        },
+        "fa": {
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 2,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 9
+        },
+        "fr": {
+          "PII": 19,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 3,
+          "SECRET": 2,
+          "PROMPT_INJECTION": 1,
+          "TOOL_CALL_ABUSE": 2,
+          "SAFE": 13
+        },
+        "gu": {
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 2
+        },
+        "he": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 2
+        },
+        "hi": {
+          "RAG_POISONING": 2,
+          "MULTI_TURN_ESCALATION": 7,
+          "PII": 2,
+          "PROMPT_INJECTION": 2,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 3,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 3,
+          "MODEL_EXTRACTION": 3,
+          "JAILBREAK": 3,
+          "SECRET": 3,
+          "SAFE": 15
+        },
+        "hinglish": {
+          "PROMPT_INJECTION": 47,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 10,
+          "DATA_EXFILTRATION_ATTEMPT": 30,
+          "JAILBREAK": 19,
+          "SAFE": 41,
+          "RAG_POISONING": 5,
+          "PII": 14,
+          "SECRET": 4,
+          "UNSAFE_OUTPUT": 14,
+          "MODEL_EXTRACTION": 8,
+          "MULTI_TURN_ESCALATION": 9,
+          "TOOL_CALL_ABUSE": 1
+        },
+        "id": {
+          "JAILBREAK": 2,
+          "MULTI_TURN_ESCALATION": 3,
+          "SAFE": 3
+        },
+        "it": {
+          "PII": 11,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 7
+        },
+        "ja": {
+          "TOOL_CALL_ABUSE": 4,
+          "JAILBREAK": 3,
+          "PII": 2,
+          "MODEL_EXTRACTION": 3,
+          "SAFE": 14,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 6,
+          "MULTI_TURN_ESCALATION": 7,
+          "PROMPT_INJECTION": 4,
+          "SECRET": 3,
+          "RAG_POISONING": 1
+        },
+        "kn": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 2,
+          "TOOL_CALL_ABUSE": 2,
+          "SAFE": 3
+        },
+        "ko": {
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 2
+        },
+        "ml": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "SAFE": 5
+        },
+        "mr": {
+          "JAILBREAK": 2,
+          "DATA_EXFILTRATION_ATTEMPT": 2,
+          "TOOL_CALL_ABUSE": 3,
+          "SAFE": 4
+        },
+        "ms": {
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 2
+        },
+        "ne": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 3
+        },
+        "nl": {
+          "PII": 15,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 8
+        },
+        "pa": {
+          "PROMPT_INJECTION": 2,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 5
+        },
+        "pl": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 2
+        },
+        "pt": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "PROMPT_INJECTION": 1,
+          "JAILBREAK": 4,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 3
+        },
+        "ro": {
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 2
+        },
+        "ru": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 7,
+          "PROMPT_INJECTION": 5,
+          "JAILBREAK": 3,
+          "DATA_EXFILTRATION_ATTEMPT": 3,
+          "ENCODING_OBFUSCATION": 2,
+          "RAG_POISONING": 2,
+          "SAFE": 19,
+          "MULTI_TURN_ESCALATION": 5,
+          "TOOL_CALL_ABUSE": 2,
+          "MODEL_EXTRACTION": 1,
+          "SECRET": 2
+        },
+        "sv": {
+          "PII": 14,
+          "PROMPT_INJECTION": 3,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 8
+        },
+        "sw": {
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 3
+        },
+        "ta": {
+          "PROMPT_INJECTION": 2,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 5
+        },
+        "te": {
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 4
+        },
+        "th": {
+          "PROMPT_INJECTION": 3,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 4
+        },
+        "tl": {
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 1
+        },
+        "tr": {
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 1,
+          "SAFE": 5
+        },
+        "uk": {
+          "PROMPT_INJECTION": 3,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 1
+        },
+        "unknown": {
+          "SAFE": 644,
+          "PII": 243,
+          "JAILBREAK": 73,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 168,
+          "RAG_POISONING": 27,
+          "UNSAFE_OUTPUT": 87,
+          "SECRET": 152,
+          "DATA_EXFILTRATION_ATTEMPT": 12,
+          "PROMPT_INJECTION": 127,
+          "ENCODING_OBFUSCATION": 63,
+          "TOXICITY_HARASSMENT": 79,
+          "MODEL_EXTRACTION": 40,
+          "TOOL_CALL_ABUSE": 73,
+          "MULTI_TURN_ESCALATION": 16
+        },
+        "ur": {
+          "PROMPT_INJECTION": 1,
+          "JAILBREAK": 2,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "MULTI_TURN_ESCALATION": 2
+        },
+        "vi": {
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "JAILBREAK": 1,
+          "SAFE": 2
+        },
+        "zh": {
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "PII": 1,
+          "JAILBREAK": 3,
+          "MULTI_TURN_ESCALATION": 9,
+          "PROMPT_INJECTION": 2,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 3,
+          "TOOL_CALL_ABUSE": 4,
+          "MODEL_EXTRACTION": 1,
+          "RAG_POISONING": 3,
+          "SECRET": 2,
+          "SAFE": 13
+        }
+      },
+      "priority_language_gaps": {
+        "en": {
+          "rows": 5674,
+          "benign": 1555,
+          "missing_labels": [
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "hi": {
+          "rows": 44,
+          "benign": 15,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "hinglish": {
+          "rows": 202,
+          "benign": 41,
+          "missing_labels": [
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "es": {
+          "rows": 66,
+          "benign": 21,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "pt": {
+          "rows": 12,
+          "benign": 3,
+          "missing_labels": [
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "TOOL_CALL_ABUSE",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "fr": {
+          "rows": 40,
+          "benign": 13,
+          "missing_labels": [
+            "JAILBREAK",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "DATA_EXFILTRATION_ATTEMPT",
+            "ENCODING_OBFUSCATION",
+            "MULTI_TURN_ESCALATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "de": {
+          "rows": 29,
+          "benign": 7,
+          "missing_labels": [
+            "JAILBREAK",
+            "SYSTEM_PROMPT_LEAK_ATTEMPT",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "TOOL_CALL_ABUSE",
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ar": {
+          "rows": 47,
+          "benign": 15,
+          "missing_labels": [
+            "PROMPT_INJECTION",
+            "UNSAFE_OUTPUT",
+            "DATA_EXFILTRATION_ATTEMPT",
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "zh": {
+          "rows": 42,
+          "benign": 13,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ja": {
+          "rows": 47,
+          "benign": 14,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "DATA_EXFILTRATION_ATTEMPT",
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ko": {
+          "rows": 4,
+          "benign": 2,
+          "missing_labels": [
+            "PROMPT_INJECTION",
+            "JAILBREAK",
+            "SYSTEM_PROMPT_LEAK_ATTEMPT",
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "DATA_EXFILTRATION_ATTEMPT",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ru": {
+          "rows": 51,
+          "benign": 19,
+          "missing_labels": [
+            "PII",
+            "UNSAFE_OUTPUT",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "id": {
+          "rows": 8,
+          "benign": 3,
+          "missing_labels": [
+            "PROMPT_INJECTION",
+            "SYSTEM_PROMPT_LEAK_ATTEMPT",
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "DATA_EXFILTRATION_ATTEMPT",
+            "TOOL_CALL_ABUSE",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "bn": {
+          "rows": 8,
+          "benign": 1,
+          "missing_labels": [
+            "SYSTEM_PROMPT_LEAK_ATTEMPT",
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "TOOL_CALL_ABUSE",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ta": {
+          "rows": 9,
+          "benign": 5,
+          "missing_labels": [
+            "JAILBREAK",
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "DATA_EXFILTRATION_ATTEMPT",
+            "ENCODING_OBFUSCATION",
+            "MULTI_TURN_ESCALATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "te": {
+          "rows": 10,
+          "benign": 4,
+          "missing_labels": [
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "tr": {
+          "rows": 8,
+          "benign": 5,
+          "missing_labels": [
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "DATA_EXFILTRATION_ATTEMPT",
+            "TOOL_CALL_ABUSE",
+            "ENCODING_OBFUSCATION",
+            "MULTI_TURN_ESCALATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "vi": {
+          "rows": 6,
+          "benign": 2,
+          "missing_labels": [
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "DATA_EXFILTRATION_ATTEMPT",
+            "TOOL_CALL_ABUSE",
+            "ENCODING_OBFUSCATION",
+            "MULTI_TURN_ESCALATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        }
+      },
+      "language_annotation_note": "Missing language metadata is unknown; counts are annotations, not verified proficiency."
+    },
+    "validation": {
+      "rows": 14139,
+      "labels": {
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 863,
+        "PII": 1003,
+        "DATA_EXFILTRATION_ATTEMPT": 992,
+        "RAG_POISONING": 556,
+        "SECRET": 821,
+        "UNSAFE_OUTPUT": 1043,
+        "SAFE": 5321,
+        "JAILBREAK": 785,
+        "PROMPT_INJECTION": 2078,
+        "TOXICITY_HARASSMENT": 124,
+        "MULTI_TURN_ESCALATION": 165,
+        "MODEL_EXTRACTION": 115,
+        "TOOL_CALL_ABUSE": 183,
+        "ENCODING_OBFUSCATION": 90
+      },
+      "languages": {
+        "ar": {
+          "DATA_EXFILTRATION_ATTEMPT": 4,
+          "MULTI_TURN_ESCALATION": 14,
+          "PROMPT_INJECTION": 6,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 4,
+          "TOOL_CALL_ABUSE": 5,
+          "MODEL_EXTRACTION": 4,
+          "JAILBREAK": 2,
+          "RAG_POISONING": 4,
+          "SECRET": 2,
+          "PII": 1,
+          "SAFE": 20
+        },
+        "bn": {
+          "PROMPT_INJECTION": 3,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "RAG_POISONING": 1,
+          "SAFE": 3
+        },
+        "cs": {
+          "PROMPT_INJECTION": 2,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 2
+        },
+        "de": {
+          "PROMPT_INJECTION": 2,
+          "PII": 20,
+          "SECRET": 1,
+          "MODEL_EXTRACTION": 1,
+          "SAFE": 21,
+          "JAILBREAK": 2,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 3,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1
+        },
+        "el": {
+          "PROMPT_INJECTION": 2,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 4
+        },
+        "en": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 526,
+          "PII": 520,
+          "DATA_EXFILTRATION_ATTEMPT": 879,
+          "RAG_POISONING": 488,
+          "SECRET": 536,
+          "UNSAFE_OUTPUT": 906,
+          "SAFE": 3988,
+          "JAILBREAK": 593,
+          "PROMPT_INJECTION": 1736,
+          "MULTI_TURN_ESCALATION": 16,
+          "TOOL_CALL_ABUSE": 15,
+          "MODEL_EXTRACTION": 11,
+          "ENCODING_OBFUSCATION": 1
+        },
+        "es": {
+          "PII": 34,
+          "MULTI_TURN_ESCALATION": 13,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 7,
+          "JAILBREAK": 5,
+          "SAFE": 31,
+          "PROMPT_INJECTION": 7,
+          "DATA_EXFILTRATION_ATTEMPT": 5,
+          "TOOL_CALL_ABUSE": 2,
+          "MODEL_EXTRACTION": 2,
+          "RAG_POISONING": 2,
+          "SECRET": 4
+        },
+        "fa": {
+          "PROMPT_INJECTION": 2,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 2,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 3
+        },
+        "fr": {
+          "PII": 16,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 3,
+          "JAILBREAK": 3,
+          "PROMPT_INJECTION": 2,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 9
+        },
+        "gu": {
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 2,
+          "TOOL_CALL_ABUSE": 2,
+          "SAFE": 4
+        },
+        "he": {
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 1
+        },
+        "hi": {
+          "MULTI_TURN_ESCALATION": 11,
+          "PROMPT_INJECTION": 5,
+          "JAILBREAK": 3,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 4,
+          "TOOL_CALL_ABUSE": 7,
+          "MODEL_EXTRACTION": 2,
+          "PII": 3,
+          "RAG_POISONING": 2,
+          "SECRET": 3,
+          "SAFE": 14
+        },
+        "hinglish": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 24,
+          "PROMPT_INJECTION": 64,
+          "SAFE": 44,
+          "JAILBREAK": 27,
+          "DATA_EXFILTRATION_ATTEMPT": 33,
+          "UNSAFE_OUTPUT": 21,
+          "PII": 13,
+          "RAG_POISONING": 9,
+          "SECRET": 8,
+          "TOOL_CALL_ABUSE": 10,
+          "MODEL_EXTRACTION": 9,
+          "ENCODING_OBFUSCATION": 2,
+          "MULTI_TURN_ESCALATION": 6
+        },
+        "id": {
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 10
+        },
+        "it": {
+          "PII": 15,
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "DATA_EXFILTRATION_ATTEMPT": 2,
+          "TOOL_CALL_ABUSE": 2,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 9
+        },
+        "ja": {
+          "TOOL_CALL_ABUSE": 4,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 4,
+          "RAG_POISONING": 5,
+          "JAILBREAK": 3,
+          "MULTI_TURN_ESCALATION": 14,
+          "PROMPT_INJECTION": 6,
+          "DATA_EXFILTRATION_ATTEMPT": 9,
+          "MODEL_EXTRACTION": 4,
+          "PII": 4,
+          "SECRET": 4,
+          "SAFE": 8
+        },
+        "kn": {
+          "PROMPT_INJECTION": 2,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 1,
+          "SAFE": 10
+        },
+        "ko": {
+          "PROMPT_INJECTION": 3,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "RAG_POISONING": 1,
+          "SAFE": 6
+        },
+        "ml": {
+          "PROMPT_INJECTION": 2,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 8
+        },
+        "mr": {
+          "PROMPT_INJECTION": 4,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 5
+        },
+        "ms": {
+          "PROMPT_INJECTION": 2,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 3,
+          "SAFE": 5
+        },
+        "ne": {
+          "PROMPT_INJECTION": 3,
+          "JAILBREAK": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 4
+        },
+        "nl": {
+          "PII": 24,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "JAILBREAK": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 2,
+          "SAFE": 11
+        },
+        "pa": {
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 2,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 3,
+          "SAFE": 1
+        },
+        "pl": {
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 2,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 2
+        },
+        "pt": {
+          "PROMPT_INJECTION": 4,
+          "RAG_POISONING": 2,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 5
+        },
+        "ro": {
+          "PROMPT_INJECTION": 1,
+          "JAILBREAK": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 6
+        },
+        "ru": {
+          "DATA_EXFILTRATION_ATTEMPT": 10,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 7,
+          "JAILBREAK": 8,
+          "TOOL_CALL_ABUSE": 6,
+          "ENCODING_OBFUSCATION": 1,
+          "RAG_POISONING": 5,
+          "MULTI_TURN_ESCALATION": 13,
+          "PII": 2,
+          "SAFE": 24,
+          "PROMPT_INJECTION": 4,
+          "MODEL_EXTRACTION": 3,
+          "SECRET": 4
+        },
+        "sv": {
+          "PII": 23,
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 2,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 20
+        },
+        "sw": {
+          "PROMPT_INJECTION": 2,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 2,
+          "MULTI_TURN_ESCALATION": 2,
+          "SAFE": 12
+        },
+        "ta": {
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "MULTI_TURN_ESCALATION": 2,
+          "SAFE": 7
+        },
+        "te": {
+          "PROMPT_INJECTION": 2,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 2,
+          "MULTI_TURN_ESCALATION": 5,
+          "SAFE": 5
+        },
+        "th": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 2,
+          "SAFE": 5
+        },
+        "tl": {
+          "PROMPT_INJECTION": 1,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 2,
+          "MULTI_TURN_ESCALATION": 2,
+          "SAFE": 7
+        },
+        "tr": {
+          "JAILBREAK": 2,
+          "PROMPT_INJECTION": 2,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 2,
+          "SAFE": 2
+        },
+        "uk": {
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 8
+        },
+        "unknown": {
+          "SAFE": 961,
+          "PROMPT_INJECTION": 196,
+          "JAILBREAK": 117,
+          "UNSAFE_OUTPUT": 116,
+          "PII": 324,
+          "RAG_POISONING": 34,
+          "DATA_EXFILTRATION_ATTEMPT": 15,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 252,
+          "SECRET": 256,
+          "TOXICITY_HARASSMENT": 124,
+          "MULTI_TURN_ESCALATION": 27,
+          "MODEL_EXTRACTION": 74,
+          "TOOL_CALL_ABUSE": 98,
+          "ENCODING_OBFUSCATION": 86
+        },
+        "ur": {
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 2,
+          "SAFE": 5
+        },
+        "vi": {
+          "TOOL_CALL_ABUSE": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 2,
+          "MULTI_TURN_ESCALATION": 2,
+          "SAFE": 7
+        },
+        "zh": {
+          "MULTI_TURN_ESCALATION": 17,
+          "JAILBREAK": 2,
+          "PROMPT_INJECTION": 4,
+          "SAFE": 24,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 3,
+          "DATA_EXFILTRATION_ATTEMPT": 6,
+          "TOOL_CALL_ABUSE": 4,
+          "MODEL_EXTRACTION": 5,
+          "PII": 4,
+          "RAG_POISONING": 3,
+          "SECRET": 3
+        }
+      },
+      "priority_language_gaps": {
+        "en": {
+          "rows": 10215,
+          "benign": 3988,
+          "missing_labels": [
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "hi": {
+          "rows": 55,
+          "benign": 14,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "hinglish": {
+          "rows": 270,
+          "benign": 44,
+          "missing_labels": [
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "es": {
+          "rows": 112,
+          "benign": 31,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "pt": {
+          "rows": 14,
+          "benign": 5,
+          "missing_labels": [
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "DATA_EXFILTRATION_ATTEMPT",
+            "ENCODING_OBFUSCATION",
+            "MULTI_TURN_ESCALATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "fr": {
+          "rows": 36,
+          "benign": 9,
+          "missing_labels": [
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "de": {
+          "rows": 52,
+          "benign": 21,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "ENCODING_OBFUSCATION",
+            "MULTI_TURN_ESCALATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ar": {
+          "rows": 66,
+          "benign": 20,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "zh": {
+          "rows": 75,
+          "benign": 24,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ja": {
+          "rows": 65,
+          "benign": 8,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ko": {
+          "rows": 14,
+          "benign": 6,
+          "missing_labels": [
+            "JAILBREAK",
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ru": {
+          "rows": 87,
+          "benign": 24,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "id": {
+          "rows": 13,
+          "benign": 10,
+          "missing_labels": [
+            "PROMPT_INJECTION",
+            "SYSTEM_PROMPT_LEAK_ATTEMPT",
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "ENCODING_OBFUSCATION",
+            "MULTI_TURN_ESCALATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "bn": {
+          "rows": 12,
+          "benign": 3,
+          "missing_labels": [
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ta": {
+          "rows": 11,
+          "benign": 7,
+          "missing_labels": [
+            "JAILBREAK",
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "DATA_EXFILTRATION_ATTEMPT",
+            "TOOL_CALL_ABUSE",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "te": {
+          "rows": 16,
+          "benign": 5,
+          "missing_labels": [
+            "JAILBREAK",
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "tr": {
+          "rows": 9,
+          "benign": 2,
+          "missing_labels": [
+            "SYSTEM_PROMPT_LEAK_ATTEMPT",
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "DATA_EXFILTRATION_ATTEMPT",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "vi": {
+          "rows": 12,
+          "benign": 7,
+          "missing_labels": [
+            "PROMPT_INJECTION",
+            "JAILBREAK",
+            "SYSTEM_PROMPT_LEAK_ATTEMPT",
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        }
+      },
+      "language_annotation_note": "Missing language metadata is unknown; counts are annotations, not verified proficiency."
+    },
+    "test": {
+      "rows": 10238,
+      "labels": {
+        "DATA_EXFILTRATION_ATTEMPT": 858,
+        "SAFE": 2996,
+        "PII": 860,
+        "JAILBREAK": 695,
+        "PROMPT_INJECTION": 1638,
+        "SECRET": 616,
+        "UNSAFE_OUTPUT": 896,
+        "SYSTEM_PROMPT_LEAK_ATTEMPT": 697,
+        "RAG_POISONING": 489,
+        "ENCODING_OBFUSCATION": 84,
+        "MODEL_EXTRACTION": 75,
+        "TOOL_CALL_ABUSE": 126,
+        "TOXICITY_HARASSMENT": 97,
+        "MULTI_TURN_ESCALATION": 111
+      },
+      "languages": {
+        "ar": {
+          "DATA_EXFILTRATION_ATTEMPT": 6,
+          "PROMPT_INJECTION": 9,
+          "SAFE": 9,
+          "MULTI_TURN_ESCALATION": 8,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "TOOL_CALL_ABUSE": 1,
+          "MODEL_EXTRACTION": 4,
+          "JAILBREAK": 2,
+          "SECRET": 7,
+          "PII": 3
+        },
+        "bn": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 2,
+          "RAG_POISONING": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "PROMPT_INJECTION": 1,
+          "SAFE": 5
+        },
+        "cs": {
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 3,
+          "SAFE": 4
+        },
+        "de": {
+          "PROMPT_INJECTION": 3,
+          "PII": 27,
+          "DATA_EXFILTRATION_ATTEMPT": 2,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "ENCODING_OBFUSCATION": 1,
+          "MODEL_EXTRACTION": 1,
+          "JAILBREAK": 3,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 14
+        },
+        "el": {
+          "PROMPT_INJECTION": 1,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 2,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 5
+        },
+        "en": {
+          "SAFE": 1908,
+          "PII": 408,
+          "JAILBREAK": 538,
+          "PROMPT_INJECTION": 1394,
+          "SECRET": 424,
+          "UNSAFE_OUTPUT": 773,
+          "DATA_EXFILTRATION_ATTEMPT": 751,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 424,
+          "RAG_POISONING": 423,
+          "MULTI_TURN_ESCALATION": 9,
+          "TOOL_CALL_ABUSE": 10,
+          "MODEL_EXTRACTION": 7,
+          "ENCODING_OBFUSCATION": 1
+        },
+        "es": {
+          "PII": 26,
+          "DATA_EXFILTRATION_ATTEMPT": 4,
+          "RAG_POISONING": 3,
+          "SAFE": 25,
+          "JAILBREAK": 4,
+          "MODEL_EXTRACTION": 1,
+          "MULTI_TURN_ESCALATION": 10,
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "TOOL_CALL_ABUSE": 4,
+          "SECRET": 1
+        },
+        "fa": {
+          "JAILBREAK": 2,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "SAFE": 3
+        },
+        "fr": {
+          "PII": 16,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "DATA_EXFILTRATION_ATTEMPT": 2,
+          "TOOL_CALL_ABUSE": 2,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 11
+        },
+        "gu": {
+          "PROMPT_INJECTION": 1,
+          "JAILBREAK": 1,
+          "TOOL_CALL_ABUSE": 3,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 5
+        },
+        "he": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "TOOL_CALL_ABUSE": 2,
+          "SAFE": 3
+        },
+        "hi": {
+          "JAILBREAK": 4,
+          "PII": 2,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 3,
+          "RAG_POISONING": 4,
+          "TOOL_CALL_ABUSE": 2,
+          "PROMPT_INJECTION": 3,
+          "TOXICITY_HARASSMENT": 1,
+          "SAFE": 21,
+          "MULTI_TURN_ESCALATION": 10,
+          "DATA_EXFILTRATION_ATTEMPT": 2,
+          "MODEL_EXTRACTION": 2,
+          "SECRET": 1
+        },
+        "hinglish": {
+          "DATA_EXFILTRATION_ATTEMPT": 40,
+          "PROMPT_INJECTION": 53,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 14,
+          "RAG_POISONING": 12,
+          "UNSAFE_OUTPUT": 15,
+          "JAILBREAK": 19,
+          "SAFE": 31,
+          "SECRET": 11,
+          "PII": 10,
+          "MULTI_TURN_ESCALATION": 4,
+          "TOOL_CALL_ABUSE": 5,
+          "MODEL_EXTRACTION": 3
+        },
+        "id": {
+          "PROMPT_INJECTION": 3,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 1
+        },
+        "it": {
+          "PII": 17,
+          "PROMPT_INJECTION": 2,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 4,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 11
+        },
+        "ja": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 4,
+          "SAFE": 23,
+          "ENCODING_OBFUSCATION": 1,
+          "MULTI_TURN_ESCALATION": 9,
+          "PROMPT_INJECTION": 2,
+          "DATA_EXFILTRATION_ATTEMPT": 4,
+          "TOOL_CALL_ABUSE": 3,
+          "MODEL_EXTRACTION": 2,
+          "PII": 1,
+          "JAILBREAK": 4,
+          "RAG_POISONING": 2,
+          "SECRET": 1
+        },
+        "kn": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 6
+        },
+        "ko": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "JAILBREAK": 2,
+          "DATA_EXFILTRATION_ATTEMPT": 4,
+          "TOOL_CALL_ABUSE": 1,
+          "RAG_POISONING": 1,
+          "SAFE": 6
+        },
+        "ml": {
+          "PROMPT_INJECTION": 1,
+          "JAILBREAK": 2,
+          "DATA_EXFILTRATION_ATTEMPT": 2,
+          "SAFE": 4
+        },
+        "mr": {
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 2,
+          "SAFE": 5
+        },
+        "ms": {
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 1
+        },
+        "ne": {
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 5
+        },
+        "nl": {
+          "PII": 21,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 15
+        },
+        "pa": {
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 1
+        },
+        "pl": {
+          "SAFE": 7
+        },
+        "pt": {
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 3,
+          "MULTI_TURN_ESCALATION": 2,
+          "SAFE": 4
+        },
+        "ro": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 2,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 5
+        },
+        "ru": {
+          "TOOL_CALL_ABUSE": 5,
+          "DATA_EXFILTRATION_ATTEMPT": 4,
+          "JAILBREAK": 6,
+          "MODEL_EXTRACTION": 6,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 5,
+          "PII": 6,
+          "ENCODING_OBFUSCATION": 1,
+          "SAFE": 21,
+          "RAG_POISONING": 3,
+          "MULTI_TURN_ESCALATION": 12,
+          "PROMPT_INJECTION": 3,
+          "SECRET": 3
+        },
+        "sv": {
+          "PII": 22,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 10
+        },
+        "sw": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 2,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 6
+        },
+        "ta": {
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 1,
+          "MULTI_TURN_ESCALATION": 3,
+          "SAFE": 2
+        },
+        "te": {
+          "PROMPT_INJECTION": 2,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "JAILBREAK": 1,
+          "TOOL_CALL_ABUSE": 2,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 3
+        },
+        "th": {
+          "PROMPT_INJECTION": 1,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "SAFE": 5
+        },
+        "tl": {
+          "PROMPT_INJECTION": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "SAFE": 1
+        },
+        "tr": {
+          "PROMPT_INJECTION": 1,
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 5
+        },
+        "uk": {
+          "JAILBREAK": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 1,
+          "TOOL_CALL_ABUSE": 1,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 5
+        },
+        "unknown": {
+          "SAFE": 781,
+          "SECRET": 165,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 223,
+          "PII": 295,
+          "DATA_EXFILTRATION_ATTEMPT": 14,
+          "JAILBREAK": 91,
+          "PROMPT_INJECTION": 147,
+          "UNSAFE_OUTPUT": 108,
+          "RAG_POISONING": 39,
+          "ENCODING_OBFUSCATION": 80,
+          "MODEL_EXTRACTION": 46,
+          "TOOL_CALL_ABUSE": 65,
+          "TOXICITY_HARASSMENT": 96,
+          "MULTI_TURN_ESCALATION": 14
+        },
+        "ur": {
+          "TOOL_CALL_ABUSE": 2,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 1
+        },
+        "vi": {
+          "PROMPT_INJECTION": 2,
+          "DATA_EXFILTRATION_ATTEMPT": 2,
+          "MULTI_TURN_ESCALATION": 1,
+          "SAFE": 4
+        },
+        "zh": {
+          "PII": 6,
+          "PROMPT_INJECTION": 6,
+          "MULTI_TURN_ESCALATION": 12,
+          "SYSTEM_PROMPT_LEAK_ATTEMPT": 1,
+          "DATA_EXFILTRATION_ATTEMPT": 2,
+          "TOOL_CALL_ABUSE": 3,
+          "MODEL_EXTRACTION": 3,
+          "JAILBREAK": 3,
+          "RAG_POISONING": 1,
+          "SECRET": 3,
+          "SAFE": 14
+        }
+      },
+      "priority_language_gaps": {
+        "en": {
+          "rows": 7070,
+          "benign": 1908,
+          "missing_labels": [
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "hi": {
+          "rows": 55,
+          "benign": 21,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION"
+          ]
+        },
+        "hinglish": {
+          "rows": 217,
+          "benign": 31,
+          "missing_labels": [
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "es": {
+          "rows": 81,
+          "benign": 25,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "pt": {
+          "rows": 10,
+          "benign": 4,
+          "missing_labels": [
+            "PROMPT_INJECTION",
+            "SYSTEM_PROMPT_LEAK_ATTEMPT",
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "TOOL_CALL_ABUSE",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "fr": {
+          "rows": 34,
+          "benign": 11,
+          "missing_labels": [
+            "PROMPT_INJECTION",
+            "JAILBREAK",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "de": {
+          "rows": 53,
+          "benign": 14,
+          "missing_labels": [
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "TOOL_CALL_ABUSE",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ar": {
+          "rows": 51,
+          "benign": 9,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "zh": {
+          "rows": 54,
+          "benign": 14,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ja": {
+          "rows": 56,
+          "benign": 23,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ko": {
+          "rows": 16,
+          "benign": 6,
+          "missing_labels": [
+            "PROMPT_INJECTION",
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "ENCODING_OBFUSCATION",
+            "MULTI_TURN_ESCALATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ru": {
+          "rows": 75,
+          "benign": 21,
+          "missing_labels": [
+            "UNSAFE_OUTPUT",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "id": {
+          "rows": 5,
+          "benign": 1,
+          "missing_labels": [
+            "JAILBREAK",
+            "SYSTEM_PROMPT_LEAK_ATTEMPT",
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "DATA_EXFILTRATION_ATTEMPT",
+            "ENCODING_OBFUSCATION",
+            "MULTI_TURN_ESCALATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "bn": {
+          "rows": 11,
+          "benign": 5,
+          "missing_labels": [
+            "JAILBREAK",
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "DATA_EXFILTRATION_ATTEMPT",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "ta": {
+          "rows": 7,
+          "benign": 2,
+          "missing_labels": [
+            "PROMPT_INJECTION",
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "DATA_EXFILTRATION_ATTEMPT",
+            "TOOL_CALL_ABUSE",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "te": {
+          "rows": 10,
+          "benign": 3,
+          "missing_labels": [
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "DATA_EXFILTRATION_ATTEMPT",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "tr": {
+          "rows": 9,
+          "benign": 5,
+          "missing_labels": [
+            "SYSTEM_PROMPT_LEAK_ATTEMPT",
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "TOOL_CALL_ABUSE",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        },
+        "vi": {
+          "rows": 9,
+          "benign": 4,
+          "missing_labels": [
+            "JAILBREAK",
+            "SYSTEM_PROMPT_LEAK_ATTEMPT",
+            "PII",
+            "SECRET",
+            "UNSAFE_OUTPUT",
+            "RAG_POISONING",
+            "TOOL_CALL_ABUSE",
+            "ENCODING_OBFUSCATION",
+            "MODEL_EXTRACTION",
+            "TOXICITY_HARASSMENT"
+          ]
+        }
+      },
+      "language_annotation_note": "Missing language metadata is unknown; counts are annotations, not verified proficiency."
+    }
+  },
+  "missing_metadata": {
+    "language": 22321,
+    "source": 4107,
+    "family": 103531,
+    "provenance": 106645
+  },
+  "input_manifest": [
+    {
+      "path": "datasets/ml-augmented-v8-final.jsonl",
+      "rows": 120620,
+      "sha256": "b2da6cb232b26d97515820d128d8dfcb17cecacb00fc3cdccbc601c33bf27a0f",
+      "role": "training_candidate"
+    },
+    {
+      "path": "datasets/ml-v8-targeted-fix.jsonl",
+      "rows": 8500,
+      "sha256": "ce95030cc30e72e3112c50cd3e4ca9d1738e2802d891ba8d1de8d3eac7a2d45e",
+      "role": "training_candidate"
+    },
+    {
+      "path": "datasets/ml-v10-advanced-attacks.jsonl",
+      "rows": 8000,
+      "sha256": "dceea75884a7714a1c15fc4f1979b8732a24edfd2e1d9af26fa30913efa5fc64",
+      "role": "training_candidate"
+    },
+    {
+      "path": "datasets/ml-v10-targeted-fix.jsonl",
+      "rows": 5000,
+      "sha256": "dfb29c541743904bb3213718270aced277327906719599fc2c3f50f177df6c9e",
+      "role": "training_candidate"
+    },
+    {
+      "path": "datasets/ml-v11-weak-fix.jsonl",
+      "rows": 1212,
+      "sha256": "4d5d68701b86894ceb2637ba6b3e5efa72e0cff0ff9c5c237d7714421a5cd943",
+      "role": "training_candidate"
+    },
+    {
+      "path": "artifacts/ml-v2/v12-toxicity-fix.jsonl",
+      "rows": 1000,
+      "sha256": "0b976086ccaaa34aa908a3b90522b2b110d693a36c7df1fa0e138d8ba32b8fd3",
+      "role": "training_candidate"
+    },
+    {
+      "path": "datasets/ml-v13-meta-instructional.jsonl",
+      "rows": 2019,
+      "sha256": "c5bf26b53007ff39e2a1d4dad517f890ad9339e462f7404905ec6d8a25f8e9fe",
+      "role": "training_candidate"
+    },
+    {
+      "path": "datasets/ml-v13-attack-gaps.jsonl",
+      "rows": 406,
+      "sha256": "725e21640a5d42f678c49db9ac70b7e931e42a119c3dca43356a2d13bbbe9235",
+      "role": "training_candidate"
+    },
+    {
+      "path": "datasets/ml-v15-threat-corpus.jsonl",
+      "rows": 1155,
+      "sha256": "2bddfc2799e7fc0948a11e2fb0e57323fabfd18602bfad65859dfc2ae927d2e0",
+      "role": "training_candidate"
+    },
+    {
+      "path": "datasets/ml-v16-threat-corpus.jsonl",
+      "rows": 4100,
+      "sha256": "d143eecb437cc96f84bfccc04911fa79287f3b75de0b70f4853f3402ef718049",
+      "role": "training_candidate"
+    },
+    {
+      "path": "datasets/ml-v17-threat-corpus.jsonl",
+      "rows": 3871,
+      "sha256": "fa5f7febe7c8e194ead39bc5419a037083af60ddfa53a6ca9e1c7e95c0bc1b11",
+      "role": "training_candidate"
+    },
+    {
+      "path": "datasets/crossdist-eval-v3-complement.jsonl",
+      "rows": 18694,
+      "sha256": "aefd44837f0a4fa7b74fa7e0e620a431f871ed87da117c8ef6fac50b3c60a443",
+      "role": "external_holdout"
+    },
+    {
+      "path": "datasets/external-real-v1.jsonl",
+      "rows": 15635,
+      "sha256": "ce9bb4fa4979e5449548992525d6fd267ef731cb85e1d489e77a311b7ae86f81",
+      "role": "external_holdout"
+    },
+    {
+      "path": "datasets/external-real-v2.jsonl",
+      "rows": 8582,
+      "sha256": "abe836d516c2cd2e984bf7170aeb159844569f94396912bcfa06bba162c86e0e",
+      "role": "external_holdout"
+    },
+    {
+      "path": "datasets/external-real-v3.jsonl",
+      "rows": 52192,
+      "sha256": "3293b53b04782f13c7122ddc67068a017ae41e945d7c9bba6afd70fd922cca44",
+      "role": "external_holdout"
+    },
+    {
+      "path": "datasets/v15-test-battery.jsonl",
+      "rows": 274,
+      "sha256": "2000986f5fd578e9e8c3dc13ec3a6c8a8b794dd298ec1230489fc5eab6ce43a4",
+      "role": "external_holdout"
+    },
+    {
+      "path": "datasets/v16-probe-battery.jsonl",
+      "rows": 70,
+      "sha256": "5d5accda2a9a4d2de049b5e01ce75aa78f28435633a06e7ced497e537290b955",
+      "role": "external_holdout"
+    },
+    {
+      "path": "datasets/v17-multilingual-battery.jsonl",
+      "rows": 312,
+      "sha256": "53a6f45595a8a125c532b12b96b87564d5d0648a6d9f797c4622267675cd8c4c",
+      "role": "external_holdout"
+    },
+    {
+      "path": "datasets/crossdist-eval-v3.jsonl",
+      "rows": 22681,
+      "sha256": "6ec6ba8be7a40bda849f994f1ef73fad158b285fb0397c35beab6e352ea4bff6",
+      "role": "external_holdout"
+    }
+  ],
+  "optional_training_sampling": "artifacts/ml/v18-training-sampling.json",
+  "limitations": [
+    "The existing corpus has sparse explicit template/translation identifiers; semantic siblings without lineage metadata may remain in different groups.",
+    "Source and broad attack category are deliberately not treated as a single template; missing family/source remains unknown.",
+    "The teacher was previously trained on parts of this corpus; internal student test is not evidence of teacher-independent generalization.",
+    "Existing external holdouts have been inspected in prior development; fresh source/family-disjoint release tests are still required.",
+    "Removing overlap cannot undo what an existing pretrained/fine-tuned teacher already saw.",
+    "Language labels and author provenance are preserved, not independently reviewed; missing labels do not imply English."
+  ]
+}

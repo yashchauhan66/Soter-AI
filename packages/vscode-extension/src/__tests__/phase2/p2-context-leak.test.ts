@@ -21,6 +21,8 @@ import { record, recordFinding } from "./results";
 import * as stub from "./vscode-stub";
 import { gatherContext, setProtectedFileChecker } from "../../firewall/ContextGatherer";
 import { WorkspaceGuard } from "../../workspace-guard/WorkspaceGuard";
+import { initializeBoundaryState, saveRules } from "../../ai-boundary/BoundarySnapshot";
+import { documentDigest } from "../../ai-boundary/policy";
 
 let fixture: Fixture;
 
@@ -34,6 +36,7 @@ test.after(async () => {
 /** Fresh per-scenario VS Code state pointed at the fixture. */
 function reset(): void {
     stub.resetState(fixture.root);
+    initializeBoundaryState(stub.makeExtensionContext(fixture.root).workspaceState as never);
     setProtectedFileChecker(() => false); // default wiring: nothing protected
 }
 
@@ -182,11 +185,37 @@ test("S4 out-of-the-box (guard never enabled) a .env tab reaches the bundle", as
 // S5 — a secret inside an ALLOWED file (I4: redact before leaving)
 // ─────────────────────────────────────────────────────────────────────────────
 
-test("S5 an inline key inside an allowed source file is redacted", async () => {
+test("S5 inline keys redact automatically; custom data needs a manual region deny", async () => {
     reset();
-    stub.openTab(path.join(fixture.root, "src", "app.ts"));
+    const file = path.join(fixture.root, "src", "app.ts");
+    const source = await fs.readFile(file, "utf8");
+    const custom = canaryById("C-PLAIN").value;
+    stub.openTab(file);
+
+    // Negative control: no automatic rule can infer that arbitrary partner text
+    // is private. Keep that finding visible instead of adding a canary-only rule.
+    const unmarked = bundleText(await gatherContext());
+    assert.ok(unmarked.includes(custom), "negative control must contain unmarked custom text");
+    assert.ok(!unmarked.includes(canaryById("V-OPENAI").value));
+    recordFinding({
+        id: "S5-unmarked", invariant: "I4",
+        scenario: "negative control: arbitrary partnerId has no manual rule",
+        expected: "no private custom value in AI context",
+        actual: "custom text remains; automatic recognition is insufficient",
+        evidence: "ContextRedactor.ts documents unknown private prose as outside automatic detection",
+        severity: "High",
+    }, !unmarked.includes(custom));
+
+    const start = source.indexOf(custom);
+    assert.ok(start >= 0);
+    await saveRules(stub.state.folders[0].uri.toString(), {
+        paths: [],
+        regions: [{ path: "src/app.ts", digest: documentDigest(source), start, end: start + custom.length }],
+    });
     const items = await gatherContext();
+    assert.ok(items.some(item => item.path === "src/app.ts"));
     const text = bundleText(items);
+    assert.ok(text.includes("https://api.example.com"), "unprotected source must remain useful");
 
     const vendorLeak = findLeaks(text).filter((l) => l.canaryId === "V-OPENAI");
     const customLeak = findLeaks(text).filter((l) => l.canaryId === "C-PLAIN");
@@ -196,16 +225,16 @@ test("S5 an inline key inside an allowed source file is redacted", async () => {
         scenario: "vendor-shaped key (sk-…) hardcoded in src/app.ts, an allowed path",
         expected: "redacted before the bundle is assembled",
         actual: vendorLeak.length === 0 ? "redacted" : `LEAKED: ${describeLeaks(vendorLeak)}`,
-        evidence: "SafeContextBuilder.ts:189 redactForSharing; Redactor.ts:83 broad sk- rule",
+        evidence: "SafeContextBuilder.ts calls redactAIContext; provider-shaped key is not manually marked",
         severity: "Critical",
     }, vendorLeak.length === 0);
 
     const customHeld = recordFinding({
         id: "S5b", invariant: "I4",
-        scenario: "non-vendor value (partnerId) hardcoded in the same allowed file",
-        expected: "redacted or blocked before leaving",
+        scenario: "partnerId selected text is manually marked AI-forbidden in the allowed file",
+        expected: "the marked region is omitted before leaving",
         actual: customLeak.length === 0 ? "removed" : `LEAKED: ${describeLeaks(customLeak)}`,
-        evidence: "Redactor.ts:45 no rule matches a bare custom value; assignment rule at :95 requires a keyword key",
+        evidence: "BoundarySnapshot.ts applies the saved region digest and offsets before gathering; this is manual enforcement",
         severity: "High",
     }, customLeak.length === 0);
 
@@ -258,7 +287,7 @@ test("S6 summarizeFile emits the env var KEY names of a sensitive file", async (
 // S7 — encoded secrets in an allowed file
 // ─────────────────────────────────────────────────────────────────────────────
 
-test("S7 encoded copies of a key in allowed files", async () => {
+test("S7 known encoded keys redact automatically; custom homoglyph data uses a manual file deny", async () => {
     const cases: Array<[string, string, string]> = [
         ["S7a", "encoded/base64.txt", "base64 of a vendor key"],
         ["S7b", "encoded/hex.txt", "hex of a vendor key"],
@@ -271,16 +300,29 @@ test("S7 encoded copies of a key in allowed files", async () => {
     const failures: string[] = [];
     for (const [id, rel, what] of cases) {
         reset();
+        const manuallyDenied = id === "S7g";
+        if (manuallyDenied) {
+            // This fixture is arbitrary custom prose, not a vendor credential.
+            await saveRules(stub.state.folders[0].uri.toString(), {
+                paths: [{ kind: "file", pattern: rel }], regions: [],
+            });
+        }
         stub.openTab(path.join(fixture.root, ...rel.split("/")));
         const items = await gatherContext();
+        assert.equal(items.some(item => item.path === rel), !manuallyDenied,
+            "each automatic case must actually be gathered; the manual file must be excluded");
         const leaks = findLeaks(bundleText(items));
         const ok = leaks.length === 0;
         record({
             id, invariant: "I1/I4",
-            scenario: `${what} in an allowed file, opened as a tab`,
+            scenario: what + (manuallyDenied
+                ? " in a manually denied file"
+                : " in an allowed file, opened as a tab"),
             expected: "the secret does not reach the bundle in any form",
             actual: ok ? "not recoverable from the bundle" : `LEAKED: ${describeLeaks(leaks)}`,
-            evidence: "Redactor.ts REDACTION_RULES operate on literal text only; no decode-then-rescan on this path",
+            evidence: manuallyDenied
+                ? "BoundarySnapshot.ts manual path deny; arbitrary custom homoglyph prose is not automatically recognized"
+                : "ContextRedactor.ts bounded normalization/decoding before building the bundle",
             severity: "High",
             status: ok ? "PASS" : "FAIL",
         });
@@ -293,13 +335,22 @@ test("S7 encoded copies of a key in allowed files", async () => {
 // S8 — prompt injection in README / .cursorrules (attacker (b) and (c))
 // ─────────────────────────────────────────────────────────────────────────────
 
-test("S8 hostile README/.cursorrules are quarantined, not merged as instructions", async () => {
+test("S8 hostile README is quarantined; agent-config detector gaps remain visible", async () => {
     reset();
     const items = await gatherContext();
     const readme = items.find((i) => i.path === "README.md");
     assert.ok(readme, "fixture README.md was not gathered");
 
     const safe = buildSafeContext(items, DEFAULT_PROJECT_POLICY);
+    recordFinding({
+        id: "S8c", invariant: "I3",
+        scenario: "the existing hostile agent-config fixture is collected as untrusted data",
+        expected: "quarantine hostile agent-config content before inclusion",
+        actual: safe.decisions.find(d => d.path === ".cursorrules")?.injectionQuarantined
+            ? "agent config quarantined" : "agent config remains; heuristic detection missed this fixture",
+        evidence: "SafeContextBuilder.ts scanUntrusted is a bounded heuristic, not an authorization boundary",
+        severity: "High",
+    }, safe.decisions.find(d => d.path === ".cursorrules")?.injectionQuarantined === true);
     const readmeDecision = safe.decisions.find((d) => d.path === "README.md");
     const quarantined = readmeDecision?.injectionQuarantined === true;
     const payloadInBundle = /ignore all previous instructions/i.test(safe.safeText);

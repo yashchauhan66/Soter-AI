@@ -542,9 +542,15 @@ export class BrokerServer {
             if (!token || !/^sk-soter-canary-[a-f0-9]{40}$/.test(token)) {
                 throw new HttpError(400, "invalid_canary_registry", "Invalid generated canary record.");
             }
-            const hash = await hashCanary(token);
+            const canonicalHash = await hashCanary(token);
+            // Preserve legacy Node 18 metadata IDs; matching still uses the full raw token.
+            let legacy = 0;
+            for (let i = 0; i < token.length; i++) legacy = ((legacy << 5) - legacy + token.charCodeAt(i)) | 0;
+            const legacyHash = Math.abs(legacy).toString(16).padStart(8, "0");
+            const hash = stringValue(item.hash);
+            if (!hash || (hash !== canonicalHash && hash !== legacyHash)) throw new HttpError(400, "invalid_canary_registry", "Canary metadata does not match its token.");
             const id = "canary_" + hash.slice(0, 12);
-            if (item.id !== id || item.hash !== hash) throw new HttpError(400, "invalid_canary_registry", "Canary metadata does not match its token.");
+            if (item.id !== id) throw new HttpError(400, "invalid_canary_registry", "Invalid canary identifier.");
             next.push({ id, token, hash, redactedPreview: canaryPreview(token) });
         }
         this.canaries = next;
@@ -642,8 +648,15 @@ export class BrokerServer {
         const provider = await this.forwardProvider("openai", forward, req, sessionId, model);
         const responseText = extractOpenAIResponse(provider.body);
         const responseScan = await scanBrokerResponse(responseText, { canaries: this.canaries });
+        const wireResponse = JSON.stringify(provider.body);
+        const unsafeResponse = responseScan.decision === "block" || this.unsafePayload(wireResponse);
+        if (unsafeResponse) {
+            responseScan.decision = "block";
+            responseScan.canaryLeaked ||= matchCanaries(wireResponse, this.canaries).length > 0;
+            responseScan.categories = [...new Set([...responseScan.categories, "output_boundary_block"])];
+        }
         this.recordResponseMemory(sessionId, responseScan, model, "openai-compatible");
-        if (responseScan.decision === "block" || this.unsafePayload(JSON.stringify(provider.body))) {
+        if (unsafeResponse) {
             throw new HttpError(422, "unsafe_provider_response", "The provider response was blocked by local output protection");
         }
         res.setHeader("x-soterai-response-decision", responseScan.decision);
@@ -686,8 +699,15 @@ export class BrokerServer {
         const provider = await this.forwardProvider("anthropic", forward, req, sessionId, model);
         const responseText = extractAnthropicResponse(provider.body);
         const responseScan = await scanBrokerResponse(responseText, { canaries: this.canaries });
+        const wireResponse = JSON.stringify(provider.body);
+        const unsafeResponse = responseScan.decision === "block" || this.unsafePayload(wireResponse);
+        if (unsafeResponse) {
+            responseScan.decision = "block";
+            responseScan.canaryLeaked ||= matchCanaries(wireResponse, this.canaries).length > 0;
+            responseScan.categories = [...new Set([...responseScan.categories, "output_boundary_block"])];
+        }
         this.recordResponseMemory(sessionId, responseScan, model, "anthropic-compatible");
-        if (responseScan.decision === "block" || this.unsafePayload(JSON.stringify(provider.body))) {
+        if (unsafeResponse) {
             throw new HttpError(422, "unsafe_provider_response", "The provider response was blocked by local output protection");
         }
         res.setHeader("x-soterai-response-decision", responseScan.decision);

@@ -1,0 +1,258 @@
+{
+  "generatedAt": "2026-09-26T11:33:40.899Z",
+  "file": "artifacts/ml/v18-balanced-comparison-rows.jsonl",
+  "mlAugmentMode": "enforce",
+  "scored": {
+    "rows": 4000,
+    "benign": 2000,
+    "attacks": 2000
+  },
+  "flaggedByRules": {
+    "total": 1162,
+    "falsePositives": 274,
+    "trueCatches": 888
+  },
+  "detailCoverage": {
+    "withAttackProbability": 1162,
+    "missing": 0
+  },
+  "eligibilityGates": [
+    "attackProbability <= tau (positive benign evidence from the ML tier)",
+    "not abstained (calibration declining to decide must never read as safe)",
+    "no HIGH/CRITICAL finding present"
+  ],
+  "whyNotEligible": {
+    "tauUsed": 0.5,
+    "falsePositiveRows": 274,
+    "blockedByNoBenignEvidence": 181,
+    "blockedByAbstentionOnly": 0,
+    "blockedBySeverityGateOnly": 84,
+    "eligible": 9,
+    "attackProbHistogram": [
+      {
+        "upTo": 0.01,
+        "falsePositiveRows": 59
+      },
+      {
+        "upTo": 0.1,
+        "falsePositiveRows": 14
+      },
+      {
+        "upTo": 0.5,
+        "falsePositiveRows": 20
+      },
+      {
+        "upTo": 0.9,
+        "falsePositiveRows": 28
+      },
+      {
+        "upTo": 1.01,
+        "falsePositiveRows": 153
+      }
+    ],
+    "correlatedErrorShare": 66.06,
+    "severityGateBlockedShare": 30.66,
+    "interpretation": "66.06% of rules false positives carry no benign evidence (the ML tier agrees with rules), so that share is unreachable by any downgrade layer. A further 84 rows DO carry benign evidence and are held back only by the HIGH/CRITICAL severity gate -- see sweep[].noSeverityGateToAllow for what releasing them would cost in attacks before treating that as an opportunity."
+  },
+  "criticalNote": "A BLOCK -> HUMAN_REVIEW downgrade does NOT reduce FPR: HUMAN_REVIEW is still action != ALLOW and still counts as a false positive under both definitions. Only a downgrade reaching ALLOW moves AC6, and that is the bypass-surface case.",
+  "sweep": [
+    {
+      "tau": 0.001,
+      "toAllow": {
+        "fpCleared": 1,
+        "attacksReleased": 0,
+        "precision": 1,
+        "rulesFprAfter": 13.65,
+        "recallAfter": 100
+      },
+      "blockOnlyToAllow": {
+        "fpCleared": 0,
+        "attacksReleased": 0,
+        "rulesFprAfter": 13.7
+      },
+      "noSeverityGateToAllow": {
+        "fpCleared": 34,
+        "attacksReleased": 0,
+        "precision": 1,
+        "rulesFprAfter": 12,
+        "attacksReleasedShareOfAllAttacks": 0
+      }
+    },
+    {
+      "tau": 0.005,
+      "toAllow": {
+        "fpCleared": 5,
+        "attacksReleased": 0,
+        "precision": 1,
+        "rulesFprAfter": 13.45,
+        "recallAfter": 100
+      },
+      "blockOnlyToAllow": {
+        "fpCleared": 1,
+        "attacksReleased": 0,
+        "rulesFprAfter": 13.65
+      },
+      "noSeverityGateToAllow": {
+        "fpCleared": 55,
+        "attacksReleased": 3,
+        "precision": 0.9483,
+        "rulesFprAfter": 10.95,
+        "attacksReleasedShareOfAllAttacks": 0.15
+      }
+    },
+    {
+      "tau": 0.01,
+      "toAllow": {
+        "fpCleared": 5,
+        "attacksReleased": 0,
+        "precision": 1,
+        "rulesFprAfter": 13.45,
+        "recallAfter": 100
+      },
+      "blockOnlyToAllow": {
+        "fpCleared": 1,
+        "attacksReleased": 0,
+        "rulesFprAfter": 13.65
+      },
+      "noSeverityGateToAllow": {
+        "fpCleared": 59,
+        "attacksReleased": 5,
+        "precision": 0.9219,
+        "rulesFprAfter": 10.75,
+        "attacksReleasedShareOfAllAttacks": 0.25
+      }
+    },
+    {
+      "tau": 0.02,
+      "toAllow": {
+        "fpCleared": 5,
+        "attacksReleased": 2,
+        "precision": 0.7143,
+        "rulesFprAfter": 13.45,
+        "recallAfter": 99.9
+      },
+      "blockOnlyToAllow": {
+        "fpCleared": 1,
+        "attacksReleased": 0,
+        "rulesFprAfter": 13.65
+      },
+      "noSeverityGateToAllow": {
+        "fpCleared": 62,
+        "attacksReleased": 7,
+        "precision": 0.8986,
+        "rulesFprAfter": 10.6,
+        "attacksReleasedShareOfAllAttacks": 0.35
+      }
+    },
+    {
+      "tau": 0.05,
+      "toAllow": {
+        "fpCleared": 5,
+        "attacksReleased": 2,
+        "precision": 0.7143,
+        "rulesFprAfter": 13.45,
+        "recallAfter": 99.9
+      },
+      "blockOnlyToAllow": {
+        "fpCleared": 1,
+        "attacksReleased": 0,
+        "rulesFprAfter": 13.65
+      },
+      "noSeverityGateToAllow": {
+        "fpCleared": 71,
+        "attacksReleased": 10,
+        "precision": 0.8765,
+        "rulesFprAfter": 10.15,
+        "attacksReleasedShareOfAllAttacks": 0.5
+      }
+    },
+    {
+      "tau": 0.1,
+      "toAllow": {
+        "fpCleared": 5,
+        "attacksReleased": 2,
+        "precision": 0.7143,
+        "rulesFprAfter": 13.45,
+        "recallAfter": 99.9
+      },
+      "blockOnlyToAllow": {
+        "fpCleared": 1,
+        "attacksReleased": 0,
+        "rulesFprAfter": 13.65
+      },
+      "noSeverityGateToAllow": {
+        "fpCleared": 73,
+        "attacksReleased": 11,
+        "precision": 0.869,
+        "rulesFprAfter": 10.05,
+        "attacksReleasedShareOfAllAttacks": 0.55
+      }
+    },
+    {
+      "tau": 0.2,
+      "toAllow": {
+        "fpCleared": 9,
+        "attacksReleased": 2,
+        "precision": 0.8182,
+        "rulesFprAfter": 13.25,
+        "recallAfter": 99.9
+      },
+      "blockOnlyToAllow": {
+        "fpCleared": 3,
+        "attacksReleased": 0,
+        "rulesFprAfter": 13.55
+      },
+      "noSeverityGateToAllow": {
+        "fpCleared": 83,
+        "attacksReleased": 14,
+        "precision": 0.8557,
+        "rulesFprAfter": 9.55,
+        "attacksReleasedShareOfAllAttacks": 0.7
+      }
+    },
+    {
+      "tau": 0.3,
+      "toAllow": {
+        "fpCleared": 9,
+        "attacksReleased": 2,
+        "precision": 0.8182,
+        "rulesFprAfter": 13.25,
+        "recallAfter": 99.9
+      },
+      "blockOnlyToAllow": {
+        "fpCleared": 3,
+        "attacksReleased": 0,
+        "rulesFprAfter": 13.55
+      },
+      "noSeverityGateToAllow": {
+        "fpCleared": 88,
+        "attacksReleased": 18,
+        "precision": 0.8302,
+        "rulesFprAfter": 9.3,
+        "attacksReleasedShareOfAllAttacks": 0.9
+      }
+    },
+    {
+      "tau": 0.5,
+      "toAllow": {
+        "fpCleared": 9,
+        "attacksReleased": 3,
+        "precision": 0.75,
+        "rulesFprAfter": 13.25,
+        "recallAfter": 99.85
+      },
+      "blockOnlyToAllow": {
+        "fpCleared": 3,
+        "attacksReleased": 0,
+        "rulesFprAfter": 13.55
+      },
+      "noSeverityGateToAllow": {
+        "fpCleared": 93,
+        "attacksReleased": 27,
+        "precision": 0.775,
+        "rulesFprAfter": 9.05,
+        "attacksReleasedShareOfAllAttacks": 1.35
+      }
+    }
+  ]
+}

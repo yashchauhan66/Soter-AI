@@ -67,7 +67,7 @@ export async function createApprovalGrant(input: CreateApprovalInput): Promise<A
     const outcome = input.outcome ?? "approve";
     // Token binds the identity fields plus a nonce so it cannot be guessed from
     // the (hashed) content alone.
-    const nonce = randomHex(12);
+    const nonce = await randomHex(12);
     const token = await hashExactContent(
         `${input.sessionId}|${input.contentHash}|${input.decision}|${outcome}|${now}|${nonce}`,
     );
@@ -180,10 +180,15 @@ export class ApprovalStore {
     }
 }
 
-function randomHex(bytes: number): string {
+async function randomHex(bytes: number): Promise<string> {
     const arr = new Uint8Array(bytes);
-    const g = (globalThis as any).crypto;
-    if (!g?.getRandomValues) throw new Error("Approval grants require cryptographic randomness.");
-    g.getRandomValues(arr);
-    return Array.from(arr, (b) => b.toString(16).padStart(2, "0")).join("");
+    const g = globalThis.crypto;
+    if (g?.getRandomValues) {
+        g.getRandomValues(arr);
+        return Array.from(arr, b => b.toString(16).padStart(2, "0")).join("");
+    }
+    try {
+        const { randomBytes } = await import("node:crypto");
+        return randomBytes(bytes).toString("hex");
+    } catch { throw new Error("Approval grants require cryptographic randomness."); }
 }

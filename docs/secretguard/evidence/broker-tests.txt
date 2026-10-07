@@ -1,0 +1,1186 @@
+TAP version 13
+# Subtest: Agent tool-call conversations through the broker (Claude Code / Cline / opencode)
+    # Subtest: Claude Code (Anthropic): assistant tool_use + user tool_result SURVIVE the broker
+    ok 1 - Claude Code (Anthropic): assistant tool_use + user tool_result SURVIVE the broker
+      ---
+      duration_ms: 1192.1008
+      type: 'test'
+      ...
+    # Subtest: Cline/opencode (OpenAI): assistant tool_calls with null content is NOT rejected
+    ok 2 - Cline/opencode (OpenAI): assistant tool_calls with null content is NOT rejected
+      ---
+      duration_ms: 391.3834
+      type: 'test'
+      ...
+    # Subtest: streaming responses with tool_calls pass through byte-for-byte
+    ok 3 - streaming responses with tool_calls pass through byte-for-byte
+      ---
+      duration_ms: 394.4827
+      type: 'test'
+      ...
+    1..3
+ok 1 - Agent tool-call conversations through the broker (Claude Code / Cline / opencode)
+  ---
+  duration_ms: 1983.6613
+  type: 'suite'
+  ...
+# Subtest: broker request framing policy
+    # Subtest: rejects duplicate length and encoding headers before stream consumption
+    ok 1 - rejects duplicate length and encoding headers before stream consumption
+      ---
+      duration_ms: 3.9845
+      type: 'test'
+      ...
+    # Subtest: rejects ambiguous transfer framing and unsafe declared lengths
+    ok 2 - rejects ambiguous transfer framing and unsafe declared lengths
+      ---
+      duration_ms: 0.9344
+      type: 'test'
+      ...
+    # Subtest: accepts an identity-encoded body within the declared limit
+    ok 3 - accepts an identity-encoded body within the declared limit
+      ---
+      duration_ms: 0.8409
+      type: 'test'
+      ...
+    1..3
+ok 2 - broker request framing policy
+  ---
+  duration_ms: 11.4809
+  type: 'suite'
+  ...
+# Subtest: Local AI Broker server
+    # Subtest: binds to 127.0.0.1 and exposes unauthenticated health only
+    ok 1 - binds to 127.0.0.1 and exposes unauthenticated health only
+      ---
+      duration_ms: 496.4101
+      type: 'test'
+      ...
+    # Subtest: rejects unauthenticated scans and accepts authenticated scans
+    ok 2 - rejects unauthenticated scans and accepts authenticated scans
+      ---
+      duration_ms: 615.1224
+      type: 'test'
+      ...
+    # Subtest: blocks a registered canary and never returns the token
+    ok 3 - blocks a registered canary and never returns the token
+      ---
+      duration_ms: 217.4081
+      type: 'test'
+      ...
+    # Subtest: enforces body limits, safe invalid JSON errors, and disabled CORS
+    ok 4 - enforces body limits, safe invalid JSON errors, and disabled CORS
+      ---
+      duration_ms: 51.2853
+      type: 'test'
+      ...
+    # Subtest: rejects compressed and declared-oversized bodies before JSON parsing
+    ok 5 - rejects compressed and declared-oversized bodies before JSON parsing
+      ---
+      duration_ms: 4498.9927
+      type: 'test'
+      ...
+    # Subtest: rejects invalid UTF-8 rather than replacing bytes before JSON parsing
+    ok 6 - rejects invalid UTF-8 rather than replacing bytes before JSON parsing
+      ---
+      duration_ms: 77.2639
+      type: 'test'
+      ...
+    # Subtest: survives a deterministic malformed-JSON fuzz corpus with bounded errors
+    ok 7 - survives a deterministic malformed-JSON fuzz corpus with bounded errors
+      ---
+      duration_ms: 2834.7815
+      type: 'test'
+      ...
+    # Subtest: rotates its local auth token
+    ok 8 - rotates its local auth token
+      ---
+      duration_ms: 271.6789
+      type: 'test'
+      ...
+    # Subtest: enables Safe Mode and returns its local rule set
+    ok 9 - enables Safe Mode and returns its local rule set
+      ---
+      duration_ms: 272.5645
+      type: 'test'
+      ...
+    # Subtest: stores and exports sanitized memory events
+    ok 10 - stores and exports sanitized memory events
+      ---
+      duration_ms: 83.1906
+      type: 'test'
+      ...
+    # Subtest: previews controlled terminal commands without executing them
+    ok 11 - previews controlled terminal commands without executing them
+      ---
+      duration_ms: 26.7329
+      type: 'test'
+      ...
+    # Subtest: does not execute denied controlled terminal commands
+    ok 12 - does not execute denied controlled terminal commands
+      ---
+      duration_ms: 15.2845
+      type: 'test'
+      ...
+    # Subtest: executes allowed controlled terminal commands through fixed argv only
+    ok 13 - executes allowed controlled terminal commands through fixed argv only
+      ---
+      duration_ms: 50.9857
+      type: 'test'
+      ...
+    # Subtest: redacts controlled terminal output before returning it
+    ok 14 - redacts controlled terminal output before returning it
+      ---
+      duration_ms: 947.3855
+      type: 'test'
+      ...
+    # Subtest: preflights runtime capabilities with honest unsupported warnings
+    ok 15 - preflights runtime capabilities with honest unsupported warnings
+      ---
+      duration_ms: 30.143
+      type: 'test'
+      ...
+    # Subtest: preflights file operations and denies realpath secret escapes
+    ok 16 - preflights file operations and denies realpath secret escapes
+      ---
+      duration_ms: 40.2337
+      type: 'test'
+      ...
+    # Subtest: preflights network egress and blocks metadata redirects with redacted payloads
+    ok 17 - preflights network egress and blocks metadata redirects with redacted payloads
+      ---
+      duration_ms: 32.3327
+      type: 'test'
+      ...
+    # Subtest: preflights MCP tools and denies prompt-injected metadata before invocation
+    ok 18 - preflights MCP tools and denies prompt-injected metadata before invocation
+      ---
+      duration_ms: 20.8471
+      type: 'test'
+      ...
+    # Subtest: preflights enterprise policy changes and blocks unsigned downgrades
+    ok 19 - preflights enterprise policy changes and blocks unsigned downgrades
+      ---
+      duration_ms: 111.3072
+      type: 'test'
+      ...
+    # Subtest: preflights process launches and denies shell/env-secret execution
+    ok 20 - preflights process launches and denies shell/env-secret execution
+      ---
+      duration_ms: 26.7858
+      type: 'test'
+      ...
+    # Subtest: preflights extension isolation and blocks risky non-allowlisted agents
+    ok 21 - preflights extension isolation and blocks risky non-allowlisted agents
+      ---
+      duration_ms: 19.9096
+      type: 'test'
+      ...
+    1..21
+ok 3 - Local AI Broker server
+  ---
+  duration_ms: 10746.958
+  type: 'suite'
+  ...
+# Subtest: OpenAI-compatible proxy
+    # Subtest: forwards a safe request to a mocked provider and scans the response
+    ok 1 - forwards a safe request to a mocked provider and scans the response
+      ---
+      duration_ms: 164.66
+      type: 'test'
+      ...
+    # Subtest: does not forward canary-bearing requests
+    ok 2 - does not forward canary-bearing requests
+      ---
+      duration_ms: 148.0591
+      type: 'test'
+      ...
+    # Subtest: blocks a mocked provider response that leaks a canary
+    ok 3 - blocks a mocked provider response that leaks a canary
+      ---
+      duration_ms: 152.3568
+      type: 'test'
+      ...
+    # Subtest: never logs a provider key
+    ok 4 - never logs a provider key
+      ---
+      duration_ms: 88.3566
+      type: 'test'
+      ...
+    # Subtest: turns OpenAI sensitive-word rejections into a stable sanitized safety error
+    ok 5 - turns OpenAI sensitive-word rejections into a stable sanitized safety error
+      ---
+      duration_ms: 163.5634
+      type: 'test'
+      ...
+    # Subtest: sanitizes the same provider safety rejection before streaming starts
+    ok 6 - sanitizes the same provider safety rejection before streaming starts
+      ---
+      duration_ms: 250.5374
+      type: 'test'
+      ...
+    # Subtest: flags a dangerous mocked provider response
+    ok 7 - flags a dangerous mocked provider response
+      ---
+      duration_ms: 121.0805
+      type: 'test'
+      ...
+    # Subtest: unlocks only the exact approved session and content hash
+    ok 8 - unlocks only the exact approved session and content hash
+      ---
+      duration_ms: 466.1928
+      type: 'test'
+      ...
+    1..8
+ok 4 - OpenAI-compatible proxy
+  ---
+  duration_ms: 1571.9227
+  type: 'suite'
+  ...
+# Subtest: Anthropic-compatible proxy
+    # Subtest: forwards and scans a mocked messages response
+    ok 1 - forwards and scans a mocked messages response
+      ---
+      duration_ms: 267.5825
+      type: 'test'
+      ...
+    1..1
+ok 5 - Anthropic-compatible proxy
+  ---
+  duration_ms: 277.7836
+  type: 'suite'
+  ...
+# Subtest: Phase 6 streaming proxy
+    # Subtest: extractStreamDelta collects OpenAI deltas and tool-call arguments
+    ok 1 - extractStreamDelta collects OpenAI deltas and tool-call arguments
+      ---
+      duration_ms: 173.2058
+      type: 'test'
+      ...
+    # Subtest: streams safe OpenAI SSE chunks to the client
+    ok 2 - streams safe OpenAI SSE chunks to the client
+      ---
+      duration_ms: 458.3341
+      type: 'test'
+      ...
+    # Subtest: aborts the stream when accumulated output leaks a canary
+    ok 3 - aborts the stream when accumulated output leaks a canary
+      ---
+      duration_ms: 74.5529
+      type: 'test'
+      ...
+    # Subtest: scans tool-call argument stream fragments for secrets
+    ok 4 - scans tool-call argument stream fragments for secrets
+      ---
+      duration_ms: 77.1275
+      type: 'test'
+      ...
+    # Subtest: does not start streaming when the request itself is blocked
+    ok 5 - does not start streaming when the request itself is blocked
+      ---
+      duration_ms: 75.1685
+      type: 'test'
+      ...
+    1..5
+ok 6 - Phase 6 streaming proxy
+  ---
+  duration_ms: 859.3199
+  type: 'suite'
+  ...
+# Subtest: Local AI Broker rate limiting
+    # Subtest: does not spend the request budget on the editor's own liveness polling
+    ok 1 - does not spend the request budget on the editor's own liveness polling
+      ---
+      duration_ms: 249.0492
+      type: 'test'
+      ...
+    # Subtest: still rate limits the endpoints that do work
+    ok 2 - still rate limits the endpoints that do work
+      ---
+      duration_ms: 241.0096
+      type: 'test'
+      ...
+    # Subtest: meters liveness on its own budget instead of exempting it
+    ok 3 - meters liveness on its own budget instead of exempting it
+      ---
+      duration_ms: 56.1594
+      type: 'test'
+      ...
+    # Subtest: keeps the two budgets independent, so exhausting one leaves the other usable
+    ok 4 - keeps the two budgets independent, so exhausting one leaves the other usable
+      ---
+      duration_ms: 348.1352
+      type: 'test'
+      ...
+    1..4
+ok 7 - Local AI Broker rate limiting
+  ---
+  duration_ms: 895.8596
+  type: 'suite'
+  ...
+# Subtest: Checkpoint rollback runtime enforcement
+    # Subtest: 1. creates a checkpoint that fingerprints real protected state without exposing it
+    ok 1 - 1. creates a checkpoint that fingerprints real protected state without exposing it
+      ---
+      duration_ms: 1527.6932
+      type: 'test'
+      ...
+    # Subtest: 2. rolls back a real filesystem change and restores exact bytes
+    ok 2 - 2. rolls back a real filesystem change and restores exact bytes
+      ---
+      duration_ms: 2155.1752
+      type: 'test'
+      ...
+    # Subtest: 3. rolls back after a partial failure, including deleting files created after the checkpoint
+    ok 3 - 3. rolls back after a partial failure, including deleting files created after the checkpoint
+      ---
+      duration_ms: 1968.4952
+      type: 'test'
+      ...
+    # Subtest: 4. refuses rollback for the wrong tenant
+    ok 4 - 4. refuses rollback for the wrong tenant
+      ---
+      duration_ms: 1420.5131
+      type: 'test'
+      ...
+    # Subtest: 5. refuses rollback for the wrong actor in the right tenant
+    ok 5 - 5. refuses rollback for the wrong actor in the right tenant
+      ---
+      duration_ms: 1164.1879
+      type: 'test'
+      ...
+    # Subtest: 6. refuses an expired checkpoint and requires compensating review
+    ok 6 - 6. refuses an expired checkpoint and requires compensating review
+      ---
+      duration_ms: 855.9883
+      type: 'test'
+      ...
+    # Subtest: 7. refuses a tampered checkpoint record before checking ownership
+    ok 7 - 7. refuses a tampered checkpoint record before checking ownership
+      ---
+      duration_ms: 487.5667
+      type: 'test'
+      ...
+    # Subtest: 8. serializes concurrent rollback requests so state is restored exactly once
+    ok 8 - 8. serializes concurrent rollback requests so state is restored exactly once
+      ---
+      duration_ms: 407.8089
+      type: 'test'
+      ...
+    # Subtest: 9. is idempotent: a repeated rollback does not restore again
+    ok 9 - 9. is idempotent: a repeated rollback does not restore again
+      ---
+      duration_ms: 870.7058
+      type: 'test'
+      ...
+    # Subtest: 10. reports a rollback failure honestly instead of claiming restoration
+    ok 10 - 10. reports a rollback failure honestly instead of claiming restoration
+      ---
+      duration_ms: 520.1691
+      type: 'test'
+      ...
+    # Subtest: 11. classifies compensating-action-only when exact restoration is impossible
+    ok 11 - 11. classifies compensating-action-only when exact restoration is impossible
+      ---
+      duration_ms: 549.8054
+      type: 'test'
+      ...
+    # Subtest: 12. never records raw protected state, paths, or secrets in evidence or logs
+    ok 12 - 12. never records raw protected state, paths, or secrets in evidence or logs
+      ---
+      duration_ms: 210.0411
+      type: 'test'
+      ...
+    # Subtest: rejects protected paths that escape the isolation root
+    ok 13 - rejects protected paths that escape the isolation root
+      ---
+      duration_ms: 116.4649
+      type: 'test'
+      ...
+    # Subtest: requires a canonical tenant and actor, and 501s when checkpointing is not configured
+    ok 14 - requires a canonical tenant and actor, and 501s when checkpointing is not configured
+      ---
+      duration_ms: 100.7947
+      type: 'test'
+      ...
+    # Subtest: rejects unauthenticated checkpoint requests
+    ok 15 - rejects unauthenticated checkpoint requests
+      ---
+      duration_ms: 117.5149
+      type: 'test'
+      ...
+    # Subtest: refuses a snapshot root inside the protected root and a weak integrity secret
+    ok 16 - refuses a snapshot root inside the protected root and a weak integrity secret
+      ---
+      duration_ms: 36.5232
+      type: 'test'
+      ...
+    1..16
+ok 8 - Checkpoint rollback runtime enforcement
+  ---
+  duration_ms: 12643.132
+  type: 'suite'
+  ...
+# Subtest: hook blocks real credential formats
+    # Subtest: blocks OpenAI (classic)
+    ok 1 - blocks OpenAI (classic)
+      ---
+      duration_ms: 287.4662
+      type: 'test'
+      ...
+    # Subtest: blocks OpenAI (project)
+    ok 2 - blocks OpenAI (project)
+      ---
+      duration_ms: 22.2556
+      type: 'test'
+      ...
+    # Subtest: blocks Anthropic
+    ok 3 - blocks Anthropic
+      ---
+      duration_ms: 104.1164
+      type: 'test'
+      ...
+    # Subtest: blocks Google Gemini
+    ok 4 - blocks Google Gemini
+      ---
+      duration_ms: 128.9454
+      type: 'test'
+      ...
+    # Subtest: blocks Groq
+    ok 5 - blocks Groq
+      ---
+      duration_ms: 11.8358
+      type: 'test'
+      ...
+    # Subtest: blocks DeepSeek
+    ok 6 - blocks DeepSeek
+      ---
+      duration_ms: 15.4057
+      type: 'test'
+      ...
+    # Subtest: blocks AWS secret access key
+    ok 7 - blocks AWS secret access key
+      ---
+      duration_ms: 90.3605
+      type: 'test'
+      ...
+    # Subtest: blocks Azure storage
+    ok 8 - blocks Azure storage
+      ---
+      duration_ms: 182.5406
+      type: 'test'
+      ...
+    # Subtest: blocks Twilio auth token
+    ok 9 - blocks Twilio auth token
+      ---
+      duration_ms: 93.2842
+      type: 'test'
+      ...
+    # Subtest: blocks GitLab CI job token
+    ok 10 - blocks GitLab CI job token
+      ---
+      duration_ms: 124.9149
+      type: 'test'
+      ...
+    # Subtest: blocks Slack webhook
+    ok 11 - blocks Slack webhook
+      ---
+      duration_ms: 60.2766
+      type: 'test'
+      ...
+    # Subtest: blocks Heroku-shaped UUID
+    ok 12 - blocks Heroku-shaped UUID
+      ---
+      duration_ms: 43.0209
+      type: 'test'
+      ...
+    # Subtest: blocks GitHub PAT
+    ok 13 - blocks GitHub PAT
+      ---
+      duration_ms: 44.7796
+      type: 'test'
+      ...
+    # Subtest: blocks Stripe live
+    ok 14 - blocks Stripe live
+      ---
+      duration_ms: 129.5677
+      type: 'test'
+      ...
+    # Subtest: blocks Bare sk- (no vendor marker)
+    ok 15 - blocks Bare sk- (no vendor marker)
+      ---
+      duration_ms: 220.0087
+      type: 'test'
+      ...
+    # Subtest: blocks Unknown vendor opaque
+    ok 16 - blocks Unknown vendor opaque
+      ---
+      duration_ms: 24.3822
+      type: 'test'
+      ...
+    # Subtest: blocks a connection-string password (single segment)
+    ok 17 - blocks a connection-string password (single segment)
+      ---
+      duration_ms: 179.2364
+      type: 'test'
+      ...
+    # Subtest: blocks a connection-string password (Pwd alias)
+    ok 18 - blocks a connection-string password (Pwd alias)
+      ---
+      duration_ms: 165.7778
+      type: 'test'
+      ...
+    # Subtest: blocks a connection-string password (SQL Server / .NET)
+    ok 19 - blocks a connection-string password (SQL Server / .NET)
+      ---
+      duration_ms: 249.3476
+      type: 'test'
+      ...
+    # Subtest: blocks a connection-string password (ADO.NET Data Source)
+    ok 20 - blocks a connection-string password (ADO.NET Data Source)
+      ---
+      duration_ms: 240.1006
+      type: 'test'
+      ...
+    # Subtest: blocks a connection-string password (Npgsql / ODBC Host=)
+    ok 21 - blocks a connection-string password (Npgsql / ODBC Host=)
+      ---
+      duration_ms: 202.9956
+      type: 'test'
+      ...
+    # Subtest: does not block ordinary files that merely mention credentials
+    ok 22 - does not block ordinary files that merely mention credentials
+      ---
+      duration_ms: 1195.2048
+      type: 'test'
+      ...
+    1..22
+ok 9 - hook blocks real credential formats
+  ---
+  duration_ms: 3881.1915
+  type: 'suite'
+  ...
+# Subtest: REAL wire-level egress protection (Cline/Claude Code paths)
+    # Subtest: Cline-style OpenAI request: no raw secret reaches the provider
+    ok 1 - Cline-style OpenAI request: no raw secret reaches the provider
+      ---
+      duration_ms: 866.9657
+      type: 'test'
+      ...
+    # Subtest: Claude Code-style Anthropic request: no raw secret reaches the provider
+    ok 2 - Claude Code-style Anthropic request: no raw secret reaches the provider
+      ---
+      duration_ms: 376.1644
+      type: 'test'
+      ...
+    # Subtest: if forwarded, secret values are replaced with redaction markers (not just removed)
+    ok 3 - if forwarded, secret values are replaced with redaction markers (not just removed)
+      ---
+      duration_ms: 507.8615
+      type: 'test'
+      ...
+    # Subtest: a clean prompt forwards untouched and returns a real provider reply
+    ok 4 - a clean prompt forwards untouched and returns a real provider reply
+      ---
+      duration_ms: 900.7958
+      type: 'test'
+      ...
+    # Subtest: Safe Mode on top of redaction: strict mode blocks database-URL secrets outright
+    ok 5 - Safe Mode on top of redaction: strict mode blocks database-URL secrets outright
+      ---
+      duration_ms: 489.7506
+      type: 'test'
+      ...
+#   · documented limitation confirmed: bare password word in prose forwarded (decision=allow)
+    # Subtest: honest limitation, documented: a bare ambiguous word in prose is NOT treated as a secret
+    ok 6 - honest limitation, documented: a bare ambiguous word in prose is NOT treated as a secret
+      ---
+      duration_ms: 1059.3252
+      type: 'test'
+      ...
+    # Subtest: egress preflight: asking the broker about a payload never sends it to the destination
+    ok 7 - egress preflight: asking the broker about a payload never sends it to the destination
+      ---
+      duration_ms: 44.1786
+      type: 'test'
+      ...
+    # Subtest: a canary planted in the codebase is caught on the wire, not just in logs
+    ok 8 - a canary planted in the codebase is caught on the wire, not just in logs
+      ---
+      duration_ms: 1871.0393
+      type: 'test'
+      ...
+    1..8
+ok 10 - REAL wire-level egress protection (Cline/Claude Code paths)
+  ---
+  duration_ms: 6122.8559
+  type: 'suite'
+  ...
+# Subtest: Round 8 Patches: Model Allowlist, Rate Limits, Route Aliases, and Secret Scanning
+    # Subtest: P1: Model allowlist enforcement
+        # Subtest: rejects unapproved models with 403 model_not_permitted before upstream call when SOTERAI_ALLOWED_MODELS is set
+        ok 1 - rejects unapproved models with 403 model_not_permitted before upstream call when SOTERAI_ALLOWED_MODELS is set
+          ---
+          duration_ms: 1717.8927
+          type: 'test'
+          ...
+        # Subtest: permits any model and emits startup warning when allowedModels is unset
+        ok 2 - permits any model and emits startup warning when allowedModels is unset
+          ---
+          duration_ms: 991.3711
+          type: 'test'
+          ...
+        1..2
+    ok 1 - P1: Model allowlist enforcement
+      ---
+      duration_ms: 2714.3069
+      type: 'suite'
+      ...
+    # Subtest: P2: Rate limit and rolling body size cap
+        # Subtest: throttles with 429 rate_limited after 10 requests when rateLimitPerMinute=10
+        ok 1 - throttles with 429 rate_limited after 10 requests when rateLimitPerMinute=10
+          ---
+          duration_ms: 3686.0693
+          type: 'test'
+          ...
+        # Subtest: throttles with 429 bandwidth_limit_exceeded when rollingBodyBytesPerMinute is reached
+        ok 2 - throttles with 429 bandwidth_limit_exceeded when rollingBodyBytesPerMinute is reached
+          ---
+          duration_ms: 539.912
+          type: 'test'
+          ...
+        1..2
+    ok 2 - P2: Rate limit and rolling body size cap
+      ---
+      duration_ms: 4227.2142
+      type: 'suite'
+      ...
+    # Subtest: P3: Standard SDK route aliases and endpoint controls
+        # Subtest: maps POST /v1/chat/completions and POST /v1/messages to existing handlers
+        ok 1 - maps POST /v1/chat/completions and POST /v1/messages to existing handlers
+          ---
+          duration_ms: 874.7598
+          type: 'test'
+          ...
+        # Subtest: denies /v1/files and /v1/models with 403 endpoint_not_permitted
+        ok 2 - denies /v1/files and /v1/models with 403 endpoint_not_permitted
+          ---
+          duration_ms: 264.3284
+          type: 'test'
+          ...
+        # Subtest: enforces authentication on route aliases
+        ok 3 - enforces authentication on route aliases
+          ---
+          duration_ms: 50.9015
+          type: 'test'
+          ...
+        1..3
+    ok 3 - P3: Standard SDK route aliases and endpoint controls
+      ---
+      duration_ms: 1191.7342
+      type: 'suite'
+      ...
+    # Subtest: P4: Cross-message secret scanning
+        # Subtest: redacts a plain secret in a single message
+        ok 1 - redacts a plain secret in a single message
+          ---
+          duration_ms: 108.1665
+          type: 'test'
+          ...
+        # Subtest: detects a key split across two messages and flags approval_required
+        ok 2 - detects a key split across two messages and flags approval_required
+          ---
+          duration_ms: 386.3382
+          type: 'test'
+          ...
+        # Subtest: detects a base64-encoded key split across two messages
+        ok 3 - detects a base64-encoded key split across two messages
+          ---
+          duration_ms: 186.754
+          type: 'test'
+          ...
+        # Subtest: produces zero false positives on normal long text
+        ok 4 - produces zero false positives on normal long text
+          ---
+          duration_ms: 99.9263
+          type: 'test'
+          ...
+        # Subtest: scans large input (50KB) fast without hanging
+        ok 5 - scans large input (50KB) fast without hanging
+          ---
+          duration_ms: 145.7862
+          type: 'test'
+          ...
+        1..5
+    ok 4 - P4: Cross-message secret scanning
+      ---
+      duration_ms: 941.608
+      type: 'suite'
+      ...
+    # Subtest: P5: Extended secret formats detection
+        # Subtest: detects fake OpenAI-style key (sk-proj-...)
+        ok 1 - detects fake OpenAI-style key (sk-proj-...)
+          ---
+          duration_ms: 59.6164
+          type: 'test'
+          ...
+        # Subtest: detects fake Stripe-style key (sk_live_...)
+        ok 2 - detects fake Stripe-style key (sk_live_...)
+          ---
+          duration_ms: 48.2451
+          type: 'test'
+          ...
+        # Subtest: detects fake PEM private key block
+        ok 3 - detects fake PEM private key block
+          ---
+          duration_ms: 92.8651
+          type: 'test'
+          ...
+        # Subtest: detects pasted .env key-value block
+        ok 4 - detects pasted .env key-value block
+          ---
+          duration_ms: 56.8546
+          type: 'test'
+          ...
+        1..4
+    ok 5 - P5: Extended secret formats detection
+      ---
+      duration_ms: 258.5186
+      type: 'suite'
+      ...
+    1..5
+ok 11 - Round 8 Patches: Model Allowlist, Rate Limits, Route Aliases, and Secret Scanning
+  ---
+  duration_ms: 9336.9299
+  type: 'suite'
+  ...
+# Subtest: Round 9: Host Binding, Control/Data Plane Split, Rolling Bucket & Auth Headers
+    # Subtest: R1: BROKER_HOST and host binding controls
+        # Subtest: default stays 127.0.0.1 and has literal value
+        ok 1 - default stays 127.0.0.1 and has literal value
+          ---
+          duration_ms: 6.3796
+          type: 'test'
+          ...
+        # Subtest: host env alone is ignored without SOTERAI_BROKER_ALLOW_NON_LOOPBACK=1
+        ok 2 - host env alone is ignored without SOTERAI_BROKER_ALLOW_NON_LOOPBACK=1
+          ---
+          duration_ms: 0.7345
+          type: 'test'
+          ...
+        # Subtest: both SOTERAI_BROKER_ALLOW_NON_LOOPBACK=1 and SOTERAI_BROKER_HOST set works
+        ok 3 - both SOTERAI_BROKER_ALLOW_NON_LOOPBACK=1 and SOTERAI_BROKER_HOST set works
+          ---
+          duration_ms: 0.5021
+          type: 'test'
+          ...
+        # Subtest: rejects invalid host syntax when allow non-loopback is set
+        ok 4 - rejects invalid host syntax when allow non-loopback is set
+          ---
+          duration_ms: 1.5631
+          type: 'test'
+          ...
+        # Subtest: isLoopbackHost correctly identifies loopback hosts
+        ok 5 - isLoopbackHost correctly identifies loopback hosts
+          ---
+          duration_ms: 0.9461
+          type: 'test'
+          ...
+        1..5
+    ok 1 - R1: BROKER_HOST and host binding controls
+      ---
+      duration_ms: 15.2253
+      type: 'suite'
+      ...
+    # Subtest: R2: Control/data-plane split and admin token enforcement
+        # Subtest: isSensitiveRoute flags all sensitive management and policy routes
+        ok 1 - isSensitiveRoute flags all sensitive management and policy routes
+          ---
+          duration_ms: 7.0701
+          type: 'test'
+          ...
+        # Subtest: admin token set: data token gets 403 admin_token_required on sensitive routes
+        ok 2 - admin token set: data token gets 403 admin_token_required on sensitive routes
+          ---
+          duration_ms: 2846.8134
+          type: 'test'
+          ...
+        # Subtest: admin token set: admin token successfully executes sensitive routes
+        ok 3 - admin token set: admin token successfully executes sensitive routes
+          ---
+          duration_ms: 33.8121
+          type: 'test'
+          ...
+        # Subtest: admin token set: proves data token CANNOT approve a blocked request
+        ok 4 - admin token set: proves data token CANNOT approve a blocked request
+          ---
+          duration_ms: 352.3226
+          type: 'test'
+          ...
+        # Subtest: backward compat: admin token unset AND loopback bind preserves current behavior
+        ok 5 - backward compat: admin token unset AND loopback bind preserves current behavior
+          ---
+          duration_ms: 177.6373
+          type: 'test'
+          ...
+        # Subtest: non-loopback bind without admin token: sensitive routes are DISABLED with 403
+        ok 6 - non-loopback bind without admin token: sensitive routes are DISABLED with 403
+          ---
+          duration_ms: 82.5389
+          type: 'test'
+          ...
+        1..6
+    ok 2 - R2: Control/data-plane split and admin token enforcement
+      ---
+      duration_ms: 3502.3868
+      type: 'suite'
+      ...
+    # Subtest: R5: Rolling-byte bucket checks first request
+        # Subtest: throttles immediately on the FIRST request if request body exceeds rollingBodyBytesPerMinute
+        ok 1 - throttles immediately on the FIRST request if request body exceeds rollingBodyBytesPerMinute
+          ---
+          duration_ms: 114.0115
+          type: 'test'
+          ...
+        1..1
+    ok 3 - R5: Rolling-byte bucket checks first request
+      ---
+      duration_ms: 114.4408
+      type: 'suite'
+      ...
+    # Subtest: R6: Auth header support via x-api-key
+        # Subtest: accepts broker token via x-api-key header for standard SDK compatibility
+        ok 1 - accepts broker token via x-api-key header for standard SDK compatibility
+          ---
+          duration_ms: 538.4082
+          type: 'test'
+          ...
+        1..1
+    ok 4 - R6: Auth header support via x-api-key
+      ---
+      duration_ms: 538.7816
+      type: 'suite'
+      ...
+    # Subtest: T4: Control plane hardening, admin token validation & terminal execute
+        # Subtest: validates admin token: >=32 chars and must differ from data token
+        ok 1 - validates admin token: >=32 chars and must differ from data token
+          ---
+          duration_ms: 1.8964
+          type: 'test'
+          ...
+        # Subtest: moves memory session, events, and GET approvals behind admin token
+        ok 2 - moves memory session, events, and GET approvals behind admin token
+          ---
+          duration_ms: 53.8236
+          type: 'test'
+          ...
+        # Subtest: terminal execute is disabled by default even with admin token
+        ok 3 - terminal execute is disabled by default even with admin token
+          ---
+          duration_ms: 529.7536
+          type: 'test'
+          ...
+        # Subtest: terminal execute runs when enableTerminalExecute=true AND admin token configured
+        ok 4 - terminal execute runs when enableTerminalExecute=true AND admin token configured
+          ---
+          duration_ms: 1353.4053
+          type: 'test'
+          ...
+        1..4
+    ok 5 - T4: Control plane hardening, admin token validation & terminal execute
+      ---
+      duration_ms: 1939.6561
+      type: 'suite'
+      ...
+    # Subtest: S5: Explicit Data-Plane Allowlist and Token Comparison
+        # Subtest: enumerates all registered routes and fails if any route is unclassified
+        ok 1 - enumerates all registered routes and fails if any route is unclassified
+          ---
+          duration_ms: 0.9789
+          type: 'test'
+          ...
+        # Subtest: safeTimingEqual validates token equality in constant time
+        ok 2 - safeTimingEqual validates token equality in constant time
+          ---
+          duration_ms: 0.8719
+          type: 'test'
+          ...
+        1..2
+    ok 6 - S5: Explicit Data-Plane Allowlist and Token Comparison
+      ---
+      duration_ms: 3.0778
+      type: 'suite'
+      ...
+    # Subtest: S6: Terminal Execution hardening with git flags and fixed cwd
+        # Subtest: invokes git with -c core.fsmonitor=false and -c core.hooksPath= and fixed cwd
+        ok 1 - invokes git with -c core.fsmonitor=false and -c core.hooksPath= and fixed cwd
+          ---
+          duration_ms: 279.8867
+          type: 'test'
+          ...
+        1..1
+    ok 7 - S6: Terminal Execution hardening with git flags and fixed cwd
+      ---
+      duration_ms: 280.3934
+      type: 'suite'
+      ...
+    # Subtest: S7: Broker CLI stdin token ingestion and validation
+        # Subtest: parses tokens from JSON payload on stdin
+        ok 1 - parses tokens from JSON payload on stdin
+          ---
+          duration_ms: 0.7594
+          type: 'test'
+          ...
+        # Subtest: parses raw single token when only one stdin flag is set
+        ok 2 - parses raw single token when only one stdin flag is set
+          ---
+          duration_ms: 0.5198
+          type: 'test'
+          ...
+        # Subtest: resolveStartupTokens succeeds with valid stdin JSON payload
+        ok 3 - resolveStartupTokens succeeds with valid stdin JSON payload
+          ---
+          duration_ms: 1.7812
+          type: 'test'
+          ...
+        # Subtest: resolveStartupTokens fails closed if flag is set but token is missing
+        ok 4 - resolveStartupTokens fails closed if flag is set but token is missing
+          ---
+          duration_ms: 1.243
+          type: 'test'
+          ...
+        # Subtest: resolveStartupTokens enforces token length and distinctness
+        ok 5 - resolveStartupTokens enforces token length and distinctness
+          ---
+          duration_ms: 1.1896
+          type: 'test'
+          ...
+        1..5
+    ok 8 - S7: Broker CLI stdin token ingestion and validation
+      ---
+      duration_ms: 6.0905
+      type: 'suite'
+      ...
+    # Subtest: Round 12: Approvals, Terminal Hardening & Anthropic SDK
+        # Subtest: V2: a block decision with a valid approval for the same hash must stay 422
+        ok 1 - V2: a block decision with a valid approval for the same hash must stay 422
+          ---
+          duration_ms: 707.738
+          type: 'test'
+          ...
+        # Subtest: V2: redact_and_allow and admin-approve with zero-width, %XX and URL-safe-base64 keys -> grep mock log for ALL forms
+        ok 2 - V2: redact_and_allow and admin-approve with zero-width, %XX and URL-safe-base64 keys -> grep mock log for ALL forms
+          ---
+          duration_ms: 1600.7236
+          type: 'test'
+          ...
+        # Subtest: V4: terminal execution in temp git repo with fsmonitor and diff.external ignores malicious configs and leaves NO marker files
+        ok 3 - V4: terminal execution in temp git repo with fsmonitor and diff.external ignores malicious configs and leaves NO marker files
+          ---
+          duration_ms: 4857.674
+          type: 'test'
+          ...
+        # Subtest: V6: Anthropic route e2e with the real @anthropic-ai/sdk (x-api-key)
+        ok 4 - V6: Anthropic route e2e with the real @anthropic-ai/sdk (x-api-key)
+          ---
+          duration_ms: 2958.1332
+          type: 'test'
+          ...
+        1..4
+    ok 9 - Round 12: Approvals, Terminal Hardening & Anthropic SDK
+      ---
+      duration_ms: 10128.4522
+      type: 'suite'
+      ...
+    # Subtest: Round 13: Hardening Validations (W1 - W7)
+        # Subtest: W1: BrokerServer passes FULL body to scanner (HTTP level: tools, arguments, metadata, user, object key -> mock log empty)
+        ok 1 - W1: BrokerServer passes FULL body to scanner (HTTP level: tools, arguments, metadata, user, object key -> mock log empty)
+          ---
+          duration_ms: 183.8927
+          type: 'test'
+          ...
+        # Subtest: W2: contentHash covers canonical full body (stable key order) -> approved body A cannot replay with secret in tools/metadata
+        ok 2 - W2: contentHash covers canonical full body (stable key order) -> approved body A cannot replay with secret in tools/metadata
+          ---
+          duration_ms: 68.2332
+          type: 'test'
+          ...
+        # Subtest: W3 / X3: apply redaction to entire forwarded body (messages AND tools) for redact_and_allow and redact, plus secret only in object key
+        ok 3 - W3 / X3: apply redaction to entire forwarded body (messages AND tools) for redact_and_allow and redact, plus secret only in object key
+          ---
+          duration_ms: 211.4354
+          type: 'test'
+          ...
+        # Subtest: W4: outcome: 'deny' -> request stays blocked and nothing reaches mock
+        ok 4 - W4: outcome: 'deny' -> request stays blocked and nothing reaches mock
+          ---
+          duration_ms: 88.9771
+          type: 'test'
+          ...
+        # Subtest: W5: 600KB benign body -> 403 approval_required with proper code
+        ok 5 - W5: 600KB benign body -> 403 approval_required with proper code
+          ---
+          duration_ms: 1289.381
+          type: 'test'
+          ...
+        # Subtest: W6 / X2: terminal security real-git tests with positive controls (diff --output, diff --textconv, show/log -p textconv, filter in subdir and .git/info/attributes)
+        ok 6 - W6 / X2: terminal security real-git tests with positive controls (diff --output, diff --textconv, show/log -p textconv, filter in subdir and .git/info/attributes)
+          ---
+          duration_ms: 17054.5401
+          type: 'test'
+          ...
+        # Subtest: W7: data-URL inspection (real PNG allowed, text secret labelled data:image/png blocked)
+        ok 7 - W7: data-URL inspection (real PNG allowed, text secret labelled data:image/png blocked)
+          ---
+          duration_ms: 55.2212
+          type: 'test'
+          ...
+        # Subtest: A5: broker-level test with real ~300KB PNG data-URL (reports decision)
+        ok 8 - A5: broker-level test with real ~300KB PNG data-URL (reports decision)
+          ---
+          duration_ms: 661.9491
+          type: 'test'
+          ...
+        1..8
+    ok 10 - Round 13: Hardening Validations (W1 - W7)
+      ---
+      duration_ms: 19615.3566
+      type: 'suite'
+      ...
+    1..10
+ok 12 - Round 9: Host Binding, Control/Data Plane Split, Rolling Bucket & Auth Headers
+  ---
+  duration_ms: 36170.5556
+  type: 'suite'
+  ...
+# Subtest: high-risk secret class vocabulary
+    # Subtest: the protocol mirror matches guard-core exactly
+    ok 1 - the protocol mirror matches guard-core exactly
+      ---
+      duration_ms: 4.3316
+      type: 'test'
+      ...
+    # Subtest: the mirrored names are the ones findSurvivingSecrets actually returns
+    ok 2 - the mirrored names are the ones findSurvivingSecrets actually returns
+      ---
+      duration_ms: 3.9538
+      type: 'test'
+      ...
+    1..2
+ok 13 - high-risk secret class vocabulary
+  ---
+  duration_ms: 11.582
+  type: 'suite'
+  ...
+#   · detected 28 finding(s) across 9 categories, decision=approval_required, risk=100
+# Subtest: Real .env secret detection (the vibe-coding risk)
+    # Subtest: flags every real secret format in a production .env
+    ok 1 - flags every real secret format in a production .env
+      ---
+      duration_ms: 151.0072
+      type: 'test'
+      ...
+#   · redacted copy contains zero raw secret values
+    # Subtest: redacts every detected secret from the shareable copy
+    ok 2 - redacts every detected secret from the shareable copy
+      ---
+      duration_ms: 164.0337
+      type: 'test'
+      ...
+#   · clean file: decision=allow, risk=0
+#   · obfuscation variants produced: raw, unicode-folded, leet-decoded, reversed
+    # Subtest: does not cry wolf over a clean code file
+    ok 3 - does not cry wolf over a clean code file
+      ---
+      duration_ms: 239.4056
+      type: 'test'
+      ...
+    # Subtest: obfuscation-resistant layer: smuggled secrets ARE recovered (zero-width / spacing / leet / base64)
+    ok 4 - obfuscation-resistant layer: smuggled secrets ARE recovered (zero-width / spacing / leet / base64)
+      ---
+      duration_ms: 3.8067
+      type: 'test'
+      ...
+#   · concatenation-split key: risk=0, decision=allow (documented gap — fragments do not match key regexes)
+    # Subtest: honest limitation, documented: concatenation-split keys are outside current obfuscation variants
+    ok 5 - honest limitation, documented: concatenation-split keys are outside current obfuscation variants
+      ---
+      duration_ms: 4.9087
+      type: 'test'
+      ...
+    1..5
+ok 14 - Real .env secret detection (the vibe-coding risk)
+  ---
+  duration_ms: 567.8905
+  type: 'suite'
+  ...
+# Subtest: Wire egress invariant: no raw secret may leave the broker
+    # Subtest: Anthropic: a secret in `system` must not reach the provider
+    ok 1 - Anthropic: a secret in `system` must not reach the provider
+      ---
+      duration_ms: 724.3733
+      type: 'test'
+      ...
+    # Subtest: Anthropic streaming: a secret in `system` must not reach the provider
+    ok 2 - Anthropic streaming: a secret in `system` must not reach the provider
+      ---
+      duration_ms: 253.7752
+      type: 'test'
+      ...
+    # Subtest: OpenAI: a secret in tool_calls[].function.arguments must not reach the provider
+    ok 3 - OpenAI: a secret in tool_calls[].function.arguments must not reach the provider
+      ---
+      duration_ms: 99.0986
+      type: 'test'
+      ...
+    # Subtest: A secret in an unscanned passthrough field is BLOCKED at the wire
+    ok 4 - A secret in an unscanned passthrough field is BLOCKED at the wire
+      ---
+      duration_ms: 57.9625
+      type: 'test'
+      ...
+    # Subtest: The egress guard is wired on the OpenAI route too, not just Anthropic
+    ok 5 - The egress guard is wired on the OpenAI route too, not just Anthropic
+      ---
+      duration_ms: 89.5929
+      type: 'test'
+      ...
+    # Subtest: HONESTY: whenever the response says `redact`, the wire must actually be redacted
+    ok 6 - HONESTY: whenever the response says `redact`, the wire must actually be redacted
+      ---
+      duration_ms: 96.5714
+      type: 'test'
+      ...
+    # Subtest: CONTROL: a clean request still reaches the provider unchanged
+    ok 7 - CONTROL: a clean request still reaches the provider unchanged
+      ---
+      duration_ms: 190.2908
+      type: 'test'
+      ...
+    # Subtest: Egress guard directly: throws 422 egress_secret_blocked with survivingSecretClasses when secrets exist in tools, metadata, or keys
+    ok 8 - Egress guard directly: throws 422 egress_secret_blocked with survivingSecretClasses when secrets exist in tools, metadata, or keys
+      ---
+      duration_ms: 5.167
+      type: 'test'
+      ...
+    # Subtest: Z6: admin approve of a plain AWS key forwards raw (egress skipped for approved hash) whereas unapproved stays blocked 403/422
+    ok 9 - Z6: admin approve of a plain AWS key forwards raw (egress skipped for approved hash) whereas unapproved stays blocked 403/422
+      ---
+      duration_ms: 346.8935
+      type: 'test'
+      ...
+    1..9
+ok 15 - Wire egress invariant: no raw secret may leave the broker
+  ---
+  duration_ms: 1872.7839
+  type: 'suite'
+  ...
+1..15
+# tests 160
+# suites 30
+# pass 160
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 46537.8722

@@ -612,9 +612,10 @@ describe("Phase 6 streaming proxy", () => {
                 });
                 const text = await response.text();
                 assert.equal(response.status, 200);
-                // Canary must never appear assembled in the client-visible body after block.
-                // Partial first half may already have been flushed (honest residual risk).
+                // Neither assembled canary nor an earlier prefix may reach the client.
                 assert.equal(text.includes(canary.token), false);
+                assert.equal(text.includes(part1), false);
+                assert.equal(text.includes(part2), false);
                 assert.match(text, /unsafe_provider_response|Stream aborted/);
             },
         );

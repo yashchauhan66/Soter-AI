@@ -126,15 +126,24 @@ export class HashCache {
 /** Exact UTF-8 identity for security decisions and approvals. No weak fallback. */
 export async function hashExactContent(text: string): Promise<string> {
     const subtle = globalThis.crypto?.subtle;
-    if (!subtle) throw new Error("Security decisions require WebCrypto SHA-256.");
-    const digest = await subtle.digest("SHA-256", new TextEncoder().encode(text));
-    return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, "0")).join("");
+    if (subtle) {
+        const digest = await subtle.digest("SHA-256", new TextEncoder().encode(text));
+        return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, "0")).join("");
+    }
+    // Same provider fallback as Ledger.ts for the VS Code 1.85 / Node 18 floor.
+    try {
+        const { createHash } = await import("node:crypto");
+        return createHash("sha256").update(text, "utf8").digest("hex");
+    } catch {
+        throw new Error("Security decisions require cryptographic SHA-256.");
+    }
 }
 
 /**
  * Legacy normalized fingerprint for existing vault/canary metadata only.
  * Do not use for authorization or cached decisions; use hashExactContent.
- * Uses Web Crypto API (available in Node 18+ and VS Code).
+ * Preserves existing fingerprints, including the historical non-WebCrypto fallback.
+ * Never use this legacy function as an authorization or decision-cache identity.
  */
 export async function hashContent(text: string): Promise<string> {
     const normalized = text.replace(/\s+/g, " ").trim().toLowerCase();

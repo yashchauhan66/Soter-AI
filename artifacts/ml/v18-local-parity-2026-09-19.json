@@ -1,0 +1,42 @@
+{
+  "verified_at_utc": "2026-09-19T12:03:52.336349+00:00",
+  "verification": "Local CPU ONNX/PyTorch parity, using weights_only=True and offline tokenizer/config",
+  "model_sha256": "ecf9e1d2e957da6ba72b714a0fc0c8f8d566b48588c0257dfd8a309e4020fba5",
+  "parity": {
+    "verified": true,
+    "tolerance": 0.001,
+    "worst_max_abs_logit_diff": 2.1457672119140625e-06,
+    "cases": [
+      {
+        "case": "batch1_padded",
+        "shape": [
+          1,
+          14
+        ],
+        "seq_len": 256,
+        "max_abs_logit_diff": 9.5367431640625e-07
+      },
+      {
+        "case": "batch3_padded",
+        "shape": [
+          3,
+          14
+        ],
+        "seq_len": 256,
+        "max_abs_logit_diff": 1.6689300537109375e-06
+      },
+      {
+        "case": "batch2_dynamic_len",
+        "shape": [
+          2,
+          14
+        ],
+        "seq_len": 13,
+        "max_abs_logit_diff": 2.1457672119140625e-06
+      }
+    ],
+    "passed": true
+  },
+  "parameters": 51810575,
+  "torch": "2.12.1+cpu"
+}

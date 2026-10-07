@@ -100,7 +100,7 @@ export function parseManualRules(raw: unknown): ManualRules {
     return structuredClone(source);
 }
 
-/** Offsets apply only to the exact document. Any edit blocks the whole file until re-marked. */
+/** Offsets apply only to the exact document. Any edit blocks the whole file until stale rules are explicitly reviewed. */
 export function redactRegions(input: string, text: string, regions: ProtectedRegion[], start = 0, end = text.length): string {
     const matching = regions.filter(region => relativePath(region.path) === relativePath(input));
     if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start < 0 || end < start || end > text.length) return OMITTED;

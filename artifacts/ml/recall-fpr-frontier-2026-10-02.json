@@ -1,0 +1,6345 @@
+{
+  "generatedAt": "2026-10-02T12:40:19.578Z",
+  "file": "artifacts/ml/v18-balanced-comparison-rows.jsonl",
+  "rows": 4000,
+  "attacks": 2000,
+  "benign": 2000,
+  "aucRaw": 0.9513,
+  "rulesOnly": {
+    "fprPct": 13.05,
+    "recallPct": 43.7
+  },
+  "systemFprFloorPct": 13.05,
+  "mlOnlyUpperBound": {
+    "note": "Pure threshold on P(attack). Ignores the INPUT label gate (8 of 13 labels admitted), the abstain path and the precision gate, so PRODUCTION CAN ONLY DO WORSE. An upper bound that misses the target proves no gate tuning reaches it.",
+    "maxRecallAtFpr1Pct": 50.85,
+    "minFprAtRecall99Pct": 29.85
+  },
+  "ac6Targets": {
+    "recallPct": 99,
+    "fprPct": 1
+  },
+  "curve": [
+    {
+      "t": 0.0002,
+      "mlRecall": 100,
+      "mlFpr": 100,
+      "sysRecall": 100,
+      "sysFpr": 100
+    },
+    {
+      "t": 0.0003,
+      "mlRecall": 100,
+      "mlFpr": 99.65,
+      "sysRecall": 100,
+      "sysFpr": 99.65
+    },
+    {
+      "t": 0.0004,
+      "mlRecall": 100,
+      "mlFpr": 95,
+      "sysRecall": 100,
+      "sysFpr": 95.25
+    },
+    {
+      "t": 0.0005,
+      "mlRecall": 100,
+      "mlFpr": 89.2,
+      "sysRecall": 100,
+      "sysFpr": 89.55
+    },
+    {
+      "t": 0.0006,
+      "mlRecall": 100,
+      "mlFpr": 83.55,
+      "sysRecall": 100,
+      "sysFpr": 84.1
+    },
+    {
+      "t": 0.0007,
+      "mlRecall": 100,
+      "mlFpr": 77.15,
+      "sysRecall": 100,
+      "sysFpr": 78.1
+    },
+    {
+      "t": 0.0008,
+      "mlRecall": 100,
+      "mlFpr": 72.75,
+      "sysRecall": 100,
+      "sysFpr": 73.8
+    },
+    {
+      "t": 0.0009,
+      "mlRecall": 100,
+      "mlFpr": 68.35,
+      "sysRecall": 100,
+      "sysFpr": 69.45
+    },
+    {
+      "t": 0.001,
+      "mlRecall": 100,
+      "mlFpr": 65.7,
+      "sysRecall": 100,
+      "sysFpr": 67
+    },
+    {
+      "t": 0.0011,
+      "mlRecall": 99.95,
+      "mlFpr": 63,
+      "sysRecall": 99.95,
+      "sysFpr": 64.5
+    },
+    {
+      "t": 0.0012,
+      "mlRecall": 99.95,
+      "mlFpr": 61,
+      "sysRecall": 99.95,
+      "sysFpr": 62.5
+    },
+    {
+      "t": 0.0013,
+      "mlRecall": 99.95,
+      "mlFpr": 58.9,
+      "sysRecall": 99.95,
+      "sysFpr": 60.45
+    },
+    {
+      "t": 0.0014,
+      "mlRecall": 99.85,
+      "mlFpr": 56.55,
+      "sysRecall": 99.9,
+      "sysFpr": 58.3
+    },
+    {
+      "t": 0.0015,
+      "mlRecall": 99.85,
+      "mlFpr": 55.35,
+      "sysRecall": 99.9,
+      "sysFpr": 57.1
+    },
+    {
+      "t": 0.0016,
+      "mlRecall": 99.85,
+      "mlFpr": 54.1,
+      "sysRecall": 99.9,
+      "sysFpr": 56
+    },
+    {
+      "t": 0.0017,
+      "mlRecall": 99.85,
+      "mlFpr": 52.75,
+      "sysRecall": 99.9,
+      "sysFpr": 54.75
+    },
+    {
+      "t": 0.0018,
+      "mlRecall": 99.85,
+      "mlFpr": 51.45,
+      "sysRecall": 99.9,
+      "sysFpr": 53.55
+    },
+    {
+      "t": 0.0019,
+      "mlRecall": 99.85,
+      "mlFpr": 50.6,
+      "sysRecall": 99.9,
+      "sysFpr": 52.7
+    },
+    {
+      "t": 0.002,
+      "mlRecall": 99.85,
+      "mlFpr": 50.05,
+      "sysRecall": 99.9,
+      "sysFpr": 52.15
+    },
+    {
+      "t": 0.0021,
+      "mlRecall": 99.85,
+      "mlFpr": 49.1,
+      "sysRecall": 99.9,
+      "sysFpr": 51.25
+    },
+    {
+      "t": 0.0022,
+      "mlRecall": 99.85,
+      "mlFpr": 48.4,
+      "sysRecall": 99.9,
+      "sysFpr": 50.65
+    },
+    {
+      "t": 0.0023,
+      "mlRecall": 99.85,
+      "mlFpr": 47.7,
+      "sysRecall": 99.9,
+      "sysFpr": 49.95
+    },
+    {
+      "t": 0.0024,
+      "mlRecall": 99.8,
+      "mlFpr": 47,
+      "sysRecall": 99.85,
+      "sysFpr": 49.3
+    },
+    {
+      "t": 0.0025,
+      "mlRecall": 99.8,
+      "mlFpr": 46.55,
+      "sysRecall": 99.85,
+      "sysFpr": 48.9
+    },
+    {
+      "t": 0.0026,
+      "mlRecall": 99.8,
+      "mlFpr": 46.15,
+      "sysRecall": 99.85,
+      "sysFpr": 48.55
+    },
+    {
+      "t": 0.0027,
+      "mlRecall": 99.75,
+      "mlFpr": 45.6,
+      "sysRecall": 99.8,
+      "sysFpr": 48
+    },
+    {
+      "t": 0.0028,
+      "mlRecall": 99.75,
+      "mlFpr": 45.05,
+      "sysRecall": 99.8,
+      "sysFpr": 47.45
+    },
+    {
+      "t": 0.0029,
+      "mlRecall": 99.75,
+      "mlFpr": 44.6,
+      "sysRecall": 99.8,
+      "sysFpr": 47
+    },
+    {
+      "t": 0.003,
+      "mlRecall": 99.75,
+      "mlFpr": 44.35,
+      "sysRecall": 99.8,
+      "sysFpr": 46.75
+    },
+    {
+      "t": 0.0031,
+      "mlRecall": 99.7,
+      "mlFpr": 44.05,
+      "sysRecall": 99.75,
+      "sysFpr": 46.45
+    },
+    {
+      "t": 0.0032,
+      "mlRecall": 99.7,
+      "mlFpr": 43.4,
+      "sysRecall": 99.75,
+      "sysFpr": 45.8
+    },
+    {
+      "t": 0.0033,
+      "mlRecall": 99.7,
+      "mlFpr": 42.85,
+      "sysRecall": 99.75,
+      "sysFpr": 45.25
+    },
+    {
+      "t": 0.0034,
+      "mlRecall": 99.7,
+      "mlFpr": 42.3,
+      "sysRecall": 99.75,
+      "sysFpr": 44.75
+    },
+    {
+      "t": 0.0035,
+      "mlRecall": 99.7,
+      "mlFpr": 41.85,
+      "sysRecall": 99.75,
+      "sysFpr": 44.3
+    },
+    {
+      "t": 0.0036,
+      "mlRecall": 99.7,
+      "mlFpr": 41.55,
+      "sysRecall": 99.75,
+      "sysFpr": 44
+    },
+    {
+      "t": 0.0037,
+      "mlRecall": 99.7,
+      "mlFpr": 41.2,
+      "sysRecall": 99.75,
+      "sysFpr": 43.65
+    },
+    {
+      "t": 0.0038,
+      "mlRecall": 99.65,
+      "mlFpr": 41,
+      "sysRecall": 99.7,
+      "sysFpr": 43.5
+    },
+    {
+      "t": 0.0039,
+      "mlRecall": 99.65,
+      "mlFpr": 40.95,
+      "sysRecall": 99.7,
+      "sysFpr": 43.45
+    },
+    {
+      "t": 0.004,
+      "mlRecall": 99.65,
+      "mlFpr": 40.65,
+      "sysRecall": 99.7,
+      "sysFpr": 43.15
+    },
+    {
+      "t": 0.0041,
+      "mlRecall": 99.65,
+      "mlFpr": 40.55,
+      "sysRecall": 99.7,
+      "sysFpr": 43.05
+    },
+    {
+      "t": 0.0042,
+      "mlRecall": 99.6,
+      "mlFpr": 40.2,
+      "sysRecall": 99.7,
+      "sysFpr": 42.75
+    },
+    {
+      "t": 0.0043,
+      "mlRecall": 99.6,
+      "mlFpr": 40.05,
+      "sysRecall": 99.7,
+      "sysFpr": 42.6
+    },
+    {
+      "t": 0.0044,
+      "mlRecall": 99.6,
+      "mlFpr": 40,
+      "sysRecall": 99.7,
+      "sysFpr": 42.55
+    },
+    {
+      "t": 0.0045,
+      "mlRecall": 99.6,
+      "mlFpr": 39.9,
+      "sysRecall": 99.7,
+      "sysFpr": 42.45
+    },
+    {
+      "t": 0.0046,
+      "mlRecall": 99.6,
+      "mlFpr": 39.7,
+      "sysRecall": 99.7,
+      "sysFpr": 42.25
+    },
+    {
+      "t": 0.0047,
+      "mlRecall": 99.6,
+      "mlFpr": 39.5,
+      "sysRecall": 99.7,
+      "sysFpr": 42.05
+    },
+    {
+      "t": 0.0048,
+      "mlRecall": 99.6,
+      "mlFpr": 39.35,
+      "sysRecall": 99.7,
+      "sysFpr": 41.9
+    },
+    {
+      "t": 0.0049,
+      "mlRecall": 99.6,
+      "mlFpr": 39.2,
+      "sysRecall": 99.7,
+      "sysFpr": 41.75
+    },
+    {
+      "t": 0.005,
+      "mlRecall": 99.6,
+      "mlFpr": 39.15,
+      "sysRecall": 99.7,
+      "sysFpr": 41.7
+    },
+    {
+      "t": 0.0051,
+      "mlRecall": 99.6,
+      "mlFpr": 38.9,
+      "sysRecall": 99.7,
+      "sysFpr": 41.45
+    },
+    {
+      "t": 0.0052,
+      "mlRecall": 99.55,
+      "mlFpr": 38.75,
+      "sysRecall": 99.65,
+      "sysFpr": 41.35
+    },
+    {
+      "t": 0.0053,
+      "mlRecall": 99.5,
+      "mlFpr": 38.55,
+      "sysRecall": 99.65,
+      "sysFpr": 41.2
+    },
+    {
+      "t": 0.0055,
+      "mlRecall": 99.5,
+      "mlFpr": 38.35,
+      "sysRecall": 99.65,
+      "sysFpr": 41
+    },
+    {
+      "t": 0.0056,
+      "mlRecall": 99.5,
+      "mlFpr": 38.2,
+      "sysRecall": 99.65,
+      "sysFpr": 40.9
+    },
+    {
+      "t": 0.0057,
+      "mlRecall": 99.45,
+      "mlFpr": 37.95,
+      "sysRecall": 99.6,
+      "sysFpr": 40.65
+    },
+    {
+      "t": 0.0058,
+      "mlRecall": 99.45,
+      "mlFpr": 37.75,
+      "sysRecall": 99.6,
+      "sysFpr": 40.45
+    },
+    {
+      "t": 0.006,
+      "mlRecall": 99.4,
+      "mlFpr": 37.65,
+      "sysRecall": 99.55,
+      "sysFpr": 40.35
+    },
+    {
+      "t": 0.0061,
+      "mlRecall": 99.4,
+      "mlFpr": 37.6,
+      "sysRecall": 99.55,
+      "sysFpr": 40.3
+    },
+    {
+      "t": 0.0062,
+      "mlRecall": 99.4,
+      "mlFpr": 37.35,
+      "sysRecall": 99.55,
+      "sysFpr": 40.05
+    },
+    {
+      "t": 0.0063,
+      "mlRecall": 99.4,
+      "mlFpr": 37.2,
+      "sysRecall": 99.55,
+      "sysFpr": 39.9
+    },
+    {
+      "t": 0.0064,
+      "mlRecall": 99.4,
+      "mlFpr": 37.1,
+      "sysRecall": 99.55,
+      "sysFpr": 39.8
+    },
+    {
+      "t": 0.0065,
+      "mlRecall": 99.4,
+      "mlFpr": 37,
+      "sysRecall": 99.55,
+      "sysFpr": 39.7
+    },
+    {
+      "t": 0.0066,
+      "mlRecall": 99.4,
+      "mlFpr": 36.9,
+      "sysRecall": 99.55,
+      "sysFpr": 39.6
+    },
+    {
+      "t": 0.0069,
+      "mlRecall": 99.4,
+      "mlFpr": 36.7,
+      "sysRecall": 99.55,
+      "sysFpr": 39.4
+    },
+    {
+      "t": 0.007,
+      "mlRecall": 99.4,
+      "mlFpr": 36.55,
+      "sysRecall": 99.55,
+      "sysFpr": 39.25
+    },
+    {
+      "t": 0.0071,
+      "mlRecall": 99.4,
+      "mlFpr": 36.5,
+      "sysRecall": 99.55,
+      "sysFpr": 39.2
+    },
+    {
+      "t": 0.0072,
+      "mlRecall": 99.4,
+      "mlFpr": 36.4,
+      "sysRecall": 99.55,
+      "sysFpr": 39.1
+    },
+    {
+      "t": 0.0073,
+      "mlRecall": 99.4,
+      "mlFpr": 36.25,
+      "sysRecall": 99.55,
+      "sysFpr": 38.95
+    },
+    {
+      "t": 0.0074,
+      "mlRecall": 99.4,
+      "mlFpr": 36.1,
+      "sysRecall": 99.55,
+      "sysFpr": 38.8
+    },
+    {
+      "t": 0.0075,
+      "mlRecall": 99.4,
+      "mlFpr": 36.05,
+      "sysRecall": 99.55,
+      "sysFpr": 38.75
+    },
+    {
+      "t": 0.0076,
+      "mlRecall": 99.4,
+      "mlFpr": 36,
+      "sysRecall": 99.55,
+      "sysFpr": 38.7
+    },
+    {
+      "t": 0.0077,
+      "mlRecall": 99.4,
+      "mlFpr": 35.8,
+      "sysRecall": 99.55,
+      "sysFpr": 38.5
+    },
+    {
+      "t": 0.0078,
+      "mlRecall": 99.4,
+      "mlFpr": 35.65,
+      "sysRecall": 99.55,
+      "sysFpr": 38.35
+    },
+    {
+      "t": 0.008,
+      "mlRecall": 99.4,
+      "mlFpr": 35.55,
+      "sysRecall": 99.55,
+      "sysFpr": 38.25
+    },
+    {
+      "t": 0.0081,
+      "mlRecall": 99.4,
+      "mlFpr": 35.45,
+      "sysRecall": 99.55,
+      "sysFpr": 38.15
+    },
+    {
+      "t": 0.0082,
+      "mlRecall": 99.4,
+      "mlFpr": 35.35,
+      "sysRecall": 99.55,
+      "sysFpr": 38.05
+    },
+    {
+      "t": 0.0084,
+      "mlRecall": 99.35,
+      "mlFpr": 35.35,
+      "sysRecall": 99.5,
+      "sysFpr": 38.05
+    },
+    {
+      "t": 0.0086,
+      "mlRecall": 99.35,
+      "mlFpr": 35.25,
+      "sysRecall": 99.5,
+      "sysFpr": 37.95
+    },
+    {
+      "t": 0.0089,
+      "mlRecall": 99.35,
+      "mlFpr": 35.1,
+      "sysRecall": 99.5,
+      "sysFpr": 37.8
+    },
+    {
+      "t": 0.0091,
+      "mlRecall": 99.35,
+      "mlFpr": 35,
+      "sysRecall": 99.5,
+      "sysFpr": 37.7
+    },
+    {
+      "t": 0.0092,
+      "mlRecall": 99.35,
+      "mlFpr": 34.9,
+      "sysRecall": 99.5,
+      "sysFpr": 37.6
+    },
+    {
+      "t": 0.0093,
+      "mlRecall": 99.3,
+      "mlFpr": 34.85,
+      "sysRecall": 99.5,
+      "sysFpr": 37.55
+    },
+    {
+      "t": 0.0094,
+      "mlRecall": 99.3,
+      "mlFpr": 34.6,
+      "sysRecall": 99.5,
+      "sysFpr": 37.35
+    },
+    {
+      "t": 0.0095,
+      "mlRecall": 99.3,
+      "mlFpr": 34.5,
+      "sysRecall": 99.5,
+      "sysFpr": 37.25
+    },
+    {
+      "t": 0.0096,
+      "mlRecall": 99.3,
+      "mlFpr": 34.45,
+      "sysRecall": 99.5,
+      "sysFpr": 37.2
+    },
+    {
+      "t": 0.0098,
+      "mlRecall": 99.3,
+      "mlFpr": 34.35,
+      "sysRecall": 99.5,
+      "sysFpr": 37.1
+    },
+    {
+      "t": 0.0099,
+      "mlRecall": 99.3,
+      "mlFpr": 34.25,
+      "sysRecall": 99.5,
+      "sysFpr": 37
+    },
+    {
+      "t": 0.01,
+      "mlRecall": 99.3,
+      "mlFpr": 34.15,
+      "sysRecall": 99.5,
+      "sysFpr": 36.9
+    },
+    {
+      "t": 0.0102,
+      "mlRecall": 99.3,
+      "mlFpr": 34,
+      "sysRecall": 99.5,
+      "sysFpr": 36.75
+    },
+    {
+      "t": 0.0103,
+      "mlRecall": 99.3,
+      "mlFpr": 33.95,
+      "sysRecall": 99.5,
+      "sysFpr": 36.7
+    },
+    {
+      "t": 0.0104,
+      "mlRecall": 99.3,
+      "mlFpr": 33.85,
+      "sysRecall": 99.5,
+      "sysFpr": 36.6
+    },
+    {
+      "t": 0.0106,
+      "mlRecall": 99.3,
+      "mlFpr": 33.8,
+      "sysRecall": 99.5,
+      "sysFpr": 36.55
+    },
+    {
+      "t": 0.0107,
+      "mlRecall": 99.3,
+      "mlFpr": 33.7,
+      "sysRecall": 99.5,
+      "sysFpr": 36.45
+    },
+    {
+      "t": 0.0109,
+      "mlRecall": 99.25,
+      "mlFpr": 33.65,
+      "sysRecall": 99.45,
+      "sysFpr": 36.4
+    },
+    {
+      "t": 0.0111,
+      "mlRecall": 99.25,
+      "mlFpr": 33.55,
+      "sysRecall": 99.45,
+      "sysFpr": 36.3
+    },
+    {
+      "t": 0.0112,
+      "mlRecall": 99.25,
+      "mlFpr": 33.5,
+      "sysRecall": 99.45,
+      "sysFpr": 36.25
+    },
+    {
+      "t": 0.0113,
+      "mlRecall": 99.25,
+      "mlFpr": 33.45,
+      "sysRecall": 99.45,
+      "sysFpr": 36.2
+    },
+    {
+      "t": 0.0115,
+      "mlRecall": 99.25,
+      "mlFpr": 33.4,
+      "sysRecall": 99.45,
+      "sysFpr": 36.15
+    },
+    {
+      "t": 0.0116,
+      "mlRecall": 99.25,
+      "mlFpr": 33.35,
+      "sysRecall": 99.45,
+      "sysFpr": 36.1
+    },
+    {
+      "t": 0.0117,
+      "mlRecall": 99.25,
+      "mlFpr": 33.25,
+      "sysRecall": 99.45,
+      "sysFpr": 36
+    },
+    {
+      "t": 0.0118,
+      "mlRecall": 99.25,
+      "mlFpr": 33.2,
+      "sysRecall": 99.45,
+      "sysFpr": 35.95
+    },
+    {
+      "t": 0.0123,
+      "mlRecall": 99.25,
+      "mlFpr": 33.1,
+      "sysRecall": 99.45,
+      "sysFpr": 35.85
+    },
+    {
+      "t": 0.0124,
+      "mlRecall": 99.25,
+      "mlFpr": 33.05,
+      "sysRecall": 99.45,
+      "sysFpr": 35.8
+    },
+    {
+      "t": 0.0126,
+      "mlRecall": 99.25,
+      "mlFpr": 32.9,
+      "sysRecall": 99.45,
+      "sysFpr": 35.65
+    },
+    {
+      "t": 0.0127,
+      "mlRecall": 99.25,
+      "mlFpr": 32.8,
+      "sysRecall": 99.45,
+      "sysFpr": 35.55
+    },
+    {
+      "t": 0.0128,
+      "mlRecall": 99.25,
+      "mlFpr": 32.75,
+      "sysRecall": 99.45,
+      "sysFpr": 35.55
+    },
+    {
+      "t": 0.0129,
+      "mlRecall": 99.25,
+      "mlFpr": 32.65,
+      "sysRecall": 99.45,
+      "sysFpr": 35.45
+    },
+    {
+      "t": 0.013,
+      "mlRecall": 99.25,
+      "mlFpr": 32.6,
+      "sysRecall": 99.45,
+      "sysFpr": 35.4
+    },
+    {
+      "t": 0.0131,
+      "mlRecall": 99.25,
+      "mlFpr": 32.5,
+      "sysRecall": 99.45,
+      "sysFpr": 35.3
+    },
+    {
+      "t": 0.0132,
+      "mlRecall": 99.25,
+      "mlFpr": 32.45,
+      "sysRecall": 99.45,
+      "sysFpr": 35.25
+    },
+    {
+      "t": 0.0134,
+      "mlRecall": 99.25,
+      "mlFpr": 32.4,
+      "sysRecall": 99.45,
+      "sysFpr": 35.2
+    },
+    {
+      "t": 0.0138,
+      "mlRecall": 99.25,
+      "mlFpr": 32.3,
+      "sysRecall": 99.45,
+      "sysFpr": 35.1
+    },
+    {
+      "t": 0.0145,
+      "mlRecall": 99.25,
+      "mlFpr": 32.15,
+      "sysRecall": 99.45,
+      "sysFpr": 34.95
+    },
+    {
+      "t": 0.0146,
+      "mlRecall": 99.25,
+      "mlFpr": 32.1,
+      "sysRecall": 99.45,
+      "sysFpr": 34.9
+    },
+    {
+      "t": 0.0148,
+      "mlRecall": 99.25,
+      "mlFpr": 32,
+      "sysRecall": 99.45,
+      "sysFpr": 34.8
+    },
+    {
+      "t": 0.0153,
+      "mlRecall": 99.25,
+      "mlFpr": 31.95,
+      "sysRecall": 99.45,
+      "sysFpr": 34.75
+    },
+    {
+      "t": 0.0154,
+      "mlRecall": 99.25,
+      "mlFpr": 31.9,
+      "sysRecall": 99.45,
+      "sysFpr": 34.7
+    },
+    {
+      "t": 0.0155,
+      "mlRecall": 99.25,
+      "mlFpr": 31.7,
+      "sysRecall": 99.45,
+      "sysFpr": 34.55
+    },
+    {
+      "t": 0.0156,
+      "mlRecall": 99.25,
+      "mlFpr": 31.65,
+      "sysRecall": 99.45,
+      "sysFpr": 34.5
+    },
+    {
+      "t": 0.0158,
+      "mlRecall": 99.2,
+      "mlFpr": 31.65,
+      "sysRecall": 99.45,
+      "sysFpr": 34.5
+    },
+    {
+      "t": 0.0159,
+      "mlRecall": 99.2,
+      "mlFpr": 31.6,
+      "sysRecall": 99.45,
+      "sysFpr": 34.45
+    },
+    {
+      "t": 0.0163,
+      "mlRecall": 99.2,
+      "mlFpr": 31.5,
+      "sysRecall": 99.45,
+      "sysFpr": 34.35
+    },
+    {
+      "t": 0.0164,
+      "mlRecall": 99.2,
+      "mlFpr": 31.45,
+      "sysRecall": 99.45,
+      "sysFpr": 34.35
+    },
+    {
+      "t": 0.0166,
+      "mlRecall": 99.2,
+      "mlFpr": 31.4,
+      "sysRecall": 99.45,
+      "sysFpr": 34.3
+    },
+    {
+      "t": 0.0173,
+      "mlRecall": 99.15,
+      "mlFpr": 31.35,
+      "sysRecall": 99.45,
+      "sysFpr": 34.25
+    },
+    {
+      "t": 0.018,
+      "mlRecall": 99.1,
+      "mlFpr": 31.35,
+      "sysRecall": 99.4,
+      "sysFpr": 34.25
+    },
+    {
+      "t": 0.0183,
+      "mlRecall": 99.1,
+      "mlFpr": 31.3,
+      "sysRecall": 99.4,
+      "sysFpr": 34.2
+    },
+    {
+      "t": 0.0188,
+      "mlRecall": 99.1,
+      "mlFpr": 31.25,
+      "sysRecall": 99.4,
+      "sysFpr": 34.15
+    },
+    {
+      "t": 0.0189,
+      "mlRecall": 99.1,
+      "mlFpr": 31.2,
+      "sysRecall": 99.4,
+      "sysFpr": 34.1
+    },
+    {
+      "t": 0.0192,
+      "mlRecall": 99.1,
+      "mlFpr": 31.1,
+      "sysRecall": 99.4,
+      "sysFpr": 34
+    },
+    {
+      "t": 0.0194,
+      "mlRecall": 99.1,
+      "mlFpr": 30.95,
+      "sysRecall": 99.4,
+      "sysFpr": 33.85
+    },
+    {
+      "t": 0.0195,
+      "mlRecall": 99.1,
+      "mlFpr": 30.9,
+      "sysRecall": 99.4,
+      "sysFpr": 33.8
+    },
+    {
+      "t": 0.0196,
+      "mlRecall": 99.1,
+      "mlFpr": 30.8,
+      "sysRecall": 99.4,
+      "sysFpr": 33.7
+    },
+    {
+      "t": 0.02,
+      "mlRecall": 99.1,
+      "mlFpr": 30.75,
+      "sysRecall": 99.4,
+      "sysFpr": 33.65
+    },
+    {
+      "t": 0.0201,
+      "mlRecall": 99.1,
+      "mlFpr": 30.7,
+      "sysRecall": 99.4,
+      "sysFpr": 33.6
+    },
+    {
+      "t": 0.0208,
+      "mlRecall": 99.1,
+      "mlFpr": 30.65,
+      "sysRecall": 99.4,
+      "sysFpr": 33.6
+    },
+    {
+      "t": 0.0209,
+      "mlRecall": 99.1,
+      "mlFpr": 30.6,
+      "sysRecall": 99.4,
+      "sysFpr": 33.55
+    },
+    {
+      "t": 0.0212,
+      "mlRecall": 99.1,
+      "mlFpr": 30.55,
+      "sysRecall": 99.4,
+      "sysFpr": 33.5
+    },
+    {
+      "t": 0.0215,
+      "mlRecall": 99.1,
+      "mlFpr": 30.5,
+      "sysRecall": 99.4,
+      "sysFpr": 33.45
+    },
+    {
+      "t": 0.0218,
+      "mlRecall": 99.1,
+      "mlFpr": 30.4,
+      "sysRecall": 99.4,
+      "sysFpr": 33.35
+    },
+    {
+      "t": 0.0222,
+      "mlRecall": 99.05,
+      "mlFpr": 30.4,
+      "sysRecall": 99.4,
+      "sysFpr": 33.35
+    },
+    {
+      "t": 0.0225,
+      "mlRecall": 99.05,
+      "mlFpr": 30.35,
+      "sysRecall": 99.4,
+      "sysFpr": 33.35
+    },
+    {
+      "t": 0.0227,
+      "mlRecall": 99,
+      "mlFpr": 30.35,
+      "sysRecall": 99.35,
+      "sysFpr": 33.35
+    },
+    {
+      "t": 0.0231,
+      "mlRecall": 99,
+      "mlFpr": 30.25,
+      "sysRecall": 99.35,
+      "sysFpr": 33.25
+    },
+    {
+      "t": 0.0235,
+      "mlRecall": 99,
+      "mlFpr": 30.2,
+      "sysRecall": 99.35,
+      "sysFpr": 33.2
+    },
+    {
+      "t": 0.0241,
+      "mlRecall": 99,
+      "mlFpr": 30.15,
+      "sysRecall": 99.35,
+      "sysFpr": 33.15
+    },
+    {
+      "t": 0.0246,
+      "mlRecall": 99,
+      "mlFpr": 30.1,
+      "sysRecall": 99.35,
+      "sysFpr": 33.1
+    },
+    {
+      "t": 0.0248,
+      "mlRecall": 99,
+      "mlFpr": 30.05,
+      "sysRecall": 99.35,
+      "sysFpr": 33.05
+    },
+    {
+      "t": 0.0251,
+      "mlRecall": 99,
+      "mlFpr": 30,
+      "sysRecall": 99.35,
+      "sysFpr": 33
+    },
+    {
+      "t": 0.0252,
+      "mlRecall": 99,
+      "mlFpr": 29.95,
+      "sysRecall": 99.35,
+      "sysFpr": 33
+    },
+    {
+      "t": 0.0261,
+      "mlRecall": 99,
+      "mlFpr": 29.9,
+      "sysRecall": 99.35,
+      "sysFpr": 32.95
+    },
+    {
+      "t": 0.0266,
+      "mlRecall": 99,
+      "mlFpr": 29.85,
+      "sysRecall": 99.35,
+      "sysFpr": 32.9
+    },
+    {
+      "t": 0.0282,
+      "mlRecall": 98.95,
+      "mlFpr": 29.8,
+      "sysRecall": 99.3,
+      "sysFpr": 32.9
+    },
+    {
+      "t": 0.0286,
+      "mlRecall": 98.95,
+      "mlFpr": 29.7,
+      "sysRecall": 99.3,
+      "sysFpr": 32.8
+    },
+    {
+      "t": 0.0287,
+      "mlRecall": 98.95,
+      "mlFpr": 29.65,
+      "sysRecall": 99.3,
+      "sysFpr": 32.75
+    },
+    {
+      "t": 0.029,
+      "mlRecall": 98.95,
+      "mlFpr": 29.55,
+      "sysRecall": 99.3,
+      "sysFpr": 32.65
+    },
+    {
+      "t": 0.0294,
+      "mlRecall": 98.9,
+      "mlFpr": 29.5,
+      "sysRecall": 99.3,
+      "sysFpr": 32.6
+    },
+    {
+      "t": 0.0297,
+      "mlRecall": 98.9,
+      "mlFpr": 29.45,
+      "sysRecall": 99.3,
+      "sysFpr": 32.55
+    },
+    {
+      "t": 0.0304,
+      "mlRecall": 98.9,
+      "mlFpr": 29.4,
+      "sysRecall": 99.3,
+      "sysFpr": 32.5
+    },
+    {
+      "t": 0.0312,
+      "mlRecall": 98.9,
+      "mlFpr": 29.35,
+      "sysRecall": 99.3,
+      "sysFpr": 32.45
+    },
+    {
+      "t": 0.0316,
+      "mlRecall": 98.85,
+      "mlFpr": 29.35,
+      "sysRecall": 99.25,
+      "sysFpr": 32.45
+    },
+    {
+      "t": 0.0318,
+      "mlRecall": 98.85,
+      "mlFpr": 29.3,
+      "sysRecall": 99.25,
+      "sysFpr": 32.4
+    },
+    {
+      "t": 0.0319,
+      "mlRecall": 98.85,
+      "mlFpr": 29.25,
+      "sysRecall": 99.25,
+      "sysFpr": 32.35
+    },
+    {
+      "t": 0.0322,
+      "mlRecall": 98.85,
+      "mlFpr": 29.15,
+      "sysRecall": 99.25,
+      "sysFpr": 32.25
+    },
+    {
+      "t": 0.033,
+      "mlRecall": 98.85,
+      "mlFpr": 29.1,
+      "sysRecall": 99.25,
+      "sysFpr": 32.2
+    },
+    {
+      "t": 0.0337,
+      "mlRecall": 98.85,
+      "mlFpr": 29.05,
+      "sysRecall": 99.25,
+      "sysFpr": 32.2
+    },
+    {
+      "t": 0.0338,
+      "mlRecall": 98.85,
+      "mlFpr": 29,
+      "sysRecall": 99.25,
+      "sysFpr": 32.15
+    },
+    {
+      "t": 0.0342,
+      "mlRecall": 98.85,
+      "mlFpr": 28.95,
+      "sysRecall": 99.25,
+      "sysFpr": 32.1
+    },
+    {
+      "t": 0.0343,
+      "mlRecall": 98.85,
+      "mlFpr": 28.9,
+      "sysRecall": 99.25,
+      "sysFpr": 32.05
+    },
+    {
+      "t": 0.0348,
+      "mlRecall": 98.85,
+      "mlFpr": 28.85,
+      "sysRecall": 99.25,
+      "sysFpr": 32
+    },
+    {
+      "t": 0.035,
+      "mlRecall": 98.85,
+      "mlFpr": 28.8,
+      "sysRecall": 99.25,
+      "sysFpr": 32
+    },
+    {
+      "t": 0.036,
+      "mlRecall": 98.85,
+      "mlFpr": 28.7,
+      "sysRecall": 99.25,
+      "sysFpr": 31.9
+    },
+    {
+      "t": 0.0365,
+      "mlRecall": 98.85,
+      "mlFpr": 28.65,
+      "sysRecall": 99.25,
+      "sysFpr": 31.85
+    },
+    {
+      "t": 0.0366,
+      "mlRecall": 98.85,
+      "mlFpr": 28.6,
+      "sysRecall": 99.25,
+      "sysFpr": 31.8
+    },
+    {
+      "t": 0.0367,
+      "mlRecall": 98.85,
+      "mlFpr": 28.55,
+      "sysRecall": 99.25,
+      "sysFpr": 31.75
+    },
+    {
+      "t": 0.0376,
+      "mlRecall": 98.85,
+      "mlFpr": 28.5,
+      "sysRecall": 99.25,
+      "sysFpr": 31.7
+    },
+    {
+      "t": 0.0377,
+      "mlRecall": 98.85,
+      "mlFpr": 28.4,
+      "sysRecall": 99.25,
+      "sysFpr": 31.6
+    },
+    {
+      "t": 0.0383,
+      "mlRecall": 98.85,
+      "mlFpr": 28.35,
+      "sysRecall": 99.25,
+      "sysFpr": 31.6
+    },
+    {
+      "t": 0.0387,
+      "mlRecall": 98.8,
+      "mlFpr": 28.35,
+      "sysRecall": 99.25,
+      "sysFpr": 31.6
+    },
+    {
+      "t": 0.0392,
+      "mlRecall": 98.8,
+      "mlFpr": 28.3,
+      "sysRecall": 99.25,
+      "sysFpr": 31.55
+    },
+    {
+      "t": 0.0397,
+      "mlRecall": 98.8,
+      "mlFpr": 28.25,
+      "sysRecall": 99.25,
+      "sysFpr": 31.5
+    },
+    {
+      "t": 0.04,
+      "mlRecall": 98.8,
+      "mlFpr": 28.15,
+      "sysRecall": 99.25,
+      "sysFpr": 31.4
+    },
+    {
+      "t": 0.0407,
+      "mlRecall": 98.8,
+      "mlFpr": 28.1,
+      "sysRecall": 99.25,
+      "sysFpr": 31.35
+    },
+    {
+      "t": 0.042,
+      "mlRecall": 98.8,
+      "mlFpr": 28.05,
+      "sysRecall": 99.25,
+      "sysFpr": 31.3
+    },
+    {
+      "t": 0.0423,
+      "mlRecall": 98.8,
+      "mlFpr": 28,
+      "sysRecall": 99.25,
+      "sysFpr": 31.3
+    },
+    {
+      "t": 0.0425,
+      "mlRecall": 98.8,
+      "mlFpr": 27.95,
+      "sysRecall": 99.25,
+      "sysFpr": 31.25
+    },
+    {
+      "t": 0.043,
+      "mlRecall": 98.8,
+      "mlFpr": 27.9,
+      "sysRecall": 99.25,
+      "sysFpr": 31.25
+    },
+    {
+      "t": 0.0442,
+      "mlRecall": 98.8,
+      "mlFpr": 27.85,
+      "sysRecall": 99.25,
+      "sysFpr": 31.2
+    },
+    {
+      "t": 0.0449,
+      "mlRecall": 98.8,
+      "mlFpr": 27.8,
+      "sysRecall": 99.25,
+      "sysFpr": 31.15
+    },
+    {
+      "t": 0.0455,
+      "mlRecall": 98.8,
+      "mlFpr": 27.75,
+      "sysRecall": 99.25,
+      "sysFpr": 31.1
+    },
+    {
+      "t": 0.046,
+      "mlRecall": 98.8,
+      "mlFpr": 27.7,
+      "sysRecall": 99.25,
+      "sysFpr": 31.05
+    },
+    {
+      "t": 0.0466,
+      "mlRecall": 98.8,
+      "mlFpr": 27.65,
+      "sysRecall": 99.25,
+      "sysFpr": 31
+    },
+    {
+      "t": 0.0469,
+      "mlRecall": 98.8,
+      "mlFpr": 27.6,
+      "sysRecall": 99.25,
+      "sysFpr": 30.95
+    },
+    {
+      "t": 0.047,
+      "mlRecall": 98.8,
+      "mlFpr": 27.55,
+      "sysRecall": 99.25,
+      "sysFpr": 30.9
+    },
+    {
+      "t": 0.0481,
+      "mlRecall": 98.8,
+      "mlFpr": 27.5,
+      "sysRecall": 99.25,
+      "sysFpr": 30.85
+    },
+    {
+      "t": 0.0487,
+      "mlRecall": 98.8,
+      "mlFpr": 27.45,
+      "sysRecall": 99.25,
+      "sysFpr": 30.8
+    },
+    {
+      "t": 0.0494,
+      "mlRecall": 98.8,
+      "mlFpr": 27.35,
+      "sysRecall": 99.25,
+      "sysFpr": 30.7
+    },
+    {
+      "t": 0.0502,
+      "mlRecall": 98.8,
+      "mlFpr": 27.3,
+      "sysRecall": 99.25,
+      "sysFpr": 30.65
+    },
+    {
+      "t": 0.0513,
+      "mlRecall": 98.8,
+      "mlFpr": 27.25,
+      "sysRecall": 99.25,
+      "sysFpr": 30.6
+    },
+    {
+      "t": 0.0521,
+      "mlRecall": 98.8,
+      "mlFpr": 27.2,
+      "sysRecall": 99.25,
+      "sysFpr": 30.55
+    },
+    {
+      "t": 0.0522,
+      "mlRecall": 98.75,
+      "mlFpr": 27.2,
+      "sysRecall": 99.2,
+      "sysFpr": 30.55
+    },
+    {
+      "t": 0.0533,
+      "mlRecall": 98.75,
+      "mlFpr": 27.1,
+      "sysRecall": 99.2,
+      "sysFpr": 30.45
+    },
+    {
+      "t": 0.0546,
+      "mlRecall": 98.75,
+      "mlFpr": 27.05,
+      "sysRecall": 99.2,
+      "sysFpr": 30.4
+    },
+    {
+      "t": 0.0547,
+      "mlRecall": 98.75,
+      "mlFpr": 27,
+      "sysRecall": 99.2,
+      "sysFpr": 30.35
+    },
+    {
+      "t": 0.0549,
+      "mlRecall": 98.75,
+      "mlFpr": 26.95,
+      "sysRecall": 99.2,
+      "sysFpr": 30.3
+    },
+    {
+      "t": 0.0555,
+      "mlRecall": 98.75,
+      "mlFpr": 26.9,
+      "sysRecall": 99.2,
+      "sysFpr": 30.25
+    },
+    {
+      "t": 0.0557,
+      "mlRecall": 98.75,
+      "mlFpr": 26.85,
+      "sysRecall": 99.2,
+      "sysFpr": 30.2
+    },
+    {
+      "t": 0.0567,
+      "mlRecall": 98.7,
+      "mlFpr": 26.85,
+      "sysRecall": 99.15,
+      "sysFpr": 30.2
+    },
+    {
+      "t": 0.0581,
+      "mlRecall": 98.7,
+      "mlFpr": 26.8,
+      "sysRecall": 99.15,
+      "sysFpr": 30.15
+    },
+    {
+      "t": 0.0587,
+      "mlRecall": 98.7,
+      "mlFpr": 26.75,
+      "sysRecall": 99.15,
+      "sysFpr": 30.1
+    },
+    {
+      "t": 0.0594,
+      "mlRecall": 98.7,
+      "mlFpr": 26.7,
+      "sysRecall": 99.15,
+      "sysFpr": 30.05
+    },
+    {
+      "t": 0.0619,
+      "mlRecall": 98.7,
+      "mlFpr": 26.65,
+      "sysRecall": 99.15,
+      "sysFpr": 30
+    },
+    {
+      "t": 0.0633,
+      "mlRecall": 98.65,
+      "mlFpr": 26.65,
+      "sysRecall": 99.15,
+      "sysFpr": 30
+    },
+    {
+      "t": 0.064,
+      "mlRecall": 98.65,
+      "mlFpr": 26.6,
+      "sysRecall": 99.15,
+      "sysFpr": 29.95
+    },
+    {
+      "t": 0.0641,
+      "mlRecall": 98.6,
+      "mlFpr": 26.6,
+      "sysRecall": 99.1,
+      "sysFpr": 29.95
+    },
+    {
+      "t": 0.066,
+      "mlRecall": 98.55,
+      "mlFpr": 26.6,
+      "sysRecall": 99.05,
+      "sysFpr": 29.95
+    },
+    {
+      "t": 0.0668,
+      "mlRecall": 98.55,
+      "mlFpr": 26.55,
+      "sysRecall": 99.05,
+      "sysFpr": 29.9
+    },
+    {
+      "t": 0.068,
+      "mlRecall": 98.55,
+      "mlFpr": 26.5,
+      "sysRecall": 99.05,
+      "sysFpr": 29.9
+    },
+    {
+      "t": 0.069,
+      "mlRecall": 98.55,
+      "mlFpr": 26.45,
+      "sysRecall": 99.05,
+      "sysFpr": 29.85
+    },
+    {
+      "t": 0.0696,
+      "mlRecall": 98.55,
+      "mlFpr": 26.4,
+      "sysRecall": 99.05,
+      "sysFpr": 29.8
+    },
+    {
+      "t": 0.0722,
+      "mlRecall": 98.55,
+      "mlFpr": 26.35,
+      "sysRecall": 99.05,
+      "sysFpr": 29.75
+    },
+    {
+      "t": 0.0726,
+      "mlRecall": 98.55,
+      "mlFpr": 26.3,
+      "sysRecall": 99.05,
+      "sysFpr": 29.7
+    },
+    {
+      "t": 0.0735,
+      "mlRecall": 98.5,
+      "mlFpr": 26.3,
+      "sysRecall": 99,
+      "sysFpr": 29.7
+    },
+    {
+      "t": 0.076,
+      "mlRecall": 98.5,
+      "mlFpr": 26.25,
+      "sysRecall": 99,
+      "sysFpr": 29.65
+    },
+    {
+      "t": 0.0777,
+      "mlRecall": 98.5,
+      "mlFpr": 26.2,
+      "sysRecall": 99,
+      "sysFpr": 29.6
+    },
+    {
+      "t": 0.078,
+      "mlRecall": 98.45,
+      "mlFpr": 26.2,
+      "sysRecall": 98.95,
+      "sysFpr": 29.6
+    },
+    {
+      "t": 0.0786,
+      "mlRecall": 98.45,
+      "mlFpr": 26.15,
+      "sysRecall": 98.95,
+      "sysFpr": 29.55
+    },
+    {
+      "t": 0.0828,
+      "mlRecall": 98.45,
+      "mlFpr": 26.1,
+      "sysRecall": 98.95,
+      "sysFpr": 29.5
+    },
+    {
+      "t": 0.0837,
+      "mlRecall": 98.45,
+      "mlFpr": 26.05,
+      "sysRecall": 98.95,
+      "sysFpr": 29.45
+    },
+    {
+      "t": 0.0882,
+      "mlRecall": 98.4,
+      "mlFpr": 26.05,
+      "sysRecall": 98.9,
+      "sysFpr": 29.45
+    },
+    {
+      "t": 0.0886,
+      "mlRecall": 98.4,
+      "mlFpr": 26,
+      "sysRecall": 98.9,
+      "sysFpr": 29.4
+    },
+    {
+      "t": 0.0902,
+      "mlRecall": 98.4,
+      "mlFpr": 25.95,
+      "sysRecall": 98.9,
+      "sysFpr": 29.4
+    },
+    {
+      "t": 0.0921,
+      "mlRecall": 98.4,
+      "mlFpr": 25.9,
+      "sysRecall": 98.9,
+      "sysFpr": 29.35
+    },
+    {
+      "t": 0.0936,
+      "mlRecall": 98.35,
+      "mlFpr": 25.9,
+      "sysRecall": 98.85,
+      "sysFpr": 29.35
+    },
+    {
+      "t": 0.094,
+      "mlRecall": 98.3,
+      "mlFpr": 25.85,
+      "sysRecall": 98.8,
+      "sysFpr": 29.3
+    },
+    {
+      "t": 0.0946,
+      "mlRecall": 98.3,
+      "mlFpr": 25.8,
+      "sysRecall": 98.8,
+      "sysFpr": 29.25
+    },
+    {
+      "t": 0.0978,
+      "mlRecall": 98.25,
+      "mlFpr": 25.8,
+      "sysRecall": 98.75,
+      "sysFpr": 29.25
+    },
+    {
+      "t": 0.0982,
+      "mlRecall": 98.25,
+      "mlFpr": 25.75,
+      "sysRecall": 98.75,
+      "sysFpr": 29.2
+    },
+    {
+      "t": 0.0986,
+      "mlRecall": 98.25,
+      "mlFpr": 25.7,
+      "sysRecall": 98.75,
+      "sysFpr": 29.15
+    },
+    {
+      "t": 0.1004,
+      "mlRecall": 98.25,
+      "mlFpr": 25.65,
+      "sysRecall": 98.75,
+      "sysFpr": 29.1
+    },
+    {
+      "t": 0.1009,
+      "mlRecall": 98.25,
+      "mlFpr": 25.6,
+      "sysRecall": 98.75,
+      "sysFpr": 29.05
+    },
+    {
+      "t": 0.1011,
+      "mlRecall": 98.25,
+      "mlFpr": 25.55,
+      "sysRecall": 98.75,
+      "sysFpr": 29.05
+    },
+    {
+      "t": 0.1032,
+      "mlRecall": 98.2,
+      "mlFpr": 25.55,
+      "sysRecall": 98.7,
+      "sysFpr": 29.05
+    },
+    {
+      "t": 0.1048,
+      "mlRecall": 98.15,
+      "mlFpr": 25.55,
+      "sysRecall": 98.65,
+      "sysFpr": 29.05
+    },
+    {
+      "t": 0.1052,
+      "mlRecall": 98.15,
+      "mlFpr": 25.5,
+      "sysRecall": 98.65,
+      "sysFpr": 29
+    },
+    {
+      "t": 0.1062,
+      "mlRecall": 98.15,
+      "mlFpr": 25.45,
+      "sysRecall": 98.65,
+      "sysFpr": 28.95
+    },
+    {
+      "t": 0.1067,
+      "mlRecall": 98.15,
+      "mlFpr": 25.4,
+      "sysRecall": 98.65,
+      "sysFpr": 28.9
+    },
+    {
+      "t": 0.1076,
+      "mlRecall": 98.15,
+      "mlFpr": 25.35,
+      "sysRecall": 98.65,
+      "sysFpr": 28.85
+    },
+    {
+      "t": 0.1124,
+      "mlRecall": 98.15,
+      "mlFpr": 25.3,
+      "sysRecall": 98.65,
+      "sysFpr": 28.8
+    },
+    {
+      "t": 0.1132,
+      "mlRecall": 98.15,
+      "mlFpr": 25.25,
+      "sysRecall": 98.65,
+      "sysFpr": 28.75
+    },
+    {
+      "t": 0.1143,
+      "mlRecall": 98.15,
+      "mlFpr": 25.2,
+      "sysRecall": 98.65,
+      "sysFpr": 28.7
+    },
+    {
+      "t": 0.1152,
+      "mlRecall": 98.15,
+      "mlFpr": 25.15,
+      "sysRecall": 98.65,
+      "sysFpr": 28.65
+    },
+    {
+      "t": 0.1174,
+      "mlRecall": 98.15,
+      "mlFpr": 25.1,
+      "sysRecall": 98.65,
+      "sysFpr": 28.65
+    },
+    {
+      "t": 0.1175,
+      "mlRecall": 98.15,
+      "mlFpr": 25.05,
+      "sysRecall": 98.65,
+      "sysFpr": 28.6
+    },
+    {
+      "t": 0.1183,
+      "mlRecall": 98.15,
+      "mlFpr": 25,
+      "sysRecall": 98.65,
+      "sysFpr": 28.6
+    },
+    {
+      "t": 0.1249,
+      "mlRecall": 98.1,
+      "mlFpr": 25,
+      "sysRecall": 98.65,
+      "sysFpr": 28.6
+    },
+    {
+      "t": 0.1275,
+      "mlRecall": 98.1,
+      "mlFpr": 24.95,
+      "sysRecall": 98.65,
+      "sysFpr": 28.55
+    },
+    {
+      "t": 0.1337,
+      "mlRecall": 98.1,
+      "mlFpr": 24.9,
+      "sysRecall": 98.65,
+      "sysFpr": 28.5
+    },
+    {
+      "t": 0.1358,
+      "mlRecall": 98.1,
+      "mlFpr": 24.85,
+      "sysRecall": 98.65,
+      "sysFpr": 28.45
+    },
+    {
+      "t": 0.1418,
+      "mlRecall": 98.1,
+      "mlFpr": 24.8,
+      "sysRecall": 98.65,
+      "sysFpr": 28.4
+    },
+    {
+      "t": 0.142,
+      "mlRecall": 98.05,
+      "mlFpr": 24.8,
+      "sysRecall": 98.65,
+      "sysFpr": 28.4
+    },
+    {
+      "t": 0.1424,
+      "mlRecall": 98.05,
+      "mlFpr": 24.75,
+      "sysRecall": 98.65,
+      "sysFpr": 28.4
+    },
+    {
+      "t": 0.1461,
+      "mlRecall": 98,
+      "mlFpr": 24.75,
+      "sysRecall": 98.6,
+      "sysFpr": 28.4
+    },
+    {
+      "t": 0.1479,
+      "mlRecall": 98,
+      "mlFpr": 24.7,
+      "sysRecall": 98.6,
+      "sysFpr": 28.35
+    },
+    {
+      "t": 0.1482,
+      "mlRecall": 98,
+      "mlFpr": 24.65,
+      "sysRecall": 98.6,
+      "sysFpr": 28.3
+    },
+    {
+      "t": 0.1498,
+      "mlRecall": 98,
+      "mlFpr": 24.6,
+      "sysRecall": 98.6,
+      "sysFpr": 28.25
+    },
+    {
+      "t": 0.152,
+      "mlRecall": 98,
+      "mlFpr": 24.55,
+      "sysRecall": 98.6,
+      "sysFpr": 28.25
+    },
+    {
+      "t": 0.1534,
+      "mlRecall": 98,
+      "mlFpr": 24.5,
+      "sysRecall": 98.6,
+      "sysFpr": 28.2
+    },
+    {
+      "t": 0.1553,
+      "mlRecall": 98,
+      "mlFpr": 24.45,
+      "sysRecall": 98.6,
+      "sysFpr": 28.15
+    },
+    {
+      "t": 0.1562,
+      "mlRecall": 97.95,
+      "mlFpr": 24.45,
+      "sysRecall": 98.6,
+      "sysFpr": 28.15
+    },
+    {
+      "t": 0.1582,
+      "mlRecall": 97.95,
+      "mlFpr": 24.4,
+      "sysRecall": 98.6,
+      "sysFpr": 28.1
+    },
+    {
+      "t": 0.1594,
+      "mlRecall": 97.95,
+      "mlFpr": 24.35,
+      "sysRecall": 98.6,
+      "sysFpr": 28.05
+    },
+    {
+      "t": 0.1619,
+      "mlRecall": 97.95,
+      "mlFpr": 24.3,
+      "sysRecall": 98.6,
+      "sysFpr": 28
+    },
+    {
+      "t": 0.1685,
+      "mlRecall": 97.95,
+      "mlFpr": 24.2,
+      "sysRecall": 98.6,
+      "sysFpr": 27.9
+    },
+    {
+      "t": 0.1717,
+      "mlRecall": 97.9,
+      "mlFpr": 24.15,
+      "sysRecall": 98.55,
+      "sysFpr": 27.85
+    },
+    {
+      "t": 0.1743,
+      "mlRecall": 97.9,
+      "mlFpr": 24.1,
+      "sysRecall": 98.55,
+      "sysFpr": 27.85
+    },
+    {
+      "t": 0.1745,
+      "mlRecall": 97.85,
+      "mlFpr": 24.1,
+      "sysRecall": 98.5,
+      "sysFpr": 27.85
+    },
+    {
+      "t": 0.1747,
+      "mlRecall": 97.85,
+      "mlFpr": 24.05,
+      "sysRecall": 98.5,
+      "sysFpr": 27.85
+    },
+    {
+      "t": 0.175,
+      "mlRecall": 97.85,
+      "mlFpr": 24,
+      "sysRecall": 98.5,
+      "sysFpr": 27.8
+    },
+    {
+      "t": 0.1763,
+      "mlRecall": 97.85,
+      "mlFpr": 23.95,
+      "sysRecall": 98.5,
+      "sysFpr": 27.75
+    },
+    {
+      "t": 0.1782,
+      "mlRecall": 97.8,
+      "mlFpr": 23.95,
+      "sysRecall": 98.45,
+      "sysFpr": 27.75
+    },
+    {
+      "t": 0.1791,
+      "mlRecall": 97.8,
+      "mlFpr": 23.9,
+      "sysRecall": 98.45,
+      "sysFpr": 27.7
+    },
+    {
+      "t": 0.1795,
+      "mlRecall": 97.8,
+      "mlFpr": 23.85,
+      "sysRecall": 98.45,
+      "sysFpr": 27.7
+    },
+    {
+      "t": 0.1838,
+      "mlRecall": 97.8,
+      "mlFpr": 23.75,
+      "sysRecall": 98.45,
+      "sysFpr": 27.6
+    },
+    {
+      "t": 0.1875,
+      "mlRecall": 97.8,
+      "mlFpr": 23.7,
+      "sysRecall": 98.45,
+      "sysFpr": 27.6
+    },
+    {
+      "t": 0.1888,
+      "mlRecall": 97.75,
+      "mlFpr": 23.7,
+      "sysRecall": 98.4,
+      "sysFpr": 27.6
+    },
+    {
+      "t": 0.1889,
+      "mlRecall": 97.75,
+      "mlFpr": 23.65,
+      "sysRecall": 98.4,
+      "sysFpr": 27.55
+    },
+    {
+      "t": 0.1906,
+      "mlRecall": 97.75,
+      "mlFpr": 23.6,
+      "sysRecall": 98.4,
+      "sysFpr": 27.5
+    },
+    {
+      "t": 0.1919,
+      "mlRecall": 97.75,
+      "mlFpr": 23.55,
+      "sysRecall": 98.4,
+      "sysFpr": 27.45
+    },
+    {
+      "t": 0.1923,
+      "mlRecall": 97.75,
+      "mlFpr": 23.5,
+      "sysRecall": 98.4,
+      "sysFpr": 27.4
+    },
+    {
+      "t": 0.1932,
+      "mlRecall": 97.75,
+      "mlFpr": 23.45,
+      "sysRecall": 98.4,
+      "sysFpr": 27.4
+    },
+    {
+      "t": 0.1991,
+      "mlRecall": 97.7,
+      "mlFpr": 23.45,
+      "sysRecall": 98.35,
+      "sysFpr": 27.4
+    },
+    {
+      "t": 0.1992,
+      "mlRecall": 97.7,
+      "mlFpr": 23.4,
+      "sysRecall": 98.35,
+      "sysFpr": 27.35
+    },
+    {
+      "t": 0.1994,
+      "mlRecall": 97.65,
+      "mlFpr": 23.4,
+      "sysRecall": 98.3,
+      "sysFpr": 27.35
+    },
+    {
+      "t": 0.2027,
+      "mlRecall": 97.6,
+      "mlFpr": 23.4,
+      "sysRecall": 98.25,
+      "sysFpr": 27.35
+    },
+    {
+      "t": 0.2076,
+      "mlRecall": 97.55,
+      "mlFpr": 23.4,
+      "sysRecall": 98.2,
+      "sysFpr": 27.35
+    },
+    {
+      "t": 0.2079,
+      "mlRecall": 97.55,
+      "mlFpr": 23.35,
+      "sysRecall": 98.2,
+      "sysFpr": 27.3
+    },
+    {
+      "t": 0.2081,
+      "mlRecall": 97.55,
+      "mlFpr": 23.3,
+      "sysRecall": 98.2,
+      "sysFpr": 27.25
+    },
+    {
+      "t": 0.2085,
+      "mlRecall": 97.55,
+      "mlFpr": 23.25,
+      "sysRecall": 98.2,
+      "sysFpr": 27.2
+    },
+    {
+      "t": 0.2117,
+      "mlRecall": 97.55,
+      "mlFpr": 23.2,
+      "sysRecall": 98.2,
+      "sysFpr": 27.15
+    },
+    {
+      "t": 0.2139,
+      "mlRecall": 97.55,
+      "mlFpr": 23.15,
+      "sysRecall": 98.2,
+      "sysFpr": 27.15
+    },
+    {
+      "t": 0.2215,
+      "mlRecall": 97.5,
+      "mlFpr": 23.15,
+      "sysRecall": 98.2,
+      "sysFpr": 27.15
+    },
+    {
+      "t": 0.2235,
+      "mlRecall": 97.5,
+      "mlFpr": 23.1,
+      "sysRecall": 98.2,
+      "sysFpr": 27.15
+    },
+    {
+      "t": 0.2242,
+      "mlRecall": 97.5,
+      "mlFpr": 23.05,
+      "sysRecall": 98.2,
+      "sysFpr": 27.1
+    },
+    {
+      "t": 0.2278,
+      "mlRecall": 97.5,
+      "mlFpr": 23,
+      "sysRecall": 98.2,
+      "sysFpr": 27.05
+    },
+    {
+      "t": 0.2282,
+      "mlRecall": 97.5,
+      "mlFpr": 22.95,
+      "sysRecall": 98.2,
+      "sysFpr": 27
+    },
+    {
+      "t": 0.2308,
+      "mlRecall": 97.5,
+      "mlFpr": 22.9,
+      "sysRecall": 98.2,
+      "sysFpr": 26.95
+    },
+    {
+      "t": 0.2343,
+      "mlRecall": 97.5,
+      "mlFpr": 22.85,
+      "sysRecall": 98.2,
+      "sysFpr": 26.9
+    },
+    {
+      "t": 0.236,
+      "mlRecall": 97.5,
+      "mlFpr": 22.8,
+      "sysRecall": 98.2,
+      "sysFpr": 26.85
+    },
+    {
+      "t": 0.2371,
+      "mlRecall": 97.5,
+      "mlFpr": 22.75,
+      "sysRecall": 98.2,
+      "sysFpr": 26.8
+    },
+    {
+      "t": 0.2409,
+      "mlRecall": 97.45,
+      "mlFpr": 22.75,
+      "sysRecall": 98.15,
+      "sysFpr": 26.8
+    },
+    {
+      "t": 0.2457,
+      "mlRecall": 97.45,
+      "mlFpr": 22.7,
+      "sysRecall": 98.15,
+      "sysFpr": 26.75
+    },
+    {
+      "t": 0.2536,
+      "mlRecall": 97.45,
+      "mlFpr": 22.65,
+      "sysRecall": 98.15,
+      "sysFpr": 26.75
+    },
+    {
+      "t": 0.2565,
+      "mlRecall": 97.45,
+      "mlFpr": 22.6,
+      "sysRecall": 98.15,
+      "sysFpr": 26.7
+    },
+    {
+      "t": 0.2588,
+      "mlRecall": 97.45,
+      "mlFpr": 22.55,
+      "sysRecall": 98.15,
+      "sysFpr": 26.65
+    },
+    {
+      "t": 0.2615,
+      "mlRecall": 97.4,
+      "mlFpr": 22.55,
+      "sysRecall": 98.15,
+      "sysFpr": 26.65
+    },
+    {
+      "t": 0.2647,
+      "mlRecall": 97.4,
+      "mlFpr": 22.5,
+      "sysRecall": 98.15,
+      "sysFpr": 26.6
+    },
+    {
+      "t": 0.2722,
+      "mlRecall": 97.4,
+      "mlFpr": 22.45,
+      "sysRecall": 98.15,
+      "sysFpr": 26.55
+    },
+    {
+      "t": 0.2812,
+      "mlRecall": 97.35,
+      "mlFpr": 22.45,
+      "sysRecall": 98.1,
+      "sysFpr": 26.55
+    },
+    {
+      "t": 0.2817,
+      "mlRecall": 97.3,
+      "mlFpr": 22.45,
+      "sysRecall": 98.1,
+      "sysFpr": 26.55
+    },
+    {
+      "t": 0.2858,
+      "mlRecall": 97.3,
+      "mlFpr": 22.4,
+      "sysRecall": 98.1,
+      "sysFpr": 26.55
+    },
+    {
+      "t": 0.2887,
+      "mlRecall": 97.3,
+      "mlFpr": 22.35,
+      "sysRecall": 98.1,
+      "sysFpr": 26.55
+    },
+    {
+      "t": 0.2993,
+      "mlRecall": 97.3,
+      "mlFpr": 22.3,
+      "sysRecall": 98.1,
+      "sysFpr": 26.5
+    },
+    {
+      "t": 0.3008,
+      "mlRecall": 97.25,
+      "mlFpr": 22.3,
+      "sysRecall": 98.1,
+      "sysFpr": 26.5
+    },
+    {
+      "t": 0.3039,
+      "mlRecall": 97.25,
+      "mlFpr": 22.25,
+      "sysRecall": 98.1,
+      "sysFpr": 26.5
+    },
+    {
+      "t": 0.3048,
+      "mlRecall": 97.25,
+      "mlFpr": 22.2,
+      "sysRecall": 98.1,
+      "sysFpr": 26.45
+    },
+    {
+      "t": 0.3091,
+      "mlRecall": 97.25,
+      "mlFpr": 22.15,
+      "sysRecall": 98.1,
+      "sysFpr": 26.4
+    },
+    {
+      "t": 0.3151,
+      "mlRecall": 97.2,
+      "mlFpr": 22.15,
+      "sysRecall": 98.1,
+      "sysFpr": 26.4
+    },
+    {
+      "t": 0.321,
+      "mlRecall": 97.2,
+      "mlFpr": 22.1,
+      "sysRecall": 98.1,
+      "sysFpr": 26.35
+    },
+    {
+      "t": 0.3232,
+      "mlRecall": 97.2,
+      "mlFpr": 22.05,
+      "sysRecall": 98.1,
+      "sysFpr": 26.3
+    },
+    {
+      "t": 0.3275,
+      "mlRecall": 97.15,
+      "mlFpr": 22.05,
+      "sysRecall": 98.05,
+      "sysFpr": 26.3
+    },
+    {
+      "t": 0.3353,
+      "mlRecall": 97.15,
+      "mlFpr": 21.95,
+      "sysRecall": 98.05,
+      "sysFpr": 26.2
+    },
+    {
+      "t": 0.3374,
+      "mlRecall": 97.15,
+      "mlFpr": 21.9,
+      "sysRecall": 98.05,
+      "sysFpr": 26.15
+    },
+    {
+      "t": 0.3433,
+      "mlRecall": 97.15,
+      "mlFpr": 21.85,
+      "sysRecall": 98.05,
+      "sysFpr": 26.15
+    },
+    {
+      "t": 0.3469,
+      "mlRecall": 97.1,
+      "mlFpr": 21.85,
+      "sysRecall": 98.05,
+      "sysFpr": 26.15
+    },
+    {
+      "t": 0.3586,
+      "mlRecall": 97.1,
+      "mlFpr": 21.8,
+      "sysRecall": 98.05,
+      "sysFpr": 26.15
+    },
+    {
+      "t": 0.3629,
+      "mlRecall": 97.05,
+      "mlFpr": 21.8,
+      "sysRecall": 98.05,
+      "sysFpr": 26.15
+    },
+    {
+      "t": 0.3706,
+      "mlRecall": 97.05,
+      "mlFpr": 21.75,
+      "sysRecall": 98.05,
+      "sysFpr": 26.1
+    },
+    {
+      "t": 0.3712,
+      "mlRecall": 97,
+      "mlFpr": 21.75,
+      "sysRecall": 98,
+      "sysFpr": 26.1
+    },
+    {
+      "t": 0.3715,
+      "mlRecall": 96.95,
+      "mlFpr": 21.75,
+      "sysRecall": 97.95,
+      "sysFpr": 26.1
+    },
+    {
+      "t": 0.3727,
+      "mlRecall": 96.95,
+      "mlFpr": 21.7,
+      "sysRecall": 97.95,
+      "sysFpr": 26.05
+    },
+    {
+      "t": 0.3732,
+      "mlRecall": 96.95,
+      "mlFpr": 21.65,
+      "sysRecall": 97.95,
+      "sysFpr": 26
+    },
+    {
+      "t": 0.3756,
+      "mlRecall": 96.9,
+      "mlFpr": 21.65,
+      "sysRecall": 97.95,
+      "sysFpr": 26
+    },
+    {
+      "t": 0.3816,
+      "mlRecall": 96.9,
+      "mlFpr": 21.55,
+      "sysRecall": 97.95,
+      "sysFpr": 25.9
+    },
+    {
+      "t": 0.3846,
+      "mlRecall": 96.85,
+      "mlFpr": 21.55,
+      "sysRecall": 97.9,
+      "sysFpr": 25.9
+    },
+    {
+      "t": 0.3868,
+      "mlRecall": 96.85,
+      "mlFpr": 21.5,
+      "sysRecall": 97.9,
+      "sysFpr": 25.85
+    },
+    {
+      "t": 0.3875,
+      "mlRecall": 96.8,
+      "mlFpr": 21.5,
+      "sysRecall": 97.9,
+      "sysFpr": 25.85
+    },
+    {
+      "t": 0.3885,
+      "mlRecall": 96.75,
+      "mlFpr": 21.5,
+      "sysRecall": 97.85,
+      "sysFpr": 25.85
+    },
+    {
+      "t": 0.4012,
+      "mlRecall": 96.75,
+      "mlFpr": 21.45,
+      "sysRecall": 97.85,
+      "sysFpr": 25.8
+    },
+    {
+      "t": 0.4019,
+      "mlRecall": 96.75,
+      "mlFpr": 21.4,
+      "sysRecall": 97.85,
+      "sysFpr": 25.75
+    },
+    {
+      "t": 0.4033,
+      "mlRecall": 96.75,
+      "mlFpr": 21.35,
+      "sysRecall": 97.85,
+      "sysFpr": 25.7
+    },
+    {
+      "t": 0.4075,
+      "mlRecall": 96.75,
+      "mlFpr": 21.3,
+      "sysRecall": 97.85,
+      "sysFpr": 25.65
+    },
+    {
+      "t": 0.4086,
+      "mlRecall": 96.75,
+      "mlFpr": 21.25,
+      "sysRecall": 97.85,
+      "sysFpr": 25.6
+    },
+    {
+      "t": 0.4139,
+      "mlRecall": 96.7,
+      "mlFpr": 21.25,
+      "sysRecall": 97.8,
+      "sysFpr": 25.6
+    },
+    {
+      "t": 0.4193,
+      "mlRecall": 96.65,
+      "mlFpr": 21.25,
+      "sysRecall": 97.8,
+      "sysFpr": 25.6
+    },
+    {
+      "t": 0.4238,
+      "mlRecall": 96.65,
+      "mlFpr": 21.2,
+      "sysRecall": 97.8,
+      "sysFpr": 25.55
+    },
+    {
+      "t": 0.4239,
+      "mlRecall": 96.65,
+      "mlFpr": 21.15,
+      "sysRecall": 97.8,
+      "sysFpr": 25.5
+    },
+    {
+      "t": 0.4251,
+      "mlRecall": 96.6,
+      "mlFpr": 21.15,
+      "sysRecall": 97.75,
+      "sysFpr": 25.5
+    },
+    {
+      "t": 0.43,
+      "mlRecall": 96.55,
+      "mlFpr": 21.15,
+      "sysRecall": 97.7,
+      "sysFpr": 25.5
+    },
+    {
+      "t": 0.4318,
+      "mlRecall": 96.55,
+      "mlFpr": 21.1,
+      "sysRecall": 97.7,
+      "sysFpr": 25.5
+    },
+    {
+      "t": 0.4331,
+      "mlRecall": 96.5,
+      "mlFpr": 21.1,
+      "sysRecall": 97.65,
+      "sysFpr": 25.5
+    },
+    {
+      "t": 0.4361,
+      "mlRecall": 96.5,
+      "mlFpr": 21.05,
+      "sysRecall": 97.65,
+      "sysFpr": 25.45
+    },
+    {
+      "t": 0.4393,
+      "mlRecall": 96.45,
+      "mlFpr": 21.05,
+      "sysRecall": 97.6,
+      "sysFpr": 25.45
+    },
+    {
+      "t": 0.4408,
+      "mlRecall": 96.45,
+      "mlFpr": 21,
+      "sysRecall": 97.6,
+      "sysFpr": 25.4
+    },
+    {
+      "t": 0.4431,
+      "mlRecall": 96.4,
+      "mlFpr": 21,
+      "sysRecall": 97.55,
+      "sysFpr": 25.4
+    },
+    {
+      "t": 0.4474,
+      "mlRecall": 96.4,
+      "mlFpr": 20.95,
+      "sysRecall": 97.55,
+      "sysFpr": 25.4
+    },
+    {
+      "t": 0.4495,
+      "mlRecall": 96.4,
+      "mlFpr": 20.9,
+      "sysRecall": 97.55,
+      "sysFpr": 25.35
+    },
+    {
+      "t": 0.4502,
+      "mlRecall": 96.4,
+      "mlFpr": 20.85,
+      "sysRecall": 97.55,
+      "sysFpr": 25.3
+    },
+    {
+      "t": 0.4506,
+      "mlRecall": 96.35,
+      "mlFpr": 20.85,
+      "sysRecall": 97.55,
+      "sysFpr": 25.3
+    },
+    {
+      "t": 0.4507,
+      "mlRecall": 96.35,
+      "mlFpr": 20.8,
+      "sysRecall": 97.55,
+      "sysFpr": 25.25
+    },
+    {
+      "t": 0.4518,
+      "mlRecall": 96.3,
+      "mlFpr": 20.8,
+      "sysRecall": 97.5,
+      "sysFpr": 25.25
+    },
+    {
+      "t": 0.4554,
+      "mlRecall": 96.3,
+      "mlFpr": 20.75,
+      "sysRecall": 97.5,
+      "sysFpr": 25.2
+    },
+    {
+      "t": 0.4556,
+      "mlRecall": 96.3,
+      "mlFpr": 20.7,
+      "sysRecall": 97.5,
+      "sysFpr": 25.15
+    },
+    {
+      "t": 0.4572,
+      "mlRecall": 96.25,
+      "mlFpr": 20.7,
+      "sysRecall": 97.45,
+      "sysFpr": 25.15
+    },
+    {
+      "t": 0.4607,
+      "mlRecall": 96.2,
+      "mlFpr": 20.7,
+      "sysRecall": 97.4,
+      "sysFpr": 25.15
+    },
+    {
+      "t": 0.4658,
+      "mlRecall": 96.15,
+      "mlFpr": 20.7,
+      "sysRecall": 97.35,
+      "sysFpr": 25.15
+    },
+    {
+      "t": 0.4678,
+      "mlRecall": 96.1,
+      "mlFpr": 20.7,
+      "sysRecall": 97.3,
+      "sysFpr": 25.15
+    },
+    {
+      "t": 0.4681,
+      "mlRecall": 96,
+      "mlFpr": 20.7,
+      "sysRecall": 97.2,
+      "sysFpr": 25.15
+    },
+    {
+      "t": 0.4708,
+      "mlRecall": 95.95,
+      "mlFpr": 20.7,
+      "sysRecall": 97.15,
+      "sysFpr": 25.15
+    },
+    {
+      "t": 0.4786,
+      "mlRecall": 95.95,
+      "mlFpr": 20.65,
+      "sysRecall": 97.15,
+      "sysFpr": 25.1
+    },
+    {
+      "t": 0.4838,
+      "mlRecall": 95.9,
+      "mlFpr": 20.65,
+      "sysRecall": 97.1,
+      "sysFpr": 25.1
+    },
+    {
+      "t": 0.4885,
+      "mlRecall": 95.85,
+      "mlFpr": 20.65,
+      "sysRecall": 97.1,
+      "sysFpr": 25.1
+    },
+    {
+      "t": 0.4923,
+      "mlRecall": 95.85,
+      "mlFpr": 20.6,
+      "sysRecall": 97.1,
+      "sysFpr": 25.05
+    },
+    {
+      "t": 0.4924,
+      "mlRecall": 95.8,
+      "mlFpr": 20.6,
+      "sysRecall": 97.05,
+      "sysFpr": 25.05
+    },
+    {
+      "t": 0.4942,
+      "mlRecall": 95.8,
+      "mlFpr": 20.55,
+      "sysRecall": 97.05,
+      "sysFpr": 25
+    },
+    {
+      "t": 0.4991,
+      "mlRecall": 95.75,
+      "mlFpr": 20.55,
+      "sysRecall": 97,
+      "sysFpr": 25
+    },
+    {
+      "t": 0.4992,
+      "mlRecall": 95.7,
+      "mlFpr": 20.55,
+      "sysRecall": 96.95,
+      "sysFpr": 25
+    },
+    {
+      "t": 0.5045,
+      "mlRecall": 95.65,
+      "mlFpr": 20.55,
+      "sysRecall": 96.95,
+      "sysFpr": 25
+    },
+    {
+      "t": 0.5121,
+      "mlRecall": 95.6,
+      "mlFpr": 20.55,
+      "sysRecall": 96.9,
+      "sysFpr": 25
+    },
+    {
+      "t": 0.5157,
+      "mlRecall": 95.6,
+      "mlFpr": 20.5,
+      "sysRecall": 96.9,
+      "sysFpr": 24.95
+    },
+    {
+      "t": 0.5164,
+      "mlRecall": 95.55,
+      "mlFpr": 20.5,
+      "sysRecall": 96.85,
+      "sysFpr": 24.95
+    },
+    {
+      "t": 0.5187,
+      "mlRecall": 95.5,
+      "mlFpr": 20.5,
+      "sysRecall": 96.8,
+      "sysFpr": 24.95
+    },
+    {
+      "t": 0.5196,
+      "mlRecall": 95.45,
+      "mlFpr": 20.5,
+      "sysRecall": 96.75,
+      "sysFpr": 24.95
+    },
+    {
+      "t": 0.5305,
+      "mlRecall": 95.45,
+      "mlFpr": 20.45,
+      "sysRecall": 96.75,
+      "sysFpr": 24.9
+    },
+    {
+      "t": 0.5307,
+      "mlRecall": 95.45,
+      "mlFpr": 20.4,
+      "sysRecall": 96.75,
+      "sysFpr": 24.85
+    },
+    {
+      "t": 0.5321,
+      "mlRecall": 95.4,
+      "mlFpr": 20.4,
+      "sysRecall": 96.7,
+      "sysFpr": 24.85
+    },
+    {
+      "t": 0.5353,
+      "mlRecall": 95.4,
+      "mlFpr": 20.35,
+      "sysRecall": 96.7,
+      "sysFpr": 24.85
+    },
+    {
+      "t": 0.5435,
+      "mlRecall": 95.4,
+      "mlFpr": 20.3,
+      "sysRecall": 96.7,
+      "sysFpr": 24.85
+    },
+    {
+      "t": 0.5444,
+      "mlRecall": 95.4,
+      "mlFpr": 20.25,
+      "sysRecall": 96.7,
+      "sysFpr": 24.8
+    },
+    {
+      "t": 0.5446,
+      "mlRecall": 95.4,
+      "mlFpr": 20.2,
+      "sysRecall": 96.7,
+      "sysFpr": 24.8
+    },
+    {
+      "t": 0.5449,
+      "mlRecall": 95.4,
+      "mlFpr": 20.15,
+      "sysRecall": 96.7,
+      "sysFpr": 24.75
+    },
+    {
+      "t": 0.5451,
+      "mlRecall": 95.35,
+      "mlFpr": 20.15,
+      "sysRecall": 96.7,
+      "sysFpr": 24.75
+    },
+    {
+      "t": 0.5513,
+      "mlRecall": 95.35,
+      "mlFpr": 20.1,
+      "sysRecall": 96.7,
+      "sysFpr": 24.75
+    },
+    {
+      "t": 0.5568,
+      "mlRecall": 95.3,
+      "mlFpr": 20.1,
+      "sysRecall": 96.7,
+      "sysFpr": 24.75
+    },
+    {
+      "t": 0.5581,
+      "mlRecall": 95.3,
+      "mlFpr": 20.05,
+      "sysRecall": 96.7,
+      "sysFpr": 24.7
+    },
+    {
+      "t": 0.5589,
+      "mlRecall": 95.25,
+      "mlFpr": 20.05,
+      "sysRecall": 96.7,
+      "sysFpr": 24.7
+    },
+    {
+      "t": 0.5598,
+      "mlRecall": 95.2,
+      "mlFpr": 20.05,
+      "sysRecall": 96.7,
+      "sysFpr": 24.7
+    },
+    {
+      "t": 0.5638,
+      "mlRecall": 95.2,
+      "mlFpr": 20,
+      "sysRecall": 96.7,
+      "sysFpr": 24.7
+    },
+    {
+      "t": 0.5707,
+      "mlRecall": 95.2,
+      "mlFpr": 19.95,
+      "sysRecall": 96.7,
+      "sysFpr": 24.65
+    },
+    {
+      "t": 0.5725,
+      "mlRecall": 95.2,
+      "mlFpr": 19.9,
+      "sysRecall": 96.7,
+      "sysFpr": 24.65
+    },
+    {
+      "t": 0.5743,
+      "mlRecall": 95.2,
+      "mlFpr": 19.85,
+      "sysRecall": 96.7,
+      "sysFpr": 24.6
+    },
+    {
+      "t": 0.5777,
+      "mlRecall": 95.15,
+      "mlFpr": 19.85,
+      "sysRecall": 96.65,
+      "sysFpr": 24.6
+    },
+    {
+      "t": 0.5817,
+      "mlRecall": 95.15,
+      "mlFpr": 19.8,
+      "sysRecall": 96.65,
+      "sysFpr": 24.55
+    },
+    {
+      "t": 0.5902,
+      "mlRecall": 95.15,
+      "mlFpr": 19.75,
+      "sysRecall": 96.65,
+      "sysFpr": 24.5
+    },
+    {
+      "t": 0.5963,
+      "mlRecall": 95.15,
+      "mlFpr": 19.7,
+      "sysRecall": 96.65,
+      "sysFpr": 24.45
+    },
+    {
+      "t": 0.597,
+      "mlRecall": 95.15,
+      "mlFpr": 19.65,
+      "sysRecall": 96.65,
+      "sysFpr": 24.45
+    },
+    {
+      "t": 0.5977,
+      "mlRecall": 95.15,
+      "mlFpr": 19.6,
+      "sysRecall": 96.65,
+      "sysFpr": 24.4
+    },
+    {
+      "t": 0.603,
+      "mlRecall": 95.15,
+      "mlFpr": 19.55,
+      "sysRecall": 96.65,
+      "sysFpr": 24.35
+    },
+    {
+      "t": 0.6031,
+      "mlRecall": 95.15,
+      "mlFpr": 19.5,
+      "sysRecall": 96.65,
+      "sysFpr": 24.3
+    },
+    {
+      "t": 0.6036,
+      "mlRecall": 95.1,
+      "mlFpr": 19.5,
+      "sysRecall": 96.6,
+      "sysFpr": 24.3
+    },
+    {
+      "t": 0.6044,
+      "mlRecall": 95.1,
+      "mlFpr": 19.4,
+      "sysRecall": 96.6,
+      "sysFpr": 24.25
+    },
+    {
+      "t": 0.6134,
+      "mlRecall": 95.05,
+      "mlFpr": 19.4,
+      "sysRecall": 96.55,
+      "sysFpr": 24.25
+    },
+    {
+      "t": 0.6166,
+      "mlRecall": 95,
+      "mlFpr": 19.4,
+      "sysRecall": 96.55,
+      "sysFpr": 24.25
+    },
+    {
+      "t": 0.6247,
+      "mlRecall": 94.95,
+      "mlFpr": 19.4,
+      "sysRecall": 96.5,
+      "sysFpr": 24.25
+    },
+    {
+      "t": 0.6296,
+      "mlRecall": 94.95,
+      "mlFpr": 19.35,
+      "sysRecall": 96.5,
+      "sysFpr": 24.2
+    },
+    {
+      "t": 0.6315,
+      "mlRecall": 94.95,
+      "mlFpr": 19.3,
+      "sysRecall": 96.5,
+      "sysFpr": 24.15
+    },
+    {
+      "t": 0.637,
+      "mlRecall": 94.95,
+      "mlFpr": 19.25,
+      "sysRecall": 96.5,
+      "sysFpr": 24.1
+    },
+    {
+      "t": 0.6383,
+      "mlRecall": 94.95,
+      "mlFpr": 19.2,
+      "sysRecall": 96.5,
+      "sysFpr": 24.05
+    },
+    {
+      "t": 0.6395,
+      "mlRecall": 94.9,
+      "mlFpr": 19.2,
+      "sysRecall": 96.5,
+      "sysFpr": 24.05
+    },
+    {
+      "t": 0.6486,
+      "mlRecall": 94.9,
+      "mlFpr": 19.15,
+      "sysRecall": 96.5,
+      "sysFpr": 24
+    },
+    {
+      "t": 0.6496,
+      "mlRecall": 94.9,
+      "mlFpr": 19.1,
+      "sysRecall": 96.5,
+      "sysFpr": 23.95
+    },
+    {
+      "t": 0.65,
+      "mlRecall": 94.85,
+      "mlFpr": 19.1,
+      "sysRecall": 96.45,
+      "sysFpr": 23.95
+    },
+    {
+      "t": 0.6591,
+      "mlRecall": 94.8,
+      "mlFpr": 19.1,
+      "sysRecall": 96.4,
+      "sysFpr": 23.95
+    },
+    {
+      "t": 0.6602,
+      "mlRecall": 94.75,
+      "mlFpr": 19.1,
+      "sysRecall": 96.35,
+      "sysFpr": 23.95
+    },
+    {
+      "t": 0.6617,
+      "mlRecall": 94.7,
+      "mlFpr": 19.1,
+      "sysRecall": 96.3,
+      "sysFpr": 23.95
+    },
+    {
+      "t": 0.6635,
+      "mlRecall": 94.65,
+      "mlFpr": 19.1,
+      "sysRecall": 96.25,
+      "sysFpr": 23.95
+    },
+    {
+      "t": 0.6679,
+      "mlRecall": 94.65,
+      "mlFpr": 19.05,
+      "sysRecall": 96.25,
+      "sysFpr": 23.9
+    },
+    {
+      "t": 0.6684,
+      "mlRecall": 94.65,
+      "mlFpr": 19,
+      "sysRecall": 96.25,
+      "sysFpr": 23.9
+    },
+    {
+      "t": 0.6686,
+      "mlRecall": 94.6,
+      "mlFpr": 19,
+      "sysRecall": 96.25,
+      "sysFpr": 23.9
+    },
+    {
+      "t": 0.6694,
+      "mlRecall": 94.55,
+      "mlFpr": 19,
+      "sysRecall": 96.2,
+      "sysFpr": 23.9
+    },
+    {
+      "t": 0.6697,
+      "mlRecall": 94.5,
+      "mlFpr": 19,
+      "sysRecall": 96.15,
+      "sysFpr": 23.9
+    },
+    {
+      "t": 0.6705,
+      "mlRecall": 94.45,
+      "mlFpr": 19,
+      "sysRecall": 96.1,
+      "sysFpr": 23.9
+    },
+    {
+      "t": 0.6706,
+      "mlRecall": 94.45,
+      "mlFpr": 18.95,
+      "sysRecall": 96.1,
+      "sysFpr": 23.85
+    },
+    {
+      "t": 0.6731,
+      "mlRecall": 94.4,
+      "mlFpr": 18.95,
+      "sysRecall": 96.1,
+      "sysFpr": 23.85
+    },
+    {
+      "t": 0.6737,
+      "mlRecall": 94.35,
+      "mlFpr": 18.95,
+      "sysRecall": 96.1,
+      "sysFpr": 23.85
+    },
+    {
+      "t": 0.6745,
+      "mlRecall": 94.3,
+      "mlFpr": 18.95,
+      "sysRecall": 96.1,
+      "sysFpr": 23.85
+    },
+    {
+      "t": 0.6779,
+      "mlRecall": 94.3,
+      "mlFpr": 18.9,
+      "sysRecall": 96.1,
+      "sysFpr": 23.8
+    },
+    {
+      "t": 0.6868,
+      "mlRecall": 94.25,
+      "mlFpr": 18.9,
+      "sysRecall": 96.1,
+      "sysFpr": 23.8
+    },
+    {
+      "t": 0.6874,
+      "mlRecall": 94.2,
+      "mlFpr": 18.9,
+      "sysRecall": 96.05,
+      "sysFpr": 23.8
+    },
+    {
+      "t": 0.6911,
+      "mlRecall": 94.2,
+      "mlFpr": 18.85,
+      "sysRecall": 96.05,
+      "sysFpr": 23.75
+    },
+    {
+      "t": 0.6952,
+      "mlRecall": 94.2,
+      "mlFpr": 18.8,
+      "sysRecall": 96.05,
+      "sysFpr": 23.7
+    },
+    {
+      "t": 0.6964,
+      "mlRecall": 94.15,
+      "mlFpr": 18.8,
+      "sysRecall": 96,
+      "sysFpr": 23.7
+    },
+    {
+      "t": 0.7032,
+      "mlRecall": 94.15,
+      "mlFpr": 18.75,
+      "sysRecall": 96,
+      "sysFpr": 23.65
+    },
+    {
+      "t": 0.7036,
+      "mlRecall": 94.15,
+      "mlFpr": 18.7,
+      "sysRecall": 96,
+      "sysFpr": 23.6
+    },
+    {
+      "t": 0.7055,
+      "mlRecall": 94.15,
+      "mlFpr": 18.65,
+      "sysRecall": 96,
+      "sysFpr": 23.6
+    },
+    {
+      "t": 0.7059,
+      "mlRecall": 94.1,
+      "mlFpr": 18.65,
+      "sysRecall": 95.95,
+      "sysFpr": 23.6
+    },
+    {
+      "t": 0.7066,
+      "mlRecall": 94.1,
+      "mlFpr": 18.6,
+      "sysRecall": 95.95,
+      "sysFpr": 23.6
+    },
+    {
+      "t": 0.7071,
+      "mlRecall": 94.05,
+      "mlFpr": 18.6,
+      "sysRecall": 95.95,
+      "sysFpr": 23.6
+    },
+    {
+      "t": 0.7119,
+      "mlRecall": 94.05,
+      "mlFpr": 18.55,
+      "sysRecall": 95.95,
+      "sysFpr": 23.55
+    },
+    {
+      "t": 0.7124,
+      "mlRecall": 94,
+      "mlFpr": 18.55,
+      "sysRecall": 95.9,
+      "sysFpr": 23.55
+    },
+    {
+      "t": 0.7165,
+      "mlRecall": 94,
+      "mlFpr": 18.5,
+      "sysRecall": 95.9,
+      "sysFpr": 23.5
+    },
+    {
+      "t": 0.7215,
+      "mlRecall": 93.95,
+      "mlFpr": 18.5,
+      "sysRecall": 95.85,
+      "sysFpr": 23.5
+    },
+    {
+      "t": 0.7228,
+      "mlRecall": 93.95,
+      "mlFpr": 18.45,
+      "sysRecall": 95.85,
+      "sysFpr": 23.45
+    },
+    {
+      "t": 0.7238,
+      "mlRecall": 93.9,
+      "mlFpr": 18.45,
+      "sysRecall": 95.85,
+      "sysFpr": 23.45
+    },
+    {
+      "t": 0.728,
+      "mlRecall": 93.9,
+      "mlFpr": 18.4,
+      "sysRecall": 95.85,
+      "sysFpr": 23.45
+    },
+    {
+      "t": 0.7316,
+      "mlRecall": 93.9,
+      "mlFpr": 18.35,
+      "sysRecall": 95.85,
+      "sysFpr": 23.4
+    },
+    {
+      "t": 0.7324,
+      "mlRecall": 93.85,
+      "mlFpr": 18.35,
+      "sysRecall": 95.85,
+      "sysFpr": 23.4
+    },
+    {
+      "t": 0.7343,
+      "mlRecall": 93.8,
+      "mlFpr": 18.35,
+      "sysRecall": 95.8,
+      "sysFpr": 23.4
+    },
+    {
+      "t": 0.7353,
+      "mlRecall": 93.75,
+      "mlFpr": 18.35,
+      "sysRecall": 95.75,
+      "sysFpr": 23.4
+    },
+    {
+      "t": 0.7359,
+      "mlRecall": 93.7,
+      "mlFpr": 18.35,
+      "sysRecall": 95.75,
+      "sysFpr": 23.4
+    },
+    {
+      "t": 0.7451,
+      "mlRecall": 93.7,
+      "mlFpr": 18.3,
+      "sysRecall": 95.75,
+      "sysFpr": 23.35
+    },
+    {
+      "t": 0.7455,
+      "mlRecall": 93.7,
+      "mlFpr": 18.25,
+      "sysRecall": 95.75,
+      "sysFpr": 23.3
+    },
+    {
+      "t": 0.7465,
+      "mlRecall": 93.7,
+      "mlFpr": 18.2,
+      "sysRecall": 95.75,
+      "sysFpr": 23.25
+    },
+    {
+      "t": 0.7468,
+      "mlRecall": 93.7,
+      "mlFpr": 18.15,
+      "sysRecall": 95.75,
+      "sysFpr": 23.2
+    },
+    {
+      "t": 0.7495,
+      "mlRecall": 93.65,
+      "mlFpr": 18.15,
+      "sysRecall": 95.7,
+      "sysFpr": 23.2
+    },
+    {
+      "t": 0.7563,
+      "mlRecall": 93.6,
+      "mlFpr": 18.15,
+      "sysRecall": 95.65,
+      "sysFpr": 23.2
+    },
+    {
+      "t": 0.7565,
+      "mlRecall": 93.6,
+      "mlFpr": 18.1,
+      "sysRecall": 95.65,
+      "sysFpr": 23.15
+    },
+    {
+      "t": 0.7591,
+      "mlRecall": 93.6,
+      "mlFpr": 18.05,
+      "sysRecall": 95.65,
+      "sysFpr": 23.15
+    },
+    {
+      "t": 0.762,
+      "mlRecall": 93.6,
+      "mlFpr": 18,
+      "sysRecall": 95.65,
+      "sysFpr": 23.15
+    },
+    {
+      "t": 0.7663,
+      "mlRecall": 93.55,
+      "mlFpr": 18,
+      "sysRecall": 95.6,
+      "sysFpr": 23.15
+    },
+    {
+      "t": 0.7676,
+      "mlRecall": 93.55,
+      "mlFpr": 17.95,
+      "sysRecall": 95.6,
+      "sysFpr": 23.1
+    },
+    {
+      "t": 0.7697,
+      "mlRecall": 93.5,
+      "mlFpr": 17.95,
+      "sysRecall": 95.55,
+      "sysFpr": 23.1
+    },
+    {
+      "t": 0.772,
+      "mlRecall": 93.45,
+      "mlFpr": 17.95,
+      "sysRecall": 95.5,
+      "sysFpr": 23.1
+    },
+    {
+      "t": 0.7728,
+      "mlRecall": 93.45,
+      "mlFpr": 17.9,
+      "sysRecall": 95.5,
+      "sysFpr": 23.05
+    },
+    {
+      "t": 0.7788,
+      "mlRecall": 93.4,
+      "mlFpr": 17.9,
+      "sysRecall": 95.45,
+      "sysFpr": 23.05
+    },
+    {
+      "t": 0.7814,
+      "mlRecall": 93.4,
+      "mlFpr": 17.85,
+      "sysRecall": 95.45,
+      "sysFpr": 23
+    },
+    {
+      "t": 0.7826,
+      "mlRecall": 93.35,
+      "mlFpr": 17.85,
+      "sysRecall": 95.4,
+      "sysFpr": 23
+    },
+    {
+      "t": 0.7834,
+      "mlRecall": 93.35,
+      "mlFpr": 17.8,
+      "sysRecall": 95.4,
+      "sysFpr": 22.95
+    },
+    {
+      "t": 0.7843,
+      "mlRecall": 93.35,
+      "mlFpr": 17.75,
+      "sysRecall": 95.4,
+      "sysFpr": 22.9
+    },
+    {
+      "t": 0.788,
+      "mlRecall": 93.3,
+      "mlFpr": 17.75,
+      "sysRecall": 95.4,
+      "sysFpr": 22.9
+    },
+    {
+      "t": 0.7905,
+      "mlRecall": 93.25,
+      "mlFpr": 17.75,
+      "sysRecall": 95.35,
+      "sysFpr": 22.9
+    },
+    {
+      "t": 0.7921,
+      "mlRecall": 93.2,
+      "mlFpr": 17.75,
+      "sysRecall": 95.3,
+      "sysFpr": 22.9
+    },
+    {
+      "t": 0.7943,
+      "mlRecall": 93.15,
+      "mlFpr": 17.75,
+      "sysRecall": 95.25,
+      "sysFpr": 22.9
+    },
+    {
+      "t": 0.7945,
+      "mlRecall": 93.15,
+      "mlFpr": 17.7,
+      "sysRecall": 95.25,
+      "sysFpr": 22.9
+    },
+    {
+      "t": 0.7975,
+      "mlRecall": 93.1,
+      "mlFpr": 17.7,
+      "sysRecall": 95.2,
+      "sysFpr": 22.9
+    },
+    {
+      "t": 0.8012,
+      "mlRecall": 93.1,
+      "mlFpr": 17.65,
+      "sysRecall": 95.2,
+      "sysFpr": 22.9
+    },
+    {
+      "t": 0.8019,
+      "mlRecall": 93.05,
+      "mlFpr": 17.65,
+      "sysRecall": 95.15,
+      "sysFpr": 22.9
+    },
+    {
+      "t": 0.8031,
+      "mlRecall": 93,
+      "mlFpr": 17.65,
+      "sysRecall": 95.1,
+      "sysFpr": 22.9
+    },
+    {
+      "t": 0.8035,
+      "mlRecall": 92.95,
+      "mlFpr": 17.65,
+      "sysRecall": 95.05,
+      "sysFpr": 22.9
+    },
+    {
+      "t": 0.8055,
+      "mlRecall": 92.95,
+      "mlFpr": 17.6,
+      "sysRecall": 95.05,
+      "sysFpr": 22.85
+    },
+    {
+      "t": 0.8073,
+      "mlRecall": 92.95,
+      "mlFpr": 17.55,
+      "sysRecall": 95.05,
+      "sysFpr": 22.8
+    },
+    {
+      "t": 0.8085,
+      "mlRecall": 92.95,
+      "mlFpr": 17.5,
+      "sysRecall": 95.05,
+      "sysFpr": 22.75
+    },
+    {
+      "t": 0.8109,
+      "mlRecall": 92.9,
+      "mlFpr": 17.5,
+      "sysRecall": 95,
+      "sysFpr": 22.75
+    },
+    {
+      "t": 0.8124,
+      "mlRecall": 92.85,
+      "mlFpr": 17.5,
+      "sysRecall": 94.95,
+      "sysFpr": 22.75
+    },
+    {
+      "t": 0.8134,
+      "mlRecall": 92.85,
+      "mlFpr": 17.45,
+      "sysRecall": 94.95,
+      "sysFpr": 22.7
+    },
+    {
+      "t": 0.8151,
+      "mlRecall": 92.8,
+      "mlFpr": 17.45,
+      "sysRecall": 94.95,
+      "sysFpr": 22.7
+    },
+    {
+      "t": 0.8172,
+      "mlRecall": 92.75,
+      "mlFpr": 17.45,
+      "sysRecall": 94.9,
+      "sysFpr": 22.7
+    },
+    {
+      "t": 0.8179,
+      "mlRecall": 92.75,
+      "mlFpr": 17.4,
+      "sysRecall": 94.9,
+      "sysFpr": 22.65
+    },
+    {
+      "t": 0.8184,
+      "mlRecall": 92.75,
+      "mlFpr": 17.35,
+      "sysRecall": 94.9,
+      "sysFpr": 22.6
+    },
+    {
+      "t": 0.819,
+      "mlRecall": 92.75,
+      "mlFpr": 17.3,
+      "sysRecall": 94.9,
+      "sysFpr": 22.55
+    },
+    {
+      "t": 0.8195,
+      "mlRecall": 92.7,
+      "mlFpr": 17.3,
+      "sysRecall": 94.85,
+      "sysFpr": 22.55
+    },
+    {
+      "t": 0.8237,
+      "mlRecall": 92.65,
+      "mlFpr": 17.3,
+      "sysRecall": 94.8,
+      "sysFpr": 22.55
+    },
+    {
+      "t": 0.8239,
+      "mlRecall": 92.65,
+      "mlFpr": 17.25,
+      "sysRecall": 94.8,
+      "sysFpr": 22.55
+    },
+    {
+      "t": 0.8242,
+      "mlRecall": 92.6,
+      "mlFpr": 17.25,
+      "sysRecall": 94.75,
+      "sysFpr": 22.55
+    },
+    {
+      "t": 0.8252,
+      "mlRecall": 92.55,
+      "mlFpr": 17.25,
+      "sysRecall": 94.7,
+      "sysFpr": 22.55
+    },
+    {
+      "t": 0.8257,
+      "mlRecall": 92.55,
+      "mlFpr": 17.2,
+      "sysRecall": 94.7,
+      "sysFpr": 22.5
+    },
+    {
+      "t": 0.8277,
+      "mlRecall": 92.5,
+      "mlFpr": 17.2,
+      "sysRecall": 94.65,
+      "sysFpr": 22.5
+    },
+    {
+      "t": 0.8284,
+      "mlRecall": 92.5,
+      "mlFpr": 17.1,
+      "sysRecall": 94.65,
+      "sysFpr": 22.4
+    },
+    {
+      "t": 0.8285,
+      "mlRecall": 92.45,
+      "mlFpr": 17.1,
+      "sysRecall": 94.6,
+      "sysFpr": 22.4
+    },
+    {
+      "t": 0.8309,
+      "mlRecall": 92.4,
+      "mlFpr": 17.1,
+      "sysRecall": 94.55,
+      "sysFpr": 22.4
+    },
+    {
+      "t": 0.8314,
+      "mlRecall": 92.4,
+      "mlFpr": 17.05,
+      "sysRecall": 94.55,
+      "sysFpr": 22.35
+    },
+    {
+      "t": 0.8319,
+      "mlRecall": 92.4,
+      "mlFpr": 17,
+      "sysRecall": 94.55,
+      "sysFpr": 22.35
+    },
+    {
+      "t": 0.8325,
+      "mlRecall": 92.4,
+      "mlFpr": 16.95,
+      "sysRecall": 94.55,
+      "sysFpr": 22.3
+    },
+    {
+      "t": 0.8345,
+      "mlRecall": 92.35,
+      "mlFpr": 16.95,
+      "sysRecall": 94.55,
+      "sysFpr": 22.3
+    },
+    {
+      "t": 0.8349,
+      "mlRecall": 92.35,
+      "mlFpr": 16.9,
+      "sysRecall": 94.55,
+      "sysFpr": 22.25
+    },
+    {
+      "t": 0.8367,
+      "mlRecall": 92.35,
+      "mlFpr": 16.85,
+      "sysRecall": 94.55,
+      "sysFpr": 22.2
+    },
+    {
+      "t": 0.8371,
+      "mlRecall": 92.3,
+      "mlFpr": 16.85,
+      "sysRecall": 94.5,
+      "sysFpr": 22.2
+    },
+    {
+      "t": 0.8384,
+      "mlRecall": 92.3,
+      "mlFpr": 16.8,
+      "sysRecall": 94.5,
+      "sysFpr": 22.2
+    },
+    {
+      "t": 0.8392,
+      "mlRecall": 92.25,
+      "mlFpr": 16.8,
+      "sysRecall": 94.5,
+      "sysFpr": 22.2
+    },
+    {
+      "t": 0.842,
+      "mlRecall": 92.2,
+      "mlFpr": 16.8,
+      "sysRecall": 94.45,
+      "sysFpr": 22.2
+    },
+    {
+      "t": 0.8444,
+      "mlRecall": 92.2,
+      "mlFpr": 16.75,
+      "sysRecall": 94.45,
+      "sysFpr": 22.2
+    },
+    {
+      "t": 0.8445,
+      "mlRecall": 92.15,
+      "mlFpr": 16.75,
+      "sysRecall": 94.4,
+      "sysFpr": 22.2
+    },
+    {
+      "t": 0.8451,
+      "mlRecall": 92.1,
+      "mlFpr": 16.75,
+      "sysRecall": 94.35,
+      "sysFpr": 22.2
+    },
+    {
+      "t": 0.8475,
+      "mlRecall": 92.05,
+      "mlFpr": 16.75,
+      "sysRecall": 94.3,
+      "sysFpr": 22.2
+    },
+    {
+      "t": 0.8487,
+      "mlRecall": 92.05,
+      "mlFpr": 16.7,
+      "sysRecall": 94.3,
+      "sysFpr": 22.15
+    },
+    {
+      "t": 0.8497,
+      "mlRecall": 92,
+      "mlFpr": 16.7,
+      "sysRecall": 94.25,
+      "sysFpr": 22.15
+    },
+    {
+      "t": 0.8505,
+      "mlRecall": 91.95,
+      "mlFpr": 16.7,
+      "sysRecall": 94.25,
+      "sysFpr": 22.15
+    },
+    {
+      "t": 0.8516,
+      "mlRecall": 91.95,
+      "mlFpr": 16.65,
+      "sysRecall": 94.25,
+      "sysFpr": 22.1
+    },
+    {
+      "t": 0.8533,
+      "mlRecall": 91.95,
+      "mlFpr": 16.6,
+      "sysRecall": 94.25,
+      "sysFpr": 22.05
+    },
+    {
+      "t": 0.8575,
+      "mlRecall": 91.95,
+      "mlFpr": 16.55,
+      "sysRecall": 94.25,
+      "sysFpr": 22
+    },
+    {
+      "t": 0.8588,
+      "mlRecall": 91.9,
+      "mlFpr": 16.55,
+      "sysRecall": 94.2,
+      "sysFpr": 22
+    },
+    {
+      "t": 0.8598,
+      "mlRecall": 91.85,
+      "mlFpr": 16.55,
+      "sysRecall": 94.2,
+      "sysFpr": 22
+    },
+    {
+      "t": 0.8604,
+      "mlRecall": 91.8,
+      "mlFpr": 16.55,
+      "sysRecall": 94.15,
+      "sysFpr": 22
+    },
+    {
+      "t": 0.8607,
+      "mlRecall": 91.75,
+      "mlFpr": 16.55,
+      "sysRecall": 94.1,
+      "sysFpr": 22
+    },
+    {
+      "t": 0.8623,
+      "mlRecall": 91.75,
+      "mlFpr": 16.5,
+      "sysRecall": 94.1,
+      "sysFpr": 22
+    },
+    {
+      "t": 0.8629,
+      "mlRecall": 91.7,
+      "mlFpr": 16.5,
+      "sysRecall": 94.1,
+      "sysFpr": 22
+    },
+    {
+      "t": 0.8655,
+      "mlRecall": 91.7,
+      "mlFpr": 16.45,
+      "sysRecall": 94.1,
+      "sysFpr": 21.95
+    },
+    {
+      "t": 0.8662,
+      "mlRecall": 91.65,
+      "mlFpr": 16.45,
+      "sysRecall": 94.1,
+      "sysFpr": 21.95
+    },
+    {
+      "t": 0.8674,
+      "mlRecall": 91.65,
+      "mlFpr": 16.4,
+      "sysRecall": 94.1,
+      "sysFpr": 21.9
+    },
+    {
+      "t": 0.8683,
+      "mlRecall": 91.65,
+      "mlFpr": 16.35,
+      "sysRecall": 94.1,
+      "sysFpr": 21.85
+    },
+    {
+      "t": 0.8688,
+      "mlRecall": 91.6,
+      "mlFpr": 16.35,
+      "sysRecall": 94.05,
+      "sysFpr": 21.85
+    },
+    {
+      "t": 0.8705,
+      "mlRecall": 91.6,
+      "mlFpr": 16.3,
+      "sysRecall": 94.05,
+      "sysFpr": 21.8
+    },
+    {
+      "t": 0.8708,
+      "mlRecall": 91.6,
+      "mlFpr": 16.25,
+      "sysRecall": 94.05,
+      "sysFpr": 21.75
+    },
+    {
+      "t": 0.8714,
+      "mlRecall": 91.6,
+      "mlFpr": 16.2,
+      "sysRecall": 94.05,
+      "sysFpr": 21.7
+    },
+    {
+      "t": 0.8721,
+      "mlRecall": 91.55,
+      "mlFpr": 16.2,
+      "sysRecall": 94,
+      "sysFpr": 21.7
+    },
+    {
+      "t": 0.8735,
+      "mlRecall": 91.5,
+      "mlFpr": 16.2,
+      "sysRecall": 94,
+      "sysFpr": 21.7
+    },
+    {
+      "t": 0.8737,
+      "mlRecall": 91.5,
+      "mlFpr": 16.15,
+      "sysRecall": 94,
+      "sysFpr": 21.7
+    },
+    {
+      "t": 0.8752,
+      "mlRecall": 91.45,
+      "mlFpr": 16.15,
+      "sysRecall": 93.95,
+      "sysFpr": 21.7
+    },
+    {
+      "t": 0.8772,
+      "mlRecall": 91.45,
+      "mlFpr": 16.1,
+      "sysRecall": 93.95,
+      "sysFpr": 21.65
+    },
+    {
+      "t": 0.8789,
+      "mlRecall": 91.4,
+      "mlFpr": 16.1,
+      "sysRecall": 93.9,
+      "sysFpr": 21.65
+    },
+    {
+      "t": 0.8814,
+      "mlRecall": 91.4,
+      "mlFpr": 16.05,
+      "sysRecall": 93.9,
+      "sysFpr": 21.6
+    },
+    {
+      "t": 0.8835,
+      "mlRecall": 91.35,
+      "mlFpr": 16.05,
+      "sysRecall": 93.9,
+      "sysFpr": 21.6
+    },
+    {
+      "t": 0.8838,
+      "mlRecall": 91.3,
+      "mlFpr": 16.05,
+      "sysRecall": 93.85,
+      "sysFpr": 21.6
+    },
+    {
+      "t": 0.8873,
+      "mlRecall": 91.25,
+      "mlFpr": 16.05,
+      "sysRecall": 93.8,
+      "sysFpr": 21.6
+    },
+    {
+      "t": 0.8881,
+      "mlRecall": 91.2,
+      "mlFpr": 16.05,
+      "sysRecall": 93.75,
+      "sysFpr": 21.6
+    },
+    {
+      "t": 0.8882,
+      "mlRecall": 91.2,
+      "mlFpr": 16,
+      "sysRecall": 93.75,
+      "sysFpr": 21.55
+    },
+    {
+      "t": 0.8885,
+      "mlRecall": 91.15,
+      "mlFpr": 16,
+      "sysRecall": 93.75,
+      "sysFpr": 21.55
+    },
+    {
+      "t": 0.8894,
+      "mlRecall": 91.15,
+      "mlFpr": 15.95,
+      "sysRecall": 93.75,
+      "sysFpr": 21.55
+    },
+    {
+      "t": 0.8896,
+      "mlRecall": 91.1,
+      "mlFpr": 15.9,
+      "sysRecall": 93.75,
+      "sysFpr": 21.55
+    },
+    {
+      "t": 0.8899,
+      "mlRecall": 91.1,
+      "mlFpr": 15.85,
+      "sysRecall": 93.75,
+      "sysFpr": 21.55
+    },
+    {
+      "t": 0.8901,
+      "mlRecall": 91.05,
+      "mlFpr": 15.85,
+      "sysRecall": 93.7,
+      "sysFpr": 21.55
+    },
+    {
+      "t": 0.8914,
+      "mlRecall": 91.05,
+      "mlFpr": 15.8,
+      "sysRecall": 93.7,
+      "sysFpr": 21.5
+    },
+    {
+      "t": 0.8923,
+      "mlRecall": 91,
+      "mlFpr": 15.8,
+      "sysRecall": 93.65,
+      "sysFpr": 21.5
+    },
+    {
+      "t": 0.8929,
+      "mlRecall": 90.95,
+      "mlFpr": 15.8,
+      "sysRecall": 93.65,
+      "sysFpr": 21.5
+    },
+    {
+      "t": 0.8933,
+      "mlRecall": 90.9,
+      "mlFpr": 15.8,
+      "sysRecall": 93.6,
+      "sysFpr": 21.5
+    },
+    {
+      "t": 0.8939,
+      "mlRecall": 90.9,
+      "mlFpr": 15.75,
+      "sysRecall": 93.6,
+      "sysFpr": 21.45
+    },
+    {
+      "t": 0.8941,
+      "mlRecall": 90.9,
+      "mlFpr": 15.65,
+      "sysRecall": 93.6,
+      "sysFpr": 21.4
+    },
+    {
+      "t": 0.8944,
+      "mlRecall": 90.9,
+      "mlFpr": 15.6,
+      "sysRecall": 93.6,
+      "sysFpr": 21.35
+    },
+    {
+      "t": 0.8952,
+      "mlRecall": 90.9,
+      "mlFpr": 15.55,
+      "sysRecall": 93.6,
+      "sysFpr": 21.3
+    },
+    {
+      "t": 0.8955,
+      "mlRecall": 90.9,
+      "mlFpr": 15.5,
+      "sysRecall": 93.6,
+      "sysFpr": 21.3
+    },
+    {
+      "t": 0.8965,
+      "mlRecall": 90.85,
+      "mlFpr": 15.5,
+      "sysRecall": 93.55,
+      "sysFpr": 21.3
+    },
+    {
+      "t": 0.8983,
+      "mlRecall": 90.85,
+      "mlFpr": 15.45,
+      "sysRecall": 93.55,
+      "sysFpr": 21.3
+    },
+    {
+      "t": 0.9009,
+      "mlRecall": 90.85,
+      "mlFpr": 15.4,
+      "sysRecall": 93.55,
+      "sysFpr": 21.25
+    },
+    {
+      "t": 0.9013,
+      "mlRecall": 90.85,
+      "mlFpr": 15.35,
+      "sysRecall": 93.55,
+      "sysFpr": 21.2
+    },
+    {
+      "t": 0.9014,
+      "mlRecall": 90.85,
+      "mlFpr": 15.3,
+      "sysRecall": 93.55,
+      "sysFpr": 21.15
+    },
+    {
+      "t": 0.9024,
+      "mlRecall": 90.8,
+      "mlFpr": 15.3,
+      "sysRecall": 93.5,
+      "sysFpr": 21.15
+    },
+    {
+      "t": 0.9032,
+      "mlRecall": 90.75,
+      "mlFpr": 15.3,
+      "sysRecall": 93.45,
+      "sysFpr": 21.15
+    },
+    {
+      "t": 0.9049,
+      "mlRecall": 90.7,
+      "mlFpr": 15.3,
+      "sysRecall": 93.4,
+      "sysFpr": 21.15
+    },
+    {
+      "t": 0.9056,
+      "mlRecall": 90.65,
+      "mlFpr": 15.3,
+      "sysRecall": 93.4,
+      "sysFpr": 21.15
+    },
+    {
+      "t": 0.9066,
+      "mlRecall": 90.6,
+      "mlFpr": 15.3,
+      "sysRecall": 93.35,
+      "sysFpr": 21.15
+    },
+    {
+      "t": 0.9074,
+      "mlRecall": 90.6,
+      "mlFpr": 15.25,
+      "sysRecall": 93.35,
+      "sysFpr": 21.1
+    },
+    {
+      "t": 0.9085,
+      "mlRecall": 90.55,
+      "mlFpr": 15.25,
+      "sysRecall": 93.35,
+      "sysFpr": 21.1
+    },
+    {
+      "t": 0.909,
+      "mlRecall": 90.55,
+      "mlFpr": 15.2,
+      "sysRecall": 93.35,
+      "sysFpr": 21.05
+    },
+    {
+      "t": 0.9096,
+      "mlRecall": 90.5,
+      "mlFpr": 15.2,
+      "sysRecall": 93.35,
+      "sysFpr": 21.05
+    },
+    {
+      "t": 0.91,
+      "mlRecall": 90.5,
+      "mlFpr": 15.15,
+      "sysRecall": 93.35,
+      "sysFpr": 21
+    },
+    {
+      "t": 0.9101,
+      "mlRecall": 90.5,
+      "mlFpr": 15.1,
+      "sysRecall": 93.35,
+      "sysFpr": 20.95
+    },
+    {
+      "t": 0.9105,
+      "mlRecall": 90.5,
+      "mlFpr": 15,
+      "sysRecall": 93.35,
+      "sysFpr": 20.85
+    },
+    {
+      "t": 0.9106,
+      "mlRecall": 90.45,
+      "mlFpr": 15,
+      "sysRecall": 93.3,
+      "sysFpr": 20.85
+    },
+    {
+      "t": 0.9108,
+      "mlRecall": 90.4,
+      "mlFpr": 15,
+      "sysRecall": 93.3,
+      "sysFpr": 20.85
+    },
+    {
+      "t": 0.911,
+      "mlRecall": 90.35,
+      "mlFpr": 15,
+      "sysRecall": 93.25,
+      "sysFpr": 20.85
+    },
+    {
+      "t": 0.9119,
+      "mlRecall": 90.3,
+      "mlFpr": 14.95,
+      "sysRecall": 93.25,
+      "sysFpr": 20.85
+    },
+    {
+      "t": 0.9121,
+      "mlRecall": 90.25,
+      "mlFpr": 14.95,
+      "sysRecall": 93.25,
+      "sysFpr": 20.85
+    },
+    {
+      "t": 0.9133,
+      "mlRecall": 90.2,
+      "mlFpr": 14.95,
+      "sysRecall": 93.25,
+      "sysFpr": 20.85
+    },
+    {
+      "t": 0.9156,
+      "mlRecall": 90.2,
+      "mlFpr": 14.9,
+      "sysRecall": 93.25,
+      "sysFpr": 20.8
+    },
+    {
+      "t": 0.916,
+      "mlRecall": 90.15,
+      "mlFpr": 14.9,
+      "sysRecall": 93.2,
+      "sysFpr": 20.8
+    },
+    {
+      "t": 0.9162,
+      "mlRecall": 90.15,
+      "mlFpr": 14.85,
+      "sysRecall": 93.2,
+      "sysFpr": 20.75
+    },
+    {
+      "t": 0.9163,
+      "mlRecall": 90.1,
+      "mlFpr": 14.85,
+      "sysRecall": 93.15,
+      "sysFpr": 20.75
+    },
+    {
+      "t": 0.9174,
+      "mlRecall": 90.05,
+      "mlFpr": 14.85,
+      "sysRecall": 93.1,
+      "sysFpr": 20.75
+    },
+    {
+      "t": 0.9182,
+      "mlRecall": 90,
+      "mlFpr": 14.85,
+      "sysRecall": 93.05,
+      "sysFpr": 20.75
+    },
+    {
+      "t": 0.9187,
+      "mlRecall": 90,
+      "mlFpr": 14.8,
+      "sysRecall": 93.05,
+      "sysFpr": 20.7
+    },
+    {
+      "t": 0.9205,
+      "mlRecall": 90,
+      "mlFpr": 14.75,
+      "sysRecall": 93.05,
+      "sysFpr": 20.7
+    },
+    {
+      "t": 0.9208,
+      "mlRecall": 90,
+      "mlFpr": 14.7,
+      "sysRecall": 93.05,
+      "sysFpr": 20.7
+    },
+    {
+      "t": 0.9209,
+      "mlRecall": 89.95,
+      "mlFpr": 14.7,
+      "sysRecall": 93.05,
+      "sysFpr": 20.7
+    },
+    {
+      "t": 0.9212,
+      "mlRecall": 89.95,
+      "mlFpr": 14.65,
+      "sysRecall": 93.05,
+      "sysFpr": 20.65
+    },
+    {
+      "t": 0.9216,
+      "mlRecall": 89.9,
+      "mlFpr": 14.65,
+      "sysRecall": 93,
+      "sysFpr": 20.65
+    },
+    {
+      "t": 0.9219,
+      "mlRecall": 89.85,
+      "mlFpr": 14.65,
+      "sysRecall": 93,
+      "sysFpr": 20.65
+    },
+    {
+      "t": 0.922,
+      "mlRecall": 89.8,
+      "mlFpr": 14.65,
+      "sysRecall": 93,
+      "sysFpr": 20.65
+    },
+    {
+      "t": 0.9221,
+      "mlRecall": 89.75,
+      "mlFpr": 14.65,
+      "sysRecall": 93,
+      "sysFpr": 20.65
+    },
+    {
+      "t": 0.9223,
+      "mlRecall": 89.7,
+      "mlFpr": 14.65,
+      "sysRecall": 92.95,
+      "sysFpr": 20.65
+    },
+    {
+      "t": 0.9242,
+      "mlRecall": 89.7,
+      "mlFpr": 14.6,
+      "sysRecall": 92.95,
+      "sysFpr": 20.6
+    },
+    {
+      "t": 0.9246,
+      "mlRecall": 89.7,
+      "mlFpr": 14.55,
+      "sysRecall": 92.95,
+      "sysFpr": 20.55
+    },
+    {
+      "t": 0.9251,
+      "mlRecall": 89.7,
+      "mlFpr": 14.5,
+      "sysRecall": 92.95,
+      "sysFpr": 20.5
+    },
+    {
+      "t": 0.9256,
+      "mlRecall": 89.7,
+      "mlFpr": 14.4,
+      "sysRecall": 92.95,
+      "sysFpr": 20.45
+    },
+    {
+      "t": 0.9258,
+      "mlRecall": 89.7,
+      "mlFpr": 14.35,
+      "sysRecall": 92.95,
+      "sysFpr": 20.4
+    },
+    {
+      "t": 0.926,
+      "mlRecall": 89.65,
+      "mlFpr": 14.35,
+      "sysRecall": 92.9,
+      "sysFpr": 20.4
+    },
+    {
+      "t": 0.9271,
+      "mlRecall": 89.6,
+      "mlFpr": 14.35,
+      "sysRecall": 92.85,
+      "sysFpr": 20.4
+    },
+    {
+      "t": 0.9273,
+      "mlRecall": 89.6,
+      "mlFpr": 14.3,
+      "sysRecall": 92.85,
+      "sysFpr": 20.4
+    },
+    {
+      "t": 0.9274,
+      "mlRecall": 89.6,
+      "mlFpr": 14.25,
+      "sysRecall": 92.85,
+      "sysFpr": 20.4
+    },
+    {
+      "t": 0.9277,
+      "mlRecall": 89.6,
+      "mlFpr": 14.2,
+      "sysRecall": 92.85,
+      "sysFpr": 20.4
+    },
+    {
+      "t": 0.9278,
+      "mlRecall": 89.55,
+      "mlFpr": 14.15,
+      "sysRecall": 92.8,
+      "sysFpr": 20.35
+    },
+    {
+      "t": 0.928,
+      "mlRecall": 89.55,
+      "mlFpr": 14.1,
+      "sysRecall": 92.8,
+      "sysFpr": 20.3
+    },
+    {
+      "t": 0.9284,
+      "mlRecall": 89.5,
+      "mlFpr": 14.1,
+      "sysRecall": 92.75,
+      "sysFpr": 20.3
+    },
+    {
+      "t": 0.9288,
+      "mlRecall": 89.45,
+      "mlFpr": 14.1,
+      "sysRecall": 92.7,
+      "sysFpr": 20.3
+    },
+    {
+      "t": 0.9292,
+      "mlRecall": 89.4,
+      "mlFpr": 14.1,
+      "sysRecall": 92.7,
+      "sysFpr": 20.3
+    },
+    {
+      "t": 0.9295,
+      "mlRecall": 89.35,
+      "mlFpr": 14.1,
+      "sysRecall": 92.7,
+      "sysFpr": 20.3
+    },
+    {
+      "t": 0.9297,
+      "mlRecall": 89.3,
+      "mlFpr": 14.1,
+      "sysRecall": 92.7,
+      "sysFpr": 20.3
+    },
+    {
+      "t": 0.9301,
+      "mlRecall": 89.25,
+      "mlFpr": 14.1,
+      "sysRecall": 92.7,
+      "sysFpr": 20.3
+    },
+    {
+      "t": 0.9312,
+      "mlRecall": 89.2,
+      "mlFpr": 14.05,
+      "sysRecall": 92.65,
+      "sysFpr": 20.25
+    },
+    {
+      "t": 0.932,
+      "mlRecall": 89.15,
+      "mlFpr": 14.05,
+      "sysRecall": 92.65,
+      "sysFpr": 20.25
+    },
+    {
+      "t": 0.9321,
+      "mlRecall": 89.05,
+      "mlFpr": 14.05,
+      "sysRecall": 92.55,
+      "sysFpr": 20.25
+    },
+    {
+      "t": 0.9326,
+      "mlRecall": 89,
+      "mlFpr": 14.05,
+      "sysRecall": 92.5,
+      "sysFpr": 20.25
+    },
+    {
+      "t": 0.9328,
+      "mlRecall": 88.95,
+      "mlFpr": 14.05,
+      "sysRecall": 92.45,
+      "sysFpr": 20.25
+    },
+    {
+      "t": 0.9336,
+      "mlRecall": 88.9,
+      "mlFpr": 14.05,
+      "sysRecall": 92.4,
+      "sysFpr": 20.25
+    },
+    {
+      "t": 0.9354,
+      "mlRecall": 88.9,
+      "mlFpr": 13.95,
+      "sysRecall": 92.4,
+      "sysFpr": 20.15
+    },
+    {
+      "t": 0.9357,
+      "mlRecall": 88.9,
+      "mlFpr": 13.9,
+      "sysRecall": 92.4,
+      "sysFpr": 20.1
+    },
+    {
+      "t": 0.9359,
+      "mlRecall": 88.9,
+      "mlFpr": 13.85,
+      "sysRecall": 92.4,
+      "sysFpr": 20.05
+    },
+    {
+      "t": 0.9366,
+      "mlRecall": 88.85,
+      "mlFpr": 13.85,
+      "sysRecall": 92.35,
+      "sysFpr": 20.05
+    },
+    {
+      "t": 0.9371,
+      "mlRecall": 88.8,
+      "mlFpr": 13.85,
+      "sysRecall": 92.3,
+      "sysFpr": 20.05
+    },
+    {
+      "t": 0.9372,
+      "mlRecall": 88.75,
+      "mlFpr": 13.85,
+      "sysRecall": 92.25,
+      "sysFpr": 20.05
+    },
+    {
+      "t": 0.9376,
+      "mlRecall": 88.7,
+      "mlFpr": 13.85,
+      "sysRecall": 92.2,
+      "sysFpr": 20.05
+    },
+    {
+      "t": 0.939,
+      "mlRecall": 88.7,
+      "mlFpr": 13.8,
+      "sysRecall": 92.2,
+      "sysFpr": 20
+    },
+    {
+      "t": 0.9391,
+      "mlRecall": 88.6,
+      "mlFpr": 13.8,
+      "sysRecall": 92.2,
+      "sysFpr": 20
+    },
+    {
+      "t": 0.9401,
+      "mlRecall": 88.6,
+      "mlFpr": 13.75,
+      "sysRecall": 92.2,
+      "sysFpr": 19.95
+    },
+    {
+      "t": 0.9403,
+      "mlRecall": 88.55,
+      "mlFpr": 13.75,
+      "sysRecall": 92.2,
+      "sysFpr": 19.95
+    },
+    {
+      "t": 0.941,
+      "mlRecall": 88.5,
+      "mlFpr": 13.75,
+      "sysRecall": 92.2,
+      "sysFpr": 19.95
+    },
+    {
+      "t": 0.9413,
+      "mlRecall": 88.45,
+      "mlFpr": 13.75,
+      "sysRecall": 92.15,
+      "sysFpr": 19.95
+    },
+    {
+      "t": 0.9416,
+      "mlRecall": 88.45,
+      "mlFpr": 13.7,
+      "sysRecall": 92.15,
+      "sysFpr": 19.95
+    },
+    {
+      "t": 0.9427,
+      "mlRecall": 88.45,
+      "mlFpr": 13.65,
+      "sysRecall": 92.15,
+      "sysFpr": 19.9
+    },
+    {
+      "t": 0.9435,
+      "mlRecall": 88.45,
+      "mlFpr": 13.6,
+      "sysRecall": 92.15,
+      "sysFpr": 19.9
+    },
+    {
+      "t": 0.9436,
+      "mlRecall": 88.4,
+      "mlFpr": 13.6,
+      "sysRecall": 92.1,
+      "sysFpr": 19.9
+    },
+    {
+      "t": 0.9437,
+      "mlRecall": 88.35,
+      "mlFpr": 13.6,
+      "sysRecall": 92.1,
+      "sysFpr": 19.9
+    },
+    {
+      "t": 0.9444,
+      "mlRecall": 88.3,
+      "mlFpr": 13.6,
+      "sysRecall": 92.05,
+      "sysFpr": 19.9
+    },
+    {
+      "t": 0.9449,
+      "mlRecall": 88.3,
+      "mlFpr": 13.55,
+      "sysRecall": 92.05,
+      "sysFpr": 19.9
+    },
+    {
+      "t": 0.9462,
+      "mlRecall": 88.25,
+      "mlFpr": 13.55,
+      "sysRecall": 92.05,
+      "sysFpr": 19.9
+    },
+    {
+      "t": 0.9472,
+      "mlRecall": 88.25,
+      "mlFpr": 13.5,
+      "sysRecall": 92.05,
+      "sysFpr": 19.9
+    },
+    {
+      "t": 0.9473,
+      "mlRecall": 88.25,
+      "mlFpr": 13.45,
+      "sysRecall": 92.05,
+      "sysFpr": 19.85
+    },
+    {
+      "t": 0.9475,
+      "mlRecall": 88.2,
+      "mlFpr": 13.45,
+      "sysRecall": 92,
+      "sysFpr": 19.85
+    },
+    {
+      "t": 0.948,
+      "mlRecall": 88.15,
+      "mlFpr": 13.45,
+      "sysRecall": 92,
+      "sysFpr": 19.85
+    },
+    {
+      "t": 0.9485,
+      "mlRecall": 88.1,
+      "mlFpr": 13.45,
+      "sysRecall": 92,
+      "sysFpr": 19.85
+    },
+    {
+      "t": 0.9492,
+      "mlRecall": 88.05,
+      "mlFpr": 13.45,
+      "sysRecall": 92,
+      "sysFpr": 19.85
+    },
+    {
+      "t": 0.9493,
+      "mlRecall": 88,
+      "mlFpr": 13.45,
+      "sysRecall": 91.95,
+      "sysFpr": 19.85
+    },
+    {
+      "t": 0.9502,
+      "mlRecall": 87.95,
+      "mlFpr": 13.45,
+      "sysRecall": 91.95,
+      "sysFpr": 19.85
+    },
+    {
+      "t": 0.9509,
+      "mlRecall": 87.9,
+      "mlFpr": 13.45,
+      "sysRecall": 91.9,
+      "sysFpr": 19.85
+    },
+    {
+      "t": 0.952,
+      "mlRecall": 87.9,
+      "mlFpr": 13.4,
+      "sysRecall": 91.9,
+      "sysFpr": 19.8
+    },
+    {
+      "t": 0.9522,
+      "mlRecall": 87.85,
+      "mlFpr": 13.4,
+      "sysRecall": 91.85,
+      "sysFpr": 19.8
+    },
+    {
+      "t": 0.9529,
+      "mlRecall": 87.8,
+      "mlFpr": 13.4,
+      "sysRecall": 91.85,
+      "sysFpr": 19.8
+    },
+    {
+      "t": 0.9534,
+      "mlRecall": 87.75,
+      "mlFpr": 13.4,
+      "sysRecall": 91.85,
+      "sysFpr": 19.8
+    },
+    {
+      "t": 0.9542,
+      "mlRecall": 87.7,
+      "mlFpr": 13.4,
+      "sysRecall": 91.8,
+      "sysFpr": 19.8
+    },
+    {
+      "t": 0.9546,
+      "mlRecall": 87.65,
+      "mlFpr": 13.4,
+      "sysRecall": 91.75,
+      "sysFpr": 19.8
+    },
+    {
+      "t": 0.955,
+      "mlRecall": 87.6,
+      "mlFpr": 13.4,
+      "sysRecall": 91.7,
+      "sysFpr": 19.8
+    },
+    {
+      "t": 0.9553,
+      "mlRecall": 87.6,
+      "mlFpr": 13.35,
+      "sysRecall": 91.7,
+      "sysFpr": 19.75
+    },
+    {
+      "t": 0.956,
+      "mlRecall": 87.5,
+      "mlFpr": 13.35,
+      "sysRecall": 91.65,
+      "sysFpr": 19.75
+    },
+    {
+      "t": 0.9569,
+      "mlRecall": 87.4,
+      "mlFpr": 13.35,
+      "sysRecall": 91.6,
+      "sysFpr": 19.75
+    },
+    {
+      "t": 0.9578,
+      "mlRecall": 87.35,
+      "mlFpr": 13.35,
+      "sysRecall": 91.55,
+      "sysFpr": 19.75
+    },
+    {
+      "t": 0.958,
+      "mlRecall": 87.35,
+      "mlFpr": 13.3,
+      "sysRecall": 91.55,
+      "sysFpr": 19.7
+    },
+    {
+      "t": 0.9582,
+      "mlRecall": 87.3,
+      "mlFpr": 13.25,
+      "sysRecall": 91.5,
+      "sysFpr": 19.65
+    },
+    {
+      "t": 0.9586,
+      "mlRecall": 87.25,
+      "mlFpr": 13.25,
+      "sysRecall": 91.45,
+      "sysFpr": 19.65
+    },
+    {
+      "t": 0.9591,
+      "mlRecall": 87.2,
+      "mlFpr": 13.25,
+      "sysRecall": 91.4,
+      "sysFpr": 19.65
+    },
+    {
+      "t": 0.96,
+      "mlRecall": 87.15,
+      "mlFpr": 13.25,
+      "sysRecall": 91.4,
+      "sysFpr": 19.65
+    },
+    {
+      "t": 0.9603,
+      "mlRecall": 87.1,
+      "mlFpr": 13.25,
+      "sysRecall": 91.4,
+      "sysFpr": 19.65
+    },
+    {
+      "t": 0.9606,
+      "mlRecall": 87.05,
+      "mlFpr": 13.25,
+      "sysRecall": 91.35,
+      "sysFpr": 19.65
+    },
+    {
+      "t": 0.9607,
+      "mlRecall": 87,
+      "mlFpr": 13.25,
+      "sysRecall": 91.35,
+      "sysFpr": 19.65
+    },
+    {
+      "t": 0.9623,
+      "mlRecall": 86.95,
+      "mlFpr": 13.25,
+      "sysRecall": 91.3,
+      "sysFpr": 19.65
+    },
+    {
+      "t": 0.9624,
+      "mlRecall": 86.9,
+      "mlFpr": 13.25,
+      "sysRecall": 91.25,
+      "sysFpr": 19.65
+    },
+    {
+      "t": 0.9627,
+      "mlRecall": 86.85,
+      "mlFpr": 13.25,
+      "sysRecall": 91.2,
+      "sysFpr": 19.65
+    },
+    {
+      "t": 0.9636,
+      "mlRecall": 86.8,
+      "mlFpr": 13.25,
+      "sysRecall": 91.15,
+      "sysFpr": 19.65
+    },
+    {
+      "t": 0.9651,
+      "mlRecall": 86.75,
+      "mlFpr": 13.25,
+      "sysRecall": 91.15,
+      "sysFpr": 19.65
+    },
+    {
+      "t": 0.9669,
+      "mlRecall": 86.75,
+      "mlFpr": 13.2,
+      "sysRecall": 91.15,
+      "sysFpr": 19.65
+    },
+    {
+      "t": 0.9679,
+      "mlRecall": 86.75,
+      "mlFpr": 13.15,
+      "sysRecall": 91.15,
+      "sysFpr": 19.6
+    },
+    {
+      "t": 0.9683,
+      "mlRecall": 86.75,
+      "mlFpr": 13.1,
+      "sysRecall": 91.15,
+      "sysFpr": 19.55
+    },
+    {
+      "t": 0.9687,
+      "mlRecall": 86.7,
+      "mlFpr": 13.1,
+      "sysRecall": 91.1,
+      "sysFpr": 19.55
+    },
+    {
+      "t": 0.969,
+      "mlRecall": 86.65,
+      "mlFpr": 13.1,
+      "sysRecall": 91.05,
+      "sysFpr": 19.55
+    },
+    {
+      "t": 0.9693,
+      "mlRecall": 86.65,
+      "mlFpr": 13.05,
+      "sysRecall": 91.05,
+      "sysFpr": 19.5
+    },
+    {
+      "t": 0.9698,
+      "mlRecall": 86.6,
+      "mlFpr": 13.05,
+      "sysRecall": 91,
+      "sysFpr": 19.5
+    },
+    {
+      "t": 0.9708,
+      "mlRecall": 86.6,
+      "mlFpr": 13,
+      "sysRecall": 91,
+      "sysFpr": 19.5
+    },
+    {
+      "t": 0.9713,
+      "mlRecall": 86.55,
+      "mlFpr": 13,
+      "sysRecall": 90.95,
+      "sysFpr": 19.5
+    },
+    {
+      "t": 0.9715,
+      "mlRecall": 86.4,
+      "mlFpr": 12.9,
+      "sysRecall": 90.8,
+      "sysFpr": 19.45
+    },
+    {
+      "t": 0.9716,
+      "mlRecall": 86.35,
+      "mlFpr": 12.9,
+      "sysRecall": 90.75,
+      "sysFpr": 19.45
+    },
+    {
+      "t": 0.9717,
+      "mlRecall": 86.25,
+      "mlFpr": 12.9,
+      "sysRecall": 90.65,
+      "sysFpr": 19.45
+    },
+    {
+      "t": 0.9722,
+      "mlRecall": 86.2,
+      "mlFpr": 12.85,
+      "sysRecall": 90.6,
+      "sysFpr": 19.4
+    },
+    {
+      "t": 0.9726,
+      "mlRecall": 86.15,
+      "mlFpr": 12.85,
+      "sysRecall": 90.55,
+      "sysFpr": 19.4
+    },
+    {
+      "t": 0.9727,
+      "mlRecall": 86.1,
+      "mlFpr": 12.85,
+      "sysRecall": 90.5,
+      "sysFpr": 19.4
+    },
+    {
+      "t": 0.9728,
+      "mlRecall": 86.05,
+      "mlFpr": 12.85,
+      "sysRecall": 90.5,
+      "sysFpr": 19.4
+    },
+    {
+      "t": 0.9729,
+      "mlRecall": 86,
+      "mlFpr": 12.85,
+      "sysRecall": 90.45,
+      "sysFpr": 19.4
+    },
+    {
+      "t": 0.9731,
+      "mlRecall": 85.95,
+      "mlFpr": 12.85,
+      "sysRecall": 90.45,
+      "sysFpr": 19.4
+    },
+    {
+      "t": 0.9733,
+      "mlRecall": 85.9,
+      "mlFpr": 12.85,
+      "sysRecall": 90.45,
+      "sysFpr": 19.4
+    },
+    {
+      "t": 0.9734,
+      "mlRecall": 85.85,
+      "mlFpr": 12.8,
+      "sysRecall": 90.4,
+      "sysFpr": 19.35
+    },
+    {
+      "t": 0.9736,
+      "mlRecall": 85.85,
+      "mlFpr": 12.75,
+      "sysRecall": 90.4,
+      "sysFpr": 19.35
+    },
+    {
+      "t": 0.9739,
+      "mlRecall": 85.85,
+      "mlFpr": 12.7,
+      "sysRecall": 90.4,
+      "sysFpr": 19.3
+    },
+    {
+      "t": 0.974,
+      "mlRecall": 85.85,
+      "mlFpr": 12.65,
+      "sysRecall": 90.4,
+      "sysFpr": 19.25
+    },
+    {
+      "t": 0.9741,
+      "mlRecall": 85.85,
+      "mlFpr": 12.6,
+      "sysRecall": 90.4,
+      "sysFpr": 19.2
+    },
+    {
+      "t": 0.9742,
+      "mlRecall": 85.85,
+      "mlFpr": 12.55,
+      "sysRecall": 90.4,
+      "sysFpr": 19.15
+    },
+    {
+      "t": 0.9743,
+      "mlRecall": 85.8,
+      "mlFpr": 12.55,
+      "sysRecall": 90.35,
+      "sysFpr": 19.15
+    },
+    {
+      "t": 0.9744,
+      "mlRecall": 85.75,
+      "mlFpr": 12.55,
+      "sysRecall": 90.35,
+      "sysFpr": 19.15
+    },
+    {
+      "t": 0.9754,
+      "mlRecall": 85.7,
+      "mlFpr": 12.55,
+      "sysRecall": 90.35,
+      "sysFpr": 19.15
+    },
+    {
+      "t": 0.9758,
+      "mlRecall": 85.65,
+      "mlFpr": 12.55,
+      "sysRecall": 90.3,
+      "sysFpr": 19.15
+    },
+    {
+      "t": 0.9759,
+      "mlRecall": 85.6,
+      "mlFpr": 12.55,
+      "sysRecall": 90.3,
+      "sysFpr": 19.15
+    },
+    {
+      "t": 0.9762,
+      "mlRecall": 85.55,
+      "mlFpr": 12.55,
+      "sysRecall": 90.3,
+      "sysFpr": 19.15
+    },
+    {
+      "t": 0.9763,
+      "mlRecall": 85.5,
+      "mlFpr": 12.55,
+      "sysRecall": 90.25,
+      "sysFpr": 19.15
+    },
+    {
+      "t": 0.9765,
+      "mlRecall": 85.5,
+      "mlFpr": 12.5,
+      "sysRecall": 90.25,
+      "sysFpr": 19.15
+    },
+    {
+      "t": 0.9766,
+      "mlRecall": 85.45,
+      "mlFpr": 12.5,
+      "sysRecall": 90.2,
+      "sysFpr": 19.15
+    },
+    {
+      "t": 0.9771,
+      "mlRecall": 85.35,
+      "mlFpr": 12.5,
+      "sysRecall": 90.15,
+      "sysFpr": 19.15
+    },
+    {
+      "t": 0.9772,
+      "mlRecall": 85.3,
+      "mlFpr": 12.5,
+      "sysRecall": 90.1,
+      "sysFpr": 19.15
+    },
+    {
+      "t": 0.9773,
+      "mlRecall": 85.25,
+      "mlFpr": 12.5,
+      "sysRecall": 90.05,
+      "sysFpr": 19.15
+    },
+    {
+      "t": 0.9776,
+      "mlRecall": 85.2,
+      "mlFpr": 12.45,
+      "sysRecall": 90.05,
+      "sysFpr": 19.15
+    },
+    {
+      "t": 0.9781,
+      "mlRecall": 85.2,
+      "mlFpr": 12.4,
+      "sysRecall": 90.05,
+      "sysFpr": 19.1
+    },
+    {
+      "t": 0.9784,
+      "mlRecall": 85.15,
+      "mlFpr": 12.35,
+      "sysRecall": 90,
+      "sysFpr": 19.1
+    },
+    {
+      "t": 0.9785,
+      "mlRecall": 85.1,
+      "mlFpr": 12.3,
+      "sysRecall": 89.95,
+      "sysFpr": 19.05
+    },
+    {
+      "t": 0.9787,
+      "mlRecall": 85.1,
+      "mlFpr": 12.25,
+      "sysRecall": 89.95,
+      "sysFpr": 19
+    },
+    {
+      "t": 0.9789,
+      "mlRecall": 85,
+      "mlFpr": 12.25,
+      "sysRecall": 89.9,
+      "sysFpr": 19
+    },
+    {
+      "t": 0.979,
+      "mlRecall": 84.95,
+      "mlFpr": 12.2,
+      "sysRecall": 89.85,
+      "sysFpr": 19
+    },
+    {
+      "t": 0.9791,
+      "mlRecall": 84.9,
+      "mlFpr": 12.15,
+      "sysRecall": 89.85,
+      "sysFpr": 18.95
+    },
+    {
+      "t": 0.9792,
+      "mlRecall": 84.85,
+      "mlFpr": 12.1,
+      "sysRecall": 89.8,
+      "sysFpr": 18.95
+    },
+    {
+      "t": 0.9793,
+      "mlRecall": 84.85,
+      "mlFpr": 12.05,
+      "sysRecall": 89.8,
+      "sysFpr": 18.9
+    },
+    {
+      "t": 0.9794,
+      "mlRecall": 84.8,
+      "mlFpr": 11.95,
+      "sysRecall": 89.8,
+      "sysFpr": 18.85
+    },
+    {
+      "t": 0.9797,
+      "mlRecall": 84.7,
+      "mlFpr": 11.95,
+      "sysRecall": 89.7,
+      "sysFpr": 18.85
+    },
+    {
+      "t": 0.9798,
+      "mlRecall": 84.65,
+      "mlFpr": 11.9,
+      "sysRecall": 89.65,
+      "sysFpr": 18.85
+    },
+    {
+      "t": 0.9799,
+      "mlRecall": 84.6,
+      "mlFpr": 11.9,
+      "sysRecall": 89.6,
+      "sysFpr": 18.85
+    },
+    {
+      "t": 0.9801,
+      "mlRecall": 84.6,
+      "mlFpr": 11.85,
+      "sysRecall": 89.6,
+      "sysFpr": 18.85
+    },
+    {
+      "t": 0.9802,
+      "mlRecall": 84.55,
+      "mlFpr": 11.75,
+      "sysRecall": 89.55,
+      "sysFpr": 18.75
+    },
+    {
+      "t": 0.9805,
+      "mlRecall": 84.5,
+      "mlFpr": 11.75,
+      "sysRecall": 89.5,
+      "sysFpr": 18.75
+    },
+    {
+      "t": 0.9806,
+      "mlRecall": 84.45,
+      "mlFpr": 11.75,
+      "sysRecall": 89.5,
+      "sysFpr": 18.75
+    },
+    {
+      "t": 0.981,
+      "mlRecall": 84.3,
+      "mlFpr": 11.75,
+      "sysRecall": 89.45,
+      "sysFpr": 18.75
+    },
+    {
+      "t": 0.9815,
+      "mlRecall": 84.2,
+      "mlFpr": 11.75,
+      "sysRecall": 89.35,
+      "sysFpr": 18.75
+    },
+    {
+      "t": 0.9816,
+      "mlRecall": 84.15,
+      "mlFpr": 11.75,
+      "sysRecall": 89.3,
+      "sysFpr": 18.75
+    },
+    {
+      "t": 0.9821,
+      "mlRecall": 84.1,
+      "mlFpr": 11.7,
+      "sysRecall": 89.25,
+      "sysFpr": 18.7
+    },
+    {
+      "t": 0.9822,
+      "mlRecall": 84.05,
+      "mlFpr": 11.6,
+      "sysRecall": 89.25,
+      "sysFpr": 18.65
+    },
+    {
+      "t": 0.9823,
+      "mlRecall": 83.95,
+      "mlFpr": 11.6,
+      "sysRecall": 89.15,
+      "sysFpr": 18.65
+    },
+    {
+      "t": 0.9827,
+      "mlRecall": 83.9,
+      "mlFpr": 11.6,
+      "sysRecall": 89.15,
+      "sysFpr": 18.65
+    },
+    {
+      "t": 0.9832,
+      "mlRecall": 83.85,
+      "mlFpr": 11.6,
+      "sysRecall": 89.1,
+      "sysFpr": 18.65
+    },
+    {
+      "t": 0.9833,
+      "mlRecall": 83.8,
+      "mlFpr": 11.6,
+      "sysRecall": 89.05,
+      "sysFpr": 18.65
+    },
+    {
+      "t": 0.9835,
+      "mlRecall": 83.8,
+      "mlFpr": 11.5,
+      "sysRecall": 89.05,
+      "sysFpr": 18.65
+    },
+    {
+      "t": 0.9837,
+      "mlRecall": 83.8,
+      "mlFpr": 11.45,
+      "sysRecall": 89.05,
+      "sysFpr": 18.6
+    },
+    {
+      "t": 0.984,
+      "mlRecall": 83.8,
+      "mlFpr": 11.4,
+      "sysRecall": 89.05,
+      "sysFpr": 18.6
+    },
+    {
+      "t": 0.9841,
+      "mlRecall": 83.8,
+      "mlFpr": 11.35,
+      "sysRecall": 89.05,
+      "sysFpr": 18.55
+    },
+    {
+      "t": 0.9842,
+      "mlRecall": 83.8,
+      "mlFpr": 11.3,
+      "sysRecall": 89.05,
+      "sysFpr": 18.5
+    },
+    {
+      "t": 0.9843,
+      "mlRecall": 83.75,
+      "mlFpr": 11.3,
+      "sysRecall": 89,
+      "sysFpr": 18.5
+    },
+    {
+      "t": 0.9844,
+      "mlRecall": 83.75,
+      "mlFpr": 11.25,
+      "sysRecall": 89,
+      "sysFpr": 18.45
+    },
+    {
+      "t": 0.9846,
+      "mlRecall": 83.7,
+      "mlFpr": 11.25,
+      "sysRecall": 88.95,
+      "sysFpr": 18.45
+    },
+    {
+      "t": 0.9849,
+      "mlRecall": 83.65,
+      "mlFpr": 11.2,
+      "sysRecall": 88.9,
+      "sysFpr": 18.45
+    },
+    {
+      "t": 0.985,
+      "mlRecall": 83.6,
+      "mlFpr": 11.2,
+      "sysRecall": 88.9,
+      "sysFpr": 18.45
+    },
+    {
+      "t": 0.9851,
+      "mlRecall": 83.55,
+      "mlFpr": 11.2,
+      "sysRecall": 88.85,
+      "sysFpr": 18.45
+    },
+    {
+      "t": 0.9852,
+      "mlRecall": 83.5,
+      "mlFpr": 11.2,
+      "sysRecall": 88.85,
+      "sysFpr": 18.45
+    },
+    {
+      "t": 0.9853,
+      "mlRecall": 83.5,
+      "mlFpr": 11.15,
+      "sysRecall": 88.85,
+      "sysFpr": 18.4
+    },
+    {
+      "t": 0.9854,
+      "mlRecall": 83.45,
+      "mlFpr": 11.1,
+      "sysRecall": 88.8,
+      "sysFpr": 18.35
+    },
+    {
+      "t": 0.9859,
+      "mlRecall": 83.35,
+      "mlFpr": 11.1,
+      "sysRecall": 88.75,
+      "sysFpr": 18.35
+    },
+    {
+      "t": 0.986,
+      "mlRecall": 83.3,
+      "mlFpr": 11.1,
+      "sysRecall": 88.7,
+      "sysFpr": 18.35
+    },
+    {
+      "t": 0.9861,
+      "mlRecall": 83.3,
+      "mlFpr": 11.05,
+      "sysRecall": 88.7,
+      "sysFpr": 18.3
+    },
+    {
+      "t": 0.9862,
+      "mlRecall": 83.3,
+      "mlFpr": 11,
+      "sysRecall": 88.7,
+      "sysFpr": 18.25
+    },
+    {
+      "t": 0.9863,
+      "mlRecall": 83.25,
+      "mlFpr": 11,
+      "sysRecall": 88.65,
+      "sysFpr": 18.25
+    },
+    {
+      "t": 0.9864,
+      "mlRecall": 83.2,
+      "mlFpr": 10.95,
+      "sysRecall": 88.6,
+      "sysFpr": 18.25
+    },
+    {
+      "t": 0.9865,
+      "mlRecall": 83.05,
+      "mlFpr": 10.95,
+      "sysRecall": 88.45,
+      "sysFpr": 18.25
+    },
+    {
+      "t": 0.9866,
+      "mlRecall": 83,
+      "mlFpr": 10.95,
+      "sysRecall": 88.45,
+      "sysFpr": 18.25
+    },
+    {
+      "t": 0.9867,
+      "mlRecall": 82.85,
+      "mlFpr": 10.95,
+      "sysRecall": 88.35,
+      "sysFpr": 18.25
+    },
+    {
+      "t": 0.9868,
+      "mlRecall": 82.85,
+      "mlFpr": 10.9,
+      "sysRecall": 88.35,
+      "sysFpr": 18.25
+    },
+    {
+      "t": 0.9869,
+      "mlRecall": 82.8,
+      "mlFpr": 10.85,
+      "sysRecall": 88.3,
+      "sysFpr": 18.2
+    },
+    {
+      "t": 0.987,
+      "mlRecall": 82.75,
+      "mlFpr": 10.85,
+      "sysRecall": 88.3,
+      "sysFpr": 18.2
+    },
+    {
+      "t": 0.9871,
+      "mlRecall": 82.7,
+      "mlFpr": 10.85,
+      "sysRecall": 88.3,
+      "sysFpr": 18.2
+    },
+    {
+      "t": 0.9872,
+      "mlRecall": 82.7,
+      "mlFpr": 10.8,
+      "sysRecall": 88.3,
+      "sysFpr": 18.15
+    },
+    {
+      "t": 0.9873,
+      "mlRecall": 82.6,
+      "mlFpr": 10.8,
+      "sysRecall": 88.2,
+      "sysFpr": 18.15
+    },
+    {
+      "t": 0.9874,
+      "mlRecall": 82.55,
+      "mlFpr": 10.75,
+      "sysRecall": 88.15,
+      "sysFpr": 18.1
+    },
+    {
+      "t": 0.9876,
+      "mlRecall": 82.5,
+      "mlFpr": 10.75,
+      "sysRecall": 88.1,
+      "sysFpr": 18.1
+    },
+    {
+      "t": 0.9877,
+      "mlRecall": 82.3,
+      "mlFpr": 10.7,
+      "sysRecall": 87.95,
+      "sysFpr": 18.1
+    },
+    {
+      "t": 0.9878,
+      "mlRecall": 82.25,
+      "mlFpr": 10.7,
+      "sysRecall": 87.95,
+      "sysFpr": 18.1
+    },
+    {
+      "t": 0.9879,
+      "mlRecall": 82.2,
+      "mlFpr": 10.7,
+      "sysRecall": 87.95,
+      "sysFpr": 18.1
+    },
+    {
+      "t": 0.988,
+      "mlRecall": 82.15,
+      "mlFpr": 10.7,
+      "sysRecall": 87.9,
+      "sysFpr": 18.1
+    },
+    {
+      "t": 0.9883,
+      "mlRecall": 82.15,
+      "mlFpr": 10.65,
+      "sysRecall": 87.9,
+      "sysFpr": 18.05
+    },
+    {
+      "t": 0.9884,
+      "mlRecall": 82.05,
+      "mlFpr": 10.65,
+      "sysRecall": 87.85,
+      "sysFpr": 18.05
+    },
+    {
+      "t": 0.9885,
+      "mlRecall": 82,
+      "mlFpr": 10.65,
+      "sysRecall": 87.8,
+      "sysFpr": 18.05
+    },
+    {
+      "t": 0.9888,
+      "mlRecall": 82,
+      "mlFpr": 10.6,
+      "sysRecall": 87.8,
+      "sysFpr": 18
+    },
+    {
+      "t": 0.9889,
+      "mlRecall": 81.95,
+      "mlFpr": 10.6,
+      "sysRecall": 87.75,
+      "sysFpr": 18
+    },
+    {
+      "t": 0.989,
+      "mlRecall": 81.9,
+      "mlFpr": 10.55,
+      "sysRecall": 87.7,
+      "sysFpr": 18
+    },
+    {
+      "t": 0.9892,
+      "mlRecall": 81.85,
+      "mlFpr": 10.5,
+      "sysRecall": 87.7,
+      "sysFpr": 17.95
+    },
+    {
+      "t": 0.9893,
+      "mlRecall": 81.85,
+      "mlFpr": 10.45,
+      "sysRecall": 87.7,
+      "sysFpr": 17.9
+    },
+    {
+      "t": 0.9895,
+      "mlRecall": 81.75,
+      "mlFpr": 10.45,
+      "sysRecall": 87.65,
+      "sysFpr": 17.9
+    },
+    {
+      "t": 0.9896,
+      "mlRecall": 81.75,
+      "mlFpr": 10.4,
+      "sysRecall": 87.65,
+      "sysFpr": 17.85
+    },
+    {
+      "t": 0.9897,
+      "mlRecall": 81.75,
+      "mlFpr": 10.35,
+      "sysRecall": 87.65,
+      "sysFpr": 17.85
+    },
+    {
+      "t": 0.9899,
+      "mlRecall": 81.7,
+      "mlFpr": 10.2,
+      "sysRecall": 87.65,
+      "sysFpr": 17.75
+    },
+    {
+      "t": 0.9901,
+      "mlRecall": 81.7,
+      "mlFpr": 10.15,
+      "sysRecall": 87.65,
+      "sysFpr": 17.75
+    },
+    {
+      "t": 0.9902,
+      "mlRecall": 81.6,
+      "mlFpr": 10.15,
+      "sysRecall": 87.6,
+      "sysFpr": 17.75
+    },
+    {
+      "t": 0.9903,
+      "mlRecall": 81.5,
+      "mlFpr": 10.15,
+      "sysRecall": 87.55,
+      "sysFpr": 17.75
+    },
+    {
+      "t": 0.9906,
+      "mlRecall": 81.4,
+      "mlFpr": 10.15,
+      "sysRecall": 87.45,
+      "sysFpr": 17.75
+    },
+    {
+      "t": 0.9907,
+      "mlRecall": 81.3,
+      "mlFpr": 10.15,
+      "sysRecall": 87.4,
+      "sysFpr": 17.75
+    },
+    {
+      "t": 0.9908,
+      "mlRecall": 81.25,
+      "mlFpr": 10.1,
+      "sysRecall": 87.35,
+      "sysFpr": 17.7
+    },
+    {
+      "t": 0.9909,
+      "mlRecall": 81.2,
+      "mlFpr": 10.1,
+      "sysRecall": 87.3,
+      "sysFpr": 17.7
+    },
+    {
+      "t": 0.991,
+      "mlRecall": 81.15,
+      "mlFpr": 10.1,
+      "sysRecall": 87.25,
+      "sysFpr": 17.7
+    },
+    {
+      "t": 0.9911,
+      "mlRecall": 81.1,
+      "mlFpr": 10.1,
+      "sysRecall": 87.25,
+      "sysFpr": 17.7
+    },
+    {
+      "t": 0.9912,
+      "mlRecall": 81.1,
+      "mlFpr": 10.05,
+      "sysRecall": 87.25,
+      "sysFpr": 17.7
+    },
+    {
+      "t": 0.9913,
+      "mlRecall": 81.1,
+      "mlFpr": 9.85,
+      "sysRecall": 87.25,
+      "sysFpr": 17.65
+    },
+    {
+      "t": 0.9914,
+      "mlRecall": 81.1,
+      "mlFpr": 9.8,
+      "sysRecall": 87.25,
+      "sysFpr": 17.65
+    },
+    {
+      "t": 0.9915,
+      "mlRecall": 81.05,
+      "mlFpr": 9.8,
+      "sysRecall": 87.25,
+      "sysFpr": 17.65
+    },
+    {
+      "t": 0.9916,
+      "mlRecall": 81,
+      "mlFpr": 9.75,
+      "sysRecall": 87.25,
+      "sysFpr": 17.6
+    },
+    {
+      "t": 0.9917,
+      "mlRecall": 80.9,
+      "mlFpr": 9.75,
+      "sysRecall": 87.2,
+      "sysFpr": 17.6
+    },
+    {
+      "t": 0.9918,
+      "mlRecall": 80.9,
+      "mlFpr": 9.7,
+      "sysRecall": 87.2,
+      "sysFpr": 17.6
+    },
+    {
+      "t": 0.992,
+      "mlRecall": 80.8,
+      "mlFpr": 9.7,
+      "sysRecall": 87.15,
+      "sysFpr": 17.6
+    },
+    {
+      "t": 0.9922,
+      "mlRecall": 80.7,
+      "mlFpr": 9.7,
+      "sysRecall": 87.1,
+      "sysFpr": 17.6
+    },
+    {
+      "t": 0.9923,
+      "mlRecall": 80.65,
+      "mlFpr": 9.65,
+      "sysRecall": 87.05,
+      "sysFpr": 17.55
+    },
+    {
+      "t": 0.9924,
+      "mlRecall": 80.55,
+      "mlFpr": 9.65,
+      "sysRecall": 87,
+      "sysFpr": 17.55
+    },
+    {
+      "t": 0.9925,
+      "mlRecall": 80.55,
+      "mlFpr": 9.55,
+      "sysRecall": 87,
+      "sysFpr": 17.45
+    },
+    {
+      "t": 0.9926,
+      "mlRecall": 80.5,
+      "mlFpr": 9.55,
+      "sysRecall": 86.95,
+      "sysFpr": 17.45
+    },
+    {
+      "t": 0.9927,
+      "mlRecall": 80.45,
+      "mlFpr": 9.55,
+      "sysRecall": 86.9,
+      "sysFpr": 17.45
+    },
+    {
+      "t": 0.9928,
+      "mlRecall": 80.25,
+      "mlFpr": 9.45,
+      "sysRecall": 86.8,
+      "sysFpr": 17.4
+    },
+    {
+      "t": 0.9929,
+      "mlRecall": 80.25,
+      "mlFpr": 9.3,
+      "sysRecall": 86.8,
+      "sysFpr": 17.35
+    },
+    {
+      "t": 0.993,
+      "mlRecall": 80.1,
+      "mlFpr": 9.25,
+      "sysRecall": 86.65,
+      "sysFpr": 17.35
+    },
+    {
+      "t": 0.9932,
+      "mlRecall": 80.05,
+      "mlFpr": 9.2,
+      "sysRecall": 86.6,
+      "sysFpr": 17.3
+    },
+    {
+      "t": 0.9933,
+      "mlRecall": 79.9,
+      "mlFpr": 9.05,
+      "sysRecall": 86.45,
+      "sysFpr": 17.15
+    },
+    {
+      "t": 0.9934,
+      "mlRecall": 79.75,
+      "mlFpr": 8.95,
+      "sysRecall": 86.45,
+      "sysFpr": 17.15
+    },
+    {
+      "t": 0.9935,
+      "mlRecall": 79.55,
+      "mlFpr": 8.7,
+      "sysRecall": 86.3,
+      "sysFpr": 16.9
+    },
+    {
+      "t": 0.9936,
+      "mlRecall": 79.4,
+      "mlFpr": 8.65,
+      "sysRecall": 86.2,
+      "sysFpr": 16.9
+    },
+    {
+      "t": 0.9937,
+      "mlRecall": 79.15,
+      "mlFpr": 8.65,
+      "sysRecall": 86.15,
+      "sysFpr": 16.9
+    },
+    {
+      "t": 0.9938,
+      "mlRecall": 78.95,
+      "mlFpr": 8.65,
+      "sysRecall": 86.1,
+      "sysFpr": 16.9
+    },
+    {
+      "t": 0.9939,
+      "mlRecall": 78.7,
+      "mlFpr": 8.6,
+      "sysRecall": 85.95,
+      "sysFpr": 16.9
+    },
+    {
+      "t": 0.994,
+      "mlRecall": 78.55,
+      "mlFpr": 8.55,
+      "sysRecall": 85.9,
+      "sysFpr": 16.9
+    },
+    {
+      "t": 0.9941,
+      "mlRecall": 78.5,
+      "mlFpr": 8.45,
+      "sysRecall": 85.85,
+      "sysFpr": 16.9
+    },
+    {
+      "t": 0.9942,
+      "mlRecall": 78.4,
+      "mlFpr": 8.3,
+      "sysRecall": 85.8,
+      "sysFpr": 16.85
+    },
+    {
+      "t": 0.9943,
+      "mlRecall": 78.3,
+      "mlFpr": 8.15,
+      "sysRecall": 85.7,
+      "sysFpr": 16.8
+    },
+    {
+      "t": 0.9944,
+      "mlRecall": 78.15,
+      "mlFpr": 8.1,
+      "sysRecall": 85.65,
+      "sysFpr": 16.75
+    },
+    {
+      "t": 0.9945,
+      "mlRecall": 78.05,
+      "mlFpr": 7.9,
+      "sysRecall": 85.6,
+      "sysFpr": 16.65
+    },
+    {
+      "t": 0.9946,
+      "mlRecall": 77.85,
+      "mlFpr": 7.9,
+      "sysRecall": 85.5,
+      "sysFpr": 16.65
+    },
+    {
+      "t": 0.9947,
+      "mlRecall": 77.45,
+      "mlFpr": 7.9,
+      "sysRecall": 85.2,
+      "sysFpr": 16.65
+    },
+    {
+      "t": 0.9948,
+      "mlRecall": 77.35,
+      "mlFpr": 7.8,
+      "sysRecall": 85.1,
+      "sysFpr": 16.6
+    },
+    {
+      "t": 0.9949,
+      "mlRecall": 77.3,
+      "mlFpr": 7.6,
+      "sysRecall": 85.1,
+      "sysFpr": 16.5
+    },
+    {
+      "t": 0.995,
+      "mlRecall": 77.15,
+      "mlFpr": 7.5,
+      "sysRecall": 85,
+      "sysFpr": 16.45
+    },
+    {
+      "t": 0.9951,
+      "mlRecall": 77.05,
+      "mlFpr": 7.5,
+      "sysRecall": 84.9,
+      "sysFpr": 16.45
+    },
+    {
+      "t": 0.9952,
+      "mlRecall": 76.95,
+      "mlFpr": 7.45,
+      "sysRecall": 84.8,
+      "sysFpr": 16.45
+    },
+    {
+      "t": 0.9953,
+      "mlRecall": 76.75,
+      "mlFpr": 7.4,
+      "sysRecall": 84.65,
+      "sysFpr": 16.45
+    },
+    {
+      "t": 0.9954,
+      "mlRecall": 76.6,
+      "mlFpr": 7.35,
+      "sysRecall": 84.55,
+      "sysFpr": 16.45
+    },
+    {
+      "t": 0.9955,
+      "mlRecall": 76.5,
+      "mlFpr": 7.3,
+      "sysRecall": 84.5,
+      "sysFpr": 16.4
+    },
+    {
+      "t": 0.9956,
+      "mlRecall": 76.35,
+      "mlFpr": 7.15,
+      "sysRecall": 84.4,
+      "sysFpr": 16.3
+    },
+    {
+      "t": 0.9957,
+      "mlRecall": 76.15,
+      "mlFpr": 7,
+      "sysRecall": 84.2,
+      "sysFpr": 16.2
+    },
+    {
+      "t": 0.9958,
+      "mlRecall": 76,
+      "mlFpr": 6.95,
+      "sysRecall": 84.1,
+      "sysFpr": 16.2
+    },
+    {
+      "t": 0.9959,
+      "mlRecall": 76,
+      "mlFpr": 6.9,
+      "sysRecall": 84.1,
+      "sysFpr": 16.15
+    },
+    {
+      "t": 0.996,
+      "mlRecall": 75.8,
+      "mlFpr": 6.85,
+      "sysRecall": 83.9,
+      "sysFpr": 16.15
+    },
+    {
+      "t": 0.9961,
+      "mlRecall": 75.6,
+      "mlFpr": 6.75,
+      "sysRecall": 83.9,
+      "sysFpr": 16.15
+    },
+    {
+      "t": 0.9962,
+      "mlRecall": 75.55,
+      "mlFpr": 6.7,
+      "sysRecall": 83.9,
+      "sysFpr": 16.1
+    },
+    {
+      "t": 0.9963,
+      "mlRecall": 75.4,
+      "mlFpr": 6.7,
+      "sysRecall": 83.8,
+      "sysFpr": 16.1
+    },
+    {
+      "t": 0.9964,
+      "mlRecall": 75.2,
+      "mlFpr": 6.65,
+      "sysRecall": 83.75,
+      "sysFpr": 16.05
+    },
+    {
+      "t": 0.9965,
+      "mlRecall": 75.15,
+      "mlFpr": 6.55,
+      "sysRecall": 83.75,
+      "sysFpr": 16
+    },
+    {
+      "t": 0.9966,
+      "mlRecall": 74.9,
+      "mlFpr": 6.55,
+      "sysRecall": 83.6,
+      "sysFpr": 16
+    },
+    {
+      "t": 0.9967,
+      "mlRecall": 74.7,
+      "mlFpr": 6.5,
+      "sysRecall": 83.45,
+      "sysFpr": 16
+    },
+    {
+      "t": 0.9968,
+      "mlRecall": 74.45,
+      "mlFpr": 6.4,
+      "sysRecall": 83.3,
+      "sysFpr": 15.95
+    },
+    {
+      "t": 0.9969,
+      "mlRecall": 74.35,
+      "mlFpr": 6.25,
+      "sysRecall": 83.25,
+      "sysFpr": 15.9
+    },
+    {
+      "t": 0.997,
+      "mlRecall": 74.05,
+      "mlFpr": 6.2,
+      "sysRecall": 83.2,
+      "sysFpr": 15.9
+    },
+    {
+      "t": 0.9971,
+      "mlRecall": 73.6,
+      "mlFpr": 6,
+      "sysRecall": 82.95,
+      "sysFpr": 15.85
+    },
+    {
+      "t": 0.9972,
+      "mlRecall": 73.45,
+      "mlFpr": 6,
+      "sysRecall": 82.95,
+      "sysFpr": 15.85
+    },
+    {
+      "t": 0.9973,
+      "mlRecall": 73,
+      "mlFpr": 5.9,
+      "sysRecall": 82.75,
+      "sysFpr": 15.85
+    },
+    {
+      "t": 0.9974,
+      "mlRecall": 72.45,
+      "mlFpr": 5.9,
+      "sysRecall": 82.4,
+      "sysFpr": 15.85
+    },
+    {
+      "t": 0.9975,
+      "mlRecall": 72.15,
+      "mlFpr": 5.85,
+      "sysRecall": 82.2,
+      "sysFpr": 15.85
+    },
+    {
+      "t": 0.9976,
+      "mlRecall": 71.6,
+      "mlFpr": 5.75,
+      "sysRecall": 82,
+      "sysFpr": 15.8
+    },
+    {
+      "t": 0.9977,
+      "mlRecall": 71.2,
+      "mlFpr": 5.5,
+      "sysRecall": 81.7,
+      "sysFpr": 15.65
+    },
+    {
+      "t": 0.9978,
+      "mlRecall": 70.9,
+      "mlFpr": 5.35,
+      "sysRecall": 81.6,
+      "sysFpr": 15.65
+    },
+    {
+      "t": 0.9979,
+      "mlRecall": 70.55,
+      "mlFpr": 5.25,
+      "sysRecall": 81.45,
+      "sysFpr": 15.6
+    },
+    {
+      "t": 0.998,
+      "mlRecall": 69.75,
+      "mlFpr": 5.1,
+      "sysRecall": 80.9,
+      "sysFpr": 15.5
+    },
+    {
+      "t": 0.9981,
+      "mlRecall": 69.1,
+      "mlFpr": 5,
+      "sysRecall": 80.45,
+      "sysFpr": 15.45
+    },
+    {
+      "t": 0.9982,
+      "mlRecall": 68.4,
+      "mlFpr": 5,
+      "sysRecall": 80.3,
+      "sysFpr": 15.45
+    },
+    {
+      "t": 0.9983,
+      "mlRecall": 68,
+      "mlFpr": 4.85,
+      "sysRecall": 80.1,
+      "sysFpr": 15.45
+    },
+    {
+      "t": 0.9984,
+      "mlRecall": 67.35,
+      "mlFpr": 4.65,
+      "sysRecall": 79.8,
+      "sysFpr": 15.35
+    },
+    {
+      "t": 0.9985,
+      "mlRecall": 66.65,
+      "mlFpr": 4.5,
+      "sysRecall": 79.45,
+      "sysFpr": 15.3
+    },
+    {
+      "t": 0.9986,
+      "mlRecall": 65.85,
+      "mlFpr": 4.4,
+      "sysRecall": 79.1,
+      "sysFpr": 15.25
+    },
+    {
+      "t": 0.9987,
+      "mlRecall": 65.45,
+      "mlFpr": 4.3,
+      "sysRecall": 78.85,
+      "sysFpr": 15.2
+    },
+    {
+      "t": 0.9988,
+      "mlRecall": 64.45,
+      "mlFpr": 4.15,
+      "sysRecall": 78.25,
+      "sysFpr": 15.15
+    },
+    {
+      "t": 0.9989,
+      "mlRecall": 63.55,
+      "mlFpr": 3.7,
+      "sysRecall": 77.65,
+      "sysFpr": 14.85
+    },
+    {
+      "t": 0.999,
+      "mlRecall": 62.55,
+      "mlFpr": 3.5,
+      "sysRecall": 77.2,
+      "sysFpr": 14.7
+    },
+    {
+      "t": 0.9991,
+      "mlRecall": 61.5,
+      "mlFpr": 3.4,
+      "sysRecall": 76.6,
+      "sysFpr": 14.7
+    },
+    {
+      "t": 0.9992,
+      "mlRecall": 60.2,
+      "mlFpr": 3,
+      "sysRecall": 75.75,
+      "sysFpr": 14.5
+    },
+    {
+      "t": 0.9993,
+      "mlRecall": 58,
+      "mlFpr": 2.55,
+      "sysRecall": 74.7,
+      "sysFpr": 14.25
+    },
+    {
+      "t": 0.9994,
+      "mlRecall": 56.25,
+      "mlFpr": 2.2,
+      "sysRecall": 73.85,
+      "sysFpr": 14.1
+    },
+    {
+      "t": 0.9995,
+      "mlRecall": 54.1,
+      "mlFpr": 1.6,
+      "sysRecall": 72.7,
+      "sysFpr": 13.9
+    },
+    {
+      "t": 0.9996,
+      "mlRecall": 50.85,
+      "mlFpr": 0.95,
+      "sysRecall": 71,
+      "sysFpr": 13.5
+    },
+    {
+      "t": 0.9997,
+      "mlRecall": 47.35,
+      "mlFpr": 0.7,
+      "sysRecall": 69.2,
+      "sysFpr": 13.45
+    },
+    {
+      "t": 0.9998,
+      "mlRecall": 42.5,
+      "mlFpr": 0.45,
+      "sysRecall": 66.5,
+      "sysFpr": 13.35
+    },
+    {
+      "t": 0.9999,
+      "mlRecall": 35,
+      "mlFpr": 0.3,
+      "sysRecall": 61.75,
+      "sysFpr": 13.2
+    },
+    {
+      "t": 1,
+      "mlRecall": 9.65,
+      "mlFpr": 0.05,
+      "sysRecall": 47.65,
+      "sysFpr": 13.05
+    }
+  ]
+}

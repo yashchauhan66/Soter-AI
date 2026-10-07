@@ -119,6 +119,7 @@ export function resetState(root?: string): void {
     state.config = new Map();
     state.configInspect = new Map();
     state.activeEditor = undefined;
+    workspace.textDocuments = [];
     state.tabs = [];
     state.clipboard = "";
     state.telemetryEnabled = true;
@@ -234,6 +235,7 @@ function walk(dir: string, root: string, acc: string[]): void {
 // ── workspace ────────────────────────────────────────────────────────────────
 
 export const workspace = {
+    textDocuments: [] as ReturnType<typeof makeDocument>[],
     get workspaceFolders(): WorkspaceFolderStub[] | undefined {
         return state.folders.length ? state.folders : undefined;
     },
@@ -386,6 +388,7 @@ export async function openEditor(absPath: string, selection?: { from: number; to
     const sel = selection
         ? new Selection(new Position(selection.from, 0), new Position(selection.to, (lines[selection.to] ?? "").length))
         : new Selection(new Position(0, 0), new Position(0, 0));
+    workspace.textDocuments = [...workspace.textDocuments.filter(item => item.uri.toString() !== uri.toString()), doc];
     state.activeEditor = { document: doc, selection: sel, selections: [sel], edit: async () => true };
 }
 
