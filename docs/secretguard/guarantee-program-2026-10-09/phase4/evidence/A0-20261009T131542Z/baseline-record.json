@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "classification": "INFERENCE_FROM_RETAINED_LOCAL_EVIDENCE",
+  "step": "A0",
+  "clientDate": "2026-10-09",
+  "clientTimezone": "Asia/Calcutta",
+  "runId": "A0-20261009T131542Z",
+  "statuses": {
+    "harnessCompletion": "PASS",
+    "confidentialityObjective": "FAIL",
+    "baselineRecord": "PASS",
+    "selectedArchitectureAssertions": "UNTESTED",
+    "osEgressBoundary": "UNTESTED",
+    "realAgentCoverage": "UNTESTED",
+    "f16": "STATIC-ONLY",
+    "controlTokenAndParentAcls": "INCOMPLETE"
+  },
+  "authority": {
+    "executedBy": "USER",
+    "agentHostExecutions": 0,
+    "agentSecurityProbes": 0,
+    "newAttackProbes": 0
+  },
+  "branch": "security-hardening",
+  "head": "973b8af6060aa967fc0ecad7d56251a2da41149a",
+  "commitsCreated": 0,
+  "run": {
+    "reportedStartUtc": "2026-10-09T13:15:42.687Z",
+    "reportedHostExitUtc": "2026-10-09T13:15:55.904Z",
+    "reportedExtensionHostExitCode": 0,
+    "retainedLab": "C:/Users/USER/AppData/Local/Temp/soterai-security-review-8cdd88de301a4da184b55375f06e5cd6",
+    "host": "VS Code 1.104.0",
+    "extension": "0.6.3",
+    "osFamily": "Windows",
+    "exactOsBuild": null,
+    "syntheticOnly": true,
+    "liveModelContacted": false,
+    "observations": 17,
+    "scopedBlocks": 7,
+    "confirmedLeaks": 10
+  },
+  "evidence": [
+    {
+      "name": "baseline.stdout.txt",
+      "sha256": "2d96518ba45d9c87ad77c455c7f7a26f0fcdcdcac6c484877c1074efcf5417bd",
+      "copiedFrom": "docs/secretguard/guarantee-program-2026-10-09/phase1/baseline-fresh-bundle-host-run.txt",
+      "copy": "BYTE_IDENTICAL"
+    },
+    {
+      "name": "live-host.json",
+      "sha256": "4b500b62bdb9acb4c969ea4b083495f34b6307a7d9982d34bfb4bb67be8767b2",
+      "copiedFrom": "docs/secretguard/security-review-2026-10-08/evidence/live-host.json",
+      "copy": "BYTE_IDENTICAL"
+    }
+  ],
+  "postRunArtifacts": [
+    {
+      "path": "packages/vscode-extension/dist/extension.js",
+      "sha256": "81b84b4efd02d30f397d39978be59ba10664982f8e6f3a9173dd35568ba3bb09",
+      "measurement": "POST_RUN_READ_ONLY"
+    },
+    {
+      "path": ".tmp/security-review-host.js",
+      "sha256": "5fa842010e3d7cea7725f8953ddcf63c17773d00efc33ee922df8f56404b1eea",
+      "measurement": "POST_RUN_READ_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/.vscode-test/vscode-win32-x64-archive-1.104.0/Code.exe",
+      "sha256": "a1a616d807909cb836f3ac920c5ccdae3c5bd7c4cc955480c9ce70da2614da08",
+      "measurement": "POST_RUN_READ_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/scripts/run-security-review-host.ps1",
+      "sha256": "c779b5dd865195a7022f09ca43be0636d6ae5844b8d0422f0970a489cedbfd6e",
+      "measurement": "POST_RUN_READ_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/__tests__/host/securityReview.host.ts",
+      "sha256": "22e514ae29091d107a653bf463dabc317893dda6f9800f2930cf93cc2a5f02d4",
+      "measurement": "POST_RUN_READ_ONLY"
+    },
+    {
+      "path": "docs/secretguard/guarantee-program-2026-10-09/phase1/native-host/native-baseline.host.ts",
+      "sha256": "3641e17958d433e9554dc3b6faff7118d8f68eedb39c8e621cdd0355897efb1c",
+      "measurement": "POST_RUN_READ_ONLY"
+    }
+  ],
+  "freezeIdentity": {
+    "extensionBundleMatch": true,
+    "hostProbeMatch": true,
+    "scope": "HASH_IDENTITY_MATCH_ONLY",
+    "executionFrom": "LIVE_WORKING_TREE_EXTENSION_DIRECTORY",
+    "earlierDedicatedFrozenLauncherDisposition": "NOT_RUN_UNCHANGED"
+  },
+  "warnings": [
+    "updateWindowsJumpList#setJumpList unexpected result: error",
+    "Git installation not found."
+  ],
+  "limitations": [
+    "Seven BLOCKED_SCOPED observations are harness observations, not full guarantee passes.",
+    "The launcher uses a mutable extensionDevelopmentPath. Matching bundle hashes do not establish an immutable snapshot of every runtime dependency.",
+    "The legacy evidence schema has no unique run ID, timestamps, exact OS build, full policy/grant state or broker bundle identity. This record supplements correlation from user stdout and post-run inspection; it does not retroactively measure those missing fields.",
+    "The shared historical live-host.json was overwritten by the user-run launcher. Its Phase1 historical digest was b84cd27912535e4081ee8a0dcd419cd301b0d276b1d6b34b25f97287235b286e. Recovery of those prior raw bytes has not been established in this step.",
+    "The Git history observation is present; the editor Git discovery warning does not establish that fixture Git was skipped or that F16 is fixed.",
+    "Git history was observed after the repository deny had been removed; it does not verify history under a continuously active mark.",
+    "The environment/output observation concerns a deliberately injected synthetic child, not the broker child.",
+    "Encoded synthetic data reached a loopback receiver; this is not verification of an OS-wide Internet egress boundary.",
+    "No real assistant, remote provider, native-baseline syntax repair, lifecycle proof, clipboard/display isolation or selected-architecture assertion was evaluated by this bookkeeping step."
+  ],
+  "next": {
+    "phase2Copy": "PENDING_EXPLICIT_APPROVAL",
+    "a1": "NOT_STARTED_WAIT_FOR_CONTINUE",
+    "normalProfileInstall": "NOT_AUTHORIZED"
+  },
+  "rollback": "Documentation-only: retain this archived evidence and withdraw erroneous claims through a new correction record. No enforcement, credentials, ACLs or protected assets changed."
+}
