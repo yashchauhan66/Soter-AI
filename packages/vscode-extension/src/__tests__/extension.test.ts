@@ -346,12 +346,12 @@ describe("Webview hardening (#7)", () => {
         assert.match(dashboardSrc, /!knownCommands\.has\(cmd\)/);
     });
     it("dashboard surfaces the 9+ trust center without overstating enforcement", () => {
-        assert.match(dashboardSrc, /Trust Center: Coverage, MCP, Isolation/);
-        assert.match(dashboardSrc, /No fake green checks/);
-        assert.match(dashboardSrc, /Start the broker to move from advisory scanning to enforced request\/response protection/);
-        assert.match(dashboardSrc, /Only traffic routed through the broker is fully inspected/);
+        assert.match(dashboardSrc, /Trust center/);
+        assert.match(dashboardSrc, /outside visibility/);
+        assert.match(dashboardSrc, /Start the broker to inspect and gate supported AI requests before they are sent/);
+        assert.match(dashboardSrc, /Protection applies to supported traffic routed through the local broker/);
         assert.match(dashboardSrc, /MCP configs for shell access, secret env keys, broad file access/);
-        assert.match(dashboardSrc, /enterprise policy, local risk report/);
+        assert.match(dashboardSrc, /coverage, runtime and local risk reports/);
     });
 });
 
@@ -584,7 +584,8 @@ describe("Live inline scanning + Quick Fixes (UX)", () => {
         assert.strictEqual(setting.default, true);
         assert.match(extensionSrc, /registerLiveScanner\(context\)/);
         assert.match(extensionSrc, /onDidSaveTextDocument/);
-        assert.match(extensionSrc, /get<boolean>\("liveScan\.enabled",\s*true\)/);
+        assert.match(liveScannerSrc, /get<boolean>\("liveScan\.enabled",\s*true\)/);
+        assert.doesNotMatch(extensionSrc, /if\s*\(liveScanEnabled\)\s*registerLiveScanner/, "An initially disabled scanner must still observe settings changes");
     });
 
     it("uses a debounced, local-only scan mapped to a DiagnosticCollection", () => {
@@ -647,7 +648,7 @@ describe("Clipboard / paste guard (UX)", () => {
 
     it("safe paste can insert a redacted version instead of the raw clipboard", () => {
         assert.match(clipboardGuardSrc, /Paste Redacted/);
-        assert.match(clipboardGuardSrc, /editor\.action\.clipboardPasteAction/);
+        assert.doesNotMatch(clipboardGuardSrc, /editor\.action\.clipboardPasteAction/, "Safe Paste must not reread an unscanned clipboard");
     });
 
     it("never logs the raw clipboard value", () => {
@@ -664,8 +665,8 @@ describe("Security search guardrails", () => {
         assert.match(commandsSrc, /Safe child process boundary/);
         assert.match(read("src/firewall/ContextGatherer.ts"), /collectSafeDiffs/);
         const diffBoundary = read("src/ai-boundary/gitDiff.ts");
-        assert.match(diffBoundary, /runGit\("git"/);
-        assert.match(diffBoundary, /--literal-pathspecs/);
+        assert.match(diffBoundary, /runner\.run/);
+        assert.match(read("src/security/SafeGit.ts"), /--literal-pathspecs/);
         assert.match(diffBoundary, /--no-ext-diff/);
         assert.match(diffBoundary, /--no-textconv/);
         assert.match(brokerManagerSrc, /User input never controls the executable or argv/);

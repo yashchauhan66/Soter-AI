@@ -1,0 +1,27 @@
+﻿
+> soterai-ide-guard@0.6.3 build
+> npm run bundle
+
+
+> soterai-ide-guard@0.6.3 bundle
+> node esbuild.js --production
+
+npm.cmd : 
+At line:12 char:5
++     & npm.cmd --prefix $check[1] run $check[2] 2>&1 | Out-File -Liter ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  dist\soterai-mcp-server.js  196.5kb
+
+Done in 1175ms
+
+  dist\local-ai-broker.js  233.1kb
+
+Done in 1183ms
+
+  dist\extension.js  607.1kb
+
+Done in 1223ms
+[esbuild] built extension + local broker + MCP server (production)

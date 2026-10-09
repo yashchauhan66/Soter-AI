@@ -1,7 +1,7 @@
 {
     "name": "soterai-ide-guard",
     "displayName": "SoterAI IDE Guard - AI Security & Secret Protection",
-    "description": "Stop secrets, API keys, PII and prompt injection before they reach AI. Local scanning for Copilot, Cursor, Claude. Free, no account.",
+    "description": "Local secret, PII and prompt-injection checks for SoterAI-managed AI context and broker requests. Free, no account.",
     "version": "0.6.3",
     "publisher": "soterai",
     "preview": false,
@@ -101,6 +101,7 @@
             {"command": "soterai.blockSelectionFromAI", "title": "Block Selected Text from AI", "category": "SoterAI"},
             {"command": "soterai.manageAIRules", "title": "Manage Manual AI Rules", "category": "SoterAI"},
             {"command": "soterai.openRedactedPreview", "title": "Open Redacted AI Preview", "category": "SoterAI"},
+            {"command": "soterai.enableAutomaticIDEProtection", "title": "Enable Automatic IDE Protection", "category": "SoterAI"},
             {
                 "command": "soterai.openControlPanel",
                 "title": "Open Control Panel",
@@ -1096,6 +1097,18 @@
                         "minimumVersion": "1.85"
                     }
                 },
+                "soterai.hardening.safeDiffLaunch": {
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
+                    "description": "Use a pinned Git executable and isolated configuration for safe diffs. Turning this off disables diff sharing; it never restores the old launcher. Same-user executable tampering remains outside coverage."
+                },
+                "soterai.hardening.coverageDisclosure": {
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
+                    "description": "Show Covers / Does not cover before one-click setup. Turning this off disables that setup flow rather than hiding its limitations."
+                },
                 "soterai.cloud.baseUrl": {
                     "type": "string",
                     "default": "https://api.soterai.in",
@@ -1545,6 +1558,10 @@
                 },
                 {
                     "command": "soterai.enableFullProtection",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.enableAutomaticIDEProtection",
                     "when": "soterai.advancedCommands"
                 },
                 {
@@ -2098,7 +2115,7 @@
         "test:host:coverage": "node scripts/host-command-coverage.mjs",
         "build": "npm run bundle",
         "bundle": "node esbuild.js --production",
-        "vscode:prepublish": "npm run bundle",
+        "vscode:prepublish": "npm run build",
         "package": "vsce package --allow-missing-repository --skip-license --no-dependencies",
         "verify:vsix": "node scripts/verify-vsix.mjs",
         "benchmark:security": "tsx benchmarks/security-evaluation.ts",

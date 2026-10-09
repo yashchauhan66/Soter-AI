@@ -1,23 +1,26 @@
 import * as vscode from "vscode";
-import { execFile } from "node:child_process";
-import { promisify } from "node:util";
 import { type ContextItem } from "@soterai/guard-core";
 import { BoundarySnapshot } from "./BoundarySnapshot";
 import { relativePath } from "./policy";
+import { createSafeGit, SAFE_GIT_UNAVAILABLE } from "../security/SafeGit";
 
-const runGit = promisify(execFile);
 const LIMIT = 64 * 1024;
 
 /** Literal pathspecs, no external diff/textconv, and no untrusted-workspace execution. */
 export async function collectSafeDiffs(boundary: BoundarySnapshot): Promise<ContextItem[]> {
     if (!vscode.workspace.isTrusted) return [];
+    if (!vscode.workspace.getConfiguration("soterai").get("hardening.safeDiffLaunch", true)) {
+        void vscode.window.showWarningMessage("Safe diff sharing is disabled. No unsafe Git fallback is available.");
+        return [];
+    }
+    let runner: Awaited<ReturnType<typeof createSafeGit>>;
+    try { runner = await createSafeGit(); }
+    catch { void vscode.window.showWarningMessage(SAFE_GIT_UNAVAILABLE); return []; }
     const items = new Map<string, ContextItem>();
     let bytes = 0;
-    for (const folder of vscode.workspace.workspaceFolders ?? []) {
+    try { for (const folder of vscode.workspace.workspaceFolders ?? []) {
         if (folder.uri.scheme !== "file") continue;
-        const git = (args: string[]) => runGit("git", ["--literal-pathspecs", ...args], {
-            cwd: folder.uri.fsPath, windowsHide: true, timeout: 5000, maxBuffer: LIMIT,
-        });
+        const git = (args: string[]) => runner.run(folder.uri.fsPath, args);
         for (const stage of [[], ["--cached"]]) {
             const base = ["diff", "--relative", "--no-ext-diff", "--no-textconv", ...stage];
             try {
@@ -54,6 +57,6 @@ export async function collectSafeDiffs(boundary: BoundarySnapshot): Promise<Cont
                 }
             } catch { /* Failed or ambiguous git output is never shared. */ }
         }
-    }
+    } } finally { await runner.dispose(); }
     return [...items.values()];
 }

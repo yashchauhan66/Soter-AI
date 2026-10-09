@@ -17,6 +17,8 @@ import {
     type ProposedChange,
 } from "./IntegrationAdapter";
 import { EncryptedBackupSink } from "./EncryptedBackupSink";
+import type { RoutingSetupResult } from "../protection/AutomaticIDEProtection";
+import { COVERAGE_DISCLOSURE, operationalCoverage } from "../security/CoverageDisclosure";
 
 /** globalState key holding {path, backupPath} pairs written by secureAllAI. */
 const SECURE_BACKUPS_KEY = "soterai.secureAllAI.backups";
@@ -83,8 +85,18 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
     const reg = (id: string, handler: (...args: any[]) => any) => context.subscriptions.push(vscode.commands.registerCommand(id, handler));
     const started = async () => { const status = await manager.start(); refresh(); return status; };
 
-    reg("soterai.secureAllAI", async () => {
+    reg("soterai.secureAllAI", async (): Promise<RoutingSetupResult> => {
+        const result = (status: RoutingSetupResult["status"], counts: Partial<RoutingSetupResult> = {}): RoutingSetupResult => ({
+            status, changedConfigs: 0, verifiedTools: 0, failedTools: 0, unsupportedConfigs: 0, ...counts,
+        });
         try {
+            if (!vscode.workspace.isTrusted) return result("unavailable");
+            if (!vscode.workspace.getConfiguration("soterai").get("hardening.coverageDisclosure", true)) {
+                void vscode.window.showWarningMessage("One-click setup is unavailable while coverage disclosure is disabled.");
+                return result("unavailable");
+            }
+            const coverageChoice = await vscode.window.showInformationMessage(COVERAGE_DISCLOSURE, { modal: true }, "Review scoped setup", "Cancel");
+            if (coverageChoice !== "Review scoped setup") return result("cancelled");
             const s = await started(); // start broker first (health gate)
             const home = require("os").homedir();
             const nodeFs: FileIO = {
@@ -93,8 +105,8 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
                 exists: async (p: string) => { try { await require("fs/promises").access(p); return true; } catch { return false; } },
             };
             const nodeHttp: HttpIO = {
-                get: async (url: string, _h?: Record<string, string>) => { const r = await fetch(url); return { status: r.status, body: await r.text() }; },
-                post: async (url: string, body: string, _h?: Record<string, string>) => { const r = await fetch(url, { method: "POST", body, headers: { "content-type": "application/json" } }); return { status: r.status, body: await r.text() }; },
+                get: async (url: string, headers?: Record<string, string>) => { const r = await fetch(url, { headers }); return { status: r.status, body: await r.text() }; },
+                post: async (url: string, body: string, headers?: Record<string, string>) => { const r = await fetch(url, { method: "POST", body, headers: { "content-type": "application/json", ...headers } }); return { status: r.status, body: await r.text() }; },
             };
             const { discoverAllAiTools, buildSecurePlan, executeSecurePlan } = await import("./AutoSecureEngine");
             // Relative candidates (".env", ".claude/settings.json") must be
@@ -110,7 +122,7 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
 
             if (plan.proposed.length === 0 && plan.monitorOnly.length === 0 && plan.unsupported.length === 0) {
                 vscode.window.showInformationMessage("SoterAI: no AI tool configs found to secure on this machine.");
-                return;
+                return result("unchanged");
             }
             if (plan.proposed.length === 0) {
                 // Nothing writable: say so plainly instead of opening a
@@ -121,7 +133,7 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
                     (detail ? `\n${detail}` : "") +
                     (plan.monitorOnly.length ? `\nMonitor-only: ${plan.monitorOnly.join(", ")}` : ""),
                 );
-                return;
+                return result(plan.unsupported.length ? "unavailable" : "unchanged", { unsupportedConfigs: plan.unsupported.length });
             }
             const pick = await vscode.window.showInformationMessage(
                 `🛡️ SoterAI found ${plan.proposed.length} tool config(s) to secure` +
@@ -131,7 +143,7 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
                 `\n\nEach file is backed up first; use "SoterAI: Restore AI Configs" to undo.`,
                 { modal: true }, "Secure Everything Now", "Cancel",
             );
-            if (pick !== "Secure Everything Now") return;
+            if (pick !== "Secure Everything Now") return result("cancelled", { unsupportedConfigs: plan.unsupported.length });
 
             const brokerToken = await context.secrets.get("soterai.localBrokerToken") ?? "";
             const outcome = await executeSecurePlan(
@@ -141,17 +153,27 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
             // Persist backup pointers so restore works in a later session.
             const restorable = outcome.applied.filter((a) => a.applied && a.backupPath);
             if (restorable.length > 0) {
-                await context.globalState.update(SECURE_BACKUPS_KEY, restorable.map((a) => ({ path: a.path, backupPath: a.backupPath })));
+                const saved = context.globalState.get<Array<{ path: string; backupPath: string }>>(SECURE_BACKUPS_KEY, []);
+                const merged = new Map(saved.map((item) => [item.path, item]));
+                for (const item of restorable) if (!merged.has(item.path)) merged.set(item.path, { path: item.path, backupPath: item.backupPath });
+                await context.globalState.update(SECURE_BACKUPS_KEY, [...merged.values()]);
             }
             refresh();
             const verif = outcome.verified.map((v) => `${v.ok ? "✅" : "⚠️"} ${v.toolId}: ${v.detail}`).join("\n");
             const unsup = outcome.unsupported.map((u) => `⚠️ ${u.reason}`).join("\n");
-            const message = [outcome.headline, verif, unsup].filter(Boolean).join("\n");
+            const message = [outcome.headline, operationalCoverage("broker routing configured; smoke checks only"), verif, unsup].filter(Boolean).join("\n");
             const anyFailed = outcome.verified.some((v) => !v.ok);
             if (anyFailed) vscode.window.showWarningMessage(message);
             else vscode.window.showInformationMessage(message);
+            return result(!outcome.brokerOnline || outcome.applied.some((a) => !a.applied) ? "failed" : "applied", {
+                changedConfigs: outcome.applied.filter((a) => a.applied).length,
+                verifiedTools: outcome.verified.filter((v) => v.ok).length,
+                failedTools: outcome.verified.filter((v) => !v.ok).length,
+                unsupportedConfigs: outcome.unsupported.length,
+            });
         } catch (e) {
-            vscode.window.showErrorMessage(`Secure My AI failed: ${e instanceof Error ? e.message : String(e)}`);
+            void vscode.window.showErrorMessage("Secure My AI did not finish. Review broker status and retry.");
+            return result("failed");
         }
     });
     reg("soterai.restoreAIConfigs", async () => {

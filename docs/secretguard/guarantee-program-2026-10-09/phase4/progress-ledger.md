@@ -2,13 +2,13 @@
 
 **INFERENCE — Resume rule.** Read this ledger first and do not redo finished batches. The FINAL MASTER prompt supersedes the former per-step pauses: S1 approves Phase2 copying; S2 approves local commits on security-hardening; S3 approves narrowly scoped broker ACL repair after inspection/backup; S4 approves the stated modal-only deny relaxation UX. Run checks, record raw results/hashes/limits/rollback and commit each batch, then continue autonomously. Push/publish/tag, normal profiles, firewall/drivers/accounts/VM/features and Tier3 implementation remain unapproved.
 
-**INFERENCE — Current step.** A0 remains recorded (harness PASS; confidentiality FAIL; 7 scoped blocks and 10 leaks). B0 housekeeping is complete with PASS build/typecheck/unit commands and a retained diagnostic FAIL for unmarked prose. All thirty selected-architecture assertions remain UNTESTED. Next batch: B1.
+**INFERENCE — Current step.** B0 and B1 are complete as scoped hardening, with raw failures retained. A0 confidentiality remains FAIL. All thirty selected-architecture assertions remain UNTESTED. Next batch: B2 (S3 read-only inspection, ACL backup/repair, win32 validation).
 
 **INFERENCE — Working branch.** security-hardening, created from release/n8n-0.8.7 at HEAD 973b8af6060aa967fc0ecad7d56251a2da41149a. Existing modified/untracked work was retained; no commit was created. A branch name does not isolate those existing changes from future staging, so no broad staging or reset is allowed.
 
 ## Next action and approval gates
 
-**INFERENCE — Next action.** Continue B1: repair existing native baseline syntax without host execution; harden F16 Git launch; add honest pre-success coverage. Native host execution remains user-only.
+**INFERENCE — Next action.** Continue B2 under S3; modify only the existing broker directory and token-file ACLs after backup, never parent ACLs or token values. Native host execution remains user-only.
 
 **INFERENCE — Pending approvals.** Copy/local commits/scoped ACL repair/modal-only UX are now authorized by S1–S4. Tier3 decision and unapproved system/profile changes still require one precise question and a stop. S3 is limited to broker directory and its two token files; parents are inspection-only. Never read or print actual token values. Do not change firewall, drivers, accounts, VM/Windows features or normal profiles.
 
@@ -17,6 +17,7 @@
 | A0 user execution and evidence capture | **INFERENCE: PASS bookkeeping; FAIL confidentiality** | User ran existing harness. Agent reviewed and archived evidence only. |
 | A0 Phase 2 document copy | **INFERENCE: PASS byte-identical copy (S1)** | Five source/destination hashes verified against Phase3 source-notes; Temp originals retained. |
 | B0 housekeeping | **INFERENCE: PASS command/record hygiene; confidentiality remains FAIL** | Exact Oct8 bytes recovered; unique/exclusive host output; rebuilt bundle identities and raw results archived. |
+| B1 low-risk fixes | **INFERENCE: PASS scoped command/unit checks; full assertions UNTESTED** | Syntax repair compiled; Git launch hardened and Windows config behavior measured; pre-success coverage tested. |
 | A1 existing baseline syntax repair | **INFERENCE: UNTESTED / not started** | Tiny source repair; no host execution; historical failure evidence retained. |
 | A2 F16 safe-diff launch | **INFERENCE: STATIC-ONLY / not started** | Pin absolute Git, minimal environment, forced hooks/fsmonitor config; benign Windows global-config behavior verification; missing Git denies operation with useful message. |
 | A3 Windows token ACLs and validation | **INFERENCE: INCOMPLETE / not started** | Read-only inspection first; approval gates actual permissions; win32 validation separately bounded. |
@@ -83,4 +84,16 @@ Git installation not found.
 **INFERENCE — B0 limits/rollback.** No confidentiality leak, independent authority, clipboard/display, mandatory egress or real-agent guarantee is fixed by evidence hygiene. Rollback disables host review or retains exclusive output; never restore a shared overwriting target. Keep both recovered historical bytes and A0. No normal profile/system settings changed.
 
 **INFERENCE — Delegation resources.** Three read-only subagent turns ended INCOMPLETE due to this exact resource message: "You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 9:16 PM." Root completed available B0 review/checks. This was a resource error, not a safety-filter rejection; no bypass/rephrasing attempt occurred.
+
+## B1 completion record
+
+**INFERENCE — Commit provenance.** B0 local commit: 3199be3e. Its documentation byte-preservation .gitattributes SHA-256 is d0603ac3cab63089f7244db84653fc897259f89c0c895297beddf105e42f9010. Batch manifests describe bytes as of the batch; future changed versions are not expected to match an earlier manifest. Relevant pre-existing content in touched manifest/command/test files is retained; unrelated working changes are not staged.
+
+**INFERENCE — B1 diff.** Added SafeGit with known absolute install discovery (no bare Git or VS Code API dependency), pinned executable per job, Git >=2.36 version gate, an explicit empty global config, minimal environment and forced hooks/fsmonitor settings. Flag hardening.safeDiffLaunch off disables diff sharing; unavailable Git produces a clear message with no fallback. Added native coverage disclosure before broker start/config success; flag hardening.coverageDisclosure off disables the setup flow. Operational results explicitly retain UNTESTED verification. Existing native-baseline source received one missing brace; compiled only, never run. Regenerated readiness metadata and corrected README setting count/authority wording.
+
+**FACT — Git version rule; accessed 2026-10-09.** Git documents that 2.35.1 and earlier interpret boolean fsmonitor values as hook pathnames. The implementation conservatively requires >=2.36 before using false. https://git-scm.com/docs/git-config
+
+**INFERENCE — Raw B1 results.** checks-1 retains initial extension typecheck FAIL (test assertion narrowed an array to never[]) and unit FAIL (temporary directory lock and generated documentation/count drift). Those defects were corrected; no failure was removed. checks-2: extension typecheck/build exit0, 561 tests /559 pass /0 fail /2 skip. Initial B1 broker typecheck/build exit0 and 128 tests /127 pass /0 fail /1 skip; broker code was unchanged during the extension recheck. Existing native baseline compile exit0, no execution. Final extension bundle SHA-256 b9dbbb1d4df8502b0c44fa82cbcbbad8ecadac2e7121e646f033d953443e9ea0. Raw Windows config controls in checks-2/diagnostic-results/windows-git-config.json show Git 2.53.0.windows.1, explicit empty file PASS; NUL returned empty on this exact configuration. Product uses the explicit empty file, not NUL. Full architecture and F16 dynamic authority-isolation remain UNTESTED/STATIC-ONLY beyond these benign config/unit checks.
+
+**INFERENCE — Limits/rollback.** Same-user executable replacement, source/config mutation, direct originals/history, buffer/clipboard/display/process access and unrestricted native egress remain unprotected. Disabling either flag withdraws its operation, never invokes the old launcher or old blanket success display. Syntax repair has no new scenario; later user wrapper controls harness execution. Original failed source/logs remain in Phase1. No host run, actual tokens, normal profiles, system settings, external recipient or Tier3 deployment was used.
 

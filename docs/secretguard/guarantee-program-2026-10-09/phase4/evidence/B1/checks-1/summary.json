@@ -1,0 +1,36 @@
+[
+    {
+        "check":  "extension-typecheck",
+        "exitCode":  2,
+        "status":  "FAIL_COMMAND"
+    },
+    {
+        "check":  "broker-typecheck",
+        "exitCode":  0,
+        "status":  "PASS_COMMAND"
+    },
+    {
+        "check":  "broker-build",
+        "exitCode":  0,
+        "status":  "PASS_COMMAND"
+    },
+    {
+        "check":  "extension-build",
+        "exitCode":  0,
+        "status":  "PASS_COMMAND"
+    },
+    {
+        "check":  "extension-tests",
+        "exitCode":  1,
+        "status":  "FAIL_COMMAND"
+    },
+    {
+        "check":  "broker-tests",
+        "exitCode":  0,
+        "status":  "PASS_COMMAND"
+    },
+    {
+        "check":  "native-baseline-compile-no-execution",
+        "exitCode":  0
+    }
+]

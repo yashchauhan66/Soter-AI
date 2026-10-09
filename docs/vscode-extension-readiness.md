@@ -15,9 +15,9 @@
 
 | Measure | Count |
 | --- | --- |
-| Commands declared and registered | 168 |
+| Commands declared and registered | 169 |
 | Visible in the palette by default | 16 |
-| Behind `soterai.showAllCommands` | 125 |
+| Behind `soterai.showAllCommands` | 126 |
 | Hidden from the palette (aliases, reports, internal) | 27 |
 
 Hidden commands remain **registered**: a keybinding, task or another
@@ -49,8 +49,8 @@ what an agent does on its own.
 
 | Measure | Count |
 | --- | --- |
-| Settings declared | 31 |
-| `machine`-scoped (a repo cannot set them) | 26 |
+| Settings declared | 33 |
+| `machine`-scoped (a repo cannot set them) | 28 |
 | Restricted in untrusted workspaces | 26 |
 | Pinnable by an administrator (`policy`) | 8 |
 
@@ -68,10 +68,10 @@ what an agent does on its own.
 | `OutputExfiltrationDetector` | 6 |
 | `PIIDetector` | 7 |
 | `PromptInjectionLiteDetector` | 36 |
-| `RepoInstructionPoisoningDetector` | 8 |
+| `RepoInstructionPoisoningDetector` | 9 |
 | `SecretDetector` | 36 |
 | `TerminalCommandRiskDetector` | 21 |
-| **Total** | **180** |
+| **Total** | **181** |
 
 All 13 detectors are deterministic regex/heuristic rules, bundled inline.
 **No ML model ships in the VSIX.** `onnxruntime` appears zero times in
