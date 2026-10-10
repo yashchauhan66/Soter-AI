@@ -8,7 +8,7 @@
 | S1 clean checkout | INCOMPLETE | [Summary](evidence/S1-20261010T051742Z-7a43a092/summary.json): clean shared-object checkout succeeded, npm install failed ENOSPC. [Object manifest](evidence/S1-20261010T051742Z-7a43a092/object-manifest.json) pins candidate bytes, not a clean build or loaded host. Previously present target sources/dependencies are explicitly tracked. |
 | S2 scoped regression coverage | PASS — component checks only | [Final raw wrapper](evidence/S2-final-20261010/verify-20261010T102944Z-a34359f2bf044be38bf247a5fa2a4cc6/summary.json): 1,322 pass / 0 fail / 3 skipped. [Coverage](coverage-map.md). All thirty full architecture assertions unchanged; unmarked diagnostic FAIL retained. |
 | S3 metadata ACL review | STATIC-ONLY / INCOMPLETE | [ACL review](acl-review.md): current broker/auth-token DACLs protected, no ACL changes, current backups saved. Controller token absent and complete protected-folder inventory unavailable. |
-| S4 rebuilt isolated host | UNTESTED | Newly authorized existing synthetic harnesses; no process killing. |
+| S4 rebuilt isolated host | INCOMPLETE | [Attempt/comparison](host-comparison.md): default existing-Code refusal, one private-profile fallback, obsolete expected-leak assertion and native working-directory launch failure. No final observation/hash attestation persisted. |
 | S5 fresh restricted-input review | NOT_PERFORMED | Same vendor/model/machine implies LOW independence. |
 | S6 fix loop | UNTESTED | At most three fix/verification rounds, if valid findings exist. |
 | S7 conditional pilot | INCOMPLETE | Current shell is not elevated; prerequisites prevent any pilot change. |
