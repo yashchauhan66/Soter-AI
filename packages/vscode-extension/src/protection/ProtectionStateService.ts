@@ -16,10 +16,9 @@ export interface ProtectionStateSnapshot {
  * Extension-host adapter for the pure ProtectionState reducer.
  *
  * This service deliberately does not treat an installed AI extension as
- * protected. A tool counts as protected only when a known workspace config
- * explicitly points at this manager's exact loopback broker URL. This is
- * configuration evidence, not network interception proof, and remains
- * labelled as verified routing rather than universal coverage.
+ * protected. Configuration text supplies no verified route count. Live broker
+ * status supplies operational state only; selected-architecture verification
+ * remains UNTESTED.
  */
 export class ProtectionStateService {
     private snapshot: ProtectionStateSnapshot = {
@@ -65,34 +64,28 @@ export class ProtectionStateService {
     public async refresh(): Promise<ProtectionStateSnapshot> {
         const config = vscode.workspace.getConfiguration("soterai");
         let broker: ProtectionRuntimeFacts["broker"] = "offline";
+        let safeModeEnabled = false;
         try {
             const status = await this.deps.brokerManager.status();
             broker = status.state === "incompatible" ? "incompatible" : status.running && status.state === "healthy" ? "healthy" : status.state === "starting" ? "starting" : "offline";
+            safeModeEnabled = config.get<boolean>("hardening.runtimeEvidence", true) && broker === "healthy" && status.safeMode?.enabled === true;
         } catch {
             broker = "error";
         }
 
-        const safeMode = this.context.globalState.get<{ enabled?: boolean }>("soterai.safeMode");
         const census = this.censusAiTools();
         const detected = census.routable.length;
-        const routed = await this.countVerifiedBrokerRoutes(detected);
+        const routed = 0; // No independently authenticated per-agent route observation exists.
 
-        // Auto-create the default policy on first use so users never see a
-        // "Policy unavailable" error simply because they haven't run a setup
-        // wizard. The file is created silently; no notification is shown.
-        // This matches the behaviour of tools like ESLint that write a default
-        // config on first run rather than blocking with an error.
-        const policyExists = await PolicyStore.exists();
-        if (!policyExists && vscode.workspace.isTrusted && vscode.workspace.workspaceFolders?.length) {
-            try { await PolicyStore.createDefault(); } catch { /* workspace may be read-only */ }
-        }
+        // A status read validates existing bytes without creating policy.
+        const policyStatus = config.get<boolean>("hardening.runtimeEvidence", true) ? await PolicyStore.status() : "unavailable";
 
         const facts: ProtectionRuntimeFacts = {
             enabled: config.get<boolean>("protection.enabled", true),
             broker,
             workspaceTrusted: vscode.workspace.isTrusted,
-            policy: (policyExists || (await PolicyStore.exists())) ? "loaded" : "unavailable",
-            safeModeEnabled: Boolean(safeMode?.enabled),
+            policy: policyStatus,
+            safeModeEnabled,
             protectedWorkspaceEnabled: this.deps.workspaceGuard.isEnabled,
             sentinelEnabled: this.deps.sentinel.isEnabled,
             // The current MCPFirewall is not a mandatory gateway. Do not count
@@ -100,9 +93,10 @@ export class ProtectionStateService {
             mcpStrictModeEnabled: false,
             liveScanEnabled: config.get<boolean>("liveScan.enabled", true),
             protectedAiTools: routed,
+            routingEvidence: "unknown",
             detectedAiTools: detected,
             unmanagedAiTools: census.unmanaged.length,
-            bypassDetected: detected > routed,
+            bypassDetected: false,
             lockdown: Boolean(this.context.globalState.get<LockdownRecord>(LOCKDOWN_STATE_KEY)?.active),
         };
         this.snapshot = { facts, descriptor: deriveProtectionState(facts) };
@@ -129,35 +123,4 @@ export class ProtectionStateService {
         );
     }
 
-    private async countVerifiedBrokerRoutes(routableCount: number): Promise<number> {
-        const folder = vscode.workspace.workspaceFolders?.[0];
-        if (!folder) return 0;
-        const brokerUrls = [`${this.deps.brokerManager.url}/v1/ai/openai-compatible`, `${this.deps.brokerManager.url}/v1/ai/anthropic-compatible`];
-        const candidates = [".continue/config.json", "continue/config.json", "config/openai.json", ".soterai/openai-client.json", ".env", ".env.local"];
-        let count = 0;
-        for (const relative of candidates) {
-            try {
-                const text = decodeUtf8(await vscode.workspace.fs.readFile(vscode.Uri.joinPath(folder.uri, relative)));
-                if (brokerUrls.some((url) => text.includes(url))) count++;
-            } catch {
-                // Candidate is absent; no route evidence.
-            }
-        }
-        // Several candidate paths can describe the same tool (.env and
-        // .env.local both configure one client), so route evidence is capped by
-        // the number of routable tools actually installed. Without the cap a
-        // workspace with two brokered files would report more tools protected
-        // than exist.
-        return Math.min(count, routableCount);
-    }
-}
-
-/** Decode small workspace configuration files without depending on DOM globals. */
-function decodeUtf8(bytes: Uint8Array): string {
-    let text = "";
-    const chunkSize = 8192;
-    for (let offset = 0; offset < bytes.length; offset += chunkSize) {
-        text += String.fromCharCode(...bytes.subarray(offset, offset + chunkSize));
-    }
-    return text;
 }

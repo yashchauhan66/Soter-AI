@@ -439,6 +439,7 @@ export const window = {
     async showWarningMessage(msg: string, ...rest: unknown[]) { recordSink("notification", "warn", msg); return pickFirstAction(rest); },
     async showErrorMessage(msg: string, ...rest: unknown[]) { recordSink("notification", "error", msg); return pickFirstAction(rest); },
     async showQuickPick() { return undefined; },
+    async showWorkspaceFolderPick() { return undefined; },
     async showInputBox() { return undefined; },
     async withProgress<T>(_o: unknown, task: (p: unknown, t: unknown) => Promise<T>): Promise<T> {
         return task({ report(): void {} }, { isCancellationRequested: false });

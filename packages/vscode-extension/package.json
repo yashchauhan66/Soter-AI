@@ -65,6 +65,12 @@
             "supported": "limited",
             "description": "SoterAI IDE Guard runs all secret/PII/prompt-injection scanning fully locally, so scanning works in restricted mode. Cloud connection, token storage, and remote scan escalation are disabled in untrusted workspaces until you trust the workspace.",
             "restrictedConfigurations": [
+                "soterai.hardening.safeDiffLaunch",
+                "soterai.hardening.coverageDisclosure",
+                "soterai.hardening.addOnlyPolicy",
+                "soterai.hardening.scopedConfirmation",
+                "soterai.hardening.runtimeEvidence",
+                "soterai.hardening.secretInventory",
                 "soterai.cloud.enabled",
                 "soterai.cloud.baseUrl",
                 "soterai.policy.mode",
@@ -1108,6 +1114,22 @@
                     "default": true,
                     "scope": "machine",
                     "description": "Show Covers / Does not cover before one-click setup. Turning this off disables that setup flow rather than hiding its limitations."
+                },
+                "soterai.hardening.addOnlyPolicy": {
+                    "type": "boolean", "default": true, "scope": "machine",
+                    "description": "Retain accepted repository denies. Off withdraws context sharing and policy mutation; it does not restore replacement or removal APIs. Relaxation requires labelled native modal review, not agent-proof."
+                },
+                "soterai.hardening.scopedConfirmation": {
+                    "type": "boolean", "default": true, "scope": "machine",
+                    "description": "Require labelled native confirmation for broker approval and protection-disable commands. Off withdraws those changes; ordinary editor dialogs are not agent-proof."
+                },
+                "soterai.hardening.runtimeEvidence": {
+                    "type": "boolean", "default": true, "scope": "machine",
+                    "description": "Use healthy current broker status and validated policy bytes for operational display. Off removes those status claims. Configuration text never proves agent routing; independent verification remains UNTESTED."
+                },
+                "soterai.hardening.secretInventory": {
+                    "type": "boolean", "default": true, "scope": "machine",
+                    "description": "Inventory persistent reference IDs for cleanup and purge on activation. Off withdraws reference creation and reads while cleanup remains available. Legacy unindexed values and same-user credential access remain outside coverage."
                 },
                 "soterai.cloud.baseUrl": {
                     "type": "string",

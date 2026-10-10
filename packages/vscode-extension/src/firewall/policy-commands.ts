@@ -59,15 +59,7 @@ export function registerPolicyCommands(deps: FirewallDeps): void {
     };
 
     const removeFromProtectedFiles = async () => {
-        const policy = await PolicyStore.load();
-        const pick = await vscode.window.showQuickPick(policy.protectedFiles, {
-            title: "Remove a protected file pattern",
-            placeHolder: "Select a pattern to remove",
-        });
-        if (!pick) return;
-        await PolicyStore.removeProtected(pick);
-        vscode.window.showInformationMessage(`Removed ${pick} from protected files.`);
-        refreshViews();
+        vscode.window.showInformationMessage("Repository denies are add-only. Edit the repository entry first, then review the accepted deny in Manage Manual AI Rules. Defaults remain mandatory; the review modal is not agent-proof.");
     };
 
     reg("soterai.createProjectPolicy", createProjectPolicy);

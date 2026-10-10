@@ -3,7 +3,7 @@ import * as path from "node:path";
 import { randomUUID } from "node:crypto";
 import { redactAIContext as redactForSharing } from "@soterai/guard-core";
 import { assertWorkspaceFileUri } from "../security/WorkspacePathGuard";
-import { BoundarySnapshot, initializeBoundaryState, storedRules, updateRules } from "./BoundarySnapshot";
+import { BoundarySnapshot, initializeBoundaryState, storedRules, updateRules, reviewRuleRelaxation } from "./BoundarySnapshot";
 import { documentDigest, relativePath, validateGlob, OMITTED } from "./policy";
 
 /** A read-only alternative URI, never an interceptor for file: or other extensions. */
@@ -121,24 +121,7 @@ export function registerAIBoundaryCommands(context: vscode.ExtensionContext): vo
         } else updated();
     });
     reg("soterai.manageAIRules", async () => {
-        const folder = await vscode.window.showWorkspaceFolderPick();
-        if (!folder) return;
-        const root = folder.uri.toString();
-        const rules = storedRules(root);
-        const choices = [
-            ...rules.paths.map((rule, index) => ({ label: `${rule.kind}: ${rule.pattern}`, index, region: false })),
-            ...rules.regions.map((rule, index) => ({ label: `Protected text: ${rule.path} (${rule.start}-${rule.end})`, index, region: true })),
-        ];
-        const choice = await vscode.window.showQuickPick(choices, { title: "Remove a manual AI rule", placeHolder: ".aiignore and default rules are managed separately." });
-        if (!choice) return;
-        const approval = await vscode.window.showWarningMessage("Remove this rule from SoterAI context protection?", { modal: true }, "Remove rule");
-        if (approval !== "Remove rule") return;
-        const removed = JSON.stringify(choice.region ? rules.regions[choice.index] : rules.paths[choice.index]);
-        await updateRules(root, current => {
-            if (choice.region) current.regions = current.regions.filter(rule => JSON.stringify(rule) !== removed);
-            else current.paths = current.paths.filter(rule => JSON.stringify(rule) !== removed);
-            return current;
-        });
+        await reviewRuleRelaxation();
         provider.refresh();
     });
     reg("soterai.openRedactedPreview", async uri => {

@@ -14,6 +14,8 @@ import type { AISentinel } from "../sentinel/AISentinel";
 import type { BrokerManager } from "../broker/BrokerManager";
 import type { ProtectionStateService } from "../protection/ProtectionStateService";
 import { managedControlReasons } from "../enterprise/managedSettingsProbe";
+import { controlPanelStyles } from "./controlPanelStyles";
+import { AUTOMATIC_SETUP_STAGES, type SetupStage, type SetupStageStatus, type SetupProgress, type AutomaticSetupResult } from "../protection/AutomaticIDEProtection";
 
 /**
  * SoterAI Control Panel — enterprise-grade sidebar surface.
@@ -29,7 +31,11 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     public static readonly viewType = "soterai-control-panel";
 
     private view?: vscode.WebviewView;
-    private feedback?: { tone: "success" | "error"; message: string };
+    private feedback?: { tone: "success" | "error" | "info"; message: string };
+    private actionPending = false;
+    private renderRevision = 0;
+    private setupSteps: Partial<Record<SetupStage, SetupStageStatus>> = {};
+    private setupResult?: AutomaticSetupResult;
 
     constructor(
         private readonly context: vscode.ExtensionContext,
@@ -52,13 +58,15 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
             localResourceRoots: [mediaUri],
         };
 
-        webviewView.webview.onDidReceiveMessage(async (message: unknown) => {
+        this.context.subscriptions.push(webviewView.webview.onDidReceiveMessage(async (message: unknown) => {
             await this.handleMessage(message);
-        });
+        }));
 
-        webviewView.onDidChangeVisibility(() => {
+        this.context.subscriptions.push(webviewView.onDidChangeVisibility(() => {
             if (webviewView.visible) void this.render();
-        });
+        }), webviewView.onDidDispose(() => {
+            if (this.view === webviewView) { this.view = undefined; this.renderRevision++; }
+        }));
 
         void this.render();
     }
@@ -79,6 +87,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
         "action:refresh",
         "action:setupBroker",
         "action:fullProtection",
+        "action:automaticProtection",
         "action:controlledTerminal",
         "action:scanClipboard",
         "action:checkBeforeAI",
@@ -94,6 +103,10 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
         "action:openWebsite",
         "action:openDocs",
         "action:reportIssue",
+        "action:protectFile",
+        "action:protectSelection",
+        "action:redactedPreview",
+        "action:manageRules",
     ]);
 
     private static readonly RESOURCE_LINKS: Record<string, { url: string; label: string }> = {
@@ -121,6 +134,10 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
             typeof msg.value !== "boolean"
             || Object.keys(msg).some((key) => key !== "type" && key !== "value")
         )) return;
+        if (type === "action:refresh") { await this.render(); return; }
+        // A disabled button alone is insufficient: messages can be repeated or
+        // forged. Serialize host-side operations, including pending dialogs.
+        if (this.actionPending) return;
         const on = msg.value === true;
 
         // GAP 3: refuse a toggle an administrator pinned. VS Code keeps the
@@ -138,6 +155,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
             return;
         }
 
+        this.actionPending = true;
         try {
             switch (type) {
                 case "toggle:safeMode":
@@ -169,6 +187,25 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
                 case "action:fullProtection":
                     await vscode.commands.executeCommand("soterai.enableFullProtection");
                     break;
+                case "action:automaticProtection": {
+                    this.setupResult = undefined;
+                    this.setupSteps = { controls: "running", routing: "waiting", verification: "waiting" };
+                    await this.render();
+                    const report = (update: SetupProgress) => {
+                        if (!update || !AUTOMATIC_SETUP_STAGES.some((item) => item.id === update.stage)
+                            || !["waiting", "running", "complete", "attention", "failed"].includes(update.status)) return;
+                        this.setupSteps[update.stage] = update.status;
+                        void this.view?.webview.postMessage?.({ type: "setupProgress", stage: update.stage, status: update.status });
+                    };
+                    const result = await vscode.commands.executeCommand<AutomaticSetupResult>("soterai.enableAutomaticIDEProtection", report);
+                    this.setupResult = result && ["ready", "attention", "failed"].includes(result.status)
+                        ? result : { status: "failed", summary: "Automatic setup could not be verified. Refresh status and retry.", changedConfigs: 0 };
+                    for (const item of AUTOMATIC_SETUP_STAGES) {
+                        if (this.setupSteps[item.id] === "running") this.setupSteps[item.id] = this.setupResult.status === "failed" ? "failed" : "attention";
+                    }
+                    this.feedback = { tone: this.setupResult.status === "ready" ? "success" : this.setupResult.status === "failed" ? "error" : "info", message: this.setupResult.summary };
+                    return;
+                }
                 case "action:controlledTerminal":
                     await vscode.commands.executeCommand("soterai.runControlledTerminalCommand");
                     break;
@@ -205,6 +242,25 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
                 case "action:openPolicy":
                     await vscode.commands.executeCommand("soterai-policy-status.focus");
                     break;
+                case "action:protectFile":
+                case "action:protectSelection":
+                case "action:redactedPreview": {
+                    const editor = vscode.window.activeTextEditor;
+                    if (!editor || editor.document.uri.scheme !== "file") {
+                        this.feedback = { tone: "info", message: "Open a local workspace file in the editor first." };
+                        return;
+                    }
+                    if (type === "action:protectSelection" && editor.selection.isEmpty) {
+                        this.feedback = { tone: "info", message: "Select the private text in your file, then choose Protect selection." };
+                        return;
+                    }
+                    await vscode.commands.executeCommand(type === "action:protectFile" ? "soterai.blockFromAI"
+                        : type === "action:protectSelection" ? "soterai.blockSelectionFromAI" : "soterai.openRedactedPreview", editor.document.uri);
+                    break;
+                }
+                case "action:manageRules":
+                    await vscode.commands.executeCommand("soterai.manageAIRules");
+                    break;
                 case "action:openWebsite":
                 case "action:openDocs":
                 case "action:reportIssue": {
@@ -213,36 +269,42 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
                     break;
                 }
             }
-            this.feedback = {
-                tone: "success",
-                message: isToggle
-                    ? "Protection setting updated. The current status is shown above."
-                    : "Action finished. Review any result or confirmation shown by VS Code.",
-            };
-        } catch (error) {
+            if (isToggle) {
+                const current = await this.gatherState();
+                const key = type.slice("toggle:".length) as keyof PanelFacts;
+                const changed = current[key] === on;
+                this.feedback = { tone: changed ? "success" : "info", message: changed
+                    ? "Setting confirmed. The current status is shown above."
+                    : "The setting is unchanged. A confirmation may have been cancelled or the setting is managed." };
+            } else {
+                this.feedback = { tone: "info", message: "Request handled. Review the result or confirmation in VS Code." };
+            }
+        } catch {
             this.feedback = {
                 tone: "error",
                 message: "That action could not be completed. Review the VS Code notification and try again.",
             };
-            vscode.window.showErrorMessage(
-                `SoterAI: could not apply that change — ${error instanceof Error ? error.message : String(error)}`,
-            );
+            void vscode.window.showErrorMessage("SoterAI could not complete this action. Refresh status and try again.");
+        } finally {
+            this.actionPending = false;
+            this.deps.refreshViews();
+            await this.render();
         }
-
-        this.deps.refreshViews();
-        await this.render();
     }
 
     // ── state gathering ──────────────────────────────────────────────────────
     private async gatherState(): Promise<PanelState> {
         const config  = vscode.workspace.getConfiguration("soterai");
-        const safeMode = this.context.globalState.get<{ enabled?: boolean; level?: string }>("soterai.safeMode");
+        let safeMode: { enabled?: boolean; level?: string } | undefined;
 
         let brokerRunning = false;
+        let brokerStatus: PanelFacts["brokerStatus"] = "stopped";
         try {
             const status = await this.deps.brokerManager.status();
-            brokerRunning = Boolean(status.running);
-        } catch { /* broker optional / stopped */ }
+            brokerRunning = Boolean(status.running && status.state === "healthy");
+            if (brokerRunning && config.get<boolean>("hardening.runtimeEvidence", true)) safeMode = status.safeMode;
+            brokerStatus = brokerRunning ? "running" : "stopped";
+        } catch { brokerStatus = "unavailable"; }
 
         return {
             safeMode:           Boolean(safeMode?.enabled),
@@ -252,6 +314,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
             sentinel:           this.deps.sentinel.isEnabled,
             mcpFirewall:        config.get<boolean>("mcpFirewall.strictMode", false),
             brokerRunning,
+            brokerStatus,
             trusted:            vscode.workspace.isTrusted,
             privacyMode:        config.get<string>("privacyMode", "local"),
             cloudEnabled:       config.get<boolean>("cloud.enabled", false),
@@ -263,19 +326,27 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     }
 
     private async render(): Promise<void> {
-        if (!this.view) return;
-        const state      = await this.gatherState();
-        const protection = await this.deps.protectionState.refresh();
-        // Resolve logo URI — served as a local webview resource so CSP is respected.
-        const logoUri = this.view.webview.asWebviewUri(
-            vscode.Uri.joinPath(this.context.extensionUri, "media", "logo_circle_whiter.png"),
-        );
-        this.view.webview.html = this.buildHtml(
-            this.view.webview,
-            state,
-            protection.descriptor,
-            logoUri,
-        );
+        const view = this.view;
+        if (!view) return;
+        const revision = ++this.renderRevision;
+        try {
+            const [state, protection] = await Promise.all([this.gatherState(), this.deps.protectionState.refresh()]);
+            if (this.view !== view || revision !== this.renderRevision) return;
+            // Resolve logo URI — served as a local webview resource so CSP is respected.
+            const logoUri = view.webview.asWebviewUri(
+                vscode.Uri.joinPath(this.context.extensionUri, "media", "logo_circle_whiter.png"),
+            );
+            view.webview.html = this.buildHtml(
+                view.webview,
+                state,
+                protection.descriptor,
+                logoUri,
+            );
+        } catch {
+            if (this.view !== view || revision !== this.renderRevision) return;
+            const nonce = getNonce();
+            view.webview.html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'nonce-${nonce}';"><title>SoterAI status unavailable</title><style>${controlPanelStyles}</style></head><body><main aria-labelledby="panel-title"><header class="brand-header"><h1 class="brand-name" id="panel-title">SoterAI Guard</h1></header><section class="status-card"><div class="status-top"><div class="status-info"><h2>Status unavailable</h2><p class="status-sub">Protection could not be verified. No security status is assumed.</p></div></div><div class="cta-wrap"><button class="cta" id="retry">Retry status check</button></div></section></main><script nonce="${nonce}">const api=acquireVsCodeApi();document.getElementById('retry').addEventListener('click',()=>api.postMessage({type:'action:refresh'}));</script></body></html>`;
+        }
     }
 
     // ── HTML ─────────────────────────────────────────────────────────────────
@@ -302,14 +373,26 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
         const startTasks  = tasks.filter((task) => task.group === "start");
         const moreTasks   = tasks.filter((task) => task.group === "more");
         const showSetupGuide = !state.brokerRunning || !state.protectedWorkspace;
-        const blockingActive = state.safeMode && state.brokerRunning;
+        const blockingActive = state.safeMode && state.brokerRunning
+            && !["LOCKDOWN", "ERROR", "POLICY_UNAVAILABLE", "BYPASS_DETECTED"].includes(protection.state);
         const monitoringActive = state.liveScan;
-        const knownGapCount = [
+        const setupCheckCount = [
             !blockingActive,
             !state.protectedWorkspace,
             !state.liveScan,
             !state.trusted,
         ].filter(Boolean).length;
+        const statusTitle = protection.state === "FULLY_ENFORCED" ? "Managed paths enforced" : protection.title;
+        const statusExplanation = protection.state === "FULLY_ENFORCED"
+            ? "Required SoterAI controls are active. Enforcement applies to supported traffic routed through the verified broker path; other tools remain outside its control."
+            : protection.explanation;
+        const routedStatus = protection.state === "LOCKDOWN" ? "Paused" : blockingActive ? "Checking" : "Not blocking";
+        const setupLabels: Record<SetupStageStatus, string> = { waiting: "Waiting", running: "Working", complete: "Done", attention: "Review", failed: "Incomplete" };
+        const setupBlocked = !state.trusted || protection.state === "LOCKDOWN";
+        const setupRows = AUTOMATIC_SETUP_STAGES.map((item) => {
+            const status = this.setupSteps?.[item.id] ?? "waiting";
+            return `<li data-setup-stage="${item.id}" data-status="${status}"><span>${item.label}</span><span class="setup-state">${setupLabels[status]}</span></li>`;
+        }).join("");
 
         // ── status card severity → CSS modifier + icon ──────────────────────
         const sevMap: Record<string, { cls: string; icon: string }> = {
@@ -322,9 +405,11 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
         const sev = sevMap[protection.severity] ?? { cls: "idle", icon: "·" };
 
         // ── broker pill ──────────────────────────────────────────────────────
-        const brokerPill = state.brokerRunning
-            ? `<span class="pill pill-on">Request checking active</span>`
-            : `<span class="pill pill-off">Request blocking needs setup</span>`;
+        const brokerPill = state.brokerStatus === "unavailable"
+            ? `<span class="pill pill-restricted">Checker status unavailable</span>`
+            : state.brokerRunning
+            ? `<span class="pill pill-on"><span class="status-dot" aria-hidden="true"></span>Local checker running</span>`
+            : `<span class="pill pill-off"><span class="status-dot" aria-hidden="true"></span>Local checker offline</span>`;
 
         // ── control rows ─────────────────────────────────────────────────────
         const row = (c: PlainControl): string => {
@@ -347,6 +432,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
                   role="switch"
                   aria-checked="${c.on}"
                   aria-label="${escapeHtml(c.label)}"
+                  aria-describedby="note-${c.id}"
                   ${c.managed ? `disabled aria-disabled="true" title="${escapeHtml(c.managedReason ?? "")}"` : ""}
                 ><span class="toggle-thumb"></span></button>
               </div>
@@ -355,9 +441,9 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
                   <span class="control-label">${escapeHtml(c.label)}</span>
                   ${badgeHtml}
                 </div>
-                <div class="control-note">${escapeHtml(c.summary)}</div>
+                <div class="control-note" id="note-${c.id}">${escapeHtml(c.summary)}</div>
                 ${c.managed ? `<div class="control-managed">${escapeHtml(c.managedReason ?? "")}</div>` : ""}
-                <details class="control-detail">
+                <details class="control-detail" id="detail-${c.id}" data-persist>
                   <summary>Coverage details</summary>
                   <p>${escapeHtml(c.detail)}</p>
                 </details>
@@ -390,484 +476,11 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
         content="default-src 'none'; img-src ${webview.cspSource}; style-src 'unsafe-inline'; script-src 'nonce-${nonce}';">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>SoterAI Guard</title>
-  <style>
-    /* ── Reset + base ────────────────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: var(--vscode-font-family, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
-      font-size: 12px;
-      color: var(--vscode-foreground);
-      background: var(--vscode-sideBar-background, #1e1e1e);
-      padding: 0 0 24px;
-      overflow-x: hidden;
-    }
-    main { display: block; }
-    .sr-only {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-
-    /* ── Brand header ────────────────────────────────────────────────────── */
-    .brand-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 14px 14px 12px;
-      border-bottom: 1px solid var(--vscode-panel-border, rgba(255,255,255,0.08));
-      background: var(--vscode-sideBarSectionHeader-background, rgba(255,255,255,0.03));
-    }
-    .brand-logo {
-      width: 32px;
-      height: 32px;
-      aspect-ratio: 1;
-      object-fit: contain;
-      border-radius: 50%;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-    .brand-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
-    .brand-name {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--vscode-foreground);
-      letter-spacing: 0;
-      white-space: nowrap;
-    }
-    .brand-tagline {
-      font-size: 11px;
-      color: var(--vscode-descriptionForeground);
-      letter-spacing: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .brand-version {
-      margin-left: auto;
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--vscode-descriptionForeground);
-      background: var(--vscode-badge-background, rgba(255,255,255,0.1));
-      padding: 2px 6px;
-      border-radius: 10px;
-      letter-spacing: 0;
-      flex-shrink: 0;
-    }
-
-    /* ── Status card ─────────────────────────────────────────────────────── */
-    .status-card {
-      margin: 12px 12px 0;
-      border-radius: 8px;
-      border: 1px solid var(--vscode-panel-border, rgba(255,255,255,0.1));
-      overflow: hidden;
-    }
-    .status-top {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-    }
-    .status-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-    .status-icon.success { background: rgba(22,163,74,0.18); color: #22c55e; border: 1px solid rgba(22,163,74,0.35); }
-    .status-icon.warning { background: rgba(217,119,6,0.18); color: #f59e0b; border: 1px solid rgba(217,119,6,0.35); }
-    .status-icon.error   { background: rgba(220,38,38,0.18); color: #f87171; border: 1px solid rgba(220,38,38,0.35); }
-    .status-icon.idle    { background: rgba(107,114,128,0.18); color: #9ca3af; border: 1px solid rgba(107,114,128,0.35); }
-    .status-info { flex: 1; min-width: 0; }
-    .status-title {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--vscode-foreground);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .status-sub {
-      font-size: 11px;
-      color: var(--vscode-descriptionForeground);
-      margin-top: 2px;
-      line-height: 1.5;
-    }
-    .status-meta {
-      display: inline-block;
-      margin-top: 5px;
-      padding: 2px 7px;
-      border-radius: 999px;
-      background: var(--vscode-badge-background, rgba(255,255,255,0.1));
-      color: var(--vscode-badge-foreground, var(--vscode-foreground));
-      font-size: 10px;
-      font-weight: 600;
-    }
-    .outcome-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--vscode-panel-border, rgba(255,255,255,0.08)); }
-    .outcome { min-width: 0; padding: 8px 6px 9px; text-align: center; border-right: 1px solid var(--vscode-panel-border, rgba(255,255,255,0.08)); }
-    .outcome:last-child { border-right: 0; }
-    .outcome-label { display: block; font-size: 10px; color: var(--vscode-descriptionForeground); line-height: 1.25; }
-    .outcome-value { display: block; margin-top: 2px; font-size: 11px; font-weight: 700; color: var(--vscode-foreground); line-height: 1.25; }
-    .outcome-value.on { color: #22c55e; }
-    .outcome-value.attention { color: #fbbf24; }
-
-    /* ── Data boundary receipt ──────────────────────────────────────────── */
-    .privacy-receipt {
-      margin: 8px 12px 0;
-      padding: 9px 10px;
-      border: 1px solid var(--vscode-panel-border, rgba(255,255,255,0.1));
-      border-left: 3px solid var(--vscode-testing-iconPassed, #22c55e);
-      border-radius: 7px;
-      background: var(--vscode-sideBarSectionHeader-background, transparent);
-    }
-    .privacy-receipt.connected { border-left-color: var(--vscode-textLink-foreground, #38bdf8); }
-    .privacy-receipt.attention { border-left-color: var(--vscode-editorWarning-foreground, #fbbf24); }
-    .privacy-title { font-size: 11px; font-weight: 700; color: var(--vscode-foreground); }
-    .privacy-detail { margin-top: 3px; font-size: 11px; line-height: 1.45; color: var(--vscode-descriptionForeground); }
-
-    /* ── Broker pill ─────────────────────────────────────────────────────── */
-    .broker-row {
-      margin: 8px 12px 0;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 10px;
-      letter-spacing: 0;
-    }
-    .pill-on  { background: rgba(22,163,74,0.15); color: #22c55e; border: 1px solid rgba(22,163,74,0.3); }
-    .pill-off { background: rgba(107,114,128,0.12); color: #9ca3af; border: 1px solid rgba(107,114,128,0.2); }
-    .pill-trusted { background: rgba(8,145,178,0.15); color: #22d3ee; border: 1px solid rgba(8,145,178,0.3); }
-    .pill-restricted { background: rgba(220,38,38,0.12); color: #f87171; border: 1px solid rgba(220,38,38,0.25); }
-
-    /* ── Section headers ─────────────────────────────────────────────────── */
-    .section-label {
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0;
-      color: var(--vscode-descriptionForeground);
-      padding: 14px 14px 6px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .section-label::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--vscode-panel-border, rgba(255,255,255,0.08));
-    }
-
-    /* ── CTA button ──────────────────────────────────────────────────────── */
-    .cta-wrap { padding: 0 12px; }
-    .cta {
-      width: 100%;
-      min-height: 36px;
-      padding: 9px 14px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0;
-      transition: opacity 0.15s, transform 0.1s;
-      background: var(--vscode-button-background);
-      color: var(--vscode-button-foreground);
-      font-family: inherit;
-    }
-    .cta:hover { opacity: 0.88; }
-    .cta:active { transform: scale(0.98); }
-    .cta.calm {
-      background: var(--vscode-button-secondaryBackground);
-      color: var(--vscode-button-secondaryForeground);
-    }
-    .cta-hint {
-      font-size: 11px;
-      color: var(--vscode-descriptionForeground);
-      padding: 5px 0 0;
-      line-height: 1.5;
-    }
-
-    /* ── Task cards ──────────────────────────────────────────────────────── */
-    .task-grid { padding: 0 12px; display: flex; flex-direction: column; gap: 5px; }
-    .task-card {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      min-height: 44px;
-      padding: 9px 10px;
-      border-radius: 7px;
-      border: 1px solid var(--vscode-panel-border, rgba(255,255,255,0.08));
-      background: var(--vscode-input-background, rgba(255,255,255,0.04));
-      cursor: pointer;
-      font-family: inherit;
-      color: var(--vscode-foreground);
-      text-align: left;
-      transition: background 0.12s, border-color 0.12s;
-      width: 100%;
-    }
-    .task-card:hover {
-      background: var(--vscode-list-hoverBackground);
-      border-color: var(--vscode-focusBorder, rgba(255,255,255,0.2));
-    }
-    .task-icon { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 20px; color: var(--vscode-icon-foreground, var(--vscode-foreground)); }
-    .task-icon svg { display: block; }
-    .task-content { flex: 1; display: flex; flex-direction: column; gap: 1px; min-width: 0; }
-    .task-label { font-size: 12px; font-weight: 600; line-height: 1.35; overflow-wrap: anywhere; }
-    .task-desc { font-size: 11px; color: var(--vscode-descriptionForeground); line-height: 1.45; }
-    .task-arrow { color: var(--vscode-descriptionForeground); font-size: 15px; flex-shrink: 0; }
-
-    /* ── Guided setup + connected surfaces ──────────────────────────────── */
-    .guide-card, .surface-grid { margin: 0 12px; }
-    .guide-card {
-      padding: 10px;
-      border: 1px solid var(--vscode-panel-border, rgba(255,255,255,0.1));
-      border-radius: 7px;
-      background: var(--vscode-sideBarSectionHeader-background, transparent);
-    }
-    .guide-title { font-size: 12px; font-weight: 700; }
-    .guide-copy { margin-top: 3px; color: var(--vscode-descriptionForeground); font-size: 11px; line-height: 1.5; }
-    .guide-steps { margin: 8px 0 9px 18px; color: var(--vscode-foreground); font-size: 11px; line-height: 1.65; }
-    .guide-button { width: 100%; min-height: 34px; }
-    .surface-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; }
-    .surface-button {
-      min-width: 0;
-      min-height: 42px;
-      padding: 6px 4px;
-      border: 1px solid var(--vscode-panel-border);
-      border-radius: 6px;
-      background: transparent;
-      color: var(--vscode-foreground);
-      cursor: pointer;
-      font: inherit;
-      font-size: 10px;
-      line-height: 1.25;
-    }
-    .surface-button:hover { background: var(--vscode-list-hoverBackground); }
-    .feedback {
-      margin: 8px 12px 0;
-      padding: 7px 9px;
-      border-radius: 6px;
-      border-left: 3px solid var(--vscode-testing-iconPassed, #22c55e);
-      background: var(--vscode-sideBarSectionHeader-background, transparent);
-      color: var(--vscode-descriptionForeground);
-      font-size: 11px;
-      line-height: 1.45;
-    }
-    .feedback.error { border-left-color: var(--vscode-errorForeground, #f87171); color: var(--vscode-errorForeground, #f87171); }
-
-    /* ── Control rows ────────────────────────────────────────────────────── */
-    .controls-list { padding: 0 12px; display: flex; flex-direction: column; gap: 2px; }
-    .control-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--vscode-panel-border, rgba(255,255,255,0.06));
-    }
-    .control-row:last-child { border-bottom: none; }
-    .control-left { flex-shrink: 0; padding-top: 1px; }
-    .control-body { flex: 1; min-width: 0; }
-    .control-header { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
-    .control-label { font-size: 12px; font-weight: 600; }
-    .control-note {
-      font-size: 11px;
-      color: var(--vscode-descriptionForeground);
-      margin-top: 3px;
-      line-height: 1.5;
-    }
-    .control-detail { margin-top: 4px; }
-    .control-detail summary {
-      font-size: 11px;
-      color: var(--vscode-textLink-foreground);
-      cursor: pointer;
-      user-select: none;
-    }
-    .control-detail p {
-      font-size: 11px;
-      color: var(--vscode-descriptionForeground);
-      margin-top: 4px;
-      line-height: 1.55;
-      padding-left: 4px;
-      border-left: 2px solid var(--vscode-panel-border);
-    }
-
-    /* ── Badge chips ─────────────────────────────────────────────────────── */
-    .badge {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0;
-      padding: 2px 6px;
-      border-radius: 10px;
-      white-space: nowrap;
-    }
-    .badge-ENFORCED  { background: rgba(22,163,74,0.2);   color: #22c55e;  border: 1px solid rgba(22,163,74,0.4); }
-    .badge-VERIFIED  { background: rgba(8,145,178,0.2);   color: #22d3ee;  border: 1px solid rgba(8,145,178,0.4); }
-    .badge-REDACTED  { background: rgba(124,58,237,0.2);  color: #a78bfa;  border: 1px solid rgba(124,58,237,0.35); }
-    .badge-MONITORED { background: rgba(217,119,6,0.2);   color: #fbbf24;  border: 1px solid rgba(217,119,6,0.35); }
-    .badge-UNKNOWN   { background: rgba(107,114,128,0.15);color: #9ca3af;  border: 1px solid rgba(107,114,128,0.3); }
-    .badge-EXPOSED   { background: rgba(220,38,38,0.15);  color: #f87171;  border: 1px solid rgba(220,38,38,0.3); }
-    .badge-off       { background: transparent; color: var(--vscode-descriptionForeground); border: 1px solid var(--vscode-panel-border); }
-    /* GAP 3: a pinned control. Deliberately neutral — it says who decided, not
-       how strong the protection is; the coverage detail still carries that. */
-    .badge-managed   { background: rgba(8,145,178,0.15); color: #22d3ee; border: 1px solid rgba(8,145,178,0.3); }
-    .control-managed {
-      font-size: 11px;
-      color: var(--vscode-descriptionForeground);
-      margin-top: 3px;
-      line-height: 1.5;
-      padding-left: 4px;
-      border-left: 2px solid rgba(8,145,178,0.4);
-    }
-
-    /* ── Toggle switch ───────────────────────────────────────────────────── */
-    .toggle {
-      width: 36px;
-      height: 20px;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      position: relative;
-      flex-shrink: 0;
-      transition: background 0.18s;
-      padding: 0;
-    }
-    .toggle-on  { background: #16a34a; }
-    .toggle-off { background: var(--vscode-input-background, rgba(255,255,255,0.1)); border: 1px solid var(--vscode-panel-border); }
-    .toggle-thumb {
-      position: absolute;
-      top: 2px;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: #fff;
-      transition: left 0.18s;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
-    }
-    .toggle-on  .toggle-thumb { left: 18px; }
-    .toggle-off .toggle-thumb { left: 2px; }
-    .toggle-managed { cursor: not-allowed; opacity: 0.55; }
-
-    /* ── Utility buttons ─────────────────────────────────────────────────── */
-    .actions-row {
-      padding: 0 12px;
-      display: flex;
-      gap: 6px;
-    }
-    .btn-secondary {
-      flex: 1;
-      min-height: 34px;
-      padding: 7px 10px;
-      border: 1px solid var(--vscode-panel-border);
-      border-radius: 6px;
-      background: transparent;
-      color: var(--vscode-foreground);
-      cursor: pointer;
-      font-size: 11px;
-      font-weight: 500;
-      font-family: inherit;
-      transition: background 0.12s;
-    }
-    .btn-secondary:hover { background: var(--vscode-list-hoverBackground); }
-    .btn-danger {
-      flex: 1;
-      min-height: 34px;
-      padding: 7px 10px;
-      border: 1px solid rgba(220,38,38,0.5);
-      border-radius: 6px;
-      background: rgba(220,38,38,0.08);
-      color: #f87171;
-      cursor: pointer;
-      font-size: 11px;
-      font-weight: 600;
-      font-family: inherit;
-      transition: background 0.12s;
-    }
-    .btn-danger:hover { background: rgba(220,38,38,0.16); }
-
-    /* ── Footer ──────────────────────────────────────────────────────────── */
-    .footer {
-      margin: 16px 12px 0;
-      padding-top: 12px;
-      border-top: 1px solid var(--vscode-panel-border, rgba(255,255,255,0.07));
-    }
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px 2px;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .footer-link {
-      background: none;
-      border: none;
-      padding: 2px 4px;
-      cursor: pointer;
-      font-family: inherit;
-      font-size: 11px;
-      color: var(--vscode-textLink-foreground);
-    }
-    .footer-link:hover { color: var(--vscode-textLink-activeForeground); text-decoration: underline; }
-    .footer-sep { color: var(--vscode-descriptionForeground); font-size: 10px; padding: 0 2px; }
-    .footer-meta {
-      font-size: 11px;
-      color: var(--vscode-descriptionForeground);
-      line-height: 1.6;
-    }
-    .footer-meta strong { color: var(--vscode-foreground); font-weight: 600; }
-    .more-tools { margin: 6px 12px 0; }
-    .more-tools > summary, .label-help > summary { color: var(--vscode-textLink-foreground); cursor: pointer; font-size: 11px; line-height: 1.5; padding-block: 3px; user-select: none; }
-    .more-tools .task-grid { padding: 7px 0 0; }
-    .label-help { margin-top: 8px; }
-    .label-help p { margin-top: 5px; font-size: 11px; line-height: 1.55; color: var(--vscode-descriptionForeground); }
-
-    /* ── Accessibility ───────────────────────────────────────────────────── */
-    :focus-visible { outline: 2px solid var(--vscode-focusBorder); outline-offset: 2px; }
-    [aria-busy="true"] { opacity: 0.5; cursor: progress; pointer-events: none; }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
-    }
-    @media (forced-colors: active) {
-      .status-card, .privacy-receipt, .task, .control-row, .cta, button { border: 1px solid CanvasText; }
-      .privacy-receipt { border-left-width: 4px; }
-    }
-    @media (max-width: 260px) {
-      .brand-header { padding-inline: 10px; gap: 7px; }
-      .brand-logo { width: 28px; height: 28px; }
-      .brand-version { display: none; }
-      .status-card, .privacy-receipt, .broker-row, .more-tools, .footer { margin-inline: 8px; }
-      .task-grid, .controls-list, .cta-wrap, .actions-row { padding-inline: 8px; }
-      .guide-card, .surface-grid, .feedback { margin-inline: 8px; }
-      .surface-grid { grid-template-columns: 1fr; }
-      .outcome-grid { grid-template-columns: 1fr; }
-      .outcome { text-align: left; border-right: 0; border-bottom: 1px solid var(--vscode-panel-border); }
-      .outcome:last-child { border-bottom: 0; }
-      .actions-row { flex-direction: column; }
-      .status-sub, .privacy-detail, .control-note, .control-detail, .task-desc, .cta-hint { overflow-wrap: anywhere; }
-    }
-  </style>
+  <style>${controlPanelStyles}</style>
 </head>
-<body>
+<body data-pending="${this.actionPending}">
+<a class="skip-link" href="#controls-title">Skip to protection controls</a>
+<div id="operation-status" class="operation-banner" role="status" aria-live="polite" aria-atomic="true">Waiting for VS Code…</div>
 <main aria-labelledby="panel-title">
 
   <!-- ① Brand Header with logo -->
@@ -875,26 +488,46 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     <img class="brand-logo" src="${logoUri}" alt="SoterAI logo" />
     <div class="brand-text">
       <h1 class="brand-name" id="panel-title">SoterAI Guard</h1>
-      <span class="brand-tagline">Local AI Security · Zero cloud dependency</span>
+      <span class="brand-tagline">WORKSPACE SECURITY</span>
     </div>
     <span class="brand-version">v${escapeHtml(String(this.context.extension.packageJSON.version ?? "unknown"))}</span>
+    <button class="icon-button" data-action="refresh" data-focus="action:refresh" aria-label="Refresh protection status" title="Refresh status"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.5 7A5.5 5.5 0 1 0 12 12M13.5 2.5V7H9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
   </header>
+  <nav class="section-nav" aria-label="Panel sections"><a href="#protection-status-title" aria-current="location">Overview</a><a href="#controls-title">Controls</a><a href="#tools-title">Tools</a></nav>
 
   <!-- ② Status card -->
   <section class="status-card" aria-labelledby="protection-status-title">
     <div class="status-top">
       <div class="status-icon ${sev.cls}" aria-hidden="true">${sev.icon}</div>
       <div class="status-info">
-        <h2 class="status-title" id="protection-status-title">${escapeHtml(protection.title)}</h2>
-        <div class="status-sub">${escapeHtml(protection.explanation)}</div>
+        <div class="eyebrow">CURRENT PROTECTION</div>
+        <h2 class="status-title" id="protection-status-title" tabindex="-1">${escapeHtml(statusTitle)}</h2>
+        <div class="status-sub">${escapeHtml(statusExplanation)}</div>
         <div class="status-meta">${activeControlCount} of ${controls.length} controls active</div>
       </div>
     </div>
     <dl class="outcome-grid" aria-label="Protection outcomes">
-      <div class="outcome"><dt class="outcome-label">Blocking</dt><dd class="outcome-value ${blockingActive ? "on" : "attention"}">${blockingActive ? "Active" : "Needs setup"}</dd></div>
+      <div class="outcome"><dt class="outcome-label">Routed requests</dt><dd class="outcome-value ${blockingActive ? "on" : "attention"}">${routedStatus}</dd></div>
       <div class="outcome"><dt class="outcome-label">Editor warnings</dt><dd class="outcome-value ${monitoringActive ? "on" : "attention"}">${monitoringActive ? "Active" : "Off"}</dd></div>
-      <div class="outcome"><dt class="outcome-label">Known gaps</dt><dd class="outcome-value ${knownGapCount === 0 ? "on" : "attention"}">${knownGapCount}</dd></div>
+      <div class="outcome"><dt class="outcome-label">Setup checks</dt><dd class="outcome-value ${setupCheckCount === 0 ? "on" : "attention"}">${setupCheckCount === 0 ? "Complete" : setupCheckCount + " to review"}</dd></div>
     </dl>
+    <div class="cta-wrap">
+      <div class="eyebrow" id="next-step-title">RECOMMENDED NEXT STEP</div>
+      <button class="cta ${cta.tone === "calm" ? "calm" : ""}" data-action="${cta.action.replace("action:", "")}" data-focus="primary-action" data-announcement="${escapeHtml(cta.label)}">${escapeHtml(cta.label)}<span aria-hidden="true"> →</span></button>
+      <div class="cta-hint">${escapeHtml(cta.hint)}</div>
+    </div>
+  </section>
+
+  <aside class="scope-notice" aria-label="Protection scope"><span class="scope-label">Managed paths only</span><p>Other tools can still read original files and make their own network requests.</p><button class="text-button" data-action="openCoverage" data-focus="scope:coverage">Review coverage <span aria-hidden="true">↗</span></button></aside>
+
+  <section class="auto-setup" aria-labelledby="auto-setup-title">
+    <div class="eyebrow">AUTOMATIC SETUP</div>
+    <h2 id="auto-setup-title">One-click IDE protection</h2>
+    <p>Enable local controls, broker auto-start and supported AI routing in one flow. Config changes get one combined review and encrypted backups.</p>
+    <ol class="setup-steps" aria-label="Automatic setup progress">${setupRows}</ol>
+    <button class="cta" data-action="automaticProtection" data-focus="automatic:setup" data-announcement="Starting automatic IDE protection" ${setupBlocked ? 'disabled aria-disabled="true"' : ""}>${this.setupResult ? "Run setup & verify again" : "Enable & verify protection"}<span aria-hidden="true">→</span></button>
+    ${setupBlocked ? `<p class="field-hint">${!state.trusted ? "Review workspace trust before setup." : "Review lockdown and unlock explicitly before setup."}</p>` : ""}
+    ${this.setupResult ? `<p class="setup-result" role="status">${escapeHtml(this.setupResult.summary)}</p><button class="text-button" data-action="openCoverage" data-focus="automatic:coverage">Review final coverage</button>` : ""}
   </section>
 
   <section class="privacy-receipt ${privacy.tone}" aria-labelledby="data-boundary-title" aria-live="polite">
@@ -914,9 +547,8 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
   ${this.feedback ? `<div class="feedback ${this.feedback.tone}" role="status" aria-live="polite">${escapeHtml(this.feedback.message)}</div>` : ""}
 
   ${showSetupGuide ? `
-  <section aria-labelledby="setup-guide-title">
-    <h2 class="section-label" id="setup-guide-title">New here?</h2>
-    <div class="guide-card">
+  <details class="guide-card" id="setup-guide" data-persist>
+    <summary id="setup-guide-title">First time here? Open the setup checklist</summary>
       <div class="guide-title">Get protected in three guided steps</div>
       <div class="guide-copy">Use safe test data first, then protect secrets and connect supported AI tools.</div>
       <ol class="guide-steps">
@@ -925,27 +557,25 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
         <li>Secure supported AI tools</li>
       </ol>
       <button class="btn-secondary guide-button" data-action="openWalkthrough" data-focus="action:openWalkthrough" data-announcement="Opening guided setup">Open guided setup</button>
-    </div>
-  </section>` : ""}
+  </details>` : ""}
 
-  <!-- ④ Primary CTA -->
-  <section aria-labelledby="next-step-title">
-  <h2 class="section-label" id="next-step-title">Next Step</h2>
-  <div class="cta-wrap">
-    <button class="cta ${cta.tone === "calm" ? "calm" : ""}"
-            data-action="${cta.action.replace("action:", "")}"
-            data-focus="${cta.action}" data-announcement="${escapeHtml(cta.label)}">${escapeHtml(cta.label)}</button>
-    <div class="cta-hint">${escapeHtml(cta.hint)}</div>
-  </div>
+  <section aria-labelledby="private-data-title">
+    <h2 class="section-label" id="private-data-title">Protect files &amp; text</h2>
+    <div class="protect-card"><p>Choose what stays out of SoterAI-built context.</p><div class="protect-grid">
+      <button class="btn-secondary" data-action="protectFile" data-focus="action:protectFile">Protect current file</button>
+      <button class="btn-secondary" data-action="protectSelection" data-focus="action:protectSelection">Protect selection</button>
+      <button class="btn-secondary" data-action="redactedPreview" data-focus="action:redactedPreview">Preview AI context</button>
+      <button class="btn-secondary" data-action="manageRules" data-focus="action:manageRules">Manage rules</button>
+    </div><span class="field-hint">Folders and patterns: Explorer menu or .aiignore.</span></div>
   </section>
 
   <!-- ⑤ Quick actions -->
   <section aria-labelledby="start-here-title">
-  <h2 class="section-label" id="start-here-title">Start Here</h2>
+  <h2 class="section-label" id="start-here-title">Review &amp; connect</h2>
   <div class="task-grid">
     ${taskCards(startTasks)}
   </div>
-  <details class="more-tools">
+  <details class="more-tools" id="more-checks" data-persist>
     <summary>More security checks</summary>
     <div class="task-grid">${taskCards(moreTasks)}</div>
   </details>
@@ -953,11 +583,11 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
 
   <!-- ⑥ Controls -->
   <section aria-labelledby="controls-title">
-  <h2 class="section-label" id="controls-title">Protection Controls</h2>
+  <h2 class="section-label" id="controls-title" tabindex="-1">Protection controls<span class="section-count">${activeControlCount}/${controls.length} on</span></h2>
   <div class="controls-list">
     ${coreControls.map(row).join("")}
   </div>
-  <details class="more-tools">
+  <details class="more-tools" id="advanced-controls" data-persist>
     <summary>Advanced agent-tool controls</summary>
     <div class="controls-list">${advancedControls.map(row).join("")}</div>
   </details>
@@ -965,15 +595,16 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
 
   <!-- ⑦ Utility buttons -->
   <section aria-labelledby="tools-title">
-  <h2 class="section-label" id="tools-title">Tools</h2>
+  <h2 class="section-label" id="tools-title" tabindex="-1">Tools</h2>
   <div class="actions-row">
     <button class="btn-secondary" data-action="openCoverage" data-focus="action:openCoverage" data-announcement="Opening protection coverage">
       What is protected
     </button>
     <button class="btn-danger" data-action="lockdown" data-focus="action:lockdown" data-announcement="Opening emergency lockdown confirmation">
-      Stop all AI access
+      Emergency lockdown
     </button>
   </div>
+  <p class="utility-note">Lockdown stops SoterAI's broker and revokes its local grants. Other tools remain outside its control.</p>
   </section>
 
   <section aria-labelledby="explore-title">
@@ -990,40 +621,87 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     <nav class="footer-links" aria-label="SoterAI resources">
       ${footerLinks}
     </nav>
-    <div class="footer-meta">Detection runs locally by default. Raw secrets are not sent to SoterAI.</div>
-    <details class="label-help">
+    <div class="footer-meta">SoterAI checks run locally by default.<br>Status checked ${escapeHtml(new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }))}</div>
+    <details class="label-help" id="label-help" data-persist>
       <summary>How protection labels work</summary>
       <p><strong>Blocks</strong> means SoterAI controls that routed path. <strong>Warns</strong> means SoterAI reports risk but cannot stop another extension's direct calls.</p>
     </details>
   </footer>
-  <div id="operation-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
 </main>
 
   <script nonce="${nonce}">
     const vscode = acquireVsCodeApi();
 
-    // Restore keyboard focus across re-renders.
+    // Store only UI identifiers and positions, never editor/clipboard content.
     const saved = vscode.getState() || {};
+    window.addEventListener('message', event => {
+      const update = event.data;
+      const labels = { waiting: 'Waiting', running: 'Working', complete: 'Done', attention: 'Review', failed: 'Incomplete' };
+      if (update?.type !== 'setupProgress' || !['controls', 'routing', 'verification'].includes(update.stage)
+        || !Object.prototype.hasOwnProperty.call(labels, update.status)) return;
+      const row = document.querySelector('[data-setup-stage="' + update.stage + '"]');
+      if (row) { row.setAttribute('data-status', update.status); row.querySelector('.setup-state').textContent = labels[update.status]; }
+      const status = document.getElementById('operation-status');
+      if (status) status.textContent = update.stage === 'controls' ? 'Enabling local controls…'
+        : update.stage === 'routing' ? 'Review the AI routing changes in VS Code, then apply or cancel.' : 'Verifying protection and coverage…';
+    });
+    function save(patch) { vscode.setState(Object.assign({}, vscode.getState() || {}, patch)); }
+    const sectionLinks = Array.from(document.querySelectorAll('.section-nav a'));
+    function markSection(link) {
+      for (const item of sectionLinks) item.removeAttribute('aria-current');
+      link.setAttribute('aria-current', 'location');
+    }
+    for (const link of sectionLinks) link.addEventListener('click', () => markSection(link));
+    const initialSection = sectionLinks.find(link => link.getAttribute('href') === location.hash);
+    if (initialSection) markSection(initialSection);
+    for (const detail of document.querySelectorAll('details[data-persist]')) {
+      if (saved.details && saved.details[detail.id] === true) detail.open = true;
+      const summary = detail.querySelector('summary');
+      if (summary) summary.setAttribute('data-focus', 'disclosure:' + detail.id);
+      detail.addEventListener('toggle', () => {
+        const details = {};
+        for (const item of document.querySelectorAll('details[data-persist]')) details[item.id] = item.open;
+        save({ details });
+      });
+    }
     if (saved.focus) {
       const el = document.querySelector('[data-focus="' + CSS.escape(saved.focus) + '"]');
-      if (el) el.focus();
+      if (el) el.focus({ preventScroll: true });
     }
     for (const el of document.querySelectorAll('[data-focus]')) {
       el.addEventListener('focus', () => {
-        vscode.setState(Object.assign({}, vscode.getState(), { focus: el.getAttribute('data-focus') }));
+        save({ focus: el.getAttribute('data-focus') });
       });
     }
+    requestAnimationFrame(() => {
+      if (Number.isFinite(saved.scrollY) && saved.scrollY >= 0) window.scrollTo(0, saved.scrollY);
+      window.addEventListener('scroll', () => save({ scrollY: window.scrollY }), { passive: true });
+    });
 
+    let pending = document.body.getAttribute('data-pending') === 'true';
+    function disableActions() {
+      document.body.setAttribute('data-pending', 'true');
+      document.querySelector('main').setAttribute('aria-busy', 'true');
+      for (const button of document.querySelectorAll('button')) {
+        if (button.getAttribute('data-action') !== 'refresh') button.disabled = true;
+      }
+    }
+    if (pending) disableActions();
     function markBusy(el) {
+      if (pending || el.disabled) return false;
+      pending = true;
       el.setAttribute('aria-busy', 'true');
+      disableActions();
       const status = document.getElementById('operation-status');
       if (status) status.textContent = el.getAttribute('data-announcement') || 'Applying change';
+      setTimeout(() => { if (pending && status) status.textContent = 'Waiting for VS Code. Finish or cancel the open dialog, or refresh status.'; }, 20000);
+      return true;
     }
 
     // Toggle switches
     for (const el of document.querySelectorAll('.toggle')) {
       el.addEventListener('click', () => {
-        markBusy(el);
+        if (!markBusy(el)) return;
         vscode.postMessage({
           type: 'toggle:' + el.getAttribute('data-id'),
           value: el.getAttribute('data-value') === 'true'
@@ -1034,7 +712,11 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
     // All action buttons (CTA, tasks, utility, footer)
     for (const el of document.querySelectorAll('[data-action]')) {
       el.addEventListener('click', () => {
-        markBusy(el);
+        if (el.getAttribute('data-action') === 'refresh') {
+          vscode.postMessage({ type: 'action:refresh' });
+          return;
+        }
+        if (!markBusy(el)) return;
         vscode.postMessage({ type: 'action:' + el.getAttribute('data-action') });
       });
     }

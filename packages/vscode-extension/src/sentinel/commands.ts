@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { confirmScopedChange } from "../security/ScopedConfirmation";
 import { AISentinel } from "./AISentinel";
 import { escapeHtml, showInfoWebview, getNonce } from "../firewall/util";
 
@@ -11,6 +12,7 @@ export function registerSentinelCommands(context: vscode.ExtensionContext, senti
     });
 
     reg("soterai.disableAISentinel", async () => {
+        if (!(await confirmScopedChange("Disable AI Activity Sentinel monitoring?"))) return;
         await sentinel.disable();
         vscode.window.showInformationMessage("SoterAI AI Activity Sentinel disabled.");
     });

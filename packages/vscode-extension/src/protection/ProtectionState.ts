@@ -35,6 +35,7 @@ export interface ProtectionRuntimeFacts {
     liveScanEnabled: boolean;
     /** Number of routable AI integrations with a verified SoterAI route. */
     protectedAiTools: number;
+    routingEvidence?: "unknown" | "verified";
     /** Number of AI integrations SoterAI can route through its broker. */
     detectedAiTools: number;
     /**
@@ -78,6 +79,7 @@ const REQUIRED_CONTROLS = ["AI traffic protection", "Protected Workspace", "AI a
 const ADVISORY_CONTROLS = ["MCP governance", "Live file diagnostics"] as const;
 
 function coverage(facts: ProtectionRuntimeFacts): string {
+    if (facts.routingEvidence === "unknown") return "Agent routes UNTESTED; broker status is operational only. Native processes remain outside coverage.";
     const unmanaged = facts.unmanagedAiTools ?? 0;
     // Unroutable tools are stated plainly rather than folded into the ratio.
     // Counting them as uncovered denominators is what produced "0 of 32".
@@ -158,7 +160,13 @@ export function deriveProtectionState(facts: ProtectionRuntimeFacts): Protection
     const policyBlocking = (facts.policy === "unavailable" || facts.policy === "invalid" || facts.policy === "expired")
         && (facts.safeModeEnabled || facts.protectedAiTools > 0);
     if (policyBlocking) {
-        return { ...shared, state: "POLICY_UNAVAILABLE", title: "Policy file missing", explanation: "Safe Mode is on but no project policy file was found. SoterAI created a default one — review it before enabling enforcement.", severity: "warning", recommendedAction: "Run 'Create Project Policy' to review and save the default policy, then re-enable Safe Mode.", allowedTransitions: transitions("POLICY_UNAVAILABLE") };
+        return { ...shared, state: "POLICY_UNAVAILABLE", title: "Policy file missing", explanation: "Safe Mode is on but project policy is missing, invalid or unavailable. Review valid policy before using managed context.", severity: "warning", recommendedAction: "Run 'Create Project Policy' to review and save the default policy, then re-enable Safe Mode.", allowedTransitions: transitions("POLICY_UNAVAILABLE") };
+    }
+    if (facts.routingEvidence === "unknown") {
+        const operational = facts.broker === "healthy" && facts.safeModeEnabled;
+        return { ...shared, state: operational ? "PARTIALLY_ENFORCED" : "MONITORING_ONLY", title: operational ? "Managed checks active; routing unverified" : "Routing unverified",
+            explanation: "Current broker status describes managed operations. No independently verified agent routes or G1-G6 architecture evidence exist. Missing route evidence is not a detected bypass.",
+            severity: "warning", recommendedAction: "Review Covers / Does not cover and the exact-configuration verification record.", allowedTransitions: transitions(operational ? "PARTIALLY_ENFORCED" : "MONITORING_ONLY") };
     }
     // A bypass is a routable integration that is NOT routed — something the
     // user can actually fix. Tools SoterAI cannot route are handled below as a

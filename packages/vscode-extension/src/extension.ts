@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { ExtensionState } from "./state";
 import { registerCommands } from "./commands";
 import { registerFirewallCommands, readContextApproval } from "./firewall/commands";
+import { secretBrokerRuntime } from "./secret-broker/runtime";
 import { setProtectedFileChecker } from "./firewall/ContextGatherer";
 import { registerScannerCommands } from "./firewall/scanners";
 import { PolicyStore } from "./firewall/PolicyStore";
@@ -31,6 +32,7 @@ import { registerContinuousGuardCommands } from "./scanners/continuousGuards";
 import { registerSecretBrokerCommands } from "./secret-broker/commands";
 import { ProtectionStateService } from "./protection/ProtectionStateService";
 import { ProtectionController } from "./protection/ProtectionController";
+import { AutomaticIDEProtection, type SetupProgress, type RoutingSetupResult } from "./protection/AutomaticIDEProtection";
 import { registerEgressFirewallCommands } from "./advanced/commands";
 import { registerAgentTools, supportsLanguageModelTools } from "./agent/languageModelTools";
 import { registerShellExecutionWatcher } from "./terminal/ShellExecutionWatcher";
@@ -205,8 +207,9 @@ export function activate(context: vscode.ExtensionContext): void {
     // Gap 5: one palette row that lists every report, so the eighteen individual
     // show* commands can stay registered without each occupying a palette row.
     registerReportCommands(context);
-    const liveScanEnabled = vscode.workspace.getConfiguration("soterai").get<boolean>("liveScan.enabled", true);
-    if (liveScanEnabled) registerLiveScanner(context);
+    // Register once even when disabled: its setting listener can then activate
+    // scanning immediately when automatic setup enables it, without a reload.
+    registerLiveScanner(context);
     registerClipboardGuard(context);
     registerContinuousGuardCommands(context, {
         scanText: async (text) => ExtensionState.getInstance().engine.scan(text, { context: "selection" }),
@@ -330,7 +333,20 @@ export function activate(context: vscode.ExtensionContext): void {
     );
     // ── End Secret Shield ──────────────────────────────────────────────────────
 
+    const automaticProtection = new AutomaticIDEProtection({
+        controller: protectionController,
+        routeTools: async () => await vscode.commands.executeCommand<RoutingSetupResult>("soterai.secureAllAI"),
+        refresh: () => protectionState.refresh(),
+    });
     context.subscriptions.push(
+        vscode.commands.registerCommand("soterai.enableAutomaticIDEProtection", async (listener?: unknown) => {
+            return vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: "SoterAI: Automatic IDE protection", cancellable: false }, async (progress) => {
+                return automaticProtection.run((update: SetupProgress) => {
+                    progress.report({ message: update.stage === "controls" ? "Enabling local controls" : update.stage === "routing" ? "Reviewing supported AI routes" : "Verifying protection" });
+                    if (typeof listener === "function") listener(update);
+                });
+            });
+        }),
         vscode.commands.registerCommand("soterai.enableFullProtection", async () => {
             try {
                 const result = await protectionController.enableFullProtection();
@@ -499,7 +515,7 @@ async function updateStatusBar(): Promise<void> {
             memoryActive = Boolean(brokerManager.memorySessionId);
         }
     } catch { /* broker optional / stopped */ }
-    const hasPolicy = await PolicyStore.exists().catch(() => false);
+    const hasPolicy = (await PolicyStore.status().catch(() => "unavailable")) === "loaded";
     const approved = extensionContext ? await readContextApproval(extensionContext).catch(() => undefined) : undefined;
 
     const line = (label: string, value: string) => `${label}: ${value}`;
@@ -529,6 +545,9 @@ async function updateStatusBar(): Promise<void> {
 }
 
 export async function deactivate(): Promise<void> {
+    secretBrokerRuntime.enforcedApi.revokeAll();
+    try { await secretBrokerRuntime.refs.clear(); }
+    catch { console.error("SoterAI reference cleanup INCOMPLETE; persisted retention may remain."); }
     TelemetryManager.getInstance().dispose();
     if (brokerManager) await brokerManager.stop();
 }

@@ -36,12 +36,27 @@ export interface CreateSecretRefInput {
     userApprovalState?: SecretRefMetadata["userApprovalState"];
 }
 
+export interface SecretReferenceOptions {
+    /** Runtime withdrawal switch; tests may use the isolated memory default. */
+    enabled?: () => boolean;
+}
+
+export const MAX_SECRET_REFERENCE_TTL_MS = 24 * 60 * 60 * 1000;
+
 export class SecretReferenceManager {
     private readonly records = new Map<string, Omit<SecretRefRecord, "value">>();
+    private readonly expiryTimers = new Map<string, ReturnType<typeof setTimeout>>();
 
-    constructor(private readonly store: SecretValueStore = new MemorySecretValueStore()) {}
+    constructor(
+        private readonly store: SecretValueStore = new MemorySecretValueStore(),
+        private readonly options: SecretReferenceOptions = {},
+    ) {}
 
     async create(input: CreateSecretRefInput): Promise<SecretRefMetadata> {
+        this.requireEnabled();
+        if (!Number.isFinite(input.ttlMs) || input.ttlMs <= 0 || input.ttlMs > MAX_SECRET_REFERENCE_TTL_MS) {
+            throw new Error("Secret reference lifetime must be positive, finite and no longer than 24 hours.");
+        }
         const id = this.newId();
         const ref = `soterai://secret/${input.finding.type}/${id}`;
         const created = Date.now();
@@ -63,21 +78,47 @@ export class SecretReferenceManager {
             useCount: 0,
         };
         this.records.set(ref, record);
-        await this.store.set(id, input.finding.value);
+        try {
+            await this.store.set(id, input.finding.value);
+            this.requireEnabled();
+            if (record.revoked || this.records.get(ref) !== record || Date.now() >= Date.parse(record.expiresAt)) {
+                throw new Error("Secret reference was withdrawn before storage completed.");
+            }
+        } catch (error) {
+            record.revoked = true;
+            this.records.delete(ref);
+            // A failed store may already have written its recovery inventory.
+            // Preserve the original failure; the store retains that cleanup ID.
+            await this.store.delete(id).catch(() => {});
+            throw error;
+        }
+        const timer = setTimeout(() => {
+            // Marking revoked is synchronous; a deletion failure keeps the ID
+            // in the persistent inventory for a later recovery attempt.
+            void this.revoke(ref).catch(() => {});
+        }, Math.max(1, Date.parse(record.expiresAt) - Date.now()));
+        timer.unref();
+        this.expiryTimers.set(ref, timer);
         return { ...record, allowedOperations: [...record.allowedOperations] };
     }
 
     async lookup(ref: string, workspace: string, operation?: BrokerOperation): Promise<SecretRefRecord | undefined> {
+        this.requireEnabled();
         const record = this.records.get(ref);
         if (!record || record.revoked || record.workspace !== workspace) return undefined;
-        if (Date.now() > Date.parse(record.expiresAt)) return undefined;
+        if (Date.now() >= Date.parse(record.expiresAt)) {
+            await this.revoke(ref);
+            return undefined;
+        }
         if (operation && !record.allowedOperations.includes(operation)) return undefined;
         if (record.oneTime && record.useCount > 0) return undefined;
         // Claim the use BEFORE the async store read so two concurrent lookups
         // cannot both pass the one-time check (TOCTOU).
         record.useCount += 1;
         const value = await this.store.get(record.id);
-        if (!value) return undefined;
+        this.requireEnabled();
+        if (Date.now() >= Date.parse(record.expiresAt) && !record.revoked) await this.revoke(ref);
+        if (!value || record.revoked || this.records.get(ref) !== record) return undefined;
         return { ...record, allowedOperations: [...record.allowedOperations], value };
     }
 
@@ -96,22 +137,37 @@ export class SecretReferenceManager {
         const record = this.records.get(ref);
         if (!record) return false;
         record.revoked = true;
+        this.clearExpiryTimer(ref);
         await this.store.delete(record.id);
         return true;
     }
 
     async clear(workspace?: string): Promise<void> {
-        for (const [ref, record] of this.records) {
-            if (!workspace || record.workspace === workspace) {
-                await this.store.delete(record.id);
-                this.records.delete(ref);
-            }
+        const targets = [...this.records].filter(([, record]) => !workspace || record.workspace === workspace);
+        // Revoke all affected authority before any async storage deletion.
+        for (const [ref, record] of targets) {
+            record.revoked = true;
+            this.clearExpiryTimer(ref);
+            this.records.delete(ref);
         }
+        for (const [, record] of targets) await this.store.delete(record.id);
         if (!workspace && this.store.clear) await this.store.clear();
     }
 
     serializeMetadata(): string {
         return JSON.stringify(this.list());
+    }
+
+    private requireEnabled(): void {
+        if (this.options.enabled && !this.options.enabled()) {
+            throw new Error("Secret reference operations are unavailable while inventory protection is disabled.");
+        }
+    }
+
+    private clearExpiryTimer(ref: string): void {
+        const timer = this.expiryTimers.get(ref);
+        if (timer) clearTimeout(timer);
+        this.expiryTimers.delete(ref);
     }
 
     private newId(): string {

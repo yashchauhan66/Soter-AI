@@ -1,42 +1,60 @@
 import { CapabilityBroker } from "./CapabilityBroker";
-import { SecretReferenceManager, MemorySecretValueStore, type SecretValueStore } from "./SecretReferenceManager";
+import { SecretReferenceManager, type SecretValueStore } from "./SecretReferenceManager";
 import { SensitiveContextPolicyEngine, DEFAULT_SENSITIVE_CONTEXT_POLICY } from "./SensitiveContextPolicy";
 import { SensitiveContextRedactor } from "./SensitiveContextRedactor";
 import { OutputFilter } from "./OutputFilter";
 import { EnforcedApiCapabilityBroker } from "./EnforcedApiCapability";
 
 /**
- * Delegating store so the runtime can start with a memory store (unit tests,
- * pre-activation) and be re-pointed at VS Code SecretStorage during
- * activation. Raw secret values then live in the OS keychain, not the
- * extension-host heap, for their TTL.
+ * Runtime storage stays unavailable until activation recovery completes.
+ * SecretStorage encrypts persistent values, but retrieving a
+ * value brings plaintext into the extension-host heap. It does not isolate
+ * secrets from other code running with that host's authority.
  */
 class DelegatingValueStore implements SecretValueStore {
-    private target: SecretValueStore = new MemorySecretValueStore();
+    private target?: SecretValueStore;
+    private ready: Promise<void> = Promise.resolve();
+    private enabled: () => boolean = () => false;
 
-    setTarget(store: SecretValueStore): void {
+    setTarget(store: SecretValueStore, ready: Promise<void>, enabled: () => boolean): void {
         this.target = store;
+        this.ready = ready;
+        this.enabled = enabled;
     }
 
-    get(id: string): Promise<string | undefined> {
-        return this.target.get(id);
+    isEnabled(): boolean {
+        return Boolean(this.target) && this.enabled();
     }
 
-    set(id: string, value: string): Promise<void> {
-        return this.target.set(id, value);
+    async get(id: string): Promise<string | undefined> {
+        const target = await this.availableTarget();
+        return target.get(id);
     }
 
-    delete(id: string): Promise<void> {
-        return this.target.delete(id);
+    async set(id: string, value: string): Promise<void> {
+        const target = await this.availableTarget();
+        return target.set(id, value);
+    }
+
+    async delete(id: string): Promise<void> {
+        await this.ready;
+        await this.target?.delete(id);
     }
 
     async clear(): Promise<void> {
-        await this.target.clear?.();
+        await this.ready;
+        await this.target?.clear?.();
+    }
+
+    private async availableTarget(): Promise<SecretValueStore> {
+        await this.ready;
+        if (!this.target || !this.enabled()) throw new Error("Secret reference storage is unavailable while inventory protection is disabled.");
+        return this.target;
     }
 }
 
 const valueStore = new DelegatingValueStore();
-const refs = new SecretReferenceManager(valueStore);
+const refs = new SecretReferenceManager(valueStore, { enabled: () => valueStore.isEnabled() });
 const policy = new SensitiveContextPolicyEngine(DEFAULT_SENSITIVE_CONTEXT_POLICY);
 
 const outputFilter = new OutputFilter();
@@ -50,7 +68,12 @@ export const secretBrokerRuntime = {
     enforcedApi: new EnforcedApiCapabilityBroker(refs, outputFilter),
 };
 
-/** Called once at activation to back secret values with VS Code SecretStorage. */
-export function setSecretValueStore(store: SecretValueStore): void {
-    valueStore.setTarget(store);
+/** Activation recovery runs before a new reference can persist or read values. */
+export function setSecretValueStore(store: SecretValueStore, enabled: () => boolean): Promise<void> {
+    const ready = store.clear ? store.clear() : Promise.reject(new Error("Secret reference storage requires recovery inventory support."));
+    valueStore.setTarget(store, ready, enabled);
+    // Recovery may fail before any command is invoked; callers receive the
+    // rejection and later storage operations remain closed.
+    void ready.catch(() => {});
+    return ready;
 }

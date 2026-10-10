@@ -41,12 +41,13 @@ import {
     type MCPPermission,
     type ProcessFilesystemMode,
     type ProcessNetworkMode,
-    type ProcessSandboxStrength,
     type ProtectionMode,
     type SafeModeLevel,
     type TaintedSource,
 } from "@soterai/guard-core";
 import { tokenMatches } from "./auth";
+import { isClientRoute } from "./ClientRoutes";
+import { controlledInvocation, controlledEnvironment } from "./ControlledExecution";
 import { validateProviderTarget, readProviderBody, MAX_PROVIDER_RESPONSE_BYTES } from "./ProviderTarget";
 import {
     CheckpointScopeError,
@@ -56,7 +57,7 @@ import {
 
 const execFileAsync = promisify(execFile);
 
-export const BROKER_VERSION = "0.1.0";
+export const BROKER_VERSION = "0.2.0";
 export const DEFAULT_BROKER_PORT = 47321;
 export const BROKER_HOST = "127.0.0.1" as const;
 
@@ -79,7 +80,10 @@ export interface SafeBrokerEvent {
 }
 
 export interface BrokerServerOptions {
+    /** Data-plane token handed to AI clients. Never authorizes management. */
     token: string;
+    /** Separate controller credential; omitted means management is unavailable. */
+    controlToken?: string;
     port?: number;
     bodyLimitBytes?: number;
     requestTimeoutMs?: number;
@@ -92,6 +96,8 @@ export interface BrokerServerOptions {
     providerApiKey?: string;
     fetchImpl?: typeof fetch;
     terminalExecutor?: (executable: string, args: string[], options: { timeoutMs: number; maxBufferBytes: number }) => Promise<{ stdout: string; stderr: string; exitCode: number }>;
+    /** Administrator-owned absolute executables. Only the current Node runtime is enabled by default. */
+    terminalExecutables?: Readonly<Record<string, string>>;
     logger?: (message: string, metadata?: Record<string, unknown>) => void;
     canaries?: Array<Pick<Canary, "id" | "token" | "hash" | "redactedPreview">>;
     /** Extension-managed brokers wait for authenticated registry synchronization. */
@@ -167,6 +173,11 @@ export class BrokerServer {
 
     constructor(private readonly options: BrokerServerOptions) {
         if (!options.token || options.token.length < 32) throw new Error("A broker auth token of at least 32 characters is required");
+        if (options.controlToken !== undefined && (options.controlToken.length < 32 || options.controlToken === options.token)) {
+            throw new Error("Controller auth must be at least 32 characters and distinct from client auth");
+        }
+        if (options.requireCanarySync && !options.controlToken) throw new Error("Canary synchronization requires controller auth");
+        this.options = { ...options };
         for (const target of [options.openAIProviderUrl, options.anthropicProviderUrl]) {
             if (target) validateProviderTarget(target);
         }
@@ -230,8 +241,13 @@ export class BrokerServer {
             if (req.method === "GET" && url.pathname === "/health") {
                 return this.json(res, 200, { status: "ok", localOnly: true, host: BROKER_HOST, startedAt: this.startedAt });
             }
-            if (!tokenMatches(req.headers.authorization, this.options.token)) {
+            const controller = this.options.controlToken !== undefined && tokenMatches(req.headers.authorization, this.options.controlToken);
+            const client = tokenMatches(req.headers.authorization, this.options.token);
+            if (!controller && !client) {
                 throw new HttpError(401, "unauthorized", "A valid local broker bearer token is required");
+            }
+            if (!controller && !isClientRoute(req.method, url.pathname)) {
+                throw new HttpError(403, "control_auth_required", "This operation requires the separate local controller credential");
             }
 
             if (req.method === "GET" && url.pathname === "/version") {
@@ -397,6 +413,7 @@ export class BrokerServer {
     private rotateAuth(res: ServerResponse, body: JsonBody): void {
         const next = requireString(body.token, "token");
         if (next.length < 32) throw new HttpError(400, "weak_token", "The replacement token must be at least 32 characters");
+        if (next === this.options.controlToken) throw new HttpError(400, "shared_token", "Client and controller credentials must remain distinct");
         this.options.token = next;
         this.json(res, 200, { rotated: true });
     }
@@ -453,13 +470,15 @@ export class BrokerServer {
         options: { timeoutMs: number; maxBufferBytes: number },
     ): Promise<{ stdout: string; stderr: string; exitCode: number }> {
         if (this.options.terminalExecutor) return this.options.terminalExecutor(executable, args, options);
+        const invocation = controlledInvocation(executable, args, this.options.terminalExecutables ?? { node: process.execPath });
+        if (!invocation) throw new HttpError(501, "terminal_runtime_not_configured", "This controlled executable has no trusted absolute path configured");
         try {
-            const result = await execFileAsync(executable, args, {
+            const result = await execFileAsync(invocation.file, invocation.args, {
                 shell: false,
                 windowsHide: true,
                 timeout: options.timeoutMs,
                 maxBuffer: options.maxBufferBytes,
-                env: minimalTerminalEnv(process.env),
+                env: controlledEnvironment(process.env),
             });
             return { stdout: result.stdout, stderr: result.stderr, exitCode: 0 };
         } catch (error) {
@@ -585,6 +604,7 @@ export class BrokerServer {
     }
 
     private previewProcessLaunch(res: ServerResponse, body: JsonBody): void {
+        if (process.env.SOTERAI_BROKER_TRUSTED_SANDBOX_CLAIMS === "0") throw new HttpError(503, "sandbox_preview_disabled", "Sandbox preview unavailable");
         const decision = evaluateProcessLaunch({
             executable: requireString(body.executable, "executable"),
             args: stringArray(body.args),
@@ -597,11 +617,11 @@ export class BrokerServer {
             allowChildProcesses: typeof body.allowChildProcesses === "boolean" ? body.allowChildProcesses : undefined,
             shell: typeof body.shell === "boolean" ? body.shell : undefined,
             productionContext: typeof body.productionContext === "boolean" ? body.productionContext : undefined,
-            sandboxStrength: parseProcessSandboxStrength(body.sandboxStrength),
+            sandboxStrength: "none", // Caller text is not platform enforcement evidence.
             protectionMode: brokerProtectionMode(this.safeMode),
         });
         this.record({ eventType: "process_launch_previewed", decision: actionToGuardAction(decision.action), riskScore: decision.riskScore, categories: decision.categories, redactedEvidence: decision.reasonCodes.join(",") });
-        this.json(res, 200, decision);
+        this.json(res, 200, { ...decision, platformEnforcement: "UNTESTED", previewOnly: true });
     }
 
     private previewExtensionIsolation(res: ServerResponse, body: JsonBody): void {
@@ -1430,10 +1450,6 @@ function parseProcessFilesystemMode(value: unknown): ProcessFilesystemMode | und
     return value === "read_only_workspace" || value === "read_write_workspace" || value === "unrestricted" ? value : undefined;
 }
 
-function parseProcessSandboxStrength(value: unknown): ProcessSandboxStrength | undefined {
-    return value === "os_enforced" || value === "broker_constrained" || value === "none" ? value : undefined;
-}
-
 function parseMemorySource(value: unknown): MemorySource {
     const allowed: MemorySource[] = ["broker", "safe-context-builder", "scan-before-ai-prompt", "manual-output-scan", "git-scan", "terminal-check", "mcp-scan"];
     return typeof value === "string" && allowed.includes(value as MemorySource) ? value as MemorySource : "broker";
@@ -1463,19 +1479,6 @@ function safeTerminalAnalysis(analysis: ReturnType<typeof analyzeControlledTermi
 function boundedNumber(value: unknown, fallback: number, min: number, max: number): number {
     if (typeof value !== "number" || !Number.isFinite(value)) return fallback;
     return Math.max(min, Math.min(max, Math.floor(value)));
-}
-
-function minimalTerminalEnv(env: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
-    const clean: NodeJS.ProcessEnv = {
-        NODE_ENV: env.NODE_ENV ?? "production",
-        PATH: env.PATH ?? env.Path ?? "",
-        Path: env.Path ?? env.PATH ?? "",
-        GIT_TERMINAL_PROMPT: "0",
-        LC_ALL: "C",
-    };
-    if (env.SystemRoot) clean.SystemRoot = env.SystemRoot;
-    if (env.windir) clean.windir = env.windir;
-    return clean;
 }
 
 function stringValue(value: unknown): string | undefined {

@@ -3,7 +3,7 @@ import * as path from "node:path";
 import { lstat } from "node:fs/promises";
 import { DEFAULT_PROJECT_POLICY, classifyPath, parseProjectPolicy, type ProjectPolicy } from "@soterai/guard-core";
 import { readBoundaryFile } from "./readFile";
-import { matchesGlob, matchesRule, parseAiIgnore, parseManualRules, redactRegions, relativePath, OMITTED, type ManualRules } from "./policy";
+import { matchesGlob, matchesRule, parseAiIgnore, parseManualRules, mergeManualRules, validateGlob, redactRegions, relativePath, OMITTED, type ManualRules } from "./policy";
 
 export const RULES_KEY = "soterai.aiForbidden.v1";
 let state: vscode.Memento | undefined;
@@ -16,7 +16,7 @@ export function storedRules(root: string): ManualRules {
     if (all !== undefined && (!all || typeof all !== "object" || Array.isArray(all))) throw new Error("Invalid AI policy storage.");
     return parseManualRules(all?.[root]);
 }
-export function updateRules(root: string, update: (rules: ManualRules) => ManualRules): Promise<void> {
+function writeRules(root: string, update: (rules: ManualRules) => ManualRules): Promise<void> {
     const target = state;
     if (!target) return Promise.reject(new Error("AI policy storage is unavailable."));
     const write = (stateWrites.get(target) ?? Promise.resolve()).then(async () => {
@@ -28,8 +28,37 @@ export function updateRules(root: string, update: (rules: ManualRules) => Manual
     stateWrites.set(target, write.catch(() => undefined));
     return write;
 }
+const policyEnabled = () => vscode.workspace.getConfiguration("soterai").get<boolean>("hardening.addOnlyPolicy", true);
+export function updateRules(root: string, update: (rules: ManualRules) => ManualRules): Promise<void> {
+    if (!policyEnabled()) return Promise.reject(new Error("AI policy updates disabled; context sharing unavailable."));
+    return writeRules(root, current => mergeManualRules(current, parseManualRules(update(structuredClone(current)))));
+}
 export function saveRules(root: string, rules: ManualRules): Promise<void> {
     return updateRules(root, () => rules);
+}
+
+/** UI review only. No rule/approval argument and no exported programmatic removal primitive. */
+export async function reviewRuleRelaxation(): Promise<void> {
+    if (!policyEnabled()) throw new Error("Policy review disabled.");
+    const folder = await vscode.window.showWorkspaceFolderPick();
+    if (!folder) return;
+    const root = folder.uri.toString();
+    const rules = storedRules(root);
+    const choices = [
+        ...rules.paths.map(rule => ({ label: `${rule.kind}: ${rule.pattern}`, value: JSON.stringify(rule), region: false })),
+        ...rules.regions.map(rule => ({ label: `Protected text: ${rule.path} (${rule.start}-${rule.end})`, value: JSON.stringify(rule), region: true })),
+    ];
+    const choice = await vscode.window.showQuickPick(choices, { title: "Review an accepted deny", placeHolder: "Remove the repository entry first; retained denies need this separate review." });
+    if (!choice) return;
+    const approval = await vscode.window.showWarningMessage(
+        `Relax ${choice.label} in ${folder.name}?\nnot agent-proof: an agent running as me could also change this`,
+        { modal: true }, "Relax this deny");
+    if (approval !== "Relax this deny" || !policyEnabled()) return;
+    await writeRules(root, current => {
+        if (choice.region) current.regions = current.regions.filter(rule => JSON.stringify(rule) !== choice.value);
+        else current.paths = current.paths.filter(rule => JSON.stringify(rule) !== choice.value);
+        return current;
+    });
 }
 
 interface RootPolicy { folder: vscode.WorkspaceFolder; globs: string[]; manual: ManualRules; invalid: boolean; project: ProjectPolicy }
@@ -52,13 +81,13 @@ export class BoundarySnapshot {
         const roots = await Promise.all((vscode.workspace.workspaceFolders ?? []).map(async folder => {
             const root: RootPolicy = {
                 folder, globs: [...DEFAULT_PROJECT_POLICY.protectedFiles, ".git/", ".aiignore", ".soterai/", ".soterai-policy.json"],
-                manual: { paths: [], regions: [] }, invalid: folder.uri.scheme !== "file",
+                manual: { paths: [], regions: [] }, invalid: folder.uri.scheme !== "file" || !policyEnabled(),
                 project: structuredClone(DEFAULT_PROJECT_POLICY),
             };
             try {
                 root.manual = storedRules(folder.uri.toString());
                 const ignore = await optionalPolicyFile(folder, ".aiignore");
-                if (ignore !== undefined) root.globs.push(...parseAiIgnore(ignore));
+                const acceptedGlobs = ignore === undefined ? [] : parseAiIgnore(ignore);
                 const project = await optionalPolicyFile(folder, ".soterai/policy.json");
                 if (project !== undefined) {
                     const parsed: unknown = JSON.parse(project);
@@ -72,6 +101,15 @@ export class BoundarySnapshot {
                     if (sensitive !== undefined && (!Array.isArray(sensitive)
                         || sensitive.length > 256 || sensitive.some(p => typeof p !== "string" || !p.trim() || p.length > 256))) throw new Error("Invalid sensitive paths.");
                     root.project = parseProjectPolicy(parsed);
+                    acceptedGlobs.push(...root.project.protectedFiles.map(validateGlob));
+                    if (root.project.aiContext.sensitivePathAction === "block") acceptedGlobs.push(...root.project.sensitivePaths.map(validateGlob));
+                    if (root.project.aiContext.defaultAction === "block") acceptedGlobs.push("**");
+                }
+                if (acceptedGlobs.length && policyEnabled()) {
+                    await updateRules(folder.uri.toString(), rules => ({ ...rules,
+                        paths: [...rules.paths, ...acceptedGlobs.map(pattern => ({ kind: "glob" as const, pattern }))],
+                    }));
+                    root.manual = storedRules(folder.uri.toString());
                 }
             } catch { root.invalid = true; }
             return root;

@@ -100,6 +100,12 @@ export function parseManualRules(raw: unknown): ManualRules {
     return structuredClone(source);
 }
 
+/** Union, never replacement: a public update API can only add accepted denies. */
+export function mergeManualRules(before: ManualRules, added: ManualRules): ManualRules {
+    const unique = <T>(items: T[]) => [...new Map(items.map(item => [JSON.stringify(item), item])).values()];
+    return parseManualRules({ paths: unique([...before.paths, ...added.paths]), regions: unique([...before.regions, ...added.regions]) });
+}
+
 /** Offsets apply only to the exact document. Any edit blocks the whole file until stale rules are explicitly reviewed. */
 export function redactRegions(input: string, text: string, regions: ProtectedRegion[], start = 0, end = text.length): string {
     const matching = regions.filter(region => relativePath(region.path) === relativePath(input));

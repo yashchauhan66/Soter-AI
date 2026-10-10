@@ -1,6 +1,6 @@
 // Test-only loader: run real product modules with the explicit VS Code stub.
 import "./phase2/register.mjs";
-import { afterEach, beforeEach, test } from "node:test";
+import { afterEach, beforeEach, test, mock } from "node:test";
 import assert from "node:assert/strict";
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
@@ -270,4 +270,47 @@ test("selection-only overlap removes protected bytes without losing adjacent pub
     assert.equal(redactRegions("notes.txt", text, regions, 3, 10), "lic " + OMITTED);
     assert.equal(redactRegions("notes.txt", text, regions, 8, 12), OMITTED);
     assert.equal(redactRegions("notes.txt", text, regions, 14, text.length), " public");
+});
+
+test("accepted repository denies survive deletion, replacement and a fresh snapshot", async () => {
+    await write("memo.txt", custom);
+    await write(".aiignore", "memo.txt");
+    assert.equal((await BoundarySnapshot.load()).blocks(uri("memo.txt")), true);
+    await fs.unlink(path.join(root, ".aiignore"));
+    initializeBoundaryState(context.workspaceState as never);
+    assert.equal((await BoundarySnapshot.load()).blocks(uri("memo.txt")), true);
+    await write(".soterai/policy.json", '{"protectedFiles":["reports/**"]}');
+    assert.equal((await BoundarySnapshot.load()).blocks(uri("reports/a.txt")), true);
+    await write(".soterai/policy.json", '{"protectedFiles":[],"aiContext":{"protectedFileAction":"allow"}}');
+    assert.equal((await BoundarySnapshot.load()).blocks(uri("reports/a.txt")), true);
+});
+
+test("public policy update and save APIs cannot clear a deny; flag off withdraws sharing", async () => {
+    const key = stub.state.folders[0].uri.toString();
+    await saveRules(key, { paths: [{kind:"file",pattern:"memo.txt"}], regions: [] });
+    await saveRules(key, { paths: [], regions: [] });
+    await updateRules(key, () => ({ paths: [], regions: [] }));
+    assert.equal(storedRules(key).paths.length, 1);
+    stub.state.config.set("soterai.hardening.addOnlyPolicy", false);
+    assert.equal((await BoundarySnapshot.load()).blocks(uri("public.txt")), true);
+    await assert.rejects(saveRules(key, {paths:[],regions:[]}));
+    assert.equal(storedRules(key).paths.length, 1);
+});
+
+test("relaxation ignores command arguments and needs the labelled native modal", async () => {
+    const key = stub.state.folders[0].uri.toString();
+    await saveRules(key, {paths:[{kind:"file",pattern:"memo.txt"}],regions:[]});
+    registerAIBoundaryCommands(context as never);
+    const methods: Array<{mock:{restore():void}}> = [
+        mock.method(stub.window, "showWorkspaceFolderPick", async () => stub.state.folders[0]),
+        mock.method(stub.window, "showQuickPick", async (items: Array<{label:string}>) => items[0]),
+    ];
+    try {
+        await stub.commands.executeCommand("soterai.manageAIRules", { approved:true, remove:"memo.txt" });
+        assert.equal(storedRules(key).paths.length,1);
+        assert.match(stub.capturedText(), /not agent-proof: an agent running as me could also change this/);
+        methods.push(mock.method(stub.window,"showWarningMessage",async()=>"Relax this deny"));
+        await stub.commands.executeCommand("soterai.manageAIRules");
+        assert.equal(storedRules(key).paths.length,0);
+    } finally { methods.forEach(m=>m.mock.restore()); }
 });

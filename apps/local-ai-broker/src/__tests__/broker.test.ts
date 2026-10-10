@@ -2,8 +2,10 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { generateCanary } from "@soterai/guard-core";
 import { BrokerServer, HttpError, validateRequestBodyHeaders } from "../BrokerServer";
+import { isClientRoute } from "../ClientRoutes";
 
 const TOKEN = "test_local_broker_token_0123456789abcdef";
+const CONTROL = "test_controller_token_0123456789abcdef";
 
 function expectHeaderError(run: () => void, status: number, code: string): void {
     assert.throws(run, (error: unknown) => error instanceof HttpError && error.status === status && error.code === code);
@@ -46,14 +48,14 @@ async function withBroker(
     options: Partial<ConstructorParameters<typeof BrokerServer>[0]>,
     run: (baseUrl: string, broker: BrokerServer) => Promise<void>,
 ): Promise<void> {
-    const broker = new BrokerServer({ token: TOKEN, port: 0, ...options });
+    const broker = new BrokerServer({ token: TOKEN, controlToken: CONTROL, port: 0, ...options });
     const { url } = await broker.start();
     try { await run(url, broker); } finally { await broker.stop(); }
 }
 
 function request(baseUrl: string, endpoint: string, init: RequestInit = {}, token = TOKEN): Promise<Response> {
     const headers = new Headers(init.headers);
-    if (token) headers.set("authorization", `Bearer ${token}`);
+    if (token) headers.set("authorization", `Bearer ${token === TOKEN && !isClientRoute(init.method ?? "GET", endpoint) ? CONTROL : token}`);
     if (init.body && !headers.has("content-type")) headers.set("content-type", "application/json");
     return fetch(`${baseUrl}${endpoint}`, { ...init, headers });
 }
@@ -389,6 +391,20 @@ describe("Local AI Broker server", () => {
             assert.equal(payload.action, "DENY");
             assert.ok(payload.findings.some((finding) => finding.id === "unknown.agent" && finding.action === "BLOCK"));
             assert.ok(payload.workspaceRecommendations.some((item) => item.includes("allowlisting")));
+        });
+    });
+
+    it("caller sandbox labels cannot elevate process preview authority", async () => {
+        await withBroker({}, async url => {
+            const observations: unknown[] = [];
+            for (const sandboxStrength of ["none", "broker_constrained", "os_enforced"]) {
+                const response = await request(url, "/v1/preflight/process-launch", {method:"POST",body:JSON.stringify({executable:"git",args:["status"],requestedNetwork:"none",filesystemMode:"workspace_readonly",sandboxStrength})});
+                assert.equal(response.status,200);
+                const payload = await response.json() as { platformEnforcement: string; previewOnly: boolean };
+                assert.equal(payload.platformEnforcement,"UNTESTED"); assert.equal(payload.previewOnly,true);
+                observations.push(payload);
+            }
+            assert.deepEqual(observations[0],observations[1]); assert.deepEqual(observations[1],observations[2]);
         });
     });
 });

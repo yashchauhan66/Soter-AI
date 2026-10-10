@@ -21,6 +21,8 @@ import { getBrokerManager } from "../broker/BrokerManager";
 
 export function registerContextCommands(deps: FirewallDeps): void {
     const { context, refreshViews } = deps;
+    // Withdraw old cosmetic broad-session claims at activation, not just on command use.
+    void context.globalState.update(APPROVAL_STATE_ID, undefined);
     const reg = (id: string, handler: (...args: any[]) => any) =>
         context.subscriptions.push(vscode.commands.registerCommand(id, handler));
 
@@ -82,7 +84,7 @@ export function registerContextCommands(deps: FirewallDeps): void {
          <p>What SoterAI would include if you build a safe context now: <strong>${safe.summary.included} included</strong>,
          <strong>${safe.summary.blocked} blocked</strong>, <strong>${safe.summary.quarantined} quarantined</strong>, <strong>${safe.summary.approvalRequired} need approval</strong>.</p>
          <table><tr><th>Path</th><th>Source</th><th>Level</th><th>Action</th><th>Included</th><th>Reason</th><th>Safe preview</th></tr>${rows}</table>
-         <p class="note">Protected files are excluded; sensitive files are summarized; untrusted content that tries to instruct or exfiltrate is quarantined as data. No raw secrets are ever included in the safe context.</p>`,
+         <p class="note">Protected files are excluded, sensitive files are summarized, and recognized hostile instructions are quarantined. Review the preview: unmarked private text and unknown secret formats may still be present. Other tools can read original files directly.</p>`,
         );
     };
 
@@ -100,22 +102,8 @@ export function registerContextCommands(deps: FirewallDeps): void {
     };
 
     const approveContextSession = async () => {
-        const policy = await PolicyStore.load();
-        const minutes = policy.aiContext.allowSessionMinutes;
-        const session: ApprovalSession = { id: `appr_${Date.now()}`, expiresAt: Date.now() + minutes * 60_000 };
-        await context.globalState.update(APPROVAL_STATE_ID, session);
-        await LedgerStore.append({
-            eventId: session.id,
-            workspacePseudoId: await workspacePseudoId(),
-            eventType: "context_approved",
-            action: "allow",
-            severity: "info",
-            riskScore: 0,
-            policyVersion: String(policy.version),
-            approvalSessionId: session.id,
-            redactedEvidencePreview: `approved for ${minutes} min`,
-        });
-        vscode.window.showInformationMessage(`Sensitive AI context approved for ${minutes} minutes.`);
+        await context.globalState.update(APPROVAL_STATE_ID, undefined);
+        vscode.window.showInformationMessage("Broad context approval is unavailable. Review a specific broker request; repository denies stay active. Independent user-presence consent is UNTESTED.");
         refreshViews();
     };
 

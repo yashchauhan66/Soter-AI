@@ -55,8 +55,31 @@ export class PolicyStore {
         }
     }
 
+    /** Valid bytes, rather than file existence; no implicit creation in a status read. */
+    static async status(): Promise<"loaded" | "invalid" | "unavailable"> {
+        const uri = this.policyUri();
+        if (!uri) return "unavailable";
+        try {
+            const bytes = await vscode.workspace.fs.readFile(uri);
+            if (bytes.byteLength > 64 * 1024) return "invalid";
+            const raw: unknown = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(bytes));
+            if (!raw || typeof raw !== "object" || Array.isArray(raw)) return "invalid";
+            for (const key of ["protectedFiles", "sensitivePaths"] as const) {
+                const rules = (raw as Record<string, unknown>)[key];
+                if (rules !== undefined && (!Array.isArray(rules) || rules.length > 256
+                    || rules.some(p => typeof p !== "string" || !p.trim() || p.length > 256))) return "invalid";
+            }
+            return "loaded";
+        } catch (error) {
+            return ["ENOENT", "FileNotFound"].includes((error as { code?: string }).code ?? "") ? "unavailable" : "invalid";
+        }
+    }
+
     /** Persist a policy to `.soterai/policy.json` (creating the folder). */
     static async save(policy: ProjectPolicy): Promise<vscode.Uri> {
+        if (!vscode.workspace.getConfiguration("soterai").get<boolean>("hardening.addOnlyPolicy", true)) throw new Error("Policy mutation unavailable.");
+        const prior = await this.load();
+        policy = { ...policy, protectedFiles: [...new Set([...prior.protectedFiles, ...policy.protectedFiles])] };
         const uri = this.policyUri();
         if (!uri) throw new Error("No workspace folder open.");
         const dir = vscode.Uri.joinPath(firstWorkspaceFolder()!.uri, ".soterai");
@@ -83,10 +106,7 @@ export class PolicyStore {
 
     /** Remove a pattern from `protectedFiles`. */
     static async removeProtected(relPath: string): Promise<ProjectPolicy> {
-        const policy = await this.load();
-        policy.protectedFiles = policy.protectedFiles.filter((p) => p !== relPath);
-        await this.save(policy);
-        return policy;
+        throw new Error("Programmatic deny removal is unavailable. Edit the repository entry, then use Review an accepted deny with native confirmation.");
     }
 
     /**

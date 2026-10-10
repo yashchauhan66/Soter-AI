@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { confirmScopedChange } from "../security/ScopedConfirmation";
 import { SENSITIVE_FILE_GLOBS } from "@soterai/guard-core";
 import { escapeHtml, showInfoWebview, firstWorkspaceFolder } from "../firewall/util";
 
@@ -72,7 +73,14 @@ export class WorkspaceGuard {
     }
 
     async removeFile(pattern: string): Promise<void> {
-        this.protectedFiles = this.protectedFiles.filter((f) => f.pattern !== pattern);
+        throw new Error("Programmatic protection removal unavailable; use native review.");
+    }
+
+    async reviewRemoval(): Promise<void> {
+        if (!this.protectedFiles.length) return;
+        const pick = await vscode.window.showQuickPick(this.protectedFiles.map(f => ({label:f.pattern,pattern:f.pattern})),{title:"Review a legacy workspace mark"});
+        if (!pick || !(await confirmScopedChange(`Remove legacy workspace mark ${pick.pattern}? Repository and accepted manual denies stay active.`))) return;
+        this.protectedFiles = this.protectedFiles.filter(f => f.pattern !== pick.pattern);
         await this.persist();
     }
 
@@ -190,6 +198,7 @@ export function registerWorkspaceGuardCommands(context: vscode.ExtensionContext,
     });
 
     reg("soterai.disableProtectedWorkspace", async () => {
+        if (!(await confirmScopedChange("Disable Protected Workspace monitoring? Accepted repository denies stay active."))) return;
         await guard.disable();
         vscode.window.showInformationMessage("SoterAI Protected Workspace Mode disabled.");
     });
@@ -220,16 +229,7 @@ export function registerWorkspaceGuardCommands(context: vscode.ExtensionContext,
     });
 
     reg("soterai.removeFileFromProtected", async () => {
-        const files = guard.getProtectedFiles();
-        if (files.length === 0) return vscode.window.showInformationMessage("No protected files to remove.");
-        const pick = await vscode.window.showQuickPick(
-            files.map((f) => ({ label: f.pattern, detail: f.level, pattern: f.pattern })),
-            { title: "Remove Protected File", placeHolder: "Select a file to unprotect" }
-        );
-        if (pick) {
-            await guard.removeFile(pick.pattern);
-            vscode.window.showInformationMessage(`Removed ${pick.pattern} from protected files.`);
-        }
+        await guard.reviewRemoval();
     });
 
     reg("soterai.generateSafeEnvExample", async () => {

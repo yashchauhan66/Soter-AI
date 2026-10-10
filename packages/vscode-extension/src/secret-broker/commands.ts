@@ -28,9 +28,13 @@ let lastPreview:
     | undefined;
 
 export function registerSecretBrokerCommands(context: vscode.ExtensionContext, refreshViews: () => void): void {
-    // Back raw secret values with VS Code SecretStorage (OS keychain) instead
-    // of the extension-host heap for their TTL window.
-    setSecretValueStore(new SecretStorageValueStore(context.secrets));
+    // The ID-only inventory is outside SecretStorage. Recover known leftovers
+    // by deletion, without retrieving any value, before enabling new refs.
+    // Unindexed legacy entries cannot be enumerated and remain a documented gap.
+    const inventoryEnabled = () => vscode.workspace.getConfiguration("soterai").get<boolean>("hardening.secretInventory", true);
+    void setSecretValueStore(new SecretStorageValueStore(context.secrets, context.globalState), inventoryEnabled).catch(() => {
+        void vscode.window.showWarningMessage("Secret reference recovery is incomplete. Reference operations are unavailable; no persistent values were read during recovery.");
+    });
 
     const reg = (id: string, handler: (...args: any[]) => any) =>
         context.subscriptions.push(vscode.commands.registerCommand(id, handler));
@@ -124,7 +128,7 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
             // anywhere itself, and the clipboard is the only copy made.
             await vscode.env.clipboard.writeText(text);
             vscode.window.showWarningMessage(
-                "Raw selection copied to clipboard for one paste. Anything you paste it into may retain it — rotate the credential afterwards if it reaches an AI tool. A sanitized audit event was recorded.",
+                "Raw selection copied to clipboard. The clipboard and any paste destination may retain it until you clear them. Rotate the credential if it reaches an AI tool. A sanitized audit event was recorded.",
             );
             return;
         }

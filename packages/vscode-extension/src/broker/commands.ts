@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { confirmScopedChange } from "../security/ScopedConfirmation";
 import * as path from "path";
 import { generateSafeModePolicy, redactForSharing } from "@soterai/guard-core";
 import { BrokerManager } from "./BrokerManager";
@@ -366,7 +367,10 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
         await setSafeMode(true, level);
         vscode.window.showInformationMessage(`SoterAI AI Safe Mode enabled (${level}).`);
     });
-    reg("soterai.disableAISafeMode", async () => { await setSafeMode(false); vscode.window.showInformationMessage("SoterAI AI Safe Mode disabled."); });
+    reg("soterai.disableAISafeMode", async () => {
+        if (!(await confirmScopedChange("Disable broker AI Safe Mode? Managed filtering will be reduced; retained repository denies remain."))) return;
+        await setSafeMode(false); vscode.window.showInformationMessage("SoterAI AI Safe Mode disabled.");
+    });
     reg("soterai.showAISafeModeRules", async () => {
         const status = await manager.status();
         const level = (status.safeMode?.level === "strict" || status.safeMode?.level === "enterprise") ? status.safeMode.level : "developer";
@@ -406,12 +410,16 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
         const chosen = await vscode.window.showQuickPick(pending.map((e) => ({ label: `${e.eventType} — ${e.contentHash!.slice(0, 12)}…`, detail: e.redactedEvidence, event: e })), { title: "Pending AI approvals" });
         if (chosen) await approve(chosen.event, "once", "approve");
     });
-    const approve = async (event: BrokerEvent, scope: string, outcome: string) => manager.request("/v1/approvals", { method: "POST", body: JSON.stringify({ sessionId: event.sessionId, contentHash: event.contentHash, scope, outcome }) });
+    const approve = async (event: BrokerEvent, scope: string, outcome: string) => {
+        if (outcome === "approve" && (!event.sessionId || !event.contentHash || scope !== "once"
+            || !(await confirmScopedChange(`Approve one brokered use?\nSession: ${event.sessionId}\nContent SHA-256: ${event.contentHash}\nScope: one use; expires five minutes after broker acceptance. Caller session is not an independently authenticated agent identity.`)))) return false;
+        await manager.request("/v1/approvals", { method: "POST", body: JSON.stringify({ sessionId: event.sessionId, contentHash: event.contentHash, scope, outcome }) });
+        return true;
+    };
     reg("soterai.approveAIContextOnce", async () => {
         const event = (await recentEvents()).slice().reverse().find((e) => e.decision === "approval_required" && e.contentHash && e.sessionId);
         if (!event) return void vscode.window.showInformationMessage("No pending approval to approve.");
-        await approve(event, "once", "approve");
-        vscode.window.showInformationMessage("AI context approved once for this exact session and content hash.");
+        if (await approve(event, "once", "approve")) vscode.window.showInformationMessage("Broker approval saved for this session and content hash; independent user presence remains UNTESTED.");
     });
     reg("soterai.denyAIContext", async () => {
         const event = (await recentEvents()).slice().reverse().find((e) => e.decision === "approval_required" && e.contentHash && e.sessionId);

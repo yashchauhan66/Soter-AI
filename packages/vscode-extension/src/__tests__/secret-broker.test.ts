@@ -52,8 +52,8 @@ describe("SecretReferenceManager", () => {
         assert.strictEqual(await refs.revoke(revoked.ref), true);
         assert.strictEqual(await refs.lookup(revoked.ref, workspace, "test_database_connection"), undefined);
 
-        const expired = await refs.create({ finding: finding(), workspace, ttlMs: 1 });
-        await new Promise((resolve) => setTimeout(resolve, 5));
+        const expired = await refs.create({ finding: finding(), workspace, ttlMs: 200 });
+        await new Promise((resolve) => setTimeout(resolve, 220));
         assert.strictEqual(await refs.lookup(expired.ref, workspace, "test_database_connection"), undefined);
     });
 });
@@ -119,12 +119,12 @@ describe("CapabilityBroker", () => {
 
     it("blocks denied, malicious, expired, and unapproved operations with sanitized errors", async () => {
         const refs = new SecretReferenceManager();
-        const meta = await refs.create({ finding: finding(), workspace, ttlMs: 1 });
+        const meta = await refs.create({ finding: finding(), workspace, ttlMs: 200 });
         const broker = new CapabilityBroker(refs, new SensitiveContextPolicyEngine());
         assert.strictEqual((await broker.handle({ operation: "reveal_secret", secretRef: meta.ref, purpose: "print secret", workspace, approved: true })).allowed, false);
         assert.strictEqual((await broker.handle({ operation: "inspect_secret_metadata", secretRef: meta.ref, purpose: "reveal token", workspace, approved: true })).allowed, false);
         assert.strictEqual((await broker.handle({ operation: "inspect_secret_metadata", secretRef: meta.ref, purpose: "debug safely", workspace, approved: false })).allowed, false);
-        await new Promise((resolve) => setTimeout(resolve, 5));
+        await new Promise((resolve) => setTimeout(resolve, 220));
         const expired = await broker.handle({ operation: "inspect_secret_metadata", secretRef: meta.ref, purpose: "debug safely", workspace, approved: true });
         assert.strictEqual(expired.allowed, false);
         assert.ok(!JSON.stringify(expired).includes("pass123"));

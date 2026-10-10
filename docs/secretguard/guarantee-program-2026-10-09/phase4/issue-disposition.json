@@ -1,0 +1,2003 @@
+{
+    "schemaVersion":  1,
+    "clientDate":  "2026-10-10",
+    "claimTag":  "INFERENCE",
+    "scope":  "B3 documentary disposition. Scoped checks-4 passed. Phase0 ledger remains unchanged.",
+    "source":  "../phase0/open-issues.json",
+    "classificationSemantics":  {
+                                    "FIXED-NOW":  "Specific standalone mechanics implemented and scoped checks passed; full issue remains OPEN under T.",
+                                    "TIER-2-LITE":  "Optional sanitized-compartment hygiene proposal; not deployed or a same-user boundary; native agents outside coverage.",
+                                    "TIER-3":  "Full threat-model objective needs independent protected authorities and later approved deployment/verification.",
+                                    "WON\u0027T-FIX":  "Universal semantic detection rejected as an unsupportable claim; known failure and explicit-classification mitigation retained."
+                                },
+    "counts":  {
+                   "TIER-3":  25,
+                   "TIER-2-LITE":  3,
+                   "WON\u0027T-FIX":  1,
+                   "FIXED-NOW":  8
+               },
+    "selectedArchitectureAssertions":  {
+                                           "count":  30,
+                                           "status":  "UNTESTED",
+                                           "source":  "../phase3/acceptance-criteria.md"
+                                       },
+    "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+    "issues":  [
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "L01",
+                       "issue":  "direct fs.readFile of protected .env",
+                       "guarantees":  [
+                                          "G1",
+                                          "G3",
+                                          "G5"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A01",
+                                          "A14"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "HISTORICAL_LEAK_REPORTED",
+                       "phase0Findings":  [
+                                              "P0-01"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "Protected .env originals remain reachable under the hostile normal OS user. Managed-context filtering does not remove that file authority.",
+                       "limitsAndRationale":  "Independent custody V/S, protected deployment M and compartment mounts are required.",
+                       "expectedResultsAndChecks":  "U/A without a grant receive access denied for protected original Y; public Z remains readable.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "No deployment exists to roll back; keep managed denies and do not publish originals.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "L02",
+                       "issue":  "direct read of protected nested file",
+                       "guarantees":  [
+                                          "G1",
+                                          "G3",
+                                          "G5"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A01",
+                                          "A14"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "HISTORICAL_LEAK_REPORTED",
+                       "phase0Findings":  [
+                                              "P0-01"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "Nested protected originals have the same direct-read exposure as top-level files.",
+                       "limitsAndRationale":  "Independent custody and consistent enrollment across nested paths are required.",
+                       "expectedResultsAndChecks":  "U/A without a grant receive access denied for nested protected Y; public sibling Z stays usable.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Retain nested deny enrollment; withdraw an unsupported protected launch.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "L03",
+                       "issue":  "direct read of protected PEM-shaped file",
+                       "guarantees":  [
+                                          "G1",
+                                          "G3",
+                                          "G5"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A01",
+                                          "A14"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "HISTORICAL_LEAK_REPORTED",
+                       "phase0Findings":  [
+                                              "P0-01"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "PEM-shaped plaintext on a user-readable filesystem remains readable regardless of detection or vault suggestions.",
+                       "limitsAndRationale":  "Independent original/key custody is required; encrypted copies do not remove reachable plaintext or same-user keys.",
+                       "expectedResultsAndChecks":  "U/A receive no protected key bytes from the original or reachable recovery artifacts; public fixtures work.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Retain enrolled denial; do not restore plaintext into the normal workspace.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "L04",
+                       "issue":  "direct read of protected text selection",
+                       "guarantees":  [
+                                          "G1",
+                                          "G3"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A02",
+                                          "A05",
+                                          "A06"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "HISTORICAL_LEAK_REPORTED",
+                       "phase0Findings":  [
+                                              "P0-01"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "Selection redaction covers managed exports, while original open buffers and editor APIs remain accessible.",
+                       "limitsAndRationale":  "Protected editing P and versioned selection enrollment outside agent authority are required.",
+                       "expectedResultsAndChecks":  "Protected selection Y yields zero bytes through U/A buffers or export; authorized P edits preserve public regions.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Withdraw protected publication on stale selection metadata; retain the mark.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "L05",
+                       "issue":  "hardlink read",
+                       "guarantees":  [
+                                          "G1",
+                                          "G3"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A01",
+                                          "A04"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "HISTORICAL_LEAK_REPORTED",
+                       "phase0Findings":  [
+                                              "P0-01"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "Managed path validation narrows known alias access but does not deny native reads of a same-user hardlink.",
+                       "limitsAndRationale":  "Independent asset custody and alias/history enrollment are required.",
+                       "expectedResultsAndChecks":  "An ungranted hardlink/alternate object for Y is denied; a public alias is usable.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Retain custody and pause publication when alias inventory is uncertain.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "L06",
+                       "issue":  "junction read",
+                       "guarantees":  [
+                                          "G1",
+                                          "G3"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A01",
+                                          "A04"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "HISTORICAL_LEAK_REPORTED",
+                       "phase0Findings":  [
+                                              "P0-01"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "Managed canonical-path checks do not prevent native access through a same-user junction.",
+                       "limitsAndRationale":  "Independent custody and versioned redirected-view handling are required.",
+                       "expectedResultsAndChecks":  "An ungranted junction/redirected view of Y is denied; public views remain usable.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Retain denies and withdraw unsupported redirected views.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "L07",
+                       "issue":  "repository .aiignore tampering",
+                       "guarantees":  [
+                                          "G1",
+                                          "G2",
+                                          "G3"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A13",
+                                          "A15"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "HISTORICAL_LEAK_REPORTED",
+                       "phase0Findings":  [
+                                              "P0-03"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "B3 ingests accepted repository denies into add-only state; deleting/replacing .aiignore and public update/save APIs cannot remove those accepted entries.",
+                       "limitsAndRationale":  "Same-user state mutation, UI automation, extension removal and loss of user-writable state still require S/M ownership and W continuity. A direct gesture cannot be authenticated by this editor.",
+                       "expectedResultsAndChecks":  "Unit: accepted deny survives deletion/replacement/new snapshot; update/save cannot clear it; cancelling labelled modal keeps it. Full architecture: unsigned/older/missing policy cannot relax custody.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "hardening.addOnlyPolicy=false withdraws managed sharing/mutation and retains accepted state; never reload permissive repository policy.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "L08",
+                       "issue":  "synthetic env variable and command output",
+                       "guarantees":  [
+                                          "G1",
+                                          "G5"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A03",
+                                          "A20",
+                                          "A22"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "HISTORICAL_LEAK_REPORTED",
+                       "phase0Findings":  [
+                                              "P0-01",
+                                              "P0-08"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "Sanitized launch environments narrow managed helpers only. Native process environment/output can still contain protected values.",
+                       "limitsAndRationale":  "Protected secret-use workers and complete output/process custody are required.",
+                       "expectedResultsAndChecks":  "Ungranting U/A and descendants receive no protected value in environment/output; approved public output works.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Withdraw managed secret injection/output publication; retain original custody.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "L09",
+                       "issue":  "synthetic Git history after working-tree replacement",
+                       "guarantees":  [
+                                          "G1",
+                                          "G5"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A04"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "HISTORICAL_LEAK_REPORTED",
+                       "phase0Findings":  [
+                                              "P0-01"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-2-LITE",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "A generated public workspace can omit .git/history/index and known recovery/cache artifacts for an explicitly launched container agent.",
+                       "limitsAndRationale":  "Hygiene only: native agents, host originals, old exports, unknown artifacts and mounts remain outside coverage; full T requires protected enrollment/custody.",
+                       "expectedResultsAndChecks":  "Planned sanitized-export unit assertions: .git, history/index/cache/recovery paths are absent and only explicitly public files are present. Independent native history denial remains NOT_TESTED.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Disable optional mode and stop producing exports; preserve the source and evidence. Never fall back to mounting the original workspace.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "L10",
+                       "issue":  "independent base64/chunked HTTP to loopback receiver",
+                       "guarantees":  [
+                                          "G1",
+                                          "G4"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A16",
+                                          "A17",
+                                          "A18"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "HISTORICAL_LEAK_REPORTED",
+                       "phase0Findings":  [
+                                              "P0-04"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "Independent loopback/native networking is outside the extension broker; encoding/chunking does not change that authority.",
+                       "limitsAndRationale":  "M-owned mandatory host and guest networking plus scoped protected release are required.",
+                       "expectedResultsAndChecks":  "All unapproved transports yield zero protected bytes; approved destination alone grants no content release.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Do not deploy or relax network policy without approval; withdraw protected work if enforced networking is unavailable.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "K11",
+                       "issue":  "S5-unmarked arbitrary private text",
+                       "guarantees":  [
+                                          "G6"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A28"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "HISTORICAL_FINDING_FAIL_REPORTED",
+                       "phase0Findings":  [
+                                              "P0-11"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "WON\u0027T-FIX",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "Universal detection of arbitrary unmarked private prose is not a promised mechanism. The retained S5-unmarked FAIL is not removed, excused or relabelled.",
+                       "limitsAndRationale":  "Explicit classification/public export in B4 can mitigate exposure, but user omissions and native originals remain outside that hygiene.",
+                       "expectedResultsAndChecks":  "Existing diagnostic S5-unmarked FAIL remains visible. Planned assertion: unclassified prose never receives a universal-safe claim; explicitly marked prose remains denied in managed export.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Retain explicit marks and known failure records; withdraw public export on missing classification. Do not restore a universal semantic-detection claim.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "K12",
+                       "issue":  "F16 safe-diff Git PATH/environment launch",
+                       "guarantees":  [
+                                          "G1",
+                                          "G2",
+                                          "G5"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A23"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "SOURCE_CONFIRMED",
+                       "phase0Findings":  [
+                                              "P0-07"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "FIXED-NOW",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "B1 replaces PATH/ambient Git launch with known absolute discovery, a pinned job executable, minimal environment, explicit empty global config and hooks/fsmonitor overrides; missing Git denies sharing.",
+                       "limitsAndRationale":  "Specific launch mechanics only. Same-user executable/config/source replacement, controller/helper authority isolation and native history access remain outside this repair. F16 remains STATIC-ONLY for dynamic authority evidence.",
+                       "expectedResultsAndChecks":  "safe-git.test.ts checks version gate, environment/config controls, missing-Git failure and benign Windows GIT_CONFIG_GLOBAL behavior. B1 raw checks exist; B3 regression status is scoped checks PASS; follow-up checks pending.",
+                       "testStatus":  "PASS scoped unit commands; follow-up checks pending",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "hardening.safeDiffLaunch=false disables diff sharing; never invoke bare Git, ambient environment or an old weaker binary.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+                                              "packages/vscode-extension/src/security/SafeGit.ts",
+                                              "packages/vscode-extension/src/ai-boundary/gitDiff.ts"
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "K13",
+                       "issue":  "agent reverts config routing",
+                       "guarantees":  [
+                                          "G2",
+                                          "G3",
+                                          "G4",
+                                          "G6"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A13",
+                                          "A16",
+                                          "A24"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "SOURCE_GAP",
+                       "phase0Findings":  [
+                                              "P0-03",
+                                              "P0-06"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "An agent can revert user-writable client routing. B3 stops using configuration text as verification, but does not make routing mandatory.",
+                       "limitsAndRationale":  "Protected policy and mandatory host/guest egress outside agent authority are required.",
+                       "expectedResultsAndChecks":  "Routing/config edits cannot disable acknowledged protection; missing enforcement yields incomplete status and no protected release.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Withdraw affected routed operations when evidence is missing; never treat a rewritten URL as enforcement proof.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "K14",
+                       "issue":  "one-click flow overstates protection",
+                       "guarantees":  [
+                                          "G6"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A24",
+                                          "A25"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "SOURCE_CONFIRMED",
+                       "phase0Findings":  [
+                                              "P0-05",
+                                              "P0-06",
+                                              "P0-13"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "FIXED-NOW",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "B1 shows Covers / Does not cover before broker/config action and separates operational result from UNTESTED verification. B3 removes text/existence promotion inputs.",
+                       "limitsAndRationale":  "Ordinary U-editor pixels can be forged; independent protected status receipts, actual agent routes and full G6 honesty under T remain UNTESTED.",
+                       "expectedResultsAndChecks":  "coverage-disclosure.test.ts and automatic-ide-protection.test.ts assert disclosure precedes action/success, cancellation changes nothing and flag-off is unavailable; B3 final checks scoped checks PASS; follow-up checks pending.",
+                       "testStatus":  "PASS scoped unit commands; follow-up checks pending",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "hardening.coverageDisclosure=false withdraws one-click setup; hardening.runtimeEvidence=false withdraws evidence claims. Never restore blanket success wording.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+                                              "packages/vscode-extension/src/security/CoverageDisclosure.ts",
+                                              "packages/vscode-extension/src/broker/commands.ts",
+                                              "packages/vscode-extension/src/protection/ProtectionStateService.ts"
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "K15",
+                       "issue":  "same-user readability of controller/data credentials",
+                       "guarantees":  [
+                                          "G2",
+                                          "G5"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A14",
+                                          "A20"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "SOURCE_GAP_LIVE_TEST_PENDING",
+                       "phase0Findings":  [
+                                              "P0-03",
+                                              "P0-08"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "B2 removed inherited group read on existing auth-token/broker directory and added win32 metadata validation. control-auth-token is absent and INCOMPLETE.",
+                       "limitsAndRationale":  "Owner USER retains full control and likely same-user DPAPI/SecretStorage authority. Independent credentials/controller ownership requires Tier3; races and installed-profile compatibility are UNTESTED.",
+                       "expectedResultsAndChecks":  "B2 Windows ACL rejection/unit and synthetic loopback suites have scoped results. Independent U/A credential denial and actual control-token ownership remain NOT_TESTED.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Runtime flag-off withdraws Windows file authentication. S3 emergency restore applies saved descriptors only if operation breaks, explicitly restoring an INCOMPLETE exposure.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "U16",
+                       "issue":  "extension restart/disable/unload/uninstall",
+                       "guarantees":  [
+                                          "G1",
+                                          "G2",
+                                          "G3",
+                                          "G4"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A12",
+                                          "A15"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "NOT_TESTED",
+                       "phase0Findings":  [
+                                              "P0-01",
+                                              "P0-05",
+                                              "P0-12"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "Broker/extension restart hygiene does not make denial survive removal of an agent-writable extension or configuration.",
+                       "limitsAndRationale":  "Independent custody, service lifecycle, mandatory networking and witness recovery are required.",
+                       "expectedResultsAndChecks":  "Acknowledged denial persists after client restart/disable/unload/uninstall; public operations resume only with valid prerequisites.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Retain custody even if UI/client is removed; keep protected launch unavailable when independent controls fail.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "U17",
+                       "issue":  "real-model prompt injection",
+                       "guarantees":  [
+                                          "G1",
+                                          "G2",
+                                          "G3",
+                                          "G4",
+                                          "G5"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A07",
+                                          "A08",
+                                          "A29"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "NOT_TESTED",
+                       "phase0Findings":  [
+                                              "P0-01",
+                                              "P0-02",
+                                              "P0-03",
+                                              "P0-04"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "Content and prompt-injection checks are advisory defenses for routed inputs; a model can choose arbitrary native tooling under T.",
+                       "limitsAndRationale":  "Independent authority limits, transaction-bound physical consent and enrolled delegated tools are required.",
+                       "expectedResultsAndChecks":  "Agent-originated content creates no privileged approval or grant; explicitly authorized enrolled operation succeeds.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Withdraw protected operations when consent/identity prerequisites are unavailable; retain managed deny filters.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "U18",
+                       "issue":  "shell aliases",
+                       "guarantees":  [
+                                          "G1",
+                                          "G5"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A03",
+                                          "A23"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "NOT_TESTED",
+                       "phase0Findings":  [
+                                              "P0-01",
+                                              "P0-07"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-2-LITE",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "Optional generated tooling with no imported host home/shell configuration and a minimal launch environment reduces accidental alias/credential reuse.",
+                       "limitsAndRationale":  "Hygiene only: natively started agents, the Windows user\u0027s WSL access and agent-controlled commands remain outside coverage; no independent authority is gained.",
+                       "expectedResultsAndChecks":  "Planned unit/config assertions: shell/home/history/credential mounts absent and only intended environment keys emitted. Native shell authority remains NOT_TESTED.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Disable optional mode and stop exporting; no native shell or host-home fallback.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "U19",
+                       "issue":  "/proc and process inspection",
+                       "guarantees":  [
+                                          "G1",
+                                          "G2",
+                                          "G5"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A02",
+                                          "A03",
+                                          "A20"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "NOT_TESTED",
+                       "phase0Findings":  [
+                                              "P0-01",
+                                              "P0-08"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "Process inspection, heap access and /proc-equivalent authority are not removed by same-user profiles or SecretStorage encryption.",
+                       "limitsAndRationale":  "Protected principals/sessions and isolated secret-use workers are required on each platform.",
+                       "expectedResultsAndChecks":  "U/A cannot inspect protected editor/worker/controller memory or recovery state; public process diagnostics remain usable.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Retain process/custody separation; withdraw secret work if platform ownership is unsupported.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "U20",
+                       "issue":  "arbitrary MCP servers",
+                       "guarantees":  [
+                                          "G1",
+                                          "G2",
+                                          "G4",
+                                          "G5"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A16",
+                                          "A17",
+                                          "A29"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "NOT_TESTED",
+                       "phase0Findings":  [
+                                              "P0-01",
+                                              "P0-04"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-2-LITE",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "Only explicitly enrolled MCP components inside a sanitized optional compartment with no credential/socket/host mounts can share its hygiene scope.",
+                       "limitsAndRationale":  "Arbitrary or natively started MCP servers are OUTSIDE COVERAGE. Container egress is a candidate requirement, not deployed proof; full T needs protected management and scoped delegation.",
+                       "expectedResultsAndChecks":  "Planned unit/config assertions: native MCP is labelled outside coverage, no host sockets/credentials are mounted and delegate configuration has explicit scope. Actual authority/egress tests remain NOT_TESTED.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Disable optional MCP mode/exports; never bridge arbitrary native servers or forward host credentials.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "U21",
+                       "issue":  "DNS egress",
+                       "guarantees":  [
+                                          "G4"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A16"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "NOT_TESTED",
+                       "phase0Findings":  [
+                                              "P0-04"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "The extension does not mediate host-wide DNS or all alternate resolution routes.",
+                       "limitsAndRationale":  "Protected mandatory DNS/transport enforcement across host and guests is required.",
+                       "expectedResultsAndChecks":  "Unapproved DNS/name-resolution routes are denied; approved public resolution is narrowly allowed.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "No firewall/feature deployment is approved; stop protected launches if mandatory networking is unavailable.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "U22",
+                       "issue":  "WebSocket egress",
+                       "guarantees":  [
+                                          "G4"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A16",
+                                          "A19"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "NOT_TESTED",
+                       "phase0Findings":  [
+                                              "P0-04"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "Broker filtering does not mediate every direct WebSocket or its established streams.",
+                       "limitsAndRationale":  "Protected mandatory networking and active-stream revocation are required.",
+                       "expectedResultsAndChecks":  "Disallowed WebSocket paths are denied; revoked streams release no newly authorized protected output after the decision.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Retain network deny and pending revocation status until termination is acknowledged.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "U23",
+                       "issue":  "QUIC egress",
+                       "guarantees":  [
+                                          "G4"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A16"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "NOT_TESTED",
+                       "phase0Findings":  [
+                                              "P0-04"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "Direct QUIC/UDP and alternate transport authority remain outside extension routing.",
+                       "limitsAndRationale":  "M-owned host/guest transport policy is required.",
+                       "expectedResultsAndChecks":  "Unapproved QUIC/UDP routes are denied while an approved public control remains usable.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Withdraw protected work; never substitute proxy settings for mandatory transport enforcement.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "U24",
+                       "issue":  "screenshots",
+                       "guarantees":  [
+                                          "G1",
+                                          "G4"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A02",
+                                          "A30"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "NOT_TESTED",
+                       "phase0Findings":  [
+                                              "P0-01"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "A same-user protected window/profile does not independently protect pixels or capture/input APIs.",
+                       "limitsAndRationale":  "Protected P session/display admission and validated capture isolation are required.",
+                       "expectedResultsAndChecks":  "U/A captures obtain zero Y bytes while P can edit/save Y; hostile-session consoles are excluded.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Stop protected editing/display on U when separation is unsupported; retain protected storage.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "U25",
+                       "issue":  "real clipboard races and clipboard history",
+                       "guarantees":  [
+                                          "G1",
+                                          "G4"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A02",
+                                          "A05"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "NOT_TESTED",
+                       "phase0Findings":  [
+                                              "P0-01"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "Managed copying may be redacted, but real clipboard races/history/sync and same-session capture remain outside coverage.",
+                       "limitsAndRationale":  "Protected editing/session clipboard isolation and explicit bridges are required.",
+                       "expectedResultsAndChecks":  "Protected P clipboard/history yields no Y to U/A; approved public clipboard use works.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Withdraw protected clipboard export and preserve marks; never claim copied plaintext has been recalled.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "U26",
+                       "issue":  "remote hosts",
+                       "guarantees":  [
+                                          "G1",
+                                          "G2",
+                                          "G3",
+                                          "G4",
+                                          "G5",
+                                          "G6"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A27",
+                                          "A29"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "NOT_TESTED",
+                       "phase0Findings":  [
+                                              "P0-01",
+                                              "P0-04",
+                                              "P0-06"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "Remote tools require explicit custody, recipient identity, administration and export scope; a remote path label proves none of these.",
+                       "limitsAndRationale":  "A separately reviewed remote architecture and local protected authorities are required; current optional remote-container hygiene does not qualify.",
+                       "expectedResultsAndChecks":  "Unenrolled remote recipients receive no implicit grant; one explicitly enrolled delegate works within exact export scope.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Remote protected use stays disabled until prerequisites/consent are approved; retain local custody.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "U27",
+                       "issue":  "sandbox escape attempts",
+                       "guarantees":  [
+                                          "G1",
+                                          "G2",
+                                          "G3",
+                                          "G4",
+                                          "G5"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A30"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "NOT_TESTED_BOUNDARY_NOT_IMPLEMENTED",
+                       "phase0Findings":  [
+                                              "P0-01",
+                                              "P0-04",
+                                              "P0-13"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "The selected boundary is not deployed, so no escape-resistance result exists. A same-user devcontainer is not that boundary.",
+                       "limitsAndRationale":  "Independent managed containment plus review of trusted interfaces are required.",
+                       "expectedResultsAndChecks":  "Missing isolation/management/device prerequisites prevent protection acknowledgement; exact deployed containment receives independent evaluation.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "No Tier3 implementation is authorized; keep protection acknowledgement unavailable instead of choosing a weaker fallback.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "M28",
+                       "issue":  "VS Code 1.85.0 floor",
+                       "guarantees":  [
+                                          "G1",
+                                          "G2",
+                                          "G3",
+                                          "G4",
+                                          "G5",
+                                          "G6"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A26",
+                                          "A27"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "REAL_AGENT_MATRIX_NOT_TESTED",
+                       "phase0Findings":  [
+
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "VS Code 1.85.0 is a requested target; no selected-architecture real-agent cell has evidence.",
+                       "limitsAndRationale":  "Full-target compatibility and security acceptance depend on an approved deployed architecture. Lower-tier compilation/compatibility may be assessed separately without promoting guarantees.",
+                       "expectedResultsAndChecks":  "All seven agents on each requested OS/editor-floor cell remain NOT_TESTED until exact variants/builds/topology and evidence are recorded.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Withdraw unsupported compatibility/security claims; retain raw failures and older supported build records.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "M29",
+                       "issue":  "VS Code 1.104.0",
+                       "guarantees":  [
+                                          "G1",
+                                          "G2",
+                                          "G3",
+                                          "G4",
+                                          "G5",
+                                          "G6"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A26",
+                                          "A27"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "SYNTHETIC_OLD_HOST_ONLY_REAL_AGENTS_NOT_TESTED",
+                       "phase0Findings":  [
+
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "VS Code 1.104.0 has historical/current synthetic Windows host observations, not real-agent or selected-architecture certification.",
+                       "limitsAndRationale":  "Exact-bundle native comparison and independent deployed-architecture evidence are still required. Root does not execute the user-only host.",
+                       "expectedResultsAndChecks":  "Keep A0 confidentiality FAIL and old Oct8 provenance; all requested real-agent cells remain NOT_TESTED.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Keep both immutable historical/current evidence; no synthetic result is substituted for real-agent PASS.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "M30",
+                       "issue":  "VS Code 1.141.0",
+                       "guarantees":  [
+                                          "G1",
+                                          "G2",
+                                          "G3",
+                                          "G4",
+                                          "G5",
+                                          "G6"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A26",
+                                          "A27"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "REAL_AGENT_MATRIX_NOT_TESTED",
+                       "phase0Findings":  [
+
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "VS Code 1.141.0 is a nominal requested target; availability and agent/fork compatibility are unverified.",
+                       "limitsAndRationale":  "Exact released editor/agent mapping plus independent architecture evidence are required before a support claim.",
+                       "expectedResultsAndChecks":  "Unavailable version is INCOMPLETE; unexecuted available combinations remain NOT_TESTED, never inferred from another version.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Withdraw unsupported claims and retain version-specific evidence; do not backfill a PASS.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "M31",
+                       "issue":  "Windows/Linux/macOS and all seven requested real agents",
+                       "guarantees":  [
+                                          "G1",
+                                          "G2",
+                                          "G3",
+                                          "G4",
+                                          "G5",
+                                          "G6"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A26",
+                                          "A27"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "REAL_AGENT_MATRIX_NOT_TESTED",
+                       "phase0Findings":  [
+
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "TIER-3",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "The requested Windows/Linux/macOS x three editor targets x seven real agents produces 63 nominal cells; no cell has selected-architecture evidence.",
+                       "limitsAndRationale":  "Full architecture validation includes platform authorities, session/network controls and exact CLI/extension/fork/remote variants.",
+                       "expectedResultsAndChecks":  "Every nominal cell remains NOT_TESTED. Synthetic fixtures or unit passes cannot change this matrix.",
+                       "testStatus":  "NOT_TESTED",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Withdraw broad OS/agent support claims; retain exact scoped observations and explicit matrix gaps.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "N32",
+                       "issue":  "promptless approval and protection-disable editor commands",
+                       "guarantees":  [
+                                          "G2",
+                                          "G3"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A07",
+                                          "A08",
+                                          "A09",
+                                          "A10",
+                                          "A11",
+                                          "A13",
+                                          "A15"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "SOURCE_CONFIRMED",
+                       "phase0Findings":  [
+                                              "P0-02"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "FIXED-NOW",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "B3 withdraws broad context sessions and adds labelled native confirmation before broker one-use approvals and control-disable commands; provided command arguments do not grant approval.",
+                       "limitsAndRationale":  "Specific promptless command mechanics only. Editor code cannot authenticate direct user gesture, physical presence or independent agent identity; UI automation and same-user controller authority remain Tier3 gaps.",
+                       "expectedResultsAndChecks":  "hardening-runtime.test.ts checks default/cancel no POST, exact full hash/session/scope display and flag-off withdrawal. Protection-disable confirmation and broad-session withdrawal retain STATIC-ONLY coverage beyond the available modal unit assertions; scoped checks PASS; follow-up checks pending.",
+                       "testStatus":  "PASS scoped unit commands; follow-up checks pending",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "hardening.scopedConfirmation=false denies affected weakening/approval actions; broad sessions remain unavailable. Never restore promptless handlers.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+                                              "packages/vscode-extension/src/security/ScopedConfirmation.ts",
+                                              "packages/vscode-extension/src/broker/commands.ts",
+                                              "packages/vscode-extension/src/firewall/context-commands.ts",
+                                              "packages/vscode-extension/src/sentinel/commands.ts",
+                                              "packages/vscode-extension/src/workspace-guard/WorkspaceGuard.ts"
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "N33",
+                       "issue":  "broker restart and stale displayed Safe Mode",
+                       "guarantees":  [
+                                          "G3",
+                                          "G6"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A12",
+                                          "A24"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "SOURCE_CONFIRMED",
+                       "phase0Findings":  [
+                                              "P0-05"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "FIXED-NOW",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "B3 state service/panel use healthy live broker Safe Mode instead of cached enabled state. Restart/off/missing/unhealthy status cannot inherit the prior displayed flag.",
+                       "limitsAndRationale":  "Specific stale display mechanics only. Lifecycle-independent policy enforcement and authenticated protected UI freshness remain UNTESTED.",
+                       "expectedResultsAndChecks":  "hardening-runtime.test.ts asserts stored enabled with live off/missing/unhealthy reports false, healthy enabled reports true and flag-off withdraws evidence. scoped checks PASS; follow-up checks pending.",
+                       "testStatus":  "PASS scoped unit commands; follow-up checks pending",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "hardening.runtimeEvidence=false reports unavailable/unverified operational evidence rather than cached active mode; retain deny state.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+                                              "packages/vscode-extension/src/protection/ProtectionStateService.ts",
+                                              "packages/vscode-extension/src/webview/ControlPanelViewProvider.ts"
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "N34",
+                       "issue":  "spoofed route text and policy-existence verification",
+                       "guarantees":  [
+                                          "G6"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A24"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "SOURCE_CONFIRMED",
+                       "phase0Findings":  [
+                                              "P0-06"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "FIXED-NOW",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "B3 counts zero verified routes from configuration text and validates policy bytes rather than stat/file existence; status reading no longer creates a policy.",
+                       "limitsAndRationale":  "Specific false verification inputs only. A valid parsed file is not independently protected policy, and actual per-agent routing/trusted receipts remain UNTESTED.",
+                       "expectedResultsAndChecks":  "hardening-runtime.test.ts checks malformed policy invalid, a valid scoped policy loaded, URL/comment text verifies zero routes, and programmatic removal is unavailable. scoped checks PASS; follow-up checks pending.",
+                       "testStatus":  "PASS scoped unit commands; follow-up checks pending",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "hardening.runtimeEvidence=false withdraws policy/runtime evidence claims; no substring or existence-based success fallback.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+                                              "packages/vscode-extension/src/protection/ProtectionStateService.ts",
+                                              "packages/vscode-extension/src/firewall/PolicyStore.ts"
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "N35",
+                       "issue":  "persisted orphan references after expiry/reload",
+                       "guarantees":  [
+                                          "G5",
+                                          "G6"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A21",
+                                          "A22"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "SOURCE_CONFIRMED",
+                       "phase0Findings":  [
+                                              "P0-09"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "FIXED-NOW",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "B3 persists nonsecret ID inventory before values, serializes one-host storage operations, purges known entries at activation without value reads, deletes expired values and denies invalid TTL/failed inventory.",
+                       "limitsAndRationale":  "Scoped new/inventoried reference retention only. Legacy unindexed IDs cannot be enumerated; cross-host writers are not synchronized/tested; shutdown/deletion failures, backups, downstream credentials and same-user custody remain INCOMPLETE/UNTESTED.",
+                       "expectedResultsAndChecks":  "secret-storage-inventory.test.ts covers inventory ordering/concurrency, no-read recovery, failure retention/sanitization, malformed inventory closure, TTL/expiry, flag withdrawal and pending-create revocation. scoped checks PASS; follow-up checks pending.",
+                       "testStatus":  "PASS scoped unit commands; follow-up checks pending",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "hardening.secretInventory=false denies runtime creation/reads while cleanup remains allowed; retain inventory on deletion failures, with no legacy persistent-store fallback.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+                                              "packages/vscode-extension/src/secret-broker/SecretReferenceManager.ts",
+                                              "packages/vscode-extension/src/secret-broker/SecretStorageValueStore.ts",
+                                              "packages/vscode-extension/src/secret-broker/runtime.ts",
+                                              "packages/vscode-extension/src/secret-broker/commands.ts"
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "N36",
+                       "issue":  "caller-asserted OS sandbox strength",
+                       "guarantees":  [
+                                          "G6"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A09",
+                                          "A24",
+                                          "A30"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "SOURCE_CONFIRMED",
+                       "phase0Findings":  [
+                                              "P0-13"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "FIXED-NOW",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "B3 process-launch preview ignores caller sandboxStrength, uses none and returns previewOnly with platformEnforcement UNTESTED.",
+                       "limitsAndRationale":  "Specific caller-strength promotion only. No sandbox is created/attested, and other caller metadata is still advisory; containment remains Tier3.",
+                       "expectedResultsAndChecks":  "Broker regression compares supplied strength values and requires none, previewOnly=true and platformEnforcement=UNTESTED. Final broker suite: scoped checks PASS; follow-up checks pending.",
+                       "testStatus":  "PASS scoped unit commands; follow-up checks pending",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "SOTERAI_BROKER_TRUSTED_SANDBOX_CLAIMS=0 withdraws process preview with 503; never restore caller-supplied full-enforcement claims or automatically execute a suggested profile.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+                                              "apps/local-ai-broker/src/BrokerServer.ts"
+                                          ]
+                   },
+                   {
+                       "claimTag":  "INFERENCE",
+                       "id":  "N37",
+                       "issue":  "failure-ledger/runner mismatch and historical evidence overwrite",
+                       "guarantees":  [
+                                          "G6"
+                                      ],
+                       "guaranteeSource":  "../phase0/guarantee-spec.md#guarantees-unchanged",
+                       "assertions":  [
+                                          "A26"
+                                      ],
+                       "assertionSource":  "../phase3/acceptance-criteria.md",
+                       "phase0Provenance":  "SOURCE_CONFIRMED",
+                       "phase0Findings":  [
+                                              "P0-14"
+                                          ],
+                       "phase0Disposition":  "OPEN",
+                       "classification":  "FIXED-NOW",
+                       "classificationScope":  "Repair/proposal allocation, not issue closure or security certification.",
+                       "scopedTreatment":  "B0 recovers exact Oct8 bytes, preserves separate A0 evidence and writes unique/exclusive run records. Syntax repair compiles the existing native probe; no agent host run occurred.",
+                       "limitsAndRationale":  "Specific evidence lifecycle/harness mechanics only. Historical findings retain original labels, A0 confidentiality FAIL remains, and no independent verification or native post-hardening PASS exists.",
+                       "expectedResultsAndChecks":  "review-evidence.test.ts rejects overwrite and disabled recording. Existing host/native sources compile only; per-run launcher/manifest verification still user-only. Final regression review: scoped checks PASS; follow-up checks pending.",
+                       "testStatus":  "PASS scoped unit commands; follow-up checks pending",
+                       "architectureVerification":  "UNTESTED",
+                       "fullThreatModelDisposition":  "OPEN",
+                       "rollback":  "Disable review rather than restoring shared overwrite output; keep archives/hash manifests and append corrections instead of relabelling raw evidence.",
+                       "fullTier3Residual":  "Hostile same-user native processes retain original-file, credential, editor/UI, process, policy and network authority. Full T requires the Phase3 protected identities/custody/editing/consent/mandatory networking/witness architecture; none of A01-A30 is promoted from UNTESTED by this disposition.",
+                       "currentSources":  [
+                                              "packages/vscode-extension/src/security/ReviewEvidence.ts",
+                                              "packages/vscode-extension/scripts/run-security-review-host.ps1",
+                                              "docs/secretguard/guarantee-program-2026-10-09/phase1/native-host/native-baseline.host.ts"
+                                          ]
+                   }
+               ],
+    "realAgentMatrix":  {
+                            "nominalCells":  63,
+                            "testedCells":  0,
+                            "status":  "NOT_TESTED",
+                            "warning":  "Requested version/fork/CLI/extension/topology mapping and availability must be recorded; unit/synthetic observations do not count as real-agent evidence.",
+                            "cells":  [
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Claude Code",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Cursor",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Continue",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Codex",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Roo",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Cline",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Copilot",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Claude Code",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Cursor",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Continue",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Codex",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Roo",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Cline",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Copilot",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Claude Code",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Cursor",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Continue",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Codex",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Roo",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Cline",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Windows",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Copilot",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Claude Code",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Cursor",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Continue",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Codex",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Roo",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Cline",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Copilot",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Claude Code",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Cursor",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Continue",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Codex",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Roo",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Cline",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Copilot",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Claude Code",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Cursor",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Continue",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Codex",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Roo",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Cline",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "Linux",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Copilot",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Claude Code",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Cursor",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Continue",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Codex",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Roo",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Cline",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.85.0",
+                                              "agent":  "Copilot",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Claude Code",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Cursor",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Continue",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Codex",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Roo",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Cline",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.104.0",
+                                              "agent":  "Copilot",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Claude Code",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Cursor",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Continue",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Codex",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Roo",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Cline",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          },
+                                          {
+                                              "os":  "macOS",
+                                              "osBuild":  "UNSPECIFIED",
+                                              "vscodeTarget":  "1.141.0",
+                                              "agent":  "Copilot",
+                                              "agentVersionAndVariant":  "UNSPECIFIED",
+                                              "topology":  "UNSPECIFIED",
+                                              "status":  "NOT_TESTED",
+                                              "selectedArchitectureGuarantees":  "UNTESTED"
+                                          }
+                                      ]
+                        },
+    "verificationCommands":  {
+                                 "claimTag":  "INFERENCE",
+                                 "extension":  {
+                                                   "source":  "evidence/B3/checks-3/summary.json",
+                                                   "rawTestLog":  "evidence/B3/checks-3/extension-test.txt",
+                                                   "typecheckExitCode":  0,
+                                                   "buildExitCode":  0,
+                                                   "testExitCode":  0,
+                                                   "total":  583,
+                                                   "passed":  581,
+                                                   "failed":  0,
+                                                   "skipped":  2,
+                                                   "limit":  "Includes seven concurrent B4 pure unit tests; no native host or real agents."
+                                               },
+                                 "broker":  {
+                                                "source":  "evidence/B3/checks-2/summary.json",
+                                                "rawTestLog":  "evidence/B3/checks-2/broker-tests.txt",
+                                                "typecheckExitCode":  0,
+                                                "buildExitCode":  0,
+                                                "testExitCode":  0,
+                                                "total":  133,
+                                                "passed":  132,
+                                                "failed":  0,
+                                                "skipped":  1
+                                            },
+                                 "earlierFailure":  "checks-1/checks-2 failed extension runs remain archived; a 1ms TTL fixture was corrected and readiness metadata regenerated.",
+                                 "pending":  "Root is preparing checks-4 for additional runtime/UI changes; replace this pending statement only after raw results exist.",
+                                 "interpretation":  "Command/unit PASS is not independent security grading or architecture PASS."
+                             },
+    "finalScopedChecks":  {
+                              "broker":  {
+                                             "typecheck":  0,
+                                             "skip":  1,
+                                             "pass":  132,
+                                             "fail":  0,
+                                             "build":  0,
+                                             "evidence":  "evidence/B3/checks-2/summary.json",
+                                             "test":  0,
+                                             "total":  133
+                                         },
+                              "extension":  {
+                                                "typecheck":  0,
+                                                "skip":  2,
+                                                "pass":  582,
+                                                "fail":  0,
+                                                "build":  0,
+                                                "evidence":  "evidence/B3/checks-4/summary.json",
+                                                "test":  0,
+                                                "total":  584
+                                            }
+                          }
+}
