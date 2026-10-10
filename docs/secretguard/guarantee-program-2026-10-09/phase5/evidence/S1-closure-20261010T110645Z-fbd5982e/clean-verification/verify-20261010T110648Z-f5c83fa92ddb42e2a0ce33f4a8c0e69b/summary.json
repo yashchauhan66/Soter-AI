@@ -1,0 +1,130 @@
+{
+    "sameUserAuthority":  "OUTSIDE_COVERAGE",
+    "architecture":  "UNTESTED",
+    "allowConcurrentIsolatedHost":  false,
+    "harnesses":  [
+                      {
+                          "status":  "PREPARED_NOT_RUN",
+                          "sha256":  "488325093598687c1567c2d0f7f77977505ee7e0d3a6fc8571e7fe58a273b572",
+                          "name":  "security-review",
+                          "hashScope":  "prepared compile, not a launch observation"
+                      },
+                      {
+                          "status":  "PREPARED_NOT_RUN",
+                          "sha256":  "8c10e3b8c0640cc8cb3dc0357669aff23cf3c6a98cef754e76372ef55f653339",
+                          "name":  "native-baseline",
+                          "hashScope":  "prepared compile, not a launch observation"
+                      }
+                  ],
+    "runHostRequested":  false,
+    "exactOsBuild":  "26300.8935",
+    "independentVerification":  "NOT_PERFORMED",
+    "expandedDependencyChecks":  true,
+    "fileWorkers":  2,
+    "wrapperSha256":  "ce645a488622180a0b32bf8a6c9c892978ee4b4e4f1114dc9d854f1231ece18c",
+    "commands":  [
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "guard-core-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "guard-core-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "guard-core-test"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "ide-protocol-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "ide-protocol-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "ide-protocol-test"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "detectors-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "detectors-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "broker-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "broker-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "broker-test"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "extension-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "extension-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "extension-test"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "security-review-compile"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "native-baseline-compile"
+                     }
+                 ],
+    "diagnosticFindings":  [
+                               {
+                                   "id":  "H2a",
+                                   "status":  "SKIP"
+                               },
+                               {
+                                   "id":  "H2e",
+                                   "status":  "SKIP"
+                               },
+                               {
+                                   "id":  "S5-unmarked",
+                                   "status":  "FAIL"
+                               }
+                           ],
+    "limitation":  "Command success is not confidentiality success. Read observation files; preserve failures.",
+    "failures":  [
+
+                 ],
+    "schemaVersion":  2,
+    "noProcessTermination":  true,
+    "runId":  "verify-20261010T110648Z-f5c83fa92ddb42e2a0ce33f4a8c0e69b",
+    "scratchPath":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\.tmp\\s5cc-eb9ac581\\.tmp\\sgv-64339697d245",
+    "atUtc":  "2026-10-10T11:08:52.4318602Z"
+}

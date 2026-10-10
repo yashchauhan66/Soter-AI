@@ -5,7 +5,7 @@
 | Stage | Status | Evidence / next action |
 |---|---|---|
 | S0 resume identity | PASS — bookkeeping only | [Identity](evidence/S0-20261010T051435Z-f2ccbf42/identity.json), [supplement](evidence/S0-20261010T051435Z-f2ccbf42/supplement.json). |
-| S1 clean checkout | INCOMPLETE | [Summary](evidence/S1-20261010T051742Z-7a43a092/summary.json): clean shared-object checkout succeeded, npm install failed ENOSPC. [Object manifest](evidence/S1-20261010T051742Z-7a43a092/object-manifest.json) pins candidate bytes, not a clean build or loaded host. Previously present target sources/dependencies are explicitly tracked. |
+| S1 clean checkout | PASS — target workspaces at S2 hash | [Closure](clean-checkout.md), fresh dependencies, 1,322 pass / 0 fail / 3 skips, three matching bundle hashes. S6 candidate will be checked separately. |
 | S2 scoped regression coverage | PASS — component checks only | [Final raw wrapper](evidence/S2-final-20261010/verify-20261010T102944Z-a34359f2bf044be38bf247a5fa2a4cc6/summary.json): 1,322 pass / 0 fail / 3 skipped. [Coverage](coverage-map.md). All thirty full architecture assertions unchanged; unmarked diagnostic FAIL retained. |
 | S3 metadata ACL review | STATIC-ONLY / INCOMPLETE | [ACL review](acl-review.md): current broker/auth-token DACLs protected, no ACL changes, current backups saved. Controller token absent and complete protected-folder inventory unavailable. |
 | S4 rebuilt isolated host | INCOMPLETE | [Attempt/comparison](host-comparison.md): default existing-Code refusal, one private-profile fallback, obsolete expected-leak assertion and native working-directory launch failure. No final observation/hash attestation persisted. |

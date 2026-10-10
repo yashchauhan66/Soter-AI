@@ -1,0 +1,327 @@
+TAP version 13
+# Subtest: shared protocol declares the egress firewall
+    # Subtest: the preflight route is the broker's egress path
+    ok 1 - the preflight route is the broker's egress path
+      ---
+      duration_ms: 1.9101
+      type: 'test'
+      ...
+    # Subtest: the egress firewall is a broker-backed shared feature
+    ok 2 - the egress firewall is a broker-backed shared feature
+      ---
+      duration_ms: 0.6598
+      type: 'test'
+      ...
+    1..2
+ok 1 - shared protocol declares the egress firewall
+  ---
+  duration_ms: 4.6966
+  type: 'suite'
+  ...
+# Subtest: every adapter reaches the egress preflight route
+    # Subtest: neovim (Lua) posts to /v1/preflight/network-egress
+    ok 1 - neovim (Lua) posts to /v1/preflight/network-egress
+      ---
+      duration_ms: 2.3129
+      type: 'test'
+      ...
+    # Subtest: vim (VimScript) posts to /v1/preflight/network-egress
+    ok 2 - vim (VimScript) posts to /v1/preflight/network-egress
+      ---
+      duration_ms: 2.0086
+      type: 'test'
+      ...
+    # Subtest: sublime (Python) posts to /v1/preflight/network-egress
+    ok 3 - sublime (Python) posts to /v1/preflight/network-egress
+      ---
+      duration_ms: 1.2879
+      type: 'test'
+      ...
+    # Subtest: jetbrains (Kotlin) posts to /v1/preflight/network-egress
+    ok 4 - jetbrains (Kotlin) posts to /v1/preflight/network-egress
+      ---
+      duration_ms: 1.486
+      type: 'test'
+      ...
+    # Subtest: eclipse (Java) posts to /v1/preflight/network-egress
+    ok 5 - eclipse (Java) posts to /v1/preflight/network-egress
+      ---
+      duration_ms: 1.8869
+      type: 'test'
+      ...
+    # Subtest: visual-studio (C\#) posts to /v1/preflight/network-egress
+    ok 6 - visual-studio (C\#) posts to /v1/preflight/network-egress
+      ---
+      duration_ms: 2.0418
+      type: 'test'
+      ...
+    # Subtest: jupyterlab (TypeScript) posts to /v1/preflight/network-egress
+    ok 7 - jupyterlab (TypeScript) posts to /v1/preflight/network-egress
+      ---
+      duration_ms: 1.822
+      type: 'test'
+      ...
+    1..7
+ok 2 - every adapter reaches the egress preflight route
+  ---
+  duration_ms: 14.4933
+  type: 'suite'
+  ...
+# Subtest: every adapter excludes ASK from clearance
+    # Subtest: neovim (Lua) lists the three cleared actions
+    ok 1 - neovim (Lua) lists the three cleared actions
+      ---
+      duration_ms: 1.9621
+      type: 'test'
+      ...
+    # Subtest: neovim (Lua) never puts ASK in its allow-set
+    ok 2 - neovim (Lua) never puts ASK in its allow-set
+      ---
+      duration_ms: 3.0498
+      type: 'test'
+      ...
+    # Subtest: vim (VimScript) lists the three cleared actions
+    ok 3 - vim (VimScript) lists the three cleared actions
+      ---
+      duration_ms: 1.4188
+      type: 'test'
+      ...
+    # Subtest: vim (VimScript) never puts ASK in its allow-set
+    ok 4 - vim (VimScript) never puts ASK in its allow-set
+      ---
+      duration_ms: 1.5176
+      type: 'test'
+      ...
+    # Subtest: sublime (Python) lists the three cleared actions
+    ok 5 - sublime (Python) lists the three cleared actions
+      ---
+      duration_ms: 1.0707
+      type: 'test'
+      ...
+    # Subtest: sublime (Python) never puts ASK in its allow-set
+    ok 6 - sublime (Python) never puts ASK in its allow-set
+      ---
+      duration_ms: 1.2953
+      type: 'test'
+      ...
+    # Subtest: jetbrains (Kotlin) lists the three cleared actions
+    ok 7 - jetbrains (Kotlin) lists the three cleared actions
+      ---
+      duration_ms: 1.1877
+      type: 'test'
+      ...
+    # Subtest: jetbrains (Kotlin) never puts ASK in its allow-set
+    ok 8 - jetbrains (Kotlin) never puts ASK in its allow-set
+      ---
+      duration_ms: 1.5987
+      type: 'test'
+      ...
+    # Subtest: eclipse (Java) lists the three cleared actions
+    ok 9 - eclipse (Java) lists the three cleared actions
+      ---
+      duration_ms: 1.3258
+      type: 'test'
+      ...
+    # Subtest: eclipse (Java) never puts ASK in its allow-set
+    ok 10 - eclipse (Java) never puts ASK in its allow-set
+      ---
+      duration_ms: 1.2744
+      type: 'test'
+      ...
+    # Subtest: visual-studio (C\#) lists the three cleared actions
+    ok 11 - visual-studio (C\#) lists the three cleared actions
+      ---
+      duration_ms: 1.1951
+      type: 'test'
+      ...
+    # Subtest: visual-studio (C\#) never puts ASK in its allow-set
+    ok 12 - visual-studio (C\#) never puts ASK in its allow-set
+      ---
+      duration_ms: 1.343
+      type: 'test'
+      ...
+    # Subtest: jupyterlab (TypeScript) lists the three cleared actions
+    ok 13 - jupyterlab (TypeScript) lists the three cleared actions
+      ---
+      duration_ms: 1.1431
+      type: 'test'
+      ...
+    # Subtest: jupyterlab (TypeScript) never puts ASK in its allow-set
+    ok 14 - jupyterlab (TypeScript) never puts ASK in its allow-set
+      ---
+      duration_ms: 1.5281
+      type: 'test'
+      ...
+    1..14
+ok 3 - every adapter excludes ASK from clearance
+  ---
+  duration_ms: 21.8044
+  type: 'suite'
+  ...
+# Subtest: every adapter exposes the check as an invokable command
+    # Subtest: neovim (Lua) registers SoterCheckEgress
+    ok 1 - neovim (Lua) registers SoterCheckEgress
+      ---
+      duration_ms: 2.1633
+      type: 'test'
+      ...
+    # Subtest: vim (VimScript) registers SoterCheckEgress
+    ok 2 - vim (VimScript) registers SoterCheckEgress
+      ---
+      duration_ms: 1.7116
+      type: 'test'
+      ...
+    # Subtest: sublime (Python) registers soterai_check_egress
+    ok 3 - sublime (Python) registers soterai_check_egress
+      ---
+      duration_ms: 1.4643
+      type: 'test'
+      ...
+    # Subtest: jetbrains (Kotlin) registers CheckEgress
+    ok 4 - jetbrains (Kotlin) registers CheckEgress
+      ---
+      duration_ms: 1.4967
+      type: 'test'
+      ...
+    # Subtest: eclipse (Java) registers checkEgress
+    ok 5 - eclipse (Java) registers checkEgress
+      ---
+      duration_ms: 2.0312
+      type: 'test'
+      ...
+    # Subtest: visual-studio (C\#) registers cmdCheckEgress
+    ok 6 - visual-studio (C\#) registers cmdCheckEgress
+      ---
+      duration_ms: 1.358
+      type: 'test'
+      ...
+    # Subtest: jupyterlab (TypeScript) registers checkEgress
+    ok 7 - jupyterlab (TypeScript) registers checkEgress
+      ---
+      duration_ms: 1.7267
+      type: 'test'
+      ...
+    1..7
+ok 4 - every adapter exposes the check as an invokable command
+  ---
+  duration_ms: 12.9495
+  type: 'suite'
+  ...
+# Subtest: no adapter reimplements detection locally
+    # Subtest: neovim (Lua) only reads the broker's verdict
+    ok 1 - neovim (Lua) only reads the broker's verdict
+      ---
+      duration_ms: 1.8121
+      type: 'test'
+      ...
+    # Subtest: vim (VimScript) only reads the broker's verdict
+    ok 2 - vim (VimScript) only reads the broker's verdict
+      ---
+      duration_ms: 1.7873
+      type: 'test'
+      ...
+    # Subtest: sublime (Python) only reads the broker's verdict
+    ok 3 - sublime (Python) only reads the broker's verdict
+      ---
+      duration_ms: 2.7284
+      type: 'test'
+      ...
+    # Subtest: jetbrains (Kotlin) only reads the broker's verdict
+    ok 4 - jetbrains (Kotlin) only reads the broker's verdict
+      ---
+      duration_ms: 1.4771
+      type: 'test'
+      ...
+    # Subtest: eclipse (Java) only reads the broker's verdict
+    ok 5 - eclipse (Java) only reads the broker's verdict
+      ---
+      duration_ms: 1.3942
+      type: 'test'
+      ...
+    # Subtest: visual-studio (C\#) only reads the broker's verdict
+    ok 6 - visual-studio (C\#) only reads the broker's verdict
+      ---
+      duration_ms: 1.5016
+      type: 'test'
+      ...
+    # Subtest: jupyterlab (TypeScript) only reads the broker's verdict
+    ok 7 - jupyterlab (TypeScript) only reads the broker's verdict
+      ---
+      duration_ms: 1.5117
+      type: 'test'
+      ...
+    1..7
+ok 5 - no adapter reimplements detection locally
+  ---
+  duration_ms: 12.7579
+  type: 'suite'
+  ...
+# Subtest: broker constants match the broker server
+ok 6 - broker constants match the broker server
+  ---
+  duration_ms: 1.8602
+  type: 'test'
+  ...
+# Subtest: decisionAllowsForward enforces block and approval gating
+ok 7 - decisionAllowsForward enforces block and approval gating
+  ---
+  duration_ms: 0.3762
+  type: 'test'
+  ...
+# Subtest: command and feature registries are stable identifiers
+ok 8 - command and feature registries are stable identifiers
+  ---
+  duration_ms: 0.3207
+  type: 'test'
+  ...
+# Subtest: runtime guards accept valid values and reject others
+ok 9 - runtime guards accept valid values and reject others
+  ---
+  duration_ms: 0.2989
+  type: 'test'
+  ...
+# Subtest: default policy is local-first
+ok 10 - default policy is local-first
+  ---
+  duration_ms: 0.1992
+  type: 'test'
+  ...
+# Subtest: assertNoRawContent blocks raw-content telemetry
+ok 11 - assertNoRawContent blocks raw-content telemetry
+  ---
+  duration_ms: 0.9062
+  type: 'test'
+  ...
+# Subtest: protocol version is exported
+ok 12 - protocol version is exported
+  ---
+  duration_ms: 0.2875
+  type: 'test'
+  ...
+# Subtest: egress preflight route matches the broker server path
+ok 13 - egress preflight route matches the broker server path
+  ---
+  duration_ms: 0.1932
+  type: 'test'
+  ...
+# Subtest: egressAllowsSend never treats an unanswered ASK as clearance
+ok 14 - egressAllowsSend never treats an unanswered ASK as clearance
+  ---
+  duration_ms: 0.505
+  type: 'test'
+  ...
+# Subtest: egress is a shared feature every adapter must reach, not VS Code-only
+ok 15 - egress is a shared feature every adapter must reach, not VS Code-only
+  ---
+  duration_ms: 0.5551
+  type: 'test'
+  ...
+1..15
+# tests 47
+# suites 5
+# pass 47
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 786.868
