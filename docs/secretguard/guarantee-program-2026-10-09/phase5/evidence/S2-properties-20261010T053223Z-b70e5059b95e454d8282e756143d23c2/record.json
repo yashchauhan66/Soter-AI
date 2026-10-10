@@ -1,0 +1,55 @@
+﻿{
+    "runId":  "S2-properties-20261010T053223Z-b70e5059b95e454d8282e756143d23c2",
+    "stage":  "S2",
+    "startedUtc":  "2026-10-10T05:32:23.5440861Z",
+    "finishedUtc":  "2026-10-10T05:32:24.1322398Z",
+    "osBuild":  "26300.8935",
+    "osBuildProvenance":  "Root S0 reported Windows 11 Home Insider Preview; not remeasured by this test subagent",
+    "command":  "node --import tsx --test packages/vscode-extension/src/__tests__/policy-properties.test.ts apps/local-ai-broker/src/__tests__/token-absence-regression.test.ts",
+    "nodeVersion":  "v22.16.0",
+    "exitCode":  1,
+    "classification":  "INCOMPLETE_OR_FAIL_SEE_RAW_LOG",
+    "totals":  {
+                   "tests":  2,
+                   "suites":  0,
+                   "pass":  0,
+                   "fail":  2,
+                   "cancelled":  0,
+                   "skipped":  0,
+                   "todo":  0
+               },
+    "scope":  "Fixed-seed bounded parser properties and synthetic token file mechanics with metadata adapters; no real profile/token/ACL inspection, no host/probes",
+    "flags":  "No runtime flag changed; permission adapter avoids actual Windows ACL inspector",
+    "fullArchitecture":  "A01-A30 full assertions remain UNTESTED",
+    "hashes":  [
+                   {
+                       "path":  "packages/vscode-extension/src/__tests__/policy-properties.test.ts",
+                       "sha256":  "b96f3d584fe2a2ab957e0468f893828977210d30abcf246748cb69bb1a95c210"
+                   },
+                   {
+                       "path":  "apps/local-ai-broker/src/__tests__/token-absence-regression.test.ts",
+                       "sha256":  "e812f450a387ed608cb3591205b6bfbc370a8a9642e076e6331ff60305fb767c"
+                   },
+                   {
+                       "path":  "packages/vscode-extension/src/ai-boundary/policy.ts",
+                       "sha256":  "e9f50c5caa50ddc4be9f8496f77b7f49695e99ee72c39b77dbcf86b4c02fff61"
+                   },
+                   {
+                       "path":  "packages/guard-core/src/ProjectPolicy.ts",
+                       "sha256":  "2cf050bc29c3429e596d6f34e80aa07749f21cb859e256a4a9c968ae05844926"
+                   },
+                   {
+                       "path":  "apps/local-ai-broker/src/auth.ts",
+                       "sha256":  "954c2708ea427aaf33a89ac2245f48ce165506f729f37c63dd42e1ff284b3391"
+                   },
+                   {
+                       "path":  "apps/local-ai-broker/src/WindowsAcl.ts",
+                       "sha256":  "895a009fe428d5301f617c1db62e801c5aaa8dc1b14d72ca8d3ffe08cfac2210"
+                   },
+                   {
+                       "path":  "node_modules/tsx/dist/cli.mjs",
+                       "sha256":  "5d5b2a9f9cf4d6a8b44326b676417e00b42ad04037ed173b7af82ea8146a4fc0"
+                   }
+               ],
+    "rawLogSha256":  "07c960724eb9aa22ed829ac7ba84d316e6eb6984b57579e73c600e60d4d623c3"
+}

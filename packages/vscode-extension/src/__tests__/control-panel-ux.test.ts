@@ -54,7 +54,8 @@ test("all-on panel retains unmanaged scope, real action routes and safe metadata
         safeMode: true, protectedWorkspace: true, liveScan: true, sentinel: true, mcpFirewall: true,
         brokerRunning: true, trusted: true,
     }, { ...descriptor("Fully enforced"), state: "FULLY_ENFORCED" }, "file:///synthetic-logo.png");
-    assert.match(enforced, /Managed paths enforced/);
+    assert.match(enforced, /Managed controls active/);
+    assert.match(enforced, /do not verify agent routing or G1-G6 guarantees/);
     assert.doesNotMatch(enforced, /Fully enforced|every AI tool on this machine/);
     const lockdown = access.buildHtml({ cspSource: "file:" }, {
         safeMode: true, protectedWorkspace: true, liveScan: true, sentinel: true, mcpFirewall: true,
@@ -101,7 +102,8 @@ test("one-click panel action uses the automatic pipeline and preserves partial r
     const html = access.buildHtml({ cspSource: "file:" }, { safeMode: true, protectedWorkspace: true, liveScan: true, sentinel: true, mcpFirewall: true, brokerRunning: true, trusted: true }, descriptor(), "file:///synthetic-logo.png");
     assert.match(html, /data-setup-stage="controls" data-status="complete"/);
     assert.match(html, /data-setup-stage="routing" data-status="attention"/);
-    assert.match(html, /Run setup &amp; verify again|Run setup & verify again/);
+    assert.match(html, /Run setup checks again/);
+    assert.doesNotMatch(html, /Run setup &amp; verify again|Run setup & verify again/);
 });
 
 test("an old render cannot replace newer status or update a disposed view", async () => {

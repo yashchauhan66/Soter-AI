@@ -84,14 +84,14 @@ function coverage(facts: ProtectionRuntimeFacts): string {
     // Unroutable tools are stated plainly rather than folded into the ratio.
     // Counting them as uncovered denominators is what produced "0 of 32".
     const limitation = unmanaged > 0
-        ? ` · ${unmanaged} other AI tool${unmanaged === 1 ? "" : "s"} cannot be routed by SoterAI (monitoring only)`
+        ? ` · ${unmanaged} other AI tool${unmanaged === 1 ? "" : "s"} cannot be routed by SoterAI (traffic unobserved)`
         : "";
     if (facts.detectedAiTools <= 0) {
         return unmanaged > 0
             ? `No routable AI integration detected${limitation}`
             : "AI integration coverage unknown until an integration is detected";
     }
-    return `${facts.protectedAiTools} of ${facts.detectedAiTools} routable AI tool${facts.detectedAiTools === 1 ? "" : "s"} routed through a verified SoterAI path${limitation}`;
+    return `${facts.protectedAiTools} of ${facts.detectedAiTools} reported managed routes${limitation}. Independent agent routing and selected-architecture guarantees remain UNTESTED.`;
 }
 
 /** True when the user has switched on something that needs a live broker. */
@@ -144,7 +144,7 @@ export function deriveProtectionState(facts: ProtectionRuntimeFacts): Protection
         return { ...shared, state: "INITIALISING", title: "Protection starting", explanation: "SoterAI is starting the local enforcement path and has not verified protection yet.", severity: "info", recommendedAction: "Wait for the broker health check to complete.", allowedTransitions: transitions("INITIALISING") };
     }
     if (!facts.enabled) {
-        return { ...shared, state: "DISABLED", title: "Protection disabled", explanation: "SoterAI controls are disabled; no protection claim is made.", severity: "warning", recommendedAction: "Enable Full Protection to configure the supported enforcement paths.", allowedTransitions: transitions("DISABLED") };
+        return { ...shared, state: "DISABLED", title: "Protection disabled", explanation: "SoterAI controls are disabled; no protection claim is made.", severity: "warning", recommendedAction: "Configure Managed Controls to review the supported checking paths.", allowedTransitions: transitions("DISABLED") };
     }
     if (!facts.workspaceTrusted) {
         return { ...shared, state: "DEGRADED", title: "Restricted workspace", explanation: "Workspace trust is required for provider routing and some protected-workspace controls.", severity: "warning", recommendedAction: "Trust the workspace or continue with the explicitly limited local controls.", allowedTransitions: transitions("DEGRADED") };
@@ -185,12 +185,12 @@ export function deriveProtectionState(facts: ProtectionRuntimeFacts): Protection
     const unmanaged = facts.unmanagedAiTools ?? 0;
     const requiredActive = facts.broker === "healthy" && facts.safeModeEnabled && facts.protectedWorkspaceEnabled && facts.sentinelEnabled;
     if (requiredActive && facts.detectedAiTools > 0 && facts.protectedAiTools === facts.detectedAiTools && unmanaged === 0) {
-        return { ...shared, state: "FULLY_ENFORCED", title: "Fully enforced", explanation: "All required controls are active, policy is loaded, and every AI tool on this machine that SoterAI can route is routed through a verified SoterAI path.", severity: "info", recommendedAction: "Continue working; review coverage and evidence when integrations change.", allowedTransitions: transitions("FULLY_ENFORCED") };
+        return { ...shared, state: "FULLY_ENFORCED", title: "Managed controls active", explanation: "Configured controls are active for the reported SoterAI-managed paths. Operational counts do not establish complete agent routing or selected-architecture G1-G6 verification.", severity: "info", recommendedAction: "Review exact route and control evidence before sharing sensitive content.", allowedTransitions: transitions("FULLY_ENFORCED") };
     }
     if (requiredActive && unmanaged > 0 && facts.protectedAiTools === facts.detectedAiTools) {
         // Everything SoterAI can control IS controlled. The remaining gap is a
         // product limitation, so it is reported as a limit, not as a user error.
-        return { ...shared, state: "PARTIALLY_ENFORCED", title: "Enforced, with known gaps", explanation: `Every routable AI integration is going through SoterAI. ${unmanaged} other AI tool${unmanaged === 1 ? "" : "s"} on this machine cannot be routed by SoterAI at all, so ${unmanaged === 1 ? "its" : "their"} traffic is observed but not controlled.`, severity: "warning", recommendedAction: "Review the uncontrolled tools and disable any you do not need; SoterAI cannot intercept them.", allowedTransitions: transitions("PARTIALLY_ENFORCED") };
+        return { ...shared, state: "PARTIALLY_ENFORCED", title: "Managed checks active, with known gaps", explanation: `Reported managed routes are operational. ${unmanaged} other AI tool${unmanaged === 1 ? "" : "s"} cannot be routed by this integration; their submitted content and network traffic are unobserved and uncontrolled. Selected-architecture guarantees remain UNTESTED.`, severity: "warning", recommendedAction: "Review unmanaged tools and the exact verification record; these checks cannot intercept them.", allowedTransitions: transitions("PARTIALLY_ENFORCED") };
     }
     if (facts.broker === "healthy" && (facts.safeModeEnabled || facts.protectedWorkspaceEnabled || facts.mcpStrictModeEnabled)) {
         return { ...shared, state: "PARTIALLY_ENFORCED", title: "Partially enforced", explanation: "Some SoterAI paths are enforcing, but one or more required controls are still off.", severity: "warning", recommendedAction: `Turn on the remaining required control${controlState.inactiveControls.length === 1 ? "" : "s"}: ${controlState.inactiveControls.join(", ") || "none"}.`, allowedTransitions: transitions("PARTIALLY_ENFORCED") };

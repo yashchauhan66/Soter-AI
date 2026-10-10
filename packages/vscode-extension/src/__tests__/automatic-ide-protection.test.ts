@@ -1,6 +1,6 @@
 import "./phase2/register.mjs";
 import assert from "node:assert/strict";
-import test, { mock } from "node:test";
+import test, { afterEach, beforeEach, mock } from "node:test";
 import * as fs from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
@@ -9,6 +9,13 @@ import { AutomaticIDEProtection, type RoutingSetupResult, type SetupProgress } f
 import { ProtectionController } from "../protection/ProtectionController";
 import { deriveProtectionState, type ProtectionRuntimeFacts } from "../protection/ProtectionState";
 import { registerBrokerCommands } from "../broker/commands";
+
+beforeEach(() => {
+    // Positive fixtures explicitly accept the ordinary scope review. Negative
+    // fixtures override it; the stub never auto-approves production dialogs.
+    mock.method(stub.window, "showInformationMessage", async (message: string) => message.startsWith("Covers:") ? "Review scoped setup" : undefined);
+});
+afterEach(() => mock.restoreAll());
 
 const facts: ProtectionRuntimeFacts = { enabled: true, workspaceTrusted: true, broker: "healthy", policy: "loaded",
     safeModeEnabled: true, protectedWorkspaceEnabled: true, sentinelEnabled: true, liveScanEnabled: true,
@@ -24,7 +31,7 @@ function setup(route = async () => routed, refresh = async () => snapshot()) {
     return { service, controller, controls: () => controls };
 }
 
-test("automatic setup sequences controls, routing and verified coverage and enables broker auto-start", async () => {
+test("accepted automatic setup sequences managed controls and operational checks and enables broker auto-start", async () => {
     const { service } = setup();
     const progress: SetupProgress[] = [];
     const result = await service.run(update => progress.push(update));
@@ -32,7 +39,8 @@ test("automatic setup sequences controls, routing and verified coverage and enab
     assert.equal(result.changedConfigs, 1);
     assert.equal(stub.state.config.get("soterai.broker.autoStart"), true);
     assert.deepEqual(progress.map(item => `${item.stage}:${item.status}`), ["controls:running", "controls:complete", "routing:running", "routing:complete", "verification:running", "verification:complete"]);
-    assert.match(result.summary, /supported managed paths/);
+    assert.match(result.summary, /Managed setup checks completed/);
+    assert.match(result.summary, /remain UNTESTED/);
 });
 
 test("untrusted, absent workspace and lockdown refuse setup without any control or routing mutation", async () => {
@@ -118,13 +126,15 @@ test("AI routing keeps review, encrypted original backup and authenticated smoke
     ];
     registerBrokerCommands(context as never, { start: async () => { setupEvents.push("broker-start"); return { running: true, state: "healthy", url: "http://127.0.0.1:47321" }; } } as never, () => {});
     try {
+        const decline = mock.method(stub.window, "showInformationMessage", async () => undefined);
         const cancelled = await stub.commands.executeCommand("soterai.secureAllAI") as RoutingSetupResult;
+        decline.mock.restore();
         assert.equal(cancelled.status, "cancelled");
         assert.equal(setupEvents.length, 0);
         assert.equal(await fs.readFile(configPath, "utf8"), original);
         mocks.push(mock.method(stub.window, "showInformationMessage", async (message: string) => {
             setupEvents.push(message.startsWith("Covers:") ? "coverage" : message.includes("Operational state:") ? "operational-result" : "setup-review");
-            return message.startsWith("Covers:") ? "Review scoped setup" : "Secure Everything Now";
+            return message.startsWith("Covers:") ? "Review scoped setup" : "Apply scoped routing changes";
         }));
         const applied = await stub.commands.executeCommand("soterai.secureAllAI") as RoutingSetupResult;
         assert.equal(applied.status, "applied"); assert.equal(applied.changedConfigs, 1);

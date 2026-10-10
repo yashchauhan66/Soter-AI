@@ -57,6 +57,7 @@ export class PolicyStore {
 
     /** Valid bytes, rather than file existence; no implicit creation in a status read. */
     static async status(): Promise<"loaded" | "invalid" | "unavailable"> {
+        if (!vscode.workspace.getConfiguration("soterai").get<boolean>("hardening.addOnlyPolicy", true)) return "unavailable";
         const uri = this.policyUri();
         if (!uri) return "unavailable";
         try {
@@ -69,6 +70,7 @@ export class PolicyStore {
                 if (rules !== undefined && (!Array.isArray(rules) || rules.length > 256
                     || rules.some(p => typeof p !== "string" || !p.trim() || p.length > 256))) return "invalid";
             }
+            parseProjectPolicy(raw);
             return "loaded";
         } catch (error) {
             return ["ENOENT", "FileNotFound"].includes((error as { code?: string }).code ?? "") ? "unavailable" : "invalid";
@@ -78,6 +80,7 @@ export class PolicyStore {
     /** Persist a policy to `.soterai/policy.json` (creating the folder). */
     static async save(policy: ProjectPolicy): Promise<vscode.Uri> {
         if (!vscode.workspace.getConfiguration("soterai").get<boolean>("hardening.addOnlyPolicy", true)) throw new Error("Policy mutation unavailable.");
+        policy = parseProjectPolicy(policy);
         const prior = await this.load();
         policy = { ...policy, protectedFiles: [...new Set([...prior.protectedFiles, ...policy.protectedFiles])] };
         const uri = this.policyUri();

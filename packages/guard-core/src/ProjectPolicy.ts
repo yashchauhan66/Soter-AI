@@ -103,11 +103,20 @@ function asStringArray(value: unknown, fallback: string[]): string[] {
 
 /**
  * Parse an untrusted `.soterai/policy.json` value into a complete, valid
- * {@link ProjectPolicy}. Never throws — unknown/partial input is filled from
- * {@link DEFAULT_PROJECT_POLICY}. This keeps a hand-edited or corrupt policy
- * file from breaking the firewall (fail-safe toward the stricter default).
+ * {@link ProjectPolicy}. Partial known-schema input is filled from defaults;
+ * an explicitly unsupported version or disabled schema repair is unavailable.
+ * Callers must retain accepted denies when parsing fails.
  */
-export function parseProjectPolicy(raw: unknown): ProjectPolicy {
+export function validateProjectPolicySchema(raw: unknown): void {
+    if (raw && typeof raw === "object" && "version" in raw
+        && (raw as Record<string, unknown>).version !== PROJECT_POLICY_VERSION) {
+        throw new Error("Unsupported project policy schema; policy operations are unavailable");
+    }
+}
+
+export function parseProjectPolicy(raw: unknown, options: { schemaValidationEnabled?: boolean } = {}): ProjectPolicy {
+    if (options.schemaValidationEnabled === false) throw new Error("Project policy operations unavailable while schema validation is disabled");
+    validateProjectPolicySchema(raw);
     const obj = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
     const d = DEFAULT_PROJECT_POLICY;
 

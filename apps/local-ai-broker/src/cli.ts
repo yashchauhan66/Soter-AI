@@ -2,14 +2,12 @@
 import path from "node:path";
 import os from "node:os";
 import { BrokerServer, DEFAULT_BROKER_PORT } from "./BrokerServer";
-import { loadOrCreateBrokerToken } from "./auth";
+import { createBrokerCredentialLoader, BrokerCredentialError } from "./auth";
 
 async function main(): Promise<void> {
     const storageDir = process.env.SOTERAI_BROKER_STORAGE ?? path.join(os.homedir(), ".soterai", "broker");
-    const suppliedToken = process.env.SOTERAI_BROKER_TOKEN;
-    const token = suppliedToken ?? await loadOrCreateBrokerToken(storageDir);
-    const controlToken = process.env.SOTERAI_BROKER_CONTROL_TOKEN
-        ?? await loadOrCreateBrokerToken(storageDir, "control-auth-token");
+    const { token, controlToken } = await createBrokerCredentialLoader(undefined, process.env.SOTERAI_HARDEN_CREDENTIAL_STARTUP !== "0")(
+        storageDir, { token: process.env.SOTERAI_BROKER_TOKEN, controlToken: process.env.SOTERAI_BROKER_CONTROL_TOKEN });
     const port = parsePort(process.env.SOTERAI_BROKER_PORT);
     const broker = new BrokerServer({
         token,
@@ -35,7 +33,8 @@ function parsePort(value: string | undefined): number {
     return port;
 }
 
-void main().catch(() => {
-    console.error(JSON.stringify({ status: "failed", message: "Broker failed to start; check private storage, distinct auth credentials, port and provider configuration." }));
+void main().catch((error: unknown) => {
+    console.error(JSON.stringify({ status: "failed", message: error instanceof BrokerCredentialError ? error.message
+        : "Broker failed to start; check private storage, distinct auth credentials, port and provider configuration." }));
     process.exit(1);
 });

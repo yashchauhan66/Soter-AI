@@ -382,9 +382,9 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
             !state.liveScan,
             !state.trusted,
         ].filter(Boolean).length;
-        const statusTitle = protection.state === "FULLY_ENFORCED" ? "Managed paths enforced" : protection.title;
+        const statusTitle = protection.state === "FULLY_ENFORCED" ? "Managed controls active" : protection.title;
         const statusExplanation = protection.state === "FULLY_ENFORCED"
-            ? "Required SoterAI controls are active. Enforcement applies to supported traffic routed through the verified broker path; other tools remain outside its control."
+            ? "Configured SoterAI controls are active. These operational facts do not verify agent routing or G1-G6 guarantees; other tools remain outside their control."
             : protection.explanation;
         const routedStatus = protection.state === "LOCKDOWN" ? "Paused" : blockingActive ? "Checking" : "Not blocking";
         const setupLabels: Record<SetupStageStatus, string> = { waiting: "Waiting", running: "Working", complete: "Done", attention: "Review", failed: "Incomplete" };
@@ -522,10 +522,10 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
 
   <section class="auto-setup" aria-labelledby="auto-setup-title">
     <div class="eyebrow">AUTOMATIC SETUP</div>
-    <h2 id="auto-setup-title">One-click IDE protection</h2>
+    <h2 id="auto-setup-title">One-click managed setup</h2>
     <p>Enable local controls, broker auto-start and supported AI routing in one flow. Config changes get one combined review and encrypted backups.</p>
     <ol class="setup-steps" aria-label="Automatic setup progress">${setupRows}</ol>
-    <button class="cta" data-action="automaticProtection" data-focus="automatic:setup" data-announcement="Starting automatic IDE protection" ${setupBlocked ? 'disabled aria-disabled="true"' : ""}>${this.setupResult ? "Run setup & verify again" : "Enable & verify protection"}<span aria-hidden="true">→</span></button>
+    <button class="cta" data-action="automaticProtection" data-focus="automatic:setup" data-announcement="Starting managed setup" ${setupBlocked ? 'disabled aria-disabled="true"' : ""}>${this.setupResult ? "Run setup checks again" : "Configure & check managed paths"}<span aria-hidden="true">→</span></button>
     ${setupBlocked ? `<p class="field-hint">${!state.trusted ? "Review workspace trust before setup." : "Review lockdown and unlock explicitly before setup."}</p>` : ""}
     ${this.setupResult ? `<p class="setup-result" role="status">${escapeHtml(this.setupResult.summary)}</p><button class="text-button" data-action="openCoverage" data-focus="automatic:coverage">Review final coverage</button>` : ""}
   </section>
@@ -643,7 +643,7 @@ export class ControlPanelViewProvider implements vscode.WebviewViewProvider {
       if (row) { row.setAttribute('data-status', update.status); row.querySelector('.setup-state').textContent = labels[update.status]; }
       const status = document.getElementById('operation-status');
       if (status) status.textContent = update.stage === 'controls' ? 'Enabling local controls…'
-        : update.stage === 'routing' ? 'Review the AI routing changes in VS Code, then apply or cancel.' : 'Verifying protection and coverage…';
+        : update.stage === 'routing' ? 'Review the AI routing changes in VS Code, then apply or cancel.' : 'Checking managed setup status…';
     });
     function save(patch) { vscode.setState(Object.assign({}, vscode.getState() || {}, patch)); }
     const sectionLinks = Array.from(document.querySelectorAll('.section-nav a'));

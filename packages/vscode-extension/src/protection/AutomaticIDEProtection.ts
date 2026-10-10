@@ -1,11 +1,12 @@
 import * as vscode from "vscode";
 import type { ProtectionController } from "./ProtectionController";
 import type { ProtectionStateSnapshot } from "./ProtectionStateService";
+import { reviewCoverageForSetup } from "../security/CoverageDisclosure";
 
 export const AUTOMATIC_SETUP_STAGES = [
     { id: "controls", label: "Enable local controls" },
     { id: "routing", label: "Connect supported AI tools" },
-    { id: "verification", label: "Verify protection & coverage" },
+    { id: "verification", label: "Check managed setup status" },
 ] as const;
 export type SetupStage = typeof AUTOMATIC_SETUP_STAGES[number]["id"];
 export type SetupStageStatus = "waiting" | "running" | "complete" | "attention" | "failed";
@@ -48,6 +49,9 @@ export class AutomaticIDEProtection {
         let stage: SetupStage = "controls";
         let changedConfigs = 0;
         try {
+            if (!(await reviewCoverageForSetup())) return {
+                status: "attention", summary: "Setup not started. Coverage disclosure was not accepted or is unavailable; no controls or settings were changed.", changedConfigs: 0,
+            };
             report({ stage, status: "running" });
             await this.deps.controller.enableFullProtection();
             const config = vscode.workspace.getConfiguration("soterai");
@@ -81,8 +85,8 @@ export class AutomaticIDEProtection {
             report({ stage, status: ready ? "complete" : "attention" });
             const summary = routing?.status === "cancelled"
                 ? "Local controls are enabled. AI routing changes were cancelled; review coverage before relying on them."
-                : ready ? "Automatic setup verified for supported managed paths. Other tools' direct file and network access remains outside SoterAI."
-                    : "Local controls are enabled. Some AI routes are unavailable, unverified or outside SoterAI; review coverage for the remaining work.";
+                : ready ? "Managed setup checks completed. Independent agent routing and selected-architecture guarantees remain UNTESTED; other tools' file and network access remains outside SoterAI."
+                    : "Local controls are enabled. Agent routes are unverified or outside SoterAI; selected-architecture guarantees remain UNTESTED. Review coverage for the remaining work.";
             return { status: ready ? "ready" : "attention", summary, changedConfigs, coverageState: snapshot.descriptor.state };
         } catch {
             report({ stage, status: "failed" });

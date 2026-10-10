@@ -41,7 +41,7 @@ async function showScanSummary(
     );
     if (action === "Copy Safe Version") {
         await vscode.env.clipboard.writeText(safeText);
-        vscode.window.showInformationMessage("Safe redacted version copied.");
+        vscode.window.showInformationMessage("Redacted candidate copied. Review unmarked private information before sharing.");
     }
 }
 
@@ -63,9 +63,11 @@ export function registerLaunchCommands(context: vscode.ExtensionContext): void {
         const report = [
             "# SoterAI: What Stays Local?",
             "",
-            "SoterAI is local-first by default. Raw secrets stay on the user's machine unless the user explicitly chooses a flow that sends data outside VS Code.",
+            "SoterAI detector scans run locally by default. Managed context applies accepted exclusions and redacts recognized sensitive values; unmarked private information may remain.",
+            "Routed AI requests can reach your configured provider. Other tools can read original files, buffers and clipboard content or use their own network paths.",
+            "Selected-architecture G1-G6 guarantees remain UNTESTED. No independent user-presence consent or durable OS boundary is provided.",
             "",
-            "## What stays local by default",
+            "## Sensitive values handled by local components",
             "",
             "- API keys",
             "- Tokens",
@@ -83,7 +85,7 @@ export function registerLaunchCommands(context: vscode.ExtensionContext): void {
             "- Hashes and redacted evidence for the local audit ledger",
             "- VS Code SecretStorage values for credentials/tokens when storage is required",
             "",
-            "## What SoterAI does not receive by default",
+            "## What automatic SoterAI cloud scanning does not receive in local mode",
             "",
             "- Raw secrets",
             "- Raw prompts",
@@ -92,13 +94,14 @@ export function registerLaunchCommands(context: vscode.ExtensionContext): void {
             "- Private keys",
             "- Full database URLs",
             "",
-            "## Before AI sees anything",
+            "## Review managed context before sharing",
             "",
-            "Use `SoterAI: Preview What AI Will See` to inspect the exact redacted prompt. The model sees placeholders and safe metadata, not raw sensitive values.",
+            "Use `SoterAI: Preview Managed AI Context` to inspect SoterAI-built context. It is a managed preview, not an observation of a third-party model request. Review unmarked private information yourself.",
             "",
             "## Reveal-once protection",
             "",
             "Raw reveal is off by default. If enabled by policy, it requires an explicit warning and typed confirmation. Enterprise policy can disable reveal entirely.",
+            "Ordinary editor confirmation is not agent-proof: same-user code can reach editor actions and user-writable state. Local credential storage is not independent custody from that code.",
             "",
             "No API keys, prompts, secrets, or raw file contents are included in this privacy report.",
         ];
@@ -139,14 +142,14 @@ export function registerLaunchCommands(context: vscode.ExtensionContext): void {
                     command: "soterai.secureAllAI",
                 },
                 {
-                    label: "Read the local privacy promise",
-                    description: "See exactly what stays on your machine by default.",
+                    label: "Review local handling and its limits",
+                    description: "See managed scanning, provider routing and same-user access limits.",
                     command: "soterai.openPrivacyGuarantee",
                 },
             ],
             {
                 title: "SoterAI: Choose your first protection step",
-                placeHolder: "Everything runs locally by default. You can change settings later.",
+                placeHolder: "Detector scans are local by default; provider routing and other tools have separate boundaries.",
             },
         );
         if (next) await vscode.commands.executeCommand(next.command);

@@ -277,19 +277,25 @@ describe("Local-first privacy mode", () => {
         assert.ok(!/cloudToken|providerApiKey|SOTERAI_PROVIDER_API_KEY/.test(launchCommandsSrc));
     });
 
-    it("privacy guarantee explains local-only secret handling", () => {
+    it("privacy report scopes local handling and preserves same-user and unmarked-data limits", () => {
         assert.ok(declaredCommands.includes("soterai.openPrivacyGuarantee"), "privacy guarantee command must be declared");
         assert.ok(registeredCommands.has("soterai.openPrivacyGuarantee"), "privacy guarantee command must be registered");
-        assert.match(launchCommandsSrc, /Raw secrets stay on the user's machine/);
-        assert.match(launchCommandsSrc, /What SoterAI does not receive by default/);
-        assert.match(launchCommandsSrc, /Preview What AI Will See/);
+        assert.match(launchCommandsSrc, /SoterAI detector scans run locally by default/);
+        assert.match(launchCommandsSrc, /unmarked private information may remain/);
+        assert.match(launchCommandsSrc, /Other tools can read original files/);
+        assert.match(launchCommandsSrc, /Selected-architecture G1-G6 guarantees remain UNTESTED/);
+        assert.doesNotMatch(launchCommandsSrc, /Raw secrets stay on the user's machine|The model sees placeholders and safe metadata, not raw sensitive values/);
+        assert.match(launchCommandsSrc, /Preview Managed AI Context/);
         assert.match(launchCommandsSrc, /No API keys, prompts, secrets, or raw file contents are included in this privacy report/);
     });
 
-    it("README gives a marketplace-grade local privacy proof", () => {
+    it("README separates local scanning from provider egress and incomplete custody", () => {
         assert.match(readmeSrc, /What Leaves Your Machine\?/);
         assert.match(readmeSrc, /Raw API keys, tokens, private keys, `\.env` values/);
-        assert.match(readmeSrc, /Never sent by default; secret broker uses scoped references/);
+        assert.match(readmeSrc, /unmarked private text can remain/i);
+        assert.match(readmeSrc, /provider traffic can leave the machine/);
+        assert.match(readmeSrc, /G1–G6 remain UNTESTED and the full claim is BLOCKED/);
+        assert.doesNotMatch(readmeSrc, /Never sent by default; secret broker uses scoped references|does\s+not make network calls/);
         assert.match(readmeSrc, /SoterAI: Local Privacy Status/);
         assert.match(readmeSrc, /no API keys, prompts, secrets, raw files, private keys, database URLs, or PII/);
     });

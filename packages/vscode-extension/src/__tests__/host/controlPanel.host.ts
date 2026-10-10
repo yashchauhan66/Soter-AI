@@ -441,7 +441,7 @@ export function run(): Promise<void> {
                 const config = vscode.workspace.getConfiguration("soterai");
                 assert.strictEqual(config.get("broker.openAIProviderUrl"), "");
                 assert.strictEqual(config.get("broker.anthropicProviderUrl"), "");
-                assert.match(panel.html, /One-click IDE protection/);
+                assert.match(panel.html, /One-click managed setup/);
                 const stages: Array<{ stage: string; status: string }> = [];
                 try {
                     const result = await vscode.commands.executeCommand<{ status: string; summary: string }>("soterai.enableAutomaticIDEProtection", (update: { stage: string; status: string }) => stages.push(update));

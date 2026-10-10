@@ -1,0 +1,101 @@
+﻿{
+    "runId":  "S2-properties-20261010T053834Z-a8a8649c823045f48c915a6bfb53b7bd",
+    "stage":  "S2",
+    "startedUtc":  "2026-10-10T05:38:34.5844543Z",
+    "finishedUtc":  "2026-10-10T05:38:36.5940421Z",
+    "osBuild":  "26300.8935",
+    "osBuildProvenance":  "Root S0 reported Windows 11 Home Insider Preview; not remeasured by this test subagent",
+    "command":  "node --import tsx --test packages/vscode-extension/src/__tests__/policy-properties.test.ts apps/local-ai-broker/src/__tests__/token-absence-regression.test.ts",
+    "nodeVersion":  "v22.16.0",
+    "exitCode":  0,
+    "classification":  "PASS",
+    "totals":  {
+                   "tests":  19,
+                   "suites":  0,
+                   "pass":  19,
+                   "fail":  0,
+                   "cancelled":  0,
+                   "skipped":  0,
+                   "todo":  0
+               },
+    "sourceHashesStableDuringRun":  true,
+    "scope":  "Fixed-seed bounded parser properties and synthetic token file mechanics/startup helper with metadata adapters; no real profile/token/ACL inspection, no host/probes",
+    "flags":  "Credential startup factory enabled=true/false tested; no runtime flag/environment configuration changed; metadata adapter avoids actual Windows ACL inspector",
+    "fullArchitecture":  "A01-A30 full assertions remain UNTESTED",
+    "previousIncompleteRun":  {
+                                  "runId":  "S2-properties-20261010T053223Z-b70e5059b95e454d8282e756143d23c2",
+                                  "classification":  "INCOMPLETE",
+                                  "exactError":  "spawn EPERM",
+                                  "note":  "Two file-level runner failures before test bodies; not two failed security assertions"
+                              },
+    "earlierScopedPassRun":  "S2-properties-20261010T053425Z-a1080654470541039b20e6a95e55c1bb",
+    "hashesBefore":  [
+                         {
+                             "path":  "packages/vscode-extension/src/__tests__/policy-properties.test.ts",
+                             "sha256":  "b96f3d584fe2a2ab957e0468f893828977210d30abcf246748cb69bb1a95c210"
+                         },
+                         {
+                             "path":  "apps/local-ai-broker/src/__tests__/token-absence-regression.test.ts",
+                             "sha256":  "285945d9b31c06fa549db8e7a4cb08387b80b8ed31bc7c177c6382718eb98cfa"
+                         },
+                         {
+                             "path":  "packages/vscode-extension/src/ai-boundary/policy.ts",
+                             "sha256":  "e9f50c5caa50ddc4be9f8496f77b7f49695e99ee72c39b77dbcf86b4c02fff61"
+                         },
+                         {
+                             "path":  "packages/guard-core/src/ProjectPolicy.ts",
+                             "sha256":  "9fc46fd4dd423f10edf8558b9f9b088109a63f55dafbf8feb5ad305a139903d3"
+                         },
+                         {
+                             "path":  "apps/local-ai-broker/src/auth.ts",
+                             "sha256":  "b1e8dc80336e1864ac2b359102a7ab6ef350514b5da5737b4757aa763cc9fd54"
+                         },
+                         {
+                             "path":  "apps/local-ai-broker/src/WindowsAcl.ts",
+                             "sha256":  "895a009fe428d5301f617c1db62e801c5aaa8dc1b14d72ca8d3ffe08cfac2210"
+                         },
+                         {
+                             "path":  "apps/local-ai-broker/src/cli.ts",
+                             "sha256":  "34f0f59ee23841ae0589c2811057f89666208fbfbe3a4e16cea29c0c3679234a"
+                         },
+                         {
+                             "path":  "node_modules/tsx/dist/cli.mjs",
+                             "sha256":  "5d5b2a9f9cf4d6a8b44326b676417e00b42ad04037ed173b7af82ea8146a4fc0"
+                         }
+                     ],
+    "hashesAfter":  [
+                        {
+                            "path":  "packages/vscode-extension/src/__tests__/policy-properties.test.ts",
+                            "sha256":  "b96f3d584fe2a2ab957e0468f893828977210d30abcf246748cb69bb1a95c210"
+                        },
+                        {
+                            "path":  "apps/local-ai-broker/src/__tests__/token-absence-regression.test.ts",
+                            "sha256":  "285945d9b31c06fa549db8e7a4cb08387b80b8ed31bc7c177c6382718eb98cfa"
+                        },
+                        {
+                            "path":  "packages/vscode-extension/src/ai-boundary/policy.ts",
+                            "sha256":  "e9f50c5caa50ddc4be9f8496f77b7f49695e99ee72c39b77dbcf86b4c02fff61"
+                        },
+                        {
+                            "path":  "packages/guard-core/src/ProjectPolicy.ts",
+                            "sha256":  "9fc46fd4dd423f10edf8558b9f9b088109a63f55dafbf8feb5ad305a139903d3"
+                        },
+                        {
+                            "path":  "apps/local-ai-broker/src/auth.ts",
+                            "sha256":  "b1e8dc80336e1864ac2b359102a7ab6ef350514b5da5737b4757aa763cc9fd54"
+                        },
+                        {
+                            "path":  "apps/local-ai-broker/src/WindowsAcl.ts",
+                            "sha256":  "895a009fe428d5301f617c1db62e801c5aaa8dc1b14d72ca8d3ffe08cfac2210"
+                        },
+                        {
+                            "path":  "apps/local-ai-broker/src/cli.ts",
+                            "sha256":  "34f0f59ee23841ae0589c2811057f89666208fbfbe3a4e16cea29c0c3679234a"
+                        },
+                        {
+                            "path":  "node_modules/tsx/dist/cli.mjs",
+                            "sha256":  "5d5b2a9f9cf4d6a8b44326b676417e00b42ad04037ed173b7af82ea8146a4fc0"
+                        }
+                    ],
+    "rawLogSha256":  "40e2b726b2a6825522f73a9829959b742625fd77e31fcf485355a3887c5154b5"
+}

@@ -58,6 +58,8 @@ const refs = new SecretReferenceManager(valueStore, { enabled: () => valueStore.
 const policy = new SensitiveContextPolicyEngine(DEFAULT_SENSITIVE_CONTEXT_POLICY);
 
 const outputFilter = new OutputFilter();
+let releaseGuard: () => boolean = () => true;
+export function setCapabilityReleaseGuard(enabled: () => boolean): void { releaseGuard = enabled; }
 
 export const secretBrokerRuntime = {
     refs,
@@ -65,7 +67,7 @@ export const secretBrokerRuntime = {
     redactor: new SensitiveContextRedactor(refs, policy),
     broker: new CapabilityBroker(refs, policy),
     outputFilter,
-    enforcedApi: new EnforcedApiCapabilityBroker(refs, outputFilter),
+    enforcedApi: new EnforcedApiCapabilityBroker(refs, outputFilter, { releaseGuardEnabled: () => releaseGuard() }),
 };
 
 /** Activation recovery runs before a new reference can persist or read values. */

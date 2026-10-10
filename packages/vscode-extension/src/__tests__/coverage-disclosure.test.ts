@@ -1,3 +1,4 @@
+import "./phase2/register.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { COVERAGE_DISCLOSURE, operationalCoverage } from "../security/CoverageDisclosure";

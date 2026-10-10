@@ -1,6 +1,8 @@
 # SoterAI IDE Guard — Safer AI Coding, Local by Default
 
-**Protect secrets, prompts, agent tools, terminal commands, and AI coding context before they become security incidents — in the editor you already use.**
+**Local secret and prompt checks for SoterAI-managed context and broker requests — in the editor you already use.**
+
+**Covers:** accepted context exclusions, recognized-value redaction and requests actually routed through SoterAI. **Does not cover:** native agents, same-user filesystem/process access, other extensions, original buffers/tabs, OS clipboard/capture or independent network traffic. Setup and smoke checks are operational evidence; selected-architecture **G1–G6 remain UNTESTED and the full claim is BLOCKED**.
 
 <p>
   <img src="https://img.shields.io/badge/LOCAL--FIRST-Enabled-F96403?style=for-the-badge" alt="Local-first protection" />
@@ -93,7 +95,9 @@ no account, cloud connection, or provider API key.
 See active controls, request checking, editor warnings, known gaps, and the
 current data boundary without leaving your editor.
 
-![SoterAI Control Panel showing five active controls, active request checking, local data boundary, and zero known gaps in the detected workspace state](https://soterai.in/marketplace/screenshots/control-panel-protection.png)
+![Historical synthetic Control Panel capture showing configured managed controls](https://soterai.in/marketplace/screenshots/control-panel-protection.png)
+
+The historical screenshot is interface evidence, not current agent-routing or G1–G6 verification. Review the current scope notice and operational status.
 
 ## Know your protection at a glance
 
@@ -129,13 +133,13 @@ Real extension-host captures using test data only.
 
 ## Features
 
-- **Control Panel** - one sidebar view with instant-apply toggles for Safe Mode, Protected Workspace, Live Scan, Sentinel, and the MCP firewall, plus Emergency Lockdown. A live **Data boundary** receipt says whether data stays local, cloud actions are available, or optional redacted metadata is enabled. Every coverage badge is resolved from the capability registry — a protection is only labelled `ENFORCED` when it is actually broker-gated, otherwise `MONITORED`.
-- **Secure My AI (one click)** - finds the AI tools already installed (Cline, Claude Code, Copilot, Continue, Aider, and generic `.env` / shell profiles) and routes them through the local broker so prompts are scanned before they leave. Every rewritten file is backed up first, encrypted, outside your workspace — and `SoterAI: Undo AI Tool Security Changes` puts every original back in one click.
+- **Control Panel** - one sidebar for managed request checks, context exclusions, diagnostics, monitoring, MCP configuration review and scoped lockdown. The privacy receipt describes SoterAI cloud features separately from provider traffic. Capability badges describe named managed paths; current status does not establish independent agent routing or G1–G6 verification.
+- **Secure My AI (one click)** - discovers known configuration candidates for clients such as Cline, Claude Code, Continue and Aider, then reviews supported routing changes. Copilot's direct content and traffic cannot be rerouted or observed by this integration. Approved rewrites receive encrypted backups outside the workspace; restore commands recover those originals. Broker smoke checks do not verify third-party clients' actual requests.
 - **Scan Current File / Selection / Workspace** - detect leaked secrets, PII, prompt injection, unsafe instructions, and risky patterns with a redacted report.
 - **Live inline scanning + Quick Fixes** - supported files are scanned as you type; findings appear as native diagnostics with lightbulb fixes (redact in place, copy a safe version of the line, move secrets to the vault).
-- **Redact Selection for AI** - copy a safe version of selected text before using it in an AI assistant. Raw secrets are not copied.
+- **Redact Selection for AI** - copy selected text with recognized sensitive values replaced. Review unmarked private information before sharing.
 - **Scan Before AI Prompt** - paste a prompt, scan it locally, and get an allow / redact / block verdict plus a safe prompt to copy.
-- **AI Egress Firewall** - one local choke point for anything you are about to send to an AI tool: `ALLOW` / `REDACT` / `ASK` / `BLOCK`, with a redacted copy offered when secrets are present. Re-runs the detectors over **de-obfuscated** variants (zero-width unicode, homoglyphs, leetspeak, letter-spacing, reversal, base64), so smuggled injection that slips past a single-pass regex still scores. Also destination-aware: content heading to a non-allowlisted host escalates, and secret-bearing content heading to a **vector database** is blocked outright because an embedded leak is durable, not transient.
+- **AI Egress Firewall** - a managed request policy checker with `ALLOW` / `REDACT` / `ASK` / `BLOCK` decisions, recognized-pattern checks over supported transformed variants and destination-aware rules. Only requests submitted to this checker are covered. It cannot force native processes or other extensions to use it, and it does not provide an OS network allowlist.
 - **Git pre-commit secret hook** - installs a hook that blocks a commit containing secrets. Refuses to install (with an explanation) when `core.hooksPath` is set by husky/lefthook rather than writing to a directory git ignores, and backs up any existing hook.
 - **Screen-share risk check** - warns when files that would expose secrets on a shared screen are open, matching on basename and on credential directories (`.ssh`, `.aws`, `.gnupg`, `.kube`, `.docker`) and key material.
 - **Scan Git Changes** - scan staged and unstaged diffs for secrets and sensitive files before commit.
@@ -143,21 +147,21 @@ Real extension-host captures using test data only.
 - **Review Selected AI Code** - surface likely vulnerabilities in AI-generated code inside a hardened webview.
 - **Local AI Broker** - authenticated loopback-only OpenAI/Anthropic-compatible routing with request/response scanning, redaction, canary blocking, and **SSE streaming** (`stream: true`) with scan-before-forward output protection.
 - **Bounded local protocols** - broker JSON responses and MCP stdio frames are capped at 1 MiB. Oversized MCP frames are discarded through their newline so later valid checks remain synchronized.
-- **Secret Broker** - replaces raw secrets with scoped `soterai://secret/...` references so AI sees structure and approved operations, not values.
+- **Secret Broker** - replaces recognized values with scoped `soterai://secret/...` references on managed context paths. Same-user access to local credentials and unmarked private text remain outside that transformation.
 - **AI Safe Mode** - Developer, Strict, and Enterprise protection overlays for SoterAI-routed workflows.
 - **AI Memory Inspector** - hashes, decisions, redacted evidence, and file metadata showing what SoterAI brokered or built for AI.
-- **Security Dashboard** - risk score, latest findings, privacy mode, policy status, and local secret privacy proof.
+- **Security Dashboard** - risk score, findings, privacy mode, policy status and the local handling model with its limits.
 
 ## Privacy & Security
 
 - **Local-first by default.** Detection, redaction, policy checks, and secret reference creation run locally in the extension host.
-- **No raw secrets leave the extension by default.** Reports, webviews, telemetry, logs, clipboard output, hash caches, broker records, and exported views are designed to avoid raw secret material.
-- **Secret broker privacy proof.** `SoterAI: Local Privacy Status`, `SoterAI: Preview What AI Will See`, and `SoterAI: What Stays Local?` explain what stays local without displaying raw secrets.
+- **Managed redaction has limits.** Recognized values and accepted protected sources are filtered on managed paths. Unmarked private information can remain in candidate output; this does not control another tool's transmission.
+- **Local handling and scope.** `SoterAI: Local Privacy Status`, `SoterAI: Preview Managed AI Context`, and `SoterAI: What Stays Local?` describe configured handling and managed previews. They do not observe third-party model requests or prove complete confidentiality.
 - **Redacted, opt-in telemetry only.** Telemetry is off by default. When enabled, it uses minimized event metadata, not raw content or tokens.
 - **Opt-out purges pending metadata.** Turning SoterAI telemetry off, returning to local privacy mode, disabling cloud, or disabling editor telemetry immediately clears SoterAI's in-memory telemetry queue.
-- **Cloud tokens stay in VS Code SecretStorage.** Provider and cloud credentials are stored locally through VS Code's secret APIs and are never logged.
+- **Local credential storage.** Provider and cloud credentials use VS Code SecretStorage. Keeping ciphertext outside the workspace does not establish independent custody against same-user applications.
 - **Config backups are encrypted and kept out of your workspace.** When "Secure My AI" rewrites a config, the pre-rewrite copy is encrypted (AES-GCM, key in VS Code SecretStorage) and stored in the extension's global storage — never as a plaintext sibling file that `.gitignore` would miss. If the backup cannot be written, the rewrite does not happen.
-- **Repository settings have limited authority.** The 32 safety-relevant settings are `machine`-scoped and declared as restricted in untrusted workspaces. This limits repository overrides; it does not prevent an agent running as the same user from changing user settings or other execution paths.
+- **Repository settings have limited authority.** The 33 safety-relevant settings are `machine`-scoped and declared as restricted in untrusted workspaces. This limits repository overrides; it does not prevent an agent running as the same user from changing user settings or other execution paths.
 - **The packaged artifact is inspected, not assumed safe.** Release CI rejects unexpected source, tests, maps, logs, `.env` files, dependencies, duplicate/unsafe archive paths, missing runtime bundles, and oversized archives. It records a SHA-256 and exact entry inventory, then generates a deterministic CycloneDX 1.6 SBOM with a SHA-256 component for every file that actually ships. Integrity evidence and the SBOM are not claimed to be a cryptographic signature.
 - **Broker ingress fails closed.** Request bodies are capped, declared oversize is rejected before reading, compressed and ambiguous framing is refused, and malformed UTF-8 is never replacement-decoded into apparently valid JSON.
 
@@ -165,11 +169,11 @@ Real extension-host captures using test data only.
 
 | Data | Local mode default | Cloud/hybrid with explicit setup |
 | --- | --- | --- |
-| Raw API keys, tokens, private keys, `.env` values | Never sent | Never sent by default; secret broker uses scoped references |
-| Raw file contents and prompts | Never sent | Redacted/minimized checks only unless you explicitly enable a trusted cloud feature |
+| Raw API keys, tokens, private keys, `.env` values | Recognized values are replaced on managed context paths; local components process raw input | Configured credential-use or provider paths have their own scopes; local mode is not a network prohibition |
+| Raw file contents and prompts | Local detector scanning; unmarked private text can remain in output | Reviewed cloud submissions and configured provider requests may transmit content |
 | Telemetry | Off | Redacted metadata only, controlled by `soterai.telemetry.redactedEvents` |
-| Vaulted secrets | Stored locally through VS Code `SecretStorage` / encrypted vault | Not uploaded by SoterAI IDE Guard |
-| AI context | Redacted text, hashes, metadata, and secret references | Same local-first contract unless a trusted cloud feature is explicitly configured |
+| Vaulted secrets | Local ciphertext and VS Code SecretStorage; same-user custody is not isolated | Approved broker credential use has a separate route; independent tools remain outside coverage |
+| AI context | Accepted exclusions and recognized-value redaction | Broker/provider traffic can leave the machine regardless of detector privacy mode |
 
 Use `SoterAI: Local Privacy Status` anytime to show a user-safe report that contains no API keys, prompts, secrets, raw files, private keys, database URLs, or PII.
 
@@ -192,10 +196,10 @@ Local scanning always works. Cloud, token, and remote features are gated behind 
 | `SoterAI: Open Control Panel` | The single screen: every protection toggle, honest coverage badges, and Emergency Lockdown. |
 | `SoterAI: Quick Start` | Choose a value-first next step: demo scan, workspace secret protection, AI-tool routing, or the local privacy promise. |
 | `SoterAI: Check Extension Health` | Show version, privacy mode, token configured yes/no, workspace trust, policy status, and last scan without secrets. |
-| `SoterAI: Local Privacy Status` | Show the local-only privacy proof without raw secrets, prompts, files, or PII. |
+| `SoterAI: Local Privacy Status` | Show configured handling metadata and its limits, without including user secret values. |
 | `SoterAI: What Stays Local?` | Explain exactly what SoterAI does not receive by default. |
-| `SoterAI: Preview What AI Will See` | Show the redacted AI context before copying or sending it. |
-| `SoterAI: Build Safe Prompt for AI` | Convert sensitive context into a safe prompt with secret references. |
+| `SoterAI: Preview Managed AI Context` | Show a managed context candidate; review unmarked private text before sharing. |
+| `SoterAI: Build Safe Prompt for AI` | Build a candidate prompt with recognized-value redaction; review unmarked private text before sharing. |
 | `SoterAI: Open Settings` | Open VS Code settings filtered to SoterAI. |
 | `SoterAI: Run Safe Demo Scan` | Run a safe local demo against fake risky text. |
 | `SoterAI: Scan Selection` | Scan selected prompt/text before sending it to an AI assistant. |
@@ -297,8 +301,9 @@ agent prompt/config files. Binary files and oversized files are skipped.
 
 Cloud and broker provider tokens are stored with VS Code `SecretStorage`. Use
 `SoterAI: Connect to SoterAI Cloud` or the broker configuration commands only
-in trusted workspaces. Local privacy mode does not require an API key and does
-not make network calls.
+in trusted workspaces. Local detector scans do not require an API key or cloud
+scan connection. Configured provider requests and separately approved OSV
+advisory lookups can use the network.
 
 ## Troubleshooting
 
@@ -319,6 +324,8 @@ not make network calls.
 - Full cloud telemetry submission is disabled until a reviewed endpoint client is added.
 - SoterAI Guard is not a replacement for professional security review, secure SDLC, or incident response.
 - Universal claims (full terminal/MCP/network enforcement for arbitrary agents) are **UNSUPPORTED** without an OS-level broker/sandbox.
+- OS controls must also be deployed and verified for the exact identity, routes and lifecycle. The selected architecture is not deployed; the full G1–G6 claim remains **BLOCKED**, not certified by setup, encryption, a modal or a synthetic check.
+- `soterai.hardening.coverageDisclosure=false` withdraws automatic, direct managed-control and routing setup before new changes; it does not hide limitations or restore an unsafe fallback. Cancelling the initial disclosure makes no setup changes. Later routing cancellation retains already configured controls, which are still scoped and unverified.
 
 
 ## Development

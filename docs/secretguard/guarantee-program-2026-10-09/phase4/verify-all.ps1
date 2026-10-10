@@ -1,8 +1,11 @@
-<# User-owned verification wrapper. Default: checks and compile only. -RunHost requires closed VS Code.
+<# User-owned verification wrapper. Default: checks and compile only. Concurrent isolated host requires an explicit switch.
 Existing harness observations are not independent G1-G6 security grading. No normal profile is used.
 #>
 param(
     [switch]$RunHost,
+    [switch]$AllowConcurrentIsolatedHost,
+    [switch]$ExpandedDependencyChecks=$true,
+    [switch]$NoProcessTermination=$true,
     [string]$CodePath,
     [ValidateSet('Both','SecurityReview','NativeBaseline')][string]$HostHarness='Both',
     [string]$OutputRoot,
@@ -11,6 +14,8 @@ param(
 $ErrorActionPreference='Stop'
 $wrapperSourceSha256=(Get-FileHash -LiteralPath $PSCommandPath).Hash.ToLowerInvariant()
 $repoRoot=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../../..'))
+if (!$ExpandedDependencyChecks) { throw 'Verification unavailable while dependency checks are disabled; stale dependency builds are not a fallback.' }
+if (!$NoProcessTermination) { throw 'Host process termination is unavailable. This wrapper does not close or kill Code.exe.' }
 if ($DisableUniqueEvidence) { throw 'Unique recording disabled; verification unavailable.' }
 if (!$OutputRoot) { $OutputRoot=Join-Path $PSScriptRoot 'evidence/user-verification' }
 $OutputRoot=[IO.Path]::GetFullPath($OutputRoot)
@@ -23,7 +28,7 @@ while ($cursor -and $cursor.Length -gt $repoRoot.Length) {
 if ($RunHost) {
     if (!$CodePath -or !(Test-Path -LiteralPath $CodePath -PathType Leaf)) { throw 'Provide an existing isolated test Code.exe via -CodePath.' }
     $CodePath=[IO.Path]::GetFullPath($CodePath)
-    if (Get-Process -Name Code -ErrorAction SilentlyContinue) { throw 'Close VS Code first. This wrapper never closes another process or uses its profile.' }
+    if ((Get-Process -Name Code -ErrorAction SilentlyContinue) -and !$AllowConcurrentIsolatedHost) { throw 'Existing Code.exe detected; default host launch refused. Optional AllowConcurrentIsolatedHost uses a separate synthetic profile; no process will be closed or killed.' }
 }
 $runId='verify-'+[DateTime]::UtcNow.ToString('yyyyMMddTHHmmssZ')+'-'+[Guid]::NewGuid().ToString('N')
 $runRoot=Join-Path $OutputRoot $runId
@@ -62,9 +67,11 @@ try {
     $env:SOTERAI_TEST_RESULTS_DIR=Join-Path $runRoot 'diagnostic-results';$env:SOTERAI_P2_NONCE='synthetic-'+$runId
     Push-Location $repoRoot
     try {
-        foreach ($package in @('apps/local-ai-broker','packages/vscode-extension')) {
-            $prefix=if ($package -like 'apps/*') {'broker'} else {'extension'}
+        foreach ($package in @('packages/guard-core','packages/ide-protocol','packages/detectors','apps/local-ai-broker','packages/vscode-extension')) {
+            $prefix=switch ($package) { 'apps/local-ai-broker' {'broker'} 'packages/vscode-extension' {'extension'} default {Split-Path -Leaf $package} }
+            $packageMetadata=Get-Content -LiteralPath (Join-Path $repoRoot ($package+'/package.json')) -Raw | ConvertFrom-Json
             foreach ($task in @('typecheck','build','test')) {
+                if (!$packageMetadata.scripts.PSObject.Properties[$task]) { continue }
                 if ($task -eq 'test') {
                     # Same existing suite, two file workers: avoid the observed default-concurrency memory failures.
                     $code=Invoke-Recorded ($prefix+'-'+$task) 'node.exe' @('--import','tsx','--test','--test-concurrency=2','src/__tests__/**/*.test.ts') (Join-Path $repoRoot $package)
@@ -126,7 +133,7 @@ try {
             $process=[Diagnostics.Process]::new();$process.StartInfo=$start
             try {
                 [void]$process.Start();$stdout=$process.StandardOutput.ReadToEndAsync();$stderr=$process.StandardError.ReadToEndAsync()
-                if (!$process.WaitForExit(60000)) { $process.Kill();$failures+='NativeBaseline host timeout; no PASS.' }
+                if (!$process.WaitForExit(60000)) { $failures+='NativeBaseline host timeout; no PASS. Process retained; no close or kill attempted.' }
                 [void]$process.WaitForExit(5000)
                 $stdoutText=if($stdout.IsCompleted){$stdout.GetAwaiter().GetResult()}else{'INCOMPLETE: stdout drain did not finish.'}
                 $stderrText=if($stderr.IsCompleted){$stderr.GetAwaiter().GetResult()}else{'INCOMPLETE: stderr drain did not finish.'}
@@ -149,7 +156,8 @@ finally {
         try { $diagnosticFindings=@(Get-Content -LiteralPath $diagnosticFile | ForEach-Object { $_|ConvertFrom-Json } | Where-Object { $_.status -in @('FAIL','SKIP','ERROR') } | ForEach-Object { @{id=$_.id;status=$_.status} }) }
         catch { $failures+='Diagnostic parsing INCOMPLETE: '+$_.Exception.Message }
     }
-    $summary=@{schemaVersion=1;runId=$runId;atUtc=[DateTime]::UtcNow.ToString('o');wrapperSha256=$wrapperSourceSha256;scratchPath=$scratchRoot;fileWorkers=2;runHostRequested=[bool]$RunHost;commands=$results;harnesses=$harnesses;failures=$failures;diagnosticFindings=$diagnosticFindings;architecture='UNTESTED';independentVerification='NOT_PERFORMED';sameUserAuthority='OUTSIDE_COVERAGE';limitation='Command success is not confidentiality success. Read observation files; preserve failures.'}
+    $osIdentity=Get-ItemProperty -LiteralPath 'HKLM:/SOFTWARE/Microsoft/Windows NT/CurrentVersion'
+    $summary=@{schemaVersion=2;runId=$runId;atUtc=[DateTime]::UtcNow.ToString('o');exactOsBuild=($osIdentity.CurrentBuild+'.'+$osIdentity.UBR);wrapperSha256=$wrapperSourceSha256;scratchPath=$scratchRoot;fileWorkers=2;runHostRequested=[bool]$RunHost;allowConcurrentIsolatedHost=[bool]$AllowConcurrentIsolatedHost;expandedDependencyChecks=[bool]$ExpandedDependencyChecks;noProcessTermination=[bool]$NoProcessTermination;commands=$results;harnesses=$harnesses;failures=$failures;diagnosticFindings=$diagnosticFindings;architecture='UNTESTED';independentVerification='NOT_PERFORMED';sameUserAuthority='OUTSIDE_COVERAGE';limitation='Command success is not confidentiality success. Read observation files; preserve failures.'}
     Write-NewText (Join-Path $runRoot 'summary.json') ($summary|ConvertTo-Json -Depth 10)
     $hashes=@(Get-ChildItem -LiteralPath $runRoot -Recurse -File | Where-Object { $_.FullName -notmatch '[\\/]tmp[\\/]' } | ForEach-Object { (Get-FileHash -LiteralPath $_.FullName).Hash.ToLowerInvariant()+'  '+$_.FullName.Substring($runRoot.Length+1).Replace('\','/') })
     foreach($bundle in @('extension.js','local-ai-broker.js','soterai-mcp-server.js')) { $p=Join-Path $repoRoot ('packages/vscode-extension/dist/'+$bundle);if(Test-Path -LiteralPath $p){$hashes+=(Get-FileHash -LiteralPath $p).Hash.ToLowerInvariant()+'  loaded-candidate/'+$bundle} }

@@ -100,10 +100,17 @@ export class EnforcedApiCapabilityBroker {
     constructor(
         private readonly refs: SecretReferenceManager,
         private readonly outputFilter = new OutputFilter(),
+        private readonly options: { releaseGuardEnabled?: boolean | (() => boolean) } = {},
     ) {}
+
+    private releaseGuardEnabled(): boolean {
+        const enabled = this.options.releaseGuardEnabled;
+        return typeof enabled === "function" ? enabled() : enabled !== false;
+    }
 
     /** Issue a scoped, revocable, non-secret capability handle. */
     grant(input: CapabilityGrantInput): CapabilityGrant {
+        if (!this.releaseGuardEnabled()) throw new Error("Capability operations unavailable while the release guard is disabled");
         if (!Number.isSafeInteger(input.ttlMs) || input.ttlMs < 1 || input.ttlMs > 300_000
             || !Number.isSafeInteger(input.maxUses ?? 1) || (input.maxUses ?? 1) < 1 || (input.maxUses ?? 1) > 1000) {
             throw new Error("Capability lifetime and use limit must be bounded positive integers");
@@ -194,9 +201,10 @@ export class EnforcedApiCapabilityBroker {
         });
 
         if (!grant) return { allowed: false, reason: "unknown capability handle", audit: audit("blocked", "unknown", "unknown capability handle") };
+        if (!this.releaseGuardEnabled()) return this.block(grant, audit, "capability operations unavailable while the release guard is disabled");
         if (grant.workspace !== input.workspace) return this.block(grant, audit, "workspace mismatch");
         if (grant.revoked) return this.block(grant, audit, "capability revoked");
-        if (Date.now() > grant.expiresAt) return this.block(grant, audit, "capability expired");
+        if (Date.now() >= grant.expiresAt) return this.block(grant, audit, "capability expired");
         if (grant.useCount >= grant.maxUses) return this.block(grant, audit, "capability use limit reached");
 
         // Claim the use synchronously BEFORE any await → replay-resistant.
@@ -219,7 +227,7 @@ export class EnforcedApiCapabilityBroker {
 
         const record = await this.refs.lookup(grant.secretRef, grant.workspace, grant.operation);
         if (!record) return this.block(grant, audit, "secret reference expired, revoked, or out of scope");
-        if (grant.revoked || Date.now() >= grant.expiresAt) return this.block(grant, audit, "capability revoked or expired during lookup");
+        if (!this.releaseGuardEnabled() || grant.revoked || Date.now() >= grant.expiresAt) return this.block(grant, audit, "capability revoked or expired during lookup");
 
         // Inject the credential LOCALLY, only now, only for this request.
         const headerName = (grant.scope.header ?? "authorization").toLowerCase();
@@ -232,6 +240,12 @@ export class EnforcedApiCapabilityBroker {
             return this.block(grant, audit, "transport error");
         }
 
+        // A completed request is not permission to release its result after revocation.
+        // This does not recall the credential already supplied to the approved transport.
+        const current = await this.refs.lookup(grant.secretRef, grant.workspace, grant.operation);
+        if (!this.releaseGuardEnabled() || !current || current.value !== record.value || grant.revoked || Date.now() >= grant.expiresAt) {
+            return this.block(grant, audit, "capability or reference revoked or expired before response release");
+        }
         // Scan the response so a service cannot echo the secret back into AI context.
         const filtered = this.outputFilter.filter(response.body, [record.value]);
         const scrubbed = filtered.reason === "secret_like_output_redacted";

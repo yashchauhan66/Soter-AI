@@ -19,9 +19,9 @@ import {
 } from "@soterai/guard-core";
 
 export type ProtectionLevel =
-    /** SoterAI controls the relevant path and technically prevented plaintext exposure. */
+    /** A scoped managed path applies enforcement when requests use that path. */
     | "ENFORCED"
-    /** A reproducible test or local evidence proves the protected transformation for this event. */
+    /** A named scoped check passed; this does not establish architecture coverage. */
     | "VERIFIED"
     /** SoterAI removed/tokenized detected sensitive values but cannot prove control over every path. */
     | "REDACTED"
@@ -47,13 +47,13 @@ export const PROTECTION: Record<ProtectionLevel, ProtectionDescriptor> = {
         level: "ENFORCED",
         icon: "shield",
         label: "Enforced",
-        meaning: "SoterAI controls this path and technically prevented plaintext exposure.",
+        meaning: "This capability applies checks on its SoterAI-managed path. Current routing, event outcomes and architecture verification require separate evidence.",
     },
     VERIFIED: {
         level: "VERIFIED",
         icon: "verified-filled",
-        label: "Verified protected",
-        meaning: "A reproducible local test proved the protected transformation for this event.",
+        label: "Scoped check passed",
+        meaning: "A named local check passed for its exact event or synthetic adapter; selected-architecture guarantees remain UNTESTED.",
     },
     REDACTED: {
         level: "REDACTED",

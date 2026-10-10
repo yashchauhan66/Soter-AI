@@ -59,11 +59,18 @@ export interface CreateApprovalInput {
     scope: ApprovalScope;
     ttlMs?: number;
     now?: number;
+    /** Disabling the repair withdraws issuance instead of accepting unchecked grants. */
+    validityHardeningEnabled?: boolean;
 }
 
 export async function createApprovalGrant(input: CreateApprovalInput): Promise<ApprovalGrant> {
     const now = input.now ?? Date.now();
     const ttl = input.ttlMs ?? SCOPE_TTL_MS[input.scope];
+    if (input.validityHardeningEnabled === false) throw new Error("Approval issuance unavailable while validity hardening is disabled");
+    if (!Object.hasOwn(SCOPE_TTL_MS, input.scope) || !Number.isSafeInteger(now) || now < 0 || !Number.isSafeInteger(ttl) || ttl < 1
+        || ttl > SCOPE_TTL_MS.workspace || !Number.isSafeInteger(now + ttl)) {
+        throw new Error("Approval clock and lifetime must be bounded positive integers");
+    }
     const outcome = input.outcome ?? "approve";
     // Token binds the identity fields plus a nonce so it cannot be guessed from
     // the (hashed) content alone.
@@ -89,6 +96,7 @@ export interface VerifyApprovalInput {
     sessionId: string;
     contentHash: string;
     now?: number;
+    validityHardeningEnabled?: boolean;
 }
 
 /**
@@ -98,9 +106,13 @@ export interface VerifyApprovalInput {
  */
 export function isApprovalValid(grant: ApprovalGrant, input: VerifyApprovalInput): boolean {
     const now = input.now ?? Date.now();
+    if (input.validityHardeningEnabled === false || !Number.isSafeInteger(now)
+        || !Number.isSafeInteger(grant.createdAt) || !Number.isSafeInteger(grant.expiresAt)
+        || grant.createdAt < 0 || grant.expiresAt <= grant.createdAt
+        || grant.expiresAt - grant.createdAt > SCOPE_TTL_MS.workspace || now < grant.createdAt) return false;
     if (grant.outcome === "deny") return false;
     if (grant.consumed) return false;
-    if (now > grant.expiresAt) return false;
+    if (now >= grant.expiresAt) return false;
     if (grant.sessionId !== input.sessionId) return false;
     // Hard binding: an approval for one payload must never unlock a different one.
     if (grant.contentHash !== input.contentHash) return false;
@@ -118,7 +130,7 @@ function toView(g: ApprovalGrant, now: number): ApprovalGrantView {
         createdAt: g.createdAt,
         expiresAt: g.expiresAt,
         consumed: g.consumed,
-        expired: now > g.expiresAt,
+        expired: !Number.isSafeInteger(now) || !Number.isSafeInteger(g.expiresAt) || now >= g.expiresAt,
     };
 }
 
@@ -159,7 +171,7 @@ export class ApprovalStore {
     prune(now = Date.now()): number {
         let n = 0;
         for (const [id, g] of this.grants) {
-            if (now > g.expiresAt || (g.scope === "once" && g.consumed)) {
+            if (!Number.isSafeInteger(g.expiresAt) || now >= g.expiresAt || (g.scope === "once" && g.consumed)) {
                 this.grants.delete(id);
                 n++;
             }

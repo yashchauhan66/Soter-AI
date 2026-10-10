@@ -1,7 +1,9 @@
 # Protected Secret Vault
 
-The vault's job: **remove raw secrets from normal workspace files** so a local
-AI assistant reading those files sees placeholders, not credentials.
+The vault moves reviewed recognized values out of changed workspace files and
+replaces those values with placeholders. This reduces accidental exposure in
+those versions of those files. It does not isolate keys or plaintext from the
+same-user adversary, other copies, history, open buffers or runtime injection.
 
 ## How it works
 
@@ -9,7 +11,7 @@ AI assistant reading those files sees placeholders, not credentials.
    file, previews the secrets it will move (values shown masked), and asks for
    an explicit modal confirmation.
 2. On confirm, it:
-   - writes a `<file>.bak` backup **before** any change,
+   - writes an encrypted backup outside the workspace **before** any change,
    - replaces each raw value with a placeholder `[SOTERAI_PROTECTED_<KEY>]`,
    - stores the real value **encrypted** in the vault.
 
@@ -26,30 +28,36 @@ OPENAI_API_KEY=[SOTERAI_PROTECTED_OPENAI_API_KEY]
 ## Where secrets live
 
 - **Encrypted vault file:** `globalStorageUri/soterai-vault.enc` — **outside the
-  workspace**, so other extensions walking the workspace never see it.
+  workspace**. Workspace relocation is not an OS access-control boundary.
 - **Encryption:** AES-256-GCM. The key is generated once and stored in VS Code
   **SecretStorage**, separate from the vault file.
-- **Metadata** (id, key, type, original file, placeholder, createdAt, **hash
-  only**) is all that is ever displayed. Raw values are never shown in the
-  webview, logs, telemetry, ledger, or exports.
+- **Status metadata** includes id, key, type, original file, placeholder,
+  creation time and hash. Supported vault views use masked values/metadata;
+  this does not prove absence of raw values in every process or storage path.
 
 ## Other commands
 
 - **Restore Secret Placeholders** — reverses the migration for a file (writes a
-  `.bak` first, requires confirmation).
+  fresh encrypted backup outside the workspace first, requires confirmation).
+  Restoring writes plaintext to the destination file again.
 - **Open Protected Vault Status** — lists vaulted entries by hash/metadata only.
 - **Generate .env.example Safely** — emits keys with `<type>` hints, no values.
 
 ## Backup / restore warning
 
-Migration and restore both write a `<file>.bak` before overwriting. Keep those
-backups until you have verified the vault works for your project. Do **not**
-commit `.bak` files, the vault, or `.soterai/canary.env` — add them to
-`.gitignore`.
+Migration and restore write encrypted backups under extension global storage
+before overwriting. Existing historical plaintext `.bak` files are not removed
+by that operation and remain a separate exposure. Do not commit recovery
+artifacts or real secret material. Ignoring a file in Git does not stop another
+process reading it.
 
 ## Honest scope
 
-The vault protects files you migrate. Files you have **not** migrated remain
-readable by other extensions. This is a defense against *accidental* exposure,
-not an OS-level access control. See
+The vault transforms selected values; it does not protect every asset under the
+same-user threat model. Credential use, key custody, copies/history, UI access
+and lifecycle durability remain separately **UNTESTED**. Full G1–G6 stays
+**BLOCKED**, and separate-account deployment stays **DEFERRED**. See
 [ide-guard-limitations.md](ide-guard-limitations.md).
+
+Source review: [VaultManager](../packages/vscode-extension/src/firewall/VaultManager.ts),
+2026-10-10. No vault/credential values were inspected for this document.

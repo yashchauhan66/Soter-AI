@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { ExtensionState } from "./state";
 import { registerCommands } from "./commands";
+import { operationalCoverage, reviewCoverageForSetup } from "./security/CoverageDisclosure";
 import { registerFirewallCommands, readContextApproval } from "./firewall/commands";
 import { secretBrokerRuntime } from "./secret-broker/runtime";
 import { setProtectedFileChecker } from "./firewall/ContextGatherer";
@@ -299,7 +300,7 @@ export function activate(context: vscode.ExtensionContext): void {
                     vscode.window.showInformationMessage(
                         `[SoterAI] ${count} secret(s) migrated to encrypted vault. ` +
                             `"${vscode.workspace.asRelativePath(target)}" now contains placeholders on disk — ` +
-                            "all AI agents (including CLI tools) see only placeholders.",
+                            "Reviewed values in this changed file use placeholders. History, buffers, other copies and same-user credential access remain outside this migration; selected-architecture guarantees are UNTESTED.",
                     );
                     refreshViews();
                 }
@@ -340,23 +341,23 @@ export function activate(context: vscode.ExtensionContext): void {
     });
     context.subscriptions.push(
         vscode.commands.registerCommand("soterai.enableAutomaticIDEProtection", async (listener?: unknown) => {
-            return vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: "SoterAI: Automatic IDE protection", cancellable: false }, async (progress) => {
+            return vscode.window.withProgress({ location: vscode.ProgressLocation.Notification, title: "SoterAI: Managed setup", cancellable: false }, async (progress) => {
                 return automaticProtection.run((update: SetupProgress) => {
-                    progress.report({ message: update.stage === "controls" ? "Enabling local controls" : update.stage === "routing" ? "Reviewing supported AI routes" : "Verifying protection" });
+                    progress.report({ message: update.stage === "controls" ? "Enabling local controls" : update.stage === "routing" ? "Reviewing supported AI routes" : "Checking managed setup status" });
                     if (typeof listener === "function") listener(update);
                 });
             });
         }),
         vscode.commands.registerCommand("soterai.enableFullProtection", async () => {
             try {
+                if (!(await reviewCoverageForSetup())) return;
                 const result = await protectionController.enableFullProtection();
                 const limitationText = result.limitations.map((item) => `• ${item}`).join("\n");
-                vscode.window.showInformationMessage(`Full Protection configured: ${result.completed.length} steps verified. Coverage remains ${result.snapshot.descriptor.state}.`, "View Coverage").then((choice) => {
+                vscode.window.showInformationMessage(`Managed controls configured: ${result.completed.length} operational steps checked. ${operationalCoverage(result.snapshot.descriptor.state)}\n${limitationText}`, "View Coverage").then((choice) => {
                     if (choice === "View Coverage") void vscode.commands.executeCommand("soterai.showCoverageMatrix");
                 });
-                if (limitationText) void vscode.window.showWarningMessage(`Full Protection limitations (not universal):\n${limitationText}`);
             } catch (error) {
-                vscode.window.showErrorMessage(`Full Protection was not completed: ${error instanceof Error ? error.message : "unknown error"}`);
+                vscode.window.showErrorMessage(`Managed setup was not completed: ${error instanceof Error ? error.message : "unknown error"}`);
             }
         }),
         vscode.commands.registerCommand("soterai.unlockProtection", async () => {

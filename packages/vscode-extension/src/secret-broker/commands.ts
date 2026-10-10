@@ -4,7 +4,7 @@ import { hashContent, redactAIContext } from "@soterai/guard-core";
 import { applySelectionBoundary } from "../ai-boundary/BoundarySnapshot";
 import { EnforcedApiCapabilityBroker } from "./EnforcedApiCapability";
 import { buildSafeLLMContext } from "./LLMContext";
-import { secretBrokerRuntime, setSecretValueStore } from "./runtime";
+import { secretBrokerRuntime, setCapabilityReleaseGuard, setSecretValueStore } from "./runtime";
 import { SecretStorageValueStore } from "./SecretStorageValueStore";
 import { SensitiveContextPolicyEngine, type SensitiveContextPolicy } from "./SensitiveContextPolicy";
 import { SensitiveContextRedactor } from "./SensitiveContextRedactor";
@@ -32,6 +32,7 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
     // by deletion, without retrieving any value, before enabling new refs.
     // Unindexed legacy entries cannot be enumerated and remain a documented gap.
     const inventoryEnabled = () => vscode.workspace.getConfiguration("soterai").get<boolean>("hardening.secretInventory", true);
+    setCapabilityReleaseGuard(() => vscode.workspace.getConfiguration("soterai").get<boolean>("hardening.capabilityReleaseGuard", true));
     void setSecretValueStore(new SecretStorageValueStore(context.secrets, context.globalState), inventoryEnabled).catch(() => {
         void vscode.window.showWarningMessage("Secret reference recovery is incomplete. Reference operations are unavailable; no persistent values were read during recovery.");
     });
@@ -50,7 +51,7 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
         if (!policyForCurrentWorkspace().requiresApproval()) return true;
         const choice = await vscode.window.showWarningMessage(
             `Allow SoterAI to run the brokered operation "${operation}"? Purpose: ${purpose}. ` +
-                "The operation uses the secret locally and returns sanitized results only — the raw value is never shown or sent to AI.",
+                "The operation uses a managed secret reference and filters supported results. This ordinary editor confirmation is not agent-proof against same-user code.",
             { modal: true },
             "Allow Once",
         );
@@ -241,9 +242,11 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
             "Forbidden operations:",
             safeContext.forbiddenOperations.map((op) => `- ${op}`).join("\n"),
             "",
-            "Privacy proof:",
-            "- Raw secrets sent to AI: no",
-            "- Raw secrets sent to SoterAI: no by default",
+            "Managed redaction summary:",
+            "- Recognized sensitive values were replaced; unmarked private information may remain.",
+            "- This command copies a local candidate prompt; it does not observe any model transmission.",
+            "- Other tools' direct file, clipboard and network access is outside these checks.",
+            "- Selected-architecture guarantees remain UNTESTED.",
             "- Ledger stores raw prompt: no by default",
         ].join("\n");
         await vscode.env.clipboard.writeText(prompt);
@@ -257,8 +260,8 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
             blocked: result.blocked.map((secret) => secret.finding.type),
             policyReason: "safe prompt copied to clipboard",
         };
-        await audit("context_built", "redact", result.text, "safe AI prompt built without raw sensitive values");
-        showPreview("Safe prompt copied. AI gets the context, not the secret.");
+        await audit("context_built", "redact", result.text, "managed prompt candidate built with recognized-value redaction");
+        showPreview("Managed prompt copied locally. Review unmarked private information before sharing; no model transmission was observed.");
         refreshViews();
     }
 
@@ -298,7 +301,7 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
             "soteraiSecretBrokerDemo",
             "SoterAI: Secret Broker Demo",
             `<h1>Secret Broker Demo</h1>
-<p><span class="badge allow">Raw secrets sent to AI: no</span> <span class="badge allow">Raw secrets sent to SoterAI: no by default</span></p>
+<p>Synthetic in-process redaction example; no model or network transmission is performed. Selected-architecture guarantees remain UNTESTED.</p>
 <table>
 <tr><th>Detected</th><td>${escapeHtml(result.secrets.map((secret) => secret.finding.type).join(", "))}</td></tr>
 <tr><th>Secret refs created</th><td>${escapeHtml(String(lastPreview.refs.length))}</td></tr>
@@ -325,8 +328,9 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
             `<h1>Local Privacy Status</h1>
 <table>
 <tr><th>Privacy mode</th><td>${escapeHtml(privacyMode)}</td></tr>
-<tr><th>Raw secrets sent to SoterAI by default</th><td><span class="badge allow">no</span></td></tr>
-<tr><th>Raw secrets sent to AI by default</th><td><span class="badge allow">no</span></td></tr>
+<tr><th>Managed context handling</th><td>accepted exclusions and recognized-value redaction; unmarked private information may remain</td></tr>
+<tr><th>Other tools' model traffic</th><td>unobserved; independent file/network paths remain outside coverage</td></tr>
+<tr><th>Selected-architecture verification</th><td>UNTESTED; full G1-G6 claim BLOCKED</td></tr>
 <tr><th>Telemetry</th><td>${escapeHtml(telemetry)}</td></tr>
 <tr><th>Raw reveal enabled</th><td><span class="badge ${rawReveal ? "warn" : "allow"}">${rawReveal ? "yes" : "no"}</span></td></tr>
 <tr><th>Raw prompt audit enabled</th><td><span class="badge ${rawPromptAudit ? "warn" : "allow"}">${rawPromptAudit ? "yes" : "no"}</span></td></tr>
@@ -426,21 +430,21 @@ export function registerSecretBrokerCommands(context: vscode.ExtensionContext, r
 
         const row = (label: string, allowed: boolean, expectAllow: boolean) => {
             const good = allowed === expectAllow;
-            return `<tr><td>${escapeHtml(label)}</td><td><span class="badge ${allowed ? "allow" : "block"}">${allowed ? "sent" : "blocked"}</span></td><td>${good ? "✓ expected" : "✗ UNEXPECTED"}</td></tr>`;
+            return `<tr><td>${escapeHtml(label)}</td><td><span class="badge ${allowed ? "allow" : "block"}">${allowed ? "allowed by simulated transport" : "denied by capability check"}</span></td><td>${good ? "✓ expected" : "✗ UNEXPECTED"}</td></tr>`;
         };
         showInfoWebview(
             "soteraiTestProtection",
             "SoterAI: Test Protection (Scenario A)",
-            `<h1>${pass ? "✅ Verified protected" : "❌ Protection check FAILED"}</h1>
-<p>Reproducible local proof on a synthetic canary secret — no network, no user data. The AI/agent would receive only the opaque handle <code>${escapeHtml(EnforcedApiCapabilityBroker.fingerprint(grant.handle))}…</code>, never the credential.</p>
+            `<p class="note">Synthetic in-process capability checks with simulated transport: no network, real agent or user data. Independent consent, OS custody and selected-architecture G1-G6 guarantees remain UNTESTED. Other extensions/processes can use paths outside this adapter.</p>
+<h1>${pass ? "✅ Synthetic capability checks passed" : "❌ Synthetic capability checks FAILED"}</h1>
+<p>The adapter uses an opaque handle <code>${escapeHtml(EnforcedApiCapabilityBroker.fingerprint(grant.handle))}…</code>; this checks the named capability cases, not deployed agent protection.</p>
 <table><tr><th>Attempt</th><th>Result</th><th>Check</th></tr>
 ${row("Approved host + method + path", ok.allowed, true)}
 ${row("Wrong host (evil.example.net)", wrongHost.allowed, false)}
 ${row("Replay past use limit", replay.allowed, false)}
 ${row("After revocation", afterRevoke.allowed, false)}
 </table>
-<p class="stat-row">Canary appeared only in the outbound Authorization header, never in the handle, results, or this view: <strong>${canaryOnlyInHeader ? "confirmed" : "NOT confirmed"}</strong>.</p>
-<p class="note">Enforcement scope: SoterAI controls this brokered request. It does not control other extensions/processes reading the underlying secret from disk — that remains monitored/unknown.</p>`,
+<p class="stat-row">Canary appeared in the simulated transport's Authorization header and was absent from the checked handle, results and this view: <strong>${canaryOnlyInHeader ? "confirmed" : "NOT confirmed"}</strong>.</p>`,
         );
         refreshViews();
     }
@@ -496,16 +500,16 @@ ${row("After revocation", afterRevoke.allowed, false)}
         refreshViews();
     }
 
-    function showPreview(message = "What AI will see before sending."): void {
+    function showPreview(message = "SoterAI-built context candidate; review unmarked private information before sharing."): void {
         if (!lastPreview) return;
         showInfoWebview(
             "soteraiWhatAISawPreview",
-            "SoterAI: What AI Will See",
-            `<h1>What AI Will See</h1>
+            "SoterAI: Managed Context Preview",
+            `<h1>Managed Context Preview</h1>
 <p>${escapeHtml(message)}</p>
 <table>
-<tr><th>Raw secret</th><td><span class="badge block">no</span></td></tr>
-<tr><th>Raw secret sent to SoterAI</th><td><span class="badge allow">no by default</span></td></tr>
+<tr><th>Recognized-value handling</th><td>redacted or referenced on this managed path; unknown private information may remain</td></tr>
+<tr><th>Third-party transmission</th><td>not observed by this preview</td></tr>
 <tr><th>Secret refs</th><td>${escapeHtml(lastPreview.refs.length ? lastPreview.refs.join(", ") : "none")}</td></tr>
 <tr><th>Allowed operations</th><td>${escapeHtml(lastPreview.allowedOperations.join(", ") || "none")}</td></tr>
 <tr><th>Blocked content</th><td>${escapeHtml(lastPreview.blocked.join(", ") || "none")}</td></tr>
@@ -513,9 +517,9 @@ ${row("After revocation", afterRevoke.allowed, false)}
 </table>
 <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
 <section><h2>Original, masked</h2><pre>${escapeHtml(lastPreview.maskedOriginal)}</pre></section>
-<section><h2>AI-safe context</h2><pre>${escapeHtml(lastPreview.redactedText)}</pre></section>
+<section><h2>Managed context candidate</h2><pre>${escapeHtml(lastPreview.redactedText)}</pre></section>
 </div>
-<p class="note">This preview intentionally does not display raw sensitive values.</p>`,
+<p class="note">Accepted source exclusions and recognized-value transformations are scoped checks. Original files, buffers, clipboard, same-user credentials and independent requests remain outside their control; selected-architecture guarantees are UNTESTED.</p>`,
         );
     }
 

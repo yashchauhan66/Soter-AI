@@ -1,0 +1,45 @@
+﻿{
+    "runId":  "S2-coverage-20261010T053228Z-485162f4",
+    "sourceCommit":  "5cdcb479c9a907398fc5ee18f9e3c9ade6a007bb",
+    "startedUtc":  "2026-10-10T05:32:29.2222009Z",
+    "os":  "Windows 11 Home",
+    "osBuild":  "26300.8935",
+    "osBuildProvenance":  "Root-provided S0 observation; not remeasured by this unit-test task",
+    "node":  "v22.16.0",
+    "command":  "node --import tsx --test --test-reporter=tap src/__tests__/phase5-coverage-gates.test.ts",
+    "scope":  "Synthetic module/unit adapters only; no activation, hosts, probes, profile, real credentials or live network",
+    "inputs":  [
+                   {
+                       "path":  "packages/vscode-extension/src/__tests__/phase5-coverage-gates.test.ts",
+                       "sha256":  "131dc51adb970f54268188921af71554d783e110fef545b1fe632769450c590c"
+                   },
+                   {
+                       "path":  "packages/vscode-extension/src/protection/AutomaticIDEProtection.ts",
+                       "sha256":  "a30fd4e025d5b59d81adacca1d7d520156896e04806bd0b94fb15608d20ee450"
+                   },
+                   {
+                       "path":  "packages/vscode-extension/src/extension.ts",
+                       "sha256":  "8037882470c08aac2b4919fc49c42f8753b8682f0bedb9017746a3db8dc733b1"
+                   },
+                   {
+                       "path":  "packages/vscode-extension/src/security/CoverageDisclosure.ts",
+                       "sha256":  "e103bf464dfa8a02bcdc9fd16e45c06355fb4c8bf9ffb5eaefcc42b11a3ac406"
+                   },
+                   {
+                       "path":  "packages/vscode-extension/src/secret-broker/commands.ts",
+                       "sha256":  "5d11a58802ee7f4aa1706a0f0f838d6d887c93d90028c83ddcaadb167de50b0f"
+                   },
+                   {
+                       "path":  "packages/vscode-extension/src/secret-broker/SensitiveContextRedactor.ts",
+                       "sha256":  "aeada04be94515cfb1c5c59474c248203b8b0f90382f139f3b0bbe68ee62baf0"
+                   },
+                   {
+                       "path":  "packages/vscode-extension/src/__tests__/phase2/vscode-stub.ts",
+                       "sha256":  "d5be1e540d6c69d3e0e0a04ff945af4049720e90793f4b2a9e599d3b5dc67f1e"
+                   },
+                   {
+                       "path":  "packages/vscode-extension/src/__tests__/phase2/register.mjs",
+                       "sha256":  "cc37a40edb376cbe5d3f93346d6e67c66e19f4d4f7e90aa1c07441b5b151f983"
+                   }
+               ]
+}

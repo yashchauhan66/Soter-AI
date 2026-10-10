@@ -143,7 +143,7 @@ export class AutoVaultMigration implements vscode.Disposable {
                     if (toMigrate.length === 0) {
                         if (!opts.silent) {
                             vscode.window.showInformationMessage(
-                                "[SoterAI] All sensitive files are already protected (no raw secrets found).",
+                                "[SoterAI] No recognizable migratable values were found in the scanned files. Unmarked private information and other copies may remain; this is not protection verification.",
                             );
                         }
                         return;
@@ -183,7 +183,7 @@ export class AutoVaultMigration implements vscode.Disposable {
                         }
                         vscode.window.showInformationMessage(
                             `[SoterAI] ${migrated} secret(s) migrated to encrypted vault. ` +
-                                "Workspace files now contain placeholders — all AI agents see only placeholders.",
+                                "Reviewed values in the changed files now use placeholders. History, buffers, backups and same-user credential access remain outside this migration; selected-architecture guarantees are UNTESTED.",
                         );
                     }
                 },

@@ -322,8 +322,8 @@ export function primaryCta(state: ProtectionStateName, facts: PanelFacts): Prima
     if (!facts.brokerRunning) {
         return {
             action: "action:automaticProtection",
-            label: "Protect IDE in one click",
-            hint: "Enable local controls, connect supported AI tools and verify coverage. Config changes get one combined review.",
+            label: "Configure managed checks",
+            hint: "Review scope, enable local controls and review supported AI routing changes. Setup checks do not verify agent coverage.",
             tone: "go",
         };
     }
@@ -347,7 +347,7 @@ export function primaryCta(state: ProtectionStateName, facts: PanelFacts): Prima
     return {
         action: "action:automaticProtection",
         label: "Complete automatic setup",
-        hint: "Enables local controls, connects supported AI tools and verifies the resulting coverage.",
+        hint: "Reviews scope, enables local controls and checks configured managed paths. Agent routing and selected-architecture guarantees remain UNTESTED.",
         tone: "go",
     };
 }

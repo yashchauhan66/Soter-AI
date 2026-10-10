@@ -69,7 +69,7 @@ try {
     $stdout = $process.StandardOutput.ReadToEndAsync()
     $stderr = $process.StandardError.ReadToEndAsync()
     $timedOut=!$process.WaitForExit(60000)
-    if ($timedOut) { $process.Kill() }
+    # Timeout is INCOMPLETE; preserve every Code.exe process, including this isolated host.
     [void]$process.WaitForExit(5000)
     $stdoutText = if($stdout.IsCompleted){$stdout.GetAwaiter().GetResult()}else{'INCOMPLETE: stdout drain did not finish.'}
     $stderrText = if($stderr.IsCompleted){$stderr.GetAwaiter().GetResult()}else{'INCOMPLETE: stderr drain did not finish.'}

@@ -19,7 +19,7 @@ import {
 } from "./IntegrationAdapter";
 import { EncryptedBackupSink } from "./EncryptedBackupSink";
 import type { RoutingSetupResult } from "../protection/AutomaticIDEProtection";
-import { COVERAGE_DISCLOSURE, operationalCoverage } from "../security/CoverageDisclosure";
+import { operationalCoverage, reviewCoverageForSetup } from "../security/CoverageDisclosure";
 
 /** globalState key holding {path, backupPath} pairs written by secureAllAI. */
 const SECURE_BACKUPS_KEY = "soterai.secureAllAI.backups";
@@ -92,12 +92,7 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
         });
         try {
             if (!vscode.workspace.isTrusted) return result("unavailable");
-            if (!vscode.workspace.getConfiguration("soterai").get("hardening.coverageDisclosure", true)) {
-                void vscode.window.showWarningMessage("One-click setup is unavailable while coverage disclosure is disabled.");
-                return result("unavailable");
-            }
-            const coverageChoice = await vscode.window.showInformationMessage(COVERAGE_DISCLOSURE, { modal: true }, "Review scoped setup", "Cancel");
-            if (coverageChoice !== "Review scoped setup") return result("cancelled");
+            if (!(await reviewCoverageForSetup())) return result(vscode.workspace.getConfiguration("soterai").get("hardening.coverageDisclosure", true) ? "cancelled" : "unavailable");
             const s = await started(); // start broker first (health gate)
             const home = require("os").homedir();
             const nodeFs: FileIO = {
@@ -142,9 +137,9 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
                 `${plan.unsupported.length ? ` + ${plan.unsupported.length} left unchanged` : ""}.\n` +
                 plan.summaryLines.slice(0, 6).join("\n") + (plan.summaryLines.length > 6 ? `\n…and ${plan.summaryLines.length - 6} more` : "") +
                 `\n\nEach file is backed up first; use "SoterAI: Restore AI Configs" to undo.`,
-                { modal: true }, "Secure Everything Now", "Cancel",
+                { modal: true }, "Apply scoped routing changes", "Cancel",
             );
-            if (pick !== "Secure Everything Now") return result("cancelled", { unsupportedConfigs: plan.unsupported.length });
+            if (pick !== "Apply scoped routing changes") return result("cancelled", { unsupportedConfigs: plan.unsupported.length });
 
             const brokerToken = await context.secrets.get("soterai.localBrokerToken") ?? "";
             const outcome = await executeSecurePlan(

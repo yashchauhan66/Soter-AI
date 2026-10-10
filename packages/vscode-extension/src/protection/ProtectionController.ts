@@ -30,7 +30,7 @@ export class ProtectionController {
     }
 
     async enableFullProtection(): Promise<FullProtectionResult> {
-        if (!vscode.workspace.isTrusted) throw new Error("Full Protection setup requires a trusted workspace");
+        if (!vscode.workspace.isTrusted) throw new Error("Managed setup requires a trusted workspace");
         if (this.lockdown.active) throw new Error("Emergency Lockdown is active; unlock before enabling supported controls");
 
         const completed: string[] = [];

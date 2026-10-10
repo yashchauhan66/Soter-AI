@@ -6,7 +6,7 @@
 |---|---|---|
 | S0 resume identity | PASS — bookkeeping only | [Identity](evidence/S0-20261010T051435Z-f2ccbf42/identity.json), [supplement](evidence/S0-20261010T051435Z-f2ccbf42/supplement.json). |
 | S1 clean checkout | INCOMPLETE | [Summary](evidence/S1-20261010T051742Z-7a43a092/summary.json): clean shared-object checkout succeeded, npm install failed ENOSPC. [Object manifest](evidence/S1-20261010T051742Z-7a43a092/object-manifest.json) pins candidate bytes, not a clean build or loaded host. Previously present target sources/dependencies are explicitly tracked. |
-| S2 scoped regression coverage | UNTESTED | Full A01–A30 acceptance must remain distinct from component tests. |
+| S2 scoped regression coverage | PASS — component checks only | [Final raw wrapper](evidence/S2-final-20261010/verify-20261010T102944Z-a34359f2bf044be38bf247a5fa2a4cc6/summary.json): 1,322 pass / 0 fail / 3 skipped. [Coverage](coverage-map.md). All thirty full architecture assertions unchanged; unmarked diagnostic FAIL retained. |
 | S3 metadata ACL review | UNTESTED | No real token values may be read. |
 | S4 rebuilt isolated host | UNTESTED | Newly authorized existing synthetic harnesses; no process killing. |
 | S5 fresh restricted-input review | NOT_PERFORMED | Same vendor/model/machine implies LOW independence. |

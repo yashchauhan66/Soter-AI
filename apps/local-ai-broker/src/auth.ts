@@ -86,3 +86,19 @@ return async function load(storageDir: string, name: TokenFile = "auth-token"): 
 };
 }
 export const loadOrCreateBrokerToken = createTokenStorage(windowsPermissions);
+
+export class BrokerCredentialError extends Error {}
+
+/** Missing/unsafe controller storage cannot downgrade to the ordinary client credential. */
+export function createBrokerCredentialLoader(permissions: TokenPermissions = windowsPermissions, enabled = true) {
+    const load = createTokenStorage(permissions);
+    return async (storageDir: string, supplied: { token?: string; controlToken?: string } = {}): Promise<{ token: string; controlToken: string }> => {
+        if (!enabled) throw new BrokerCredentialError("Broker startup unavailable while credential hardening is disabled");
+        const token = supplied.token ?? await load(storageDir, "auth-token");
+        let controlToken: string;
+        try { controlToken = supplied.controlToken ?? await load(storageDir, "control-auth-token"); }
+        catch { throw new BrokerCredentialError("Controller credential unavailable; broker startup denied. Client credentials are never a fallback."); }
+        if (token === controlToken) throw new BrokerCredentialError("Broker client and controller credentials must be distinct");
+        return { token, controlToken };
+    };
+}

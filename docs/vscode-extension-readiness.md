@@ -8,8 +8,9 @@
 
 **Package:** `soterai-ide-guard` v0.6.3 · publisher `soterai`
 **License:** `SEE LICENSE IN LICENSE.md`
-**Editor floor:** `^1.85.0` — kept deliberately low so Cursor, Windsurf, Kiro and Antigravity stay supported.
+**Editor floor:** `^1.85.0` — manifest eligibility only; exact editor, fork and real-agent combinations require separate evidence.
 **Entry point:** `./dist/extension.js` (single esbuild bundle; no `node_modules` in the VSIX)
+**Coverage:** managed path checks only. Same-user original files, history, buffers, clipboard and independent network traffic remain outside extension mediation. Selected-architecture G1–G6 remain **UNTESTED; full claim BLOCKED**.
 
 ## Command surface
 
@@ -49,9 +50,9 @@ what an agent does on its own.
 
 | Measure | Count |
 | --- | --- |
-| Settings declared | 37 |
-| `machine`-scoped (a repo cannot set them) | 32 |
-| Restricted in untrusted workspaces | 32 |
+| Settings declared | 38 |
+| `machine`-scoped (a repo cannot set them) | 33 |
+| Restricted in untrusted workspaces | 33 |
 | Pinnable by an administrator (`policy`) | 8 |
 
 ## Detection engine

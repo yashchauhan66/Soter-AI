@@ -130,7 +130,7 @@ export const KNOWN_AI_TOOLS: AiToolSpec[] = [
         canAutoSecure: false,
         mode: "monitor",
         configCandidates: [],
-        coverageNote: "Copilot hard-codes its endpoint and cannot be re-routed. SoterAI cannot intercept its direct HTTPS calls (VS Code has no network API). We MONITOR the editor/clipboard instead so leaks are still visible. ⚠️ monitor-only.",
+        coverageNote: "Copilot cannot be re-routed by this integration. Its submitted content and direct network traffic are not observed. Separate editor and selected-clipboard scans are advisory; they do not establish Copilot coverage. ⚠️ monitor-only.",
     },
 ];
 

@@ -1,0 +1,94 @@
+﻿TAP version 13
+# Subtest: A14 missing controller token: provisioning failure rejects instead of returning the existing client credential
+ok 1 - A14 missing controller token: provisioning failure rejects instead of returning the existing client credential
+  ---
+  duration_ms: 65.3022
+  type: 'test'
+  ...
+# Subtest: A14 missing controller token: unavailable directory metadata denies creation and preserves the client control
+ok 2 - A14 missing controller token: unavailable directory metadata denies creation and preserves the client control
+  ---
+  duration_ms: 56.1002
+  type: 'test'
+  ...
+# Subtest: A14 missing controller token: successful synthetic metadata provisioning remains distinct and persists
+ok 3 - A14 missing controller token: successful synthetic metadata provisioning remains distinct and persists
+  ---
+  duration_ms: 57.9613
+  type: 'test'
+  ...
+# Subtest: A14 existing controller token: successful metadata validation loads its own file without provisioning or client fallback
+ok 4 - A14 existing controller token: successful metadata validation loads its own file without provisioning or client fallback
+  ---
+  duration_ms: 30.4578
+  type: 'test'
+  ...
+# Subtest: A14 existing controller token: metadata rejection does not rotate it or authenticate through the client file
+ok 5 - A14 existing controller token: metadata rejection does not rotate it or authenticate through the client file
+  ---
+  duration_ms: 45.2274
+  type: 'test'
+  ...
+# Subtest: A14 corrupt controller token: invalid content fails without client fallback while valid controller content succeeds
+ok 6 - A14 corrupt controller token: invalid content fails without client fallback while valid controller content succeeds
+  ---
+  duration_ms: 45.4458
+  type: 'test'
+  ...
+# Subtest: A05/A13 property: valid relative paths normalize idempotently and preserve segment identity
+ok 7 - A05/A13 property: valid relative paths normalize idempotently and preserve segment identity
+  ---
+  duration_ms: 48.1517
+  type: 'test'
+  ...
+# Subtest: A01/A05 property: traversal, absolute paths, control characters and empty segments fail with valid controls
+ok 8 - A01/A05 property: traversal, absolute paths, control characters and empty segments fail with valid controls
+  ---
+  duration_ms: 52.262
+  type: 'test'
+  ...
+# Subtest: A05 property: deny globs retain literal identity, root anchoring and folder descendant semantics
+ok 9 - A05 property: deny globs retain literal identity, root anchoring and folder descendant semantics
+  ---
+  duration_ms: 61.3161
+  type: 'test'
+  ...
+# Subtest: A13 property: invalid deny syntax and parser limits cannot become an empty accepted policy
+ok 10 - A13 property: invalid deny syntax and parser limits cannot become an empty accepted policy
+  ---
+  duration_ms: 50.9806
+  type: 'test'
+  ...
+# Subtest: A05/A13 property: accepted rule union is monotone, idempotent and isolated from caller mutation
+ok 11 - A05/A13 property: accepted rule union is monotone, idempotent and isolated from caller mutation
+  ---
+  duration_ms: 164.4986
+  type: 'test'
+  ...
+# Subtest: A05/A13 property: malformed stored rule and region families fail while a valid region remains accepted
+ok 12 - A05/A13 property: malformed stored rule and region families fail while a valid region remains accepted
+  ---
+  duration_ms: 56.1171
+  type: 'test'
+  ...
+# Subtest: A05/A22 property: exact-region masking preserves public controls and any revision change withholds the file
+ok 13 - A05/A22 property: exact-region masking preserves public controls and any revision change withholds the file
+  ---
+  duration_ms: 25.0067
+  type: 'test'
+  ...
+# Subtest: A13 property: project-policy defaults reject malformed enums, bound durations and require explicit raw-content opt-in
+ok 14 - A13 property: project-policy defaults reject malformed enums, bound durations and require explicit raw-content opt-in
+  ---
+  duration_ms: 7.8508
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1969.1313

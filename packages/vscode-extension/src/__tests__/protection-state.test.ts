@@ -36,7 +36,7 @@ test("reports monitoring only when the broker is healthy but no enforcement is e
     assert.equal(result.state, "MONITORING_ONLY");
 });
 
-test("reports fully enforced only when required controls and all detected tools are verified", () => {
+test("legacy full state denotes managed controls under complete synthetic facts", () => {
     assert.equal(deriveProtectionState(base).state, "FULLY_ENFORCED");
 });
 
@@ -55,13 +55,15 @@ test("a tool SoterAI cannot route is a stated limit, not a bypass", () => {
     const result = deriveProtectionState({ ...base, detectedAiTools: 1, protectedAiTools: 1, unmanagedAiTools: 4 });
     assert.notEqual(result.state, "BYPASS_DETECTED");
     assert.equal(result.severity, "warning", "an unfixable limitation must not be reported as an error");
-    assert.match(result.explanation, /cannot be routed by SoterAI/i);
+    assert.match(result.explanation, /cannot be routed by this integration/i);
+    assert.match(result.explanation, /unobserved and uncontrolled/);
+    assert.match(result.explanation, /UNTESTED/);
     // The count is still disclosed: the fix must not hide uncovered tools to
     // buy a calmer badge.
     assert.match(result.coverage, /4 other AI tools cannot be routed/i);
 });
 
-test("fully enforced is reachable on a real machine", () => {
+test("complete synthetic census facts can reach the legacy full state without an architecture claim", () => {
     // This is the assertion that failed before the fix: MCP governance was in
     // REQUIRED_CONTROLS while ProtectionStateService hardcoded its fact to
     // false, so no user could reach a green state whatever they switched on.

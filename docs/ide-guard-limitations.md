@@ -19,18 +19,19 @@ use precise language on purpose.
 
 ## What SoterAI **can** do (best-effort, honest)
 
-- **Prevent accidental exposure**: gate and inspect AI context before you share
-  it; build secret-free "safe context" and prompts.
+- **Reduce accidental exposure on managed paths**: apply accepted exclusions
+  and recognized-value redaction before you share candidate context. Unknown
+  private information can remain and needs user classification/review.
 - **Block protected, SoterAI-managed secrets** from SoterAI-built context.
 - **Move real secrets into the Protected Vault** (encrypted, outside the
-  workspace) so workspace files hold only placeholders — this is the strongest
-  practical protection today.
+  workspace) so reviewed values in the changed files use placeholders. Original
+  buffers, history, other copies and same-user credential access remain gaps.
 - **Detect and alert on leakage** via canaries and the output-leak monitor.
 - **Provide auditability**: the "What AI Saw" ledger records decisions, hashes,
   and redacted evidence — never raw secrets.
 - **Surface risk**: AI extensions, MCP tool permissions, risky terminal commands.
 
-## The strongest protection available today
+## A workflow for reducing accidental exposure
 
 1. Move real secrets into the [Protected Secret Vault](protected-secret-vault.md)
    so they are not present in workspace files.
@@ -41,7 +42,12 @@ use precise language on purpose.
 
 ## For stronger, OS-level enforcement
 
-Stronger process/tool/filesystem mediation requires the
-[Local Guard Agent](local-guard-agent-enforcement-plan.md). Even then, "100%
-block every extension" is only achievable with OS-level controls (sandboxing,
-per-process ACLs, EDR) — we will not claim it otherwise.
+Stronger process, filesystem and network mediation requires authority outside
+the agent plus exact deployment evidence. The [Local Guard Agent plan](local-guard-agent-enforcement-plan.md)
+is a design reference, not implemented mandatory mediation. OS mechanisms alone
+do not establish coverage of all agents, aliases, UI paths or lifecycle events.
+
+Selected-architecture **G1–G6 remain UNTESTED; full claim BLOCKED**. Separate-account
+deployment remains **DEFERRED**. Setup, a healthy broker, encrypted storage,
+editor modal and synthetic capability checks do not clear those gates. No
+percentage of user data protected is measured.

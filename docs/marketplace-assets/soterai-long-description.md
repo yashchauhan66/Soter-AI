@@ -1,6 +1,6 @@
 # SoterAI Guard
 
-SoterAI Guard adds a security layer for AI usage across developer tools, browser AI apps, automation platforms, and API-based products. It scans prompts, files, workflow inputs, and model outputs for sensitive data and risky instructions before they leave the user or organization boundary.
+SoterAI Guard provides scanning, recognized-value redaction and policy decisions for inputs and outputs submitted through configured integrations. Supported developer, browser, automation and API routes have different coverage. An independent tool can bypass cooperative checks; detector results do not establish complete confidentiality or an OS egress allowlist.
 
 Core capabilities:
 
@@ -15,9 +15,11 @@ SoterAI is built for teams adopting AI assistants, coding agents, browser copilo
 
 Recommended use cases:
 
-- Block API keys, database credentials, private keys, and `.env` files before users paste them into AI tools.
-- Redact sensitive customer or employee data before AI processing.
+- Review recognized credential patterns and accepted protected-source rules on managed context paths before sharing.
+- Redact supported customer or employee data patterns, while reviewing unmarked private information separately.
 - Add guardrails to n8n, Zapier, Make, Botpress, Dify, Flowise, and Langflow workflows.
-- Enforce AI egress policy for browser-based AI destinations and coding platforms.
+- Apply request policy on supported browser destinations and configured coding-tool routes; arbitrary process egress is outside that integration.
 - Send sanitized audit events to security dashboards and SIEM pipelines.
+
+For the VS Code same-user threat model, setup, encrypted storage and synthetic checks are operational/scoped evidence. Selected-architecture **G1–G6 remain UNTESTED and the full claim is BLOCKED**; separate-account deployment is **DEFERRED**. Native agents, original buffers/tabs, clipboard/capture, reachable keys/history and independent network routes are outside extension mediation. See [IDE limitations](../ide-guard-limitations.md).
 
