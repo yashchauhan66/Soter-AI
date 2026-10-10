@@ -1,0 +1,781 @@
+﻿
+> @soterai/local-ai-broker@0.2.0 test
+> tsx --test src/__tests__/**/*.test.ts
+
+TAP version 13
+# fatal error: pageAlloc: out of memory
+# runtime stack:
+# runtime.throw({0x7ff6af1ec411?, 0x1818bb000000?})
+# \\truntime/panic.go:1229 +0x4d fp=0x71811ff870 sp=0x71811ff840 pc=0x7ff6aebc3d8d
+# runtime.(*pageAlloc).grow(0x7ff6af63d988, 0x400000?, 0x400000)
+# \\truntime/mpagealloc.go:413 +0x254 fp=0x71811ff8e0 sp=0x71811ff870 pc=0x7ff6aeb7d6f4
+# runtime.(*mheap).grow(0x7ff6af63d980?, 0x2000?)
+# \\truntime/mheap.go:1644 +0x2d0 fp=0x71811ff968 sp=0x71811ff8e0 pc=0x7ff6aeb7ad30
+# runtime.(*mheap).allocSpan(0x7ff6af63d980, 0x1, 0x0, 0x24)
+# \\truntime/mheap.go:1299 +0x1b3 fp=0x71811ffa18 sp=0x71811ff968 pc=0x7ff6aeb7a2b3
+# runtime.(*mheap).alloc.func1()
+# \\truntime/mheap.go:1017 +0x5c fp=0x71811ffa60 sp=0x71811ffa18 pc=0x7ff6aeb79d5c
+# runtime.(*mheap).alloc(0x7ff6aebcb26e?, 0x71811ffac0?, 0x0?)
+# \\truntime/mheap.go:1011 +0x57 fp=0x71811ffaa8 sp=0x71811ffa60 pc=0x7ff6aeb79cb7
+# runtime.(*mcentral).grow(0x7ff6af634ba0?)
+# \\truntime/mcentral.go:253 +0x36 fp=0x71811ffad8 sp=0x71811ffaa8 pc=0x7ff6aeb62376
+# runtime.(*mcentral).cacheSpan(0x7ff6af64f918)
+# \\truntime/mcentral.go:171 +0x454 fp=0x71811ffb50 sp=0x71811ffad8 pc=0x7ff6aeb621f4
+# runtime.(*mcache).refill(0x2534bbc0108, 0x80?)
+# \\truntime/mcache.go:205 +0x16b fp=0x71811ffb90 sp=0x71811ffb50 pc=0x7ff6aeb617cb
+# runtime.(*mcache).nextFree(0x2534bbc0108, 0x24)
+# \\truntime/malloc.go:1006 +0x7e fp=0x71811ffbc8 sp=0x71811ffb90 pc=0x7ff6aeb5dcde
+# runtime.mallocgcSmallScanNoHeader(0x100, 0x7ff6af13caa0)
+# \\truntime/malloc.go:1529 +0x145 fp=0x71811ffc28 sp=0x71811ffbc8 pc=0x7ff6aeb5e585
+# runtime.mallocgc(0x100, 0x7ff6af13caa0, 0x1)
+# \\truntime/malloc.go:1150 +0xa5 fp=0x71811ffc58 sp=0x71811ffc28 pc=0x7ff6aebc1bc5
+# runtime.newobject(0x7ff6aeb67677?)
+# \\truntime/malloc.go:2157 +0x25 fp=0x71811ffc80 sp=0x71811ffc58 pc=0x7ff6aeb5f0a5
+# internal/cpu.doinit()
+# \\tinternal/cpu/cpu_x86.go:72 +0x1e fp=0x71811ffce8 sp=0x71811ffc80 pc=0x7ff6aeb4209e
+# internal/cpu.Initialize({0x0, 0x0})
+# \\tinternal/cpu/cpu.go:181 +0x1d fp=0x71811ffd08 sp=0x71811ffce8 pc=0x7ff6aeb41b3d
+# runtime.cpuinit(...)
+# \\truntime/proc.go:761
+# runtime.schedinit()
+# \\truntime/proc.go:878 +0xfa fp=0x71811ffd60 sp=0x71811ffd08 pc=0x7ff6aeb8fe1a
+# runtime.rt0_go()
+# \\truntime/asm_amd64.s:373 +0x143 fp=0x71811ffd68 sp=0x71811ffd60 pc=0x7ff6aebc97c3
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: The service was stopped
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:999:38
+#     at responseCallbacks.<computed> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:884:9)
+#     at Socket.afterClose (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:875:28)
+#     at Socket.emit (node:events:530:35)
+#     at endReadableNT (node:internal/streams/readable:1698:12)
+#     at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\agent-toolcalls-e2e.test.ts
+not ok 1 - src\\__tests__\\agent-toolcalls-e2e.test.ts
+  ---
+  duration_ms: 3527.2726
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\apps\\local-ai-broker\\src\\__tests__\\agent-toolcalls-e2e.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# fatal error: runtime: cannot allocate memory
+# runtime stack:
+# runtime.throw({0x7ff6af1f1366?, 0xce67ff858?})
+# \\truntime/panic.go:1229 +0x4d fp=0xce67ff808 sp=0xce67ff7d8 pc=0x7ff6aebc3d8d
+# runtime.persistentalloc1(0x3fc0, 0x237a?, 0x7ff6af6811c8)
+# \\truntime/malloc.go:2379 +0x265 fp=0xce67ff860 sp=0xce67ff808 pc=0x7ff6aeb5f5e5
+# runtime.persistentalloc.func1()
+# \\truntime/malloc.go:2332 +0x28 fp=0xce67ff890 sp=0xce67ff860 pc=0x7ff6aeb5f368
+# runtime.persistentalloc(0x0?, 0xce67ff8f8?, 0xffffffffffffffff?)
+# \\truntime/malloc.go:2331 +0x45 fp=0xce67ff8d8 sp=0xce67ff890 pc=0x7ff6aeb5f305
+# runtime.(*fixalloc).alloc(0x7ff6af654418)
+# \\truntime/mfixalloc.go:90 +0x77 fp=0xce67ff910 sp=0xce67ff8d8 pc=0x7ff6aeb67677
+# runtime.(*mheap).allocMSpanLocked(0x7ff6af63d980)
+# \\truntime/mheap.go:1172 +0x9a fp=0xce67ff938 sp=0xce67ff910 pc=0x7ff6aeb7a0ba
+# runtime.(*mheap).allocSpan(0x7ff6af63d980, 0x1, 0x0, 0x2b)
+# \\truntime/mheap.go:1313 +0x225 fp=0xce67ff9e8 sp=0xce67ff938 pc=0x7ff6aeb7a325
+# runtime.(*mheap).alloc.func1()
+# \\truntime/mheap.go:1017 +0x5c fp=0xce67ffa30 sp=0xce67ff9e8 pc=0x7ff6aeb79d5c
+# runtime.systemstack(0x7ff6af6336e0)
+# \\truntime/asm_amd64.s:562 +0x49 fp=0xce67ffa40 sp=0xce67ffa30 pc=0x7ff6aebc9969
+# goroutine 1 gp=0xde660462000 m=0 mp=0x7ff6af634680 [running, locked to thread]:
+# runtime.systemstack_switch()
+# \\truntime/asm_amd64.s:516 +0x8 fp=0xde660469bd8 sp=0xde660469bc8 pc=0x7ff6aebc9908
+# runtime.(*mheap).alloc(0x1e8b9d0d5b0?, 0xde66047e000?, 0x68?)
+# \\truntime/mheap.go:1011 +0x57 fp=0xde660469c20 sp=0xde660469bd8 pc=0x7ff6aeb79cb7
+# runtime.(*mcentral).grow(0x7ff6af22e920?)
+# \\truntime/mcentral.go:253 +0x36 fp=0xde660469c50 sp=0xde660469c20 pc=0x7ff6aeb62376
+# runtime.(*mcentral).cacheSpan(0x7ff6af64fe58)
+# \\truntime/mcentral.go:171 +0x454 fp=0xde660469cc8 sp=0xde660469c50 pc=0x7ff6aeb621f4
+# runtime.(*mcache).refill(0x1e8b9d03618, 0xa?)
+# \\truntime/mcache.go:205 +0x16b fp=0xde660469d08 sp=0xde660469cc8 pc=0x7ff6aeb617cb
+# runtime.(*mcache).nextFree(0x1e8b9d03618, 0x2b)
+# \\truntime/malloc.go:1006 +0x7e fp=0xde660469d40 sp=0xde660469d08 pc=0x7ff6aeb5dcde
+# runtime.mallocgcSmallNoscan(0x8?, 0x7ff6af137920?, 0x20?)
+# \\truntime/malloc.go:1397 +0x185 fp=0xde660469d98 sp=0xde660469d40 pc=0x7ff6aeb5e2c5
+# runtime.mallocgc(0x148, 0x7ff6af1ae320, 0x1)
+# \\truntime/malloc.go:1143 +0xcc fp=0xde660469dc8 sp=0xde660469d98 pc=0x7ff6aebc1bec
+# runtime.newobject(0xde660469e01?)
+# \\truntime/malloc.go:2157 +0x25 fp=0xde660469df0 sp=0xde660469dc8 pc=0x7ff6aeb5f0a5
+# encoding/base64.NewEncoding(...)
+# \\tencoding/base64/base64.go:69
+# encoding/base64.init()
+# \\tencoding/base64/base64.go:123 +0xe8 fp=0xde660469e28 sp=0xde660469df0 pc=0x7ff6aec524a8
+# runtime.doInit1(0x7ff6af5c4fa0)
+# \\truntime/proc.go:8103 +0xda fp=0xde660469f48 sp=0xde660469e28 pc=0x7ff6aeb9e8ba
+# runtime.doInit(...)
+# \\truntime/proc.go:8070
+# runtime.main()
+# \\truntime/proc.go:258 +0x25e fp=0xde660469fe0 sp=0xde660469f48 pc=0x7ff6aeb8ef3e
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0xde660469fe8 sp=0xde660469fe0 pc=0x7ff6aebcb5a1
+# goroutine 2 gp=0xde660462780 m=nil [force gc (idle)]:
+# runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+# \\truntime/proc.go:462 +0xce fp=0xde660465fa8 sp=0xde660465f88 pc=0x7ff6aebc3eae
+# runtime.goparkunlock(...)
+# \\truntime/proc.go:468
+# runtime.forcegchelper()
+# \\truntime/proc.go:375 +0xb8 fp=0xde660465fe0 sp=0xde660465fa8 pc=0x7ff6aeb8f298
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0xde660465fe8 sp=0xde660465fe0 pc=0x7ff6aebcb5a1
+# created by runtime.init.7 in goroutine 1
+# \\truntime/proc.go:363 +0x1a
+# goroutine 3 gp=0xde660462b40 m=nil [GC sweep wait]:
+# runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+# \\truntime/proc.go:462 +0xce fp=0xde660467f88 sp=0xde660467f68 pc=0x7ff6aebc3eae
+# runtime.goparkunlock(...)
+# \\truntime/proc.go:468
+# runtime.bgsweep(0xde66041e100)
+# \\truntime/mgcsweep.go:279 +0x94 fp=0xde660467fc8 sp=0xde660467f88 pc=0x7ff6aeb764b4
+# runtime.gcenable.gowrap1()
+# \\truntime/mgc.go:214 +0x17 fp=0xde660467fe0 sp=0xde660467fc8 pc=0x7ff6aeb67917
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0xde660467fe8 sp=0xde660467fe0 pc=0x7ff6aebcb5a1
+# created by runtime.gcenable in goroutine 1
+# \\truntime/mgc.go:214 +0x66
+# goroutine 4 gp=0xde660462d20 m=nil [GC scavenge wait]:
+# runtime.gopark(0xde66041e100?, 0x7ff6af216f00?, 0x1?, 0x0?, 0xde660462d20?)
+# \\truntime/proc.go:462 +0xce fp=0xde660475f78 sp=0xde660475f58 pc=0x7ff6aebc3eae
+# runtime.goparkunlock(...)
+# \\truntime/proc.go:468
+# runtime.(*scavengerState).park(0x7ff6af633300)
+# \\truntime/mgcscavenge.go:425 +0x49 fp=0xde660475fa8 sp=0xde660475f78 pc=0x7ff6aeb73fe9
+# runtime.bgscavenge(0xde66041e100)
+# \\truntime/mgcscavenge.go:653 +0x3c fp=0xde660475fc8 sp=0xde660475fa8 pc=0x7ff6aeb7455c
+# runtime.gcenable.gowrap2()
+# \\truntime/mgc.go:215 +0x17 fp=0xde660475fe0 sp=0xde660475fc8 pc=0x7ff6aeb678d7
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0xde660475fe8 sp=0xde660475fe0 pc=0x7ff6aebcb5a1
+# created by runtime.gcenable in goroutine 1
+# \\truntime/mgc.go:215 +0xa5
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: The service was stopped
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:999:38
+#     at responseCallbacks.<computed> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:884:9)
+#     at Socket.afterClose (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:875:28)
+#     at Socket.emit (node:events:530:35)
+#     at endReadableNT (node:internal/streams/readable:1698:12)
+#     at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\auth-storage.test.ts
+not ok 2 - src\\__tests__\\auth-storage.test.ts
+  ---
+  duration_ms: 3452.3206
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\apps\\local-ai-broker\\src\\__tests__\\auth-storage.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: spawn UNKNOWN
+#     at ChildProcess.spawn (node:internal/child_process:420:11)
+#     at Object.spawn (node:child_process:753:9)
+#     at ensureServiceIsRunning (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2268:29)
+#     at startSyncServiceWorker (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2474:19)
+#     at Object.<anonymous> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2515:3)
+#     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+#     at Object..js (node:internal/modules/cjs/loader:1895:10)
+#     at Module.load (node:internal/modules/cjs/loader:1465:32)
+#     at Function._load (node:internal/modules/cjs/loader:1282:12)
+#     at TracingChannel.traceSync (node:diagnostics_channel:322:14) {
+#   errno: -4094,
+#   code: 'UNKNOWN',
+#   syscall: 'spawn',
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\broker.test.ts
+not ok 3 - src\\__tests__\\broker.test.ts
+  ---
+  duration_ms: 3281.2
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\apps\\local-ai-broker\\src\\__tests__\\broker.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: Checkpoint rollback runtime enforcement
+    # Subtest: 1. creates a checkpoint that fingerprints real protected state without exposing it
+    ok 1 - 1. creates a checkpoint that fingerprints real protected state without exposing it
+      ---
+      duration_ms: 1577.8599
+      type: 'test'
+      ...
+    # Subtest: 2. rolls back a real filesystem change and restores exact bytes
+    ok 2 - 2. rolls back a real filesystem change and restores exact bytes
+      ---
+      duration_ms: 466.6631
+      type: 'test'
+      ...
+    # Subtest: 3. rolls back after a partial failure, including deleting files created after the checkpoint
+    ok 3 - 3. rolls back after a partial failure, including deleting files created after the checkpoint
+      ---
+      duration_ms: 505.6076
+      type: 'test'
+      ...
+    # Subtest: 4. refuses rollback for the wrong tenant
+    ok 4 - 4. refuses rollback for the wrong tenant
+      ---
+      duration_ms: 868.7443
+      type: 'test'
+      ...
+    # Subtest: 5. refuses rollback for the wrong actor in the right tenant
+    ok 5 - 5. refuses rollback for the wrong actor in the right tenant
+      ---
+      duration_ms: 649.4471
+      type: 'test'
+      ...
+    # Subtest: 6. refuses an expired checkpoint and requires compensating review
+    ok 6 - 6. refuses an expired checkpoint and requires compensating review
+      ---
+      duration_ms: 403.294
+      type: 'test'
+      ...
+    # Subtest: 7. refuses a tampered checkpoint record before checking ownership
+    ok 7 - 7. refuses a tampered checkpoint record before checking ownership
+      ---
+      duration_ms: 162.6476
+      type: 'test'
+      ...
+    # Subtest: 8. serializes concurrent rollback requests so state is restored exactly once
+    ok 8 - 8. serializes concurrent rollback requests so state is restored exactly once
+      ---
+      duration_ms: 458.5769
+      type: 'test'
+      ...
+    # Subtest: 9. is idempotent: a repeated rollback does not restore again
+    ok 9 - 9. is idempotent: a repeated rollback does not restore again
+      ---
+      duration_ms: 2926.3832
+      type: 'test'
+      ...
+    # Subtest: 10. reports a rollback failure honestly instead of claiming restoration
+    ok 10 - 10. reports a rollback failure honestly instead of claiming restoration
+      ---
+      duration_ms: 77.9559
+      type: 'test'
+      ...
+    # Subtest: 11. classifies compensating-action-only when exact restoration is impossible
+    ok 11 - 11. classifies compensating-action-only when exact restoration is impossible
+      ---
+      duration_ms: 154.7191
+      type: 'test'
+      ...
+    # Subtest: 12. never records raw protected state, paths, or secrets in evidence or logs
+    ok 12 - 12. never records raw protected state, paths, or secrets in evidence or logs
+      ---
+      duration_ms: 124.3929
+      type: 'test'
+      ...
+    # Subtest: rejects protected paths that escape the isolation root
+    ok 13 - rejects protected paths that escape the isolation root
+      ---
+      duration_ms: 98.1941
+      type: 'test'
+      ...
+    # Subtest: requires a canonical tenant and actor, and 501s when checkpointing is not configured
+    ok 14 - requires a canonical tenant and actor, and 501s when checkpointing is not configured
+      ---
+      duration_ms: 77.1166
+      type: 'test'
+      ...
+    # Subtest: rejects unauthenticated checkpoint requests
+    ok 15 - rejects unauthenticated checkpoint requests
+      ---
+      duration_ms: 43.4467
+      type: 'test'
+      ...
+    # Subtest: refuses a snapshot root inside the protected root and a weak integrity secret
+    ok 16 - refuses a snapshot root inside the protected root and a weak integrity secret
+      ---
+      duration_ms: 31.5749
+      type: 'test'
+      ...
+    1..16
+ok 4 - Checkpoint rollback runtime enforcement
+  ---
+  duration_ms: 8638.6285
+  type: 'suite'
+  ...
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: spawn UNKNOWN
+#     at ChildProcess.spawn (node:internal/child_process:420:11)
+#     at Object.spawn (node:child_process:753:9)
+#     at ensureServiceIsRunning (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2268:29)
+#     at startSyncServiceWorker (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2474:19)
+#     at Object.<anonymous> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2515:3)
+#     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+#     at Object..js (node:internal/modules/cjs/loader:1895:10)
+#     at Module.load (node:internal/modules/cjs/loader:1465:32)
+#     at Function._load (node:internal/modules/cjs/loader:1282:12)
+#     at TracingChannel.traceSync (node:diagnostics_channel:322:14) {
+#   errno: -4094,
+#   code: 'UNKNOWN',
+#   syscall: 'spawn',
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\control-boundary.test.ts
+not ok 5 - src\\__tests__\\control-boundary.test.ts
+  ---
+  duration_ms: 3205.8246
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\apps\\local-ai-broker\\src\\__tests__\\control-boundary.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: spawn UNKNOWN
+#     at ChildProcess.spawn (node:internal/child_process:420:11)
+#     at Object.spawn (node:child_process:753:9)
+#     at ensureServiceIsRunning (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2268:29)
+#     at startSyncServiceWorker (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2474:19)
+#     at Object.<anonymous> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2515:3)
+#     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+#     at Object..js (node:internal/modules/cjs/loader:1895:10)
+#     at Module.load (node:internal/modules/cjs/loader:1465:32)
+#     at Function._load (node:internal/modules/cjs/loader:1282:12)
+#     at TracingChannel.traceSync (node:diagnostics_channel:322:14) {
+#   errno: -4094,
+#   code: 'UNKNOWN',
+#   syscall: 'spawn',
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\controlled-execution.test.ts
+not ok 6 - src\\__tests__\\controlled-execution.test.ts
+  ---
+  duration_ms: 3146.8018
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\apps\\local-ai-broker\\src\\__tests__\\controlled-execution.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: hook blocks real credential formats
+    # Subtest: blocks OpenAI (classic)
+    ok 1 - blocks OpenAI (classic)
+      ---
+      duration_ms: 150.1408
+      type: 'test'
+      ...
+    # Subtest: blocks OpenAI (project)
+    ok 2 - blocks OpenAI (project)
+      ---
+      duration_ms: 57.0748
+      type: 'test'
+      ...
+    # Subtest: blocks Anthropic
+    ok 3 - blocks Anthropic
+      ---
+      duration_ms: 33.2595
+      type: 'test'
+      ...
+    # Subtest: blocks Google Gemini
+    ok 4 - blocks Google Gemini
+      ---
+      duration_ms: 16.0137
+      type: 'test'
+      ...
+    # Subtest: blocks Groq
+    ok 5 - blocks Groq
+      ---
+      duration_ms: 6.5865
+      type: 'test'
+      ...
+    # Subtest: blocks DeepSeek
+    ok 6 - blocks DeepSeek
+      ---
+      duration_ms: 18.8307
+      type: 'test'
+      ...
+    # Subtest: blocks AWS secret access key
+    ok 7 - blocks AWS secret access key
+      ---
+      duration_ms: 15.5621
+      type: 'test'
+      ...
+    # Subtest: blocks Azure storage
+    ok 8 - blocks Azure storage
+      ---
+      duration_ms: 12.9899
+      type: 'test'
+      ...
+    # Subtest: blocks Twilio auth token
+    ok 9 - blocks Twilio auth token
+      ---
+      duration_ms: 14.6376
+      type: 'test'
+      ...
+    # Subtest: blocks GitLab CI job token
+    ok 10 - blocks GitLab CI job token
+      ---
+      duration_ms: 19.8127
+      type: 'test'
+      ...
+    # Subtest: blocks Slack webhook
+    ok 11 - blocks Slack webhook
+      ---
+      duration_ms: 5.1658
+      type: 'test'
+      ...
+    # Subtest: blocks Heroku-shaped UUID
+    ok 12 - blocks Heroku-shaped UUID
+      ---
+      duration_ms: 7.6775
+      type: 'test'
+      ...
+    # Subtest: blocks GitHub PAT
+    ok 13 - blocks GitHub PAT
+      ---
+      duration_ms: 17.9726
+      type: 'test'
+      ...
+    # Subtest: blocks Stripe live
+    ok 14 - blocks Stripe live
+      ---
+      duration_ms: 7.5186
+      type: 'test'
+      ...
+    # Subtest: blocks Bare sk- (no vendor marker)
+    ok 15 - blocks Bare sk- (no vendor marker)
+      ---
+      duration_ms: 4.9758
+      type: 'test'
+      ...
+    # Subtest: blocks Unknown vendor opaque
+    ok 16 - blocks Unknown vendor opaque
+      ---
+      duration_ms: 49.6212
+      type: 'test'
+      ...
+    # Subtest: blocks a connection-string password (single segment)
+    ok 17 - blocks a connection-string password (single segment)
+      ---
+      duration_ms: 3.9366
+      type: 'test'
+      ...
+    # Subtest: blocks a connection-string password (Pwd alias)
+    ok 18 - blocks a connection-string password (Pwd alias)
+      ---
+      duration_ms: 9.1229
+      type: 'test'
+      ...
+    # Subtest: blocks a connection-string password (SQL Server / .NET)
+    ok 19 - blocks a connection-string password (SQL Server / .NET)
+      ---
+      duration_ms: 5.0536
+      type: 'test'
+      ...
+    # Subtest: blocks a connection-string password (ADO.NET Data Source)
+    ok 20 - blocks a connection-string password (ADO.NET Data Source)
+      ---
+      duration_ms: 9.8593
+      type: 'test'
+      ...
+    # Subtest: blocks a connection-string password (Npgsql / ODBC Host=)
+    ok 21 - blocks a connection-string password (Npgsql / ODBC Host=)
+      ---
+      duration_ms: 5.1619
+      type: 'test'
+      ...
+    # Subtest: does not block ordinary files that merely mention credentials
+    ok 22 - does not block ordinary files that merely mention credentials
+      ---
+      duration_ms: 54.5863
+      type: 'test'
+      ...
+    1..22
+ok 7 - hook blocks real credential formats
+  ---
+  duration_ms: 555.0647
+  type: 'suite'
+  ...
+# Subtest: provider destinations require HTTPS or explicit loopback HTTP and reject URL credentials
+ok 8 - provider destinations require HTTPS or explicit loopback HTTP and reject URL credentials
+  ---
+  duration_ms: 14.4654
+  type: 'test'
+  ...
+# Subtest: redirect responses never forward body or provider authorization to a second destination
+ok 9 - redirect responses never forward body or provider authorization to a second destination
+  ---
+  duration_ms: 881.9597
+  type: 'test'
+  ...
+# Subtest: responses block recognized raw and encoded credentials in content or passthrough fields
+ok 10 - responses block recognized raw and encoded credentials in content or passthrough fields
+  ---
+  duration_ms: 1327.978
+  type: 'test'
+  ...
+# Subtest: a canary in non-message request metadata is stopped at the final wire gate
+ok 11 - a canary in non-message request metadata is stopped at the final wire gate
+  ---
+  duration_ms: 156.4029
+  type: 'test'
+  ...
+# Subtest: an encoded credential beyond the detector's first candidate batch cannot leave via metadata
+ok 12 - an encoded credential beyond the detector's first candidate batch cannot leave via metadata
+  ---
+  duration_ms: 306.9164
+  type: 'test'
+  ...
+# Subtest: split SSE credentials release neither prefix nor suffix, including CRLF frames
+ok 13 - split SSE credentials release neither prefix nor suffix, including CRLF frames
+  ---
+  duration_ms: 202.3717
+  type: 'test'
+  ...
+# Subtest: a final unterminated event cannot leak metadata after earlier clean text
+ok 14 - a final unterminated event cannot leak metadata after earlier clean text
+  ---
+  duration_ms: 105.8882
+  type: 'test'
+  ...
+# Subtest: provider bodies are bounded even without a Content-Length header
+ok 15 - provider bodies are bounded even without a Content-Length header
+  ---
+  duration_ms: 380.3921
+  type: 'test'
+  ...
+# Subtest: incomplete or invalid UTF-8 streams fail closed
+ok 16 - incomplete or invalid UTF-8 streams fail closed
+  ---
+  duration_ms: 82.6358
+  type: 'test'
+  ...
+# Subtest: clean SSE content still reaches the client after validation
+ok 17 - clean SSE content still reaches the client after validation
+  ---
+  duration_ms: 74.9287
+  type: 'test'
+  ...
+# Subtest: extension-managed brokers require authenticated canary sync before forwarding
+ok 18 - extension-managed brokers require authenticated canary sync before forwarding
+  ---
+  duration_ms: 1059.5787
+  type: 'test'
+  ...
+# Subtest: legacy short canary fingerprints remain usable after a runtime upgrade
+ok 19 - legacy short canary fingerprints remain usable after a runtime upgrade
+  ---
+  duration_ms: 32.0397
+  type: 'test'
+  ...
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: spawn UNKNOWN
+#     at ChildProcess.spawn (node:internal/child_process:420:11)
+#     at Object.spawn (node:child_process:753:9)
+#     at ensureServiceIsRunning (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2268:29)
+#     at startSyncServiceWorker (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2474:19)
+#     at Object.<anonymous> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2515:3)
+#     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+#     at Object..js (node:internal/modules/cjs/loader:1895:10)
+#     at Module.load (node:internal/modules/cjs/loader:1465:32)
+#     at Function._load (node:internal/modules/cjs/loader:1282:12)
+#     at TracingChannel.traceSync (node:diagnostics_channel:322:14) {
+#   errno: -4094,
+#   code: 'UNKNOWN',
+#   syscall: 'spawn',
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\realuser-e2e.test.ts
+not ok 9 - src\\__tests__\\realuser-e2e.test.ts
+  ---
+  duration_ms: 3291.3578
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\apps\\local-ai-broker\\src\\__tests__\\realuser-e2e.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: spawn UNKNOWN
+#     at ChildProcess.spawn (node:internal/child_process:420:11)
+#     at Object.spawn (node:child_process:753:9)
+#     at ensureServiceIsRunning (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2268:29)
+#     at startSyncServiceWorker (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2474:19)
+#     at Object.<anonymous> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2515:3)
+#     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+#     at Object..js (node:internal/modules/cjs/loader:1895:10)
+#     at Module.load (node:internal/modules/cjs/loader:1465:32)
+#     at Function._load (node:internal/modules/cjs/loader:1282:12)
+#     at TracingChannel.traceSync (node:diagnostics_channel:322:14) {
+#   errno: -4094,
+#   code: 'UNKNOWN',
+#   syscall: 'spawn',
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\secret-class-vocabulary.test.ts
+not ok 10 - src\\__tests__\\secret-class-vocabulary.test.ts
+  ---
+  duration_ms: 3339.1207
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\apps\\local-ai-broker\\src\\__tests__\\secret-class-vocabulary.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+#   · detected 28 finding(s) across 9 categories, decision=approval_required, risk=100
+# Subtest: Real .env secret detection (the vibe-coding risk)
+    # Subtest: flags every real secret format in a production .env
+    ok 1 - flags every real secret format in a production .env
+      ---
+      duration_ms: 927.9732
+      type: 'test'
+      ...
+#   · redacted copy contains zero raw secret values
+    # Subtest: redacts every detected secret from the shareable copy
+    ok 2 - redacts every detected secret from the shareable copy
+      ---
+      duration_ms: 165.241
+      type: 'test'
+      ...
+#   · clean file: decision=allow, risk=0
+#   · obfuscation variants produced: raw, unicode-folded, leet-decoded, reversed
+    # Subtest: does not cry wolf over a clean code file
+    ok 3 - does not cry wolf over a clean code file
+      ---
+      duration_ms: 99.2905
+      type: 'test'
+      ...
+    # Subtest: obfuscation-resistant layer: smuggled secrets ARE recovered (zero-width / spacing / leet / base64)
+    ok 4 - obfuscation-resistant layer: smuggled secrets ARE recovered (zero-width / spacing / leet / base64)
+      ---
+      duration_ms: 9.7379
+      type: 'test'
+      ...
+#   · concatenation-split key: risk=0, decision=allow (documented gap — fragments do not match key regexes)
+    # Subtest: honest limitation, documented: concatenation-split keys are outside current obfuscation variants
+    ok 5 - honest limitation, documented: concatenation-split keys are outside current obfuscation variants
+      ---
+      duration_ms: 7.6685
+      type: 'test'
+      ...
+    1..5
+ok 22 - Real .env secret detection (the vibe-coding risk)
+  ---
+  duration_ms: 1215.8882
+  type: 'suite'
+  ...
+# Subtest: Windows metadata denies inherited/group access, foreign ownership, missing owner rights and deny ACEs
+ok 23 - Windows metadata denies inherited/group access, foreign ownership, missing owner rights and deny ACEs
+  ---
+  duration_ms: 16.9276
+  type: 'test'
+  ...
+# Subtest: parent read-only foreign ACE allowed; foreign replacement/write authority denied
+ok 24 - parent read-only foreign ACE allowed; foreign replacement/write authority denied
+  ---
+  duration_ms: 5.9605
+  type: 'test'
+  ...
+# Subtest: metadata failure occurs before reading even an invalid synthetic token
+ok 25 - metadata failure occurs before reading even an invalid synthetic token
+  ---
+  duration_ms: 102.7993
+  type: 'test'
+  ...
+# Subtest: ACL flag off withdraws file authentication
+ok 26 - ACL flag off withdraws file authentication
+  ---
+  duration_ms: 3.8648
+  type: 'test'
+  ...
+# Subtest: Wire egress invariant: no raw secret may leave the broker
+    # Subtest: Anthropic: a secret in `system` must not reach the provider
+    ok 1 - Anthropic: a secret in `system` must not reach the provider
+      ---
+      duration_ms: 2766.5364
+      type: 'test'
+      ...
+    # Subtest: Anthropic streaming: a secret in `system` must not reach the provider
+    ok 2 - Anthropic streaming: a secret in `system` must not reach the provider
+      ---
+      duration_ms: 169.7461
+      type: 'test'
+      ...
+    # Subtest: OpenAI: a secret in tool_calls[].function.arguments must not reach the provider
+    ok 3 - OpenAI: a secret in tool_calls[].function.arguments must not reach the provider
+      ---
+      duration_ms: 94.5842
+      type: 'test'
+      ...
+    # Subtest: A secret in an unscanned passthrough field is BLOCKED at the wire
+    ok 4 - A secret in an unscanned passthrough field is BLOCKED at the wire
+      ---
+      duration_ms: 65.4137
+      type: 'test'
+      ...
+    # Subtest: The egress guard is wired on the OpenAI route too, not just Anthropic
+    ok 5 - The egress guard is wired on the OpenAI route too, not just Anthropic
+      ---
+      duration_ms: 49.8053
+      type: 'test'
+      ...
+    # Subtest: HONESTY: whenever the response says `redact`, the wire must actually be redacted
+    ok 6 - HONESTY: whenever the response says `redact`, the wire must actually be redacted
+      ---
+      duration_ms: 83.1967
+      type: 'test'
+      ...
+    # Subtest: CONTROL: a clean request still reaches the provider unchanged
+    ok 7 - CONTROL: a clean request still reaches the provider unchanged
+      ---
+      duration_ms: 68.5158
+      type: 'test'
+      ...
+    1..7
+ok 27 - Wire egress invariant: no raw secret may leave the broker
+  ---
+  duration_ms: 3314.1609
+  type: 'suite'
+  ...
+1..27
+# tests 73
+# suites 4
+# pass 66
+# fail 7
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 17366.4707

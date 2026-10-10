@@ -1,0 +1,3098 @@
+﻿
+> soterai-ide-guard@0.6.3 test
+> node --import tsx --test src/__tests__/**/*.test.ts
+
+TAP version 13
+# fatal error: out of memory allocating heap arena map
+# runtime stack:
+# runtime.throw({0x7ff6af1f6fbf?, 0x878c5ff760?})
+# \\truntime/panic.go:1229 +0x4d fp=0x878c5ff6d8 sp=0x878c5ff6a8 pc=0x7ff6aebc3d8d
+# runtime.(*mheap).sysAlloc(0x7ff6af63d980, 0x7ff9288fe3c5?, 0x7ff6af64dd80, 0x7ff6af64dda8)
+# \\truntime/malloc.go:866 +0x378 fp=0x878c5ff7b0 sp=0x878c5ff6d8 pc=0x7ff6aeb5d7d8
+# runtime.(*mheap).grow(0x7ff6af63d980, 0x2000?)
+# \\truntime/mheap.go:1574 +0x7d fp=0x878c5ff838 sp=0x878c5ff7b0 pc=0x7ff6aeb7aadd
+# runtime.(*mheap).allocSpan(0x7ff6af63d980, 0x1, 0x0, 0x24)
+# \\truntime/mheap.go:1299 +0x1b3 fp=0x878c5ff8e8 sp=0x878c5ff838 pc=0x7ff6aeb7a2b3
+# runtime.(*mheap).alloc.func1()
+# \\truntime/mheap.go:1017 +0x5c fp=0x878c5ff930 sp=0x878c5ff8e8 pc=0x7ff6aeb79d5c
+# runtime.(*mheap).alloc(0x7ff6aebcb26e?, 0x878c5ff990?, 0x0?)
+# \\truntime/mheap.go:1011 +0x57 fp=0x878c5ff978 sp=0x878c5ff930 pc=0x7ff6aeb79cb7
+# runtime.(*mcentral).grow(0x7ff6af634ba0?)
+# \\truntime/mcentral.go:253 +0x36 fp=0x878c5ff9a8 sp=0x878c5ff978 pc=0x7ff6aeb62376
+# runtime.(*mcentral).cacheSpan(0x7ff6af64f918)
+# \\truntime/mcentral.go:171 +0x454 fp=0x878c5ffa20 sp=0x878c5ff9a8 pc=0x7ff6aeb621f4
+# runtime.(*mcache).refill(0x26cc1770108, 0x80?)
+# \\truntime/mcache.go:205 +0x16b fp=0x878c5ffa60 sp=0x878c5ffa20 pc=0x7ff6aeb617cb
+# runtime.(*mcache).nextFree(0x26cc1770108, 0x24)
+# \\truntime/malloc.go:1006 +0x7e fp=0x878c5ffa98 sp=0x878c5ffa60 pc=0x7ff6aeb5dcde
+# runtime.mallocgcSmallScanNoHeader(0x100, 0x7ff6af13caa0)
+# \\truntime/malloc.go:1529 +0x145 fp=0x878c5ffaf8 sp=0x878c5ffa98 pc=0x7ff6aeb5e585
+# runtime.mallocgc(0x100, 0x7ff6af13caa0, 0x1)
+# \\truntime/malloc.go:1150 +0xa5 fp=0x878c5ffb28 sp=0x878c5ffaf8 pc=0x7ff6aebc1bc5
+# runtime.newobject(0x7ff6aeb67677?)
+# \\truntime/malloc.go:2157 +0x25 fp=0x878c5ffb50 sp=0x878c5ffb28 pc=0x7ff6aeb5f0a5
+# internal/cpu.doinit()
+# \\tinternal/cpu/cpu_x86.go:72 +0x1e fp=0x878c5ffbb8 sp=0x878c5ffb50 pc=0x7ff6aeb4209e
+# internal/cpu.Initialize({0x0, 0x0})
+# \\tinternal/cpu/cpu.go:181 +0x1d fp=0x878c5ffbd8 sp=0x878c5ffbb8 pc=0x7ff6aeb41b3d
+# runtime.cpuinit(...)
+# \\truntime/proc.go:761
+# runtime.schedinit()
+# \\truntime/proc.go:878 +0xfa fp=0x878c5ffc30 sp=0x878c5ffbd8 pc=0x7ff6aeb8fe1a
+# runtime.rt0_go()
+# \\truntime/asm_amd64.s:373 +0x143 fp=0x878c5ffc38 sp=0x878c5ffc30 pc=0x7ff6aebc97c3
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: The service was stopped
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:999:38
+#     at responseCallbacks.<computed> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:884:9)
+#     at Socket.afterClose (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:875:28)
+#     at Socket.emit (node:events:530:35)
+#     at endReadableNT (node:internal/streams/readable:1698:12)
+#     at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\agent-tools.test.ts
+not ok 1 - src\\__tests__\\agent-tools.test.ts
+  ---
+  duration_ms: 3267.4266
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\agent-tools.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# fatal error: runtime: cannot allocate memory
+# runtime stack:
+# runtime.throw({0x7ff6af1f1366?, 0xfffffffffffff800?})
+# \\truntime/panic.go:1229 +0x4d fp=0x4f381ffc98 sp=0x4f381ffc68 pc=0x7ff6aebc3d8d
+# runtime.persistentalloc1(0x1200, 0x7ff6af63d980?, 0x7ff6af6811e0)
+# \\truntime/malloc.go:2379 +0x265 fp=0x4f381ffcf0 sp=0x4f381ffc98 pc=0x7ff6aeb5f5e5
+# runtime.persistentalloc.func1()
+# \\truntime/malloc.go:2332 +0x28 fp=0x4f381ffd20 sp=0x4f381ffcf0 pc=0x7ff6aeb5f368
+# runtime.systemstack(0x212f937c54a0)
+# \\truntime/asm_amd64.s:562 +0x49 fp=0x4f381ffd30 sp=0x4f381ffd20 pc=0x7ff6aebc9969
+# goroutine 3 gp=0x212f937c4b40 m=6 mp=0x212f937dc808 [running]:
+# runtime.systemstack_switch()
+# \\truntime/asm_amd64.s:516 +0x8 fp=0x212f937c9d38 sp=0x212f937c9d28 pc=0x7ff6aebc9908
+# runtime.persistentalloc(0x800?, 0x40?, 0x7ff6af6811e0?)
+# \\truntime/malloc.go:2331 +0x45 fp=0x212f937c9d80 sp=0x212f937c9d38 pc=0x7ff6aeb5f305
+# runtime.(*spanSetBlockAlloc).alloc(0x500000000?)
+# \\truntime/mspanset.go:338 +0x49 fp=0x212f937c9da8 sp=0x212f937c9d80 pc=0x7ff6aeb84809
+# runtime.(*spanSet).push(0x7ff6af650d60, 0x1dd6f4a2588)
+# \\truntime/mspanset.go:134 +0x11d fp=0x212f937c9e10 sp=0x212f937c9da8 pc=0x7ff6aeb8449d
+# runtime.(*sweepLocked).sweep(0x7ff6af63d980?, 0x0)
+# \\truntime/mgcsweep.go:795 +0x8e5 fp=0x212f937c9f38 sp=0x212f937c9e10 pc=0x7ff6aeb77305
+# runtime.sweepone()
+# \\truntime/mgcsweep.go:396 +0xdd fp=0x212f937c9f88 sp=0x212f937c9f38 pc=0x7ff6aeb7673d
+# runtime.bgsweep(0x212f93780180)
+# \\truntime/mgcsweep.go:300 +0xa6 fp=0x212f937c9fc8 sp=0x212f937c9f88 pc=0x7ff6aeb764c6
+# runtime.gcenable.gowrap1()
+# \\truntime/mgc.go:214 +0x17 fp=0x212f937c9fe0 sp=0x212f937c9fc8 pc=0x7ff6aeb67917
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x212f937c9fe8 sp=0x212f937c9fe0 pc=0x7ff6aebcb5a1
+# created by runtime.gcenable in goroutine 1
+# \\truntime/mgc.go:214 +0x66
+# goroutine 1 gp=0x212f937c4000 m=7 mp=0x212f937dd008 [syscall]:
+# runtime.cgocall(0x7ff6aeb520e0, 0x212f937dd358)
+# \\truntime/cgocall.go:167 +0x3e fp=0x212f938a59b0 sp=0x212f938a5948 pc=0x7ff6aebc129e
+# syscall.syscalln(0x0?, 0x0?, {0x212f938a5a28?, 0x9c63424beb1c4afe?, 0x0?})
+# \\truntime/syscall_windows.go:431 +0x4e fp=0x212f938a59d0 sp=0x212f938a59b0 pc=0x7ff6aebc7ace
+# syscall.SyscallN(0xd?, {0x212f938a5a28?, 0x212f93765550?, 0x7ff6aeb458c9?})
+# \\tsyscall/dll_windows.go:99 +0x1e fp=0x212f938a5a08 sp=0x212f938a59d0 pc=0x7ff6aebf88fe
+# syscall.readFile(0x308, {0x212f93844000?, 0x4000, 0x30?}, 0x7ff6af11be40?, 0x212f938b2ed0?)
+# \\tsyscall/zsyscall_windows.go:1030 +0xba fp=0x212f938a5a80 sp=0x212f938a5a08 pc=0x7ff6aebfdd9a
+# syscall.ReadFile(...)
+# \\tsyscall/syscall_windows.go:510
+# internal/poll.(*FD).Read.func1(0x7ff6af620520?)
+# \\tinternal/poll/fd_windows.go:586 +0x4a fp=0x212f938a5ac8 sp=0x212f938a5a80 pc=0x7ff6aec1b76a
+# internal/poll.(*FD).execIO(0x212f937fa000, 0x72, 0x212f938a5c48)
+# \\tinternal/poll/fd_windows.go:304 +0x2c9 fp=0x212f938a5bc8 sp=0x212f938a5ac8 pc=0x7ff6aec1a729
+# internal/poll.(*FD).Read(0x212f937fa000, {0x212f93844000, 0x4000, 0x4000})
+# \\tinternal/poll/fd_windows.go:585 +0x290 fp=0x212f938a5c90 sp=0x212f938a5bc8 pc=0x7ff6aec1b450
+# os.(*File).read(...)
+# \\tos/file_posix.go:29
+# os.(*File).Read(0x212f9375e058, {0x212f93844000?, 0xa?, 0x212f93802018?})
+# \\tos/file.go:144 +0x4f fp=0x212f938a5cd0 sp=0x212f938a5c90 pc=0x7ff6aec2050f
+# main.runService(0x1)
+# \\tgithub.com/evanw/esbuild/cmd/esbuild/service.go:134 +0x37f fp=0x212f938a5df8 sp=0x212f938a5cd0 pc=0x7ff6af07355f
+# main.main()
+# \\tgithub.com/evanw/esbuild/cmd/esbuild/main.go:252 +0xb16 fp=0x212f938a5f48 sp=0x212f938a5df8 pc=0x7ff6af071d56
+# runtime.main()
+# \\truntime/proc.go:290 +0x2c7 fp=0x212f938a5fe0 sp=0x212f938a5f48 pc=0x7ff6aeb8efa7
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x212f938a5fe8 sp=0x212f938a5fe0 pc=0x7ff6aebcb5a1
+# goroutine 2 gp=0x212f937c4780 m=nil [force gc (idle)]:
+# runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+# \\truntime/proc.go:462 +0xce fp=0x212f937c7fa8 sp=0x212f937c7f88 pc=0x7ff6aebc3eae
+# runtime.goparkunlock(...)
+# \\truntime/proc.go:468
+# runtime.forcegchelper()
+# \\truntime/proc.go:375 +0xb8 fp=0x212f937c7fe0 sp=0x212f937c7fa8 pc=0x7ff6aeb8f298
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x212f937c7fe8 sp=0x212f937c7fe0 pc=0x7ff6aebcb5a1
+# created by runtime.init.7 in goroutine 1
+# \\truntime/proc.go:363 +0x1a
+# goroutine 4 gp=0x212f937c4d20 m=nil [GC scavenge wait]:
+# runtime.gopark(0x10000?, 0x7ff6af216f00?, 0x0?, 0x0?, 0x0?)
+# \\truntime/proc.go:462 +0xce fp=0x212f937d7f78 sp=0x212f937d7f58 pc=0x7ff6aebc3eae
+# runtime.goparkunlock(...)
+# \\truntime/proc.go:468
+# runtime.(*scavengerState).park(0x7ff6af633300)
+# \\truntime/mgcscavenge.go:425 +0x49 fp=0x212f937d7fa8 sp=0x212f937d7f78 pc=0x7ff6aeb73fe9
+# runtime.bgscavenge(0x212f93780180)
+# \\truntime/mgcscavenge.go:658 +0x59 fp=0x212f937d7fc8 sp=0x212f937d7fa8 pc=0x7ff6aeb74579
+# runtime.gcenable.gowrap2()
+# \\truntime/mgc.go:215 +0x17 fp=0x212f937d7fe0 sp=0x212f937d7fc8 pc=0x7ff6aeb678d7
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x212f937d7fe8 sp=0x212f937d7fe0 pc=0x7ff6aebcb5a1
+# created by runtime.gcenable in goroutine 1
+# \\truntime/mgc.go:215 +0xa5
+# goroutine 5 gp=0x212f937c50e0 m=nil [finalizer wait]:
+# runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+# \\truntime/proc.go:462 +0xce fp=0x212f937d9e20 sp=0x212f937d9e00 pc=0x7ff6aebc3eae
+# runtime.runFinalizers()
+# \\truntime/mfinal.go:210 +0x107 fp=0x212f937d9fe0 sp=0x212f937d9e20 pc=0x7ff6aeb668a7
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x212f937d9fe8 sp=0x212f937d9fe0 pc=0x7ff6aebcb5a1
+# created by runtime.createfing in goroutine 1
+# \\truntime/mfinal.go:172 +0x3d
+# goroutine 6 gp=0x212f937c52c0 m=nil [cleanup wait]:
+# runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+# \\truntime/proc.go:462 +0xce fp=0x212f937d3f68 sp=0x212f937d3f48 pc=0x7ff6aebc3eae
+# runtime.goparkunlock(...)
+# \\truntime/proc.go:468
+# runtime.(*cleanupQueue).dequeue(0x7ff6af6335e0)
+# \\truntime/mcleanup.go:522 +0xd4 fp=0x212f937d3fa0 sp=0x212f937d3f68 pc=0x7ff6aeb63734
+# runtime.runCleanups()
+# \\truntime/mcleanup.go:718 +0x45 fp=0x212f937d3fe0 sp=0x212f937d3fa0 pc=0x7ff6aeb63da5
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x212f937d3fe8 sp=0x212f937d3fe0 pc=0x7ff6aebcb5a1
+# created by runtime.(*cleanupQueue).createGs in goroutine 1
+# \\truntime/mcleanup.go:672 +0xa5
+# goroutine 18 gp=0x212f938081e0 m=nil [chan receive]:
+# runtime.gopark(0x212f937fa0c0?, 0x0?, 0x0?, 0x0?, 0x7ff6aec1c760?)
+# \\truntime/proc.go:462 +0xce fp=0x212f9384dee8 sp=0x212f9384dec8 pc=0x7ff6aebc3eae
+# runtime.chanrecv(0x212f93842000, 0x212f9384dfb0, 0x1)
+# \\truntime/chan.go:667 +0x4ae fp=0x212f9384df60 sp=0x212f9384dee8 pc=0x7ff6aeb563ce
+# runtime.chanrecv2(0x212f9375e060?, 0x212f9377a4c0?)
+# \\truntime/chan.go:514 +0x12 fp=0x212f9384df88 sp=0x212f9384df60 pc=0x7ff6aeb55f12
+# main.runService.func1()
+# \\tgithub.com/evanw/esbuild/cmd/esbuild/service.go:98 +0x45 fp=0x212f9384dfe0 sp=0x212f9384df88 pc=0x7ff6af0739e5
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x212f9384dfe8 sp=0x212f9384dfe0 pc=0x7ff6aebcb5a1
+# created by main.runService in goroutine 1
+# \\tgithub.com/evanw/esbuild/cmd/esbuild/service.go:97 +0x1db
+# goroutine 19 gp=0x212f938083c0 m=nil [chan receive]:
+# runtime.gopark(0x1dd29e71400?, 0x212f937da000?, 0xe3?, 0x5c?, 0x212f9384fee0?)
+# \\truntime/proc.go:462 +0xce fp=0x212f9384fe90 sp=0x212f9384fe70 pc=0x7ff6aebc3eae
+# runtime.chanrecv(0x212f93782310, 0x212f9384ff68, 0x1)
+# \\truntime/chan.go:667 +0x4ae fp=0x212f9384ff08 sp=0x212f9384fe90 pc=0x7ff6aeb563ce
+# runtime.chanrecv1(0x7ff6af159540?, 0x212f939f6000?)
+# \\truntime/chan.go:509 +0x12 fp=0x212f9384ff30 sp=0x212f9384ff08 pc=0x7ff6aeb55ef2
+# main.(*serviceType).sendRequest(0x212f9380a210, {0x7ff6af159540, 0x212f939f6000})
+# \\tgithub.com/evanw/esbuild/cmd/esbuild/service.go:192 +0x12b fp=0x212f9384ffa0 sp=0x212f9384ff30 pc=0x7ff6af073bcb
+# main.runService.func3()
+# \\tgithub.com/evanw/esbuild/cmd/esbuild/service.go:125 +0x3e fp=0x212f9384ffe0 sp=0x212f9384ffa0 pc=0x7ff6af0738be
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x212f9384ffe8 sp=0x212f9384ffe0 pc=0x7ff6aebcb5a1
+# created by main.runService in goroutine 1
+# \\tgithub.com/evanw/esbuild/cmd/esbuild/service.go:122 +0x30c
+# goroutine 25 gp=0x212f93a7cb40 m=nil [GC worker (idle)]:
+# runtime.gopark(0x212f9399fe30?, 0x212f9399ffd0?, 0xa6?, 0xa3?, 0x5800000000?)
+# \\truntime/proc.go:462 +0xce fp=0x212f9399ff40 sp=0x212f9399ff20 pc=0x7ff6aebc3eae
+# runtime.gcBgMarkWorker(0x212f93842150)
+# \\truntime/mgc.go:1791 +0xeb fp=0x212f9399ffc8 sp=0x212f9399ff40 pc=0x7ff6aeb6a30b
+# runtime.gcBgMarkStartWorkers.gowrap1()
+# \\truntime/mgc.go:1695 +0x17 fp=0x212f9399ffe0 sp=0x212f9399ffc8 pc=0x7ff6aeb6a1f7
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x212f9399ffe8 sp=0x212f9399ffe0 pc=0x7ff6aebcb5a1
+# created by runtime.gcBgMarkStartWorkers in goroutine 55
+# \\truntime/mgc.go:1695 +0x105
+# goroutine 24 gp=0x212f93a7cd20 m=nil [GC worker (idle)]:
+# runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+# \\truntime/proc.go:462 +0xce fp=0x212f9384bf40 sp=0x212f9384bf20 pc=0x7ff6aebc3eae
+# runtime.gcBgMarkWorker(0x212f93842150)
+# \\truntime/mgc.go:1791 +0xeb fp=0x212f9384bfc8 sp=0x212f9384bf40 pc=0x7ff6aeb6a30b
+# runtime.gcBgMarkStartWorkers.gowrap1()
+# \\truntime/mgc.go:1695 +0x17 fp=0x212f9384bfe0 sp=0x212f9384bfc8 pc=0x7ff6aeb6a1f7
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x212f9384bfe8 sp=0x212f9384bfe0 pc=0x7ff6aebcb5a1
+# created by runtime.gcBgMarkStartWorkers in goroutine 55
+# \\truntime/mgc.go:1695 +0x105
+# goroutine 23 gp=0x212f93a7cf00 m=nil [GC worker (idle)]:
+# runtime.gopark(0x212f93a59e30?, 0x212f93a59fd0?, 0xa6?, 0xa3?, 0x5800000000?)
+# \\truntime/proc.go:462 +0xce fp=0x212f93a59f40 sp=0x212f93a59f20 pc=0x7ff6aebc3eae
+# runtime.gcBgMarkWorker(0x212f93842150)
+# \\truntime/mgc.go:1791 +0xeb fp=0x212f93a59fc8 sp=0x212f93a59f40 pc=0x7ff6aeb6a30b
+# runtime.gcBgMarkStartWorkers.gowrap1()
+# \\truntime/mgc.go:1695 +0x17 fp=0x212f93a59fe0 sp=0x212f93a59fc8 pc=0x7ff6aeb6a1f7
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x212f93a59fe8 sp=0x212f93a59fe0 pc=0x7ff6aebcb5a1
+# created by runtime.gcBgMarkStartWorkers in goroutine 55
+# \\truntime/mgc.go:1695 +0x105
+# goroutine 26 gp=0x212f93a7d0e0 m=nil [GC worker (idle)]:
+# runtime.gopark(0x212f939a3e30?, 0x212f939a3fd0?, 0xa6?, 0xa3?, 0x5800000000?)
+# \\truntime/proc.go:462 +0xce fp=0x212f939a3f40 sp=0x212f939a3f20 pc=0x7ff6aebc3eae
+# runtime.gcBgMarkWorker(0x212f93842150)
+# \\truntime/mgc.go:1791 +0xeb fp=0x212f939a3fc8 sp=0x212f939a3f40 pc=0x7ff6aeb6a30b
+# runtime.gcBgMarkStartWorkers.gowrap1()
+# \\truntime/mgc.go:1695 +0x17 fp=0x212f939a3fe0 sp=0x212f939a3fc8 pc=0x7ff6aeb6a1f7
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x212f939a3fe8 sp=0x212f939a3fe0 pc=0x7ff6aebcb5a1
+# created by runtime.gcBgMarkStartWorkers in goroutine 55
+# \\truntime/mgc.go:1695 +0x105
+# goroutine 22 gp=0x212f93a7d2c0 m=nil [GC worker (idle)]:
+# runtime.gopark(0x200000004?, 0x200000004?, 0xd0?, 0x3f?, 0x7ff6af0781f7?)
+# \\truntime/proc.go:462 +0xce fp=0x212f93a63f40 sp=0x212f93a63f20 pc=0x7ff6aebc3eae
+# runtime.gcBgMarkWorker(0x212f93842150)
+# \\truntime/mgc.go:1791 +0xeb fp=0x212f93a63fc8 sp=0x212f93a63f40 pc=0x7ff6aeb6a30b
+# runtime.gcBgMarkStartWorkers.gowrap1()
+# \\truntime/mgc.go:1695 +0x17 fp=0x212f93a63fe0 sp=0x212f93a63fc8 pc=0x7ff6aeb6a1f7
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x212f93a63fe8 sp=0x212f93a63fe0 pc=0x7ff6aebcb5a1
+# created by runtime.gcBgMarkStartWorkers in goroutine 55
+# \\truntime/mgc.go:1695 +0x105
+# goroutine 27 gp=0x212f93808b40 m=nil [GC worker (idle)]:
+# runtime.gopark(0x376849e52a48?, 0x1?, 0x0?, 0x0?, 0x0?)
+# \\truntime/proc.go:462 +0xce fp=0x212f93a5df40 sp=0x212f93a5df20 pc=0x7ff6aebc3eae
+# runtime.gcBgMarkWorker(0x212f93842150)
+# \\truntime/mgc.go:1791 +0xeb fp=0x212f93a5dfc8 sp=0x212f93a5df40 pc=0x7ff6aeb6a30b
+# runtime.gcBgMarkStartWorkers.gowrap1()
+# \\truntime/mgc.go:1695 +0x17 fp=0x212f93a5dfe0 sp=0x212f93a5dfc8 pc=0x7ff6aeb6a1f7
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x212f93a5dfe8 sp=0x212f93a5dfe0 pc=0x7ff6aebcb5a1
+# created by runtime.gcBgMarkStartWorkers in goroutine 55
+# \\truntime/mgc.go:1695 +0x105
+# goroutine 28 gp=0x212f93808d20 m=nil [GC worker (idle)]:
+# runtime.gopark(0x3768522ffbb0?, 0x3?, 0x0?, 0x0?, 0x212f93904800?)
+# \\truntime/proc.go:462 +0xce fp=0x212f93a5ff40 sp=0x212f93a5ff20 pc=0x7ff6aebc3eae
+# runtime.gcBgMarkWorker(0x212f93842150)
+# \\truntime/mgc.go:1791 +0xeb fp=0x212f93a5ffc8 sp=0x212f93a5ff40 pc=0x7ff6aeb6a30b
+# runtime.gcBgMarkStartWorkers.gowrap1()
+# \\truntime/mgc.go:1695 +0x17 fp=0x212f93a5ffe0 sp=0x212f93a5ffc8 pc=0x7ff6aeb6a1f7
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x212f93a5ffe8 sp=0x212f93a5ffe0 pc=0x7ff6aebcb5a1
+# created by runtime.gcBgMarkStartWorkers in goroutine 55
+# \\truntime/mgc.go:1695 +0x105
+# goroutine 29 gp=0x212f93808f00 m=nil [GC worker (idle)]:
+# runtime.gopark(0x7ff6af67cc20?, 0x1?, 0x14?, 0x20?, 0x0?)
+# \\truntime/proc.go:462 +0xce fp=0x212f93c19f40 sp=0x212f93c19f20 pc=0x7ff6aebc3eae
+# runtime.gcBgMarkWorker(0x212f93842150)
+# \\truntime/mgc.go:1791 +0xeb fp=0x212f93c19fc8 sp=0x212f93c19f40 pc=0x7ff6aeb6a30b
+# runtime.gcBgMarkStartWorkers.gowrap1()
+# \\truntime/mgc.go:1695 +0x17 fp=0x212f93c19fe0 sp=0x212f93c19fc8 pc=0x7ff6aeb6a1f7
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x212f93c19fe8 sp=0x212f93c19fe0 pc=0x7ff6aebcb5a1
+# created by runtime.gcBgMarkStartWorkers in goroutine 55
+# \\truntime/mgc.go:1695 +0x105
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: The service is no longer running: write EPIPE
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:999:38
+#     at sendRequest (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:880:36)
+#     at start (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:998:9)
+#     at Object.transform2 [as transform] (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:1059:5)
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2333:77
+#     at new Promise (<anonymous>)
+#     at Object.transform (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2333:36)
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2486:67
+#     at MessagePort.<anonymous> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2502:9)
+#     at [nodejs.internal.kHybridDispatch] (node:internal/event_target:827:20) {
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\ai-boundary.test.ts
+not ok 2 - src\\__tests__\\ai-boundary.test.ts
+  ---
+  duration_ms: 4962.1868
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\ai-boundary.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: the extensions that produced the inflated count are not AI tools
+ok 3 - the extensions that produced the inflated count are not AI tools
+  ---
+  duration_ms: 3.807
+  type: 'test'
+  ...
+# Subtest: SoterAI does not count itself as an unprotected AI tool
+ok 4 - SoterAI does not count itself as an unprotected AI tool
+  ---
+  duration_ms: 1.2624
+  type: 'test'
+  ...
+# Subtest: "ai" counts as a signal only when it is a whole id segment
+ok 5 - "ai" counts as a signal only when it is a whole id segment
+  ---
+  duration_ms: 1.6177
+  type: 'test'
+  ...
+# Subtest: routable and unmanaged AI tools are separated, not lumped together
+ok 6 - routable and unmanaged AI tools are separated, not lumped together
+  ---
+  duration_ms: 0.3948
+  type: 'test'
+  ...
+# Subtest: a real AI tool is still detected even when its exact id is unknown
+ok 7 - a real AI tool is still detected even when its exact id is unknown
+  ---
+  duration_ms: 0.4217
+  type: 'test'
+  ...
+# Subtest: an unroutable tool is never reported as routable
+ok 8 - an unroutable tool is never reported as routable
+  ---
+  duration_ms: 0.3716
+  type: 'test'
+  ...
+# Subtest: the census over a realistic machine reports a defensible count
+ok 9 - the census over a realistic machine reports a defensible count
+  ---
+  duration_ms: 3.5975
+  type: 'test'
+  ...
+# Subtest: every classification carries a reason a user could be shown
+ok 10 - every classification carries a reason a user could be shown
+  ---
+  duration_ms: 0.937
+  type: 'test'
+  ...
+# Subtest: real AI tools found on a real machine are all detected
+ok 11 - real AI tools found on a real machine are all detected
+  ---
+  duration_ms: 1.3681
+  type: 'test'
+  ...
+# Subtest: an extension's own manifest can identify it when the id cannot
+ok 12 - an extension's own manifest can identify it when the id cannot
+  ---
+  duration_ms: 1.9948
+  type: 'test'
+  ...
+# Subtest: exposing tools TO an AI does not make an extension an AI tool
+ok 13 - exposing tools TO an AI does not make an extension an AI tool
+  ---
+  duration_ms: 17.4036
+  type: 'test'
+  ...
+# Subtest: a routable tool stays routable even though its manifest declares AI
+ok 14 - a routable tool stays routable even though its manifest declares AI
+  ---
+  duration_ms: 0.4131
+  type: 'test'
+  ...
+# Subtest: SoterAI declares category AI itself and still must not count
+ok 15 - SoterAI declares category AI itself and still must not count
+  ---
+  duration_ms: 0.3244
+  type: 'test'
+  ...
+# fatal error: runtime: cannot allocate memory
+# runtime stack:
+# runtime.throw({0x7ff6af1f1366?, 0x2000?})
+# \\truntime/panic.go:1229 +0x4d fp=0x6ab7ff720 sp=0x6ab7ff6f0 pc=0x7ff6aebc3d8d
+# runtime.persistentalloc1(0x800, 0x7ff6aeb79d5c?, 0x7ff6af6811e0)
+# \\truntime/malloc.go:2379 +0x265 fp=0x6ab7ff778 sp=0x6ab7ff720 pc=0x7ff6aeb5f5e5
+# runtime.persistentalloc.func1()
+# \\truntime/malloc.go:2332 +0x28 fp=0x6ab7ff7a8 sp=0x6ab7ff778 pc=0x7ff6aeb5f368
+# runtime.persistentalloc(0x7ff6aeb6051c?, 0x6ab7ff7d8?, 0x8?)
+# \\truntime/malloc.go:2331 +0x45 fp=0x6ab7ff7f0 sp=0x6ab7ff7a8 pc=0x7ff6aeb5f305
+# runtime.(*spanSet).push(0x7ff6af6510b0, 0x1490fd1b030)
+# \\truntime/mspanset.go:113 +0xcf fp=0x6ab7ff858 sp=0x6ab7ff7f0 pc=0x7ff6aeb8444f
+# runtime.(*mcentral).uncacheSpan(0x8000?, 0x1490fd1dc90?)
+# \\truntime/mcentral.go:245 +0x9e fp=0x6ab7ff880 sp=0x6ab7ff858 pc=0x7ff6aeb622de
+# runtime.(*mcache).refill(0x1490fd10108, 0x43)
+# \\truntime/mcache.go:182 +0xbf fp=0x6ab7ff8c0 sp=0x6ab7ff880 pc=0x7ff6aeb6171f
+# runtime.(*mcache).nextFree(0x1490fd10108, 0x43)
+# \\truntime/malloc.go:1006 +0x7e fp=0x6ab7ff8f8 sp=0x6ab7ff8c0 pc=0x7ff6aeb5dcde
+# runtime.mallocgcSmallNoscan(0x7ff6aeba026b?, 0x7ff6af167c00?, 0xf0?)
+# \\truntime/malloc.go:1397 +0x185 fp=0x6ab7ff950 sp=0x6ab7ff8f8 pc=0x7ff6aeb5e2c5
+# runtime.mallocgc(0x438, 0x7ff6af12e440, 0x1)
+# \\truntime/malloc.go:1143 +0xcc fp=0x6ab7ff980 sp=0x6ab7ff950 pc=0x7ff6aebc1bec
+# runtime.makeslice(0x28a899725808?, 0x100?, 0x6ab7ff9e0?)
+# \\truntime/slice.go:117 +0x49 fp=0x6ab7ff9a8 sp=0x6ab7ff980 pc=0x7ff6aebc5a49
+# runtime.makeProfStackFP(...)
+# \\truntime/proc.go:1063
+# runtime.mProfStackInit(...)
+# \\truntime/proc.go:1050
+# runtime.mcommoninit(0x28a899725808, 0x3)
+# \\truntime/proc.go:1036 +0x213 fp=0x6ab7ff9f0 sp=0x6ab7ff9a8 pc=0x7ff6aeb90413
+# runtime.allocm(0x28a899770008, 0x7ff6af216538, 0x3)
+# \\truntime/proc.go:2326 +0xc5 fp=0x6ab7ffa48 sp=0x6ab7ff9f0 pc=0x7ff6aeb92c05
+# runtime.newm(0x600002000?, 0x28a899770008, 0x3768547c9d24?)
+# \\truntime/proc.go:2870 +0x35 fp=0x6ab7ffa78 sp=0x6ab7ffa48 pc=0x7ff6aeb93675
+# runtime.startm(0x28a899770008?, 0x1, 0x0)
+# \\truntime/proc.go:3096 +0x130 fp=0x6ab7ffac0 sp=0x6ab7ffa78 pc=0x7ff6aeb93d10
+# runtime.wakep()
+# \\truntime/proc.go:3243 +0xec fp=0x6ab7ffaf0 sp=0x6ab7ffac0 pc=0x7ff6aebc400c
+# runtime.newproc.func1()
+# \\truntime/proc.go:5305 +0x53 fp=0x6ab7ffb20 sp=0x6ab7ffaf0 pc=0x7ff6aeb98d13
+# runtime.systemstack(0x7ff6af6336e0)
+# \\truntime/asm_amd64.s:562 +0x49 fp=0x6ab7ffb30 sp=0x6ab7ffb20 pc=0x7ff6aebc9969
+# goroutine 1 gp=0x28a899774000 m=0 mp=0x7ff6af634680 [running, locked to thread]:
+# runtime.systemstack_switch()
+# \\truntime/asm_amd64.s:516 +0x8 fp=0x28a89977bdd8 sp=0x28a89977bdc8 pc=0x7ff6aebc9908
+# runtime.newproc(0x9800000000?)
+# \\truntime/proc.go:5298 +0x3f fp=0x28a89977be10 sp=0x28a89977bdd8 pc=0x7ff6aeb98c7f
+# runtime.init.7()
+# \\truntime/proc.go:363 +0x1a fp=0x28a89977be28 sp=0x28a89977be10 pc=0x7ff6aeb8f1ba
+# runtime.doInit1(0x7ff6af5c76e0)
+# \\truntime/proc.go:8103 +0xda fp=0x28a89977bf48 sp=0x28a89977be28 pc=0x7ff6aeb9e8ba
+# runtime.doInit(...)
+# \\truntime/proc.go:8070
+# runtime.main()
+# \\truntime/proc.go:203 +0x131 fp=0x28a89977bfe0 sp=0x28a89977bf48 pc=0x7ff6aeb8ee11
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x28a89977bfe8 sp=0x28a89977bfe0 pc=0x7ff6aebcb5a1
+# goroutine 2 gp=0x28a899774780 m=nil [runnable]:
+# runtime.forcegchelper()
+# \\truntime/proc.go:366 fp=0x28a899777fe0 sp=0x28a899777fd8 pc=0x7ff6aeb8f1e0
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x28a899777fe8 sp=0x28a899777fe0 pc=0x7ff6aebcb5a1
+# created by runtime.init.7 in goroutine 1
+# \\truntime/proc.go:363 +0x1a
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: The service was stopped
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:999:38
+#     at responseCallbacks.<computed> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:884:9)
+#     at Socket.afterClose (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:875:28)
+#     at Socket.emit (node:events:530:35)
+#     at endReadableNT (node:internal/streams/readable:1698:12)
+#     at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\audit-ledger-boundary.test.ts
+not ok 4 - src\\__tests__\\audit-ledger-boundary.test.ts
+  ---
+  duration_ms: 4531.4219
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\audit-ledger-boundary.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: proposeBrokerRewrite never corrupts the file it claims to protect
+    # Subtest: refuses to append a shell directive to JSON with no base-URL field
+    ok 1 - refuses to append a shell directive to JSON with no base-URL field
+      ---
+      duration_ms: 5.1349
+      type: 'test'
+      ...
+    # Subtest: refuses YAML with no base-URL field rather than breaking the document
+    ok 2 - refuses YAML with no base-URL field rather than breaking the document
+      ---
+      duration_ms: 0.9294
+      type: 'test'
+      ...
+    # Subtest: edits an existing base-URL field in place and keeps JSON parseable
+    ok 3 - edits an existing base-URL field in place and keeps JSON parseable
+      ---
+      duration_ms: 2.2847
+      type: 'test'
+      ...
+    # Subtest: writes `export` in shell profiles so child processes actually inherit the var
+    ok 4 - writes `export` in shell profiles so child processes actually inherit the var
+      ---
+      duration_ms: 1.7827
+      type: 'test'
+      ...
+    # Subtest: omits `export` in .env files, which dotenv loaders would treat as part of the key
+    ok 5 - omits `export` in .env files, which dotenv loaders would treat as part of the key
+      ---
+      duration_ms: 1.5218
+      type: 'test'
+      ...
+    # Subtest: routes anthropic and openai kinds to their own broker paths
+    ok 6 - routes anthropic and openai kinds to their own broker paths
+      ---
+      duration_ms: 0.7648
+      type: 'test'
+      ...
+    1..6
+ok 17 - proposeBrokerRewrite never corrupts the file it claims to protect
+  ---
+  duration_ms: 16.3789
+  type: 'suite'
+  ...
+# Subtest: detectConfigFormat
+    # Subtest: classifies by filename first
+    ok 1 - classifies by filename first
+      ---
+      duration_ms: 2.5804
+      type: 'test'
+      ...
+    # Subtest: falls back to content shape for unnamed files
+    ok 2 - falls back to content shape for unnamed files
+      ---
+      duration_ms: 1.9225
+      type: 'test'
+      ...
+    1..2
+ok 18 - detectConfigFormat
+  ---
+  duration_ms: 5.842
+  type: 'suite'
+  ...
+# Subtest: discoverAllAiTools path anchoring
+    # Subtest: resolves workspace-relative candidates against the workspace, not the host cwd
+    ok 1 - resolves workspace-relative candidates against the workspace, not the host cwd
+      ---
+      duration_ms: 10.3032
+      type: 'test'
+      ...
+    # Subtest: skips relative candidates entirely when no workspace is open
+    ok 2 - skips relative candidates entirely when no workspace is open
+      ---
+      duration_ms: 1.5881
+      type: 'test'
+      ...
+    # Subtest: reports monitor-only tools as monitor-only, never as covered
+    ok 3 - reports monitor-only tools as monitor-only, never as covered
+      ---
+      duration_ms: 0.8653
+      type: 'test'
+      ...
+    # Subtest: every auto-securable tool declares at least one config candidate
+    ok 4 - every auto-securable tool declares at least one config candidate
+      ---
+      duration_ms: 0.5634
+      type: 'test'
+      ...
+    1..4
+ok 19 - discoverAllAiTools path anchoring
+  ---
+  duration_ms: 13.9894
+  type: 'suite'
+  ...
+# Subtest: buildSecurePlan honesty
+    # Subtest: reports a JSON config it refused to rewrite instead of claiming coverage
+    ok 1 - reports a JSON config it refused to rewrite instead of claiming coverage
+      ---
+      duration_ms: 3.8397
+      type: 'test'
+      ...
+    # Subtest: keeps each config's own kind rather than coercing everything to anthropic
+    ok 2 - keeps each config's own kind rather than coercing everything to anthropic
+      ---
+      duration_ms: 1.3486
+      type: 'test'
+      ...
+    1..2
+ok 20 - buildSecurePlan honesty
+  ---
+  duration_ms: 5.6519
+  type: 'suite'
+  ...
+# Subtest: executeSecurePlan
+    # Subtest: refuses to rewrite anything while the broker is offline
+    ok 1 - refuses to rewrite anything while the broker is offline
+      ---
+      duration_ms: 3.2066
+      type: 'test'
+      ...
+    # Subtest: does not claim redaction when the smoke test fails
+    ok 2 - does not claim redaction when the smoke test fails
+      ---
+      duration_ms: 2.8007
+      type: 'test'
+      ...
+    # Subtest: applies, backs up, and round-trips through restoreAll
+    ok 3 - applies, backs up, and round-trips through restoreAll
+      ---
+      duration_ms: 1.8339
+      type: 'test'
+      ...
+    # Subtest: a reachable route with an upstream failure cannot claim redaction
+    ok 4 - a reachable route with an upstream failure cannot claim redaction
+      ---
+      duration_ms: 1.7784
+      type: 'test'
+      ...
+    # Subtest: writes nothing when the user did not approve
+    ok 5 - writes nothing when the user did not approve
+      ---
+      duration_ms: 2.0867
+      type: 'test'
+      ...
+    1..5
+ok 21 - executeSecurePlan
+  ---
+  duration_ms: 12.3572
+  type: 'suite'
+  ...
+# fatal error: out of memory allocating heap arena map
+# runtime stack:
+# runtime.throw({0x7ff6af1f6fbf?, 0x12735ff420?})
+# \\truntime/panic.go:1229 +0x4d fp=0x12735ff398 sp=0x12735ff368 pc=0x7ff6aebc3d8d
+# runtime.(*mheap).sysAlloc(0x7ff6af63d980, 0x7ff9288fe3c5?, 0x7ff6af64dd80, 0x7ff6af64dda8)
+# \\truntime/malloc.go:866 +0x378 fp=0x12735ff470 sp=0x12735ff398 pc=0x7ff6aeb5d7d8
+# runtime.(*mheap).grow(0x7ff6af63d980, 0x2000?)
+# \\truntime/mheap.go:1574 +0x7d fp=0x12735ff4f8 sp=0x12735ff470 pc=0x7ff6aeb7aadd
+# runtime.(*mheap).allocSpan(0x7ff6af63d980, 0x1, 0x0, 0x24)
+# \\truntime/mheap.go:1299 +0x1b3 fp=0x12735ff5a8 sp=0x12735ff4f8 pc=0x7ff6aeb7a2b3
+# runtime.(*mheap).alloc.func1()
+# \\truntime/mheap.go:1017 +0x5c fp=0x12735ff5f0 sp=0x12735ff5a8 pc=0x7ff6aeb79d5c
+# runtime.(*mheap).alloc(0x7ff6aebcb26e?, 0x12735ff650?, 0x0?)
+# \\truntime/mheap.go:1011 +0x57 fp=0x12735ff638 sp=0x12735ff5f0 pc=0x7ff6aeb79cb7
+# runtime.(*mcentral).grow(0x7ff6af634ba0?)
+# \\truntime/mcentral.go:253 +0x36 fp=0x12735ff668 sp=0x12735ff638 pc=0x7ff6aeb62376
+# runtime.(*mcentral).cacheSpan(0x7ff6af64f918)
+# \\truntime/mcentral.go:171 +0x454 fp=0x12735ff6e0 sp=0x12735ff668 pc=0x7ff6aeb621f4
+# runtime.(*mcache).refill(0x1443f230108, 0x80?)
+# \\truntime/mcache.go:205 +0x16b fp=0x12735ff720 sp=0x12735ff6e0 pc=0x7ff6aeb617cb
+# runtime.(*mcache).nextFree(0x1443f230108, 0x24)
+# \\truntime/malloc.go:1006 +0x7e fp=0x12735ff758 sp=0x12735ff720 pc=0x7ff6aeb5dcde
+# runtime.mallocgcSmallScanNoHeader(0x100, 0x7ff6af13caa0)
+# \\truntime/malloc.go:1529 +0x145 fp=0x12735ff7b8 sp=0x12735ff758 pc=0x7ff6aeb5e585
+# runtime.mallocgc(0x100, 0x7ff6af13caa0, 0x1)
+# \\truntime/malloc.go:1150 +0xa5 fp=0x12735ff7e8 sp=0x12735ff7b8 pc=0x7ff6aebc1bc5
+# runtime.newobject(0x7ff6aeb67677?)
+# \\truntime/malloc.go:2157 +0x25 fp=0x12735ff810 sp=0x12735ff7e8 pc=0x7ff6aeb5f0a5
+# internal/cpu.doinit()
+# \\tinternal/cpu/cpu_x86.go:72 +0x1e fp=0x12735ff878 sp=0x12735ff810 pc=0x7ff6aeb4209e
+# internal/cpu.Initialize({0x0, 0x0})
+# \\tinternal/cpu/cpu.go:181 +0x1d fp=0x12735ff898 sp=0x12735ff878 pc=0x7ff6aeb41b3d
+# runtime.cpuinit(...)
+# \\truntime/proc.go:761
+# runtime.schedinit()
+# \\truntime/proc.go:878 +0xfa fp=0x12735ff8f0 sp=0x12735ff898 pc=0x7ff6aeb8fe1a
+# runtime.rt0_go()
+# \\truntime/asm_amd64.s:373 +0x143 fp=0x12735ff8f8 sp=0x12735ff8f0 pc=0x7ff6aebc97c3
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: The service was stopped
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:999:38
+#     at responseCallbacks.<computed> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:884:9)
+#     at Socket.afterClose (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:875:28)
+#     at Socket.emit (node:events:530:35)
+#     at endReadableNT (node:internal/streams/readable:1698:12)
+#     at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\automatic-ide-protection.test.ts
+not ok 6 - src\\__tests__\\automatic-ide-protection.test.ts
+  ---
+  duration_ms: 4465.8395
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\automatic-ide-protection.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: spawn UNKNOWN
+#     at ChildProcess.spawn (node:internal/child_process:420:11)
+#     at Object.spawn (node:child_process:753:9)
+#     at ensureServiceIsRunning (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2268:29)
+#     at startSyncServiceWorker (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2474:19)
+#     at Object.<anonymous> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2515:3)
+#     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+#     at Object..js (node:internal/modules/cjs/loader:1895:10)
+#     at Module.load (node:internal/modules/cjs/loader:1465:32)
+#     at Function._load (node:internal/modules/cjs/loader:1282:12)
+#     at TracingChannel.traceSync (node:diagnostics_channel:322:14) {
+#   errno: -4094,
+#   code: 'UNKNOWN',
+#   syscall: 'spawn',
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\bounded-response.test.ts
+not ok 7 - src\\__tests__\\bounded-response.test.ts
+  ---
+  duration_ms: 4342.1494
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\bounded-response.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: broker auto-start: the broker actually starts
+    # Subtest: starts the broker on activation — the whole point of the feature
+    ok 1 - starts the broker on activation — the whole point of the feature
+      ---
+      duration_ms: 2.9407
+      type: 'test'
+      ...
+    # Subtest: does not start when the user turned auto-start off, and records that protection is advisory
+    ok 2 - does not start when the user turned auto-start off, and records that protection is advisory
+      ---
+      duration_ms: 0.9529
+      type: 'test'
+      ...
+    1..2
+ok 24 - broker auto-start: the broker actually starts
+  ---
+  duration_ms: 6.927
+  type: 'suite'
+  ...
+# Subtest: broker auto-start: failures are never silent
+    # Subtest: retries a transient failure and succeeds — a slow first spawn is not a dead broker
+    ok 1 - retries a transient failure and succeeds — a slow first spawn is not a dead broker
+      ---
+      duration_ms: 6.7523
+      type: 'test'
+      ...
+    # Subtest: does NOT retry a port conflict — three identical errors only delay the truth
+    ok 2 - does NOT retry a port conflict — three identical errors only delay the truth
+      ---
+      duration_ms: 1.1983
+      type: 'test'
+      ...
+    # Subtest: tells the user enforcement is OFF when every attempt fails — not just that a start failed
+    ok 3 - tells the user enforcement is OFF when every attempt fails — not just that a start failed
+      ---
+      duration_ms: 2.3029
+      type: 'test'
+      ...
+    # Subtest: offers a way forward and runs what the user picks
+    ok 4 - offers a way forward and runs what the user picks
+      ---
+      duration_ms: 2.3045
+      type: 'test'
+      ...
+    # Subtest: stays quiet when the user dismisses the notification
+    ok 5 - stays quiet when the user dismisses the notification
+      ---
+      duration_ms: 20.3665
+      type: 'test'
+      ...
+    # Subtest: treats an UNKNOWN error as retryable — an unexpected fault is the worst case to give up on
+    ok 6 - treats an UNKNOWN error as retryable — an unexpected fault is the worst case to give up on
+      ---
+      duration_ms: 6.3945
+      type: 'test'
+      ...
+    1..6
+ok 25 - broker auto-start: failures are never silent
+  ---
+  duration_ms: 41.3402
+  type: 'suite'
+  ...
+# Subtest: broker auto-start: lockdown is the guard working, not a fault
+    # Subtest: does not alarm the user when Emergency Lockdown blocks the start
+    ok 1 - does not alarm the user when Emergency Lockdown blocks the start
+      ---
+      duration_ms: 1.6247
+      type: 'test'
+      ...
+    1..1
+ok 26 - broker auto-start: lockdown is the guard working, not a fault
+  ---
+  duration_ms: 2.3746
+  type: 'suite'
+  ...
+# Subtest: broker start failures carry retryability as a flag, not as prose
+    # Subtest: keys retries on the typed flag so a copy edit cannot change enforcement
+    ok 1 - keys retries on the typed flag so a copy edit cannot change enforcement
+      ---
+      duration_ms: 0.8142
+      type: 'test'
+      ...
+    1..1
+ok 27 - broker start failures carry retryability as a flag, not as prose
+  ---
+  duration_ms: 1.3348
+  type: 'suite'
+  ...
+# Subtest: capabilities reject alternate ports, ambiguous paths and URL credentials before credential injection
+ok 28 - capabilities reject alternate ports, ambiguous paths and URL credentials before credential injection
+  ---
+  duration_ms: 14.5616
+  type: 'test'
+  ...
+# Subtest: a returned grant cannot be modified to widen destination or replay limits
+ok 29 - a returned grant cannot be modified to widen destination or replay limits
+  ---
+  duration_ms: 2.7991
+  type: 'test'
+  ...
+# Subtest: arbitrary known secrets are withheld on raw, encoded, escaped or split JSON echoes
+ok 30 - arbitrary known secrets are withheld on raw, encoded, escaped or split JSON echoes
+  ---
+  duration_ms: 13.6972
+  type: 'test'
+  ...
+# Subtest: transport exceptions cannot echo a protected value into reasons or audit
+ok 31 - transport exceptions cannot echo a protected value into reasons or audit
+  ---
+  duration_ms: 3.8404
+  type: 'test'
+  ...
+# Subtest: invalid grant lifetimes and use counts cannot create immortal or unlimited grants
+ok 32 - invalid grant lifetimes and use counts cannot create immortal or unlimited grants
+  ---
+  duration_ms: 2.8038
+  type: 'test'
+  ...
+# Subtest: revoking or clearing authority while storage is pending prevents transport
+ok 33 - revoking or clearing authority while storage is pending prevents transport
+  ---
+  duration_ms: 4.0651
+  type: 'test'
+  ...
+# Subtest: broker launch excludes credentials, preload hooks, proxy overrides, home and executable search paths
+ok 34 - broker launch excludes credentials, preload hooks, proxy overrides, home and executable search paths
+  ---
+  duration_ms: 5.9643
+  type: 'test'
+  ...
+# Subtest: Windows environment names are matched without case sensitivity and no inherited objects are reused
+ok 35 - Windows environment names are matched without case sensitivity and no inherited objects are reused
+  ---
+  duration_ms: 0.6492
+  type: 'test'
+  ...
+# Subtest: Safe Paste inserts the scanned snapshot even if the clipboard changes during scanning
+ok 36 - Safe Paste inserts the scanned snapshot even if the clipboard changes during scanning
+  ---
+  duration_ms: 10.7506
+  type: 'test'
+  ...
+# Subtest: Safe Paste fails closed when the target is outside the supported text editor
+ok 37 - Safe Paste fails closed when the target is outside the supported text editor
+  ---
+  duration_ms: 1.4868
+  type: 'test'
+  ...
+# Subtest: Command Palette hygiene
+    # Subtest: has commands to check
+    ok 1 - has commands to check
+      ---
+      duration_ms: 2.7479
+      type: 'test'
+      ...
+    # Subtest: never renders the SoterAI prefix twice
+    ok 2 - never renders the SoterAI prefix twice
+      ---
+      duration_ms: 3.3917
+      type: 'test'
+      ...
+    # Subtest: gives every command the SoterAI category so it is findable by typing 'soterai'
+    ok 3 - gives every command the SoterAI category so it is findable by typing 'soterai'
+      ---
+      duration_ms: 0.4552
+      type: 'test'
+      ...
+    # Subtest: gives no two commands the same palette text
+    ok 4 - gives no two commands the same palette text
+      ---
+      duration_ms: 1.384
+      type: 'test'
+      ...
+    # Subtest: keeps every title free of leading/trailing whitespace and empty titles
+    ok 5 - keeps every title free of leading/trailing whitespace and empty titles
+      ---
+      duration_ms: 0.9829
+      type: 'test'
+      ...
+    # Subtest: declares every command in contributes.commands exactly once
+    ok 6 - declares every command in contributes.commands exactly once
+      ---
+      duration_ms: 0.6799
+      type: 'test'
+      ...
+    1..6
+ok 38 - Command Palette hygiene
+  ---
+  duration_ms: 13.4212
+  type: 'suite'
+  ...
+# Subtest: activationEvents stay minimal
+    # Subtest: lists no onCommand: events, because VS Code generates them
+    ok 1 - lists no onCommand: events, because VS Code generates them
+      ---
+      duration_ms: 0.9293
+      type: 'test'
+      ...
+    # Subtest: keeps the events that are NOT generated
+    ok 2 - keeps the events that are NOT generated
+      ---
+      duration_ms: 0.8722
+      type: 'test'
+      ...
+    # Subtest: still activates eagerly, because a lazily-activated security guard protects nothing
+    ok 3 - still activates eagerly, because a lazily-activated security guard protects nothing
+      ---
+      duration_ms: 0.6721
+      type: 'test'
+      ...
+    1..3
+ok 39 - activationEvents stay minimal
+  ---
+  duration_ms: 3.8112
+  type: 'suite'
+  ...
+# Subtest: deprecated aliases stay callable but leave the palette
+    # Subtest: soterai.scanSelectedText is still declared and registered, so nothing that calls it breaks
+    ok 1 - soterai.scanSelectedText is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 6.6728
+      type: 'test'
+      ...
+    # Subtest: soterai.scanSelectedText is hidden from the palette in favour of soterai.scanSelection
+    ok 2 - soterai.scanSelectedText is hidden from the palette in favour of soterai.scanSelection
+      ---
+      duration_ms: 0.6014
+      type: 'test'
+      ...
+    # Subtest: soterai.scanSelection is the one the palette offers
+    ok 3 - soterai.scanSelection is the one the palette offers
+      ---
+      duration_ms: 33.7438
+      type: 'test'
+      ...
+    # Subtest: soterai.scanGitDiff is still declared and registered, so nothing that calls it breaks
+    ok 4 - soterai.scanGitDiff is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 0.2889
+      type: 'test'
+      ...
+    # Subtest: soterai.scanGitDiff is hidden from the palette in favour of soterai.scanGitChanges
+    ok 5 - soterai.scanGitDiff is hidden from the palette in favour of soterai.scanGitChanges
+      ---
+      duration_ms: 0.2886
+      type: 'test'
+      ...
+    # Subtest: soterai.scanGitChanges is the one the palette offers
+    ok 6 - soterai.scanGitChanges is the one the palette offers
+      ---
+      duration_ms: 0.2568
+      type: 'test'
+      ...
+    # Subtest: soterai.reviewTerminalCommand is still declared and registered, so nothing that calls it breaks
+    ok 7 - soterai.reviewTerminalCommand is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 0.2422
+      type: 'test'
+      ...
+    # Subtest: soterai.reviewTerminalCommand is hidden from the palette in favour of soterai.checkTerminalCommand
+    ok 8 - soterai.reviewTerminalCommand is hidden from the palette in favour of soterai.checkTerminalCommand
+      ---
+      duration_ms: 0.395
+      type: 'test'
+      ...
+    # Subtest: soterai.checkTerminalCommand is the one the palette offers
+    ok 9 - soterai.checkTerminalCommand is the one the palette offers
+      ---
+      duration_ms: 0.5554
+      type: 'test'
+      ...
+    # Subtest: soterai.choosePolicyPack is still declared and registered, so nothing that calls it breaks
+    ok 10 - soterai.choosePolicyPack is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 0.8128
+      type: 'test'
+      ...
+    # Subtest: soterai.choosePolicyPack is hidden from the palette in favour of soterai.applyPolicyPack
+    ok 11 - soterai.choosePolicyPack is hidden from the palette in favour of soterai.applyPolicyPack
+      ---
+      duration_ms: 0.3029
+      type: 'test'
+      ...
+    # Subtest: soterai.applyPolicyPack is the one the palette offers
+    ok 12 - soterai.applyPolicyPack is the one the palette offers
+      ---
+      duration_ms: 0.1895
+      type: 'test'
+      ...
+    # Subtest: soterai.openSecurityPanel is still declared and registered, so nothing that calls it breaks
+    ok 13 - soterai.openSecurityPanel is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 0.1805
+      type: 'test'
+      ...
+    # Subtest: soterai.openSecurityPanel is hidden from the palette in favour of soterai.openControlPanel
+    ok 14 - soterai.openSecurityPanel is hidden from the palette in favour of soterai.openControlPanel
+      ---
+      duration_ms: 0.1811
+      type: 'test'
+      ...
+    # Subtest: soterai.openControlPanel is the one the palette offers
+    ok 15 - soterai.openControlPanel is the one the palette offers
+      ---
+      duration_ms: 0.1936
+      type: 'test'
+      ...
+    # Subtest: soterai.scanMCPAgentTools is still declared and registered, so nothing that calls it breaks
+    ok 16 - soterai.scanMCPAgentTools is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 0.3773
+      type: 'test'
+      ...
+    # Subtest: soterai.scanMCPAgentTools is hidden from the palette in favour of soterai.scanMCPConfigs
+    ok 17 - soterai.scanMCPAgentTools is hidden from the palette in favour of soterai.scanMCPConfigs
+      ---
+      duration_ms: 0.235
+      type: 'test'
+      ...
+    # Subtest: soterai.scanMCPConfigs is the one the palette offers
+    ok 18 - soterai.scanMCPConfigs is the one the palette offers
+      ---
+      duration_ms: 0.2573
+      type: 'test'
+      ...
+    # Subtest: soterai.openAIActivityLedger is still declared and registered, so nothing that calls it breaks
+    ok 19 - soterai.openAIActivityLedger is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 0.2496
+      type: 'test'
+      ...
+    # Subtest: soterai.openAIActivityLedger is hidden from the palette in favour of soterai.openAILedger
+    ok 20 - soterai.openAIActivityLedger is hidden from the palette in favour of soterai.openAILedger
+      ---
+      duration_ms: 0.2234
+      type: 'test'
+      ...
+    # Subtest: soterai.openAILedger is the one the palette offers
+    ok 21 - soterai.openAILedger is the one the palette offers
+      ---
+      duration_ms: 0.2508
+      type: 'test'
+      ...
+    # Subtest: soterai.generateCanaryToken is still declared and registered, so nothing that calls it breaks
+    ok 22 - soterai.generateCanaryToken is still declared and registered, so nothing that calls it breaks
+      ---
+      duration_ms: 0.2321
+      type: 'test'
+      ...
+    # Subtest: soterai.generateCanaryToken is hidden from the palette in favour of soterai.generateCanary
+    ok 23 - soterai.generateCanaryToken is hidden from the palette in favour of soterai.generateCanary
+      ---
+      duration_ms: 0.2179
+      type: 'test'
+      ...
+    # Subtest: soterai.generateCanary is the one the palette offers
+    ok 24 - soterai.generateCanary is the one the palette offers
+      ---
+      duration_ms: 0.2087
+      type: 'test'
+      ...
+    1..24
+ok 40 - deprecated aliases stay callable but leave the palette
+  ---
+  duration_ms: 53.6416
+  type: 'suite'
+  ...
+# Subtest: no two palette-visible commands describe the same workflow
+    # Subtest: gives every visible command a distinct normalised title
+    ok 1 - gives every visible command a distinct normalised title
+      ---
+      duration_ms: 6.525
+      type: 'test'
+      ...
+    1..1
+ok 41 - no two palette-visible commands describe the same workflow
+  ---
+  duration_ms: 6.8505
+  type: 'suite'
+  ...
+# Subtest: one Open Report entry point replaces eighteen show* rows
+    # Subtest: offers a quick pick that lists the reports
+    ok 1 - offers a quick pick that lists the reports
+      ---
+      duration_ms: 0.529
+      type: 'test'
+      ...
+    # Subtest: points every catalogue entry at a command that exists
+    ok 2 - points every catalogue entry at a command that exists
+      ---
+      duration_ms: 0.5059
+      type: 'test'
+      ...
+    # Subtest: describes each report in one line, so the user can choose without guessing
+    ok 3 - describes each report in one line, so the user can choose without guessing
+      ---
+      duration_ms: 0.3973
+      type: 'test'
+      ...
+    # Subtest: keeps every individual report command registered for automation
+    ok 4 - keeps every individual report command registered for automation
+      ---
+      duration_ms: 0.3126
+      type: 'test'
+      ...
+    # Subtest: lists no duplicate command in the catalogue
+    ok 5 - lists no duplicate command in the catalogue
+      ---
+      duration_ms: 0.3747
+      type: 'test'
+      ...
+    # Subtest: hides the individual report commands it replaces
+    ok 6 - hides the individual report commands it replaces
+      ---
+      duration_ms: 0.3636
+      type: 'test'
+      ...
+    1..6
+ok 42 - one Open Report entry point replaces eighteen show* rows
+  ---
+  duration_ms: 3.091
+  type: 'suite'
+  ...
+# Subtest: the README stops advertising a command count
+    # Subtest: does not sell the raw number of commands as a feature
+    ok 1 - does not sell the raw number of commands as a feature
+      ---
+      duration_ms: 0.6933
+      type: 'test'
+      ...
+    1..1
+ok 43 - the README stops advertising a command count
+  ---
+  duration_ms: 0.891
+  type: 'suite'
+  ...
+# Subtest: buildScreenShareWarnings (\#6)
+    # Subtest: flags secret files at any depth, not only at the workspace root
+    ok 1 - flags secret files at any depth, not only at the workspace root
+      ---
+      duration_ms: 7.2143
+      type: 'test'
+      ...
+    # Subtest: flags key material and named secrets
+    ok 2 - flags key material and named secrets
+      ---
+      duration_ms: 0.8629
+      type: 'test'
+      ...
+    # Subtest: does not flag ordinary source files
+    ok 3 - does not flag ordinary source files
+      ---
+      duration_ms: 0.4127
+      type: 'test'
+      ...
+    1..3
+ok 44 - buildScreenShareWarnings (\#6)
+  ---
+  duration_ms: 10.6513
+  type: 'suite'
+  ...
+# Subtest: evaluateOsvNudge (\#7)
+    # Subtest: never claims risky packages were found when no scan ran
+    ok 1 - never claims risky packages were found when no scan ran
+      ---
+      duration_ms: 1.25
+      type: 'test'
+      ...
+    # Subtest: reports the real count when a scan did run
+    ok 2 - reports the real count when a scan did run
+      ---
+      duration_ms: 0.6698
+      type: 'test'
+      ...
+    # Subtest: stays quiet after a clean scan, and whenever OSV is already always-on
+    ok 3 - stays quiet after a clean scan, and whenever OSV is already always-on
+      ---
+      duration_ms: 0.6587
+      type: 'test'
+      ...
+    1..3
+ok 45 - evaluateOsvNudge (\#7)
+  ---
+  duration_ms: 3.5141
+  type: 'suite'
+  ...
+# Subtest: parseGitHooksPath (\#5)
+    # Subtest: detects a husky-style core.hooksPath so a dead hook is never installed
+    ok 1 - detects a husky-style core.hooksPath so a dead hook is never installed
+      ---
+      duration_ms: 23.5839
+      type: 'test'
+      ...
+    # Subtest: ignores hooksPath declared under another section
+    ok 2 - ignores hooksPath declared under another section
+      ---
+      duration_ms: 1.3402
+      type: 'test'
+      ...
+    # Subtest: returns null for a normal repo config
+    ok 3 - returns null for a normal repo config
+      ---
+      duration_ms: 37.9925
+      type: 'test'
+      ...
+    # Subtest: strips quotes around the value
+    ok 4 - strips quotes around the value
+      ---
+      duration_ms: 0.4757
+      type: 'test'
+      ...
+    1..4
+ok 46 - parseGitHooksPath (\#5)
+  ---
+  duration_ms: 65.0369
+  type: 'suite'
+  ...
+# Subtest: buildPreCommitHook (\#5)
+    # Subtest: is a POSIX script that blocks on a match and exits 0 otherwise
+    ok 1 - is a POSIX script that blocks on a match and exits 0 otherwise
+      ---
+      duration_ms: 0.4289
+      type: 'test'
+      ...
+    1..1
+ok 47 - buildPreCommitHook (\#5)
+  ---
+  duration_ms: 0.6296
+  type: 'suite'
+  ...
+# Subtest: resolveLocalModelLogFiles (\#8)
+    # Subtest: expands the LM Studio log DIRECTORY into the files inside it
+    ok 1 - expands the LM Studio log DIRECTORY into the files inside it
+      ---
+      duration_ms: 9.1299
+      type: 'test'
+      ...
+    # Subtest: passes plain log files straight through
+    ok 2 - passes plain log files straight through
+      ---
+      duration_ms: 1.175
+      type: 'test'
+      ...
+    # Subtest: returns nothing when no local model is installed
+    ok 3 - returns nothing when no local model is installed
+      ---
+      duration_ms: 22.9443
+      type: 'test'
+      ...
+    # Subtest: bounds how many files it pulls out of one directory
+    ok 4 - bounds how many files it pulls out of one directory
+      ---
+      duration_ms: 2.5111
+      type: 'test'
+      ...
+    1..4
+ok 48 - resolveLocalModelLogFiles (\#8)
+  ---
+  duration_ms: 44.5618
+  type: 'suite'
+  ...
+# Subtest: scanAICodeForVulns (\#3)
+    # Subtest: matches injection-prone AI-generated patterns
+    ok 1 - matches injection-prone AI-generated patterns
+      ---
+      duration_ms: 3.5174
+      type: 'test'
+      ...
+    # Subtest: is stateless across calls despite global regexes
+    ok 2 - is stateless across calls despite global regexes
+      ---
+      duration_ms: 0.4513
+      type: 'test'
+      ...
+    # Subtest: stays quiet on clean code
+    ok 3 - stays quiet on clean code
+      ---
+      duration_ms: 0.6076
+      type: 'test'
+      ...
+    1..3
+ok 49 - scanAICodeForVulns (\#3)
+  ---
+  duration_ms: 5.1239
+  type: 'suite'
+  ...
+# Subtest: RAG egress detection (\#4) is reachable from this module
+    # Subtest: re-exports a live implementation rather than a dead local copy
+    ok 1 - re-exports a live implementation rather than a dead local copy
+      ---
+      duration_ms: 0.8071
+      type: 'test'
+      ...
+    1..1
+ok 50 - RAG egress detection (\#4) is reachable from this module
+  ---
+  duration_ms: 1.1023
+  type: 'suite'
+  ...
+# Subtest: all-on panel retains unmanaged scope, real action routes and safe metadata rendering
+ok 51 - all-on panel retains unmanaged scope, real action routes and safe metadata rendering
+  ---
+  duration_ms: 549.3281
+  type: 'test'
+  ...
+# Subtest: host rejects duplicate actions while an earlier command is awaiting completion
+ok 52 - host rejects duplicate actions while an earlier command is awaiting completion
+  ---
+  duration_ms: 4.9178
+  type: 'test'
+  ...
+# Subtest: cancelled toggle does not report a confirmed setting change
+ok 53 - cancelled toggle does not report a confirmed setting change
+  ---
+  duration_ms: 4.4511
+  type: 'test'
+  ...
+# Subtest: one-click panel action uses the automatic pipeline and preserves partial results
+ok 54 - one-click panel action uses the automatic pipeline and preserves partial results
+  ---
+  duration_ms: 3.7106
+  type: 'test'
+  ...
+# Subtest: an old render cannot replace newer status or update a disposed view
+ok 55 - an old render cannot replace newer status or update a disposed view
+  ---
+  duration_ms: 125.9338
+  type: 'test'
+  ...
+# Subtest: status errors present a retry without assuming protection
+ok 56 - status errors present a retry without assuming protection
+  ---
+  duration_ms: 40.6545
+  type: 'test'
+  ...
+# fatal error: pageAlloc: out of memory
+# runtime stack:
+# runtime.throw({0x7ff6af1ec411?, 0x3ea883c00000?})
+# \\truntime/panic.go:1229 +0x4d fp=0x3fcd7ff330 sp=0x3fcd7ff300 pc=0x7ff6aebc3d8d
+# runtime.(*pageAlloc).grow(0x7ff6af63d988, 0x400000?, 0x400000)
+# \\truntime/mpagealloc.go:413 +0x254 fp=0x3fcd7ff3a0 sp=0x3fcd7ff330 pc=0x7ff6aeb7d6f4
+# runtime.(*mheap).grow(0x7ff6af63d980?, 0x2000?)
+# \\truntime/mheap.go:1644 +0x2d0 fp=0x3fcd7ff428 sp=0x3fcd7ff3a0 pc=0x7ff6aeb7ad30
+# runtime.(*mheap).allocSpan(0x7ff6af63d980, 0x1, 0x0, 0x24)
+# \\truntime/mheap.go:1299 +0x1b3 fp=0x3fcd7ff4d8 sp=0x3fcd7ff428 pc=0x7ff6aeb7a2b3
+# runtime.(*mheap).alloc.func1()
+# \\truntime/mheap.go:1017 +0x5c fp=0x3fcd7ff520 sp=0x3fcd7ff4d8 pc=0x7ff6aeb79d5c
+# runtime.(*mheap).alloc(0x7ff6aebcb26e?, 0x3fcd7ff580?, 0x0?)
+# \\truntime/mheap.go:1011 +0x57 fp=0x3fcd7ff568 sp=0x3fcd7ff520 pc=0x7ff6aeb79cb7
+# runtime.(*mcentral).grow(0x7ff6af634ba0?)
+# \\truntime/mcentral.go:253 +0x36 fp=0x3fcd7ff598 sp=0x3fcd7ff568 pc=0x7ff6aeb62376
+# runtime.(*mcentral).cacheSpan(0x7ff6af64f918)
+# \\truntime/mcentral.go:171 +0x454 fp=0x3fcd7ff610 sp=0x3fcd7ff598 pc=0x7ff6aeb621f4
+# runtime.(*mcache).refill(0x232596b0108, 0x80?)
+# \\truntime/mcache.go:205 +0x16b fp=0x3fcd7ff650 sp=0x3fcd7ff610 pc=0x7ff6aeb617cb
+# runtime.(*mcache).nextFree(0x232596b0108, 0x24)
+# \\truntime/malloc.go:1006 +0x7e fp=0x3fcd7ff688 sp=0x3fcd7ff650 pc=0x7ff6aeb5dcde
+# runtime.mallocgcSmallScanNoHeader(0x100, 0x7ff6af13caa0)
+# \\truntime/malloc.go:1529 +0x145 fp=0x3fcd7ff6e8 sp=0x3fcd7ff688 pc=0x7ff6aeb5e585
+# runtime.mallocgc(0x100, 0x7ff6af13caa0, 0x1)
+# \\truntime/malloc.go:1150 +0xa5 fp=0x3fcd7ff718 sp=0x3fcd7ff6e8 pc=0x7ff6aebc1bc5
+# runtime.newobject(0x7ff6aeb67677?)
+# \\truntime/malloc.go:2157 +0x25 fp=0x3fcd7ff740 sp=0x3fcd7ff718 pc=0x7ff6aeb5f0a5
+# internal/cpu.doinit()
+# \\tinternal/cpu/cpu_x86.go:72 +0x1e fp=0x3fcd7ff7a8 sp=0x3fcd7ff740 pc=0x7ff6aeb4209e
+# internal/cpu.Initialize({0x0, 0x0})
+# \\tinternal/cpu/cpu.go:181 +0x1d fp=0x3fcd7ff7c8 sp=0x3fcd7ff7a8 pc=0x7ff6aeb41b3d
+# runtime.cpuinit(...)
+# \\truntime/proc.go:761
+# runtime.schedinit()
+# \\truntime/proc.go:878 +0xfa fp=0x3fcd7ff820 sp=0x3fcd7ff7c8 pc=0x7ff6aeb8fe1a
+# runtime.rt0_go()
+# \\truntime/asm_amd64.s:373 +0x143 fp=0x3fcd7ff828 sp=0x3fcd7ff820 pc=0x7ff6aebc97c3
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: The service was stopped
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:999:38
+#     at responseCallbacks.<computed> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:884:9)
+#     at Socket.afterClose (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:875:28)
+#     at Socket.emit (node:events:530:35)
+#     at endReadableNT (node:internal/streams/readable:1698:12)
+#     at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\coverage-disclosure.test.ts
+not ok 16 - src\\__tests__\\coverage-disclosure.test.ts
+  ---
+  duration_ms: 3230.4017
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\coverage-disclosure.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: dashboard distinguishes an unscanned workspace from a clean scan and shows its coverage boundary
+ok 58 - dashboard distinguishes an unscanned workspace from a clean scan and shows its coverage boundary
+  ---
+  duration_ms: 316.4094
+  type: 'test'
+  ...
+# Subtest: dashboard escapes finding and status metadata and rejects malformed numeric scores
+ok 59 - dashboard escapes finding and status metadata and rejects malformed numeric scores
+  ---
+  duration_ms: 13.5446
+  type: 'test'
+  ...
+# Subtest: dashboard represents failed status reads as unavailable rather than missing protection
+ok 60 - dashboard represents failed status reads as unavailable rather than missing protection
+  ---
+  duration_ms: 8.5688
+  type: 'test'
+  ...
+# Subtest: DepGuard heuristics
+    # Subtest: flags curl|sh install as critical
+    ok 1 - flags curl|sh install as critical
+      ---
+      duration_ms: 8.1904
+      type: 'test'
+      ...
+    # Subtest: flags typosquat-like package names
+    ok 2 - flags typosquat-like package names
+      ---
+      duration_ms: 2.6963
+      type: 'test'
+      ...
+    # Subtest: flags unpinned and remote URL installs
+    ok 3 - flags unpinned and remote URL installs
+      ---
+      duration_ms: 1.2507
+      type: 'test'
+      ...
+    # Subtest: parses npm install package@version
+    ok 4 - parses npm install package@version
+      ---
+      duration_ms: 1.5593
+      type: 'test'
+      ...
+    1..4
+ok 61 - DepGuard heuristics
+  ---
+  duration_ms: 18.3512
+  type: 'suite'
+  ...
+# Subtest: DepGuard OSV client (mocked)
+    # Subtest: skips unpinned versions without inventing CVEs
+    ok 1 - skips unpinned versions without inventing CVEs
+      ---
+      duration_ms: 12.5522
+      type: 'test'
+      ...
+    # Subtest: maps OSV vulns from a successful query
+    ok 2 - maps OSV vulns from a successful query
+      ---
+      duration_ms: 234.0881
+      type: 'test'
+      ...
+    # Subtest: returns error metadata on HTTP failure without throwing
+    ok 3 - returns error metadata on HTTP failure without throwing
+      ---
+      duration_ms: 1.0782
+      type: 'test'
+      ...
+    # Subtest: batch query maps results by index
+    ok 4 - batch query maps results by index
+      ---
+      duration_ms: 8.6983
+      type: 'test'
+      ...
+    1..4
+ok 62 - DepGuard OSV client (mocked)
+  ---
+  duration_ms: 257.4944
+  type: 'suite'
+  ...
+# Subtest: menu surfaces exist at all
+    # Subtest: contributes more than just the Command Palette
+    ok 1 - contributes more than just the Command Palette
+      ---
+      duration_ms: 3.0847
+      type: 'test'
+      ...
+    # Subtest: puts SoterAI in the editor context menu, where text is selected
+    ok 2 - puts SoterAI in the editor context menu, where text is selected
+      ---
+      duration_ms: 2.9504
+      type: 'test'
+      ...
+    # Subtest: puts SoterAI in the explorer context menu, where files are chosen
+    ok 3 - puts SoterAI in the explorer context menu, where files are chosen
+      ---
+      duration_ms: 0.8643
+      type: 'test'
+      ...
+    # Subtest: puts SoterAI in source control, where secrets get committed
+    ok 4 - puts SoterAI in source control, where secrets get committed
+      ---
+      duration_ms: 0.6392
+      type: 'test'
+      ...
+    1..4
+ok 63 - menu surfaces exist at all
+  ---
+  duration_ms: 11.3604
+  type: 'suite'
+  ...
+# Subtest: menu entries are wired to real commands
+    # Subtest: references only declared commands
+    ok 1 - references only declared commands
+      ---
+      duration_ms: 2.7732
+      type: 'test'
+      ...
+    # Subtest: references only declared submenus
+    ok 2 - references only declared submenus
+      ---
+      duration_ms: 1.0432
+      type: 'test'
+      ...
+    # Subtest: gives every submenu at least one item, so it is never an empty arrow
+    ok 3 - gives every submenu at least one item, so it is never an empty arrow
+      ---
+      duration_ms: 0.6252
+      type: 'test'
+      ...
+    # Subtest: gates every context-menu entry with a when clause
+    ok 4 - gates every context-menu entry with a when clause
+      ---
+      duration_ms: 1.1445
+      type: 'test'
+      ...
+    # Subtest: gives every view/title command an icon
+    ok 5 - gives every view/title command an icon
+      ---
+      duration_ms: 0.9192
+      type: 'test'
+      ...
+    1..5
+ok 64 - menu entries are wired to real commands
+  ---
+  duration_ms: 8.0619
+  type: 'suite'
+  ...
+# Subtest: keybindings
+    # Subtest: binds the two highest-frequency safe actions
+    ok 1 - binds the two highest-frequency safe actions
+      ---
+      duration_ms: 4.9891
+      type: 'test'
+      ...
+    # Subtest: stays small, because every binding is taken from the user's own budget
+    ok 2 - stays small, because every binding is taken from the user's own budget
+      ---
+      duration_ms: 0.595
+      type: 'test'
+      ...
+    # Subtest: binds only declared commands, and offers a mac chord for each
+    ok 3 - binds only declared commands, and offers a mac chord for each
+      ---
+      duration_ms: 0.4711
+      type: 'test'
+      ...
+    # Subtest: avoids shallow chords that collide with core editor keys
+    ok 4 - avoids shallow chords that collide with core editor keys
+      ---
+      duration_ms: 0.9465
+      type: 'test'
+      ...
+    1..4
+ok 65 - keybindings
+  ---
+  duration_ms: 7.8345
+  type: 'suite'
+  ...
+# Subtest: view welcome content
+    # Subtest: gives an empty view something to say
+    ok 1 - gives an empty view something to say
+      ---
+      duration_ms: 0.4947
+      type: 'test'
+      ...
+    # Subtest: targets views this extension actually contributes
+    ok 2 - targets views this extension actually contributes
+      ---
+      duration_ms: 0.4312
+      type: 'test'
+      ...
+    # Subtest: offers a runnable command link, not just prose
+    ok 3 - offers a runnable command link, not just prose
+      ---
+      duration_ms: 1.2986
+      type: 'test'
+      ...
+    1..3
+ok 66 - view welcome content
+  ---
+  duration_ms: 2.708
+  type: 'suite'
+  ...
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: spawn UNKNOWN
+#     at ChildProcess.spawn (node:internal/child_process:420:11)
+#     at Object.spawn (node:child_process:753:9)
+#     at ensureServiceIsRunning (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2268:29)
+#     at startSyncServiceWorker (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2474:19)
+#     at Object.<anonymous> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2515:3)
+#     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+#     at Object..js (node:internal/modules/cjs/loader:1895:10)
+#     at Module.load (node:internal/modules/cjs/loader:1465:32)
+#     at Function._load (node:internal/modules/cjs/loader:1282:12)
+#     at TracingChannel.traceSync (node:diagnostics_channel:322:14) {
+#   errno: -4094,
+#   code: 'UNKNOWN',
+#   syscall: 'spawn',
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\egress-firewall.test.ts
+not ok 20 - src\\__tests__\\egress-firewall.test.ts
+  ---
+  duration_ms: 6003.0058
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\egress-firewall.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: Enforced API capability — Scenario A
+    # Subtest: injects the credential locally for the approved host/method/path and never exposes it to the caller
+    ok 1 - injects the credential locally for the approved host/method/path and never exposes it to the caller
+      ---
+      duration_ms: 18.9974
+      type: 'test'
+      ...
+    # Subtest: blocks wrong host, wrong method, and out-of-scope path
+    ok 2 - blocks wrong host, wrong method, and out-of-scope path
+      ---
+      duration_ms: 7.1653
+      type: 'test'
+      ...
+    # Subtest: blocks plaintext http even for the right host
+    ok 3 - blocks plaintext http even for the right host
+      ---
+      duration_ms: 1.9544
+      type: 'test'
+      ...
+    # Subtest: enforces use limit (replay past maxUses fails)
+    ok 4 - enforces use limit (replay past maxUses fails)
+      ---
+      duration_ms: 4.2541
+      type: 'test'
+      ...
+    # Subtest: fails on expiry
+    ok 5 - fails on expiry
+      ---
+      duration_ms: 18.2299
+      type: 'test'
+      ...
+    # Subtest: fails after revocation and on workspace mismatch
+    ok 6 - fails after revocation and on workspace mismatch
+      ---
+      duration_ms: 3.9863
+      type: 'test'
+      ...
+    # Subtest: emergency lockdown revokes every active capability at once
+    ok 7 - emergency lockdown revokes every active capability at once
+      ---
+      duration_ms: 1.8247
+      type: 'test'
+      ...
+    # Subtest: scans the response so a service cannot echo the secret back into AI context
+    ok 8 - scans the response so a service cannot echo the secret back into AI context
+      ---
+      duration_ms: 1.3586
+      type: 'test'
+      ...
+    # Subtest: metadata never leaks the secretRef mapping to a value
+    ok 9 - metadata never leaks the secretRef mapping to a value
+      ---
+      duration_ms: 1.696
+      type: 'test'
+      ...
+    # Subtest: unknown handle fails closed
+    ok 10 - unknown handle fails closed
+      ---
+      duration_ms: 1.18
+      type: 'test'
+      ...
+    1..10
+ok 68 - Enforced API capability — Scenario A
+  ---
+  duration_ms: 65.9717
+  type: 'suite'
+  ...
+# fatal error: runtime: cannot allocate memory
+# goroutine 1 gp=0x3d9053180000 m=0 mp=0x7ff6af634680 [running, locked to thread]:
+# runtime.throw({0x7ff6af1f1366?, 0x7ff6aebb4760?})
+# \\truntime/panic.go:1229 +0x4d fp=0x3d90531e1b10 sp=0x3d90531e1ae0 pc=0x7ff6aebc3d8d
+# runtime.stkbucket(0x1, 0x240, {0x3d905315c000, 0xe, 0x3d90531e1c08?}, 0x1)
+# \\truntime/mprof.go:284 +0x3c5 fp=0x3d90531e1b70 sp=0x3d90531e1b10 pc=0x7ff6aeb81a25
+# runtime.mProf_Malloc(0x7ff6af634680, 0x3d90531edd48, 0x240)
+# \\truntime/mprof.go:450 +0xd7 fp=0x3d90531e1bf0 sp=0x3d90531e1b70 pc=0x7ff6aeb81cd7
+# runtime.profilealloc(0x7ff6af634680?, 0x3d90531edd48?, 0x240?)
+# \\truntime/malloc.go:2245 +0x9b fp=0x3d90531e1c20 sp=0x3d90531e1bf0 pc=0x7ff6aeb5f15b
+# runtime.mallocgcSmallScanHeader(0x3d90531e1ca0?, 0x7ff6af171480)
+# \\truntime/malloc.go:1674 +0x296 fp=0x3d90531e1c78 sp=0x3d90531e1c20 pc=0x7ff6aeb5ea16
+# runtime.mallocgc(0x210, 0x7ff6af171480, 0x1)
+# \\truntime/malloc.go:1152 +0xac fp=0x3d90531e1ca8 sp=0x3d90531e1c78 pc=0x7ff6aebc1bcc
+# runtime.newarray(0x7ff6af634680?, 0x3d905311a1d0?)
+# \\truntime/malloc.go:2207 +0x45 fp=0x3d90531e1cd0 sp=0x3d90531e1ca8 pc=0x7ff6aebc1da5
+# internal/runtime/maps.newarray(0x20?, 0x7ff6af1b2880?)
+# \\truntime/malloc.go:2231 +0x13 fp=0x3d90531e1cf0 sp=0x3d90531e1cd0 pc=0x7ff6aebc1e53
+# internal/runtime/maps.newGroups(...)
+# \\tinternal/runtime/maps/group.go:321
+# internal/runtime/maps.(*table).reset(0x3d905318aae0, 0x7ff6af15cf80, 0x10)
+# \\tinternal/runtime/maps/table.go:103 +0x3d fp=0x3d90531e1d18 sp=0x3d90531e1cf0 pc=0x7ff6aeb45d9d
+# internal/runtime/maps.newTable(0x7ff6af15cf80, 0xa, 0x0, 0x0)
+# \\tinternal/runtime/maps/table.go:94 +0x8f fp=0x3d90531e1d48 sp=0x3d90531e1d18 pc=0x7ff6aeb45cef
+# internal/runtime/maps.NewMap(0x7ff6af15cf80, 0x9, 0x3d90531b97e0?, 0x1000000000000)
+# \\tinternal/runtime/maps/map.go:322 +0x185 fp=0x3d90531e1da0 sp=0x3d90531e1d48 pc=0x7ff6aeb44085
+# runtime.makemap(0x7ff6af15d080?, 0x3d905314dc20?, 0x10000000?)
+# \\truntime/map.go:67 +0x29 fp=0x3d90531e1dd0 sp=0x3d90531e1da0 pc=0x7ff6aebc1ee9
+# github.com/evanw/esbuild/internal/compat.map.init.4()
+# \\tgithub.com/evanw/esbuild/internal/compat/js_table.go:572 +0x7273 fp=0x3d90531e1e18 sp=0x3d90531e1dd0 pc=0x7ff6aee02bd3
+# github.com/evanw/esbuild/internal/compat.init()
+# \\tgithub.com/evanw/esbuild/internal/compat/js_table.go:198 +0x25 fp=0x3d90531e1e28 sp=0x3d90531e1e18 pc=0x7ff6aedf8065
+# runtime.doInit1(0x7ff6af5c4f70)
+# \\truntime/proc.go:8103 +0xda fp=0x3d90531e1f48 sp=0x3d90531e1e28 pc=0x7ff6aeb9e8ba
+# runtime.doInit(...)
+# \\truntime/proc.go:8070
+# runtime.main()
+# \\truntime/proc.go:258 +0x25e fp=0x3d90531e1fe0 sp=0x3d90531e1f48 pc=0x7ff6aeb8ef3e
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x3d90531e1fe8 sp=0x3d90531e1fe0 pc=0x7ff6aebcb5a1
+# goroutine 2 gp=0x3d9053180780 m=nil [force gc (idle)]:
+# runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+# \\truntime/proc.go:462 +0xce fp=0x3d9053183fa8 sp=0x3d9053183f88 pc=0x7ff6aebc3eae
+# runtime.goparkunlock(...)
+# \\truntime/proc.go:468
+# runtime.forcegchelper()
+# \\truntime/proc.go:375 +0xb8 fp=0x3d9053183fe0 sp=0x3d9053183fa8 pc=0x7ff6aeb8f298
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x3d9053183fe8 sp=0x3d9053183fe0 pc=0x7ff6aebcb5a1
+# created by runtime.init.7 in goroutine 1
+# \\truntime/proc.go:363 +0x1a
+# goroutine 3 gp=0x3d9053180b40 m=nil [GC sweep wait]:
+# runtime.gopark(0x0?, 0x0?, 0x0?, 0x0?, 0x0?)
+# \\truntime/proc.go:462 +0xce fp=0x3d9053185f88 sp=0x3d9053185f68 pc=0x7ff6aebc3eae
+# runtime.goparkunlock(...)
+# \\truntime/proc.go:468
+# runtime.bgsweep(0x3d905313c180)
+# \\truntime/mgcsweep.go:279 +0x94 fp=0x3d9053185fc8 sp=0x3d9053185f88 pc=0x7ff6aeb764b4
+# runtime.gcenable.gowrap1()
+# \\truntime/mgc.go:214 +0x17 fp=0x3d9053185fe0 sp=0x3d9053185fc8 pc=0x7ff6aeb67917
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x3d9053185fe8 sp=0x3d9053185fe0 pc=0x7ff6aebcb5a1
+# created by runtime.gcenable in goroutine 1
+# \\truntime/mgc.go:214 +0x66
+# goroutine 4 gp=0x3d9053180d20 m=nil [GC scavenge wait]:
+# runtime.gopark(0x3d905313c180?, 0x7ff6af216f00?, 0x1?, 0x0?, 0x3d9053180d20?)
+# \\truntime/proc.go:462 +0xce fp=0x3d9053193f78 sp=0x3d9053193f58 pc=0x7ff6aebc3eae
+# runtime.goparkunlock(...)
+# \\truntime/proc.go:468
+# runtime.(*scavengerState).park(0x7ff6af633300)
+# \\truntime/mgcscavenge.go:425 +0x49 fp=0x3d9053193fa8 sp=0x3d9053193f78 pc=0x7ff6aeb73fe9
+# runtime.bgscavenge(0x3d905313c180)
+# \\truntime/mgcscavenge.go:653 +0x3c fp=0x3d9053193fc8 sp=0x3d9053193fa8 pc=0x7ff6aeb7455c
+# runtime.gcenable.gowrap2()
+# \\truntime/mgc.go:215 +0x17 fp=0x3d9053193fe0 sp=0x3d9053193fc8 pc=0x7ff6aeb678d7
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x3d9053193fe8 sp=0x3d9053193fe0 pc=0x7ff6aebcb5a1
+# created by runtime.gcenable in goroutine 1
+# \\truntime/mgc.go:215 +0xa5
+# goroutine 5 gp=0x3d90531810e0 m=nil [runnable]:
+# runtime.runFinalizers()
+# \\truntime/mfinal.go:193 fp=0x3d9053195fe0 sp=0x3d9053195fd8 pc=0x7ff6aeb667a0
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x3d9053195fe8 sp=0x3d9053195fe0 pc=0x7ff6aebcb5a1
+# created by runtime.createfing in goroutine 1
+# \\truntime/mfinal.go:172 +0x3d
+# goroutine 6 gp=0x3d90531812c0 m=nil [runnable]:
+# runtime.runCleanups()
+# \\truntime/mcleanup.go:716 fp=0x3d905318ffe0 sp=0x3d905318ffd8 pc=0x7ff6aeb63d60
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x3d905318ffe8 sp=0x3d905318ffe0 pc=0x7ff6aebcb5a1
+# created by runtime.(*cleanupQueue).createGs in goroutine 1
+# \\truntime/mcleanup.go:672 +0xa5
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: The service was stopped
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:999:38
+#     at responseCallbacks.<computed> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:884:9)
+#     at Socket.afterClose (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:875:28)
+#     at Socket.emit (node:events:530:35)
+#     at endReadableNT (node:internal/streams/readable:1698:12)
+#     at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\enterprise-policy.test.ts
+not ok 22 - src\\__tests__\\enterprise-policy.test.ts
+  ---
+  duration_ms: 3290.1024
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\enterprise-policy.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# <--- Last few GCs --->
+# [32448:00000282136A1000]      318 ms: Scavenge 4.9 (6.6) -> 4.6 (7.1) MB, pooled: 0 MB, 2.95 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+# [32448:00000282136A1000]     1341 ms: Scavenge 5.8 (7.6) -> 5.5 (10.1) MB, pooled: 0 MB, 947.27 / 0.00 ms  (average mu = 1.000, current mu = 1.000) task; 
+# [32448:00000282136A1000]     1529 ms: Scavenge 8.8 (11.6) -> 7.9 (12.3) MB, pooled: 0 MB, 2.24 / 0.01 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+# <--- JS stacktrace --->
+# FATAL ERROR: Zone Allocation failed - process out of memory
+# ----- Native stack trace -----
+#  1: 00007FF7E980711D node::SetCppgcReference+17725
+#  2: 00007FF7E976A138 SSL_get_quiet_shutdown+92344
+#  3: 00007FF7EA2F0C51 v8::Isolate::ReportExternalAllocationLimitReached+65
+#  4: 00007FF7EA2DD8D6 v8::Function::Experimental_IsNopFunction+2870
+#  5: 00007FF7E9DAC79B v8::SnapshotCreator::GetIsolate+52395
+#  6: 00007FF7EA068E64 v8::Context::GetIsolate+454084
+#  7: 00007FF7EA071DF7 v8::Context::GetIsolate+490839
+#  8: 00007FF7EA070BF3 v8::Context::GetIsolate+486227
+#  9: 00007FF7EA06A067 v8::Context::GetIsolate+458695
+# 10: 00007FF7EA06D586 v8::Context::GetIsolate+472294
+# 11: 00007FF7EA070C32 v8::Context::GetIsolate+486290
+# 12: 00007FF7EA06A067 v8::Context::GetIsolate+458695
+# 13: 00007FF7EA06D63D v8::Context::GetIsolate+472477
+# 14: 00007FF7EA070566 v8::Context::GetIsolate+484550
+# 15: 00007FF7EA06A067 v8::Context::GetIsolate+458695
+# 16: 00007FF7EA070643 v8::Context::GetIsolate+484771
+# 17: 00007FF7EA06A067 v8::Context::GetIsolate+458695
+# 18: 00007FF7EA0735C5 v8::Context::GetIsolate+496933
+# 19: 00007FF7EA0682F2 v8::Context::GetIsolate+451154
+# 20: 00007FF7EA067F40 v8::Context::GetIsolate+450208
+# 21: 00007FF7EA05789B v8::Context::GetIsolate+382971
+# 22: 00007FF7EA2583A8 v8::SharedValueConveyor::SharedValueConveyor+30744
+# 23: 00007FF7EA2516B8 v8::SharedValueConveyor::SharedValueConveyor+2856
+# 24: 00007FF7EA254C93 v8::SharedValueConveyor::SharedValueConveyor+16643
+# 25: 00007FF7EA25460A v8::SharedValueConveyor::SharedValueConveyor+14970
+# 26: 00007FF7E9F9A213 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+808307
+# 27: 00007FF7E9F9B166 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+812230
+# 28: 00007FF7E9F9BB44 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+814756
+# 29: 00007FF7E9F81207 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+705895
+# 30: 00007FF7E9E108CD v8::base::AddressSpaceReservation::AddressSpaceReservation+293821
+# 31: 00007FF7EA3ABFEE v8::PropertyDescriptor::writable+725966
+# 32: 00007FF7EA30D17F v8::PropertyDescriptor::writable+75103
+# 33: 00007FF7EA4A2C1D v8::PropertyDescriptor::writable+1736701
+# 34: 00007FF7EA30C852 v8::PropertyDescriptor::writable+72754
+# 35: 00007FF7EA30C852 v8::PropertyDescriptor::writable+72754
+# 36: 00007FF7EA42913B v8::PropertyDescriptor::writable+1238299
+# 37: 00007FF7EA30D370 v8::PropertyDescriptor::writable+75600
+# 38: 00007FF7EA4A2C1D v8::PropertyDescriptor::writable+1736701
+# 39: 00007FF7EA30C852 v8::PropertyDescriptor::writable+72754
+# 40: 00007FF7EA30C852 v8::PropertyDescriptor::writable+72754
+# 41: 00007FF7EA34F081 v8::PropertyDescriptor::writable+345185
+# 42: 00007FF7EA30A450 v8::PropertyDescriptor::writable+63536
+# 43: 00007FF7EA30A04B v8::PropertyDescriptor::writable+62507
+# 44: 00007FF7EA1B39AA v8::Isolate::NumberOfHeapSpaces+2586
+# 45: 00007FF7EA1B3ABB v8::Isolate::NumberOfHeapSpaces+2859
+# 46: 00007FF7EA1B4501 v8::Isolate::NumberOfHeapSpaces+5489
+# 47: 00007FF7E9EE62B5 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+71189
+# 48: 00007FF7E9EE8628 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+80264
+# 49: 00007FF7E9EE8487 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+79847
+# 50: 00007FF7E9EE8487 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+79847
+# 51: 00007FF7E9EE8487 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+79847
+# 52: 00007FF7E9EE5BAC v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+69388
+# 53: 00007FF7E9F17A50 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+273840
+# 54: 00007FF7EA2DC934 v8::Module::Evaluate+324
+# 55: 00007FF7E97B81A4 v8::base::CPU::has_popcnt+10980
+# 56: 00007FF7EA30E598 v8::PropertyDescriptor::writable+80248
+# 57: 00007FF7EA30C852 v8::PropertyDescriptor::writable+72754
+# 58: 00007FF7EA34BF37 v8::PropertyDescriptor::writable+332567
+# 59: 00007FF7EA42B2E9 v8::PropertyDescriptor::writable+1246921
+# 60: 00007FF7EA33BE63 v8::PropertyDescriptor::writable+266819
+# 61: 00007FF7EA30A34B v8::PropertyDescriptor::writable+63275
+# 62: 00007FF7EA1B39C1 v8::Isolate::NumberOfHeapSpaces+2609
+# 63: 00007FF7EA1B3ABB v8::Isolate::NumberOfHeapSpaces+2859
+# 64: 00007FF7EA1B46E4 v8::Isolate::NumberOfHeapSpaces+5972
+# 65: 00007FF7EA18AE06 v8::base::CPU::has_sse41+1558
+# 66: 00007FF7EA18AB20 v8::base::CPU::has_sse41+816
+# 67: 00007FF7E9849C75 node::CallbackScope::~CallbackScope+533
+# 68: 00007FF7E9849AEE node::CallbackScope::~CallbackScope+142
+# 69: 00007FF7E9747A84 v8::base::CPU::has_fpu+45924
+# 70: 00007FF7E9760CE8 SSL_get_quiet_shutdown+54376
+# 71: 00007FF7E987CF6A uv_timer_stop+1322
+# 72: 00007FF7E987918B uv_update_time+475
+# 73: 00007FF7E9878CF4 uv_run+900
+# 74: 00007FF7E98492C5 node::SpinEventLoop+405
+# 75: 00007FF7E962544C X509_CRL_get_meth_data+174364
+# 76: 00007FF7E96188F5 X509_CRL_get_meth_data+122309
+# 77: 00007FF7E9867463 uv_poll_stop+291
+# 78: 00007FF7EB064C2E inflateValidate+159742
+# 79: 00007FF92968CCB7 BaseThreadInitThunk+23
+# 80: 00007FF92B60AD6C RtlUserThreadStart+44
+# Subtest: src\\__tests__\\extension.test.ts
+not ok 23 - src\\__tests__\\extension.test.ts
+  ---
+  duration_ms: 2693.1884
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\extension.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 134
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: VS Code lowercase Windows drive letters preserve legitimate file access
+ok 71 - VS Code lowercase Windows drive letters preserve legitimate file access
+  ---
+  duration_ms: 99.5964
+  type: 'test'
+  ...
+# <--- Last few GCs --->
+# [27008:000002ECFE570000]      224 ms: Scavenge 4.9 (6.6) -> 4.6 (7.3) MB, pooled: 0 MB, 13.62 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+# [27008:000002ECFE570000]      306 ms: Scavenge 5.8 (7.6) -> 5.5 (10.1) MB, pooled: 0 MB, 68.89 / 0.00 ms  (average mu = 1.000, current mu = 1.000) task; 
+# [27008:000002ECFE570000]      532 ms: Scavenge 8.9 (11.6) -> 8.0 (12.3) MB, pooled: 0 MB, 1.43 / 0.01 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+# <--- JS stacktrace --->
+# FATAL ERROR: Zone Allocation failed - process out of memory
+# ----- Native stack trace -----
+#  1: 00007FF7E980711D node::SetCppgcReference+17725
+#  2: 00007FF7E976A138 SSL_get_quiet_shutdown+92344
+#  3: 00007FF7EA2F0C51 v8::Isolate::ReportExternalAllocationLimitReached+65
+#  4: 00007FF7EA2DD8D6 v8::Function::Experimental_IsNopFunction+2870
+#  5: 00007FF7E9DAC79B v8::SnapshotCreator::GetIsolate+52395
+#  6: 00007FF7E9EEA130 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+87184
+#  7: 00007FF7EA05D07E v8::Context::GetIsolate+405470
+#  8: 00007FF7EA05D378 v8::Context::GetIsolate+406232
+#  9: 00007FF7EA085A05 v8::Context::GetIsolate+571749
+# 10: 00007FF7EA0671BD v8::Context::GetIsolate+446749
+# 11: 00007FF7EA071329 v8::Context::GetIsolate+488073
+# 12: 00007FF7EA06A067 v8::Context::GetIsolate+458695
+# 13: 00007FF7EA06D586 v8::Context::GetIsolate+472294
+# 14: 00007FF7EA0695F2 v8::Context::GetIsolate+456018
+# 15: 00007FF7EA070C26 v8::Context::GetIsolate+486278
+# 16: 00007FF7EA06A067 v8::Context::GetIsolate+458695
+# 17: 00007FF7EA06D63D v8::Context::GetIsolate+472477
+# 18: 00007FF7EA070566 v8::Context::GetIsolate+484550
+# 19: 00007FF7EA06A067 v8::Context::GetIsolate+458695
+# 20: 00007FF7EA0735C5 v8::Context::GetIsolate+496933
+# 21: 00007FF7EA06A657 v8::Context::GetIsolate+460215
+# 22: 00007FF7EA06A514 v8::Context::GetIsolate+459892
+# 23: 00007FF7EA070536 v8::Context::GetIsolate+484502
+# 24: 00007FF7EA06A067 v8::Context::GetIsolate+458695
+# 25: 00007FF7EA070643 v8::Context::GetIsolate+484771
+# 26: 00007FF7EA06A067 v8::Context::GetIsolate+458695
+# 27: 00007FF7EA0735C5 v8::Context::GetIsolate+496933
+# 28: 00007FF7EA0682F2 v8::Context::GetIsolate+451154
+# 29: 00007FF7EA067F40 v8::Context::GetIsolate+450208
+# 30: 00007FF7EA05789B v8::Context::GetIsolate+382971
+# 31: 00007FF7EA2583A8 v8::SharedValueConveyor::SharedValueConveyor+30744
+# 32: 00007FF7EA2516B8 v8::SharedValueConveyor::SharedValueConveyor+2856
+# 33: 00007FF7EA254C93 v8::SharedValueConveyor::SharedValueConveyor+16643
+# 34: 00007FF7EA25460A v8::SharedValueConveyor::SharedValueConveyor+14970
+# 35: 00007FF7E9F9A213 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+808307
+# 36: 00007FF7E9F9B166 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+812230
+# 37: 00007FF7E9F9BB44 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+814756
+# 38: 00007FF7E9F81207 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+705895
+# 39: 00007FF7E9E108CD v8::base::AddressSpaceReservation::AddressSpaceReservation+293821
+# 40: 00007FF7EA3ABFEE v8::PropertyDescriptor::writable+725966
+# 41: 00007FF7EA30D17F v8::PropertyDescriptor::writable+75103
+# 42: 00007FF7EA4A2C1D v8::PropertyDescriptor::writable+1736701
+# 43: 00007FF7EA30C852 v8::PropertyDescriptor::writable+72754
+# 44: 00007FF7EA30C852 v8::PropertyDescriptor::writable+72754
+# 45: 00007FF7EA42913B v8::PropertyDescriptor::writable+1238299
+# 46: 00007FF7EA30D370 v8::PropertyDescriptor::writable+75600
+# 47: 00007FF7EA4A2C1D v8::PropertyDescriptor::writable+1736701
+# 48: 00007FF7EA30C852 v8::PropertyDescriptor::writable+72754
+# 49: 00007FF7EA30C852 v8::PropertyDescriptor::writable+72754
+# 50: 00007FF7EA34F081 v8::PropertyDescriptor::writable+345185
+# 51: 00007FF7EA30A450 v8::PropertyDescriptor::writable+63536
+# 52: 00007FF7EA30A04B v8::PropertyDescriptor::writable+62507
+# 53: 00007FF7EA1B39AA v8::Isolate::NumberOfHeapSpaces+2586
+# 54: 00007FF7EA1B3ABB v8::Isolate::NumberOfHeapSpaces+2859
+# 55: 00007FF7EA1B4501 v8::Isolate::NumberOfHeapSpaces+5489
+# 56: 00007FF7E9EE62B5 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+71189
+# 57: 00007FF7E9EE8628 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+80264
+# 58: 00007FF7E9EE8487 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+79847
+# 59: 00007FF7E9EE8487 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+79847
+# 60: 00007FF7E9EE8487 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+79847
+# 61: 00007FF7E9EE5BAC v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+69388
+# 62: 00007FF7E9F17A50 v8::MemorySpan<std::basic_string_view<char,std::char_traits<char> > const >::end+273840
+# 63: 00007FF7EA2DC934 v8::Module::Evaluate+324
+# 64: 00007FF7E97B81A4 v8::base::CPU::has_popcnt+10980
+# 65: 00007FF7EA30E598 v8::PropertyDescriptor::writable+80248
+# 66: 00007FF7EA30C852 v8::PropertyDescriptor::writable+72754
+# 67: 00007FF7EA34BF37 v8::PropertyDescriptor::writable+332567
+# 68: 00007FF7EA42B2E9 v8::PropertyDescriptor::writable+1246921
+# 69: 00007FF7EA33BE63 v8::PropertyDescriptor::writable+266819
+# 70: 00007FF7EA30A34B v8::PropertyDescriptor::writable+63275
+# 71: 00007FF7EA1B39C1 v8::Isolate::NumberOfHeapSpaces+2609
+# 72: 00007FF7EA1B3ABB v8::Isolate::NumberOfHeapSpaces+2859
+# 73: 00007FF7EA1B46E4 v8::Isolate::NumberOfHeapSpaces+5972
+# 74: 00007FF7EA18AE06 v8::base::CPU::has_sse41+1558
+# 75: 00007FF7EA18AB20 v8::base::CPU::has_sse41+816
+# 76: 00007FF7E9849C75 node::CallbackScope::~CallbackScope+533
+# 77: 00007FF7E9849AEE node::CallbackScope::~CallbackScope+142
+# 78: 00007FF7E9747A84 v8::base::CPU::has_fpu+45924
+# 79: 00007FF7E9760CE8 SSL_get_quiet_shutdown+54376
+# 80: 00007FF7E987CF6A uv_timer_stop+1322
+# 81: 00007FF7E987918B uv_update_time+475
+# 82: 00007FF7E9878CF4 uv_run+900
+# 83: 00007FF7E98492C5 node::SpinEventLoop+405
+# 84: 00007FF7E962544C X509_CRL_get_meth_data+174364
+# 85: 00007FF7E96188F5 X509_CRL_get_meth_data+122309
+# 86: 00007FF7E9867463 uv_poll_stop+291
+# 87: 00007FF7EB064C2E inflateValidate+159742
+# 88: 00007FF92968CCB7 BaseThreadInitThunk+23
+# 89: 00007FF92B60AD6C RtlUserThreadStart+44
+# Subtest: src\\__tests__\\hardening-runtime.test.ts
+not ok 25 - src\\__tests__\\hardening-runtime.test.ts
+  ---
+  duration_ms: 1239.5349
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\hardening-runtime.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 134
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: IntegrationAdapter detect + propose
+    # Subtest: detects openai-compatible config and extracts base URL
+    ok 1 - detects openai-compatible config and extracts base URL
+      ---
+      duration_ms: 9.9516
+      type: 'test'
+      ...
+    # Subtest: proposes a rewrite to loopback broker without writing
+    ok 2 - proposes a rewrite to loopback broker without writing
+      ---
+      duration_ms: 1.5554
+      type: 'test'
+      ...
+    1..2
+ok 73 - IntegrationAdapter detect + propose
+  ---
+  duration_ms: 16.0983
+  type: 'suite'
+  ...
+# Subtest: IntegrationAdapter apply + restore (never silent)
+    # Subtest: refuses to write without approval
+    ok 1 - refuses to write without approval
+      ---
+      duration_ms: 4.565
+      type: 'test'
+      ...
+    # Subtest: apply + restore round-trip preserves original content
+    ok 2 - apply + restore round-trip preserves original content
+      ---
+      duration_ms: 1.7147
+      type: 'test'
+      ...
+    # Subtest: never writes the pre-rewrite copy of a secret file to the filesystem
+    ok 3 - never writes the pre-rewrite copy of a secret file to the filesystem
+      ---
+      duration_ms: 6.7659
+      type: 'test'
+      ...
+    # Subtest: leaves the original untouched when the backup sink fails
+    ok 4 - leaves the original untouched when the backup sink fails
+      ---
+      duration_ms: 1.1891
+      type: 'test'
+      ...
+    # Subtest: refuses apply when file drifted since proposal
+    ok 5 - refuses apply when file drifted since proposal
+      ---
+      duration_ms: 1.3538
+      type: 'test'
+      ...
+    # Subtest: refuses restore without approval
+    ok 6 - refuses restore without approval
+      ---
+      duration_ms: 1.1733
+      type: 'test'
+      ...
+    1..6
+ok 74 - IntegrationAdapter apply + restore (never silent)
+  ---
+  duration_ms: 18.6288
+  type: 'suite'
+  ...
+# Subtest: IntegrationAdapter health + stream smoke
+    # Subtest: reports health OK on 200
+    ok 1 - reports health OK on 200
+      ---
+      duration_ms: 1.5531
+      type: 'test'
+      ...
+    # Subtest: stream smoke fails closed without auth token
+    ok 2 - stream smoke fails closed without auth token
+      ---
+      duration_ms: 1.3605
+      type: 'test'
+      ...
+    # Subtest: stream smoke accepts non-404 route responses
+    ok 3 - stream smoke accepts non-404 route responses
+      ---
+      duration_ms: 4.1707
+      type: 'test'
+      ...
+    1..3
+ok 75 - IntegrationAdapter health + stream smoke
+  ---
+  duration_ms: 7.7487
+  type: 'suite'
+  ...
+# Subtest: manifest assets
+    # Subtest: declares at least the icons and walkthrough pages
+    ok 1 - declares at least the icons and walkthrough pages
+      ---
+      duration_ms: 7.3027
+      type: 'test'
+      ...
+    # Subtest: every declared asset exists on disk
+    ok 2 - every declared asset exists on disk
+      ---
+      duration_ms: 9.5533
+      type: 'test'
+      ...
+    # Subtest: no declared asset is excluded from the VSIX by .vscodeignore
+    ok 3 - no declared asset is excluded from the VSIX by .vscodeignore
+      ---
+      duration_ms: 47.3424
+      type: 'test'
+      ...
+    # Subtest: the activity-bar icon is maskable, not a raster or a filled glyph
+    ok 4 - the activity-bar icon is maskable, not a raster or a filled glyph
+      ---
+      duration_ms: 18.0682
+      type: 'test'
+      ...
+    1..4
+ok 76 - manifest assets
+  ---
+  duration_ms: 88.8556
+  type: 'suite'
+  ...
+# Subtest: marketplace icon
+    # Subtest: points at the one approved brand mark
+    ok 1 - points at the one approved brand mark
+      ---
+      duration_ms: 0.6367
+      type: 'test'
+      ...
+    # Subtest: is collected by the asset walker, so the existence and .vscodeignore checks cover it
+    ok 2 - is collected by the asset walker, so the existence and .vscodeignore checks cover it
+      ---
+      duration_ms: 0.5379
+      type: 'test'
+      ...
+    # Subtest: is a real PNG with transparency, square, and big enough for the gallery
+    ok 3 - is a real PNG with transparency, square, and big enough for the gallery
+      ---
+      duration_ms: 6.0933
+      type: 'test'
+      ...
+    # Subtest: has not drifted from the website's copy of the same logo
+    ok 4 - has not drifted from the website's copy of the same logo
+      ---
+      duration_ms: 6.463
+      type: 'test'
+      ...
+    1..4
+ok 77 - marketplace icon
+  ---
+  duration_ms: 16.7938
+  type: 'suite'
+  ...
+# Subtest: walkthrough media
+    # Subtest: ships no page the manifest does not reference
+    ok 1 - ships no page the manifest does not reference
+      ---
+      duration_ms: 3.4508
+      type: 'test'
+      ...
+    # Subtest: has one page per contributed step
+    ok 2 - has one page per contributed step
+      ---
+      duration_ms: 0.9413
+      type: 'test'
+      ...
+    1..2
+ok 78 - walkthrough media
+  ---
+  duration_ms: 4.9951
+  type: 'suite'
+  ...
+# Subtest: gallery banner
+    # Subtest: is the saffron brand colour on a light banner
+    ok 1 - is the saffron brand colour on a light banner
+      ---
+      duration_ms: 0.5282
+      type: 'test'
+      ...
+    1..1
+ok 79 - gallery banner
+  ---
+  duration_ms: 0.7794
+  type: 'suite'
+  ...
+# Subtest: stored MCP deny-list blocks SoterAI preflight before broker contact
+ok 80 - stored MCP deny-list blocks SoterAI preflight before broker contact
+  ---
+  duration_ms: 144.8019
+  type: 'test'
+  ...
+# Subtest: strict policy is passed to preflight and runtime tool name is distinct from server
+ok 81 - strict policy is passed to preflight and runtime tool name is distinct from server
+  ---
+  duration_ms: 234.2042
+  type: 'test'
+  ...
+# Subtest: JSON primitives and arrays never reach MCP preflight as argument objects
+ok 82 - JSON primitives and arrays never reach MCP preflight as argument objects
+  ---
+  duration_ms: 343.7228
+  type: 'test'
+  ...
+# Subtest: concurrent canary creation retains every token and rotation publishes complete state
+ok 83 - concurrent canary creation retains every token and rotation publishes complete state
+  ---
+  duration_ms: 169.9654
+  type: 'test'
+  ...
+# Subtest: corrupt canary storage does not silently become an empty monitoring registry
+ok 84 - corrupt canary storage does not silently become an empty monitoring registry
+  ---
+  duration_ms: 83.7627
+  type: 'test'
+  ...
+# Subtest: BrokerManager synchronizes canaries on attachment and registry changes over authenticated local requests
+ok 85 - BrokerManager synchronizes canaries on attachment and registry changes over authenticated local requests
+  ---
+  duration_ms: 484.132
+  type: 'test'
+  ...
+# Subtest: Control Panel plain-language content
+    # Subtest: every always-visible string avoids internal vocabulary
+    ok 1 - every always-visible string avoids internal vocabulary
+      ---
+      duration_ms: 9.7078
+      type: 'test'
+      ...
+    # Subtest: task labels and hints avoid internal vocabulary too
+    ok 2 - task labels and hints avoid internal vocabulary too
+      ---
+      duration_ms: 1.5906
+      type: 'test'
+      ...
+    # Subtest: summaries stay short enough to read at a glance
+    ok 3 - summaries stay short enough to read at a glance
+      ---
+      duration_ms: 1.9073
+      type: 'test'
+      ...
+    # Subtest: keeps the honest caveat rather than deleting it
+    ok 4 - keeps the honest caveat rather than deleting it
+      ---
+      duration_ms: 1.5868
+      type: 'test'
+      ...
+    # Subtest: never claims a level stronger than the capability registry allows
+    ok 5 - never claims a level stronger than the capability registry allows
+      ---
+      duration_ms: 0.9571
+      type: 'test'
+      ...
+    # Subtest: shows no protection badge for a control that is off
+    ok 6 - shows no protection badge for a control that is off
+      ---
+      duration_ms: 1.9619
+      type: 'test'
+      ...
+    # Subtest: only claims enforcement for Safe Mode while local checking is actually running
+    ok 7 - only claims enforcement for Safe Mode while local checking is actually running
+      ---
+      duration_ms: 1.8279
+      type: 'test'
+      ...
+    1..7
+ok 86 - Control Panel plain-language content
+  ---
+  duration_ms: 24.6871
+  type: 'suite'
+  ...
+# Subtest: Control Panel privacy boundary
+    # Subtest: states that local mode keeps scan data on this device
+    ok 1 - states that local mode keeps scan data on this device
+      ---
+      duration_ms: 1.3008
+      type: 'test'
+      ...
+    # Subtest: does not imply cloud transfer merely because cloud is configured
+    ok 2 - does not imply cloud transfer merely because cloud is configured
+      ---
+      duration_ms: 0.8713
+      type: 'test'
+      ...
+    # Subtest: makes optional metadata collection explicit without claiming content upload
+    ok 3 - makes optional metadata collection explicit without claiming content upload
+      ---
+      duration_ms: 1.0677
+      type: 'test'
+      ...
+    # Subtest: states that an untrusted workspace cannot send
+    ok 4 - states that an untrusted workspace cannot send
+      ---
+      duration_ms: 0.6136
+      type: 'test'
+      ...
+    1..4
+ok 87 - Control Panel privacy boundary
+  ---
+  duration_ms: 5.1226
+  type: 'suite'
+  ...
+# Subtest: Control Panel primary action
+    # Subtest: offers exactly one action for every reachable state
+    ok 1 - offers exactly one action for every reachable state
+      ---
+      duration_ms: 1.3319
+      type: 'test'
+      ...
+    # Subtest: offers a way out of lockdown
+    ok 2 - offers a way out of lockdown
+      ---
+      duration_ms: 0.3629
+      type: 'test'
+      ...
+    # Subtest: offers the automatic setup when nothing can be blocked yet
+    ok 3 - offers the automatic setup when nothing can be blocked yet
+      ---
+      duration_ms: 0.3698
+      type: 'test'
+      ...
+    # Subtest: guides an untrusted workspace without offering automatic changes
+    ok 4 - guides an untrusted workspace without offering automatic changes
+      ---
+      duration_ms: 0.6826
+      type: 'test'
+      ...
+    # Subtest: does not push more setup when everything supported is already on
+    ok 5 - does not push more setup when everything supported is already on
+      ---
+      duration_ms: 0.4811
+      type: 'test'
+      ...
+    # Subtest: does not offer a no-op full-protection action when all visible controls are on
+    ok 6 - does not offer a no-op full-protection action when all visible controls are on
+      ---
+      duration_ms: 0.4045
+      type: 'test'
+      ...
+    # Subtest: every action it can emit is allowlisted by the provider
+    ok 7 - every action it can emit is allowlisted by the provider
+      ---
+      duration_ms: 1.9886
+      type: 'test'
+      ...
+    # Subtest: puts the highest-value protection flows first and secondary checks behind disclosure
+    ok 8 - puts the highest-value protection flows first and secondary checks behind disclosure
+      ---
+      duration_ms: 3.5858
+      type: 'test'
+      ...
+    # Subtest: task icons are real line icons, not emoji
+    ok 9 - task icons are real line icons, not emoji
+      ---
+      duration_ms: 0.7543
+      type: 'test'
+      ...
+    1..9
+ok 88 - Control Panel primary action
+  ---
+  duration_ms: 11.0169
+  type: 'suite'
+  ...
+# Subtest: S1 a modified .env enters the bundle through the synthetic `git diff` item
+ok 89 - S1 a modified .env enters the bundle through the synthetic `git diff` item
+  ---
+  duration_ms: 4469.4159
+  type: 'test'
+  ...
+# Subtest: S2 custom data in a protected file survives the diff path
+ok 90 - S2 custom data in a protected file survives the diff path
+  ---
+  duration_ms: 1084.8637
+  type: 'test'
+  ...
+# Subtest: S3 a protected file open in the active editor is excluded
+ok 91 - S3 a protected file open in the active editor is excluded
+  ---
+  duration_ms: 984.9613
+  type: 'test'
+  ...
+# Subtest: S4 out-of-the-box (guard never enabled) a .env tab reaches the bundle
+ok 92 - S4 out-of-the-box (guard never enabled) a .env tab reaches the bundle
+  ---
+  duration_ms: 704.326
+  type: 'test'
+  ...
+# Subtest: S5 inline keys redact automatically; custom data needs a manual region deny
+ok 93 - S5 inline keys redact automatically; custom data needs a manual region deny
+  ---
+  duration_ms: 1298.2678
+  type: 'test'
+  ...
+# Subtest: S6 sensitive summaries omit env var names and values
+ok 94 - S6 sensitive summaries omit env var names and values
+  ---
+  duration_ms: 14.6758
+  type: 'test'
+  ...
+# Subtest: S7 known encoded keys redact automatically; custom homoglyph data uses a manual file deny
+ok 95 - S7 known encoded keys redact automatically; custom homoglyph data uses a manual file deny
+  ---
+  duration_ms: 3798.3535
+  type: 'test'
+  ...
+# Subtest: S8 hostile README and agent-config fixtures are quarantined
+ok 96 - S8 hostile README and agent-config fixtures are quarantined
+  ---
+  duration_ms: 533.1656
+  type: 'test'
+  ...
+# Subtest: S9 alias paths into the denied set
+ok 97 - S9 alias paths into the denied set
+  ---
+  duration_ms: 1317.5501
+  type: 'test'
+  ...
+# Subtest: S10 a copy of .env under an unprotected name
+ok 98 - S10 a copy of .env under an unprotected name
+  ---
+  duration_ms: 716.2825
+  type: 'test'
+  ...
+# Subtest: S11 no canary reached a recorded VS Code sink
+ok 99 - S11 no canary reached a recorded VS Code sink
+  ---
+  duration_ms: 3.7903
+  type: 'test'
+  ...
+# Subtest: H1 leak oracle finds a canary in every encoding it claims to cover
+ok 100 - H1 leak oracle finds a canary in every encoding it claims to cover
+  ---
+  duration_ms: 29.9601
+  type: 'test'
+  ...
+# Subtest: H2 fixture plants all canaries on disk
+ok 101 - H2 fixture plants all canaries on disk
+  ---
+  duration_ms: 4777.6992
+  type: 'test'
+  ...
+# Subtest: H3 `vscode` resolves to the stub and modules under test load
+ok 102 - H3 `vscode` resolves to the stub and modules under test load
+  ---
+  duration_ms: 1543.6089
+  type: 'test'
+  ...
+# Subtest: H4 @soterai/guard-core resolves to a dist newer than its sources
+ok 103 - H4 @soterai/guard-core resolves to a dist newer than its sources
+  ---
+  duration_ms: 486.5747
+  type: 'test'
+  ...
+# Subtest: H5 git is available (several scenarios shell out to it)
+ok 104 - H5 git is available (several scenarios shell out to it)
+  ---
+  duration_ms: 120.9284
+  type: 'test'
+  ...
+# Subtest: does not call protection fully enforced when one required control is missing
+ok 105 - does not call protection fully enforced when one required control is missing
+  ---
+  duration_ms: 14.0636
+  type: 'test'
+  ...
+# Subtest: reports bypass when a routable AI tool is not routed through SoterAI
+ok 106 - reports bypass when a routable AI tool is not routed through SoterAI
+  ---
+  duration_ms: 1.2848
+  type: 'test'
+  ...
+# Subtest: reports monitoring only when the broker is healthy but no enforcement is enabled
+ok 107 - reports monitoring only when the broker is healthy but no enforcement is enabled
+  ---
+  duration_ms: 0.6703
+  type: 'test'
+  ...
+# Subtest: reports fully enforced only when required controls and all detected tools are verified
+ok 108 - reports fully enforced only when required controls and all detected tools are verified
+  ---
+  duration_ms: 0.4693
+  type: 'test'
+  ...
+# Subtest: lockdown has priority over all other runtime facts
+ok 109 - lockdown has priority over all other runtime facts
+  ---
+  duration_ms: 1.9509
+  type: 'test'
+  ...
+# Subtest: a tool SoterAI cannot route is a stated limit, not a bypass
+ok 110 - a tool SoterAI cannot route is a stated limit, not a bypass
+  ---
+  duration_ms: 1.0065
+  type: 'test'
+  ...
+# Subtest: fully enforced is reachable on a real machine
+ok 111 - fully enforced is reachable on a real machine
+  ---
+  duration_ms: 1.0248
+  type: 'test'
+  ...
+# Subtest: broker offline is an error only when something depends on the broker
+ok 112 - broker offline is an error only when something depends on the broker
+  ---
+  duration_ms: 0.8331
+  type: 'test'
+  ...
+# Subtest: policy unavailable is not a red banner unless enforcement is actually on
+ok 113 - policy unavailable is not a red banner unless enforcement is actually on
+  ---
+  duration_ms: 1.8537
+  type: 'test'
+  ...
+# Subtest: MCP governance is disclosed as advisory rather than gating the claim
+ok 114 - MCP governance is disclosed as advisory rather than gating the claim
+  ---
+  duration_ms: 1.7017
+  type: 'test'
+  ...
+# Subtest: the coverage line never invents protection it cannot prove
+ok 115 - the coverage line never invents protection it cannot prove
+  ---
+  duration_ms: 1.5094
+  type: 'test'
+  ...
+# node:internal/worker:291
+#     this[kHandle].startThread();
+#                   ^
+# Error: EINVAL
+#     at new Worker (node:internal/worker:291:19)
+#     at new InternalWorker (node:internal/worker:481:5)
+#     at new HooksProxy (node:internal/modules/esm/hooks:506:20)
+#     at getHooksProxy (node:internal/modules/esm/loader:980:18)
+#     at new CustomizedModuleLoader (node:internal/modules/esm/loader:872:5)
+#     at ModuleLoader.register (node:internal/modules/esm/loader:662:30)
+#     at Function.register (node:internal/modules/esm/loader:1037:35)
+#     at register (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/register-CqMfTiWi.mjs:2:15304)
+#     at file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/node_modules/tsx/dist/esm/index.mjs:1:736
+#     at ModuleJob.run (node:internal/modules/esm/module_job:274:25) {
+#   code: 'ERR_WORKER_INIT_FAILED'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\readiness-doc.test.ts
+not ok 33 - src\\__tests__\\readiness-doc.test.ts
+  ---
+  duration_ms: 650.0277
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\readiness-doc.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: src\\__tests__\\readme-accuracy.test.ts
+not ok 34 - src\\__tests__\\readme-accuracy.test.ts
+  ---
+  duration_ms: 1426.056
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\readme-accuracy.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 3221226505
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: src\\__tests__\\resource-links.test.ts
+not ok 35 - src\\__tests__\\resource-links.test.ts
+  ---
+  duration_ms: 977.2605
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\resource-links.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 3221226505
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: spawn UNKNOWN
+#     at ChildProcess.spawn (node:internal/child_process:420:11)
+#     at Object.spawn (node:child_process:753:9)
+#     at ensureServiceIsRunning (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2268:29)
+#     at startSyncServiceWorker (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2474:19)
+#     at Object.<anonymous> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2515:3)
+#     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+#     at Object..js (node:internal/modules/cjs/loader:1895:10)
+#     at Module.load (node:internal/modules/cjs/loader:1465:32)
+#     at Function._load (node:internal/modules/cjs/loader:1282:12)
+#     at TracingChannel.traceSync (node:diagnostics_channel:322:14) {
+#   errno: -4094,
+#   code: 'UNKNOWN',
+#   syscall: 'spawn',
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\review-evidence.test.ts
+not ok 36 - src\\__tests__\\review-evidence.test.ts
+  ---
+  duration_ms: 1475.5498
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\review-evidence.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: safe Git accepts only versions with boolean fsmonitor support
+ok 120 - safe Git accepts only versions with boolean fsmonitor support
+  ---
+  duration_ms: 3.4046
+  type: 'test'
+  ...
+# Subtest: Git launch policy excludes ambient credentials and configuration inputs
+ok 121 - Git launch policy excludes ambient credentials and configuration inputs
+  ---
+  duration_ms: 5.016
+  type: 'test'
+  ...
+# Subtest: missing Git fails closed with a usable message
+ok 122 - missing Git fails closed with a usable message
+  ---
+  duration_ms: 147.1212
+  type: 'test'
+  ...
+# Subtest: Windows Git global override uses an explicit empty file, with benign configuration controls
+ok 123 - Windows Git global override uses an explicit empty file, with benign configuration controls
+  ---
+  duration_ms: 2515.6304
+  type: 'test'
+  ...
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: spawn UNKNOWN
+#     at ChildProcess.spawn (node:internal/child_process:420:11)
+#     at Object.spawn (node:child_process:753:9)
+#     at ensureServiceIsRunning (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2268:29)
+#     at startSyncServiceWorker (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2474:19)
+#     at Object.<anonymous> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:2515:3)
+#     at Module._compile (node:internal/modules/cjs/loader:1730:14)
+#     at Object..js (node:internal/modules/cjs/loader:1895:10)
+#     at Module.load (node:internal/modules/cjs/loader:1465:32)
+#     at Function._load (node:internal/modules/cjs/loader:1282:12)
+#     at TracingChannel.traceSync (node:diagnostics_channel:322:14) {
+#   errno: -4094,
+#   code: 'UNKNOWN',
+#   syscall: 'spawn',
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\scan-globs-and-config-scope.test.ts
+not ok 38 - src\\__tests__\\scan-globs-and-config-scope.test.ts
+  ---
+  duration_ms: 1662.8051
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\scan-globs-and-config-scope.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# fatal error: out of memory allocating heap arena map
+# runtime stack:
+# runtime.throw({0x7ff6af1f6fbf?, 0xa7211ff310?})
+# \\truntime/panic.go:1229 +0x4d fp=0xa7211ff288 sp=0xa7211ff258 pc=0x7ff6aebc3d8d
+# runtime.(*mheap).sysAlloc(0x7ff6af63d980, 0x7ff9288fe3c5?, 0x7ff6af64dd80, 0x7ff6af64dda8)
+# \\truntime/malloc.go:866 +0x378 fp=0xa7211ff360 sp=0xa7211ff288 pc=0x7ff6aeb5d7d8
+# runtime.(*mheap).grow(0x7ff6af63d980, 0x2000?)
+# \\truntime/mheap.go:1574 +0x7d fp=0xa7211ff3e8 sp=0xa7211ff360 pc=0x7ff6aeb7aadd
+# runtime.(*mheap).allocSpan(0x7ff6af63d980, 0x1, 0x0, 0x24)
+# \\truntime/mheap.go:1299 +0x1b3 fp=0xa7211ff498 sp=0xa7211ff3e8 pc=0x7ff6aeb7a2b3
+# runtime.(*mheap).alloc.func1()
+# \\truntime/mheap.go:1017 +0x5c fp=0xa7211ff4e0 sp=0xa7211ff498 pc=0x7ff6aeb79d5c
+# runtime.(*mheap).alloc(0x7ff6aebcb26e?, 0xa7211ff540?, 0x0?)
+# \\truntime/mheap.go:1011 +0x57 fp=0xa7211ff528 sp=0xa7211ff4e0 pc=0x7ff6aeb79cb7
+# runtime.(*mcentral).grow(0x7ff6af634ba0?)
+# \\truntime/mcentral.go:253 +0x36 fp=0xa7211ff558 sp=0xa7211ff528 pc=0x7ff6aeb62376
+# runtime.(*mcentral).cacheSpan(0x7ff6af64f918)
+# \\truntime/mcentral.go:171 +0x454 fp=0xa7211ff5d0 sp=0xa7211ff558 pc=0x7ff6aeb621f4
+# runtime.(*mcache).refill(0x1b4b1d50108, 0x80?)
+# \\truntime/mcache.go:205 +0x16b fp=0xa7211ff610 sp=0xa7211ff5d0 pc=0x7ff6aeb617cb
+# runtime.(*mcache).nextFree(0x1b4b1d50108, 0x24)
+# \\truntime/malloc.go:1006 +0x7e fp=0xa7211ff648 sp=0xa7211ff610 pc=0x7ff6aeb5dcde
+# runtime.mallocgcSmallScanNoHeader(0x100, 0x7ff6af13caa0)
+# \\truntime/malloc.go:1529 +0x145 fp=0xa7211ff6a8 sp=0xa7211ff648 pc=0x7ff6aeb5e585
+# runtime.mallocgc(0x100, 0x7ff6af13caa0, 0x1)
+# \\truntime/malloc.go:1150 +0xa5 fp=0xa7211ff6d8 sp=0xa7211ff6a8 pc=0x7ff6aebc1bc5
+# runtime.newobject(0x7ff6aeb67677?)
+# \\truntime/malloc.go:2157 +0x25 fp=0xa7211ff700 sp=0xa7211ff6d8 pc=0x7ff6aeb5f0a5
+# internal/cpu.doinit()
+# \\tinternal/cpu/cpu_x86.go:72 +0x1e fp=0xa7211ff768 sp=0xa7211ff700 pc=0x7ff6aeb4209e
+# internal/cpu.Initialize({0x0, 0x0})
+# \\tinternal/cpu/cpu.go:181 +0x1d fp=0xa7211ff788 sp=0xa7211ff768 pc=0x7ff6aeb41b3d
+# runtime.cpuinit(...)
+# \\truntime/proc.go:761
+# runtime.schedinit()
+# \\truntime/proc.go:878 +0xfa fp=0xa7211ff7e0 sp=0xa7211ff788 pc=0x7ff6aeb8fe1a
+# runtime.rt0_go()
+# \\truntime/asm_amd64.s:373 +0x143 fp=0xa7211ff7e8 sp=0xa7211ff7e0 pc=0x7ff6aebc97c3
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: The service was stopped
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:999:38
+#     at responseCallbacks.<computed> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:884:9)
+#     at Socket.afterClose (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:875:28)
+#     at Socket.emit (node:events:530:35)
+#     at endReadableNT (node:internal/streams/readable:1698:12)
+#     at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\secret-broker.test.ts
+not ok 39 - src\\__tests__\\secret-broker.test.ts
+  ---
+  duration_ms: 1701.1072
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\secret-broker.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# fatal error: runtime: cannot allocate memory
+# runtime stack:
+# runtime.throw({0x7ff6af1f1366?, 0x2000?})
+# \\truntime/panic.go:1229 +0x4d fp=0x84f2fff430 sp=0x84f2fff400 pc=0x7ff6aebc3d8d
+# runtime.persistentalloc1(0x800, 0x7ff6aeb79d5c?, 0x7ff6af6811e0)
+# \\truntime/malloc.go:2379 +0x265 fp=0x84f2fff488 sp=0x84f2fff430 pc=0x7ff6aeb5f5e5
+# runtime.persistentalloc.func1()
+# \\truntime/malloc.go:2332 +0x28 fp=0x84f2fff4b8 sp=0x84f2fff488 pc=0x7ff6aeb5f368
+# runtime.persistentalloc(0x7ff6aeb6051c?, 0x84f2fff4e8?, 0x8?)
+# \\truntime/malloc.go:2331 +0x45 fp=0x84f2fff500 sp=0x84f2fff4b8 pc=0x7ff6aeb5f305
+# runtime.(*spanSet).push(0x7ff6af6510b0, 0x21fe581b030)
+# \\truntime/mspanset.go:113 +0xcf fp=0x84f2fff568 sp=0x84f2fff500 pc=0x7ff6aeb8444f
+# runtime.(*mcentral).uncacheSpan(0x8000?, 0x21fe581dc90?)
+# \\truntime/mcentral.go:245 +0x9e fp=0x84f2fff590 sp=0x84f2fff568 pc=0x7ff6aeb622de
+# runtime.(*mcache).refill(0x21fe5810108, 0x43)
+# \\truntime/mcache.go:182 +0xbf fp=0x84f2fff5d0 sp=0x84f2fff590 pc=0x7ff6aeb6171f
+# runtime.(*mcache).nextFree(0x21fe5810108, 0x43)
+# \\truntime/malloc.go:1006 +0x7e fp=0x84f2fff608 sp=0x84f2fff5d0 pc=0x7ff6aeb5dcde
+# runtime.mallocgcSmallNoscan(0x7ff6aeba026b?, 0x7ff6af167c00?, 0xf0?)
+# \\truntime/malloc.go:1397 +0x185 fp=0x84f2fff660 sp=0x84f2fff608 pc=0x7ff6aeb5e2c5
+# runtime.mallocgc(0x438, 0x7ff6af12e440, 0x1)
+# \\truntime/malloc.go:1143 +0xcc fp=0x84f2fff690 sp=0x84f2fff660 pc=0x7ff6aebc1bec
+# runtime.makeslice(0x3b0bce0ef808?, 0x100?, 0x84f2fff6f0?)
+# \\truntime/slice.go:117 +0x49 fp=0x84f2fff6b8 sp=0x84f2fff690 pc=0x7ff6aebc5a49
+# runtime.makeProfStackFP(...)
+# \\truntime/proc.go:1063
+# runtime.mProfStackInit(...)
+# \\truntime/proc.go:1050
+# runtime.mcommoninit(0x3b0bce0ef808, 0x3)
+# \\truntime/proc.go:1036 +0x213 fp=0x84f2fff700 sp=0x84f2fff6b8 pc=0x7ff6aeb90413
+# runtime.allocm(0x3b0bce13a008, 0x7ff6af216538, 0x3)
+# \\truntime/proc.go:2326 +0xc5 fp=0x84f2fff758 sp=0x84f2fff700 pc=0x7ff6aeb92c05
+# runtime.newm(0x8400002000?, 0x3b0bce13a008, 0x376c915a9918?)
+# \\truntime/proc.go:2870 +0x35 fp=0x84f2fff788 sp=0x84f2fff758 pc=0x7ff6aeb93675
+# runtime.startm(0x3b0bce13a008?, 0x1, 0x0)
+# \\truntime/proc.go:3096 +0x130 fp=0x84f2fff7d0 sp=0x84f2fff788 pc=0x7ff6aeb93d10
+# runtime.wakep()
+# \\truntime/proc.go:3243 +0xec fp=0x84f2fff800 sp=0x84f2fff7d0 pc=0x7ff6aebc400c
+# runtime.newproc.func1()
+# \\truntime/proc.go:5305 +0x53 fp=0x84f2fff830 sp=0x84f2fff800 pc=0x7ff6aeb98d13
+# runtime.systemstack(0x7ff6af6336e0)
+# \\truntime/asm_amd64.s:562 +0x49 fp=0x84f2fff840 sp=0x84f2fff830 pc=0x7ff6aebc9969
+# goroutine 1 gp=0x3b0bce13e000 m=0 mp=0x7ff6af634680 [running, locked to thread]:
+# runtime.systemstack_switch()
+# \\truntime/asm_amd64.s:516 +0x8 fp=0x3b0bce145dd8 sp=0x3b0bce145dc8 pc=0x7ff6aebc9908
+# runtime.newproc(0x9800000000?)
+# \\truntime/proc.go:5298 +0x3f fp=0x3b0bce145e10 sp=0x3b0bce145dd8 pc=0x7ff6aeb98c7f
+# runtime.init.7()
+# \\truntime/proc.go:363 +0x1a fp=0x3b0bce145e28 sp=0x3b0bce145e10 pc=0x7ff6aeb8f1ba
+# runtime.doInit1(0x7ff6af5c76e0)
+# \\truntime/proc.go:8103 +0xda fp=0x3b0bce145f48 sp=0x3b0bce145e28 pc=0x7ff6aeb9e8ba
+# runtime.doInit(...)
+# \\truntime/proc.go:8070
+# runtime.main()
+# \\truntime/proc.go:203 +0x131 fp=0x3b0bce145fe0 sp=0x3b0bce145f48 pc=0x7ff6aeb8ee11
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x3b0bce145fe8 sp=0x3b0bce145fe0 pc=0x7ff6aebcb5a1
+# goroutine 2 gp=0x3b0bce13e780 m=nil [runnable]:
+# runtime.forcegchelper()
+# \\truntime/proc.go:366 fp=0x3b0bce141fe0 sp=0x3b0bce141fd8 pc=0x7ff6aeb8f1e0
+# runtime.goexit({})
+# \\truntime/asm_amd64.s:1771 +0x1 fp=0x3b0bce141fe8 sp=0x3b0bce141fe0 pc=0x7ff6aebcb5a1
+# created by runtime.init.7 in goroutine 1
+# \\truntime/proc.go:363 +0x1a
+# node:internal/modules/run_main:123
+#     triggerUncaughtException(
+#     ^
+# Error: The service was stopped
+#     at C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:999:38
+#     at responseCallbacks.<computed> (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:884:9)
+#     at Socket.afterClose (C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\node_modules\\esbuild\\lib\\main.js:875:28)
+#     at Socket.emit (node:events:530:35)
+#     at endReadableNT (node:internal/streams/readable:1698:12)
+#     at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {
+#   name: 'TransformError'
+# }
+# Node.js v22.16.0
+# Subtest: src\\__tests__\\secret-storage-inventory.test.ts
+not ok 40 - src\\__tests__\\secret-storage-inventory.test.ts
+  ---
+  duration_ms: 2218.9401
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\secret-storage-inventory.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# <--- Last few GCs --->
+# [31792:000001979A7FC000]      102 ms: Scavenge 5.8 (7.6) -> 5.5 (7.8) MB, pooled: 1 MB, 1.65 / 0.00 ms  (average mu = 1.000, current mu = 1.000) task; 
+# [31792:000001979A7FC000]      113 ms: Mark-Compact 5.7 (7.8) -> 5.0 (8.1) MB, pooled: 1 MB, 7.21 / 0.00 ms  (average mu = 0.933, current mu = 0.933) allocation failure; GC in old space requested
+# <--- JS stacktrace --->
+# FATAL ERROR: AlignedAlloc Allocation failed - process out of memory
+# ----- Native stack trace -----
+#  1: 00007FF7E980711D 
+#  2: 00007FF7E976A138 
+#  3: 00007FF7EA2F0C51 
+#  4: 00007FF7EA2DD8D6 
+#  5: 00007FF7E9DAF77F 
+#  6: 00007FF7E9EE20DA 
+#  7: 00007FF7E9EE1B3A 
+#  8: 00007FF7E9EE0B6C 
+#  9: 00007FF7E9EE1FD4 
+# 10: 00007FF7E9B3BB47 
+# 11: 00007FF7E9E1B454 
+# 12: 00007FF7E9E1B760 
+# 13: 00007FF7EA3ABFEE 
+# 14: 00007FF7EA389163 
+# 15: 00007FF7EA4AA5AA 
+# 16: 00007FF7EA30C852 
+# 17: 00007FF7EA30C852 
+# 18: 00007FF7EA30C852 
+# 19: 00007FF7EA30C852 
+# 20: 00007FF7EA30C852 
+# 21: 00007FF7EA30C852 
+# 22: 00007FF7EA30C852 
+# 23: 00007FF7EA30C852 
+# 24: 00007FF7EA30C852 
+# 25: 00007FF7EA30C852 
+# 26: 00007FF7EA30C852 
+# 27: 00007FF7EA30C852 
+# 28: 00007FF7EA30C852 
+# 29: 00007FF7EA30C852 
+# 30: 00007FF7EA30C852 
+# 31: 00007FF7EA30A450 
+# 32: 00007FF7EA30A04B 
+# 33: 00007FF7EA1B39AA 
+# 34: 00007FF7EA1B32E3 
+# 35: 00007FF7EA2D6144 
+# 36: 00007FF7E984A157 
+# 37: 00007FF7E9840D3A 
+# 38: 00007FF7E970F0B9 
+# 39: 00007FF7E987918B 
+# 40: 00007FF7E9878CF4 
+# 41: 00007FF7E98492C5 
+# 42: 00007FF7E962544C 
+# 43: 00007FF7E96188F5 
+# 44: 00007FF7E9867463 
+# 45: 00007FF7EB064C2E 
+# 46: 00007FF92968CCB7 
+# 47: 00007FF92B60AD6C 
+# Subtest: src\\__tests__\\security-benchmark.test.ts
+not ok 41 - src\\__tests__\\security-benchmark.test.ts
+  ---
+  duration_ms: 2229.9691
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\security-benchmark.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 134
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# \#
+# \# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+# \#
+# ----- Native stack trace -----
+#  1: 00007FF7E980711D node::SetCppgcReference+17725
+#  2: 00007FF7E96E181F node::TriggerNodeReport+73231
+#  3: 00007FF7EA9595C6 v8::base::FatalOOM+54
+#  4: 00007FF7EA2F0CA3 v8::Isolate::ReportExternalAllocationLimitReached+147
+#  5: 00007FF7EA2DD8D6 v8::Function::Experimental_IsNopFunction+2870
+#  6: 00007FF7EA12AA20 v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+31456
+#  7: 00007FF7EA0F29DA v8::CpuProfileNode::GetScriptResourceNameStr+3146
+#  8: 00007FF7EA0F2FF0 v8::CpuProfileNode::GetScriptResourceNameStr+4704
+#  9: 00007FF7EA0F2CF5 v8::CpuProfileNode::GetScriptResourceNameStr+3941
+# 10: 00007FF7EA0E26DB v8::FixedArray::Length+126619
+# 11: 00007FF7EA0E1CAA v8::FixedArray::Length+124010
+# 12: 00007FF7EA138782 v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+88130
+# 13: 00007FF7EA19CAED v8::base::CPU::has_sse41+74493
+# 14: 00007FF7E9DCB9D5 v8::base::AddressSpaceReservation::AddressSpaceReservation+11461
+# 15: 00007FF7EA2E68A1 v8::Isolate::Initialize+433
+# 16: 00007FF7E984696D node::NewContext+397
+# 17: 00007FF7E961E58A X509_CRL_get_meth_data+146010
+# 18: 00007FF7E9623FEA X509_CRL_get_meth_data+169146
+# 19: 00007FF7E96188F5 X509_CRL_get_meth_data+122309
+# 20: 00007FF7E9867463 uv_poll_stop+291
+# 21: 00007FF7EB064C2E inflateValidate+159742
+# 22: 00007FF92968CCB7 BaseThreadInitThunk+23
+# 23: 00007FF92B60AD6C RtlUserThreadStart+44
+# Subtest: src\\__tests__\\sensitive-file-list-drift.test.ts
+not ok 42 - src\\__tests__\\sensitive-file-list-drift.test.ts
+  ---
+  duration_ms: 1605.0416
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\sensitive-file-list-drift.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 2147483651
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: src\\__tests__\\terminal-shell-execution.test.ts
+not ok 43 - src\\__tests__\\terminal-shell-execution.test.ts
+  ---
+  duration_ms: 714.8803
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\terminal-shell-execution.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 3221225725
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# \#
+# \# Fatal process out of memory: Re-embedded builtins: set permissions
+# \#
+# ----- Native stack trace -----
+#  1: 00007FF7E980711D node::SetCppgcReference+17725
+#  2: 00007FF7E96E181F node::TriggerNodeReport+73231
+#  3: 00007FF7EA9595C6 v8::base::FatalOOM+54
+#  4: 00007FF7EA2F0CA3 v8::Isolate::ReportExternalAllocationLimitReached+147
+#  5: 00007FF7EA2DD8D6 v8::Function::Experimental_IsNopFunction+2870
+#  6: 00007FF7EA176FCB v8::CppHeap::wrapper_descriptor+55115
+#  7: 00007FF7EA19EA5A v8::base::CPU::has_sse41+82538
+#  8: 00007FF7EA19CAB9 v8::base::CPU::has_sse41+74441
+#  9: 00007FF7E9DCB9D5 v8::base::AddressSpaceReservation::AddressSpaceReservation+11461
+# 10: 00007FF7EA2E68A1 v8::Isolate::Initialize+433
+# 11: 00007FF7E984696D node::NewContext+397
+# 12: 00007FF7E9712FAB v8_inspector::protocol::Binary::operator=+128987
+# 13: 00007FF7E97B53C2 node::Start+4802
+# 14: 00007FF7E97B4127 node::Start+39
+# 15: 00007FF7E952EC1C AES_cbc_encrypt+156236
+# 16: 00007FF7EB046654 inflateValidate+35364
+# 17: 00007FF92968CCB7 BaseThreadInitThunk+23
+# 18: 00007FF92B60AD6C RtlUserThreadStart+44
+# Subtest: src\\__tests__\\tier2-lite.test.ts
+not ok 44 - src\\__tests__\\tier2-lite.test.ts
+  ---
+  duration_ms: 802.5816
+  type: 'test'
+  location: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\packages\\vscode-extension\\src\\__tests__\\tier2-lite.test.ts:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 2147483651
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: Workspace path containment policy
+    # Subtest: allows a file below the workspace root
+    ok 1 - allows a file below the workspace root
+      ---
+      duration_ms: 3.0142
+      type: 'test'
+      ...
+    # Subtest: rejects parent traversal outside the workspace
+    ok 2 - rejects parent traversal outside the workspace
+      ---
+      duration_ms: 0.508
+      type: 'test'
+      ...
+    # Subtest: rejects a sibling with a shared textual prefix
+    ok 3 - rejects a sibling with a shared textual prefix
+      ---
+      duration_ms: 0.6077
+      type: 'test'
+      ...
+    # Subtest: allows separate files within each multi-root workspace independently
+    ok 4 - allows separate files within each multi-root workspace independently
+      ---
+      duration_ms: 0.7989
+      type: 'test'
+      ...
+    1..4
+ok 131 - Workspace path containment policy
+  ---
+  duration_ms: 8.9748
+  type: 'suite'
+  ...
+# Subtest: Workspace filesystem path policy
+    # Subtest: allows a normal existing workspace file and a normal output
+    ok 1 - allows a normal existing workspace file and a normal output
+      ---
+      duration_ms: 84.9873
+      type: 'test'
+      ...
+    # Subtest: rejects a symlink to a file outside the workspace
+    ok 2 - rejects a symlink to a file outside the workspace # SKIP symlink unavailable: Error: EPERM: operation not permitted, symlink 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\secretguard\\guarantee-program-2026-10-09\\phase4\\evidence\\B4\\checks-1\\tmp\\soterai-link-brsZx1\\outside.env' -> 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\secretguard\\guarantee-program-2026-10-09\\phase4\\evidence\\B4\\checks-1\\tmp\\soterai-link-brsZx1\\workspace\\.env'
+      ---
+      duration_ms: 49.6451
+      type: 'test'
+      ...
+    # Subtest: rejects an internal symlink and a symlinked output target
+    ok 3 - rejects an internal symlink and a symlinked output target # SKIP symlink unavailable: Error: EPERM: operation not permitted, symlink 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\secretguard\\guarantee-program-2026-10-09\\phase4\\evidence\\B4\\checks-1\\tmp\\soterai-internal-link-NsveHx\\source.env' -> 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\secretguard\\guarantee-program-2026-10-09\\phase4\\evidence\\B4\\checks-1\\tmp\\soterai-internal-link-NsveHx\\.env'
+      ---
+      duration_ms: 46.1948
+      type: 'test'
+      ...
+    # Subtest: rejects a Windows directory junction
+    ok 4 - rejects a Windows directory junction
+      ---
+      duration_ms: 77.874
+      type: 'test'
+      ...
+    1..4
+ok 132 - Workspace filesystem path policy
+  ---
+  duration_ms: 261.612
+  type: 'suite'
+  ...
+1..132
+# tests 264
+# suites 41
+# pass 241
+# fail 21
+# cancelled 0
+# skipped 2
+# todo 0
+# duration_ms 34084.5347
