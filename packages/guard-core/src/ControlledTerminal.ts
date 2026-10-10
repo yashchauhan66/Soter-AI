@@ -21,9 +21,8 @@ export interface ControlledTerminalOptions {
 const READ_ONLY_COMMANDS: Record<string, (args: string[]) => boolean> = {
     git: (args) => {
         const sub = args[0];
-        if (sub === "status") return args.every((arg) => isSafeArg(arg));
-        if (sub === "diff") return args.every((arg) => isSafeArg(arg) && !["--output", "--ext-diff"].includes(arg));
-        if (sub === "log" || sub === "show") return args.every((arg) => isSafeArg(arg) && !arg.startsWith("--exec"));
+        if (sub === "status") return args.slice(1).every(arg => ["--short", "--porcelain", "--porcelain=v1", "--branch", "-sb", "--untracked-files=no"].includes(arg));
+        // Content/history reads need file policy mediation; regex redaction is insufficient.
         if (sub === "branch") return args.length === 2 && args[1] === "--show-current";
         return false;
     },
@@ -131,10 +130,6 @@ function isAllowlisted(executable: string | undefined, args: string[]): boolean 
     if (!executable) return false;
     const rule = READ_ONLY_COMMANDS[executable];
     return Boolean(rule?.(args));
-}
-
-function isSafeArg(arg: string): boolean {
-    return /^[A-Za-z0-9._/@:=,+-]+$/.test(arg) && !arg.startsWith("-c") && !arg.includes("..");
 }
 
 function terminalMentionsProduction(cmd: string): boolean {

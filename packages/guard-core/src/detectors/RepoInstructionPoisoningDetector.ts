@@ -13,9 +13,32 @@ const PATTERNS = [
     { pattern: /(?:please\s+)?(?:do not|never)\s+(?:scan|check|review)\s+(?:this|the)\s+(?:code|repo)\b/gi, type: "scan_suppression", label: "Scan suppression", score: 30, confidence: 0.8, message: "Instruction to suppress scanning." },
 ];
 
+/**
+ * Untrusted retrieved content only (agent configs, READMEs, open files): an
+ * instruction to read a credential FILE and put it somewhere visible (chat,
+ * reply, URL, webhook). Deliberately NOT part of detectRepoInstructionPoisoning,
+ * because DecisionEngine also runs that over prompts the user typed themselves.
+ * Single-line bounded windows; no nested quantifiers.
+ */
+const SECRET_DISCLOSURE_PATTERNS = [
+    {
+        pattern: /\b(?:read|cat(?:-?ing)?|print|echo|dump|output|show|display|include|paste|copy|send|upload|post|reveal|leak|exfiltrate|share|append)\w{0,4}\b[^\n]{0,100}?(?:\.env\b|\bid_(?:rsa|ed25519|ecdsa)\b|\.ssh\/|\.aws\/|\bcredentials\b|\.npmrc\b|\.pypirc\b|\.netrc\b|\.git-credentials\b|\bprivate[ _-]?keys?\b|\bsecrets?\.(?:json|ya?ml|toml)\b)[^\n]{0,100}?\b(?:chat|reply|response|answer|conversation|url|webhook|https?:\/\/)/gi,
+        type: "secret_file_disclosure_instruction", label: "Secret-file disclosure instruction", score: 40, confidence: 0.85,
+        message: "Untrusted text instructs an agent to read a credential file and disclose it.",
+    },
+];
+
+export function detectSecretDisclosureInstruction(text: string): DetectorResult {
+    return runPatterns(text, SECRET_DISCLOSURE_PATTERNS);
+}
+
 export function detectRepoInstructionPoisoning(text: string): DetectorResult {
+    return runPatterns(text, PATTERNS);
+}
+
+function runPatterns(text: string, specs: typeof PATTERNS): DetectorResult {
     const matches: DetectorMatch[] = [];
-    for (const spec of PATTERNS) {
+    for (const spec of specs) {
         spec.pattern.lastIndex = 0;
         let m: RegExpExecArray | null;
         while ((m = spec.pattern.exec(text)) !== null) {

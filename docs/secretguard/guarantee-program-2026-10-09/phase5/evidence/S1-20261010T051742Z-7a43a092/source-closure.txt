@@ -1,0 +1,46 @@
+ M .gitattributes
+ M apps/local-ai-broker/package.json
+ M apps/local-ai-broker/src/__tests__/checkpoint-rollback.test.ts
+ M apps/local-ai-broker/src/__tests__/provider-boundary.test.ts
+ M apps/local-ai-broker/src/__tests__/realuser-e2e.test.ts
+ M apps/local-ai-broker/src/cli.ts
+?? apps/local-ai-broker/src/ClientRoutes.ts
+?? apps/local-ai-broker/src/ControlledExecution.ts
+?? apps/local-ai-broker/src/__tests__/control-boundary.test.ts
+?? apps/local-ai-broker/src/__tests__/controlled-execution.test.ts
+ M packages/guard-core/src/ControlledTerminal.ts
+ M packages/guard-core/src/SafeContextBuilder.ts
+ M packages/guard-core/src/__tests__/safecontext.test.ts
+ M packages/guard-core/src/detectors/RepoInstructionPoisoningDetector.ts
+ M packages/vscode-extension/src/__tests__/auto-secure-engine.test.ts
+ M packages/vscode-extension/src/__tests__/host/controlPanel.host.ts
+ M packages/vscode-extension/src/__tests__/mcp-canary-boundary.test.ts
+ M packages/vscode-extension/src/__tests__/panel-content.test.ts
+ M packages/vscode-extension/src/__tests__/phase2/p2-context-leak.test.ts
+ M packages/vscode-extension/src/advanced/commands.ts
+ M packages/vscode-extension/src/broker/AutoSecureEngine.ts
+ M packages/vscode-extension/src/broker/BrokerManager.ts
+ M packages/vscode-extension/src/clipboard/ClipboardGuard.ts
+ M packages/vscode-extension/src/protection/ProtectionController.ts
+ M packages/vscode-extension/src/secret-broker/EnforcedApiCapability.ts
+ M packages/vscode-extension/src/secret-broker/OutputFilter.ts
+ M packages/vscode-extension/src/secret-shield/AutoVaultMigration.ts
+ M packages/vscode-extension/src/security/FileSystemPathPolicy.ts
+ M packages/vscode-extension/src/webview/DashboardPanel.ts
+ M packages/vscode-extension/src/webview/panelContent.ts
+?? packages/vscode-extension/src/__tests__/capability-boundary-regression.test.ts
+?? packages/vscode-extension/src/__tests__/child-environment.test.ts
+?? packages/vscode-extension/src/__tests__/clipboard-boundary.test.ts
+?? packages/vscode-extension/src/__tests__/control-panel-ux.test.ts
+?? packages/vscode-extension/src/__tests__/dashboard-ui.test.ts
+?? packages/vscode-extension/src/__tests__/filesystem-windows-drive.test.ts
+?? packages/vscode-extension/src/protection/AutomaticIDEProtection.ts
+?? packages/vscode-extension/src/security/childEnvironment.ts
+?? packages/vscode-extension/src/webview/controlPanelStyles.ts
+ M packages/vscode-extension/.vscodeignore
+ M packages/vscode-extension/scripts/verify-vsix.mjs
+ M packages/vscode-extension/benchmark-results/security-evaluation.json
+ M packages/vscode-extension/benchmark-results/security-evaluation.md
+ M package-lock.json
+?? docs/secretguard/guarantee-program-2026-10-09/phase0/guarantee-spec.md
+?? docs/secretguard/guarantee-program-2026-10-09/phase3/acceptance-criteria.md

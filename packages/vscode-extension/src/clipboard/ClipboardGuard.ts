@@ -33,7 +33,7 @@ async function scanClipboard(): Promise<GuardDecision | undefined> {
     state.latestDecision = decision;
     const v = verdict(decision);
     if (v === "Allow") {
-        vscode.window.showInformationMessage(`SoterAI: clipboard is safe to paste into AI. No high-risk content found (${decision.riskScore}/100).`);
+        vscode.window.showInformationMessage(`SoterAI found no recognized high-risk content (${decision.riskScore}/100). Unmarked private text may still be present.`);
         return decision;
     }
     const reasons = decision.findings.slice(0, 3).map((f) => f.title).join("; ") || "sensitive content";
@@ -45,7 +45,7 @@ async function scanClipboard(): Promise<GuardDecision | undefined> {
     if (pick === "Replace Clipboard with Safe Version") {
         await vscode.env.clipboard.writeText(redactForSharing(decision.redactedText ?? text));
         const next = await vscode.window.showInformationMessage(
-            `Clipboard is now safe to paste. ${decision.findings.length} risk finding(s) were handled.`,
+            `${decision.findings.length} recognized risk finding(s) were handled in the clipboard copy. Review it before sharing.`,
             "Protect Workspace Secrets",
         );
         if (next === "Protect Workspace Secrets") {
@@ -63,19 +63,29 @@ async function scanClipboard(): Promise<GuardDecision | undefined> {
 async function safePaste(): Promise<void> {
     const editor = vscode.window.activeTextEditor;
     if (!editor) {
-        await vscode.commands.executeCommand("editor.action.clipboardPasteAction");
+        void vscode.window.showWarningMessage("Safe Paste requires an active text editor. This command cannot protect pastes into other views.");
         return;
     }
+    const version = editor.document.version;
+    const selections = editor.selections.slice();
+    const selectionIdentity = JSON.stringify(selections);
+    const insertSnapshot = async (value: string): Promise<boolean> => {
+        if (vscode.window.activeTextEditor !== editor || editor.document.version !== version
+            || JSON.stringify(editor.selections) !== selectionIdentity) {
+            void vscode.window.showWarningMessage("Safe Paste cancelled because the target editor or selection changed. Try again.");
+            return false;
+        }
+        return editor.edit(builder => { for (const selection of selections) builder.replace(selection, value); });
+    };
     const text = await vscode.env.clipboard.readText();
     if (!text.trim()) {
-        await vscode.commands.executeCommand("editor.action.clipboardPasteAction");
         return;
     }
     const state = ExtensionState.getInstance();
     const decision = await state.engine.scan(text, { context: "prompt" });
     state.latestDecision = decision;
     if (verdict(decision) === "Allow") {
-        await vscode.commands.executeCommand("editor.action.clipboardPasteAction");
+        await insertSnapshot(text);
         return;
     }
     const reasons = decision.findings.slice(0, 3).map((f) => f.title).join("; ") || "sensitive content";
@@ -87,12 +97,9 @@ async function safePaste(): Promise<void> {
     );
     if (pick === "Paste Redacted") {
         const safe = redactForSharing(decision.redactedText ?? text);
-        await editor.edit((builder) => {
-            for (const selection of editor.selections) builder.replace(selection, safe);
-        });
-        vscode.window.showInformationMessage("Safe version pasted. The risky clipboard content was not inserted.");
+        if (await insertSnapshot(safe)) vscode.window.showInformationMessage("Redacted snapshot pasted.");
     } else if (pick === "Paste Original") {
-        await vscode.commands.executeCommand("editor.action.clipboardPasteAction");
+        await insertSnapshot(text);
     }
     // No selection made => user cancelled; insert nothing.
 }

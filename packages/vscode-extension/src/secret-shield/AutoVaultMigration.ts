@@ -4,12 +4,11 @@ import { VaultManager } from "../firewall/VaultManager";
 import { assertWorkspaceFileUri } from "../security/WorkspacePathGuard";
 
 /**
- * AutoVaultMigration — on-disk secret elimination for ALL agents.
+ * AutoVaultMigration — removes reviewed plaintext values from workspace files.
  *
- * This is the ONLY mechanism that stops out-of-process agents (Claude Code CLI,
- * Codex CLI, any tool that reads files via OS syscalls) from seeing raw secrets.
- * It works by replacing raw secret values with [SOTERAI_PROTECTED_*] placeholders
- * directly in the workspace files so the on-disk content is already clean.
+ * Replaces reviewed values with [SOTERAI_PROTECTED_*] placeholders. Agents reading
+ * those migrated files see placeholders. History, existing buffers, environment,
+ * backups and runtime injection need separate controls and OS isolation.
  *
  * Trigger points:
  *   1. Workspace open / extension activate  — scans all sensitive files once.

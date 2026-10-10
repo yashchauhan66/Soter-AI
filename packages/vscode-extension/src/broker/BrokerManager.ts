@@ -5,10 +5,12 @@ import { LOCKDOWN_STATE_KEY, type LockdownRecord } from "../protection/LockdownS
 import { readBoundedResponseBody } from "../security/boundedResponse";
 import { BrokerStartFailure } from "./autoStart";
 import { CanaryManager } from "../firewall/CanaryManager";
+import { brokerChildEnvironment } from "../security/childEnvironment";
 
 const TOKEN_KEY = "soterai.localBrokerToken";
+const CONTROL_TOKEN_KEY = "soterai.localBrokerControlToken";
 const SESSION_KEY = "soterai.memorySessionId";
-export const EXPECTED_BROKER_VERSION = "0.1.0";
+export const EXPECTED_BROKER_VERSION = "0.2.0";
 
 // Declared in ./autoStart because that module does not import `vscode` and can
 // therefore be unit-tested; re-exported here because this is where it is
@@ -142,6 +144,7 @@ export class BrokerManager implements vscode.Disposable {
         this.lastError = undefined;
         this.canarySyncError = undefined;
         const token = await this.getOrCreateToken();
+        const controlToken = await this.getOrCreateToken(CONTROL_TOKEN_KEY);
         const script = this.context.asAbsolutePath("dist/local-ai-broker.js");
         const config = vscode.workspace.getConfiguration("soterai");
         // The stored provider key is withheld in a restricted workspace.
@@ -159,9 +162,10 @@ export class BrokerManager implements vscode.Disposable {
             ? await this.context.secrets.get("soterai.providerApiKey")
             : undefined;
         const env: NodeJS.ProcessEnv = {
-            ...process.env,
+            ...brokerChildEnvironment(process.env),
             ELECTRON_RUN_AS_NODE: "1",
             SOTERAI_BROKER_TOKEN: token,
+            SOTERAI_BROKER_CONTROL_TOKEN: controlToken,
             SOTERAI_BROKER_PORT: String(this.port),
             SOTERAI_REQUIRE_CANARY_SYNC: "1",
             SOTERAI_BROKER_STORAGE: this.context.globalStorageUri.fsPath,
@@ -225,7 +229,8 @@ export class BrokerManager implements vscode.Disposable {
             if (exited) break;
         }
         this.lifecycle = "error";
-        const reason = BrokerManager.summarizeSpawnOutput(output, token);
+        const reason = BrokerManager.summarizeSpawnOutput(
+            output.split(controlToken).join("[redacted]").split(providerKey || "\u0000").join("[redacted]"), token);
         this.lastError = `Local AI Broker did not become ready before the startup deadline${reason ? `: ${reason}` : ""}`;
         this.intentionalStop = true;
         await this.stop();
@@ -315,7 +320,7 @@ export class BrokerManager implements vscode.Disposable {
 
     async request<T>(path: string, init: RequestInit = {}, timeoutMs = 5000): Promise<T> {
         if (this.isLockedDown() && path !== "/v1/approvals/clear") throw new Error("Emergency Lockdown is active; broker requests fail closed");
-        const token = await this.context.secrets.get(TOKEN_KEY);
+        const token = await this.context.secrets.get(CONTROL_TOKEN_KEY);
         if (!token) throw new Error("Local broker token is not configured");
         const headers = new Headers(init.headers);
         headers.set("authorization", `Bearer ${token}`);
@@ -342,6 +347,7 @@ export class BrokerManager implements vscode.Disposable {
     async clearToken(): Promise<void> {
         await this.stop();
         await this.context.secrets.delete(TOKEN_KEY);
+        await this.context.secrets.delete(CONTROL_TOKEN_KEY);
     }
 
     async startMemorySession(): Promise<string> {
@@ -402,11 +408,11 @@ export class BrokerManager implements vscode.Disposable {
         this.restartTimer = undefined;
     }
 
-    private async getOrCreateToken(): Promise<string> {
-        let token = await this.context.secrets.get(TOKEN_KEY);
+    private async getOrCreateToken(key = TOKEN_KEY): Promise<string> {
+        let token = await this.context.secrets.get(key);
         if (!token) {
             token = randomBytes(32).toString("base64url");
-            await this.context.secrets.store(TOKEN_KEY, token);
+            await this.context.secrets.store(key, token);
         }
         return token;
     }

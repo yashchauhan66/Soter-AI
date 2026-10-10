@@ -21,6 +21,7 @@ import { createServer, type Server } from "node:http";
 import { AddressInfo } from "node:net";
 import { describe, it } from "node:test";
 import { BrokerServer } from "../BrokerServer";
+import { isClientRoute } from "../ClientRoutes";
 
 const TOKEN = "test_local_broker_token_0123456789abcdef";
 
@@ -67,14 +68,14 @@ async function withRealBroker(
     options: Partial<ConstructorParameters<typeof BrokerServer>[0]>,
     run: (baseUrl: string) => Promise<void>,
 ): Promise<void> {
-    const broker = new BrokerServer({ token: TOKEN, port: 0, ...options });
+    const broker = new BrokerServer({ token: TOKEN, controlToken: TOKEN + "-controller", port: 0, ...options });
     const { url } = await broker.start();
     try { await run(url); } finally { await broker.stop(); }
 }
 
 function request(baseUrl: string, endpoint: string, init: RequestInit = {}, token = TOKEN): Promise<Response> {
     const headers = new Headers(init.headers);
-    if (token) headers.set("authorization", `Bearer ${token}`);
+    if (token) headers.set("authorization", `Bearer ${token === TOKEN && !isClientRoute(init.method ?? "GET", endpoint) ? TOKEN + "-controller" : token}`);
     if (init.body && !headers.has("content-type")) headers.set("content-type", "application/json");
     return fetch(`${baseUrl}${endpoint}`, { ...init, headers });
 }

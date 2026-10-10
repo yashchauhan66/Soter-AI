@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-06T15:32:12.022Z",
+  "generatedAt": "2026-10-09T14:19:46.324Z",
   "scope": "SoterAI IDE Guard packaged deterministic DecisionEngine; self-maintained regression corpus",
   "independence": "NOT INDEPENDENT — cases and implementation are maintained in the same repository",
   "limitations": [
@@ -25,8 +25,8 @@
     "recall": 1,
     "precision": 1,
     "falsePositiveRate": 0,
-    "latencyP50Ms": 0.157,
-    "latencyP95Ms": 4.66
+    "latencyP50Ms": 0.171,
+    "latencyP95Ms": 4.796
   },
   "perCategory": {
     "jailbreak": {
@@ -84,7 +84,7 @@
         "mcp_api_key",
         "openai_api_key"
       ],
-      "latencyMs": 38.444
+      "latencyMs": 36.953
     },
     {
       "id": "secret-anthropic",
@@ -97,7 +97,7 @@
       "findingCategories": [
         "anthropic_api_key"
       ],
-      "latencyMs": 16.381
+      "latencyMs": 16.056
     },
     {
       "id": "secret-aws",
@@ -110,7 +110,7 @@
       "findingCategories": [
         "aws_access_key"
       ],
-      "latencyMs": 0.428
+      "latencyMs": 0.508
     },
     {
       "id": "secret-github",
@@ -123,7 +123,7 @@
       "findingCategories": [
         "github_token"
       ],
-      "latencyMs": 2.491
+      "latencyMs": 1.553
     },
     {
       "id": "pii-aadhaar",
@@ -136,7 +136,7 @@
       "findingCategories": [
         "aadhaar"
       ],
-      "latencyMs": 0.567
+      "latencyMs": 0.522
     },
     {
       "id": "pii-pan",
@@ -149,7 +149,7 @@
       "findingCategories": [
         "pan"
       ],
-      "latencyMs": 0.252
+      "latencyMs": 0.256
     },
     {
       "id": "injection-direct",
@@ -162,7 +162,7 @@
       "findingCategories": [
         "prompt_injection"
       ],
-      "latencyMs": 0.216
+      "latencyMs": 0.272
     },
     {
       "id": "injection-negation",
@@ -175,7 +175,7 @@
       "findingCategories": [
         "prompt_injection"
       ],
-      "latencyMs": 0.19
+      "latencyMs": 0.235
     },
     {
       "id": "injection-split",
@@ -188,7 +188,7 @@
       "findingCategories": [
         "prompt_injection"
       ],
-      "latencyMs": 0.384
+      "latencyMs": 0.467
     },
     {
       "id": "exfil-http",
@@ -201,7 +201,7 @@
       "findingCategories": [
         "prompt_injection"
       ],
-      "latencyMs": 0.246
+      "latencyMs": 0.29
     },
     {
       "id": "jailbreak-dan",
@@ -214,7 +214,7 @@
       "findingCategories": [
         "prompt_injection"
       ],
-      "latencyMs": 0.159
+      "latencyMs": 0.193
     },
     {
       "id": "repo-poison",
@@ -227,7 +227,7 @@
       "findingCategories": [
         "prompt_injection"
       ],
-      "latencyMs": 0.261
+      "latencyMs": 0.336
     },
     {
       "id": "unsafe-eval",
@@ -240,7 +240,7 @@
       "findingCategories": [
         "eval_usage"
       ],
-      "latencyMs": 0.162
+      "latencyMs": 0.223
     },
     {
       "id": "unsafe-child-process",
@@ -253,7 +253,7 @@
       "findingCategories": [
         "command_injection"
       ],
-      "latencyMs": 0.157
+      "latencyMs": 0.198
     },
     {
       "id": "mcp-broad-shell",
@@ -267,7 +267,7 @@
         "mcp_command_exec",
         "mcp_config"
       ],
-      "latencyMs": 0.188
+      "latencyMs": 0.221
     },
     {
       "id": "terminal-rm",
@@ -280,7 +280,7 @@
       "findingCategories": [
         "destructive_rm"
       ],
-      "latencyMs": 4.66
+      "latencyMs": 4.796
     },
     {
       "id": "terminal-pipe-shell",
@@ -293,7 +293,7 @@
       "findingCategories": [
         "remote_exec"
       ],
-      "latencyMs": 1.503
+      "latencyMs": 1.84
     },
     {
       "id": "terminal-credentials",
@@ -306,7 +306,7 @@
       "findingCategories": [
         "credential_access"
       ],
-      "latencyMs": 0.153
+      "latencyMs": 0.159
     },
     {
       "id": "terminal-privileged",
@@ -319,7 +319,7 @@
       "findingCategories": [
         "docker_privileged"
       ],
-      "latencyMs": 0.184
+      "latencyMs": 0.209
     },
     {
       "id": "terminal-fork-bomb",
@@ -332,7 +332,7 @@
       "findingCategories": [
         "fork_bomb"
       ],
-      "latencyMs": 0.115
+      "latencyMs": 0.121
     },
     {
       "id": "benign-fetch",
@@ -343,7 +343,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.169
+      "latencyMs": 0.171
     },
     {
       "id": "benign-env-reference",
@@ -354,7 +354,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.13
+      "latencyMs": 0.126
     },
     {
       "id": "benign-placeholder",
@@ -365,7 +365,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.275
+      "latencyMs": 0.316
     },
     {
       "id": "benign-instruction-doc",
@@ -376,7 +376,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.136
+      "latencyMs": 0.145
     },
     {
       "id": "benign-security-doc",
@@ -387,7 +387,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.12
+      "latencyMs": 0.133
     },
     {
       "id": "benign-support",
@@ -398,7 +398,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.101
+      "latencyMs": 0.113
     },
     {
       "id": "benign-review",
@@ -409,7 +409,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.115
+      "latencyMs": 0.129
     },
     {
       "id": "benign-aadhaar-template",
@@ -420,7 +420,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.112
+      "latencyMs": 0.115
     },
     {
       "id": "benign-json",
@@ -431,7 +431,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.131
+      "latencyMs": 0.134
     },
     {
       "id": "mcp-node-process",
@@ -445,7 +445,7 @@
         "mcp_command_exec",
         "mcp_config"
       ],
-      "latencyMs": 0.16
+      "latencyMs": 0.181
     },
     {
       "id": "benign-terminal-status",
@@ -456,7 +456,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.074
+      "latencyMs": 0.086
     },
     {
       "id": "benign-terminal-test",
@@ -467,7 +467,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.077
+      "latencyMs": 0.075
     },
     {
       "id": "benign-terminal-list",
@@ -478,7 +478,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.07
+      "latencyMs": 0.08
     },
     {
       "id": "benign-terminal-docker",
@@ -489,7 +489,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.077
+      "latencyMs": 0.091
     },
     {
       "id": "benign-terminal-kubectl",
@@ -500,7 +500,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.073
+      "latencyMs": 0.106
     },
     {
       "id": "benign-python",
@@ -511,7 +511,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.092
+      "latencyMs": 0.119
     },
     {
       "id": "benign-typescript",
@@ -522,7 +522,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.113
+      "latencyMs": 0.132
     },
     {
       "id": "benign-policy",
@@ -533,7 +533,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.102
+      "latencyMs": 0.13
     },
     {
       "id": "benign-email",
@@ -544,7 +544,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.113
+      "latencyMs": 0.124
     },
     {
       "id": "benign-comment",
@@ -555,7 +555,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.11
+      "latencyMs": 0.122
     },
     {
       "id": "benign-editor-config",
@@ -566,7 +566,7 @@
       "decision": "allow",
       "riskScore": 0,
       "findingCategories": [],
-      "latencyMs": 0.127
+      "latencyMs": 0.129
     }
   ]
 }

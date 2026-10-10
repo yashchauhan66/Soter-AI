@@ -186,15 +186,15 @@ export function run(): Promise<void> {
                 };
                 try {
                     const local = await set("local", false, "off");
-                    assert.match(local, /Data stays on this device/);
+                    assert.match(local, /SoterAI cloud scanning off/);
                     assert.match(local, /No scan content or telemetry is sent/);
 
                     const connected = await set("hybrid", true, "off");
-                    assert.match(connected, /Cloud is available on request/);
+                    assert.match(connected, /SoterAI cloud available on request/);
                     assert.match(connected, /Automatic telemetry is off/);
 
                     const metadata = await set("cloud", true, "batched");
-                    assert.match(metadata, /Optional metadata is enabled/);
+                    assert.match(metadata, /SoterAI metadata enabled/);
                     assert.match(metadata, /not raw prompts and not raw secrets/);
                 } finally {
                     await config.update("privacyMode", original.privacyMode, vscode.ConfigurationTarget.Global);
@@ -280,7 +280,7 @@ export function run(): Promise<void> {
                 // would pass every other test and be invisible to the user.
                 for (const [action, label] of [
                     ["openWebsite", "soterai.in"],
-                    ["openDocs", "Docs"],
+                    ["openDocs", "Documentation"],
                     ["reportIssue", "Report an issue"],
                 ]) {
                     assert.ok(
@@ -408,7 +408,10 @@ export function run(): Promise<void> {
                     "soterai.setupBrokerIntegration", "soterai.runControlledTerminalCommand",
                     "soterai.scanClipboard", "soterai.preflightMCPTool",
                     "soterai.checkDependencyInstall", "soterai.enableFullProtection",
+                    "soterai.enableAutomaticIDEProtection",
                     "soterai.unlockProtection", "soterai.openWalkthrough",
+                    "soterai.blockFromAI", "soterai.blockSelectionFromAI",
+                    "soterai.openRedactedPreview", "soterai.manageAIRules",
                     "soterai-project-risk.focus", "soterai-latest-findings.focus",
                     "soterai-policy-status.focus",
                 ];
@@ -425,6 +428,44 @@ export function run(): Promise<void> {
                 });
                 assert.strictEqual(cta.action, "action:unlock");
                 assert.ok(registered.has("soterai.unlockProtection"));
+            });
+
+            if (process.env.SOTERAI_UI_TEST_AUTOMATIC === "1") await check("one-click protection enables and verifies real local controls in the synthetic host", async () => {
+                const path = await import("node:path");
+                const os = await import("node:os");
+                const fs = await import("node:fs/promises");
+                const folder = vscode.workspace.workspaceFolders?.[0];
+                assert.ok(folder && process.env.SOTERAI_UI_LAB_HOME, "Synthetic launcher is required");
+                assert.strictEqual(path.resolve(os.homedir()), path.resolve(process.env.SOTERAI_UI_LAB_HOME!));
+                assert.strictEqual(await fs.readFile(path.join(folder!.uri.fsPath, ".synthetic-ui-lab"), "utf8"), "synthetic-only-v1");
+                const config = vscode.workspace.getConfiguration("soterai");
+                assert.strictEqual(config.get("broker.openAIProviderUrl"), "");
+                assert.strictEqual(config.get("broker.anthropicProviderUrl"), "");
+                assert.match(panel.html, /One-click IDE protection/);
+                const stages: Array<{ stage: string; status: string }> = [];
+                try {
+                    const result = await vscode.commands.executeCommand<{ status: string; summary: string }>("soterai.enableAutomaticIDEProtection", (update: { stage: string; status: string }) => stages.push(update));
+                    assert.strictEqual(result?.status, "attention", "Synthetic automatic setup result: " + JSON.stringify({ result, stages }));
+                    assert.ok(stages.some(item => item.stage === "controls" && item.status === "complete"));
+                    assert.ok(stages.some(item => item.stage === "verification" && item.status === "attention"));
+                    const verifiedConfig = vscode.workspace.getConfiguration("soterai");
+                    assert.strictEqual(verifiedConfig.get("liveScan.enabled"), true);
+                    assert.strictEqual(verifiedConfig.get("mcpFirewall.strictMode"), true);
+                    assert.strictEqual(verifiedConfig.get("broker.autoStart"), true);
+                    const response = await fetch(`http://127.0.0.1:${config.get<number>("broker.port")}/health`);
+                    assert.strictEqual(response.status, 200);
+                    const samplePath = path.resolve(folder!.uri.fsPath, "synthetic-one-click-scan.ts");
+                    assert.ok(samplePath.startsWith(path.resolve(folder!.uri.fsPath) + path.sep));
+                    await fs.writeFile(samplePath, "export const OPENAI_API_KEY = 'sk-proj-soterai-self-test-1234567890abcdefghijkl';\n");
+                    const document = await vscode.workspace.openTextDocument(vscode.Uri.file(samplePath));
+                    await vscode.window.showTextDocument(document);
+                    for (let attempt = 0; attempt < 40 && !vscode.languages.getDiagnostics(document.uri).some(item => item.source === "SoterAI"); attempt++) {
+                        await new Promise(resolve => setTimeout(resolve, 100));
+                    }
+                    assert.ok(vscode.languages.getDiagnostics(document.uri).some(item => item.source === "SoterAI"), "Live scanning must activate without reloading an initially disabled extension");
+                } finally {
+                    await vscode.commands.executeCommand("soterai.stopLocalAIBroker");
+                }
             });
 
             console.log(`\n${passes.length} passed, ${failures.length} failed`);

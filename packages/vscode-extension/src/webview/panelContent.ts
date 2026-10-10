@@ -26,6 +26,7 @@ export interface PanelFacts {
     sentinel: boolean;
     mcpFirewall: boolean;
     brokerRunning: boolean;
+    brokerStatus?: "running" | "stopped" | "unavailable";
     trusted: boolean;
     /** Current data-boundary settings. Optional for old hosts/test adapters. */
     privacyMode?: string;
@@ -98,27 +99,27 @@ export interface PrivacyBoundaryReceipt {
 export function privacyBoundary(input: PrivacyBoundaryInput): PrivacyBoundaryReceipt {
     if (!input.trusted) {
         return {
-            title: "Data stays on this device",
-            detail: "This workspace is not trusted, so cloud features are disabled and nothing can be sent.",
+            title: "SoterAI cloud scanning off",
+            detail: "This workspace is not trusted, so SoterAI cloud features are disabled. Other tools have their own data access and network permissions.",
             tone: "local",
         };
     }
     if (input.privacyMode === "local" || !input.cloudEnabled) {
         return {
-            title: "Data stays on this device",
-            detail: "Local checks run here. No scan content or telemetry is sent to SoterAI.",
+            title: "SoterAI cloud scanning off",
+            detail: "No scan content or telemetry is sent to SoterAI. Routed AI requests can still reach your configured provider; other tools are outside these checks.",
             tone: "local",
         };
     }
     if (input.telemetryLevel === "off") {
         return {
-            title: "Cloud is available on request",
-            detail: "Data leaves only when you start a cloud action. Automatic telemetry is off.",
+            title: "SoterAI cloud available on request",
+            detail: "SoterAI cloud actions run only when you start them. Automatic telemetry is off. AI provider traffic and other tools have separate boundaries.",
             tone: "connected",
         };
     }
     return {
-        title: "Optional metadata is enabled",
+        title: "SoterAI metadata enabled",
         detail: "Redacted metadata may be recorded when every privacy gate allows it; not raw prompts and not raw secrets. Cloud actions can send only the content you explicitly submit.",
         tone: "attention",
     };
@@ -171,13 +172,13 @@ export function plainControls(facts: PanelFacts): PlainControl[] {
             summary: facts.safeMode
                 ? facts.brokerRunning
                     ? "On — risky requests through SoterAI are blocked before they leave your machine."
-                    : "On — SoterAI-routed checks warn, but direct AI traffic is not blocked."
-                : "Off — AI requests leave your machine without a safety check.",
+                    : "On — request blocking is unavailable until the local checker is running."
+                : "Off — SoterAI request blocking is disabled.",
             detail: facts.safeMode
                 ? facts.brokerRunning
-                    ? `Fully enforced on brokered AI traffic${facts.safeModeLevel ? ` (${facts.safeModeLevel})` : ""}. Traffic that bypasses the broker is scanned and warned — SoterAI cannot intercept another extension's own network calls.`
+                    ? `Enforced on brokered AI traffic${facts.safeModeLevel ? ` (${facts.safeModeLevel})` : ""}. Requests that bypass the broker are not covered. SoterAI cannot intercept another extension's own network calls.`
                     : "Safe Mode is on. Without the local broker, SoterAI scans every prompt you send through SoterAI commands and warns on secrets/injection. Start the broker for full pre-send blocking on routed traffic."
-                : "AI Safe Mode is off. No scanning or blocking on any AI request path.",
+                : "AI Safe Mode request blocking is off. Local editor scans and default context exclusions have separate settings.",
             on: facts.safeMode,
             level: levelFor(facts.safeMode, facts.brokerRunning ? "ENFORCED" : "MONITORED"),
         },
@@ -185,11 +186,11 @@ export function plainControls(facts: PanelFacts): PlainControl[] {
             id: "protectedWorkspace",
             label: "Keep chosen files out of AI",
             summary: facts.protectedWorkspace
-                ? "On — files you mark as private are stripped from anything SoterAI sends."
-                : "Off — every file in this project can be included when AI asks for context.",
+                ? "On — listed files are excluded from SoterAI-built context."
+                : "Off — the additional protected-file list is inactive. Default and manual rules still apply.",
             detail: facts.protectedWorkspace
                 ? "Protected files are excluded from SoterAI-built AI context. Direct reads by other extensions or tools are not intercepted."
-                : "Listed files are not excluded from AI context bundles.",
+                : "The additional workspace list is inactive. Default sensitive paths and manual file/selection rules still apply to managed context. Other tools' direct reads are not intercepted.",
             on: facts.protectedWorkspace,
             level: levelFor(facts.protectedWorkspace, "REDACTED"),
         },
@@ -246,7 +247,7 @@ export function panelTasks(): PanelTask[] {
         },
         {
             action: "action:protectSecrets",
-            label: "Protect workspace secrets",
+            label: "Review workspace secrets",
             hint: "Finds raw secrets and, after review, replaces them with safe placeholders on disk.",
             icon: `<svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 1.5 13 3.5v3.75c0 3.2-1.9 5.7-5 7.25-3.1-1.55-5-4.05-5-7.25V3.5l5-2Z" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round"/><path d="m5.5 8 1.5 1.5 3.5-3.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
             group: "start",
@@ -302,6 +303,14 @@ export function primaryCta(state: ProtectionStateName, facts: PanelFacts): Prima
             tone: "fix",
         };
     }
+    if (!facts.trusted) {
+        return {
+            action: "action:openWalkthrough",
+            label: "Review setup requirements",
+            hint: "This workspace is untrusted. Open the setup guide before enabling protection.",
+            tone: "calm",
+        };
+    }
     if (state === "ERROR" || state === "POLICY_UNAVAILABLE") {
         return {
             action: "action:openCoverage",
@@ -312,9 +321,9 @@ export function primaryCta(state: ProtectionStateName, facts: PanelFacts): Prima
     }
     if (!facts.brokerRunning) {
         return {
-            action: "action:setupBroker",
-            label: "Turn on local checking",
-            hint: "One-time setup. Until this is done, SoterAI can warn you but cannot block anything.",
+            action: "action:automaticProtection",
+            label: "Protect IDE in one click",
+            hint: "Enable local controls, connect supported AI tools and verify coverage. Config changes get one combined review.",
             tone: "go",
         };
     }
@@ -323,6 +332,10 @@ export function primaryCta(state: ProtectionStateName, facts: PanelFacts): Prima
         && facts.liveScan
         && facts.sentinel
         && facts.mcpFirewall;
+    if (state === "BYPASS_DETECTED") return {
+        action: "action:automaticProtection", label: "Fix supported AI routing",
+        hint: "Runs automatic setup and reviews routing changes for supported AI tools.", tone: "fix",
+    };
     if (state === "FULLY_ENFORCED" || (facts.brokerRunning && everyVisibleControlOn)) {
         return {
             action: "action:openCoverage",
@@ -332,9 +345,9 @@ export function primaryCta(state: ProtectionStateName, facts: PanelFacts): Prima
         };
     }
     return {
-        action: "action:fullProtection",
-        label: "Turn on everything",
-        hint: "Switches on every supported control in one step. You can turn any of them off after.",
+        action: "action:automaticProtection",
+        label: "Complete automatic setup",
+        hint: "Enables local controls, connects supported AI tools and verifies the resulting coverage.",
         tone: "go",
     };
 }

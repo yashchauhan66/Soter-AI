@@ -22,6 +22,7 @@ import { FilesystemCheckpointStore } from "../CheckpointStore";
 import { signCheckpoint, type CheckpointRecord, type RollbackEvidence } from "@soterai/guard-core";
 
 const TOKEN = "test_local_broker_token_0123456789abcdef";
+const CONTROL = TOKEN + "-controller";
 const SECRET = "checkpoint_integrity_secret_0123456789abcdef";
 const TENANT = "tenant_alpha";
 const ACTOR = "actor_agent_1";
@@ -57,13 +58,13 @@ async function withBroker(
     checkpoint: ConstructorParameters<typeof FilesystemCheckpointStore>[0],
     run: (call: (endpoint: string, body: unknown, headers?: Record<string, string>) => Promise<{ status: number; json: any; text: string }>) => Promise<void>,
 ): Promise<void> {
-    const broker = new BrokerServer({ token: TOKEN, port: 0, checkpoint });
+    const broker = new BrokerServer({ token: TOKEN, controlToken: CONTROL, port: 0, checkpoint });
     const { url } = await broker.start();
     const call = async (endpoint: string, body: unknown, headers: Record<string, string> = {}) => {
         const response = await fetch(`${url}${endpoint}`, {
             method: "POST",
             headers: {
-                authorization: `Bearer ${TOKEN}`,
+                authorization: `Bearer ${CONTROL}`,
                 "content-type": "application/json",
                 "x-soterai-tenant": TENANT,
                 "x-soterai-actor": ACTOR,
@@ -335,12 +336,12 @@ describe("Checkpoint rollback runtime enforcement", () => {
             assert.equal(noTenant.json.error.code, "missing_tenant");
         });
 
-        const broker = new BrokerServer({ token: TOKEN, port: 0 });
+        const broker = new BrokerServer({ token: TOKEN, controlToken: CONTROL, port: 0 });
         const { url } = await broker.start();
         try {
             const response = await fetch(`${url}/v1/checkpoint/create`, {
                 method: "POST",
-                headers: { authorization: `Bearer ${TOKEN}`, "content-type": "application/json" },
+                headers: { authorization: `Bearer ${CONTROL}`, "content-type": "application/json" },
                 body: JSON.stringify({ paths: ["x"] }),
             });
             assert.equal(response.status, 501);

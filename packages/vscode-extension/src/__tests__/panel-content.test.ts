@@ -167,7 +167,7 @@ describe("Control Panel privacy boundary", () => {
             trusted: true,
         });
         assert.strictEqual(receipt.tone, "local");
-        assert.match(receipt.title, /stays on this device/i);
+        assert.match(receipt.title, /SoterAI cloud scanning off/i);
         assert.match(receipt.detail, /no scan content|not sent/i);
     });
 
@@ -203,7 +203,8 @@ describe("Control Panel privacy boundary", () => {
             trusted: false,
         });
         assert.strictEqual(receipt.tone, "local");
-        assert.match(receipt.detail, /not trusted|nothing can be sent/i);
+        assert.match(receipt.detail, /not trusted/i);
+        assert.match(receipt.detail, /Other tools have their own/i);
     });
 });
 
@@ -231,8 +232,16 @@ describe("Control Panel primary action", () => {
         assert.strictEqual(primaryCta("LOCKDOWN", OFF).action, "action:unlock");
     });
 
-    it("asks for setup first when nothing can be blocked yet", () => {
-        assert.strictEqual(primaryCta("MONITORING_ONLY", OFF).action, "action:setupBroker");
+    it("offers the automatic setup when nothing can be blocked yet", () => {
+        assert.strictEqual(primaryCta("MONITORING_ONLY", OFF).action, "action:automaticProtection");
+    });
+
+    it("guides an untrusted workspace without offering automatic changes", () => {
+        for (const state of STATES.filter(value => value !== "LOCKDOWN")) {
+            const cta = primaryCta(state, { ...OFF, trusted: false });
+            assert.strictEqual(cta.action, "action:openWalkthrough");
+            assert.match(cta.hint, /untrusted/i);
+        }
     });
 
     it("does not push more setup when everything supported is already on", () => {

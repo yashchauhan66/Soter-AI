@@ -1,13 +1,11 @@
 /**
  * "Secure My AI" — ONE-CLICK auto-discovery & protection engine.
  *
- * Goal (user's requirement):
- *   The user clicks ONE button. SoterAI finds every AI tool on this machine
- *   (Cline, Claude Code, Copilot, Continue, Cursor, env-based providers,
- *   NVIDIA NIM, OpenRouter, Groq, DeepSeek, Mistral, xAI, Ollama, LM Studio...)
- *   and re-routes ALL of them through the local SoterAI broker, so NO secret
- *   or prompt can ever leave raw. Backup first. Health-check after.
- *   Verify end-to-end. One-click restore if anything breaks.
+ * Finds known config candidates, reviews supported endpoint rewrites and
+ * backs them up before applying. Broker smoke tests verify route reachability;
+ * they do not prove that a third-party tool uses the rewritten config or that
+ * all of its traffic is filtered. Direct reads and independent network paths
+ * remain outside this engine.
  *
  * Honest design notes:
  *   - We never silent-write. One button = one approval, then batch-apply.
@@ -229,7 +227,7 @@ export function buildSecurePlan(discovered: DiscoveredTool[], ioFiles: Record<st
                 proposed.push(change);
                 summaryLines.push(`✅ ${d.spec.name}: will route via ${change.brokerBaseUrl}`);
             } else {
-                summaryLines.push(`ℹ️  ${d.spec.name}: already secure (no diff needed)`);
+                summaryLines.push(`ℹ️  ${d.spec.name}: config already points at the broker (no diff needed)`);
             }
         }
     }
@@ -323,14 +321,14 @@ export async function executeSecurePlan(
     if (okCount === 0) {
         headline = skipped > 0
             ? `No config was safely rewritable.${tail}`
-            : "Nothing to change — everything reachable is already secure.";
+            : "No config was changed. Review coverage to check which tools use the broker.";
     } else if (failedVerify > 0) {
         // Never claim redaction we did not observe end-to-end.
         headline =
             `⚠️ Rewrote ${okCount} config(s) but ${failedVerify} did not pass the broker smoke test — ` +
             `redaction is NOT confirmed. Run "SoterAI: Restore AI Configs" if your tools misbehave.${tail}`;
     } else {
-        headline = `🛡️ Secured ${okCount} tool config(s). Secrets now redact before they reach any connected LLM.${tail}`;
+        headline = `Rewrote ${okCount} tool config(s). Broker route smoke checks passed; third-party tool traffic and redaction are not verified by this check.${tail}`;
     }
     return { applied, verified, monitorOnly: plan.monitorOnly, unsupported: plan.unsupported, brokerOnline, headline };
 }

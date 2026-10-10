@@ -48,7 +48,7 @@ async function presentDecision(result: EgressResult, origin: string): Promise<bo
     const detail = summarize(result);
 
     if (result.decision === "ALLOW") {
-        void vscode.window.showInformationMessage(`SoterAI Egress Firewall: safe to send (${result.riskScore}/100).`);
+        void vscode.window.showInformationMessage(`SoterAI found no recognized egress risk (${result.riskScore}/100). Review unmarked private text before sharing.`);
         return true;
     }
 

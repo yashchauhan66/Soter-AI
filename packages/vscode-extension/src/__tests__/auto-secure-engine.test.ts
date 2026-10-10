@@ -227,7 +227,9 @@ describe("executeSecurePlan", () => {
         const sink = memorySink();
         const out = await executeSecurePlan(plan, discovered, io, okHttp(), true, `http://127.0.0.1:${PORT}/health`, sink, TOKEN);
 
-        assert.match(out.headline, /Secured 1 tool config/);
+        assert.match(out.headline, /Rewrote 1 tool config/);
+        assert.match(out.headline, /redaction are not verified/);
+        assert.doesNotMatch(out.headline, /Secrets now redact|already secure/);
         assert.match(io.store["/home/u/.bashrc"], /127\.0\.0\.1:47321/);
         assert.deepEqual(
             Object.keys(io.store),
@@ -239,6 +241,21 @@ describe("executeSecurePlan", () => {
         assert.equal(restored.restored, 1);
         assert.deepEqual(restored.failed, []);
         assert.equal(io.store["/home/u/.bashrc"], original, "restore must return the byte-exact original");
+    });
+
+    it("a reachable route with an upstream failure cannot claim redaction", async () => {
+        const files = { "/home/u/.bashrc": "export OPENAI_BASE_URL=https://api.openai.com/v1\n" };
+        const io = memoryIO(files);
+        const discovered = await discoverAllAiTools(io, "/home/u", "/ws");
+        const plan = buildSecurePlan(discovered, files, PORT);
+        const http: HttpIO = {
+            async get() { return { status: 200, body: "ok" }; },
+            async post() { return { status: 502, body: "upstream unavailable" }; },
+        };
+        const out = await executeSecurePlan(plan, discovered, io, http, true, `http://127.0.0.1:${PORT}/health`, memorySink(), TOKEN);
+        assert.equal(out.verified[0].ok, true, "the smoke proves broker route reachability only");
+        assert.match(out.headline, /redaction are not verified/);
+        assert.doesNotMatch(out.headline, /Secrets now redact|already secure/);
     });
 
     it("writes nothing when the user did not approve", async () => {

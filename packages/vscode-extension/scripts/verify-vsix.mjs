@@ -23,7 +23,7 @@ const REQUIRED = new Set([
     "extension/dist/local-ai-broker.js",
     "extension/dist/soterai-mcp-server.js",
 ]);
-const FORBIDDEN = /(^|\/)(src|node_modules|__tests__|coverage|dist-test)(\/|$)|\.map$|\.log$|(^|\/)\.env($|\.)|FINAL-MASTER-PROMPT|vsix-integrity\.json$|\.ts$|\.vsix$/i;
+const FORBIDDEN = /(^|\/)(src|node_modules|__tests__|coverage|dist-test|artifacts)(\/|$)|\.map$|\.log$|(^|\/)\.env($|\.)|FINAL-MASTER-PROMPT|vsix-integrity\.json$|\.ts$|\.vsix$/i;
 const MAX_ENTRY_COUNT = 100;
 const MAX_UNCOMPRESSED_BYTES = 15 * 1024 * 1024;
 

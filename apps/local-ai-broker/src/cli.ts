@@ -2,16 +2,18 @@
 import path from "node:path";
 import os from "node:os";
 import { BrokerServer, DEFAULT_BROKER_PORT } from "./BrokerServer";
-import { loadOrCreateBrokerToken, persistBrokerToken } from "./auth";
+import { loadOrCreateBrokerToken } from "./auth";
 
 async function main(): Promise<void> {
     const storageDir = process.env.SOTERAI_BROKER_STORAGE ?? path.join(os.homedir(), ".soterai", "broker");
     const suppliedToken = process.env.SOTERAI_BROKER_TOKEN;
     const token = suppliedToken ?? await loadOrCreateBrokerToken(storageDir);
-    if (suppliedToken) await persistBrokerToken(storageDir, suppliedToken);
+    const controlToken = process.env.SOTERAI_BROKER_CONTROL_TOKEN
+        ?? await loadOrCreateBrokerToken(storageDir, "control-auth-token");
     const port = parsePort(process.env.SOTERAI_BROKER_PORT);
     const broker = new BrokerServer({
         token,
+        controlToken,
         port,
         requireCanarySync: process.env.SOTERAI_REQUIRE_CANARY_SYNC === "1",
         openAIProviderUrl: process.env.SOTERAI_OPENAI_PROVIDER_URL,
@@ -33,7 +35,7 @@ function parsePort(value: string | undefined): number {
     return port;
 }
 
-void main().catch((error: unknown) => {
-    console.error(JSON.stringify({ status: "failed", message: error instanceof Error ? error.message : "Broker failed to start" }));
+void main().catch(() => {
+    console.error(JSON.stringify({ status: "failed", message: "Broker failed to start; check private storage, distinct auth credentials, port and provider configuration." }));
     process.exit(1);
 });

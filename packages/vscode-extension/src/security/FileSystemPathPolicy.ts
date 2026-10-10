@@ -33,7 +33,14 @@ async function isDirectoryAlias(lexicalPath: string): Promise<boolean> {
     try {
         const entry = await stat(lexicalPath);
         if (!entry.isDirectory()) return false;
-        return path.normalize(await realpath(lexicalPath)) !== path.normalize(path.resolve(lexicalPath));
+        // VS Code normalizes Windows drive letters to lowercase while realpath
+        // can return uppercase. Preserve directory-name case checks, but do not
+        // classify this spelling difference as a junction/alias.
+        const comparable = (value: string) => {
+            const normalized = path.normalize(value);
+            return process.platform === "win32" ? normalized.replace(/^[a-z]:/i, drive => drive.toUpperCase()) : normalized;
+        };
+        return comparable(await realpath(lexicalPath)) !== comparable(path.resolve(lexicalPath));
     } catch {
         return false;
     }

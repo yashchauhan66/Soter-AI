@@ -6,11 +6,10 @@ import { type BrokerOperation } from "./types";
 /**
  * Enforced API Capability — Scenario A.
  *
- * This is the ONE path SoterAI can honestly label "Verified protected": the
- * AI/agent never receives the credential, only an opaque capability handle. The
- * broker injects the secret into the Authorization header LOCALLY, and only for
- * the exact host + method + path the grant allows. Wrong host/path/method,
- * replay past maxUses, expiry, and post-revocation all fail closed.
+ * On this mediated path the caller receives an opaque handle. The broker
+ * injects the credential locally for the granted host, port, method and path.
+ * The injected transport must enforce the redirect contract. Unit tests and
+ * the demonstration command do not establish global agent confinement.
  *
  * ENFORCEMENT SCOPE (honest): SoterAI controls this outbound request because it
  * originates in the broker. It does NOT control other extensions/processes that
@@ -20,6 +19,8 @@ import { type BrokerOperation } from "./types";
 export interface CapabilityScope {
     /** Exact host the credential may be sent to, e.g. "api.example.com". */
     host: string;
+    /** Exact HTTPS port; defaults to 443. */
+    port?: number;
     /** Allowed HTTP method (upper-case), e.g. "POST". */
     method: string;
     /** Exact path prefix the grant allows, e.g. "/v1/charges". */
@@ -57,6 +58,8 @@ export interface TransportRequest {
     method: string;
     headers: Record<string, string>;
     body?: string;
+    /** Transports MUST reject redirects; never forward injected auth to a redirect. */
+    redirect: "error";
 }
 
 export interface TransportResponse {
@@ -101,6 +104,19 @@ export class EnforcedApiCapabilityBroker {
 
     /** Issue a scoped, revocable, non-secret capability handle. */
     grant(input: CapabilityGrantInput): CapabilityGrant {
+        if (!Number.isSafeInteger(input.ttlMs) || input.ttlMs < 1 || input.ttlMs > 300_000
+            || !Number.isSafeInteger(input.maxUses ?? 1) || (input.maxUses ?? 1) < 1 || (input.maxUses ?? 1) > 1000) {
+            throw new Error("Capability lifetime and use limit must be bounded positive integers");
+        }
+        const port = input.scope.port ?? 443;
+        if (!Number.isSafeInteger(port) || port < 1 || port > 65535
+            || !/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?$/i.test(input.scope.host)
+            || !/^(GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS)$/.test(input.scope.method.toUpperCase())
+            || !safeCapabilityPath(input.scope.pathPrefix)
+            || !/^(authorization|x-api-key|api-key)$/i.test(input.scope.header ?? "authorization")
+            || /[\r\n\x00-\x1f]/.test(input.scope.scheme ?? "Bearer ")) {
+            throw new Error("Invalid capability scope");
+        }
         const handle = `soter-cap-${randomBytes(18).toString("base64url")}`;
         const now = Date.now();
         const grant: CapabilityGrant = {
@@ -111,6 +127,7 @@ export class EnforcedApiCapabilityBroker {
                 header: "authorization",
                 scheme: "Bearer ",
                 ...input.scope,
+                port,
                 host: input.scope.host.toLowerCase(),
                 method: input.scope.method.toUpperCase(),
             },
@@ -122,7 +139,7 @@ export class EnforcedApiCapabilityBroker {
             revoked: false,
         };
         this.grants.set(handle, grant);
-        return grant;
+        return structuredClone(grant);
     }
 
     revoke(handle: string): boolean {
@@ -191,13 +208,18 @@ export class EnforcedApiCapabilityBroker {
         } catch {
             return this.block(grant, audit, "invalid URL");
         }
+        if (parsed.username || parsed.password || parsed.hash || /[\x00-\x20\\]/.test(input.url)) return this.block(grant, audit, "ambiguous URL or URL credentials");
         if (parsed.hostname.toLowerCase() !== grant.scope.host) return this.block(grant, audit, "host not in capability scope");
         if (parsed.protocol !== "https:") return this.block(grant, audit, "only https is allowed for credential injection");
+        if (Number(parsed.port || 443) !== (grant.scope.port ?? 443)) return this.block(grant, audit, "port not in capability scope");
         if (input.method.toUpperCase() !== grant.scope.method) return this.block(grant, audit, "method not in capability scope");
-        if (!parsed.pathname.startsWith(grant.scope.pathPrefix)) return this.block(grant, audit, "path not in capability scope");
+        const prefix = grant.scope.pathPrefix.replace(/\/$/, "");
+        if (!safeCapabilityPath(parsed.pathname)
+            || (prefix && parsed.pathname !== prefix && !parsed.pathname.startsWith(prefix + "/"))) return this.block(grant, audit, "path not in capability scope");
 
         const record = await this.refs.lookup(grant.secretRef, grant.workspace, grant.operation);
         if (!record) return this.block(grant, audit, "secret reference expired, revoked, or out of scope");
+        if (grant.revoked || Date.now() >= grant.expiresAt) return this.block(grant, audit, "capability revoked or expired during lookup");
 
         // Inject the credential LOCALLY, only now, only for this request.
         const headerName = (grant.scope.header ?? "authorization").toLowerCase();
@@ -205,13 +227,13 @@ export class EnforcedApiCapabilityBroker {
 
         let response: TransportResponse;
         try {
-            response = await transport({ url: input.url, method: grant.scope.method, headers, body: input.body });
-        } catch (err) {
-            return this.block(grant, audit, `transport error: ${err instanceof Error ? err.message : "unknown"}`);
+            response = await transport({ url: parsed.href, method: grant.scope.method, headers, body: input.body, redirect: "error" });
+        } catch {
+            return this.block(grant, audit, "transport error");
         }
 
         // Scan the response so a service cannot echo the secret back into AI context.
-        const filtered = this.outputFilter.filter(response.body);
+        const filtered = this.outputFilter.filter(response.body, [record.value]);
         const scrubbed = filtered.reason === "secret_like_output_redacted";
         return {
             allowed: true,
@@ -232,4 +254,9 @@ export class EnforcedApiCapabilityBroker {
     ): EnforcedCallResult {
         return { allowed: false, reason, audit: audit("blocked", grant.scope.host, reason) };
     }
+}
+
+function safeCapabilityPath(value: string): boolean {
+    return value.startsWith("/") && value.length <= 2048 && !/[\\%?#\x00-\x20]/.test(value)
+        && !value.includes("//") && !value.split("/").some(segment => segment === "." || segment === "..");
 }

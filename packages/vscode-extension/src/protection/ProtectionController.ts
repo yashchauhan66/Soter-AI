@@ -4,6 +4,7 @@ import type { AISentinel } from "../sentinel/AISentinel";
 import type { WorkspaceGuard } from "../workspace-guard/WorkspaceGuard";
 import type { ProtectionStateService, ProtectionStateSnapshot } from "./ProtectionStateService";
 import { LOCKDOWN_STATE_KEY, type LockdownRecord } from "./LockdownState";
+import { isManagedSetting } from "../enterprise/managedSettingsProbe";
 
 export interface FullProtectionResult {
     snapshot: ProtectionStateSnapshot;
@@ -36,7 +37,18 @@ export class ProtectionController {
         const limitations: string[] = [];
         const config = vscode.workspace.getConfiguration("soterai");
 
-        await config.update("protection.enabled", true, vscode.ConfigurationTarget.Global);
+        for (const key of ["protectedWorkspace.enabled", "sentinel.enabled"]) {
+            if (config.get(key) === false && isManagedSetting(key)) throw new Error("An administrator has disabled a required control");
+        }
+        const enableSetting = async (key: string) => {
+            const inspection = config.inspect(key);
+            const target = inspection?.workspaceFolderValue !== undefined ? vscode.ConfigurationTarget.WorkspaceFolder
+                : inspection?.workspaceValue !== undefined ? vscode.ConfigurationTarget.Workspace : vscode.ConfigurationTarget.Global;
+            await config.update(key, true, target);
+            if (vscode.workspace.getConfiguration("soterai").get(key) !== true) throw new Error("A required setting could not be enabled");
+        };
+
+        await enableSetting("protection.enabled");
         completed.push("central protection state enabled");
 
         const broker = await this.deps.brokerManager.start();
@@ -53,15 +65,17 @@ export class ProtectionController {
         await this.deps.sentinel.enable();
         completed.push("privacy-safe local Sentinel monitoring enabled");
 
-        await config.update("liveScan.enabled", true, vscode.ConfigurationTarget.Global);
-        await config.update("mcpFirewall.strictMode", true, vscode.ConfigurationTarget.Global);
+        await enableSetting("liveScan.enabled");
+        await enableSetting("mcpFirewall.strictMode");
         completed.push("local diagnostics and strict MCP config checks enabled");
 
         const test = await this.deps.brokerManager.request<{ decision: string; redacted?: boolean }>(
             "/v1/scan",
             { method: "POST", body: JSON.stringify({ content: "OPENAI_API_KEY=sk-proj-soterai-self-test-1234567890abcdefghijkl" }) },
         );
-        if (test.decision === "allow" && !test.redacted) throw new Error("Broker protection self-test did not redact or block the synthetic test value");
+        if (!["block", "redact"].includes(test.decision) && !(test.decision === "allow" && test.redacted === true)) {
+            throw new Error("Broker protection self-test did not redact or block the synthetic test value");
+        }
         completed.push(`broker self-test passed (${test.decision})`);
 
         const snapshot = await this.deps.protectionState.refresh();

@@ -6,13 +6,14 @@ import { BrokerServer } from "../BrokerServer";
 import { validateProviderTarget, readProviderBody, MAX_PROVIDER_RESPONSE_BYTES } from "../ProviderTarget";
 
 const TOKEN = "boundary-test-auth-token-73921-abcdefghijklmnopqrstuvwxyz";
+const CONTROL = TOKEN + "-controller";
 const ROUTE = "/v1/ai/openai-compatible/chat/completions";
 const FAKE = "sk-proj-" + "FakeBoundary73921".repeat(4);
 const input = (stream = false) => ({ model: "fixture", stream, messages: [{ role: "user", content: "Say hello." }] });
 const frame = (text: string) => "data: " + JSON.stringify({ choices: [{ delta: { content: text } }] }) + "\r\n\r\n";
 
 async function withBroker(options: Partial<ConstructorParameters<typeof BrokerServer>[0]>, run: (url: string) => Promise<void>) {
-    const broker = new BrokerServer({ token: TOKEN, port: 0, ...options });
+    const broker = new BrokerServer({ token: TOKEN, controlToken: CONTROL, port: 0, ...options });
     const { url } = await broker.start();
     try { await run(url); } finally { await broker.stop(); }
 }
@@ -201,7 +202,7 @@ test("extension-managed brokers require authenticated canary sync before forward
         fetchImpl: async () => { calls++; return Response.json({ choices: [{ message: { content: output } }] }); },
     }, async url => {
         const sync = (canaries: unknown[], authenticated = true) => fetch(url + "/v1/canaries/sync", {
-            method: "POST", headers: { "content-type": "application/json", ...(authenticated ? { authorization: "Bearer " + TOKEN } : {}) },
+            method: "POST", headers: { "content-type": "application/json", ...(authenticated ? { authorization: "Bearer " + CONTROL } : {}) },
             body: JSON.stringify({ canaries }),
         });
         const initial = await post(url, input());
@@ -221,7 +222,7 @@ test("extension-managed brokers require authenticated canary sync before forward
         const leakedOutput = await post(url, input());
         assert.equal(leakedOutput.status, 422);
         assert.ok(!(await leakedOutput.text()).includes(canary.token));
-        const events = await fetch(url + "/v1/events/recent", { headers: { authorization: "Bearer " + TOKEN } });
+        const events = await fetch(url + "/v1/events/recent", { headers: { authorization: "Bearer " + CONTROL } });
         assert.ok(!(await events.text()).includes(canary.token));
         assert.equal((await sync([{ ...canary, hash: "0".repeat(64) }])).status, 400);
         assert.equal((await post(url, input())).status, 503);
@@ -239,7 +240,7 @@ test("legacy short canary fingerprints remain usable after a runtime upgrade", a
     const hash = Math.abs(value).toString(16).padStart(8, "0");
     await withBroker({ requireCanarySync: true }, async url => {
         const response = await fetch(url + "/v1/canaries/sync", {
-            method: "POST", headers: { authorization: "Bearer " + TOKEN, "content-type": "application/json" },
+            method: "POST", headers: { authorization: "Bearer " + CONTROL, "content-type": "application/json" },
             body: JSON.stringify({ canaries: [{ id: "canary_" + hash, token, hash }] }),
         });
         assert.equal(response.status, 200);

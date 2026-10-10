@@ -2,7 +2,7 @@ import type { GuardAction } from "./types";
 import { classifyPath, type ProjectPolicy, type PathSensitivity, type PathClassification } from "./ProjectPolicy";
 import { findSurvivingSecrets } from "./Redactor";
 import { redactAIContext as redactForSharing } from "./ContextRedactor";
-import { detectRepoInstructionPoisoning } from "./detectors/RepoInstructionPoisoningDetector";
+import { detectRepoInstructionPoisoning, detectSecretDisclosureInstruction } from "./detectors/RepoInstructionPoisoningDetector";
 import { detectOutputExfiltration } from "./detectors/OutputExfiltrationDetector";
 
 /**
@@ -102,8 +102,9 @@ const UNTRUSTED_KINDS = new Set<ContextKind>([
 export function scanUntrustedContent(item: ContextItem): { hostile: boolean; causalChain: string[] } {
     const chain: string[] = [];
     const poison = detectRepoInstructionPoisoning(item.content);
+    const disclosure = detectSecretDisclosureInstruction(item.content);
     const exfil = detectOutputExfiltration(item.content);
-    for (const m of poison.matches) {
+    for (const m of [...poison.matches, ...disclosure.matches]) {
         chain.push(`Injection in ${item.path} (${item.kind}): ${m.label} — "${m.message}"`);
     }
     for (const m of exfil.matches) {
@@ -114,13 +115,14 @@ export function scanUntrustedContent(item: ContextItem): { hostile: boolean; cau
 
 const PREVIEW_LEN = 160;
 
-/** A secret-free structural summary of a sensitive/protected file. */
+/**
+ * A secret-free structural summary of a sensitive/protected file. Only a key
+ * COUNT is reported: env-var names are metadata too (I2), so they stay local.
+ */
 function summarizeFile(item: ContextItem): string {
     const lineCount = item.content.split("\n").length;
-    const keys = [...item.content.matchAll(/^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=/gm)]
-        .map((m) => m[1])
-        .slice(0, 20);
-    const keyLine = keys.length ? ` Keys present (values omitted): ${keys.join(", ")}.` : "";
+    const keyCount = [...item.content.matchAll(/^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=/gm)].length;
+    const keyLine = keyCount ? ` ${keyCount} assignment key(s) present (names and values omitted).` : "";
     return `${item.path} — ${lineCount} lines, kind=${item.kind}.${keyLine} [values and secrets omitted by SoterAI]`;
 }
 
@@ -138,8 +140,9 @@ function safePreview(text: string): string {
 function scanUntrusted(item: ContextItem): string[] {
     const chain: string[] = [];
     const injection = detectRepoInstructionPoisoning(item.content);
+    const disclosure = detectSecretDisclosureInstruction(item.content);
     const exfil = detectOutputExfiltration(item.content);
-    for (const m of injection.matches) {
+    for (const m of [...injection.matches, ...disclosure.matches]) {
         chain.push(`${item.path} (${item.kind}) contains an instruction-like payload → ${m.label}`);
     }
     for (const m of exfil.matches) {

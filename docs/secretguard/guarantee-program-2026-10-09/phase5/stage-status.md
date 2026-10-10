@@ -5,7 +5,7 @@
 | Stage | Status | Evidence / next action |
 |---|---|---|
 | S0 resume identity | PASS — bookkeeping only | [Identity](evidence/S0-20261010T051435Z-f2ccbf42/identity.json), [supplement](evidence/S0-20261010T051435Z-f2ccbf42/supplement.json). |
-| S1 clean checkout | UNTESTED | Next stage; pre-existing relevant dirty dependencies remain uncommitted. |
+| S1 clean checkout | INCOMPLETE | [Summary](evidence/S1-20261010T051742Z-7a43a092/summary.json): clean shared-object checkout succeeded, npm install failed ENOSPC. [Object manifest](evidence/S1-20261010T051742Z-7a43a092/object-manifest.json) pins candidate bytes, not a clean build or loaded host. Previously present target sources/dependencies are explicitly tracked. |
 | S2 scoped regression coverage | UNTESTED | Full A01–A30 acceptance must remain distinct from component tests. |
 | S3 metadata ACL review | UNTESTED | No real token values may be read. |
 | S4 rebuilt isolated host | UNTESTED | Newly authorized existing synthetic harnesses; no process killing. |

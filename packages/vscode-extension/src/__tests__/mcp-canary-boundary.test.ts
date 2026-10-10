@@ -7,7 +7,7 @@ import * as path from "node:path";
 import * as stub from "./phase2/vscode-stub";
 import { MCPFirewall, registerMCPFirewallCommands } from "../mcp-firewall/MCPFirewall";
 import { CanaryManager } from "../firewall/CanaryManager";
-import { BrokerManager } from "../broker/BrokerManager";
+import { BrokerManager, EXPECTED_BROKER_VERSION } from "../broker/BrokerManager";
 
 let root: string;
 let context: ReturnType<typeof stub.makeExtensionContext>;
@@ -106,6 +106,7 @@ test("corrupt canary storage does not silently become an empty monitoring regist
 
 test("BrokerManager synchronizes canaries on attachment and registry changes over authenticated local requests", async () => {
     context._inspect.secretStore.set("soterai.localBrokerToken", "fixture-auth-" + "a".repeat(40));
+    context._inspect.secretStore.set("soterai.localBrokerControlToken", "fixture-controller-" + "b".repeat(40));
     const registry = new CanaryManager(context as never);
     const first = await registry.create();
     const batches: Array<Array<{ id: string; token: string }>> = [];
@@ -113,10 +114,11 @@ test("BrokerManager synchronizes canaries on attachment and registry changes ove
         const url = new URL(String(input));
         assert.equal(url.hostname, "127.0.0.1");
         assert.equal(init?.redirect, "error");
-        if (url.pathname === "/version") return Response.json({ version: "0.1.0" });
+        assert.match(new Headers(init?.headers).get("authorization") ?? "", /^Bearer fixture-controller-/);
+        if (url.pathname === "/version") return Response.json({ version: EXPECTED_BROKER_VERSION });
         if (url.pathname === "/v1/safe-mode/status") return Response.json({ enabled: false, level: "developer" });
         assert.equal(url.pathname, "/v1/canaries/sync");
-        assert.match(new Headers(init?.headers).get("authorization") ?? "", /^Bearer fixture-auth-/);
+        assert.match(new Headers(init?.headers).get("authorization") ?? "", /^Bearer fixture-controller-/);
         const body = JSON.parse(String(init?.body));
         batches.push(body.canaries);
         return Response.json({ synchronized: true, count: body.canaries.length });

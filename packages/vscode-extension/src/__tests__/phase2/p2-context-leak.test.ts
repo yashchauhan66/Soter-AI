@@ -246,7 +246,7 @@ test("S5 inline keys redact automatically; custom data needs a manual region den
 // S6 — I2: do protected NAMES and env-var KEYS leak?
 // ─────────────────────────────────────────────────────────────────────────────
 
-test("S6 summarizeFile emits the env var KEY names of a sensitive file", async () => {
+test("S6 sensitive summaries omit env var names and values", async () => {
     reset();
     const envText = await fs.readFile(path.join(fixture.root, ".env"), "utf8");
     // Force the "sensitive" branch: a policy where .env is sensitive, not protected.
@@ -267,7 +267,7 @@ test("S6 summarizeFile emits the env var KEY names of a sensitive file", async (
         actual: namesLeaked
             ? "KEY NAMES INCLUDED: summarizeFile lists every assignment key verbatim"
             : "no key names in the summary",
-        evidence: "SafeContextBuilder.ts:113-119 summarizeFile → `Keys present (values omitted): …`",
+        evidence: "SafeContextBuilder.ts summarizeFile reports assignment count; names and values stay out of the summary",
         severity: "Medium",
         status: namesLeaked ? "FAIL" : "PASS",
     });
@@ -280,6 +280,7 @@ test("S6 summarizeFile emits the env var KEY names of a sensitive file", async (
         evidence: "SafeContextBuilder.ts:115 captures only the key of `KEY=` lines",
         severity: "Critical",
     }, valueLeaks.length === 0);
+    assert.equal(namesLeaked, false, "S6a: private assignment names reached the summary");
     assert.equal(held, true, `S6b: ${describeLeaks(valueLeaks)}`);
 });
 
@@ -335,7 +336,7 @@ test("S7 known encoded keys redact automatically; custom homoglyph data uses a m
 // S8 — prompt injection in README / .cursorrules (attacker (b) and (c))
 // ─────────────────────────────────────────────────────────────────────────────
 
-test("S8 hostile README is quarantined; agent-config detector gaps remain visible", async () => {
+test("S8 hostile README and agent-config fixtures are quarantined", async () => {
     reset();
     const items = await gatherContext();
     const readme = items.find((i) => i.path === "README.md");
@@ -376,6 +377,7 @@ test("S8 hostile README is quarantined; agent-config detector gaps remain visibl
         severity: "High",
     }, leaks.length === 0);
 
+    assert.equal(safe.decisions.find(d => d.path === ".cursorrules")?.injectionQuarantined, true, "S8c: agent-config disclosure instruction was not quarantined");
     assert.equal(quarantined, true, "README injection was NOT quarantined");
     assert.equal(payloadInBundle, false, "injection payload text reached safeText");
     assert.equal(held, true, `S8b: ${describeLeaks(leaks)}`);
