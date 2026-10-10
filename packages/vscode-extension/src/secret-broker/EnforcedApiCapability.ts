@@ -242,8 +242,11 @@ export class EnforcedApiCapabilityBroker {
 
         // A completed request is not permission to release its result after revocation.
         // This does not recall the credential already supplied to the approved transport.
-        const current = await this.refs.lookup(grant.secretRef, grant.workspace, grant.operation);
-        if (!this.releaseGuardEnabled() || !current || current.value !== record.value || grant.revoked || Date.now() >= grant.expiresAt) {
+        let current = false;
+        try {
+            if (this.releaseGuardEnabled()) current = await this.refs.revalidateUsedReference(record, grant.workspace, grant.operation);
+        } catch { /* Storage or inventory withdrawal withholds the result. */ }
+        if (!this.releaseGuardEnabled() || !current || grant.revoked || Date.now() >= grant.expiresAt) {
             return this.block(grant, audit, "capability or reference revoked or expired before response release");
         }
         // Scan the response so a service cannot echo the secret back into AI context.

@@ -7,7 +7,7 @@ import { createHash, randomBytes } from "node:crypto";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
 import { createServer } from "node:http";
-import { writeReviewEvidence } from "../../security/ReviewEvidence";
+import { observeReviewCanary, writeReviewEvidence } from "../../security/ReviewEvidence";
 
 const execute = promisify(execFile);
 
@@ -31,6 +31,14 @@ export async function run(): Promise<void> {
     assert.ok(extension, "development extension is missing");
     await extension.activate();
     assert.ok(extension.isActive);
+    await writeReviewEvidence(evidence + ".activation.json", {
+        runId: process.env.SOTERAI_REVIEW_RUN_ID, observedAt: new Date().toISOString(),
+        exactOsBuild: process.env.SOTERAI_REVIEW_OS_BUILD, host: vscode.version,
+        extension: extension.packageJSON.version, extensionActive: extension.isActive,
+        extensionBundleSha256: createHash("sha256").update(await fs.readFile(path.join(extension.extensionPath, "dist", "extension.js"))).digest("hex"),
+        hostProbeSha256: createHash("sha256").update(await fs.readFile(__filename)).digest("hex"),
+        status: "ACTIVATED_NOT_GRADED", syntheticOnly: true,
+    });
     await vscode.commands.executeCommand("soterai.enableProtectedWorkspace");
     const preview = async (relative: string) => {
         await vscode.commands.executeCommand("soterai.openRedactedPreview", vscode.Uri.file(path.join(root, relative)));
@@ -72,8 +80,7 @@ export async function run(): Promise<void> {
     assert.ok(!(await preview("custom.txt")).includes(custom));
     report("repository deny rule", false, "SoterAI preview", custom);
     await fs.writeFile(path.join(root, ".aiignore"), "");
-    assert.ok((await preview("custom.txt")).includes(custom));
-    report("agent edits repository deny policy", true, "writable .aiignore", custom);
+    report("agent edits repository deny policy", observeReviewCanary(await preview("custom.txt"), custom), "writable .aiignore; retained accepted deny", custom);
     const envResult = await execute(process.execPath, ["-e", "process.stdout.write(process.env.SOTERAI_SYNTHETIC_CANARY)"], {
         env: { SystemRoot: process.env.SystemRoot, ELECTRON_RUN_AS_NODE: "1", SOTERAI_SYNTHETIC_CANARY: raw }, windowsHide: true, timeout: 10_000,
     });
@@ -111,7 +118,7 @@ export async function run(): Promise<void> {
         assert.equal(JSON.parse(capture).fragments.join(""), Buffer.from(raw).toString("base64"));
         report("encoded chunked exfiltration", true, "independent HTTP to local synthetic receiver only", raw);
     } finally { receiver.closeAllConnections(); await new Promise<void>(resolve => receiver.close(() => resolve())); }
-    await writeReviewEvidence(evidence, { runId: process.env.SOTERAI_REVIEW_RUN_ID, observedAt: new Date().toISOString(), host: vscode.version, extension: extension.packageJSON.version,
+    await writeReviewEvidence(evidence, { runId: process.env.SOTERAI_REVIEW_RUN_ID, observedAt: new Date().toISOString(), exactOsBuild: process.env.SOTERAI_REVIEW_OS_BUILD, host: vscode.version, extension: extension.packageJSON.version,
         extensionBundleSha256: createHash("sha256").update(await fs.readFile(path.join(extension.extensionPath, "dist", "extension.js"))).digest("hex"),
         hostProbeSha256: createHash("sha256").update(await fs.readFile(__filename)).digest("hex"),
         extensionActive: extension.isActive, protectedWorkspaceEnabled: true, syntheticOnly: true, liveModelContacted: false,

@@ -82,7 +82,7 @@ export class AutoVaultMigration implements vscode.Disposable {
 
         const choice = await vscode.window.showWarningMessage(
             `[SoterAI] New sensitive file "${rel}" contains ${candidates.length} secret(s). ` +
-                "Migrate now to hide them from ALL AI agents?",
+                "Review replacement with placeholders? Same-user processes may still access the vault or retained originals/history.",
             { modal: false },
             "Migrate Now",
             "Later",

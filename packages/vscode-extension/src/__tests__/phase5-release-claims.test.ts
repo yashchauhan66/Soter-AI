@@ -11,24 +11,31 @@ const unsupported = [
     /The model sees placeholders and safe metadata, not raw sensitive values/i,
     /one local choke point for anything you are about to send/i,
     /zero known gaps in the detected workspace state/i,
+    /hide them from ALL AI agents|Nothing leaves your machine by default\.|Safe to send\.|vault for real protection/i,
 ];
 
 test('release claim checks detect their unsupported examples as a positive control', () => {
     const examples = ['all AI agents (including CLI tools) see only placeholders', 'Raw secrets sent to AI: no',
         'Verified protected', 'The model sees placeholders and safe metadata, not raw sensitive values',
-        'one local choke point for anything you are about to send', 'zero known gaps in the detected workspace state'];
+        'one local choke point for anything you are about to send', 'zero known gaps in the detected workspace state', 'Migrate now to hide them from ALL AI agents?'];
     examples.forEach((text, index) => assert.ok(unsupported[index].test(text)));
 });
 
 test('canonical release UI and docs avoid the identified unconditional confidentiality claims', () => {
     const paths = ['packages/vscode-extension/src/extension.ts', 'packages/vscode-extension/src/launchCommands.ts',
+        'packages/vscode-extension/src/commands.ts', 'packages/vscode-extension/src/advanced/commands.ts',
+        'packages/vscode-extension/src/advanced/posture.ts', 'packages/vscode-extension/src/firewall/scanners.ts',
+        'packages/vscode-extension/src/secret-shield/AutoVaultMigration.ts',
         'packages/vscode-extension/src/secret-broker/commands.ts', 'packages/vscode-extension/README.md',
         'docs/vscode-local-secret-privacy-proof.md', 'docs/ide-guard-limitations.md', 'docs/protected-secret-vault.md',
         'docs/ai-context-firewall.md', 'docs/marketplace-assets/soterai-long-description.md', 'docs/vscode-extension-readiness.md'];
     for (const path of paths) {
         const text = readFileSync(resolve(root, path), 'utf8');
         unsupported.forEach(pattern => assert.doesNotMatch(text, pattern, path));
-        assert.match(text, /UNTESTED/, `${path} must retain the architecture limitation`);
+        if (!['packages/vscode-extension/src/commands.ts', 'packages/vscode-extension/src/advanced/commands.ts',
+            'packages/vscode-extension/src/advanced/posture.ts', 'packages/vscode-extension/src/firewall/scanners.ts'].includes(path)) {
+            assert.match(text, /UNTESTED/, `${path} must retain the architecture limitation`);
+        }
     }
 });
 

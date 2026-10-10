@@ -213,3 +213,7 @@ Git installation not found.
 ## S5 completion record — 2026-10-10
 
 **FACT — STATIC-ONLY, LOW independence.** Fresh restricted kit reviewer report retained verbatim, SHA256 2294ed67f04ec1e030718ef11639156a48487371778a8aa3d6e51dde3b955b78; all19 kit entries matched, manifest866c94040d614c44f8b439dbd5ebafb889bfce25e1ee3883a7e7c9e09c04e073. Same vendor/model/machine; no dynamic execution or safety refusal. All30 full assertions remain UNTESTED,63 cells NOT_TESTED. See ../phase5/review-triage.md for all9 valid findings; five architecture gaps are not fixed, four managed findings use the last allowed repair round. Original grades remain unchanged.
+
+## S6 final round source record — 2026-10-10
+
+**FACT — Round3 of3, verification pending.** S1 closure commit93992a76, S5 verbatim review commitbf5e563b. Fix actual unlock guard, one-time release revalidation, bounded manual wording, retired release artwork, and existing host observation recording with early hash identity. Existing flags withdraw operations; no new probe scenario, real credential or system change. ../phase5/final-round-changes.md lists files, regressions, rollback and limits. Original review grades unchanged. No further engineering round after these checks; failures remain OPEN/INCOMPLETE.

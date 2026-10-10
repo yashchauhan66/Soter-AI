@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { ExtensionState } from "./state";
 import { registerCommands } from "./commands";
 import { operationalCoverage, reviewCoverageForSetup } from "./security/CoverageDisclosure";
+import { confirmScopedChange } from "./security/ScopedConfirmation";
 import { registerFirewallCommands, readContextApproval } from "./firewall/commands";
 import { secretBrokerRuntime } from "./secret-broker/runtime";
 import { setProtectedFileChecker } from "./firewall/ContextGatherer";
@@ -361,8 +362,8 @@ export function activate(context: vscode.ExtensionContext): void {
             }
         }),
         vscode.commands.registerCommand("soterai.unlockProtection", async () => {
-            const confirm = await vscode.window.showWarningMessage("Unlock SoterAI protection after Emergency Lockdown? Verify the incident is contained first.", { modal: true }, "Unlock");
-            if (confirm === "Unlock") await protectionController.unlock();
+            if (!(await confirmScopedChange("Unlock SoterAI managed protection after Emergency Lockdown? Verify the incident is contained first."))) return;
+            await protectionController.unlock();
         }),
     );
 

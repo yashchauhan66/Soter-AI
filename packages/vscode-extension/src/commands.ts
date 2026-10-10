@@ -52,13 +52,13 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
 
             // Handle decision action notifications
             if (decision.decision === "block") {
-                vscode.window.showErrorMessage(`[SoterAI BLOCK] File ${relativePath} contains high-risk content! Decision: Block.`);
+                vscode.window.showErrorMessage(`[SoterAI CHECK] File ${relativePath} has recognized high-risk findings. Review before sharing; this manual scan does not intercept other tools.`);
             } else if (decision.decision === "warn") {
                 vscode.window.showWarningMessage(`[SoterAI WARNING] File ${relativePath} has findings. Risk Score: ${decision.riskScore}.`);
             } else if (decision.decision === "redact") {
-                vscode.window.showInformationMessage(`[SoterAI REDACT] File ${relativePath} scanned. Safeguards active.`);
+                vscode.window.showInformationMessage(`[SoterAI CHECK] File ${relativePath} scanned; recognized findings may need redaction before sharing.`);
             } else {
-                vscode.window.showInformationMessage(`[SoterAI ALLOW] File ${relativePath} is safe. No critical issues.`);
+                vscode.window.showInformationMessage(`[SoterAI CHECK] File ${relativePath}: no recognized critical findings. Review unmarked private information before sharing.`);
             }
         } catch (err: any) {
             vscode.window.showErrorMessage(`Scanning failed: ${err.message}`);
@@ -83,7 +83,7 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
         refreshViews();
 
         if (decision.decision === "block") {
-            vscode.window.showErrorMessage(`[SoterAI BLOCK] Selection risk score is ${decision.riskScore}! Block sending to AI.`);
+            vscode.window.showErrorMessage(`[SoterAI CHECK] Selection risk score is ${decision.riskScore}. Review before sharing; this scan does not intercept other tools.`);
         } else if (decision.decision === "redact" && decision.redactedText) {
             const copyVal = await vscode.window.showInformationMessage(
                 "Sensitive data detected. Would you like to copy a redacted version to clipboard?",
@@ -96,7 +96,7 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
                 vscode.window.showInformationMessage("Redacted selection copied to clipboard.");
             }
         } else {
-            vscode.window.showInformationMessage(`Selection safe. Risk score: ${decision.riskScore}/100.`);
+            vscode.window.showInformationMessage(`Selection scan score: ${decision.riskScore}/100. Review findings and unmarked private information before sharing.`);
         }
     };
 
@@ -321,7 +321,7 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
     const scanBeforeAIPromptHandler = async () => {
         const prompt = await vscode.window.showInputBox({
             title: "SoterAI: Scan Before AI Prompt",
-            prompt: "Paste the prompt you are about to send to an AI assistant. It is scanned locally — nothing leaves your machine.",
+            prompt: "Paste a prompt for a local manual scan. This check does not control another tool's traffic; review unmarked private information before sharing.",
             placeHolder: "e.g. Fix this bug. Here is my config: DATABASE_URL=postgres://...",
             ignoreFocusOut: true,
         });
@@ -333,7 +333,7 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
         refreshViews();
 
         if (decision.decision === "block" || decision.decision === "approval_required") {
-            vscode.window.showErrorMessage(`[SoterAI BLOCK] This prompt is high-risk (score ${decision.riskScore}). Do not send it as-is: ${decision.evidencePreview ?? ""}`);
+            vscode.window.showErrorMessage(`[SoterAI CHECK] This prompt has recognized high-risk findings (score ${decision.riskScore}). Review before sharing: ${decision.evidencePreview ?? ""}`);
             return;
         }
 
@@ -341,7 +341,7 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
             // redactedText is already fail-closed safe; guard once more defensively.
             const safe = redactForSharing(decision.redactedText);
             const action = await vscode.window.showWarningMessage(
-                `[SoterAI REDACT] Sensitive data found in your prompt (score ${decision.riskScore}). A safe, redacted version can be copied to your clipboard.`,
+                `[SoterAI CHECK] Recognized sensitive data found (score ${decision.riskScore}). Review the redacted version and unmarked private information before sharing.`,
                 "Copy Safe Prompt"
             );
             if (action === "Copy Safe Prompt") {
@@ -350,7 +350,7 @@ export function registerCommands(context: vscode.ExtensionContext, refreshViews:
             }
         } else {
             const action = await vscode.window.showInformationMessage(
-                `[SoterAI ALLOW] No sensitive data detected (score ${decision.riskScore}). Safe to send.`,
+                `[SoterAI CHECK] No recognized sensitive pattern detected (score ${decision.riskScore}). Review unmarked private information before sharing.`,
                 "Copy Prompt"
             );
             if (action === "Copy Prompt") {

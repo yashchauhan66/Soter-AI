@@ -15,9 +15,7 @@ Scan locally · Redact sensitive context · Guard supported AI traffic — no ac
 
 ## See it in action
 
-![SoterAI catches a secret before it reaches AI](https://soterai.in/marketplace/screenshots/soterai-secret-caught-before-ai.gif)
-
-*Recorded from the real playground with the real detection engine (synthetic test secret, BLOCK verdict). Regenerate: `node scripts/marketing/generate-readme-gif.mjs`.*
+Local scans can flag recognized synthetic secrets. A scanner verdict does not establish interception of another tool's traffic or confinement of a same-user process.
 
 ---
 
@@ -95,9 +93,7 @@ no account, cloud connection, or provider API key.
 See active controls, request checking, editor warnings, known gaps, and the
 current data boundary without leaving your editor.
 
-![Historical synthetic Control Panel capture showing configured managed controls](https://soterai.in/marketplace/screenshots/control-panel-protection.png)
-
-The historical screenshot is interface evidence, not current agent-routing or G1–G6 verification. Review the current scope notice and operational status.
+Review the current scope notice and operational status. Historical marketplace captures have been retired from this release's README and package because their labels do not establish current agent-routing or G1–G6 verification.
 
 ## Know your protection at a glance
 
@@ -115,21 +111,9 @@ The Control Panel always shows the current **data boundary**, active controls,
 known gaps, and one recommended next action. Green protection labels are reserved
 for paths SoterAI technically controls.
 
-## See it inside VS Code
+## Review local results inside VS Code
 
-Real extension-host captures using test data only.
-
-### Find a secret without exposing it in the result
-
-![SoterAI reports a secret finding and offers a redacted copy](https://soterai.in/marketplace/screenshots/secret-scan-result.png)
-
-### Check selected context before sharing it with AI
-
-![SoterAI scan-selection result in VS Code](https://soterai.in/marketplace/screenshots/scan-selection-result.png)
-
-### Turn on local request protection
-
-![SoterAI Safe Mode enabled in VS Code](https://soterai.in/marketplace/screenshots/safe-mode-enabled.png)
+Run the synthetic demo, review a selection and inspect the broker's named managed controls. Review findings and unmarked private information before sharing. These actions do not prove third-party agent routing or global network enforcement.
 
 ## Features
 

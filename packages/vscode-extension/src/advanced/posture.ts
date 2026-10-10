@@ -46,7 +46,7 @@ export function computePosture(d: PostureDeps): PostureReport {
             weight: 20,
             fixCommand: "soterai.configurePrivacyMode",
             fixLabel: "Set local mode",
-            note: d.privacyLocal() ? "Nothing leaves your machine by default." : "Cloud/hybrid mode sends redacted checks off-device.",
+            note: d.privacyLocal() ? "Local scan mode is selected. Broker/provider traffic and other tools have separate network behavior." : "Cloud/hybrid mode permits supported cloud checks; review their data handling separately.",
         },
         {
             id: "liveScan",

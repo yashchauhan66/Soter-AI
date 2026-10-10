@@ -54,7 +54,7 @@ async function presentDecision(result: EgressResult, origin: string): Promise<bo
 
     if (result.decision === "BLOCK") {
         const pick = await vscode.window.showErrorMessage(
-            `SoterAI blocked this send (${result.riskScore}/100). ${detail}`,
+            `SoterAI manual check recommends withholding this ${origin} (${result.riskScore}/100). ${detail} This check does not intercept another tool's send.`,
             { modal: true },
             ...(result.redactedText ? ["Copy Redacted Version"] : []),
         );
@@ -70,23 +70,23 @@ async function presentDecision(result: EgressResult, origin: string): Promise<bo
             `SoterAI: secrets detected in this ${origin} (${result.riskScore}/100). ${detail}`,
             { modal: true },
             "Copy Redacted Version",
-            "Send Original Anyway",
+            "Keep Original",
         );
         if (pick === "Copy Redacted Version" && result.redactedText) {
             await vscode.env.clipboard.writeText(result.redactedText);
             void vscode.window.showInformationMessage("Redacted version copied — paste this into the AI tool instead.");
             return false;
         }
-        return pick === "Send Original Anyway";
+        return pick === "Keep Original";
     }
 
     // ASK
     const pick = await vscode.window.showWarningMessage(
         `SoterAI: this ${origin} looks like a prompt-injection attempt (${result.riskScore}/100). ${detail}`,
         { modal: true },
-        "Send Anyway",
+        "Keep Original",
     );
-    return pick === "Send Anyway";
+    return pick === "Keep Original";
 }
 
 export function registerEgressFirewallCommands(context: vscode.ExtensionContext): void {

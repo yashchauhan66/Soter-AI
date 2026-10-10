@@ -82,7 +82,7 @@ export function showAIExtensions(): void {
      <table><tr><th>Id</th><th>Name</th><th>Publisher</th><th>Risk</th><th>Recommendation</th></tr>${
          rows || `<tr><td colspan="5">No AI coding assistants detected.</td></tr>`
      }</table>
-     <p class="note">Detection is heuristic (id/name/category matching) and may miss new tools. These extensions are not blocked by SoterAI — a VS Code extension cannot stop another extension from reading files it already has access to. Move secrets into the SoterAI vault for real protection.</p>`,
+     <p class="note">Detection is heuristic (id/name/category matching) and may miss new tools. These extensions are not blocked by SoterAI — a VS Code extension cannot stop another extension from reading files it already has access to. Vault placeholders reduce managed-path exposure; same-user vault access and retained originals/history remain outside that control.</p>`,
     );
 }
 

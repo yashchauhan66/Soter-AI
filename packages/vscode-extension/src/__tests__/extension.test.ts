@@ -216,13 +216,9 @@ describe("Launch readiness command surface", () => {
 });
 
 describe("Marketplace README media hygiene", () => {
-    it("shows verified VS Code evidence screenshots in the Marketplace README", () => {
-        // Screenshots are referenced by absolute URL (hosted on soterai.in) so they
-        // render on BOTH the VS Code Marketplace and Open VSX. Open VSX does not
-        // resolve README-relative image paths, so a relative `media/...` reference
-        // is silently dropped from the Open VSX listing even though the file ships
-        // in the VSIX. The local file stays the source of truth that is deployed to
-        // the website and still bundled in the VSIX as a fallback.
+    it("preserves historical screenshot sources without presenting them as current evidence", () => {
+        // Restricted review found unsupported words inside historical screenshots.
+        // Keep their evidence bytes, withdraw release references and packaging.
         const screenshots = [
             "control-panel-protection.png",
             "secret-scan-result.png",
@@ -232,20 +228,20 @@ describe("Marketplace README media hygiene", () => {
         for (const name of screenshots) {
             const url = `https://soterai.in/marketplace/screenshots/${name}`;
             const local = `media/marketplace/${name}`;
-            assert.ok(readmeSrc.includes(url), `README must render the absolute URL ${url}`);
+            assert.ok(!readmeSrc.includes(url), `README must retire unsupported historical capture ${url}`);
             assert.ok(fs.existsSync(path.join(root, local)), `missing Marketplace screenshot source ${local}`);
-            assert.ok(!vscodeIgnoreSrc.includes(local), `Marketplace screenshot is excluded from the VSIX: ${local}`);
+            assert.match(vscodeIgnoreSrc, /^media\/marketplace\/\*\*$/m, "Historical assets must be excluded from a new VSIX.");
         }
     });
 
-    it("embeds the real-product README demo GIF (22-GIF-RECORDING-KIT contract)", () => {
+    it("preserves the historical demo GIF while withdrawing its release reference", () => {
         const name = "soterai-secret-caught-before-ai.gif";
         const url = `https://soterai.in/marketplace/screenshots/${name}`;
         const local = `media/marketplace/${name}`;
         const abs = path.join(root, local);
-        assert.ok(readmeSrc.includes(url), `README must render the demo GIF absolute URL ${url}`);
+        assert.ok(!readmeSrc.includes(url), `README must retire the old demo GIF reference ${url}`);
         assert.ok(fs.existsSync(abs), `missing demo GIF source ${local}`);
-        assert.ok(!vscodeIgnoreSrc.includes(local), `demo GIF is excluded from the VSIX: ${local}`);
+        assert.match(vscodeIgnoreSrc, /^media\/marketplace\/\*\*$/m);
         // Marketplace budget from 22-GIF-RECORDING-KIT: < 3 MB so the README stays fast.
         assert.ok(fs.statSync(abs).size < 3 * 1024 * 1024, `demo GIF exceeds 3 MB budget: ${fs.statSync(abs).size} bytes`);
     });

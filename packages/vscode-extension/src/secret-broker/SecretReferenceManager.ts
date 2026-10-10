@@ -45,6 +45,7 @@ export const MAX_SECRET_REFERENCE_TTL_MS = 24 * 60 * 60 * 1000;
 
 export class SecretReferenceManager {
     private readonly records = new Map<string, Omit<SecretRefRecord, "value">>();
+    private readonly usedReferences = new WeakMap<SecretRefRecord, Omit<SecretRefRecord, "value">>();
     private readonly expiryTimers = new Map<string, ReturnType<typeof setTimeout>>();
 
     constructor(
@@ -119,7 +120,23 @@ export class SecretReferenceManager {
         this.requireEnabled();
         if (Date.now() >= Date.parse(record.expiresAt) && !record.revoked) await this.revoke(ref);
         if (!value || record.revoked || this.records.get(ref) !== record) return undefined;
-        return { ...record, allowedOperations: [...record.allowedOperations], value };
+        const resolved = { ...record, allowedOperations: [...record.allowedOperations], value };
+        this.usedReferences.set(resolved, record);
+        return resolved;
+    }
+
+    /** Recheck an already claimed use without consuming another one-time use.
+     * This local lease is not an independent process or user identity boundary. */
+    async revalidateUsedReference(resolved: SecretRefRecord, workspace: string, operation?: BrokerOperation): Promise<boolean> {
+        this.requireEnabled();
+        const record = this.usedReferences.get(resolved);
+        const current = () => !!record && !record.revoked && this.records.get(record.ref) === record
+            && record.workspace === workspace && Date.now() < Date.parse(record.expiresAt)
+            && (!operation || record.allowedOperations.includes(operation));
+        if (!record || !current()) return false;
+        const value = await this.store.get(record.id);
+        this.requireEnabled();
+        return current() && !!value && value === resolved.value && this.hash(value) === record.hash;
     }
 
     metadata(ref: string): SecretRefMetadata | undefined {
