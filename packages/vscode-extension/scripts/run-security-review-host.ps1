@@ -3,9 +3,18 @@ $ErrorActionPreference = 'Stop'
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '../../..'))
 $extensionRoot = Join-Path $repoRoot 'packages/vscode-extension'
 if ($DisableUniqueEvidence) { throw 'Unique evidence recording is disabled; host execution is unavailable.' }
+function Write-NewText([string]$file,[string]$value) {
+    $stream=[IO.File]::Open($file,[IO.FileMode]::CreateNew,[IO.FileAccess]::Write,[IO.FileShare]::None)
+    try {$bytes=[Text.UTF8Encoding]::new($false).GetBytes($value);$stream.Write($bytes,0,$bytes.Length)} finally {$stream.Dispose()}
+}
 if (-not $OutputRoot) { $OutputRoot = Join-Path $repoRoot 'docs/secretguard/guarantee-program-2026-10-09/phase4/evidence/host-runs' }
 $OutputRoot = [IO.Path]::GetFullPath($OutputRoot)
 if (-not $OutputRoot.StartsWith($repoRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) { throw 'OutputRoot must stay inside this repository.' }
+$cursor=$OutputRoot
+while ($cursor.Length -gt $repoRoot.Length) {
+    if ((Test-Path -LiteralPath $cursor) -and ((Get-Item -LiteralPath $cursor -Force).Attributes -band [IO.FileAttributes]::ReparsePoint)) { throw 'Linked output refused.' }
+    $cursor=Split-Path -Parent $cursor
+}
 $runId = 'host-' + [DateTime]::UtcNow.ToString('yyyyMMddTHHmmssZ') + '-' + [Guid]::NewGuid().ToString('N')
 $runRoot = Join-Path $OutputRoot $runId
 if (Test-Path -LiteralPath $runRoot) { throw 'Run output already exists; refusing overwrite.' }
@@ -16,7 +25,7 @@ $bundle = Join-Path $runRoot 'security-review-host.js'
 & node.exe (Join-Path $repoRoot 'node_modules/esbuild/bin/esbuild') (Join-Path $extensionRoot 'src/__tests__/host/securityReview.host.ts') --bundle --platform=node --external:vscode "--outfile=$bundle"
 if ($LASTEXITCODE -ne 0) { throw 'Existing host harness build failed; no host execution.' }
 $launchRecord = @{ runId=$runId; status='PREPARED_NOT_RUN'; createdAt=[DateTime]::UtcNow.ToString('o'); extensionBundleSha256=(Get-FileHash -LiteralPath (Join-Path $extensionRoot 'dist/extension.js')).Hash.ToLowerInvariant(); hostProbeSha256=(Get-FileHash -LiteralPath $bundle).Hash.ToLowerInvariant(); codeSha256=(Get-FileHash -LiteralPath $CodePath).Hash.ToLowerInvariant(); extensionDevelopmentPath=$extensionRoot; limitation='Working-tree launch; hashes identify prepared bytes, not an immutable complete runtime.' }
-[IO.File]::WriteAllText((Join-Path $runRoot 'launch.json'), ($launchRecord | ConvertTo-Json))
+Write-NewText (Join-Path $runRoot 'launch.json') ($launchRecord | ConvertTo-Json)
 $labRoot = Join-Path ([IO.Path]::GetTempPath()) ('soterai-security-review-' + [Guid]::NewGuid().ToString('N'))
 $workspace = Join-Path $labRoot 'workspace'
 $profile = Join-Path $labRoot 'profile'
@@ -55,17 +64,23 @@ $gitCommand = Get-Command git.exe -ErrorAction SilentlyContinue
 if ($gitCommand) { $startInfo.EnvironmentVariables['SOTERAI_REVIEW_GIT'] = $gitCommand.Source }
 $process = New-Object Diagnostics.Process
 $process.StartInfo = $startInfo
-[void]$process.Start()
-$stdout = $process.StandardOutput.ReadToEndAsync()
-$stderr = $process.StandardError.ReadToEndAsync()
-if (!$process.WaitForExit(60000)) { $process.Kill(); throw 'Isolated host timed out; no security pass is recorded.' }
-$process.WaitForExit()
-$stdoutText = $stdout.GetAwaiter().GetResult()
-$stderrText = $stderr.GetAwaiter().GetResult()
-[IO.File]::WriteAllText((Join-Path $runRoot 'stdout.txt'), $stdoutText)
-[IO.File]::WriteAllText((Join-Path $runRoot 'stderr.txt'), $stderrText)
-$stdoutText
-$stderrText
-Write-Output ('Per-run evidence at ' + $runRoot)
-Write-Output ('Synthetic lab retained at ' + $labRoot)
-exit $process.ExitCode
+try {
+    [void]$process.Start()
+    $stdout = $process.StandardOutput.ReadToEndAsync()
+    $stderr = $process.StandardError.ReadToEndAsync()
+    $timedOut=!$process.WaitForExit(60000)
+    if ($timedOut) { $process.Kill() }
+    [void]$process.WaitForExit(5000)
+    $stdoutText = if($stdout.IsCompleted){$stdout.GetAwaiter().GetResult()}else{'INCOMPLETE: stdout drain did not finish.'}
+    $stderrText = if($stderr.IsCompleted){$stderr.GetAwaiter().GetResult()}else{'INCOMPLETE: stderr drain did not finish.'}
+    Write-NewText (Join-Path $runRoot 'stdout.txt') $stdoutText
+    Write-NewText (Join-Path $runRoot 'stderr.txt') $stderrText
+    $stdoutText
+    $stderrText
+    Write-Output ('Per-run evidence at ' + $runRoot)
+    Write-Output ('Synthetic lab retained at ' + $labRoot)
+    if ($timedOut) { throw 'Isolated host timed out; raw output retained; no security pass is recorded.' }
+    if (!$process.HasExited) { throw 'Host exit/drain INCOMPLETE; raw output retained.' }
+    $hostExitCode=$process.ExitCode
+} finally { $process.Dispose() }
+exit $hostExitCode

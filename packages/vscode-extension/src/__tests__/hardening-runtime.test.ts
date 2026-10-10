@@ -6,6 +6,7 @@ import { ProtectionStateService } from "../protection/ProtectionStateService";
 import { deriveProtectionState } from "../protection/ProtectionState";
 import { PolicyStore } from "../firewall/PolicyStore";
 import { registerBrokerCommands } from "../broker/commands";
+import { ControlPanelViewProvider } from "../webview/ControlPanelViewProvider";
 import { confirmScopedChange } from "../security/ScopedConfirmation";
 import { mkdtemp, mkdir, writeFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -43,17 +44,31 @@ test("broker approval command arguments cannot bypass modal; approval displays e
     stub.resetState(); const context=stub.makeExtensionContext("synthetic-consent");
     const event={decision:"approval_required",sessionId:"synthetic-session",contentHash:"a".repeat(64)};
     let posts=0;
-    registerBrokerCommands(context as never,{request:async(p:string)=>{if(p==="/v1/events/recent")return{events:[event]};posts++;return{};}} as never,()=>{});
+    let body: any;
+    registerBrokerCommands(context as never,{request:async(p:string,options?:{body?:string})=>{if(p==="/v1/events/recent")return{events:[event]};posts++;body=JSON.parse(options?.body ?? "{}");return{};}} as never,()=>{});
     try {
         await stub.commands.executeCommand("soterai.approveAIContextOnce",{approved:true}); assert.equal(posts,0);
         assert.ok(stub.capturedText().includes(event.contentHash));assert.match(stub.capturedText(),/not agent-proof/);
-        const prompt=mock.method(stub.window,"showWarningMessage",async()=>"Confirm this change");
-        try { await stub.commands.executeCommand("soterai.approveAIContextOnce");assert.equal(posts,1); }
+        const prompt=mock.method(stub.window,"showWarningMessage",async()=>{event.contentHash="b".repeat(64);return "Confirm this change";});
+        try { await stub.commands.executeCommand("soterai.approveAIContextOnce");assert.equal(posts,1);assert.equal(body.contentHash,"a".repeat(64)); }
         finally { prompt.mock.restore(); }
         stub.state.config.set("soterai.hardening.scopedConfirmation",false);
         assert.equal(await confirmScopedChange("synthetic"),false);
         await stub.commands.executeCommand("soterai.approveAIContextOnce");assert.equal(posts,1);
     } finally { context.subscriptions.forEach(d=>d.dispose()); }
+});
+
+test("A24 helper: panel live off and malformed status cannot inherit cached Safe Mode", async () => {
+    stub.resetState();const context=stub.makeExtensionContext("synthetic-panel-state");
+    await context.globalState.update("soterai.safeMode",{enabled:true,level:"strict"});
+    let status: any={running:true,state:"healthy",safeMode:{enabled:false,level:"developer"}};
+    const panel=new ControlPanelViewProvider(context as never,{brokerManager:{status:async()=>status} as never,workspaceGuard:{isEnabled:false} as never,sentinel:{isEnabled:false} as never,protectionState:{} as never,refreshViews:()=>{}});
+    const access=panel as unknown as {gatherState():Promise<{safeMode:boolean;brokerRunning:boolean}>};
+    assert.equal((await access.gatherState()).safeMode,false);
+    status={running:true,state:"incompatible",safeMode:{enabled:true}};
+    const incompatible=await access.gatherState();assert.equal(incompatible.safeMode,false);assert.equal(incompatible.brokerRunning,false);
+    status={running:true,state:"healthy",safeMode:{enabled:true,level:"strict"}};
+    assert.equal((await access.gatherState()).safeMode,true);
 });
 
 test("unknown routing evidence cannot report either a verified route or detected bypass", () => {

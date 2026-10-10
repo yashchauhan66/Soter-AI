@@ -411,9 +411,10 @@ export function registerBrokerCommands(context: vscode.ExtensionContext, manager
         if (chosen) await approve(chosen.event, "once", "approve");
     });
     const approve = async (event: BrokerEvent, scope: string, outcome: string) => {
-        if (outcome === "approve" && (!event.sessionId || !event.contentHash || scope !== "once"
-            || !(await confirmScopedChange(`Approve one brokered use?\nSession: ${event.sessionId}\nContent SHA-256: ${event.contentHash}\nScope: one use; expires five minutes after broker acceptance. Caller session is not an independently authenticated agent identity.`)))) return false;
-        await manager.request("/v1/approvals", { method: "POST", body: JSON.stringify({ sessionId: event.sessionId, contentHash: event.contentHash, scope, outcome }) });
+        const request = Object.freeze({ sessionId: event.sessionId, contentHash: event.contentHash, scope, outcome });
+        if (outcome === "approve" && (!request.sessionId || !request.contentHash || !/^[a-f0-9]{64}$/.test(request.contentHash) || scope !== "once"
+            || !(await confirmScopedChange(`Approve one brokered use?\nSession: ${request.sessionId}\nContent SHA-256: ${request.contentHash}\nScope: one use; expires five minutes after broker acceptance. Caller session is not an independently authenticated agent identity.`)))) return false;
+        await manager.request("/v1/approvals", { method: "POST", body: JSON.stringify(request) });
         return true;
     };
     reg("soterai.approveAIContextOnce", async () => {

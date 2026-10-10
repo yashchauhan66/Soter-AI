@@ -1,0 +1,15 @@
+# Verifier brief for a later fresh session
+
+**INFERENCE — Task status, 2026-10-10 (Asia/Calcutta).** This brief prepares a future verification task. No test/probe execution is requested or authorized by delivery of this document. Begin with all selected-architecture A01–A30 results UNTESTED and all 63 requested real-agent cells NOT_TESTED.
+
+**INFERENCE — Session requirements.** You are a future independent verifier, using a different exact model from the builder in a new session without builder conversation history or notes. Establish and record that separation before describing your conclusions as independent. If it cannot be established, state independence INCOMPLETE. Do not read any material outside the allowlist in [README.md](README.md), including builder findings and previous captures.
+
+**INFERENCE — Expected-result review.** Read threat model T/G1–G6 and the complete acceptance document from the allowlist. Use [expected-results.md](expected-results.md) for the verbatim A01–A30 table. Keep full assertions separate from product helper behavior. Preserve all target exclusions, acknowledgement conditions, exact consent/identity requirements, durability, mandatory egress, retention distinctions and reporting limits. Do not infer implementation or resistance from architecture names or a generated template.
+
+**INFERENCE — Identity gate.** Pin the final release manifest and every product artifact. An absent/mismatched artifact, unsupported deployment prerequisite or unrecorded OS/editor/agent/topology identity makes the affected result INCOMPLETE. A source inventory or local artifact hash is identity evidence only; clean-checkout reproducibility and effective enforcement need their own observations.
+
+**INFERENCE — Reporting task.** Prepare separate expected and actual observations using [evidence-format.md](evidence-format.md) and [assertion-results-template.csv](assertion-results-template.csv). Do not fill actual observations during document review. Later user-authorized observations must include the matching positive controls and exact versions/identities/grants/policy/boundary. Use original execution labels and separate acceptance statuses. Preserve every failure, error, skip, missing observation and unavailable requested combination.
+
+**INFERENCE — Limit of the handoff.** The kit contains no attack walkthrough, reproduction steps, new probe or exploit code. It transfers no authority to alter normal profiles, real data/accounts, firewall/driver/system settings or publish. Any later authorized verification remains synthetic, isolated and loopback-only within the specification's rules. Do not promote a builder review, helper runner or earlier/different-bundle record to an independent full-architecture result.
+
+**INFERENCE — Required conclusion.** State the exact evidenced scope, actual observed attack successes, untested assertions/cells, missing prerequisites and residual risks. An unavailable capability, blank actual field or broken positive control is never PASS. Until later independent observations exist, the full selected architecture and requested real-agent matrix remain UNTESTED/NOT_TESTED.

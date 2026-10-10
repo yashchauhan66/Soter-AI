@@ -1,0 +1,84 @@
+{
+    "wrapperSha256":  "81619e98d1ad982abd5f399940678f841c4452dd56d4eea49de061353f77538d",
+    "runHostRequested":  false,
+    "atUtc":  "2026-10-10T04:13:27.0841156Z",
+    "scratchPath":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\.tmp\\sgv-9051ed9ac673",
+    "fileWorkers":  2,
+    "commands":  [
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "broker-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "broker-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "broker-test"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "extension-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "extension-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "extension-test"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "security-review-compile"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "native-baseline-compile"
+                     }
+                 ],
+    "architecture":  "UNTESTED",
+    "sameUserAuthority":  "OUTSIDE_COVERAGE",
+    "independentVerification":  "NOT_PERFORMED",
+    "runId":  "verify-20261010T041154Z-a93c5161d5d84cb593aab69db04483a9",
+    "failures":  [
+
+                 ],
+    "schemaVersion":  1,
+    "diagnosticFindings":  [
+                               {
+                                   "id":  "H2a",
+                                   "status":  "SKIP"
+                               },
+                               {
+                                   "id":  "H2e",
+                                   "status":  "SKIP"
+                               },
+                               {
+                                   "id":  "S5-unmarked",
+                                   "status":  "FAIL"
+                               }
+                           ],
+    "harnesses":  [
+                      {
+                          "status":  "PREPARED_NOT_RUN",
+                          "sha256":  "488325093598687c1567c2d0f7f77977505ee7e0d3a6fc8571e7fe58a273b572",
+                          "name":  "security-review"
+                      },
+                      {
+                          "status":  "PREPARED_NOT_RUN",
+                          "sha256":  "d93d907dae79fbfdaa9ee65220e32c5a588af2fd6d2f8e9727cf18dde6e93bea",
+                          "name":  "native-baseline"
+                      }
+                  ],
+    "limitation":  "Command success is not confidentiality success. Read observation files; preserve failures."
+}

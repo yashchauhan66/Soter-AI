@@ -1,0 +1,2161 @@
+{
+    "name": "soterai-ide-guard",
+    "displayName": "SoterAI IDE Guard - AI Security & Secret Protection",
+    "description": "Local secret, PII and prompt-injection checks for SoterAI-managed AI context and broker requests. Free, no account.",
+    "version": "0.6.3",
+    "publisher": "soterai",
+    "preview": false,
+    "pricing": "Free",
+    "icon": "media/logo_circle_whiter.png",
+    "galleryBanner": {
+        "color": "#F96403",
+        "theme": "light"
+    },
+    "engines": {
+        "vscode": "^1.85.0"
+    },
+    "categories": [
+        "AI",
+        "Linters",
+        "Other"
+    ],
+    "keywords": [
+        "ai-security",
+        "ai-coding",
+        "prompt-injection",
+        "secret-scanning",
+        "mcp-security",
+        "cursor",
+        "copilot",
+        "claude",
+        "local-ai",
+        "data-leakage",
+        "vscode-security",
+        "developer-security",
+        "ai-agent-security",
+        "ai-safe-mode",
+        "ai-memory-inspector",
+        "enterprise-security",
+        "ai-activity-sentinel",
+        "protected-workspace",
+        "mcp-firewall",
+        "dependency-guard",
+        "policy-packs",
+        "risk-dashboard"
+    ],
+    "license": "SEE LICENSE IN LICENSE.md",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/yashchauhan66/Soter-AI.git",
+        "directory": "packages/vscode-extension"
+    },
+    "bugs": {
+        "url": "https://github.com/yashchauhan66/Soter-AI/issues"
+    },
+    "homepage": "https://soterai.in/vscode-ai-security",
+    "qna": "https://soterai.in/support",
+    "activationEvents": [
+        "workspaceContains:.soterai-policy.json",
+        "onWalkthrough:soterai.gettingStarted",
+        "onStartupFinished"
+    ],
+    "main": "./dist/extension.js",
+    "capabilities": {
+        "untrustedWorkspaces": {
+            "supported": "limited",
+            "description": "SoterAI IDE Guard runs all secret/PII/prompt-injection scanning fully locally, so scanning works in restricted mode. Cloud connection, token storage, and remote scan escalation are disabled in untrusted workspaces until you trust the workspace.",
+            "restrictedConfigurations": [
+                "soterai.hardening.safeDiffLaunch",
+                "soterai.hardening.coverageDisclosure",
+                "soterai.hardening.addOnlyPolicy",
+                "soterai.hardening.scopedConfirmation",
+                "soterai.hardening.runtimeEvidence",
+                "soterai.hardening.secretInventory",
+                "soterai.cloud.enabled",
+                "soterai.cloud.baseUrl",
+                "soterai.policy.mode",
+                "soterai.scan.remoteEscalation",
+                "soterai.privacyMode",
+                "soterai.sensitiveContext.defaultAction",
+                "soterai.sensitiveContext.allowRawReveal",
+                "soterai.sensitiveContext.requireApproval",
+                "soterai.sensitiveContext.ttlMinutes",
+                "soterai.audit.storeRawPrompts",
+                "soterai.telemetry.redactedEvents",
+                "soterai.broker.port",
+                "soterai.broker.autoStart",
+                "soterai.broker.openAIProviderUrl",
+                "soterai.broker.anthropicProviderUrl",
+                "soterai.terminal.protectionMode",
+                "soterai.terminal.warnOnRawTerminalOpen",
+                "soterai.sentinel.enabled",
+                "soterai.sentinel.retentionDays",
+                "soterai.protectedWorkspace.enabled",
+                "soterai.mcpFirewall.strictMode",
+                "soterai.liveScan.enabled",
+                "soterai.protection.enabled",
+                "soterai.autoVaultMigration.enabled",
+                "soterai.dependencyGuard.osvMode",
+                "soterai.secretInterceptor.enabled"
+            ]
+        }
+    },
+    "contributes": {
+        "commands": [
+            {"command": "soterai.blockFromAI", "title": "Block File or Folder from AI", "category": "SoterAI"},
+            {"command": "soterai.blockGlobFromAI", "title": "Block Pattern from AI", "category": "SoterAI"},
+            {"command": "soterai.blockSelectionFromAI", "title": "Block Selected Text from AI", "category": "SoterAI"},
+            {"command": "soterai.manageAIRules", "title": "Manage Manual AI Rules", "category": "SoterAI"},
+            {"command": "soterai.openRedactedPreview", "title": "Open Redacted AI Preview", "category": "SoterAI"},
+            {"command": "soterai.enableAutomaticIDEProtection", "title": "Enable Automatic IDE Protection", "category": "SoterAI"},
+            {
+                "command": "soterai.openControlPanel",
+                "title": "Open Control Panel",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openReport",
+                "title": "Open Report",
+                "category": "SoterAI",
+                "icon": "$(output)"
+            },
+            {
+                "command": "soterai.enableFullProtection",
+                "title": "Enable Full Protection",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.unlockProtection",
+                "title": "Unlock Protection After Lockdown",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.quickStart",
+                "title": "Quick Start",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.checkExtensionHealth",
+                "title": "Check Extension Health",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openPrivacyGuarantee",
+                "title": "What Stays Local?",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openSettings",
+                "title": "Open Settings",
+                "category": "SoterAI",
+                "icon": "$(gear)"
+            },
+            {
+                "command": "soterai.runDemoScan",
+                "title": "Run Safe Demo Scan",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanSelectedText",
+                "title": "Scan Selected Text",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.useSensitiveContextSafely",
+                "title": "Use Sensitive Context Safely",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.buildSafePromptForAI",
+                "title": "Build Safe Prompt for AI",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.runSecretBrokerDemo",
+                "title": "Run Secret Broker Demo",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openLocalPrivacyStatus",
+                "title": "Local Privacy Status",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.previewWhatAIWillSee",
+                "title": "Preview What AI Will See",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.manageSecretReferences",
+                "title": "Manage Secret References",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.clearSecretBrokerSession",
+                "title": "Clear Secret Broker Session",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.configurePrivacyMode",
+                "title": "Configure Privacy Mode",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.chooseSecretHandlingPolicy",
+                "title": "Choose Secret Handling Policy",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.runSecretBrokerDemoOperation",
+                "title": "Run Secret Broker Demo Operation",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.emergencyLockdown",
+                "title": "Emergency Lockdown (Revoke All Capabilities)",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.testProtection",
+                "title": "Test Protection (Enforced API Capability)",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanGitDiff",
+                "title": "Scan Git Diff",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.reviewTerminalCommand",
+                "title": "Review Terminal Command",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanMCPAgentTools",
+                "title": "Scan MCP / Agent Tools",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openAIActivityLedger",
+                "title": "Open AI Activity Ledger",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.generateCanaryToken",
+                "title": "Generate Canary Token",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.choosePolicyPack",
+                "title": "Choose Policy Pack",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanCurrentFile",
+                "title": "Scan Current File",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanSelection",
+                "title": "Scan Selection",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanBeforeAIPrompt",
+                "title": "Scan Before AI Prompt",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.redactSelectionForAI",
+                "title": "Redact Selection for AI",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.checkTerminalCommand",
+                "title": "Check Terminal Command",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanGitChanges",
+                "title": "Scan Git Changes",
+                "category": "SoterAI",
+                "icon": "$(shield)"
+            },
+            {
+                "command": "soterai.openSecurityPanel",
+                "title": "Open Security Panel",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.configurePolicy",
+                "title": "Configure Policy",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.connectToCloud",
+                "title": "Connect to SoterAI Cloud",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.disconnectCloud",
+                "title": "Disconnect / Clear Token",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.exportLocalRiskReport",
+                "title": "Export Local Risk Report",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.reviewSelectedAICode",
+                "title": "Review Selected AI Code",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.createProjectPolicy",
+                "title": "Create Project AI Security Policy",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.editProjectPolicy",
+                "title": "Edit Project AI Security Policy",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showProtectedFiles",
+                "title": "Show Protected Files",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.addToProtectedFiles",
+                "title": "Add Current File to Protected Files",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.removeFromProtectedFiles",
+                "title": "Remove File from Protected Files",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.migrateSecretsToVault",
+                "title": "Migrate Secrets to Protected Vault",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.migrateCurrentFileToVault",
+                "title": "Migrate Current File Secrets to Vault",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.autoMigrateWorkspace",
+                "title": "Protect Workspace Secrets",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showFileReadLog",
+                "title": "Show AI Agent File-Read Access Log",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.clearFileReadLog",
+                "title": "Clear AI Agent File-Read Access Log",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.restoreSecretPlaceholders",
+                "title": "Restore Secret Placeholders",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.restoreFileFromBackup",
+                "title": "Restore File From Encrypted Backup",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openVaultStatus",
+                "title": "Open Protected Vault Status",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.generateEnvExample",
+                "title": "Generate .env.example Safely",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.inspectAIContext",
+                "title": "Inspect AI Context",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.buildSafeAIContext",
+                "title": "Build Safe AI Context",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.copySafeAIContext",
+                "title": "Copy Safe AI Context",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.approveContextSession",
+                "title": "Approve Context for Session",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.clearContextApproval",
+                "title": "Clear AI Context Approval Session",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.buildSafeDebugPrompt",
+                "title": "Build Safe Debug Prompt",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.buildSafeCodeReviewPrompt",
+                "title": "Build Safe Code Review Prompt",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.buildSafeDeploymentPrompt",
+                "title": "Build Safe Deployment Prompt",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.buildSafeErrorFixPrompt",
+                "title": "Build Safe Error Fix Prompt",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.buildSafeArchitecturePrompt",
+                "title": "Build Safe Architecture Prompt",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openAILedger",
+                "title": "Open AI Access Ledger",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.exportAILedger",
+                "title": "Export AI Access Ledger",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.clearAILedger",
+                "title": "Clear Local AI Ledger",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showWhatAISawLastSession",
+                "title": "Show What AI Saw Last Session",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanAIOutput",
+                "title": "Scan AI Output",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.compareOutputAgainstContext",
+                "title": "Compare Output Against Protected Context",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.checkOutputForLeakage",
+                "title": "Check Output for Secret Leakage",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.generateCanary",
+                "title": "Generate Local Canary Secret",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.insertCanaryIntoTestFile",
+                "title": "Insert Canary Into Test File",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanWorkspaceForCanary",
+                "title": "Scan Workspace for Canary Exposure",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.verifyNoCanaryInLogs",
+                "title": "Verify No Canary in Logs/Reports",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.rotateCanary",
+                "title": "Rotate Canary",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanInstalledExtensionsRisk",
+                "title": "Scan Installed Extensions Risk",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showAIExtensions",
+                "title": "Show AI Extensions",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.generateExtensionRiskReport",
+                "title": "Generate Extension Risk Report",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showCoverageMatrix",
+                "title": "Show AI Route Coverage",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanMCPConfigs",
+                "title": "Scan MCP Configs",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showMCPToolPermissions",
+                "title": "Show MCP Tool Permissions",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.blockRiskyMCPRecommendation",
+                "title": "Block Risky MCP Recommendation",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.generateMCPSafePolicy",
+                "title": "Generate MCP Safe Policy",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.startLocalAIBroker",
+                "title": "Start Local AI Broker",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.stopLocalAIBroker",
+                "title": "Stop Local AI Broker",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.restartLocalAIBroker",
+                "title": "Restart Local AI Broker",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showBrokerStatus",
+                "title": "Show Broker Status",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showRuntimeCapabilitySummary",
+                "title": "Show Runtime Capability Summary",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showExtensionIsolationSummary",
+                "title": "Show Extension Isolation Summary",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.configureAIBroker",
+                "title": "Configure AI Broker",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.copyOpenAIBrokerUrl",
+                "title": "Copy OpenAI-Compatible Broker URL",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.copyAnthropicBrokerUrl",
+                "title": "Copy Anthropic-Compatible Broker URL",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.testBrokerProtection",
+                "title": "Test Broker Protection",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.runControlledTerminalCommand",
+                "title": "Run Controlled Terminal Command",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.rotateBrokerToken",
+                "title": "Rotate Broker Token",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.clearBrokerToken",
+                "title": "Clear Broker Token",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.enableAISafeMode",
+                "title": "Enable AI Safe Mode",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.disableAISafeMode",
+                "title": "Disable AI Safe Mode",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showAISafeModeRules",
+                "title": "Show AI Safe Mode Rules",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.configureSafeMode",
+                "title": "Configure Safe Mode",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openAIMemoryInspector",
+                "title": "Open AI Memory Inspector",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.startAIMemorySession",
+                "title": "Start AI Memory Session",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.endAIMemorySession",
+                "title": "End AI Memory Session",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.clearAIMemorySession",
+                "title": "Clear AI Memory Session",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.exportAIMemoryReport",
+                "title": "Export AI Memory Report",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showWhatAISaw",
+                "title": "Show What AI Saw",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showBlockedAIContext",
+                "title": "Show Blocked AI Context",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.compareAIResponseWithContext",
+                "title": "Compare AI Response With Context",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.reviewPendingAIApproval",
+                "title": "Review Pending AI Approval",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.approveAIContextOnce",
+                "title": "Approve AI Context Once",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.denyAIContext",
+                "title": "Deny AI Context",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showActiveAIApprovals",
+                "title": "Show Active AI Approvals",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.clearAIApprovals",
+                "title": "Clear Broker AI Approvals",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.enableAISentinel",
+                "title": "Enable AI Activity Sentinel",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.disableAISentinel",
+                "title": "Disable AI Activity Sentinel",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showAITimeline",
+                "title": "Show AI Activity Timeline",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.exportAIActivityReport",
+                "title": "Export AI Activity Report",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.clearAIActivityEvents",
+                "title": "Clear AI Activity Events",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openPermissionCenter",
+                "title": "Open AI Permission Center",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.reviewPendingApprovals",
+                "title": "Review Pending AI Approvals",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.clearApprovals",
+                "title": "Clear Stored Permission Approvals",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.enableProtectedWorkspace",
+                "title": "Enable Protected Workspace Mode",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.disableProtectedWorkspace",
+                "title": "Disable Protected Workspace Mode",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showProtectedFilesList",
+                "title": "Show Protected Files List",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.addFileToProtected",
+                "title": "Add File to Protected List",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.removeFileFromProtected",
+                "title": "Remove File from Protected List",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.generateSafeEnvExample",
+                "title": "Generate Safe .env.example",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showWorkspaceRiskScore",
+                "title": "Show Workspace Risk Score",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanWorkspaceRisk",
+                "title": "Scan Workspace Risk",
+                "category": "SoterAI",
+                "icon": "$(search)"
+            },
+            {
+                "command": "soterai.openMCPToolFirewall",
+                "title": "Open MCP Tool Firewall",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.generateSafeMCPPolicyFile",
+                "title": "Generate Safe MCP Policy",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.blockMCPTool",
+                "title": "Block MCP Tool",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.approveMCPTool",
+                "title": "Approve MCP Tool",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanMemoryRisk",
+                "title": "Scan AI Memory Risk",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.cleanPoisonedInstructions",
+                "title": "Clean Poisoned AI Instructions",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showMemoryPoisoningFindings",
+                "title": "Show Memory Poisoning Findings",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.checkDependencyInstall",
+                "title": "Check Dependency Install",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanPackageJsonRisk",
+                "title": "Scan package.json Risk",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.reviewAISuggestedDependency",
+                "title": "Review AI Suggested Dependency",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.applyPolicyPack",
+                "title": "Apply Policy Pack",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.comparePolicyPacks",
+                "title": "Compare Policy Packs",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.exportPolicy",
+                "title": "Export Policy",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openEnterpriseDashboard",
+                "title": "Open Enterprise Risk Dashboard",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.exportEnterpriseRiskReport",
+                "title": "Export Enterprise Risk Report",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.secureAllAI",
+                "title": "Secure Installed AI Tools (One Click)",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanClipboardAICode",
+                "title": "Scan Clipboard as AI-Generated Code (check vulnerabilities before pasting)",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.installGitSecretHook",
+                "title": "Install Git Pre-Commit Secret Hook (block secrets at commit time)",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.checkScreenShareRisk",
+                "title": "Check Screen-Share Risk (warns if sensitive files are visible)",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanLocalModelLogs",
+                "title": "Scan Local AI Model Logs (Ollama/LM Studio) for persisted secrets",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.reviewDependencyGuardMode",
+                "title": "Review Dependency Guard Mode (harden OSV advisory checks)",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.copyPreCommitHookScript",
+                "title": "Copy Pre-Commit Hook Script (for husky/lefthook repos)",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.restoreAIConfigs",
+                "title": "Undo AI Tool Security Changes",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.openWalkthrough",
+                "title": "Open Getting Started Walkthrough",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.applyFindingFix",
+                "title": "Apply Finding Fix",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.scanClipboard",
+                "title": "Scan Clipboard Before AI",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.safePaste",
+                "title": "Safe Paste (scan clipboard, then paste)",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.setupBrokerIntegration",
+                "title": "Setup Broker Integration",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.restoreBrokerIntegration",
+                "title": "Restore Broker Integration",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.preflightMCPTool",
+                "title": "Preflight MCP Tool Call",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.checkBeforeSendingToAI",
+                "title": "Scan Before Sending to AI",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.showEgressFirewallStatus",
+                "title": "Show AI Egress Firewall Status",
+                "category": "SoterAI"
+            },
+            {
+                "command": "soterai.checkEgressPayload",
+                "title": "Check Egress Payload (API)",
+                "category": "SoterAI"
+            }
+        ],
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "soterai-explorer",
+                    "title": "SoterAI Guard",
+                    "icon": "media/icon.svg"
+                }
+            ]
+        },
+        "views": {
+            "soterai-explorer": [
+                {
+                    "id": "soterai-control-panel",
+                    "name": "Control Panel",
+                    "type": "webview"
+                },
+                {
+                    "id": "soterai-project-risk",
+                    "name": "Project Risk"
+                },
+                {
+                    "id": "soterai-latest-findings",
+                    "name": "Latest Findings"
+                },
+                {
+                    "id": "soterai-policy-status",
+                    "name": "Policy & Cloud Sync Status"
+                }
+            ]
+        },
+        "submenus": [
+            {
+                "id": "soterai.editorContext",
+                "label": "SoterAI"
+            },
+            {
+                "id": "soterai.explorerContext",
+                "label": "SoterAI"
+            }
+        ],
+        "languageModelTools": [
+            {
+                "name": "soterai_scan_text",
+                "displayName": "Check text for secrets and prompt injection",
+                "modelDescription": "Check text for secrets, prompt injection, and jailbreak attempts before sending it to a model, writing it to a file, or including it in a commit. Returns a verdict (allow/warn/block) and, when secrets are present, a redacted copy safe to use instead. Also catches content hidden by zero-width characters, homoglyphs, leetspeak or base64. ADVISORY: this returns a verdict, it cannot block your action.",
+                "userDescription": "Checks text for secrets and prompt-injection before it reaches an AI model.",
+                "toolReferenceName": "soteraiScanText",
+                "canBeReferencedInPrompt": true,
+                "icon": "$(shield)",
+                "tags": [
+                    "soterai",
+                    "security"
+                ],
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                        "text": {
+                            "type": "string",
+                            "description": "The text to check."
+                        }
+                    },
+                    "required": [
+                        "text"
+                    ]
+                }
+            },
+            {
+                "name": "soterai_check_command",
+                "displayName": "Check a shell command before running it",
+                "modelDescription": "Check a shell command for destructive or credential-stealing behaviour before running it: recursive deletes, fork bombs, piping a download into a shell, reverse shells, reading ~/.aws/credentials or SSH keys, privileged containers, destructive kubectl. Returns a verdict (allow/warn/block). ADVISORY and pattern-based: it cannot see what a script the command invokes will do.",
+                "userDescription": "Checks a terminal command for destructive or credential-stealing patterns.",
+                "toolReferenceName": "soteraiCheckCommand",
+                "canBeReferencedInPrompt": true,
+                "icon": "$(terminal)",
+                "tags": [
+                    "soterai",
+                    "security"
+                ],
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                        "command": {
+                            "type": "string",
+                            "description": "The exact command line you intend to run."
+                        }
+                    },
+                    "required": [
+                        "command"
+                    ]
+                }
+            },
+            {
+                "name": "soterai_check_dependency",
+                "displayName": "Check a package before installing it",
+                "modelDescription": "Check a package before installing it: typosquatting, unpinned versions, install-from-URL, and piped-shell install commands. Accepts a whole install command or a name and version. Returns a verdict (allow/warn/block). ADVISORY and offline — local heuristics only, no CVE database is queried, so a known-vulnerable but well-named package can still pass.",
+                "userDescription": "Checks a dependency for typosquatting and unsafe install patterns.",
+                "toolReferenceName": "soteraiCheckDependency",
+                "canBeReferencedInPrompt": true,
+                "icon": "$(package)",
+                "tags": [
+                    "soterai",
+                    "security"
+                ],
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                        "command": {
+                            "type": "string",
+                            "description": "A full install command, e.g. \"npm install expres\"."
+                        },
+                        "name": {
+                            "type": "string",
+                            "description": "Package name, if you do not have a command."
+                        },
+                        "version": {
+                            "type": "string",
+                            "description": "Version or range. Defaults to \"latest\"."
+                        }
+                    }
+                }
+            }
+        ],
+        "mcpServerDefinitionProviders": [
+            {
+                "id": "soterai.guard-tools",
+                "label": "SoterAI Guard"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "soterai.safePaste",
+                "key": "ctrl+alt+v",
+                "mac": "cmd+alt+v",
+                "when": "editorTextFocus && !editorReadonly"
+            },
+            {
+                "command": "soterai.checkBeforeSendingToAI",
+                "key": "ctrl+alt+s",
+                "mac": "cmd+alt+s",
+                "when": "editorTextFocus"
+            }
+        ],
+        "viewsWelcome": [
+            {
+                "view": "soterai-project-risk",
+                "contents": "No workspace scan yet, so this risk score is unknown rather than zero.\n[Scan this workspace](command:soterai.scanWorkspaceRisk)\nOr try a safe built-in example first.\n[Run safe demo](command:soterai.runDemoScan)",
+                "when": "workbenchState != empty"
+            },
+            {
+                "view": "soterai-project-risk",
+                "contents": "Open a folder to scan it. Single files can still be checked with the editor right-click menu.\n[Open folder](command:vscode.openFolder)",
+                "when": "workbenchState == empty"
+            },
+            {
+                "view": "soterai-latest-findings",
+                "contents": "Nothing scanned yet. Findings appear here after a file, selection, or workspace scan.\n[Scan the current file](command:soterai.scanCurrentFile)"
+            },
+            {
+                "view": "soterai-policy-status",
+                "contents": "No project policy file found. SoterAI is running on local defaults, which is the safest mode.\n[Choose a policy pack](command:soterai.choosePolicyPack)"
+            }
+        ],
+        "configuration": {
+            "title": "SoterAI IDE Guard Settings",
+            "properties": {
+                "soterai.cloud.enabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enable cloud features like policy sync and high-risk cloud scan escalation.",
+                    "scope": "machine",
+                    "policy": {
+                        "name": "SoterAICloudEnabled",
+                        "minimumVersion": "1.85"
+                    }
+                },
+                "soterai.hardening.safeDiffLaunch": {
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
+                    "description": "Use a pinned Git executable and isolated configuration for safe diffs. Turning this off disables diff sharing; it never restores the old launcher. Same-user executable tampering remains outside coverage."
+                },
+                "soterai.hardening.coverageDisclosure": {
+                    "type": "boolean",
+                    "default": true,
+                    "scope": "machine",
+                    "description": "Show Covers / Does not cover before one-click setup. Turning this off disables that setup flow rather than hiding its limitations."
+                },
+                "soterai.hardening.addOnlyPolicy": {
+                    "type": "boolean", "default": true, "scope": "machine",
+                    "description": "Retain accepted repository denies. Off withdraws context sharing and policy mutation; it does not restore replacement or removal APIs. Relaxation requires labelled native modal review, not agent-proof."
+                },
+                "soterai.hardening.scopedConfirmation": {
+                    "type": "boolean", "default": true, "scope": "machine",
+                    "description": "Require labelled native confirmation for broker approval and protection-disable commands. Off withdraws those changes; ordinary editor dialogs are not agent-proof."
+                },
+                "soterai.hardening.runtimeEvidence": {
+                    "type": "boolean", "default": true, "scope": "machine",
+                    "description": "Use healthy current broker status and validated policy bytes for operational display. Off removes those status claims. Configuration text never proves agent routing; independent verification remains UNTESTED."
+                },
+                "soterai.hardening.secretInventory": {
+                    "type": "boolean", "default": true, "scope": "machine",
+                    "description": "Inventory persistent reference IDs for cleanup and purge on activation. Off withdraws reference creation and reads while cleanup remains available. Legacy unindexed values and same-user credential access remain outside coverage."
+                },
+                "soterai.cloud.baseUrl": {
+                    "type": "string",
+                    "default": "https://api.soterai.in",
+                    "description": "SoterAI cloud environment base URL.",
+                    "scope": "machine"
+                },
+                "soterai.policy.mode": {
+                    "type": "string",
+                    "enum": [
+                        "local",
+                        "team",
+                        "enterprise"
+                    ],
+                    "default": "local",
+                    "description": "Security policy mode.",
+                    "scope": "machine"
+                },
+                "soterai.scan.remoteEscalation": {
+                    "type": "string",
+                    "enum": [
+                        "never",
+                        "high-risk-only",
+                        "enterprise-required"
+                    ],
+                    "default": "never",
+                    "description": "Escalate high-risk scanning to cloud (redacted/minimized payload only).",
+                    "scope": "machine"
+                },
+                "soterai.privacyMode": {
+                    "type": "string",
+                    "enum": [
+                        "local",
+                        "cloud",
+                        "hybrid"
+                    ],
+                    "default": "local",
+                    "description": "Controls whether SoterAI uses only local detectors, configured cloud checks, or local-first hybrid checks with user consent.",
+                    "scope": "machine",
+                    "policy": {
+                        "name": "SoterAIPrivacyMode",
+                        "minimumVersion": "1.85"
+                    }
+                },
+                "soterai.sensitiveContext.defaultAction": {
+                    "type": "string",
+                    "enum": [
+                        "broker",
+                        "redact",
+                        "block",
+                        "summarize"
+                    ],
+                    "default": "broker",
+                    "description": "Default action when sensitive context is selected for AI use.",
+                    "scope": "machine"
+                },
+                "soterai.sensitiveContext.allowRawReveal": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Allow dangerous reveal-once flows after explicit confirmation. Enterprise policy can still disable this.",
+                    "scope": "machine"
+                },
+                "soterai.sensitiveContext.requireApproval": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Require user approval before brokered local actions can use a secret reference.",
+                    "scope": "machine"
+                },
+                "soterai.sensitiveContext.ttlMinutes": {
+                    "type": "number",
+                    "default": 5,
+                    "minimum": 1,
+                    "maximum": 60,
+                    "description": "Maximum lifetime for scoped secret references.",
+                    "scope": "machine"
+                },
+                "soterai.audit.storeRawPrompts": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Store raw prompts in the audit ledger. This should remain disabled for privacy.",
+                    "scope": "machine"
+                },
+                "soterai.telemetry.redactedEvents": {
+                    "type": "string",
+                    "enum": [
+                        "off",
+                        "high-risk-only",
+                        "batched"
+                    ],
+                    "default": "off",
+                    "description": "Redacted telemetry event collection level.",
+                    "scope": "machine"
+                },
+                "soterai.scan.maxFileSizeKb": {
+                    "type": "number",
+                    "default": 256,
+                    "description": "Maximum file size to scan locally in KB."
+                },
+                "soterai.scan.maxWorkspaceFiles": {
+                    "type": "number",
+                    "default": 1000,
+                    "description": "Maximum files to check during workspace security scans."
+                },
+                "soterai.scan.excludeGlobs": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "default": [
+                        "**/node_modules/**",
+                        "**/.git/**",
+                        "**/dist/**",
+                        "**/build/**",
+                        "**/*.bin",
+                        "**/*.exe",
+                        "**/*.zip",
+                        "**/*.png",
+                        "**/*.jpg"
+                    ],
+                    "description": "Exclude glob patterns from file scans."
+                },
+                "soterai.broker.port": {
+                    "type": "number",
+                    "default": 47321,
+                    "minimum": 1024,
+                    "maximum": 65535,
+                    "description": "Loopback-only Local AI Broker port.",
+                    "scope": "machine"
+                },
+                "soterai.broker.autoStart": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Start the Local AI Broker automatically when the editor opens. The broker is the only component that can block a request rather than just report it, so with this off SoterAI is advisory until you start it by hand.",
+                    "scope": "machine"
+                },
+                "soterai.broker.openAIProviderUrl": {
+                    "type": "string",
+                    "default": "",
+                    "description": "OpenAI-compatible upstream chat completions endpoint. Stored locally.",
+                    "scope": "machine"
+                },
+                "soterai.broker.anthropicProviderUrl": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Anthropic-compatible upstream messages endpoint. Stored locally.",
+                    "scope": "machine"
+                },
+                "soterai.terminal.protectionMode": {
+                    "type": "string",
+                    "enum": [
+                        "manual",
+                        "warn",
+                        "approval"
+                    ],
+                    "default": "warn",
+                    "description": "Action on detecting dangerous terminal commands.",
+                    "scope": "machine",
+                    "policy": {
+                        "name": "SoterAITerminalProtectionMode",
+                        "minimumVersion": "1.85"
+                    }
+                },
+                "soterai.terminal.warnOnRawTerminalOpen": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Show a one-time warning when a raw VS Code terminal opens because raw terminal input is outside SoterAI broker enforcement. The warning offers the broker-controlled terminal route.",
+                    "scope": "machine"
+                },
+                "soterai.secretInterceptor.enabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Monitor sensitive documents opened in VS Code and offer encrypted vault migration. This is visibility only: VS Code does not expose the caller or an awaitable file-read interception hook. Vault migration removes detected plaintext from disk for editor and CLI agents.",
+                    "scope": "machine",
+                    "policy": {
+                        "name": "SoterAISecretInterceptorEnabled",
+                        "minimumVersion": "1.85"
+                    }
+                },
+                "soterai.autoVaultMigration.enabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable AutoVaultMigration: scan the workspace on startup for sensitive files (.env*, *.pem, etc.) that contain raw secrets and offer to migrate them to the encrypted vault. This is the only protection that works against CLI-based agents (Claude Code, Codex) that read files directly from disk.",
+                    "scope": "machine",
+                    "policy": {
+                        "name": "SoterAIAutoVaultMigrationEnabled",
+                        "minimumVersion": "1.85"
+                    }
+                },
+                "soterai.sentinel.enabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enable AI Activity Sentinel background monitor.",
+                    "scope": "machine",
+                    "policy": {
+                        "name": "SoterAISentinelEnabled",
+                        "minimumVersion": "1.85"
+                    }
+                },
+                "soterai.protectedWorkspace.enabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enable Protected Workspace Mode — auto-protect sensitive files.",
+                    "scope": "machine",
+                    "policy": {
+                        "name": "SoterAIProtectedWorkspaceEnabled",
+                        "minimumVersion": "1.85"
+                    }
+                },
+                "soterai.mcpFirewall.strictMode": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Use strict policy for SoterAI MCP preflight; deny unconfigured servers. Does not intercept other clients or discover runtime tools.",
+                    "scope": "machine"
+                },
+                "soterai.showAllCommands": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Show all ~100 advanced SoterAI commands in the Command Palette. Off by default keeps the palette focused on the core commands; every command remains available from the SoterAI Guard view, status bar, and this setting."
+                },
+                "soterai.experimentalFeatures.enabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Show Labs and experimental SoterAI commands in the Command Palette. Keep this off for the stable marketplace experience."
+                },
+                "soterai.liveScan.enabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Scan supported files as you type and show secrets, PII, prompt-injection, and jailbreak risks inline (squiggly underlines with lightbulb Quick Fixes). 100% local regex/heuristic detection — nothing is sent anywhere. This is VISIBILITY_ONLY: diagnostics appear after content exists; SoterAI does not block other extensions or prevent you from sending text to AI.",
+                    "scope": "machine"
+                },
+                "soterai.protection.enabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable the central SoterAI protection state. This does not imply universal interception; coverage is reported from verified runtime facts.",
+                    "scope": "machine",
+                    "policy": {
+                        "name": "SoterAIProtectionEnabled",
+                        "minimumVersion": "1.85"
+                    }
+                },
+                "soterai.sentinel.retentionDays": {
+                    "type": "number",
+                    "default": 30,
+                    "minimum": 1,
+                    "maximum": 365,
+                    "description": "Local Sentinel metadata/redacted-evidence retention period. Raw prompts and secrets are not retained.",
+                    "scope": "machine"
+                },
+                "soterai.dependencyGuard.osvMode": {
+                    "type": "string",
+                    "enum": [
+                        "ask",
+                        "always",
+                        "never"
+                    ],
+                    "default": "ask",
+                    "markdownDescription": "How Dependency Guard obtains CVE advisories. `ask` prompts before contacting [OSV](https://osv.dev) (`api.osv.dev`); `always` queries OSV online (package name + version only); `never` uses local heuristics only (typosquat, unpinned, remote URL, install scripts). **Advisory only** — cannot block installs outside SoterAI-reviewed commands. SoterAI is not a full SCA product; OSV is the advisory source when online.",
+                    "scope": "machine"
+                }
+            }
+        },
+        "menus": {
+            "editor/context": [
+                {
+                    "submenu": "soterai.editorContext",
+                    "group": "1_modification@100",
+                    "when": "editorHasSelection && !editorReadonly"
+                }
+            ],
+            "soterai.editorContext": [
+                { "command": "soterai.blockSelectionFromAI", "group": "2_fix@0", "when": "editorHasSelection && resourceScheme == file" },
+                { "command": "soterai.openRedactedPreview", "group": "2_fix@3", "when": "resourceScheme == file" },
+                {
+                    "command": "soterai.scanSelection",
+                    "group": "1_check@1",
+                    "when": "editorHasSelection"
+                },
+                {
+                    "command": "soterai.checkBeforeSendingToAI",
+                    "group": "1_check@2",
+                    "when": "editorHasSelection"
+                },
+                {
+                    "command": "soterai.redactSelectionForAI",
+                    "group": "2_fix@1",
+                    "when": "editorHasSelection"
+                },
+                {
+                    "command": "soterai.reviewSelectedAICode",
+                    "group": "2_fix@2",
+                    "when": "editorHasSelection"
+                }
+            ],
+            "explorer/context": [
+                {
+                    "submenu": "soterai.explorerContext",
+                    "group": "7_modification@100",
+                    "when": "resourceScheme == file"
+                }
+            ],
+            "soterai.explorerContext": [
+                { "command": "soterai.blockFromAI", "group": "2_protect@0", "when": "resourceScheme == file" },
+                { "command": "soterai.blockGlobFromAI", "group": "2_protect@2", "when": "resourceScheme == file" },
+                { "command": "soterai.openRedactedPreview", "group": "2_protect@3", "when": "!explorerResourceIsFolder && resourceScheme == file" },
+                {
+                    "command": "soterai.scanCurrentFile",
+                    "group": "1_check@1",
+                    "when": "!explorerResourceIsFolder"
+                },
+                {
+                    "command": "soterai.addFileToProtected",
+                    "group": "2_protect@1",
+                    "when": "!explorerResourceIsFolder"
+                }
+            ],
+            "scm/title": [
+                {
+                    "command": "soterai.scanGitChanges",
+                    "group": "navigation@100",
+                    "when": "scmProvider == git"
+                }
+            ],
+            "view/title": [
+                {
+                    "command": "soterai.scanWorkspaceRisk",
+                    "group": "navigation@1",
+                    "when": "view == soterai-project-risk"
+                },
+                {
+                    "command": "soterai.openSettings",
+                    "group": "navigation@2",
+                    "when": "view == soterai-control-panel"
+                },
+                {
+                    "command": "soterai.openWalkthrough",
+                    "group": "1_help@1",
+                    "when": "view == soterai-control-panel"
+                }
+            ],
+            "commandPalette": [
+                {
+                    "command": "soterai.quickStart",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.checkExtensionHealth",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.openPrivacyGuarantee",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.openSettings",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.scanSelectedText",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.buildSafePromptForAI",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.runSecretBrokerDemo",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.openLocalPrivacyStatus",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.reviewTerminalCommand",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.scanMCPAgentTools",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.openAIActivityLedger",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.generateCanaryToken",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.choosePolicyPack",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.scanClipboardAICode",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.installGitSecretHook",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.copyPreCommitHookScript",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.checkScreenShareRisk",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.scanLocalModelLogs",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.reviewDependencyGuardMode",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.useSensitiveContextSafely",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.previewWhatAIWillSee",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.manageSecretReferences",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.clearSecretBrokerSession",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.configurePrivacyMode",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.chooseSecretHandlingPolicy",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.runSecretBrokerDemoOperation",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.emergencyLockdown",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.enableFullProtection",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.enableAutomaticIDEProtection",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.unlockProtection",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.testProtection",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.scanSelection",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.scanWorkspaceRisk",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.scanBeforeAIPrompt",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.redactSelectionForAI",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.checkTerminalCommand",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.openSecurityPanel",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.configurePolicy",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.connectToCloud",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.disconnectCloud",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.exportLocalRiskReport",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.reviewSelectedAICode",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.createProjectPolicy",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.editProjectPolicy",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showProtectedFiles",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.addToProtectedFiles",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.removeFromProtectedFiles",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.migrateSecretsToVault",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.migrateCurrentFileToVault",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showFileReadLog",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.clearFileReadLog",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.restoreSecretPlaceholders",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.restoreFileFromBackup",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.openVaultStatus",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.generateEnvExample",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.inspectAIContext",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.buildSafeAIContext",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.copySafeAIContext",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.approveContextSession",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.clearContextApproval",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.buildSafeDebugPrompt",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.buildSafeCodeReviewPrompt",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.buildSafeDeploymentPrompt",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.buildSafeErrorFixPrompt",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.buildSafeArchitecturePrompt",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.openAILedger",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.exportAILedger",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.clearAILedger",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showWhatAISawLastSession",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.scanAIOutput",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.compareOutputAgainstContext",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.checkOutputForLeakage",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.generateCanary",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.insertCanaryIntoTestFile",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.scanWorkspaceForCanary",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.verifyNoCanaryInLogs",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.rotateCanary",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.scanInstalledExtensionsRisk",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showAIExtensions",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.generateExtensionRiskReport",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showCoverageMatrix",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.scanMCPConfigs",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showMCPToolPermissions",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.blockRiskyMCPRecommendation",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.generateMCPSafePolicy",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.startLocalAIBroker",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.stopLocalAIBroker",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.restartLocalAIBroker",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showBrokerStatus",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.showRuntimeCapabilitySummary",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.showExtensionIsolationSummary",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.configureAIBroker",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.copyOpenAIBrokerUrl",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.copyAnthropicBrokerUrl",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.testBrokerProtection",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.runControlledTerminalCommand",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.rotateBrokerToken",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.clearBrokerToken",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.enableAISafeMode",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.disableAISafeMode",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showAISafeModeRules",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.configureSafeMode",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.openAIMemoryInspector",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.startAIMemorySession",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.endAIMemorySession",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.clearAIMemorySession",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.exportAIMemoryReport",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showWhatAISaw",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.showBlockedAIContext",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.compareAIResponseWithContext",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.reviewPendingAIApproval",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.approveAIContextOnce",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.denyAIContext",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showActiveAIApprovals",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.clearAIApprovals",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.enableAISentinel",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.disableAISentinel",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showAITimeline",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.exportAIActivityReport",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.clearAIActivityEvents",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.openPermissionCenter",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.reviewPendingApprovals",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.clearApprovals",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.enableProtectedWorkspace",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.disableProtectedWorkspace",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showProtectedFilesList",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.addFileToProtected",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.removeFileFromProtected",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.generateSafeEnvExample",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showWorkspaceRiskScore",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.openMCPToolFirewall",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.generateSafeMCPPolicyFile",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.blockMCPTool",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.approveMCPTool",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.scanMemoryRisk",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.cleanPoisonedInstructions",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showMemoryPoisoningFindings",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.checkDependencyInstall",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.scanPackageJsonRisk",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.reviewAISuggestedDependency",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.applyPolicyPack",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.comparePolicyPacks",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.exportPolicy",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.openEnterpriseDashboard",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.exportEnterpriseRiskReport",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.applyFindingFix",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.safePaste",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.setupBrokerIntegration",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.restoreBrokerIntegration",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.preflightMCPTool",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.showEgressFirewallStatus",
+                    "when": "false"
+                },
+                {
+                    "command": "soterai.checkEgressPayload",
+                    "when": "soterai.advancedCommands"
+                },
+                {
+                    "command": "soterai.scanGitDiff",
+                    "when": "false"
+                }
+            ]
+        },
+        "walkthroughs": [
+            {
+                "id": "soterai.gettingStarted",
+                "title": "Get started with SoterAI Guard",
+                "description": "See a real security result, protect project secrets, then connect supported AI tools — all local by default.",
+                "steps": [
+                    {
+                        "id": "demoScan",
+                        "title": "See your first safety result",
+                        "description": "Run a safe built-in example. You will see a verdict, a reason, and a redacted copy without sharing any real code.\n[Run Safe Demo](command:soterai.runDemoScan)",
+                        "media": {
+                            "markdown": "media/walkthrough/demo.md"
+                        },
+                        "completionEvents": [
+                            "onCommand:soterai.runDemoScan"
+                        ]
+                    },
+                    {
+                        "id": "protectWorkspace",
+                        "title": "Protect workspace secrets",
+                        "description": "Find raw secrets in sensitive files, review the list, and replace only approved values with safe placeholders on disk.\n[Protect Workspace Secrets](command:soterai.autoMigrateWorkspace)",
+                        "media": {
+                            "markdown": "media/walkthrough/vault.md"
+                        },
+                        "completionEvents": [
+                            "onCommand:soterai.autoMigrateWorkspace"
+                        ]
+                    },
+                    {
+                        "id": "secureAiTools",
+                        "title": "Secure supported AI tools",
+                        "description": "Find supported AI client configs, review every proposed routing change, and keep encrypted backups outside your project.\n[Secure Installed AI Tools](command:soterai.secureAllAI)",
+                        "media": {
+                            "markdown": "media/walkthrough/integrate.md"
+                        },
+                        "completionEvents": [
+                            "onCommand:soterai.secureAllAI"
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
+    "scripts": {
+        "typecheck": "tsc --noEmit -p tsconfig.json",
+        "lint": "npm run typecheck",
+        "test": "node --import tsx --test src/__tests__/**/*.test.ts",
+        "test:host": "node esbuild.js && node esbuild.host-tests.js && node scripts/run-host-tests.js",
+        "test:host:floor": "node scripts/run-host-floor.js",
+        "test:host:sweep": "node scripts/run-host-sweep.js",
+        "test:host:coverage": "node scripts/host-command-coverage.mjs",
+        "build": "npm run bundle",
+        "bundle": "node esbuild.js --production",
+        "vscode:prepublish": "npm run build",
+        "package": "vsce package --allow-missing-repository --skip-license --no-dependencies",
+        "verify:vsix": "node scripts/verify-vsix.mjs",
+        "benchmark:security": "tsx benchmarks/security-evaluation.ts",
+        "vscode:package": "vsce package --allow-missing-repository --skip-license --no-dependencies",
+        "vscode:publish": "vsce publish --no-dependencies",
+        "openvsx:package": "npm run vscode:package",
+        "openvsx:publish": "node ../../scripts/publish-openvsx.mjs"
+    },
+    "devDependencies": {
+        "@soterai/detectors": "file:../detectors",
+        "@soterai/guard-core": "file:../guard-core",
+        "@types/node": "22.10.2",
+        "@types/vscode": "^1.85.0",
+        "@vscode/test-electron": "^2.5.2",
+        "@vscode/vsce": "^3.9.2",
+        "esbuild": "^0.28.1",
+        "ovsx": "^0.10.12",
+        "tsx": "^4.19.0",
+        "typescript": "^5.9.3"
+    }
+}

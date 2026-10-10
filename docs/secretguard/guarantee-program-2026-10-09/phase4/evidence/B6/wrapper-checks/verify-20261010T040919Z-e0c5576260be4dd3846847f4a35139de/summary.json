@@ -1,0 +1,66 @@
+{
+    "limitation":  "Command success is not confidentiality success. Read observation files; preserve failures.",
+    "runId":  "verify-20261010T040919Z-e0c5576260be4dd3846847f4a35139de",
+    "harnesses":  [
+
+                  ],
+    "failures":  [
+                     "Check failed: extension-test. Raw evidence retained; no host run."
+                 ],
+    "architecture":  "UNTESTED",
+    "runHostRequested":  false,
+    "commands":  [
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "broker-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "broker-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "broker-test"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "extension-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "extension-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  1,
+                         "name":  "extension-test"
+                     }
+                 ],
+    "independentVerification":  "NOT_PERFORMED",
+    "atUtc":  "2026-10-10T04:10:46.0252236Z",
+    "diagnosticFindings":  [
+                               {
+                                   "id":  "H2a",
+                                   "status":  "SKIP"
+                               },
+                               {
+                                   "id":  "H2b",
+                                   "status":  "SKIP"
+                               },
+                               {
+                                   "id":  "H2e",
+                                   "status":  "SKIP"
+                               },
+                               {
+                                   "id":  "S5-unmarked",
+                                   "status":  "FAIL"
+                               }
+                           ],
+    "schemaVersion":  1,
+    "sameUserAuthority":  "OUTSIDE_COVERAGE"
+}
