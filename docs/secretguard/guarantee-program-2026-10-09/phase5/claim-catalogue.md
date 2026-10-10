@@ -1,0 +1,23 @@
+# Current claim-to-evidence catalogue
+
+**FACT — 2026-10-10, Windows26300.8935; scope: inspected canonical source/UI callbacks, README, walkthroughs, listing copy and referenced current assets.** [Exact source manifest](evidence/S6-evaluation-20261010T113227Z-7fb071c5/source-object-manifest.json) and [review report](evidence/S5-20261010/reviewer-report.md) pin the two different review objects. This is source/component tracing, not exhaustive live UI or external listing validation. Passing a class's test cannot certify all of its unobserved deployments.
+
+| Current surface / bounded claim | Supporting evidence | What is not covered |
+|---|---|---|
+| One-click/direct managed setup shows Covers / Does not cover first | phase5-coverage-gates, coverage-disclosure and automatic-protection tests; S2/S6 scoped results | Modal is ordinary same-user UX; no principal/presence authentication; provider routes remain unverified |
+| Local scan reports recognized findings/recommendations | phase5-final-review actual file callback PASS; manual presentDecision wording SOURCE_CONFIRMED, TST-01 adapter FAIL; canonical claim checks PASS | No universal semantic privacy or another tool's send interception; manual dialog positive control incomplete |
+| Preview/manual marks omit protected context on named readers | ai-boundary/workspace-path tests; historical A0 scoped blocks; current host comparison INCOMPLETE | Originals, buffers/tabs, aliases outside readers, clipboard/display/process/history not isolated |
+| Repository additions retain accepted denies | ai-boundary/policy-properties/PolicyStore; malformed schemas deny managed context | USER can modify state/code/settings; no independent durable policy authority |
+| Scoped safe-diff launch | safe-git test; S6 benign Windows GIT_CONFIG_GLOBAL result PASS | F16 auth/helper custody static-only; same-user binary/config mutation and direct Git/history unaffected |
+| Broker file authentication/control separation | auth-storage/windows-acl/control-boundary/token-absence tests; S3 DACL metadata | Real absent controller token INCOMPLETE; USER owner authority, atomic handle/race/decrypt boundary unproved |
+| Routed broker payload/response checks | provider-boundary/wire-egress/framing tests, public loopback controls | No OS/container allowlist or mandatory mediation of other processes/protocols |
+| Credential capability injects only for named operation and filters result | enforced-capability, phase5-release-ordering; one-time once/replay/current-authority regressions PASS | Synthetic transport does not certify real redirect/DNS/provider implementation; sent bytes/effects not recalled; custody same-user |
+| Ordinary consent/unlock is withdrawn when guard is off | actual unlock callback/shared guard modes PASS; scoped confirmation tests | Not agent-proof; independent C/P identity/epoch/physical signatures absent |
+| Indexed references support cleanup/recovery mechanics | secret-storage-inventory and withdrawal tests | No independent secret custody, all legacy inventory, backup deletion or downstream key revocation proof |
+| Operational Control Panel status | protection-state/runtime/coverage tests; routingEvidence unknown/protectedAiTools0 in source | No authenticated effective-control receipt or trusted isolated UI; G6 full remains UNTESTED |
+| MCP/language-model results are advisory | agent/MCP/capability boundary tests and advisory labels | No real delegate principal enrollment or third-party process/network confinement |
+| Optional public snapshot scaffold | default-off tier2-lite tests, explicit public selection/template | No actual Docker/WSL/container launch/attach/credential forwarding/egress enforcement; native agents outside coverage |
+| README/listing/artwork/compatibility | release-claim tests; retired art preserved/excluded/unreferenced; unchanged63 NOT_TESTED rows | No remote CDN/marketplace mutation, complete animation review, installable VSIX/runtime/fork/platform certification |
+| Evidence/audit report | review-evidence uniqueness/overwrite controls, raw SHA-256 manifests, A0/S4/S6 preserved | Local hashes/chain/USER files are not protected signing authority, witness or independent anchoring |
+
+**INFERENCE — Audit verdict.** No remaining instance of the identified unconditional claims was found in the inspected current canonical paths; this is a bounded source finding. Historical evidence intentionally retains those words, and external active listing/assets and every live UI flow are not certified. D4 is8 with these limits, not full G6 PASS. Other tools' private APIs/network are explicitly outside implemented controls.

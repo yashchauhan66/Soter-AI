@@ -227,3 +227,7 @@ Git installation not found.
 ## S7 completion record — 2026-10-10
 
 **FACT — INCOMPLETE, pilot not run.** Active shell still non-elevated on exact Windows26300.8935; user Block P requires already elevated and forbids UAC. Saved ../phase5/evidence/S7-20261010T112828Z-8fcefa0c/pilot-status.json. No restore point/account/password/ACL/firewall rule/connection attempt or removal operation. Nothing to roll back; D3 NOT RATED. Deployment remains DEFERRED; no stable-build evidence follows from this Insider machine.
+
+## S8 final report record — 2026-10-10
+
+**FACT — Reporting complete, verification gaps retained.** S6 source ccbeb9f2, evidence27f18dc4; S7c3bf12f2. phase5 FINAL-REPORT.md/SCORECARD.md/coverage-map.md/release-checklist.md plus claims, open work, matrix/accounting and hashes distinguish final 1,337PASS/1FAIL/3skips, current17 host INCOMPLETE,30full UNTESTED and63real-agent NOT_TESTED. Three builds byte-match, five typechecks/builds PASS; no loaded hash. Full claim BLOCKED; deployment DEFERRED; candidate WITHHELD. Provisional D1=6,D2=2,D3NOT_RATED,D4=8,D5=7; headline min(2,8)=2. S5LOW old object; revised extension independent NOT_PERFORMED. No publish/push/tag/install/process killing/system pilot/new probe/real secret read. Original failures and exact filter remain. STOP after final result.
