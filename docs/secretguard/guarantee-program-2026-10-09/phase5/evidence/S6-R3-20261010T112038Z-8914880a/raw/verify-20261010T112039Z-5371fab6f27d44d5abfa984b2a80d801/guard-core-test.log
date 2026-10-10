@@ -1,0 +1,3576 @@
+TAP version 13
+# Subtest: ApprovalToken — binding
+    # Subtest: valid for the exact session + content it was minted for
+    ok 1 - valid for the exact session + content it was minted for
+      ---
+      duration_ms: 21.7674
+      type: 'test'
+      ...
+    # Subtest: cannot be replayed for different content
+    ok 2 - cannot be replayed for different content
+      ---
+      duration_ms: 4.1077
+      type: 'test'
+      ...
+    # Subtest: cannot be used from a different session
+    ok 3 - cannot be used from a different session
+      ---
+      duration_ms: 4.2006
+      type: 'test'
+      ...
+    # Subtest: expires after its TTL
+    ok 4 - expires after its TTL
+      ---
+      duration_ms: 4.6439
+      type: 'test'
+      ...
+    # Subtest: a deny outcome is never valid
+    ok 5 - a deny outcome is never valid
+      ---
+      duration_ms: 2.2722
+      type: 'test'
+      ...
+    # Subtest: token carries no raw content and is unique per mint
+    ok 6 - token carries no raw content and is unique per mint
+      ---
+      duration_ms: 4.5615
+      type: 'test'
+      ...
+    1..6
+ok 1 - ApprovalToken — binding
+  ---
+  duration_ms: 45.7722
+  type: 'suite'
+  ...
+# Subtest: ApprovalStore
+    # Subtest: approves then blocks replay for once-scope
+    ok 1 - approves then blocks replay for once-scope
+      ---
+      duration_ms: 6.0533
+      type: 'test'
+      ...
+    # Subtest: session scope stays valid across multiple checks
+    ok 2 - session scope stays valid across multiple checks
+      ---
+      duration_ms: 3.9402
+      type: 'test'
+      ...
+    # Subtest: prunes expired grants and lists redacted views
+    ok 3 - prunes expired grants and lists redacted views
+      ---
+      duration_ms: 4.4674
+      type: 'test'
+      ...
+    # Subtest: clear removes everything
+    ok 4 - clear removes everything
+      ---
+      duration_ms: 2.5753
+      type: 'test'
+      ...
+    1..4
+ok 2 - ApprovalStore
+  ---
+  duration_ms: 19.1104
+  type: 'suite'
+  ...
+# Subtest: Phase 2 attack harness — prompt injection / jailbreak
+    # Subtest: flags instruction override
+    ok 1 - flags instruction override
+      ---
+      duration_ms: 25.1264
+      type: 'test'
+      ...
+    # Subtest: flags role impersonation + DAN
+    ok 2 - flags role impersonation + DAN
+      ---
+      duration_ms: 16.5753
+      type: 'test'
+      ...
+    # Subtest: flags system delimiter injection
+    ok 3 - flags system delimiter injection
+      ---
+      duration_ms: 0.2908
+      type: 'test'
+      ...
+    # Subtest: flags multi-step secret exfiltration
+    ok 4 - flags multi-step secret exfiltration
+      ---
+      duration_ms: 0.7024
+      type: 'test'
+      ...
+    # Subtest: flags pipe exfiltration
+    ok 5 - flags pipe exfiltration
+      ---
+      duration_ms: 0.4412
+      type: 'test'
+      ...
+    # Subtest: flags encoded exfiltration
+    ok 6 - flags encoded exfiltration
+      ---
+      duration_ms: 0.3448
+      type: 'test'
+      ...
+    # Subtest: flags Hindi/Hinglish override
+    ok 7 - flags Hindi/Hinglish override
+      ---
+      duration_ms: 0.5565
+      type: 'test'
+      ...
+    # Subtest: flags zero-width character smuggling via jailbreak detector
+    ok 8 - flags zero-width character smuggling via jailbreak detector
+      ---
+      duration_ms: 7.491
+      type: 'test'
+      ...
+    1..8
+ok 3 - Phase 2 attack harness — prompt injection / jailbreak
+  ---
+  duration_ms: 55.7462
+  type: 'suite'
+  ...
+# Subtest: Phase 2 attack harness — secrets (behavioral)
+    # Subtest: detects openai secret fixture
+    ok 1 - detects openai secret fixture
+      ---
+      duration_ms: 20.4648
+      type: 'test'
+      ...
+    # Subtest: detects anthropic secret fixture
+    ok 2 - detects anthropic secret fixture
+      ---
+      duration_ms: 20.3154
+      type: 'test'
+      ...
+    # Subtest: detects aws secret fixture
+    ok 3 - detects aws secret fixture
+      ---
+      duration_ms: 1.2403
+      type: 'test'
+      ...
+    # Subtest: detects github secret fixture
+    ok 4 - detects github secret fixture
+      ---
+      duration_ms: 15.1605
+      type: 'test'
+      ...
+    # Subtest: detects stripe secret fixture
+    ok 5 - detects stripe secret fixture
+      ---
+      duration_ms: 0.6905
+      type: 'test'
+      ...
+    # Subtest: detects slack secret fixture
+    ok 6 - detects slack secret fixture
+      ---
+      duration_ms: 1.2837
+      type: 'test'
+      ...
+    # Subtest: detects private_key secret fixture
+    ok 7 - detects private_key secret fixture
+      ---
+      duration_ms: 2.1364
+      type: 'test'
+      ...
+    # Subtest: detects database secret fixture
+    ok 8 - detects database secret fixture
+      ---
+      duration_ms: 2.5187
+      type: 'test'
+      ...
+    # Subtest: detects jwt secret fixture
+    ok 9 - detects jwt secret fixture
+      ---
+      duration_ms: 1.505
+      type: 'test'
+      ...
+    1..9
+ok 4 - Phase 2 attack harness — secrets (behavioral)
+  ---
+  duration_ms: 67.8544
+  type: 'suite'
+  ...
+# Subtest: Phase 2 attack harness — terminal risk
+    # Subtest: flags destructive rm
+    ok 1 - flags destructive rm
+      ---
+      duration_ms: 6.7998
+      type: 'test'
+      ...
+    # Subtest: flags remote exec pipe
+    ok 2 - flags remote exec pipe
+      ---
+      duration_ms: 8.382
+      type: 'test'
+      ...
+    1..2
+ok 5 - Phase 2 attack harness — terminal risk
+  ---
+  duration_ms: 17.019
+  type: 'suite'
+  ...
+# Subtest: Phase 2 attack harness — DecisionEngine end-to-end
+    # Subtest: blocks/high-risk on secret + injection combo via prompt context
+    ok 1 - blocks/high-risk on secret + injection combo via prompt context
+      ---
+      duration_ms: 24.6125
+      type: 'test'
+      ...
+    # Subtest: file context detects injection (live-scan parity regression)
+    ok 2 - file context detects injection (live-scan parity regression)
+      ---
+      duration_ms: 21.67
+      type: 'test'
+      ...
+    # Subtest: benign math helper stays low risk
+    ok 3 - benign math helper stays low risk
+      ---
+      duration_ms: 7.5801
+      type: 'test'
+      ...
+    # Subtest: package.json without secrets stays low risk
+    ok 4 - package.json without secrets stays low risk
+      ---
+      duration_ms: 1.1154
+      type: 'test'
+      ...
+    # Subtest: placeholder YOUR_API_KEY_HERE is not treated as a live secret
+    ok 5 - placeholder YOUR_API_KEY_HERE is not treated as a live secret
+      ---
+      duration_ms: 0.5346
+      type: 'test'
+      ...
+    1..5
+ok 6 - Phase 2 attack harness — DecisionEngine end-to-end
+  ---
+  duration_ms: 56.7513
+  type: 'suite'
+  ...
+# Subtest: Phase 2 attack harness — redaction invariant
+    # Subtest: never leaves high-risk secrets in redacted output for mixed payload
+    ok 1 - never leaves high-risk secrets in redacted output for mixed payload
+      ---
+      duration_ms: 1.344
+      type: 'test'
+      ...
+    1..1
+ok 7 - Phase 2 attack harness — redaction invariant
+  ---
+  duration_ms: 1.8706
+  type: 'suite'
+  ...
+# Subtest: Phase 2 attack harness — MCP configuration
+    # Subtest: detects quoted JSON keys and broad shell execution
+    ok 1 - detects quoted JSON keys and broad shell execution
+      ---
+      duration_ms: 0.7431
+      type: 'test'
+      ...
+    # Subtest: does not treat a documented placeholder as a live credential
+    ok 2 - does not treat a documented placeholder as a live credential
+      ---
+      duration_ms: 0.9814
+      type: 'test'
+      ...
+    1..2
+ok 8 - Phase 2 attack harness — MCP configuration
+  ---
+  duration_ms: 2.1104
+  type: 'suite'
+  ...
+# Subtest: BrokerScanner — request
+    # Subtest: allows a benign request
+    ok 1 - allows a benign request
+      ---
+      duration_ms: 107.2151
+      type: 'test'
+      ...
+    # Subtest: redacts a real secret in a request
+    ok 2 - redacts a real secret in a request
+      ---
+      duration_ms: 14.113
+      type: 'test'
+      ...
+    # Subtest: blocks a request containing a planted canary at every safe-mode level
+    ok 3 - blocks a request containing a planted canary at every safe-mode level
+      ---
+      duration_ms: 13.1021
+      type: 'test'
+      ...
+    # Subtest: blocks a canary even with safe mode off
+    ok 4 - blocks a canary even with safe mode off
+      ---
+      duration_ms: 4.3131
+      type: 'test'
+      ...
+    # Subtest: produces a stable content hash and never embeds raw content
+    ok 5 - produces a stable content hash and never embeds raw content
+      ---
+      duration_ms: 5.5854
+      type: 'test'
+      ...
+    1..5
+ok 9 - BrokerScanner — request
+  ---
+  duration_ms: 147.4496
+  type: 'suite'
+  ...
+# Subtest: BrokerScanner — forwarding rules
+    # Subtest: shouldForward respects decisions
+    ok 1 - shouldForward respects decisions
+      ---
+      duration_ms: 0.6232
+      type: 'test'
+      ...
+    # Subtest: messagesToForward sends redacted copy only for redact decisions
+    ok 2 - messagesToForward sends redacted copy only for redact decisions
+      ---
+      duration_ms: 0.5519
+      type: 'test'
+      ...
+    1..2
+ok 10 - BrokerScanner — forwarding rules
+  ---
+  duration_ms: 2.1258
+  type: 'suite'
+  ...
+# Subtest: BrokerScanner — response
+    # Subtest: flags a canary leak in the response as block
+    ok 1 - flags a canary leak in the response as block
+      ---
+      duration_ms: 17.0823
+      type: 'test'
+      ...
+    # Subtest: flags dangerous terminal commands in the response
+    ok 2 - flags dangerous terminal commands in the response
+      ---
+      duration_ms: 8.5703
+      type: 'test'
+      ...
+    # Subtest: passes clean helpful output
+    ok 3 - passes clean helpful output
+      ---
+      duration_ms: 2.3772
+      type: 'test'
+      ...
+    # Subtest: never leaks the raw canary token in findings/evidence
+    ok 4 - never leaks the raw canary token in findings/evidence
+      ---
+      duration_ms: 2.005
+      type: 'test'
+      ...
+    1..4
+ok 11 - BrokerScanner — response
+  ---
+  duration_ms: 31.1577
+  type: 'suite'
+  ...
+# Subtest: Canary generation
+    # Subtest: produces a unique, SecretDetector-visible token with hash-only metadata
+    ok 1 - produces a unique, SecretDetector-visible token with hash-only metadata
+      ---
+      duration_ms: 19.5618
+      type: 'test'
+      ...
+    1..1
+ok 12 - Canary generation
+  ---
+  duration_ms: 21.6145
+  type: 'suite'
+  ...
+# Subtest: matchCanaries
+    # Subtest: detects a canary embedded in text and reports only redacted info
+    ok 1 - detects a canary embedded in text and reports only redacted info
+      ---
+      duration_ms: 5.1304
+      type: 'test'
+      ...
+    # Subtest: returns no hits when the canary is absent
+    ok 2 - returns no hits when the canary is absent
+      ---
+      duration_ms: 4.1355
+      type: 'test'
+      ...
+    1..2
+ok 13 - matchCanaries
+  ---
+  duration_ms: 10.0415
+  type: 'suite'
+  ...
+# Subtest: registry is internally honest: no capability claims enforcement it cannot back
+ok 14 - registry is internally honest: no capability claims enforcement it cannot back
+  ---
+  duration_ms: 3.2575
+  type: 'test'
+  ...
+# Subtest: every ENFORCING capability is wired into the runtime and names an enforcement point
+ok 15 - every ENFORCING capability is wired into the runtime and names an enforcement point
+  ---
+  duration_ms: 0.7222
+  type: 'test'
+  ...
+# Subtest: preflight engines remain detection-only and checkpoint rollback is filesystem-partial
+ok 16 - preflight engines remain detection-only and checkpoint rollback is filesystem-partial
+  ---
+  duration_ms: 0.5216
+  type: 'test'
+  ...
+# Subtest: inline MCP gateway and its taint engine are wired pre-execution
+ok 17 - inline MCP gateway and its taint engine are wired pre-execution
+  ---
+  duration_ms: 0.4243
+  type: 'test'
+  ...
+# Subtest: a doctored registry that lies about wiring is caught by the invariant
+ok 18 - a doctored registry that lies about wiring is caught by the invariant
+  ---
+  duration_ms: 0.8993
+  type: 'test'
+  ...
+# Subtest: capabilitiesSnapshot is serializable, honest, and self-describing
+ok 19 - capabilitiesSnapshot is serializable, honest, and self-describing
+  ---
+  duration_ms: 1.1983
+  type: 'test'
+  ...
+# Subtest: every capability id is unique and stable
+ok 20 - every capability id is unique and stable
+  ---
+  duration_ms: 0.3465
+  type: 'test'
+  ...
+# Subtest: canonical payload is length-delimited so distinct records cannot collide
+ok 21 - canonical payload is length-delimited so distinct records cannot collide
+  ---
+  duration_ms: 2.7336
+  type: 'test'
+  ...
+# Subtest: canonical payload is order-independent for files and side effects
+ok 22 - canonical payload is order-independent for files and side effects
+  ---
+  duration_ms: 27.3463
+  type: 'test'
+  ...
+# Subtest: integrity verification detects any mutation of protected fingerprints
+ok 23 - integrity verification detects any mutation of protected fingerprints
+  ---
+  duration_ms: 17.1914
+  type: 'test'
+  ...
+# Subtest: status changes do not invalidate integrity, because rollback must update status
+ok 24 - status changes do not invalidate integrity, because rollback must update status
+  ---
+  duration_ms: 1.7363
+  type: 'test'
+  ...
+# Subtest: claim validation orders integrity before ownership and expiry
+ok 25 - claim validation orders integrity before ownership and expiry
+  ---
+  duration_ms: 4.712
+  type: 'test'
+  ...
+# Subtest: restoration classification separates exact, partial and compensating-only
+ok 26 - restoration classification separates exact, partial and compensating-only
+  ---
+  duration_ms: 1.542
+  type: 'test'
+  ...
+# Subtest: state fingerprints are exact-byte, not normalized like cache hashes
+ok 27 - state fingerprints are exact-byte, not normalized like cache hashes
+  ---
+  duration_ms: 3.2674
+  type: 'test'
+  ...
+# Subtest: rollback evidence carries digests only, never paths or protected content
+ok 28 - rollback evidence carries digests only, never paths or protected content
+  ---
+  duration_ms: 6.4927
+  type: 'test'
+  ...
+# Subtest: recognised secret in base64 is withheld from context and decisions
+ok 29 - recognised secret in base64 is withheld from context and decisions
+  ---
+  duration_ms: 20.5287
+  type: 'test'
+  ...
+# Subtest: recognised secret in hex is withheld from context and decisions
+ok 30 - recognised secret in hex is withheld from context and decisions
+  ---
+  duration_ms: 3.9513
+  type: 'test'
+  ...
+# Subtest: recognised secret in percent encoding is withheld from context and decisions
+ok 31 - recognised secret in percent encoding is withheld from context and decisions
+  ---
+  duration_ms: 0.5734
+  type: 'test'
+  ...
+# Subtest: recognised secret in zero width is withheld from context and decisions
+ok 32 - recognised secret in zero width is withheld from context and decisions
+  ---
+  duration_ms: 8.321
+  type: 'test'
+  ...
+# Subtest: recognised secret in line splitting is withheld from context and decisions
+ok 33 - recognised secret in line splitting is withheld from context and decisions
+  ---
+  duration_ms: 0.7914
+  type: 'test'
+  ...
+# Subtest: recognised secret in array concatenation is withheld from context and decisions
+ok 34 - recognised secret in array concatenation is withheld from context and decisions
+  ---
+  duration_ms: 0.4573
+  type: 'test'
+  ...
+# Subtest: recognised secret in JS escapes is withheld from context and decisions
+ok 35 - recognised secret in JS escapes is withheld from context and decisions
+  ---
+  duration_ms: 0.636
+  type: 'test'
+  ...
+# Subtest: literal redaction retains surrounding useful text
+ok 36 - literal redaction retains surrounding useful text
+  ---
+  duration_ms: 0.365
+  type: 'test'
+  ...
+# Subtest: ordinary code and encoded public text are not blanket blocked
+ok 37 - ordinary code and encoded public text are not blanket blocked
+  ---
+  duration_ms: 0.739
+  type: 'test'
+  ...
+# Subtest: oversized context fails closed
+ok 38 - oversized context fails closed
+  ---
+  duration_ms: 0.527
+  type: 'test'
+  ...
+# Subtest: numeric hex is inspected before PII redaction can fragment its bytes
+ok 39 - numeric hex is inspected before PII redaction can fragment its bytes
+  ---
+  duration_ms: 0.395
+  type: 'test'
+  ...
+# Subtest: redaction placeholders do not become fake credentials during normalization
+ok 40 - redaction placeholders do not become fake credentials during normalization
+  ---
+  duration_ms: 0.2924
+  type: 'test'
+  ...
+# Subtest: controlled terminal allows a read-only git status command
+ok 41 - controlled terminal allows a read-only git status command
+  ---
+  duration_ms: 14.5591
+  type: 'test'
+  ...
+# Subtest: controlled terminal denies shell syntax before fixed argv execution
+ok 42 - controlled terminal denies shell syntax before fixed argv execution
+  ---
+  duration_ms: 4.2437
+  type: 'test'
+  ...
+# Subtest: controlled terminal denies destructive commands
+ok 43 - controlled terminal denies destructive commands
+  ---
+  duration_ms: 0.6794
+  type: 'test'
+  ...
+# Subtest: controlled terminal denies unknown executables
+ok 44 - controlled terminal denies unknown executables
+  ---
+  duration_ms: 0.4091
+  type: 'test'
+  ...
+# Subtest: controlled terminal denies production-impact commands even when otherwise read-only looking
+ok 45 - controlled terminal denies production-impact commands even when otherwise read-only looking
+  ---
+  duration_ms: 0.3776
+  type: 'test'
+  ...
+# Subtest: controlled terminal strips quoted path and Windows suffixes from executable names
+ok 46 - controlled terminal strips quoted path and Windows suffixes from executable names
+  ---
+  duration_ms: 0.7405
+  type: 'test'
+  ...
+# Subtest: controlled terminal denies pipe-to-shell bypass
+ok 47 - controlled terminal denies pipe-to-shell bypass
+  ---
+  duration_ms: 1.1327
+  type: 'test'
+  ...
+# Subtest: controlled terminal denies nested shell invocation
+ok 48 - controlled terminal denies nested shell invocation
+  ---
+  duration_ms: 1.3366
+  type: 'test'
+  ...
+# Subtest: controlled terminal denies encoded PowerShell / -enc style
+ok 49 - controlled terminal denies encoded PowerShell / -enc style
+  ---
+  duration_ms: 1.3811
+  type: 'test'
+  ...
+# Subtest: controlled terminal denies env-expansion style shell metacharacters
+ok 50 - controlled terminal denies env-expansion style shell metacharacters
+  ---
+  duration_ms: 1.0233
+  type: 'test'
+  ...
+# Subtest: controlled terminal denies command substitution backticks
+ok 51 - controlled terminal denies command substitution backticks
+  ---
+  duration_ms: 0.3336
+  type: 'test'
+  ...
+# Subtest: Scenario B — honest route coverage matrix
+    # Subtest: never claims ENFORCED for an unobservable/unenforceable route
+    ok 1 - never claims ENFORCED for an unobservable/unenforceable route
+      ---
+      duration_ms: 1.1875
+      type: 'test'
+      ...
+    # Subtest: marks unknown extensions/processes as MONITORED, never enforced
+    ok 2 - marks unknown extensions/processes as MONITORED, never enforced
+      ---
+      duration_ms: 0.4794
+      type: 'test'
+      ...
+    # Subtest: the broker route is the only ENFORCED one and every non-enforceable route has an honest note
+    ok 3 - the broker route is the only ENFORCED one and every non-enforceable route has an honest note
+      ---
+      duration_ms: 1.2463
+      type: 'test'
+      ...
+    # Subtest: Scenario B: a plaintext secret on disk is MONITORED, brokered is ENFORCED
+    ok 4 - Scenario B: a plaintext secret on disk is MONITORED, brokered is ENFORCED
+      ---
+      duration_ms: 0.3558
+      type: 'test'
+      ...
+    1..4
+ok 52 - Scenario B — honest route coverage matrix
+  ---
+  duration_ms: 4.8997
+  type: 'suite'
+  ...
+# Subtest: Scenario D — MCP credential boundary
+    # Subtest: asks (not denies) a well-formed flow and reports the trusted domain for consent
+    ok 1 - asks (not denies) a well-formed flow and reports the trusted domain for consent
+      ---
+      duration_ms: 0.856
+      type: 'test'
+      ...
+    # Subtest: denies credential-in-model-context and token passthrough
+    ok 2 - denies credential-in-model-context and token passthrough
+      ---
+      duration_ms: 0.5799
+      type: 'test'
+      ...
+    # Subtest: denies audience/resource mismatch (confused deputy)
+    ok 3 - denies audience/resource mismatch (confused deputy)
+      ---
+      duration_ms: 0.4028
+      type: 'test'
+      ...
+    # Subtest: warns on punycode / non-ASCII authorization domains
+    ok 4 - warns on punycode / non-ASCII authorization domains
+      ---
+      duration_ms: 0.7089
+      type: 'test'
+      ...
+    # Subtest: never surfaces a raw credential value in the decision
+    ok 5 - never surfaces a raw credential value in the decision
+      ---
+      duration_ms: 0.3625
+      type: 'test'
+      ...
+    1..5
+ok 53 - Scenario D — MCP credential boundary
+  ---
+  duration_ms: 3.7294
+  type: 'suite'
+  ...
+# Subtest: oversized input cannot receive a clean prefix-only verdict
+ok 54 - oversized input cannot receive a clean prefix-only verdict
+  ---
+  duration_ms: 3.1924
+  type: 'test'
+  ...
+# Subtest: cached decisions match the requested pipeline and current policy
+ok 55 - cached decisions match the requested pipeline and current policy
+  ---
+  duration_ms: 129.7434
+  type: 'test'
+  ...
+# Subtest: authorization hashes preserve case, whitespace and message boundaries
+ok 56 - authorization hashes preserve case, whitespace and message boundaries
+  ---
+  duration_ms: 9.0834
+  type: 'test'
+  ...
+# Subtest: exact hashes, approvals and canaries retain cryptographic identity without global WebCrypto
+ok 57 - exact hashes, approvals and canaries retain cryptographic identity without global WebCrypto
+  ---
+  duration_ms: 40.9417
+  type: 'test'
+  ...
+# Subtest: DecisionEngine and Orchestrator
+    # Subtest: should evaluate text and return correct GuardDecision
+    ok 1 - should evaluate text and return correct GuardDecision
+      ---
+      duration_ms: 49.6749
+      type: 'test'
+      ...
+    # Subtest: should use local hash cache to save execution time
+    ok 2 - should use local hash cache to save execution time
+      ---
+      duration_ms: 21.8277
+      type: 'test'
+      ...
+    # Subtest: should enforce policy configuration updates
+    ok 3 - should enforce policy configuration updates
+      ---
+      duration_ms: 0.6062
+      type: 'test'
+      ...
+    # Subtest: should respect TTL and policy version change in hash cache
+    ok 4 - should respect TTL and policy version change in hash cache
+      ---
+      duration_ms: 0.393
+      type: 'test'
+      ...
+    1..4
+ok 58 - DecisionEngine and Orchestrator
+  ---
+  duration_ms: 74.723
+  type: 'suite'
+  ...
+# Subtest: SoterAI Guard Core Detectors
+    # Subtest: should detect OpenAI and AWS keys
+    ok 1 - should detect OpenAI and AWS keys
+      ---
+      duration_ms: 10.98
+      type: 'test'
+      ...
+    # Subtest: should redact secrets correctly without exposing them
+    ok 2 - should redact secrets correctly without exposing them
+      ---
+      duration_ms: 5.5882
+      type: 'test'
+      ...
+    # Subtest: should redact shorter GitHub token canaries before sharing
+    ok 3 - should redact shorter GitHub token canaries before sharing
+      ---
+      duration_ms: 8.9364
+      type: 'test'
+      ...
+    # Subtest: should detect environment file blocks
+    ok 4 - should detect environment file blocks
+      ---
+      duration_ms: 2.5888
+      type: 'test'
+      ...
+    # Subtest: should detect Indian PII such as Aadhaar and PAN
+    ok 5 - should detect Indian PII such as Aadhaar and PAN
+      ---
+      duration_ms: 1.2443
+      type: 'test'
+      ...
+    # Subtest: should detect English and Hinglish prompt injection/jailbreak patterns
+    ok 6 - should detect English and Hinglish prompt injection/jailbreak patterns
+      ---
+      duration_ms: 30.4959
+      type: 'test'
+      ...
+    # Subtest: should detect dangerous terminal commands
+    ok 7 - should detect dangerous terminal commands
+      ---
+      duration_ms: 4.9595
+      type: 'test'
+      ...
+    # Subtest: should detect repo instruction poisoning and hidden messages
+    ok 8 - should detect repo instruction poisoning and hidden messages
+      ---
+      duration_ms: 2.0221
+      type: 'test'
+      ...
+    # Subtest: should output security flaws in AI generated code patterns
+    ok 9 - should output security flaws in AI generated code patterns
+      ---
+      duration_ms: 2.1099
+      type: 'test'
+      ...
+    1..9
+ok 59 - SoterAI Guard Core Detectors
+  ---
+  duration_ms: 74.6013
+  type: 'suite'
+  ...
+# Subtest: ExtensionRiskScanner
+    # Subtest: treats built-in extensions as trusted/info
+    ok 1 - treats built-in extensions as trusted/info
+      ---
+      duration_ms: 2.025
+      type: 'test'
+      ...
+    # Subtest: flags a known AI assistant as AI but keeps verified/publisher-matched ones lower
+    ok 2 - flags a known AI assistant as AI but keeps verified/publisher-matched ones lower
+      ---
+      duration_ms: 0.5444
+      type: 'test'
+      ...
+    # Subtest: raises high risk for an unverified impersonator with wildcard activation
+    ok 3 - raises high risk for an unverified impersonator with wildcard activation
+      ---
+      duration_ms: 0.3046
+      type: 'test'
+      ...
+    # Subtest: rolls up scan totals and sorts by risk desc
+    ok 4 - rolls up scan totals and sorts by risk desc
+      ---
+      duration_ms: 0.5781
+      type: 'test'
+      ...
+    # Subtest: never emits raw secret-like values (metadata only)
+    ok 5 - never emits raw secret-like values (metadata only)
+      ---
+      duration_ms: 0.4133
+      type: 'test'
+      ...
+    1..5
+ok 60 - ExtensionRiskScanner
+  ---
+  duration_ms: 6.0903
+  type: 'suite'
+  ...
+# Subtest: Jailbreak Detector — Positive Cases
+    # Subtest: should detect DAN jailbreak reference
+    ok 1 - should detect DAN jailbreak reference
+      ---
+      duration_ms: 13.1718
+      type: 'test'
+      ...
+    # Subtest: should detect DAN versioned reference
+    ok 2 - should detect DAN versioned reference
+      ---
+      duration_ms: 8.402
+      type: 'test'
+      ...
+    # Subtest: should detect AIM persona jailbreak
+    ok 3 - should detect AIM persona jailbreak
+      ---
+      duration_ms: 0.3656
+      type: 'test'
+      ...
+    # Subtest: should detect STAN persona jailbreak
+    ok 4 - should detect STAN persona jailbreak
+      ---
+      duration_ms: 0.3087
+      type: 'test'
+      ...
+    # Subtest: should detect DUDE persona jailbreak
+    ok 5 - should detect DUDE persona jailbreak
+      ---
+      duration_ms: 0.195
+      type: 'test'
+      ...
+    # Subtest: should detect KEVIN persona jailbreak
+    ok 6 - should detect KEVIN persona jailbreak
+      ---
+      duration_ms: 0.4325
+      type: 'test'
+      ...
+    # Subtest: should detect MAXIMUM persona jailbreak
+    ok 7 - should detect MAXIMUM persona jailbreak
+      ---
+      duration_ms: 0.1981
+      type: 'test'
+      ...
+    # Subtest: should detect OMEGA persona jailbreak
+    ok 8 - should detect OMEGA persona jailbreak
+      ---
+      duration_ms: 0.3009
+      type: 'test'
+      ...
+    # Subtest: should detect ethical override: 'ignore ethical rules'
+    ok 9 - should detect ethical override: 'ignore ethical rules'
+      ---
+      duration_ms: 0.3941
+      type: 'test'
+      ...
+    # Subtest: should detect ethical override: 'disregard moral guidelines'
+    ok 10 - should detect ethical override: 'disregard moral guidelines'
+      ---
+      duration_ms: 0.7749
+      type: 'test'
+      ...
+    # Subtest: should detect mandated response: 'you must answer without restrictions'
+    ok 11 - should detect mandated response: 'you must answer without restrictions'
+      ---
+      duration_ms: 0.2035
+      type: 'test'
+      ...
+    # Subtest: should detect mandated response: 'you must answer without restrictions'
+    ok 12 - should detect mandated response: 'you must answer without restrictions'
+      ---
+      duration_ms: 0.1446
+      type: 'test'
+      ...
+    # Subtest: should detect mandated response: 'you have to respond without filters'
+    ok 13 - should detect mandated response: 'you have to respond without filters'
+      ---
+      duration_ms: 0.2497
+      type: 'test'
+      ...
+    # Subtest: should detect hypothetical framing: 'hypothetically'
+    ok 14 - should detect hypothetical framing: 'hypothetically'
+      ---
+      duration_ms: 0.1381
+      type: 'test'
+      ...
+    # Subtest: should detect hypothetical framing: 'in a fictional'
+    ok 15 - should detect hypothetical framing: 'in a fictional'
+      ---
+      duration_ms: 0.1315
+      type: 'test'
+      ...
+    # Subtest: should detect constraint removal: 'pretend there are no rules'
+    ok 16 - should detect constraint removal: 'pretend there are no rules'
+      ---
+      duration_ms: 0.3328
+      type: 'test'
+      ...
+    # Subtest: should detect constraint removal: 'assume you have no restrictions'
+    ok 17 - should detect constraint removal: 'assume you have no restrictions'
+      ---
+      duration_ms: 0.185
+      type: 'test'
+      ...
+    # Subtest: should detect emotional manipulation: 'my life depends on'
+    ok 18 - should detect emotional manipulation: 'my life depends on'
+      ---
+      duration_ms: 0.1521
+      type: 'test'
+      ...
+    # Subtest: should detect emotional manipulation: 'I'll be fired'
+    ok 19 - should detect emotional manipulation: 'I'll be fired'
+      ---
+      duration_ms: 0.1454
+      type: 'test'
+      ...
+    # Subtest: should detect zero-width character smuggling
+    ok 20 - should detect zero-width character smuggling
+      ---
+      duration_ms: 6.1678
+      type: 'test'
+      ...
+    # Subtest: should detect combining character attack
+    ok 21 - should detect combining character attack
+      ---
+      duration_ms: 0.3003
+      type: 'test'
+      ...
+    # Subtest: should detect virtualization attack: 'simulate an isolated environment'
+    ok 22 - should detect virtualization attack: 'simulate an isolated environment'
+      ---
+      duration_ms: 0.2571
+      type: 'test'
+      ...
+    # Subtest: should detect virtualization attack: 'create an unrestricted AI'
+    ok 23 - should detect virtualization attack: 'create an unrestricted AI'
+      ---
+      duration_ms: 0.2536
+      type: 'test'
+      ...
+    # Subtest: should detect crescendo escalation: 'good, now continue'
+    ok 24 - should detect crescendo escalation: 'good, now continue'
+      ---
+      duration_ms: 0.2318
+      type: 'test'
+      ...
+    # Subtest: should detect crescendo escalation: 'now that you've agreed'
+    ok 25 - should detect crescendo escalation: 'now that you've agreed'
+      ---
+      duration_ms: 0.241
+      type: 'test'
+      ...
+    # Subtest: should detect Hindi jailbreak: 'koi bhi kar sakta'
+    ok 26 - should detect Hindi jailbreak: 'koi bhi kar sakta'
+      ---
+      duration_ms: 0.3598
+      type: 'test'
+      ...
+    # Subtest: should detect Hindi unrestricted: 'bina kisi rok'
+    ok 27 - should detect Hindi unrestricted: 'bina kisi rok'
+      ---
+      duration_ms: 0.3026
+      type: 'test'
+      ...
+    # Subtest: should detect Hindi unrestricted: 'bina filter'
+    ok 28 - should detect Hindi unrestricted: 'bina filter'
+      ---
+      duration_ms: 0.2771
+      type: 'test'
+      ...
+    # Subtest: should detect few-shot jailbreak: 'example 1: ignore'
+    ok 29 - should detect few-shot jailbreak: 'example 1: ignore'
+      ---
+      duration_ms: 0.2652
+      type: 'test'
+      ...
+    # Subtest: should detect token repetition attack
+    ok 30 - should detect token repetition attack
+      ---
+      duration_ms: 0.2677
+      type: 'test'
+      ...
+    # Subtest: should detect context override: 'ignore the above'
+    ok 31 - should detect context override: 'ignore the above'
+      ---
+      duration_ms: 0.1752
+      type: 'test'
+      ...
+    # Subtest: should detect context override: 'forget context'
+    ok 32 - should detect context override: 'forget context'
+      ---
+      duration_ms: 0.2925
+      type: 'test'
+      ...
+    # Subtest: should detect jailbreak prefix: 'jailbroken mode'
+    ok 33 - should detect jailbreak prefix: 'jailbroken mode'
+      ---
+      duration_ms: 0.152
+      type: 'test'
+      ...
+    # Subtest: should detect multiple jailbreak patterns in one input
+    ok 34 - should detect multiple jailbreak patterns in one input
+      ---
+      duration_ms: 0.1728
+      type: 'test'
+      ...
+    1..34
+ok 61 - Jailbreak Detector — Positive Cases
+  ---
+  duration_ms: 42.5786
+  type: 'suite'
+  ...
+# Subtest: Jailbreak Detector — Negative Cases (False Positives)
+    # Subtest: should NOT flag normal conversation
+    ok 1 - should NOT flag normal conversation
+      ---
+      duration_ms: 0.5308
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'DAN' as a name in normal context
+    ok 2 - should NOT flag 'DAN' as a name in normal context
+      ---
+      duration_ms: 0.1641
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'ignore' in non-jailbreak context
+    ok 3 - should NOT flag 'ignore' in non-jailbreak context
+      ---
+      duration_ms: 0.1539
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'rules' in legitimate context
+    ok 4 - should NOT flag 'rules' in legitimate context
+      ---
+      duration_ms: 0.2069
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'hypothetically' in pure academic math context
+    ok 5 - should NOT flag 'hypothetically' in pure academic math context
+      ---
+      duration_ms: 0.184
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'pretend' in game development
+    ok 6 - should NOT flag 'pretend' in game development
+      ---
+      duration_ms: 0.1842
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'you must' in normal instructions
+    ok 7 - should NOT flag 'you must' in normal instructions
+      ---
+      duration_ms: 0.138
+      type: 'test'
+      ...
+    # Subtest: should NOT flag Hindi words in normal context
+    ok 8 - should NOT flag Hindi words in normal context
+      ---
+      duration_ms: 0.1834
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'batao' in normal question
+    ok 9 - should NOT flag 'batao' in normal question
+      ---
+      duration_ms: 0.1321
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'example 1' in a tutorial
+    ok 10 - should NOT flag 'example 1' in a tutorial
+      ---
+      duration_ms: 0.1913
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'life depends on' in non-bypass context
+    ok 11 - should NOT flag 'life depends on' in non-bypass context
+      ---
+      duration_ms: 0.2079
+      type: 'test'
+      ...
+    # Subtest: should NOT flag emergency in non-bypass context
+    ok 12 - should NOT flag emergency in non-bypass context
+      ---
+      duration_ms: 0.1201
+      type: 'test'
+      ...
+    1..12
+ok 62 - Jailbreak Detector — Negative Cases (False Positives)
+  ---
+  duration_ms: 3.0412
+  type: 'suite'
+  ...
+# Subtest: Jailbreak Detector — Boundary Cases
+    # Subtest: should handle empty string gracefully
+    ok 1 - should handle empty string gracefully
+      ---
+      duration_ms: 0.3656
+      type: 'test'
+      ...
+    # Subtest: should handle single character input
+    ok 2 - should handle single character input
+      ---
+      duration_ms: 0.1312
+      type: 'test'
+      ...
+    # Subtest: should handle whitespace-only input
+    ok 3 - should handle whitespace-only input
+      ---
+      duration_ms: 0.1167
+      type: 'test'
+      ...
+    # Subtest: should handle null-like input gracefully
+    ok 4 - should handle null-like input gracefully
+      ---
+      duration_ms: 0.1373
+      type: 'test'
+      ...
+    # Subtest: should handle undefined input gracefully
+    ok 5 - should handle undefined input gracefully
+      ---
+      duration_ms: 0.1227
+      type: 'test'
+      ...
+    # Subtest: should handle numeric input gracefully
+    ok 6 - should handle numeric input gracefully
+      ---
+      duration_ms: 0.1294
+      type: 'test'
+      ...
+    # Subtest: should handle object input gracefully
+    ok 7 - should handle object input gracefully
+      ---
+      duration_ms: 0.1402
+      type: 'test'
+      ...
+    # Subtest: should handle very long input (10KB+)
+    ok 8 - should handle very long input (10KB+)
+      ---
+      duration_ms: 0.6682
+      type: 'test'
+      ...
+    # Subtest: should handle special characters around jailbreak
+    ok 9 - should handle special characters around jailbreak
+      ---
+      duration_ms: 0.2625
+      type: 'test'
+      ...
+    # Subtest: should handle jailbreak with repeated characters
+    ok 10 - should handle jailbreak with repeated characters
+      ---
+      duration_ms: 0.2186
+      type: 'test'
+      ...
+    # Subtest: should handle jailbreak at start of string
+    ok 11 - should handle jailbreak at start of string
+      ---
+      duration_ms: 0.1873
+      type: 'test'
+      ...
+    # Subtest: should handle jailbreak at end of string
+    ok 12 - should handle jailbreak at end of string
+      ---
+      duration_ms: 0.1393
+      type: 'test'
+      ...
+    # Subtest: should handle jailbreak with leading/trailing spaces
+    ok 13 - should handle jailbreak with leading/trailing spaces
+      ---
+      duration_ms: 0.2811
+      type: 'test'
+      ...
+    1..13
+ok 63 - Jailbreak Detector — Boundary Cases
+  ---
+  duration_ms: 3.5176
+  type: 'suite'
+  ...
+# Subtest: Jailbreak Detector — Adversarial Patterns
+    # Subtest: should detect jailbreak with benign preamble
+    ok 1 - should detect jailbreak with benign preamble
+      ---
+      duration_ms: 1.8015
+      type: 'test'
+      ...
+    # Subtest: should detect layered jailbreak with multiple techniques
+    ok 2 - should detect layered jailbreak with multiple techniques
+      ---
+      duration_ms: 0.3049
+      type: 'test'
+      ...
+    # Subtest: should detect jailbreak in code comment context
+    ok 3 - should detect jailbreak in code comment context
+      ---
+      duration_ms: 0.185
+      type: 'test'
+      ...
+    # Subtest: should detect jailbreak with case variation
+    ok 4 - should detect jailbreak with case variation
+      ---
+      duration_ms: 0.1363
+      type: 'test'
+      ...
+    # Subtest: should detect jailbreak across multiple lines
+    ok 5 - should detect jailbreak across multiple lines
+      ---
+      duration_ms: 0.1287
+      type: 'test'
+      ...
+    # Subtest: should detect jailbreak with surrounding markdown
+    ok 6 - should detect jailbreak with surrounding markdown
+      ---
+      duration_ms: 0.1194
+      type: 'test'
+      ...
+    # Subtest: should detect boundary-free DAN mode reference
+    ok 7 - should detect boundary-free DAN mode reference
+      ---
+      duration_ms: 0.1406
+      type: 'test'
+      ...
+    1..7
+ok 64 - Jailbreak Detector — Adversarial Patterns
+  ---
+  duration_ms: 3.1692
+  type: 'suite'
+  ...
+# Subtest: Jailbreak Detector — Security Hardening
+    # Subtest: should have sane timeout constants
+    ok 1 - should have sane timeout constants
+      ---
+      duration_ms: 0.3134
+      type: 'test'
+      ...
+    # Subtest: should handle catastrophic backtracking input without hanging
+    ok 2 - should handle catastrophic backtracking input without hanging
+      ---
+      duration_ms: 0.2053
+      type: 'test'
+      ...
+    # Subtest: should handle pathological input with many alternations
+    ok 3 - should handle pathological input with many alternations
+      ---
+      duration_ms: 0.5059
+      type: 'test'
+      ...
+    # Subtest: should handle extremely long benign text without timeout
+    ok 4 - should handle extremely long benign text without timeout
+      ---
+      duration_ms: 13.304
+      type: 'test'
+      ...
+    # Subtest: should produce deterministic result for same input
+    ok 5 - should produce deterministic result for same input
+      ---
+      duration_ms: 0.3087
+      type: 'test'
+      ...
+    # Subtest: should handle very long single-word input without hang
+    ok 6 - should handle very long single-word input without hang
+      ---
+      duration_ms: 0.6804
+      type: 'test'
+      ...
+    1..6
+ok 65 - Jailbreak Detector — Security Hardening
+  ---
+  duration_ms: 15.8678
+  type: 'suite'
+  ...
+# Subtest: buildLedgerEntry
+    # Subtest: produces a complete entry with defaults
+    ok 1 - produces a complete entry with defaults
+      ---
+      duration_ms: 3.628
+      type: 'test'
+      ...
+    1..1
+ok 66 - buildLedgerEntry
+  ---
+  duration_ms: 5.2353
+  type: 'suite'
+  ...
+# Subtest: sanitizeLedgerEntry
+    # Subtest: scrubs a raw secret that leaked into a preview field
+    ok 1 - scrubs a raw secret that leaked into a preview field
+      ---
+      duration_ms: 5.4652
+      type: 'test'
+      ...
+    1..1
+ok 67 - sanitizeLedgerEntry
+  ---
+  duration_ms: 5.6735
+  type: 'suite'
+  ...
+# Subtest: serialize/parse ledger
+    # Subtest: round-trips entries as JSONL and drops raw secrets on write
+    ok 1 - round-trips entries as JSONL and drops raw secrets on write
+      ---
+      duration_ms: 0.809
+      type: 'test'
+      ...
+    # Subtest: skips corrupt lines without throwing
+    ok 2 - skips corrupt lines without throwing
+      ---
+      duration_ms: 0.2748
+      type: 'test'
+      ...
+    1..2
+ok 68 - serialize/parse ledger
+  ---
+  duration_ms: 1.4496
+  type: 'suite'
+  ...
+# Subtest: tamper-evident hash chain
+    # Subtest: chains entries and verifies a clean chain
+    ok 1 - chains entries and verifies a clean chain
+      ---
+      duration_ms: 18.2802
+      type: 'test'
+      ...
+    # Subtest: detects an edited entry
+    ok 2 - detects an edited entry
+      ---
+      duration_ms: 2.6029
+      type: 'test'
+      ...
+    # Subtest: detects a deleted middle entry
+    ok 3 - detects a deleted middle entry
+      ---
+      duration_ms: 1.8124
+      type: 'test'
+      ...
+    # Subtest: accepts a retention-trimmed head (first entry prevHash taken as-is)
+    ok 4 - accepts a retention-trimmed head (first entry prevHash taken as-is)
+      ---
+      duration_ms: 2.1372
+      type: 'test'
+      ...
+    # Subtest: tolerates legacy unchained entries before the chain starts
+    ok 5 - tolerates legacy unchained entries before the chain starts
+      ---
+      duration_ms: 1.6379
+      type: 'test'
+      ...
+    # Subtest: without globalThis.crypto (the Node 18 / VS Code 1.85 floor)
+        # Subtest: still chains, instead of throwing 'crypto is not defined'
+        ok 1 - still chains, instead of throwing 'crypto is not defined'
+          ---
+          duration_ms: 2.0251
+          type: 'test'
+          ...
+        # Subtest: produces byte-identical hashes to the WebCrypto path
+        ok 2 - produces byte-identical hashes to the WebCrypto path
+          ---
+          duration_ms: 4.0652
+          type: 'test'
+          ...
+        # Subtest: writes a chain that verifies again once WebCrypto is back
+        ok 3 - writes a chain that verifies again once WebCrypto is back
+          ---
+          duration_ms: 2.2158
+          type: 'test'
+          ...
+        1..3
+    ok 6 - without globalThis.crypto (the Node 18 / VS Code 1.85 floor)
+      ---
+      duration_ms: 8.9383
+      type: 'suite'
+      ...
+    1..6
+ok 69 - tamper-evident hash chain
+  ---
+  duration_ms: 36.4319
+  type: 'suite'
+  ...
+# Subtest: resolveScanPipeline — shared policy
+    # Subtest: enables prompt-injection and jailbreak for file context (live scan)
+    ok 1 - enables prompt-injection and jailbreak for file context (live scan)
+      ---
+      duration_ms: 1.3496
+      type: 'test'
+      ...
+    # Subtest: enables prompt-injection and jailbreak for prompt and selection
+    ok 2 - enables prompt-injection and jailbreak for prompt and selection
+      ---
+      duration_ms: 0.402
+      type: 'test'
+      ...
+    # Subtest: disables injection detectors for terminal context
+    ok 3 - disables injection detectors for terminal context
+      ---
+      duration_ms: 0.1795
+      type: 'test'
+      ...
+    1..3
+ok 70 - resolveScanPipeline — shared policy
+  ---
+  duration_ms: 3.6246
+  type: 'suite'
+  ...
+# Subtest: DecisionEngine live-scan parity (behavioral)
+    # Subtest: detects prompt injection when context is file (live scan path)
+    ok 1 - detects prompt injection when context is file (live scan path)
+      ---
+      duration_ms: 37.8972
+      type: 'test'
+      ...
+    # Subtest: detects jailbreak keywords when context is file
+    ok 2 - detects jailbreak keywords when context is file
+      ---
+      duration_ms: 21.9301
+      type: 'test'
+      ...
+    # Subtest: file and prompt contexts both flag the same injection fixture
+    ok 3 - file and prompt contexts both flag the same injection fixture
+      ---
+      duration_ms: 2.1801
+      type: 'test'
+      ...
+    # Subtest: still detects secrets on file context
+    ok 4 - still detects secrets on file context
+      ---
+      duration_ms: 3.2343
+      type: 'test'
+      ...
+    # Subtest: benign code stays low risk on file context
+    ok 5 - benign code stays low risk on file context
+      ---
+      duration_ms: 0.766
+      type: 'test'
+      ...
+    # Subtest: terminal context skips injection detectors but runs terminal risk
+    ok 6 - terminal context skips injection detectors but runs terminal risk
+      ---
+      duration_ms: 3.3392
+      type: 'test'
+      ...
+    1..6
+ok 71 - DecisionEngine live-scan parity (behavioral)
+  ---
+  duration_ms: 70.2999
+  type: 'suite'
+  ...
+# Subtest: HashCache detector-version invalidation (fail-closed)
+    # Subtest: detectorVersionsMatch requires all required keys
+    ok 1 - detectorVersionsMatch requires all required keys
+      ---
+      duration_ms: 0.4566
+      type: 'test'
+      ...
+    # Subtest: cache miss when detector versions change (no fail-open stale allow)
+    ok 2 - cache miss when detector versions change (no fail-open stale allow)
+      ---
+      duration_ms: 1.1688
+      type: 'test'
+      ...
+    1..2
+ok 72 - HashCache detector-version invalidation (fail-closed)
+  ---
+  duration_ms: 1.9679
+  type: 'suite'
+  ...
+# Subtest: MCPPolicyAnalyzer
+    # Subtest: detects filesystem + broad root + command runner
+    ok 1 - detects filesystem + broad root + command runner
+      ---
+      duration_ms: 2.9629
+      type: 'test'
+      ...
+    # Subtest: flags secret env keys by name only, never values
+    ok 2 - flags secret env keys by name only, never values
+      ---
+      duration_ms: 0.9185
+      type: 'test'
+      ...
+    # Subtest: marks remote endpoints and redacts credentials in urls
+    ok 3 - marks remote endpoints and redacts credentials in urls
+      ---
+      duration_ms: 1.7327
+      type: 'test'
+      ...
+    # Subtest: rates a remote MCP endpoint as high risk and requires review
+    ok 4 - rates a remote MCP endpoint as high risk and requires review
+      ---
+      duration_ms: 0.6563
+      type: 'test'
+      ...
+    # Subtest: recognizes curl with a remote URL as network execution, not filesystem access
+    ok 5 - recognizes curl with a remote URL as network execution, not filesystem access
+      ---
+      duration_ms: 0.5571
+      type: 'test'
+      ...
+    # Subtest: keeps a localhost-only transport below the approval threshold
+    ok 6 - keeps a localhost-only transport below the approval threshold
+      ---
+      duration_ms: 0.2603
+      type: 'test'
+      ...
+    # Subtest: flags prompt-injection phrasing in tool descriptions as critical
+    ok 7 - flags prompt-injection phrasing in tool descriptions as critical
+      ---
+      duration_ms: 0.7318
+      type: 'test'
+      ...
+    # Subtest: handles malformed JSON without throwing
+    ok 8 - handles malformed JSON without throwing
+      ---
+      duration_ms: 2.7159
+      type: 'test'
+      ...
+    # Subtest: generates a least-privilege safe policy requiring approval for high risk
+    ok 9 - generates a least-privilege safe policy requiring approval for high risk
+      ---
+      duration_ms: 1.1294
+      type: 'test'
+      ...
+    1..9
+ok 73 - MCPPolicyAnalyzer
+  ---
+  duration_ms: 14.4857
+  type: 'suite'
+  ...
+# Subtest: MemorySession — sanitizer
+    # Subtest: drops raw secrets from evidence
+    ok 1 - drops raw secrets from evidence
+      ---
+      duration_ms: 7.8213
+      type: 'test'
+      ...
+    # Subtest: never persists a raw canary token
+    ok 2 - never persists a raw canary token
+      ---
+      duration_ms: 11.8944
+      type: 'test'
+      ...
+    1..2
+ok 74 - MemorySession — sanitizer
+  ---
+  duration_ms: 22.032
+  type: 'suite'
+  ...
+# Subtest: MemoryStore
+    # Subtest: tracks a brokered request and updates aggregates
+    ok 1 - tracks a brokered request and updates aggregates
+      ---
+      duration_ms: 2.4983
+      type: 'test'
+      ...
+    # Subtest: records blocked protected files separately from included files
+    ok 2 - records blocked protected files separately from included files
+      ---
+      duration_ms: 0.5047
+      type: 'test'
+      ...
+    # Subtest: marks canary exposure
+    ok 3 - marks canary exposure
+      ---
+      duration_ms: 0.4868
+      type: 'test'
+      ...
+    # Subtest: export is redacted and canary-free
+    ok 4 - export is redacted and canary-free
+      ---
+      duration_ms: 6.1547
+      type: 'test'
+      ...
+    # Subtest: clear removes a session
+    ok 5 - clear removes a session
+      ---
+      duration_ms: 0.7073
+      type: 'test'
+      ...
+    1..5
+ok 75 - MemoryStore
+  ---
+  duration_ms: 11.6334
+  type: 'suite'
+  ...
+# Subtest: OutputExfiltrationDetector
+    # Subtest: flags outbound HTTP sinks and secret pipes
+    ok 1 - flags outbound HTTP sinks and secret pipes
+      ---
+      duration_ms: 4.7753
+      type: 'test'
+      ...
+    # Subtest: flags exfiltration phrasing and placeholder reversal
+    ok 2 - flags exfiltration phrasing and placeholder reversal
+      ---
+      duration_ms: 1.8255
+      type: 'test'
+      ...
+    # Subtest: does not flag benign local output
+    ok 3 - does not flag benign local output
+      ---
+      duration_ms: 0.2715
+      type: 'test'
+      ...
+    1..3
+ok 76 - OutputExfiltrationDetector
+  ---
+  duration_ms: 9.0238
+  type: 'suite'
+  ...
+# Subtest: scanAIOutput
+    # Subtest: treats a leaked canary as a critical block and reports no raw token
+    ok 1 - treats a leaked canary as a critical block and reports no raw token
+      ---
+      duration_ms: 20.1444
+      type: 'test'
+      ...
+    # Subtest: flags raw secrets that leaked into output without exposing them
+    ok 2 - flags raw secrets that leaked into output without exposing them
+      ---
+      duration_ms: 5.2415
+      type: 'test'
+      ...
+    # Subtest: raises risk when known vault placeholders are referenced
+    ok 3 - raises risk when known vault placeholders are referenced
+      ---
+      duration_ms: 0.5114
+      type: 'test'
+      ...
+    # Subtest: allows genuinely clean output
+    ok 4 - allows genuinely clean output
+      ---
+      duration_ms: 0.3299
+      type: 'test'
+      ...
+    1..4
+ok 77 - scanAIOutput
+  ---
+  duration_ms: 27.0813
+  type: 'suite'
+  ...
+# Subtest: Phase 2 runtime discovery reports critical effective risk and unsupported warnings
+ok 78 - Phase 2 runtime discovery reports critical effective risk and unsupported warnings
+  ---
+  duration_ms: 3.6918
+  type: 'test'
+  ...
+# Subtest: Phase 4 file firewall denies symlink/outside-workspace secret access
+ok 79 - Phase 4 file firewall denies symlink/outside-workspace secret access
+  ---
+  duration_ms: 7.373
+  type: 'test'
+  ...
+# Subtest: Phase 4 file firewall requires review for security-sensitive workflow edits
+ok 80 - Phase 4 file firewall requires review for security-sensitive workflow edits
+  ---
+  duration_ms: 1.1291
+  type: 'test'
+  ...
+# Subtest: Phase 7 network egress blocks metadata and secret payloads
+ok 81 - Phase 7 network egress blocks metadata and secret payloads
+  ---
+  duration_ms: 8.0473
+  type: 'test'
+  ...
+# Subtest: Phase 7 network egress blocks redirect to private network
+ok 82 - Phase 7 network egress blocks redirect to private network
+  ---
+  duration_ms: 1.0083
+  type: 'test'
+  ...
+# Subtest: Phase 8 MCP gateway denies unknown or prompt-injected tool calls before invocation
+ok 83 - Phase 8 MCP gateway denies unknown or prompt-injected tool calls before invocation
+  ---
+  duration_ms: 3.9613
+  type: 'test'
+  ...
+# Subtest: Phase 8 MCP gateway redacts secret-like arguments
+ok 84 - Phase 8 MCP gateway redacts secret-like arguments
+  ---
+  duration_ms: 4.4701
+  type: 'test'
+  ...
+# Subtest: Phase 9 taint engine escalates high-risk actions influenced by injected sources
+ok 85 - Phase 9 taint engine escalates high-risk actions influenced by injected sources
+  ---
+  duration_ms: 0.6353
+  type: 'test'
+  ...
+# Subtest: Phase 10 transaction preview denies dependency installs mixed with sensitive changes
+ok 86 - Phase 10 transaction preview denies dependency installs mixed with sensitive changes
+  ---
+  duration_ms: 0.886
+  type: 'test'
+  ...
+# Subtest: Phase 10 checkpoint stores hashes and redacted previews only
+ok 87 - Phase 10 checkpoint stores hashes and redacted previews only
+  ---
+  duration_ms: 22.0599
+  type: 'test'
+  ...
+# Subtest: Phase 11 governance blocks silent enterprise policy downgrade
+ok 88 - Phase 11 governance blocks silent enterprise policy downgrade
+  ---
+  duration_ms: 1.087
+  type: 'test'
+  ...
+# Subtest: Phase 12 process sandbox denies shell/env-secret launch before execution
+ok 89 - Phase 12 process sandbox denies shell/env-secret launch before execution
+  ---
+  duration_ms: 1.5653
+  type: 'test'
+  ...
+# Subtest: Phase 12 process sandbox returns constrained profile for OS-enforced launches
+ok 90 - Phase 12 process sandbox returns constrained profile for OS-enforced launches
+  ---
+  duration_ms: 0.7143
+  type: 'test'
+  ...
+# Subtest: Phase 12 extension isolation blocks risky non-allowlisted AI extensions in locked mode
+ok 91 - Phase 12 extension isolation blocks risky non-allowlisted AI extensions in locked mode
+  ---
+  duration_ms: 1.2895
+  type: 'test'
+  ...
+# Subtest: advisory approvals reject invalid lifetime and clock with a working finite control
+ok 92 - advisory approvals reject invalid lifetime and clock with a working finite control
+  ---
+  duration_ms: 10.9099
+  type: 'test'
+  ...
+# Subtest: validity withdrawal never restores unchecked approval and once grants cannot replay
+ok 93 - validity withdrawal never restores unchecked approval and once grants cannot replay
+  ---
+  duration_ms: 2.0038
+  type: 'test'
+  ...
+# Subtest: project schema rejects unsupported versions while valid private and public classifications work
+ok 94 - project schema rejects unsupported versions while valid private and public classifications work
+  ---
+  duration_ms: 1.6409
+  type: 'test'
+  ...
+# Subtest: bounded policy input families retain supported schema and default protected paths
+ok 95 - bounded policy input families retain supported schema and default protected paths
+  ---
+  duration_ms: 9.5105
+  type: 'test'
+  ...
+# Subtest: PolicyEvaluator threshold ordering
+    # Subtest: reaches approval_required above the block threshold (regression for \#8)
+    ok 1 - reaches approval_required above the block threshold (regression for \#8)
+      ---
+      duration_ms: 2.458
+      type: 'test'
+      ...
+    # Subtest: selects the highest satisfied tier regardless of threshold ordering
+    ok 2 - selects the highest satisfied tier regardless of threshold ordering
+      ---
+      duration_ms: 0.3081
+      type: 'test'
+      ...
+    # Subtest: honors a critical policy rule override above thresholds
+    ok 3 - honors a critical policy rule override above thresholds
+      ---
+      duration_ms: 0.4372
+      type: 'test'
+      ...
+    # Subtest: disabled policy always allows
+    ok 4 - disabled policy always allows
+      ---
+      duration_ms: 0.2027
+      type: 'test'
+      ...
+    1..4
+ok 96 - PolicyEvaluator threshold ordering
+  ---
+  duration_ms: 5.0661
+  type: 'suite'
+  ...
+# Subtest: globToRegExp
+    # Subtest: matches basename patterns anywhere in the tree
+    ok 1 - matches basename patterns anywhere in the tree
+      ---
+      duration_ms: 2.2969
+      type: 'test'
+      ...
+    # Subtest: supports ** across segments and anchors when a slash is present
+    ok 2 - supports ** across segments and anchors when a slash is present
+      ---
+      duration_ms: 0.5018
+      type: 'test'
+      ...
+    # Subtest: matches an exact rooted path
+    ok 3 - matches an exact rooted path
+      ---
+      duration_ms: 0.4077
+      type: 'test'
+      ...
+    # Subtest: normalizes backslashes
+    ok 4 - normalizes backslashes
+      ---
+      duration_ms: 0.3785
+      type: 'test'
+      ...
+    1..4
+ok 97 - globToRegExp
+  ---
+  duration_ms: 5.8726
+  type: 'suite'
+  ...
+# Subtest: classifyPath
+    # Subtest: classifies .env and keys as protected → block
+    ok 1 - classifies .env and keys as protected → block
+      ---
+      duration_ms: 1.1837
+      type: 'test'
+      ...
+    # Subtest: classifies sensitive paths → approval_required
+    ok 2 - classifies sensitive paths → approval_required
+      ---
+      duration_ms: 0.6286
+      type: 'test'
+      ...
+    # Subtest: protected wins over sensitive when both match
+    ok 3 - protected wins over sensitive when both match
+      ---
+      duration_ms: 0.7174
+      type: 'test'
+      ...
+    # Subtest: normal files fall through to defaultAction
+    ok 4 - normal files fall through to defaultAction
+      ---
+      duration_ms: 0.6771
+      type: 'test'
+      ...
+    # Subtest: isProtectedPath / isSensitivePath helpers agree with classifyPath
+    ok 5 - isProtectedPath / isSensitivePath helpers agree with classifyPath
+      ---
+      duration_ms: 0.4561
+      type: 'test'
+      ...
+    1..5
+ok 98 - classifyPath
+  ---
+  duration_ms: 4.6143
+  type: 'suite'
+  ...
+# Subtest: parseProjectPolicy
+    # Subtest: fills defaults for empty/garbage input without throwing
+    ok 1 - fills defaults for empty/garbage input without throwing
+      ---
+      duration_ms: 1.668
+      type: 'test'
+      ...
+    # Subtest: keeps valid overrides and rejects invalid enums/actions
+    ok 2 - keeps valid overrides and rejects invalid enums/actions
+      ---
+      duration_ms: 0.3596
+      type: 'test'
+      ...
+    # Subtest: defaults sendRawContent to false unless explicitly true
+    ok 3 - defaults sendRawContent to false unless explicitly true
+      ---
+      duration_ms: 0.2555
+      type: 'test'
+      ...
+    1..3
+ok 99 - parseProjectPolicy
+  ---
+  duration_ms: 3.9452
+  type: 'suite'
+  ...
+# Subtest: Prompt-Injection Detector — Positive Cases
+    # Subtest: should detect direct instruction override: 'ignore all previous instructions'
+    ok 1 - should detect direct instruction override: 'ignore all previous instructions'
+      ---
+      duration_ms: 16.6331
+      type: 'test'
+      ...
+    # Subtest: should detect instruction override: 'disregard all previous rules'
+    ok 2 - should detect instruction override: 'disregard all previous rules'
+      ---
+      duration_ms: 10.6173
+      type: 'test'
+      ...
+    # Subtest: should detect instruction override: 'forget above instructions'
+    ok 3 - should detect instruction override: 'forget above instructions'
+      ---
+      duration_ms: 0.3588
+      type: 'test'
+      ...
+    # Subtest: should detect instruction override via negation: 'do not follow any previous rules'
+    ok 4 - should detect instruction override via negation: 'do not follow any previous rules'
+      ---
+      duration_ms: 0.299
+      type: 'test'
+      ...
+    # Subtest: should detect a paraphrased governing-instruction override
+    ok 5 - should detect a paraphrased governing-instruction override
+      ---
+      duration_ms: 0.316
+      type: 'test'
+      ...
+    # Subtest: should detect an instruction override split across word separators
+    ok 6 - should detect an instruction override split across word separators
+      ---
+      duration_ms: 0.341
+      type: 'test'
+      ...
+    # Subtest: should detect role impersonation: 'you are now'
+    ok 7 - should detect role impersonation: 'you are now'
+      ---
+      duration_ms: 0.3446
+      type: 'test'
+      ...
+    # Subtest: should detect role impersonation: 'act as'
+    ok 8 - should detect role impersonation: 'act as'
+      ---
+      duration_ms: 0.5014
+      type: 'test'
+      ...
+    # Subtest: should detect role impersonation: 'pretend you're'
+    ok 9 - should detect role impersonation: 'pretend you're'
+      ---
+      duration_ms: 0.6251
+      type: 'test'
+      ...
+    # Subtest: should detect role impersonation: 'roleplay as'
+    ok 10 - should detect role impersonation: 'roleplay as'
+      ---
+      duration_ms: 1.2384
+      type: 'test'
+      ...
+    # Subtest: should detect role impersonation: 'from now on you are'
+    ok 11 - should detect role impersonation: 'from now on you are'
+      ---
+      duration_ms: 0.3858
+      type: 'test'
+      ...
+    # Subtest: should detect system role injection: 'system: you are'
+    ok 12 - should detect system role injection: 'system: you are'
+      ---
+      duration_ms: 0.3087
+      type: 'test'
+      ...
+    # Subtest: should detect system role injection: 'developer: ignore'
+    ok 13 - should detect system role injection: 'developer: ignore'
+      ---
+      duration_ms: 0.3553
+      type: 'test'
+      ...
+    # Subtest: should detect jailbreak keyword: 'DAN mode'
+    ok 14 - should detect jailbreak keyword: 'DAN mode'
+      ---
+      duration_ms: 0.1861
+      type: 'test'
+      ...
+    # Subtest: should detect jailbreak keyword: 'do anything now'
+    ok 15 - should detect jailbreak keyword: 'do anything now'
+      ---
+      duration_ms: 0.1662
+      type: 'test'
+      ...
+    # Subtest: should detect jailbreak keyword: 'jailbreak'
+    ok 16 - should detect jailbreak keyword: 'jailbreak'
+      ---
+      duration_ms: 0.2564
+      type: 'test'
+      ...
+    # Subtest: should detect jailbreak keyword: 'god mode'
+    ok 17 - should detect jailbreak keyword: 'god mode'
+      ---
+      duration_ms: 0.2892
+      type: 'test'
+      ...
+    # Subtest: should detect jailbreak keyword: 'unrestricted mode'
+    ok 18 - should detect jailbreak keyword: 'unrestricted mode'
+      ---
+      duration_ms: 0.2135
+      type: 'test'
+      ...
+    # Subtest: should detect jailbreak keyword: 'developer mode'
+    ok 19 - should detect jailbreak keyword: 'developer mode'
+      ---
+      duration_ms: 0.1452
+      type: 'test'
+      ...
+    # Subtest: should detect safety bypass: 'bypass safety'
+    ok 20 - should detect safety bypass: 'bypass safety'
+      ---
+      duration_ms: 0.234
+      type: 'test'
+      ...
+    # Subtest: should detect safety bypass: 'disable filter'
+    ok 21 - should detect safety bypass: 'disable filter'
+      ---
+      duration_ms: 0.294
+      type: 'test'
+      ...
+    # Subtest: should detect safety bypass: 'remove guardrail'
+    ok 22 - should detect safety bypass: 'remove guardrail'
+      ---
+      duration_ms: 0.2966
+      type: 'test'
+      ...
+    # Subtest: should detect safety bypass: 'remove guardrail' (simplified)
+    ok 23 - should detect safety bypass: 'remove guardrail' (simplified)
+      ---
+      duration_ms: 0.2707
+      type: 'test'
+      ...
+    # Subtest: should detect safety bypass: 'turn off censorship'
+    ok 24 - should detect safety bypass: 'turn off censorship'
+      ---
+      duration_ms: 0.1639
+      type: 'test'
+      ...
+    # Subtest: should detect system prompt extraction: 'reveal system prompt'
+    ok 25 - should detect system prompt extraction: 'reveal system prompt'
+      ---
+      duration_ms: 0.1678
+      type: 'test'
+      ...
+    # Subtest: should detect system prompt extraction: 'show initial instructions'
+    ok 26 - should detect system prompt extraction: 'show initial instructions'
+      ---
+      duration_ms: 0.1606
+      type: 'test'
+      ...
+    # Subtest: should detect system prompt query: 'what are your system instructions'
+    ok 27 - should detect system prompt query: 'what are your system instructions'
+      ---
+      duration_ms: 0.144
+      type: 'test'
+      ...
+    # Subtest: should detect system prompt query: 'what is your original prompt'
+    ok 28 - should detect system prompt query: 'what is your original prompt'
+      ---
+      duration_ms: 0.1419
+      type: 'test'
+      ...
+    # Subtest: should detect indirect extraction from attacker-controlled content
+    ok 29 - should detect indirect extraction from attacker-controlled content
+      ---
+      duration_ms: 0.1358
+      type: 'test'
+      ...
+    # Subtest: should detect encoding attack: 'encode the following'
+    ok 30 - should detect encoding attack: 'encode the following'
+      ---
+      duration_ms: 0.1258
+      type: 'test'
+      ...
+    # Subtest: should detect encoding attack: 'decode and respond'
+    ok 31 - should detect encoding attack: 'decode and respond'
+      ---
+      duration_ms: 0.1392
+      type: 'test'
+      ...
+    # Subtest: should detect encoding evasion: 'translate to base64'
+    ok 32 - should detect encoding evasion: 'translate to base64'
+      ---
+      duration_ms: 0.1253
+      type: 'test'
+      ...
+    # Subtest: should detect Hindi instruction override: 'pichle nirdesh bhool'
+    ok 33 - should detect Hindi instruction override: 'pichle nirdesh bhool'
+      ---
+      duration_ms: 0.2066
+      type: 'test'
+      ...
+    # Subtest: should detect Hindi instruction override: 'purane instructions chod'
+    ok 34 - should detect Hindi instruction override: 'purane instructions chod'
+      ---
+      duration_ms: 0.1516
+      type: 'test'
+      ...
+    # Subtest: should detect Hindi role impersonation: 'ab se tum ek'
+    ok 35 - should detect Hindi role impersonation: 'ab se tum ek'
+      ---
+      duration_ms: 0.1318
+      type: 'test'
+      ...
+    # Subtest: should detect Hindi safety bypass: 'safety hata kar'
+    ok 36 - should detect Hindi safety bypass: 'safety hata kar'
+      ---
+      duration_ms: 0.1553
+      type: 'test'
+      ...
+    # Subtest: should detect Hindi safety bypass: 'suraksha band karo'
+    ok 37 - should detect Hindi safety bypass: 'suraksha band karo'
+      ---
+      duration_ms: 0.2224
+      type: 'test'
+      ...
+    # Subtest: should detect Devanagari Hindi override and prompt extraction
+    ok 38 - should detect Devanagari Hindi override and prompt extraction
+      ---
+      duration_ms: 8.5806
+      type: 'test'
+      ...
+    # Subtest: should detect delimiter injection: '[SYSTEM]' tags
+    ok 39 - should detect delimiter injection: '[SYSTEM]' tags
+      ---
+      duration_ms: 0.224
+      type: 'test'
+      ...
+    # Subtest: should detect delimiter injection: '<|im_start|>' tags
+    ok 40 - should detect delimiter injection: '<|im_start|>' tags
+      ---
+      duration_ms: 0.2374
+      type: 'test'
+      ...
+    # Subtest: should detect code block injection: '```system'
+    ok 41 - should detect code block injection: '```system'
+      ---
+      duration_ms: 1.7086
+      type: 'test'
+      ...
+    # Subtest: should detect multi-step injection chain
+    ok 42 - should detect multi-step injection chain
+      ---
+      duration_ms: 0.9781
+      type: 'test'
+      ...
+    # Subtest: should detect data exfiltration: sending to URL
+    ok 43 - should detect data exfiltration: sending to URL
+      ---
+      duration_ms: 0.6073
+      type: 'test'
+      ...
+    # Subtest: should detect data exfiltration: email exfiltration
+    ok 44 - should detect data exfiltration: email exfiltration
+      ---
+      duration_ms: 0.5616
+      type: 'test'
+      ...
+    # Subtest: should detect secret exfiltration combo: read + send
+    ok 45 - should detect secret exfiltration combo: read + send
+      ---
+      duration_ms: 0.3661
+      type: 'test'
+      ...
+    # Subtest: should detect HTTP exfiltration of secrets
+    ok 46 - should detect HTTP exfiltration of secrets
+      ---
+      duration_ms: 0.3148
+      type: 'test'
+      ...
+    # Subtest: should detect encoded exfiltration
+    ok 47 - should detect encoded exfiltration
+      ---
+      duration_ms: 0.4437
+      type: 'test'
+      ...
+    # Subtest: should detect pipe exfiltration of secrets
+    ok 48 - should detect pipe exfiltration of secrets
+      ---
+      duration_ms: 0.4469
+      type: 'test'
+      ...
+    # Subtest: should detect pipe exfiltration via netcat
+    ok 49 - should detect pipe exfiltration via netcat
+      ---
+      duration_ms: 1.2746
+      type: 'test'
+      ...
+    1..49
+ok 100 - Prompt-Injection Detector — Positive Cases
+  ---
+  duration_ms: 60.2138
+  type: 'suite'
+  ...
+# Subtest: Prompt-Injection Detector — Negative Cases (False Positives)
+    # Subtest: should NOT flag normal content: 'please review my code'
+    ok 1 - should NOT flag normal content: 'please review my code'
+      ---
+      duration_ms: 1.5136
+      type: 'test'
+      ...
+    # Subtest: should NOT flag normal content: 'I need help with TypeScript'
+    ok 2 - should NOT flag normal content: 'I need help with TypeScript'
+      ---
+      duration_ms: 0.2879
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'ignore' in non-injection context
+    ok 3 - should NOT flag 'ignore' in non-injection context
+      ---
+      duration_ms: 0.2302
+      type: 'test'
+      ...
+    # Subtest: should NOT flag ordinary governance or Hindi support prose
+    ok 4 - should NOT flag ordinary governance or Hindi support prose
+      ---
+      duration_ms: 2.2248
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'forget' in normal context
+    ok 5 - should NOT flag 'forget' in normal context
+      ---
+      duration_ms: 0.3658
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'system' in tech support context
+    ok 6 - should NOT flag 'system' in tech support context
+      ---
+      duration_ms: 0.2659
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'developer' in normal context
+    ok 7 - should NOT flag 'developer' in normal context
+      ---
+      duration_ms: 0.2546
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'DAN' as part of a name
+    ok 8 - should NOT flag 'DAN' as part of a name
+      ---
+      duration_ms: 0.2655
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'do anything' in casual context
+    ok 9 - should NOT flag 'do anything' in casual context
+      ---
+      duration_ms: 0.3851
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'restriction' in legitimate context
+    ok 10 - should NOT flag 'restriction' in legitimate context
+      ---
+      duration_ms: 0.3473
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'show' in normal query
+    ok 11 - should NOT flag 'show' in normal query
+      ---
+      duration_ms: 0.3088
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'reveal' in CSS context
+    ok 12 - should NOT flag 'reveal' in CSS context
+      ---
+      duration_ms: 0.2813
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'base64' in data processing context
+    ok 13 - should NOT flag 'base64' in data processing context
+      ---
+      duration_ms: 0.3185
+      type: 'test'
+      ...
+    # Subtest: should NOT flag Hindi words in normal context
+    ok 14 - should NOT flag Hindi words in normal context
+      ---
+      duration_ms: 0.4444
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'safety' in regular question
+    ok 15 - should NOT flag 'safety' in regular question
+      ---
+      duration_ms: 0.3787
+      type: 'test'
+      ...
+    # Subtest: should NOT flag academic/research framing
+    ok 16 - should NOT flag academic/research framing
+      ---
+      duration_ms: 0.3688
+      type: 'test'
+      ...
+    # Subtest: should NOT flag educational content about injection
+    ok 17 - should NOT flag educational content about injection
+      ---
+      duration_ms: 0.2937
+      type: 'test'
+      ...
+    # Subtest: should NOT flag normal code review request
+    ok 18 - should NOT flag normal code review request
+      ---
+      duration_ms: 0.2984
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'first' in numbered list
+    ok 19 - should NOT flag 'first' in numbered list
+      ---
+      duration_ms: 0.254
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'hypothetically' in academic context
+    ok 20 - should NOT flag 'hypothetically' in academic context
+      ---
+      duration_ms: 0.29
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'pretend' in game development context
+    ok 21 - should NOT flag 'pretend' in game development context
+      ---
+      duration_ms: 0.2466
+      type: 'test'
+      ...
+    # Subtest: should NOT flag 'send' in email delivery context
+    ok 22 - should NOT flag 'send' in email delivery context
+      ---
+      duration_ms: 0.2465
+      type: 'test'
+      ...
+    1..22
+ok 101 - Prompt-Injection Detector — Negative Cases (False Positives)
+  ---
+  duration_ms: 11.9133
+  type: 'suite'
+  ...
+# Subtest: Prompt-Injection Detector — Boundary Cases
+    # Subtest: should handle empty string gracefully
+    ok 1 - should handle empty string gracefully
+      ---
+      duration_ms: 0.7589
+      type: 'test'
+      ...
+    # Subtest: should handle single character input
+    ok 2 - should handle single character input
+      ---
+      duration_ms: 0.4608
+      type: 'test'
+      ...
+    # Subtest: should handle whitespace-only input
+    ok 3 - should handle whitespace-only input
+      ---
+      duration_ms: 0.3438
+      type: 'test'
+      ...
+    # Subtest: should handle very long input (10KB+)
+    ok 4 - should handle very long input (10KB+)
+      ---
+      duration_ms: 2.2562
+      type: 'test'
+      ...
+    # Subtest: should handle special characters in input
+    ok 5 - should handle special characters in input
+      ---
+      duration_ms: 0.412
+      type: 'test'
+      ...
+    # Subtest: should detect multiple injection patterns in one input
+    ok 6 - should detect multiple injection patterns in one input
+      ---
+      duration_ms: 0.4649
+      type: 'test'
+      ...
+    # Subtest: should handle newlines within injection pattern
+    ok 7 - should handle newlines within injection pattern
+      ---
+      duration_ms: 0.4787
+      type: 'test'
+      ...
+    # Subtest: should handle injection pattern split across paragraphs
+    ok 8 - should handle injection pattern split across paragraphs
+      ---
+      duration_ms: 0.4918
+      type: 'test'
+      ...
+    # Subtest: should handle injection at start of string
+    ok 9 - should handle injection at start of string
+      ---
+      duration_ms: 0.48
+      type: 'test'
+      ...
+    # Subtest: should handle injection at end of string
+    ok 10 - should handle injection at end of string
+      ---
+      duration_ms: 0.4538
+      type: 'test'
+      ...
+    # Subtest: should handle injection with leading/trailing spaces
+    ok 11 - should handle injection with leading/trailing spaces
+      ---
+      duration_ms: 0.3509
+      type: 'test'
+      ...
+    # Subtest: should handle injection with unicode characters surrounding
+    ok 12 - should handle injection with unicode characters surrounding
+      ---
+      duration_ms: 0.4014
+      type: 'test'
+      ...
+    # Subtest: should handle injection with repeated characters
+    ok 13 - should handle injection with repeated characters
+      ---
+      duration_ms: 0.4189
+      type: 'test'
+      ...
+    1..13
+ok 102 - Prompt-Injection Detector — Boundary Cases
+  ---
+  duration_ms: 9.2805
+  type: 'suite'
+  ...
+# Subtest: Prompt-Injection Detector — Obfuscation Resistance
+    # Subtest: should detect case variation bypass
+    ok 1 - should detect case variation bypass
+      ---
+      duration_ms: 0.3737
+      type: 'test'
+      ...
+    # Subtest: should detect mixed case 'ignore' variations
+    ok 2 - should detect mixed case 'ignore' variations
+      ---
+      duration_ms: 0.2084
+      type: 'test'
+      ...
+    # Subtest: should detect leetspeak '1gn0r3' variations
+    ok 3 - should detect leetspeak '1gn0r3' variations
+      ---
+      duration_ms: 0.1717
+      type: 'test'
+      ...
+    # Subtest: should detect simple Unicode-encoded bypass (partial improvement)
+    ok 4 - should detect simple Unicode-encoded bypass (partial improvement)
+      ---
+      duration_ms: 0.1958
+      type: 'test'
+      ...
+    # Subtest: should detect homoglyph attack: Cyrillic letters (limited)
+    ok 5 - should detect homoglyph attack: Cyrillic letters (limited)
+      ---
+      duration_ms: 0.1663
+      type: 'test'
+      ...
+    # Subtest: should detect zero-width character smuggling in injection
+    ok 6 - should detect zero-width character smuggling in injection
+      ---
+      duration_ms: 0.149
+      type: 'test'
+      ...
+    # Subtest: should detect invisible Unicode characters in injection
+    ok 7 - should detect invisible Unicode characters in injection
+      ---
+      duration_ms: 0.1615
+      type: 'test'
+      ...
+    # Subtest: should detect HTML entity encoded injection (limited)
+    ok 8 - should detect HTML entity encoded injection (limited)
+      ---
+      duration_ms: 0.2178
+      type: 'test'
+      ...
+    # Subtest: should detect spaced-out injection: 'i g n o r e'
+    ok 9 - should detect spaced-out injection: 'i g n o r e'
+      ---
+      duration_ms: 0.2907
+      type: 'test'
+      ...
+    # Subtest: should detect URL-encoded injection (limited)
+    ok 10 - should detect URL-encoded injection (limited)
+      ---
+      duration_ms: 0.4039
+      type: 'test'
+      ...
+    # Subtest: should detect injection with combining diacritical marks
+    ok 11 - should detect injection with combining diacritical marks
+      ---
+      duration_ms: 0.2223
+      type: 'test'
+      ...
+    # Subtest: should detect injection with punctuation interleaved
+    ok 12 - should detect injection with punctuation interleaved
+      ---
+      duration_ms: 0.266
+      type: 'test'
+      ...
+    # Subtest: should detect injection with newlines between every character
+    ok 13 - should detect injection with newlines between every character
+      ---
+      duration_ms: 0.1649
+      type: 'test'
+      ...
+    # Subtest: should detect injection with ASCII control characters
+    ok 14 - should detect injection with ASCII control characters
+      ---
+      duration_ms: 0.2934
+      type: 'test'
+      ...
+    1..14
+ok 103 - Prompt-Injection Detector — Obfuscation Resistance
+  ---
+  duration_ms: 4.4131
+  type: 'suite'
+  ...
+# Subtest: Prompt-Injection Detector — Multilingual Coverage
+    # Subtest: should detect Hindi (Hinglish) injection patterns
+    ok 1 - should detect Hindi (Hinglish) injection patterns
+      ---
+      duration_ms: 0.3254
+      type: 'test'
+      ...
+    # Subtest: should detect Hindi safety bypass pattern
+    ok 2 - should detect Hindi safety bypass pattern
+      ---
+      duration_ms: 0.2238
+      type: 'test'
+      ...
+    # Subtest: should detect Arabic injection (NOT covered)
+    ok 3 - should detect Arabic injection (NOT covered)
+      ---
+      duration_ms: 0.2471
+      type: 'test'
+      ...
+    # Subtest: should detect Chinese injection (NOT covered)
+    ok 4 - should detect Chinese injection (NOT covered)
+      ---
+      duration_ms: 0.3372
+      type: 'test'
+      ...
+    # Subtest: should detect Japanese injection (NOT covered)
+    ok 5 - should detect Japanese injection (NOT covered)
+      ---
+      duration_ms: 0.3228
+      type: 'test'
+      ...
+    # Subtest: should detect Korean injection (NOT covered)
+    ok 6 - should detect Korean injection (NOT covered)
+      ---
+      duration_ms: 0.3196
+      type: 'test'
+      ...
+    # Subtest: should detect Russian injection (NOT covered)
+    ok 7 - should detect Russian injection (NOT covered)
+      ---
+      duration_ms: 0.3038
+      type: 'test'
+      ...
+    # Subtest: should detect French injection (NOT covered)
+    ok 8 - should detect French injection (NOT covered)
+      ---
+      duration_ms: 0.3305
+      type: 'test'
+      ...
+    # Subtest: should detect German injection (NOT covered)
+    ok 9 - should detect German injection (NOT covered)
+      ---
+      duration_ms: 0.3346
+      type: 'test'
+      ...
+    # Subtest: should detect Spanish injection (NOT covered)
+    ok 10 - should detect Spanish injection (NOT covered)
+      ---
+      duration_ms: 0.5398
+      type: 'test'
+      ...
+    # Subtest: should detect Tamil injection (NOT covered)
+    ok 11 - should detect Tamil injection (NOT covered)
+      ---
+      duration_ms: 0.4149
+      type: 'test'
+      ...
+    # Subtest: should detect Telugu injection (NOT covered)
+    ok 12 - should detect Telugu injection (NOT covered)
+      ---
+      duration_ms: 0.2912
+      type: 'test'
+      ...
+    1..12
+ok 104 - Prompt-Injection Detector — Multilingual Coverage
+  ---
+  duration_ms: 6.8998
+  type: 'suite'
+  ...
+# Subtest: Prompt-Injection Detector — Adversarial Patterns
+    # Subtest: should detect DAN 2.0 jailbreak reference
+    ok 1 - should detect DAN 2.0 jailbreak reference
+      ---
+      duration_ms: 10.2406
+      type: 'test'
+      ...
+    # Subtest: should detect AIM persona jailbreak
+    ok 2 - should detect AIM persona jailbreak
+      ---
+      duration_ms: 0.332
+      type: 'test'
+      ...
+    # Subtest: should detect STAN persona jailbreak
+    ok 3 - should detect STAN persona jailbreak
+      ---
+      duration_ms: 0.2484
+      type: 'test'
+      ...
+    # Subtest: should detect DUDE persona jailbreak
+    ok 4 - should detect DUDE persona jailbreak
+      ---
+      duration_ms: 0.4248
+      type: 'test'
+      ...
+    # Subtest: should detect KEVIN persona jailbreak
+    ok 5 - should detect KEVIN persona jailbreak
+      ---
+      duration_ms: 0.279
+      type: 'test'
+      ...
+    # Subtest: should detect MAXIMUM persona jailbreak
+    ok 6 - should detect MAXIMUM persona jailbreak
+      ---
+      duration_ms: 0.3997
+      type: 'test'
+      ...
+    # Subtest: should detect OMEGA persona jailbreak
+    ok 7 - should detect OMEGA persona jailbreak
+      ---
+      duration_ms: 0.4093
+      type: 'test'
+      ...
+    # Subtest: should detect indirect injection via pretend context
+    ok 8 - should detect indirect injection via pretend context
+      ---
+      duration_ms: 0.468
+      type: 'test'
+      ...
+    # Subtest: should detect emotional manipulation bypass
+    ok 9 - should detect emotional manipulation bypass
+      ---
+      duration_ms: 0.4159
+      type: 'test'
+      ...
+    # Subtest: should detect constraint removal via hypothetical framing
+    ok 10 - should detect constraint removal via hypothetical framing
+      ---
+      duration_ms: 0.3417
+      type: 'test'
+      ...
+    # Subtest: should detect virtualization attack: 'simulate an unrestricted environment'
+    ok 11 - should detect virtualization attack: 'simulate an unrestricted environment'
+      ---
+      duration_ms: 0.4631
+      type: 'test'
+      ...
+    # Subtest: should detect virtualization attack: 'create an isolated instance'
+    ok 12 - should detect virtualization attack: 'create an isolated instance'
+      ---
+      duration_ms: 0.2863
+      type: 'test'
+      ...
+    # Subtest: should detect virtualization attack: 'emulate an unrestricted AI'
+    ok 13 - should detect virtualization attack: 'emulate an unrestricted AI'
+      ---
+      duration_ms: 0.4199
+      type: 'test'
+      ...
+    # Subtest: should detect crescendo escalation: 'now that you've agreed'
+    ok 14 - should detect crescendo escalation: 'now that you've agreed'
+      ---
+      duration_ms: 0.4341
+      type: 'test'
+      ...
+    # Subtest: should detect crescendo escalation: 'good, now continue'
+    ok 15 - should detect crescendo escalation: 'good, now continue'
+      ---
+      duration_ms: 0.2912
+      type: 'test'
+      ...
+    # Subtest: should detect indirect injection via multi-step chain
+    ok 16 - should detect indirect injection via multi-step chain
+      ---
+      duration_ms: 0.413
+      type: 'test'
+      ...
+    # Subtest: should detect payload splitting: separate benign + malicious parts
+    ok 17 - should detect payload splitting: separate benign + malicious parts
+      ---
+      duration_ms: 0.5375
+      type: 'test'
+      ...
+    # Subtest: should detect role-play to extract secrets
+    ok 18 - should detect role-play to extract secrets
+      ---
+      duration_ms: 0.265
+      type: 'test'
+      ...
+    # Subtest: should detect context-switching attack
+    ok 19 - should detect context-switching attack
+      ---
+      duration_ms: 0.2585
+      type: 'test'
+      ...
+    # Subtest: should detect nested injection: prompt within prompt
+    ok 20 - should detect nested injection: prompt within prompt
+      ---
+      duration_ms: 0.3668
+      type: 'test'
+      ...
+    # Subtest: should detect injection with benign preamble
+    ok 21 - should detect injection with benign preamble
+      ---
+      duration_ms: 0.4424
+      type: 'test'
+      ...
+    # Subtest: should detect markdown table injection (IMPROVED)
+    ok 22 - should detect markdown table injection (IMPROVED)
+      ---
+      duration_ms: 0.4551
+      type: 'test'
+      ...
+    # Subtest: should detect image-alt-text injection (IMPROVED)
+    ok 23 - should detect image-alt-text injection (IMPROVED)
+      ---
+      duration_ms: 0.3698
+      type: 'test'
+      ...
+    # Subtest: should detect few-shot example poisoning
+    ok 24 - should detect few-shot example poisoning
+      ---
+      duration_ms: 0.3006
+      type: 'test'
+      ...
+    # Subtest: should detect payload concatenation with variable splitting (IMPROVED)
+    ok 25 - should detect payload concatenation with variable splitting (IMPROVED)
+      ---
+      duration_ms: 0.3403
+      type: 'test'
+      ...
+    1..25
+ok 105 - Prompt-Injection Detector — Adversarial Patterns
+  ---
+  duration_ms: 22.5928
+  type: 'suite'
+  ...
+# Subtest: Prompt-Injection Detector — Integration with DecisionEngine
+    # Subtest: should scan prompt context and produce decision
+    ok 1 - should scan prompt context and produce decision
+      ---
+      duration_ms: 231.7229
+      type: 'test'
+      ...
+    # Subtest: should NOT flag benign content in prompt context
+    ok 2 - should NOT flag benign content in prompt context
+      ---
+      duration_ms: 42.3102
+      type: 'test'
+      ...
+    # Subtest: should produce redacted evidence for injection attempts
+    ok 3 - should produce redacted evidence for injection attempts
+      ---
+      duration_ms: 8.7735
+      type: 'test'
+      ...
+    # Subtest: should cache and return consistent results for identical inputs
+    ok 4 - should cache and return consistent results for identical inputs
+      ---
+      duration_ms: 7.6187
+      type: 'test'
+      ...
+    # Subtest: should enforce policy thresholds on injection severity
+    ok 5 - should enforce policy thresholds on injection severity
+      ---
+      duration_ms: 3.7159
+      type: 'test'
+      ...
+    # Subtest: should handle concurrent scans without race conditions
+    ok 6 - should handle concurrent scans without race conditions
+      ---
+      duration_ms: 9.2645
+      type: 'test'
+      ...
+    # Subtest: should produce deterministic results across identical scans
+    ok 7 - should produce deterministic results across identical scans
+      ---
+      duration_ms: 3.7573
+      type: 'test'
+      ...
+    # Subtest: should support skipCache option for fresh scans
+    ok 8 - should support skipCache option for fresh scans
+      ---
+      duration_ms: 2.2916
+      type: 'test'
+      ...
+    # Subtest: should integrate detector version tracking
+    ok 9 - should integrate detector version tracking
+      ---
+      duration_ms: 1.5393
+      type: 'test'
+      ...
+    1..9
+ok 106 - Prompt-Injection Detector — Integration with DecisionEngine
+  ---
+  duration_ms: 313.6138
+  type: 'suite'
+  ...
+# Subtest: Prompt-Injection Detector — Security Hardening
+    # Subtest: should have sane timeout constants
+    ok 1 - should have sane timeout constants
+      ---
+      duration_ms: 0.5302
+      type: 'test'
+      ...
+    # Subtest: should handle catastrophic backtracking input without hanging
+    ok 2 - should handle catastrophic backtracking input without hanging
+      ---
+      duration_ms: 0.415
+      type: 'test'
+      ...
+    # Subtest: should handle pathological input with many alternations
+    ok 3 - should handle pathological input with many alternations
+      ---
+      duration_ms: 1.1245
+      type: 'test'
+      ...
+    # Subtest: should handle extremely long benign text without timeout
+    ok 4 - should handle extremely long benign text without timeout
+      ---
+      duration_ms: 45.3754
+      type: 'test'
+      ...
+    # Subtest: should produce deterministic result for same input
+    ok 5 - should produce deterministic result for same input
+      ---
+      duration_ms: 0.7328
+      type: 'test'
+      ...
+    # Subtest: should handle input with many consecutive spaces without pattern hang
+    ok 6 - should handle input with many consecutive spaces without pattern hang
+      ---
+      duration_ms: 0.4392
+      type: 'test'
+      ...
+    # Subtest: should handle input with nested parentheses without hang
+    ok 7 - should handle input with nested parentheses without hang
+      ---
+      duration_ms: 0.3058
+      type: 'test'
+      ...
+    # Subtest: should handle very long single-word input without hang
+    ok 8 - should handle very long single-word input without hang
+      ---
+      duration_ms: 1.4945
+      type: 'test'
+      ...
+    # Subtest: should handle mixed encoding input without hang
+    ok 9 - should handle mixed encoding input without hang
+      ---
+      duration_ms: 0.512
+      type: 'test'
+      ...
+    1..9
+ok 107 - Prompt-Injection Detector — Security Hardening
+  ---
+  duration_ms: 52.3235
+  type: 'suite'
+  ...
+# Subtest: Prompt-Injection Detector — Fail-Closed Safety
+    # Subtest: should handle extremely long input (100KB+) without crash
+    ok 1 - should handle extremely long input (100KB+) without crash
+      ---
+      duration_ms: 18.1737
+      type: 'test'
+      ...
+    # Subtest: should handle null-like input gracefully
+    ok 2 - should handle null-like input gracefully
+      ---
+      duration_ms: 0.4021
+      type: 'test'
+      ...
+    # Subtest: should handle undefined input gracefully
+    ok 3 - should handle undefined input gracefully
+      ---
+      duration_ms: 1.7741
+      type: 'test'
+      ...
+    # Subtest: should handle numeric input gracefully
+    ok 4 - should handle numeric input gracefully
+      ---
+      duration_ms: 1.9962
+      type: 'test'
+      ...
+    # Subtest: should handle object input gracefully
+    ok 5 - should handle object input gracefully
+      ---
+      duration_ms: 0.4892
+      type: 'test'
+      ...
+    # Subtest: should handle regex special characters in injection text
+    ok 6 - should handle regex special characters in injection text
+      ---
+      duration_ms: 0.2873
+      type: 'test'
+      ...
+    # Subtest: should handle injection with backreferences
+    ok 7 - should handle injection with backreferences
+      ---
+      duration_ms: 0.3537
+      type: 'test'
+      ...
+    # Subtest: should handle injection with SQL-like syntax
+    ok 8 - should handle injection with SQL-like syntax
+      ---
+      duration_ms: 0.2779
+      type: 'test'
+      ...
+    1..8
+ok 108 - Prompt-Injection Detector — Fail-Closed Safety
+  ---
+  duration_ms: 25.0059
+  type: 'suite'
+  ...
+# Subtest: Redaction safety-net (canary regression)
+    # Subtest: redactText masks every canary secret even with no findings supplied
+    ok 1 - redactText masks every canary secret even with no findings supplied
+      ---
+      duration_ms: 17.9713
+      type: 'test'
+      ...
+    # Subtest: safety-net runs even when detector findings ARE supplied (merge, not replace)
+    ok 2 - safety-net runs even when detector findings ARE supplied (merge, not replace)
+      ---
+      duration_ms: 9.3518
+      type: 'test'
+      ...
+    # Subtest: redactForSharing fails closed — surviving secret lines are scrubbed
+    ok 3 - redactForSharing fails closed — surviving secret lines are scrubbed
+      ---
+      duration_ms: 3.7416
+      type: 'test'
+      ...
+    # Subtest: produces masked placeholders (not raw values) for the acceptance sample
+    ok 4 - produces masked placeholders (not raw values) for the acceptance sample
+      ---
+      duration_ms: 0.7788
+      type: 'test'
+      ...
+    # Subtest: individual canary classes each redact
+    ok 5 - individual canary classes each redact
+      ---
+      duration_ms: 0.8332
+      type: 'test'
+      ...
+    1..5
+ok 109 - Redaction safety-net (canary regression)
+  ---
+  duration_ms: 35.9596
+  type: 'suite'
+  ...
+# Subtest: DecisionEngine never emits raw secrets
+    # Subtest: redactedText contains zero raw canaries
+    ok 1 - redactedText contains zero raw canaries
+      ---
+      duration_ms: 107.5248
+      type: 'test'
+      ...
+    # Subtest: evidencePreview and findings evidence contain zero raw canaries
+    ok 2 - evidencePreview and findings evidence contain zero raw canaries
+      ---
+      duration_ms: 48.8363
+      type: 'test'
+      ...
+    1..2
+ok 110 - DecisionEngine never emits raw secrets
+  ---
+  duration_ms: 159.0957
+  type: 'suite'
+  ...
+# Subtest: HashCache never stores raw secrets
+    # Subtest: cached decision has no raw canaries
+    ok 1 - cached decision has no raw canaries
+      ---
+      duration_ms: 63.2565
+      type: 'test'
+      ...
+    # Subtest: sanitizeDecisionForCache scrubs a leaked field defensively
+    ok 2 - sanitizeDecisionForCache scrubs a leaked field defensively
+      ---
+      duration_ms: 1.9016
+      type: 'test'
+      ...
+    # Subtest: HashCache.set stores a sanitized copy
+    ok 3 - HashCache.set stores a sanitized copy
+      ---
+      duration_ms: 1.1112
+      type: 'test'
+      ...
+    1..3
+ok 111 - HashCache never stores raw secrets
+  ---
+  duration_ms: 68.3607
+  type: 'suite'
+  ...
+# Subtest: EvidenceMinimizer never exposes raw secrets
+    # Subtest: minimized findings carry only masked evidence
+    ok 1 - minimized findings carry only masked evidence
+      ---
+      duration_ms: 1.5085
+      type: 'test'
+      ...
+    1..1
+ok 112 - EvidenceMinimizer never exposes raw secrets
+  ---
+  duration_ms: 1.879
+  type: 'suite'
+  ...
+# Subtest: RuntimePolicyEngine denies raw credential exposure before execution
+ok 113 - RuntimePolicyEngine denies raw credential exposure before execution
+  ---
+  duration_ms: 3.0244
+  type: 'test'
+  ...
+# Subtest: RuntimePolicyEngine fails closed in locked modes when policy health is unknown
+ok 114 - RuntimePolicyEngine fails closed in locked modes when policy health is unknown
+  ---
+  duration_ms: 0.4096
+  type: 'test'
+  ...
+# Subtest: RuntimePolicyEngine denies unknown network egress in strict mode
+ok 115 - RuntimePolicyEngine denies unknown network egress in strict mode
+  ---
+  duration_ms: 0.2065
+  type: 'test'
+  ...
+# Subtest: RuntimePolicyEngine blocks secret egress and cloud metadata targets
+ok 116 - RuntimePolicyEngine blocks secret egress and cloud metadata targets
+  ---
+  duration_ms: 0.2694
+  type: 'test'
+  ...
+# Subtest: RuntimePolicyEngine asks or denies when suspicious terminal parsing fails
+ok 117 - RuntimePolicyEngine asks or denies when suspicious terminal parsing fails
+  ---
+  duration_ms: 0.3479
+  type: 'test'
+  ...
+# Subtest: RuntimePolicyEngine does not claim blocking in observe mode
+ok 118 - RuntimePolicyEngine does not claim blocking in observe mode
+  ---
+  duration_ms: 0.2433
+  type: 'test'
+  ...
+# Subtest: RuntimePolicyEngine denies high-risk unsupported paths instead of showing protected
+ok 119 - RuntimePolicyEngine denies high-risk unsupported paths instead of showing protected
+  ---
+  duration_ms: 0.4424
+  type: 'test'
+  ...
+# Subtest: RuntimePolicyEngine allows low-risk local supported actions with reversible rollback metadata
+ok 120 - RuntimePolicyEngine allows low-risk local supported actions with reversible rollback metadata
+  ---
+  duration_ms: 0.3338
+  type: 'test'
+  ...
+# Subtest: buildSafeContext
+    # Subtest: blocks protected files and excludes their content
+    ok 1 - blocks protected files and excludes their content
+      ---
+      duration_ms: 1.7909
+      type: 'test'
+      ...
+    # Subtest: summarizes sensitive files and requires approval, never raw secrets
+    ok 2 - summarizes sensitive files and requires approval, never raw secrets
+      ---
+      duration_ms: 0.4414
+      type: 'test'
+      ...
+    # Subtest: sensitive summaries omit assignment names as well as values
+    ok 3 - sensitive summaries omit assignment names as well as values
+      ---
+      duration_ms: 3.2345
+      type: 'test'
+      ...
+    # Subtest: includes normal files with secrets redacted
+    ok 4 - includes normal files with secrets redacted
+      ---
+      duration_ms: 0.3654
+      type: 'test'
+      ...
+    # Subtest: assembled safeText is free of every high-risk secret
+    ok 5 - assembled safeText is free of every high-risk secret
+      ---
+      duration_ms: 0.2397
+      type: 'test'
+      ...
+    # Subtest: summary counts add up
+    ok 6 - summary counts add up
+      ---
+      duration_ms: 0.2075
+      type: 'test'
+      ...
+    1..6
+ok 121 - buildSafeContext
+  ---
+  duration_ms: 8.4188
+  type: 'suite'
+  ...
+# Subtest: Scenario C — indirect injection + exfiltration defense
+    # Subtest: quarantines a README that instructs the agent to upload .env, with a causal chain
+    ok 1 - quarantines a README that instructs the agent to upload .env, with a causal chain
+      ---
+      duration_ms: 4.3084
+      type: 'test'
+      ...
+    # Subtest: quarantines credential-file disclosure instructions only through the retrieved-content gate
+    ok 2 - quarantines credential-file disclosure instructions only through the retrieved-content gate
+      ---
+      duration_ms: 1.1328
+      type: 'test'
+      ...
+    # Subtest: ordinary local configuration guidance remains shareable
+    ok 3 - ordinary local configuration guidance remains shareable
+      ---
+      duration_ms: 2.3261
+      type: 'test'
+      ...
+    # Subtest: fences untrusted-but-clean content as data, never as instructions
+    ok 4 - fences untrusted-but-clean content as data, never as instructions
+      ---
+      duration_ms: 0.8784
+      type: 'test'
+      ...
+    # Subtest: quarantines malicious instructions in both selections and active files
+    ok 5 - quarantines malicious instructions in both selections and active files
+      ---
+      duration_ms: 1.0937
+      type: 'test'
+      ...
+    1..5
+ok 122 - Scenario C — indirect injection + exfiltration defense
+  ---
+  duration_ms: 10.3755
+  type: 'suite'
+  ...
+# Subtest: safe prompt templates
+    # Subtest: buildDebugPrompt wraps safe context and carries a security note, no secrets
+    ok 1 - buildDebugPrompt wraps safe context and carries a security note, no secrets
+      ---
+      duration_ms: 1.3736
+      type: 'test'
+      ...
+    1..1
+ok 123 - safe prompt templates
+  ---
+  duration_ms: 1.5881
+  type: 'suite'
+  ...
+# Subtest: SafeMode — policy generation
+    # Subtest: generates a policy + settings for all three levels
+    ok 1 - generates a policy + settings for all three levels
+      ---
+      duration_ms: 2.7339
+      type: 'test'
+      ...
+    # Subtest: developer warns on sensitive paths; strict/enterprise require approval
+    ok 2 - developer warns on sensitive paths; strict/enterprise require approval
+      ---
+      duration_ms: 0.35
+      type: 'test'
+      ...
+    # Subtest: enterprise fails closed (default approval_required + failClosed)
+    ok 3 - enterprise fails closed (default approval_required + failClosed)
+      ---
+      duration_ms: 0.2279
+      type: 'test'
+      ...
+    # Subtest: protected files are always blocked
+    ok 4 - protected files are always blocked
+      ---
+      duration_ms: 0.4869
+      type: 'test'
+      ...
+    1..4
+ok 124 - SafeMode — policy generation
+  ---
+  duration_ms: 5.9733
+  type: 'suite'
+  ...
+# Subtest: SafeMode — decision escalation
+    # Subtest: strictest picks the more restrictive action
+    ok 1 - strictest picks the more restrictive action
+      ---
+      duration_ms: 0.6273
+      type: 'test'
+      ...
+    # Subtest: a canary is always blocked at every level
+    ok 2 - a canary is always blocked at every level
+      ---
+      duration_ms: 0.4181
+      type: 'test'
+      ...
+    # Subtest: private keys block even at developer level
+    ok 3 - private keys block even at developer level
+      ---
+      duration_ms: 0.4613
+      type: 'test'
+      ...
+    # Subtest: provider tokens redact at developer, block at strict/enterprise
+    ok 4 - provider tokens redact at developer, block at strict/enterprise
+      ---
+      duration_ms: 0.5089
+      type: 'test'
+      ...
+    # Subtest: PII is at least redacted
+    ok 5 - PII is at least redacted
+      ---
+      duration_ms: 0.3414
+      type: 'test'
+      ...
+    # Subtest: dangerous terminal commands are blocked
+    ok 6 - dangerous terminal commands are blocked
+      ---
+      duration_ms: 0.4432
+      type: 'test'
+      ...
+    # Subtest: protected path classification forces block
+    ok 7 - protected path classification forces block
+      ---
+      duration_ms: 0.2963
+      type: 'test'
+      ...
+    # Subtest: enterprise fails closed on any risk
+    ok 8 - enterprise fails closed on any risk
+      ---
+      duration_ms: 0.5252
+      type: 'test'
+      ...
+    # Subtest: never loosens a stricter base action
+    ok 9 - never loosens a stricter base action
+      ---
+      duration_ms: 0.2088
+      type: 'test'
+      ...
+    1..9
+ok 125 - SafeMode — decision escalation
+  ---
+  duration_ms: 4.647
+  type: 'suite'
+  ...
+# Subtest: secret class blocking coverage
+    # Subtest: every detector class is blockable or has a written reason not to be
+    ok 1 - every detector class is blockable or has a written reason not to be
+      ---
+      duration_ms: 2.8364
+      type: 'test'
+      ...
+    # Subtest: the exception list has no stale entries
+    ok 2 - the exception list has no stale entries
+      ---
+      duration_ms: 0.4108
+      type: 'test'
+      ...
+    # Subtest: the vocabulary names no class the detector cannot emit
+    ok 3 - the vocabulary names no class the detector cannot emit
+      ---
+      duration_ms: 0.5979
+      type: 'test'
+      ...
+    1..3
+ok 126 - secret class blocking coverage
+  ---
+  duration_ms: 6.0693
+  type: 'suite'
+  ...
+# Subtest: Phase 4 secret expansion
+    # Subtest: reports detector version 1.2.0+
+    ok 1 - reports detector version 1.2.0+
+      ---
+      duration_ms: 7.0967
+      type: 'test'
+      ...
+    # Subtest: detects Hugging Face token
+    ok 2 - detects Hugging Face token
+      ---
+      duration_ms: 11.7453
+      type: 'test'
+      ...
+    # Subtest: detects npm token
+    ok 3 - detects npm token
+      ---
+      duration_ms: 0.9072
+      type: 'test'
+      ...
+    # Subtest: detects PyPI token
+    ok 4 - detects PyPI token
+      ---
+      duration_ms: 0.4173
+      type: 'test'
+      ...
+    # Subtest: detects Shopify token
+    ok 5 - detects Shopify token
+      ---
+      duration_ms: 0.3504
+      type: 'test'
+      ...
+    # Subtest: detects Databricks token
+    ok 6 - detects Databricks token
+      ---
+      duration_ms: 0.3724
+      type: 'test'
+      ...
+    # Subtest: detects Supabase key
+    ok 7 - detects Supabase key
+      ---
+      duration_ms: 0.2533
+      type: 'test'
+      ...
+    # Subtest: detects DigitalOcean token
+    ok 8 - detects DigitalOcean token
+      ---
+      duration_ms: 0.9626
+      type: 'test'
+      ...
+    # Subtest: detects Docker Hub PAT
+    ok 9 - detects Docker Hub PAT
+      ---
+      duration_ms: 0.7778
+      type: 'test'
+      ...
+    # Subtest: detects GitHub fine-grained PAT
+    ok 10 - detects GitHub fine-grained PAT
+      ---
+      duration_ms: 0.7742
+      type: 'test'
+      ...
+    # Subtest: detects Mailgun key
+    ok 11 - detects Mailgun key
+      ---
+      duration_ms: 0.3631
+      type: 'test'
+      ...
+    # Subtest: detects Terraform Cloud atlasv1 token
+    ok 12 - detects Terraform Cloud atlasv1 token
+      ---
+      duration_ms: 1.3853
+      type: 'test'
+      ...
+    1..12
+ok 127 - Phase 4 secret expansion
+  ---
+  duration_ms: 28.9799
+  type: 'suite'
+  ...
+# Subtest: Phase 4 false-positive controls
+    # Subtest: suppresses YOUR_API_KEY_HERE placeholder
+    ok 1 - suppresses YOUR_API_KEY_HERE placeholder
+      ---
+      duration_ms: 0.2555
+      type: 'test'
+      ...
+    # Subtest: suppresses sk-test / sk-example style stubs
+    ok 2 - suppresses sk-test / sk-example style stubs
+      ---
+      duration_ms: 0.7869
+      type: 'test'
+      ...
+    # Subtest: still detects real-shaped OpenAI project keys
+    ok 3 - still detects real-shaped OpenAI project keys
+      ---
+      duration_ms: 0.2999
+      type: 'test'
+      ...
+    # Subtest: does not treat short noise as secrets
+    ok 4 - does not treat short noise as secrets
+      ---
+      duration_ms: 0.363
+      type: 'test'
+      ...
+    # Subtest: does not suppress provider-prefixed tokens that contain 'test' mid-body
+    ok 5 - does not suppress provider-prefixed tokens that contain 'test' mid-body
+      ---
+      duration_ms: 1.3202
+      type: 'test'
+      ...
+    1..5
+ok 128 - Phase 4 false-positive controls
+  ---
+  duration_ms: 3.3172
+  type: 'suite'
+  ...
+# Subtest: sensitive file list — globs and predicate agree
+    # Subtest: every glob has a sample path and no sample is orphaned
+    ok 1 - every glob has a sample path and no sample is orphaned
+      ---
+      duration_ms: 2.6022
+      type: 'test'
+      ...
+    # Subtest: the predicate matches every glob's representative path
+    ok 2 - the predicate matches every glob's representative path
+      ---
+      duration_ms: 6.6281
+      type: 'test'
+      ...
+    # Subtest: covers the agent credential configs that no prior list did
+    ok 3 - covers the agent credential configs that no prior list did
+      ---
+      duration_ms: 0.4888
+      type: 'test'
+      ...
+    # Subtest: is path-scoped: a bare settings.json is NOT sensitive
+    ok 4 - is path-scoped: a bare settings.json is NOT sensitive
+      ---
+      duration_ms: 0.6227
+      type: 'test'
+      ...
+    # Subtest: does not flag ordinary source and config files
+    ok 5 - does not flag ordinary source and config files
+      ---
+      duration_ms: 0.4126
+      type: 'test'
+      ...
+    # Subtest: matches a bare basename and a Windows-style relative path
+    ok 6 - matches a bare basename and a Windows-style relative path
+      ---
+      duration_ms: 0.5288
+      type: 'test'
+      ...
+    # Subtest: AGENT_CONFIG_GLOBS is a real subset of the canonical list
+    ok 7 - AGENT_CONFIG_GLOBS is a real subset of the canonical list
+      ---
+      duration_ms: 0.5019
+      type: 'test'
+      ...
+    1..7
+ok 129 - sensitive file list — globs and predicate agree
+  ---
+  duration_ms: 13.9444
+  type: 'suite'
+  ...
+# Subtest: Vault.extractEnvSecrets
+    # Subtest: finds secret-bearing keys and skips non-secrets
+    ok 1 - finds secret-bearing keys and skips non-secrets
+      ---
+      duration_ms: 4.8878
+      type: 'test'
+      ...
+    # Subtest: produces SOTERAI placeholders and correct offsets
+    ok 2 - produces SOTERAI placeholders and correct offsets
+      ---
+      duration_ms: 0.5683
+      type: 'test'
+      ...
+    # Subtest: uses unique placeholders when the same key appears more than once
+    ok 3 - uses unique placeholders when the same key appears more than once
+      ---
+      duration_ms: 0.3865
+      type: 'test'
+      ...
+    1..3
+ok 130 - Vault.extractEnvSecrets
+  ---
+  duration_ms: 7.136
+  type: 'suite'
+  ...
+# Subtest: Vault.extractVaultCandidates
+    # Subtest: adds standalone tokens and private-key blocks without duplicating env values
+    ok 1 - adds standalone tokens and private-key blocks without duplicating env values
+      ---
+      duration_ms: 9.7897
+      type: 'test'
+      ...
+    # Subtest: gives repeated standalone secrets unique placeholders
+    ok 2 - gives repeated standalone secrets unique placeholders
+      ---
+      duration_ms: 1.5238
+      type: 'test'
+      ...
+    1..2
+ok 131 - Vault.extractVaultCandidates
+  ---
+  duration_ms: 11.6114
+  type: 'suite'
+  ...
+# Subtest: Vault placeholder round-trip
+    # Subtest: applyPlaceholders removes every raw secret
+    ok 1 - applyPlaceholders removes every raw secret
+      ---
+      duration_ms: 0.5337
+      type: 'test'
+      ...
+    # Subtest: restorePlaceholders reverses the migration exactly
+    ok 2 - restorePlaceholders reverses the migration exactly
+      ---
+      duration_ms: 0.5036
+      type: 'test'
+      ...
+    1..2
+ok 132 - Vault placeholder round-trip
+  ---
+  duration_ms: 1.4569
+  type: 'suite'
+  ...
+# Subtest: Vault metadata never stores raw values
+    # Subtest: buildVaultMetadata carries a hash, not the secret
+    ok 1 - buildVaultMetadata carries a hash, not the secret
+      ---
+      duration_ms: 13.611
+      type: 'test'
+      ...
+    1..1
+ok 133 - Vault metadata never stores raw values
+  ---
+  duration_ms: 13.9036
+  type: 'suite'
+  ...
+# Subtest: generateEnvExample
+    # Subtest: keeps keys, drops all secret values
+    ok 1 - keeps keys, drops all secret values
+      ---
+      duration_ms: 0.5953
+      type: 'test'
+      ...
+    1..1
+ok 134 - generateEnvExample
+  ---
+  duration_ms: 0.8456
+  type: 'suite'
+  ...
+# Subtest: VaultCrypto AES-256-GCM
+    # Subtest: encrypt → decrypt round-trips and ciphertext hides the plaintext
+    ok 1 - encrypt → decrypt round-trips and ciphertext hides the plaintext
+      ---
+      duration_ms: 6.825
+      type: 'test'
+      ...
+    # Subtest: wrong key fails to decrypt
+    ok 2 - wrong key fails to decrypt
+      ---
+      duration_ms: 1.8169
+      type: 'test'
+      ...
+    1..2
+ok 135 - VaultCrypto AES-256-GCM
+  ---
+  duration_ms: 8.9232
+  type: 'suite'
+  ...
+1..135
+# tests 515
+# suites 68
+# pass 515
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14495.9244

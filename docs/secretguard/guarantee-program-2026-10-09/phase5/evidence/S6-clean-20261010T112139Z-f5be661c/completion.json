@@ -1,0 +1,31 @@
+{
+    "stage":  "S6 clean same-source verification",
+    "independence":  "LOW, no new restricted review of S6 binary",
+    "hostExecuted":  false,
+    "dependencies":  "Original successful fresh clone ci; lock/dependency graph unchanged by S6; no builder modules/cache copied",
+    "artifacts":  [
+                      {
+                          "sha256":  "ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b",
+                          "name":  "extension.js",
+                          "bytes":  635029
+                      },
+                      {
+                          "sha256":  "6c07093d81243f0063bfd8d51b3d23a162cd3b4375c312c75b59e95f8239a397",
+                          "name":  "local-ai-broker.js",
+                          "bytes":  243478
+                      },
+                      {
+                          "sha256":  "6d5e1199d509139387e542e91faad02b790e692415416bd7eb5510a6e6ecc486",
+                          "name":  "soterai-mcp-server.js",
+                          "bytes":  202258
+                      }
+                  ],
+    "error":  "Final clean candidate checks failed; no fourth engineering round.",
+    "architecture":  "30 UNTESTED",
+    "observedUtc":  "2026-10-10T11:24:27.9945466Z",
+    "status":  "INCOMPLETE",
+    "sourceCommit":  "ccbeb9f2761046569b59692c19340829382a50fd",
+    "exactOsBuild":  "26300.8935",
+    "round":  3,
+    "verificationExit":  1
+}

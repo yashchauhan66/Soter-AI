@@ -10,7 +10,7 @@
 | S3 metadata ACL review | STATIC-ONLY / INCOMPLETE | [ACL review](acl-review.md): current broker/auth-token DACLs protected, no ACL changes, current backups saved. Controller token absent and complete protected-folder inventory unavailable. |
 | S4 rebuilt isolated host | INCOMPLETE | [Attempt/comparison](host-comparison.md): default existing-Code refusal, one private-profile fallback, obsolete expected-leak assertion and native working-directory launch failure. No final observation/hash attestation persisted. |
 | S5 fresh restricted-input review | STATIC-ONLY — LOW independence | [Verbatim report and triage](review-triage.md), nineteen hash-matched inputs; all30 architecture grades unchanged. |
-| S6 fix loop | UNTESTED | At most three fix/verification rounds, if valid findings exist. |
+| S6 fix loop | FAIL — cap 3/3 exhausted | [Final evaluation](evidence/S6-evaluation-20261010T113227Z-7fb071c5/evaluation.json): 1,337 pass /1 fail /3 skips; all builds/hash reproduction PASS; current hosts withheld. |
 | S7 conditional pilot | INCOMPLETE | Current shell is not elevated; prerequisites prevent any pilot change. |
 | S8 final report and rating | UNTESTED | Preserve A0 confidentiality FAIL, S5-unmarked FAIL, missing control-token and all untested coverage. |
 

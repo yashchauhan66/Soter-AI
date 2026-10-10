@@ -217,3 +217,9 @@ Git installation not found.
 ## S6 final round source record — 2026-10-10
 
 **FACT — Round3 of3, verification pending.** S1 closure commit93992a76, S5 verbatim review commitbf5e563b. Fix actual unlock guard, one-time release revalidation, bounded manual wording, retired release artwork, and existing host observation recording with early hash identity. Existing flags withdraw operations; no new probe scenario, real credential or system change. ../phase5/final-round-changes.md lists files, regressions, rollback and limits. Original review grades unchanged. No further engineering round after these checks; failures remain OPEN/INCOMPLETE.
+
+## S6 completion record — 2026-10-10
+
+**FACT — FAIL, round3 of3.** Source commit ccbeb9f2761046569b59692c19340829382a50fd. All five typechecks/builds PASS, 1,341 tests /1,337 PASS /1 FAIL /3 skipped in builder and committed-source clean checkout. Three bundle hashes match. New extension ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b; no loaded-host hash. TST-01: "Actual showDecision callback must exist; absence is not a pass."; adapter asks showDecision but actual function is presentDecision. This failure remains OPEN because cap exhausted; no fourth round. Both hosts withheld by full-suite gate, INCOMPLETE. S4 old failed records unchanged; A0 seven blocks/ten leaks retained; all17 current case comparisons INCOMPLETE.
+
+**INFERENCE — Scope/rollback.** Existing flags withdraw operations, current wording stays bounded and retired artwork stays excluded; release is withheld. All30 full assertions UNTESTED,63 cells NOT_TESTED. Programme restricted review LOW for old S2 object; current changed extension independently NOT_PERFORMED. See ../phase5/evidence/S6-evaluation-20261010T113227Z-7fb071c5/evaluation.json and final-round-changes.md for source inventory/tests/limits.

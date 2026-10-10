@@ -1,0 +1,109 @@
+{
+    "sameUserAuthority":  "OUTSIDE_COVERAGE",
+    "architecture":  "UNTESTED",
+    "allowConcurrentIsolatedHost":  false,
+    "harnesses":  [
+
+                  ],
+    "runHostRequested":  false,
+    "exactOsBuild":  "26300.8935",
+    "independentVerification":  "NOT_PERFORMED",
+    "expandedDependencyChecks":  true,
+    "fileWorkers":  2,
+    "wrapperSha256":  "ce645a488622180a0b32bf8a6c9c892978ee4b4e4f1114dc9d854f1231ece18c",
+    "commands":  [
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "guard-core-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "guard-core-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "guard-core-test"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "ide-protocol-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "ide-protocol-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "ide-protocol-test"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "detectors-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "detectors-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "broker-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "broker-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "broker-test"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "extension-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "extension-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  1,
+                         "name":  "extension-test"
+                     }
+                 ],
+    "diagnosticFindings":  [
+                               {
+                                   "id":  "H2a",
+                                   "status":  "SKIP"
+                               },
+                               {
+                                   "id":  "H2e",
+                                   "status":  "SKIP"
+                               },
+                               {
+                                   "id":  "S5-unmarked",
+                                   "status":  "FAIL"
+                               }
+                           ],
+    "limitation":  "Command success is not confidentiality success. Read observation files; preserve failures.",
+    "failures":  [
+                     "Check failed: extension-test. Raw evidence retained; no host run."
+                 ],
+    "schemaVersion":  2,
+    "noProcessTermination":  true,
+    "runId":  "verify-20261010T112143Z-f439dd69e1d340d189219e5cac4fcebf",
+    "scratchPath":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\.tmp\\s5cc-eb9ac581\\.tmp\\sgv-c45dbd35cc94",
+    "atUtc":  "2026-10-10T11:24:27.2426548Z"
+}

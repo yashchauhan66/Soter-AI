@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "claimTag": "FACT",
+  "observedUtc": "2026-10-10T11:32:27.900Z",
+  "exactOsBuild": "26300.8935",
+  "sourceCommit": "ccbeb9f2761046569b59692c19340829382a50fd",
+  "roundsUsed": 3,
+  "roundsRemaining": 0,
+  "fullSuites": "FAIL",
+  "totals": {
+    "tests": 1341,
+    "pass": 1337,
+    "fail": 1,
+    "skip": 3,
+    "cancelled": 0
+  },
+  "suites": [
+    {
+      "name": "guard-core",
+      "tests": 515,
+      "pass": 515,
+      "fail": 0,
+      "skip": 0,
+      "cancelled": 0,
+      "log": "docs/secretguard/guarantee-program-2026-10-09/phase5/evidence/S6-R3-20261010T112038Z-8914880a/raw/verify-20261010T112039Z-5371fab6f27d44d5abfa984b2a80d801/guard-core-test.log",
+      "sha256": "234f648ba024aeaac73f0160136c2ca9c8745bb4a978179ee60797e658db59fb"
+    },
+    {
+      "name": "ide-protocol",
+      "tests": 47,
+      "pass": 47,
+      "fail": 0,
+      "skip": 0,
+      "cancelled": 0,
+      "log": "docs/secretguard/guarantee-program-2026-10-09/phase5/evidence/S6-R3-20261010T112038Z-8914880a/raw/verify-20261010T112039Z-5371fab6f27d44d5abfa984b2a80d801/ide-protocol-test.log",
+      "sha256": "236c7e0e5adf466442fe3268476c82f991177318a318f950f66ebb267ff65d39"
+    },
+    {
+      "name": "broker",
+      "tests": 144,
+      "pass": 143,
+      "fail": 0,
+      "skip": 1,
+      "cancelled": 0,
+      "log": "docs/secretguard/guarantee-program-2026-10-09/phase5/evidence/S6-R3-20261010T112038Z-8914880a/raw/verify-20261010T112039Z-5371fab6f27d44d5abfa984b2a80d801/broker-test.log",
+      "sha256": "34820496501eab91b57ab187901014fea90bd48ddf35b45f73d561557d3e163a"
+    },
+    {
+      "name": "extension",
+      "tests": 635,
+      "pass": 632,
+      "fail": 1,
+      "skip": 2,
+      "cancelled": 0,
+      "log": "docs/secretguard/guarantee-program-2026-10-09/phase5/evidence/S6-R3-20261010T112038Z-8914880a/raw/verify-20261010T112039Z-5371fab6f27d44d5abfa984b2a80d801/extension-test.log",
+      "sha256": "be714a46a95f2b83832959e4f88143d07e33c4370e0b2f50c26343665cbf0515"
+    }
+  ],
+  "cleanSuites": [
+    {
+      "name": "guard-core",
+      "tests": 515,
+      "pass": 515,
+      "fail": 0,
+      "skip": 0,
+      "cancelled": 0,
+      "log": "docs/secretguard/guarantee-program-2026-10-09/phase5/evidence/S6-clean-20261010T112139Z-f5be661c/raw/verify-20261010T112143Z-f439dd69e1d340d189219e5cac4fcebf/guard-core-test.log",
+      "sha256": "043c064b921a0d11a62d49a7613c11a8b4ffadae63f6de2abbb26859875d371f"
+    },
+    {
+      "name": "ide-protocol",
+      "tests": 47,
+      "pass": 47,
+      "fail": 0,
+      "skip": 0,
+      "cancelled": 0,
+      "log": "docs/secretguard/guarantee-program-2026-10-09/phase5/evidence/S6-clean-20261010T112139Z-f5be661c/raw/verify-20261010T112143Z-f439dd69e1d340d189219e5cac4fcebf/ide-protocol-test.log",
+      "sha256": "e819c4ddb61528c8c7f2e8bc26e05f8556a5094c70c1691b6fc8f8187a6315cc"
+    },
+    {
+      "name": "broker",
+      "tests": 144,
+      "pass": 143,
+      "fail": 0,
+      "skip": 1,
+      "cancelled": 0,
+      "log": "docs/secretguard/guarantee-program-2026-10-09/phase5/evidence/S6-clean-20261010T112139Z-f5be661c/raw/verify-20261010T112143Z-f439dd69e1d340d189219e5cac4fcebf/broker-test.log",
+      "sha256": "ded085fa02cda2609328f42fd0b658d6974fba46282946e8abda690ef88daeeb"
+    },
+    {
+      "name": "extension",
+      "tests": 635,
+      "pass": 632,
+      "fail": 1,
+      "skip": 2,
+      "cancelled": 0,
+      "log": "docs/secretguard/guarantee-program-2026-10-09/phase5/evidence/S6-clean-20261010T112139Z-f5be661c/raw/verify-20261010T112143Z-f439dd69e1d340d189219e5cac4fcebf/extension-test.log",
+      "sha256": "7464a4dc5e1e9fe4ca68f5f37a91b4be915c099aa4141866716bf574e867ba70"
+    }
+  ],
+  "cleanBuilds": "PASS all five typechecks/builds; current three bundles byte-match",
+  "artifacts": [
+    {
+      "name": "extension.js",
+      "bytes": 635029,
+      "sha256": "ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b",
+      "cleanSha256": "ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b",
+      "cleanMatches": true,
+      "actualLoadedSha256": null,
+      "hostStatus": "INCOMPLETE_NOT_LAUNCHED"
+    },
+    {
+      "name": "local-ai-broker.js",
+      "bytes": 243478,
+      "sha256": "6c07093d81243f0063bfd8d51b3d23a162cd3b4375c312c75b59e95f8239a397",
+      "cleanSha256": "6c07093d81243f0063bfd8d51b3d23a162cd3b4375c312c75b59e95f8239a397",
+      "cleanMatches": true,
+      "actualLoadedSha256": null,
+      "hostStatus": "INCOMPLETE_NOT_LAUNCHED"
+    },
+    {
+      "name": "soterai-mcp-server.js",
+      "bytes": 202258,
+      "sha256": "6d5e1199d509139387e542e91faad02b790e692415416bd7eb5510a6e6ecc486",
+      "cleanSha256": "6d5e1199d509139387e542e91faad02b790e692415416bd7eb5510a6e6ecc486",
+      "cleanMatches": true,
+      "actualLoadedSha256": null,
+      "hostStatus": "INCOMPLETE_NOT_LAUNCHED"
+    }
+  ],
+  "host": "INCOMPLETE; neither current harness launched; no loaded hash",
+  "failure": {
+    "id": "TST-01",
+    "status": "FAIL_OPEN",
+    "message": "Actual showDecision callback must exist; absence is not a pass.",
+    "actualSourceCallback": "presentDecision",
+    "requestedAdapterCallback": "showDecision",
+    "location": "packages/vscode-extension/src/__tests__/phase5-final-review.test.ts",
+    "nature": "Defective new regression adapter; this result is neither a privacy leak nor a passing manual-check control",
+    "repairDeferredBecause": "Three product engineering fix/verify rounds exhausted; no fourth round or weaker host gate"
+  },
+  "fullArchitecture": {
+    "count": 30,
+    "status": "UNTESTED"
+  },
+  "realAgentCells": {
+    "count": 63,
+    "status": "NOT_TESTED"
+  },
+  "review": {
+    "programme": "LOW_STATIC_ONLY",
+    "reviewedExtensionSha256": "853fc442fe868db57b63c9bbf9d4abe31a09afab6cec7b6b30e7239197c5d43a",
+    "currentExtension": "NOT_PERFORMED"
+  },
+  "diagnostics": [
+    {
+      "id": "S5-unmarked",
+      "status": "FAIL"
+    },
+    {
+      "id": "H2a",
+      "status": "SKIP"
+    },
+    {
+      "id": "H2e",
+      "status": "SKIP"
+    }
+  ],
+  "safetyRefusalThisStage": false,
+  "protectedDataRead": "Synthetic fixtures/source only; no real token contents",
+  "noHostProcessTerminated": true
+}
