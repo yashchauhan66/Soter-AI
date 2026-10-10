@@ -520,10 +520,10 @@ test("the subtitle renders a clean status line for every operation and reflects 
     /local/,
     "a local guard did not surface its engine",
   );
-  assert.doesNotMatch(
+  assert.match(
     String(evalExpression(soterGuardSubtitleV3, { operation: "issuePassport", options: { detectionEngine: "LOCAL" } })),
-    /local/,
-    "a lifecycle operation advertised an engine it does not use",
+    /local simulation/,
+    "a lifecycle operation did not disclose local simulation",
   );
   assert.match(
     String(evalExpression(soterGuardSubtitleV3, { operation: "piiRedactor", options: { branchOnRedaction: true } })),
@@ -572,7 +572,8 @@ test("the key hints fire only in the state they warn about", () => {
   // Custom preset with no overrides (last hint): the empty-policy trap.
   const custom = soterGuardHintsV3.length - 1;
   assert.equal(hintFires(custom, { operation: "enrollIdentity", passportPolicyPreset: "CUSTOM", options: {} }), true);
-  assert.equal(hintFires(custom, { operation: "enrollIdentity", passportPolicyPreset: "CUSTOM", options: { passportPolicy: "{}" } }), false);
+  assert.equal(hintFires(custom, { operation: "enrollIdentity", passportPolicyPreset: "CUSTOM", options: { passportPolicy: "{}" } }), true);
+  assert.equal(hintFires(custom, { operation: "enrollIdentity", passportPolicyPreset: "CUSTOM", options: { passportPolicy: '{"allowedTools":["rag.search"]}' } }), false);
   assert.equal(hintFires(custom, { operation: "enrollIdentity", passportPolicyPreset: "READ_ONLY", options: {} }), false);
 
   // Redaction branching hint

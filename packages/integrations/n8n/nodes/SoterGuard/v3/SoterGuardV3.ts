@@ -42,16 +42,15 @@ const MAIN = NodeConnectionTypes.Main;
 
 /** Values whose canvas label, engine line, and enforcement line all come from the layout. */
 const OPERATION_LABELS = JSON.stringify(Object.fromEntries(OPERATIONS.map((o) => [o.value, o.name])));
-const ENFORCING = JSON.stringify(OPERATIONS.filter((o) => o.notice === "enforcingNotice").map((o) => o.value));
+const ENFORCING = JSON.stringify(OPERATIONS.filter((o) => o.fields.includes("onThreat")).map((o) => o.value));
 const WITH_SENSITIVITY = JSON.stringify(OPERATIONS.filter((o) => o.fields.includes("sensitivity")).map((o) => o.value));
-/** Operations that offer no Detection Engine, so a stale engine value must not be advertised. */
-const ENGINE_LESS = JSON.stringify(
-  OPERATIONS.filter((o) => !o.options.includes("detectionEngine")).map((o) => o.value),
+const ENGINE_LESS = JSON.stringify(OPERATIONS.filter((o) => !o.fields.includes("detectionEngine")).map((o) => o.value));
+const WITH_ENGINE = JSON.stringify(
+  OPERATIONS.filter((o) => o.fields.includes("detectionEngine") || o.options.includes("detectionEngine")).map((o) => o.value),
 );
-const WITH_ENGINE = JSON.stringify(OPERATIONS.filter((o) => o.options.includes("detectionEngine")).map((o) => o.value));
 const WITH_TOPICS = JSON.stringify(OPERATIONS.filter((o) => o.options.includes("allowedTopics")).map((o) => o.value));
 const PASSPORT_LIFECYCLE = JSON.stringify(
-  OPERATIONS.filter((o) => o.resource === "agentPassport" && !o.options.includes("detectionEngine")).map((o) => o.value),
+  ["enrollIdentity", "issuePassport", "validatePassport", "revokePassport"],
 );
 const WITH_PRESET = JSON.stringify(
   OPERATIONS.filter((o) => o.fields.includes("passportPolicyPreset")).map((o) => o.value),
@@ -73,7 +72,7 @@ export const soterGuardOutputsV3 = `={{
   ((parameters) => {
     const options = parameters.options || {};
     if (${JSON.stringify(SINGLE_OUTPUT_ACTIONS)}.includes(parameters.operation)) {
-      if (options.branchOnRedaction) {
+      if (options.branchOnRedaction === true) {
         return [
           { displayName: "Clean", type: "${MAIN}" },
           { displayName: "Redacted", type: "${MAIN}" }
@@ -97,7 +96,7 @@ export const soterGuardOutputsV3 = `={{
  * generated from `layoutV3.ts`, so renaming an operation cannot leave a stale
  * name on the canvas.
  *
- * Detection Engine now lives inside Options, so it is read from that object.
+ * Detection Engine now lives on the main panel, with fallback to options.
  * `($parameter["options"] || {})` rather than optional chaining: this string is
  * evaluated by n8n's expression engine, not by Node.
  */
@@ -115,9 +114,10 @@ export const soterGuardSubtitleV3 = `={{
       base = base + " · " + sensitivity.toLowerCase();
     }
     if (${ENGINE_LESS}.includes(operation)) return base;
-    const engine = String(options.detectionEngine || "AUTO");
-    if (engine !== "AUTO") base = base + " · " + engine.toLowerCase();
-    if (operation === "piiRedactor" && options.branchOnRedaction) {
+    const engine = String(parameters.detectionEngine || options.detectionEngine || "AUTO");
+    if (engine === "LOCAL" && ${PASSPORT_LIFECYCLE}.includes(operation)) base = base + " · local simulation";
+    else if (engine !== "AUTO") base = base + " · " + engine.toLowerCase();
+    if (operation === "piiRedactor" && options.branchOnRedaction === true) {
       base = base + " · branching";
     }
     return base;
@@ -137,7 +137,7 @@ export const soterGuardHintsV3: NodeHint[] = [
     // The one mistake that leaves a user unprotected while they believe the
     // opposite: enforcement configured, Flagged output left dangling.
     message:
-      "Dual-branch routing: Flagged or blocked items leave through Output 2 (Flagged), emitting 0 items to Output 1 (Safe). If subsequent nodes are wired only to Safe, they will not execute when an attack is blocked. Connect Output 2 (Flagged) to an alert, incident log, or graceful notification step — but do not connect it back into your main path.",
+      "Items routed to Flagged do not appear on Safe. Connect Flagged to an alert or review step to handle them.",
     type: "info",
     location: "outputPane",
     displayCondition: `={{ !${JSON.stringify(SINGLE_OUTPUT_ACTIONS)}.includes($parameter["operation"]) }}`,
@@ -145,24 +145,24 @@ export const soterGuardHintsV3: NodeHint[] = [
   },
   {
     message:
-      "Passport token fields are masked in the editor. Keep <b>Include Raw API Response</b> off for lifecycle workflows unless debugging; token-shaped keys in raw responses are redacted.",
+      "Token inputs are masked. Issue Passport returns a live token for the next step; use expressions and control access to saved execution data.",
     type: "info",
     location: "ndv",
     displayCondition: '={{ ["issuePassport", "validatePassport", "toolCall"].includes($parameter["operation"]) }}',
   },
   {
     message:
-      "<b>On Threat</b> is set to Continue, so nothing is ever stopped and the <b>Flagged</b> output stays empty. Use Block or Redact for real enforcement.",
+      "<b>Continue</b> allows detected threats to proceed. Use Block or Redact for enforcement. Firewall approval and unavailable-layer decisions can still go to Flagged.",
     type: "warning",
     location: "ndv",
     displayCondition: `={{ ${ENFORCING}.includes($parameter["operation"]) && $parameter["onThreat"] === "CONTINUE" }}`,
   },
   {
     message:
-      "No <b>Session ID</b> set. Each message will be judged on its own, so an attack spread across several turns can pass one harmless-looking message at a time. Add one under <b>Options</b>.",
+      "For cloud checks across conversation turns, add a stable <b>Session ID</b> under Options or pass sessionId in the incoming item.",
     type: "info",
     location: "ndv",
-    displayCondition: `={{ ${ENFORCING}.includes($parameter["operation"]) && !($parameter["options"] || {})["sessionId"] }}`,
+    displayCondition: '={{ ["inputGuard", "universalGuard"].includes($parameter["operation"]) && ($parameter["detectionEngine"] || ($parameter["options"] || {}).detectionEngine || "AUTO") !== "LOCAL" && !($parameter["options"] || {}).sessionId }}',
   },
   {
     // The complaint this node was fixed for: a helpdesk blocking its own
@@ -170,23 +170,23 @@ export const soterGuardHintsV3: NodeHint[] = [
     // only when the author has actually named topics, so it is advice and not
     // nagging.
     message:
-      "<b>Topic Handling</b> is set to Advisory, so your <b>Allowed Semantic Topics</b> only annotate the result. If ordinary questions about these topics are being blocked, switch it to <b>Trust My Topics</b> under <b>Options</b>.",
+      "<b>Advisory</b> reports topic scope without changing the verdict. Choose Trust My Topics to reduce topic-related false positives.",
     type: "info",
     location: "ndv",
-    displayCondition: `={{ ${WITH_TOPICS}.includes($parameter["operation"]) && !!($parameter["options"] || {})["allowedTopics"] && ($parameter["options"] || {})["topicHandling"] === "ADVISORY" }}`,
+    displayCondition: `={{ ${WITH_TOPICS}.includes($parameter["operation"]) && !!(($parameter["options"] || {}).allowedTopics || ($parameter["options"] || {}).systemPromptContext) && ($parameter["options"] || {}).topicHandling === "ADVISORY" }}`,
   },
   {
     // Always Allow is the one control here that can genuinely reduce coverage,
     // so it says so in the node rather than only in the README.
     message:
-      "<b>Always Allow</b> skips detection completely for messages that match one of your lines exactly. Nothing about them is scanned, and the result is marked <code>bypassed: ALWAYS_ALLOW</code>. Keep the list to the questions you are certain about.",
+      "<b>Always Allow</b> bypasses input detection for exact whole-message matches. Universal Firewall still checks its configured output, RAG, tool, and memory layers.",
     type: "warning",
     location: "ndv",
     displayCondition: `={{ ${WITH_TOPICS}.includes($parameter["operation"]) && !!($parameter["options"] || {})["alwaysAllow"] }}`,
   },
   {
     message:
-      "<b>Sensitivity</b> is Lenient: borderline findings are reported but not enforced, so expect fewer stops and more items on <b>Safe</b>. Live secrets and clear injection or jailbreak attempts are still stopped at every level.",
+      "<b>Lenient</b> reports borderline findings with fewer stops. Clear attacks remain enforced; Output Guard redacts detected secrets and continues with cleaned text.",
     type: "info",
     location: "ndv",
     displayCondition: `={{ ${WITH_SENSITIVITY}.includes($parameter["operation"]) && $parameter["sensitivity"] === "LENIENT" }}`,
@@ -199,29 +199,35 @@ export const soterGuardHintsV3: NodeHint[] = [
       "Local mode can only compare the output against <b>Protected Sources</b> whose text is supplied inline, because resolving a bare source ID needs the cloud fingerprint store. Sources given by ID alone are reported as unresolved, never as clean.",
     type: "warning",
     location: "ndv",
-    displayCondition:
-      '={{ $parameter["operation"] === "universalGuard" && ($parameter["options"] || {})["detectionEngine"] === "LOCAL" }}',
+    displayCondition: `={{ ((p) => {
+      if (p.operation !== "universalGuard" || (p.detectionEngine || (p.options || {}).detectionEngine || "AUTO") !== "LOCAL") return false;
+      const value = ((p.securityContext || {}).output || {}).protectedSources;
+      try {
+        const sources = typeof value === "string" ? JSON.parse(value) : value;
+        return Array.isArray(sources) && sources.length > 0;
+      } catch { return false; }
+    })($parameter) }}`,
   },
   {
     // Cross-turn detection, reputation, and the ML tier are all server-side, so
     // a fully local guard is meaningfully weaker. Said once, on the canvas, where
     // someone reviewing the workflow rather than editing the node will see it.
     message:
-      "<b>Reduced protection:</b> Local is a pattern-only first filter (measured prompt-injection recall is about 18% on the published out-of-distribution corpus). It has no ML tier, cross-turn tracking, reputation, or passport enforcement. Use Auto for cloud-first production protection.",
+      "<b>Local rules</b> provide reduced detection coverage, without cloud ML, cross-turn tracking, or reputation checks. Use a credential with Auto or Cloud Only for cloud protection.",
     type: "warning",
     location: "outputPane",
     // Only the operations that offer Detection Engine can raise this. On the
     // lifecycle operations the setting does not exist, and a stale LOCAL value
     // there would collide with the "never falls back to Local" hint below.
-    displayCondition: `={{ ${WITH_ENGINE}.includes($parameter["operation"]) && ($parameter["options"] || {})["detectionEngine"] === "LOCAL" }}`,
+    displayCondition: `={{ ${WITH_ENGINE}.includes($parameter["operation"]) && !${PASSPORT_LIFECYCLE}.includes($parameter["operation"]) && ($parameter["detectionEngine"] || ($parameter["options"] || {}).detectionEngine || "AUTO") === "LOCAL" }}`,
     whenToDisplay: "beforeExecution",
   },
   {
     message:
-      "Identity and passport lifecycle operations use server-side state in Cloud mode. In Local mode, operations run simulated locally (emulated: true); in Cloud mode, they never fall back to Local.",
-    type: "info",
+      "<b>Local simulation:</b> passports use temporary state inside this n8n process and are marked emulated. Use Cloud Only or Auto with a credential for production authorization; these modes never fall back to simulation.",
+    type: "warning",
     location: "ndv",
-    displayCondition: `={{ ${PASSPORT_LIFECYCLE}.includes($parameter["operation"]) }}`,
+    displayCondition: `={{ ${PASSPORT_LIFECYCLE}.includes($parameter["operation"]) && ($parameter["detectionEngine"] || ($parameter["options"] || {}).detectionEngine || "AUTO") === "LOCAL" }}`,
   },
   {
     message:
@@ -233,21 +239,28 @@ export const soterGuardHintsV3: NodeHint[] = [
   },
   {
     message:
-      "<b>On Threat</b> is set to Block, but <b>Also Enforce On Sensitive Data</b> is off under Options. Secrets and personal data will be redacted and continue through <b>Safe</b>. Turn it on under Options if you want Block to stop them.",
+      "<b>Also Enforce On Sensitive Data</b> is off. Sensitive-only findings are cleaned and allowed to continue by default. Enable it under Options to apply On Threat to these findings too.",
     type: "info",
     location: "ndv",
     displayCondition: `={{ ${ENFORCING}.includes($parameter["operation"]) && $parameter["onThreat"] === "BLOCK" && !($parameter["options"] || {})["enforceOnSensitiveData"] }}`,
   },
   {
-    // New in version 3. Custom JSON Only is the one preset that grants nothing
-    // on its own, and the panel now shows the preset while its overrides sit
-    // behind Options — so the state where an author has picked Custom and left
-    // the policy empty is both easy to reach and invisible.
+    // Empty objects and unknown keys do not configure any of the policy lists.
+    // The warning must also work for JSON expressions returning objects.
     message:
-      "<b>Custom JSON Only</b> starts from an empty policy, so this agent would be granted nothing. Add <b>Policy Overrides (JSON)</b> under <b>Options</b>.",
+      "<b>Custom JSON Only</b> starts with empty policy lists. Define tool access and scopes in <b>Policy Overrides (JSON)</b> under Options before issuing a production passport.",
     type: "warning",
     location: "ndv",
-    displayCondition: `={{ ${WITH_PRESET}.includes($parameter["operation"]) && $parameter["passportPolicyPreset"] === "CUSTOM" && !($parameter["options"] || {})["passportPolicy"] }}`,
+    displayCondition: `={{ ((p) => {
+      if (!${WITH_PRESET}.includes(p.operation) || p.passportPolicyPreset !== "CUSTOM") return false;
+      const value = (p.options || {}).passportPolicy;
+      if (!value) return true;
+      try {
+        const policy = typeof value === "string" ? JSON.parse(value) : value;
+        const keys = ["allowedTools", "blockedTools", "approvalRequiredTools", "allowedDomains", "blockedDomains", "dataScopes", "memoryScopes"];
+        return !policy || !keys.some((key) => Array.isArray(policy[key]) && policy[key].length > 0);
+      } catch { return true; }
+    })($parameter) }}`,
   },
 ];
 
@@ -273,6 +286,7 @@ export class SoterGuardV3 implements INodeType {
           // with a specific, actionable error when no credential is selected.
           name: "soterApi",
           required: false,
+          displayOptions: { hide: { operation: ["workflowAudit"], detectionEngine: ["LOCAL"] } },
         },
       ],
       hints: soterGuardHintsV3,

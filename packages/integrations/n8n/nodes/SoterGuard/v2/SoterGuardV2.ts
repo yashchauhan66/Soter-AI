@@ -35,7 +35,7 @@ export const soterGuardOutputs = `={{
   ((parameters) => {
     const advanced = parameters.advancedOptions || {};
     if (${JSON.stringify(SINGLE_OUTPUT_ACTIONS)}.includes(parameters.action)) {
-      if (advanced.branchOnRedaction) {
+      if (advanced.branchOnRedaction === true) {
         return [
           { displayName: "Clean", type: "${MAIN}" },
           { displayName: "Redacted", type: "${MAIN}" }

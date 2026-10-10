@@ -50,10 +50,10 @@ test("universalGuard survives a 401 on one optional layer and names the endpoint
   const egress = layer(result, "semanticEgress");
   assert.ok(egress, "the failed layer is still reported, not dropped");
   assert.equal(egress?.unavailable, true);
-  // The whole point of the message change: the reader is told which of the six
-  // calls failed, and told that a key working elsewhere is not the problem.
+  // Identify the failing endpoint and authentication checks without asserting
+  // that a credential was proven valid by an unrelated request.
   assert.match(String(egress?.error), /\/api\/semantic-egress\/check/);
-  assert.match(String(egress?.error), /the key itself is valid/i);
+  assert.match(String(egress?.error), /API key is correct, active/i);
   // The layers that did answer still produced a verdict.
   assert.equal(result.blocked, false);
   assert.equal(result.finalDecision, "ALLOW");

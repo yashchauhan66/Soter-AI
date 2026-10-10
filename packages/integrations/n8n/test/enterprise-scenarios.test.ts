@@ -117,7 +117,7 @@ test("the five passport actions compose into a working lifecycle", async () => {
   });
   assert.equal(validate.safe[0].json.verdictCode, "PASSPORT_VALID");
   assert.equal(validate.safe[0].json.allowed, true);
-  assert.equal(validate.safe[0].json.passportToken, passportToken);
+  assert.equal(validate.safe[0].json.passportToken, undefined);
   assert.ok(validate.safe[0].json.passportTokenMasked, "validate did not return passportTokenMasked");
 
   // Step 4 — an authorized tool call on that session leaves through Safe.
@@ -127,7 +127,7 @@ test("the five passport actions compose into a working lifecycle", async () => {
     respond,
   });
   assert.equal(tool.safe[0].json.allowed, true);
-  assert.equal(tool.safe[0].json.passportToken, passportToken);
+  assert.equal(tool.safe[0].json.passportToken, undefined);
   assert.ok(tool.safe[0].json.passportTokenMasked, "toolCall did not return passportTokenMasked");
   assert.equal(tool.flagged.length, 0);
 
@@ -135,12 +135,12 @@ test("the five passport actions compose into a working lifecycle", async () => {
   // to reading passportToken and sessionId from incoming input JSON when left empty.
   const toolWithFallback = await run({
     action: "toolCall",
-    inputData: [{ json: validate.safe[0].json as Record<string, unknown> }],
+    inputData: [{ json: passport as Record<string, unknown> }],
     params: { toolName: "rag.search", toolAction: "search", toolDestination: "internal", detectionEngine: "CLOUD" },
     respond,
   });
   assert.equal(toolWithFallback.safe[0].json.allowed, true);
-  assert.equal(toolWithFallback.safe[0].json.passportToken, passportToken);
+  assert.equal(toolWithFallback.safe[0].json.passportToken, undefined);
 
   // Step 5 — revoke the session.
   const revoke = await run({

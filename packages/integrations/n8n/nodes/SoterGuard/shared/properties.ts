@@ -208,7 +208,7 @@ export const soterGuardProperties: INodeProperties[] = [
     type: "string",
     default: "",
     required: true,
-    placeholder: "={{ $json.agentIdentityID }}",
+    placeholder: "={{ $json.agentIdentityId }}",
     displayOptions: { show: { action: ["issuePassport"] } },
     description: "Identity ID returned by Register Agent",
   },
@@ -351,7 +351,7 @@ export const soterGuardProperties: INodeProperties[] = [
     name: "passportId",
     type: "string",
     default: "",
-    placeholder: "={{ $json.passportID }}",
+    placeholder: "={{ $json.passportId }}",
     displayOptions: { show: { action: ["revokePassport"] } },
     description: "Access pass ID to revoke. Optional when Session ID is provided.",
   },
@@ -1294,7 +1294,7 @@ export const soterGuardProperties: INodeProperties[] = [
         displayName: "Include Raw API Response",
         name: "includeRawResponse",
         type: "boolean",
-        default: true,
+        default: false,
         description:
           "Whether to attach the full API response as rawResponse. It is recursively sanitized first, but turning it off keeps run data smaller on high-volume workflows.",
       },
@@ -1302,10 +1302,11 @@ export const soterGuardProperties: INodeProperties[] = [
         displayName: "Items in Parallel",
         name: "batchConcurrency",
         type: "number",
+        noDataExpression: true,
         typeOptions: { minValue: 1, maxValue: 20 },
         default: 1,
         description:
-          "How many input items to check at the same time. The default of 1 is sequential, so a hundred items are a hundred requests one after another, not a burst. Raising it is the single biggest speed win on large batches; a 429 is retried after the interval the API asks for either way. Order of the output items never changes.",
+          "How many input items to check at the same time for the whole batch. A 429 is retried only when the server's wait fits within Request Timeout. Output order is preserved.",
       },
       {
         displayName: "Layers in Parallel",
@@ -1338,7 +1339,7 @@ export const soterGuardProperties: INodeProperties[] = [
         type: "number",
         typeOptions: { minValue: 1, maxValue: 120000 },
         default: 20000,
-        description: "How long to wait for each API call before giving up. In Auto mode a timeout is what triggers the local fallback.",
+        description: "Total time budget for each API call, including rate-limit retries and waits. In Auto mode a timeout can trigger the local fallback.",
       },
       {
         displayName: "Reuse Identical Items",

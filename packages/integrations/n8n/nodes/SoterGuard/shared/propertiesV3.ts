@@ -1,4 +1,4 @@
-import type { INodeProperties, INodePropertyOptions } from "n8n-workflow";
+import type { INodeProperties, INodePropertyCollection, INodePropertyOptions } from "n8n-workflow";
 
 import {
   OPERATIONS,
@@ -13,14 +13,10 @@ import { soterGuardProperties } from "./properties";
  * The version-3 panel, generated from `layoutV3.ts` and the field definitions
  * version 2 already publishes.
  *
- * Nothing here re-types a label, a hint, a placeholder, or a dropdown. Every
- * field is looked up in `properties.ts` and re-homed: `displayOptions` is
- * replaced with the version-3 condition, `required` is set from the layout, and
- * a small number of sentences are overridden where the version-2 wording is
- * wrong at its new position ("Session ID has its own field above" is false once
- * the field moved into Options). A wording fix in `properties.ts` therefore
- * reaches every version, which is the whole reason this file generates rather
- * than copies.
+ * Fields inherit their storage keys, types, and defaults from properties.ts.
+ * Version-specific copy and compact controls are overridden here. Visibility
+ * and required markers come from the layout; saved v1/v2 parameter locations
+ * remain supported by their existing panels.
  *
  * Three structural rules this file enforces by construction, because the n8n
  * linter checks them and a hand-written panel drifts out of them silently:
@@ -80,16 +76,56 @@ function rehome(property: INodeProperties): INodeProperties {
 // ---------------------------------------------------------------------------
 // Version-3 copy overrides
 //
-// Only sentences that read wrongly at their new position. Everything else is
-// inherited, so a fix in properties.ts reaches v1, v2 and v3 together.
+// Compact native controls, consistent vocabulary, and operation-specific copy.
 // ---------------------------------------------------------------------------
 
 /** Passport vocabulary. Under an "Agent Passport" resource, "Access Pass Token" reads as a different thing. */
 const PANEL_OVERRIDES: Record<string, Partial<INodeProperties>> = {
+  detectionEngine: {
+    description: "Where checks run. Cloud requires a SoterAI credential; Local keeps data inside n8n.",
+    options: [
+      { name: "Auto (Recommended)", value: "AUTO", description: "Cloud first; use local rules if the cloud is unavailable" },
+      { name: "Cloud Only", value: "CLOUD", description: "Full cloud detection; fail the item if the service is unavailable" },
+      { name: "Local Only", value: "LOCAL", description: "Bundled rules, no network or API key; reduced detection coverage" },
+    ],
+  },
+  inputText: {
+    typeOptions: { rows: 3 },
+    hint: "Map the message from the previous node, for example {{ $json.chatInput }}",
+  },
+  outputText: {
+    typeOptions: { rows: 3 },
+    hint: "Use {{ $json.safeText }} or {{ $json.outputText }} from this node downstream",
+  },
+  universalOutputText: {
+    displayName: "AI Output Text",
+    typeOptions: { rows: 3 },
+    hint: "Optional when Input Text is supplied. Both directions can be checked together",
+  },
+  onThreat: {
+    description: "How to handle a detected threat. Approval and unavailable-layer decisions may still route to Flagged.",
+    hint: "Block sends threats to Flagged. Configure customer wording in Customer Replies",
+    options: [
+      { name: "Block", value: "BLOCK", description: "Route stopped items to Flagged" },
+      { name: "Continue", value: "CONTINUE", description: "Allow detected threats to continue; inspect the verdict downstream" },
+      { name: "Redact", value: "REDACT", description: "Remove unsafe content and continue with the cleaned text" },
+      { name: "Warn", value: "WARN", description: "Continue and include a warning in the result" },
+    ],
+  },
+  sensitivity: {
+    hint: "Balanced suits most workflows. Lenient reduces borderline stops; Strict also acts on lower-confidence findings",
+    description: "Detection threshold. Output Guard in Lenient mode redacts detected secrets instead of hard-blocking them.",
+  },
+  protectionProfile: {
+    hint: "Maximum is the production default. On Threat controls how detected threats are handled",
+  },
+  agentIdentityId: {
+    description: "Identity ID returned by Enroll Identity",
+  },
   passportToken: {
     displayName: "Passport Token",
     description:
-      "Raw short-lived token returned by Issue Passport. Use an expression; do not hard-code it in workflow JSON.",
+      "Token returned by Issue Passport. If empty, uses the incoming passportToken or passport.token. Prefer expressions to saved tokens.",
   },
   passportId: {
     displayName: "Passport ID",
@@ -101,14 +137,30 @@ const PANEL_OVERRIDES: Record<string, Partial<INodeProperties>> = {
   piiText: {
     // The behaviour sentence this hint used to carry is now the operation's
     // notice, so the hint goes back to being about what to put in the field.
-    hint: "Usually an expression pointing at the previous node, such as {{ $json.text }}",
+    typeOptions: { rows: 3 },
+    hint: "Use {{ $json.outputText }} from this node for the cleaned copy",
+  },
+  ragText: {
+    typeOptions: { rows: 3 },
+  },
+  securityContext: {
+    displayName: "Additional Security Layers",
+    description: "Add the RAG, tool, memory, or output destination your workflow uses. Each layer is optional.",
+  },
+  userMessages: {
+    description: "Optional customer-facing replies. Results are returned in userMessage; your workflow delivers them.",
   },
 };
 
 /** The panel Session ID, which is the thread every passport step has to share. */
-const PANEL_SESSION_HINT = "Use the same value in every passport step. Revoke accepts this or Passport ID.";
+const PANEL_SESSION_HINT = "Use the same session across passport steps. If empty, reads the session from the incoming item";
 
 const OPTION_OVERRIDES: Record<string, Partial<INodeProperties>> = {
+  branchOnRedaction: {
+    displayName: "Branch On Redaction",
+    noDataExpression: true,
+    description: "Whether to split unchanged items onto Clean and sanitized items onto Redacted",
+  },
   sessionId: {
     hint: "Recommended. Keeps one conversation's messages together across turns.",
   },
@@ -116,14 +168,28 @@ const OPTION_OVERRIDES: Record<string, Partial<INodeProperties>> = {
     // "Session ID has its own field above" was true when Session ID was a
     // top-level field. It is now a sibling inside this same collection.
     hint: "Optional. Extra fields for your own audit logs.",
+    default: "{}",
   },
   allowedTopics: {
-    hint: "Optional. Comma-separated. Topic Handling does nothing while this is empty.",
+    hint: "Comma-separated subjects, such as billing, shipping, returns. Configure Topic Handling to choose their effect",
+  },
+  topicHandling: {
+    hint: "Uses Allowed Semantic Topics and System Prompt Context. Clear attack patterns remain enforced",
+  },
+  alwaysAllow: {
+    description: "Exact whole-message matches bypass input detection. Other configured firewall layers are still checked.",
+  },
+  enforceOnSensitiveData: {
+    hint: "Off: redact sensitive-only findings and continue. On: apply On Threat to sensitive data as well",
+  },
+  neverDowngradeToLocal: {
+    hint: "In Auto mode, fail the item when the cloud cannot answer instead of switching to local rules",
   },
   passportPolicy: {
     displayName: "Policy Overrides (JSON)",
+    default: "{}",
     description:
-      "Policy keys merged over the preset: allowedTools, blockedTools, approvalRequiredTools, allowedDomains, blockedDomains, dataScopes, memoryScopes. Required when the preset is Custom JSON Only, which starts from an empty policy.",
+      "JSON object merged over the preset. Supports allowedTools, blockedTools, approvalRequiredTools, allowedDomains, blockedDomains, dataScopes, memoryScopes. Custom JSON Only starts with empty lists.",
   },
   passportToken: {
     displayName: "Passport Token",
@@ -137,35 +203,33 @@ const OPTION_OVERRIDES: Record<string, Partial<INodeProperties>> = {
  * execute.ts actually contains.
  *
  * Version 2 sorted them alphabetically, which put "Coding Agent" first and the
- * recommended least-privilege preset third. The order here is the order of
- * increasing reach, and every description is the preset's real tool lists rather
- * than a characterisation of them — a reader choosing a security policy should
- * not have to open the source to find out what they picked.
+ * recommended least-privilege preset third. Put the default first and keep the
+ * descriptions short enough to compare inside n8n's dropdown.
  */
 const PASSPORT_PRESET_OPTIONS: INodePropertyOptions[] = [
   {
     name: "Read Only (Recommended)",
     value: "READ_ONLY",
     description:
-      "Allows browser.read, browser.open, rag.search, calendar.read, filesystem.read. Blocks terminal.run, filesystem.delete, payments.charge, secrets.read, and asks for approval on browser.submit_form, gmail.send, filesystem.write, api.call, mcp.tool.call.",
+      "Read and search tools; writes and outbound actions require approval; destructive tools are blocked",
   },
   {
     name: "Customer Support",
     value: "SUPPORT",
     description:
-      "Allows rag.search, crm.read, orders.read, tickets.read. Blocks terminal.run, filesystem.delete, secrets.read, payments.charge, and asks for approval on gmail.send, crm.update, tickets.update, payments.refund.",
+      "Support lookups; customer updates, messages, and refunds require approval",
   },
   {
     name: "Coding Agent",
     value: "CODING",
     description:
-      "Allows filesystem.read, repository.search, tests.run. Blocks secrets.read, filesystem.delete, payments.charge, and asks for approval on filesystem.write, terminal.run, git.push, package.publish.",
+      "Repository reads and tests; file writes, terminal commands, pushes, and publishing require approval",
   },
   {
     name: "Custom JSON Only",
     value: "CUSTOM",
     description:
-      "Starts from an empty policy — no allowed tools, no blocked tools, no scopes. Everything the agent may do has to come from Policy Overrides (JSON) under Options.",
+      "Empty policy lists. Define tool access and scopes in Policy Overrides (JSON) under Options.",
   },
 ];
 
@@ -173,30 +237,34 @@ const PASSPORT_PRESET_OPTIONS: INodePropertyOptions[] = [
 // Notices. Exactly one per operation.
 // ---------------------------------------------------------------------------
 
-/** Notices whose wording already exists in properties.ts, mapped v3 name -> source name. */
-const REUSED_NOTICES: Record<string, string> = {
-  reportOnlyNotice: "reportOnlyNoticeV2",
-  auditNotice: "auditNotice",
-  enrollIdentityNotice: "enrollIdentityNotice",
-  issuePassportNotice: "issuePassportNotice",
-  validatePassportNotice: "validatePassportNotice",
-  toolCallNotice: "toolCallNotice",
-  revokePassportNotice: "revokePassportNotice",
-};
-
-/** The two version-3 notices with no version-2 equivalent. */
-const NEW_NOTICES: Record<string, string> = {
+/** One short task-specific notice per operation. */
+const OPERATION_NOTICES: Record<string, string> = {
   enforcingNotice:
-    "This operation enforces dual-branch security. Clean items proceed to <b>Output 1 (Safe)</b>. Blocked or flagged items leave through <b>Output 2 (Flagged)</b>, emitting 0 items to Safe (downstream nodes wired only to Safe will not execute). Wire Flagged to an incident alert or logger.",
+    "Connect <b>Safe</b> to the next step and <b>Flagged</b> to your alert or review path. Use the cleaned text from this node downstream.",
+  universalNotice:
+    "Supply input, AI output, or both. Add security layers below as needed. Connect <b>Safe</b> to the next step and <b>Flagged</b> to review.",
   redactNotice:
-    "Never blocks and never stops an item. The cleaned copy arrives as <code>{{ $json.outputText }}</code> on the single output; the text you pass in is not modified in place.",
+    "The cleaned copy is returned in <code>{{ $json.outputText }}</code>. Enable <b>Branch On Redaction</b> under Options to split Clean and Redacted items.",
+  reportOnlyNotice:
+    "Returns a risk report. Clean items go to <b>Safe</b>; risky items go to <b>Flagged</b>. Connect both paths to handle each result.",
+  auditNotice:
+    "Local static review of exported workflow JSON. No workflow execution, network request, or credential access.",
+  enrollIdentityNotice:
+    "Create an agent identity, then pass <code>{{ $json.agentIdentityId }}</code> to <b>Issue Passport</b>.",
+  issuePassportNotice:
+    "Issue a short-lived passport. Pass <code>passportToken</code> and <code>sessionId</code> to the validation and tool-check steps by expression.",
+  validatePassportNotice:
+    "Validate the session passport. Token and session can come from the incoming item. Optional tool fields check authorization for a specific call.",
+  toolCallNotice:
+    "Place before the real tool. Allowed calls go to <b>Safe</b>; blocked or approval-required calls go to <b>Flagged</b>.",
+  revokePassportNotice:
+    "Revoke by <b>Session ID</b> or <b>Passport ID</b>. A successful revocation returns <code>PASSPORT_REVOKED</code> on Safe.",
 };
 
 function noticeText(name: string): string {
-  if (NEW_NOTICES[name]) return NEW_NOTICES[name];
-  const sourceName = REUSED_NOTICES[name];
-  if (!sourceName) throw new Error(`propertiesV3: no text for notice "${name}"`);
-  return source(sourceName).displayName;
+  const text = OPERATION_NOTICES[name];
+  if (!text) throw new Error(`propertiesV3: no text for notice "${name}"`);
+  return text;
 }
 
 // ---------------------------------------------------------------------------
@@ -351,10 +419,45 @@ function panelProperties(): INodeProperties[] {
         // describe the thread the lifecycle shares instead.
         if (!required) {
           property.description =
-            "Stable per-conversation ID tying this step to the rest of the passport flow. Validate Passport is refused without it, and Revoke accepts this or the Passport ID.";
+            "Session shared by the passport steps. Validate needs a session here or in the incoming item. Revoke accepts this or Passport ID.";
+        }
+      }
+      if (name === "inputText" && !required) {
+        property.hint = "Optional when AI Output Text is supplied. Leave empty for an output-only check";
+      }
+      if (name === "detectionEngine") {
+        // Lifecycle state cannot be reconstructed by a cloud fallback. Explicit
+        // Local is a simulation, a different promise from local text detection.
+        const lifecycle = group.filter((operation) =>
+          ["enrollIdentity", "issuePassport", "validatePassport", "revokePassport"].includes(operation.value),
+        );
+        if (lifecycle.length) {
+          properties.push({
+            ...property,
+            displayOptions: { show: { operation: lifecycle.map((operation) => operation.value) } },
+            description: "Cloud and Auto use server-side passport state. Local simulates the lifecycle inside this n8n process.",
+            options: [
+              { name: "Auto (Cloud)", value: "AUTO", description: "Cloud state; fails if unavailable, with no local fallback" },
+              { name: "Cloud Only", value: "CLOUD", description: "Cloud state with a SoterAI credential" },
+              { name: "Local Simulation", value: "LOCAL", description: "Testing only: process-local state, emulated tokens, no cloud authorization" },
+            ],
+          });
+          const detection = group.filter((operation) => !lifecycle.includes(operation));
+          if (!detection.length) continue;
+          property.displayOptions = { show: { operation: detection.map((operation) => operation.value) } };
         }
       }
       if (name === "passportPolicyPreset") property.options = PASSPORT_PRESET_OPTIONS;
+      if (name === "securityContext") {
+        // Empty optional JSON is accepted at runtime but shows a syntax error
+        // in n8n's editor. Start with the appropriate valid empty container.
+        property.options = (property.options as INodePropertyCollection[]).map((layer) => ({
+          ...layer,
+          values: layer.values.map((field) => field.type === "json"
+            ? { ...field, default: field.name === "protectedSources" ? "[]" : "{}" }
+            : field),
+        }));
+      }
       properties.push(property);
     }
   }
@@ -379,6 +482,7 @@ function optionProperties(): INodeProperties[] {
     name: "options",
     type: "collection" as const,
     placeholder: "Add Option",
+    description: "Optional detection, audit, and execution settings. Defaults apply until a setting is added.",
     default: {},
     displayOptions: { show: { operation: operations } },
     options: names.map((name) => OPTION_CHILDREN[name]).sort(byDisplayName),

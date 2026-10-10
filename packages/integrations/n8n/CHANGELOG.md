@@ -2,6 +2,37 @@
 
 All notable changes to `n8n-nodes-soterai` will be documented in this file.
 
+## [0.8.8] - 2026-10-10
+
+### Security
+
+- Remove resolved API key values from upstream responses, errors, fallback details and node outputs, regardless of key format. Redaction is scoped to each execution and preserves unrelated newly issued passport tokens.
+- Preserve typed errors and item pairing while masking credential reflection in stop and continue-on-error modes. Added arbitrary-key-format, raw-response, concurrency and reflection regression coverage.
+
+### Packaging and compatibility
+
+- Bumped the patch version so the updated artifact does not replace the already-published `0.8.7` package.
+- Declared Node.js `22.22.0+` and an n8n support floor of `2.27.4`. Removed stale unit-count and Docker/UI pass claims; publication still requires fresh integration evidence.
+- Updated the development platform dependency to the stable n8n-workflow `2.42.3`. Import the official n8n lint plugins directly with the CLI's equivalent Cloud and node rules, removing unused generator/AI SDK dependencies and their critical advisory. The n8n host supplies its own runtime peer; no runtime dependencies were added.
+- Copy icons with Node.js filesystem APIs, removing the obsolete copyfiles/glob/inflight build dependency chain while preserving published icon paths.
+
+### Improved
+
+- Refined the v3 native panel with engine-first configuration, compact task notices and text areas, concise dropdown descriptions, consistent passport terminology, and optional security-layer controls.
+- Distinguished Local Simulation from cloud passport authorization, hid unused credentials in explicit Local mode and Workflow Audit, and made hints reflect the selected engine and configured layers.
+- Initialized optional JSON editors with valid empty objects/lists so unused fields do not display syntax errors.
+
+### Fixed
+
+- Allowed output-only Universal Firewall configuration in the editor, corrected identity/passport expression examples, aligned imported redaction boolean output labels with runtime, and made empty custom policy guidance cover JSON objects and strings. Added native validation, real n8n expression, and all-operation/engine regression coverage.
+- Completed the v0.8.7 audit remediation: output-only Universal Firewall scanning, input-only Always Allow in both engines, empty cleaned-answer preservation, null-input routing, REVIEW attack enforcement, and Analyze Text routing.
+- Prevented Ignored Words from splitting sensitive spans, preserved independent cloud risk categories when withdrawing identifier findings, and kept Lenient continuation booleans consistent.
+- Removed raw passport tokens from runtime check/validation outputs and sanitized camelCase credential fields. Issuance remains the explicit token-producing step. Local validation checks issued session/token/expiry, reuse preserves the original pass, and revoke works by passport ID.
+- Applied a single retry deadline, stopped queued workers after fatal errors, included engine/options in reuse keys, and kept per-item timeout/raw-response settings effective. Batch concurrency is explicitly a fixed node setting.
+- Unified runtime and credential-test URL validation, blocked private IPv4/IPv6 and metadata forms, disabled redirects, used actual HTTP status for conflicts, and preserved GET HTTP errors.
+- Recognized active v3 Firewall/tool nodes by registered type, rejected name-only spoofing, and inspected actual credential values instead of token counters or ordinary prompt prose in workflow audits.
+- Clarified 401 errors and documented raw-response opt-in, fallback controls, token handling, compatibility, and runtime limits. Added audit regression tests.
+
 ## [0.8.7] - 2026-10-03
 
 ### Fixed

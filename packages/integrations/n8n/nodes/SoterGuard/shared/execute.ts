@@ -6,6 +6,9 @@ import type {
   JsonObject,
 } from "n8n-workflow";
 import { NodeApiError, NodeOperationError, sleep } from "n8n-workflow";
+import { randomBytes } from "node:crypto";
+import { validatedBaseUrl } from "../../../shared/baseUrl";
+import { redactKnownCredentials } from "../../../shared/credentialRedaction";
 
 import {
   analyzeLocal,
@@ -34,7 +37,7 @@ import type {
   LocalTopicScope,
 } from "./localEngine";
 
-export const PACKAGE_VERSION = "0.8.7";
+export const PACKAGE_VERSION = "0.8.8";
 const USER_AGENT = `n8n-nodes-soterai/${PACKAGE_VERSION}`;
 const MAX_SANITIZE_DEPTH = 8;
 const MAX_METADATA_STRING_LENGTH = 500;
@@ -128,7 +131,7 @@ function readNodeOptions(ctx: IExecuteFunctions, itemIndex: number): NodeOptions
     reuseIdenticalItems: advanced.reuseIdenticalItems !== false,
     parallelLayers: advanced.parallelLayers !== false,
     requestTimeoutMs: Number.isFinite(timeout) ? Math.max(1, Math.min(120000, Math.trunc(timeout))) : DEFAULT_REQUEST_TIMEOUT_MS,
-    includeRawResponse: advanced.includeRawResponse !== false,
+    includeRawResponse: advanced.includeRawResponse === true,
     // Opt-in, and default false on purpose: every published version has failed
     // open, and flipping that on upgrade would turn a brief API outage into a
     // stopped production workflow for people who never asked for it.
@@ -258,15 +261,19 @@ async function runWithConcurrency(count: number, limit: number, work: (index: nu
   }
 
   let next = 0;
+  let aborted = false;
   const failures: Array<{ index: number; error: unknown }> = [];
   const workers = Array.from({ length: Math.min(limit, count) }, async () => {
     for (; ;) {
+      if (aborted) return;
       const index = next++;
       if (index >= count) return;
       try {
         await work(index);
       } catch (error) {
         failures.push({ index, error });
+        aborted = true;
+        return;
       }
     }
   });
@@ -279,8 +286,8 @@ async function runWithConcurrency(count: number, limit: number, work: (index: nu
 }
 
 /**
- * Reads Retry-After (RFC 7231: delta-seconds or an HTTP-date) and clamps it to
- * a bound we are willing to block the workflow for. Returns null when the value
+ * Reads Retry-After (RFC 7231: delta-seconds or an HTTP-date). The caller
+ * compares the full wait with its deadline. Returns null when the value
  * is missing or unusable so the caller can fall back to its own backoff.
  */
 function parseRetryAfterMs(headers: unknown): number | null {
@@ -296,14 +303,14 @@ function parseRetryAfterMs(headers: unknown): number | null {
   const seconds = Number(text);
   if (Number.isFinite(seconds)) {
     if (seconds < 0) return null;
-    return Math.min(seconds * 1000, MAX_RETRY_WAIT_MS);
+    return Math.min(seconds * 1000, Number.MAX_SAFE_INTEGER);
   }
 
   const dateMs = Date.parse(text);
   if (Number.isNaN(dateMs)) return null;
   const delta = dateMs - Date.now();
   if (delta <= 0) return 0;
-  return Math.min(delta, MAX_RETRY_WAIT_MS);
+  return delta;
 }
 
 /**
@@ -338,7 +345,19 @@ function isFlagged(action: string, result: IDataObject, branchOnRedaction?: bool
     case "ragScanner":
       return !isAllowishRecommendation(result.recommendedAction);
     case "analyzeText":
-      return result.allowed === false;
+      return (
+        result.allowed === false ||
+        result.blocked === true ||
+        result.action === "BLOCK" ||
+        result.rawAction === "BLOCK" ||
+        result.decision === "BLOCK" ||
+        result.decision === "ASK_APPROVAL" ||
+        result.rawAction === "HUMAN_REVIEW" ||
+        result.rawAction === "REVIEW" ||
+        result.action === "REVIEW" ||
+        result.decision === "REVIEW" ||
+        (typeof result.riskScore === "number" && result.riskScore >= 60)
+      );
     case "universalGuard":
       return result.blocked === true || result.degraded === true || result.finalDecision === "ASK_APPROVAL" || result.needsHumanReview === true;
     case "toolCall":
@@ -355,7 +374,7 @@ function isFlagged(action: string, result: IDataObject, branchOnRedaction?: bool
         result.verdictCode === "TOOL_BLOCKED"
       );
     default:
-      return result.blocked === true || result.decision === "ASK_APPROVAL";
+      return result.blocked === true;
   }
 }
 
@@ -429,6 +448,7 @@ interface ActionRequest {
   revokeReason?: string;
   onSessionConflict?: string;
   tool?: SecurityContext["tool"];
+  wasExplicitNull?: boolean;
 }
 
 /**
@@ -512,8 +532,20 @@ interface CustomReplies {
  * never really examined — and a guard that reports protection it did not
  * perform is the one failure this package is built to avoid.
  */
-function readText(ctx: IExecuteFunctions, node: INode, name: string, itemIndex: number, fieldName: string): string {
-  return coerceText(ctx.getNodeParameter(name, itemIndex, "") as unknown, node, itemIndex, fieldName);
+function readText(
+  ctx: IExecuteFunctions,
+  node: INode,
+  name: string,
+  itemIndex: number,
+  fieldName: string,
+  request?: ActionRequest,
+): string {
+  const raw = ctx.getNodeParameter(name, itemIndex, "") as unknown;
+  if (raw === null || raw === undefined) {
+    if (request) request.wasExplicitNull = true;
+    return "";
+  }
+  return coerceText(raw, node, itemIndex, fieldName);
 }
 
 /**
@@ -581,7 +613,7 @@ function maskPassportToken(token: unknown): string | null {
   if (typeof token !== "string") return null;
   const trimmed = token.trim();
   if (!trimmed) return null;
-  if (trimmed.length <= 8) return trimmed.slice(0, 3) + "***";
+  if (trimmed.length <= 12) return "[REDACTED]";
   if (trimmed.startsWith("soter_tok_")) {
     return "soter_tok_" + trimmed.slice(10, 14) + "..." + trimmed.slice(-4);
   }
@@ -600,8 +632,6 @@ function readActionRequest(
   if (!rawPassportToken) {
     if (typeof itemJson.passportToken === "string" && itemJson.passportToken.trim()) {
       rawPassportToken = itemJson.passportToken.trim();
-    } else if (typeof itemJson.token === "string" && itemJson.token.trim()) {
-      rawPassportToken = itemJson.token.trim();
     } else if (
       itemJson.passport &&
       typeof itemJson.passport === "object" &&
@@ -647,12 +677,12 @@ function readActionRequest(
 
   switch (action) {
     case "analyzeText":
-      request.text = readText(ctx, node, "inputText", itemIndex, "Input Text");
+      request.text = readText(ctx, node, "inputText", itemIndex, "Input Text", request);
       request.onThreat = "WARN";
       request.replies = readCustomReplies(ctx, itemIndex);
       break;
     case "inputGuard":
-      request.text = readText(ctx, node, "inputText", itemIndex, "Input Text");
+      request.text = readText(ctx, node, "inputText", itemIndex, "Input Text", request);
       request.onThreat = ctx.getNodeParameter("onThreat", itemIndex) as string;
       request.allowedTopics = splitList(readDetectionOption(ctx, nodeVersion, "allowedTopics", itemIndex, "") as string);
       request.systemPromptContext = coerceText(
@@ -670,10 +700,10 @@ function readActionRequest(
       request.replies = readCustomReplies(ctx, itemIndex);
       break;
     case "universalGuard":
-      request.text = readText(ctx, node, "inputText", itemIndex, "Input Text");
+      request.text = readText(ctx, node, "inputText", itemIndex, "Input Text", request);
       request.onThreat = ctx.getNodeParameter("onThreat", itemIndex) as string;
       request.profile = ctx.getNodeParameter("protectionProfile", itemIndex) as ProtectionProfile;
-      request.aiOutputText = readText(ctx, node, "universalOutputText", itemIndex, "AI Output Text");
+      request.aiOutputText = readText(ctx, node, "universalOutputText", itemIndex, "AI Output Text", request);
       request.allowedTopics = splitList(readDetectionOption(ctx, nodeVersion, "allowedTopics", itemIndex, "") as string);
       request.systemPromptContext = coerceText(
         readDetectionOption(ctx, nodeVersion, "systemPromptContext", itemIndex, ""),
@@ -760,7 +790,7 @@ function readActionRequest(
       break;
     }
     case "outputGuard":
-      request.text = readText(ctx, node, "outputText", itemIndex, "AI Output Text");
+      request.text = readText(ctx, node, "outputText", itemIndex, "AI Output Text", request);
       request.onThreat = ctx.getNodeParameter("onThreat", itemIndex) as string;
       request.sensitivity = readSensitivity(ctx, itemIndex);
       attachIgnoredEntities(request, readIgnoredEntities(ctx, nodeVersion, itemIndex));
@@ -769,18 +799,53 @@ function readActionRequest(
       request.replies = readCustomReplies(ctx, itemIndex);
       break;
     case "piiRedactor":
-      request.text = readText(ctx, node, "piiText", itemIndex, "Text");
+      request.text = readText(ctx, node, "piiText", itemIndex, "Text", request);
       attachIgnoredEntities(request, readIgnoredEntities(ctx, nodeVersion, itemIndex));
       attachIgnoredWords(ctx, request, nodeVersion, itemIndex);
       break;
-    case "ragScanner":
-      request.text = readText(ctx, node, "ragText", itemIndex, "Document Text");
-      request.documentId = readText(ctx, node, "documentId", itemIndex, "Document ID");
+    case "ragScanner": {
+      let docText = readText(ctx, node, "ragText", itemIndex, "Document Text");
+      if (!docText.trim()) {
+        try {
+          docText = readText(ctx, node, "documentText", itemIndex, "Document Text");
+        } catch {
+          // ignore
+        }
+      }
+      if (!docText.trim()) {
+        if (typeof itemJson.documentText === "string" && itemJson.documentText.trim()) {
+          docText = itemJson.documentText.trim();
+        } else if (typeof itemJson.ragText === "string" && itemJson.ragText.trim()) {
+          docText = itemJson.ragText.trim();
+        } else if (typeof itemJson.text === "string" && itemJson.text.trim()) {
+          docText = itemJson.text.trim();
+        }
+      }
+      request.text = docText;
+      if (docText.trim()) {
+        request.wasExplicitNull = false;
+      }
+      let docId = readText(ctx, node, "documentId", itemIndex, "Document ID");
+      if (!docId.trim()) {
+        if (typeof itemJson.documentId === "string" && itemJson.documentId.trim()) {
+          docId = itemJson.documentId.trim();
+        } else if (typeof itemJson.id === "string" && itemJson.id.trim()) {
+          docId = itemJson.id.trim();
+        }
+      }
+      request.documentId = docId;
       request.documentSource = documentSourceValue(ctx.getNodeParameter("documentSource", itemIndex, ""));
       break;
-    case "workflowAudit":
-      request.workflowJson = readText(ctx, node, "workflowJson", itemIndex, "Workflow JSON");
+    }
+    case "workflowAudit": {
+      const rawWf = ctx.getNodeParameter("workflowJson", itemIndex, "") as unknown;
+      if (rawWf && typeof rawWf === "object") {
+        request.workflowJson = JSON.stringify(rawWf);
+      } else {
+        request.workflowJson = readText(ctx, node, "workflowJson", itemIndex, "Workflow JSON", request);
+      }
       break;
+    }
     default:
       throw new NodeOperationError(node, `Unknown action: ${action}`, { itemIndex });
   }
@@ -859,7 +924,8 @@ export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeE
   // value here.
   const nodeAction =
     items.length > 0
-      ? (this.getNodeParameter("action", 0) as string)
+      ? (((this.getNodeParameter("action", 0, "") as string) || (this.getNodeParameter("operation", 0, "") as string)) ||
+        ((node.parameters?.action as string) ?? (node.parameters?.operation as string) ?? "inputGuard"))
       : ((node.parameters?.action as string) ?? (node.parameters?.operation as string) ?? "inputGuard");
 
   const emptyOptions = (node.parameters?.options as IDataObject) ?? (node.parameters?.advancedOptions as IDataObject) ?? {};
@@ -882,6 +948,7 @@ export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeE
   // account — and made a credential-less workflow fail on an action that needs no
   // credential.
   let clientPromise: Promise<SoterClient> | undefined;
+  const resolvedSecrets: string[] = [];
   const resolveClient = (): Promise<SoterClient> => {
     if (!clientPromise) {
       clientPromise = (async () => {
@@ -898,6 +965,8 @@ export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeE
           });
         }
         const apiKey = typeof credentials.apiKey === "string" ? credentials.apiKey.trim() : "";
+        if (typeof credentials.apiKey === "string") resolvedSecrets.push(credentials.apiKey);
+        if (apiKey) resolvedSecrets.push(apiKey);
         if (!apiKey) {
           throw new NodeOperationError(node, "The selected SoterAI credential has no API key.", {
             description: ENGINE_LOCAL_HINT,
@@ -920,8 +989,13 @@ export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeE
 
   const runItem = async (i: number): Promise<void> => {
     try {
-      const action = this.getNodeParameter("action", i) as string;
-      const isAiToolContext = (this as unknown as { getMode?: () => string }).getMode?.() === "ai-tool" ||
+      const itemOptions = readNodeOptions(this, i);
+      const action =
+        ((this.getNodeParameter("action", i, "") as string) || (this.getNodeParameter("operation", i, "") as string)) ||
+        ((node.parameters?.action as string) ?? (node.parameters?.operation as string) ?? "inputGuard");
+      const isAiToolContext =
+        Boolean((this as unknown as { isToolExecution?: () => boolean }).isToolExecution?.()) ||
+        (this as unknown as { getMode?: () => string }).getMode?.() === "ai-tool" ||
         Boolean((this as unknown as { isTool?: boolean }).isTool);
       if (isAiToolContext && ["enrollIdentity", "issuePassport", "revokePassport"].includes(action)) {
         throw new NodeOperationError(
@@ -933,7 +1007,7 @@ export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeE
       const request = readActionRequest(this, node, i, nodeVersion, action);
       const blank = blankInputResult(request);
       if (blank) {
-        outcomes[i] = { json: canonicalizeResult(action, blank), flagged: false };
+        outcomes[i] = { json: canonicalizeResult(action, blank, itemOptions.branchOnRedaction), flagged: isFlagged(action, blank, itemOptions.branchOnRedaction) };
         return;
       }
       // Checked before the engine, not after: an allowlisted message costs no
@@ -947,7 +1021,16 @@ export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeE
       // Analysis is safe to reuse. Lifecycle mutations and audited tool checks
       // are not: each input item must create its own server-side event/resource.
       const nonReusableAction = ["enrollIdentity", "issuePassport", "revokePassport", "toolCall"].includes(action);
-      const key = options.reuseIdenticalItems && !nonReusableAction ? reuseKey(request) : undefined;
+      const key = itemOptions.reuseIdenticalItems && !nonReusableAction ? JSON.stringify([reuseKey(request), itemOptions]) : undefined;
+
+      const resolveItemClient = async (): Promise<SoterClient> => {
+        const client = await resolveClient();
+        return {
+          ...client,
+          timeoutMs: itemOptions.requestTimeoutMs ?? client.timeoutMs,
+          includeRaw: itemOptions.includeRawResponse ?? client.includeRaw,
+        };
+      };
 
       let hit = key ? reuseCache.get(key) : undefined;
       if (!hit) {
@@ -962,30 +1045,34 @@ export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeE
         // part of `reuseKey`, so two items sharing an answer configured them
         // identically.
         const started = {
-          promise: runAction(this, node, options, resolveClient, request).then((raw) => applyAuthorControls(request, raw)),
+          promise: runAction(this, node, itemOptions, resolveItemClient, request).then((raw) => applyAuthorControls(request, raw)),
           itemIndex: i,
         };
         if (key) reuseCache.set(key, started);
         hit = started;
       }
 
-      const result = canonicalizeResult(action, await hit.promise, options.branchOnRedaction);
+      const result = canonicalizeResult(action, await hit.promise, itemOptions.branchOnRedaction);
       if (hit.itemIndex === i) {
-        outcomes[i] = { json: result, flagged: isFlagged(action, result, options.branchOnRedaction) };
+        outcomes[i] = { json: result, flagged: isFlagged(action, result, itemOptions.branchOnRedaction) };
         return;
       }
       // Marked, not hidden. A reader comparing two items with one incident id
       // between them needs to know why, and a reused answer is still an answer
       // about this item's text — it is the same text.
-      const reused: IDataObject = { ...result, reusedResult: true, reusedFromItemIndex: hit.itemIndex };
-      outcomes[i] = { json: reused, flagged: isFlagged(action, reused, options.branchOnRedaction) };
-    } catch (error) {
+      const cloned = typeof structuredClone === "function" ? structuredClone(result) : JSON.parse(JSON.stringify(result));
+      const reused: IDataObject = { ...cloned, reusedResult: true, reusedFromItemIndex: hit.itemIndex };
+      outcomes[i] = { json: reused, flagged: isFlagged(action, reused, itemOptions.branchOnRedaction) };
+    } catch (unsafeError) {
+      const error = redactKnownCredentials(unsafeError, resolvedSecrets);
       if (this.continueOnFail()) {
         // An item whose check never completed has not been cleared by anything,
         // so it leaves through Flagged rather than Safe. Sending it down the
         // Safe branch would turn an API outage into a silent bypass.
+        const originalInput = items[i]?.json ? { ...items[i].json } : {};
         outcomes[i] = {
           json: {
+            ...redactKnownCredentials(originalInput, resolvedSecrets),
             error: true,
             message: sanitizeErrorMessage(error instanceof Error ? error.message : "SoterAI request failed."),
           },
@@ -1001,11 +1088,12 @@ export async function executeSoterGuard(this: IExecuteFunctions): Promise<INodeE
 
   const safeItems: INodeExecutionData[] = [];
   const flaggedItems: INodeExecutionData[] = [];
+  const outputCount = outputCountForAction(nodeAction, isBranchingRedaction);
   for (let i = 0; i < items.length; i++) {
     const outcome = outcomes[i];
     if (!outcome) continue;
-    const entry: INodeExecutionData = { json: outcome.json, pairedItem: { item: i } };
-    if (branchOutputs && outcome.flagged) flaggedItems.push(entry);
+    const entry: INodeExecutionData = { json: redactKnownCredentials(outcome.json, resolvedSecrets), pairedItem: { item: i } };
+    if (branchOutputs && outputCount > 1 && outcome.flagged) flaggedItems.push(entry);
     else safeItems.push(entry);
   }
 
@@ -1133,6 +1221,10 @@ function stampLocalEngine(result: IDataObject, fallbackReason: string | null): I
     limitations: LOCAL_ENGINE_LIMITATIONS,
     ...(fallbackReason ? { fellBackFromCloud: fallbackReason } : {}),
   };
+  if (fallbackReason) {
+    result.warning = `Fell back from cloud to local engine: ${fallbackReason}`;
+    result.developerMessage = `[FALLBACK] ${result.developerMessage ?? "Processed locally."} (${fallbackReason})`;
+  }
   return result;
 }
 
@@ -1180,6 +1272,7 @@ async function runCloudAction(
         metadata: request.metadata,
         allowedTopics: request.allowedTopics,
         systemPromptContext: request.systemPromptContext,
+        alwaysAllow: request.alwaysAllow,
         profile: request.profile,
         aiOutputText: request.aiOutputText,
         ragText: context.rag?.text,
@@ -1229,8 +1322,12 @@ async function runCloudAction(
           defaultPolicy: policy,
         });
       } catch (err: unknown) {
-        const errorMsg = err instanceof Error ? err.message : String(err);
-        if (/already exists|409/i.test(errorMsg)) {
+        const errObj = typeof err === "object" && err !== null ? (err as Record<string, unknown>) : {};
+        const is409 =
+          Number(errObj.httpCode) === 409 ||
+          Number(errObj.statusCode) === 409 ||
+          Number(errObj.status) === 409;
+        if (is409) {
           // Idempotency: try to query existing identities
           try {
             const listRes = await soterGet(ctx, client, "/api/agent/identities");
@@ -1266,6 +1363,12 @@ async function runCloudAction(
         identity: sanitizeOutputObject(raw),
         agentIdentityId: (raw.id as string) ?? null,
         reused: Boolean(raw.reused),
+        ...(raw.reused
+          ? {
+              warning: `Agent identity '${name}' already exists (HTTP 409). Reused existing identity with its original policy preset; requested preset '${request.passportPolicyPreset || "CUSTOM"}' was NOT applied to avoid unexpected security changes.`,
+              developerMessage: `Agent identity '${name}' already exists in registry. Preserved existing identity policy.`,
+            }
+          : {}),
         nextStep: "Use agentIdentityId with Issue Access Pass, then pass its passportToken to Check Tool Call.",
       };
       break;
@@ -1288,15 +1391,12 @@ async function runCloudAction(
           metadata: request.metadata,
         });
       } catch (err: unknown) {
-        if (
-          onSessionConflict === "ROTATE" &&
-          sessionId &&
-          typeof err === "object" &&
-          err !== null &&
-          ((err as { httpCode?: string | number }).httpCode === 409 ||
-            (err as { statusCode?: string | number }).statusCode === 409 ||
-            String((err as { message?: string }).message).includes("already exists for this sessionId"))
-        ) {
+        const errObj = typeof err === "object" && err !== null ? (err as Record<string, unknown>) : {};
+        const is409 =
+          Number(errObj.httpCode) === 409 ||
+          Number(errObj.statusCode) === 409 ||
+          Number(errObj.status) === 409;
+        if (onSessionConflict === "ROTATE" && sessionId && is409) {
           try {
             await soterPost(ctx, client, "/api/agent/passport/revoke", {
               sessionId,
@@ -1396,7 +1496,6 @@ async function runCloudAction(
         passportId: (raw.passportId as string) ?? null,
         agentIdentityId: (raw.agentIdentityId as string) ?? null,
         sessionId: (raw.sessionId as string) ?? sessionId,
-        passportToken: request.passportToken ?? null,
         passportTokenMasked: maskPassportToken(request.passportToken),
         expiresAt: raw.expiresAt as string,
         ...rawResponseFields(client, raw),
@@ -1553,7 +1652,6 @@ function toolCallResult(raw: Record<string, unknown>, client: SoterClient, passp
     policyMatches: matches as unknown as IDataObject[],
     passportId: (raw.passportId as string) ?? null,
     sessionId: (raw.sessionId as string) ?? null,
-    passportToken: activeToken,
     passportTokenMasked: maskPassportToken(activeToken),
     ...rawResponseFields(client, raw),
   };
@@ -1593,15 +1691,21 @@ function rawResponseFields(client: SoterClient, raw: Record<string, unknown>): I
  * rather than letting the request 400 keeps a long topic list from failing the
  * whole item with a validation error the user cannot easily connect to this field.
  */
-function splitList(value: string | undefined): string[] {
+function splitList(value: unknown): string[] {
   if (!value) return [];
+  if (Array.isArray(value)) {
+    return value
+      .map((entry) => String(entry).trim().slice(0, 120))
+      .filter(Boolean)
+      .slice(0, 50);
+  }
+  if (typeof value !== "string") return [];
   return value
     .split(/[,\n]/)
     .map((entry) => entry.trim().slice(0, 120))
     .filter(Boolean)
     .slice(0, 50);
 }
-
 /**
  * Newline-only split, for lists whose entries are sentences.
  *
@@ -1609,8 +1713,12 @@ function splitList(value: string | undefined): string[] {
  * how long does it take?" — and splitting those on commas would shred one entry
  * into three that match nothing.
  */
-function splitLines(value: string | undefined): string[] {
+function splitLines(value: unknown): string[] {
   if (!value) return [];
+  if (Array.isArray(value)) {
+    return value.map((e) => String(e).trim().slice(0, 300)).filter(Boolean).slice(0, 50);
+  }
+  if (typeof value !== "string") return [];
   return value
     .split(/\r?\n/)
     .map((entry) => entry.trim().slice(0, 300))
@@ -1741,6 +1849,7 @@ type UniversalRisk = "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
 interface UniversalGuardParams extends GuardParams {
   profile: ProtectionProfile;
   aiOutputText?: string;
+  alwaysAllow?: string[];
   ragText?: string;
   ragDocumentId?: string;
   ragSource?: string;
@@ -1826,8 +1935,15 @@ async function soterPost(
   body: Record<string, unknown>,
 ): Promise<Record<string, unknown>> {
   const url = `${client.baseUrl.replace(/\/$/, "")}${path}`;
+  const deadline = Date.now() + client.timeoutMs;
 
   for (let attempt = 0; ; attempt++) {
+    if (attempt > 0 && Date.now() >= deadline) {
+      throw tagTransient(new NodeApiError(ctx.getNode(), {}, {
+        message: "SoterAI API request time budget was exhausted during rate-limit backoff.",
+        httpCode: "408",
+      }));
+    }
     let response: { statusCode?: number; body?: unknown; headers?: unknown };
 
     try {
@@ -1850,7 +1966,8 @@ async function soterPost(
         },
         body: body as IDataObject,
         json: true,
-        timeout: client.timeoutMs,
+        timeout: Math.max(1, deadline - Date.now()),
+        disableFollowRedirect: true,
         returnFullResponse: true,
         ignoreHttpStatusErrors: true,
       });
@@ -1859,14 +1976,17 @@ async function soterPost(
       // timeout. Nothing here says the request was wrong, so Auto mode may
       // answer it with the local engine.
       throw tagTransient(
-        new NodeApiError(ctx.getNode(), error as JsonObject, {
+        new NodeApiError(ctx.getNode(), redactKnownCredentials(error, [client.apiKey]) as JsonObject, {
           message: `SoterAI API request to ${path} failed. Check the Base URL and network access.`,
         }),
       );
     }
 
     const statusCode = typeof response.statusCode === "number" ? response.statusCode : 0;
-    const data = (response.body && typeof response.body === "object" ? response.body : {}) as Record<string, unknown>;
+    const data = redactKnownCredentials(
+      (response.body && typeof response.body === "object" ? response.body : {}) as Record<string, unknown>,
+      [client.apiKey],
+    );
 
     // Guard calls are pure analysis — they create no resource — so replaying one
     // after the rate-limit window rolls over is safe.
@@ -1874,9 +1994,13 @@ async function soterPost(
       const retryAfterMs = parseRetryAfterMs(response.headers);
       // Back off exponentially only when the server did not tell us how long to
       // wait; when it did, its number is authoritative.
-      const waitMs = retryAfterMs ?? Math.min(DEFAULT_RETRY_WAIT_MS * 2 ** attempt, MAX_RETRY_WAIT_MS);
-      await sleep(waitMs);
-      continue;
+      const rawWaitMs = retryAfterMs ?? Math.min(DEFAULT_RETRY_WAIT_MS * 2 ** attempt, MAX_RETRY_WAIT_MS);
+      // The timeout covers the entire retry sequence, including backoff. Never
+      // shorten the server's Retry-After just to squeeze in another request.
+      if (rawWaitMs < deadline - Date.now()) {
+        if (rawWaitMs > 0) await sleep(rawWaitMs);
+        continue;
+      }
     }
 
     if (statusCode < 200 || statusCode >= 300) {
@@ -1908,8 +2032,9 @@ async function soterGet(
   path: string,
 ): Promise<Record<string, unknown>> {
   const url = `${client.baseUrl.replace(/\/$/, "")}${path}`;
+  let response: { statusCode?: number; body?: unknown };
   try {
-    const response = await ctx.helpers.httpRequest({
+    response = await ctx.helpers.httpRequest({
       method: "GET",
       url,
       headers: {
@@ -1920,17 +2045,29 @@ async function soterGet(
       },
       json: true,
       timeout: client.timeoutMs,
+      disableFollowRedirect: true,
       returnFullResponse: true,
       ignoreHttpStatusErrors: true,
     });
-    return (response.body && typeof response.body === "object" ? response.body : {}) as Record<string, unknown>;
   } catch (error) {
     throw tagTransient(
-      new NodeApiError(ctx.getNode(), error as JsonObject, {
+      new NodeApiError(ctx.getNode(), redactKnownCredentials(error, [client.apiKey]) as JsonObject, {
         message: `SoterAI API request to ${path} failed. Check the Base URL and network access.`,
       }),
     );
   }
+  const statusCode = typeof response.statusCode === "number" ? response.statusCode : 0;
+  const body = redactKnownCredentials(
+    (response.body && typeof response.body === "object" ? response.body : {}) as Record<string, unknown>,
+    [client.apiKey],
+  );
+  if (statusCode < 200 || statusCode >= 300) {
+    throw new NodeApiError(ctx.getNode(), body as JsonObject, {
+      message: formatApiError(statusCode, body, path),
+      httpCode: String(statusCode),
+    });
+  }
+  return body;
 }
 
 /**
@@ -1979,7 +2116,15 @@ async function executeInputGuard(
       : {}),
   });
 
-  const allowed = raw.allowed as boolean;
+  const rawAction = typeof raw.action === "string" ? raw.action.toUpperCase() : "";
+  const rawDecision = typeof raw.decision === "string" ? raw.decision.toUpperCase() : "";
+  const isServerBlocked = rawAction === "BLOCK" || rawDecision === "BLOCK" || raw.verdictCode === "CONTENT_BLOCKED" || raw.verdictCode === "THREAT_BLOCKED";
+  let allowed = raw.allowed === true;
+  if (normalizeDecision(raw.action) === "REVIEW" && Array.isArray(raw.riskTypes) && raw.riskTypes.some((type) => ATTACK_CATEGORIES.has(String(type)))) allowed = false;
+  // Bug 49: If server sends contradictory allowed: true with action: "BLOCK", cross-check and enforce allowed: false
+  if (allowed === true && isServerBlocked) {
+    allowed = false;
+  }
   const action = normalizeDecision(raw.action) ?? (allowed ? "ALLOW" : "BLOCK");
   const result: IDataObject = {
     allowed,
@@ -2046,6 +2191,10 @@ async function executeInputGuard(
       (raw.safeText as string) ?? (raw.redactedText as string) ?? params.text,
       (raw.reason as string) ?? "",
     );
+  } else if (!allowed) {
+    result.blocked = true;
+    result.allowed = false;
+    result.outputText = "";
   } else {
     result.blocked = false;
     result.outputText = (raw.safeText as string) ?? (raw.redactedText as string) ?? params.text;
@@ -2069,7 +2218,15 @@ async function executeOutputGuard(
     metadata: meta,
   });
 
-  const allowed = raw.allowed as boolean;
+  const rawAction = typeof raw.action === "string" ? raw.action.toUpperCase() : "";
+  const rawDecision = typeof raw.decision === "string" ? raw.decision.toUpperCase() : "";
+  const isServerBlocked = rawAction === "BLOCK" || rawDecision === "BLOCK" || raw.verdictCode === "CONTENT_BLOCKED" || raw.verdictCode === "THREAT_BLOCKED";
+  let allowed = raw.allowed === true;
+  if (normalizeDecision(raw.action) === "REVIEW" && Array.isArray(raw.riskTypes) && raw.riskTypes.some((type) => ATTACK_CATEGORIES.has(String(type)))) allowed = false;
+  // Bug 49: If server sends contradictory allowed: true with action: "BLOCK", cross-check and enforce allowed: false
+  if (allowed === true && isServerBlocked) {
+    allowed = false;
+  }
   const action = normalizeDecision(raw.action) ?? (allowed ? "ALLOW" : "BLOCK");
   const result: IDataObject = {
     allowed,
@@ -2136,6 +2293,10 @@ async function executeOutputGuard(
       (raw.safeText as string) ?? (raw.redactedText as string) ?? params.text,
       (raw.reason as string) ?? "",
     );
+  } else if (!allowed) {
+    result.blocked = true;
+    result.allowed = false;
+    result.outputText = "";
   } else {
     result.blocked = false;
     result.outputText = (raw.safeText as string) ?? (raw.redactedText as string) ?? params.text;
@@ -2331,7 +2492,7 @@ async function executeUniversalGuard(
   client: SoterClient,
   params: UniversalGuardParams,
 ): Promise<IDataObject> {
-  validateText(ctx.getNode(), params.text, "Input Text");
+  if (params.text.trim()) validateText(ctx.getNode(), params.text, "Input Text");
   const meta: Record<string, unknown> = {
     ...params.metadata,
     soteraiNodeMode: "universalGuard",
@@ -2345,18 +2506,43 @@ async function executeUniversalGuard(
   const auto = options.engine === "AUTO";
 
   const checks: IDataObject[] = [];
-  // The input guard is the one mandatory layer, so it is deliberately not
-  // wrapped: if it cannot run, nothing has inspected the item and the node must
-  // fail loudly rather than emit a partial verdict.
-  const input = await executeInputGuard(ctx, client, {
-    text: params.text,
-    projectId: params.projectId,
-    onThreat: "WARN",
-    metadata: meta,
-    allowedTopics: params.allowedTopics,
-    systemPromptContext: params.systemPromptContext,
+  let inputCheck: IDataObject;
+  const inputMessage = foldForAllowlist(params.text);
+  const matchedAlwaysAllow = params.alwaysAllow?.find((phrase) => {
+    const folded = foldForAllowlist(phrase);
+    return folded.length >= MIN_ALWAYS_ALLOW_LENGTH && folded === inputMessage;
   });
-  checks.push({ layer: "input", ...input });
+
+  if (matchedAlwaysAllow && inputMessage.length >= MIN_ALWAYS_ALLOW_LENGTH) {
+    inputCheck = {
+      layer: "input",
+      bypassed: "ALWAYS_ALLOW",
+      alwaysAllowMatch: matchedAlwaysAllow,
+      allowed: true,
+      blocked: false,
+      decision: "ALLOW",
+      action: "ALLOW",
+      riskScore: 0,
+      categories: ["LOW_RISK"],
+      findings: [],
+      safeText: params.text,
+      outputText: params.text,
+      reason: "The message matched an Always Allow entry exactly on the input layer.",
+    };
+  } else {
+    inputCheck = {
+      layer: "input",
+      ...(params.text.trim() ? await executeInputGuard(ctx, client, {
+        text: params.text,
+        projectId: params.projectId,
+        onThreat: "WARN",
+        metadata: meta,
+        allowedTopics: params.allowedTopics,
+        systemPromptContext: params.systemPromptContext,
+      }) : { allowed: true, blocked: false, action: "ALLOW", riskScore: 0, categories: ["LOW_RISK"], safeText: "", outputText: "", skipped: true, reason: "No input text supplied; other layers are checked." }),
+    };
+  }
+  checks.push(inputCheck);
 
   const layerRuns: Array<() => Promise<IDataObject>> = [];
 
@@ -2560,7 +2746,7 @@ async function executeUniversalGuard(
 
   checks.push(...(await runLayers(layerRuns, options.parallelLayers)));
 
-  let outputText = params.aiOutputText?.trim() ? params.aiOutputText : (input.outputText as string) || params.text;
+  let outputText = params.aiOutputText?.trim() ? params.aiOutputText : (inputCheck.outputText as string) || params.text;
   const outputLayer = checks.find((check) => check.layer === "output");
   if (outputLayer && outputLayer.unavailable !== true) {
     outputText = (outputLayer.outputText as string) || (params.aiOutputText as string) || outputText;
@@ -2607,7 +2793,17 @@ function finalizeUniversalGuard(input: {
     .filter((check) => check.engine === "local" && check.engineDegraded === true)
     .map((check) => String(check.layer));
   const final = decideUniversal(evaluated, input.profile);
-  const safeText = firstString(evaluated, ["safeText", "safeContent", "contentRedacted"]) || input.outputText;
+  let safeText: string | undefined;
+  if (input.aiOutputText?.trim()) {
+    const outputCheck = evaluated.find((check) => check.layer === "output" || check.layer === "egress" || check.layer === "aiOutput");
+    if (outputCheck) {
+      safeText = firstString([outputCheck], ["safeText", "safeContent", "contentRedacted"], true);
+    }
+    if (safeText === undefined) safeText = redactLocal(input.aiOutputText).safeText;
+  }
+  if (safeText === undefined) {
+    safeText = firstString(evaluated, ["safeText", "safeContent", "contentRedacted"]) || input.outputText;
+  }
   // Attribution comes from whichever layer actually drove the verdict, not from
   // the first layer that happened to run — otherwise `primaryRiskType` would say
   // "input" on a run that was decided by the egress check. Scored through
@@ -2631,7 +2827,7 @@ function finalizeUniversalGuard(input: {
   return {
     operation: "universalGuard",
     protectionProfile: input.profile,
-    allowed: final.decision === "ALLOW" || final.decision === "REDACT" || final.decision === "REVIEW",
+    allowed: !enforced.blocked && final.decision !== "ASK_APPROVAL",
     blocked: enforced.blocked,
     // Reported apart from `blocked` on purpose: the item was not stopped by a
     // verdict, but part of it was never inspected, and those are different facts
@@ -2720,6 +2916,18 @@ function localTopicOptions(request: ActionRequest): LocalAnalysisOptions {
     ...(ignoreLiterals ? { ignoreLiterals } : {}),
   };
 }
+
+const LOCAL_ACTIVE_SESSIONS = new Map<
+  string,
+  {
+    passportId: string;
+    passportToken: string;
+    expiresAt: number;
+    ttlSeconds: number;
+    agentIdentityId: string;
+    policy: Record<string, unknown>;
+  }
+>();
 
 function runLocalAction(node: INode, options: NodeOptions, request: ActionRequest): IDataObject {
   switch (request.action) {
@@ -2862,39 +3070,91 @@ function runLocalAction(node: INode, options: NodeOptions, request: ActionReques
       const agentIdentityId = request.agentIdentityId?.trim() ?? "";
       if (!agentIdentityId) throw new NodeOperationError(node, "Agent Identity ID is required.", { itemIndex: request.itemIndex });
       const sessionId = metadataSessionId(request.metadata) || "session_local";
-      const policy = resolvePassportPolicy(request.passportPolicyPreset, request.passportPolicy);
-      const ttlSeconds = request.passportTtlSeconds ?? 3600;
-      const passportId = `pass_local_${Date.now()}`;
-      const passportToken = `soter_tok_local_${Math.random().toString(36).substring(2, 12)}`;
+      let policy = resolvePassportPolicy(request.passportPolicyPreset, request.passportPolicy);
+      let ttlSeconds = request.passportTtlSeconds ?? 3600;
       const onSessionConflict = request.onSessionConflict || "ROTATE";
+
+      for (const [id, session] of LOCAL_ACTIVE_SESSIONS) {
+        if (session.expiresAt <= Date.now()) LOCAL_ACTIVE_SESSIONS.delete(id);
+      }
+      const existingSession = LOCAL_ACTIVE_SESSIONS.get(sessionId);
+      const isUnexpired = Boolean(existingSession && existingSession.expiresAt > Date.now());
+
+      if (existingSession && isUnexpired && onSessionConflict === "FAIL") {
+        throw new NodeOperationError(
+          node,
+          `Session conflict: an active session "${sessionId}" already exists and On Session Conflict is set to Fail.`,
+          { itemIndex: request.itemIndex },
+        );
+      }
+
+      const reusable = existingSession && isUnexpired && onSessionConflict === "REUSE" ? existingSession : undefined;
+      if (reusable && reusable.agentIdentityId !== agentIdentityId) {
+        throw new NodeOperationError(node, "Cannot reuse a session belonging to a different Agent Identity ID.", { itemIndex: request.itemIndex });
+      }
+      const passportId = reusable?.passportId ?? `pass_local_${randomBytes(12).toString("hex")}`;
+      const passportToken = reusable?.passportToken ?? `soter_tok_local_${randomBytes(16).toString("hex")}`;
+      const expiresAt = reusable?.expiresAt ?? Date.now() + ttlSeconds * 1000;
+      if (reusable) {
+        policy = reusable.policy;
+        ttlSeconds = reusable.ttlSeconds;
+      }
+      LOCAL_ACTIVE_SESSIONS.set(sessionId, {
+        passportId,
+        passportToken,
+        expiresAt,
+        ttlSeconds,
+        agentIdentityId,
+        policy,
+      });
+
       return {
         operation: "issuePassport",
         verdictCode: "PASSPORT_ISSUED",
         allowed: true,
         blocked: false,
         emulated: true,
-        warning: "Simulated local access pass. Not persisted in SoterAI cloud registry.",
+        warning: reusable
+          ? "Reused simulated local access pass with its original policy and expiry; requested policy and TTL were not applied."
+          : "Simulated local access pass. Not persisted in SoterAI cloud registry.",
         passportId,
         passportToken,
         passportTokenMasked: maskPassportToken(passportToken),
         sessionId,
         agentIdentityId,
         ttlSeconds,
-        expiresAt: new Date(Date.now() + ttlSeconds * 1000).toISOString(),
+        expiresAt: new Date(expiresAt).toISOString(),
         policy,
         status: "ACTIVE",
         mode: "LOCAL_EMULATED",
-        ...(onSessionConflict === "ROTATE" ? { rotated: true } : {}),
-        ...(onSessionConflict === "REUSE" ? { reused: true } : {}),
+        ...(existingSession && isUnexpired && onSessionConflict === "ROTATE" ? { rotated: true } : {}),
+        ...(reusable ? { reused: true } : {}),
       };
     }
     case "validatePassport": {
-      const token = request.passportToken || "soter_tok_local";
+      if (!request.passportToken?.trim()) {
+        return {
+          operation: "validatePassport",
+          verdictCode: "TOKEN_MISSING",
+          allowed: false,
+          blocked: true,
+          decision: "BLOCK",
+          emulated: true,
+          warning: "No passport token provided for validation.",
+          passportTokenMasked: null,
+          sessionId: metadataSessionId(request.metadata) || "session_local",
+          status: "REVOKED",
+          mode: "LOCAL_EMULATED",
+        };
+      }
+      const token = request.passportToken.trim();
       const sessionId = metadataSessionId(request.metadata) || "session_local";
+      const session = LOCAL_ACTIVE_SESSIONS.get(sessionId);
+      const valid = Boolean(session && session.expiresAt > Date.now() && session.passportToken === token);
       const tool = request.tool;
-      let allowed = true;
-      let decision = "ALLOW";
-      if (tool && tool.name && tool.action) {
+      let allowed = valid;
+      let decision = valid ? "ALLOW" : "BLOCK";
+      if (valid && tool && tool.name && tool.action) {
         const check = checkToolCallLocal({
           name: tool.name,
           action: tool.action,
@@ -2911,17 +3171,25 @@ function runLocalAction(node: INode, options: NodeOptions, request: ActionReques
         allowed,
         blocked: !allowed,
         emulated: true,
-        warning: "Simulated local passport validation.",
+        warning: valid ? "Simulated local passport validation." : "Unknown, expired, revoked, or mismatched local passport token.",
         decision,
-        passportToken: token,
         passportTokenMasked: maskPassportToken(token),
         sessionId,
-        status: "ACTIVE",
+        status: allowed ? "ACTIVE" : "REVOKED",
         mode: "LOCAL_EMULATED",
       };
     }
     case "revokePassport": {
       const sessionId = metadataSessionId(request.metadata) || "";
+      if (!sessionId && !request.passportId) throw new NodeOperationError(node, "Session ID or Passport ID is required to revoke a passport.");
+      if (sessionId) {
+        LOCAL_ACTIVE_SESSIONS.delete(sessionId);
+      }
+      if (request.passportId) {
+        for (const [id, session] of LOCAL_ACTIVE_SESSIONS) {
+          if (session.passportId === request.passportId) LOCAL_ACTIVE_SESSIONS.delete(id);
+        }
+      }
       const passportId = request.passportId || "pass_local";
       return {
         operation: "revokePassport",
@@ -3102,11 +3370,11 @@ function toLocalEgressSources(sources: unknown[]): LocalEgressSource[] {
 }
 
 function runLocalUniversalGuard(node: INode, options: NodeOptions, request: ActionRequest): IDataObject {
-  validateText(node, request.text, "Input Text");
+  if (request.text.trim()) validateText(node, request.text, "Input Text");
   const context = request.securityContext ?? {};
   const checks: IDataObject[] = [];
 
-  const input = localGuardResult({
+  const input = alwaysAllowResult(request, true) ?? localGuardResult({
     analysis: analyzeLocal(request.text, "INPUT", localTopicOptions(request)),
     direction: "input",
     originalText: request.text,
@@ -3283,8 +3551,44 @@ function canonicalizeResult(action: string, result: IDataObject, branchOnRedacti
 }
 
 function blankInputResult(request: ActionRequest): IDataObject | null {
-  if (!["analyzeText", "inputGuard", "outputGuard", "piiRedactor", "ragScanner", "universalGuard"].includes(request.action)) return null;
-  if (request.text.trim()) return null;
+  if (request.wasExplicitNull) {
+    return {
+      operation: request.action,
+      skipped: false,
+      allowed: false,
+      blocked: true,
+      action: "BLOCK",
+      rawAction: "BLOCK",
+      decision: "BLOCK",
+      riskScore: 100,
+      categories: ["INVALID_INPUT"],
+      safeText: "",
+      outputText: "",
+      verdictCode: "INVALID_INPUT",
+      reason: "Input expression resolved to null or undefined. A valid string is required for security inspection.",
+      userMessage: "Input is missing or null.",
+      developerMessage: "Input expression resolved to null or undefined.",
+      throttled: false,
+      engine: "none",
+      engineDegraded: false,
+    };
+  }
+
+  if (!["analyzeText", "inputGuard", "outputGuard", "piiRedactor", "universalGuard"].includes(request.action)) return null;
+
+  if (request.action === "universalGuard") {
+    const hasAnyContent =
+      Boolean(request.text?.trim()) ||
+      Boolean(request.aiOutputText?.trim()) ||
+      Boolean(request.tool?.name?.trim() || request.tool?.action?.trim() || request.tool?.content?.trim()) ||
+      Boolean(request.securityContext?.tool) ||
+      Boolean(request.securityContext?.memory) ||
+      Boolean(request.securityContext?.rag?.text?.trim());
+    if (hasAnyContent) return null;
+  } else {
+    if (request.text.trim()) return null;
+  }
+
   return {
     operation: request.action,
     skipped: true,
@@ -3375,7 +3679,8 @@ const MIN_ALWAYS_ALLOW_LENGTH = 8;
  * most common questions has no way to see that coming. Whole-message matching
  * cannot be extended that way — adding anything changes the message.
  */
-function alwaysAllowResult(request: ActionRequest): IDataObject | null {
+function alwaysAllowResult(request: ActionRequest, inputLayer = false): IDataObject | null {
+  if (request.action === "universalGuard" && !inputLayer) return null;
   const phrases = request.alwaysAllow;
   if (!phrases?.length || !GUARDED_ACTIONS.has(request.action)) return null;
 
@@ -3573,7 +3878,7 @@ function restoreCloudIgnoredWords(
 
     const trimmedSpan = originalSpan.trim().toLowerCase();
     const match = keptWords.find(
-      (kw) => kw.toLowerCase() === trimmedSpan || trimmedSpan.includes(kw.toLowerCase()),
+      (kw) => kw.trim().toLowerCase() === trimmedSpan,
     );
 
     if (match && !phraseCarriesCredential(originalSpan)) {
@@ -3753,8 +4058,9 @@ function applyIgnoredEntities(request: ActionRequest, result: IDataObject): void
   if (withdrawn.length > 0) {
     result.findings = kept as unknown as IDataObject[];
     const keptTypes = new Set(kept.map((finding) => String(finding.type)));
+    const withdrawnTypes = new Set(withdrawn.map((finding) => String(finding.type)));
     const categories = (Array.isArray(result.categories) ? result.categories.map(String) : []).filter((category) =>
-      keptTypes.has(category),
+      !withdrawnTypes.has(category) || keptTypes.has(category),
     );
     result.categories = categories.length > 0 ? categories : ["LOW_RISK"];
     report.withdrawnFindings = withdrawn as unknown as IDataObject[];
@@ -3772,7 +4078,10 @@ function applyIgnoredEntities(request: ActionRequest, result: IDataObject): void
     restored = found.length > 0 && found.every((name) => tokens.has(name));
   }
 
-  if (withdrawn.length > 0 && kept.length === 0) {
+  const existingCategories = Array.isArray(result.categories) ? result.categories.map(String) : [];
+  const hasAttackRisk = existingCategories.some((cat) => cat !== "LOW_RISK");
+
+  if (withdrawn.length > 0 && kept.length === 0 && !hasAttackRisk) {
     // Nothing else was found. The only reasons to stop this item were the ones
     // the author asked the guard to ignore, so it continues.
     result.allowed = true;
@@ -3897,6 +4206,7 @@ function applySensitivity(request: ActionRequest, result: IDataObject): void {
     // Exactly the shape On Threat = Warn already produces: the engine's verdict
     // is untouched and reported as-is, the node simply did not act on it.
     result.blocked = false;
+    result.allowed = true;
     result.outputText = stringValue(result.safeText) ?? request.text;
     result.warning = reason;
     result.sensitivity = {
@@ -3931,6 +4241,7 @@ function applySensitivity(request: ActionRequest, result: IDataObject): void {
  * being hard-blocked.
  */
 function enforceOnThreat(result: IDataObject, onThreat: string, originalText: string, reason: string): void {
+  result.allowed = onThreat === "REDACT" || onThreat === "WARN" || onThreat === "CONTINUE";
   switch (onThreat) {
     case "REDACT":
       result.blocked = false;
@@ -4067,7 +4378,20 @@ async function executePiiRedactor(
     );
   }
 
-  const baseText = serverRedacted ?? params.text;
+  let baseText = serverRedacted;
+  if (baseText === undefined) {
+    const local = redactLocal(params.text, { ignore: params.ignoredEntities });
+    baseText = local.safeText;
+    if (local.entities.length > 0 && piiEntities.length === 0) {
+      for (const f of local.entities) {
+        piiEntities.push({
+          type: f.type,
+          label: `${f.type} (redacted by local engine fallback)`,
+          severity: f.severity,
+        });
+      }
+    }
+  }
   // The node's own SSN net answers to the same list the server side of this
   // action cannot be told about, so an author who asked to keep SSNs does not
   // get them back from the API and removed again on the way out.
@@ -4329,18 +4653,9 @@ function parseOptionalJsonObject(node: INode, raw: unknown, fieldName: string): 
 function validateBaseUrl(node: INode, raw: string): string {
   let parsed: URL;
   try {
-    parsed = new URL(raw);
-  } catch {
-    throw new NodeOperationError(node, "SoterAI Base URL must be a valid URL.");
-  }
-
-  if (parsed.username || parsed.password || parsed.search || parsed.hash) {
-    throw new NodeOperationError(node, "SoterAI Base URL must not include credentials, query parameters, or fragments.");
-  }
-
-  const isLocalDevHost = ["localhost", "127.0.0.1", "::1", "host.docker.internal"].includes(parsed.hostname);
-  if (parsed.protocol !== "https:" && !(parsed.protocol === "http:" && isLocalDevHost)) {
-    throw new NodeOperationError(node, "SoterAI Base URL must use HTTPS, except http://localhost for local development.");
+    parsed = new URL(validatedBaseUrl(raw));
+  } catch (error) {
+    throw new NodeOperationError(node, error as Error);
   }
 
   parsed.pathname = parsed.pathname.replace(/\/+$/, "");
@@ -4354,7 +4669,7 @@ function sanitizeRequestMetadata(metadata?: Record<string, unknown>): Record<str
 
 function sanitizeMetadataValue(value: unknown, depth: number, key?: string): unknown {
   if (depth > MAX_SANITIZE_DEPTH) return "[REDACTED_DEPTH_LIMIT]";
-  if (isSensitiveKey(key)) return "[REDACTED]";
+  if (isSensitiveKey(key, value)) return "[REDACTED]";
   if (typeof value === "string") {
     const sanitized = sanitizeErrorMessage(value);
     return sanitized.length > MAX_METADATA_STRING_LENGTH ? `${sanitized.slice(0, MAX_METADATA_STRING_LENGTH)}...[TRUNCATED]` : sanitized;
@@ -4419,7 +4734,7 @@ function securityContextFromCollection(node: INode, collection: IDataObject): Se
         destination: toolDestinationValue(tool.destination),
         target: stringValue(tool.target),
         content: stringValue(tool.content),
-        riskContext: parseOptionalJsonObject(node, stringValue(tool.riskContext) ?? "", "Security Context: Risk Context"),
+        riskContext: parseOptionalJsonObject(node, tool.riskContext, "Security Context: Risk Context"),
       };
     }
   }
@@ -4440,7 +4755,7 @@ function securityContextFromCollection(node: INode, collection: IDataObject): Se
   if (isRecord(output)) {
     const protectedSources = parseOptionalJsonArray(
       node,
-      stringValue(output.protectedSources) ?? "",
+      output.protectedSources,
       "Security Context: Protected Sources",
     );
     const destinationType = stringValue(output.destinationType);
@@ -4627,7 +4942,9 @@ const PASSPORT_TTL_MAX_SECONDS = 86_400;
 
 function decideUniversal(checks: IDataObject[], profile: ProtectionProfile) {
   const layerDecisions = checks.map(toLayerDecision);
-  const worst = layerDecisions.reduce((current, item) => riskRank(item.riskLevel) > riskRank(current.riskLevel) ? item : current, {
+  const worst = layerDecisions.reduce((current, item) =>
+    riskRank(item.riskLevel) > riskRank(current.riskLevel) ||
+    (riskRank(item.riskLevel) === riskRank(current.riskLevel) && item.riskScore > current.riskScore) ? item : current, {
     decision: "ALLOW" as UniversalDecision,
     riskLevel: "LOW" as UniversalRisk,
     riskScore: 0,
@@ -4661,10 +4978,11 @@ function decideUniversal(checks: IDataObject[], profile: ProtectionProfile) {
 function toLayerDecision(check: IDataObject) {
   const layer = typeof check.layer === "string" ? check.layer : "unknown";
   let decision = normalizeDecision(check.decision);
+  const categories = Array.isArray(check.categories) ? check.categories.map(String) : [];
+  if ((normalizeDecision(check.rawAction) === "REVIEW" || normalizeDecision(check.action) === "REVIEW") && categories.some((type) => ATTACK_CATEGORIES.has(type))) decision = "BLOCK";
   const allowed = typeof check.allowed === "boolean" ? check.allowed : undefined;
   if (!decision && allowed === false) decision = "BLOCK";
   if (!decision && normalizeDecision(check.action) === "BLOCK") decision = "BLOCK";
-  if (!decision && normalizeDecision(check.action) === "REDACT") decision = "REDACT";
   // A guard layer reports its verdict in `action`, not `decision` — only the
   // purpose-built layers use `decision`. So a layer that answered REDACT arrived
   // here with nothing to read, fell through to ALLOW, and the `redacted` branch
@@ -4730,8 +5048,8 @@ function scoreFromCheck(check: IDataObject): number {
 }
 
 function normalizeScore(score: number) {
-  const scaled = score <= 1 ? score * 100 : score;
-  return Math.max(0, Math.min(100, Math.round(scaled)));
+  // Guard API riskScore is always on a 0-100 scale, including fractions.
+  return Number.isFinite(score) ? Math.max(0, Math.min(100, Math.round(score))) : 0;
 }
 
 function riskScoreForLevel(level?: UniversalRisk) {
@@ -4814,7 +5132,7 @@ function enforceUniversalDecision(input: {
     };
   }
   const threat = input.decision !== "ALLOW" && input.decision !== "REVIEW";
-  if (!threat) return { blocked: false, outputText: input.safeText || input.originalText };
+  if (!threat) return { blocked: false, outputText: input.safeText };
   switch (input.onThreat) {
     case "REDACT":
       return { blocked: false, outputText: input.safeText || "[REDACTED]" };
@@ -4848,11 +5166,11 @@ function collectCategories(checks: IDataObject[]) {
   return [...values];
 }
 
-function firstString(checks: IDataObject[], fields: string[]) {
+function firstString(checks: IDataObject[], fields: string[], allowEmpty = false) {
   for (const check of checks) {
     for (const field of fields) {
       const value = check[field];
-      if (typeof value === "string" && value.trim()) return value;
+      if (typeof value === "string" && (allowEmpty || value.trim())) return value;
     }
   }
   return undefined;
@@ -4938,6 +5256,18 @@ function buildDeveloperMessage(input: {
   return `SoterAI flagged this ${input.direction}. Risk score: ${score}. Categories: ${categories}. Reason: ${input.reason || "No reason returned."}`;
 }
 
+function hasHardcodedWorkflowSecret(value: unknown, key = ""): boolean {
+  if (typeof value === "string") {
+    const literal = value.replace(/\{\{[\s\S]*?\}\}/g, "").trim();
+    if (!literal || literal === "=") return false;
+    const credentialKey = /^(?:api[_-]?key|apikey|password|passwd|pwd|client[_-]?secret|private[_-]?key|(?:auth|access|refresh|bearer|secret|session|passport)[_-]?token|authorization|token|secret)$/i;
+    return (credentialKey.test(key) && literal.replace(/^Bearer\s*/i, "").length >= 6) || phraseCarriesCredential(literal);
+  }
+  if (Array.isArray(value)) return value.some((entry) => hasHardcodedWorkflowSecret(entry));
+  if (isRecord(value)) return Object.entries(value).some(([entryKey, entryValue]) => hasHardcodedWorkflowSecret(entryValue, entryKey));
+  return false;
+}
+
 function executeWorkflowAudit(node: INode, workflowJson: string): IDataObject {
   validateText(node, workflowJson, "Workflow JSON");
   const workflow = parseWorkflowJson(node, workflowJson);
@@ -4955,14 +5285,38 @@ function executeWorkflowAudit(node: INode, workflowJson: string): IDataObject {
     ));
   }
 
-  const hasSoterNode = nodes.some((wfNode) => wfNode.type === "n8n-nodes-soterai.soterGuard");
-  const hasUniversalGuard = nodes.some((wfNode) => wfNode.type === "n8n-nodes-soterai.soterGuard" && getParam(wfNode, "action") === "universalGuard");
-  const hasAiAgent = nodes.some((wfNode) => /langchain\.agent|ai.?agent/i.test(`${wfNode.type} ${wfNode.name}`));
-  const hasToolLikeNode = nodes.some((wfNode) => isToolLikeNode(wfNode));
-  const hasWebhook = nodes.some((wfNode) => /webhook|formTrigger/i.test(wfNode.type));
-  const hasRespond = nodes.some((wfNode) => /respondToWebhook|webhook/i.test(wfNode.type));
-  const hasRagOrVector = nodes.some((wfNode) => /vector|pinecone|qdrant|weaviate|supabase|retriever|document|embedding|splitter/i.test(`${wfNode.type} ${wfNode.name}`));
-  const hasMemory = nodes.some((wfNode) => /memory|chatMemory|windowBuffer/i.test(`${wfNode.type} ${wfNode.name}`));
+  // Bug 37 & Bug 38: Only active (non-disabled) nodes provide runtime protection
+  const isSoterGuardNode = (wfNode: WorkflowNode) =>
+    ["n8n-nodes-soterai.soterGuard", "n8n-nodes-soterai.soterGuardTool"].includes(wfNode.type);
+
+  for (const wfNode of nodes) {
+    if (wfNode.disabled && isSoterGuardNode(wfNode)) {
+      findings.push(auditFinding(
+        "soterai.firewall_disabled",
+        "HIGH",
+        `SoterAI guard node is disabled: ${wfNode.name}.`,
+        "Enable the SoterAI Firewall node to protect the workflow. Disabled nodes are bypassed at runtime.",
+        "LLM01:2025 Prompt Injection",
+        wfNode.name,
+      ));
+    }
+  }
+
+  const activeSoterNodes = nodes.filter((wfNode) => !wfNode.disabled && isSoterGuardNode(wfNode));
+  const hasSoterNode = activeSoterNodes.length > 0;
+  const hasUniversalGuard = activeSoterNodes.some(
+    (wfNode) =>
+      getParam(wfNode, "action") === "universalGuard" ||
+      getParam(wfNode, "operation") === "universalGuard" ||
+      wfNode.type.includes("soterGuardTool") ||
+      wfNode.type === "n8n-nodes-soterai.soterGuardTool",
+  );
+  const hasAiAgent = nodes.some((wfNode) => !wfNode.disabled && /langchain\.agent|ai.?agent/i.test(`${wfNode.type} ${wfNode.name}`));
+  const hasToolLikeNode = nodes.some((wfNode) => !wfNode.disabled && isToolLikeNode(wfNode));
+  const hasWebhook = nodes.some((wfNode) => !wfNode.disabled && /webhook|formTrigger/i.test(wfNode.type));
+  const hasRespond = nodes.some((wfNode) => !wfNode.disabled && /respondToWebhook|webhook/i.test(wfNode.type));
+  const hasRagOrVector = nodes.some((wfNode) => !wfNode.disabled && /vector|pinecone|qdrant|weaviate|supabase|retriever|document|embedding|splitter/i.test(`${wfNode.type} ${wfNode.name}`));
+  const hasMemory = nodes.some((wfNode) => !wfNode.disabled && /memory|chatMemory|windowBuffer/i.test(`${wfNode.type} ${wfNode.name}`));
 
   if ((hasAiAgent || hasToolLikeNode || hasRagOrVector) && !hasUniversalGuard) {
     findings.push(auditFinding(
@@ -4983,6 +5337,9 @@ function executeWorkflowAudit(node: INode, workflowJson: string): IDataObject {
   }
 
   for (const wfNode of nodes) {
+    // Bug 39: Sticky notes are canvas documentation, not executable code or credential containers
+    if (/stickyNote/i.test(wfNode.type)) continue;
+
     const searchable = `${wfNode.name} ${wfNode.type} ${JSON.stringify(wfNode.parameters ?? {})}`;
     if (/code|function|python/i.test(wfNode.type)) {
       findings.push(auditFinding(
@@ -5006,7 +5363,7 @@ function executeWorkflowAudit(node: INode, workflowJson: string): IDataObject {
         wfNode.name,
       ));
     }
-    if (/credential|api[_ -]?key|token|secret|password|bearer/i.test(searchable)) {
+    if (hasHardcodedWorkflowSecret(wfNode.parameters)) {
       findings.push(auditFinding(
         "workflow.secret_reference",
         "CRITICAL",
@@ -5106,6 +5463,7 @@ interface WorkflowNode {
   name: string;
   type: string;
   parameters?: Record<string, unknown>;
+  disabled?: boolean;
 }
 
 function parseWorkflowJson(node: INode, raw: string): Record<string, unknown> {
@@ -5128,6 +5486,7 @@ function getParam(node: WorkflowNode, key: string): unknown {
 }
 
 function isToolLikeNode(node: WorkflowNode) {
+  if (typeof node.type === "string" && node.type.startsWith("n8n-nodes-soterai.")) return false;
   return /tool|httpRequest|gmail|slack|telegram|discord|notion|sheets|database|postgres|mysql|mongo|airtable|github|jira|linear/i.test(`${node.type} ${node.name}`);
 }
 
@@ -5343,19 +5702,21 @@ function formatTextTooLongError(limit: number, sent: number, path: string): stri
 }
 
 function formatApiError(status: number, data: Record<string, unknown>, path?: string): string {
-  if (status === 401 || status === 403) {
-    // Naming the endpoint is the whole point of this branch. The Universal AI
-    // Firewall calls up to six paths per item, and when one of them 401s while
-    // the rest succeed, "check the API key" sends the reader to the one thing
-    // that is demonstrably fine — the key works everywhere else. A middleware
-    // that session-gates an API-key-only route produces exactly this shape, and
-    // it is invisible without the path.
+  if (status === 401) {
     const where = path ? ` on ${path}` : "";
     const upstream = typeof data.message === "string" ? ` Server said: ${sanitizeErrorMessage(data.message)}` : "";
     return (
-      `SoterAI API returned HTTP ${status}${where}. If other SoterAI calls in this workflow ` +
-      "succeed with the same credential, the key itself is valid — check that this endpoint " +
-      `exists on the deployment at your Base URL and is enabled for the key's plan.${upstream}`
+      `SoterAI API returned HTTP 401 Unauthorized${where}. Check that the selected API key is correct, active, ` +
+      `and belongs to the deployment at your Base URL.${upstream}`
+    );
+  }
+  if (status === 403) {
+    const where = path ? ` on ${path}` : "";
+    const upstream = typeof data.message === "string" ? ` Server said: ${sanitizeErrorMessage(data.message)}` : "";
+    return (
+      `SoterAI API returned HTTP 403 Forbidden${where}. If other SoterAI calls in this workflow ` +
+      "succeed with the same credential, check that this endpoint exists on the deployment at your Base URL, " +
+      `is enabled for the key's plan, and CSRF/origin restrictions permit it.${upstream}`
     );
   }
   if (status === 408 || status === 504) {
@@ -5366,8 +5727,8 @@ function formatApiError(status: number, data: Record<string, unknown>, path?: st
   }
   if (status === 429) {
     return (
-      `SoterAI API rate limit still exceeded after ${MAX_RATE_LIMIT_RETRIES} retries. ` +
-      "Reduce workflow concurrency or upgrade the plan for a higher per-minute limit."
+      "SoterAI API rate limit exceeded; the retry count or request time budget was exhausted. " +
+      "Reduce workflow concurrency or retry after the server's rate-limit window."
     );
   }
   const message = typeof data.message === "string" ? sanitizeErrorMessage(data.message) : "";
@@ -5398,7 +5759,7 @@ function sanitizeOutputObject(value: Record<string, unknown>): IDataObject {
 
 function sanitizeOutputValue(value: unknown, depth: number, key?: string): unknown {
   if (depth > MAX_SANITIZE_DEPTH) return "[REDACTED_DEPTH_LIMIT]";
-  if (isSensitiveKey(key)) return "[REDACTED]";
+  if (isSensitiveKey(key, value)) return "[REDACTED]";
   if (typeof value === "string") return sanitizeErrorMessage(value);
   if (Array.isArray(value)) return value.map((item) => sanitizeOutputValue(item, depth + 1));
   if (value && typeof value === "object") {
@@ -5411,6 +5772,10 @@ function sanitizeOutputValue(value: unknown, depth: number, key?: string): unkno
   return value;
 }
 
-function isSensitiveKey(key?: string): boolean {
-  return Boolean(key && /(?:api[-_]?key|authorization|bearer|credential|password|secret|token|private[-_]?key)/i.test(key));
+function isSensitiveKey(key?: string, value?: unknown): boolean {
+  if (!key) return false;
+  if (/^(?:passportToken|accessToken|refreshToken|sessionToken|clientSecret|apiKey)$/i.test(key)) return true;
+  if (typeof value === "number" || typeof value === "boolean") return false;
+  if (/^SECRET_DETECTED$/i.test(key)) return false;
+  return /(?:api[-_]?key|authorization|bearer|credential|password|\bsecret\b|\btoken\b|private[-_]?key)/i.test(key);
 }

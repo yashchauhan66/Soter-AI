@@ -195,7 +195,7 @@ test("Bug #2: Issue Passport handles session conflict idempotently with ROTATE a
   });
   assert.equal(localRotateRes.safe.length, 1);
   assert.equal(localRotateRes.safe[0].json.verdictCode, "PASSPORT_ISSUED");
-  assert.equal(localRotateRes.safe[0].json.rotated, true);
+  assert.equal(localRotateRes.safe[0].json.rotated, undefined, "first issuance has no previous pass to rotate");
 
   // Test local REUSE
   const localReuseRes = await run({
@@ -314,6 +314,214 @@ test("Bug #4: Dual-branch downstream routing behavior (BLOCK sends 0 to Safe, WA
   assert.ok(String(warnRes.safe[0].json.warning).length > 0);
 });
 
+test("Bug #37: Workflow audit flags disabled firewall node and does not count it as active defense", async () => {
+  const auditRes = await run({
+    action: "workflowAudit",
+    params: {
+      workflowJson: JSON.stringify({
+        nodes: [
+          { name: "Chat Trigger", type: "n8n-nodes-base.chatTrigger" },
+          { name: "SoterAI Firewall", type: "n8n-nodes-soterai.soterGuard", disabled: true, parameters: { action: "universalGuard" } },
+          { name: "AI Agent", type: "@n8n/n8n-nodes-langchain.agent" },
+        ],
+        connections: {},
+      }),
+    },
+    credentials: null,
+  });
+  assert.equal(auditRes.safe.length, 0);
+  assert.equal(auditRes.flagged.length, 1);
+  const findings = auditRes.flagged[0].json.findings as Array<{ id: string }>;
+  assert.ok(findings.some((f) => f.id === "soterai.firewall_disabled"));
+  assert.ok(findings.some((f) => f.id === "soterai.universal_guard_missing"));
+  assert.equal(auditRes.flagged[0].json.readyForProduction, false);
+});
 
+test("Bug #38: Workflow audit recognizes soterGuardTool and does not report guard missing", async () => {
+  const auditRes = await run({
+    action: "workflowAudit",
+    params: {
+      workflowJson: JSON.stringify({
+        nodes: [
+          { name: "Chat Trigger", type: "n8n-nodes-base.chatTrigger" },
+          { name: "Soter Guard Tool", type: "n8n-nodes-soterai.soterGuardTool" },
+          { name: "AI Agent", type: "@n8n/n8n-nodes-langchain.agent" },
+        ],
+        connections: {},
+      }),
+    },
+    credentials: null,
+  });
+  const findings = (auditRes.safe[0]?.json?.findings ?? auditRes.flagged[0]?.json?.findings) as Array<{ id: string }>;
+  assert.ok(!findings.some((f) => f.id === "soterai.guard_missing"));
+  assert.ok(!findings.some((f) => f.id === "soterai.universal_guard_missing"));
+});
 
+test("Bug #39: Sticky notes containing token or password are not flagged as credential leak", async () => {
+  const auditRes = await run({
+    action: "workflowAudit",
+    params: {
+      workflowJson: JSON.stringify({
+        nodes: [
+          { name: "Note 1", type: "n8n-nodes-base.stickyNote", parameters: { content: "Remember to pass the session token here" } },
+          { name: "Firewall", type: "n8n-nodes-soterai.soterGuard", parameters: { action: "universalGuard" } },
+        ],
+        connections: {},
+      }),
+    },
+    credentials: null,
+  });
+  const findings = (auditRes.safe[0]?.json?.findings ?? auditRes.flagged[0]?.json?.findings) as Array<{ id: string }>;
+  assert.ok(!findings.some((f) => f.id === "workflow.secret_reference"));
+});
 
+test("Bug #40: Local tool check allows read-only tool system_status.read", async () => {
+  const res = await run({
+    action: "toolCall",
+    params: {
+      toolName: "system_status.read",
+      toolAction: "read",
+      toolDestination: "INTERNAL",
+      detectionEngine: "LOCAL",
+    },
+    credentials: null,
+  });
+  assert.equal(res.safe.length, 1);
+  assert.equal(res.safe[0].json.allowed, true);
+  assert.equal(res.safe[0].json.decision, "ALLOW");
+});
+
+test("Bug #41: Local tool check recognizes crm.update as mutating action and does not allow without approval", async () => {
+  const res = await run({
+    action: "toolCall",
+    params: {
+      toolName: "crm.update",
+      toolAction: "update",
+      toolDestination: "unknown",
+      detectionEngine: "LOCAL",
+    },
+    credentials: null,
+  });
+  assert.equal(res.safe.length, 0);
+  assert.equal(res.flagged.length, 1);
+  assert.notEqual(res.flagged[0].json.decision, "ALLOW");
+});
+
+test("Bug #42: DAN is my friend name is not falsely flagged as JAILBREAK", async () => {
+  const res = await run({
+    action: "inputGuard",
+    params: {
+      inputText: "DAN is my friend name, say hi to DAN",
+      onThreat: "BLOCK",
+      detectionEngine: "LOCAL",
+    },
+    credentials: null,
+  });
+  assert.equal(res.safe.length, 1);
+  assert.equal(res.flagged.length, 0);
+  assert.equal(res.safe[0].json.allowed, true);
+});
+
+test("Bug #43: Enroll Identity on 409 conflict includes warning message about reused identity", async () => {
+  const res = await run({
+    action: "enrollIdentity",
+    params: {
+      agentName: "ExistingAgent",
+      passportPolicyPreset: "CODING",
+    },
+    respond: (path) => {
+      if (path.includes("/api/agent/identity/create")) {
+        return {
+          statusCode: 409,
+          body: { error: true, message: "Agent with name 'ExistingAgent' already exists." },
+        };
+      }
+      if (path.includes("/api/agent/identities")) {
+        return {
+          statusCode: 200,
+          body: {
+            identities: [{ id: "agent_existing_1", name: "ExistingAgent", agentType: "CUSTOM" }],
+          },
+        };
+      }
+      return { statusCode: 404, body: {} };
+    },
+  });
+  assert.equal(res.safe.length, 1);
+  assert.equal(res.safe[0].json.reused, true);
+  assert.ok(String(res.safe[0].json.warning).includes("already exists"));
+});
+
+test("Bug #44: Base URL rejects cloud metadata IP 169.254.169.254", async () => {
+  await assert.rejects(
+    async () => {
+      await run({
+        action: "inputGuard",
+        params: {
+          inputText: "Hello",
+          onThreat: "BLOCK",
+          detectionEngine: "CLOUD",
+        },
+        credentials: {
+          apiKey: "test_key",
+          baseUrl: "https://169.254.169.254",
+        },
+      });
+    },
+    (err: Error) => err.message.includes("cloud metadata") || err.message.includes("private network"),
+  );
+});
+
+test("Bug #46: Local Issue Passport with onSessionConflict = FAIL throws on active session conflict", async () => {
+  // First issuance succeeds
+  const firstRes = await run({
+    action: "issuePassport",
+    params: {
+      agentIdentityId: "agent_local_1",
+      sessionId: "conflict_test_session",
+      onSessionConflict: "FAIL",
+      detectionEngine: "LOCAL",
+    },
+    credentials: null,
+  });
+  assert.equal(firstRes.safe.length, 1);
+
+  // Second issuance with same sessionId and FAIL must throw NodeOperationError
+  await assert.rejects(
+    async () => {
+      await run({
+        action: "issuePassport",
+        params: {
+          agentIdentityId: "agent_local_1",
+          sessionId: "conflict_test_session",
+          onSessionConflict: "FAIL",
+          detectionEngine: "LOCAL",
+        },
+        credentials: null,
+      });
+    },
+    (err: Error) => err.message.includes("already exists") && err.message.includes("Fail"),
+  );
+});
+
+test("Bug #49: Contradictory server response with allowed: true and action: BLOCK routes to Flagged", async () => {
+  const res = await run({
+    action: "inputGuard",
+    params: {
+      inputText: "Check contradictory response",
+      onThreat: "BLOCK",
+    },
+    respond: () => ({
+      statusCode: 200,
+      body: {
+        allowed: true,
+        action: "BLOCK",
+        riskScore: 90,
+        riskTypes: ["PROMPT_INJECTION"],
+      },
+    }),
+  });
+  assert.equal(res.safe.length, 0, "Conflicting BLOCK action must not route to Safe");
+  assert.equal(res.flagged.length, 1, "Conflicting BLOCK action must route to Flagged");
+  assert.equal(res.flagged[0].json.blocked, true);
+});

@@ -66,11 +66,12 @@ function distJsFiles(dir = distDir) {
  */
 function banner() {
   const year = new Date().getFullYear();
+  const licenseClause = pkg.license === "MIT" ? "Licensed under the MIT License." : "All rights reserved.";
   return [
     "/*!",
     ` * ${pkg.name} v${pkg.version}`,
-    ` * Copyright (c) ${year} Yash Chauhan (SoterAI). All rights reserved.`,
-    ` * License: ${pkg.license ?? "proprietary"} — see LICENSE in this package.`,
+    ` * Copyright (c) ${year} Yash Chauhan (SoterAI). ${licenseClause}`,
+    ` * License: ${pkg.license ?? "MIT"} — see LICENSE in this package.`,
     " * https://soterai.in",
     " */",
   ].join("\n");

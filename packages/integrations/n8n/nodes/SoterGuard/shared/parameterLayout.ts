@@ -56,6 +56,13 @@ export function withV3ParameterLayout(ctx: IExecuteFunctions): IExecuteFunctions
 
     if (name === "action") return read("operation", ...args.slice(1));
     if (COLLECTION_ALIASES.has(name)) return optionsAt(itemIndex);
+    if (name === "ragText" || name === "documentText") {
+      const vRag = read("ragText", ...args.slice(1));
+      if (vRag !== undefined && vRag !== null && vRag !== "") return vRag;
+      const vDoc = read("documentText", ...args.slice(1));
+      if (vDoc !== undefined && vDoc !== null && vDoc !== "") return vDoc;
+      return vRag !== undefined ? vRag : vDoc;
+    }
 
     const placement = placementOf(operationAt(itemIndex), name);
 
@@ -63,6 +70,21 @@ export function withV3ParameterLayout(ctx: IExecuteFunctions): IExecuteFunctions
     // expressions, `extractValue`, and the caller's own fallback.
     if (placement === "panel") {
       const panelValue = read(...args);
+      if (name === "detectionEngine") {
+        const fromOptions = optionsAt(itemIndex).detectionEngine;
+        if (fromOptions !== undefined) {
+          const rawParams = ctx.getNode().parameters;
+          if (rawParams.detectionEngine === undefined) {
+            return fromOptions;
+          }
+        }
+        if (panelValue === undefined || panelValue === "CLOUD") {
+          const rawParams = ctx.getNode().parameters;
+          if (rawParams.detectionEngine === undefined) {
+            return "AUTO";
+          }
+        }
+      }
       if (name === "userMessages") {
         const isBlank = !panelValue || (typeof panelValue === "object" && Object.keys(panelValue as object).length === 0);
         if (isBlank) {

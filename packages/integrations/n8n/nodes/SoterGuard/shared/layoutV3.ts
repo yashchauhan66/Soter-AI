@@ -76,7 +76,7 @@ const RUNTIME = ["includeRawResponse", "batchConcurrency", "requestTimeoutMs", "
  * what Auto does when the cloud is unreachable, so on an operation with no
  * engine choice it is a control that cannot do anything.
  */
-const ENGINE = ["detectionEngine", "neverDowngradeToLocal"];
+const ENGINE = ["neverDowngradeToLocal"];
 
 /** Everything a detection operation carries beyond its own text fields. */
 const COMMON = [...ENGINE, "sessionId", "projectId", "metadata", ...RUNTIME];
@@ -98,7 +98,7 @@ const REDACTION = ["ignoredEntities", "ignoredWords"];
  */
 const ENFORCEMENT = ["enforceOnSensitiveData"];
 
-/** Identifiers and audit fields for the passport lifecycle, which has no engine choice. */
+/** Identifiers, engine selector, and audit fields for the passport lifecycle. */
 const PASSPORT_COMMON = ["projectId", "metadata", ...RUNTIME];
 
 /** The optional tool details both passport checks accept. */
@@ -135,14 +135,15 @@ export const RESOURCES: ResourceSpec[] = [
  * configuration that works. Every star below is one that `execute.ts` throws on
  * or the API's own zod schema rejects; the comments name which.
  */
-export const OPERATIONS: OperationSpec[] = [  {
+export const OPERATIONS: OperationSpec[] = [
+  {
     resource: "guardrail",
     value: "inputGuard",
     name: "Guard Input",
     description: "Check a user's message before it reaches the AI, and block or clean it. Start here.",
     action: "Check user input for threats",
     notice: "enforcingNotice",
-    fields: ["inputText", "onThreat", "sensitivity", "userMessages"],
+    fields: ["inputText", "onThreat", "sensitivity", "detectionEngine", "userMessages"],
     required: ["inputText"],
     options: [...TOPIC_SCOPE, ...REDACTION, ...ENFORCEMENT, ...COMMON],
   },
@@ -153,7 +154,7 @@ export const OPERATIONS: OperationSpec[] = [  {
     description: "Check the AI's reply before the user sees it, and block or clean it",
     action: "Check AI output for threats",
     notice: "enforcingNotice",
-    fields: ["outputText", "onThreat", "sensitivity", "userMessages"],
+    fields: ["outputText", "onThreat", "sensitivity", "detectionEngine", "userMessages"],
     required: ["outputText"],
     options: [...REDACTION, ...ENFORCEMENT, ...COMMON],
   },
@@ -163,9 +164,10 @@ export const OPERATIONS: OperationSpec[] = [  {
     name: "Universal Firewall",
     description: "All-in-one guard for prompt, files, tools, memory, output, and data leaks. Most complete.",
     action: "Protect an AI workflow end to end",
-    notice: "enforcingNotice",
-    fields: ["inputText", "universalOutputText", "protectionProfile", "onThreat", "securityContext", "userMessages"],
-    required: ["inputText"],
+    notice: "universalNotice",
+    fields: ["inputText", "universalOutputText", "protectionProfile", "onThreat", "detectionEngine", "securityContext", "userMessages"],
+    // Input-only and output-only checks are both supported by the engine.
+    required: [],
     options: [...TOPIC_SCOPE, ...REDACTION, ...ENFORCEMENT, "passportToken", "parallelLayers", ...COMMON],
   },
   {
@@ -175,7 +177,7 @@ export const OPERATIONS: OperationSpec[] = [  {
     description: "Score any text for risk without blocking — Safe and risky items are split so you decide",
     action: "Analyze text for AI security risks",
     notice: "reportOnlyNotice",
-    fields: ["inputText", "userMessages"],
+    fields: ["inputText", "detectionEngine", "userMessages"],
     required: ["inputText"],
     options: [...COMMON],
   },
@@ -186,7 +188,7 @@ export const OPERATIONS: OperationSpec[] = [  {
     description: "Get a cleaned copy of text with personal data and secrets removed. Use it downstream.",
     action: "Redact secrets and PII from text",
     notice: "redactNotice",
-    fields: ["piiText"],
+    fields: ["piiText", "detectionEngine"],
     required: ["piiText"],
     options: ["branchOnRedaction", ...REDACTION, ...COMMON],
   },
@@ -197,7 +199,7 @@ export const OPERATIONS: OperationSpec[] = [  {
     description: "Check a document before adding it to a knowledge base. Poisoned files are flagged.",
     action: "Scan a RAG document for threats",
     notice: "reportOnlyNotice",
-    fields: ["ragText", "documentId", "documentSource"],
+    fields: ["ragText", "documentId", "documentSource", "detectionEngine"],
     required: ["ragText", "documentId"],
     options: [...COMMON],
   },
@@ -221,7 +223,7 @@ export const OPERATIONS: OperationSpec[] = [  {
     description: "Give an AI agent a reusable identity with a safe, least-privilege starting policy",
     action: "Enroll an agent identity",
     notice: "enrollIdentityNotice",
-    fields: ["agentName", "agentType", "agentDescription", "passportPolicyPreset"],
+    fields: ["agentName", "agentType", "agentDescription", "passportPolicyPreset", "detectionEngine"],
     required: ["agentName"],
     options: ["passportPolicy", ...PASSPORT_COMMON],
   },
@@ -232,7 +234,7 @@ export const OPERATIONS: OperationSpec[] = [  {
     description: "Give an enrolled agent a short-lived access pass for one session",
     action: "Issue an agent passport",
     notice: "issuePassportNotice",
-    fields: ["agentIdentityId", "sessionId", "passportTtlSeconds", "passportPolicyPreset"],
+    fields: ["agentIdentityId", "sessionId", "passportTtlSeconds", "passportPolicyPreset", "detectionEngine"],
     // Session ID is deliberately NOT starred. `agentPassportIssueSchema` marks it
     // `.optional()` and execute.ts sends it only when present, so a session-less
     // passport is a configuration the product accepts. A star here would make n8n
@@ -247,7 +249,7 @@ export const OPERATIONS: OperationSpec[] = [  {
     description: "Check that an agent's session pass is still valid, and whether an action is allowed",
     action: "Validate an agent passport",
     notice: "validatePassportNotice",
-    fields: ["passportToken", "sessionId", "toolName", "toolAction"],
+    fields: ["passportToken", "sessionId", "toolName", "toolAction", "detectionEngine"],
     // Session ID is optional on the parameter panel: if left empty, execute.ts auto-falls back to incoming itemJson.sessionId.
     // execute.ts throws "Session ID is required to validate a passport." only if both the parameter and the incoming item lack a Session ID.
     required: [],
@@ -260,14 +262,14 @@ export const OPERATIONS: OperationSpec[] = [  {
     description: "Check one tool call an agent wants to make before it runs",
     action: "Check an agent tool call",
     notice: "toolCallNotice",
-    fields: ["passportToken", "sessionId", "toolName", "toolAction"],
+    fields: ["passportToken", "sessionId", "toolName", "toolAction", "detectionEngine"],
     // execute.ts throws "Tool Name and Tool Action are required.", and
     // `agentActionSchema` makes both `min(1)` server-side, so the two stars are
     // the truth. Session ID is `.optional()` in that same schema — a tool check
     // authenticated by the passport token alone is valid — so it is not starred.
     required: ["toolName", "toolAction"],
-    // The only passport operation that is not cloud-only in execute.ts, so it is
-    // the only one where the engine choice is a real choice.
+    // Tool checks can fall back; lifecycle operations require explicit Local
+    // mode to simulate state and never silently fall back from Cloud or Auto.
     options: [...ENGINE, ...TOOL_DETAILS, ...PASSPORT_COMMON],
   },
   {
@@ -277,7 +279,7 @@ export const OPERATIONS: OperationSpec[] = [  {
     description: "Cancel an agent's access pass when the task ends or something looks wrong",
     action: "Revoke an agent passport",
     notice: "revokePassportNotice",
-    fields: ["sessionId", "passportId", "revokeReason"],
+    fields: ["sessionId", "passportId", "revokeReason", "detectionEngine"],
     // Either identifier is enough on its own, so neither can honestly carry a star.
     required: [],
     options: [...PASSPORT_COMMON],
@@ -293,6 +295,7 @@ export const OPERATIONS: OperationSpec[] = [  {
  * drifting into different orders for the same pair of fields.
  */
 export const PANEL_ORDER = [
+  "detectionEngine",
   "agentName",
   "agentType",
   "agentDescription",

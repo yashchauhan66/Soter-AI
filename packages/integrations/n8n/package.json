@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-soterai",
-  "version": "0.8.7",
+  "version": "0.8.8",
   "description": "SoterAI helps protect n8n AI workflows by detecting prompt injection, jailbreaks, secrets, PII, and unsafe AI instructions.",
   "license": "MIT",
   "author": {
@@ -50,9 +50,9 @@
   ],
   "scripts": {
     "clean": "node scripts/clean-dist.cjs",
-    "build": "npm run clean && tsc && copyfiles \"nodes/**/*.svg\" \"credentials/**/*.svg\" dist",
+    "build": "npm run clean && tsc && node scripts/copy-icons.cjs",
     "dev": "tsc --watch",
-    "lint": "n8n-node lint",
+    "lint": "eslint nodes credentials shared package.json --max-warnings=0",
     "typecheck": "tsc --noEmit",
     "validate": "node scripts/validate-package.cjs",
     "test:unit": "tsc -p tsconfig.test.json && cd test-build && node --test",
@@ -65,12 +65,19 @@
   "peerDependencies": {
     "n8n-workflow": "*"
   },
+  "engines": {
+    "node": ">=22.22.0"
+  },
   "devDependencies": {
-    "@n8n/node-cli": "^0.42.2",
-    "copyfiles": "^2.4.1",
+    "@eslint/js": "^9.29.0",
+    "@n8n/eslint-plugin-community-nodes": "0.35.0",
     "esbuild": "0.28.1",
+    "eslint": "9.29.0",
+    "eslint-import-resolver-typescript": "^4.4.3",
+    "eslint-plugin-import-x": "^4.15.2",
     "eslint-plugin-n8n-nodes-base": "^1.16.7",
-    "n8n-workflow": "^1.0.0",
-    "typescript": "^5.0.0"
+    "n8n-workflow": "2.42.3",
+    "typescript": "^5.0.0",
+    "typescript-eslint": "8.70.0"
   }
 }

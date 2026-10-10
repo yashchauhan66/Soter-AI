@@ -317,7 +317,9 @@ function foldBase(text: string, lower = true): string {
  * that was not in the text.
  */
 function collapseSpaces(text: string): string {
-  return text.replace(/[ \t\u00a0\u2000-\u200a\u202f\u205f\u3000]+/g, " ");
+  return text
+    .replace(/[ \t\u00a0\u2000-\u200a\u202f\u205f\u3000]+/g, " ")
+    .replace(/\r?\n(?:[ \t\r\n]*\r?\n)+/g, "\n\n");
 }
 
 /** The folded, whitespace-normalised form used for comparison and excerpting. */
@@ -348,7 +350,7 @@ function foldLeet(text: string): string {
  * any word of two or more letters breaks the chain.
  */
 function foldSpacedLetters(text: string): string {
-  return text.replace(/\b(?:[a-z][\s._*-]){2,}[a-z]\b/g, (match) => match.replace(/[\s._*-]/g, ""));
+  return text.replace(/\b(?:[a-z][ \t._*-]){2,}[a-z]\b/g, (match) => match.replace(/[ \t._*-]/g, ""));
 }
 
 /**
@@ -625,10 +627,10 @@ const LOCAL_RULES: LocalRule[] = [
     severity: "HIGH",
     direction: "BOTH",
     patterns: [
-      /(?:^|\n)\s*(?:###\s*)?(?:system|assistant|developer)\s*(?:message)?\s*[:>]\s*\S/i,
+      /(?:^|\n)[ \t]*(?:###[ \t]*)?(?:system|assistant|developer)[ \t]*(?:message)?[ \t]*[:>][ \t]*\S/i,
       /<\|(?:im_start|im_end|system|endoftext|eot_id|start_header_id)\|>/i,
       /\[\/?(?:INST|SYS|SYSTEM)\]/,
-      /(?:^|\n)\s*(?:---+|===+|```)?\s*end\s+of\s+(?:user\s+)?(?:input|message|prompt)\s*(?:---+|===+|```)?/i,
+      /(?:^|\n)[ \t]*(?:---+|===+|```)?[ \t]*end\s+of\s+(?:user\s+)?(?:input|message|prompt)[ \t]*(?:---+|===+|```)?/i,
     ],
   },
   {
@@ -730,7 +732,9 @@ const LOCAL_RULES: LocalRule[] = [
     severity: "CRITICAL",
     direction: "INPUT",
     patterns: [
-      /\bD\.?A\.?N\.?\s*(?:mode|prompt|\d+\.\d+)?\b(?:[^.]{0,40}\b(?:do\s+anything\s+now|no\s+restrictions?|jailbr\w+)\b)?/,
+      /\bD\.?A\.?N\.?\s+(?:mode|prompt|\d+\.\d+)\b/i,
+      /\bD\.?A\.?N\.?\b[^.]{0,60}\b(?:do\s+anything\s+now|no\s+restrictions?|jailbr\w+)\b/i,
+      /\b(?:you\s+are|act\s+as|pretend\s+to\s+be|roleplay\s+as|become)\s+(?:now\s+)?D\.?A\.?N\.?\b/i,
       /\bdo\s+anything\s+now\b/i,
       /\b(?:developer|dev|god|admin|root|sudo|debug|unrestricted|unlocked|dan|stan|aim|kevin|briarheart|mongo\s*tom|chaosgpt|betterdan|machiavelli|anti-?gpt)\s+mode\s*(?:enabled|on|activated|:|is\s+now)/i,
       /\benable\s+(?:developer|god|admin|debug|unrestricted)\s+mode\b/i,
@@ -1322,10 +1326,10 @@ const REDACTION_RULES: RedactionRule[] = [
     type: "SECRET_DETECTED",
     label: "Credential assignment",
     severity: "HIGH",
-    // Only fires on an assignment with a value that actually looks like a
-    // secret: 12+ non-space characters. "password: please reset it" is prose.
+    // Fires on assignment (: or =) or conversational declaration ("is", "was", "set to")
+    // with a value of 6+ characters.
     pattern:
-      /\b(?:api[_-]?key|apikey|access[_-]?token|auth[_-]?token|bearer[_-]?token|client[_-]?secret|secret[_-]?key|private[_-]?token|password|passwd|pwd)\b\s*[:=]\s*["']?([A-Za-z0-9_\-./+=]{12,})["']?/gi,
+      /\b(?:api[_-]?key|apikey|access[_-]?token|auth[_-]?token|bearer[_-]?token|client[_-]?secret|secret[_-]?key|private[_-]?token|password|passwd|pwd)\b(?:\s*[:=]\s*|\s+(?:is|was|set\s+to)\s+)["']?([A-Za-z0-9_\-./+=!@#$%^&*~]{6,})["']?/gi,
     token: "[REDACTED_CREDENTIAL]",
   },
   {
@@ -1702,7 +1706,27 @@ export function redactLocal(text: string, options: LocalRedactionOptions = {}): 
   let sentinelSeq = 0;
   for (const phrase of [...literalScreen.kept].sort((a, b) => b.length - a.length)) {
     let hit = false;
-    source = source.replace(new RegExp(escapeRegExp(phrase), "gi"), (match) => {
+    // Find complete sensitive spans before masking this phrase. A partial
+    // overlap must never break a detector (e.g. "AKIA" inside an AWS key,
+    // "password" before its value, or a company name inside an email).
+    const protectedSpans: Array<{ start: number; end: number; secret: boolean }> = [];
+    for (const rule of REDACTION_RULES) {
+      for (const found of source.matchAll(new RegExp(rule.pattern.source, rule.pattern.flags))) {
+        if (rule.accept && !rule.accept(found[0])) continue;
+        protectedSpans.push({ start: found.index!, end: found.index! + found[0].length, secret: rule.type === "SECRET_DETECTED" });
+      }
+    }
+    for (const pattern of [US_SSN_DASHED, US_SSN_LABELLED]) {
+      for (const found of source.matchAll(new RegExp(pattern.source, pattern.flags))) {
+        protectedSpans.push({ start: found.index!, end: found.index! + found[0].length, secret: false });
+      }
+    }
+    source = source.replace(new RegExp(escapeRegExp(phrase), "gi"), (match, offset: number) => {
+      const end = offset + match.length;
+      if (protectedSpans.some((span) => offset < span.end && end > span.start &&
+          (span.secret || offset !== span.start || end !== span.end))) {
+        return match;
+      }
       hit = true;
       const sentinel = `\u{E000}K${sentinelSeq++}\u{E001}`;
       restoreMap.set(sentinel, match);
@@ -2466,7 +2490,11 @@ export interface LocalToolCheck {
 
 const DESTRUCTIVE_ACTION =
   /\b(?:delete|drop|truncate|purge|wipe|remove|revoke|transfer|payout|refund|charge|deploy|shutdown|disable|kill|terminate|format|destroy|reset)\b/i;
-const CODE_EXEC_ACTION = /\b(?:exec|execute|eval|bash|cmd|sh|shell|terminal|powershell|system|spawn)\b/i;
+const MUTATING_ACTION =
+  /\b(?:update|modify|patch|write|insert|upsert|create|edit|alter|overwrite|set|change|append)\b/i;
+const READ_ONLY_ACTION =
+  /\b(?:read|get|fetch|list|inspect|check|status|view|describe|show|info|search|query|find|scan)\b/i;
+const CODE_EXEC_ACTION = /\b(?:exec|execute|eval|bash|cmd|sh|shell|terminal|powershell|spawn|os\.system|child_process)\b/i;
 const CODE_EXEC_COMPOUND = /\b(?:run|execute|exec)\s+(?:command|script|code|process|shell|terminal|cli|tool|payload)\b/i;
 const SENDING_ACTION = /\b(?:send|post|publish|email|mail|tweet|message|notify|share|upload|export)\b/i;
 
@@ -2530,17 +2558,21 @@ export function checkToolCallLocal(
   const spokenAction = spoken(input.action);
   const destination = (input.destination ?? "").trim().toLowerCase();
 
-  const external = destination === "external" || destination === "unknown";
-  const destructive = DESTRUCTIVE_ACTION.test(spokenAction) || DESTRUCTIVE_ACTION.test(spokenName);
-  const sending = SENDING_ACTION.test(spokenAction) || SENDING_ACTION.test(spokenName);
+  const external = !destination || destination === "external" || destination === "unknown" || destination === "internet" || destination === "public";
+  const isReadOnly =
+    READ_ONLY_ACTION.test(spokenAction) &&
+    !CODE_EXEC_ACTION.test(spokenAction) &&
+    !CODE_EXEC_COMPOUND.test(spokenAction);
+  const destructive = DESTRUCTIVE_ACTION.test(spokenAction) || (!isReadOnly && DESTRUCTIVE_ACTION.test(spokenName));
+  const mutating = MUTATING_ACTION.test(spokenAction) || (!isReadOnly && MUTATING_ACTION.test(spokenName));
+  const sending = SENDING_ACTION.test(spokenAction) || (!isReadOnly && SENDING_ACTION.test(spokenName));
   const codeExecution =
     CODE_EXEC_ACTION.test(spokenAction) ||
-    CODE_EXEC_ACTION.test(spokenName) ||
     CODE_EXEC_COMPOUND.test(spokenAction) ||
-    CODE_EXEC_COMPOUND.test(spokenName);
+    (!isReadOnly && (CODE_EXEC_ACTION.test(spokenName) || CODE_EXEC_COMPOUND.test(spokenName)));
 
   const capabilities = input.riskContext ?? {};
-  const canModify = capabilities.canModifyData === true || capabilities.canDeleteData === true;
+  const canModify = capabilities.canModifyData === true || capabilities.canDeleteData === true || mutating;
   const canRunCode = capabilities.canRunCode === true || codeExecution;
   const canSend = capabilities.canSendMessage === true || capabilities.canSendEmail === true;
 

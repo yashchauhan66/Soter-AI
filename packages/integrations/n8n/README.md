@@ -44,7 +44,17 @@ Restart n8n after installation.
 
 Do not paste real production secrets into test workflows. Use fake values such as `sk-test-1234567890abcdef`.
 
-The credential sends the key only as the `x-api-key` header. It is not a Bearer credential and never reuses a stale `Authorization: Bearer` value. The credential is optional for Local analysis and Workflow Audit; identity enrollment and passport issuance always require it.
+The credential sends the key only as the `x-api-key` header. It is not a Bearer credential and never reuses a stale `Authorization: Bearer` value. Cloud and Auto passport lifecycle operations require a credential. Explicit Local Simulation uses temporary process-local state for testing and does not provide cloud authorization.
+
+## Node panel
+
+Version 3 groups all 12 operations by Resource. Select Resource and Operation, choose Detection Engine, then map the content to check. Optional settings are available through **Add Option**; customer wording and Universal Firewall layers have their own add controls.
+
+- Connect **Safe** to the next step and **Flagged** to alerting or review. Use `safeText` or `outputText` from this node for cleaned content.
+- Universal Firewall accepts input, AI output, or both. Additional Security Layers adds RAG, tool, memory, and output-destination checks.
+- Redact Secrets or PII returns the cleaned copy in `outputText`. **Options → Branch On Redaction** splits Clean and Redacted outputs.
+- Passport lifecycle operations label explicit Local mode as **Local Simulation**. Auto and Cloud use server state and never fall back to simulation.
+- The credential selector is hidden for Workflow Audit and explicit Local mode. Existing v1/v2 workflows keep their parameter layout.
 
 ## Detection Engine: Cloud, Local, or Auto
 
@@ -124,6 +134,8 @@ The node now exposes the complete lifecycle; raw HTTP nodes are not required:
 
 Treat `passportToken` as a secret. Prefer an expression from the issuance step or an encrypted n8n credential; do not hard-code it in workflow JSON. Local tool checks inspect payload/capability risk only and explicitly set `passportEnforced: false`.
 
+Validate Passport and Check Tool Call return only `passportTokenMasked`. For later checks, reference the token from the Issue Passport step explicitly. An unrelated incoming `$json.token` is never used as a passport. Local passport operations are process-local simulations: tokens must have been issued in that process and must match an unexpired, unrevoked session.
+
 Policy presets provide auditable least-privilege starting points: **Read Only**, **Customer Support**, and **Coding Agent**. Custom Policy JSON overrides only the keys you provide, while unmodified preset deny/approval controls remain active. Select **Custom JSON Only** when no preset applies.
 
 Import `examples/soterai-agent-passport-lifecycle.workflow.json` for a complete enroll → issue → validate → tool check → revoke reference. It contains expressions and a credential placeholder, never a real token.
@@ -148,14 +160,14 @@ All optional. Only **Layers in Parallel** changes the node's previous behaviour,
 
 | Option | Default | What it does |
 | --- | --- | --- |
-| **Items in Parallel** | `1` | How many input items are checked at once (1–20). Output order and `pairedItem` are preserved regardless of which item finishes first. |
+| **Items in Parallel** | `1` | Fixed setting for the whole batch (1–20). Output order and `pairedItem` are preserved. Queued items stop starting after a fatal error; already running requests finish. |
 | **Layers in Parallel** | on | Runs the Universal AI Firewall's optional layers concurrently instead of one after another. Turn it off if your plan's per-minute rate limit is tight. |
 | **Reuse Identical Items** | on | A batch containing the same text more than once costs one API call. Reused items are marked `reusedResult` and `reusedFromItemIndex` rather than being silently identical. |
 | **Never Downgrade to Local** *(Auto only)* | off | Fail an item instead of answering it with the local engine when the cloud cannot be reached. See [Auto mode](#auto-mode). Off by default so an upgrade never changes behaviour. |
-| **Request Timeout (Ms)** | `20000` | Per-request timeout, 1000–120000. |
-| **Include Raw API Response** | on | Turn off to drop `rawResponse` from the output when you do not want the full payload in your execution data. |
+| **Request Timeout (Ms)** | `20000` | Total budget per API call, including retries and backoff, 1–120000 ms. |
+| **Include Raw API Response** | off | Opt in to attach a recursively sanitized `rawResponse`. |
 
-Items in Parallel and Reuse Identical Items are the two that matter for large batches. **Items in Parallel defaults to `1` — sequential** — so a hundred-item batch is a hundred requests one after another, which is the safest thing for a rate limit but not the fastest; raising it is the single biggest speed win, and a 429 is retried after the interval the API asks for at any setting. Reuse Identical Items skips duplicate calls within one execution entirely.
+Items in Parallel defaults to `1` (sequential). A 429 is retried after the server's requested wait only when it fits within Request Timeout. Reuse Identical Items skips duplicate calls within one execution when both request and engine/options match. Detection Engine, Request Timeout, and Include Raw API Response resolve separately for each item.
 
 ## Two Outputs: Safe and Flagged
 
@@ -692,6 +704,8 @@ own email address. When a level changes an outcome it says so:
 
 #### Always Allow
 
+In Universal AI Firewall, Always Allow bypasses only the input layer. Output, tool, RAG, memory, and egress checks still run. A blank input with an AI answer or security context also runs those enabled layers. `outputText` follows the cleaned AI answer when one is supplied.
+
 Newline-separated messages that skip detection entirely. Matching is
 **whole-message only** after case and punctuation folding, so appending an
 attack to an allowlisted phrase does not match. Entries shorter than eight
@@ -806,23 +820,28 @@ API keys, bearer tokens, common provider tokens, AWS access key IDs, database UR
 - Advanced `rawResponse` output is recursively sanitized before it is returned to downstream n8n nodes.
 - Metadata JSON is sanitized before it is sent: sensitive keys are redacted, secret-like strings are redacted, and long strings are truncated.
 - Base URL validation requires HTTPS, except `http://localhost` for local development, and rejects embedded credentials, query strings, and fragments.
+- Private, link-local, metadata, and reserved IP destinations are rejected in runtime requests and the credential Test expression. Explicit loopback development URLs remain supported. HTTP redirects are disabled. Custom public DNS names must resolve to a trusted deployment; host validation does not provide DNS rebinding protection.
 - Use fake test data for demos, screenshots, and video submissions.
 - SoterAI provides layered protection for AI workflow content, but no detector can guarantee that every possible attack is blocked or that false positives never happen. Use **Maximum Protection**, fail-closed routing, approvals, and least-privilege tool credentials for high-risk production agents.
 
 ## Compatibility
 
+Build this package with Node.js `24+` and npm `11`: run `npm ci`, `npm test`, `npm run lint`, then `npm run build`. The project npm configuration uses the same peer installation policy as the publish workflow. Lint imports the official n8n plugins directly and retains the node CLI's Cloud, credential and node rules, without installing its unused generators or AI SDK. Development tooling is not bundled in the published tarball.
+
 - Package: `n8n-nodes-soterai`
-- Version: `0.8.7`
+- Version: `0.8.8`
 - n8n node API: `1`
 - Peer dependency: `n8n-workflow` `*`
-- Runtime: n8n versions that support community nodes and Node.js 20+ are expected to work; verify in your own n8n host before production use.
+- Minimum supported n8n version: `2.27.4`. Older hosts are outside this release's support policy; upgrade to the latest stable n8n before production use.
+- Node.js requirement: `22.22.0` or newer; also satisfy the n8n host's own Node.js requirement (n8n `2.42.6` requires Node.js `24+`). The `n8n-workflow` peer is provided by the host.
+- Release validation: the exact `0.8.8` artifact must pass the stable, previous-minor, and `2.27.4` Docker matrix before publication. A declared support floor is not a claim that those integration checks have passed.
 
 ## Known Limitations
 
 - Cloud mode requires a reachable SoterAI API and a valid API key. Local mode requires neither, at the cost of the detection tiers listed under [Local mode](#local-mode).
 - Local mode is pattern-based: no ML classifier, no cross-turn correlation, no attacker reputation, no passport enforcement, and egress comparison only against Protected Sources supplied inline. Treat it as the best answer available offline, not as an equivalent of Cloud mode.
 - Passport lifecycle actions are cloud-only because identity state, token hashes, revocation, and audit records live on the configured SoterAI deployment. Auto never pretends to complete these actions locally.
-- Version 0.8.7 passes package, type, lint, unit (286/286 passing), ReDoS sweep (164 patterns), stress testing (24 heavy test cases), build, runtime-load, and fresh Docker n8n 2.x/1.x live workflow/UI metadata gates. Cloud passport execution still requires a reachable SoterAI backend and valid API key.
+- Local package/unit results do not establish real cloud or n8n UI compatibility. See the release QA report for the tested artifact, results and outstanding blockers; cloud passport execution requires a reachable SoterAI backend and valid test-account API key.
 - RAG/document risk summaries in Cloud mode depend on the `/api/rag/document/trust-score` endpoint being enabled for your SoterAI deployment. In Local mode the document is scored in-process instead.
 - **Topic trust is a local-engine behaviour.** In Cloud mode your topics are sent to the API and can only *add* an `OFF_TOPIC` finding; they will not exempt an in-scope message from a threat rule. Set the engine to Local if you need trust to apply, and read the notice beside the field rather than assuming both engines behave alike.
 - **Always Allow is a real hole, by design.** Matching messages are never scanned by any engine. It matches whole messages only and ignores entries under eight characters, but anything you put on that list is unprotected. Results say so with `bypassed: "ALWAYS_ALLOW"`.

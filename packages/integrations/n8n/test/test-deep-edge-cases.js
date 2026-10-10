@@ -17,7 +17,7 @@ const {
   compareEgressLocal,
   redactLocal,
   scoreRagDocumentLocal
-} = require('./dist/nodes/SoterGuard/shared/localEngine');
+} = require('../dist/nodes/SoterGuard/shared/localEngine');
 
 console.log('================================================================');
 console.log('🔍 DEEP EDGE-CASE SCAN: FINDING ALL REMAINING FAULTS');
@@ -107,8 +107,9 @@ testCase('Tool check with command injection in tool arguments', () => {
 // 8. PII Redactor with malformed Indian Aadhaar patterns
 testCase('Malformed Aadhaar with mixed letters and numbers', () => {
   const res = redactLocal('My Aadhaar is 2345-6789-012A and phone is +91-9876543210');
-  console.log('   -> Redacted text:', res.text);
-  console.log('   -> Findings:', res.findings.map(f => f.label));
+  console.log('   -> Redacted text:', res.safeText || res.text);
+  const items = res.findings || res.entities || [];
+  console.log('   -> Findings/Entities:', items.map(f => f.label));
 });
 
 // 9. Egress comparison with empty protected sources

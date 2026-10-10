@@ -259,8 +259,8 @@ test("Lenient reports a borderline finding instead of enforcing it", async () =>
   assert.equal(flagged.length, 0);
   const result = safe[0].json;
   assert.equal(result.blocked, false);
-  // The detection is untouched and still reported. Only enforcement moved.
-  assert.equal(result.allowed, false);
+  // Categories retain the detection; allowed reflects the continuation policy.
+  assert.equal(result.allowed, true);
   assert.deepEqual(result.categories, ["TOOL_ABUSE"]);
   assert.equal((result.sensitivity as Record<string, unknown>).effect, "NOT_ENFORCED");
   assert.equal(result.outputText, BORDERLINE);

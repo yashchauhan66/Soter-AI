@@ -1,9 +1,13 @@
 import type {
   Icon,
+  ICredentialDataDecryptedObject,
   ICredentialTestRequest,
   ICredentialType,
+  IDataObject,
+  IHttpRequestHelper,
   INodeProperties,
 } from "n8n-workflow";
+import { validatedBaseUrl } from "../shared/baseUrl";
 
 export class SoterApi implements ICredentialType {
   name = "soterApi";
@@ -37,17 +41,27 @@ export class SoterApi implements ICredentialType {
    */
   test: ICredentialTestRequest = {
     request: {
-      baseURL: "={{$credentials.baseUrl}}",
+      baseURL: `={{ (${validatedBaseUrl.toString()})($credentials.baseUrl) }}`,
       url: "/api/workflow/audit",
       method: "POST",
+      disableFollowRedirect: true,
       headers: {
         "Content-Type": "application/json",
         "x-api-key": "={{$credentials.apiKey}}",
+        Origin: "={{($credentials.baseUrl || 'https://soterai.in').trim().match(/^https?:\\/\\/[^/]+/i)[0]}}",
       },
       body: {
         workflowJson: '{"nodes":[],"connections":{}}',
       },
     },
+  };
+
+  preAuthentication = async function (
+    this: IHttpRequestHelper,
+    credentials: ICredentialDataDecryptedObject,
+  ): Promise<IDataObject> {
+    validatedBaseUrl(String(credentials.baseUrl || "https://soterai.in"));
+    return {};
   };
 
   properties: INodeProperties[] = [
