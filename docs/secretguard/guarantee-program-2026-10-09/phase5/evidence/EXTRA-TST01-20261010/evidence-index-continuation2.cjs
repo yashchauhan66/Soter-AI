@@ -1,0 +1,55 @@
+// Continue evidence indexing after detecting pre-existing Git line-ending normalization.
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),cp=require('node:child_process');
+const root=path.join(__dirname,'s5cc-eb9ac581'),phase=path.join(root,'docs/secretguard/guarantee-program-2026-10-09/phase5'),ev=path.join(phase,'evidence/EXTRA-TST01-20261010');
+const prefix='docs/secretguard/guarantee-program-2026-10-09/phase5/';
+const digest=b=>crypto.createHash('sha256').update(b).digest('hex'),sha=p=>digest(fs.readFileSync(p));
+const json=p=>JSON.parse(fs.readFileSync(p,'utf8').replace(/^\uFEFF/,''));
+const write=(p,v,exclusive=false)=>fs.writeFileSync(p,typeof v==='string'?v:JSON.stringify(v,null,2)+'\n',exclusive?{flag:'wx'}:{});
+const rel=p=>path.relative(phase,p).replace(/\\/g,'/');
+function files(dir){return fs.readdirSync(dir,{withFileTypes:true}).sort((a,b)=>a.name.localeCompare(b.name)).flatMap(e=>{const p=path.join(dir,e.name);if(e.isSymbolicLink())throw Error('Linked archive refused');return e.isDirectory()?files(p):[p];});}
+const previous=json(path.join(ev,'before-evidence-index.json')),assessment=json(path.join(ev,'evaluation.json'));
+const changed=new Set(['FINAL-REPORT.md','SCORECARD.md','allowed-claims.txt','coverage-map.md','release-checklist.md','claim-catalogue.md','open-work.md','stage-status.md','clean-checkout.md','final-round-changes.md','host-comparison.md']);
+const discrepancies=[];
+for(const r of previous.files){if(changed.has(r.path)||sha(path.join(phase,r.path))===r.sha256)continue;
+ const blob=cp.execFileSync('git',['show','fa4ff283fc781e55c454ad01924b9c4c96ae6479:'+prefix+r.path],{cwd:root});
+ const current=sha(path.join(phase,r.path)),crlf=digest(Buffer.from(blob.toString('utf8').replace(/\r?\n/g,'\r\n'),'utf8'));
+ const clean=cp.execFileSync('git',['diff','--name-only','fa4ff283fc781e55c454ad01924b9c4c96ae6479','--',prefix+r.path],{cwd:root,encoding:'utf8'}).trim()==='';
+ if(current!==digest(blob)||crlf!==r.sha256||!clean)throw Error('Unexpected historical evidence difference '+r.path);
+ discrepancies.push({path:r.path,oldManifestRawSha256:r.sha256,committedGitBlobAndCheckoutSha256:current,crlfReconstructionSha256:crlf,
+ interpretation:'Pre-existing historical commit normalized CRLF to LF; checkout is unchanged from fa4ff283, byte-exact older working-tree manifest does not match these three Git blobs. Original historical files not rewritten; no new observation inferred.'});
+}
+if(discrepancies.length!==3)throw Error('Unexpected normalization discrepancy count');
+const restoredReferences=[];
+const referenceResults=previous.historicalReferences.map(r=>{
+ let p=path.resolve(phase,r.path),referencePath=r.path,scope=r.scope;
+ if(!fs.existsSync(p)){
+  const original=path.resolve(__dirname,'..','docs/secretguard/guarantee-program-2026-10-09/phase5',r.path);
+  if(sha(original)!==r.sha256)throw Error('Original missing-reference hash mismatch '+r.path);
+  const dir=path.join(ev,'historical-references');fs.mkdirSync(dir,{recursive:true});
+  p=path.join(dir,path.basename(original));fs.copyFileSync(original,p,fs.constants.COPYFILE_EXCL);
+  referencePath=rel(p);scope='Preserved owner original absent from committed checkout; archived byte-for-byte after old-hash verification, no regeneration';
+  restoredReferences.push({originalReference:r.path,archivedReference:referencePath,sha256:r.sha256,status:'PASS_ORIGINAL_HASH_MATCH'});
+ }
+ const hash=sha(p);if(!r.path.endsWith('progress-ledger.md')&&hash!==r.sha256)throw Error('Historical reference changed '+r.path);
+ return {...r,path:referencePath,originalPath:r.path,bytes:fs.statSync(p).size,sha256:hash,scope:r.path.endsWith('progress-ledger.md')?'Maintained progress ledger; prior committed version preserved':scope};
+});
+write(path.join(ev,'preservation-validation.json'),{status:'PASS_COMMITTED_IDENTITY_WITH_THREE_PREEXISTING_RAW_HASH_EXCEPTIONS',
+ priorIndexedFiles:previous.files.length,maintainedReportsArchived:changed.size,discrepancies,restoredReferences,
+ originalA0Sha256:assessment.a0Sha256,a0Unchanged:true,originalReviewerUnchanged:true,
+ productSourceChanged:false,nativeR01:'INCOMPLETE',newSafetyFilterRejections:0},true);
+const note='\n**FACT — Historical hash qualification.** Indexing found three pre-existing S0 raw-hash mismatches (cim-query.json, identity.json, supplement.json). This isolated checkout matches their fa4ff283 Git blobs byte-for-byte; the old manifest hashes match CRLF reconstructions of those LF blobs. No historical file was changed in this repair. The prior raw working-tree hash manifest and committed-source checkout differ for those three files; this is disclosed rather than called a byte-exact preservation pass. [Validation](evidence/EXTRA-TST01-20261010/preservation-validation.json) pins both hashes and the proof. A0, original reviewer and all other immutable indexed bytes match; current hashes are local identities, not independent witness evidence.\n';
+for(const name of ['FINAL-REPORT.md','SCORECARD.md']){const p=path.join(phase,name);write(p,fs.readFileSync(p,'utf8')+note);}
+const report=path.join(ev,'REPAIR-REPORT.md');write(report,fs.readFileSync(report,'utf8')+note.replaceAll('evidence/EXTRA-TST01-20261010/',''));
+const evidenceChecks=files(ev).filter(p=>path.basename(p)!=='SHA256SUMS.txt');write(path.join(ev,'SHA256SUMS.txt'),evidenceChecks.map(p=>sha(p)+'  '+path.relative(ev,p).replace(/\\/g,'/')).join('\n')+'\n',true);
+const exclude=new Set(['evidence-index.json','evidence-index.md','SHA256SUMS-final.txt']);
+const priorPaths=new Set(previous.files.map(r=>r.path));
+const inScope=p=>priorPaths.has(rel(p))||rel(p).startsWith('evidence/EXTRA-TST01-20261010/')||exclude.has(rel(p));
+const entries=files(phase).filter(p=>inScope(p)&&!exclude.has(rel(p))).map(p=>({path:rel(p),bytes:fs.statSync(p).size,sha256:sha(p)}));
+write(path.join(phase,'evidence-index.json'),{...previous,observedUtc:new Date().toISOString(),repairBaseCommit:'fa4ff283fc781e55c454ad01924b9c4c96ae6479',extraRound:'EXTRA-TST01-20261010',extraRoundScope:'Test/harness only; both loaded identities; native R01 INCOMPLETE; no product changes',historicalRawHashExceptions:discrepancies,files:entries,historicalReferences:referenceResults});
+write(path.join(phase,'evidence-index.md'),`# Phase5 evidence index\n\n**FACT — 2026-10-11 (Asia/Calcutta), Windows26300.8935.** [Machine-readable index](evidence-index.json) pins ${entries.length} current files and twelve historical references. [Checksums](SHA256SUMS-final.txt) include reports/index and retained evidence, with self-exclusions disclosed. [Extra-round evaluation](evidence/EXTRA-TST01-20261010/evaluation.json), [repair diff](evidence/EXTRA-TST01-20261010/repair.diff), [repair report](evidence/EXTRA-TST01-20261010/REPAIR-REPORT.md), [old index](evidence/EXTRA-TST01-20261010/before-evidence-index.json), [old raw checksum manifest](evidence/EXTRA-TST01-20261010/before-SHA256SUMS-final.txt). Old failed raw runs remain immutable in Git.\n\n**FACT — Current outcome.** Full suite1338 PASS/0 FAIL/3 skipped, repeated identically by the native gate; count one run. SecurityReview harness PASS, eight scoped blocks/nine leaks across all17 A0 cases. NativeBaseline launched/verified the same loaded hash, six public controls, nine blocks/nine leaks and R01 ERROR/INCOMPLETE: occupied loopback47321. Native harness FAIL, not a confidentiality pass. Both read back ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b. Architecture30 UNTESTED, real-agent63 NOT_TESTED; current-object independent review NOT_PERFORMED, earlier S5 LOW/static.\n\n**FACT — Preservation qualification.** [Validation](evidence/EXTRA-TST01-20261010/preservation-validation.json) discloses three prior S0 raw-hash/committed-LF exceptions, proven unchanged against Git and the old CRLF hashes. No historical bytes are rewritten. A0 and reviewer identity match. [Archive scope](evidence/EXTRA-TST01-20261010/archive-scope.json) excludes generated profile credentials/runtime workspace junctions; original private runtime remains untouched. Local writable hashes are not independently anchored receipts.\n\n**INFERENCE — Full claim BLOCKED, deployment DEFERRED; candidate WITHHELD.** No product changes, push, deployment or process termination.\n`);
+const finalFiles=files(phase).filter(p=>inScope(p)&&rel(p)!=='SHA256SUMS-final.txt');write(path.join(phase,'SHA256SUMS-final.txt'),finalFiles.map(p=>sha(p)+'  '+rel(p)).join('\n')+'\n');
+const docs=['FINAL-REPORT.md','SCORECARD.md','host-comparison.md','release-checklist.md','open-work.md','claim-catalogue.md','stage-status.md','evidence/EXTRA-TST01-20261010/REPAIR-REPORT.md'];
+const missing=[];let linkCount=0;for(const name of docs){const p=path.join(phase,name);for(const m of fs.readFileSync(p,'utf8').matchAll(/\[[^\]]*\]\(([^)]+)\)/g)){let target=m[1];if(/^(https?:|#)/.test(target))continue;target=target.replace(/^<|>$/g,'').split('#')[0];linkCount++;if(!fs.existsSync(path.resolve(path.dirname(p),target)))missing.push({from:name,target});}}
+for(const r of entries)if(sha(path.join(phase,r.path))!==r.sha256)throw Error('Index readback mismatch');
+if(missing.length)throw Error('Missing report links '+JSON.stringify(missing));
+console.log(JSON.stringify({status:'PASS_CURRENT_METADATA_READBACK_WITH_DISCLOSED_PREEXISTING_EXCEPTIONS',indexedFiles:entries.length,checksumFiles:finalFiles.length,linksChecked:linkCount,normalizationExceptions:discrepancies.length,loadedHash:assessment.actuallyLoaded,tests:assessment.tests,caseCounts:assessment.caseCounts,nativeCounts:assessment.nativeCounts,reportSha256:sha(path.join(phase,'FINAL-REPORT.md')),scorecardSha256:sha(path.join(phase,'SCORECARD.md')),checksumSha256:sha(path.join(phase,'SHA256SUMS-final.txt'))}));

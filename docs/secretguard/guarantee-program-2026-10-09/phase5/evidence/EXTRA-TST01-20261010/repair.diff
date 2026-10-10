@@ -1,0 +1,44 @@
+﻿diff --git a/packages/vscode-extension/src/__tests__/host/securityReview.host.ts b/packages/vscode-extension/src/__tests__/host/securityReview.host.ts
+index dd7f4465..8a4669a7 100644
+--- a/packages/vscode-extension/src/__tests__/host/securityReview.host.ts
++++ b/packages/vscode-extension/src/__tests__/host/securityReview.host.ts
+@@ -80,7 +80,10 @@ export async function run(): Promise<void> {
+     assert.ok(!(await preview("custom.txt")).includes(custom));
+     report("repository deny rule", false, "SoterAI preview", custom);
+     await fs.writeFile(path.join(root, ".aiignore"), "");
+-    report("agent edits repository deny policy", observeReviewCanary(await preview("custom.txt"), custom), "writable .aiignore; retained accepted deny", custom);
++    // The old harness expected removal to expose custom. Accepted-deny controls
++    // now prove retention; record the actual result rather than require a leak.
++    const retainedDeny = !observeReviewCanary(await preview("custom.txt"), custom);
++    report("agent edits repository deny policy", !retainedDeny, "writable .aiignore; retained accepted deny", custom);
+     const envResult = await execute(process.execPath, ["-e", "process.stdout.write(process.env.SOTERAI_SYNTHETIC_CANARY)"], {
+         env: { SystemRoot: process.env.SystemRoot, ELECTRON_RUN_AS_NODE: "1", SOTERAI_SYNTHETIC_CANARY: raw }, windowsHide: true, timeout: 10_000,
+     });
+@@ -122,6 +125,7 @@ export async function run(): Promise<void> {
+         extensionBundleSha256: createHash("sha256").update(await fs.readFile(path.join(extension.extensionPath, "dist", "extension.js"))).digest("hex"),
+         hostProbeSha256: createHash("sha256").update(await fs.readFile(__filename)).digest("hex"),
+         extensionActive: extension.isActive, protectedWorkspaceEnabled: true, syntheticOnly: true, liveModelContacted: false,
++        repositoryDenyControls: { publicBeforeEnrollment: true, deniedAfterEnrollment: true, retainedAfterRemoval: retainedDeny },
+         results, limitations: ["No third-party assistant or remote provider was invoked", "File symlinks, screenshots, clipboard races, live disablement, /proc and privileged OS isolation not tested"] });
+     console.log(JSON.stringify({ syntheticReview: "completed", scopedBlocks: results.filter(r => r.status === "BLOCKED_SCOPED").length,
+         confirmedLeaks: results.filter(r => r.status === "LEAK_CONFIRMED").length }));
+diff --git a/packages/vscode-extension/src/__tests__/phase5-final-review.test.ts b/packages/vscode-extension/src/__tests__/phase5-final-review.test.ts
+index 88c2753b..27e86c7e 100644
+--- a/packages/vscode-extension/src/__tests__/phase5-final-review.test.ts
++++ b/packages/vscode-extension/src/__tests__/phase5-final-review.test.ts
+@@ -60,9 +60,12 @@ test("VD-02 actual manual checker gives bounded public and high-risk recommendat
+     const restores = ["showInformationMessage", "showWarningMessage", "showErrorMessage"].map(name =>
+         mock.method(stub.window, name as "showInformationMessage", async (text: string) => { messages.push(text); return undefined; }));
+     try {
+-        const showDecision = callback("advanced/commands.ts", "showDecision", { summarize: () => "Synthetic finding" });
+-        assert.equal(await showDecision({ decision: "ALLOW", riskScore: 0 }, "selection"), true);
+-        assert.equal(await showDecision({ decision: "BLOCK", riskScore: 95 }, "selection"), false);
++        const presentDecision = callback("advanced/commands.ts", "presentDecision", { summarize: () => "Synthetic finding" });
++        assert.equal(await presentDecision({ decision: "ALLOW", riskScore: 0 }, "selection"), true,
++            "Positive public control must complete through the actual presentDecision function.");
++        assert.equal(await presentDecision({ decision: "BLOCK", riskScore: 95 }, "selection"), false,
++            "Negative high-risk control must withhold through the actual presentDecision function.");
++        assert.equal(messages.length, 2, "Both controls must produce an actual decision notification.");
+         assert.match(messages[0], /no recognized egress risk/);
+         assert.match(messages[0], /unmarked private/);
+         assert.match(messages[1], /manual check recommends withholding/);

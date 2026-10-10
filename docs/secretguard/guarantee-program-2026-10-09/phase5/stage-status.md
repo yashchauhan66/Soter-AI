@@ -1,5 +1,7 @@
 # Autonomous completion stage status
 
+**FACT — Superseding extra-round status, 2026-10-11.** One explicitly granted test-only repair round fixes TST-01; five typechecks/builds and 1338/1341 tests PASS (3 skipped, zero failed). Both existing hosts ran (SecurityReview harness PASS; NativeBaseline harness FAIL/R01 INCOMPLETE) with actual loaded extension ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b; SecurityReview eight scoped blocks/nine leaks, NativeBaseline observations recorded separately. [Current results](evidence/EXTRA-TST01-20261010/REPAIR-REPORT.md), [all17 A0 comparisons](evidence/EXTRA-TST01-20261010/host-comparison.json). Earlier S4/S6 failures and historical statements below retain their original time/scope and are superseded for current status only. S5-unmarked FAIL,30 full criteria UNTESTED,63 cells NOT_TESTED, exact-object review NOT_PERFORMED; full claim BLOCKED/deployment DEFERRED.
+
 **FACT — 2026-10-10, Windows26300.8935 (Insider).** Owner master prompt SHA-25660cd51b1ceb86c7e4a678bd629f23c1bc6b418862681eb32f97b168a2469b1ad. This builder report does not supply independent full-T grading. Full claim BLOCKED; deployment DEFERRED; candidate WITHHELD.
 
 | Stage | Status | Evidence |

@@ -1,0 +1,26 @@
+# Remaining work and exclusions
+
+**FACT — 2026-10-10, Windows26300.8935.** Remaining work is not implemented by this document. Full target remains BLOCKED. All original37 issues retain their full-T dispositions in [issue-disposition](../phase4/issue-disposition.json); narrow FIXED-NOW allocations are not closure of same-user/full-architecture issues.
+
+| Item | Status | Why it remains / future evidence requirement |
+|---|---|---|
+| TST-01 manual-check regression adapter | FAIL / OPEN | Adapter references showDecision instead of presentDecision. Three-round cap exhausted. Later authorized repair must execute the actual public/risk callback controls and pass unchanged full suites. |
+| Final existing native/security hosts | INCOMPLETE | S4 obsolete assertion/native launch failure; S6 withheld on unit failure. Later passing gate must complete existing synthetic cases and record actual loaded hash. No new scenarios are proposed. |
+| A0 full-T failures | Historical confidentiality FAIL, not fixed | Ten A0 leaks remain full-T findings. Local retained repo-deny unit repair is not independent policy custody; all17 current host comparisons INCOMPLETE. |
+| S5-unmarked | FAIL | Automatic recognition of arbitrary private prose is unsupported. Explicit classification helps managed sharing but is not universal semantic detection or independent enrollment. |
+| Real control-auth-token and protected inventory | INCOMPLETE | Real control token absent; no provisioning or token content access. Directory-only candidate metadata is not complete protected-folder inventory/effective token access. |
+| F16/auth/credential storage | STATIC-ONLY / dynamic INCOMPLETE | Benign safe Git config/launch and synthetic ACL tests are distinct from independent helper/credential authority. Filtered auth probe directory never read or run. DPAPI/source review is not dynamic same-user isolation evidence. |
+| Final-object independent review | NOT_PERFORMED | Fresh S5 LOW static review saw earlier extension hash; current broker/MCP bytes match that kit, changed extension does not. No original reviewer re-grading. Higher independence/exact identities remain absent. |
+| 30 architecture criteria /63 real-agent cells | UNTESTED /NOT_TESTED | Selected protected custody/session/management/presence/witness/mandatory-egress/private-worker architecture not deployed; named agents/forks/OS versions/topologies not run. |
+| Agent-account pilot | INCOMPLETE; D3 NOT RATED | Shell not elevated and UAC prohibited. No account/rule/connection was attempted; nothing to roll back. Insider results cannot certify stable Windows. |
+| Tier2-lite/WSL/devcontainer runtime | INCOMPLETE /NOT_TESTED | Only default-off sanitized snapshot/templates and units exist. No secrets/history/credential mounts/forwarding or egress behavior observed; native agents outside coverage. |
+| Tier3/Hyper-V/two-account deployment | DEFERRED | Planning/prerequisites only; no hardware/account/VM/feature/driver/firewall changes. Independent authority and all lifecycle/consent/egress controls need separate deployment/evidence. |
+| Existing public listing/CDN assets | UNTESTED /unchanged | No publishing authorized. Current repository README retires old captures and package excludes them; remote public bytes were not changed or verified. |
+
+**FACT — Original safety refusal, retained verbatim from phase3/source-notes.md.**
+
+> This content was flagged for possible cybersecurity risk. If this seems wrong, try rephrasing your request. If you’re doing authorized security work that requires more cyber permissive safeguards, apply for Daybreak access via https://platform.openai.com/settings/organization/status-and-access before retrying.
+
+**FACT — Handling.** F16/auth dynamic work stayed skipped; no rephrasing/retry around that refusal. No fresh safety refusal occurred in S0–S8. Earlier resource/quota errors, sandbox spawn failures, ENOSPC/ENOTCACHED, long-path/source-closure errors and final metadata cmd syntax error are retained as their actual categories, not relabelled as security results. No unsafe substitute, user prompt, account, real secret or external payload was used.
+
+**INFERENCE — Stop/rollback.** The source/artifact candidate is reviewable but withheld; this report closes the authorized pipeline with these gaps. Flag-off withdraws operations and release rollback retains denies/evidence/secure ACLs. No Phase-next implementation, new probe, system change, publication or purchase follows from this list.

@@ -1,0 +1,15 @@
+node:internal/fs/promises:633
+  return new FileHandle(await PromisePrototypeThen(
+                        ^
+System.Management.Automation.RemoteException
+Error: ENOENT: no such file or directory, open 'C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\.tmp\s5cc-eb9ac581\docs\secretguard\guarantee-program-2026-10-09\phase0\evidence\baseline-final\inventory.json'
+    at async open (node:internal/fs/promises:633:25)
+    at async Object.readFile (node:internal/fs/promises:1237:14)
+    at async file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/.tmp/s5cc-eb9ac581/docs/secretguard/guarantee-program-2026-10-09/phase1/native-host/prepare-host.mjs:24:27 {
+  errno: -4058,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: 'C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\.tmp\\s5cc-eb9ac581\\docs\\secretguard\\guarantee-program-2026-10-09\\phase0\\evidence\\baseline-final\\inventory.json'
+}
+System.Management.Automation.RemoteException
+Node.js v22.16.0

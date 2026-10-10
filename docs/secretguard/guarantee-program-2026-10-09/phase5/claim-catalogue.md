@@ -1,5 +1,7 @@
 # Current claim-to-evidence catalogue
 
+**FACT — Superseding extra-round status, 2026-10-11.** One explicitly granted test-only repair round fixes TST-01; five typechecks/builds and 1338/1341 tests PASS (3 skipped, zero failed). Both existing hosts ran (SecurityReview harness PASS; NativeBaseline harness FAIL/R01 INCOMPLETE) with actual loaded extension ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b; SecurityReview eight scoped blocks/nine leaks, NativeBaseline observations recorded separately. [Current results](evidence/EXTRA-TST01-20261010/REPAIR-REPORT.md), [all17 A0 comparisons](evidence/EXTRA-TST01-20261010/host-comparison.json). Earlier S4/S6 failures and historical statements below retain their original time/scope and are superseded for current status only. S5-unmarked FAIL,30 full criteria UNTESTED,63 cells NOT_TESTED, exact-object review NOT_PERFORMED; full claim BLOCKED/deployment DEFERRED.
+
 **FACT — 2026-10-10, Windows26300.8935; scope: inspected canonical source/UI callbacks, README, walkthroughs, listing copy and referenced current assets.** [Exact source manifest](evidence/S6-evaluation-20261010T113227Z-7fb071c5/source-object-manifest.json) and [review report](evidence/S5-20261010/reviewer-report.md) pin the two different review objects. This is source/component tracing, not exhaustive live UI or external listing validation. Passing a class's test cannot certify all of its unobserved deployments.
 
 | Current surface / bounded claim | Supporting evidence | What is not covered |

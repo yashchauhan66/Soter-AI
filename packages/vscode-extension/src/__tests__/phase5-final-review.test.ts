@@ -60,9 +60,12 @@ test("VD-02 actual manual checker gives bounded public and high-risk recommendat
     const restores = ["showInformationMessage", "showWarningMessage", "showErrorMessage"].map(name =>
         mock.method(stub.window, name as "showInformationMessage", async (text: string) => { messages.push(text); return undefined; }));
     try {
-        const showDecision = callback("advanced/commands.ts", "showDecision", { summarize: () => "Synthetic finding" });
-        assert.equal(await showDecision({ decision: "ALLOW", riskScore: 0 }, "selection"), true);
-        assert.equal(await showDecision({ decision: "BLOCK", riskScore: 95 }, "selection"), false);
+        const presentDecision = callback("advanced/commands.ts", "presentDecision", { summarize: () => "Synthetic finding" });
+        assert.equal(await presentDecision({ decision: "ALLOW", riskScore: 0 }, "selection"), true,
+            "Positive public control must complete through the actual presentDecision function.");
+        assert.equal(await presentDecision({ decision: "BLOCK", riskScore: 95 }, "selection"), false,
+            "Negative high-risk control must withhold through the actual presentDecision function.");
+        assert.equal(messages.length, 2, "Both controls must produce an actual decision notification.");
         assert.match(messages[0], /no recognized egress risk/);
         assert.match(messages[0], /unmarked private/);
         assert.match(messages[1], /manual check recommends withholding/);

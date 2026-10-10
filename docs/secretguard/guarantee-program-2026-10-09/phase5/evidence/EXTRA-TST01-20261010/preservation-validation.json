@@ -1,0 +1,49 @@
+{
+  "status": "PASS_COMMITTED_IDENTITY_WITH_DISCLOSED_PREEXISTING_RAW_HASH_EXCEPTIONS",
+  "priorIndexedFiles": 373,
+  "maintainedReportsArchived": 11,
+  "discrepancies": [
+    {
+      "path": "evidence/S0-20261010T051435Z-f2ccbf42/cim-query.json",
+      "oldManifestRawSha256": "c6313e21b0916d27f89a9b948f07ce4853d8a7f8933f1ba2c1e24467a8cf9035",
+      "committedGitBlobAndCheckoutSha256": "681b30dccf1d2b958622c0ed200346364cadf2ba5503c9f39b4b80fbb88bb87a",
+      "crlfReconstructionSha256": "c6313e21b0916d27f89a9b948f07ce4853d8a7f8933f1ba2c1e24467a8cf9035",
+      "interpretation": "Pre-existing historical commit normalized CRLF to LF; checkout is unchanged from fa4ff283, byte-exact older working-tree manifest does not match these three Git blobs. Original historical files not rewritten; no new observation inferred."
+    },
+    {
+      "path": "evidence/S0-20261010T051435Z-f2ccbf42/identity.json",
+      "oldManifestRawSha256": "2036b75fecf712479e3f483a8fd25f4bcafc0dd1bcbadfed5865d7a590a83a22",
+      "committedGitBlobAndCheckoutSha256": "99ac6904be9c9955826c5dd17302b8f2b0972d729c3cdbde06909da186e14fe7",
+      "crlfReconstructionSha256": "2036b75fecf712479e3f483a8fd25f4bcafc0dd1bcbadfed5865d7a590a83a22",
+      "interpretation": "Pre-existing historical commit normalized CRLF to LF; checkout is unchanged from fa4ff283, byte-exact older working-tree manifest does not match these three Git blobs. Original historical files not rewritten; no new observation inferred."
+    },
+    {
+      "path": "evidence/S0-20261010T051435Z-f2ccbf42/supplement.json",
+      "oldManifestRawSha256": "14ac993912eb335cdf200a358194e1f0ef0f85a46ecfc360f83ccb3d91b61829",
+      "committedGitBlobAndCheckoutSha256": "eed22593b16a2adc0ec3d3a80c8ec3aa82f4f3b6079f120ebe6442aa45137185",
+      "crlfReconstructionSha256": "14ac993912eb335cdf200a358194e1f0ef0f85a46ecfc360f83ccb3d91b61829",
+      "interpretation": "Pre-existing historical commit normalized CRLF to LF; checkout is unchanged from fa4ff283, byte-exact older working-tree manifest does not match these three Git blobs. Original historical files not rewritten; no new observation inferred."
+    },
+    {
+      "path": "../phase4/issue-disposition.json",
+      "oldManifestRawSha256": "c7f0a351c0e1fb352062d14847ba3f6038b32043d0361e89c38a395c318b8542",
+      "committedGitBlobAndCheckoutSha256": "900bffa542d77bfdf7393678ec1e9ebbfd7d91f4fe1ac44ba7aa8828f77a310e",
+      "crlfReconstructionSha256": "c7f0a351c0e1fb352062d14847ba3f6038b32043d0361e89c38a395c318b8542",
+      "interpretation": "Pre-existing historical Git CRLF-to-LF normalization; unchanged from fa4ff283, not rewritten by repair"
+    }
+  ],
+  "restoredReferences": [
+    {
+      "originalReference": "../phase3/source-notes.md",
+      "archivedReference": "evidence/EXTRA-TST01-20261010/historical-references/source-notes.md",
+      "sha256": "037f7ff319a49bd61e7010eb42e9b9d678340e307c58dc3d008a2128d2f60a98",
+      "status": "PASS_ORIGINAL_HASH_MATCH"
+    }
+  ],
+  "originalA0Sha256": "4b500b62bdb9acb4c969ea4b083495f34b6307a7d9982d34bfb4bb67be8767b2",
+  "a0Unchanged": true,
+  "originalReviewerUnchanged": true,
+  "productSourceChanged": false,
+  "nativeR01": "INCOMPLETE",
+  "newSafetyFilterRejections": 0
+}

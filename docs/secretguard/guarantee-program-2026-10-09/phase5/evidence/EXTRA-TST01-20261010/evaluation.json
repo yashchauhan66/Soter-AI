@@ -1,0 +1,224 @@
+{
+  "observedUtc": "2026-10-10T18:33:59.705Z",
+  "exactOsBuild": "26300.8935",
+  "sourceBaseCommit": "fa4ff283fc781e55c454ad01924b9c4c96ae6479",
+  "repairScope": "One additional TST-01/test-harness-only round; no product behaviour change",
+  "additionalRoundsRemaining": 0,
+  "wrapperExit": 1,
+  "tests": {
+    "tests": 1341,
+    "pass": 1338,
+    "fail": 0,
+    "skipped": 3
+  },
+  "suites": [
+    {
+      "name": "guard-core",
+      "tests": 515,
+      "pass": 515,
+      "fail": 0,
+      "skipped": 0,
+      "log": "evidence/EXTRA-TST01-20261010/raw/guard-core-test.log"
+    },
+    {
+      "name": "ide-protocol",
+      "tests": 47,
+      "pass": 47,
+      "fail": 0,
+      "skipped": 0,
+      "log": "evidence/EXTRA-TST01-20261010/raw/ide-protocol-test.log"
+    },
+    {
+      "name": "broker",
+      "tests": 144,
+      "pass": 143,
+      "fail": 0,
+      "skipped": 1,
+      "log": "evidence/EXTRA-TST01-20261010/raw/broker-test.log"
+    },
+    {
+      "name": "extension",
+      "tests": 635,
+      "pass": 633,
+      "fail": 0,
+      "skipped": 2,
+      "log": "evidence/EXTRA-TST01-20261010/raw/extension-test.log"
+    }
+  ],
+  "typechecksAndBuilds": [
+    {
+      "scope": "command result only",
+      "exitCode": 0,
+      "name": "guard-core-typecheck"
+    },
+    {
+      "scope": "command result only",
+      "exitCode": 0,
+      "name": "guard-core-build"
+    },
+    {
+      "scope": "command result only",
+      "exitCode": 0,
+      "name": "ide-protocol-typecheck"
+    },
+    {
+      "scope": "command result only",
+      "exitCode": 0,
+      "name": "ide-protocol-build"
+    },
+    {
+      "scope": "command result only",
+      "exitCode": 0,
+      "name": "detectors-typecheck"
+    },
+    {
+      "scope": "command result only",
+      "exitCode": 0,
+      "name": "detectors-build"
+    },
+    {
+      "scope": "command result only",
+      "exitCode": 0,
+      "name": "broker-typecheck"
+    },
+    {
+      "scope": "command result only",
+      "exitCode": 0,
+      "name": "broker-build"
+    },
+    {
+      "scope": "command result only",
+      "exitCode": 0,
+      "name": "extension-typecheck"
+    },
+    {
+      "scope": "command result only",
+      "exitCode": 0,
+      "name": "extension-build"
+    }
+  ],
+  "bundles": [
+    {
+      "name": "extension.js",
+      "sha256": "ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b"
+    },
+    {
+      "name": "local-ai-broker.js",
+      "sha256": "6c07093d81243f0063bfd8d51b3d23a162cd3b4375c312c75b59e95f8239a397"
+    },
+    {
+      "name": "soterai-mcp-server.js",
+      "sha256": "6d5e1199d509139387e542e91faad02b790e692415416bd7eb5510a6e6ecc486"
+    }
+  ],
+  "actuallyLoaded": {
+    "SecurityReview": "ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b",
+    "NativeBaseline": "ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b"
+  },
+  "a0Sha256": "4b500b62bdb9acb4c969ea4b083495f34b6307a7d9982d34bfb4bb67be8767b2",
+  "caseCounts": {
+    "PASS": 8,
+    "FAIL": 9,
+    "INCOMPLETE": 0,
+    "UNTESTED": 30
+  },
+  "repositoryDenyControls": {
+    "publicBeforeEnrollment": true,
+    "deniedAfterEnrollment": true,
+    "retainedAfterRemoval": true
+  },
+  "nativeCounts": {
+    "IDENTITY_VERIFIED": 1,
+    "PUBLIC_CONTROL_PASS": 6,
+    "BLOCKED_SCOPED": 9,
+    "LEAK_CONFIRMED": 9,
+    "ERROR": 1
+  },
+  "nativeFatal": null,
+  "diagnostics": [
+    {
+      "id": "H2a",
+      "status": "SKIP"
+    },
+    {
+      "id": "H2e",
+      "status": "SKIP"
+    },
+    {
+      "id": "S5-unmarked",
+      "status": "FAIL"
+    }
+  ],
+  "architectureAssertions": "30 UNTESTED",
+  "realAgentCells": "63 NOT_TESTED",
+  "independentReview": "NOT_PERFORMED for current extension; prior S5 LOW static only",
+  "fullClaim": "BLOCKED",
+  "deployment": "DEFERRED",
+  "productSourceChanged": false,
+  "changedTestFiles": [
+    "packages/vscode-extension/src/__tests__/phase5-final-review.test.ts",
+    "packages/vscode-extension/src/__tests__/host/securityReview.host.ts"
+  ],
+  "originalShortOutput": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\.tmp\\s5cc-eb9ac581\\.tmp\\r4",
+  "noProcessTermination": true,
+  "nativeWrapperExit": 1,
+  "firstWrapperFailures": [
+    "Existing native preparation failed."
+  ],
+  "nativeWrapperFailures": [
+    "NativeBaseline host failed; inspect retained findings."
+  ],
+  "nativeGateSuites": [
+    {
+      "name": "guard-core",
+      "tests": 515,
+      "pass": 515,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "ide-protocol",
+      "tests": 47,
+      "pass": 47,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "broker",
+      "tests": 144,
+      "pass": 143,
+      "fail": 0,
+      "skipped": 1
+    },
+    {
+      "name": "extension",
+      "tests": 635,
+      "pass": 633,
+      "fail": 0,
+      "skipped": 2
+    }
+  ],
+  "suiteAccounting": "Two full-suite gates, identical outcomes; count one run, not double",
+  "nativeWorkingDirectory": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\.tmp\\s5cc-eb9ac581\\.tmp\\n4\\verify-20261010T182729Z-2b878662519a4921af6cb37353b3d48e\\native-baseline-runs\\host-4f62283c37bb38c886c1c94f\\workspace",
+  "nativeWorkingDirectoryCharacters": 199,
+  "inventoryInputSha256": "144a3244a5fd2a1aef01f9ca3fa9911c315abd3daf722fac064e017d05312918",
+  "inputRecovery": "Initial native preparation ENOENT; existing original inventory copied byte-for-byte, no code repair; native-only wrapper run retained separately",
+  "hostStatus": {
+    "SecurityReview": "PASS_HARNESS_CONFIDENTIALITY_FAIL",
+    "NativeBaseline": "FAIL_HARNESS_R01_INCOMPLETE_CONFIDENTIALITY_FAIL"
+  },
+  "nativeIncompleteCases": [
+    {
+      "id": "R01",
+      "operation": "real native broker restart/runtime state",
+      "status": "ERROR",
+      "boundary": "harness/runtime",
+      "gates": [],
+      "details": {
+        "name": "BrokerStartFailure",
+        "message": "http://127.0.0.1:47321 is already in use, so the local AI broker cannot start there. If another editor is already running SoterAI, give this one its own port with the \"soterai.broker.port\" setting."
+      },
+      "evidenceDisposition": "INCOMPLETE; runtime precondition failed, not a successful restart control"
+    }
+  ]
+}

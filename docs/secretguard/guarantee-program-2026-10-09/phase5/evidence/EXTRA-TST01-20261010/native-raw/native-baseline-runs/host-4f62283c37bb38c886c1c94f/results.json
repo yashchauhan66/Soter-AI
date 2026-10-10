@@ -1,0 +1,415 @@
+{
+  "schemaVersion": 1,
+  "phase": 1,
+  "runId": "host-4f62283c37bb38c886c1c94f",
+  "host": "1.104.0",
+  "platform": "win32",
+  "extensionVersion": "0.6.3",
+  "suppliedBundleSha256": "ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b",
+  "probeSha256": "8c10e3b8c0640cc8cb3dc0357669aff23cf3c6a98cef754e76372ef55f653339",
+  "syntheticOnly": true,
+  "realAgentTested": false,
+  "liveModelContacted": false,
+  "productionCodeModified": false,
+  "observations": [
+    {
+      "id": "IDENTITY",
+      "operation": "activate frozen supplied build",
+      "status": "IDENTITY_VERIFIED",
+      "boundary": "actual VS Code host",
+      "gates": [],
+      "details": {
+        "host": "1.104.0",
+        "extension": "0.6.3",
+        "bundleSha256": "ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b"
+      }
+    },
+    {
+      "id": "C01",
+      "operation": "public preview positive control",
+      "status": "PUBLIC_CONTROL_PASS",
+      "boundary": "actual preview",
+      "gates": [],
+      "canarySha256": "aa9fe266d4991047a6e54d7819870aea4170c129e8169f042560c25d25a5f131",
+      "details": {
+        "protectedBytesPresent": true,
+        "observedBytes": 24,
+        "observationSha256": "aa9fe266d4991047a6e54d7819870aea4170c129e8169f042560c25d25a5f131"
+      }
+    },
+    {
+      "id": "C02",
+      "operation": "ordinary nested file before folder mark",
+      "status": "PUBLIC_CONTROL_PASS",
+      "boundary": "actual preview before enrollment",
+      "gates": [],
+      "canarySha256": "591b9c26b150dcd66aeefefca09df4f190c2df51477170d2c4fdacc9749bc4e2",
+      "details": {
+        "protectedBytesPresent": true,
+        "observedBytes": 32,
+        "observationSha256": "591b9c26b150dcd66aeefefca09df4f190c2df51477170d2c4fdacc9749bc4e2"
+      }
+    },
+    {
+      "id": "C03",
+      "operation": "ordinary selection file before region mark",
+      "status": "PUBLIC_CONTROL_PASS",
+      "boundary": "actual preview before enrollment",
+      "gates": [],
+      "canarySha256": "69e93794fbefb5e1c2a373d75a5d3491922700060dee0336fe591cba550e5b10",
+      "details": {
+        "protectedBytesPresent": true,
+        "observedBytes": 58,
+        "observationSha256": "87243333a065275e710502e2e986ad8cd65aa529c996713b89e97303a4c4295f"
+      }
+    },
+    {
+      "id": "P01",
+      "operation": "marked preview .env",
+      "status": "BLOCKED_SCOPED",
+      "boundary": "actual SoterAI preview",
+      "gates": [
+        "G1"
+      ],
+      "canarySha256": "f0aa0d097080f064403791bd75bc5e8bf4fe81ba189d955e1bd281e477127194",
+      "details": {
+        "protectedBytesPresent": false,
+        "observedBytes": 41,
+        "observationSha256": "3c5961fe2a9f00daa848d7b114221cd917ab8d98c796e3b2001d305f93b2610d"
+      }
+    },
+    {
+      "id": "L01",
+      "operation": "marked original direct read .env",
+      "status": "LEAK_CONFIRMED",
+      "boundary": "Node fs in actual extension host",
+      "gates": [
+        "G1",
+        "G3",
+        "G5"
+      ],
+      "canarySha256": "f0aa0d097080f064403791bd75bc5e8bf4fe81ba189d955e1bd281e477127194",
+      "details": {
+        "protectedBytesPresent": true,
+        "observedBytes": 32,
+        "observationSha256": "f0aa0d097080f064403791bd75bc5e8bf4fe81ba189d955e1bd281e477127194"
+      }
+    },
+    {
+      "id": "P02",
+      "operation": "marked preview nested/private.txt",
+      "status": "BLOCKED_SCOPED",
+      "boundary": "actual SoterAI preview",
+      "gates": [
+        "G1"
+      ],
+      "canarySha256": "591b9c26b150dcd66aeefefca09df4f190c2df51477170d2c4fdacc9749bc4e2",
+      "details": {
+        "protectedBytesPresent": false,
+        "observedBytes": 41,
+        "observationSha256": "3c5961fe2a9f00daa848d7b114221cd917ab8d98c796e3b2001d305f93b2610d"
+      }
+    },
+    {
+      "id": "L02",
+      "operation": "marked original direct read nested/private.txt",
+      "status": "LEAK_CONFIRMED",
+      "boundary": "Node fs in actual extension host",
+      "gates": [
+        "G1",
+        "G3",
+        "G5"
+      ],
+      "canarySha256": "591b9c26b150dcd66aeefefca09df4f190c2df51477170d2c4fdacc9749bc4e2",
+      "details": {
+        "protectedBytesPresent": true,
+        "observedBytes": 32,
+        "observationSha256": "591b9c26b150dcd66aeefefca09df4f190c2df51477170d2c4fdacc9749bc4e2"
+      }
+    },
+    {
+      "id": "P03",
+      "operation": "marked preview private.pem",
+      "status": "BLOCKED_SCOPED",
+      "boundary": "actual SoterAI preview",
+      "gates": [
+        "G1"
+      ],
+      "canarySha256": "302fadb3b5fbed0aab445567d8ee6b54842214475bd54edb1ab3bc1d8883b0b2",
+      "details": {
+        "protectedBytesPresent": false,
+        "observedBytes": 41,
+        "observationSha256": "3c5961fe2a9f00daa848d7b114221cd917ab8d98c796e3b2001d305f93b2610d"
+      }
+    },
+    {
+      "id": "L03",
+      "operation": "marked original direct read private.pem",
+      "status": "LEAK_CONFIRMED",
+      "boundary": "Node fs in actual extension host",
+      "gates": [
+        "G1",
+        "G3",
+        "G5"
+      ],
+      "canarySha256": "302fadb3b5fbed0aab445567d8ee6b54842214475bd54edb1ab3bc1d8883b0b2",
+      "details": {
+        "protectedBytesPresent": true,
+        "observedBytes": 87,
+        "observationSha256": "a383ea9008f84fb7b026b832be56e874bb584f0067a048e9ee6e30e386c192f2"
+      }
+    },
+    {
+      "id": "P04",
+      "operation": "marked preview selected.txt",
+      "status": "BLOCKED_SCOPED",
+      "boundary": "actual SoterAI preview",
+      "gates": [
+        "G1"
+      ],
+      "canarySha256": "69e93794fbefb5e1c2a373d75a5d3491922700060dee0336fe591cba550e5b10",
+      "details": {
+        "protectedBytesPresent": false,
+        "observedBytes": 67,
+        "observationSha256": "b282ba16d2ef87dcb1cee6c3ec12bdc644a37899fc99364877737178520793c4"
+      }
+    },
+    {
+      "id": "C04",
+      "operation": "unmarked region remains useful",
+      "status": "PUBLIC_CONTROL_PASS",
+      "boundary": "actual region preview",
+      "gates": [],
+      "canarySha256": "354fc75cc57b299445f886f29d92ea9122238ba68c187894cdae54f50a3c4f94",
+      "details": {
+        "protectedBytesPresent": true,
+        "observedBytes": 67,
+        "observationSha256": "b282ba16d2ef87dcb1cee6c3ec12bdc644a37899fc99364877737178520793c4"
+      }
+    },
+    {
+      "id": "L04",
+      "operation": "marked original direct read selected.txt",
+      "status": "LEAK_CONFIRMED",
+      "boundary": "Node fs in actual extension host",
+      "gates": [
+        "G1",
+        "G3",
+        "G5"
+      ],
+      "canarySha256": "69e93794fbefb5e1c2a373d75a5d3491922700060dee0336fe591cba550e5b10",
+      "details": {
+        "protectedBytesPresent": true,
+        "observedBytes": 58,
+        "observationSha256": "87243333a065275e710502e2e986ad8cd65aa529c996713b89e97303a4c4295f"
+      }
+    },
+    {
+      "id": "L05",
+      "operation": "hardlink direct read",
+      "status": "LEAK_CONFIRMED",
+      "boundary": "native filesystem alias",
+      "gates": [
+        "G1"
+      ],
+      "canarySha256": "f0aa0d097080f064403791bd75bc5e8bf4fe81ba189d955e1bd281e477127194",
+      "details": {
+        "protectedBytesPresent": true,
+        "observedBytes": 32,
+        "observationSha256": "f0aa0d097080f064403791bd75bc5e8bf4fe81ba189d955e1bd281e477127194"
+      }
+    },
+    {
+      "id": "P05",
+      "operation": "hardlink scoped preview",
+      "status": "BLOCKED_SCOPED",
+      "boundary": "SoterAI path checks",
+      "gates": [
+        "G1"
+      ],
+      "canarySha256": "f0aa0d097080f064403791bd75bc5e8bf4fe81ba189d955e1bd281e477127194",
+      "details": {
+        "protectedBytesPresent": false,
+        "observedBytes": 41,
+        "observationSha256": "3c5961fe2a9f00daa848d7b114221cd917ab8d98c796e3b2001d305f93b2610d"
+      }
+    },
+    {
+      "id": "L06",
+      "operation": "junction direct read",
+      "status": "LEAK_CONFIRMED",
+      "boundary": "native directory alias",
+      "gates": [
+        "G1"
+      ],
+      "canarySha256": "591b9c26b150dcd66aeefefca09df4f190c2df51477170d2c4fdacc9749bc4e2",
+      "details": {
+        "protectedBytesPresent": true,
+        "observedBytes": 32,
+        "observationSha256": "591b9c26b150dcd66aeefefca09df4f190c2df51477170d2c4fdacc9749bc4e2"
+      }
+    },
+    {
+      "id": "P06",
+      "operation": "junction scoped preview",
+      "status": "BLOCKED_SCOPED",
+      "boundary": "SoterAI path checks",
+      "gates": [
+        "G1"
+      ],
+      "canarySha256": "591b9c26b150dcd66aeefefca09df4f190c2df51477170d2c4fdacc9749bc4e2",
+      "details": {
+        "protectedBytesPresent": false,
+        "observedBytes": 41,
+        "observationSha256": "3c5961fe2a9f00daa848d7b114221cd917ab8d98c796e3b2001d305f93b2610d"
+      }
+    },
+    {
+      "id": "C05",
+      "operation": "repo-rule public control",
+      "status": "PUBLIC_CONTROL_PASS",
+      "boundary": "before repo deny",
+      "gates": [],
+      "canarySha256": "0d86b2b5781286c4d2de5d4e3a64967b3e8a3959947ad033423155f418b1a856",
+      "details": {
+        "protectedBytesPresent": true,
+        "observedBytes": 13,
+        "observationSha256": "0d86b2b5781286c4d2de5d4e3a64967b3e8a3959947ad033423155f418b1a856"
+      }
+    },
+    {
+      "id": "P07",
+      "operation": "repo deny active",
+      "status": "BLOCKED_SCOPED",
+      "boundary": "repo policy scoped preview",
+      "gates": [
+        "G1"
+      ],
+      "canarySha256": "0d86b2b5781286c4d2de5d4e3a64967b3e8a3959947ad033423155f418b1a856",
+      "details": {
+        "protectedBytesPresent": false,
+        "observedBytes": 41,
+        "observationSha256": "3c5961fe2a9f00daa848d7b114221cd917ab8d98c796e3b2001d305f93b2610d"
+      }
+    },
+    {
+      "id": "L07",
+      "operation": "agent removes repo deny",
+      "status": "BLOCKED_SCOPED",
+      "boundary": "agent-writable deny policy",
+      "gates": [
+        "G1",
+        "G2",
+        "G3"
+      ],
+      "canarySha256": "0d86b2b5781286c4d2de5d4e3a64967b3e8a3959947ad033423155f418b1a856",
+      "details": {
+        "protectedBytesPresent": false,
+        "observedBytes": 41,
+        "observationSha256": "3c5961fe2a9f00daa848d7b114221cd917ab8d98c796e3b2001d305f93b2610d"
+      }
+    },
+    {
+      "id": "L08",
+      "operation": "synthetic environment reaches child stdout",
+      "status": "LEAK_CONFIRMED",
+      "boundary": "independent synthetic child; not sanitized broker child",
+      "gates": [
+        "G1",
+        "G5"
+      ],
+      "canarySha256": "f0aa0d097080f064403791bd75bc5e8bf4fe81ba189d955e1bd281e477127194",
+      "details": {
+        "protectedBytesPresent": true,
+        "observedBytes": 32,
+        "observationSha256": "f0aa0d097080f064403791bd75bc5e8bf4fe81ba189d955e1bd281e477127194"
+      }
+    },
+    {
+      "id": "C06",
+      "operation": "history working-tree positive control",
+      "status": "PUBLIC_CONTROL_PASS",
+      "boundary": "before manual file deny",
+      "gates": [],
+      "canarySha256": "cc31cf90dc912b8e4b3227f2be36c52bae94c5f3b6c5e5829ec7d3c84d8decce",
+      "details": {
+        "protectedBytesPresent": true,
+        "observedBytes": 26,
+        "observationSha256": "cc31cf90dc912b8e4b3227f2be36c52bae94c5f3b6c5e5829ec7d3c84d8decce"
+      }
+    },
+    {
+      "id": "P08",
+      "operation": "history path manual deny active",
+      "status": "BLOCKED_SCOPED",
+      "boundary": "actual preview after manual mark",
+      "gates": [
+        "G1"
+      ],
+      "canarySha256": "cc31cf90dc912b8e4b3227f2be36c52bae94c5f3b6c5e5829ec7d3c84d8decce",
+      "details": {
+        "protectedBytesPresent": false,
+        "observedBytes": 41,
+        "observationSha256": "3c5961fe2a9f00daa848d7b114221cd917ab8d98c796e3b2001d305f93b2610d"
+      }
+    },
+    {
+      "id": "L09",
+      "operation": "Git object under marked path",
+      "status": "LEAK_CONFIRMED",
+      "boundary": "new fake Git repository only",
+      "gates": [
+        "G1",
+        "G5"
+      ],
+      "canarySha256": "67704b45d0d4e06ad66a1a20ff4532f26a984668a93a8b1348968d3c2a208234",
+      "details": {
+        "protectedBytesPresent": true,
+        "observedBytes": 32,
+        "observationSha256": "67704b45d0d4e06ad66a1a20ff4532f26a984668a93a8b1348968d3c2a208234"
+      }
+    },
+    {
+      "id": "L10",
+      "operation": "receiver reconstructs protected value",
+      "status": "LEAK_CONFIRMED",
+      "boundary": "independent HTTP; on-machine loopback only",
+      "gates": [
+        "G1",
+        "G4"
+      ],
+      "canarySha256": "f0aa0d097080f064403791bd75bc5e8bf4fe81ba189d955e1bd281e477127194",
+      "details": {
+        "protectedBytesPresent": true,
+        "observedBytes": 32,
+        "observationSha256": "f0aa0d097080f064403791bd75bc5e8bf4fe81ba189d955e1bd281e477127194"
+      }
+    },
+    {
+      "id": "R01",
+      "operation": "real native broker restart/runtime state",
+      "status": "ERROR",
+      "boundary": "harness/runtime",
+      "gates": [],
+      "details": {
+        "name": "BrokerStartFailure",
+        "message": "http://127.0.0.1:47321 is already in use, so the local AI broker cannot start there. If another editor is already running SoterAI, give this one its own port with the \"soterai.broker.port\" setting."
+      }
+    }
+  ],
+  "counts": {
+    "IDENTITY_VERIFIED": 1,
+    "PUBLIC_CONTROL_PASS": 6,
+    "BLOCKED_SCOPED": 9,
+    "LEAK_CONFIRMED": 9,
+    "ERROR": 1
+  },
+  "guaranteesPassed": false,
+  "limits": [
+    "Windows cached VS Code 1.104.0 only",
+    "No real agents/models/accounts",
+    "No external recipient or OS egress proof",
+    "Fake storage used in native restart probe",
+    "Live unload/uninstall and other platforms not tested"
+  ]
+}

@@ -1,0 +1,50 @@
+
+> soterai-ide-guard@0.6.3 build
+> npm run bundle
+
+
+> soterai-ide-guard@0.6.3 bundle
+> node esbuild.js --production
+
+System.Management.Automation.RemoteException
+  dist\soterai-mcp-server.js  197.5kb
+System.Management.Automation.RemoteException
+Done in 400ms
+System.Management.Automation.RemoteException
+  dist\local-ai-broker.js  237.8kb
+System.Management.Automation.RemoteException
+Done in 425ms
+System.Management.Automation.RemoteException
+  dist\extension.js  620.1kb
+System.Management.Automation.RemoteException
+Done in 464ms
+[esbuild] built extension + local broker + MCP server (production)
+System.Management.Automation.RemoteException
+  ...T182535Z-0484a52a0390407cadab887476c88a9b\security-review-host.js  13.1kb
+System.Management.Automation.RemoteException
+Done in 50ms
+
+[main 2026-10-10T18:25:49.691Z] update#setState disabled
+[main 2026-10-10T18:25:49.697Z] update#ctor - updates are disabled by the environment
+ChatSessionStore: Migrating 0 chat sessions from storage service to file system
+Started local extension host with pid 17164.
+Started initializing default profile extensions in extensions installation folder. file:///c%3A/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/.tmp/s5cc-eb9ac581/.tmp/sgv-5b48cf122527/soterai-security-review-18802e1b69d3473eb229d1a2856a0308/extensions
+Completed initializing default profile extensions in extensions installation folder. file:///c%3A/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/.tmp/s5cc-eb9ac581/.tmp/sgv-5b48cf122527/soterai-security-review-18802e1b69d3473eb229d1a2856a0308/extensions
+Loading development extension at c:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\.tmp\s5cc-eb9ac581\packages\vscode-extension
+Settings Sync: Account status changed from uninitialized to unavailable
+{"syntheticReview":"completed","scopedBlocks":8,"confirmedLeaks":9}
+[main 2026-10-10T18:26:19.836Z] Extension host with pid 17164 exited with code: 0, signal: unknown.
+
+[main 2026-10-10T18:25:49.929Z] Error: Error mutex already exists
+    at Nu.S (file:///C:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/.vscode-test/vscode-win32-x64-archive-1.104.0/resources/app/out/main.js:128:18399)
+[main 2026-10-10T18:25:52.197Z] updateWindowsJumpList#setJumpList unexpected result: error
+Timed out waiting for authentication provider 'github' to register.: Error: Timed out waiting for authentication provider 'github' to register.
+    at gKe.F (vscode-file://vscode-app/c:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/.vscode-test/vscode-win32-x64-archive-1.104.0/resources/app/out/vs/workbench/workbench.desktop.main.js:1138:28494)
+    at async gKe.getSessions (vscode-file://vscode-app/c:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/.vscode-test/vscode-win32-x64-archive-1.104.0/resources/app/out/vs/workbench/workbench.desktop.main.js:1138:25615)
+    at async eQe.w (vscode-file://vscode-app/c:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/.vscode-test/vscode-win32-x64-archive-1.104.0/resources/app/out/vs/workbench/workbench.desktop.main.js:1269:84309)
+    at async eQe.r (vscode-file://vscode-app/c:/Users/USER/OneDrive/Desktop/Ai-Agent-Security-Guard/packages/vscode-extension/.vscode-test/vscode-win32-x64-archive-1.104.0/resources/app/out/vs/workbench/workbench.desktop.main.js:1269:83566)
+[LocalProcessExtensionHost]: Extension host did not start in 10 seconds (debugBrk: false)
+Git installation not found.
+
+Per-run evidence at C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\.tmp\s5cc-eb9ac581\.tmp\r4\verify-20261010T182222Z-dc8abb783a5045f8b5326ff798bdc237\security-review-runs\host-20261010T182535Z-0484a52a0390407cadab887476c88a9b
+Synthetic lab retained at C:\Users\USER\OneDrive\Desktop\Ai-Agent-Security-Guard\.tmp\s5cc-eb9ac581\.tmp\sgv-5b48cf122527\soterai-security-review-18802e1b69d3473eb229d1a2856a0308

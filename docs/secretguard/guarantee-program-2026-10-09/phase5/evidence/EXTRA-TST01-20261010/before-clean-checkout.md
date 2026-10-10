@@ -1,0 +1,11 @@
+# S1 clean-checkout closure
+
+**FACT — 2026-10-10, Windows 26300.8935.** Fresh `npm ci` installed 357 packages for the five target workspaces into .tmp/s5cc-eb9ac581 with a new cache and empty npm configuration. No builder node_modules/cache was copied or linked. Clean source commit: aea44c8aa6e81e5cf5d4bb610929b763e0aecfbb; Git objects are shared read-only, index/worktree/dependencies are separate. This is local reproduction, not independent verification.
+
+**FACT — PASS, target checks.** [Final clean result](evidence/S1-closure-20261010T110645Z-fbd5982e/summary.json): all five typechecks/builds; 1,325 tests, 1,322 PASS / 0 FAIL / 3 skipped. All three candidate bundle SHA-256 values matched byte-for-byte. The clean checkout includes the committed extensions adapters and public logo required by existing contract/asset tests. No product source or assertions were weakened.
+
+**FACT — STATIC-ONLY dependency check.** [Resolution inventory](evidence/S1-resolution-20261010T111326Z-75dbc8b3/dependency-resolution.json) resolves 50 bare imports plus TypeScript/tsx/esbuild to real paths inside the clone; zero unresolved or parent-builder resolutions. Node built-ins and the intentional external host module vscode are excluded. Dynamic constructed module specifiers and a complete OS/network hermeticity proof are UNTESTED; this metadata check does not imply those.
+
+**FACT — Earlier results retained.** Initial ENOTCACHED/ENOSPC, sandbox process refusal and historical default long-path omission remain in original records. Fresh retry initially lacked committed adapter/public input files: 35 adapter assertions, then one canonical-logo assertion failed before checkout closure. The dependency metadata helper initially used packages/local-broker rather than apps/local-ai-broker; its exact error is retained. These are source-checkout/orchestration failures, not dismissed privacy failures.
+
+**INFERENCE — Scope/rollback.** Reproducibility is PASS for these five workspaces at this source/hash state. A later candidate must be checked separately. All thirty architecture assertions remain UNTESTED and 63 real-agent cells NOT_TESTED. Rollback withdraws this claim and retains its raw evidence; no security control or system setting is changed by closure.

@@ -231,3 +231,9 @@ Git installation not found.
 ## S8 final report record — 2026-10-10
 
 **FACT — Reporting complete, verification gaps retained.** S6 source ccbeb9f2, evidence27f18dc4; S7c3bf12f2. phase5 FINAL-REPORT.md/SCORECARD.md/coverage-map.md/release-checklist.md plus claims, open work, matrix/accounting and hashes distinguish final 1,337PASS/1FAIL/3skips, current17 host INCOMPLETE,30full UNTESTED and63real-agent NOT_TESTED. Three builds byte-match, five typechecks/builds PASS; no loaded hash. Full claim BLOCKED; deployment DEFERRED; candidate WITHHELD. Provisional D1=6,D2=2,D3NOT_RATED,D4=8,D5=7; headline min(2,8)=2. S5LOW old object; revised extension independent NOT_PERFORMED. No publish/push/tag/install/process killing/system pilot/new probe/real secret read. Original failures and exact filter remain. STOP after final result.
+
+## Owner-authorized extra TST-01/host repair — 2026-10-11
+
+**FACT — Complete; test-only.** One extra round beyond the exhausted original cap explicitly authorized. Isolated checkout fa4ff283 preserves main n8n branch. Adapter uses actual presentDecision with positive/negative controls; three targeted controls PASS before repository-deny logging change. Old expectation/A0/failed raw evidence preserved. Five typechecks/builds PASS; 1338 PASS/0 FAIL/3 skipped (1341 total). Both existing hosts complete with loaded extensionca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b; SecurityReview eight scoped blocks/nine leaks, all17 compared. Native shorter output root works with no wrapper/product/probe changes or process termination. [Current report](../phase5/evidence/EXTRA-TST01-20261010/REPAIR-REPORT.md). No further extra round, push or deployment.
+
+**INFERENCE — Limits.** D1=8,D2=2,D3NOT_RATED,D4=8,D5=9; headline min(2,8)=2 PROVISIONAL. Confidentiality FAIL/full claim BLOCKED/deployment DEFERRED;30 architecture UNTESTED,63 real-agent NOT_TESTED, current-object independent review NOT_PERFORMED.

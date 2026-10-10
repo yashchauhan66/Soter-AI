@@ -80,7 +80,10 @@ export async function run(): Promise<void> {
     assert.ok(!(await preview("custom.txt")).includes(custom));
     report("repository deny rule", false, "SoterAI preview", custom);
     await fs.writeFile(path.join(root, ".aiignore"), "");
-    report("agent edits repository deny policy", observeReviewCanary(await preview("custom.txt"), custom), "writable .aiignore; retained accepted deny", custom);
+    // The old harness expected removal to expose custom. Accepted-deny controls
+    // now prove retention; record the actual result rather than require a leak.
+    const retainedDeny = !observeReviewCanary(await preview("custom.txt"), custom);
+    report("agent edits repository deny policy", !retainedDeny, "writable .aiignore; retained accepted deny", custom);
     const envResult = await execute(process.execPath, ["-e", "process.stdout.write(process.env.SOTERAI_SYNTHETIC_CANARY)"], {
         env: { SystemRoot: process.env.SystemRoot, ELECTRON_RUN_AS_NODE: "1", SOTERAI_SYNTHETIC_CANARY: raw }, windowsHide: true, timeout: 10_000,
     });
@@ -122,6 +125,7 @@ export async function run(): Promise<void> {
         extensionBundleSha256: createHash("sha256").update(await fs.readFile(path.join(extension.extensionPath, "dist", "extension.js"))).digest("hex"),
         hostProbeSha256: createHash("sha256").update(await fs.readFile(__filename)).digest("hex"),
         extensionActive: extension.isActive, protectedWorkspaceEnabled: true, syntheticOnly: true, liveModelContacted: false,
+        repositoryDenyControls: { publicBeforeEnrollment: true, deniedAfterEnrollment: true, retainedAfterRemoval: retainedDeny },
         results, limitations: ["No third-party assistant or remote provider was invoked", "File symlinks, screenshots, clipboard races, live disablement, /proc and privileged OS isolation not tested"] });
     console.log(JSON.stringify({ syntheticReview: "completed", scopedBlocks: results.filter(r => r.status === "BLOCKED_SCOPED").length,
         confirmedLeaks: results.filter(r => r.status === "LEAK_CONFIRMED").length }));
