@@ -14,7 +14,9 @@
 | Extension release artifact | [extension.js](../evidence/B6/release/extension.js) | INFERENCE: require an exact match to the release manifest. |
 | Local broker release artifact | [local-ai-broker.js](../evidence/B6/release/local-ai-broker.js) | INFERENCE: require an exact match to the release manifest. |
 | MCP release artifact | [soterai-mcp-server.js](../evidence/B6/release/soterai-mcp-server.js) | INFERENCE: require an exact match to the release manifest. |
-| Packaged product metadata | [package.json](../evidence/B6/release/package.json) | INFERENCE: require an exact match to the release manifest. |
+| Product metadata review copy | [package.json](../evidence/B6/release/package.json) | INFERENCE: require an exact match to the release manifest. |
+
+**INFERENCE — Review-object boundary.** The four flat files are a bundle-review object, not an installable extension; runtime media/dependencies are not supplied. Deployment/host prerequisites remain INCOMPLETE until separately authorized complete artifacts exist. Manifest inventory paths do not add those files to the allowed inputs.
 
 **INFERENCE — Excluded inputs.** Do not read builder analysis, progress ledgers, dispositions, ADR notes, rollback notes, helper-to-assertion mappings, baseline/historical findings, prior runner reports, raw captures, attack walkthroughs, internal conversations or builder conclusions. Do not use release-manifest paths to expand the allowlist. Product artifacts and their manifest identify the object being assessed; source/hash lists alone are not security evidence or reproducibility proof.
 
