@@ -2,13 +2,13 @@
 
 **INFERENCE — Resume rule.** Read this ledger first and do not redo finished batches. The FINAL MASTER prompt supersedes the former per-step pauses: S1 approves Phase2 copying; S2 approves local commits on security-hardening; S3 approves narrowly scoped broker ACL repair after inspection/backup; S4 approves the stated modal-only deny relaxation UX. Run checks, record raw results/hashes/limits/rollback and commit each batch, then continue autonomously. Push/publish/tag, normal profiles, firewall/drivers/accounts/VM/features and Tier3 implementation remain unapproved.
 
-**INFERENCE — Current step.** B0–B3 are complete as scoped hardening, with failures retained. B2 control-token inspection remains INCOMPLETE (absent file). A0 confidentiality remains FAIL. All thirty selected-architecture assertions remain UNTESTED. Next batch: B4 optional public scaffold, then B5 feasibility/B6 handoff/B7 report. No Tier3 deployment.
+**INFERENCE — Current step.** B0–B5 preparation is complete, with failures retained. B4 runtime deployment and B5 deployment feasibility remain INCOMPLETE. B2 control-token inspection remains INCOMPLETE (absent file). A0 confidentiality remains FAIL. All thirty selected-architecture assertions remain UNTESTED. Next batch: B6 verification handoff, then B7 report. No Tier3 deployment.
 
 **INFERENCE — Working branch.** security-hardening, created from release/n8n-0.8.7 at HEAD 973b8af6060aa967fc0ecad7d56251a2da41149a. Existing modified/untracked work was retained; no commit was created. A branch name does not isolate those existing changes from future staging, so no broad staging or reset is allowed.
 
 ## Next action and approval gates
 
-**INFERENCE — Next action.** Complete the B4 scaffold checks, then B5–B7. Ordinary editor modal consent is explicitly not agent-proof. Native host execution remains user-only.
+**INFERENCE — Next action.** Complete B6–B7. Ordinary editor modal consent is explicitly not agent-proof. Native host execution remains user-only.
 
 **INFERENCE — Pending approvals.** Copy/local commits/scoped ACL repair/modal-only UX are now authorized by S1–S4. Tier3 decision and unapproved system/profile changes still require one precise question and a stop. S3 is limited to broker directory and its two token files; parents are inspection-only. Never read or print actual token values. Do not change firewall, drivers, accounts, VM/Windows features or normal profiles.
 
@@ -135,3 +135,13 @@ Git installation not found.
 **INFERENCE — Raw tests.** Targeted scaffold checks:7/7 pass. checks-1 typechecks/builds exit0, but default worker test runs failed from resource exhaustion: broker73 total/66pass/7fail; extension264 total/241pass/21fail/2skip. Retained exact messages include "fatal error: out of memory allocating heap arena map", "fatal error: runtime: cannot allocate memory", "Error: The service was stopped" and "Error: spawn UNKNOWN". Reran the same existing suites via node --import tsx --test --test-concurrency=2 (two file workers), without new scenarios: checks-2 broker133/132pass/0fail/1skip; extension584/582pass/0fail/2skip; both exit0. Diagnostic S5-unmarked FAIL remains. No host run.
 
 **INFERENCE — Hashes/rollback/limits.** evidence/B4/SHA256SUMS.txt pins source, tests, docs and raw logs. Off withdraws generation; no rollback introduces online/native execution or credentials. Source originals/history, same-user tokens/DPAPI, buffers/tabs/clipboard/display/processes, prior copies and mandatory host egress remain exposed. All architecture assertions and real-agent/runtime cells remain UNTESTED/NOT_TESTED. Public misclassification, cross-process races and effective editor attach are outside this scaffold's evidence.
+
+## B5 completion record — 2026-10-10
+
+**INFERENCE — Commit provenance.** B4 main local commit 9341dbac; raw-log inclusion correction 103ff1b3. B5 adds tier3-feasibility.md and read-only machine/source/document evidence. It changes no product behavior, account, feature, VM, device, witness, network rule, normal profile or credential. No native host ran.
+
+**INFERENCE — Feasibility outcome.** Reported Windows 11 Home/CoreSingleLanguage does not meet the selected supported Hyper-V role edition requirement. HypervisorPresent=true does not establish usable managed-role support. Four read-only feature queries returned exactly "The requested operation requires elevation.\r\n"; states remain INCOMPLETE without elevated retry. C transaction display/signing, W continuity, independent P/S/M and mandatory E remain unimplemented and UNTESTED. Recommendation: PARTIAL prerequisite planning, DEFER deployment; full deployment is not ready. Hardware and recurring totals are UNKNOWN or labelled estimates, not a procurement quote.
+
+**INFERENCE — Raw checks.** evidence/B5/checks-1 retains both typecheck/build command logs and the full existing suites at two file workers; all six exit0. Broker133 total/132pass/0fail/1skip; extension584 total/582pass/0fail/2skip. Diagnostic S5-unmarked FAIL is retained separately from the unit command. No safety filter blocked B5. The elevation error is a read-only access gap, not a safety rejection.
+
+**INFERENCE — Hashes/rollback/limits.** B5/SHA256SUMS.txt pins the feasibility report, metadata, source records, checks and this ledger as of this batch. Documentation-only rollback withdraws a mistaken recommendation with an appended correction; retain raw evidence. No runtime flag is applicable. Same-user file/history/DPAPI/buffer/clipboard/process authority, independent consent, custody, mandatory host egress, runtime container forwarding and all thirty architecture assertions remain unprotected or UNTESTED. Clean-checkout reproducibility and all63 real-agent/platform cells remain UNTESTED/NOT_TESTED. B6 product/test edits are separate from these B5 results.

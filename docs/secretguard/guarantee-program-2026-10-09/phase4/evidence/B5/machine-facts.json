@@ -1,0 +1,62 @@
+﻿{
+    "ObservedAtUtc":  "2026-10-09T16:13:11.3976296Z",
+    "OS":  {
+               "Caption":  "Microsoft Windows 11 Home Insider Preview Single Language",
+               "Version":  "10.0.26300",
+               "BuildNumber":  "26300",
+               "OSArchitecture":  "64-bit",
+               "ProductName":  "Windows 10 Home Single Language",
+               "EditionID":  "CoreSingleLanguage",
+               "DisplayVersion":  "26H2",
+               "UBR":  8935
+           },
+    "CPU":  [
+                {
+                    "Name":  "Intel(R) Core(TM) i5-8350U CPU @ 1.70GHz",
+                    "AddressWidth":  64,
+                    "NumberOfCores":  4,
+                    "NumberOfLogicalProcessors":  8,
+                    "SecondLevelAddressTranslationExtensions":  false,
+                    "VirtualizationFirmwareEnabled":  false,
+                    "VMMonitorModeExtensions":  false
+                }
+            ],
+    "Computer":  {
+                     "Manufacturer":  "LENOVO",
+                     "Model":  "20LAS3GF00",
+                     "HypervisorPresent":  true,
+                     "TotalPhysicalMemory":  16977907712
+                 },
+    "OptionalFeatures":  [
+                             {
+                                 "FeatureName":  "Microsoft-Hyper-V-All",
+                                 "State":  "INCOMPLETE",
+                                 "Error":  "The requested operation requires elevation.\r\n"
+                             },
+                             {
+                                 "FeatureName":  "Microsoft-Hyper-V-Hypervisor",
+                                 "State":  "INCOMPLETE",
+                                 "Error":  "The requested operation requires elevation.\r\n"
+                             },
+                             {
+                                 "FeatureName":  "VirtualMachinePlatform",
+                                 "State":  "INCOMPLETE",
+                                 "Error":  "The requested operation requires elevation.\r\n"
+                             },
+                             {
+                                 "FeatureName":  "Microsoft-Windows-Subsystem-Linux",
+                                 "State":  "INCOMPLETE",
+                                 "Error":  "The requested operation requires elevation.\r\n"
+                             }
+                         ],
+    "Token":  {
+                  "IsElevatedAdministrator":  false,
+                  "AdministratorSidPresent":  false
+              },
+    "Limitations":  [
+                        "Read-only metadata, no feature enablement, account changes, probes or token contents.",
+                        "Initial collection catch serialized an ErrorRecord as FeatureName; oversized output was not archived. Corrected string feature-name collection preserves elevation failures.",
+                        "CIM virtualization flags are not a conclusive CPU capability verdict while a hypervisor is present.",
+                        "Current account group membership does not prove full-token or independent management isolation."
+                    ]
+}
