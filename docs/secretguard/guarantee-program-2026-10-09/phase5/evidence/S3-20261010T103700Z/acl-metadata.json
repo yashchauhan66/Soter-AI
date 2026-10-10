@@ -1,0 +1,2023 @@
+{
+    "elevated":  false,
+    "protectedFolderInventory":  "INCOMPLETE: no authoritative list supplied; known candidates only",
+    "aclModified":  false,
+    "exactOsBuild":  "26300.8935",
+    "group":  {
+                  "status":  "STATIC-ONLY",
+                  "sid":  "S-1-5-21-576938901-594400856-1755335594-1007",
+                  "name":  "CodexSandboxUsers",
+                  "members":  [
+                                  {
+                                      "objectClass":  "User",
+                                      "sid":  "S-1-5-21-576938901-594400856-1755335594-1008",
+                                      "principalSource":  "Local",
+                                      "name":  "YASH-CHAUHAN\\CodexSandboxOffline"
+                                  },
+                                  {
+                                      "objectClass":  "User",
+                                      "sid":  "S-1-5-21-576938901-594400856-1755335594-1009",
+                                      "principalSource":  "Local",
+                                      "name":  "YASH-CHAUHAN\\CodexSandboxOnline"
+                                  }
+                              ]
+              },
+    "currentSid":  "S-1-5-21-576938901-594400856-1755335594-1001",
+    "contentRead":  false,
+    "observedUtc":  "2026-10-10T10:36:11.0736883Z",
+    "targets":  [
+                    {
+                        "path":  "C:\\",
+                        "kind":  "directory",
+                        "exists":  true,
+                        "aces":  [
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "NT AUTHORITY\\Authenticated Users",
+                                         "type":  "Allow",
+                                         "rights":  "AppendData",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "NT AUTHORITY\\Authenticated Users",
+                                         "type":  "Allow",
+                                         "rights":  "-536805376",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "NT AUTHORITY\\SYSTEM",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "BUILTIN\\Administrators",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "BUILTIN\\Users",
+                                         "type":  "Allow",
+                                         "rights":  "ReadAndExecute, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-15-3-65536-1888954469-739942743-1668119174-2468466756-4239452838-1296943325-355587736-700089176",
+                                         "type":  "Allow",
+                                         "rights":  "ReadData, ExecuteFile, ReadAttributes, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     }
+                                 ],
+                        "owner":  "NT SERVICE\\TrustedInstaller",
+                        "sddl":  "O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:PAI(A;;LC;;;AU)(A;OICIIO;SDGXGWGR;;;AU)(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;OICI;0x1200a9;;;BU)(A;;0x1000a1;;;S-1-15-3-65536-1888954469-739942743-1668119174-2468466756-4239452838-1296943325-355587736-700089176)",
+                        "status":  "STATIC-ONLY",
+                        "length":  null,
+                        "attributes":  "Hidden, System, Directory",
+                        "inheritanceDisabled":  true
+                    },
+                    {
+                        "path":  "C:\\Users",
+                        "kind":  "directory",
+                        "exists":  true,
+                        "aces":  [
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "Everyone",
+                                         "type":  "Allow",
+                                         "rights":  "-1610612736",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "Everyone",
+                                         "type":  "Allow",
+                                         "rights":  "ReadAndExecute, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "NT AUTHORITY\\SYSTEM",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "BUILTIN\\Administrators",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "BUILTIN\\Users",
+                                         "type":  "Allow",
+                                         "rights":  "ReadAndExecute, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "BUILTIN\\Users",
+                                         "type":  "Allow",
+                                         "rights":  "-1610612736",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-15-3-65536-4045685566-1323397456-4055816110-285687253-194181-4019357623-1925838800-191844675",
+                                         "type":  "Allow",
+                                         "rights":  "ReadData, ExecuteFile, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     }
+                                 ],
+                        "owner":  "NT AUTHORITY\\SYSTEM",
+                        "sddl":  "O:SYG:SYD:PAI(A;OICIIO;GXGR;;;WD)(A;;0x1200a9;;;WD)(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;;0x1200a9;;;BU)(A;OICIIO;GXGR;;;BU)(A;;0x100021;;;S-1-15-3-65536-4045685566-1323397456-4055816110-285687253-194181-4019357623-1925838800-191844675)",
+                        "status":  "STATIC-ONLY",
+                        "length":  null,
+                        "attributes":  "ReadOnly, Directory",
+                        "inheritanceDisabled":  true
+                    },
+                    {
+                        "path":  "C:\\Users\\USER",
+                        "kind":  "directory",
+                        "exists":  true,
+                        "aces":  [
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "NT AUTHORITY\\SYSTEM",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "BUILTIN\\Administrators",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "YASH-CHAUHAN\\USER",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-15-3-65536-599108337-2355189375-1353122160-3480128286-3345335107-485756383-4087318168-230526575",
+                                         "type":  "Allow",
+                                         "rights":  "ExecuteFile, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     }
+                                 ],
+                        "owner":  "NT AUTHORITY\\SYSTEM",
+                        "sddl":  "O:SYG:SYD:P(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;OICI;FA;;;S-1-5-21-576938901-594400856-1755335594-1001)(A;;0x100020;;;S-1-15-3-65536-599108337-2355189375-1353122160-3480128286-3345335107-485756383-4087318168-230526575)",
+                        "status":  "STATIC-ONLY",
+                        "length":  null,
+                        "attributes":  "Directory",
+                        "inheritanceDisabled":  true
+                    },
+                    {
+                        "path":  "C:\\Users\\USER\\.soterai",
+                        "kind":  "directory",
+                        "exists":  true,
+                        "aces":  [
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "YASH-CHAUHAN\\CodexSandboxUsers",
+                                         "type":  "Allow",
+                                         "rights":  "ReadAndExecute, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "NT AUTHORITY\\SYSTEM",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "BUILTIN\\Administrators",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "YASH-CHAUHAN\\USER",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     }
+                                 ],
+                        "owner":  "YASH-CHAUHAN\\USER",
+                        "sddl":  "O:S-1-5-21-576938901-594400856-1755335594-1001G:S-1-5-21-576938901-594400856-1755335594-1001D:AI(A;OICI;0x1200a9;;;S-1-5-21-576938901-594400856-1755335594-1007)(A;OICIID;FA;;;SY)(A;OICIID;FA;;;BA)(A;OICIID;FA;;;S-1-5-21-576938901-594400856-1755335594-1001)",
+                        "status":  "STATIC-ONLY",
+                        "length":  null,
+                        "attributes":  "Directory",
+                        "inheritanceDisabled":  false
+                    },
+                    {
+                        "path":  "C:\\Users\\USER\\.soterai\\broker",
+                        "kind":  "directory",
+                        "exists":  true,
+                        "aces":  [
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "NT AUTHORITY\\SYSTEM",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "BUILTIN\\Administrators",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "YASH-CHAUHAN\\USER",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     }
+                                 ],
+                        "owner":  "YASH-CHAUHAN\\USER",
+                        "sddl":  "O:S-1-5-21-576938901-594400856-1755335594-1001G:S-1-5-21-576938901-594400856-1755335594-1001D:PAI(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;OICI;FA;;;S-1-5-21-576938901-594400856-1755335594-1001)",
+                        "status":  "STATIC-ONLY",
+                        "length":  null,
+                        "attributes":  "Directory",
+                        "inheritanceDisabled":  true
+                    },
+                    {
+                        "path":  "C:\\Users\\USER\\.soterai\\broker\\auth-token",
+                        "kind":  "file",
+                        "exists":  true,
+                        "aces":  [
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "NT AUTHORITY\\SYSTEM",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "BUILTIN\\Administrators",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "YASH-CHAUHAN\\USER",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     }
+                                 ],
+                        "owner":  "YASH-CHAUHAN\\USER",
+                        "sddl":  "O:S-1-5-21-576938901-594400856-1755335594-1001G:S-1-5-21-576938901-594400856-1755335594-1001D:PAI(A;;FA;;;SY)(A;;FA;;;BA)(A;;FA;;;S-1-5-21-576938901-594400856-1755335594-1001)",
+                        "status":  "STATIC-ONLY",
+                        "length":  43,
+                        "attributes":  "Archive",
+                        "inheritanceDisabled":  true
+                    },
+                    {
+                        "path":  "C:\\Users\\USER\\.soterai\\broker\\control-auth-token",
+                        "error":  "Cannot find path \u0027C:\\Users\\USER\\.soterai\\broker\\control-auth-token\u0027 because it does not exist.",
+                        "status":  "INCOMPLETE",
+                        "exists":  false
+                    },
+                    {
+                        "path":  "C:\\Users\\USER\\.aws",
+                        "kind":  "directory",
+                        "exists":  true,
+                        "aces":  [
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "NT AUTHORITY\\SYSTEM",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "BUILTIN\\Administrators",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "YASH-CHAUHAN\\USER",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     }
+                                 ],
+                        "owner":  "YASH-CHAUHAN\\USER",
+                        "sddl":  "O:S-1-5-21-576938901-594400856-1755335594-1001G:S-1-5-21-576938901-594400856-1755335594-1001D:(A;OICIID;FA;;;SY)(A;OICIID;FA;;;BA)(A;OICIID;FA;;;S-1-5-21-576938901-594400856-1755335594-1001)",
+                        "status":  "STATIC-ONLY",
+                        "length":  null,
+                        "attributes":  "Directory",
+                        "inheritanceDisabled":  false
+                    },
+                    {
+                        "path":  "C:\\Users\\USER\\.ssh",
+                        "kind":  "directory",
+                        "exists":  true,
+                        "aces":  [
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "NT AUTHORITY\\SYSTEM",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "BUILTIN\\Administrators",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "YASH-CHAUHAN\\USER",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     }
+                                 ],
+                        "owner":  "YASH-CHAUHAN\\USER",
+                        "sddl":  "O:S-1-5-21-576938901-594400856-1755335594-1001G:S-1-5-21-576938901-594400856-1755335594-1001D:(A;OICIID;FA;;;SY)(A;OICIID;FA;;;BA)(A;OICIID;FA;;;S-1-5-21-576938901-594400856-1755335594-1001)",
+                        "status":  "STATIC-ONLY",
+                        "length":  null,
+                        "attributes":  "Directory",
+                        "inheritanceDisabled":  false
+                    },
+                    {
+                        "path":  "C:\\Users\\USER\\.codex",
+                        "kind":  "directory",
+                        "exists":  true,
+                        "aces":  [
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2603327303-3034456847-90346724-361395178",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2603327303-3034456847-90346724-361395178",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2675585216-2384851512-966871506-3842196723",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2675585216-2384851512-966871506-3842196723",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2709091784-2496900242-2963379322-771956731",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2709091784-2496900242-2963379322-771956731",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2864420989-1372487617-3764684314-2284799832",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2864420989-1372487617-3764684314-2284799832",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2883987788-1697834170-421135345-1860488085",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2883987788-1697834170-421135345-1860488085",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2927789365-112170919-3304212029-3601250961",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2927789365-112170919-3304212029-3601250961",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2947363987-2177514002-3676224574-725259682",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2947363987-2177514002-3676224574-725259682",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3001761357-3923159464-3535385217-1126292856",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3001761357-3923159464-3535385217-1126292856",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3013129524-1657636798-1873535355-3937629096",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3013129524-1657636798-1873535355-3937629096",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3013331098-2350433599-2818956104-1102087191",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3013331098-2350433599-2818956104-1102087191",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3040442229-1333859534-347028138-2272640936",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3040442229-1333859534-347028138-2272640936",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3056139657-3047101037-1879133969-3190796962",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3056139657-3047101037-1879133969-3190796962",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3117367122-3233725505-54897841-4088091974",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3117367122-3233725505-54897841-4088091974",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3151182039-2746256759-1734520334-4282755466",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3151182039-2746256759-1734520334-4282755466",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3205261497-1778733196-3067283086-1656719676",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3205261497-1778733196-3067283086-1656719676",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3212538977-3367071352-2815962600-1858956753",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3212538977-3367071352-2815962600-1858956753",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3214021925-3190294074-909284988-3260301071",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3214021925-3190294074-909284988-3260301071",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3229876805-251025706-2442465223-3898312099",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3229876805-251025706-2442465223-3898312099",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3239853026-1968119037-3103439920-2540340533",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3239853026-1968119037-3103439920-2540340533",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3276783315-3563767037-2518578490-1411270652",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3276783315-3563767037-2518578490-1411270652",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3363051289-1326339153-3731582944-1036832610",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3363051289-1326339153-3731582944-1036832610",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3393068043-4137083569-1834039100-1655304398",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3393068043-4137083569-1834039100-1655304398",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3414403046-784117997-218261220-1435812397",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3414403046-784117997-218261220-1435812397",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3442360318-1542207648-3668349066-4245188761",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3442360318-1542207648-3668349066-4245188761",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3472883398-1117335861-996814525-3549885967",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3472883398-1117335861-996814525-3549885967",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3648747794-3661391488-1375646078-1702300369",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3648747794-3661391488-1375646078-1702300369",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3796841125-628465982-1357613738-753050955",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3796841125-628465982-1357613738-753050955",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3903288857-421168001-883225952-586729770",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3903288857-421168001-883225952-586729770",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-4034897277-1867325186-1868234255-1831534639",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-4034897277-1867325186-1868234255-1831534639",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-4079454769-439456065-1906500396-1717087997",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-4079454769-439456065-1906500396-1717087997",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-4179738923-2766984803-4280522094-181345508",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-4179738923-2766984803-4280522094-181345508",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-4206714251-168626826-2704559914-648953705",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-4206714251-168626826-2704559914-648953705",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-4259522465-2720946232-1467323356-346101016",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-4259522465-2720946232-1467323356-346101016",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-35113068-163691057-4195367755-3674419946",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-35113068-163691057-4195367755-3674419946",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-81101145-2315639199-3852749881-2619227187",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-81101145-2315639199-3852749881-2619227187",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-85451875-1044708373-3320565142-219788622",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-85451875-1044708373-3320565142-219788622",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-148683043-2495160486-407592565-589779231",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-148683043-2495160486-407592565-589779231",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-189209186-208165054-925679981-1857891462",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-189209186-208165054-925679981-1857891462",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-320992350-248763216-1852460337-262412442",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-320992350-248763216-1852460337-262412442",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-321475203-1356578236-2627905584-2839407069",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-321475203-1356578236-2627905584-2839407069",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-327091553-71847952-331311578-1733875701",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-327091553-71847952-331311578-1733875701",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-488298532-393829485-3620339581-1651676631",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-488298532-393829485-3620339581-1651676631",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-695146622-3183323219-3267786833-2802090855",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-695146622-3183323219-3267786833-2802090855",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-754309983-665867598-856089329-452810852",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-754309983-665867598-856089329-452810852",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-765392479-2481441495-4267481107-513268512",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-765392479-2481441495-4267481107-513268512",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-807004867-3622331772-2454489812-1517330673",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-807004867-3622331772-2454489812-1517330673",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-826910663-1115346821-1547795566-3489136191",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-826910663-1115346821-1547795566-3489136191",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-900471796-2148699624-3281524777-3769126437",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-900471796-2148699624-3281524777-3769126437",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-993545950-2351761375-4247982118-2932230060",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-993545950-2351761375-4247982118-2932230060",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1009762672-2798153653-3135407424-27999708",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1009762672-2798153653-3135407424-27999708",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1100853214-3769489907-4264814193-2999256512",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1100853214-3769489907-4264814193-2999256512",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1166404997-1192592058-603181906-2953073076",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1166404997-1192592058-603181906-2953073076",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1169745770-546477236-1444061591-1657328337",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1169745770-546477236-1444061591-1657328337",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1181492340-139972941-32612147-1302484391",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1181492340-139972941-32612147-1302484391",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1330451005-1100287885-3750608499-1611503848",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1330451005-1100287885-3750608499-1611503848",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1426841492-3745927370-758948278-3207232762",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1426841492-3745927370-758948278-3207232762",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1665760895-649368419-3643278012-1345643318",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1665760895-649368419-3643278012-1345643318",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1730372097-2452935229-2067454654-1916957155",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1730372097-2452935229-2067454654-1916957155",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1750071883-2050664745-922167642-844213667",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1750071883-2050664745-922167642-844213667",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1776763704-3593127996-1408285816-2571478125",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1776763704-3593127996-1408285816-2571478125",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1802002970-3000048776-1467148112-3199226860",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1802002970-3000048776-1467148112-3199226860",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1908448482-2631390470-171622536-3462991228",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1908448482-2631390470-171622536-3462991228",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1908647889-932991531-2306008698-1226842856",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1908647889-932991531-2306008698-1226842856",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1959483177-3196556767-2973767098-661704702",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1959483177-3196556767-2973767098-661704702",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1970688835-2396768286-2871964371-3011349831",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1970688835-2396768286-2871964371-3011349831",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2016672754-74683342-1690518668-150864286",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2016672754-74683342-1690518668-150864286",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2060234477-2112870177-1363817478-2350861165",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2060234477-2112870177-1363817478-2350861165",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2086804495-613146629-765152393-2099075107",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2086804495-613146629-765152393-2099075107",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2093436092-2328240124-3212855333-1575141779",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2093436092-2328240124-3212855333-1575141779",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2105622746-1903834426-1174501547-3081682279",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2105622746-1903834426-1174501547-3081682279",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2132351025-2242635354-631126421-986210805",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2132351025-2242635354-631126421-986210805",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2146886411-3473835302-1710679200-1405828557",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2146886411-3473835302-1710679200-1405828557",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2159080458-3821265870-3548441502-989246096",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2159080458-3821265870-3548441502-989246096",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2210618561-2186698586-1852293790-2091231926",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2210618561-2186698586-1852293790-2091231926",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2217626156-3957232386-2865176653-4099563064",
+                                         "type":  "Deny",
+                                         "rights":  "1074987350",
+                                         "propagation":  "InheritOnly",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2217626156-3957232386-2865176653-4099563064",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles, Write, Delete, ReadPermissions, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "YASH-CHAUHAN\\CodexSandboxUsers",
+                                         "type":  "Allow",
+                                         "rights":  "ReadAndExecute, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "NT AUTHORITY\\SYSTEM",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "BUILTIN\\Administrators",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "YASH-CHAUHAN\\USER",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     }
+                                 ],
+                        "owner":  "YASH-CHAUHAN\\USER",
+                        "sddl":  "O:S-1-5-21-576938901-594400856-1755335594-1001G:S-1-5-21-576938901-594400856-1755335594-1001D:AI(D;;0x130156;;;S-1-5-21-2603327303-3034456847-90346724-361395178)(D;OICIIO;0x40130156;;;S-1-5-21-2603327303-3034456847-90346724-361395178)(D;OICIIO;0x40130156;;;S-1-5-21-2675585216-2384851512-966871506-3842196723)(D;;0x130156;;;S-1-5-21-2675585216-2384851512-966871506-3842196723)(D;OICIIO;0x40130156;;;S-1-5-21-2709091784-2496900242-2963379322-771956731)(D;;0x130156;;;S-1-5-21-2709091784-2496900242-2963379322-771956731)(D;OICIIO;0x40130156;;;S-1-5-21-2864420989-1372487617-3764684314-2284799832)(D;;0x130156;;;S-1-5-21-2864420989-1372487617-3764684314-2284799832)(D;OICIIO;0x40130156;;;S-1-5-21-2883987788-1697834170-421135345-1860488085)(D;;0x130156;;;S-1-5-21-2883987788-1697834170-421135345-1860488085)(D;OICIIO;0x40130156;;;S-1-5-21-2927789365-112170919-3304212029-3601250961)(D;;0x130156;;;S-1-5-21-2927789365-112170919-3304212029-3601250961)(D;;0x130156;;;S-1-5-21-2947363987-2177514002-3676224574-725259682)(D;OICIIO;0x40130156;;;S-1-5-21-2947363987-2177514002-3676224574-725259682)(D;OICIIO;0x40130156;;;S-1-5-21-3001761357-3923159464-3535385217-1126292856)(D;;0x130156;;;S-1-5-21-3001761357-3923159464-3535385217-1126292856)(D;;0x130156;;;S-1-5-21-3013129524-1657636798-1873535355-3937629096)(D;OICIIO;0x40130156;;;S-1-5-21-3013129524-1657636798-1873535355-3937629096)(D;;0x130156;;;S-1-5-21-3013331098-2350433599-2818956104-1102087191)(D;OICIIO;0x40130156;;;S-1-5-21-3013331098-2350433599-2818956104-1102087191)(D;OICIIO;0x40130156;;;S-1-5-21-3040442229-1333859534-347028138-2272640936)(D;;0x130156;;;S-1-5-21-3040442229-1333859534-347028138-2272640936)(D;OICIIO;0x40130156;;;S-1-5-21-3056139657-3047101037-1879133969-3190796962)(D;;0x130156;;;S-1-5-21-3056139657-3047101037-1879133969-3190796962)(D;OICIIO;0x40130156;;;S-1-5-21-3117367122-3233725505-54897841-4088091974)(D;;0x130156;;;S-1-5-21-3117367122-3233725505-54897841-4088091974)(D;;0x130156;;;S-1-5-21-3151182039-2746256759-1734520334-4282755466)(D;OICIIO;0x40130156;;;S-1-5-21-3151182039-2746256759-1734520334-4282755466)(D;;0x130156;;;S-1-5-21-3205261497-1778733196-3067283086-1656719676)(D;OICIIO;0x40130156;;;S-1-5-21-3205261497-1778733196-3067283086-1656719676)(D;OICIIO;0x40130156;;;S-1-5-21-3212538977-3367071352-2815962600-1858956753)(D;;0x130156;;;S-1-5-21-3212538977-3367071352-2815962600-1858956753)(D;;0x130156;;;S-1-5-21-3214021925-3190294074-909284988-3260301071)(D;OICIIO;0x40130156;;;S-1-5-21-3214021925-3190294074-909284988-3260301071)(D;OICIIO;0x40130156;;;S-1-5-21-3229876805-251025706-2442465223-3898312099)(D;;0x130156;;;S-1-5-21-3229876805-251025706-2442465223-3898312099)(D;OICIIO;0x40130156;;;S-1-5-21-3239853026-1968119037-3103439920-2540340533)(D;;0x130156;;;S-1-5-21-3239853026-1968119037-3103439920-2540340533)(D;OICIIO;0x40130156;;;S-1-5-21-3276783315-3563767037-2518578490-1411270652)(D;;0x130156;;;S-1-5-21-3276783315-3563767037-2518578490-1411270652)(D;OICIIO;0x40130156;;;S-1-5-21-3363051289-1326339153-3731582944-1036832610)(D;;0x130156;;;S-1-5-21-3363051289-1326339153-3731582944-1036832610)(D;OICIIO;0x40130156;;;S-1-5-21-3393068043-4137083569-1834039100-1655304398)(D;;0x130156;;;S-1-5-21-3393068043-4137083569-1834039100-1655304398)(D;;0x130156;;;S-1-5-21-3414403046-784117997-218261220-1435812397)(D;OICIIO;0x40130156;;;S-1-5-21-3414403046-784117997-218261220-1435812397)(D;;0x130156;;;S-1-5-21-3442360318-1542207648-3668349066-4245188761)(D;OICIIO;0x40130156;;;S-1-5-21-3442360318-1542207648-3668349066-4245188761)(D;;0x130156;;;S-1-5-21-3472883398-1117335861-996814525-3549885967)(D;OICIIO;0x40130156;;;S-1-5-21-3472883398-1117335861-996814525-3549885967)(D;OICIIO;0x40130156;;;S-1-5-21-3648747794-3661391488-1375646078-1702300369)(D;;0x130156;;;S-1-5-21-3648747794-3661391488-1375646078-1702300369)(D;;0x130156;;;S-1-5-21-3796841125-628465982-1357613738-753050955)(D;OICIIO;0x40130156;;;S-1-5-21-3796841125-628465982-1357613738-753050955)(D;OICIIO;0x40130156;;;S-1-5-21-3903288857-421168001-883225952-586729770)(D;;0x130156;;;S-1-5-21-3903288857-421168001-883225952-586729770)(D;OICIIO;0x40130156;;;S-1-5-21-4034897277-1867325186-1868234255-1831534639)(D;;0x130156;;;S-1-5-21-4034897277-1867325186-1868234255-1831534639)(D;OICIIO;0x40130156;;;S-1-5-21-4079454769-439456065-1906500396-1717087997)(D;;0x130156;;;S-1-5-21-4079454769-439456065-1906500396-1717087997)(D;OICIIO;0x40130156;;;S-1-5-21-4179738923-2766984803-4280522094-181345508)(D;;0x130156;;;S-1-5-21-4179738923-2766984803-4280522094-181345508)(D;OICIIO;0x40130156;;;S-1-5-21-4206714251-168626826-2704559914-648953705)(D;;0x130156;;;S-1-5-21-4206714251-168626826-2704559914-648953705)(D;OICIIO;0x40130156;;;S-1-5-21-4259522465-2720946232-1467323356-346101016)(D;;0x130156;;;S-1-5-21-4259522465-2720946232-1467323356-346101016)(D;OICIIO;0x40130156;;;S-1-5-21-35113068-163691057-4195367755-3674419946)(D;;0x130156;;;S-1-5-21-35113068-163691057-4195367755-3674419946)(D;OICIIO;0x40130156;;;S-1-5-21-81101145-2315639199-3852749881-2619227187)(D;;0x130156;;;S-1-5-21-81101145-2315639199-3852749881-2619227187)(D;;0x130156;;;S-1-5-21-85451875-1044708373-3320565142-219788622)(D;OICIIO;0x40130156;;;S-1-5-21-85451875-1044708373-3320565142-219788622)(D;OICIIO;0x40130156;;;S-1-5-21-148683043-2495160486-407592565-589779231)(D;;0x130156;;;S-1-5-21-148683043-2495160486-407592565-589779231)(D;;0x130156;;;S-1-5-21-189209186-208165054-925679981-1857891462)(D;OICIIO;0x40130156;;;S-1-5-21-189209186-208165054-925679981-1857891462)(D;;0x130156;;;S-1-5-21-320992350-248763216-1852460337-262412442)(D;OICIIO;0x40130156;;;S-1-5-21-320992350-248763216-1852460337-262412442)(D;OICIIO;0x40130156;;;S-1-5-21-321475203-1356578236-2627905584-2839407069)(D;;0x130156;;;S-1-5-21-321475203-1356578236-2627905584-2839407069)(D;;0x130156;;;S-1-5-21-327091553-71847952-331311578-1733875701)(D;OICIIO;0x40130156;;;S-1-5-21-327091553-71847952-331311578-1733875701)(D;OICIIO;0x40130156;;;S-1-5-21-488298532-393829485-3620339581-1651676631)(D;;0x130156;;;S-1-5-21-488298532-393829485-3620339581-1651676631)(D;OICIIO;0x40130156;;;S-1-5-21-695146622-3183323219-3267786833-2802090855)(D;;0x130156;;;S-1-5-21-695146622-3183323219-3267786833-2802090855)(D;;0x130156;;;S-1-5-21-754309983-665867598-856089329-452810852)(D;OICIIO;0x40130156;;;S-1-5-21-754309983-665867598-856089329-452810852)(D;OICIIO;0x40130156;;;S-1-5-21-765392479-2481441495-4267481107-513268512)(D;;0x130156;;;S-1-5-21-765392479-2481441495-4267481107-513268512)(D;OICIIO;0x40130156;;;S-1-5-21-807004867-3622331772-2454489812-1517330673)(D;;0x130156;;;S-1-5-21-807004867-3622331772-2454489812-1517330673)(D;OICIIO;0x40130156;;;S-1-5-21-826910663-1115346821-1547795566-3489136191)(D;;0x130156;;;S-1-5-21-826910663-1115346821-1547795566-3489136191)(D;OICIIO;0x40130156;;;S-1-5-21-900471796-2148699624-3281524777-3769126437)(D;;0x130156;;;S-1-5-21-900471796-2148699624-3281524777-3769126437)(D;OICIIO;0x40130156;;;S-1-5-21-993545950-2351761375-4247982118-2932230060)(D;;0x130156;;;S-1-5-21-993545950-2351761375-4247982118-2932230060)(D;OICIIO;0x40130156;;;S-1-5-21-1009762672-2798153653-3135407424-27999708)(D;;0x130156;;;S-1-5-21-1009762672-2798153653-3135407424-27999708)(D;OICIIO;0x40130156;;;S-1-5-21-1100853214-3769489907-4264814193-2999256512)(D;;0x130156;;;S-1-5-21-1100853214-3769489907-4264814193-2999256512)(D;;0x130156;;;S-1-5-21-1166404997-1192592058-603181906-2953073076)(D;OICIIO;0x40130156;;;S-1-5-21-1166404997-1192592058-603181906-2953073076)(D;OICIIO;0x40130156;;;S-1-5-21-1169745770-546477236-1444061591-1657328337)(D;;0x130156;;;S-1-5-21-1169745770-546477236-1444061591-1657328337)(D;OICIIO;0x40130156;;;S-1-5-21-1181492340-139972941-32612147-1302484391)(D;;0x130156;;;S-1-5-21-1181492340-139972941-32612147-1302484391)(D;;0x130156;;;S-1-5-21-1330451005-1100287885-3750608499-1611503848)(D;OICIIO;0x40130156;;;S-1-5-21-1330451005-1100287885-3750608499-1611503848)(D;OICIIO;0x40130156;;;S-1-5-21-1426841492-3745927370-758948278-3207232762)(D;;0x130156;;;S-1-5-21-1426841492-3745927370-758948278-3207232762)(D;OICIIO;0x40130156;;;S-1-5-21-1665760895-649368419-3643278012-1345643318)(D;;0x130156;;;S-1-5-21-1665760895-649368419-3643278012-1345643318)(D;OICIIO;0x40130156;;;S-1-5-21-1730372097-2452935229-2067454654-1916957155)(D;;0x130156;;;S-1-5-21-1730372097-2452935229-2067454654-1916957155)(D;OICIIO;0x40130156;;;S-1-5-21-1750071883-2050664745-922167642-844213667)(D;;0x130156;;;S-1-5-21-1750071883-2050664745-922167642-844213667)(D;OICIIO;0x40130156;;;S-1-5-21-1776763704-3593127996-1408285816-2571478125)(D;;0x130156;;;S-1-5-21-1776763704-3593127996-1408285816-2571478125)(D;OICIIO;0x40130156;;;S-1-5-21-1802002970-3000048776-1467148112-3199226860)(D;;0x130156;;;S-1-5-21-1802002970-3000048776-1467148112-3199226860)(D;;0x130156;;;S-1-5-21-1908448482-2631390470-171622536-3462991228)(D;OICIIO;0x40130156;;;S-1-5-21-1908448482-2631390470-171622536-3462991228)(D;OICIIO;0x40130156;;;S-1-5-21-1908647889-932991531-2306008698-1226842856)(D;;0x130156;;;S-1-5-21-1908647889-932991531-2306008698-1226842856)(D;OICIIO;0x40130156;;;S-1-5-21-1959483177-3196556767-2973767098-661704702)(D;;0x130156;;;S-1-5-21-1959483177-3196556767-2973767098-661704702)(D;OICIIO;0x40130156;;;S-1-5-21-1970688835-2396768286-2871964371-3011349831)(D;;0x130156;;;S-1-5-21-1970688835-2396768286-2871964371-3011349831)(D;;0x130156;;;S-1-5-21-2016672754-74683342-1690518668-150864286)(D;OICIIO;0x40130156;;;S-1-5-21-2016672754-74683342-1690518668-150864286)(D;;0x130156;;;S-1-5-21-2060234477-2112870177-1363817478-2350861165)(D;OICIIO;0x40130156;;;S-1-5-21-2060234477-2112870177-1363817478-2350861165)(D;;0x130156;;;S-1-5-21-2086804495-613146629-765152393-2099075107)(D;OICIIO;0x40130156;;;S-1-5-21-2086804495-613146629-765152393-2099075107)(D;OICIIO;0x40130156;;;S-1-5-21-2093436092-2328240124-3212855333-1575141779)(D;;0x130156;;;S-1-5-21-2093436092-2328240124-3212855333-1575141779)(D;OICIIO;0x40130156;;;S-1-5-21-2105622746-1903834426-1174501547-3081682279)(D;;0x130156;;;S-1-5-21-2105622746-1903834426-1174501547-3081682279)(D;;0x130156;;;S-1-5-21-2132351025-2242635354-631126421-986210805)(D;OICIIO;0x40130156;;;S-1-5-21-2132351025-2242635354-631126421-986210805)(D;OICIIO;0x40130156;;;S-1-5-21-2146886411-3473835302-1710679200-1405828557)(D;;0x130156;;;S-1-5-21-2146886411-3473835302-1710679200-1405828557)(D;;0x130156;;;S-1-5-21-2159080458-3821265870-3548441502-989246096)(D;OICIIO;0x40130156;;;S-1-5-21-2159080458-3821265870-3548441502-989246096)(D;OICIIO;0x40130156;;;S-1-5-21-2210618561-2186698586-1852293790-2091231926)(D;;0x130156;;;S-1-5-21-2210618561-2186698586-1852293790-2091231926)(D;OICIIO;0x40130156;;;S-1-5-21-2217626156-3957232386-2865176653-4099563064)(D;;0x130156;;;S-1-5-21-2217626156-3957232386-2865176653-4099563064)(A;OICI;0x1200a9;;;S-1-5-21-576938901-594400856-1755335594-1007)(A;OICIID;FA;;;SY)(A;OICIID;FA;;;BA)(A;OICIID;FA;;;S-1-5-21-576938901-594400856-1755335594-1001)",
+                        "status":  "STATIC-ONLY",
+                        "length":  null,
+                        "attributes":  "Directory",
+                        "inheritanceDisabled":  false
+                    },
+                    {
+                        "path":  "C:\\Users\\USER\\OneDrive",
+                        "kind":  "directory",
+                        "exists":  true,
+                        "aces":  [
+                                     {
+                                         "inheritance":  "ContainerInherit",
+                                         "identity":  "Everyone",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1931988859-3023176044-1888554487-1128045738",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2823185636-3123252209-3474124028-932345231",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "YASH-CHAUHAN\\CodexSandboxUsers",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "NT AUTHORITY\\SYSTEM",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "BUILTIN\\Administrators",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "YASH-CHAUHAN\\USER",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     }
+                                 ],
+                        "owner":  "YASH-CHAUHAN\\USER",
+                        "sddl":  "O:S-1-5-21-576938901-594400856-1755335594-1001G:S-1-5-21-576938901-594400856-1755335594-1001D:AI(D;CI;DT;;;WD)(A;OICI;0x1301bf;;;S-1-5-21-1931988859-3023176044-1888554487-1128045738)(A;OICI;0x1301bf;;;S-1-5-21-2823185636-3123252209-3474124028-932345231)(A;OICI;0x1301bf;;;S-1-5-21-576938901-594400856-1755335594-1007)(A;OICIID;FA;;;SY)(A;OICIID;FA;;;BA)(A;OICIID;FA;;;S-1-5-21-576938901-594400856-1755335594-1001)",
+                        "status":  "STATIC-ONLY",
+                        "length":  null,
+                        "attributes":  "ReadOnly, Directory, Archive, ReparsePoint",
+                        "inheritanceDisabled":  false
+                    },
+                    {
+                        "path":  "C:\\Users\\USER\\OneDrive\\Desktop",
+                        "kind":  "directory",
+                        "exists":  true,
+                        "aces":  [
+                                     {
+                                         "inheritance":  "ContainerInherit",
+                                         "identity":  "Everyone",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2823185636-3123252209-3474124028-932345231",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "YASH-CHAUHAN\\CodexSandboxUsers",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1931988859-3023176044-1888554487-1128045738",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "NT AUTHORITY\\SYSTEM",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "BUILTIN\\Administrators",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "YASH-CHAUHAN\\USER",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     }
+                                 ],
+                        "owner":  "YASH-CHAUHAN\\USER",
+                        "sddl":  "O:S-1-5-21-576938901-594400856-1755335594-1001G:S-1-5-21-576938901-594400856-1755335594-1001D:AI(D;CIID;DT;;;WD)(A;OICIID;0x1301bf;;;S-1-5-21-2823185636-3123252209-3474124028-932345231)(A;OICIID;0x1301bf;;;S-1-5-21-576938901-594400856-1755335594-1007)(A;OICIID;0x1301bf;;;S-1-5-21-1931988859-3023176044-1888554487-1128045738)(A;OICIID;FA;;;SY)(A;OICIID;FA;;;BA)(A;OICIID;FA;;;S-1-5-21-576938901-594400856-1755335594-1001)",
+                        "status":  "STATIC-ONLY",
+                        "length":  null,
+                        "attributes":  "ReadOnly, Directory, ReparsePoint",
+                        "inheritanceDisabled":  false
+                    },
+                    {
+                        "path":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard",
+                        "kind":  "directory",
+                        "exists":  true,
+                        "aces":  [
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-3465323512-1656394722-3177060961-761849156",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-470140097-520693967-324179577-417277437",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "YASH-CHAUHAN\\CodexSandboxUsers",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-828024968-1655340827-2479949696-1246529385",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1580210762-2848201172-3433395473-3758357596",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1928537268-3357231376-688809779-868141111",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2236787789-739586745-4012131403-2515585398",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  false
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit",
+                                         "identity":  "Everyone",
+                                         "type":  "Deny",
+                                         "rights":  "DeleteSubdirectoriesAndFiles",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-2823185636-3123252209-3474124028-932345231",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "YASH-CHAUHAN\\CodexSandboxUsers",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "S-1-5-21-1931988859-3023176044-1888554487-1128045738",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "NT AUTHORITY\\SYSTEM",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "BUILTIN\\Administrators",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "ContainerInherit, ObjectInherit",
+                                         "identity":  "YASH-CHAUHAN\\USER",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     }
+                                 ],
+                        "owner":  "YASH-CHAUHAN\\USER",
+                        "sddl":  "O:S-1-5-21-576938901-594400856-1755335594-1001G:S-1-5-21-576938901-594400856-1755335594-1001D:AI(A;OICI;0x1301bf;;;S-1-5-21-3465323512-1656394722-3177060961-761849156)(A;OICI;0x1301bf;;;S-1-5-21-470140097-520693967-324179577-417277437)(A;OICI;0x1301bf;;;S-1-5-21-576938901-594400856-1755335594-1007)(A;OICI;0x1301bf;;;S-1-5-21-828024968-1655340827-2479949696-1246529385)(A;OICI;0x1301bf;;;S-1-5-21-1580210762-2848201172-3433395473-3758357596)(A;OICI;0x1301bf;;;S-1-5-21-1928537268-3357231376-688809779-868141111)(A;OICI;0x1301bf;;;S-1-5-21-2236787789-739586745-4012131403-2515585398)(D;CIID;DT;;;WD)(A;OICIID;0x1301bf;;;S-1-5-21-2823185636-3123252209-3474124028-932345231)(A;OICIID;0x1301bf;;;S-1-5-21-576938901-594400856-1755335594-1007)(A;OICIID;0x1301bf;;;S-1-5-21-1931988859-3023176044-1888554487-1128045738)(A;OICIID;FA;;;SY)(A;OICIID;FA;;;BA)(A;OICIID;FA;;;S-1-5-21-576938901-594400856-1755335594-1001)",
+                        "status":  "STATIC-ONLY",
+                        "length":  null,
+                        "attributes":  "Directory",
+                        "inheritanceDisabled":  false
+                    },
+                    {
+                        "path":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\.env",
+                        "kind":  "file",
+                        "exists":  true,
+                        "aces":  [
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-828024968-1655340827-2479949696-1246529385",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-3465323512-1656394722-3177060961-761849156",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1928537268-3357231376-688809779-868141111",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1580210762-2848201172-3433395473-3758357596",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-470140097-520693967-324179577-417277437",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "YASH-CHAUHAN\\CodexSandboxUsers",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2236787789-739586745-4012131403-2515585398",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-2823185636-3123252209-3474124028-932345231",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "S-1-5-21-1931988859-3023176044-1888554487-1128045738",
+                                         "type":  "Allow",
+                                         "rights":  "Modify, Synchronize",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "NT AUTHORITY\\SYSTEM",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "BUILTIN\\Administrators",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     },
+                                     {
+                                         "inheritance":  "None",
+                                         "identity":  "YASH-CHAUHAN\\USER",
+                                         "type":  "Allow",
+                                         "rights":  "FullControl",
+                                         "propagation":  "None",
+                                         "inherited":  true
+                                     }
+                                 ],
+                        "owner":  "YASH-CHAUHAN\\USER",
+                        "sddl":  "O:S-1-5-21-576938901-594400856-1755335594-1001G:S-1-5-21-576938901-594400856-1755335594-1001D:AI(A;ID;0x1301bf;;;S-1-5-21-828024968-1655340827-2479949696-1246529385)(A;ID;0x1301bf;;;S-1-5-21-3465323512-1656394722-3177060961-761849156)(A;ID;0x1301bf;;;S-1-5-21-1928537268-3357231376-688809779-868141111)(A;ID;0x1301bf;;;S-1-5-21-1580210762-2848201172-3433395473-3758357596)(A;ID;0x1301bf;;;S-1-5-21-470140097-520693967-324179577-417277437)(A;ID;0x1301bf;;;S-1-5-21-576938901-594400856-1755335594-1007)(A;ID;0x1301bf;;;S-1-5-21-2236787789-739586745-4012131403-2515585398)(A;ID;0x1301bf;;;S-1-5-21-2823185636-3123252209-3474124028-932345231)(A;ID;0x1301bf;;;S-1-5-21-1931988859-3023176044-1888554487-1128045738)(A;ID;FA;;;SY)(A;ID;FA;;;BA)(A;ID;FA;;;S-1-5-21-576938901-594400856-1755335594-1001)",
+                        "status":  "STATIC-ONLY",
+                        "length":  16371,
+                        "attributes":  "Archive",
+                        "inheritanceDisabled":  false
+                    }
+                ],
+    "limitation":  "DACL metadata is not a dynamic effective-access proof. Same-user owner, process state, DPAPI, UI and network are outside this inspection.",
+    "stage":  "S3"
+}
