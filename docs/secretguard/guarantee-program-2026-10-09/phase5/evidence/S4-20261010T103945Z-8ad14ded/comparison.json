@@ -1,0 +1,118 @@
+{
+  "stage": "S4",
+  "exactOsBuild": "26300.8935",
+  "observedUtc": "2026-10-10T10:54:22.146Z",
+  "status": "INCOMPLETE",
+  "observationsPersisted": 0,
+  "baselineBlocks": 7,
+  "baselineLeaks": 10,
+  "actualLoadedBundleHash": "UNAVAILABLE: hash written only at harness completion, which did not occur",
+  "preparedCandidateExtensionSha256": "853fc442fe868db57b63c9bbf9d4abe31a09afab6cec7b6b30e7239197c5d43a",
+  "securityReview": "Actual host started and extension activated; stopped at an assertion expecting repo-deny relaxation to leak",
+  "nativeBaseline": "Launch failed: Exception calling \"Start\" with \"0\" argument(s): \"The directory name is invalid\"",
+  "limitations": "Neither process exit zero nor prepared hash is a security result. Prior observations remain immutable.",
+  "rows": [
+    {
+      "operation": ".env redacted preview",
+      "baseline": "BLOCKED_SCOPED",
+      "current": "INCOMPLETE: no final observation file",
+      "classification": "Matching current managed observation not persisted"
+    },
+    {
+      "operation": ".env direct filesystem read",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "INCOMPLETE: no final observation file",
+      "classification": "OUT-OF-COVERAGE-BY-DESIGN; historical failure retained, no current fix claim"
+    },
+    {
+      "operation": "nested/private.txt redacted preview",
+      "baseline": "BLOCKED_SCOPED",
+      "current": "INCOMPLETE: no final observation file",
+      "classification": "Matching current managed observation not persisted"
+    },
+    {
+      "operation": "nested/private.txt direct filesystem read",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "INCOMPLETE: no final observation file",
+      "classification": "OUT-OF-COVERAGE-BY-DESIGN; historical failure retained, no current fix claim"
+    },
+    {
+      "operation": "private.pem redacted preview",
+      "baseline": "BLOCKED_SCOPED",
+      "current": "INCOMPLETE: no final observation file",
+      "classification": "Matching current managed observation not persisted"
+    },
+    {
+      "operation": "private.pem direct filesystem read",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "INCOMPLETE: no final observation file",
+      "classification": "OUT-OF-COVERAGE-BY-DESIGN; historical failure retained, no current fix claim"
+    },
+    {
+      "operation": "selected.txt redacted preview",
+      "baseline": "BLOCKED_SCOPED",
+      "current": "INCOMPLETE: no final observation file",
+      "classification": "Matching current managed observation not persisted"
+    },
+    {
+      "operation": "selected.txt direct filesystem read",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "INCOMPLETE: no final observation file",
+      "classification": "OUT-OF-COVERAGE-BY-DESIGN; historical failure retained, no current fix claim"
+    },
+    {
+      "operation": "hardlink direct read",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "INCOMPLETE: no final observation file",
+      "classification": "OUT-OF-COVERAGE-BY-DESIGN; historical failure retained, no current fix claim"
+    },
+    {
+      "operation": "hardlink redacted preview",
+      "baseline": "BLOCKED_SCOPED",
+      "current": "INCOMPLETE: no final observation file",
+      "classification": "Matching current managed observation not persisted"
+    },
+    {
+      "operation": "junction direct read",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "INCOMPLETE: no final observation file",
+      "classification": "OUT-OF-COVERAGE-BY-DESIGN; historical failure retained, no current fix claim"
+    },
+    {
+      "operation": "junction redacted preview",
+      "baseline": "BLOCKED_SCOPED",
+      "current": "INCOMPLETE: no final observation file",
+      "classification": "Matching current managed observation not persisted"
+    },
+    {
+      "operation": "repository deny rule",
+      "baseline": "BLOCKED_SCOPED",
+      "current": "INCOMPLETE: no final observation file",
+      "classification": "Matching current managed observation not persisted"
+    },
+    {
+      "operation": "agent edits repository deny policy",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "INCOMPLETE: no final observation file",
+      "classification": "Managed repair exists; host stopped at obsolete leak expectation, no complete result"
+    },
+    {
+      "operation": "runtime environment and command output",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "INCOMPLETE: no final observation file",
+      "classification": "OUT-OF-COVERAGE-BY-DESIGN; historical failure retained, no current fix claim"
+    },
+    {
+      "operation": "Git object after working-tree replacement",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "INCOMPLETE: no final observation file",
+      "classification": "OUT-OF-COVERAGE-BY-DESIGN; historical failure retained, no current fix claim"
+    },
+    {
+      "operation": "encoded chunked exfiltration",
+      "baseline": "LEAK_CONFIRMED",
+      "current": "INCOMPLETE: no final observation file",
+      "classification": "OUT-OF-COVERAGE-BY-DESIGN; historical failure retained, no current fix claim"
+    }
+  ]
+}

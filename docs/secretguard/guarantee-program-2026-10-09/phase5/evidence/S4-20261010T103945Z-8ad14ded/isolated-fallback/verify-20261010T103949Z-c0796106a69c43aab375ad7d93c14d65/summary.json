@@ -1,0 +1,149 @@
+{
+    "sameUserAuthority":  "OUTSIDE_COVERAGE",
+    "architecture":  "UNTESTED",
+    "allowConcurrentIsolatedHost":  true,
+    "harnesses":  [
+                      {
+                          "hashScope":  "prepared compile, not a launch observation",
+                          "name":  "security-review",
+                          "launchRecord":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\docs\\secretguard\\guarantee-program-2026-10-09\\phase5\\evidence\\S4-20261010T103945Z-8ad14ded\\isolated-fallback\\verify-20261010T103949Z-c0796106a69c43aab375ad7d93c14d65\\security-review-runs\\host-20261010T104207Z-4e5be3cedd2547a6bebe9fae30286e10\\launch.json",
+                          "sha256":  "488325093598687c1567c2d0f7f77977505ee7e0d3a6fc8571e7fe58a273b572",
+                          "launchedHarnessSha256":  "488325093598687c1567c2d0f7f77977505ee7e0d3a6fc8571e7fe58a273b572",
+                          "status":  "USER_HOST_ATTEMPTED_RESULTS_REQUIRED",
+                          "preparedExtensionSha256":  "853fc442fe868db57b63c9bbf9d4abe31a09afab6cec7b6b30e7239197c5d43a"
+                      },
+                      {
+                          "status":  "PREPARED_NOT_RUN",
+                          "sha256":  "8c10e3b8c0640cc8cb3dc0357669aff23cf3c6a98cef754e76372ef55f653339",
+                          "name":  "native-baseline",
+                          "hashScope":  "prepared compile, not a launch observation"
+                      }
+                  ],
+    "runHostRequested":  true,
+    "exactOsBuild":  "26300.8935",
+    "independentVerification":  "NOT_PERFORMED",
+    "expandedDependencyChecks":  true,
+    "fileWorkers":  2,
+    "wrapperSha256":  "ce645a488622180a0b32bf8a6c9c892978ee4b4e4f1114dc9d854f1231ece18c",
+    "commands":  [
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "guard-core-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "guard-core-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "guard-core-test"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "ide-protocol-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "ide-protocol-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "ide-protocol-test"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "detectors-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "detectors-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "broker-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "broker-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "broker-test"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "extension-typecheck"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "extension-build"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "extension-test"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "security-review-compile"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "native-baseline-compile"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  1,
+                         "name":  "security-review-user-host"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "native-prepare"
+                     },
+                     {
+                         "scope":  "command result only",
+                         "exitCode":  0,
+                         "name":  "native-frozen-compile"
+                     }
+                 ],
+    "diagnosticFindings":  [
+                               {
+                                   "id":  "H2a",
+                                   "status":  "SKIP"
+                               },
+                               {
+                                   "id":  "H2e",
+                                   "status":  "SKIP"
+                               },
+                               {
+                                   "id":  "S5-unmarked",
+                                   "status":  "FAIL"
+                               }
+                           ],
+    "limitation":  "Command success is not confidentiality success. Read observation files; preserve failures.",
+    "failures":  [
+                     "SecurityReview host command failed; inspect raw results.",
+                     "Exception calling \"Start\" with \"0\" argument(s): \"The directory name is invalid\""
+                 ],
+    "schemaVersion":  2,
+    "noProcessTermination":  true,
+    "runId":  "verify-20261010T103949Z-c0796106a69c43aab375ad7d93c14d65",
+    "scratchPath":  "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\.tmp\\sgv-72d329f94bff",
+    "atUtc":  "2026-10-10T10:43:16.4708458Z"
+}
