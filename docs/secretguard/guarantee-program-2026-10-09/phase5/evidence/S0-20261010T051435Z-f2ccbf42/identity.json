@@ -1,0 +1,38 @@
+{
+    "Stage":  "S0",
+    "Status":  "PASS",
+    "Scope":  "Resume/build identity only, not security grading",
+    "ObservedUtc":  "2026-10-10T05:14:36.8767416Z",
+    "Os":  {
+               "ProductName":  "Windows 10 Home Single Language",
+               "EditionID":  "CoreSingleLanguage",
+               "DisplayVersion":  "26H2",
+               "CurrentBuild":  "26300",
+               "UBR":  8935,
+               "ExactBuild":  "26300.8935"
+           },
+    "Process":  {
+                    "UserSid":  "S-1-5-21-576938901-594400856-1755335594-1001",
+                    "Elevated":  false
+                },
+    "Git":  {
+                "Branch":  "security-hardening",
+                "Head":  "9ec83e4dd03127749d5261085ee3acf1f19c6a92",
+                "Version":  "git version 2.53.0.windows.1"
+            },
+    "Tools":  {
+                  "Node":  "v22.16.0",
+                  "Npm":  "11.15.0",
+                  "PowerShell":  "5.1.26100.8935"
+              },
+    "OriginalAssertions":  {
+                               "ArchitectureUntested":  30,
+                               "RealAgentNotTested":  63,
+                               "A0ScopedBlocks":  7,
+                               "A0ConfirmedLeaks":  10
+                           },
+    "HostPermission":  "Authorized by 2026-10-10 final autonomous prompt, existing synthetic isolated harnesses only",
+    "PilotPermission":  "Only if shell already elevated; never request UAC",
+    "ReleaseManifestSha256":  "fd4a56396963bbcab95de50fae430f2a6070628266abdea235f20030d98a7073",
+    "InputPromptSha256":  "60cd51b1ceb86c7e4a678bd629f23c1bc6b418862681eb32f97b168a2469b1ad"
+}

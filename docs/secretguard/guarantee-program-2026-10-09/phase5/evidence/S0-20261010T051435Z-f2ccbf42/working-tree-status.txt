@@ -1,0 +1,160 @@
+## security-hardening
+ M apps/local-ai-broker/package.json
+ M apps/local-ai-broker/src/__tests__/checkpoint-rollback.test.ts
+ M apps/local-ai-broker/src/__tests__/provider-boundary.test.ts
+ M apps/local-ai-broker/src/__tests__/realuser-e2e.test.ts
+ M apps/local-ai-broker/src/cli.ts
+ M artifacts/security/host-command-coverage.json
+ M dist/credentials/SoterApi.credentials.d.ts
+ M dist/credentials/SoterApi.credentials.js
+ M docs/secretguard/phase2-upgrade/changes.json
+ M docs/secretguard/phase2-upgrade/phase2-report.md
+ M docs/secretguard/phase2-upgrade/phase2-upgrade.patch
+ M extensions/jetbrains/.gradle/8.9/fileHashes/fileHashes.bin
+ M extensions/jetbrains/.gradle/8.9/fileHashes/fileHashes.lock
+ M lib/csrf.ts
+ M package-lock.json
+ M packages/guard-core/src/ControlledTerminal.ts
+ M packages/guard-core/src/SafeContextBuilder.ts
+ M packages/guard-core/src/__tests__/safecontext.test.ts
+ M packages/guard-core/src/detectors/RepoInstructionPoisoningDetector.ts
+ M packages/integrations/n8n/CHANGELOG.md
+ M packages/integrations/n8n/README.md
+ M packages/integrations/n8n/credentials/SoterApi.credentials.ts
+ M packages/integrations/n8n/nodes/SoterGuard/shared/execute.ts
+ M packages/integrations/n8n/nodes/SoterGuard/shared/layoutV3.ts
+ M packages/integrations/n8n/nodes/SoterGuard/shared/localEngine.ts
+ M packages/integrations/n8n/nodes/SoterGuard/shared/parameterLayout.ts
+ M packages/integrations/n8n/nodes/SoterGuard/shared/properties.ts
+ M packages/integrations/n8n/nodes/SoterGuard/shared/propertiesV3.ts
+ M packages/integrations/n8n/nodes/SoterGuard/v2/SoterGuardV2.ts
+ M packages/integrations/n8n/nodes/SoterGuard/v3/SoterGuardV3.ts
+ M packages/integrations/n8n/test/author-controls.test.ts
+ M packages/integrations/n8n/test/enterprise-scenarios.test.ts
+ M packages/integrations/n8n/test/node-behaviour.test.ts
+ M packages/integrations/n8n/test/test-deep-edge-cases.js
+ M packages/integrations/n8n/test/v082-fixes.test.ts
+ M packages/integrations/n8n/test/v3-layout.test.ts
+ M packages/vscode-extension/.vscodeignore
+ M packages/vscode-extension/artifacts/phase2/results.jsonl
+ M packages/vscode-extension/benchmark-results/security-evaluation.json
+ M packages/vscode-extension/benchmark-results/security-evaluation.md
+ M packages/vscode-extension/scripts/verify-vsix.mjs
+ M packages/vscode-extension/src/__tests__/auto-secure-engine.test.ts
+ M packages/vscode-extension/src/__tests__/host/controlPanel.host.ts
+ M packages/vscode-extension/src/__tests__/mcp-canary-boundary.test.ts
+ M packages/vscode-extension/src/__tests__/panel-content.test.ts
+ M packages/vscode-extension/src/__tests__/phase2/p2-context-leak.test.ts
+ M packages/vscode-extension/src/advanced/commands.ts
+ M packages/vscode-extension/src/broker/AutoSecureEngine.ts
+ M packages/vscode-extension/src/broker/BrokerManager.ts
+ M packages/vscode-extension/src/clipboard/ClipboardGuard.ts
+ M packages/vscode-extension/src/protection/ProtectionController.ts
+ M packages/vscode-extension/src/secret-broker/EnforcedApiCapability.ts
+ M packages/vscode-extension/src/secret-broker/OutputFilter.ts
+ M packages/vscode-extension/src/secret-shield/AutoVaultMigration.ts
+ M packages/vscode-extension/src/security/FileSystemPathPolicy.ts
+ M packages/vscode-extension/src/webview/DashboardPanel.ts
+ M packages/vscode-extension/src/webview/panelContent.ts
+ M scripts/minify-published-dist.mjs
+ M scripts/ml/ac2-competitor-benchmark.py
+ M scripts/n8n-qa-harness.mjs
+ M tests/integrations/n8n-node-execute.test.ts
+ M workflows/enterprise-templates/N8N_CREATOR_PORTAL_SUBMISSION_GUIDE.md
+?? Autonomous-Deep-Research-Competitor-Intelligence-Agent-SoterAI.json
+?? apps/local-ai-broker/src/ClientRoutes.ts
+?? apps/local-ai-broker/src/ControlledExecution.ts
+?? apps/local-ai-broker/src/__tests__/control-boundary.test.ts
+?? apps/local-ai-broker/src/__tests__/controlled-execution.test.ts
+?? artifacts/ml/ac2-competitor-benchmark-2026-10-02.json
+?? dist/credentials/soterai.dark.svg
+?? dist/credentials/soterai.svg
+?? dist/nodes/
+?? dist/shared/
+?? docs/n8n-panel-ux-2026-10-08.md
+?? docs/n8n-v087-audit-remediation-2026-10-08.md
+?? docs/secretguard/guarantee-program-2026-10-09/phase0/
+?? docs/secretguard/guarantee-program-2026-10-09/phase1/PHASE2_KICKOFF.md
+?? docs/secretguard/guarantee-program-2026-10-09/phase1/baseline-fresh-bundle-host-run.txt
+?? docs/secretguard/guarantee-program-2026-10-09/phase1/git-auth-probes/
+?? docs/secretguard/guarantee-program-2026-10-09/phase1/managed-probes/
+?? docs/secretguard/guarantee-program-2026-10-09/phase1/native-host/prepared-run.json
+?? docs/secretguard/guarantee-program-2026-10-09/phase1/native-host/runs/
+?? docs/secretguard/guarantee-program-2026-10-09/phase1/phase1-handoff.json
+?? docs/secretguard/guarantee-program-2026-10-09/phase1/phase1-summary.md
+?? docs/secretguard/guarantee-program-2026-10-09/phase1/reviewer/
+?? docs/secretguard/guarantee-program-2026-10-09/phase3/
+?? docs/secretguard/guarantee-program-2026-10-09/phase5/
+?? docs/secretguard/phase2-upgrade/validation-summary.json
+?? docs/secretguard/phase2-upgrade/validation/broker-tests-current.txt
+?? docs/secretguard/phase2-upgrade/validation/broker-typecheck-current.txt
+?? docs/secretguard/phase2-upgrade/validation/core-build-current.txt
+?? docs/secretguard/phase2-upgrade/validation/core-tests-current.txt
+?? docs/secretguard/phase2-upgrade/validation/extension-build-current.txt
+?? docs/secretguard/phase2-upgrade/validation/extension-complete-probes/
+?? docs/secretguard/phase2-upgrade/validation/extension-current-probes/
+?? docs/secretguard/phase2-upgrade/validation/extension-tests-complete.txt
+?? docs/secretguard/phase2-upgrade/validation/extension-tests-current.txt
+?? docs/secretguard/phase2-upgrade/validation/extension-typecheck-current.txt
+?? docs/secretguard/phase3-testing/
+?? docs/secretguard/security-review-2026-10-08/
+?? docs/vscode-enterprise-ux-2026-10-08.md
+?? docs/vscode-one-click-protection-2026-10-09.md
+?? packages/integrations/n8n/artifacts/panel-2026-10-08/
+?? packages/integrations/n8n/audit-pack.json
+?? packages/integrations/n8n/panel-pack.json
+?? packages/integrations/n8n/scripts/smoke-built-package.cjs
+?? packages/integrations/n8n/shared/baseUrl.ts
+?? packages/integrations/n8n/test/panel-ux.test.ts
+?? packages/integrations/n8n/test/v087-audit.test.ts
+?? packages/vscode-extension/artifacts/enterprise-ux-2026-10-08/
+?? packages/vscode-extension/artifacts/one-click-protection-2026-10-09/
+?? packages/vscode-extension/scripts/diagnose-probes.ts
+?? packages/vscode-extension/scripts/phase3-canary-lab.mjs
+?? packages/vscode-extension/scripts/phase3-canary-lab.test.mjs
+?? packages/vscode-extension/scripts/render-enterprise-ui.ts
+?? packages/vscode-extension/scripts/run-enterprise-ui-host.ps1
+?? packages/vscode-extension/scripts/security-review-summary.mjs
+?? packages/vscode-extension/scripts/security-source-inventory.mjs
+?? packages/vscode-extension/scripts/testing-ui-server.ts
+?? packages/vscode-extension/scripts/verify-enterprise-ui.mjs
+?? packages/vscode-extension/src/__tests__/capability-boundary-regression.test.ts
+?? packages/vscode-extension/src/__tests__/child-environment.test.ts
+?? packages/vscode-extension/src/__tests__/clipboard-boundary.test.ts
+?? packages/vscode-extension/src/__tests__/control-panel-ux.test.ts
+?? packages/vscode-extension/src/__tests__/dashboard-ui.test.ts
+?? packages/vscode-extension/src/__tests__/filesystem-windows-drive.test.ts
+?? packages/vscode-extension/src/protection/AutomaticIDEProtection.ts
+?? packages/vscode-extension/src/security/childEnvironment.ts
+?? packages/vscode-extension/src/webview/controlPanelStyles.ts
+?? scratch/database.sqlite
+?? scratch/inspect_canvas_dom.mjs
+?? scratch/inspect_db.py
+?? scratch/inspect_revoke_err.mjs
+?? scratch/test_outguard_fields.mjs
+?? scratch/test_passport_flow.mjs
+?? scratch/test_ui_inspect.mjs
+?? scripts/build-deep-research-workflow.mjs
+?? scripts/capture_all_v087_node_modals.mjs
+?? scripts/capture_cloud_executed_ndvs.mjs
+?? scripts/capture_cloud_modals_clean.mjs
+?? scripts/capture_cloud_ndv_and_canvas.mjs
+?? scripts/capture_cloud_node_details.mjs
+?? scripts/capture_cred_success.mjs
+?? scripts/capture_current_v087_execution.mjs
+?? scripts/capture_main_panel_detection.mjs
+?? scripts/capture_v087_complete_execution_ui.mjs
+?? scripts/capture_v087_ui_evidence.mjs
+?? scripts/compare_local_vs_cloud_executions.mjs
+?? scripts/create_and_run_v087_master_workflow.mjs
+?? scripts/debug_console.mjs
+?? scripts/inspect_node1_cred.mjs
+?? scripts/patch_and_copy_cred.mjs
+?? scripts/patch_cred_in_docker.mjs
+?? scripts/run_canvas_interactive_cloud.mjs
+?? scripts/run_canvas_interactive_v087.mjs
+?? scripts/test-n8n-panel.mjs
+?? scripts/test_and_capture_cloud_master.mjs
+?? scripts/test_cred_ui.mjs
+?? scripts/test_exec_nav.mjs
+?? workflows/enterprise-templates/workflow-4-autonomous-deep-research-sentinel.json
