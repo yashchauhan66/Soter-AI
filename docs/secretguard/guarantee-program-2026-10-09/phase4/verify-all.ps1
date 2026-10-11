@@ -116,7 +116,11 @@ try {
             $nativeBundle=Join-Path $nativeRun 'native-baseline.js'
             if ((Invoke-Recorded 'native-frozen-compile' 'node.exe' @('node_modules/esbuild/bin/esbuild','docs/secretguard/guarantee-program-2026-10-09/phase1/native-host/native-baseline.host.ts','--bundle','--platform=node','--external:vscode',"--outfile=$nativeBundle")) -ne 0) { throw 'Existing native compile failed.' }
             $workspace=Join-Path $nativeRun 'workspace';$profile=Join-Path $nativeRun 'profile'
-            $settings=@{'telemetry.telemetryLevel'='off';'update.mode'='none';'extensions.autoUpdate'=$false;'extensions.autoCheckUpdates'=$false;'soterai.cloud.enabled'=$false;'soterai.privacyMode'='local';'soterai.autoVaultMigration.enabled'=$false;'soterai.broker.openAIProviderUrl'='';'soterai.broker.anthropicProviderUrl'=''}
+            $listener = New-Object Net.Sockets.TcpListener([Net.IPAddress]::Loopback, 0)
+            $listener.Start()
+            $nativePort = $listener.LocalEndpoint.Port
+            $listener.Stop()
+            $settings=@{'telemetry.telemetryLevel'='off';'update.mode'='none';'extensions.autoUpdate'=$false;'extensions.autoCheckUpdates'=$false;'soterai.cloud.enabled'=$false;'soterai.privacyMode'='local';'soterai.autoVaultMigration.enabled'=$false;'soterai.broker.autoStart'=$false;'soterai.broker.port'=$nativePort;'soterai.broker.openAIProviderUrl'='';'soterai.broker.anthropicProviderUrl'=''}
             Write-NewText (Join-Path $profile 'User/settings.json') ($settings|ConvertTo-Json)
             $start=[Diagnostics.ProcessStartInfo]::new();$start.FileName=[IO.Path]::GetFullPath($CodePath)
             $launchArgs=@("--extensionDevelopmentPath=$(Join-Path $nativeRun 'snapshot')","--extensionTestsPath=$nativeBundle","--user-data-dir=$profile","--extensions-dir=$(Join-Path $nativeRun 'extensions')",'--disable-extensions','--disable-workspace-trust','--disable-gpu','--disable-updates','--skip-welcome','--skip-release-notes',$workspace)

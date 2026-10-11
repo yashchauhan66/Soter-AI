@@ -1,0 +1,1442 @@
+{
+  "metadata": {
+    "schemaVersion": 1,
+    "phase": 0,
+    "clientDate": "2026-10-09",
+    "clientTimezone": "Asia/Calcutta",
+    "capturedAtUtc": "2026-10-09T05:59:58.626Z",
+    "head": "973b8af6060aa967fc0ecad7d56251a2da41149a",
+    "platform": "win32",
+    "node": "v22.16.0",
+    "extension": {
+      "name": "soterai-ide-guard",
+      "version": "0.6.3",
+      "engine": "^1.85.0"
+    },
+    "brokerVersion": "0.2.0",
+    "testsRunThisPhase": 0,
+    "liveAgentsRunThisPhase": 0,
+    "exploitAttemptsThisPhase": 0,
+    "sourceScope": [
+      "packages/vscode-extension/src",
+      "apps/local-ai-broker/src",
+      "packages/guard-core/src"
+    ],
+    "sourceFiles": 155,
+    "sourceLines": 28090,
+    "reviewMeaning": "Targeted manual review can include selected sections. Hash inventory is not semantic review.",
+    "skippedLinks": [],
+    "unavailable": [],
+    "inputs": [
+      {
+        "path": "packages/vscode-extension/package.json",
+        "bytes": 87257,
+        "sha256": "fef4588d079311f7faec88446c62f4e8b16d6052083a4bd11bdabf4f3975184a"
+      },
+      {
+        "path": "apps/local-ai-broker/package.json",
+        "bytes": 754,
+        "sha256": "a8f21664cf368359464c276b2c0a620fffb9d3839f4727453e4fd09d0462a52b"
+      },
+      {
+        "path": "packages/guard-core/package.json",
+        "bytes": 960,
+        "sha256": "a8da119fbfafa81fe4c64a7f93502e0c582c16ebe989a5db96d75bdc52b07e7d"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/README.md",
+        "bytes": 9515,
+        "sha256": "3bce393fdf12655ee804c39db226f6be86f7e851b2e61ddd603f507a2cbb09d0"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/findings.md",
+        "bytes": 8884,
+        "sha256": "7ce386f5eba651998ddd961245f0fd7b2ec0514df7f1f48097ad4db47fb5f38d"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/threat-model.md",
+        "bytes": 5740,
+        "sha256": "12f4f9d64552bd9baa0f248ec64abd60517829997d6e1d1c36fbe2441f3f6c7a"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/bypass-report.md",
+        "bytes": 8155,
+        "sha256": "d4676687bc1cef189f086f6c697fedf870b7c7fde762c4c0de386971c95d6af8"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/architecture.md",
+        "bytes": 6803,
+        "sha256": "1a842d347bbeb242f0bee3551f804a46fd64ffda09d5d1253e1d6afc362dcd69"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/research.md",
+        "bytes": 9926,
+        "sha256": "880456b47beac463bafdaadf63610ef77b9d71c08820d568a5e4c768e3368c1f"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/roadmap.md",
+        "bytes": 3037,
+        "sha256": "f4f4dc9138e0468371d2325d4d1c8c8bd30a6d87ac455fe4955660e57b3c23d7"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/residual-risks.md",
+        "bytes": 3755,
+        "sha256": "bea43dd677e8182917a889891e53ac3b2407cc4d8e1c8f01f2c06101b3c79fc0"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/user-guide.md",
+        "bytes": 6937,
+        "sha256": "6853c3e58a61e977ea48a82fb9d39dd0b97883e423cd089ab58eeb21fe511a60"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/evidence/live-host.json",
+        "bytes": 4570,
+        "sha256": "b84cd27912535e4081ee8a0dcd419cd301b0d276b1d6b34b25f97287235b286e"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/evidence/validation-summary.json",
+        "bytes": 2207,
+        "sha256": "e79c17b110fd526ce46327811440724bf55ec9deb9bede961576265dd21f18bd"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/evidence/source-inventory.json",
+        "bytes": 84062,
+        "sha256": "0e2eb619322f9bd5a69fac2a1571af5819235a666e9853b8847209c3f4b3fb2d"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/evidence/phase2-verified-final/results.jsonl",
+        "bytes": 11463,
+        "sha256": "b23b5a580ea02eca6faf2826052cba825268166846c4af61d505a62e5f57ce67"
+      },
+      {
+        "path": "docs/vscode-one-click-protection-2026-10-09.md",
+        "bytes": 7307,
+        "sha256": "d4fdb24a88f1fc7c2828fe36b231137e1dbe092aad56b055e45c96af6f43af8e"
+      },
+      {
+        "path": "docs/vscode-enterprise-ux-2026-10-08.md",
+        "bytes": 17352,
+        "sha256": "5ad14de9aeafbf745a0c897904ee72ead027f06c355dab0bbcf06650470d4ff5"
+      },
+      {
+        "path": "docs/secretguard/phase2-upgrade/phase2-report.md",
+        "bytes": 35198,
+        "sha256": "5cd81636bfff1a21fcb2991ffd823fafd3277d1afd11a837f6e2b7ea1beb287e"
+      },
+      {
+        "path": "docs/secretguard/phase2-upgrade/validation-summary.json",
+        "bytes": 1182,
+        "sha256": "7ae1dbc5d840fdcfce978dd5a2fdf9d980a93d71316ec6d6f98081d0cfeec2c3"
+      },
+      {
+        "path": "docs/secretguard/phase3-testing/README.md",
+        "bytes": 20474,
+        "sha256": "0c494ac444639d29e28856ef1d3f044ab3dc7b3d48eea8753cc9aa8e56b01bde"
+      },
+      {
+        "path": "docs/secretguard/phase3-testing/cases.md",
+        "bytes": 15673,
+        "sha256": "573c782de3fa96bd6d1684caf477a5a97f4d77dc9e408abae8f032076afa2b0e"
+      },
+      {
+        "path": "packages/vscode-extension/artifacts/one-click-protection-2026-10-09/validation-summary.json",
+        "bytes": 6858,
+        "sha256": "fb963b4c119210a720ef665c1f71c5308101064a97e92346e17e960146ecca7c"
+      },
+      {
+        "path": "packages/vscode-extension/src/__tests__/host/securityReview.host.ts",
+        "bytes": 8864,
+        "sha256": "22e514ae29091d107a653bf463dabc317893dda6f9800f2930cf93cc2a5f02d4"
+      },
+      {
+        "path": "packages/vscode-extension/src/__tests__/phase2/p2-context-leak.test.ts",
+        "bytes": 30007,
+        "sha256": "02c37c53718b325dacbcfb82c50f35ddaa91779d281e2dc44aff57820cae87a5"
+      },
+      {
+        "path": "packages/vscode-extension/scripts/run-security-review-host.ps1",
+        "bytes": 3675,
+        "sha256": "c779b5dd865195a7022f09ca43be0636d6ae5844b8d0422f0970a489cedbfd6e"
+      },
+      {
+        "path": "packages/vscode-extension/scripts/phase3-canary-lab.mjs",
+        "bytes": 27771,
+        "sha256": "17b3981db9a75a56551ab97a25cf2f81d294964f6bdf449c111d066aafd0f88c"
+      },
+      {
+        "path": "packages/vscode-extension/dist/extension.js",
+        "bytes": 618385,
+        "sha256": "81b84b4efd02d30f397d39978be59ba10664982f8e6f3a9173dd35568ba3bb09"
+      },
+      {
+        "path": "packages/vscode-extension/dist/local-ai-broker.js",
+        "bytes": 238648,
+        "sha256": "3dcdaf5b3a2d59543c15fdcb82381a9ecc91381e325877321acb4d97d144d71f"
+      },
+      {
+        "path": "packages/vscode-extension/dist/soterai-mcp-server.js",
+        "bytes": 201238,
+        "sha256": "95815c284242623c55567d609f5581305da2ff3c59e124f93353231cff8452b1"
+      },
+      {
+        "path": ".tmp/security-review-host.js",
+        "bytes": 11006,
+        "sha256": "5fa842010e3d7cea7725f8953ddcf63c17773d00efc33ee922df8f56404b1eea"
+      },
+      {
+        "path": "packages/vscode-extension/artifacts/one-click-protection-2026-10-09/soterai-ide-guard-0.6.3-one-click-protection.vsix",
+        "bytes": 4452350,
+        "sha256": "43b92b0b4a61a4a0ea8f04d2c63441ae23ac2e800a7a76a792c7cde0bbce84f0"
+      }
+    ],
+    "priorResults": {
+      "provenance": "READ_FROM_PREVIOUS_REPORT_NOT_REPRODUCED",
+      "suites": {
+        "core": {
+          "tests": 511,
+          "pass": 511,
+          "fail": 0,
+          "skipped": 0,
+          "cancelled": 0
+        },
+        "broker": {
+          "tests": 128,
+          "pass": 127,
+          "fail": 0,
+          "skipped": 1,
+          "cancelled": 0
+        },
+        "extension": {
+          "tests": 536,
+          "pass": 534,
+          "fail": 0,
+          "skipped": 2,
+          "cancelled": 0
+        }
+      },
+      "adversarialFindingRows": {
+        "PASS": 28,
+        "FAIL": 1,
+        "SKIP": 2
+      },
+      "host": {
+        "vscode": "1.104.0",
+        "extension": "0.6.3",
+        "liveModelContacted": false,
+        "outcomes": [
+          {
+            "attack": ".env redacted preview",
+            "status": "BLOCKED_SCOPED"
+          },
+          {
+            "attack": ".env direct filesystem read",
+            "status": "LEAK_CONFIRMED"
+          },
+          {
+            "attack": "nested/private.txt redacted preview",
+            "status": "BLOCKED_SCOPED"
+          },
+          {
+            "attack": "nested/private.txt direct filesystem read",
+            "status": "LEAK_CONFIRMED"
+          },
+          {
+            "attack": "private.pem redacted preview",
+            "status": "BLOCKED_SCOPED"
+          },
+          {
+            "attack": "private.pem direct filesystem read",
+            "status": "LEAK_CONFIRMED"
+          },
+          {
+            "attack": "selected.txt redacted preview",
+            "status": "BLOCKED_SCOPED"
+          },
+          {
+            "attack": "selected.txt direct filesystem read",
+            "status": "LEAK_CONFIRMED"
+          },
+          {
+            "attack": "hardlink direct read",
+            "status": "LEAK_CONFIRMED"
+          },
+          {
+            "attack": "hardlink redacted preview",
+            "status": "BLOCKED_SCOPED"
+          },
+          {
+            "attack": "junction direct read",
+            "status": "LEAK_CONFIRMED"
+          },
+          {
+            "attack": "junction redacted preview",
+            "status": "BLOCKED_SCOPED"
+          },
+          {
+            "attack": "repository deny rule",
+            "status": "BLOCKED_SCOPED"
+          },
+          {
+            "attack": "agent edits repository deny policy",
+            "status": "LEAK_CONFIRMED"
+          },
+          {
+            "attack": "runtime environment and command output",
+            "status": "LEAK_CONFIRMED"
+          },
+          {
+            "attack": "Git object after working-tree replacement",
+            "status": "LEAK_CONFIRMED"
+          },
+          {
+            "attack": "encoded chunked exfiltration",
+            "status": "LEAK_CONFIRMED"
+          }
+        ],
+        "testedBundleSha256": "01d46e39e5da5770cb40efbd8f48ea20e4134ea06ce0c9b0a5499d9fdeb8fef3",
+        "currentBundleSha256": "81b84b4efd02d30f397d39978be59ba10664982f8e6f3a9173dd35568ba3bb09",
+        "currentBundleMatches": false,
+        "testedProbeSha256": "5fa842010e3d7cea7725f8953ddcf63c17773d00efc33ee922df8f56404b1eea",
+        "currentProbeSha256": "5fa842010e3d7cea7725f8953ddcf63c17773d00efc33ee922df8f56404b1eea",
+        "currentProbeMatches": true
+      }
+    },
+    "priorEvidenceHashVerification": [
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/evidence/core-suite.tap",
+        "expected": "f0166abd1b0b3800efe65bd5f96570987d2a4382150071735ab4f16d0781e1d6",
+        "actual": "f0166abd1b0b3800efe65bd5f96570987d2a4382150071735ab4f16d0781e1d6",
+        "status": "HASH_MATCH"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/evidence/broker-suite.tap",
+        "expected": "79d3eb9e21668a94d0ee565f1958c2ef1d5a2fddce86a6780980c2dde264356e",
+        "actual": "79d3eb9e21668a94d0ee565f1958c2ef1d5a2fddce86a6780980c2dde264356e",
+        "status": "HASH_MATCH"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/evidence/extension-suite.tap",
+        "expected": "d3ae980873f6b33d470d17097cf25e46fe69a2c29db3a405e242c83162b25827",
+        "actual": "d3ae980873f6b33d470d17097cf25e46fe69a2c29db3a405e242c83162b25827",
+        "status": "HASH_MATCH"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/evidence/broker-typecheck.log",
+        "expected": "4be0f4567efd6c37d9fa22a56279a3453adae356607ac6313e91320fd68aa849",
+        "actual": "4be0f4567efd6c37d9fa22a56279a3453adae356607ac6313e91320fd68aa849",
+        "status": "HASH_MATCH"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/evidence/extension-typecheck.log",
+        "expected": "ffe695a1f91c98302b9cfe6e66e3135440120f60eca5696326d01394f13deeb9",
+        "actual": "ffe695a1f91c98302b9cfe6e66e3135440120f60eca5696326d01394f13deeb9",
+        "status": "HASH_MATCH"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/evidence/extension-build.log",
+        "expected": "0b1a9317c2fbc6c1c2a6368c67dd2c72a923e3384e4e7743047f3daed77dc66a",
+        "actual": "0b1a9317c2fbc6c1c2a6368c67dd2c72a923e3384e4e7743047f3daed77dc66a",
+        "status": "HASH_MATCH"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/evidence/live-host.json",
+        "expected": "b84cd27912535e4081ee8a0dcd419cd301b0d276b1d6b34b25f97287235b286e",
+        "actual": "b84cd27912535e4081ee8a0dcd419cd301b0d276b1d6b34b25f97287235b286e",
+        "status": "HASH_MATCH"
+      },
+      {
+        "path": "docs/secretguard/security-review-2026-10-08/evidence/source-inventory.json",
+        "expected": "0e2eb619322f9bd5a69fac2a1571af5819235a666e9853b8847209c3f4b3fb2d",
+        "actual": "0e2eb619322f9bd5a69fac2a1571af5819235a666e9853b8847209c3f4b3fb2d",
+        "status": "HASH_MATCH"
+      }
+    ]
+  },
+  "sources": [
+    {
+      "path": "packages/vscode-extension/src/advanced/auditLedger.ts",
+      "bytes": 8178,
+      "sha256": "7798d8178282efb4cf8d678e2d1cba2802301d48f2501830b5f2af63f7ab9791",
+      "lines": 175,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/advanced/commands.ts",
+      "bytes": 7216,
+      "sha256": "7bea5e02d7a391e84965f0ff5b94b383665e2db2ad38e68858e731233f3ae353",
+      "lines": 153,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/advanced/egressFirewall.ts",
+      "bytes": 9715,
+      "sha256": "83831ed186e480c0773f606c8de296ca0d9e0ed72ec5e791f89fc77259e13b82",
+      "lines": 233,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/advanced/posture.ts",
+      "bytes": 4838,
+      "sha256": "0bb55e4bcf4cd584db612b3225dcf0f7727907d069c1b4efb2250fa523d75908",
+      "lines": 124,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/advanced/unicodeFolding.ts",
+      "bytes": 6480,
+      "sha256": "6528bcb394f302b0acfee6f0bb225289dd03725c920aefde80422b687aa1f54f",
+      "lines": 164,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/agent/languageModelTools.ts",
+      "bytes": 3704,
+      "sha256": "1a9285138a01cd9d53e697927e54b757f50af5ab00732b5512e958a268ae2ffc",
+      "lines": 83,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/agent/mcpProvider.ts",
+      "bytes": 3028,
+      "sha256": "67b4b55fd8cc886c76c87fe081e3560dd6276b0d955e7f520e4fb3779ebe7c9e",
+      "lines": 64,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/agent/mcpServer.ts",
+      "bytes": 11863,
+      "sha256": "58d1ce80eedc206cc860d7abead09389290b987a3ac2d99ce8f20bf3b792a5e4",
+      "lines": 266,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/agent/status.ts",
+      "bytes": 2671,
+      "sha256": "0dc4c442e17ee1c86f736461f7ce9897dc6129015c475d9fc610bb865144203e",
+      "lines": 64,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/agent/toolLogic.ts",
+      "bytes": 11880,
+      "sha256": "4593bc5c37d16b3a8a2528703caf77536180a0236e7fd6f0c3ac643ca5f03fb8",
+      "lines": 257,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/ai-boundary/BoundarySnapshot.ts",
+      "bytes": 7846,
+      "sha256": "e1d6885c26e6fd1bc05bdeee32edfa16a417e7aab428cd758fd8b0244dd44dad",
+      "lines": 141,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/ai-boundary/commands.ts",
+      "bytes": 8831,
+      "sha256": "23ee35802287f38eec876099cb6132db67f55959887a3b61290e4351dc3fdb25",
+      "lines": 150,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/ai-boundary/gitDiff.ts",
+      "bytes": 3188,
+      "sha256": "bd6a52cac10a00195f7f69ef88fb213e83511b99d5bc98e9fbb3627ba4dc25d7",
+      "lines": 60,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/ai-boundary/policy.ts",
+      "bytes": 6470,
+      "sha256": "b259cde5002eb52f0d8ff755398a6b4422b89dc37982bbfcbcbd853cb8d393d3",
+      "lines": 125,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/ai-boundary/readFile.ts",
+      "bytes": 1304,
+      "sha256": "671363986927cd3b05d490f876fc24faad78f1f5eede2bd59dd6e2f82b52bc8d",
+      "lines": 26,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/AutoSecureEngine.ts",
+      "bytes": 14786,
+      "sha256": "6df9d3d144a698fd04ef4d8ff99ba45769bf09dc2749843b918f2b591cf60497",
+      "lines": 357,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/autoStart.ts",
+      "bytes": 8279,
+      "sha256": "2e4475ac4d68b09b89b667f864c6ae016769b7cff2971e9982c1d4462fdcb724",
+      "lines": 194,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/BrokerManager.ts",
+      "bytes": 21088,
+      "sha256": "c7b149cafb565e18a62cd80c9fa7371c7e82d507eaf01bda54160294e54332fa",
+      "lines": 428,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/commands.ts",
+      "bytes": 38141,
+      "sha256": "1159702aa991aabe1a15f7a6fe481f1b6d58f7d47bb40931a4ff8e0c0ed483e0",
+      "lines": 596,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/EncryptedBackupSink.ts",
+      "bytes": 4014,
+      "sha256": "d3b23942ccc75684bd38260fd5aa31be5edcd67b98b17ebb83ee47f81055a5bd",
+      "lines": 98,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/IntegrationAdapter.ts",
+      "bytes": 15562,
+      "sha256": "b59e48310facf0329d5b21dbfa32b4a8fc101d32d5dedcf203d7028705c0a07a",
+      "lines": 399,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/clipboard/ClipboardGuard.ts",
+      "bytes": 5560,
+      "sha256": "8961e0ab58c4bbfebfa0371159daf977279980cac104b530be868ed604f8480c",
+      "lines": 113,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/commands.ts",
+      "bytes": 28657,
+      "sha256": "83174fd5a44ab3e7c79545086f131878e5c6cb2ce7c0de5975e8939a602a8a54",
+      "lines": 553,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/dep-guard/DepGuard.ts",
+      "bytes": 10346,
+      "sha256": "aa21914f54757fc90abb53eb65c091b5bd87452162259f0c8aecaa8bc3a22d0a",
+      "lines": 216,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/dep-guard/DepGuardCore.ts",
+      "bytes": 12149,
+      "sha256": "931a670612d2a3e715f1edeec85a097d368b8af4d2330ae745605418cd23946c",
+      "lines": 350,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/diagnostics/LiveScanner.ts",
+      "bytes": 28698,
+      "sha256": "7332a029f1d872cd4cb2c62dd9e10a9cecc331ed1094bd2b7aabfb311fb09a38",
+      "lines": 618,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/enterprise/EnterpriseDashboard.ts",
+      "bytes": 10328,
+      "sha256": "11fc6251c82cc770f10c6a89ba64392ef7421006a181372b0e506b29fdad3f4c",
+      "lines": 168,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/enterprise/managedSettings.ts",
+      "bytes": 4007,
+      "sha256": "f7379b815b1f09bd2bfde55483cb47471713ae6b54fcdc186cc97eafd4cd684a",
+      "lines": 86,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/enterprise/managedSettingsProbe.ts",
+      "bytes": 2729,
+      "sha256": "433835aef8252883dfbbc3c53c13d7dff7ee384c577619982cfeaa90703a16c4",
+      "lines": 60,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/enterprise/telemetryGate.ts",
+      "bytes": 3330,
+      "sha256": "0af6095900516c692d2d485011f3700dda05fdf618e8d3e5aec306384a9cb426",
+      "lines": 84,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/extension.ts",
+      "bytes": 31308,
+      "sha256": "dee3ec2b547efa7bdb7e564868413b25336898a13ff9a07e1b1a4b317b157d1b",
+      "lines": 571,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/canary-commands.ts",
+      "bytes": 4408,
+      "sha256": "dd800604730f513d6d98240f275fdc8a6b6c75ae840a72e07e257a7b1d07e5c8",
+      "lines": 86,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/CanaryManager.ts",
+      "bytes": 4805,
+      "sha256": "1f32e0ae79738212fd29672e544a9a4ce6b0bd27ef75b5bbd47e67b7de3f5512",
+      "lines": 111,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/commands.ts",
+      "bytes": 1532,
+      "sha256": "7e0d7c3cf2e78c2a5dcb22e2ad8fad678a5a1e1cbd85ac70fd20af77238f13bb",
+      "lines": 38,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/context-commands.ts",
+      "bytes": 9360,
+      "sha256": "1d01b0fbe0982736e62c9277dc4bcbe9d480abe50917089088f822e9f6712f51",
+      "lines": 170,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/ContextGatherer.ts",
+      "bytes": 4487,
+      "sha256": "24a3568868f7a33ef3fabf6b086d12604a1840efbc67685b4b469ffdc64a3514",
+      "lines": 107,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/ledger-commands.ts",
+      "bytes": 3338,
+      "sha256": "e95a646c897a48f55bc891df3f7073276b0effa5451a73f859bc0f62dd482aee",
+      "lines": 69,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/LedgerStore.ts",
+      "bytes": 4925,
+      "sha256": "878c2c36778cfd6139947f7f68d9ee1428c5e65188b129043313c0475c935d55",
+      "lines": 120,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/output-commands.ts",
+      "bytes": 3340,
+      "sha256": "b8c968bc1919e76f20a79458f0fc719ab253bc220995955771d5b05691f850bd",
+      "lines": 67,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/policy-commands.ts",
+      "bytes": 4041,
+      "sha256": "4837b359f3fc4d9edd77644536c266a15bf78d3b0060f4ab22e3f1edd564ff11",
+      "lines": 79,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/PolicyStore.ts",
+      "bytes": 5031,
+      "sha256": "b41b7e6085dff990175a5896cf6d064ca4e703fc0d5faf6cce2612d75afa10aa",
+      "lines": 113,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/scanners.ts",
+      "bytes": 17108,
+      "sha256": "900d205c61c66a1ece9ddeaeb2489e8d3752e089cf4d7251818499c075867c20",
+      "lines": 337,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/shared.ts",
+      "bytes": 1198,
+      "sha256": "4993ea707de4e7cfc4a0282fbacfa0b7e96091b80d37b9e52e6f222836cb6f94",
+      "lines": 38,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/util.ts",
+      "bytes": 3289,
+      "sha256": "c32fb842a56836edcd29f20becfb50c95f221e9933f99fe0caeebd8449ef4610",
+      "lines": 67,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/vault-commands.ts",
+      "bytes": 6710,
+      "sha256": "4fea6849fe40542a0b466d2ac10a6cce0e7cf3e707c17dbd8d203dc4722f475b",
+      "lines": 129,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultManager.ts",
+      "bytes": 16580,
+      "sha256": "a50ed9e610aa5923ea3e7595db7d390cf69365805aaeb80d39c9c3dfa6994c24",
+      "lines": 375,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/launchCommands.ts",
+      "bytes": 8445,
+      "sha256": "8016e3702eff58b34ee3f7e132560c1be68441f660985b52a7bb2ace8e0957e7",
+      "lines": 181,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/mcp-firewall/MCPFirewall.ts",
+      "bytes": 18186,
+      "sha256": "3c23a102d1b61045f68543b54819fa1393011eecf1183ad2e31f2a5a79e1cf53",
+      "lines": 366,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/memory-guard/MemoryGuard.ts",
+      "bytes": 8050,
+      "sha256": "e0a2c796949a0592ef573d8bb565d04f678abacaa2024a1997fe3fca0dd4e327",
+      "lines": 174,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/packagedRuntimeProbe.ts",
+      "bytes": 8061,
+      "sha256": "4dcd042d6777686d4e854efa8d856e332b1299a2be96a7cca82d0d720a1e565a",
+      "lines": 167,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/permissions/commands.ts",
+      "bytes": 3863,
+      "sha256": "5b65de743a8a43acad1227dfc73ee3dc77aefbae39dcf7b3ba523b1bf25db074",
+      "lines": 63,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/permissions/PermissionStore.ts",
+      "bytes": 5859,
+      "sha256": "47ce1835893a0a6ef12b7ade91767f09bdbe584c4c626b324b8963f3808c4790",
+      "lines": 156,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/policy-packs/commands.ts",
+      "bytes": 6783,
+      "sha256": "c1574c7140e86147c769c419d57ab5d0925b2719082599b3d2006d69139e0d5a",
+      "lines": 144,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/policy-packs/PolicyPacks.ts",
+      "bytes": 7396,
+      "sha256": "a3cf32941b51f250a171abf5c8755b6fc1a63ad689cefb59aac13cbb94564a52",
+      "lines": 153,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/AiToolRegistry.ts",
+      "bytes": 12503,
+      "sha256": "c0d88bf8730a2019ef02fd618b7032935f318d5f74140fffc5bfbe829784f7f7",
+      "lines": 274,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/AutomaticIDEProtection.ts",
+      "bytes": 6119,
+      "sha256": "a30fd4e025d5b59d81adacca1d7d520156896e04806bd0b94fb15608d20ee450",
+      "lines": 93,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/LockdownState.ts",
+      "bytes": 164,
+      "sha256": "c32b410f4123216ad6f9387d17eb441a3cb0eaf07ecf926f4246ecd6839551c2",
+      "lines": 7,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/ProtectionController.ts",
+      "bytes": 5701,
+      "sha256": "794f016de0159fdd2ee763a410a304435408215601df05234161409131e55c15",
+      "lines": 105,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/ProtectionLevel.ts",
+      "bytes": 5559,
+      "sha256": "43936e6e2e84ccf0282da072db18ce6ecc9b25bf2fe73779f3b0cc3ba1991797",
+      "lines": 153,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/ProtectionState.ts",
+      "bytes": 13589,
+      "sha256": "ffad99fd7f7a75853ff40bd1b0f1e9ac55e8fcdc6577abd741e88572bd18fc62",
+      "lines": 192,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/ProtectionStateService.ts",
+      "bytes": 7734,
+      "sha256": "aaf40dc1e6bbdd24f129f978e5dfcead14abd4c5f8400de481aca6222fa956a1",
+      "lines": 164,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/reports/commands.ts",
+      "bytes": 1343,
+      "sha256": "1cc503685cac3611fc6e56a851e6f758af8d04ddf5d150c4c96e0c92092f9998",
+      "lines": 34,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/reports/reportCatalog.ts",
+      "bytes": 4789,
+      "sha256": "78d73baefed5542287508007d427f5946db5c04be49b68ef3b3a10a8a995655f",
+      "lines": 124,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/scanners/continuousGuards.ts",
+      "bytes": 18906,
+      "sha256": "67d2ba2639a53a029a338d8316b26d6187c9acef930e81d74f7d56479e592b59",
+      "lines": 356,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/CapabilityBroker.ts",
+      "bytes": 5521,
+      "sha256": "aa393d004a4b71ce834cd8984229a3065d2a5820d2fe86e1f0bf54d5b9dac941",
+      "lines": 123,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/commands.ts",
+      "bytes": 32980,
+      "sha256": "e15eab381533ad7ae24a759d1c598145f9cba39f4be6106d5b4745b31f511681",
+      "lines": 610,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/EnforcedApiCapability.ts",
+      "bytes": 10992,
+      "sha256": "3de2f2540e654b306994ded4b64e15b7bb97c53433a17398bf0258480cc88bac",
+      "lines": 263,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/LLMContext.ts",
+      "bytes": 1505,
+      "sha256": "15b9775386dc321d18c8510f6aaf121cdadeb913493c960fb73e599babcb0d2c",
+      "lines": 33,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/OutputFilter.ts",
+      "bytes": 3216,
+      "sha256": "dd3916df8ed48756bad44e8319f0c62376a7305a2a3a288d3e142aabcda2daa2",
+      "lines": 63,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/runtime.ts",
+      "bytes": 2131,
+      "sha256": "914ed05e0a3fe62047e0a2da9f6fff32e859a860b8bbd95a121646381e3793a3",
+      "lines": 58,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/SecretClassifier.ts",
+      "bytes": 6656,
+      "sha256": "43c8082ed0c5b62ea5143ef75dcc96750e906cfa5913517563ca939006810767",
+      "lines": 179,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/SecretReferenceManager.ts",
+      "bytes": 4993,
+      "sha256": "5b9aff21cfc5444aa2360f806b8a971516879d466afd0c8040da255216cc1759",
+      "lines": 126,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/SecretStorageValueStore.ts",
+      "bytes": 651,
+      "sha256": "33b1a14df8ae73b978d60d2fd9eb2b8c90fe78945f6835a87847e44b8da75ac7",
+      "lines": 19,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/SensitiveContextPolicy.ts",
+      "bytes": 4978,
+      "sha256": "8b1d45050ab74a01910e7c548b1b8dadf5bb1dfb92b582000aee430f700588a9",
+      "lines": 119,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/SensitiveContextRedactor.ts",
+      "bytes": 3272,
+      "sha256": "aeada04be94515cfb1c5c59474c248203b8b0f90382f139f3b0bbe68ee62baf0",
+      "lines": 67,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/types.ts",
+      "bytes": 2701,
+      "sha256": "7bc5ae1b916a5603fcbedeafc864480184d6d0782e00ec53285635ee4ce7f0f7",
+      "lines": 104,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-shield/AutoVaultMigration.ts",
+      "bytes": 10703,
+      "sha256": "471eb6dd5ba199aecac39a4d5085af9f5e6fff1d31e7830d530fc189e711a828",
+      "lines": 243,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-shield/FileReadSentinel.ts",
+      "bytes": 6769,
+      "sha256": "cd31e420782f832b48fe5934ef25f28dae1484626a786d522fa563ac54cc02aa",
+      "lines": 183,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-shield/SecretFileInterceptor.ts",
+      "bytes": 4657,
+      "sha256": "2579e347a3590cdc66cef2270c3c235c0a46f6463488f83f10be894d643a7a11",
+      "lines": 110,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/security/boundedResponse.ts",
+      "bytes": 1969,
+      "sha256": "b8f327f9cd30b9a880a667ccabbcb0e9e4e168565b30a010705af76b5d3e4cb6",
+      "lines": 51,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/security/childEnvironment.ts",
+      "bytes": 565,
+      "sha256": "aba0ff0d1c4c81eb5490fe31bbc21de08339cf7ca55395a6b89f328c366bb1e8",
+      "lines": 13,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/security/FileSystemPathPolicy.ts",
+      "bytes": 4219,
+      "sha256": "b078ca0fbfec4295b3f613b1505ae447ccdab511f45ad6a171123fe038517aad",
+      "lines": 105,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/security/pathContainment.ts",
+      "bytes": 523,
+      "sha256": "2f16b8a0d439de85c1fa4f7102f88653aabd36aac96ef1b181fe3bff1503efd9",
+      "lines": 13,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/security/WorkspacePathGuard.ts",
+      "bytes": 2511,
+      "sha256": "84793782ca8a8840040a25f964fc4e3e6fc4697549a24bf3d9bf4180e5bd86f8",
+      "lines": 69,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/sentinel/AISentinel.ts",
+      "bytes": 10193,
+      "sha256": "3de1ddc85d753196d128b59befebcca15ff3fd89fd92964ebec1858ace360763",
+      "lines": 248,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/sentinel/commands.ts",
+      "bytes": 2553,
+      "sha256": "c44d4bfdb44ac39a45ccca3acefdc2d8543bc9253f390b2b9767fb35adfce6eb",
+      "lines": 44,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/state.ts",
+      "bytes": 2076,
+      "sha256": "f6e23b0a50c77885eeee043ba157d096cc6cd65ae27c206997c93f07d2729ea3",
+      "lines": 57,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/telemetry.ts",
+      "bytes": 9481,
+      "sha256": "198bb270b6c573c3da2cfd4b1863050af0ac4e912ee3988639c0893cdb403abe",
+      "lines": 223,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/terminal/shellExecutionPolicy.ts",
+      "bytes": 5460,
+      "sha256": "5e6eed55487ffed9775837741cd474a7eed49f48815edc53ba5f9f776fec3f5e",
+      "lines": 123,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/terminal/ShellExecutionWatcher.ts",
+      "bytes": 5606,
+      "sha256": "d468f1dbfc23b4ff14b48875a527526afabe190f5bbd928a43b736b247d63f3c",
+      "lines": 135,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/views/RiskTreeProvider.ts",
+      "bytes": 3731,
+      "sha256": "896ac83e3ec0396ca97dbe75d7452a90bef1be6d27a78f44ba1947cdeea86615",
+      "lines": 82,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/webview/controlPanelStyles.ts",
+      "bytes": 16375,
+      "sha256": "bf31d315aa48635a9bc4d6cdeb7ed7b471852a38d841faf583996a3c33338b13",
+      "lines": 193,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/webview/ControlPanelViewProvider.ts",
+      "bytes": 41865,
+      "sha256": "ab821c0225174524b311940dfbdc2985afb335ec98d12331292402c17edad6ef",
+      "lines": 730,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/vscode-extension/src/webview/DashboardPanel.ts",
+      "bytes": 40485,
+      "sha256": "b555fc4b962e3e4af6194ef03b291e5ae3a657d70065718f5908fee93ac8e71e",
+      "lines": 496,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/webview/panelContent.ts",
+      "bytes": 18148,
+      "sha256": "eedc902a975d86ae2307ae5ef713ee794cced1e91fcc99f3625139908205362d",
+      "lines": 354,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/vscode-extension/src/workspace-guard/WorkspaceGuard.ts",
+      "bytes": 11968,
+      "sha256": "bbf8534050b5367c385111bdf40b0163e5c08c5a2c6db493d9c7c0c1e73026e3",
+      "lines": 251,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "apps/local-ai-broker/src/auth.ts",
+      "bytes": 3630,
+      "sha256": "e9a5de5bbe839cbd08c8e1e63fde6e96dfaf42feadfd7ce556fc34f55e8b0f3c",
+      "lines": 70,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "apps/local-ai-broker/src/BrokerServer.ts",
+      "bytes": 86202,
+      "sha256": "fa1343bb663d788123c8e445ed00be7a8bc5a3b90c20eb752b6711b2a9e476fa",
+      "lines": 1539,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "apps/local-ai-broker/src/CheckpointStore.ts",
+      "bytes": 14185,
+      "sha256": "b9ef5192cbb452747e550a3af936e0a7c7db0e1dae709e0ead395c483dc44ae0",
+      "lines": 343,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "apps/local-ai-broker/src/cli.ts",
+      "bytes": 2112,
+      "sha256": "9cfcfad71c79a6d990fb7026163f07f72e3e1a41f642ab39ebebf7fefd54be12",
+      "lines": 42,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "apps/local-ai-broker/src/ClientRoutes.ts",
+      "bytes": 788,
+      "sha256": "ae96e5e908b8898291f2f4fa449c554fa889cebbf058e62d11802a73b3e73d0d",
+      "lines": 16,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "apps/local-ai-broker/src/ControlledExecution.ts",
+      "bytes": 1240,
+      "sha256": "fa9aebd61a627185f00d10c12e3e96efb8693570275fe0507ff2952f39c1b3cd",
+      "lines": 24,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "apps/local-ai-broker/src/index.ts",
+      "bytes": 56,
+      "sha256": "b8409e72b6dc3e3cbaa77df503b6d642f3f499b5c9c6ac96b9395214b90150cc",
+      "lines": 3,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "apps/local-ai-broker/src/ProviderTarget.ts",
+      "bytes": 1704,
+      "sha256": "06101ab4f6b92e82842825626597d1cece084d7dd79761aa95297932e71758f1",
+      "lines": 37,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/ApprovalToken.ts",
+      "bytes": 6375,
+      "sha256": "d20a8dcaf1e59740f0c2c1bd2dc919b14f46e19bd64e9e4b83b36fbb084d5789",
+      "lines": 195,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/guard-core/src/BrokerScanner.ts",
+      "bytes": 8197,
+      "sha256": "55e5050ba0a9798cdef18e54d66dc7ac0a6a2f4ec5e9da2d57680319519a1342",
+      "lines": 221,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/guard-core/src/Canary.ts",
+      "bytes": 3632,
+      "sha256": "67a83c1e3fcfb0ce8cf588455657294de6be1124567b442f9927cfac3deaafc6",
+      "lines": 106,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/CapabilityRegistry.ts",
+      "bytes": 37352,
+      "sha256": "bfa665050d6c84a6f58cec268fff9af38304a2a69b9bf044bac2983dc03d195a",
+      "lines": 749,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/CheckpointRollback.ts",
+      "bytes": 15197,
+      "sha256": "dbe9fb7327d3164bde7486f09620b34ac29cffd727289a7ada31109dc8a794f9",
+      "lines": 363,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/ContextRedactor.ts",
+      "bytes": 2895,
+      "sha256": "438d6ae62d12d1259dbe0c52e1ef9cdbd064a0c3c88454c03a059ba2401ef304",
+      "lines": 49,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/ControlledTerminal.ts",
+      "bytes": 6055,
+      "sha256": "994a606d57fddaab0535ea9f14a3e1b1f9b3df24a5b9a3b8a2e12978e4bd1e15",
+      "lines": 138,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/CoverageMatrix.ts",
+      "bytes": 5471,
+      "sha256": "d85f5ddbf7d4dcb301a4bfaa0b1c920ba73db76a1d107efecff2306890e48b1b",
+      "lines": 133,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/DecisionEngine.ts",
+      "bytes": 11876,
+      "sha256": "e7134c03e60470d7845ba2d08e64935ef954f71bcb7a72f8187681875c86944b",
+      "lines": 254,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/detectors/AIGeneratedCodeRiskDetector.ts",
+      "bytes": 4802,
+      "sha256": "094023452cde43ec846be4fcd69bf08a7fd68efc1e18d8a46d4044dbc0ad1438",
+      "lines": 55,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/detectors/EncodedSecretDetector.ts",
+      "bytes": 6707,
+      "sha256": "020d43b0cc184290dc5c4a0415cf20740b5c16a87c152afab9c5f6fc6ded8eaa",
+      "lines": 164,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/detectors/EnvFileDetector.ts",
+      "bytes": 1794,
+      "sha256": "e46ae316fbf215abe143d5c666dd9a8ebaf301cecbb044fce5ca75a7b0082a40",
+      "lines": 52,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/detectors/FileContextRiskDetector.ts",
+      "bytes": 4413,
+      "sha256": "ead94fd4fbf5d156c2f70d85daaad1490950a33932a7d65416555b5decaeb448",
+      "lines": 72,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/detectors/index.ts",
+      "bytes": 1385,
+      "sha256": "bf5e509ee535ef64df546be6d473c412f886b570521e68c0004bd7533a5c9d67",
+      "lines": 15,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/detectors/IndiaPIIDetector.ts",
+      "bytes": 3146,
+      "sha256": "96ddcb4ffdab86b47bee629025d19f84ca37cb58eaa00668c61877ee118922ee",
+      "lines": 94,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/detectors/JailbreakLiteDetector.ts",
+      "bytes": 10815,
+      "sha256": "e169531253b26bb292826c440a48b93c3c3c0c0cebb955905762c6dab0abbab7",
+      "lines": 122,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/detectors/MCPConfigRiskDetector.ts",
+      "bytes": 2747,
+      "sha256": "fb55f00f76288558450f4608cccf3c4e9e71a36b76bf35185ea498b017112938",
+      "lines": 39,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/detectors/OutputExfiltrationDetector.ts",
+      "bytes": 3968,
+      "sha256": "693e41ba3e0b36730abb2b5a6bda9f02368ea0a90306d8bddb3cb887ceba8692",
+      "lines": 77,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/detectors/PIIDetector.ts",
+      "bytes": 3027,
+      "sha256": "9a35491ac4fbadee0cd1cd4c4d88e4e8d367b13c8697d6e448636b5441246f1b",
+      "lines": 101,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/detectors/PromptInjectionLiteDetector.ts",
+      "bytes": 17096,
+      "sha256": "ae097d19dbb832478a0a367aba71c002df9191424ed0f16715d661530af5a1e3",
+      "lines": 140,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/detectors/RepoInstructionPoisoningDetector.ts",
+      "bytes": 4193,
+      "sha256": "3cc2e6fd14727f252a8a95d860ad425952b0016848bfdb2eec875acbc5ee7a5e",
+      "lines": 56,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/detectors/SecretDetector.ts",
+      "bytes": 32428,
+      "sha256": "8dfdd6f4931660c638be246f9e25e239c38908a9f4136c3d45960a3d8da9078b",
+      "lines": 750,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/detectors/TerminalCommandRiskDetector.ts",
+      "bytes": 6836,
+      "sha256": "ddd66efc537ea992d0025f7dc740e7f09e9079533afe5f660daaf47194791d35",
+      "lines": 81,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/detectors/utils.ts",
+      "bytes": 3666,
+      "sha256": "b0a660d0bb8e38b448caadbd1b44a52f542c4669368870211e86472871d7a2c8",
+      "lines": 105,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/EvidenceMinimizer.ts",
+      "bytes": 1507,
+      "sha256": "939796dfd089374959aa7082210feee1a690b94071f6767138e7c020e5f8770a",
+      "lines": 40,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/ExtensionIsolationPolicy.ts",
+      "bytes": 5710,
+      "sha256": "544387d5e13a285a918b1d338e8ba5244a08e024131237ab24b643fee16852cd",
+      "lines": 122,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/ExtensionRiskScanner.ts",
+      "bytes": 8185,
+      "sha256": "693094cb8ce88a0784a5bf816d00be15093dfa0a287cf1d6d1e17fd681f6b3b5",
+      "lines": 207,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/FileOperationFirewall.ts",
+      "bytes": 6724,
+      "sha256": "ea98d9f30eb6f6ee542fd9d8ce9856721bfc4fba70bd4e53e25df2228cc6300e",
+      "lines": 168,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/GovernancePolicy.ts",
+      "bytes": 4028,
+      "sha256": "507ad667be470fe31b939f6017cfcaf0b89e6803aa12233fa7851cf5804c3f5f",
+      "lines": 86,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/HashCache.ts",
+      "bytes": 6702,
+      "sha256": "1dcb8d57fdee9232bfc7f56a0270fc52891bf1d0c2a48a0a8639ff281ad262fa",
+      "lines": 169,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/index.ts",
+      "bytes": 1285,
+      "sha256": "8121e158db6a7139e6ebb85b0b59480983c811a4e1810d26ec5c9f0b998650f6",
+      "lines": 37,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/Ledger.ts",
+      "bytes": 11087,
+      "sha256": "2962dfe8ac04867ca1acb279b13a56c9853f0b08763aa27cf36a5e7084524a7c",
+      "lines": 263,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/MCPCredentialBoundary.ts",
+      "bytes": 4803,
+      "sha256": "a0362012678f6a42bc71299713a45ba9cc6bb244de4457ba08b37e4132325d65",
+      "lines": 105,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/MCPGateway.ts",
+      "bytes": 5895,
+      "sha256": "6dfaa74eedbeff86556e4a052cc3ab6b2e8ed9d7683e492fc7648918c4980bfd",
+      "lines": 133,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/MCPPolicyAnalyzer.ts",
+      "bytes": 11910,
+      "sha256": "442815e1fb475ab55e9b9fb67c80db19e4ffbbb0502128eba5c1f3387327ea3e",
+      "lines": 283,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/MemorySession.ts",
+      "bytes": 7372,
+      "sha256": "76c2b8525b3ed312b0539a95ffefa624a8c1be7727e542cae91bd02e7f946870",
+      "lines": 211,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/NetworkEgressPolicy.ts",
+      "bytes": 8104,
+      "sha256": "187f617fe15cd6a67f54b874329ba95cb64420d81ef23eb8bd471b0dc6e168ff",
+      "lines": 173,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/guard-core/src/OutputLeakScanner.ts",
+      "bytes": 4255,
+      "sha256": "d58aadfdaf51716061d12cfe4bad2f1c241440766777be61dc9532a52e59824c",
+      "lines": 105,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/PolicyEvaluator.ts",
+      "bytes": 4084,
+      "sha256": "803ba2f5da3093533fe0f81921dbfadb3728929c1f8bce0ccc05fa52d6d624c3",
+      "lines": 103,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/ProcessSandboxPolicy.ts",
+      "bytes": 7564,
+      "sha256": "3b922649175a037702aaab67dea9f72feaf05eac3f6966e64ce0cc37df8f275f",
+      "lines": 146,
+      "review": "TARGETED_MANUAL_REVIEW"
+    },
+    {
+      "path": "packages/guard-core/src/ProjectPolicy.ts",
+      "bytes": 8548,
+      "sha256": "6f3ecb075eea7c21b96159e9c3b9f7aacae46068fd28d00505c6c31a73a70815",
+      "lines": 230,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/Redactor.ts",
+      "bytes": 16200,
+      "sha256": "b3c854e5e7cfa215a38e19ec372f99090bde41bb9d9df392444486af9dc92a19",
+      "lines": 280,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/RuntimeDiscovery.ts",
+      "bytes": 6632,
+      "sha256": "39819e137c06657d545b766317938611a96be97dfa37e7ca55a55b8499bf4131",
+      "lines": 110,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/RuntimePolicyEngine.ts",
+      "bytes": 11799,
+      "sha256": "57d6679fd18bca9ffa6c95936f285ab2fa395614363821a10ee145b792c9f8ec",
+      "lines": 279,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/SafeContextBuilder.ts",
+      "bytes": 12363,
+      "sha256": "f3b708ab938a2c960c1669d9fd703650bbeaa842c0805bd7ffdd6e6702c2c169",
+      "lines": 297,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/SafeMode.ts",
+      "bytes": 10586,
+      "sha256": "1f5d05a6e07a3078d475cde8e83dc99771737b383b3b467718be52f85eee5da3",
+      "lines": 279,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/sensitiveFiles.ts",
+      "bytes": 8267,
+      "sha256": "e58fe3900c94f65a8396223852cc88e232edb846f774378f2ef0316cfdac1a4f",
+      "lines": 170,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/TaintEngine.ts",
+      "bytes": 3803,
+      "sha256": "4f2f83fab99b208215b30315f56f81a2d326051ac8ff1a82fee1ebd331d3e7e9",
+      "lines": 86,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/types.ts",
+      "bytes": 5838,
+      "sha256": "2fa25db278a68b7f3054acca3e3fa4e75f5457001379471046676eb3d4c21311",
+      "lines": 192,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/Vault.ts",
+      "bytes": 10347,
+      "sha256": "6097f15c9ff7cf5dfa169ced77d8d1810cb022386da3a6bce129ea96e8afc0e9",
+      "lines": 255,
+      "review": "HASH_INVENTORY_ONLY"
+    },
+    {
+      "path": "packages/guard-core/src/VaultCrypto.ts",
+      "bytes": 3268,
+      "sha256": "98f89de3026da5ed7f02fbda7962f1af1031e0c66878ccacae7dd4ecb3a39d53",
+      "lines": 81,
+      "review": "HASH_INVENTORY_ONLY"
+    }
+  ]
+}

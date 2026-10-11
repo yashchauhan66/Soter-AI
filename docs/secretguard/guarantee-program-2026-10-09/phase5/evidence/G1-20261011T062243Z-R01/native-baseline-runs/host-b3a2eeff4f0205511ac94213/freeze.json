@@ -1,0 +1,915 @@
+{
+  "schemaVersion": 1,
+  "syntheticOnly": true,
+  "phase": 1,
+  "runId": "host-b3a2eeff4f0205511ac94213",
+  "capturedAtUtc": "2026-10-11T06:24:21.961Z",
+  "run": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard\\.tmp\\g1-run2\\verify-20261011T062243Z-544f82455a64419aa1e5a314dd1846ea\\native-baseline-runs\\host-b3a2eeff4f0205511ac94213",
+  "repo": "C:\\Users\\USER\\OneDrive\\Desktop\\Ai-Agent-Security-Guard",
+  "suppliedBuild": [
+    {
+      "path": "packages/vscode-extension/package.json",
+      "snapshot": "package.json",
+      "bytes": 90447,
+      "sha256": "0f5bba251c1571909694a1710f024bf3653bf4905e5d2a68c7ce8e43ac5143f6"
+    },
+    {
+      "path": "packages/vscode-extension/dist/extension.js",
+      "snapshot": "dist/extension.js",
+      "bytes": 635029,
+      "sha256": "ca6a3e027cb881449d94410e82edb9e65503ee29165069f48b1f26780730338b"
+    },
+    {
+      "path": "packages/vscode-extension/dist/local-ai-broker.js",
+      "snapshot": "dist/local-ai-broker.js",
+      "bytes": 243478,
+      "sha256": "6c07093d81243f0063bfd8d51b3d23a162cd3b4375c312c75b59e95f8239a397"
+    },
+    {
+      "path": "packages/vscode-extension/dist/soterai-mcp-server.js",
+      "snapshot": "dist/soterai-mcp-server.js",
+      "bytes": 202258,
+      "sha256": "6d5e1199d509139387e542e91faad02b790e692415416bd7eb5510a6e6ecc486"
+    }
+  ],
+  "runtimeAssets": [
+    {
+      "path": "media/icon.svg",
+      "bytes": 1473,
+      "sha256": "25cffa9a3674c2d6e69d3a9c76bbcbc5767b1bba39cc1e198e00937876cd1729"
+    },
+    {
+      "path": "media/logo_circle_whiter.png",
+      "bytes": 951992,
+      "sha256": "49ba85f42522528544b3d18a234559942935642d6f7fc48e775aaba5042e2173"
+    },
+    {
+      "path": "media/marketplace/control-panel-protection.png",
+      "bytes": 58434,
+      "sha256": "09d2b984b953a66acaef33d4b301ff9c278431dc37568c96f9430fe0cab72555"
+    },
+    {
+      "path": "media/marketplace/safe-mode-enabled.png",
+      "bytes": 40402,
+      "sha256": "7c9592ed924d480c6a7fa24264c5f8e909b81693b86bb27a60a1850315041cec"
+    },
+    {
+      "path": "media/marketplace/scan-selection-result.png",
+      "bytes": 85954,
+      "sha256": "933bea3a9385b982abb640f1d038a76933acd4ca87deb8f60964cb4b774beee8"
+    },
+    {
+      "path": "media/marketplace/secret-scan-result.png",
+      "bytes": 45402,
+      "sha256": "ea589616eccf994f58ec0d9fbfc179d867404eb45a814bc1dfc94fbab03cccba"
+    },
+    {
+      "path": "media/marketplace/soterai-secret-caught-before-ai.gif",
+      "bytes": 3006471,
+      "sha256": "f94d09b5661e24e75b7e5fcf847dfcba418d435216d672c38e364ae1d5cbc1f3"
+    },
+    {
+      "path": "media/walkthrough/demo.md",
+      "bytes": 514,
+      "sha256": "228de710a499a67a09c7b3e9f40d22b3d37060a8cf8a744d723df532634135b3"
+    },
+    {
+      "path": "media/walkthrough/integrate.md",
+      "bytes": 446,
+      "sha256": "b49b5d56ca6c1dd46fb03b3130439e0fb59206dc0bee6645d0a7d518a6436c0a"
+    },
+    {
+      "path": "media/walkthrough/vault.md",
+      "bytes": 450,
+      "sha256": "ac664bf6d49833902efadb07b442941c379de6beb4b6fbc402fc739f64fabac9"
+    }
+  ],
+  "sourceIdentity": [
+    {
+      "path": "packages/vscode-extension/src/advanced/auditLedger.ts",
+      "sha256": "7798d8178282efb4cf8d678e2d1cba2802301d48f2501830b5f2af63f7ab9791",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/advanced/commands.ts",
+      "sha256": "6c8f5ae921f115fd693a1cb1d638c774567b84ac701ea7020b810e62549702f1",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/advanced/egressFirewall.ts",
+      "sha256": "83831ed186e480c0773f606c8de296ca0d9e0ed72ec5e791f89fc77259e13b82",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/advanced/posture.ts",
+      "sha256": "70f5f4f5a494f4a6292e68adeb947f05e2baf57fb03889f87c1b8f6d7f2f8fea",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/advanced/unicodeFolding.ts",
+      "sha256": "6528bcb394f302b0acfee6f0bb225289dd03725c920aefde80422b687aa1f54f",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/agent/languageModelTools.ts",
+      "sha256": "1a9285138a01cd9d53e697927e54b757f50af5ab00732b5512e958a268ae2ffc",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/agent/mcpProvider.ts",
+      "sha256": "67b4b55fd8cc886c76c87fe081e3560dd6276b0d955e7f520e4fb3779ebe7c9e",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/agent/mcpServer.ts",
+      "sha256": "58d1ce80eedc206cc860d7abead09389290b987a3ac2d99ce8f20bf3b792a5e4",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/agent/status.ts",
+      "sha256": "0dc4c442e17ee1c86f736461f7ce9897dc6129015c475d9fc610bb865144203e",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/agent/toolLogic.ts",
+      "sha256": "4593bc5c37d16b3a8a2528703caf77536180a0236e7fd6f0c3ac643ca5f03fb8",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/ai-boundary/BoundarySnapshot.ts",
+      "sha256": "16147722e5d41d212673c7f954711a9234d962b12b0adb2ff8d98cf00041e38d",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/ai-boundary/commands.ts",
+      "sha256": "6e919acaa79d856b2d7e935c01d0df1f44276e780e0681e4773885d57c3c42f2",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/ai-boundary/gitDiff.ts",
+      "sha256": "a729b1f010b48aaf6d63117b5c9483f7aac38670e3b42ddcabfedc29d16f7386",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/ai-boundary/policy.ts",
+      "sha256": "e9f50c5caa50ddc4be9f8496f77b7f49695e99ee72c39b77dbcf86b4c02fff61",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/ai-boundary/readFile.ts",
+      "sha256": "671363986927cd3b05d490f876fc24faad78f1f5eede2bd59dd6e2f82b52bc8d",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/AutoSecureEngine.ts",
+      "sha256": "4ab546c174e0259e2f0b861832f6e5cba23fe361673a3c831bc7e13e112bf28a",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/autoStart.ts",
+      "sha256": "2e4475ac4d68b09b89b667f864c6ae016769b7cff2971e9982c1d4462fdcb724",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/BrokerManager.ts",
+      "sha256": "9c51c2ee05be39da0e3ae3ece99c5eae2fda10d5024cae3e03809b0894f274a6",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/commands.ts",
+      "sha256": "f3abd55cf296ab978369bd0e4e2df6b1158749c46281db8961c5e6489bf1db08",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/EncryptedBackupSink.ts",
+      "sha256": "d3b23942ccc75684bd38260fd5aa31be5edcd67b98b17ebb83ee47f81055a5bd",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/broker/IntegrationAdapter.ts",
+      "sha256": "b59e48310facf0329d5b21dbfa32b4a8fc101d32d5dedcf203d7028705c0a07a",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/clipboard/ClipboardGuard.ts",
+      "sha256": "fffdfa4995e1370aa5414a1e728aef1624e6fe776ac72de718418a7463cb5ba4",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/commands.ts",
+      "sha256": "75b8fafce7139831f517ec4fb205a9c7c1fb512c8f1e86f2194d43d4d7ac9339",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/dep-guard/DepGuard.ts",
+      "sha256": "aa21914f54757fc90abb53eb65c091b5bd87452162259f0c8aecaa8bc3a22d0a",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/dep-guard/DepGuardCore.ts",
+      "sha256": "931a670612d2a3e715f1edeec85a097d368b8af4d2330ae745605418cd23946c",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/diagnostics/LiveScanner.ts",
+      "sha256": "7332a029f1d872cd4cb2c62dd9e10a9cecc331ed1094bd2b7aabfb311fb09a38",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/enterprise/EnterpriseDashboard.ts",
+      "sha256": "11fc6251c82cc770f10c6a89ba64392ef7421006a181372b0e506b29fdad3f4c",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/enterprise/managedSettings.ts",
+      "sha256": "f7379b815b1f09bd2bfde55483cb47471713ae6b54fcdc186cc97eafd4cd684a",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/enterprise/managedSettingsProbe.ts",
+      "sha256": "433835aef8252883dfbbc3c53c13d7dff7ee384c577619982cfeaa90703a16c4",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/enterprise/telemetryGate.ts",
+      "sha256": "0af6095900516c692d2d485011f3700dda05fdf618e8d3e5aec306384a9cb426",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/extension.ts",
+      "sha256": "e66ec471459b13a385180cd4495c627293d0529dcb07ba2b1d84633259eaa7f9",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/canary-commands.ts",
+      "sha256": "dd800604730f513d6d98240f275fdc8a6b6c75ae840a72e07e257a7b1d07e5c8",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/CanaryManager.ts",
+      "sha256": "1f32e0ae79738212fd29672e544a9a4ce6b0bd27ef75b5bbd47e67b7de3f5512",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/commands.ts",
+      "sha256": "7e0d7c3cf2e78c2a5dcb22e2ad8fad678a5a1e1cbd85ac70fd20af77238f13bb",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/context-commands.ts",
+      "sha256": "11a702933c4094a7e17c5136ced783cdfb3a16341c15065058384469b11fc852",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/ContextGatherer.ts",
+      "sha256": "24a3568868f7a33ef3fabf6b086d12604a1840efbc67685b4b469ffdc64a3514",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/ledger-commands.ts",
+      "sha256": "e95a646c897a48f55bc891df3f7073276b0effa5451a73f859bc0f62dd482aee",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/LedgerStore.ts",
+      "sha256": "878c2c36778cfd6139947f7f68d9ee1428c5e65188b129043313c0475c935d55",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/output-commands.ts",
+      "sha256": "b8c968bc1919e76f20a79458f0fc719ab253bc220995955771d5b05691f850bd",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/policy-commands.ts",
+      "sha256": "fdaeaa8387f0ddf48c9594fc1c1a7c900d2940d043f652153d1ac9fe4b69cd68",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/PolicyStore.ts",
+      "sha256": "c1d14fb50419ac86b1bf480a0a3a1b867fccf0e3a5b702245748aba885d988fc",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/scanners.ts",
+      "sha256": "4ff7eb327a4a057410a64c5fc2da5b615822798e49a752bedfc67cce4e9c4017",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/shared.ts",
+      "sha256": "4993ea707de4e7cfc4a0282fbacfa0b7e96091b80d37b9e52e6f222836cb6f94",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/util.ts",
+      "sha256": "c32fb842a56836edcd29f20becfb50c95f221e9933f99fe0caeebd8449ef4610",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/vault-commands.ts",
+      "sha256": "4fea6849fe40542a0b466d2ac10a6cce0e7cf3e707c17dbd8d203dc4722f475b",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/firewall/VaultManager.ts",
+      "sha256": "a50ed9e610aa5923ea3e7595db7d390cf69365805aaeb80d39c9c3dfa6994c24",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/launchCommands.ts",
+      "sha256": "adb99081f2d71acc139daa2fac12c89e4e3cff5ccf3d7d4ebe6da076563d772f",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/mcp-firewall/MCPFirewall.ts",
+      "sha256": "3c23a102d1b61045f68543b54819fa1393011eecf1183ad2e31f2a5a79e1cf53",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/memory-guard/MemoryGuard.ts",
+      "sha256": "e0a2c796949a0592ef573d8bb565d04f678abacaa2024a1997fe3fca0dd4e327",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/packagedRuntimeProbe.ts",
+      "sha256": "4dcd042d6777686d4e854efa8d856e332b1299a2be96a7cca82d0d720a1e565a",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/permissions/commands.ts",
+      "sha256": "5b65de743a8a43acad1227dfc73ee3dc77aefbae39dcf7b3ba523b1bf25db074",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/permissions/PermissionStore.ts",
+      "sha256": "47ce1835893a0a6ef12b7ade91767f09bdbe584c4c626b324b8963f3808c4790",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/policy-packs/commands.ts",
+      "sha256": "c1574c7140e86147c769c419d57ab5d0925b2719082599b3d2006d69139e0d5a",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/policy-packs/PolicyPacks.ts",
+      "sha256": "a3cf32941b51f250a171abf5c8755b6fc1a63ad689cefb59aac13cbb94564a52",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/AiToolRegistry.ts",
+      "sha256": "c0d88bf8730a2019ef02fd618b7032935f318d5f74140fffc5bfbe829784f7f7",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/AutomaticIDEProtection.ts",
+      "sha256": "5c75d2dd9873594439f543591beba21b526e809fe1a96684656ac264cc2fb877",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/LockdownState.ts",
+      "sha256": "c32b410f4123216ad6f9387d17eb441a3cb0eaf07ecf926f4246ecd6839551c2",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/ProtectionController.ts",
+      "sha256": "68b39a029bd5b4839979131fe73180c007d7211b706177cf7bd1f5569b1ac0f2",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/ProtectionLevel.ts",
+      "sha256": "8b5c3fb49b6800a4548f993a04094aa8d41ae51187b31d36f5adb3e91336a1c8",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/ProtectionState.ts",
+      "sha256": "f28d6ce5b00f97f54bb6d2dcdd33e413bc898e5ebd61725e3d4f89901c4f6c83",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/protection/ProtectionStateService.ts",
+      "sha256": "74a41444f74ccc8d42a461b166e43eae35cb0c325862ebac03d01a9f6876f2dd",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/reports/commands.ts",
+      "sha256": "1cc503685cac3611fc6e56a851e6f758af8d04ddf5d150c4c96e0c92092f9998",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/reports/reportCatalog.ts",
+      "sha256": "78d73baefed5542287508007d427f5946db5c04be49b68ef3b3a10a8a995655f",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/scanners/continuousGuards.ts",
+      "sha256": "67d2ba2639a53a029a338d8316b26d6187c9acef930e81d74f7d56479e592b59",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/CapabilityBroker.ts",
+      "sha256": "aa393d004a4b71ce834cd8984229a3065d2a5820d2fe86e1f0bf54d5b9dac941",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/commands.ts",
+      "sha256": "7530457c13728e248ed3e04c2087160d168a3bf1fb111ca1c9a88c32df04ea6f",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/EnforcedApiCapability.ts",
+      "sha256": "3c0877982232d7e87ef85e07e97d17df30917460eab67232d2dfa2fdd0783f5f",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/LLMContext.ts",
+      "sha256": "15b9775386dc321d18c8510f6aaf121cdadeb913493c960fb73e599babcb0d2c",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/OutputFilter.ts",
+      "sha256": "5c21d867615ea5cf08876f4c4dc1594974be404e5372ebd4ee4c56f64116a94a",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/runtime.ts",
+      "sha256": "a60c6e3e6917f471e5e2c6a7a1d01440e7ad004666874c8608fb016bb91859c7",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/SecretClassifier.ts",
+      "sha256": "43c8082ed0c5b62ea5143ef75dcc96750e906cfa5913517563ca939006810767",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/SecretReferenceManager.ts",
+      "sha256": "e72127b7072220c94fa562992978e69a6ade7b501bcedd2472a2e7cc1d91c127",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/SecretStorageValueStore.ts",
+      "sha256": "5d2bcc133be70318c8f4a1cf808ee520c97509fd409f529b776175dd3954ca71",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/SensitiveContextPolicy.ts",
+      "sha256": "8b1d45050ab74a01910e7c548b1b8dadf5bb1dfb92b582000aee430f700588a9",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/SensitiveContextRedactor.ts",
+      "sha256": "aeada04be94515cfb1c5c59474c248203b8b0f90382f139f3b0bbe68ee62baf0",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-broker/types.ts",
+      "sha256": "7bc5ae1b916a5603fcbedeafc864480184d6d0782e00ec53285635ee4ce7f0f7",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-shield/AutoVaultMigration.ts",
+      "sha256": "e741095aca9a29e41acdd7e3b67a91b2d8c68b7309994a1697e9a61c703a1d99",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-shield/FileReadSentinel.ts",
+      "sha256": "cd31e420782f832b48fe5934ef25f28dae1484626a786d522fa563ac54cc02aa",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/secret-shield/SecretFileInterceptor.ts",
+      "sha256": "2579e347a3590cdc66cef2270c3c235c0a46f6463488f83f10be894d643a7a11",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/security/boundedResponse.ts",
+      "sha256": "b8f327f9cd30b9a880a667ccabbcb0e9e4e168565b30a010705af76b5d3e4cb6",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/security/childEnvironment.ts",
+      "sha256": "39dfde2af1d33413958e64f4c7018101107afe5b44840b27768cb5f0298ecb67",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/security/FileSystemPathPolicy.ts",
+      "sha256": "e41fddccdb360a02c0253f3198d113d8545d07071f86795e545f65d94efc2748",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/security/pathContainment.ts",
+      "sha256": "2f16b8a0d439de85c1fa4f7102f88653aabd36aac96ef1b181fe3bff1503efd9",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/security/WorkspacePathGuard.ts",
+      "sha256": "84793782ca8a8840040a25f964fc4e3e6fc4697549a24bf3d9bf4180e5bd86f8",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/sentinel/AISentinel.ts",
+      "sha256": "3de1ddc85d753196d128b59befebcca15ff3fd89fd92964ebec1858ace360763",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/sentinel/commands.ts",
+      "sha256": "30443f7c818baa54fff98f81e9089504be978d3043dcffc599a5525399047aef",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/state.ts",
+      "sha256": "f6e23b0a50c77885eeee043ba157d096cc6cd65ae27c206997c93f07d2729ea3",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/telemetry.ts",
+      "sha256": "198bb270b6c573c3da2cfd4b1863050af0ac4e912ee3988639c0893cdb403abe",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/terminal/shellExecutionPolicy.ts",
+      "sha256": "5e6eed55487ffed9775837741cd474a7eed49f48815edc53ba5f9f776fec3f5e",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/terminal/ShellExecutionWatcher.ts",
+      "sha256": "d468f1dbfc23b4ff14b48875a527526afabe190f5bbd928a43b736b247d63f3c",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/views/RiskTreeProvider.ts",
+      "sha256": "896ac83e3ec0396ca97dbe75d7452a90bef1be6d27a78f44ba1947cdeea86615",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/vscode-extension/src/webview/controlPanelStyles.ts",
+      "sha256": "202060d52dc600621bfc5743aa36257823e001d34a64ee2772ac8b1fc935caeb",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/webview/ControlPanelViewProvider.ts",
+      "sha256": "9b59726252f004385bd7a691389ebf5790027066ff998673b41a462f78dc1ea2",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/webview/DashboardPanel.ts",
+      "sha256": "7f1645cd86762e8352dc472080dce67453b126136ca2a5447dd60700de9ee359",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/webview/panelContent.ts",
+      "sha256": "3bdba2021a4086e2e5d2245b8a9dc6f137bccbf979e77325c688b11326c92d4f",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/vscode-extension/src/workspace-guard/WorkspaceGuard.ts",
+      "sha256": "35f67e746cf49e283c614e78cd8dc6f80fa226dce8e2ffa321debdbec9e2f78b",
+      "matchesPhase0": false
+    },
+    {
+      "path": "apps/local-ai-broker/src/auth.ts",
+      "sha256": "55a21d4d1ed8f070d1496097797e9b19f73e460f0d54b3a573409d79ef40d683",
+      "matchesPhase0": false
+    },
+    {
+      "path": "apps/local-ai-broker/src/BrokerServer.ts",
+      "sha256": "b38828d3d5b9f101fa6fe6def7775aa18420caf8a1dc0c061c2d7b29f3885a26",
+      "matchesPhase0": false
+    },
+    {
+      "path": "apps/local-ai-broker/src/CheckpointStore.ts",
+      "sha256": "b9ef5192cbb452747e550a3af936e0a7c7db0e1dae709e0ead395c483dc44ae0",
+      "matchesPhase0": true
+    },
+    {
+      "path": "apps/local-ai-broker/src/cli.ts",
+      "sha256": "7d5372f4675b79e5ca2e073e9205c9beb27326f3c03df40e00e1c1c5be1891a9",
+      "matchesPhase0": false
+    },
+    {
+      "path": "apps/local-ai-broker/src/ClientRoutes.ts",
+      "sha256": "ea8f338011a5cbc30df4fe51d6473af953960233310d931c30e82257186b3ada",
+      "matchesPhase0": false
+    },
+    {
+      "path": "apps/local-ai-broker/src/ControlledExecution.ts",
+      "sha256": "6c59f1cfc72d8e51b0df02064c5c94fa57e701e59cf82b3441f48bdade2ceaac",
+      "matchesPhase0": false
+    },
+    {
+      "path": "apps/local-ai-broker/src/index.ts",
+      "sha256": "b8409e72b6dc3e3cbaa77df503b6d642f3f499b5c9c6ac96b9395214b90150cc",
+      "matchesPhase0": true
+    },
+    {
+      "path": "apps/local-ai-broker/src/ProviderTarget.ts",
+      "sha256": "06101ab4f6b92e82842825626597d1cece084d7dd79761aa95297932e71758f1",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/ApprovalToken.ts",
+      "sha256": "f477a4a0f31f5dccda064bdc3e6cfe7da8bc3d78695d71057eca99042c4ed10e",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/guard-core/src/BrokerScanner.ts",
+      "sha256": "55e5050ba0a9798cdef18e54d66dc7ac0a6a2f4ec5e9da2d57680319519a1342",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/Canary.ts",
+      "sha256": "fc3552b8d5c70bc1ff0f683814d644b175c664527d7d30420366b5e5cecc2f4c",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/guard-core/src/CapabilityRegistry.ts",
+      "sha256": "bfa665050d6c84a6f58cec268fff9af38304a2a69b9bf044bac2983dc03d195a",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/CheckpointRollback.ts",
+      "sha256": "dbe9fb7327d3164bde7486f09620b34ac29cffd727289a7ada31109dc8a794f9",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/ContextRedactor.ts",
+      "sha256": "438d6ae62d12d1259dbe0c52e1ef9cdbd064a0c3c88454c03a059ba2401ef304",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/ControlledTerminal.ts",
+      "sha256": "7cf813cc1b53ac6b5affc1272b1a0e8d386166a03f051cf8506913bb8ca3fa90",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/guard-core/src/CoverageMatrix.ts",
+      "sha256": "d85f5ddbf7d4dcb301a4bfaa0b1c920ba73db76a1d107efecff2306890e48b1b",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/DecisionEngine.ts",
+      "sha256": "e7134c03e60470d7845ba2d08e64935ef954f71bcb7a72f8187681875c86944b",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/detectors/AIGeneratedCodeRiskDetector.ts",
+      "sha256": "094023452cde43ec846be4fcd69bf08a7fd68efc1e18d8a46d4044dbc0ad1438",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/detectors/EncodedSecretDetector.ts",
+      "sha256": "020d43b0cc184290dc5c4a0415cf20740b5c16a87c152afab9c5f6fc6ded8eaa",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/detectors/EnvFileDetector.ts",
+      "sha256": "e46ae316fbf215abe143d5c666dd9a8ebaf301cecbb044fce5ca75a7b0082a40",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/detectors/FileContextRiskDetector.ts",
+      "sha256": "ead94fd4fbf5d156c2f70d85daaad1490950a33932a7d65416555b5decaeb448",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/detectors/index.ts",
+      "sha256": "bf5e509ee535ef64df546be6d473c412f886b570521e68c0004bd7533a5c9d67",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/detectors/IndiaPIIDetector.ts",
+      "sha256": "96ddcb4ffdab86b47bee629025d19f84ca37cb58eaa00668c61877ee118922ee",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/detectors/JailbreakLiteDetector.ts",
+      "sha256": "e169531253b26bb292826c440a48b93c3c3c0c0cebb955905762c6dab0abbab7",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/detectors/MCPConfigRiskDetector.ts",
+      "sha256": "fb55f00f76288558450f4608cccf3c4e9e71a36b76bf35185ea498b017112938",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/detectors/OutputExfiltrationDetector.ts",
+      "sha256": "693e41ba3e0b36730abb2b5a6bda9f02368ea0a90306d8bddb3cb887ceba8692",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/detectors/PIIDetector.ts",
+      "sha256": "9a35491ac4fbadee0cd1cd4c4d88e4e8d367b13c8697d6e448636b5441246f1b",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/detectors/PromptInjectionLiteDetector.ts",
+      "sha256": "ae097d19dbb832478a0a367aba71c002df9191424ed0f16715d661530af5a1e3",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/detectors/RepoInstructionPoisoningDetector.ts",
+      "sha256": "3cc2e6fd14727f252a8a95d860ad425952b0016848bfdb2eec875acbc5ee7a5e",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/detectors/SecretDetector.ts",
+      "sha256": "8dfdd6f4931660c638be246f9e25e239c38908a9f4136c3d45960a3d8da9078b",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/detectors/TerminalCommandRiskDetector.ts",
+      "sha256": "ddd66efc537ea992d0025f7dc740e7f09e9079533afe5f660daaf47194791d35",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/detectors/utils.ts",
+      "sha256": "b0a660d0bb8e38b448caadbd1b44a52f542c4669368870211e86472871d7a2c8",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/EvidenceMinimizer.ts",
+      "sha256": "939796dfd089374959aa7082210feee1a690b94071f6767138e7c020e5f8770a",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/ExtensionIsolationPolicy.ts",
+      "sha256": "544387d5e13a285a918b1d338e8ba5244a08e024131237ab24b643fee16852cd",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/ExtensionRiskScanner.ts",
+      "sha256": "693094cb8ce88a0784a5bf816d00be15093dfa0a287cf1d6d1e17fd681f6b3b5",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/FileOperationFirewall.ts",
+      "sha256": "ea98d9f30eb6f6ee542fd9d8ce9856721bfc4fba70bd4e53e25df2228cc6300e",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/GovernancePolicy.ts",
+      "sha256": "507ad667be470fe31b939f6017cfcaf0b89e6803aa12233fa7851cf5804c3f5f",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/HashCache.ts",
+      "sha256": "1dcb8d57fdee9232bfc7f56a0270fc52891bf1d0c2a48a0a8639ff281ad262fa",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/index.ts",
+      "sha256": "8121e158db6a7139e6ebb85b0b59480983c811a4e1810d26ec5c9f0b998650f6",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/Ledger.ts",
+      "sha256": "2962dfe8ac04867ca1acb279b13a56c9853f0b08763aa27cf36a5e7084524a7c",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/MCPCredentialBoundary.ts",
+      "sha256": "a0362012678f6a42bc71299713a45ba9cc6bb244de4457ba08b37e4132325d65",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/MCPGateway.ts",
+      "sha256": "6dfaa74eedbeff86556e4a052cc3ab6b2e8ed9d7683e492fc7648918c4980bfd",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/MCPPolicyAnalyzer.ts",
+      "sha256": "442815e1fb475ab55e9b9fb67c80db19e4ffbbb0502128eba5c1f3387327ea3e",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/MemorySession.ts",
+      "sha256": "76c2b8525b3ed312b0539a95ffefa624a8c1be7727e542cae91bd02e7f946870",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/NetworkEgressPolicy.ts",
+      "sha256": "187f617fe15cd6a67f54b874329ba95cb64420d81ef23eb8bd471b0dc6e168ff",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/OutputLeakScanner.ts",
+      "sha256": "d58aadfdaf51716061d12cfe4bad2f1c241440766777be61dc9532a52e59824c",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/PolicyEvaluator.ts",
+      "sha256": "803ba2f5da3093533fe0f81921dbfadb3728929c1f8bce0ccc05fa52d6d624c3",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/ProcessSandboxPolicy.ts",
+      "sha256": "3b922649175a037702aaab67dea9f72feaf05eac3f6966e64ce0cc37df8f275f",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/ProjectPolicy.ts",
+      "sha256": "00bc7ed55f2c0eeb1ecb9d72c0d890d5c45c080bbe68ddd224beae1d65fb0290",
+      "matchesPhase0": false
+    },
+    {
+      "path": "packages/guard-core/src/Redactor.ts",
+      "sha256": "b3c854e5e7cfa215a38e19ec372f99090bde41bb9d9df392444486af9dc92a19",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/RuntimeDiscovery.ts",
+      "sha256": "39819e137c06657d545b766317938611a96be97dfa37e7ca55a55b8499bf4131",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/RuntimePolicyEngine.ts",
+      "sha256": "57d6679fd18bca9ffa6c95936f285ab2fa395614363821a10ee145b792c9f8ec",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/SafeContextBuilder.ts",
+      "sha256": "f3b708ab938a2c960c1669d9fd703650bbeaa842c0805bd7ffdd6e6702c2c169",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/SafeMode.ts",
+      "sha256": "1f5d05a6e07a3078d475cde8e83dc99771737b383b3b467718be52f85eee5da3",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/sensitiveFiles.ts",
+      "sha256": "e58fe3900c94f65a8396223852cc88e232edb846f774378f2ef0316cfdac1a4f",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/TaintEngine.ts",
+      "sha256": "4f2f83fab99b208215b30315f56f81a2d326051ac8ff1a82fee1ebd331d3e7e9",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/types.ts",
+      "sha256": "2fa25db278a68b7f3054acca3e3fa4e75f5457001379471046676eb3d4c21311",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/Vault.ts",
+      "sha256": "6097f15c9ff7cf5dfa169ced77d8d1810cb022386da3a6bce129ea96e8afc0e9",
+      "matchesPhase0": true
+    },
+    {
+      "path": "packages/guard-core/src/VaultCrypto.ts",
+      "sha256": "98f89de3026da5ed7f02fbda7962f1af1031e0c66878ccacae7dd4ecb3a39d53",
+      "matchesPhase0": true
+    }
+  ],
+  "sourceChangesSincePhase0": [
+    "packages/vscode-extension/src/advanced/commands.ts",
+    "packages/vscode-extension/src/advanced/posture.ts",
+    "packages/vscode-extension/src/ai-boundary/BoundarySnapshot.ts",
+    "packages/vscode-extension/src/ai-boundary/commands.ts",
+    "packages/vscode-extension/src/ai-boundary/gitDiff.ts",
+    "packages/vscode-extension/src/ai-boundary/policy.ts",
+    "packages/vscode-extension/src/broker/AutoSecureEngine.ts",
+    "packages/vscode-extension/src/broker/BrokerManager.ts",
+    "packages/vscode-extension/src/broker/commands.ts",
+    "packages/vscode-extension/src/clipboard/ClipboardGuard.ts",
+    "packages/vscode-extension/src/commands.ts",
+    "packages/vscode-extension/src/extension.ts",
+    "packages/vscode-extension/src/firewall/context-commands.ts",
+    "packages/vscode-extension/src/firewall/policy-commands.ts",
+    "packages/vscode-extension/src/firewall/PolicyStore.ts",
+    "packages/vscode-extension/src/firewall/scanners.ts",
+    "packages/vscode-extension/src/launchCommands.ts",
+    "packages/vscode-extension/src/protection/AutomaticIDEProtection.ts",
+    "packages/vscode-extension/src/protection/ProtectionController.ts",
+    "packages/vscode-extension/src/protection/ProtectionLevel.ts",
+    "packages/vscode-extension/src/protection/ProtectionState.ts",
+    "packages/vscode-extension/src/protection/ProtectionStateService.ts",
+    "packages/vscode-extension/src/secret-broker/commands.ts",
+    "packages/vscode-extension/src/secret-broker/EnforcedApiCapability.ts",
+    "packages/vscode-extension/src/secret-broker/OutputFilter.ts",
+    "packages/vscode-extension/src/secret-broker/runtime.ts",
+    "packages/vscode-extension/src/secret-broker/SecretReferenceManager.ts",
+    "packages/vscode-extension/src/secret-broker/SecretStorageValueStore.ts",
+    "packages/vscode-extension/src/secret-shield/AutoVaultMigration.ts",
+    "packages/vscode-extension/src/security/childEnvironment.ts",
+    "packages/vscode-extension/src/security/FileSystemPathPolicy.ts",
+    "packages/vscode-extension/src/sentinel/commands.ts",
+    "packages/vscode-extension/src/webview/controlPanelStyles.ts",
+    "packages/vscode-extension/src/webview/ControlPanelViewProvider.ts",
+    "packages/vscode-extension/src/webview/DashboardPanel.ts",
+    "packages/vscode-extension/src/webview/panelContent.ts",
+    "packages/vscode-extension/src/workspace-guard/WorkspaceGuard.ts",
+    "apps/local-ai-broker/src/auth.ts",
+    "apps/local-ai-broker/src/BrokerServer.ts",
+    "apps/local-ai-broker/src/cli.ts",
+    "apps/local-ai-broker/src/ClientRoutes.ts",
+    "apps/local-ai-broker/src/ControlledExecution.ts",
+    "packages/guard-core/src/ApprovalToken.ts",
+    "packages/guard-core/src/Canary.ts",
+    "packages/guard-core/src/ControlledTerminal.ts",
+    "packages/guard-core/src/ProjectPolicy.ts"
+  ],
+  "currentSecurityResult": "NOT_RUN",
+  "realAgentTested": false,
+  "productionCodeModified": false
+}
